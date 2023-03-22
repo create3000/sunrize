@@ -1,0 +1,40 @@
+"use strict"
+
+const
+   X3DBoundedObjectTool = require ("../Grouping/X3DBoundedObjectTool"),
+   ToolColors           = require ("../Core/ToolColors"),
+   X3D                  = require ("../../X3D"),
+   GeoLOD               = X3D .require ("x_ite/Components/Geospatial/GeoLOD"),
+   Vector3              = X3D .require ("standard/Math/Numbers/Vector3")
+
+class GeoLODTool extends X3DBoundedObjectTool
+{
+   bboxColor = ToolColors .DARK_CYAN
+
+   async initialize ()
+   {
+      await super .initialize ()
+
+      this .tool .centerDisplay = true
+   }
+
+   static center = new Vector3 (0, 0, 0)
+
+   reshape ()
+   {
+      super .reshape ()
+
+      const center = this .node .getCoord (this .node ._center, GeoLODTool .center)
+
+      if (!this .tool .center .getValue () .equals (center))
+         this .tool .center = center;
+   }
+}
+
+Object .assign (GeoLOD .prototype,
+{
+   createTool: function ()
+   {
+      return new GeoLODTool (this)
+   },
+})

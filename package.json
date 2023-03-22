@@ -1,0 +1,103 @@
+{
+  "name": "sunrize",
+  "productName": "Sunrize X3D Editor",
+  "version": "1.0.11",
+  "description": "A Multi Platform X3D Editor",
+  "homepage": "https://create3000.github.io/sunrize/",
+  "author": "Holger Seelig",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/create3000/sunrize.git"
+  },
+  "bugs": {
+    "url": "https://github.com/create3000/sunrize/issues"
+  },
+  "keywords": [
+    "X3D",
+    "VRML",
+    "WebGL",
+    "editor",
+    "3D",
+    "wrl",
+    "JavaScript",
+    "JSON",
+    "x_ite",
+    "node",
+    "electron"
+  ],
+  "contributors": [
+    {
+      "name": "Holger Seelig",
+      "email": "holger.seelig@gmail.com",
+      "url": "https://github.com/create3000"
+    }
+  ],
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.5",
+    "@electron-forge/maker-deb": "^6.0.5",
+    "@electron-forge/maker-rpm": "^6.0.5",
+    "@electron-forge/maker-squirrel": "^6.0.5",
+    "@electron-forge/maker-zip": "^6.0.5",
+    "electron": "^23.1.2"
+  },
+  "dependencies": {
+    "capitalize": "^2.0.4",
+    "css-element-queries": "^1.2.3",
+    "electron-squirrel-startup": "^1.0.0",
+    "electron-tabs": "^1.0.1",
+    "fullname": "^4.0.1",
+    "jquery": "^3.6.4",
+    "jquery-ui-dist": "^1.13.2",
+    "jstree": "^3.3.15",
+    "material-icons": "^1.13.2",
+    "material-symbols": "^0.5.0",
+    "md5": "^2.3.0",
+    "monaco-editor": "^0.36.1",
+    "node-localstorage": "^2.2.1",
+    "qtip2": "^3.0.3",
+    "spectrum-colorpicker2": "^2.0.10",
+    "x_ite": "latest"
+  },
+  "main": "src/main.js",
+  "bin": {
+    "sunrize": "bin/sunrize.js"
+  },
+  "scripts": {
+    "start": "electron-forge start --",
+    "development": "SUNRISE_ENVIRONMENT=DEVELOPMENT electron-forge start --",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "icon": "./src/images/icon.png"
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "Sunrize"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {
+            "icon": "./src/images/icon256.png"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  }
+}

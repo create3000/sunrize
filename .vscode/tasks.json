@@ -1,0 +1,25 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run Sunrize",
+            "type": "shell",
+            "command": "npm run development -- `echo ${file} | grep -E '\\.(?:x3d|x3dz|x3dv|x3dvz|x3dj|x3djz|gltf|glb|obj|stl|svg|svgz)'` 2>&1 | grep -v -E '^\\d'",
+            "problemMatcher": [],
+        },
+        {
+            "label": "Package Sunrize",
+            "type": "shell",
+            "command": "npm run make",
+            "problemMatcher": []
+        },
+        {
+            "label": "Make X_ITE for Sunrize",
+            "type": "shell",
+            "command": "make x_ite-for-sunrize",
+            "problemMatcher": []
+        }
+    ]
+}

@@ -1,0 +1,21 @@
+{
+   "files.exclude": {
+      "**/*~": true,
+      "node_modules": true,
+      "out": true,
+      "x_ite": true,
+      "package-lock.json": true
+   },
+   "cSpell.words": [
+      "Collidable",
+      "colorpicker",
+      "dragstop",
+      "fullname",
+      "gettext",
+      "jstree",
+      "mult",
+      "qtip",
+      "Tink",
+      "titlebar"
+   ]
+}

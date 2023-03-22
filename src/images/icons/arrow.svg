@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:export-ydpi="30"
+   inkscape:export-xdpi="30"
+   inkscape:export-filename="/Users/holger/Downloads/Arrow.png"
+   sodipodi:docname="Arrow.svg"
+   inkscape:version="1.0 (4035a4f, 2020-05-01)"
+   id="svg2408"
+   height="24"
+   width="24"
+   version="1.0">
+  <sodipodi:namedview
+     inkscape:bbox-nodes="true"
+     inkscape:document-rotation="0"
+     inkscape:snap-nodes="true"
+     inkscape:snap-page="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-intersection-paths="false"
+     inkscape:snap-object-midpoints="false"
+     inkscape:object-paths="false"
+     inkscape:guide-bbox="true"
+     showguides="true"
+     inkscape:bbox-paths="false"
+     inkscape:snap-bbox="true"
+     inkscape:current-layer="g4856"
+     inkscape:window-maximized="1"
+     inkscape:window-y="23"
+     inkscape:window-x="0"
+     inkscape:cy="12.981972"
+     inkscape:cx="14.436146"
+     inkscape:zoom="22.448519"
+     showgrid="true"
+     id="namedview3312"
+     inkscape:window-height="810"
+     inkscape:window-width="1440"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="10"
+     borderopacity="1"
+     bordercolor="#666666"
+     pagecolor="#ffffff">
+    <sodipodi:guide
+       id="guide4411"
+       position="-190.05815,48"
+       orientation="0,1" />
+    <sodipodi:guide
+       id="guide4413"
+       position="48,42"
+       orientation="1,0" />
+    <inkscape:grid
+       spacingx="1"
+       spacingy="1"
+       snapvisiblegridlinesonly="true"
+       enabled="true"
+       visible="true"
+       empspacing="2"
+       id="grid3989"
+       type="xygrid" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2410">
+    <linearGradient
+       id="linearGradient3935-4">
+      <stop
+         id="stop3937-9"
+         offset="0"
+         style="stop-color:#000000;stop-opacity:0;" />
+      <stop
+         id="stop3939-6"
+         offset="1"
+         style="stop-color:#ff0101;stop-opacity:1;" />
+    </linearGradient>
+  </defs>
+  <metadata
+     id="metadata2413">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     style="display:inline"
+     inkscape:label="Stroke"
+     id="layer2"
+     inkscape:groupmode="layer">
+    <g
+       style="fill:#090909;fill-opacity:1;stroke:none;stroke-opacity:1;stroke-width:3.9545455;stroke-miterlimit:4;stroke-dasharray:none"
+       transform="matrix(0.25287356,0,0,0.25287356,3.4827586,-0.51724136)"
+       id="g4856">
+      <path
+         d="M 11.931821,10.371791 V 71.027392 L 28.395548,62.757786 42.111787,90.327871 53.08054,84.812435 39.364303,57.24235 55.828028,48.972747 Z"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:3.95455;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path3927" />
+    </g>
+  </g>
+  <g
+     id="text7563"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:92.1986px;line-height:130%;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none" />
+</svg>

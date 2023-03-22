@@ -1,0 +1,6 @@
+node_modules/
+out/
+x_ite/
+package-lock.json
+
+**/.DS_Store

@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Layout' level='2'/>
+    <component name='Scripting' level='1'/>
+    <meta name='comment' content='Rise and Shine'/>
+    <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.0.11, https://create3000.github.io/sunrize/'/>
+    <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Grouping/X3DBoundedObjectTool.x3d'/>
+    <meta name='modified' content='Sun, 19 Mar 2023 16:33:08 GMT'/>
+  </head>
+  <Scene>
+    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
+    </ExternProtoDeclare>
+    <ProtoDeclare name='Tool'>
+      <ProtoInterface>
+        <field accessType='inputOutput' type='SFVec3f' name='center'/>
+        <field accessType='inputOutput' type='SFBool' name='centerDisplay'/>
+        <field accessType='inputOutput' type='SFVec3f' name='axisOfRotation'/>
+        <field accessType='inputOutput' type='SFBool' name='rectangleDisplay'/>
+        <field accessType='inputOutput' type='SFVec3f' name='rectangleSize' value='1 1 1'/>
+        <field accessType='inputOutput' type='SFVec3f' name='rectangleCenter'/>
+        <field accessType='inputOutput' type='SFInt32' name='bboxStyle' value='1'/>
+        <field accessType='inputOutput' type='SFColor' name='bboxColor' value='0.35 1 0.7'/>
+        <field accessType='inputOutput' type='SFVec3f' name='bboxSize' value='1 1 1'/>
+        <field accessType='inputOutput' type='SFVec3f' name='bboxCenter'/>
+      </ProtoInterface>
+      <ProtoBody>
+        <Collision
+            enabled='false'>
+          <Transform DEF='BoundingBox'>
+            <IS>
+              <connect nodeField='translation' protoField='bboxCenter'/>
+            </IS>
+            <Shape DEF='Box'>
+              <Appearance>
+                <LineProperties
+                    linewidthScaleFactor='2'>
+                  <IS>
+                    <connect nodeField='linetype' protoField='bboxStyle'/>
+                  </IS>
+                </LineProperties>
+                <UnlitMaterial DEF='BBoxMaterial'>
+                  <IS>
+                    <connect nodeField='emissiveColor' protoField='bboxColor'/>
+                  </IS>
+                </UnlitMaterial>
+              </Appearance>
+              <IndexedLineSet
+                  coordIndex='0, 1, 2, 3, 0, -1, 4, 5, 6, 7, 4, -1, 0, 4, -1, 3, 7, -1, 1, 5, -1, 2, 6, -1'>
+                <Coordinate DEF='BBox'
+                    point='-0.5 0.5 0.5, -0.5 -0.5 0.5, 0.5 -0.5 0.5, 0.5 0.5 0.5, -0.5 0.5 -0.5, -0.5 -0.5 -0.5, 0.5 -0.5 -0.5, 0.5 0.5 -0.5'/>
+              </IndexedLineSet>
+            </Shape>
+            <Shape DEF='Axes_1'>
+              <IndexedLineSet
+                  colorPerVertex='false'
+                  coordIndex='0, 1, -1, 0, 2, -1, 0, 3, -1'>
+                <Color
+                    color='1 0 0, 0 1 0, 0 0 1'/>
+                <Coordinate DEF='AxesCoord'
+                    point='0 0 0, 0.5 0 0, 0 0.5 0, 0 0 0.5, 0 0 0'/>
+              </IndexedLineSet>
+            </Shape>
+          </Transform>
+          <Transform DEF='AdjustmentHandles'>
+            <IS>
+              <connect nodeField='translation' protoField='bboxCenter'/>
+            </IS>
+            <Transform DEF='XHandle'
+                translation='0.5 0 0'>
+              <ScreenGroup>
+                <Transform
+                    translation='6 0 0'
+                    rotation='0 0 -1 1.5708'>
+                  <Shape>
+                    <Appearance DEF='Red'>
+                      <Material
+                          diffuseColor='1 0 0'/>
+                      <ProtoInstance name='ToolShader' DEF='_1' containerField='shaders'/>
+                    </Appearance>
+                    <Cone DEF='Arrow'
+                        height='12'
+                        bottomRadius='4'/>
+                  </Shape>
+                </Transform>
+              </ScreenGroup>
+            </Transform>
+            <Transform DEF='YHandle'
+                translation='0 0.5 0'>
+              <ScreenGroup>
+                <Transform
+                    translation='0 6 0'>
+                  <Shape>
+                    <Appearance DEF='Green'>
+                      <Material
+                          diffuseColor='0 1 0'/>
+                      <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
+                    </Appearance>
+                    <Cone USE='Arrow'/>
+                  </Shape>
+                </Transform>
+              </ScreenGroup>
+            </Transform>
+            <Transform DEF='ZHandle'
+                translation='0 0 0.5'>
+              <ScreenGroup>
+                <Transform
+                    translation='0 0 6'
+                    rotation='1 0 0 1.5708'>
+                  <Shape>
+                    <Appearance DEF='Blue'>
+                      <Material
+                          diffuseColor='0 0 1'/>
+                      <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
+                    </Appearance>
+                    <Cone USE='Arrow'/>
+                  </Shape>
+                </Transform>
+              </ScreenGroup>
+            </Transform>
+          </Transform>
+          <Transform DEF='Center'>
+            <IS>
+              <connect nodeField='visible' protoField='centerDisplay'/>
+            </IS>
+            <Shape DEF='CenterLine'>
+              <Appearance>
+                <LineProperties
+                    linetype='3'
+                    linewidthScaleFactor='2'/>
+              </Appearance>
+              <IndexedLineSet DEF='CenterIndexedLineSet'
+                  coordIndex='0, 1, -1'>
+                <Color
+                    color='1 1 0, 1 1 0'/>
+                <Coordinate DEF='CenterLineCoord'
+                    point='0 0 0, 0 0 0'/>
+              </IndexedLineSet>
+            </Shape>
+            <Transform DEF='_2'>
+              <IS>
+                <connect nodeField='translation' protoField='center'/>
+              </IS>
+              <ScreenGroup DEF='CenterPoint'>
+                <Shape>
+                  <Appearance>
+                    <Material
+                        diffuseColor='1 1 0'/>
+                    <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
+                  </Appearance>
+                  <Sphere
+                      radius='5'/>
+                </Shape>
+              </ScreenGroup>
+              <Inline DEF='Vector'
+                  global='true'
+                  load='false'
+                  url='"Vector.x3d"'
+                  visible='false'/>
+            </Transform>
+          </Transform>
+          <Transform DEF='Rectangle'>
+            <IS>
+              <connect nodeField='translation' protoField='rectangleCenter'/>
+              <connect nodeField='visible' protoField='rectangleDisplay'/>
+            </IS>
+            <Shape DEF='Box_1'>
+              <Appearance>
+                <LineProperties
+                    linewidthScaleFactor='2'/>
+                <Material DEF='BBoxMaterial_1'
+                    emissiveColor='0 1 0'/>
+                <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
+              </Appearance>
+              <IndexedLineSet
+                  coordIndex='0, 1, 2, 3, 0, -1'>
+                <Coordinate DEF='Rectangle_1'
+                    point='-0.5 0.5 0, -0.5 -0.5 0, 0.5 -0.5 0, 0.5 0.5 0'/>
+              </IndexedLineSet>
+            </Shape>
+          </Transform>
+        </Collision>
+        <Script DEF='BBoxScript'
+            directOutput='true'>
+          <field accessType='inputOutput' type='SFBool' name='rectangleDisplay'/>
+          <field accessType='inputOutput' type='SFVec3f' name='rectangleSize'/>
+          <field accessType='inputOutput' type='SFVec3f' name='bboxSize'/>
+          <field accessType='initializeOnly' type='SFNode' name='rectangle'>
+            <Coordinate USE='Rectangle_1'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='bbox'>
+            <Coordinate USE='BBox'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='axes'>
+            <Coordinate USE='AxesCoord'/>
+          </field>
+          <IS>
+            <connect nodeField='rectangleDisplay' protoField='rectangleDisplay'/>
+            <connect nodeField='rectangleSize' protoField='rectangleSize'/>
+            <connect nodeField='bboxSize' protoField='bboxSize'/>
+          </IS>
+<![CDATA[ecmascript:
+
+function eventsProcessed ()
+{
+	var bboxSize1_2 = bboxSize .divide (2);
+
+	// Axes
+
+	axes .point = new MFVec3f (new SFVec3f (0, 0, 0),
+	                           new SFVec3f (bboxSize1_2 .x, 0, 0),
+	                           new SFVec3f (0, bboxSize1_2 .y, 0),
+	                           new SFVec3f (0, 0, bboxSize1_2 .z),
+	                           new SFVec3f (0, 0, 0));
+
+
+	// BBox
+
+	bbox .point = new MFVec3f (new SFVec3f (-bboxSize1_2 .x,  bboxSize1_2 .y,  bboxSize1_2 .z),
+	                           new SFVec3f (-bboxSize1_2 .x, -bboxSize1_2 .y,  bboxSize1_2 .z),
+	                           new SFVec3f ( bboxSize1_2 .x, -bboxSize1_2 .y,  bboxSize1_2 .z),
+	                           new SFVec3f ( bboxSize1_2 .x,  bboxSize1_2 .y,  bboxSize1_2 .z),
+	                           new SFVec3f (-bboxSize1_2 .x,  bboxSize1_2 .y, -bboxSize1_2 .z),
+	                           new SFVec3f (-bboxSize1_2 .x, -bboxSize1_2 .y, -bboxSize1_2 .z),
+	                           new SFVec3f ( bboxSize1_2 .x, -bboxSize1_2 .y, -bboxSize1_2 .z),
+	                           new SFVec3f ( bboxSize1_2 .x,  bboxSize1_2 .y, -bboxSize1_2 .z));
+
+	if (rectangleDisplay)
+	{
+		var bboxSize1_2 = rectangleSize .divide (2);
+
+		// BBox
+
+		rectangle .point = new MFVec3f (new SFVec3f (-bboxSize1_2 .x,  bboxSize1_2 .y,  0),
+		                                new SFVec3f (-bboxSize1_2 .x, -bboxSize1_2 .y,  0),
+		                                new SFVec3f ( bboxSize1_2 .x, -bboxSize1_2 .y,  0),
+		                                new SFVec3f ( bboxSize1_2 .x,  bboxSize1_2 .y,  0));
+	}
+}
+]]>
+        </Script>
+        <Script DEF='ArrowsScript'
+            directOutput='true'>
+          <field accessType='inputOutput' type='SFVec3f' name='bboxSize'/>
+          <field accessType='initializeOnly' type='SFNode' name='x'>
+            <Transform USE='XHandle'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='y'>
+            <Transform USE='YHandle'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='z'>
+            <Transform USE='ZHandle'/>
+          </field>
+          <IS>
+            <connect nodeField='bboxSize' protoField='bboxSize'/>
+          </IS>
+<![CDATA[ecmascript:
+
+function eventsProcessed ()
+{
+	// Position arrows
+
+	var bboxSize1_2 = bboxSize .divide (2);
+
+	x .translation = new SFVec3f (bboxSize1_2 .x, 0, 0);
+	y .translation = new SFVec3f (0, bboxSize1_2 .y, 0);
+	z .translation = new SFVec3f (0, 0, bboxSize1_2 .z);
+}
+]]>
+        </Script>
+        <Script DEF='CenterScript'
+            directOutput='true'>
+          <field accessType='inputOutput' type='SFVec3f' name='center'/>
+          <field accessType='inputOutput' type='SFVec3f' name='bboxSize'/>
+          <field accessType='inputOutput' type='SFVec3f' name='bboxCenter'/>
+          <field accessType='initializeOnly' type='SFNode' name='coord'>
+            <Coordinate USE='CenterLineCoord'/>
+          </field>
+          <IS>
+            <connect nodeField='center' protoField='center'/>
+            <connect nodeField='bboxSize' protoField='bboxSize'/>
+            <connect nodeField='bboxCenter' protoField='bboxCenter'/>
+          </IS>
+<![CDATA[ecmascript:
+
+function eventsProcessed ()
+{
+	coord .point [0] = center;
+	coord .point [1] = bboxCenter;
+}
+]]>
+        </Script>
+        <Script DEF='AxisOfRotationScript'
+            directOutput='true'>
+          <field accessType='inputOutput' type='SFVec3f' name='vector'/>
+          <field accessType='initializeOnly' type='SFVec3f' name='zAxis' value='0 0 1'/>
+          <field accessType='initializeOnly' type='SFNode' name='transform'>
+            <Transform USE='_2'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='inline'>
+            <Inline USE='Vector'/>
+          </field>
+          <IS>
+            <connect nodeField='vector' protoField='axisOfRotation'/>
+          </IS>
+<![CDATA[ecmascript:
+
+function eventsProcessed ()
+{
+	if (vector .x == 0 && vector .y == 0 && vector .z == 0)
+	{
+		inline .visible = false;
+	}
+	else
+	{
+		inline .load    = true;
+		inline .visible = true;
+
+		transform .rotation = new SFRotation (zAxis, vector);
+	}
+}
+]]>
+        </Script>
+      </ProtoBody>
+    </ProtoDeclare>
+  </Scene>
+</X3D>

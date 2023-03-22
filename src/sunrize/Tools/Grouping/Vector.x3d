@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Geometry2D' level='2'/>
+    <component name='Layout' level='2'/>
+    <meta name='comment' content='Rise and Shine'/>
+    <meta name='created' content='Sun, 03 Aug 2014 14:43:17 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.0.11, https://create3000.github.io/sunrize/'/>
+    <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Grouping/Vector.x3d'/>
+    <meta name='modified' content='Thu, 16 Mar 2023 12:05:53 GMT'/>
+  </head>
+  <Scene>
+    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
+    </ExternProtoDeclare>
+    <ScreenGroup DEF='Vector'>
+      <Transform
+          rotation='1 0 0 1.5708'>
+        <Transform DEF='Cone'
+            translation='0 60 0'
+            scale='6 9 6'>
+          <Shape>
+            <Appearance DEF='_1'>
+              <Material
+                  diffuseColor='0.8 0.8 0.16'/>
+              <ProtoInstance name='ToolShader' DEF='_2' containerField='shaders'/>
+            </Appearance>
+            <Cone/>
+          </Shape>
+        </Transform>
+        <Transform DEF='Cylinder'
+            translation='0 30 0'
+            scale='2 30 2'>
+          <Shape>
+            <Appearance USE='_1'/>
+            <Cylinder/>
+          </Shape>
+        </Transform>
+        <Transform DEF='Sphere'
+            scale='6 6 6'>
+          <Shape>
+            <Appearance USE='_1'/>
+            <Sphere/>
+          </Shape>
+        </Transform>
+        <Switch
+            whichChoice='1'>
+          <Transform DEF='Grid'
+              scale='15 1 15'>
+            <Shape>
+              <Appearance>
+                <ProtoInstance name='ToolShader' containerField='shaders'/>
+              </Appearance>
+              <IndexedLineSet
+                  colorPerVertex='false'
+                  colorIndex='0, 1, 2'
+                  coordIndex='0, 1, 2, 3, 0, -1, 4, 5, -1, 6, 7, -1, 8, 9, -1, 10, 11, -1, 12, 13, -1, 14, 15, -1'>
+                <Color
+                    color='1 0.2 0.2, 1 0.2 0.2, 1 0.2 0.2, 1 0.2 0.2, 1 0.2 0.2, 1 0.2 0.2, 1 0.2 0.2'/>
+                <Coordinate
+                    point='-2 0 2, 2 0 2, 2 0 -2, -2 0 -2, -1 0 2, -1 0 -2, 0 0 2, 0 0 -2, 1 0 2, 1 0 -2, -2 0 1, 2 0 1, -2 0 0, 2 0 0, -2 0 -1, 2 0 -1'/>
+              </IndexedLineSet>
+            </Shape>
+          </Transform>
+          <Transform DEF='Circles'
+              rotation='1 0 0 4.71239'>
+            <Shape>
+              <Appearance DEF='_3'>
+                <Material
+                    emissiveColor='1 0.2 0.2'/>
+                <ProtoInstance name='ToolShader' USE='_2' containerField='shaders'/>
+              </Appearance>
+              <Circle2D
+                  radius='18'/>
+            </Shape>
+            <Shape>
+              <Appearance USE='_3'/>
+              <Circle2D
+                  radius='12'/>
+            </Shape>
+            <Shape>
+              <IndexedLineSet
+                  colorPerVertex='false'
+                  colorIndex='0, 1, 2'
+                  coordIndex='0, 1, -1, 2, 3'>
+                <Color
+                    color='1 0.2 0.2, 1 0.2 0.2'/>
+                <Coordinate
+                    point='0 -18 0, 0 18 0, -18 0 0, 18 0 0'/>
+              </IndexedLineSet>
+            </Shape>
+          </Transform>
+        </Switch>
+      </Transform>
+    </ScreenGroup>
+  </Scene>
+</X3D>
