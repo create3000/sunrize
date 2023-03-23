@@ -39,7 +39,7 @@
     "@electron-forge/maker-rpm": "^6.0.5",
     "@electron-forge/maker-squirrel": "^6.0.5",
     "@electron-forge/maker-zip": "^6.0.5",
-    "electron": "^23.2.0"
+    "electron": "^23.2.0",
   },
   "dependencies": {
     "capitalize": "^2.0.4",
@@ -57,7 +57,7 @@
     "node-localstorage": "^2.2.1",
     "qtip2": "^3.0.3",
     "spectrum-colorpicker2": "^2.0.10",
-    "x_ite": "latest"
+    "x_ite": "^8.6.11"
   },
   "main": "src/main.js",
   "bin": {
