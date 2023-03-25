@@ -510,6 +510,11 @@ tr.disabled ~ tr > td > div {
   left: -3px;
 }
 
+.small .material-symbols-outlined {
+  font-size: calc(var(--icon-size) + 3px);
+  left: -1px;
+}
+
 .vertical-toolbar .separator {
   display: block;
   margin: 10px auto;
