@@ -63,7 +63,7 @@ module .exports = class Splitter extends Interface
 
    get position ()
    {
-      this .config .file .position
+      return this .config .file .position
    }
 
    /**

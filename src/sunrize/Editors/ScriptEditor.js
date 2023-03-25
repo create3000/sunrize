@@ -39,6 +39,8 @@ module .exports = class ScriptEditor extends Interface
 
       this .vSplitter = new Splitter (this .verticalSplitter, "vertical")
 
+      this .vSplitter .splitter .on ("dblclick", () => this .closeLeftBar ())
+
       this .toolbar = $("<div></div>")
          .addClass (["toolbar", "vertical-toolbar", "script-editor-toolbar"])
          .appendTo (this .scriptEditor)
@@ -594,6 +596,20 @@ main ()
             this .shaderTypeButton .text ("auto_awesome")
             break
          }
+      }
+   }
+
+   closeLeftBar ()
+   {
+      if (this .config .file .vSplitterPosition !== undefined)
+      {
+         this .vSplitter .position = this .config .file .vSplitterPosition
+         this .config .file .vSplitterPosition = undefined
+      }
+      else
+      {
+         this .config .file .vSplitterPosition = this .vSplitter .position
+         this .vSplitter .position = 0
       }
    }
 }
