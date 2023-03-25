@@ -248,6 +248,7 @@ module .exports = class ScriptEditor extends Interface
                   automaticLayout: true,
                   wordWrap: "on",
                   wrappingIndent: "indent",
+                  minimap: { enabled: false },
                })
 
                editor .viewState = editor .saveViewState ()
