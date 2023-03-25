@@ -140,6 +140,8 @@ module .exports = class ScriptEditor extends Interface
                break
             }
          }
+
+         this .monaco .viewState = this .monaco .saveViewState ()
       }
 
       this .node = node
@@ -156,6 +158,8 @@ module .exports = class ScriptEditor extends Interface
 
          this .editor = editor .element .appendTo (this .verticalSplitterRight)
          this .monaco = editor .monaco
+
+         this .monaco .restoreViewState (this .monaco .viewState)
 
          this .node ._url .addFieldCallback (this, this .set_url .bind (this))
 
@@ -244,11 +248,12 @@ module .exports = class ScriptEditor extends Interface
                   wrappingIndent: "indent",
                })
 
+               editor .viewState = editor .saveViewState ()
+
                element .on ("contextmenu", (event) => this .showContextMenu ())
                element .detach ()
 
                //this .debugFindActions (editor)
-
                this .editors .set (node, { element: element, monaco: editor })
 
                resolve (this .editors .get (node))
