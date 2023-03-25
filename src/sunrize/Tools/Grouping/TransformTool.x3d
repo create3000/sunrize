@@ -5,9 +5,9 @@
     <meta name='created' content='Sat, 11 Mar 2023 10:55:09 GMT'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.0.11, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.0.12, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Grouping/TransformTool.x3d'/>
-    <meta name='modified' content='Sat, 11 Mar 2023 15:53:51 GMT'/>
+    <meta name='modified' content='Sat, 25 Mar 2023 22:06:22 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='Tool'>

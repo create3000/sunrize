@@ -7,9 +7,9 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.0.11, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.0.12, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Grouping/X3DBoundedObjectTool.x3d'/>
-    <meta name='modified' content='Sun, 19 Mar 2023 16:33:08 GMT'/>
+    <meta name='modified' content='Sat, 25 Mar 2023 22:06:07 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -23,7 +23,7 @@
         <field accessType='inputOutput' type='SFVec3f' name='rectangleSize' value='1 1 1'/>
         <field accessType='inputOutput' type='SFVec3f' name='rectangleCenter'/>
         <field accessType='inputOutput' type='SFInt32' name='bboxStyle' value='1'/>
-        <field accessType='inputOutput' type='SFColor' name='bboxColor' value='0.35 1 0.7'/>
+        <field accessType='inputOutput' type='SFColor' name='bboxColor' value='1 1 1'/>
         <field accessType='inputOutput' type='SFVec3f' name='bboxSize' value='1 1 1'/>
         <field accessType='inputOutput' type='SFVec3f' name='bboxCenter'/>
       </ProtoInterface>
