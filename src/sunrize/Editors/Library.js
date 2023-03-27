@@ -7,7 +7,7 @@ const
    Editor           = require ("../Undo/Editor"),
    UndoManager      = require ("../Undo/UndoManager"),
    Primitives       = require ("./Primitives"),
-   stringSimilarity = require ("string-similarity"),
+   StringSimilarity = require ("string-similarity"),
    _                = require ("../Application/GetText")
 
 module .exports = new class Library extends Dialog
@@ -153,7 +153,7 @@ module .exports = new class Library extends Dialog
       const input = this .input .val () .toLowerCase () .trim ()
 
       if (input)
-         var filter = (Type) => stringSimilarity .compareTwoStrings (Type .prototype .getTypeName () .toLowerCase (), input) > 0.4
+         var filter = (Type) => StringSimilarity .compareTwoStrings (Type .prototype .getTypeName () .toLowerCase (), input) > 0.4
       else
          var filter = () => true
 
@@ -213,7 +213,7 @@ module .exports = new class Library extends Dialog
       const input = this .input .val () .toLowerCase () .trim ()
 
       if (input)
-         var filter = (object) => stringSimilarity .compareTwoStrings (object .typeName .toLowerCase (), input) > 0.4
+         var filter = (object) => StringSimilarity .compareTwoStrings (object .typeName .toLowerCase (), input) > 0.4
       else
          var filter = () => true
 
