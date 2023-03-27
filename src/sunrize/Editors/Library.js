@@ -213,7 +213,7 @@ module .exports = new class Library extends Dialog
       const input = this .input .val () .toLowerCase () .trim ()
 
       if (input)
-         var filter = (object) => object .typeName .toLowerCase () .includes (input)
+         var filter = (object) => stringSimilarity .compareTwoStrings (object .typeName .toLowerCase (), input) > 0.4
       else
          var filter = () => true
 
