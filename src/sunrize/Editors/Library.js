@@ -1,13 +1,14 @@
 "use strict"
 
 const
-   $           = require ("jquery"),
-   X3D         = require ("../X3D"),
-   Dialog      = require ("../Controls/Dialog"),
-   Editor      = require ("../Undo/Editor"),
-   UndoManager = require ("../Undo/UndoManager"),
-   Primitives  = require ("./Primitives"),
-   _           = require ("../Application/GetText")
+   $                = require ("jquery"),
+   X3D              = require ("../X3D"),
+   Dialog           = require ("../Controls/Dialog"),
+   Editor           = require ("../Undo/Editor"),
+   UndoManager      = require ("../Undo/UndoManager"),
+   Primitives       = require ("./Primitives"),
+   stringSimilarity = require ("string-similarity"),
+   _                = require ("../Application/GetText")
 
 module .exports = new class Library extends Dialog
 {
@@ -141,9 +142,7 @@ module .exports = new class Library extends Dialog
 
    updateNodes ()
    {
-      const
-         SupportedNodes = X3D .require ("x_ite/Configuration/SupportedNodes"),
-         cmp            = (a, b) => (a > b) - (a < b)
+      const cmp = (a, b) => (a > b) - (a < b)
 
       // Clear list.
 
@@ -154,7 +153,7 @@ module .exports = new class Library extends Dialog
       const input = this .input .val () .toLowerCase () .trim ()
 
       if (input)
-         var filter = (Type) => Type .prototype .getTypeName () .toLowerCase () .includes (input)
+         var filter = (Type) => stringSimilarity .compareTwoStrings (Type .prototype .getTypeName () .toLowerCase (), input) > 0.4
       else
          var filter = () => true
 
