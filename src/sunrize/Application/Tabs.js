@@ -122,7 +122,14 @@ module .exports = new class Tabs
          this .openTabs (openTabs, false)
 
       if (this .tabs .getTabs () .length)
-         this .getTabByURL (activeTab)?.activate ()
+      {
+         const tab = this .getTabByURL (activeTab)
+
+         if (tab)
+            tab .activate ()
+         else
+            this .tabs .getTabByPosition (0) .activate ()
+      }
       else
          this .openTabs ()
    }
