@@ -1,7 +1,7 @@
 {
   "name": "sunrize",
   "productName": "Sunrize X3D Editor",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "A Multi Platform X3D Editor",
   "homepage": "https://create3000.github.io/sunrize/",
   "author": "Holger Seelig",
@@ -35,8 +35,8 @@
   ],
   "devDependencies": {
     "@electron-forge/cli": "^6.0.5",
-    "@electron-forge/maker-deb": "^6.0.5",
-    "@electron-forge/maker-rpm": "^6.0.5",
+    "@electron-forge/maker-deb": "^6.1.0",
+    "@electron-forge/maker-rpm": "^6.1.0",
     "@electron-forge/maker-squirrel": "^6.0.5",
     "@electron-forge/maker-zip": "^6.0.5",
     "electron": "^23.2.0"
@@ -51,14 +51,14 @@
     "jquery-ui-dist": "^1.13.2",
     "jstree": "^3.3.15",
     "material-icons": "^1.13.3",
-    "material-symbols": "^0.5.1",
+    "material-symbols": "^0.5.3",
     "md5": "^2.3.0",
     "monaco-editor": "^0.36.1",
     "node-localstorage": "^2.2.1",
     "qtip2": "^3.0.3",
     "spectrum-colorpicker2": "^2.0.10",
     "string-similarity": "^4.0.4",
-    "x_ite": "^8.6.12"
+    "x_ite": "^8.6.13"
   },
   "main": "src/main.js",
   "bin": {
