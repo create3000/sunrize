@@ -112,6 +112,21 @@ module .exports = class Traverse
       {
          switch (type [t])
          {
+            case X3D .X3DConstants .X3DExternProtoDeclaration:
+            {
+               if (flags & this .EXTERNPROTO_DECLARATION_SCENE)
+               {
+                  try
+                  {
+                     if (this .traverseScene (node .getInternalScene (), flags, callback, seen) === false)
+                        return false
+                  }
+                  catch
+                  { }
+               }
+
+               break
+            }
             case X3D .X3DConstants .X3DProtoDeclaration:
             {
                if (flags & Traverse .PROTO_DECLARATION_BODY)
@@ -127,6 +142,16 @@ module .exports = class Traverse
                if (flags & Traverse .PROTOTYPE_INSTANCES)
                {
                   if (this .traverseScene (node .getBody (), flags, callback, seen) === false)
+                     return false
+               }
+
+               break
+            }
+            case X3D .X3DConstants .Inline:
+            {
+               if (flags & this .INLINE_SCENE)
+               {
+                  if (this .traverseScene (node .getInternalScene (), flags, callback, seen) === false)
                      return false
                }
 
@@ -300,7 +325,7 @@ module .exports = class Traverse
                   {
                      try
                      {
-                        this .findInScene (X3D, node .getInternalScene (), object, flags, hierarchies, hierarchy, seen)
+                        this .findInScene (node .getInternalScene (), object, flags, hierarchies, hierarchy, seen)
                      }
                      catch
                      { }

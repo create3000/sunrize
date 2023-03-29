@@ -22,9 +22,9 @@ class BillboardTool extends X3DBoundedObjectTool
 
    removeTool ()
    {
-      super .removeTool ()
-
       this .node ._axisOfRotation .removeFieldInterest (this .tool .axisOfRotation)
+
+      return super .removeTool ()
    }
 }
 

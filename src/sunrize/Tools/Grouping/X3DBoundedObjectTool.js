@@ -13,7 +13,7 @@ class X3DBoundedObjectTool extends X3DNodeTool
 
       await this .load (__dirname, "X3DBoundedObjectTool.x3d")
 
-      this .node .getBrowser () .displayEvents () .addInterest ("reshape", this)
+      this .node .getBrowser () .displayEvents () .addInterest ("reshape", this .target)
 
       this .tool .bboxColor = this .bboxColor
    }
@@ -38,6 +38,13 @@ class X3DBoundedObjectTool extends X3DNodeTool
    {
       this .node .traverse (type, renderObject)
       this .innerNode?.traverse (type, renderObject)
+   }
+
+   removeTool ()
+   {
+      this .node .getBrowser () .displayEvents () .removeInterest ("reshape", this .target)
+
+      return super .removeTool ()
    }
 }
 

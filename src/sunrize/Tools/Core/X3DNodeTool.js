@@ -1,11 +1,12 @@
 "use strict"
 
 const
-   path    = require ("path"),
-   url     = require ("url"),
-   X3D     = require ("../../X3D"),
-   Fields  = X3D .require ("x_ite/Fields"),
-   X3DNode = X3D .require ("x_ite/Components/Core/X3DNode")
+   path     = require ("path"),
+   url      = require ("url"),
+   Traverse = require("../../Application/Traverse"),
+   X3D      = require ("../../X3D"),
+   Fields   = X3D .require ("x_ite/Fields"),
+   X3DNode  = X3D .require ("x_ite/Components/Core/X3DNode")
 
 const handler =
 {
@@ -47,7 +48,8 @@ class X3DNodeTool
    {
       const proxy = new Proxy (this, handler)
 
-      this .node = node
+      this .target = this
+      this .node   = node
 
       this .replaceNode (node, proxy)
       this .setup ()
@@ -105,6 +107,8 @@ class X3DNodeTool
 
    removeTool ()
    {
+      Traverse .traverse (this .tool, Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES, node => node .dispose ())
+
       this .replaceNode (this, this .node)
 
       return this .node

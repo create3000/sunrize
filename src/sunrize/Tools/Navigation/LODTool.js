@@ -22,9 +22,9 @@ class LODTool extends X3DBoundedObjectTool
 
    removeTool ()
    {
-      super .removeTool ()
-
       this .node ._center .removeFieldInterest (this .tool .center)
+
+      return super .removeTool ()
    }
 }
 

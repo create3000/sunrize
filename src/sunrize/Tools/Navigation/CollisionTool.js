@@ -17,7 +17,7 @@ class CollisionTool extends X3DBoundedObjectTool
    {
       await super .initialize ()
 
-      this .node ._enabled .addInterest (_set_enabled, this)
+      this .node ._enabled .addInterest (_set_enabled, this .target)
 
       this [_set_enabled] ()
    }
@@ -25,6 +25,13 @@ class CollisionTool extends X3DBoundedObjectTool
    [_set_enabled] ()
    {
       this .tool .bboxStyle = this .node ._enabled .getValue () ? 1 : 2
+   }
+
+   removeTool ()
+   {
+      this .node ._enabled .removeInterest (_set_enabled, this .target)
+
+      return super .removeTool ()
    }
 }
 
