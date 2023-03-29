@@ -80,6 +80,8 @@ module .exports = class Dashboard extends Interface
 
       this .arrowButton .removeClass ("active")
       this .handButton .addClass ("active")
+
+      this .browser .setBrowserOption ("PrivateSensors", false)
    }
 
    arrow ()
@@ -91,6 +93,8 @@ module .exports = class Dashboard extends Interface
 
       this .handButton .removeClass ("active")
       this .arrowButton .addClass ("active")
+
+      this .browser .setBrowserOption ("PrivateSensors", true)
    }
 
    play (value)
