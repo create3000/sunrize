@@ -7,11 +7,11 @@ const
    Box3      = X3D .require ("standard/Math/Geometry/Box3"),
    _         = require ("./GetText")
 
-module .exports = class SecondaryToolbar extends Interface
+module .exports = class Dashboard extends Interface
 {
    constructor (element)
    {
-      super ("Sunrize.SecondaryToolbar.")
+      super ("Sunrize.Dashboard.")
 
       this .toolbar = element
 
@@ -80,6 +80,8 @@ module .exports = class SecondaryToolbar extends Interface
 
       this .arrowButton .removeClass ("active")
       this .handButton .addClass ("active")
+
+      this .browser .setBrowserOption ("PointingDevice", true)
    }
 
    arrow ()
@@ -91,6 +93,8 @@ module .exports = class SecondaryToolbar extends Interface
 
       this .handButton .removeClass ("active")
       this .arrowButton .addClass ("active")
+
+      this .browser .setBrowserOption ("PointingDevice", false)
    }
 
    play (value)
