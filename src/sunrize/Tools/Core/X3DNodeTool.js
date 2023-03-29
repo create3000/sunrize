@@ -80,7 +80,7 @@ class X3DNodeTool
 
          X3DNodeTool .scenes .set (URL .href, scene)
 
-         scene .setPrivate (true)
+         scene .getPrivateSensors () .setValue (true)
          scene .beginUpdate ()
 
          this .tool = scene .createProto ("Tool")
