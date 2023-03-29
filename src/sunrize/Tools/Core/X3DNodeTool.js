@@ -66,7 +66,7 @@ class X3DNodeTool
 
    static scenes = new Map ()
 
-   async load (... args)
+   async loadTool (... args)
    {
       const
          URL   = url .pathToFileURL (path .resolve (... args)),
