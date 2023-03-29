@@ -15,32 +15,32 @@ const handler =
       if (key in target)
          return target [key]
 
-      return target .toolNode [key];
+      return target .toolNode [key]
    },
    set: function (target, key, value)
    {
       if (key in target)
       {
-         target [key] = value;
-         return true;
+         target [key] = value
+         return true
       }
 
-      target .toolNode [key] = value;
-      return true;
+      target .toolNode [key] = value
+      return true
    },
    has: function (target, key)
    {
-      return key in target .toolNode;
+      return key in target .toolNode
    },
    ownKeys: function (target)
    {
-      return Object .keys (target .toolNode);
+      return Object .keys (target .toolNode)
    },
    getOwnPropertyDescriptor: function (target, key)
    {
-      return Object .getOwnPropertyDescriptor (target .toolNode, key);
+      return Object .getOwnPropertyDescriptor (target .toolNode, key)
    },
-};
+}
 
 class X3DNodeTool
 {
@@ -54,12 +54,12 @@ class X3DNodeTool
       this .replaceNode (node, proxy)
       this .setup ()
 
-      return proxy;
+      return proxy
    }
 
    setup ()
    {
-      this .initialize ();
+      this .initialize ()
    }
 
    initialize () { }
@@ -96,13 +96,13 @@ class X3DNodeTool
       for (const parent of new Set (node .getParents ()))
       {
          if (parent instanceof Fields .SFNode)
-            parent .setValue (replacement);
+            parent .setValue (replacement)
       }
    }
 
    addTool ()
    {
-      return this;
+      return this
    }
 
    removeTool ()
@@ -116,8 +116,8 @@ class X3DNodeTool
 
    dispose ()
    {
-      this .removeTool ();
-      this .toolNode .dispose ();
+      this .removeTool ()
+      this .toolNode .dispose ()
    }
 }
 
@@ -125,11 +125,11 @@ Object .assign (X3DNode .prototype,
 {
    addTool: function ()
    {
-      return this .createTool () ?? this;
+      return this .createTool () ?? this
    },
    createTool: function ()
    {
-      return null;
+      return null
    },
    removeTool: function () { return this },
 })

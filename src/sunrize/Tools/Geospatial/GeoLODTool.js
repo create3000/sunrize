@@ -27,7 +27,7 @@ class GeoLODTool extends X3DBoundedObjectTool
       const center = this .toolNode .getCoord (this .toolNode ._center, GeoLODTool .center)
 
       if (!this .tool .center .getValue () .equals (center))
-         this .tool .center = center;
+         this .tool .center = center
    }
 }
 

@@ -9,7 +9,7 @@ class X3DTransformNodeTool extends X3DNodeTool
 {
    async initialize ()
    {
-      super .initialize ();
+      super .initialize ()
 
       await this .load (__dirname, "X3DBoundedObjectTool.x3d")
 
