@@ -80,8 +80,6 @@ module .exports = class Dashboard extends Interface
 
       this .arrowButton .removeClass ("active")
       this .handButton .addClass ("active")
-
-      this .browser .setBrowserOption ("PointingDevice", true)
    }
 
    arrow ()
@@ -93,8 +91,6 @@ module .exports = class Dashboard extends Interface
 
       this .handButton .removeClass ("active")
       this .arrowButton .addClass ("active")
-
-      this .browser .setBrowserOption ("PointingDevice", false)
    }
 
    play (value)
