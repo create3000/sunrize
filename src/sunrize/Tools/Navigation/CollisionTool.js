@@ -17,19 +17,19 @@ class CollisionTool extends X3DBoundedObjectTool
    {
       await super .initialize ()
 
-      this .node ._enabled .addInterest (_set_enabled, this .target)
+      this .toolNode ._enabled .addInterest (_set_enabled, this .toolTarget)
 
       this [_set_enabled] ()
    }
 
    [_set_enabled] ()
    {
-      this .tool .bboxStyle = this .node ._enabled .getValue () ? 1 : 2
+      this .tool .bboxStyle = this .toolNode ._enabled .getValue () ? 1 : 2
    }
 
    removeTool ()
    {
-      this .node ._enabled .removeInterest (_set_enabled, this .target)
+      this .toolNode ._enabled .removeInterest (_set_enabled, this .toolTarget)
 
       return super .removeTool ()
    }

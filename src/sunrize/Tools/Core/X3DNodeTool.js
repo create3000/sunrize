@@ -15,7 +15,7 @@ const handler =
       if (key in target)
          return target [key]
 
-      return target .node [key];
+      return target .toolNode [key];
    },
    set: function (target, key, value)
    {
@@ -25,20 +25,20 @@ const handler =
          return true;
       }
 
-      target .node [key] = value;
+      target .toolNode [key] = value;
       return true;
    },
    has: function (target, key)
    {
-      return key in target .node;
+      return key in target .toolNode;
    },
    ownKeys: function (target)
    {
-      return Object .keys (target .node);
+      return Object .keys (target .toolNode);
    },
    getOwnPropertyDescriptor: function (target, key)
    {
-      return Object .getOwnPropertyDescriptor (target .node, key);
+      return Object .getOwnPropertyDescriptor (target .toolNode, key);
    },
 };
 
@@ -48,8 +48,8 @@ class X3DNodeTool
    {
       const proxy = new Proxy (this, handler)
 
-      this .target = this
-      this .node   = node
+      this .toolTarget = this
+      this .toolNode   = node
 
       this .replaceNode (node, proxy)
       this .setup ()
@@ -88,7 +88,7 @@ class X3DNodeTool
          this .tool = scene .createProto ("Tool")
       }
 
-      this .innerNode = this .tool .getValue () .getInnerNode ()
+      this .toolInnerNode = this .tool .getValue () .getInnerNode ()
    }
 
    replaceNode (node, replacement)
@@ -109,15 +109,15 @@ class X3DNodeTool
    {
       Traverse .traverse (this .tool, Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES, node => node .dispose ())
 
-      this .replaceNode (this, this .node)
+      this .replaceNode (this, this .toolNode)
 
-      return this .node
+      return this .toolNode
    }
 
    dispose ()
    {
       this .removeTool ();
-      this .node .dispose ();
+      this .toolNode .dispose ();
    }
 }
 

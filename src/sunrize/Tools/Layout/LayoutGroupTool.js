@@ -30,19 +30,19 @@ Object .assign (LayoutGroupTool .prototype,
 
       return function (rectangle)
       {
-         const layoutNode = this .node .getLayout ()
+         const layoutNode = this .toolNode .getLayout ()
 
          if (!layoutNode)
             return rectangle .set ();
 
-         this .node .modelViewMatrix .get (null, null, scale)
+         this .toolNode .modelViewMatrix .get (null, null, scale)
 
          rectangleSize   .set (... layoutNode .getRectangleSize (),   0) .divVec (scale)
          rectangleCenter .set (... layoutNode .getRectangleCenter (), 0) .divVec (scale)
 
          rectangle
             .set (rectangleSize, rectangleCenter)
-            .multRight (this .node .getMatrix () .inverse ())
+            .multRight (this .toolNode .getMatrix () .inverse ())
 
          return rectangle
       };
