@@ -446,6 +446,8 @@ module .exports = class Editor
                      }
                   }
                }
+
+               this .setLive (node, false)
             }
 
             this .requestUpdateInstances (executionContext, undoManager)
@@ -459,7 +461,28 @@ module .exports = class Editor
 
    /**
     *
-    * @param {X3Scene} scene
+    * @param {X3DBaseNode} node
+    * @param {boolean} value
+    */
+   static setLive (node, value, undoManager = UndoManager .shared)
+   {
+      const oldValue = node .isLive ()
+
+      undoManager .beginUndo (_ ("Set live state to »%s«"), value)
+
+      node .setLive (value)
+
+      undoManager .registerUndo (() =>
+      {
+         this .setLive (node, oldValue, undoManager)
+      })
+
+      undoManager .endUndo ()
+   }
+
+   /**
+    *
+    * @param {X3DScene} scene
     * @param {UndoManager} undoManager
     */
    static inferProfileAndComponents (scene, undoManager = UndoManager .shared)
@@ -469,17 +492,17 @@ module .exports = class Editor
          usedComponents       = this .getUsedComponents (scene),
          profileAndComponents = this .getProfileAndComponentsFromUsedComponents (browser, usedComponents)
 
-      UndoManager .shared .beginUndo (_ ("Infer Profile and Components from Source"))
+      undoManager .beginUndo (_ ("Infer Profile and Components from Source"))
 
       this .setProfile    (scene, profileAndComponents .profile,    undoManager)
       this .setComponents (scene, profileAndComponents .components, undoManager)
 
-      UndoManager .shared .endUndo ()
+      undoManager .endUndo ()
    }
 
    /**
     *
-    * @param {X3Scene} scene
+    * @param {X3DScene} scene
     * @returns {Array<ComponentInfo}
     */
    static getUsedComponents (scene)
