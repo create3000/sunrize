@@ -7,23 +7,20 @@ module .exports = new class Selection
       this .nodes = new Map ()
    }
 
-   clear (exception)
+   clear ()
    {
       for (const node of this .nodes .values ())
-      {
-         if (node !== exception)
-            node .removeTool ()
-      }
+         node .removeTool ()
 
       this .nodes .clear ()
    }
 
    set (node)
    {
-      const tool = this .tool (node)
+      this .nodes .delete (this .node (node))
 
-      this .clear (tool)
-      this .add (tool ?? node)
+      this .clear ()
+      this .add (node)
    }
 
    add (node)
@@ -33,7 +30,7 @@ module .exports = new class Selection
 
    remove (node)
    {
-      this .tool (node) .removeTool ()
+      this .tool (node)?.removeTool ()
       this .nodes .delete (this .node (node))
    }
 
