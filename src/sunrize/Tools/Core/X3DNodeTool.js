@@ -83,7 +83,7 @@ class X3DNodeTool
          X3DNodeTool .scenes .set (URL .href, scene)
 
          scene .setPrivate (true)
-         scene .beginUpdate ()
+         scene .setLive (true)
 
          this .tool = scene .createProto ("Tool")
       }
