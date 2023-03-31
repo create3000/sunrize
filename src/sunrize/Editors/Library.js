@@ -191,7 +191,7 @@ module .exports = new class Library extends Dialog
 
    createNode (typeName)
    {
-      const node = this .executionContext .createNode (typeName, true, false)
+      const node = this .executionContext .createNode (typeName, { warn: false })
 
       UndoManager .shared .beginUndo (_ ("Create Node %s"), typeName)
 

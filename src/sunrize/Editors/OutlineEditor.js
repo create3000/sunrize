@@ -640,7 +640,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          parentNodeElement  = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
          parentNode         = this .getNode (parentNodeElement),
          parentField        = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement),
-         node               = executionContext .createNode (typeName, true, false) .getValue (),
+         node               = executionContext .createNode (typeName, { warn: false }) .getValue (),
          field              = node .getField (fieldName)
 
       UndoManager .shared .beginUndo (_ ("Add Parent Group %s to Node %s"), typeName, childNode .getTypeName ())

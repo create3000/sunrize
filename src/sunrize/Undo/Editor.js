@@ -447,7 +447,7 @@ module .exports = class Editor
                   }
                }
 
-               this .setLive (node, false)
+               this .#setLive (node, false)
             }
 
             this .requestUpdateInstances (executionContext, undoManager)
@@ -464,7 +464,7 @@ module .exports = class Editor
     * @param {X3DBaseNode} node
     * @param {boolean} value
     */
-   static setLive (node, value, undoManager = UndoManager .shared)
+   static #setLive (node, value, undoManager = UndoManager .shared)
    {
       const oldValue = node .isLive ()
 
@@ -474,7 +474,7 @@ module .exports = class Editor
 
       undoManager .registerUndo (() =>
       {
-         this .setLive (node, oldValue, undoManager)
+         this .#setLive (node, oldValue, undoManager)
       })
 
       undoManager .endUndo ()
@@ -1493,7 +1493,7 @@ module .exports = class Editor
       undoManager .beginUndo (_ ("Remove World Info"))
 
       this .removeNode (executionContext, worldInfo, undoManager)
-      this .removeWorldInfo (executionContext, worldInfo, undoManager)
+      this .#removeWorldInfo (executionContext, worldInfo, undoManager)
 
       undoManager .endUndo ()
    }
@@ -1514,7 +1514,7 @@ module .exports = class Editor
          {
             for (let i = node .rootNodes .length - 1; i >= 0; -- i)
             {
-               if (node .rootNodes [i] .getValue () === remove)
+               if (node .rootNodes [i]?.getValue () === remove)
                   this .removeValueFromArray (node, node, node .rootNodes, i, undoManager)
             }
          }
@@ -1535,7 +1535,7 @@ module .exports = class Editor
                   {
                      for (let i = field .length - 1; i >= 0; -- i)
                      {
-                        if (field [i] .getValue () === remove)
+                        if (field [i]?.getValue () === remove)
                            this .removeValueFromArray (node .getExecutionContext (), node, field, i, undoManager)
                      }
 
