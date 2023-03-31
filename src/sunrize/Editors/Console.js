@@ -88,7 +88,7 @@ module .exports = class Console extends Interface
          if (event !== X3D .X3DConstants .INITIALIZED_EVENT)
             return
 
-         this .scriptNode      = this .browser .currentScene .createNode ("Script")
+         this .scriptNode      = this .browser .currentScene .createNode ("Script", true, false)
          this .scriptNode .url = new X3D .MFString ("ecmascript:");
       }
       catch (error)
