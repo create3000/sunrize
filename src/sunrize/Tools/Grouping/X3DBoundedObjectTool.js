@@ -37,7 +37,7 @@ class X3DBoundedObjectTool extends X3DNodeTool
    traverse (type, renderObject)
    {
       this .toolNode .traverse (type, renderObject)
-      this .toolInnerNode?.traverse (type, renderObject)
+      this .toolInnerNode ?.traverse (type, renderObject)
    }
 
    removeTool ()

@@ -1514,7 +1514,7 @@ module .exports = class Editor
          {
             for (let i = node .rootNodes .length - 1; i >= 0; -- i)
             {
-               if (node .rootNodes [i]?.getValue () === remove)
+               if (node .rootNodes [i] ?.getValue () === remove)
                   this .removeValueFromArray (node, node, node .rootNodes, i, undoManager)
             }
          }
@@ -1535,7 +1535,7 @@ module .exports = class Editor
                   {
                      for (let i = field .length - 1; i >= 0; -- i)
                      {
-                        if (field [i]?.getValue () === remove)
+                        if (field [i] ?.getValue () === remove)
                            this .removeValueFromArray (node .getExecutionContext (), node, field, i, undoManager)
                      }
 

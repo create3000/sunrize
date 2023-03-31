@@ -2288,7 +2288,7 @@ module .exports = class OutlineView extends Interface
       this .beforeOpen (element)
       this .expandNode (element, node, full, this .expandTime)
 
-      node .setUserData (_expanded,     field?.getId () ?? true)
+      node .setUserData (_expanded,     field ?.getId () ?? true)
       node .setUserData (_fullExpanded, full)
    }
 

@@ -30,7 +30,7 @@ module .exports = new class Selection
 
    remove (node)
    {
-      this .tool (node)?.removeTool ()
+      this .tool (node) ?.removeTool ()
       this .nodes .delete (this .node (node))
    }
 
