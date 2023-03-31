@@ -1807,7 +1807,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             if (sourceIndexOffsets .has (sourceParentField))
             {
-               if (sourceParentField !== destinationParentField || destinationIndex > sourceIndex)
+               if (sourceParentField !== destinationParentField || destinationIndex > sourceIndex || isNaN (destinationIndex))
                   sourceIndexOffsets .set (sourceParentField, sourceIndexOffsets .get (sourceParentField) - 1)
             }
             else
