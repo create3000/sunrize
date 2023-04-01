@@ -23,7 +23,7 @@ module .exports = class Console extends Interface
    {
       super (`Sunrize.Console.${element .attr ("id")}.`)
 
-      this .suspendConsole     = false;
+      this .suspendConsole     = false
       this .messageTime        = 0
       this .historyIndex       = 0
       this .history            = [ ]
@@ -89,7 +89,7 @@ module .exports = class Console extends Interface
             return
 
          this .scriptNode      = this .browser .currentScene .createNode ("Script", { warn: false })
-         this .scriptNode .url = new X3D .MFString ("ecmascript:");
+         this .scriptNode .url = new X3D .MFString ("ecmascript:")
       }
       catch (error)
       { }

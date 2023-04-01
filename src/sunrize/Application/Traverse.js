@@ -106,7 +106,7 @@ module .exports = class Traverse
          }
       }
 
-      const type = node .getType ();
+      const type = node .getType ()
 
       for (let t = type .length - 1; t >= 0; -- t)
       {
@@ -313,7 +313,7 @@ module .exports = class Traverse
             }
          }
 
-         const type = node .getType ();
+         const type = node .getType ()
 
          for (let t = type .length - 1; t >= 0; -- t)
          {

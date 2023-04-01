@@ -523,7 +523,7 @@ module .exports = class Editor
       const profiles = ["Interactive", "Interchange", "Immersive"] .map (name =>
       {
          return { profile: browser .getProfile (name), components: new Set (usedComponents) }
-      });
+      })
 
       profiles .forEach (object =>
       {
@@ -1529,7 +1529,7 @@ module .exports = class Editor
                      if (field .getValue () === remove)
                         this .setFieldValue (node .getExecutionContext (), node, field, null, undoManager)
 
-                     break;
+                     break
                   }
                   case X3D .X3DConstants .MFNode:
                   {
@@ -1539,7 +1539,7 @@ module .exports = class Editor
                            this .removeValueFromArray (node .getExecutionContext (), node, field, i, undoManager)
                      }
 
-                     break;
+                     break
                   }
                }
             }

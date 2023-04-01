@@ -35,7 +35,7 @@ $.fn.renameNodeInput = function (node)
       if (name === node .getName ())
          return
 
-      const executionContext = node .getExecutionContext ();
+      const executionContext = node .getExecutionContext ()
 
       if (node instanceof X3D .X3DProtoDeclarationNode)
       {

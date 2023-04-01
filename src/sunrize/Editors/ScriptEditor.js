@@ -473,7 +473,7 @@ main ()
          return
 
       if (!this .monaco)
-         return;
+         return
 
       const value = new X3D .MFString (this .monaco .getModel () .getValue ())
 

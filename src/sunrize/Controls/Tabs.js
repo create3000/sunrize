@@ -20,8 +20,8 @@ module .exports = class Tabs extends Interface
       this .addTabs ()
 
       this .element .tabs ()
-      this .element .tabs ("option", "classes.ui-tabs", this .orientation);
-      this .element .on ("tabsactivate", () => this .tabActivated ());
+      this .element .tabs ("option", "classes.ui-tabs", this .orientation)
+      this .element .on ("tabsactivate", () => this .tabActivated ())
    }
 
    addTabs () { }

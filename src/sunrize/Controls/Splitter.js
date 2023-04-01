@@ -73,7 +73,7 @@ module .exports = class Splitter extends Interface
    {
       position = Algorithm .clamp (position, 0, 1)
 
-      this .config .file .position = position;
+      this .config .file .position = position
 
       switch (this .orientation)
       {

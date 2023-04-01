@@ -22,7 +22,7 @@ module .exports = class Application
       if (electron .app .requestSingleInstanceLock ())
          new this ()
       else
-         electron .app .quit ();
+         electron .app .quit ()
    }
 
    constructor ()
@@ -431,7 +431,7 @@ module .exports = class Application
                   checked: this .config .rubberband,
                   click: () =>
                   {
-                     this .config .rubberband = !this .config .rubberband;
+                     this .config .rubberband = !this .config .rubberband
                      this .mainWindow .webContents .send ("display-rubberband", this .config .rubberband)
                   },
                },
@@ -441,7 +441,7 @@ module .exports = class Application
                   checked: this .config .timings,
                   click: () =>
                   {
-                     this .config .timings = !this .config .timings;
+                     this .config .timings = !this .config .timings
                      this .mainWindow .webContents .send ("display-timings", this .config .timings)
                   },
                },

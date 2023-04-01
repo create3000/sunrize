@@ -65,7 +65,7 @@ const handler =
 				ownKeys .push (key .substring (namespace .length))
 		}
 
-		return ownKeys;
+		return ownKeys
 	},
 	getOwnPropertyDescriptor: function (target, key)
 	{
@@ -73,7 +73,7 @@ const handler =
 			storage   = target .getStorage (),
 			namespace = target .getNameSpace ()
 
-		return Object .getOwnPropertyDescriptor (storage, namespace + key);
+		return Object .getOwnPropertyDescriptor (storage, namespace + key)
 	},
 }
 

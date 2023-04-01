@@ -263,7 +263,7 @@ module .exports = new class Document extends Interface
 
       this .saveFile (true)
 
-      undoManager .undo ();
+      undoManager .undo ()
 
       this .filePath = oldFilePath
    }

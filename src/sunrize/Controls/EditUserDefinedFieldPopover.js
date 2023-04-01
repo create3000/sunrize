@@ -99,12 +99,12 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field)
       typeNameMenu
          .find ("option")
          .filter ((i, e) => $(e) .text () === field .getTypeName ())
-         .prop ("selected", true);
+         .prop ("selected", true)
 
       accessTypeMenu
          .find ("option")
          .filter ((i, e) => $(e) .text () === accessTypes .get (field .getAccessType ()))
-         .prop ("selected", true);
+         .prop ("selected", true)
 
       nameInput .val (field .getName ())
    }

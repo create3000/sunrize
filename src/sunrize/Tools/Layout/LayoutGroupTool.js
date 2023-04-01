@@ -33,7 +33,7 @@ Object .assign (LayoutGroupTool .prototype,
          const layoutNode = this .toolNode .getLayout ()
 
          if (!layoutNode)
-            return rectangle .set ();
+            return rectangle .set ()
 
          this .toolNode .modelViewMatrix .get (null, null, scale)
 
@@ -45,7 +45,7 @@ Object .assign (LayoutGroupTool .prototype,
             .multRight (this .toolNode .getMatrix () .inverse ())
 
          return rectangle
-      };
+      }
    })(),
    reshape: (function ()
    {
@@ -65,7 +65,7 @@ Object .assign (LayoutGroupTool .prototype,
 
          if (!this .tool .rectangleCenter .getValue () .equals (rectangle .center))
             this .tool .rectangleCenter = rectangle .center
-      };
+      }
    })(),
 })
 
