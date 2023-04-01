@@ -15,7 +15,13 @@ const handler =
       if (key in target)
          return target [key]
 
-      return target .toolNode [key]
+      const property = target .toolNode [key]
+
+      if (typeof property === "function")
+         return property .bind (target .toolNode)
+
+      else
+         return property
    },
    set: function (target, key, value)
    {
@@ -116,7 +122,7 @@ class X3DNodeTool
 
    valueOf ()
    {
-      return X3DNode .prototype .valueOf .call (this)
+      return this .toolNode .valueOf ()
    }
 
    dispose ()

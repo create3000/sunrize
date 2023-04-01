@@ -662,7 +662,7 @@ module .exports = class Editor
     *
     * @param {X3DExecutionContext} executionContext
     * @param {string} name
-    * @param {SFNode} node
+    * @param {X3DNode} node
     * @param {UndoManager} undoManager
     */
    static updateNamedNode (executionContext, name, node, undoManager = UndoManager .shared)
@@ -671,7 +671,7 @@ module .exports = class Editor
 
       undoManager .beginUndo (_ ("Rename Node to »%s«"), name)
 
-      executionContext .updateNamedNode (name, node)
+      executionContext .updateNamedNode (name, node .valueOf ())
 
       undoManager .registerUndo (() =>
       {
@@ -689,7 +689,7 @@ module .exports = class Editor
    /**
     *
     * @param {X3DExecutionContext} executionContext
-    * @param {SFNode} node
+    * @param {X3DNode} node
     * @param {UndoManager} undoManager
     */
    static removeNamedNode (executionContext, node, undoManager = UndoManager .shared)
@@ -713,7 +713,7 @@ module .exports = class Editor
    /**
     *
     * @param {X3DExecutionContext} executionContext
-    * @param {SFNode<Inline>} inlineNode
+    * @param {X3DNode} inlineNode
     * @param {string} exportedName
     * @param {string} importedName
     * @param {UndoManager} undoManager
@@ -722,7 +722,7 @@ module .exports = class Editor
    {
       undoManager .beginUndo (_ ("Update Imported Node »%s«"), importedName)
 
-      executionContext .updateImportedNode (inlineNode, exportedName, importedName)
+      executionContext .updateImportedNode (inlineNode .valueOf (), exportedName, importedName)
 
       undoManager .registerUndo (() =>
       {
@@ -744,8 +744,8 @@ module .exports = class Editor
    {
       const
          importedNode = executionContext .getImportedNodes () .get (importedName),
-         inlineNode   = importedNode .inlineNode,
-         exportedName = importedNode .exportedName
+         inlineNode   = importedNode .getInlineNode (),
+         exportedName = importedNode .getExportedName ()
 
       undoManager .beginUndo (_ ("Remove Imported Node »%s«"), importedName)
 
@@ -765,14 +765,14 @@ module .exports = class Editor
     *
     * @param {X3DScene} scene
     * @param {string} exportedName
-    * @param {SFNode} node
+    * @param {X3DNode} node
     * @param {UndoManager} undoManager
     */
    static updateExportedNode (scene, exportedName, node, undoManager = UndoManager .shared)
    {
       undoManager .beginUndo (_ ("Update Exported Node »%s«"), exportedName)
 
-      scene .updateExportedNode (exportedName, node)
+      scene .updateExportedNode (exportedName, node .valueOf ())
 
       undoManager .registerUndo (() =>
       {
@@ -794,7 +794,7 @@ module .exports = class Editor
    {
       const
          exportedNode = scene .getExportedNodes () .get (exportedName),
-         node         = exportedNode .localNode
+         node         = exportedNode .getLocalNode ()
 
       undoManager .beginUndo (_ ("Remove Exported Node »%s«"), exportedName)
 
@@ -1388,19 +1388,19 @@ module .exports = class Editor
    /**
     *
     * @param {X3DExecutionContext} executionContext
-    * @param {SFNode} sourceNode
+    * @param {X3DNode} sourceNode
     * @param {string} sourceField
-    * @param {SFNode} destinationNode
+    * @param {X3DNode} destinationNode
     * @param {string} destinationField
     * @param {UndoManager} undoManager
     */
    static addRoute (executionContext, sourceNode, sourceField, destinationNode, destinationField, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_ ("Add Route From %s »%s« TO %s »%s«"), sourceNode .getNodeTypeName (), sourceField, destinationNode .getNodeTypeName (), destinationField)
+      undoManager .beginUndo (_ ("Add Route From %s »%s« TO %s »%s«"), sourceNode .getTypeName (), sourceField, destinationNode .getTypeName (), destinationField)
 
       try
       {
-         executionContext .addRoute (sourceNode, sourceField, destinationNode, destinationField)
+         executionContext .addRoute (sourceNode .valueOf (), sourceField, destinationNode .valueOf (), destinationField)
       }
       catch (error)
       {
@@ -1428,9 +1428,9 @@ module .exports = class Editor
     */
    static deleteRoute (executionContext, sourceNode, sourceField, destinationNode, destinationField, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_ ("Delete Route From %s »%s« TO %s »%s«"), sourceNode .getNodeTypeName (), sourceField, destinationNode .getNodeTypeName (), destinationField)
+      undoManager .beginUndo (_ ("Delete Route From %s »%s« TO %s »%s«"), sourceNode .getTypeName (), sourceField, destinationNode .getTypeName (), destinationField)
 
-      executionContext .deleteRoute (sourceNode, sourceField, destinationNode, destinationField)
+      executionContext .deleteRoute (sourceNode .valueOf (), sourceField, destinationNode .valueOf (), destinationField)
 
       undoManager .registerUndo (() =>
       {

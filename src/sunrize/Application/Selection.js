@@ -36,7 +36,7 @@ module .exports = new class Selection
 
    node (node)
    {
-      return node .toolNode ?? node
+      return node .valueOf ()
    }
 
    tool (node)

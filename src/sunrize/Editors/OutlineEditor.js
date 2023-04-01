@@ -1129,7 +1129,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             		// Add route.
 
-            		Editor .addRoute (executionContext, this .connector .node .valueOf (), this .connector .field .getName (), node .valueOf (), field .getName ())
+            		Editor .addRoute (executionContext, this .connector .node, this .connector .field .getName (), node, field .getName ())
 
             		if (event .shiftKey)
             			break
@@ -1161,7 +1161,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             		// Add route.
 
-            		Editor .addRoute (executionContext, node .valueOf (), field .getName (), this .connector .node .valueOf (), this .connector .field .getName ())
+            		Editor .addRoute (executionContext, node, field .getName (), this .connector .node, this .connector .field .getName ())
 
             		if (event .shiftKey)
             			break
