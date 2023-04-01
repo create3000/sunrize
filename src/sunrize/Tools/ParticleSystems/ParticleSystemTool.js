@@ -13,7 +13,7 @@ class ParticleSystemTool extends X3DBoundedObjectTool
 
 Object .assign (ParticleSystem .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new ParticleSystemTool (this)
    },

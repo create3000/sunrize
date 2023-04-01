@@ -13,7 +13,7 @@ class ShapeTool extends X3DBoundedObjectTool
 
 Object .assign (Shape .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new ShapeTool (this)
    },

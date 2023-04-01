@@ -13,7 +13,7 @@ class SwitchTool extends X3DBoundedObjectTool
 
 Object .assign (Switch .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new SwitchTool (this)
    },

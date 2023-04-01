@@ -13,7 +13,7 @@ class StaticGroupTool extends X3DBoundedObjectTool
 
 Object .assign (StaticGroup .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new StaticGroupTool (this)
    },

@@ -9,7 +9,7 @@ class SegmentedVolumeDataTool extends X3DVolumeDataNodeTool { }
 
 Object .assign (SegmentedVolumeData .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new SegmentedVolumeDataTool (this)
    },

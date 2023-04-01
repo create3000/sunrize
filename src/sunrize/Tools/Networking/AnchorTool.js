@@ -13,7 +13,7 @@ class AnchorTool extends X3DBoundedObjectTool
 
 Object .assign (Anchor .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new AnchorTool (this)
    },

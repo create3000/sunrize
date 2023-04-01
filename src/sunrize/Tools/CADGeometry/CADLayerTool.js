@@ -13,7 +13,7 @@ class CADLayerTool extends X3DBoundedObjectTool
 
 Object .assign (CADLayer .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new CADLayerTool (this)
    },

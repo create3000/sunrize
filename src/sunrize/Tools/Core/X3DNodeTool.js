@@ -55,6 +55,7 @@ class X3DNodeTool
       const proxy = new Proxy (this, handler)
 
       this .toolTarget = this
+      this .toolProxy  = proxy
       this .toolNode   = node
 
       this .replaceNode (node, proxy)
@@ -108,7 +109,7 @@ class X3DNodeTool
 
    addTool ()
    {
-      return this
+      return this .toolProxy
    }
 
    removeTool ()
@@ -118,6 +119,11 @@ class X3DNodeTool
       this .replaceNode (this, this .toolNode)
 
       return this .toolNode
+   }
+
+   getInnerNode ()
+   {
+      return this .toolProxy
    }
 
    valueOf ()
@@ -136,13 +142,12 @@ Object .assign (X3DNode .prototype,
 {
    addTool: function ()
    {
-      return this .createTool () ?? this
+      return this
    },
-   createTool: function ()
+   removeTool: function ()
    {
-      return null
+      return this
    },
-   removeTool: function () { return this },
 })
 
 module .exports = X3DNodeTool

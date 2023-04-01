@@ -9,7 +9,7 @@ class LayerTool extends X3DLayerNodeTool { }
 
 Object .assign (Layer .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new LayerTool (this)
    },

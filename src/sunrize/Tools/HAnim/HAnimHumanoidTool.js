@@ -13,7 +13,7 @@ class HAnimHumanoidTool extends X3DTransformNodeTool
 
 Object .assign (HAnimHumanoid .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new HAnimHumanoidTool (this)
    },

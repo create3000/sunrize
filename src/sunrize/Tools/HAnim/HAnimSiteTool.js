@@ -13,7 +13,7 @@ class HAnimSiteTool extends X3DTransformNodeTool
 
 Object .assign (HAnimSite .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new HAnimSiteTool (this)
    },

@@ -13,7 +13,7 @@ class GeoTransformTool extends X3DBoundedObjectTool
 
 Object .assign (GeoTransform .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new GeoTransformTool (this)
    },

@@ -13,7 +13,7 @@ class HAnimJointTool extends X3DTransformNodeTool
 
 Object .assign (HAnimJoint .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new HAnimJointTool (this)
    },

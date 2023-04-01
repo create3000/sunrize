@@ -13,7 +13,7 @@ class CADAssemblyTool extends X3DBoundedObjectTool
 
 Object .assign (CADAssembly .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new CADAssemblyTool (this)
    },

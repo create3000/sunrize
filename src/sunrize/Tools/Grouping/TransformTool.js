@@ -13,7 +13,7 @@ class TransformTool extends X3DTransformNodeTool
 
 Object .assign (Transform .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new TransformTool (this)
    },

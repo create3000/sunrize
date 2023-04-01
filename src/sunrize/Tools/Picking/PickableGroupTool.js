@@ -13,7 +13,7 @@ class PickableGroupTool extends X3DBoundedObjectTool
 
 Object .assign (PickableGroup .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new PickableGroupTool (this)
    },

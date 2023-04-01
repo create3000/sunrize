@@ -13,7 +13,7 @@ class GroupTool extends X3DBoundedObjectTool
 
 Object .assign (Group .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new GroupTool (this)
    },

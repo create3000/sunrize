@@ -13,7 +13,7 @@ class InlineTool extends X3DBoundedObjectTool
 
 Object .assign (Inline .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new InlineTool (this)
    },

@@ -71,7 +71,7 @@ Object .assign (LayoutGroupTool .prototype,
 
 Object .assign (LayoutGroup .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new LayoutGroupTool (this)
    },

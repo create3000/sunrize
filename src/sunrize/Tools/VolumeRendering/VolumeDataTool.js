@@ -9,7 +9,7 @@ class VolumeDataTool extends X3DVolumeDataNodeTool { }
 
 Object .assign (VolumeData .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new VolumeDataTool (this)
    },

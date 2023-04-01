@@ -13,7 +13,7 @@ class GeoLocationTool extends X3DBoundedObjectTool
 
 Object .assign (GeoLocation .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new GeoLocationTool (this)
    },

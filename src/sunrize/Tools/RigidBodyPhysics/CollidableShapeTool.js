@@ -37,7 +37,7 @@ class CollidableShapeTool extends X3DBoundedObjectTool
 
 Object .assign (CollidableShape .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new CollidableShapeTool (this)
    },

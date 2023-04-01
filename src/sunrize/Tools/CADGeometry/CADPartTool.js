@@ -13,7 +13,7 @@ class CADPartTool extends X3DTransformNodeTool
 
 Object .assign (CADPart .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new CADPartTool (this)
    },

@@ -13,7 +13,7 @@ class ScreenGroupTool extends X3DBoundedObjectTool
 
 Object .assign (ScreenGroup .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new ScreenGroupTool (this)
    },

@@ -20,11 +20,16 @@ class X3DPrototypeInstanceTool extends X3DNodeTool
 
       return super .removeTool ()
    }
+
+   getInnerNode ()
+   {
+      return this .toolNode .getInnerNode ()
+   }
 }
 
 Object .assign (X3DPrototypeInstance .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new X3DPrototypeInstanceTool (this)
    },

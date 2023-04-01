@@ -13,7 +13,7 @@ class CADFaceTool extends X3DBoundedObjectTool
 
 Object .assign (CADFace .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new CADFaceTool (this)
    },

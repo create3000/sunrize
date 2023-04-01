@@ -9,7 +9,7 @@ class LayoutLayerTool extends X3DLayerNodeTool { }
 
 Object .assign (LayoutLayer .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new LayoutLayerTool (this)
    },

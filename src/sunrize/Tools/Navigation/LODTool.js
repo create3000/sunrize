@@ -30,7 +30,7 @@ class LODTool extends X3DBoundedObjectTool
 
 Object .assign (LOD .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new LODTool (this)
    },

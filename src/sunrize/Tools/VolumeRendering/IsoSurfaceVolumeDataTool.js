@@ -9,7 +9,7 @@ class IsoSurfaceVolumeDataTool extends X3DVolumeDataNodeTool { }
 
 Object .assign (IsoSurfaceVolumeData .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new IsoSurfaceVolumeDataTool (this)
    },

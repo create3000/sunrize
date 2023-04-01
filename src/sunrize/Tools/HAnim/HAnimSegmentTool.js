@@ -13,7 +13,7 @@ class HAnimSegmentTool extends X3DBoundedObjectTool
 
 Object .assign (HAnimSegment .prototype,
 {
-   createTool: function ()
+   addTool: function ()
    {
       return new HAnimSegmentTool (this)
    },
