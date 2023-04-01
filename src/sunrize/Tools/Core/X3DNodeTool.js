@@ -116,7 +116,7 @@ class X3DNodeTool
 
    valueOf ()
    {
-      return this .toolNode .valueOf ()
+      return X3DNode .prototype .valueOf .call (this)
    }
 
    dispose ()
