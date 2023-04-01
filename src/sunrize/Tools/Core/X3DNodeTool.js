@@ -71,6 +71,20 @@ class X3DNodeTool
 
    initialize () { }
 
+   addTool ()
+   {
+      return this .toolProxy
+   }
+
+   removeTool ()
+   {
+      Traverse .traverse (this .tool, Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES, node => node .dispose ())
+
+      this .replaceNode (this, this .toolNode)
+
+      return this .toolNode
+   }
+
    static scenes = new Map ()
 
    async loadTool (... args)
@@ -105,20 +119,6 @@ class X3DNodeTool
          if (parent instanceof Fields .SFNode)
             parent .setValue (replacement)
       }
-   }
-
-   addTool ()
-   {
-      return this .toolProxy
-   }
-
-   removeTool ()
-   {
-      Traverse .traverse (this .tool, Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES, node => node .dispose ())
-
-      this .replaceNode (this, this .toolNode)
-
-      return this .toolNode
    }
 
    getInnerNode ()

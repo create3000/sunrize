@@ -22,16 +22,16 @@ class CollidableOffsetTool extends X3DBoundedObjectTool
       this [_set_enabled] ()
    }
 
-   [_set_enabled] ()
-   {
-      this .tool .bboxStyle = this .toolNode ._enabled .getValue () ? 1 : 2
-   }
-
    removeTool ()
    {
       this .toolNode ._enabled .removeInterest (_set_enabled, this .toolTarget)
 
       return super .removeTool ()
+   }
+
+   [_set_enabled] ()
+   {
+      this .tool .bboxStyle = this .toolNode ._enabled .getValue () ? 1 : 2
    }
 }
 

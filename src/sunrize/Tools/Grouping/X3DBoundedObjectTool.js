@@ -18,6 +18,13 @@ class X3DBoundedObjectTool extends X3DNodeTool
       this .tool .bboxColor = this .bboxColor
    }
 
+   removeTool ()
+   {
+      this .toolNode .getBrowser () .displayEvents () .removeInterest ("reshape", this .toolTarget)
+
+      return super .removeTool ()
+   }
+
    static box = new Box3 ()
 
    reshape ()
@@ -38,13 +45,6 @@ class X3DBoundedObjectTool extends X3DNodeTool
    {
       this .toolNode .traverse (type, renderObject)
       this .toolInnerNode ?.traverse (type, renderObject)
-   }
-
-   removeTool ()
-   {
-      this .toolNode .getBrowser () .displayEvents () .removeInterest ("reshape", this .toolTarget)
-
-      return super .removeTool ()
    }
 }
 
