@@ -114,6 +114,11 @@ class X3DNodeTool
       return this .toolNode
    }
 
+   valueOf ()
+   {
+      return this .toolNode .valueOf ()
+   }
+
    dispose ()
    {
       this .removeTool ()

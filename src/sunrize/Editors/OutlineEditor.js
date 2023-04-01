@@ -1129,7 +1129,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             		// Add route.
 
-            		Editor .addRoute (executionContext, new X3D .SFNode (this .connector .node), this .connector .field .getName (), new X3D .SFNode (node), field .getName ())
+            		Editor .addRoute (executionContext, this .connector .node .valueOf (), this .connector .field .getName (), node .valueOf (), field .getName ())
 
             		if (event .shiftKey)
             			break
@@ -1161,7 +1161,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             		// Add route.
 
-            		Editor .addRoute (executionContext, new X3D .SFNode (node), field .getName (), new X3D .SFNode (this .connector .node), this .connector .field .getName ())
+            		Editor .addRoute (executionContext, node .valueOf (), field .getName (), this .connector .node .valueOf (), this .connector .field .getName ())
 
             		if (event .shiftKey)
             			break
