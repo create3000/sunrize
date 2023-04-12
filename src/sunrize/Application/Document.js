@@ -50,8 +50,6 @@ module .exports = new class Document extends Interface
 
       UndoManager .shared .addInterest (this, () => this .undoManager ())
 
-      this .browser .endUpdate ()
-
       await this .browser .loadComponents (this .browser .getProfile ("Full"))
       await this .restoreFile ()
 
