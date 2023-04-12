@@ -88,12 +88,20 @@ module .exports = class Console extends Interface
          if (event !== X3D .X3DConstants .INITIALIZED_EVENT)
             return
 
-         this .scriptNode      = this .browser .currentScene .createNode ("Script", { warn: false })
+         const scripting = this .browser .currentScene .hasComponent ("Scripting")
+
+         if (!scripting)
+            this .browser .currentScene .addComponent (this .browser .getComponent ("Scripting"))
+
+         this .scriptNode      = this .browser .currentScene .createNode ("Script")
          this .scriptNode .url = new X3D .MFString ("ecmascript:")
+
+         if (!scripting)
+            this .browser .currentScene .removeComponent (this .browser .getComponent ("Scripting"))
       }
       catch (error)
       { }
-    }
+   }
 
    excludes = new Set ([
       "The vm module of Node.js is deprecated in the renderer process and will be removed.",
