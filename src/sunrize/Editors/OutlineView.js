@@ -169,6 +169,9 @@ module .exports = class OutlineView extends Interface
       {
          Traverse .traverse (scene, Traverse .ROOT_NODES, node =>
          {
+            if (node .isInitialized ())
+               return
+               
             if (node .getType () .includes (X3D .X3DConstants .X3DUrlObject))
                return
 
