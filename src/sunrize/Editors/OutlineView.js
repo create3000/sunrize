@@ -166,7 +166,15 @@ module .exports = class OutlineView extends Interface
       parent .data ("full-expanded", false)
 
       if (scene .getOuterNode () instanceof X3D .X3DProtoDeclaration)
-         Traverse .traverse (scene, Traverse .ROOT_NODES, node => node .setup ())
+      {
+         Traverse .traverse (scene, Traverse .ROOT_NODES, node =>
+         {
+            if (node .getType () .includes (X3D .X3DConstants .X3DUrlObject))
+               return
+
+            node .setup ()
+         })
+      }
 
       if (scene .isScene ())
          scene ._units_changed .addInterest ("updateScene", this, parent, scene)
