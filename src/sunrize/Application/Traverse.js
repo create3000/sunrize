@@ -317,7 +317,7 @@ module .exports = class Traverse
 
          for (let t = type .length - 1; t >= 0; -- t)
          {
-            switch (type)
+            switch (type [t])
             {
                case X3D .X3DConstants .X3DExternProtoDeclaration:
                {
