@@ -35,7 +35,7 @@ module .exports = class Dashboard extends Interface
          .on ("click", () => this .arrow ())
 
       this .playButton = $("<span></span>")
-         .addClass (["material-icons", "active"])
+         .addClass (["material-icons"])
          .attr ("title", _ ("Toggle browser update."))
          .css ({ position: "relative", left: "-1px", "font-weight": "bold" })
          .text ("play_arrow")
@@ -63,7 +63,7 @@ module .exports = class Dashboard extends Interface
    {
       this .config .file .addDefaultValues ({
          pointer: "hand",
-         play: true,
+         play: false,
       })
 
       this [this .config .file .pointer] ()
