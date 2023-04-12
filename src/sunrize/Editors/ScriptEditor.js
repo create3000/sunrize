@@ -143,7 +143,7 @@ module .exports = class ScriptEditor extends Interface
             }
          }
 
-         this .monaco .viewState = this .monaco .saveViewState ()
+         this .monaco .viewState = this .monaco ?.saveViewState ()
       }
 
       this .node = node
