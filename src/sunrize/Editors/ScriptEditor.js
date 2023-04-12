@@ -420,6 +420,7 @@ function set_field (value, time)
 
       const nodes = Editor .importX3D (this .browser .currentScene, `
 DEF NewShader ComposedShader {
+   language "GLSL"
    parts [
       DEF VertexShader ShaderPart {
          type "VERTEX"
