@@ -599,6 +599,44 @@ module .exports = class Editor
       undoManager .endUndo ()
    }
 
+   static addComponent (executionContext, name, undoManager = UndoManager .shared)
+   {
+      if (executionContext .hasComponent (name))
+         return
+
+      const browser = executionContext .getBrowser ()
+
+      undoManager .beginUndo (_ ("Add Component %s"), name)
+
+      executionContext .addComponent (browser .getComponent (name))
+
+      undoManager .registerUndo (() =>
+      {
+         this .removeComponent (executionContext, name, undoManager)
+      })
+
+      undoManager .endUndo ()
+   }
+
+   static removeComponent (executionContext, name, undoManager = UndoManager .shared)
+   {
+      if (!executionContext .hasComponent (name))
+         return
+
+      const browser = executionContext .getBrowser ()
+
+      undoManager .beginUndo (_ ("Remove Component %s"), name)
+
+      executionContext .removeComponent (browser .getComponent (name))
+
+      undoManager .registerUndo (() =>
+      {
+         this .addComponent (executionContext, name, undoManager)
+      })
+
+      undoManager .endUndo ()
+   }
+
    /**
     *
     * @param {X3DScene} scene

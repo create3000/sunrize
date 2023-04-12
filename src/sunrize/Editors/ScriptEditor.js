@@ -392,6 +392,8 @@ main ()
    {
       UndoManager .shared .beginUndo (_ ("Create New Script"))
 
+      Editor .addComponent (this .browser .currentScene, "Scripting")
+
       const nodes = Editor .importX3D (this .browser .currentScene, `
 DEF NewScript Script {
    url "ecmascript:
@@ -417,6 +419,8 @@ function set_field (value, time)
    createShader ()
    {
       UndoManager .shared .beginUndo (_ ("Create New Shader"))
+
+      Editor .addComponent (this .browser .currentScene, "Shaders")
 
       const nodes = Editor .importX3D (this .browser .currentScene, `
 DEF NewShader ComposedShader {

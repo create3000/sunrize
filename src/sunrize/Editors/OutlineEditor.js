@@ -200,103 +200,103 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                submenu: [
                   {
                      label: "Transform",
-                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Transform", "children"],
+                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "Transform", "children"],
                   },
                   {
                      label: "Group",
-                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Group", "children"],
+                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "Group", "children"],
                   },
                   {
                      label: "StaticGroup",
-                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "StaticGroup", "children"],
+                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "StaticGroup", "children"],
                   },
                   {
                      label: "Switch",
-                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Switch", "children"],
+                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "Switch", "children"],
                   },
                   { type: "separator" },
                   {
                      label: "Billboard",
-                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Billboard", "children"],
+                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "Billboard", "children"],
                   },
                   {
                      label: "Collision",
-                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Collision", "children"],
+                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "Collision", "children"],
                   },
                   {
                      label: "LOD",
-                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "LOD", "children"],
+                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "LOD", "children"],
                   },
                   {
                      label: "ViewpointGroup",
-                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "ViewpointGroup", "children"],
+                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "ViewpointGroup", "children"],
                   },
                   { type: "separator" },
                   {
                      label: "Anchor",
-                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Anchor", "children"],
+                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "Anchor", "children"],
                   },
                   { type: "separator" },
                   {
                      label: "LayoutLayer",
-                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "LayoutLayer", "children"],
+                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layout", "LayoutLayer", "children"],
                   },
                   {
                      label: "ScreenGroup",
-                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "ScreenGroup", "children"],
+                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layout", "ScreenGroup", "children"],
                   },
                   { type: "separator" },
                   {
                      label: "GeoTransform",
-                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "GeoTransform", "children"],
+                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Geospatial", "GeoTransform", "children"],
                   },
                   {
                      label: "GeoLocation",
-                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "GeoLocation", "children"],
+                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Geospatial", "GeoLocation", "children"],
                   },
                   { type: "separator" },
                   {
                      label: "CADAssembly",
-                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADAssembly", "children"],
+                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADAssembly", "children"],
                   },
                   {
                      label: "CADFace",
-                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADFace", "shape"],
+                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADFace", "shape"],
                   },
                   {
                      label: "CADLayer",
-                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADLayer", "children"],
+                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADLayer", "children"],
                   },
                   {
                      label: "CADPart",
-                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADPart", "children"],
+                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADPart", "children"],
                   },
                   { type: "separator" },
                   {
                      label: "LayerSet",
-                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "LayerSet", "layers"],
+                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layering", "LayerSet", "layers"],
                   },
                   {
                      label: "Layer",
-                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layer", "children"],
+                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layering", "Layer", "children"],
                   },
                   {
                      label: "Viewport",
-                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Viewport", "children"],
+                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layering", "Viewport", "children"],
                   },
                   { type: "separator" },
                   {
                      label: "PickableGroup",
-                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "PickableGroup", "children"],
+                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Picking", "PickableGroup", "children"],
                   },
                   { type: "separator" },
                   {
                      label: "CollidableShape",
-                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CollidableShape", "shape"],
+                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "RigidBodyPhysics", "CollidableShape", "shape"],
                   },
                   {
                      label: "CollidableOffset",
-                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CollidableOffset", "collidable"],
+                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "RigidBodyPhysics", "CollidableOffset", "collidable"],
                   },
                ],
             },
@@ -629,7 +629,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       UndoManager .shared .endUndo ()
    }
 
-   addParentGroup (id, executionContextId, nodeId, typeName, fieldName)
+   addParentGroup (id, executionContextId, nodeId, component, typeName, fieldName)
    {
       const
          element            = $(`#${id}`),
@@ -639,11 +639,15 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          parentFieldElement = element .closest (".field, .scene", this .sceneGraph),
          parentNodeElement  = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
          parentNode         = this .getNode (parentNodeElement),
-         parentField        = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement),
-         node               = executionContext .createNode (typeName, { warn: false }) .getValue (),
-         field              = node .getField (fieldName)
+         parentField        = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement)
 
       UndoManager .shared .beginUndo (_ ("Add Parent Group %s to Node %s"), typeName, childNode .getTypeName ())
+
+      Editor .addComponent (executionContext, component)
+
+      const
+         node  = executionContext .createNode (typeName) .getValue (),
+         field = node .getField (fieldName)
 
       if (field instanceof X3D .X3DArrayField)
          Editor .insertValueIntoArray (executionContext, node, field, 0, childNode)

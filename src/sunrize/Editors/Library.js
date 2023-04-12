@@ -110,7 +110,9 @@ module .exports = new class Library extends Dialog
       if (event .key !== "Enter")
          return
 
-      const first = this .list .find (".node") .first ()
+      const
+         first     = this .list .find (".node") .first (),
+         component = this .list .find (".component") .first ()
 
       if (!first .length)
          return
@@ -122,9 +124,9 @@ module .exports = new class Library extends Dialog
          Type           = SupportedNodes .getType (HTMLSupport .getNodeTypeName (input))
 
       if (Type)
-         this .createNode (Type .prototype .getTypeName ())
+         this .createNode (Type .prototype .getTypeName (), Type .prototype .getComponentName ())
       else
-         this .createNode (first .text ())
+         this .createNode (first .text (), component .attr ("name"))
    }
 
    update ()
@@ -177,6 +179,7 @@ module .exports = new class Library extends Dialog
 
             $("<li></li>")
                .addClass ("component")
+               .attr ("name", node .component)
                .text (this .browser .getSupportedComponents () .get (node .component) .title)
                .appendTo (this .list)
          }
@@ -185,15 +188,17 @@ module .exports = new class Library extends Dialog
             .addClass ("node")
             .text (node .typeName)
             .appendTo (this .list)
-            .on ("dblclick", () => this .createNode (node .typeName))
+            .on ("dblclick", () => this .createNode (node .typeName, node .component))
       }
    }
 
-   createNode (typeName)
+   createNode (typeName, component)
    {
-      const node = this .executionContext .createNode (typeName, { warn: false })
-
       UndoManager .shared .beginUndo (_ ("Create Node %s"), typeName)
+
+      Editor .addComponent (this .executionContext, component)
+
+      const node = this .executionContext .createNode (typeName)
 
       Editor .insertValueIntoArray (this .executionContext, this .executionContext, this .executionContext .rootNodes, this .executionContext .rootNodes .length, node)
 
