@@ -173,7 +173,7 @@ module .exports = class OutlineView extends Interface
                return
 
             if (node .getType () .includes (X3D .X3DConstants .X3DUrlObject))
-               node .requestImmediateLoad = Function .prototype
+               node .requestImmediateLoad = () => Promise .resolve ()
 
             node .setup ()
          })
@@ -484,7 +484,7 @@ module .exports = class OutlineView extends Interface
    expandSceneExportedNodes (parent, scene)
    {
       if (!scene .isScene ())
-         return $("")
+         return $("<div></div>")
 
       const child = $("<div></div>")
          .addClass (["exported-nodes", "subtree"])
