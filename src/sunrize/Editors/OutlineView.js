@@ -173,7 +173,7 @@ module .exports = class OutlineView extends Interface
                return
 
             if (node .getType () .includes (X3D .X3DConstants .X3DUrlObject))
-               return
+               node .requestImmediateLoad = Function .prototype
 
             node .setup ()
          })
@@ -184,11 +184,12 @@ module .exports = class OutlineView extends Interface
 
       // Generate subtrees.
 
-      const externprotos  = this .expandSceneExternProtoDeclarations (parent, scene)
-      const protos        = this .expandSceneProtoDeclarations       (parent, scene)
-      const rootNodes     = this .expandSceneRootNodes               (parent, scene)
-      const importedNodes = this .expandSceneImportedNodes           (parent, scene)
-      const exportedNodes = this .expandSceneExportedNodes           (parent, scene)
+      const
+         externprotos  = this .expandSceneExternProtoDeclarations (parent, scene),
+         protos        = this .expandSceneProtoDeclarations       (parent, scene),
+         rootNodes     = this .expandSceneRootNodes               (parent, scene),
+         importedNodes = this .expandSceneImportedNodes           (parent, scene),
+         exportedNodes = this .expandSceneExportedNodes           (parent, scene)
 
       if (!externprotos .is (":empty") || !protos .is (":empty") || !rootNodes .is (":empty") || !importedNodes .is (":empty") || !exportedNodes .is (":empty"))
       {
