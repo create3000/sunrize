@@ -776,7 +776,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    {
       const externproto = this .objects .get (protoNodeId)
 
-      externproto .loadNow ()
+      externproto .loadNow () .catch (Function .prototype)
    }
 
    async turnIntoExternPrototype (id, executionContextId, protoNodeId)
