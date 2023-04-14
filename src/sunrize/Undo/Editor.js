@@ -585,8 +585,8 @@ module .exports = class Editor
 
       undoManager .beginUndo (_ ("Set Components of Scene"))
 
-      for (const component of oldComponents)
-         scene .removeComponent (component)
+      for (const { name } of oldComponents)
+         scene .removeComponent (name)
 
       for (const component of components)
          scene .addComponent (component)
@@ -623,11 +623,9 @@ module .exports = class Editor
       if (!executionContext .hasComponent (name))
          return
 
-      const browser = executionContext .getBrowser ()
-
       undoManager .beginUndo (_ ("Remove Component %s"), name)
 
-      executionContext .removeComponent (browser .getComponent (name))
+      executionContext .removeComponent (name)
 
       undoManager .registerUndo (() =>
       {

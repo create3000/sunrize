@@ -97,7 +97,7 @@ module .exports = class Console extends Interface
          this .scriptNode .url = new X3D .MFString ("ecmascript:")
 
          if (!scripting)
-            this .browser .currentScene .removeComponent (this .browser .getComponent ("Scripting"))
+            this .browser .currentScene .removeComponent ("Scripting")
       }
       catch (error)
       { }
