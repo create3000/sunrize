@@ -98,19 +98,14 @@ module .exports = new class Document extends Interface
 
    onfocus ()
    {
-      if (this .activeElement)
-         this .activeElement .off ("keyup.Document, change.Document")
+      this .activeElement ?.off ("keyup.Document, change.Document")
 
       this .activeElement = document .activeElement ? $(document .activeElement) : null
 
       if (this .activeElementIsInputOrOutput ())
-      {
          this .activeElement .on ("keyup.Document, change.Document", () => this .undoManager ())
-      }
       else
-      {
          this .autosave ()
-      }
 
       this .undoManager ()
    }
@@ -166,8 +161,7 @@ module .exports = new class Document extends Interface
     */
    saveFile (force = false)
    {
-      if (this .footer .scriptEditor)
-         this .footer .scriptEditor .apply ()
+      this .footer .scriptEditor ?.apply ()
 
       if (!UndoManager .shared .saveNeeded && !force)
          return
@@ -289,7 +283,9 @@ module .exports = new class Document extends Interface
             document .execCommand ("undo")
       }
       else
+      {
          UndoManager .shared .undo ()
+      }
    }
 
    redo ()
@@ -302,7 +298,9 @@ module .exports = new class Document extends Interface
             document .execCommand ("redo")
       }
       else
+      {
          UndoManager .shared .redo ()
+      }
    }
 
    undoManager ()
