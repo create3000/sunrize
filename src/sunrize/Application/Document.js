@@ -103,24 +103,16 @@ module .exports = new class Document extends Interface
 
       this .activeElement = document .activeElement ? $(document .activeElement) : null
 
-      if (this .activeElementIsInputOrOutput (false))
+      if (this .activeElementIsInputOrOutput ())
       {
-         this .activeElement .on ("keyup.Document, change.Document", () => this .onchange ())
-
-         this .onchange ()
+         this .activeElement .on ("keyup.Document, change.Document", () => this .undoManager ())
       }
       else
       {
          this .autosave ()
       }
-   }
 
-   onchange ()
-   {
-      electron .ipcRenderer .send ("change-menu", {
-         undoLabel: document .queryCommandEnabled ("undo") ? _ ("Undo ") : _ ("Undo"),
-         redoLabel: document .queryCommandEnabled ("redo") ? _ ("Redo ") : _ ("Redo"),
-      })
+      this .undoManager ()
    }
 
    async restoreFile ()
@@ -289,7 +281,7 @@ module .exports = new class Document extends Interface
 
    undo ()
    {
-      if (this .activeElementIsInputOrOutput (false))
+      if (this .activeElementIsInputOrOutput ())
       {
          if (this .activeElement .closest (".script-editor-monaco") .length)
             this .scriptEditor .monaco .getModel () .undo ()
@@ -302,7 +294,7 @@ module .exports = new class Document extends Interface
 
    redo ()
    {
-      if (this .activeElementIsInputOrOutput (false))
+      if (this .activeElementIsInputOrOutput ())
       {
          if (this .activeElement .closest (".script-editor-monaco") .length)
             this .scriptEditor .monaco .getModel () .redo ()
@@ -315,16 +307,26 @@ module .exports = new class Document extends Interface
 
    undoManager ()
    {
-      electron .ipcRenderer .send ("change-menu",
+      if (this .activeElementIsInputOrOutput ())
       {
-         undoLabel: UndoManager .shared .undoLabel,
-         redoLabel: UndoManager .shared .redoLabel,
-      })
+         electron .ipcRenderer .send ("change-menu", {
+            undoLabel: document .queryCommandEnabled ("undo") ? _ ("Undo ") : _ ("Undo"),
+            redoLabel: document .queryCommandEnabled ("redo") ? _ ("Redo ") : _ ("Redo"),
+         })
+      }
+      else
+      {
+         electron .ipcRenderer .send ("change-menu",
+         {
+            undoLabel: UndoManager .shared .undoLabel,
+            redoLabel: UndoManager .shared .redoLabel,
+         })
 
-      electron .ipcRenderer .sendToHost ("saved", !UndoManager .shared .saveNeeded)
+         electron .ipcRenderer .sendToHost ("saved", !UndoManager .shared .saveNeeded)
 
-      if (UndoManager .shared .saveNeeded)
-         this .autosave ()
+         if (UndoManager .shared .saveNeeded)
+            this .autosave ()
+      }
    }
 
    cut ()
