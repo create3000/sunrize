@@ -620,8 +620,9 @@ module .exports = class OutlineView extends Interface
             return mb - ma
          })
 
-         // Proto fields, instance fields, user-defined fields.
-         
+         // Proto fields, user-defined fields.
+         // Instances are updated, because they completely change.
+
          node ._fields_changed .addInterest ("updateNode", this, parent, node, full)
       }
 
