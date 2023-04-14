@@ -596,6 +596,8 @@ module .exports = class OutlineView extends Interface
 
       if (node .canUserDefinedFields ())
       {
+         // Move user-defined fields on top.
+
          const userDefinedFields = node .getUserDefinedFields ()
 
          fields .sort ((a, b) =>
@@ -607,6 +609,8 @@ module .exports = class OutlineView extends Interface
             return ub - ua
          })
 
+         // Move metadata field on top.
+
          fields .sort ((a, b) =>
          {
             const
@@ -617,6 +621,7 @@ module .exports = class OutlineView extends Interface
          })
 
          // Proto fields, instance fields, user-defined fields.
+         
          node ._fields_changed .addInterest ("updateNode", this, parent, node, full)
       }
 
