@@ -104,8 +104,6 @@ module .exports = new class Document extends Interface
 
       if (this .activeElementIsInputOrOutput ())
          this .activeElement .on ("keyup.Document, change.Document", () => this .undoManager ())
-      else
-         this .autosave ()
 
       this .undoManager ()
    }
