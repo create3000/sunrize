@@ -81,26 +81,17 @@ module .exports = class Console extends Interface
 
    async setBrowserEvent (event)
    {
-      try
-      {
-         super .setBrowserEvent (event)
+      super .setBrowserEvent (event)
 
-         if (event !== X3D .X3DConstants .INITIALIZED_EVENT)
-            return
+      if (event !== X3D .X3DConstants .INITIALIZED_EVENT)
+         return
 
-         const scripting = this .browser .currentScene .hasComponent ("Scripting")
+      const Script = this .browser .getSupportedNode ("Script")
 
-         if (!scripting)
-            this .browser .currentScene .addComponent (this .browser .getComponent ("Scripting"))
+      this .scriptNode       = new Script (this .browser .currentScene)
+      this .scriptNode ._url = new X3D .MFString ("ecmascript:")
 
-         this .scriptNode      = this .browser .currentScene .createNode ("Script")
-         this .scriptNode .url = new X3D .MFString ("ecmascript:")
-
-         if (!scripting)
-            this .browser .currentScene .removeComponent ("Scripting")
-      }
-      catch (error)
-      { }
+      this .scriptNode .setup ()
    }
 
    excludes = new Set ([
@@ -235,7 +226,7 @@ module .exports = class Console extends Interface
 
       try
       {
-         console .debug ("" + this .scriptNode .getValue () .evaluate (text))
+         console .debug ("" + this .scriptNode .evaluate (text))
       }
       catch (error)
       {
