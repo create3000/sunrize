@@ -88,6 +88,9 @@ module .exports = class Console extends Interface
 
       const Script = this .browser .getSupportedNode ("Script")
 
+      if (!Script)
+         return
+
       this .scriptNode       = new Script (this .browser .currentScene)
       this .scriptNode ._url = new X3D .MFString ("ecmascript:")
 
@@ -96,6 +99,7 @@ module .exports = class Console extends Interface
 
    excludes = new Set ([
       "The vm module of Node.js is deprecated in the renderer process and will be removed.",
+      "Invalid asm.js: Invalid member of stdlib",
    ])
 
    addMessage (event, level, sourceId, line, message)
