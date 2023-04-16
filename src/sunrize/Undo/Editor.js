@@ -509,10 +509,15 @@ module .exports = class Editor
    {
       const components = new Set ()
 
-      Traverse .traverse (scene, Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, (node) =>
+      Traverse .traverse (scene, Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES | Traverse .PROTOTYPE_INSTANCES, (node) =>
       {
-         if (node .getType () .includes (X3D .X3DConstants .X3DNode))
-            components .add (node .getComponentName ())
+         if (!node .getType () .includes (X3D .X3DConstants .X3DNode))
+            return
+
+         if (node .getExecutionContext () .getOuterNode () ?.getProtoNode ?.() .isExternProto)
+            return
+
+         components .add (node .getComponentName ())
       })
 
       return components
