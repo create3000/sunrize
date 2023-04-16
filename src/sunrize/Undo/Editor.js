@@ -513,19 +513,6 @@ module .exports = class Editor
       {
          if (node .getType () .includes (X3D .X3DConstants .X3DNode))
             components .add (node .getComponentName ())
-
-         if (node .getType () .includes (X3D .X3DConstants .Script))
-         {
-            const Types = node ._url
-               .join ("\n")
-               .match (/(?<=createNode\s*\(\s*)(".*?"|'.*?'|`.*?`)(?=\s*\))/g)
-               ?.map (m => m .replace (/^.|.$/g, ""))
-               .map (m => scene .getBrowser () .getSupportedNode (m))
-               .filter (m => m)
-
-            for (const Type of Types ?? [ ])
-               components .add (Type .prototype .getComponentName ())
-         }
       })
 
       return components
