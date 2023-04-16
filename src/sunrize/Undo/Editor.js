@@ -514,7 +514,7 @@ module .exports = class Editor
          if (!node .getType () .includes (X3D .X3DConstants .X3DNode))
             return
 
-         if (node .getExecutionContext () .getOuterNode () ?.getProtoNode ?.() .isExternProto)
+         if (node .getScene () !== scene)
             return
 
          components .add (node .getComponentName ())
