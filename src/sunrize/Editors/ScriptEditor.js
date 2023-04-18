@@ -249,6 +249,8 @@ module .exports = class ScriptEditor extends Interface
                   minimap: { enabled: false },
                })
 
+               editor .onDidBlurEditorWidget (() => this .apply ())
+
                editor .viewState = editor .saveViewState ()
 
                element .on ("contextmenu", (event) => this .showContextMenu ())
