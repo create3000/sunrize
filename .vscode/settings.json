@@ -4,7 +4,11 @@
       "node_modules": true,
       "out": true,
       "x_ite": true,
-      "package-lock.json": true
+      "package-lock.json": true,
+      "**/_site": true,
+      "**/.jekyll-cache": true,
+      "**/.jekyll-metadata": true,
+      "**/.bundle": true
    },
    "cSpell.words": [
       "Collidable",
