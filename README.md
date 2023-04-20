@@ -8,7 +8,7 @@ Sunrize is based on [X_ITE](https://create3000.github.io/x_ite/) and is a basic 
 
 Quick Links
 -----------
-* [Getting Started](https://create3000.github.io/sunrize/)
+* [Home Page](https://create3000.github.io/sunrize/)
 
 License
 -------
