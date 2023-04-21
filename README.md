@@ -12,8 +12,8 @@ Sunrize is based on [X_ITE](https://create3000.github.io/x_ite/) and is a basic 
 
 You can run Sunrize without installing it using **npx**:
 
-```sh
-npx sunrize [files]
+```console
+$ npx sunrize [files]
 ```
 
 ## License
