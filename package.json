@@ -14,18 +14,18 @@
     "url": "https://github.com/create3000/sunrize/issues"
   },
   "keywords": [
-    "X3D",
-    "VRML",
-    "WebGL",
-    "editor",
     "3D",
-    "wrl",
+    "editor",
+    "electron",
     "JavaScript",
     "JSON",
-    "x_ite",
     "node",
-    "electron",
-    "npx"
+    "npx",
+    "VRML",
+    "WebGL",
+    "wrl",
+    "x_ite",
+    "X3D"
   ],
   "contributors": [
     {
