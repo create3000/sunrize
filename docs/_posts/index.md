@@ -12,7 +12,9 @@ Sunrize is an easy-to-use editor for X3D files that is based on the [X_ITE](http
 
 ![Image from Sunrize Editor](/assets/img/sunrize.png)
 
-## Run Sunrize
+## Usage
+
+You can run Sunrize without installing it using **npx**:
 
 ```sh
 npx sunrize
