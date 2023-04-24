@@ -1,7 +1,7 @@
 {
   "name": "sunrize",
   "productName": "Sunrize X3D Editor",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "description": "A Multi Platform X3D Editor",
   "homepage": "https://create3000.github.io/sunrize/",
   "author": "Holger Seelig",
@@ -51,7 +51,7 @@
     "jquery": "^3.6.4",
     "jquery-ui-dist": "^1.13.2",
     "jstree": "^3.3.15",
-    "material-icons": "^1.13.4",
+    "material-icons": "^1.13.5",
     "material-symbols": "^0.5.5",
     "md5": "^2.3.0",
     "monaco-editor": "^0.37.1",
@@ -59,7 +59,7 @@
     "qtip2": "^3.0.3",
     "spectrum-colorpicker2": "^2.0.10",
     "string-similarity": "^4.0.4",
-    "x_ite": "^8.6.18"
+    "x_ite": "^8.6.19"
   },
   "main": "src/main.js",
   "bin": {
