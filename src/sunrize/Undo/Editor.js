@@ -178,20 +178,20 @@ module .exports = class Editor
          if (node .getProtoNode () .getExecutionContext () !== executionContext)
             return
 
-         const proto = protos .get (node .getProtoNode () .getName ())
+         const proto = protos .get (node .getTypeName ())
 
          if (proto)
          {
-            updatedProtos .set (node .getProtoNode () .getName (), proto)
+            updatedProtos .set (node .getTypeName (), proto)
             this .setProtoNode (executionContext, node, proto, undoManager)
             return
          }
 
-         const externproto = externprotos .get (node .getProtoNode () .getName ())
+         const externproto = externprotos .get (node .getTypeName ())
 
          if (externproto)
          {
-            updatedExternProtos .set (node .getProtoNode () .getName (), externproto)
+            updatedExternProtos .set (node .getTypeName (), externproto)
             this .setProtoNode (executionContext, node, externproto, undoManager)
             return
          }
