@@ -42,6 +42,7 @@ module .exports = class Application
          size: [1100, 680],
          maximized: false,
          fullscreen: false,
+         autoSave: false,
          expandExternProtoDeclarations: true,
          expandPrototypeInstances: true,
          expandInlineNodes: true,
@@ -194,6 +195,18 @@ module .exports = class Application
                   {
                      this .mainWindow .webContents .send ("save-all-files")
                   },
+               },
+               { type: "separator" },
+               {
+                  label: _ ("Auto Save"),
+                  type: "checkbox",
+                  checked: this .config .autoSave,
+                  click: () =>
+                  {
+                     this .config .autoSave = !this .config .autoSave
+                     this .mainWindow .webContents .send ("auto-save", this .config .autoSave)
+                  },
+
                },
                { type: "separator" },
                {

@@ -60,6 +60,8 @@ module .exports = new class Tabs
 
       // Forward Actions
 
+      this .forwardToAllTabs ("auto-save")
+
       this .forwardToActiveTab ("scene-properties")
       this .forwardToActiveTab ("save-copy-as")
       this .forwardToActiveTab ("scene-properties")

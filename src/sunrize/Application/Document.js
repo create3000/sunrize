@@ -55,6 +55,7 @@ module .exports = new class Document extends Interface
 
       // Actions
 
+      electron .ipcRenderer .on ("auto-save", (event, value) => this .autoSave = value)
       electron .ipcRenderer .on ("scene-properties", () => require ("../Editors/SceneProperties") .open ())
       electron .ipcRenderer .on ("show-library", () => require ("../Editors/Library") .open (this .browser .currentScene))
 
@@ -252,10 +253,26 @@ module .exports = new class Document extends Interface
       this .filePath = oldFilePath
    }
 
+   get autoSave ()
+   {
+      return this .config .global .autoSave
+   }
+
+   set autoSave (value)
+   {
+      this .config .global .autoSave = value
+
+      if (value)
+         this .registerAutoSave ()
+   }
+
    #saveTimeoutId = undefined
 
-   autosave ()
+   registerAutoSave ()
    {
+      if (!this .autoSave)
+         return
+
       clearTimeout (this .#saveTimeoutId)
 
       this .#saveTimeoutId = setTimeout (() => this .saveFile (), 3000)
@@ -321,7 +338,7 @@ module .exports = new class Document extends Interface
          electron .ipcRenderer .sendToHost ("saved", !UndoManager .shared .saveNeeded)
 
          if (UndoManager .shared .saveNeeded)
-            this .autosave ()
+            this .registerAutoSave ()
       }
    }
 
