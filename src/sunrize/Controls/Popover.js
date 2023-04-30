@@ -19,7 +19,7 @@ $.fn.popover = function (options)
          ready: true,
          modal: true,
          solo: true,
-         delay: 200,
+         delay: 0,
       },
       events: {
          hide: function (event, api)
