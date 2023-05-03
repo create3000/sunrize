@@ -210,6 +210,21 @@ module .exports = class Application
                },
                { type: "separator" },
                {
+                  label: _ ("Export As..."),
+                  click: async () =>
+                  {
+                     const response = await this .showExportDialog (this .currentFile)
+
+                     if (response .canceled)
+                        return
+
+                     electron .app .addRecentDocument (response .filePath)
+
+                     this .mainWindow .webContents .send ("export-as", response .filePath)
+                  },
+               },
+               { type: "separator" },
+               {
                   label: _ ("Scene Properties..."),
                   accelerator: "CmdOrCtrl+I",
                   click: () =>
@@ -610,12 +625,23 @@ module .exports = class Application
          defaultPath: defaultPath,
          properties: ["createDirectory", "showOverwriteConfirmation"],
          filters : [
-            {name: "X3D XML Document", extensions: ["x3d"]},
-            {name: "X3D XML Document GZipped", extensions: ["x3dz"]},
-            {name: "X3D JSON Document", extensions: ["x3dj"]},
-            {name: "X3D JSON Document GZipped", extensions: ["x3djz"]},
-            {name: "X3D VRML Classic Document", extensions: ["x3dv"]},
-            {name: "X3D VRML Classic Document GZipped", extensions: ["x3dvz"]},
+            { name: "X3D XML Document", extensions: ["x3d"] },
+            { name: "X3D XML Document GZipped", extensions: ["x3dz"] },
+            { name: "X3D JSON Document", extensions: ["x3dj"] },
+            { name: "X3D JSON Document GZipped", extensions: ["x3djz"] },
+            { name: "X3D VRML Classic Document", extensions: ["x3dv"] },
+            { name: "X3D VRML Classic Document GZipped", extensions: ["x3dvz"] },
+         ],
+      })
+   }
+
+   async showExportDialog (defaultPath)
+   {
+      return await electron .dialog .showSaveDialog ({
+         defaultPath: defaultPath,
+         properties: ["createDirectory", "showOverwriteConfirmation"],
+         filters : [
+            { name: "HTML Document", extensions: ["html"] },
          ],
       })
    }

@@ -63,6 +63,7 @@ module .exports = new class Document extends Interface
       electron .ipcRenderer .on ("save-file",    (event, force)    => this .saveFile (force))
       electron .ipcRenderer .on ("save-file-as", (event, filePath) => this .saveFileAs (filePath))
       electron .ipcRenderer .on ("save-copy-as", (event, filePath) => this .saveCopyAs (filePath))
+      electron .ipcRenderer .on ("export-as",    (event, filePath) => this .exportAs (filePath))
 
       electron .ipcRenderer .on ("undo",       () => this .undo ())
       electron .ipcRenderer .on ("redo",       () => this .redo ())
@@ -276,6 +277,11 @@ module .exports = new class Document extends Interface
       clearTimeout (this .#saveTimeoutId)
 
       this .#saveTimeoutId = setTimeout (() => this .saveFile (), 3000)
+   }
+
+   exportAs (filePath)
+   {
+      this .saveCopyAs (filePath)
    }
 
    /**

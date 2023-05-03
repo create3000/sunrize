@@ -257,7 +257,32 @@ module .exports = class Editor
             return scene .toJSONString ()
          case ".x3djz":
             return zlib .gzipSync (scene .toJSONString ({ style: "CLEAN" }))
+         case ".html":
+            return this .getHTML (scene);
       }
+   }
+
+   static getHTML (scene)
+   {
+      return `<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
+    <style>
+x3d-canvas {
+  width: 768px;
+  height: 432px;
+}
+    </style>
+  </head>
+  <body>
+    <x3d-canvas>
+${scene .toXMLString ({ html: true, selfClosingTags: false, indent: "      " }) .replace (/\s+$/s, "")}
+    </x3d-canvas>
+  </body>
+</html>`
    }
 
    static absoluteURL = new RegExp ("^(?:[a-z]+:|//)", "i")
