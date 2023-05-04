@@ -215,6 +215,7 @@ module .exports = class Application
                { type: "separator" },
                {
                   label: exportPath ? util .format (_ ("Export As %s"), path .basename (exportPath)) : _ ("Export..."),
+                  accelerator: "CmdOrCtrl+E",
                   click: async () =>
                   {
                      const exportPath = this .exportPath .get (this .currentFile)
@@ -242,6 +243,7 @@ module .exports = class Application
                },
                {
                   label: _ ("Export As..."),
+                  accelerator: "Shift+CmdOrCtrl+E",
                   click: async () =>
                   {
                      const response = await this .showExportDialog (this .currentFile)
