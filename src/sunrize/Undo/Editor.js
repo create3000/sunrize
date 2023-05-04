@@ -238,7 +238,7 @@ module .exports = class Editor
     *
     * @param {X3DScene} scene a scene
     * @param {string=} type default is ".x3d"
-    * @returns
+    * @returns {string}
     */
    static getContents (scene, type)
    {
@@ -262,6 +262,11 @@ module .exports = class Editor
       }
    }
 
+   /**
+    *
+    * @param {X3DScene} scene a scene
+    * @returns {string}
+    */
    static getHTML (scene)
    {
       return `<!DOCTYPE html>
@@ -279,7 +284,7 @@ x3d-canvas {
   </head>
   <body>
     <x3d-canvas>
-${scene .toXMLString ({ html: true, selfClosingTags: false, indent: "      " }) .replace (/\s+$/s, "")}
+${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
     </x3d-canvas>
   </body>
 </html>`
