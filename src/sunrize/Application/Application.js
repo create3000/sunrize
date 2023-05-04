@@ -599,7 +599,7 @@ module .exports = class Application
       if (electron .BrowserWindow .getAllWindows () .length)
          return
 
-      this .mainWindow = this .createWindow ()
+      this .createWindow ()
    }
 
    contextMenu (id, menu)
