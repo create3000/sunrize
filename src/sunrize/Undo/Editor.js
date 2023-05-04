@@ -275,6 +275,10 @@ module .exports = class Editor
     <meta charset="utf-8">
     <script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
     <style>
+body {
+  background-color: rgb(21, 22, 24);
+}
+
 x3d-canvas {
   width: 768px;
   height: 432px;
