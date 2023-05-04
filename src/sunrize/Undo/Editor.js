@@ -277,6 +277,11 @@ module .exports = class Editor
     <style>
 body {
   background-color: rgb(21, 22, 24);
+  color: rgb(108, 110, 113);
+}
+
+a {
+  color: rgb(106, 140, 191);
 }
 
 x3d-canvas {
@@ -286,9 +291,11 @@ x3d-canvas {
     </style>
   </head>
   <body>
+    <h1>${path .basename (url .fileURLToPath (scene .worldURL))}</h1>
     <x3d-canvas>
 ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
     </x3d-canvas>
+    <p>For more information visit <a href="https://create3000.github.io/x_ite/" target="_blank">X_ITE webpage.</a></p>
   </body>
 </html>`
    }
