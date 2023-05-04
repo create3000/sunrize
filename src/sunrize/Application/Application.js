@@ -5,6 +5,7 @@ const
    url          = require ("url"),
    path         = require ("path"),
    fs           = require ("fs"),
+   util         = require ("util"),
    LocalStorage = require ("node-localstorage") .LocalStorage,
    DataStorage  = require ("../Application/DataStorage"),
    _            = require ("../Application/GetText")
@@ -104,7 +105,7 @@ module .exports = class Application
       this .mainWindow .title = `${title} · Sunrize`
    }
 
-   changeMenu (object)
+   changeMenu (object = { })
    {
       Object .assign (this .menuLabels, object)
 
@@ -113,6 +114,8 @@ module .exports = class Application
 
    createMenu ()
    {
+      const exportPath = this .exportPath .get (this .currentFile)
+
       const menu = electron .Menu .buildFromTemplate ([
          {
             label: "Sunrize",
@@ -211,7 +214,7 @@ module .exports = class Application
                },
                { type: "separator" },
                {
-                  label: _ ("Export"),
+                  label: exportPath ? util .format (_ ("Export As %s"), path .basename (exportPath)) : _ ("Export..."),
                   click: async () =>
                   {
                      const exportPath = this .exportPath .get (this .currentFile)
@@ -232,6 +235,8 @@ module .exports = class Application
                         this .exportPath .set (this .currentFile, response .filePath)
 
                         this .mainWindow .webContents .send ("export-as", response .filePath)
+
+                        this .changeMenu ()
                      }
                   },
                },
@@ -249,6 +254,8 @@ module .exports = class Application
                      this .exportPath .set (this .currentFile, response .filePath)
 
                      this .mainWindow .webContents .send ("export-as", response .filePath)
+
+                     this .changeMenu ()
                   },
                },
                { type: "separator" },
