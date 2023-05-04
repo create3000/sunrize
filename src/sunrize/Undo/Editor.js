@@ -270,7 +270,6 @@ module .exports = class Editor
    static getHTML (scene)
    {
       return `<!DOCTYPE html>
-<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
