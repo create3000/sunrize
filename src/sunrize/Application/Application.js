@@ -16,6 +16,7 @@ const localStorage = new LocalStorage (path .join (electron .app .getPath ("user
 module .exports = class Application
 {
    config = new DataStorage (localStorage, "Sunrize.Application.")
+   exportPath = new Map ()
 
    static run ()
    {
@@ -210,6 +211,31 @@ module .exports = class Application
                },
                { type: "separator" },
                {
+                  label: _ ("Export"),
+                  click: async () =>
+                  {
+                     const exportPath = this .exportPath .get (this .currentFile)
+
+                     if (exportPath)
+                     {
+                        this .mainWindow .webContents .send ("export-as", exportPath)
+                     }
+                     else
+                     {
+                        const response = await this .showExportDialog (this .currentFile)
+
+                        if (response .canceled)
+                           return
+
+                        electron .app .addRecentDocument (response .filePath)
+
+                        this .exportPath .set (this .currentFile, response .filePath)
+
+                        this .mainWindow .webContents .send ("export-as", response .filePath)
+                     }
+                  },
+               },
+               {
                   label: _ ("Export As..."),
                   click: async () =>
                   {
@@ -219,6 +245,8 @@ module .exports = class Application
                         return
 
                      electron .app .addRecentDocument (response .filePath)
+
+                     this .exportPath .set (this .currentFile, response .filePath)
 
                      this .mainWindow .webContents .send ("export-as", response .filePath)
                   },
