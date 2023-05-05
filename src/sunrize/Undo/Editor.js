@@ -295,7 +295,7 @@ x3d-canvas {
     <x3d-canvas>
 ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
     </x3d-canvas>
-    <p>For more information visit <a href="https://create3000.github.io/x_ite/" target="_blank">X_ITE webpage.</a></p>
+    <p>Made with <a href="https://create3000.github.io/sunrize/" target="_blank">Sunrize X3D Editor</a>.</p>
   </body>
 </html>`
    }
