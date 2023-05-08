@@ -141,7 +141,15 @@ module .exports = class Interface
       }
 
       for (const other of Interface .#interfaces)
-         other .config .file = other .createFileConfig (to)
+      {
+         const
+            oldFileConfig = other .config .file,
+            newFileConfig = other .createFileConfig (to)
+
+         newFileConfig .addDefaultValues (oldFileConfig .getDefaultValues ())
+
+         other .config .file = newFileConfig
+      }
    }
 
    configure () { }

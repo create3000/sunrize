@@ -129,8 +129,17 @@ module .exports = class DataStorage
 
 	/**
 	 *
+	 * @returns {object}
+	 */
+	getDefaultValues ()
+	{
+		return Object .assign ({ }, defaults .get (this .target))
+	}
+
+	/**
+	 *
 	 * @param {string} key
-	 * @returns
+	 * @returns {any}
 	 */
 	getDefaultValue (key)
 	{
