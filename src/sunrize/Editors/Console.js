@@ -66,6 +66,8 @@ module .exports = class Console extends Interface
 
       electron .ipcRenderer .on ("console-message", this .addMessageCallback)
 
+      this .browser .printWelcomeMessage ()
+
       this .setup ()
    }
 
