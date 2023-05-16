@@ -2258,7 +2258,7 @@ module .exports = class OutlineView extends Interface
          {
             const single = new (field .getSingleType ()) ()
 
-            textarea .val (field .map (value =>
+            textarea .val ([... field] .map (value =>
             {
                single .setValue (value)
 
@@ -2279,7 +2279,7 @@ module .exports = class OutlineView extends Interface
          }
          default:
          {
-            textarea .val (field .map (value => value .toString ({ scene: node .getExecutionContext () })) .join (",\n"))
+            textarea .val ([... field] .map (value => value .toString ({ scene: node .getExecutionContext () })) .join (",\n"))
             break
          }
       }

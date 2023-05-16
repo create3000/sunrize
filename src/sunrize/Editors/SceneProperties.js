@@ -403,7 +403,7 @@ module .exports = new class SceneProperties extends Dialog
    {
       const
          units = Units .filter (units => units .category === category) [0] .units,
-         unit  = units .filter (unit => unit .conversionFactor === 1) [0]
+         unit  = units .find (unit => unit .conversionFactor === 1)
 
       return unit
    }
@@ -420,7 +420,7 @@ module .exports = new class SceneProperties extends Dialog
 
       const
          units = Units .filter (units => units .category === category) [0] .units,
-         unit  = units .filter (unit => unit .name === name .val ()) [0]
+         unit  = units .find (unit => unit .name === name .val ())
 
       if (unit)
          conversionFactor .val (unit .conversionFactor)

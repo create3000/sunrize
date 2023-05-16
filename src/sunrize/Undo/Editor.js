@@ -28,7 +28,7 @@ module .exports = class Editor
       const
          externprotos = new Set (objects .filter (o => o instanceof X3D .X3DExternProtoDeclaration)),
          protos       = new Set (objects .filter (o => o instanceof X3D .X3DProtoDeclaration)),
-         nodes        = new X3D .MFNode (...objects .filter (o => o .getType () .includes (X3D .X3DConstants .X3DNode)))
+         nodes        = new X3D .MFNode (... objects .filter (o => o .getType () .includes (X3D .X3DConstants .X3DNode)))
 
       const
          browser = executionContext .getBrowser (),
@@ -80,7 +80,7 @@ module .exports = class Editor
          }
       })
 
-      const routes = [...childRoutes] .filter (route => children .has (route .getSourceNode ()) && children .has (route .getDestinationNode ()))
+      const routes = [... childRoutes] .filter (route => children .has (route .getSourceNode ()) && children .has (route .getDestinationNode ()))
 
       // Store world url.
 
@@ -125,8 +125,8 @@ module .exports = class Editor
       const
          browser      = executionContext .getBrowser (),
          scene        = browser .createScene (),
-         externprotos = new Map (executionContext .externprotos .map (p => [p .getName (), p])),
-         protos       = new Map (executionContext .protos       .map (p => [p .getName (), p])),
+         externprotos = new Map ([... executionContext .externprotos] .map (p => [p .getName (), p])),
+         protos       = new Map ([... executionContext .protos]       .map (p => [p .getName (), p])),
          rootNodes    = executionContext .rootNodes .copy ()
 
       try
@@ -164,8 +164,8 @@ module .exports = class Editor
       // Remove protos that already exists in context.
 
       const
-         nodes               = executionContext .rootNodes .slice (rootNodes .length) .map (n => n .getValue ()),
-         newProtos           = executionContext .protos .slice (protos .length),
+         nodes               = [... executionContext .rootNodes] .slice (rootNodes .length) .map (n => n .getValue ()),
+         newProtos           = [... executionContext .protos] .slice (protos .length),
          updatedExternProtos = new Map (),
          updatedProtos       = new Map (),
          removedProtoNodes   = new Set ()
@@ -901,7 +901,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
    static addProtoDeclaration (executionContext, name, undoManager = UndoManager .shared)
    {
       const
-         oldProtos = new Map (executionContext .protos .map (p => [p .getName (), p])),
+         oldProtos = new Map ([... executionContext .protos] .map (p => [p .getName (), p])),
          proto     = new X3D .X3DProtoDeclaration (executionContext)
 
       undoManager .beginUndo (_ ("Add Proto Declaration »%s«"), name)
@@ -957,7 +957,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
     */
    static removeProtoDeclaration (executionContext, name, undoManager = UndoManager .shared)
    {
-      const oldProtos = new Map (executionContext .protos .map (p => [p .getName (), p]))
+      const oldProtos = new Map ([... executionContext .protos] .map (p => [p .getName (), p]))
 
       undoManager .beginUndo (_ ("Remove Proto Declaration »%s«"), name)
 
@@ -981,7 +981,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
     */
    static setProtoDeclarations (executionContext, protos, undoManager = UndoManager .shared)
    {
-      const oldProtos = new Map (executionContext .protos .map (p => [p .getName (), p]))
+      const oldProtos = new Map ([... executionContext .protos] .map (p => [p .getName (), p]))
 
       undoManager .beginUndo (_ ("Update Proto Declarations"))
 
@@ -1063,7 +1063,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
    static addExternProtoDeclaration (executionContext, name, undoManager = UndoManager .shared)
    {
       const
-         oldExternprotos = new Map (executionContext .externprotos .map (p => [p .getName (), p])),
+         oldExternprotos = new Map ([... executionContext .externprotos] .map (p => [p .getName (), p])),
          externproto     = new X3D .X3DExternProtoDeclaration (executionContext, new X3D .MFString ())
 
       undoManager .beginUndo (_ ("Add Extern Prototype Declaration »%s«"), name)
@@ -1119,7 +1119,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
     */
    static removeExternProtoDeclaration (executionContext, name, undoManager = UndoManager .shared)
    {
-      const oldExternProtos = new Map (executionContext .externprotos .map (p => [p .getName (), p]))
+      const oldExternProtos = new Map ([... executionContext .externprotos] .map (p => [p .getName (), p]))
 
       undoManager .beginUndo (_ ("Remove Extern Prototype Declaration »%s«"), name)
 
@@ -1143,7 +1143,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
     */
    static setExternProtoDeclarations (executionContext, externprotos, undoManager = UndoManager .shared)
    {
-      const oldExternProtos = new Map (executionContext .externprotos .map (p => [p .getName (), p]))
+      const oldExternProtos = new Map ([... executionContext .externprotos] .map (p => [p .getName (), p]))
 
       undoManager .beginUndo (_ ("Update Extern Prototype Declarations"))
 
@@ -1771,7 +1771,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
     */
    static removeUserDefinedField (executionContext, node, field, undoManager = UndoManager .shared)
    {
-      const fields = node .getUserDefinedFields () .filter (f => f !== field)
+      const fields = [... node .getUserDefinedFields ()] .filter (f => f !== field)
 
       undoManager .beginUndo (_ ("Remove Field »%s«"), field .getName ())
 
