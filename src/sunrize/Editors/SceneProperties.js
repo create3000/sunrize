@@ -371,7 +371,7 @@ module .exports = new class SceneProperties extends Dialog
       else
          UndoManager .shared .beginUndo (_ ("Remove Meta Data »%s«"), oldKey)
 
-      const metaData = Array .from (this .metaData .table .find ("tr")) .map ((element) =>
+      const metaData = Array .from (this .metaData .table .find ("tr")) .map (element =>
       {
          const
             inputs = $(element) .find ("input"),
