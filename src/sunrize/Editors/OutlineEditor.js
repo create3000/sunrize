@@ -1937,6 +1937,12 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       }
    }
 
+   onDragEnd ()
+   {
+      this .sceneGraph .find (".drag-before, .drag-into, .drag-after")
+         .removeClass (["drag-before", "drag-into", "drag-after"])
+   }
+
    getUndoDescriptionForNode (dropEffect, node)
    {
       if (Array .isArray (node))

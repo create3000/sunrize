@@ -50,6 +50,7 @@ module .exports = class OutlineView extends Interface
          .on ("dragenter dragover", this .onDragEnter .bind (this))
          .on ("dragleave dragend drop", this .onDragLeave .bind (this))
          .on ("drop", this .onDrop .bind (this))
+         .on ("dragend", this .onDragEnd .bind (this))
       .appendTo (this .treeView)
 
       electron .ipcRenderer .on ("deselect-all", () => this .deselectAll ())
@@ -2868,6 +2869,8 @@ module .exports = class OutlineView extends Interface
    onDragLeave (event) { }
 
    onDrop (event) { }
+
+   onDragEnd (event) { }
 
    expandTo (object)
    {
