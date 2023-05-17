@@ -1939,6 +1939,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
    onDragEnd ()
    {
+      // console .log ("onDragEnd")
+
       this .sceneGraph .find (".drag-before, .drag-into, .drag-after")
          .removeClass (["drag-before", "drag-into", "drag-after"])
    }
