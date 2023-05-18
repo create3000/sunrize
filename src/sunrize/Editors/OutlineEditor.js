@@ -1540,7 +1540,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const element = $(event .target)
          .closest ("li, .scene-graph", this .sceneGraph)
 
-      element .removeClass (["drag-before", "drag-into", "drag-after"])
+      element .find ("> .item") .addBack ()
+         .removeClass (["drag-before", "drag-into", "drag-after"])
    }
 
    onDrop (event)
@@ -1940,9 +1941,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    onDragEnd ()
    {
       // console .log ("onDragEnd")
-
-      this .sceneGraph .find (".drag-before, .drag-into, .drag-after")
-         .removeClass (["drag-before", "drag-into", "drag-after"])
    }
 
    getUndoDescriptionForNode (dropEffect, node)
