@@ -4,7 +4,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Run Sunrize",
+            "label": "Open Sunrize",
             "type": "shell",
             "command": "npm run development -- `echo ${file} | grep -E '\\.(?:x3d|x3dz|x3dv|x3dvz|x3dj|x3djz|gltf|glb|obj|stl|svg|svgz)'` 2>&1 | grep -v -E '^\\d'",
             "problemMatcher": [],
