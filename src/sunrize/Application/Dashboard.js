@@ -129,14 +129,19 @@ module .exports = class Dashboard extends Interface
 
          for (const element of selection)
          {
-            const node = outlineEditor .getNode ($(element))
+            try
+            {
+               const node = outlineEditor .getNode ($(element)) .getInnerNode ()
 
-            if (!node .getType () .includes (X3D .X3DConstants .X3DBoundedObject))
-               continue
+               if (!node .getType () .includes (X3D .X3DConstants .X3DBoundedObject))
+                  continue
 
-            const modelMatrix = outlineEditor .getModelMatrix ($(element), false)
+               const modelMatrix = outlineEditor .getModelMatrix ($(element), false)
 
-            bbox .add (node .getBBox (new Box3 ()) .multRight (modelMatrix))
+               bbox .add (node .getBBox (new Box3 ()) .multRight (modelMatrix))
+            }
+            catch
+            { }
          }
 
          viewpointNode .lookAtBBox (layerNode, bbox, 1, straighten)
