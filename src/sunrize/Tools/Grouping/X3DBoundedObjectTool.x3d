@@ -7,9 +7,9 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.0.12, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.0.36, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Grouping/X3DBoundedObjectTool.x3d'/>
-    <meta name='modified' content='Sat, 25 Mar 2023 22:06:07 GMT'/>
+    <meta name='modified' content='Mon, 29 May 2023 16:20:46 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -34,7 +34,8 @@
             <IS>
               <connect nodeField='translation' protoField='bboxCenter'/>
             </IS>
-            <Shape DEF='Box'>
+            <Shape DEF='Box'
+                castShadow='false'>
               <Appearance>
                 <LineProperties
                     linewidthScaleFactor='2'>
@@ -54,7 +55,8 @@
                     point='-0.5 0.5 0.5, -0.5 -0.5 0.5, 0.5 -0.5 0.5, 0.5 0.5 0.5, -0.5 0.5 -0.5, -0.5 -0.5 -0.5, 0.5 -0.5 -0.5, 0.5 0.5 -0.5'/>
               </IndexedLineSet>
             </Shape>
-            <Shape DEF='Axes_1'>
+            <Shape DEF='Axes_1'
+                castShadow='false'>
               <IndexedLineSet
                   colorPerVertex='false'
                   coordIndex='0, 1, -1, 0, 2, -1, 0, 3, -1'>
@@ -75,7 +77,8 @@
                 <Transform
                     translation='6 0 0'
                     rotation='0 0 -1 1.5708'>
-                  <Shape>
+                  <Shape
+                      castShadow='false'>
                     <Appearance DEF='Red'>
                       <Material
                           diffuseColor='1 0 0'/>
@@ -93,7 +96,8 @@
               <ScreenGroup>
                 <Transform
                     translation='0 6 0'>
-                  <Shape>
+                  <Shape
+                      castShadow='false'>
                     <Appearance DEF='Green'>
                       <Material
                           diffuseColor='0 1 0'/>
@@ -110,7 +114,8 @@
                 <Transform
                     translation='0 0 6'
                     rotation='1 0 0 1.5708'>
-                  <Shape>
+                  <Shape
+                      castShadow='false'>
                     <Appearance DEF='Blue'>
                       <Material
                           diffuseColor='0 0 1'/>
@@ -126,7 +131,8 @@
             <IS>
               <connect nodeField='visible' protoField='centerDisplay'/>
             </IS>
-            <Shape DEF='CenterLine'>
+            <Shape DEF='CenterLine'
+                castShadow='false'>
               <Appearance>
                 <LineProperties
                     linetype='3'
@@ -145,7 +151,8 @@
                 <connect nodeField='translation' protoField='center'/>
               </IS>
               <ScreenGroup DEF='CenterPoint'>
-                <Shape>
+                <Shape
+                    castShadow='false'>
                   <Appearance>
                     <Material
                         diffuseColor='1 1 0'/>
@@ -167,7 +174,8 @@
               <connect nodeField='translation' protoField='rectangleCenter'/>
               <connect nodeField='visible' protoField='rectangleDisplay'/>
             </IS>
-            <Shape DEF='Box_1'>
+            <Shape DEF='Box_1'
+                castShadow='false'>
               <Appearance>
                 <LineProperties
                     linewidthScaleFactor='2'/>

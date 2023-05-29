@@ -5,18 +5,19 @@
     <meta name='created' content='Sat, 11 Mar 2023 10:55:09 GMT'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.0.12, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.0.36, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Grouping/TransformTool.x3d'/>
-    <meta name='modified' content='Sat, 25 Mar 2023 22:06:22 GMT'/>
+    <meta name='modified' content='Mon, 29 May 2023 16:22:43 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='Tool'>
       <ProtoInterface>
-        <field accessType='inputOnly' type='SFColor' name='bboxColor' value='1 1 1'/>
+        <field accessType='inputOnly' type='SFColor' name='bboxColor'/>
       </ProtoInterface>
       <ProtoBody>
         <Transform DEF='IndexedLineSet'>
-          <Shape>
+          <Shape
+              castShadow='false'>
             <Appearance>
               <UnlitMaterial>
                 <IS>
