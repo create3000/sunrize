@@ -155,15 +155,15 @@ module .exports = new class Library extends Dialog
       const input = this .input .val () .toLowerCase () .trim ()
 
       if (input)
-         var filter = (Type) => StringSimilarity .compareTwoStrings (Type .prototype .getTypeName () .toLowerCase (), input) > 0.4
+         var filter = Type => StringSimilarity .compareTwoStrings (Type .prototype .getTypeName () .toLowerCase (), input) > 0.4
       else
          var filter = () => true
 
       // Get supported nodes.
 
-      const nodes = this .browser .getSupportedNodes ()
+      const nodes = [... this .browser .getSupportedNodes ()]
          .filter (filter)
-         .map ((Type) => ({ component: Type .prototype .getComponentName (), typeName: Type .prototype .getTypeName () }))
+         .map (Type => ({ component: Type .prototype .getComponentName (), typeName: Type .prototype .getTypeName () }))
          .sort ((a, b) => cmp (a .typeName,  b .typeName))
          .sort ((a, b) => cmp (a .component, b .component))
 
