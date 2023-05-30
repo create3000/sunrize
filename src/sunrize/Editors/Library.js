@@ -118,10 +118,9 @@ module .exports = new class Library extends Dialog
          return
 
       const
-         SupportedNodes = X3D .require ("x_ite/Configuration/SupportedNodes"),
-         HTMLSupport    = X3D .require ("x_ite/Parser/HTMLSupport"),
-         input          = this .input .val () .toUpperCase () .trim (),
-         Type           = SupportedNodes .getType (HTMLSupport .getNodeTypeName (input))
+         HTMLSupport = X3D .require ("x_ite/Parser/HTMLSupport"),
+         input       = this .input .val () .toUpperCase () .trim (),
+         Type        = this .browser .getSupportedNode (HTMLSupport .getNodeTypeName (input))
 
       if (Type)
          this .createNode (Type .prototype .getTypeName (), Type .prototype .getComponentName ())
