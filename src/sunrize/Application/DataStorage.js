@@ -1,4 +1,5 @@
 // Cannot use strict.
+//"use strict"
 
 const
 	storages   = new WeakMap (),
