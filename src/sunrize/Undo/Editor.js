@@ -89,10 +89,10 @@ module .exports = class Editor
       // Add protos.
 
       for (const externproto of externprotos)
-         scene .addExternProtoDeclaration (externproto .getName (), externproto)
+         scene .externprotos .add (externproto .getName (), externproto)
 
       for (const proto of protos)
-         scene .addProtoDeclaration (proto .getName (), proto)
+         scene .protos .add (proto .getName (), proto)
 
       // Set nodes.
 
