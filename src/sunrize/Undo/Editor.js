@@ -99,7 +99,7 @@ module .exports = class Editor
       scene .rootNodes = nodes
 
       for (const route of routes)
-         scene .routes .add (`${route .getSourceField () .getId ()}.${route .getDestinationNode ()}`, route)
+         scene .routes .add (route .getSourceField () .getId () + "." + route .getDestinationNode (), route)
 
       // Return VRML string.
 
