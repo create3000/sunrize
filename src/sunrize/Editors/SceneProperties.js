@@ -36,8 +36,8 @@ module .exports = new class SceneProperties extends Dialog
       this .tabs = new Tabs ($("<div></div>") .attr ("id", "scene-properties-tabs"), "top")
 
       this .tabs .addTextTab ("profile-and-components", _ ("Profile & Components"))
-      this .tabs .addTextTab ("meta-data",              _ ("Meta Data"))
       this .tabs .addTextTab ("units",                  _ ("Units"))
+      this .tabs .addTextTab ("meta-data",              _ ("Meta Data"))
       this .tabs .addTextTab ("world-info",             _ ("World Info"))
 
       this .tabs .setup ()
@@ -46,8 +46,8 @@ module .exports = new class SceneProperties extends Dialog
       // Add panels.
 
       this .profileAndComponents = $("#profile-and-components") .addClass ("scrollable")
-      this .metaData             = $("#meta-data") .addClass ("scrollable")
       this .units                = $("#units") .addClass ("scrollable")
+      this .metaData             = $("#meta-data") .addClass ("scrollable")
       this .worldInfo            = $("#world-info") .addClass ("scrollable")
 
       // Profile And Components
@@ -110,17 +110,6 @@ module .exports = new class SceneProperties extends Dialog
          .append ($("<td></td>") .append (this .profileAndComponents .components))
          .appendTo (this .profileAndComponents .table .body)
 
-      // Meta Data
-
-      this .metaData .table       = $("<table></table>") .addClass ("sticky-headers") .appendTo (this .metaData)
-      this .metaData .table .head = $("<thead></thead>") .appendTo (this .metaData .table)
-      this .metaData .table .body = $("<tbody></tbody>") .appendTo (this .metaData .table)
-
-      $("<tr></tr>")
-         .append ($("<th></th>") .css ("width", "30%") .text (_ ("Key")))
-         .append ($("<th></th>") .css ("width", "70%") .text (_ ("Value")))
-         .appendTo (this .metaData .table .head)
-
       // Units
 
       this .units .table       = $("<table></table>") .appendTo (this .units)
@@ -175,6 +164,17 @@ module .exports = new class SceneProperties extends Dialog
 
       this .units .find ("input[category]") .on ("change", event => this .changeUnitValue (event))
 
+      // Meta Data
+
+      this .metaData .table       = $("<table></table>") .addClass ("sticky-headers") .appendTo (this .metaData)
+      this .metaData .table .head = $("<thead></thead>") .appendTo (this .metaData .table)
+      this .metaData .table .body = $("<tbody></tbody>") .appendTo (this .metaData .table)
+
+      $("<tr></tr>")
+         .append ($("<th></th>") .css ("width", "30%") .text (_ ("Key")))
+         .append ($("<th></th>") .css ("width", "70%") .text (_ ("Value")))
+         .appendTo (this .metaData .table .head)
+
       // World Info
 
       this .worldInfo .table       = $("<table></table>") .appendTo (this .worldInfo)
@@ -221,10 +221,10 @@ module .exports = new class SceneProperties extends Dialog
 
    onopen ()
    {
-      this .executionContext ._profile_changed    .addInterest ("updateProfile",    this)
-      this .executionContext ._components_changed .addInterest ("updateComponents", this)
-      this .executionContext ._metadata_changed   .addInterest ("updateMetaData",   this)
-      this .executionContext ._units_changed      .addInterest ("updateUnits",      this)
+      this .executionContext .profile_changed  .addInterest ("updateProfile",    this)
+      this .executionContext .components       .addInterest ("updateComponents", this)
+      this .executionContext .units            .addInterest ("updateUnits",      this)
+      this .executionContext .metadata_changed .addInterest ("updateMetaData",   this)
 
       this .executionContext .getWorldInfos () .addInterest ("updateWorldInfo", this)
 
@@ -235,17 +235,17 @@ module .exports = new class SceneProperties extends Dialog
       this .toggleInferProfileAndComponents ()
       this .updateProfile ()
       this .updateComponents ()
-      this .updateMetaData ()
       this .updateUnits ()
+      this .updateMetaData ()
       this .updateWorldInfo ()
    }
 
    onclose ()
    {
-      this .executionContext ._profile_changed    .removeInterest ("updateProfile",    this)
-      this .executionContext ._components_changed .removeInterest ("updateComponents", this)
-      this .executionContext ._metadata_changed   .removeInterest ("updateMetaData",   this)
-      this .executionContext ._units_changed      .removeInterest ("updateUnits",      this)
+      this .executionContext .profile_changed  .removeInterest ("updateProfile",    this)
+      this .executionContext .components       .removeInterest ("updateComponents", this)
+      this .executionContext .units            .removeInterest ("updateUnits",      this)
+      this .executionContext .metadata_changed .removeInterest ("updateMetaData",   this)
 
       this .executionContext .getWorldInfos () .removeInterest ("updateWorldInfo", this)
    }
@@ -311,6 +311,56 @@ module .exports = new class SceneProperties extends Dialog
       .filter (v => v)
 
       Editor .setComponents (this .executionContext, components)
+   }
+
+   updateUnits ()
+   {
+      for (const unit of this .executionContext .getUnits ())
+      {
+         const inputs = this .units .inputs .get (unit .category)
+
+         inputs .name             .val (unit .name)
+         inputs .conversionFactor .val (unit .conversionFactor)
+      }
+   }
+
+   getDefaultUnit (category)
+   {
+      const
+         units = Units .find (units => units .category === category) .units,
+         unit  = units .find (unit => unit .conversionFactor === 1)
+
+      return unit
+   }
+
+   changeUnitName (event)
+   {
+      const
+         category         = $(event .currentTarget) .attr ("list"),
+         name             = this .units .inputs .get (category) .name,
+         conversionFactor = this .units .inputs .get (category) .conversionFactor
+
+      if (!name .val ())
+         name .val (this .getDefaultUnit (category) .name)
+
+      const
+         units = Units .find (units => units .category === category) .units,
+         unit  = units .find (unit => unit .name === name .val ())
+
+      if (unit)
+         conversionFactor .val (unit .conversionFactor)
+
+      Editor .updateUnit (this .executionContext, category, name .val (), conversionFactor .val ())
+   }
+
+   changeUnitValue (event)
+   {
+      const
+         category         = $(event .currentTarget) .attr ("category"),
+         name             = this .units .inputs .get (category) .name,
+         conversionFactor = this .units .inputs .get (category) .conversionFactor
+
+      Editor .updateUnit (this .executionContext, category, name .val (), conversionFactor .val ())
    }
 
    updateMetaData ()
@@ -386,56 +436,6 @@ module .exports = new class SceneProperties extends Dialog
       Editor .setMetaData (this .executionContext, metaData)
 
       UndoManager .shared .endUndo ()
-   }
-
-   updateUnits ()
-   {
-      for (const unit of this .executionContext .getUnits ())
-      {
-         const inputs = this .units .inputs .get (unit .category)
-
-         inputs .name             .val (unit .name)
-         inputs .conversionFactor .val (unit .conversionFactor)
-      }
-   }
-
-   getDefaultUnit (category)
-   {
-      const
-         units = Units .find (units => units .category === category) .units,
-         unit  = units .find (unit => unit .conversionFactor === 1)
-
-      return unit
-   }
-
-   changeUnitName (event)
-   {
-      const
-         category         = $(event .currentTarget) .attr ("list"),
-         name             = this .units .inputs .get (category) .name,
-         conversionFactor = this .units .inputs .get (category) .conversionFactor
-
-      if (!name .val ())
-         name .val (this .getDefaultUnit (category) .name)
-
-      const
-         units = Units .find (units => units .category === category) .units,
-         unit  = units .find (unit => unit .name === name .val ())
-
-      if (unit)
-         conversionFactor .val (unit .conversionFactor)
-
-      Editor .updateUnit (this .executionContext, category, name .val (), conversionFactor .val ())
-   }
-
-   changeUnitValue (event)
-   {
-      const
-         category         = $(event .currentTarget) .attr ("category"),
-         name             = this .units .inputs .get (category) .name,
-         conversionFactor = this .units .inputs .get (category) .conversionFactor
-
-      Editor .updateUnit (this .executionContext, category, name .val (), conversionFactor .val ())
    }
 
    updateWorldInfo ()

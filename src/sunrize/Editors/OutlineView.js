@@ -10,7 +10,6 @@ const
    Interface    = require ("../Application/Interface"),
    ActionKeys   = require ("../Application/ActionKeys"),
    Traverse     = require ("../Application/Traverse"),
-   X3DNodeTool  = require ("../Tools/Core/X3DNodeTool"),
    _            = require ("../Application/GetText")
 
 const
@@ -181,7 +180,7 @@ module .exports = class OutlineView extends Interface
       }
 
       if (scene .isScene ())
-         scene ._units_changed .addInterest ("updateScene", this, parent, scene)
+         scene .units .addInterest ("updateScene", this, parent, scene)
 
       // Generate subtrees.
 
@@ -340,14 +339,12 @@ module .exports = class OutlineView extends Interface
 
    expandSceneExternProtoDeclarations (parent, scene)
    {
-      const externprotos = scene .externprotos
-
-      scene ._externprotos_changed .addInterest ("updateSceneSubtree", this, parent, scene, "externprotos", "expandSceneExternProtoDeclarations")
+      scene .externprotos .addInterest ("updateSceneSubtree", this, parent, scene, "externprotos", "expandSceneExternProtoDeclarations")
 
       const child = $("<div></div>")
          .addClass (["externprotos", "subtree"])
 
-      if (!externprotos .length)
+      if (!scene .externprotos .length)
          return child .appendTo (parent)
 
       const ul = $("<ul></ul>")
@@ -360,7 +357,7 @@ module .exports = class OutlineView extends Interface
 
       let index = 0
 
-      for (const externproto of externprotos)
+      for (const externproto of scene .externprotos)
          ul .append (this .createNodeElement ("externproto", parent, externproto, index ++))
 
       this .connectSceneSubtree (parent, child)
@@ -370,14 +367,12 @@ module .exports = class OutlineView extends Interface
 
    expandSceneProtoDeclarations (parent, scene)
    {
-      const protos = scene .protos
-
-      scene ._protos_changed .addInterest ("updateSceneSubtree", this, parent, scene, "protos", "expandSceneProtoDeclarations")
+      scene .protos .addInterest ("updateSceneSubtree", this, parent, scene, "protos", "expandSceneProtoDeclarations")
 
       const child = $("<div></div>")
          .addClass (["protos", "subtree"])
 
-      if (!protos .length)
+      if (!scene .protos .length)
          return child .appendTo (parent)
 
       const ul = $("<ul></ul>")
@@ -390,7 +385,7 @@ module .exports = class OutlineView extends Interface
 
       let index = 0
 
-      for (const proto of protos)
+      for (const proto of scene .protos)
          ul .append (this .createNodeElement ("proto", parent, proto, index ++))
 
       this .connectSceneSubtree (parent, child)
@@ -400,16 +395,14 @@ module .exports = class OutlineView extends Interface
 
    expandSceneRootNodes (parent, scene)
    {
-      const rootNodes = scene .rootNodes
+      scene .rootNodes .addFieldCallback (this, this .updateSceneSubtree .bind (this, parent, scene, "root-nodes", "expandSceneRootNodes"))
 
-      rootNodes .addFieldCallback (this, this .updateSceneSubtree .bind (this, parent, scene, "root-nodes", "expandSceneRootNodes"))
-
-      parent .attr ("index", rootNodes .length)
+      parent .attr ("index", scene .rootNodes .length)
 
       const child = $("<div></div>")
          .addClass (["root-nodes", "subtree"])
 
-      if (!rootNodes .length)
+      if (!scene .rootNodes .length)
          return child .appendTo (parent)
 
       const ul = $("<ul></ul>")
@@ -422,7 +415,7 @@ module .exports = class OutlineView extends Interface
 
       let index = 0
 
-      for (const rootNode of rootNodes)
+      for (const rootNode of scene .rootNodes)
          ul .append (this .createNodeElement ("node", parent, rootNode ? rootNode .getValue () : null, index ++))
 
       // Added to prevent bug, that last route is not drawn right.
@@ -437,17 +430,15 @@ module .exports = class OutlineView extends Interface
 
    expandSceneImportedNodes (parent, scene)
    {
-      let importedNodes = scene .getImportedNodes ()
-
-      scene ._importedNodes_changed .addInterest ("updateSceneSubtree", this, parent, scene, "imported-nodes", "expandSceneImportedNodes")
+      scene .importedNodes .addInterest ("updateSceneSubtree", this, parent, scene, "imported-nodes", "expandSceneImportedNodes")
 
       const child = $("<div></div>")
          .addClass (["imported-nodes", "subtree"])
 
-      if (!importedNodes .length)
+      if (!scene .importedNodes .length)
          return child .appendTo (parent)
 
-      importedNodes = Array .from (importedNodes) .sort ((a, b) =>
+      const importedNodes = Array .from (scene .importedNodes) .sort ((a, b) =>
       {
          return this .naturalCompare (a .getImportedName (), b .getImportedName ())
       })
@@ -490,14 +481,12 @@ module .exports = class OutlineView extends Interface
       const child = $("<div></div>")
          .addClass (["exported-nodes", "subtree"])
 
-      let exportedNodes = scene .getExportedNodes ()
+      scene .exportedNodes .addInterest ("updateSceneSubtree", this, parent, scene, "exported-nodes", "expandSceneExportedNodes")
 
-      scene ._exportedNodes_changed .addInterest ("updateSceneSubtree", this, parent, scene, "exported-nodes", "expandSceneExportedNodes")
-
-      if (!exportedNodes .length)
+      if (!scene .exportedNodes .length)
          return child .appendTo (parent)
 
-      exportedNodes = Array .from (exportedNodes) .sort ((a, b) =>
+      const exportedNodes = Array .from (scene .exportedNodes) .sort ((a, b) =>
       {
          return this .naturalCompare (a .getExportedName (), b .getExportedName ())
       })
@@ -624,7 +613,7 @@ module .exports = class OutlineView extends Interface
          // Proto fields, user-defined fields.
          // Instances are updated, because they completely change.
 
-         node ._fields_changed .addInterest ("updateNode", this, parent, node, full)
+         node .getFields () .addInterest ("updateNode", this, parent, node, full)
       }
 
       for (const field of fields)
@@ -871,11 +860,11 @@ module .exports = class OutlineView extends Interface
       {
          this .objects .set (node .getId (), node)
 
-         // These fields are observed and must never be disconnected, because clones would lose connection too.
+         // These fields are observed and must never be disconnected, because clones would also lose connection.
 
-         node ._typeName_changed   .addFieldCallback (this, this .changeNodeTypeName .bind (this, node))
-         node ._name_changed       .addFieldCallback (this, this .changeNodeName     .bind (this, node))
-         node ._cloneCount_changed .addFieldCallback (this, this .changeCloneCount   .bind (this, node))
+         node .typeName_changed   .addFieldCallback (this, this .changeNodeTypeName .bind (this, node))
+         node .name_changed       .addFieldCallback (this, this .changeNodeName     .bind (this, node))
+         node .cloneCount_changed .addFieldCallback (this, this .changeCloneCount   .bind (this, node))
       }
 
       // Classes
@@ -1093,8 +1082,8 @@ module .exports = class OutlineView extends Interface
       this .objects .set (exportedNode .getId (), exportedNode)
       this .objects .set (node .getId (), node)
 
-      node ._typeName_changed .addFieldCallback (this .exportedNodeSymbol, this .changeNodeTypeName .bind (this, node))
-      node ._name_changed     .addFieldCallback (this .exportedNodeSymbol, this .changeNodeName     .bind (this, node))
+      node .typeName_changed .addFieldCallback (this .exportedNodeSymbol, this .changeNodeTypeName .bind (this, node))
+      node .name_changed     .addFieldCallback (this .exportedNodeSymbol, this .changeNodeName     .bind (this, node))
 
       // Node
 
@@ -2464,16 +2453,16 @@ module .exports = class OutlineView extends Interface
             element = $(e),
             scene   = this .getNode (element)
 
-         scene ._externprotos_changed  .removeInterest ("updateSceneSubtree", this)
-         scene ._protos_changed        .removeInterest ("updateSceneSubtree", this)
-         scene ._importedNodes_changed .removeInterest ("updateSceneSubtree", this)
+         scene .externprotos  .removeInterest ("updateSceneSubtree", this)
+         scene .protos        .removeInterest ("updateSceneSubtree", this)
+         scene .importedNodes .removeInterest ("updateSceneSubtree", this)
 
          scene .rootNodes .removeFieldCallback (this)
 
          if (scene .isScene ())
          {
-            scene ._units_changed         .removeInterest ("updateScene",        this)
-            scene ._exportedNodes_changed .removeInterest ("updateSceneSubtree", this)
+            scene .units         .removeInterest ("updateScene",        this)
+            scene .exportedNodes .removeInterest ("updateSceneSubtree", this)
          }
       })
 
@@ -2498,7 +2487,7 @@ module .exports = class OutlineView extends Interface
          if (node .getType () .includes (X3D .X3DConstants .X3DUrlObject))
             node .getLoadState () .removeFieldCallback (this)
 
-         node ._fields_changed .removeInterest ("updateNode", this)
+         node .getFields () .removeInterest ("updateNode", this)
       })
 
       element .find (".field, .special") .each ((i, e) =>

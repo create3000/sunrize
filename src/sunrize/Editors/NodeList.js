@@ -27,15 +27,14 @@ module .exports = class NodeList extends Interface
 
    configure ()
    {
-      if (this .executionContext)
-         this .executionContext ._sceneGraph_changed .removeInterest ("update", this)
+      this .executionContext ?.sceneGraph_changed .removeInterest ("update", this)
 
       this .executionContext = this .browser .currentScene
 
       this .update ()
       this .setNode (this .nodes [this .config .file .index] || null)
 
-      this .executionContext ._sceneGraph_changed .addInterest ("update", this)
+      this .executionContext .sceneGraph_changed .addInterest ("update", this)
    }
 
    update ()
@@ -46,8 +45,8 @@ module .exports = class NodeList extends Interface
 
       for (const node of this .nodes)
       {
-         node ._typeName_changed .removeInterest ("set_typeName", this)
-         node ._name_changed     .removeInterest ("set_name",     this)
+         node .typeName_changed .removeInterest ("set_typeName", this)
+         node .name_changed     .removeInterest ("set_name",     this)
       }
 
       this .list .empty ()
@@ -67,8 +66,8 @@ module .exports = class NodeList extends Interface
             .on ("click", () => this .setNode (node))
             .appendTo (this .list)
 
-         node ._typeName_changed .addInterest ("set_typeName", this, listItem, node)
-         node ._name_changed     .addInterest ("set_name",     this, listItem, node)
+         node .typeName_changed .addInterest ("set_typeName", this, listItem, node)
+         node .name_changed     .addInterest ("set_name",     this, listItem, node)
       }
 
       this .nodeList .scrollTop (scrollTop)
