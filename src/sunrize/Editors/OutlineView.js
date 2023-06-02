@@ -60,11 +60,6 @@ module .exports = class OutlineView extends Interface
       electron .ipcRenderer .on ("close", (event) => this .saveExpanded ())
    }
 
-   get autoExpandMaxChildren ()
-   {
-      return 30
-   }
-
    get expandExternProtoDeclarations ()
    {
       return this .config .global .expandExternProtoDeclarations
@@ -96,6 +91,11 @@ module .exports = class OutlineView extends Interface
    {
       this .config .global .expandInlineNodes = value
       this .updateSceneGraph ()
+   }
+
+   get autoExpandMaxChildren ()
+   {
+      return 30
    }
 
    configure ()
