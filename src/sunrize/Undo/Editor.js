@@ -361,7 +361,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
 
       let executionContext = childContext
 
-      while (!executionContext .isScene ())
+      while (!(executionContext instanceof X3D .X3DScene))
       {
          if (executionContext === parentContext)
             return true
@@ -432,7 +432,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
 
                // Remove exported nodes.
 
-               if (executionContext .isScene ())
+               if (executionContext instanceof X3D .X3DScene)
                {
                   for (const exportedNode of executionContext .getExportedNodes ())
                   {

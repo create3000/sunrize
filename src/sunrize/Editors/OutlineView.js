@@ -179,7 +179,7 @@ module .exports = class OutlineView extends Interface
          })
       }
 
-      if (scene .isScene ())
+      if (scene instanceof X3D .X3DScene)
          scene .units .addInterest ("updateScene", this, parent, scene)
 
       // Generate subtrees.
@@ -475,7 +475,7 @@ module .exports = class OutlineView extends Interface
 
    expandSceneExportedNodes (parent, scene)
    {
-      if (!scene .isScene ())
+      if (!(scene instanceof X3D .X3DScene))
          return $("<div></div>")
 
       const child = $("<div></div>")
@@ -2459,7 +2459,7 @@ module .exports = class OutlineView extends Interface
 
          scene .rootNodes .removeFieldCallback (this)
 
-         if (scene .isScene ())
+         if (scene instanceof X3D .X3DScene)
          {
             scene .units         .removeInterest ("updateScene",        this)
             scene .exportedNodes .removeInterest ("updateSceneSubtree", this)
