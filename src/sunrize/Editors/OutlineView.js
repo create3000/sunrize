@@ -26,10 +26,9 @@ module .exports = class OutlineView extends Interface
    {
       super (`Sunrize.OutlineEditor.${element .attr ("id")}.`)
 
-      this .outlineEditor  = element
-      this .objects        = new Map () // <id, node>
-      this .actionKeys     = new ActionKeys ()
-      this .animatedExpand = [true]
+      this .outlineEditor = element
+      this .objects       = new Map () // <id, node>
+      this .actionKeys    = new ActionKeys ()
 
       this .config .global .addDefaultValues ({
          expandExternProtoDeclarations: true,
@@ -64,11 +63,6 @@ module .exports = class OutlineView extends Interface
    get autoExpandMaxChildren ()
    {
       return 30
-   }
-
-   get expandTime ()
-   {
-      return this .animatedExpand .at (-1) ? 0 : 0
    }
 
    get expandExternProtoDeclarations ()
@@ -133,12 +127,8 @@ module .exports = class OutlineView extends Interface
 
       // Expand scene.
 
-      this .animatedExpand .push (false)
-
       this .expandScene (this .sceneGraph, this .executionContext)
       this .restoreExpanded ()
-
-      this .animatedExpand .pop ()
    }
 
    updateSceneGraph ()
@@ -148,16 +138,12 @@ module .exports = class OutlineView extends Interface
 
    updateScene (parent, scene)
    {
-      this .animatedExpand .push (false)
-
       this .saveScrollPositions ()
       this .saveExpanded ()
       this .removeSubtree (parent)
       this .expandScene (parent, scene)
       this .restoreExpanded ()
       this .restoreScrollPositions ()
-
-      this .animatedExpand .pop ()
    }
 
    expandScene (parent, scene)
@@ -264,15 +250,8 @@ module .exports = class OutlineView extends Interface
          specialElements = child .find (".externproto, .proto, .imported-node, .exported-node"),
          elements        = child .find (".node")
 
-      if (this .expandTime)
-      {
-         child .show (this .expandTime, this .expandSceneSubtreeComplete .bind (this, specialElements, elements))
-      }
-      else
-      {
-         child .show ()
-         this .expandSceneSubtreeComplete (specialElements, elements)
-      }
+      child .show ()
+      this .expandSceneSubtreeComplete (specialElements, elements)
    }
 
    expandSceneSubtreeComplete (specialElements, elements)
@@ -319,11 +298,7 @@ module .exports = class OutlineView extends Interface
 
          this .disconnectSubtree (oldSubtree)
 
-         this .animatedExpand .push (false)
-
          const newSubtree = this [func] (parent, scene)
-
-         this .animatedExpand .pop ()
 
          oldSubtree .replaceWith (newSubtree .detach ())
 
@@ -554,12 +529,8 @@ module .exports = class OutlineView extends Interface
    {
       this .saveScrollPositions ()
 
-      this .animatedExpand .push (false)
-
       this .removeSubtree (parent)
       this .expandNode (parent, node, full)
-
-      this .animatedExpand .pop ()
 
       this .restoreScrollPositions ()
    }
@@ -733,15 +704,8 @@ module .exports = class OutlineView extends Interface
          scenes   = child .find (".scene"),
          elements = child .find (".field, .special")
 
-      if (this .expandTime)
-      {
-         child .show (this .expandTime, this .expandNodeComplete .bind (this, protos, scenes, elements))
-      }
-      else
-      {
-         child .show ()
-         this .expandNodeComplete (protos, scenes, elements)
-      }
+      child .show ()
+      this .expandNodeComplete (protos, scenes, elements)
    }
 
    expandNodeComplete (protos, scenes, elements)
@@ -1497,12 +1461,8 @@ module .exports = class OutlineView extends Interface
    {
       this .saveScrollPositions ()
 
-      this .animatedExpand .push (false)
-
       this .removeSubtree (parent)
       this .expandField (parent, node, field, type, full && (field .getInputRoutes () .size || field .getOutputRoutes () .size))
-
-      this .animatedExpand .pop ()
 
       this .restoreScrollPositions ()
    }
@@ -1667,15 +1627,8 @@ module .exports = class OutlineView extends Interface
 
       const elements = child .find (".node")
 
-      if (this .expandTime)
-      {
-         child .show (this .expandTime, this .expandMFNodeComplete .bind (this, elements, field))
-      }
-      else
-      {
-         child .show ()
-         this .expandMFNodeComplete (elements, field)
-      }
+      child .show ()
+      this .expandMFNodeComplete (elements, field)
    }
 
    expandMFNodeComplete (elements, field)
@@ -1772,15 +1725,8 @@ module .exports = class OutlineView extends Interface
 
       const elements = child .find (".node")
 
-      if (this .expandTime)
-      {
-         child .show (this .expandTime, this .expandSFNodeComplete .bind (this, elements, field))
-      }
-      else
-      {
-         child .show ()
-         this .expandSFNodeComplete (elements, field)
-      }
+      child .show ()
+      this .expandSFNodeComplete (elements, field)
    }
 
    expandSFNodeComplete (elements, field)
@@ -1906,15 +1852,8 @@ module .exports = class OutlineView extends Interface
 
       // Expand children.
 
-      if (this .expandTime)
-      {
-         child .show (this .expandTime, this .updateRouteGraph .bind (this))
-      }
-      else
-      {
-         child .show ()
-         this .updateRouteGraph ()
-      }
+      child .show ()
+      this .updateRouteGraph ()
    }
 
    onkeydownField (input, event)
@@ -2031,15 +1970,8 @@ module .exports = class OutlineView extends Interface
 
       // Expand children.
 
-      if (this .expandTime)
-      {
-         child .show (this .expandTime, this .updateRouteGraph .bind (this))
-      }
-      else
-      {
-         child .show ()
-         this .updateRouteGraph ()
-      }
+      child .show ()
+      this .updateRouteGraph ()
    }
 
    onkeydownArrayField (textarea, event)
@@ -2294,7 +2226,7 @@ module .exports = class OutlineView extends Interface
 
       this .nodeCloseClones (element)
       this .beforeOpen (element)
-      this .expandNode (element, node, full, this .expandTime)
+      this .expandNode (element, node, full)
 
       node .setUserData (_expanded,     field ?.getId () ?? true)
       node .setUserData (_fullExpanded, full)
@@ -2325,7 +2257,7 @@ module .exports = class OutlineView extends Interface
          const scene = this .getNode (element)
 
          this .beforeOpen (element)
-         this .expandScene (element, scene, this .expandTime)
+         this .expandScene (element, scene)
 
          scene .setUserData (_expanded, true)
       }
@@ -2347,7 +2279,7 @@ module .exports = class OutlineView extends Interface
          element .data ("auto-expand", false)
 
          this .beforeOpen (element)
-         this .expandField (element, node, field, "field", full, this .expandTime)
+         this .expandField (element, node, field, "field", full)
 
          field .setUserData (_expanded,     true)
          field .setUserData (_fullExpanded, full)
@@ -2413,15 +2345,8 @@ module .exports = class OutlineView extends Interface
 
       const child = element .find ("> .subtree")
 
-      if (this .expandTime)
-      {
-         child .hide (this .expandTime, this .afterClose .bind (this, element))
-      }
-      else
-      {
-         child .hide ()
-         this .afterClose (element)
-      }
+      child .hide ()
+      this .afterClose (element)
    }
 
    afterClose (element)

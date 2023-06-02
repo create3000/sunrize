@@ -1204,40 +1204,22 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       if (!(event .ctrlKey || event .metaKey))
          return
 
+      element .hide ()
+
       switch (type)
       {
          case "input":
          {
             const route = this .getRoute (element, field .getInputRoutes ())
 
-            element .hide ({
-            	duration: this .expandTime,
-            	complete: function ()
-            	{
-            		// Delete route.
-
-            		Editor .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField)
-            	}
-            	.bind (this),
-            })
-
+            Editor .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField)
             break
          }
          case "output":
          {
             const route = this .getRoute (element, field .getOutputRoutes ())
 
-            element .hide ({
-            	duration: this .expandTime,
-            	complete: function ()
-            	{
-            		// Delete route.
-
-            		Editor .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField)
-            	}
-            	.bind (this),
-            })
-
+            Editor .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField)
             break
          }
       }
