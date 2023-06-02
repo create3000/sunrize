@@ -98,6 +98,13 @@ module .exports = class OutlineView extends Interface
       return 30
    }
 
+   accessTypes = {
+      [X3D .X3DConstants .initializeOnly]: "initializeOnly",
+      [X3D .X3DConstants .inputOnly]:      "inputOnly",
+      [X3D .X3DConstants .outputOnly]:     "outputOnly",
+      [X3D .X3DConstants .inputOutput]:    "inputOutput",
+   }
+
    configure ()
    {
       if (this .executionContext)
@@ -109,14 +116,6 @@ module .exports = class OutlineView extends Interface
       }
 
       this .executionContext = this .browser .currentScene
-
-      // Add access types.
-
-      this .accessTypes = { }
-      this .accessTypes [X3D .X3DConstants .initializeOnly] = "initializeOnly"
-      this .accessTypes [X3D .X3DConstants .inputOnly]      = "inputOnly"
-      this .accessTypes [X3D .X3DConstants .outputOnly]     = "outputOnly"
-      this .accessTypes [X3D .X3DConstants .inputOutput]    = "inputOutput"
 
       // Clear tree.
 
