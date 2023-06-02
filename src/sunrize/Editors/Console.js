@@ -88,7 +88,7 @@ module .exports = class Console extends Interface
       if (event !== X3D .X3DConstants .INITIALIZED_EVENT)
          return
 
-      const Script = this .browser .getSupportedNode ("Script")
+      const Script = this .browser .getConcreteNode ("Script")
 
       if (!Script)
          return

@@ -120,7 +120,7 @@ module .exports = new class Library extends Dialog
       const
          HTMLSupport = X3D .require ("x_ite/Parser/HTMLSupport"),
          input       = this .input .val () .toUpperCase () .trim (),
-         Type        = this .browser .getSupportedNode (HTMLSupport .getNodeTypeName (input))
+         Type        = this .browser .getConcreteNode (HTMLSupport .getNodeTypeName (input))
 
       if (Type)
          this .createNode (Type .prototype .getTypeName (), Type .prototype .getComponentName ())
@@ -160,7 +160,7 @@ module .exports = new class Library extends Dialog
 
       // Get supported nodes.
 
-      const nodes = [... this .browser .getSupportedNodes ()]
+      const nodes = [... this .browser .getConcreteNodes ()]
          .filter (filter)
          .map (Type => ({ component: Type .prototype .getComponentName (), typeName: Type .prototype .getTypeName () }))
          .sort ((a, b) => cmp (a .typeName,  b .typeName))
