@@ -40,30 +40,26 @@ module .exports = new class Document extends Interface
     */
    async initialize ()
    {
-      $(window)
-         .on ("focusin",  () => this .onfocus ())
-         .on ("focusout", () => this .onfocus ())
+      await this .browser .loadComponents (this .browser .getProfile ("Full"))
 
-      // Must be set before await X3D.
-      electron .ipcRenderer .on ("activate", () => this .activate ())
-      electron .ipcRenderer .on ("close", (event) => this .close ())
+      this .browser .getSupportedNodes () .update ("StaticGroup", "StaticGroup", require ("../Components/Grouping/StaticGroup"))
+
+      await this .restoreFile ()
 
       UndoManager .shared .addInterest (this, () => this .undoManager ())
 
-      await this .browser .loadComponents (this .browser .getProfile ("Full"))
-      await this .restoreFile ()
-
       // Actions
 
-      electron .ipcRenderer .on ("auto-save", (event, value) => this .autoSave = value)
-      electron .ipcRenderer .on ("scene-properties", () => require ("../Editors/SceneProperties") .open ())
-      electron .ipcRenderer .on ("show-library", () => require ("../Editors/Library") .open (this .browser .currentScene))
+      electron .ipcRenderer .on ("activate", () => this .activate ())
 
-      electron .ipcRenderer .on ("open-files",   (event, urls)     => this .openFile (urls [0])) // DEBUG
-      electron .ipcRenderer .on ("save-file",    (event, force)    => this .saveFile (force))
-      electron .ipcRenderer .on ("save-file-as", (event, filePath) => this .saveFileAs (filePath))
-      electron .ipcRenderer .on ("save-copy-as", (event, filePath) => this .saveCopyAs (filePath))
-      electron .ipcRenderer .on ("export-as",    (event, filePath) => this .exportAs (filePath))
+      electron .ipcRenderer .on ("open-files",       (event, urls)     => this .openFile (urls [0])) // DEBUG
+      electron .ipcRenderer .on ("save-file",        (event, force)    => this .saveFile (force))
+      electron .ipcRenderer .on ("save-file-as",     (event, filePath) => this .saveFileAs (filePath))
+      electron .ipcRenderer .on ("save-copy-as",     (event, filePath) => this .saveCopyAs (filePath))
+      electron .ipcRenderer .on ("auto-save",        (event, value)    => this .autoSave = value)
+      electron .ipcRenderer .on ("export-as",        (event, filePath) => this .exportAs (filePath))
+      electron .ipcRenderer .on ("scene-properties", (event)           => require ("../Editors/SceneProperties") .open ())
+      electron .ipcRenderer .on ("close",            (event)           => this .close ())
 
       electron .ipcRenderer .on ("undo",       () => this .undo ())
       electron .ipcRenderer .on ("redo",       () => this .redo ())
@@ -77,8 +73,13 @@ module .exports = new class Document extends Interface
       electron .ipcRenderer .on ("texture-quality",    (event, value) => this .setTextureQuality (value))
       electron .ipcRenderer .on ("display-rubberband", (event, value) => this .displayRubberband (value))
       electron .ipcRenderer .on ("display-timings",    (event, value) => this .displayTimings (value))
+      electron .ipcRenderer .on ("show-library",       (event)        => require ("../Editors/Library") .open (this .browser .currentScene))
 
       electron .ipcRenderer .on ("browser-size", () => this .browserSize .open ())
+
+      $(window)
+         .on ("focusin",  () => this .onfocus ())
+         .on ("focusout", () => this .onfocus ())
 
       this .fullname     = await electron .ipcRenderer .invoke ("fullname")
       this .browserSize  = require ("../Editors/BrowserSize")
@@ -146,8 +147,6 @@ module .exports = new class Document extends Interface
             await this .browser .loadURL (new X3D .MFString (fileURL))
          else
             await this .browser .replaceWorld (null)
-
-         this .browser .setBrowserOption ("OptimizeStaticGroups", false)
       }
       catch (error)
       {
