@@ -147,7 +147,7 @@ module .exports = new class Document extends Interface
          else
             await this .browser .replaceWorld (null)
 
-         this .browser .setBrowserOption ("OptimizeStaticGroup", false)
+         this .browser .setBrowserOption ("OptimizeStaticGroups", false)
       }
       catch (error)
       {
