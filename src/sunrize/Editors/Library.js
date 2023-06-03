@@ -118,12 +118,12 @@ module .exports = new class Library extends Dialog
          return
 
       const
-         HTMLSupport = X3D .require ("x_ite/Parser/HTMLSupport"),
-         input       = this .input .val () .toUpperCase () .trim (),
-         Type        = this .browser .getConcreteNode (HTMLSupport .getNodeTypeName (input))
+         HTMLSupport  = X3D .require ("x_ite/Parser/HTMLSupport"),
+         input        = this .input .val () .toUpperCase () .trim (),
+         ConcreteNode = this .browser .getConcreteNode (HTMLSupport .getNodeTypeName (input))
 
-      if (Type)
-         this .createNode (Type .prototype .getTypeName (), Type .prototype .getComponentName ())
+      if (ConcreteNode)
+         this .createNode (ConcreteNode .typeName, ConcreteNode .componentName)
       else
          this .createNode (first .text (), component .attr ("name"))
    }
@@ -153,33 +153,31 @@ module .exports = new class Library extends Dialog
 
       const input = this .input .val () .toLowerCase () .trim ()
 
-      if (input)
-         var filter = Type => StringSimilarity .compareTwoStrings (Type .prototype .getTypeName () .toLowerCase (), input) > 0.4
-      else
-         var filter = () => true
+      const filter = input
+         ? ConcreteNode => StringSimilarity .compareTwoStrings (ConcreteNode .typeName .toLowerCase (), input) > 0.4
+         : () => true
 
       // Get supported nodes.
 
       const nodes = [... this .browser .getConcreteNodes ()]
          .filter (filter)
-         .map (Type => ({ component: Type .prototype .getComponentName (), typeName: Type .prototype .getTypeName () }))
-         .sort ((a, b) => cmp (a .typeName,  b .typeName))
-         .sort ((a, b) => cmp (a .component, b .component))
+         .sort ((a, b) => cmp (a .typeName, b .typeName))
+         .sort ((a, b) => cmp (a .componentName, b .componentName))
 
       // Create list elements.
 
-      let component = ""
+      let componentName = ""
 
       for (const node of nodes)
       {
-         if (node .component !== component)
+         if (node .componentName !== componentName)
          {
-            component = node .component
+            componentName = node .componentName
 
             $("<li></li>")
                .addClass ("component")
-               .attr ("name", node .component)
-               .text (this .browser .getSupportedComponents () .get (node .component) .title)
+               .attr ("name", node .componentName)
+               .text (this .browser .getSupportedComponents () .get (node .componentName) .title)
                .appendTo (this .list)
          }
 
@@ -187,15 +185,15 @@ module .exports = new class Library extends Dialog
             .addClass ("node")
             .text (node .typeName)
             .appendTo (this .list)
-            .on ("dblclick", () => this .createNode (node .typeName, node .component))
+            .on ("dblclick", () => this .createNode (node .typeName, node .componentName))
       }
    }
 
-   createNode (typeName, component)
+   createNode (typeName, componentName)
    {
       UndoManager .shared .beginUndo (_ ("Create Node %s"), typeName)
 
-      Editor .addComponent (this .executionContext, component)
+      Editor .addComponent (this .executionContext, componentName)
 
       const node = this .executionContext .createNode (typeName)
 
@@ -226,21 +224,21 @@ module .exports = new class Library extends Dialog
       const nodes = Primitives
          .filter (filter)
          .sort ((a, b) => cmp (a .typeName,  b .typeName))
-         .sort ((a, b) => cmp (a .component, b .component))
+         .sort ((a, b) => cmp (a .componentName, b .componentName))
 
       // Create list elements.
 
-      let component = ""
+      let componentName = ""
 
       for (const node of nodes)
       {
-         if (node .component !== component)
+         if (node .componentName !== componentName)
          {
-            component = node .component
+            componentName = node .componentName
 
             $("<li></li>")
                .addClass ("component")
-               .text (node .component)
+               .text (node .componentName)
                .appendTo (this .list)
          }
 
@@ -260,10 +258,10 @@ module .exports = new class Library extends Dialog
 
       for (const node of nodes)
       {
-         if (node .getType () .includes (X3D .X3DConstants .X3DBindableNode))
-         {
-            Editor .setFieldValue (this .executionContext, node, node ._set_bind, true)
-         }
+         if (!node .getType () .includes (X3D .X3DConstants .X3DBindableNode))
+            continue
+
+         Editor .setFieldValue (this .executionContext, node, node ._set_bind, true)
       }
 
       UndoManager .shared .endUndo ()

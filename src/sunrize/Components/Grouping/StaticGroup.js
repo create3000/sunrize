@@ -24,30 +24,6 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
    X3DBoundedObject .prototype,
 {
    constructor: StaticGroup,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "children",    new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "StaticGroup";
-   },
-   getComponentName: function ()
-   {
-      return "Grouping";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DChildNode     .prototype .initialize .call (this);
@@ -82,6 +58,37 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
    {
       X3DBoundedObject .prototype .dispose .call (this);
       X3DChildNode     .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (StaticGroup,
+{
+   typeName:
+   {
+      value: "StaticGroup",
+   },
+   componentName:
+   {
+      value: "Grouping",
+   },
+   containerField:
+   {
+      value: "children",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "children",    new Fields .MFNode ()),
+      ]),
    },
 });
 
