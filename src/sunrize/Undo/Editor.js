@@ -258,7 +258,7 @@ module .exports = class Editor
          case ".x3djz":
             return zlib .gzipSync (scene .toJSONString ({ style: "CLEAN" }))
          case ".html":
-            return this .getHTML (scene);
+            return this .getHTML (scene)
       }
    }
 
@@ -588,7 +588,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
       { count: Number .POSITIVE_INFINITY })
 
       return {
-         profile:  min .object .profile,
+         profile: min .object .profile,
          components: Array .from (min .object .components) .sort () .map (name => browser .getSupportedComponents () .get (name)),
       }
    }
