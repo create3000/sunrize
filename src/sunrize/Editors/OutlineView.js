@@ -1834,7 +1834,7 @@ module .exports = class OutlineView extends Interface
       if (field .getType () === X3D .X3DConstants .SFString)
          input .val (field .getValue ())
       else
-         input .val (field .toString ({ scene: this .executionContext }))
+         input .val (field .toString ({ scene: node .getExecutionContext () }))
 
       if ((field .isInput () || field .isInitializable ()) && this .isEditable (parent))
       {
@@ -1875,7 +1875,7 @@ module .exports = class OutlineView extends Interface
          if (field .getType () === X3D .X3DConstants .SFString)
             input .val (field .getValue ())
          else
-            input .val (field .toString ({ scene: this .executionContext }))
+            input .val (field .toString ({ scene: node .getExecutionContext () }))
       })
 
       if (assign)
@@ -2183,7 +2183,7 @@ module .exports = class OutlineView extends Interface
             {
                single .setValue (value)
 
-               return single .toString ({ scene: this .executionContext })
+               return single .toString ({ scene: node .getExecutionContext () })
             })
             .join (",\n"))
             break
@@ -2200,7 +2200,7 @@ module .exports = class OutlineView extends Interface
          }
          default:
          {
-            textarea .val (Array .from (field, value => value .toString ({ scene: this .executionContext })) .join (",\n"))
+            textarea .val (Array .from (field, value => value .toString ({ scene: node .getExecutionContext () })) .join (",\n"))
             break
          }
       }
