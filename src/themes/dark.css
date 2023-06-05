@@ -1080,6 +1080,10 @@ tr.disabled ~ tr > td > div {
   color: var(--system-orange);
 }
 
+.scene-graph .field.user-defined > .item .name {
+  font-weight: bold;
+}
+
 .scene-graph .field.references > .item .name {
   font-weight: bold;
   color: var(--system-brown);

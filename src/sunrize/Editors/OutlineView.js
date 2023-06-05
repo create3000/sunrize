@@ -549,10 +549,10 @@ module .exports = class OutlineView extends Interface
 
       // Fields
 
-      let fields = full ? Array .from (node .getFields ()) : node .getChangedFields (true)
+      let fields = full ? [... node .getUserDefinedFields (), ... node .getPredefinedFields ()] : node .getChangedFields (true)
 
       if (!fields .length)
-         fields = Array .from (node .getFields ())
+         fields = [... node .getUserDefinedFields (), ... node .getPredefinedFields ()]
 
       if (node .canUserDefinedFields ())
       {
@@ -563,8 +563,8 @@ module .exports = class OutlineView extends Interface
          fields .sort ((a, b) =>
          {
             const
-               ua = userDefinedFields .has (a .getName ()),
-               ub = userDefinedFields .has (b .getName ())
+               ua = userDefinedFields .get (a .getName ()) === a,
+               ub = userDefinedFields .get (b .getName ()) === b
 
             return ub - ua
          })
@@ -1113,6 +1113,9 @@ module .exports = class OutlineView extends Interface
 
       if (field .hasReferences ())
          classes .push ("references")
+
+      if (node .getUserDefinedFields () .get (field .getName ()) === field)
+         classes .push ("user-defined")
 
       // Node
 
