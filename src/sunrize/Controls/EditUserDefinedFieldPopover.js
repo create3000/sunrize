@@ -144,7 +144,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field)
 
       if (field)
       {
-         if (node .getFields () .has (name) && node .getFields () .get (name) !== field)
+         if (node .getUserDefinedFields () .has (name) && node .getUserDefinedFields () .get (name) !== field)
          {
             // Error: field name exists.
             $ .beep ()
@@ -191,7 +191,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field)
       }
       else
       {
-         if (node .getFields () .has (name))
+         if (node .getUserDefinedFields () .has (name))
          {
             // Error: field name exists.
             $ .beep ()
