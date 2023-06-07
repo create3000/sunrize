@@ -101,13 +101,8 @@ module .exports = class Traverse
             {
                if (flags & this .EXTERNPROTO_DECLARATION_SCENE)
                {
-                  try
-                  {
-                     if (this .traverseScene (node .getInternalScene (), flags, callback, seen) === false)
-                        return false
-                  }
-                  catch
-                  { }
+                  if (this .traverseScene (node .getInternalScene (), flags, callback, seen) === false)
+                     return false
                }
 
                break
@@ -302,14 +297,7 @@ module .exports = class Traverse
                case X3D .X3DConstants .X3DExternProtoDeclaration:
                {
                   if (flags & this .EXTERNPROTO_DECLARATION_SCENE)
-                  {
-                     try
-                     {
-                        this .findInScene (node .getInternalScene (), object, flags, hierarchies, hierarchy, seen)
-                     }
-                     catch
-                     { }
-                  }
+                     this .findInScene (node .getInternalScene (), object, flags, hierarchies, hierarchy, seen)
 
                   break
                }
