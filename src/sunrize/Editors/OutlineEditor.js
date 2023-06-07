@@ -1775,7 +1775,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                   }
                   catch
                   {
-                     for (const field of [destinationParentNode .getPredefinedFields (), ... destinationParentNode .getUserDefinedFields ()] .reverse ())
+                     for (const field of [... destinationParentNode .getPredefinedFields (), ... destinationParentNode .getUserDefinedFields ()] .reverse ())
                      {
                         if (!field .isInitializable ())
                            continue

@@ -70,7 +70,7 @@ module .exports = class Editor
       {
          children .add (node)
 
-         for (const field of node .getFields ())
+         for (const field of [... node .getUserDefinedFields (), ... node .getPredefinedFields ()])
          {
             for (const route of field .getInputRoutes ())
                childRoutes .add (route)
@@ -443,7 +443,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
 
                // Remove routes.
 
-               for (const field of node .getFields ())
+               for (const field of [... node .getUserDefinedFields (), ... node .getPredefinedFields ()])
                {
                   for (const route of field .getInputRoutes ())
                   {
@@ -470,7 +470,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
 
                // Clear fields, to get right clone count.
 
-               for (const field of node .getFields ())
+               for (const field of [... node .getUserDefinedFields (), ... node .getPredefinedFields ()])
                {
                   switch (field .getType ())
                   {
@@ -1287,7 +1287,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
       {
          const proto = outerNode
 
-         for (const field of instance .getFields ())
+         for (const field of instance .getPredefinedFields ())
          {
             references .set (field .getName (), new Set (field .getReferences ()))
 
@@ -1302,7 +1302,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
          inputRoutes  = new Map (),
          outputRoutes = new Map ()
 
-      for (const field of instance .getFields ())
+      for (const field of instance .getPredefinedFields ())
       {
          inputRoutes  .set (field .getName (), new Set (field .getInputRoutes ()))
          outputRoutes .set (field .getName (), new Set (field .getOutputRoutes ()))
@@ -1328,7 +1328,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
       {
          const proto = outerNode
 
-         for (const field of instance .getFields ())
+         for (const field of instance .getPredefinedFields ())
          {
             const oldReferences = references .get (field .getName ())
 
@@ -1336,7 +1336,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
             {
                for (const oldReference of oldReferences)
                {
-                  const reference = proto .getFields () .get (oldReference .getName ())
+                  const reference = proto .getUserDefinedFields () .get (oldReference .getName ())
 
                   if (!reference)
                      continue
@@ -1355,7 +1355,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
 
       // Restore routes.
 
-      for (const field of instance .getFields ())
+      for (const field of instance .getPredefinedFields ())
       {
          const
             oldInputRoutes = inputRoutes   .get (field .getName ()),
@@ -1601,7 +1601,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
          }
          else
          {
-            for (const field of node .getFields ())
+            for (const field of [... node .getUserDefinedFields (), ... node .getPredefinedFields ()])
             {
                switch (field .getType ())
                {
@@ -1683,7 +1683,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
 
             Traverse .traverse (proto, Traverse .PROTO_DECLARATION | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, (node) =>
             {
-               for (const field of node .getFields ())
+               for (const field of [... node .getUserDefinedFields (), ... node .getPredefinedFields ()])
                {
                   // Remove references.
 
@@ -1804,7 +1804,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
 
             Traverse .traverse (proto, Traverse .PROTO_DECLARATION | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, (node) =>
             {
-               for (const field of node .getFields ())
+               for (const field of [... node .getUserDefinedFields (), ... node .getPredefinedFields ()])
                {
                   for (const removedField of removedFields)
                   {
@@ -2230,7 +2230,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
       if (!node)
          return true
 
-      return node .getFields () .every (field =>
+      return [... node .getUserDefinedFields (), ... node .getPredefinedFields ()] .every (field =>
       {
          switch (field .getType ())
          {

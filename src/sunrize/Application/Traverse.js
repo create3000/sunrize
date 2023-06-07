@@ -85,7 +85,7 @@ module .exports = class Traverse
 
       seen .add (node)
 
-      for (const field of node .getFields ())
+      for (const field of [... node .getUserDefinedFields (), ... node .getPredefinedFields ()])
       {
          switch (field .getType ())
          {
