@@ -85,26 +85,11 @@ module .exports = class Traverse
 
       seen .add (node)
 
-      for (const field of [... node .getUserDefinedFields (), ... node .getPredefinedFields ()])
-      {
-         switch (field .getType ())
-         {
-            case X3D .X3DConstants .SFNode:
-            {
-               if (this .traverseNode (field .getValue (), flags, callback, seen) === false)
-                  return false
+      if (this .traverseFields (node .getUserDefinedFields (), flags, callback, seen) === false)
+         return false
 
-               break
-            }
-            case X3D .X3DConstants .MFNode:
-            {
-               if (this .traverseNodes (field, flags, callback, seen) === false)
-                  return false
-
-               break
-            }
-         }
-      }
+      if (this .traverseFields (node .getPredefinedFields (), flags, callback, seen) === false)
+         return false
 
       const type = node .getType ()
 
@@ -167,6 +152,32 @@ module .exports = class Traverse
       }
 
       return callback (node) !== false
+   }
+
+   static traverseFields (fields, flags, callback, seen)
+   {
+      for (const field of fields)
+      {
+         switch (field .getType ())
+         {
+            case X3D .X3DConstants .SFNode:
+            {
+               if (this .traverseNode (field .getValue (), flags, callback, seen) === false)
+                  return false
+
+               break
+            }
+            case X3D .X3DConstants .MFNode:
+            {
+               if (this .traverseNodes (field, flags, callback, seen) === false)
+                  return false
+
+               break
+            }
+         }
+      }
+
+      return true
    }
 
    static find (scene, object, flags)
