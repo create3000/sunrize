@@ -287,41 +287,10 @@ module .exports = class Traverse
       }
       else
       {
-         if (! node .getType () .includes (X3D .X3DConstants .X3DExternProtoDeclaration))
+         if (!node .getType () .includes (X3D .X3DConstants .X3DExternProtoDeclaration))
          {
-            for (const fieldDefinition of node .getFieldDefinitions ())
-            {
-               const field = node .getField (fieldDefinition .name)
-
-               hierarchy .push (field)
-
-               if (field === object)
-               {
-                  hierarchies .push (hierarchy .slice ())
-               }
-               else
-               {
-                  switch (field .getType ())
-                  {
-                     case X3D .X3DConstants .SFNode:
-                     {
-                        this .findInNode (field .getValue (), object, flags, hierarchies, hierarchy, seen)
-                        break
-                     }
-                     case X3D .X3DConstants .MFNode:
-                     {
-                        for (const node of field)
-                           this .findInNode (node .getValue (), object, flags, hierarchies, hierarchy, seen)
-
-                        break
-                     }
-                     default:
-                        break
-                  }
-
-                  hierarchy .pop ()
-               }
-            }
+            this .findInFields (node .getUserDefinedFields (), object, flags, hierarchies, hierarchy, seen)
+            this .findInFields (node .getPredefinedFields (),  object, flags, hierarchies, hierarchy, seen)
          }
 
          const type = node .getType ()
@@ -373,5 +342,40 @@ module .exports = class Traverse
 
       hierarchy .pop ()
       seen .delete (node)
+   }
+
+   static findInFields (fields, object, flags, hierarchies, hierarchy, seen)
+   {
+      for (const field of fields)
+      {
+         hierarchy .push (field)
+
+         if (field === object)
+         {
+            hierarchies .push (hierarchy .slice ())
+         }
+         else
+         {
+            switch (field .getType ())
+            {
+               case X3D .X3DConstants .SFNode:
+               {
+                  this .findInNode (field .getValue (), object, flags, hierarchies, hierarchy, seen)
+                  break
+               }
+               case X3D .X3DConstants .MFNode:
+               {
+                  for (const node of field)
+                     this .findInNode (node .getValue (), object, flags, hierarchies, hierarchy, seen)
+
+                  break
+               }
+               default:
+                  break
+            }
+         }
+
+         hierarchy .pop ()
+      }
    }
 }
