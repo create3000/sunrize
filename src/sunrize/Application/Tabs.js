@@ -126,15 +126,14 @@ module .exports = new class Tabs
 
       if (this .tabs .getTabs () .length)
       {
-         const tab = this .getTabByURL (activeTab)
+         const tab = this .getTabByURL (activeTab) ?? this .tabs .getTabByPosition (0)
 
-         if (tab)
-            tab .activate ()
-         else
-            this .tabs .getTabByPosition (0) .activate ()
+         tab .activate ()
       }
       else
+      {
          this .openTabs ()
+      }
    }
 
    openTabs (urls = [""], activate = true)
@@ -198,7 +197,7 @@ module .exports = new class Tabs
 
       if (activate)
       {
-         const tab = this .tabs .getTabs () .findLast (tab => tab .url && urls .includes (tab .url))
+         const tab = this .getTabs () .findLast (tab => tab .url && urls .includes (tab .url))
             ?? this .tabs .getTabByPosition (this .tabs .getTabs () .length - 1)
 
          tab .activate ()
@@ -207,15 +206,17 @@ module .exports = new class Tabs
       this .saveTabs ()
    }
 
+   getTabs ()
+   {
+      const cmp  = (a, b) => (a > b) - (a < b)
+
+      return this .tabs .getTabs ()
+         .sort ((a, b) => cmp (a .getPosition (), b .getPosition ()))
+   }
+
    getTabByURL (fileURL)
    {
-      for (const tab of this .tabs .getTabs () .reverse ())
-      {
-         if (tab .url === fileURL)
-            return tab
-      }
-
-      return null
+      return this .getTabs () .findLast (tab => tab .url === fileURL)
    }
 
    setTabURL (tab, fileURL, saved = true)
@@ -232,13 +233,11 @@ module .exports = new class Tabs
    saveTabs ()
    {
       const
-         cmp  = (a, b) => (a > b) - (a < b),
-         urls = this .tabs .getTabs ()
-            .sort ((a, b) => cmp (a .getPosition (), b .getPosition ()))
-            .map (tab => tab .url)
+         tabs = this .getTabs (),
+         urls = tabs .map (tab => tab .url)
 
       this .config .openTabs  = urls
-      this .config .activeTab = this .tabs .getTabs () .length ? this .tabs .getActiveTab () .url : undefined
+      this .config .activeTab = tabs .length ? this .tabs .getActiveTab () .url : undefined
    }
 
    tabClosing (tab, abort)
@@ -339,6 +338,6 @@ module .exports = new class Tabs
 
    forwardToAllTabs (channel)
    {
-      electron .ipcRenderer .on (channel, (event, ...args) => this .tabs .getTabs () .forEach ((tab) => tab .webview .send (channel, ...args)))
+      electron .ipcRenderer .on (channel, (event, ...args) => this .tabs .getTabs () .forEach (tab => tab .webview .send (channel, ...args)))
    }
 }
