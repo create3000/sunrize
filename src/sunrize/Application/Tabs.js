@@ -197,7 +197,12 @@ module .exports = new class Tabs
       }
 
       if (activate)
-         this .tabs .getTabByPosition (this .tabs .getTabs () .length - 1) .activate ()
+      {
+         const tab = this .tabs .getTabs () .findLast (tab => tab .url && urls .includes (tab .url))
+            ?? this .tabs .getTabByPosition (this .tabs .getTabs () .length - 1)
+
+         tab .activate ()
+      }
 
       this .saveTabs ()
    }
