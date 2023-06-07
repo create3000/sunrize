@@ -43,7 +43,7 @@ module .exports = class Traverse
 
    static traverseScene (executionContext, flags, callback, seen)
    {
-      if (! executionContext)
+      if (!executionContext)
          return true
 
       if (flags & Traverse .PROTO_DECLARATIONS)
@@ -194,7 +194,7 @@ module .exports = class Traverse
 
    static findInScene (executionContext, object, flags, hierarchies, hierarchy, seen)
    {
-      if (! executionContext)
+      if (!executionContext)
          return
 
       if (executionContext .isPrivate ())
@@ -272,7 +272,7 @@ module .exports = class Traverse
 
    static findInNode (node, object, flags, hierarchies, hierarchy, seen)
    {
-      if (! node)
+      if (!node)
          return
 
       if (seen .has (node))
