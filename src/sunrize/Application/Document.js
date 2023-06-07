@@ -84,6 +84,8 @@ module .exports = new class Document extends Interface
       this .fullname     = await electron .ipcRenderer .invoke ("fullname")
       this .browserSize  = require ("../Editors/BrowserSize")
       this .resizeSensor = new ResizeSensor ($("#browser-frame"), this .onresize .bind (this))
+
+      this .undoManager ()
    }
 
    configure ()
