@@ -74,7 +74,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                proto      = outerNode,
                references = [ ]
 
-            for (const protoField of proto .getFields ())
+            for (const protoField of proto .getUserDefinedFields ())
             {
                if (protoField .getType () === field .getType () &&
                      protoField .isReference (field .getAccessType ()))
@@ -1775,7 +1775,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                   }
                   catch
                   {
-                     for (const field of Array .from (destinationParentNode .getFields ()) .reverse ())
+                     for (const field of [destinationParentNode .getPredefinedFields (), ... destinationParentNode .getUserDefinedFields ()] .reverse ())
                      {
                         if (!field .isInitializable ())
                            continue

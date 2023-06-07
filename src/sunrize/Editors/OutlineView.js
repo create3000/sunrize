@@ -583,7 +583,8 @@ module .exports = class OutlineView extends Interface
          // Proto fields, user-defined fields.
          // Instances are updated, because they completely change.
 
-         node .getFields () .addInterest ("updateNode", this, parent, node, full)
+         node .getPredefinedFields ()  .addInterest ("updateNode", this, parent, node, full)
+         node .getUserDefinedFields () .addInterest ("updateNode", this, parent, node, full)
       }
 
       for (const field of fields)
@@ -2414,7 +2415,8 @@ module .exports = class OutlineView extends Interface
          if (node .getType () .includes (X3D .X3DConstants .X3DUrlObject))
             node .getLoadState () .removeFieldCallback (this)
 
-         node .getFields () .removeInterest ("updateNode", this)
+         node .getPredefinedFields ()  .removeInterest ("updateNode", this)
+         node .getUserDefinedFields () .removeInterest ("updateNode", this)
       })
 
       element .find (".field, .special") .each ((i, e) =>
