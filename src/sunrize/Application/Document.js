@@ -40,7 +40,7 @@ module .exports = new class Document extends Interface
     */
    async initialize ()
    {
-      await this .browser .loadComponents (this .browser .getProfile ("Full"))
+      await this .browser .loadComponents (this .browser .getComponent ("Grouping"))
 
       this .browser .updateConcreteNode ("StaticGroup", require ("../Components/Grouping/StaticGroup"))
 

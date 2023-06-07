@@ -85,8 +85,10 @@ module .exports = new class Library extends Dialog
       }
    }
 
-   open (executionContext)
+   async open (executionContext)
    {
+      await this .browser .loadComponents (this .browser .getProfile ("Full"))
+
       this .executionContext = executionContext
 
       super .open ()

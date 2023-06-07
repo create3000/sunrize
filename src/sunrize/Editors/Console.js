@@ -88,10 +88,9 @@ module .exports = class Console extends Interface
       if (event !== X3D .X3DConstants .INITIALIZED_EVENT)
          return
 
-      const Script = this .browser .getConcreteNode ("Script")
+      await this .browser .loadComponents (this .browser .getComponent ("Scripting"))
 
-      if (!Script)
-         return
+      const Script = this .browser .getConcreteNode ("Script")
 
       this .scriptNode       = new Script (this .browser .currentScene)
       this .scriptNode ._url = new X3D .MFString ("ecmascript:")
