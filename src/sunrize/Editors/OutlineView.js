@@ -549,10 +549,10 @@ module .exports = class OutlineView extends Interface
 
       // Fields
 
-      let fields = full ? [... node .getUserDefinedFields (), ... node .getPredefinedFields ()] : node .getChangedFields (true)
+      let fields = full ? node .getFields () : node .getChangedFields (true)
 
       if (!fields .length)
-         fields = [... node .getUserDefinedFields (), ... node .getPredefinedFields ()]
+         fields = node .getFields ()
 
       if (node .canUserDefinedFields ())
       {

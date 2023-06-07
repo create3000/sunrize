@@ -70,7 +70,7 @@ module .exports = class Editor
       {
          children .add (node)
 
-         for (const field of [... node .getUserDefinedFields (), ... node .getPredefinedFields ()])
+         for (const field of node .getFields ())
          {
             for (const route of field .getInputRoutes ())
                childRoutes .add (route)
@@ -443,7 +443,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
 
                // Remove routes.
 
-               for (const field of [... node .getUserDefinedFields (), ... node .getPredefinedFields ()])
+               for (const field of node .getFields ())
                {
                   for (const route of field .getInputRoutes ())
                   {
@@ -470,7 +470,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
 
                // Clear fields, to get right clone count.
 
-               for (const field of [... node .getUserDefinedFields (), ... node .getPredefinedFields ()])
+               for (const field of node .getFields ())
                {
                   switch (field .getType ())
                   {
@@ -1601,7 +1601,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
          }
          else
          {
-            for (const field of [... node .getUserDefinedFields (), ... node .getPredefinedFields ()])
+            for (const field of node .getFields ())
             {
                switch (field .getType ())
                {
@@ -1683,7 +1683,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
 
             Traverse .traverse (proto, Traverse .PROTO_DECLARATION | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, (node) =>
             {
-               for (const field of [... node .getUserDefinedFields (), ... node .getPredefinedFields ()])
+               for (const field of node .getFields ())
                {
                   // Remove references.
 
@@ -1804,7 +1804,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
 
             Traverse .traverse (proto, Traverse .PROTO_DECLARATION | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, (node) =>
             {
-               for (const field of [... node .getUserDefinedFields (), ... node .getPredefinedFields ()])
+               for (const field of node .getFields ())
                {
                   for (const removedField of removedFields)
                   {
@@ -2230,7 +2230,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
       if (!node)
          return true
 
-      return [... node .getUserDefinedFields (), ... node .getPredefinedFields ()] .every (field =>
+      return node .getFields () .every (field =>
       {
          switch (field .getType ())
          {
