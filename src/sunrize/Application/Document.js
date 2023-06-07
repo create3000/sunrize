@@ -99,7 +99,7 @@ module .exports = new class Document extends Interface
       this .undoManager ()
    }
 
-   activeElement = $()
+   activeElement = null
 
    onfocus ()
    {
@@ -389,7 +389,7 @@ module .exports = new class Document extends Interface
 
    activeElementIsInputOrOutput ()
    {
-      if (!document .activeElement)
+      if (!this .activeElement)
          return false
 
       const activeElement = this .activeElement
