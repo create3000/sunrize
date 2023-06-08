@@ -11,10 +11,4 @@ class PickableGroupTool extends X3DBoundedObjectTool
    bboxColor = ToolColors .ROSE
 }
 
-Object .assign (PickableGroup .prototype,
-{
-   addTool: function ()
-   {
-      return new PickableGroupTool (this)
-   },
-})
+module .exports = PickableGroupTool

@@ -11,10 +11,4 @@ class GeoTransformTool extends X3DBoundedObjectTool
    bboxColor = ToolColors .GREEN
 }
 
-Object .assign (GeoTransform .prototype,
-{
-   addTool: function ()
-   {
-      return new GeoTransformTool (this)
-   },
-})
+module .exports = GeoTransformTool

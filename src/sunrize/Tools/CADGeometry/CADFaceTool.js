@@ -11,10 +11,4 @@ class CADFaceTool extends X3DBoundedObjectTool
    bboxColor = ToolColors .BROWN
 }
 
-Object .assign (CADFace .prototype,
-{
-   addTool: function ()
-   {
-      return new CADFaceTool (this)
-   },
-})
+module .exports = CADFaceTool

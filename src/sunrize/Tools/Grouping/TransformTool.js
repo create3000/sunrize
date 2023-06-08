@@ -11,10 +11,4 @@ class TransformTool extends X3DTransformNodeTool
    bboxColor = ToolColors .GREEN
 }
 
-Object .assign (Transform .prototype,
-{
-   addTool: function ()
-   {
-      return new TransformTool (this)
-   },
-})
+module .exports = TransformTool

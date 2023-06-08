@@ -11,10 +11,4 @@ class GeoLocationTool extends X3DBoundedObjectTool
    bboxColor = ToolColors .DARK_GREEN
 }
 
-Object .assign (GeoLocation .prototype,
-{
-   addTool: function ()
-   {
-      return new GeoLocationTool (this)
-   },
-})
+module .exports = GeoLocationTool

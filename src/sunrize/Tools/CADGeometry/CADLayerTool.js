@@ -11,10 +11,4 @@ class CADLayerTool extends X3DBoundedObjectTool
    bboxColor = ToolColors .DARK_YELLOW
 }
 
-Object .assign (CADLayer .prototype,
-{
-   addTool: function ()
-   {
-      return new CADLayerTool (this)
-   },
-})
+module .exports = CADLayerTool

@@ -27,10 +27,4 @@ class X3DPrototypeInstanceTool extends X3DNodeTool
    }
 }
 
-Object .assign (X3DPrototypeInstance .prototype,
-{
-   addTool: function ()
-   {
-      return new X3DPrototypeInstanceTool (this)
-   },
-})
+module .exports = X3DPrototypeInstanceTool

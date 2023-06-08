@@ -35,10 +35,4 @@ class CollidableOffsetTool extends X3DBoundedObjectTool
    }
 }
 
-Object .assign (CollidableOffset .prototype,
-{
-   addTool: function ()
-   {
-      return new CollidableOffsetTool (this)
-   },
-})
+module .exports = CollidableOffsetTool

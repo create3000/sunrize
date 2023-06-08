@@ -11,10 +11,4 @@ class HAnimSegmentTool extends X3DBoundedObjectTool
    bboxColor = ToolColors .DARK_GREEN
 }
 
-Object .assign (HAnimSegment .prototype,
-{
-   addTool: function ()
-   {
-      return new HAnimSegmentTool (this)
-   },
-})
+module .exports = HAnimSegmentTool

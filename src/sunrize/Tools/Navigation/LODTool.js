@@ -28,10 +28,4 @@ class LODTool extends X3DBoundedObjectTool
    }
 }
 
-Object .assign (LOD .prototype,
-{
-   addTool: function ()
-   {
-      return new LODTool (this)
-   },
-})
+module .exports = LODTool

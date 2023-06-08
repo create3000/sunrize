@@ -7,10 +7,4 @@ const
 
 class LayerTool extends X3DLayerNodeTool { }
 
-Object .assign (Layer .prototype,
-{
-   addTool: function ()
-   {
-      return new LayerTool (this)
-   },
-})
+module .exports = LayerTool

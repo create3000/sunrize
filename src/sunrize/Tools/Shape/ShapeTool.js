@@ -11,10 +11,4 @@ class ShapeTool extends X3DBoundedObjectTool
    bboxColor = ToolColors .ORANGE
 }
 
-Object .assign (Shape .prototype,
-{
-   addTool: function ()
-   {
-      return new ShapeTool (this)
-   },
-})
+module .exports = ShapeTool

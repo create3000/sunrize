@@ -35,10 +35,4 @@ class CollisionTool extends X3DBoundedObjectTool
    }
 }
 
-Object .assign (Collision .prototype,
-{
-   addTool: function ()
-   {
-      return new CollisionTool (this)
-   },
-})
+module .exports = CollisionTool

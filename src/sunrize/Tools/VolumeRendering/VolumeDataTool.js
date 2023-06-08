@@ -7,10 +7,4 @@ const
 
 class VolumeDataTool extends X3DVolumeDataNodeTool { }
 
-Object .assign (VolumeData .prototype,
-{
-   addTool: function ()
-   {
-      return new VolumeDataTool (this)
-   },
-})
+module .exports = VolumeDataTool

@@ -11,10 +11,4 @@ class CADPartTool extends X3DTransformNodeTool
    bboxColor = ToolColors .GREEN
 }
 
-Object .assign (CADPart .prototype,
-{
-   addTool: function ()
-   {
-      return new CADPartTool (this)
-   },
-})
+module .exports = CADPartTool

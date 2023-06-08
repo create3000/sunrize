@@ -11,10 +11,4 @@ class HAnimHumanoidTool extends X3DTransformNodeTool
    bboxColor = ToolColors .GREEN
 }
 
-Object .assign (HAnimHumanoid .prototype,
-{
-   addTool: function ()
-   {
-      return new HAnimHumanoidTool (this)
-   },
-})
+module .exports = HAnimHumanoidTool

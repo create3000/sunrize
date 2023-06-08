@@ -3,6 +3,7 @@
 const
    path     = require ("path"),
    url      = require ("url"),
+   fs       = require ("fs"),
    Traverse = require("../../Application/Traverse"),
    X3D      = require ("../../X3D"),
    Fields   = X3D .require ("x_ite/Fields"),
@@ -141,6 +142,11 @@ Object .assign (X3DNode .prototype,
 {
    addTool: function ()
    {
+      const module = path .resolve (__dirname, "..", this .constructor .componentName, this .constructor .typeName + "Tool.js")
+
+      if (fs .existsSync (module))
+         return new (require (module)) (this)
+
       return this
    },
    removeTool: function ()

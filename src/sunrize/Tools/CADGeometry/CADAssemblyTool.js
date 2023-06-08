@@ -11,10 +11,4 @@ class CADAssemblyTool extends X3DBoundedObjectTool
    bboxColor = ToolColors .DARK_GREEN
 }
 
-Object .assign (CADAssembly .prototype,
-{
-   addTool: function ()
-   {
-      return new CADAssemblyTool (this)
-   },
-})
+module .exports = CADAssemblyTool

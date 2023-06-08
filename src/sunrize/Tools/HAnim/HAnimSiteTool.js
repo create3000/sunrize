@@ -11,10 +11,4 @@ class HAnimSiteTool extends X3DTransformNodeTool
    bboxColor = ToolColors .GREEN
 }
 
-Object .assign (HAnimSite .prototype,
-{
-   addTool: function ()
-   {
-      return new HAnimSiteTool (this)
-   },
-})
+module .exports = HAnimSiteTool

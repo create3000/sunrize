@@ -11,10 +11,4 @@ class StaticGroupTool extends X3DBoundedObjectTool
    bboxColor = ToolColors .DARK_GREY
 }
 
-Object .assign (StaticGroup .prototype,
-{
-   addTool: function ()
-   {
-      return new StaticGroupTool (this)
-   },
-})
+module .exports = StaticGroupTool

@@ -11,10 +11,4 @@ class ScreenGroupTool extends X3DBoundedObjectTool
    bboxColor = ToolColors .LIME
 }
 
-Object .assign (ScreenGroup .prototype,
-{
-   addTool: function ()
-   {
-      return new ScreenGroupTool (this)
-   },
-})
+module .exports = ScreenGroupTool

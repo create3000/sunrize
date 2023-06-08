@@ -7,10 +7,4 @@ const
 
 class SegmentedVolumeDataTool extends X3DVolumeDataNodeTool { }
 
-Object .assign (SegmentedVolumeData .prototype,
-{
-   addTool: function ()
-   {
-      return new SegmentedVolumeDataTool (this)
-   },
-})
+module .exports = SegmentedVolumeDataTool

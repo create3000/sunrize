@@ -31,10 +31,4 @@ class GeoLODTool extends X3DBoundedObjectTool
    }
 }
 
-Object .assign (GeoLOD .prototype,
-{
-   addTool: function ()
-   {
-      return new GeoLODTool (this)
-   },
-})
+module .exports = GeoLODTool

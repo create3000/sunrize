@@ -11,10 +11,4 @@ class HAnimJointTool extends X3DTransformNodeTool
    bboxColor = ToolColors .GREEN
 }
 
-Object .assign (HAnimJoint .prototype,
-{
-   addTool: function ()
-   {
-      return new HAnimJointTool (this)
-   },
-})
+module .exports = HAnimJointTool

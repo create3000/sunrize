@@ -11,10 +11,4 @@ class GroupTool extends X3DBoundedObjectTool
    bboxColor = ToolColors .DARK_GREEN
 }
 
-Object .assign (Group .prototype,
-{
-   addTool: function ()
-   {
-      return new GroupTool (this)
-   },
-})
+module .exports = GroupTool

@@ -28,10 +28,4 @@ class BillboardTool extends X3DBoundedObjectTool
    }
 }
 
-Object .assign (Billboard .prototype,
-{
-   addTool: function ()
-   {
-      return new BillboardTool (this)
-   },
-})
+module .exports = BillboardTool

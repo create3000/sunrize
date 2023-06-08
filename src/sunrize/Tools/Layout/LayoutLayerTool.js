@@ -7,10 +7,4 @@ const
 
 class LayoutLayerTool extends X3DLayerNodeTool { }
 
-Object .assign (LayoutLayer .prototype,
-{
-   addTool: function ()
-   {
-      return new LayoutLayerTool (this)
-   },
-})
+module .exports = LayoutLayerTool

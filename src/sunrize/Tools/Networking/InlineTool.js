@@ -11,10 +11,4 @@ class InlineTool extends X3DBoundedObjectTool
    bboxColor = ToolColors .WHITE
 }
 
-Object .assign (Inline .prototype,
-{
-   addTool: function ()
-   {
-      return new InlineTool (this)
-   },
-})
+module .exports = InlineTool

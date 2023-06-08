@@ -11,10 +11,4 @@ class SwitchTool extends X3DBoundedObjectTool
    bboxColor = ToolColors .YELLOW
 }
 
-Object .assign (Switch .prototype,
-{
-   addTool: function ()
-   {
-      return new SwitchTool (this)
-   },
-})
+module .exports = SwitchTool

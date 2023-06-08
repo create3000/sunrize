@@ -11,10 +11,4 @@ class AnchorTool extends X3DBoundedObjectTool
    bboxColor = ToolColors .LILA
 }
 
-Object .assign (Anchor .prototype,
-{
-   addTool: function ()
-   {
-      return new AnchorTool (this)
-   },
-})
+module .exports = AnchorTool

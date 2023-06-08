@@ -11,10 +11,4 @@ class ParticleSystemTool extends X3DBoundedObjectTool
    bboxColor = ToolColors .ORANGE
 }
 
-Object .assign (ParticleSystem .prototype,
-{
-   addTool: function ()
-   {
-      return new ParticleSystemTool (this)
-   },
-})
+module .exports = ParticleSystemTool
