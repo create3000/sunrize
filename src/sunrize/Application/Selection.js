@@ -1,46 +1,53 @@
-require ("../Tools")
-
-module .exports = new class Selection
+module .exports = new Promise (async (resolve, reject) =>
 {
-   constructor ()
+   const browser = require ("./Document") .browser
+
+   await browser .loadComponents (browser .getProfile ("Full"))
+
+   require ("../Tools")
+
+   resolve (new class Selection
    {
-      this .nodes = new Map ()
-   }
+      constructor ()
+      {
+         this .nodes = new Map ()
+      }
 
-   clear ()
-   {
-      for (const node of this .nodes .values ())
-         node .removeTool ()
+      clear ()
+      {
+         for (const node of this .nodes .values ())
+            node .removeTool ()
 
-      this .nodes .clear ()
-   }
+         this .nodes .clear ()
+      }
 
-   set (node)
-   {
-      this .nodes .delete (this .node (node))
+      set (node)
+      {
+         this .nodes .delete (this .node (node))
 
-      this .clear ()
-      this .add (node)
-   }
+         this .clear ()
+         this .add (node)
+      }
 
-   add (node)
-   {
-      this .nodes .set (this .node (node), node .addTool ())
-   }
+      add (node)
+      {
+         this .nodes .set (this .node (node), node .addTool ())
+      }
 
-   remove (node)
-   {
-      this .tool (node) ?.removeTool ()
-      this .nodes .delete (this .node (node))
-   }
+      remove (node)
+      {
+         this .tool (node) ?.removeTool ()
+         this .nodes .delete (this .node (node))
+      }
 
-   node (node)
-   {
-      return node .valueOf ()
-   }
+      node (node)
+      {
+         return node .valueOf ()
+      }
 
-   tool (node)
-   {
-      return this .nodes .get (this .node (node))
-   }
-}
+      tool (node)
+      {
+         return this .nodes .get (this .node (node))
+      }
+   })
+})

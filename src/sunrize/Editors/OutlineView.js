@@ -2484,7 +2484,7 @@ module .exports = class OutlineView extends Interface
          this .selectPrimaryElement (element)
    }
 
-   selectNodeElement (element, add = false)
+   async selectNodeElement (element, add = false)
    {
       if (!element .hasClass ("node"))
          return
@@ -2493,7 +2493,7 @@ module .exports = class OutlineView extends Interface
          return
 
       const
-         selection        = require ("../Application/Selection"),
+         selection        = await require ("../Application/Selection"),
          selected         = element .hasClass ("selected"),
          selectedElements = this .sceneGraph .find (".primary, .selected"),
          node             = this .getNode (element),
