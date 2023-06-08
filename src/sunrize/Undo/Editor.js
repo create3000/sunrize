@@ -63,13 +63,13 @@ module .exports = class Editor
       // Determine components and routes.
 
       const
-         components  = new Set (),
-         children    = new Set (),
-         childRoutes = new Set ()
+         componentNames = new Set (),
+         children       = new Set (),
+         childRoutes    = new Set ()
 
       Traverse .traverse (nodes, 0, node =>
       {
-         components .add (node .getComponentName ())
+         componentNames .add (node .getComponentName ())
          children .add (node)
 
          for (const field of node .getFields ())
@@ -98,7 +98,7 @@ module .exports = class Editor
 
       // Add components.
 
-      for (const name of components)
+      for (const name of componentNames)
          scene .addComponent (browser .getComponent (name))
 
       // Set nodes.
