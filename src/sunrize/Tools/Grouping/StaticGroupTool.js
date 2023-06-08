@@ -2,9 +2,7 @@
 
 const
    X3DBoundedObjectTool = require ("./X3DBoundedObjectTool"),
-   ToolColors           = require ("../Core/ToolColors"),
-   X3D                  = require ("../../X3D"),
-   StaticGroup          = X3D .require ("x_ite/Components/Grouping/StaticGroup")
+   ToolColors           = require ("../Core/ToolColors")
 
 class StaticGroupTool extends X3DBoundedObjectTool
 {

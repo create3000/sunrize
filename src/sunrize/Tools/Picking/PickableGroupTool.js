@@ -2,9 +2,7 @@
 
 const
    X3DBoundedObjectTool = require ("../Grouping/X3DBoundedObjectTool"),
-   ToolColors           = require ("../Core/ToolColors"),
-   X3D                  = require ("../../X3D"),
-   PickableGroup        = X3D .require ("x_ite/Components/Picking/PickableGroup")
+   ToolColors           = require ("../Core/ToolColors")
 
 class PickableGroupTool extends X3DBoundedObjectTool
 {

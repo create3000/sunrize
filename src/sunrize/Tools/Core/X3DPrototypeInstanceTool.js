@@ -1,9 +1,6 @@
 "use strict"
 
-const
-   X3DNodeTool          = require ("./X3DNodeTool"),
-   X3D                  = require ("../../X3D"),
-   X3DPrototypeInstance = X3D .require ("x_ite/Components/Core/X3DPrototypeInstance")
+const X3DNodeTool = require ("./X3DNodeTool")
 
 class X3DPrototypeInstanceTool extends X3DNodeTool
 {

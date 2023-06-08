@@ -2,9 +2,7 @@
 
 const
    X3DTransformNodeTool = require ("../Grouping/X3DTransformNodeTool"),
-   ToolColors           = require ("../Core/ToolColors"),
-   X3D                  = require ("../../X3D"),
-   HAnimHumanoid        = X3D .require ("x_ite/Components/HAnim/HAnimHumanoid")
+   ToolColors           = require ("../Core/ToolColors")
 
 class HAnimHumanoidTool extends X3DTransformNodeTool
 {

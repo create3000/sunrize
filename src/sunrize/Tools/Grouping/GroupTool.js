@@ -2,9 +2,7 @@
 
 const
    X3DBoundedObjectTool = require ("./X3DBoundedObjectTool"),
-   ToolColors           = require ("../Core/ToolColors"),
-   X3D                  = require ("../../X3D"),
-   Group                = X3D .require ("x_ite/Components/Grouping/Group")
+   ToolColors           = require ("../Core/ToolColors")
 
 class GroupTool extends X3DBoundedObjectTool
 {

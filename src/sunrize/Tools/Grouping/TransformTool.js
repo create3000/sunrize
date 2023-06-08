@@ -2,9 +2,7 @@
 
 const
    X3DTransformNodeTool = require ("./X3DTransformNodeTool"),
-   ToolColors           = require ("../Core/ToolColors"),
-   X3D                  = require ("../../X3D"),
-   Transform            = X3D .require ("x_ite/Components/Grouping/Transform")
+   ToolColors           = require ("../Core/ToolColors")
 
 class TransformTool extends X3DTransformNodeTool
 {

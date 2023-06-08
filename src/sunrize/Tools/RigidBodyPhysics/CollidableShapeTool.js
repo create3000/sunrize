@@ -2,9 +2,7 @@
 
 const
    X3DBoundedObjectTool = require ("../Grouping/X3DBoundedObjectTool"),
-   ToolColors           = require ("../Core/ToolColors"),
-   X3D                  = require ("../../X3D"),
-   CollidableShape      = X3D .require ("x_ite/Components/RigidBodyPhysics/CollidableShape")
+   ToolColors           = require ("../Core/ToolColors")
 
 const
    _set_enabled = Symbol ()

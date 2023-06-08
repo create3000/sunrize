@@ -2,9 +2,7 @@
 
 const
    X3DBoundedObjectTool = require ("../Grouping/X3DBoundedObjectTool"),
-   ToolColors           = require ("../Core/ToolColors"),
-   X3D                  = require ("../../X3D"),
-   Billboard            = X3D .require ("x_ite/Components/Navigation/Billboard")
+   ToolColors           = require ("../Core/ToolColors")
 
 class BillboardTool extends X3DBoundedObjectTool
 {

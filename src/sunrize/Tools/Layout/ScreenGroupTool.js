@@ -2,9 +2,7 @@
 
 const
    X3DBoundedObjectTool = require ("../Grouping/X3DBoundedObjectTool"),
-   ToolColors           = require ("../Core/ToolColors"),
-   X3D                  = require ("../../X3D"),
-   ScreenGroup          = X3D .require ("x_ite/Components/Layout/ScreenGroup")
+   ToolColors           = require ("../Core/ToolColors")
 
 class ScreenGroupTool extends X3DBoundedObjectTool
 {

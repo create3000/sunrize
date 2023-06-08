@@ -2,9 +2,7 @@
 
 const
    X3DBoundedObjectTool = require ("./X3DBoundedObjectTool"),
-   ToolColors           = require ("../Core/ToolColors"),
-   X3D                  = require ("../../X3D"),
-   Switch               = X3D .require ("x_ite/Components/Grouping/Switch")
+   ToolColors           = require ("../Core/ToolColors")
 
 class SwitchTool extends X3DBoundedObjectTool
 {
