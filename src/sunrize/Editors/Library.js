@@ -252,11 +252,11 @@ module .exports = new class Library extends Dialog
       }
    }
 
-   importX3D (typeName, x3dSyntax)
+   async importX3D (typeName, x3dSyntax)
    {
       UndoManager .shared .beginUndo (_ ("Import %s"), typeName)
 
-      const nodes = Editor .importX3D (this .executionContext, x3dSyntax)
+      const nodes = await Editor .importX3D (this .executionContext, x3dSyntax)
 
       for (const node of nodes)
       {

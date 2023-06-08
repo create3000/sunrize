@@ -60,14 +60,16 @@ module .exports = class Editor
             protos .add (protoNode)
       }
 
-      // Determine routes.
+      // Determine components and routes.
 
       const
+         components  = new Set (),
          children    = new Set (),
          childRoutes = new Set ()
 
-      Traverse .traverse (nodes, 0, (node) =>
+      Traverse .traverse (nodes, 0, node =>
       {
+         components .add (node .getComponentName ())
          children .add (node)
 
          for (const field of node .getFields ())
@@ -94,6 +96,11 @@ module .exports = class Editor
       for (const proto of protos)
          scene .protos .add (proto .getName (), proto)
 
+      // Add components.
+
+      for (const name of components)
+         scene .addComponent (browser .getComponent (name))
+
       // Set nodes.
 
       scene .rootNodes = nodes
@@ -116,20 +123,17 @@ module .exports = class Editor
     * @param {X3DExecutionContext} executionContext
     * @param {string} x3dSyntax
     * @param {UndoManager} undoManager
-    * @returns {Array<X3DNode>} nodes
+    * @returns {Promise<Array<X3DNode>>}
     */
-   static importX3D (executionContext, x3dSyntax, undoManager = UndoManager .shared)
+   static async importX3D (executionContext, x3dSyntax, undoManager = UndoManager .shared)
    {
       // Parse string.
 
       const
-         browser      = executionContext .getBrowser (),
-         scene        = browser .createScene (),
+         scene        = executionContext instanceof X3D .X3DScene ? executionContext : executionContext .getScene (),
          externprotos = new Map (Array .from (executionContext .externprotos, p => [p .getName (), p])),
          protos       = new Map (Array .from (executionContext .protos,       p => [p .getName (), p])),
          rootNodes    = executionContext .rootNodes .copy ()
-
-      browser .loadComponents (browser .getProfile ("Full"))
 
       try
       {
@@ -138,8 +142,7 @@ module .exports = class Editor
             parser     = new GoldenGate (scene)
 
          parser .pushExecutionContext (executionContext)
-         parser .parseIntoScene (x3dSyntax)
-         parser .popExecutionContext ()
+         await new Promise ((resolve, reject) => parser .parseIntoScene (x3dSyntax, resolve, reject))
       }
       catch (error)
       {
@@ -226,8 +229,6 @@ module .exports = class Editor
 
       if (oldWorldURL)
          this .rewriteURLs (executionContext, [...newProtos, ...nodes], oldWorldURL [0], executionContext .worldURL, undoManager)
-
-      scene .dispose ()
 
       this .requestUpdateInstances (executionContext, undoManager)
 
@@ -1019,7 +1020,15 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
       undoManager .endUndo ()
    }
 
-   static turnIntoExternProto (executionContext, proto, filePath, undoManager = UndoManager .shared)
+   /**
+    *
+    * @param {X3DExecutionContext} executionContext
+    * @param {Array<X3DProtoDeclaration} protos
+    * @param {string} filePath
+    * @param {UndoManager} undoManager
+    * @returns {Promise<void>}
+    */
+   static async turnIntoExternProto (executionContext, proto, filePath, undoManager = UndoManager .shared)
    {
       const
          browser   = executionContext .getBrowser (),
@@ -1028,7 +1037,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
 
       undoManager .beginUndo (_ ("Turn Prototype »%s« into Extern Prototype"), proto .getName ())
 
-      this .importX3D (scene, x3dSyntax, new UndoManager ())
+      await this .importX3D (scene, x3dSyntax, new UndoManager ())
       this .rewriteURLs (scene, scene, executionContext .worldURL, url .pathToFileURL (filePath) .href, new UndoManager ())
 
       fs .writeFileSync (filePath, this .getContents (scene, path .extname (filePath)))
@@ -1186,8 +1195,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
     * @param {X3DExecutionContext} executionContext
     * @param {X3DExternProtoDeclaration} externproto
     * @param {UndoManager} undoManager
+    * @returns {Promise<void>}
     */
-   static turnIntoPrototype (executionContext, externproto, undoManager = UndoManager .shared)
+   static async turnIntoPrototype (executionContext, externproto, undoManager = UndoManager .shared)
    {
       const
          browser   = executionContext .getBrowser (),
@@ -1196,7 +1206,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
 
       undoManager .beginUndo (_ ("Turn Extern Prototype »%s« into Prototype"), externproto .getName ())
 
-      this .importX3D (executionContext, x3dSyntax, undoManager)
+      await this .importX3D (executionContext, x3dSyntax, undoManager)
 
       const
          protos         = Array .from (executionContext .protos),

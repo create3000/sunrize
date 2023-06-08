@@ -391,13 +391,13 @@ main ()
       electron .ipcRenderer .send ("context-menu", "script-editor-menu", menu)
    }
 
-   createScript ()
+   async createScript ()
    {
       UndoManager .shared .beginUndo (_ ("Create New Script"))
 
       Editor .addComponent (this .browser .currentScene, "Scripting")
 
-      const nodes = Editor .importX3D (this .browser .currentScene, `
+      const nodes = await Editor .importX3D (this .browser .currentScene, `
 DEF NewScript Script {
    url "ecmascript:
 
@@ -419,13 +419,13 @@ function set_field (value, time)
       this .setNode (nodes [0])
    }
 
-   createShader ()
+   async createShader ()
    {
       UndoManager .shared .beginUndo (_ ("Create New Shader"))
 
       Editor .addComponent (this .browser .currentScene, "Shaders")
 
-      const nodes = Editor .importX3D (this .browser .currentScene, `
+      const nodes = await Editor .importX3D (this .browser .currentScene, `
 DEF NewShader ComposedShader {
    language "GLSL"
    parts [
