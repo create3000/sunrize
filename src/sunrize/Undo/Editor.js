@@ -606,8 +606,11 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
       if ((profile && oldProfile && profile .name === oldProfile .name) || (profile === oldProfile))
          return
 
+      const browser = scene .getBrowser ()
+
       undoManager .beginUndo (_ ("Set Profile to »%s«"), profile ? profile .title : "Full")
 
+      browser .loadComponents (profile)
       scene .setProfile (profile)
 
       undoManager .registerUndo (() =>
@@ -626,9 +629,13 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
     */
    static setComponents (scene, components, undoManager = UndoManager .shared)
    {
-      const oldComponents = Array .from (scene .getComponents ())
+      const
+         browser       = scene .getBrowser (),
+         oldComponents = Array .from (scene .getComponents ())
 
       undoManager .beginUndo (_ ("Set Components of Scene"))
+
+      browser .loadComponents (... components .map (component => component .name))
 
       for (const { name } of oldComponents)
          scene .removeComponent (name)
@@ -644,37 +651,38 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
       undoManager .endUndo ()
    }
 
-   static addComponent (executionContext, name, undoManager = UndoManager .shared)
+   static addComponent (scene, name, undoManager = UndoManager .shared)
    {
-      if (executionContext .hasComponent (name))
+      if (scene .hasComponent (name))
          return
 
-      const browser = executionContext .getBrowser ()
+      const browser = scene .getBrowser ()
 
       undoManager .beginUndo (_ ("Add Component %s"), name)
 
-      executionContext .addComponent (browser .getComponent (name))
+      browser .loadComponents (name)
+      scene .addComponent (browser .getComponent (name))
 
       undoManager .registerUndo (() =>
       {
-         this .removeComponent (executionContext, name, undoManager)
+         this .removeComponent (scene, name, undoManager)
       })
 
       undoManager .endUndo ()
    }
 
-   static removeComponent (executionContext, name, undoManager = UndoManager .shared)
+   static removeComponent (scene, name, undoManager = UndoManager .shared)
    {
-      if (!executionContext .hasComponent (name))
+      if (!scene .hasComponent (name))
          return
 
       undoManager .beginUndo (_ ("Remove Component %s"), name)
 
-      executionContext .removeComponent (name)
+      scene .removeComponent (name)
 
       undoManager .registerUndo (() =>
       {
-         this .addComponent (executionContext, name, undoManager)
+         this .addComponent (scene, name, undoManager)
       })
 
       undoManager .endUndo ()
