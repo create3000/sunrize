@@ -11,7 +11,7 @@ const
 
 const handler =
 {
-   get: function (target, key)
+   get (target, key)
    {
       if (key in target)
          return target [key]
@@ -24,7 +24,7 @@ const handler =
       else
          return property
    },
-   set: function (target, key, value)
+   set (target, key, value)
    {
       if (key in target)
       {
@@ -35,15 +35,15 @@ const handler =
       target .toolNode [key] = value
       return true
    },
-   has: function (target, key)
+   has (target, key)
    {
       return key in target .toolNode
    },
-   ownKeys: function (target)
+   ownKeys (target)
    {
       return Object .keys (target .toolNode)
    },
-   getOwnPropertyDescriptor: function (target, key)
+   getOwnPropertyDescriptor (target, key)
    {
       return Object .getOwnPropertyDescriptor (target .toolNode, key)
    },
@@ -140,7 +140,7 @@ class X3DNodeTool
 
 Object .assign (X3DNode .prototype,
 {
-   addTool: function ()
+   addTool ()
    {
       const module = path .resolve (__dirname, "..", this .constructor .componentName, this .constructor .typeName + "Tool.js")
 
@@ -149,7 +149,7 @@ Object .assign (X3DNode .prototype,
 
       return this
    },
-   removeTool: function ()
+   removeTool ()
    {
       return this
    },

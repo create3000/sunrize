@@ -8,7 +8,7 @@ const
 
 const handler =
 {
-	get: function (target, key)
+	get (target, key)
 	{
 		const property = target [key]
 
@@ -28,7 +28,7 @@ const handler =
 
 		return JSON .parse (value)
 	},
-	set: function (target, key, value)
+	set (target, key, value)
 	{
 		const
 			storage   = target .getStorage (),
@@ -47,13 +47,13 @@ const handler =
 
 		return true
 	},
-	has: function (target, key)
+	has (target, key)
 	{
 		const value = target .getStorage () [target .getNameSpace () + key]
 
 		return !(value === undefined || value === "undefined" || value === null)
 	},
-	ownKeys: function (target)
+	ownKeys (target)
 	{
 		const
 			storage   = target .getStorage (),
@@ -68,7 +68,7 @@ const handler =
 
 		return ownKeys
 	},
-	getOwnPropertyDescriptor: function (target, key)
+	getOwnPropertyDescriptor (target, key)
 	{
 		const
 			storage   = target .getStorage (),

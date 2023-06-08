@@ -231,8 +231,9 @@ module .exports = class ScriptEditor extends Interface
                   .addClass ("script-editor-monaco")
                   .appendTo (this .verticalSplitterRight)
 
-               self .MonacoEnvironment = {
-                  getWorkerUrl: function (moduleId, label)
+               self .MonacoEnvironment =
+               {
+                  getWorkerUrl (moduleId, label)
                   {
                      return "../../node_modules/monaco-editor/min/vs/base/worker/workerMain.js"
                   },

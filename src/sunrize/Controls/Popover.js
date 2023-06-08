@@ -22,7 +22,7 @@ $.fn.popover = function (options)
          delay: 0,
       },
       events: {
-         hide: function (event, api)
+         hide (event, api)
          {
             api .destroy (true)
          },

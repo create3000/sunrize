@@ -23,7 +23,7 @@ function StaticGroup (executionContext)
 Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .prototype),
    X3DBoundedObject .prototype,
 {
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
@@ -45,15 +45,15 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       this .setCameraObject   (this .groupNode .isCameraObject ());
       this .setPickableObject (this .groupNode .isPickableObject ());
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       return this .groupNode .getBBox (bbox, shadows);
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       this .groupNode .traverse (type, renderObject);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DBoundedObject .prototype .dispose .call (this);
       X3DChildNode     .prototype .dispose .call (this);
