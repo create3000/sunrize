@@ -133,6 +133,7 @@ module .exports = class Editor
 
       const
          scene        = executionContext instanceof X3D .X3DScene ? executionContext : executionContext .getScene (),
+         profile      = scene .getProfile (),
          externprotos = new Map (Array .from (executionContext .externprotos, p => [p .getName (), p])),
          protos       = new Map (Array .from (executionContext .protos,       p => [p .getName (), p])),
          rootNodes    = executionContext .rootNodes .copy ()
@@ -167,6 +168,10 @@ module .exports = class Editor
          // Restore Root Nodes.
          this .setFieldValue (executionContext, executionContext, executionContext .rootNodes, rootNodes, undoManager)
       })
+
+      // Restore profile.
+
+      scene .setProfile (profile)
 
       // Remove protos that already exists in context.
 
