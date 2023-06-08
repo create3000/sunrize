@@ -26,6 +26,7 @@ module .exports = new class Selection
    add (node)
    {
       tools .require (node .getComponentName ())
+
       this .nodes .set (this .node (node), node .addTool ())
    }
 
