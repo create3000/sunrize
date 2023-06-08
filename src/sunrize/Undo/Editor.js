@@ -129,6 +129,8 @@ module .exports = class Editor
          protos       = new Map (Array .from (executionContext .protos,       p => [p .getName (), p])),
          rootNodes    = executionContext .rootNodes .copy ()
 
+      browser .loadComponents (browser .getProfile ("Full"))
+
       try
       {
          const
