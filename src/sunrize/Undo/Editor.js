@@ -96,7 +96,9 @@ module .exports = class Editor
       for (const proto of protos)
          scene .protos .add (proto .getName (), proto)
 
-      // Add components.
+      // Set profile and components.
+
+      scene .setProfile (browser .getProfile ("Core"))
 
       for (const name of componentNames)
          scene .addComponent (browser .getComponent (name))
