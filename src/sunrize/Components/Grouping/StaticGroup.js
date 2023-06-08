@@ -20,10 +20,9 @@ function StaticGroup (executionContext)
    this .groupNode = new Group (this .getExecutionContext ());
 }
 
-StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .prototype),
    X3DBoundedObject .prototype,
 {
-   constructor: StaticGroup,
    initialize: function ()
    {
       X3DChildNode     .prototype .initialize .call (this);
