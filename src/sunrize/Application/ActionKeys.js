@@ -17,7 +17,7 @@ module .exports = class ActionKeys
 
       $(window)
          .on ("keydown", this .onkeydown .bind (this))
-         .on ("keyup", this .onkeyup .bind (this))
+         .on ("keyup",   this .onkeyup   .bind (this))
    }
 
    onkeydown (event)

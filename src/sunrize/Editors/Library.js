@@ -39,7 +39,7 @@ module .exports = new class Library extends Dialog
          .appendTo (this .element)
          .addClass ("library-input")
          .attr ("placeholder", _ ("Node type name"))
-         .on ("keydown", (event) => this .enter (event))
+         .on ("keydown", event => this .enter (event))
          .on ("keyup", () => this .update ())
 
       // Buttons

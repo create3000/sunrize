@@ -17,7 +17,7 @@ $.fn.validate = function (regex, error)
 
    let lastValue = this .val ()
 
-   this .on ("keydown.validate", (event) =>
+   this .on ("keydown.validate", event =>
    {
       if (event .key .length > 1)
          return

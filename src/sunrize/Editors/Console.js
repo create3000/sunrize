@@ -55,8 +55,8 @@ module .exports = class Console extends Interface
          .attr ("placeholder", _ ("Evaluate JavaScript code here."))
          .attr ("tabindex", 0)
          .appendTo (this .input)
-         .on ("keydown", (event) => this .onKeyDown (event))
-         .on ("keyup", (event) => this .onKeyUp (event))
+         .on ("keydown", event => this .onkeydown (event))
+         .on ("keyup", event => this .onkeyup (event))
 
       if (this .console .attr ("id") !== "console")
       {
@@ -147,7 +147,7 @@ module .exports = class Console extends Interface
       this .addMessage (null, "info", __filename, 0, `Console cleared at ${new Date () .toLocaleTimeString ()}.`)
    }
 
-   onKeyDown (event)
+   onkeydown (event)
    {
       switch (event .key)
       {
@@ -189,7 +189,7 @@ module .exports = class Console extends Interface
       }
    }
 
-   onKeyUp (event)
+   onkeyup (event)
    {
       this .adjustTextAreaHeight ()
    }

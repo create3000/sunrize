@@ -1796,6 +1796,7 @@ module .exports = class OutlineView extends Interface
 
       child
          .jstree ()
+         .off ("dblclick.jstree")
          .on ("select_node.jstree", this .selectField .bind (this))
          .appendTo (parent)
          .hide ()
@@ -1916,6 +1917,7 @@ module .exports = class OutlineView extends Interface
 
       child
          .jstree ()
+         .off ("dblclick.jstree")
          .on ("select_node.jstree", this .selectField .bind (this))
          .appendTo (parent)
          .hide ()

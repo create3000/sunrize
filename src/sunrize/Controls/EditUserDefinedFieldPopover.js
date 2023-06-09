@@ -121,7 +121,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field)
                $ .beep ()
                nameInput .highlight ()
             })
-            .on ("keydown", (event) =>
+            .on ("keydown", event =>
             {
                if (event .key !== "Enter")
                   return

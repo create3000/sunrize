@@ -50,7 +50,7 @@ $.fn.addPrototypePopover = function (executionContext, type)
                $ .beep ()
                nameInput .highlight ()
             })
-            .on ("keydown.addPrototypePopover", (event) =>
+            .on ("keydown.addPrototypePopover", event =>
             {
                if (event .key !== "Enter")
                   return
