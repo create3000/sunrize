@@ -17,7 +17,7 @@ const
    _fullExpanded = Symbol (),
    _primary      = Symbol (),
    _selected     = Symbol (),
-   _changing     = Symbol ()
+   _toolChanging = Symbol .for ("Sunrize.toolChanging")
 
 module .exports = class OutlineView extends Interface
 {
@@ -408,10 +408,10 @@ module .exports = class OutlineView extends Interface
    {
       for (const node of scene .rootNodes)
       {
-         if (!node ?.getNodeUserData (_changing))
+         if (!node ?.getNodeUserData (_toolChanging))
             continue
 
-         setTimeout (() => node .setNodeUserData (_changing, false))
+         setTimeout (() => node .setNodeUserData (_toolChanging, false))
          return
       }
 
@@ -1483,20 +1483,20 @@ module .exports = class OutlineView extends Interface
       {
          case X3D .X3DConstants .SFNode:
          {
-            if (!field ?.getNodeUserData (_changing))
+            if (!field ?.getNodeUserData (_toolChanging))
                break
 
-            setTimeout (() => field .setNodeUserData (_changing, false))
+            setTimeout (() => field .setNodeUserData (_toolChanging, false))
             return
          }
          case X3D .X3DConstants .MFNode:
          {
             for (const node of field)
             {
-               if (!node ?.getNodeUserData (_changing))
+               if (!node ?.getNodeUserData (_toolChanging))
                   continue
 
-               setTimeout (() => node .setNodeUserData (_changing, false))
+               setTimeout (() => node .setNodeUserData (_toolChanging, false))
                return
             }
 
@@ -2549,8 +2549,6 @@ module .exports = class OutlineView extends Interface
          this .getNode ($(element)) .setUserData (_primary, false)
 
       selectedElements .removeClass ("primary")
-
-      node .setUserData (_changing, true)
 
       if (add)
       {
