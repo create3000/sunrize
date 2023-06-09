@@ -9,7 +9,7 @@ const
    Fields   = X3D .require ("x_ite/Fields"),
    X3DNode  = X3D .require ("x_ite/Components/Core/X3DNode")
 
-const _toolChanging = Symbol .for ("Sunrize.toolChanging")
+const _changing = Symbol .for ("Sunrize.changing")
 
 const handler =
 {
@@ -61,7 +61,7 @@ class X3DNodeTool
       this .toolProxy  = proxy
       this .toolNode   = node
 
-      this .toolNode .setUserData (_toolChanging, true)
+      this .toolNode .setUserData (_changing, true)
 
       this .replaceNode (node, proxy)
       this .setup ()
@@ -85,7 +85,7 @@ class X3DNodeTool
    {
       Traverse .traverse (this .tool, Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES, node => node .dispose ())
 
-      this .toolNode .setUserData (_toolChanging, true)
+      this .toolNode .setUserData (_changing, true)
 
       this .replaceNode (this, this .toolNode)
 

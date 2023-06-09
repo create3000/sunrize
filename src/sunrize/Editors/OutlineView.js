@@ -17,7 +17,7 @@ const
    _fullExpanded = Symbol (),
    _primary      = Symbol (),
    _selected     = Symbol (),
-   _toolChanging = Symbol .for ("Sunrize.toolChanging")
+   _changing     = Symbol .for ("Sunrize.changing")
 
 module .exports = class OutlineView extends Interface
 {
@@ -408,10 +408,10 @@ module .exports = class OutlineView extends Interface
    {
       for (const node of scene .rootNodes)
       {
-         if (!node ?.getNodeUserData (_toolChanging))
+         if (!node ?.getNodeUserData (_changing))
             continue
 
-         setTimeout (() => node .setNodeUserData (_toolChanging, false))
+         setTimeout (() => node .setNodeUserData (_changing, false))
          return
       }
 
@@ -1483,20 +1483,20 @@ module .exports = class OutlineView extends Interface
       {
          case X3D .X3DConstants .SFNode:
          {
-            if (!field ?.getNodeUserData (_toolChanging))
+            if (!field ?.getNodeUserData (_changing))
                break
 
-            setTimeout (() => field .setNodeUserData (_toolChanging, false))
+            setTimeout (() => field .setNodeUserData (_changing, false))
             return
          }
          case X3D .X3DConstants .MFNode:
          {
             for (const node of field)
             {
-               if (!node ?.getNodeUserData (_toolChanging))
+               if (!node ?.getNodeUserData (_changing))
                   continue
 
-               setTimeout (() => node .setNodeUserData (_toolChanging, false))
+               setTimeout (() => node .setNodeUserData (_changing, false))
                return
             }
 
