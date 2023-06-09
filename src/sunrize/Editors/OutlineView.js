@@ -16,7 +16,8 @@ const
    _expanded     = Symbol (),
    _fullExpanded = Symbol (),
    _primary      = Symbol (),
-   _selected     = Symbol ()
+   _selected     = Symbol (),
+   _changing     = Symbol ()
 
 module .exports = class OutlineView extends Interface
 {
@@ -370,7 +371,7 @@ module .exports = class OutlineView extends Interface
 
    expandSceneRootNodes (parent, scene)
    {
-      scene .rootNodes .addFieldCallback (this, this .updateSceneSubtree .bind (this, parent, scene, "root-nodes", "expandSceneRootNodes"))
+      scene .rootNodes .addFieldCallback (this, this .updateSceneRootNodes .bind (this, parent, scene, "root-nodes", "expandSceneRootNodes"))
 
       parent .attr ("index", scene .rootNodes .length)
 
@@ -401,6 +402,20 @@ module .exports = class OutlineView extends Interface
       this .connectSceneSubtree (parent, child)
 
       return child
+   }
+
+   updateSceneRootNodes (parent, scene, type, func)
+   {
+      for (const node of scene .rootNodes)
+      {
+         if (!node ?.getNodeUserData (_changing))
+            continue
+
+         setTimeout (() => node .setNodeUserData (_changing, false))
+         return
+      }
+
+      this .updateSceneSubtree (parent, scene, type, func)
    }
 
    expandSceneImportedNodes (parent, scene)
@@ -1464,6 +1479,31 @@ module .exports = class OutlineView extends Interface
 
    updateField (parent, node, field, type, full)
    {
+      switch (field .getType ())
+      {
+         case X3D .X3DConstants .SFNode:
+         {
+            if (!field ?.getNodeUserData (_changing))
+               break
+
+            setTimeout (() => field .setNodeUserData (_changing, false))
+            return
+         }
+         case X3D .X3DConstants .MFNode:
+         {
+            for (const node of field)
+            {
+               if (!node ?.getNodeUserData (_changing))
+                  continue
+
+               setTimeout (() => node .setNodeUserData (_changing, false))
+               return
+            }
+
+            break
+         }
+      }
+
       this .saveScrollPositions ()
 
       this .removeSubtree (parent)
@@ -2509,6 +2549,8 @@ module .exports = class OutlineView extends Interface
          this .getNode ($(element)) .setUserData (_primary, false)
 
       selectedElements .removeClass ("primary")
+
+      node .setUserData (_changing, true)
 
       if (add)
       {
