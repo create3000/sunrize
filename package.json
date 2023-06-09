@@ -40,7 +40,7 @@
     "@electron-forge/maker-rpm": "^6.1.1",
     "@electron-forge/maker-squirrel": "^6.1.1",
     "@electron-forge/maker-zip": "^6.1.1",
-    "electron": "^24.4.0"
+    "electron": "^25.1.0"
   },
   "dependencies": {
     "capitalize": "^2.0.4",
@@ -51,10 +51,10 @@
     "jquery": "^3.7.0",
     "jquery-ui-dist": "^1.13.2",
     "jstree": "^3.3.15",
-    "material-icons": "^1.13.7",
-    "material-symbols": "^0.5.5",
+    "material-icons": "^1.13.8",
+    "material-symbols": "^0.6.0",
     "md5": "^2.3.0",
-    "monaco-editor": "^0.38.0",
+    "monaco-editor": "^0.39.0",
     "node-localstorage": "^2.2.1",
     "qtip2": "^3.0.3",
     "spectrum-colorpicker2": "^2.0.10",
