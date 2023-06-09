@@ -203,6 +203,7 @@ module .exports = class OutlineView extends Interface
 
       child
          .jstree ()
+         .off ("keypress.jstree")
          .on ("before_open.jstree", this .nodeBeforeOpen .bind (this))
          .on ("close_node.jstree",  this .nodeCloseNode .bind (this))
          .on ("select_node.jstree", this .selectNode .bind (this))
@@ -644,6 +645,7 @@ module .exports = class OutlineView extends Interface
 
       child
          .jstree ()
+         .off ("keypress.jstree")
          .on ("before_open.jstree", this .fieldBeforeOpen .bind (this))
          .on ("close_node.jstree",  this .fieldCloseNode .bind (this))
          .on ("select_node.jstree", this .selectField .bind (this))
@@ -1578,6 +1580,7 @@ module .exports = class OutlineView extends Interface
 
       child
          .jstree ()
+         .off ("keypress.jstree")
          .on ("before_open.jstree", this .nodeBeforeOpen .bind (this))
          .on ("close_node.jstree",  this .nodeCloseNode .bind (this))
          .on ("select_node.jstree", this .selectNode .bind (this))
@@ -1676,6 +1679,7 @@ module .exports = class OutlineView extends Interface
 
       child
          .jstree ()
+         .off ("keypress.jstree")
          .on ("before_open.jstree", this .nodeBeforeOpen .bind (this))
          .on ("close_node.jstree",  this .nodeCloseNode .bind (this))
          .on ("select_node.jstree", this .selectNode .bind (this))
@@ -1796,6 +1800,7 @@ module .exports = class OutlineView extends Interface
 
       child
          .jstree ()
+         .off ("keypress.jstree")
          .off ("dblclick.jstree")
          .on ("select_node.jstree", this .selectField .bind (this))
          .appendTo (parent)
@@ -1917,6 +1922,7 @@ module .exports = class OutlineView extends Interface
 
       child
          .jstree ()
+         .off ("keypress.jstree")
          .off ("dblclick.jstree")
          .on ("select_node.jstree", this .selectField .bind (this))
          .appendTo (parent)
