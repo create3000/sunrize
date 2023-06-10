@@ -1483,7 +1483,7 @@ module .exports = class OutlineView extends Interface
       {
          case X3D .X3DConstants .SFNode:
          {
-            if (!field ?.getNodeUserData (_changing))
+            if (!field .getValue () || !field ?.getNodeUserData (_changing))
                break
 
             setTimeout (() => field .setNodeUserData (_changing, false))
