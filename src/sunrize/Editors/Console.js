@@ -231,7 +231,7 @@ module .exports = class Console extends Interface
 
       try
       {
-         console .debug ("" + this .scriptNode .evaluate (text))
+         console .debug ("" + this .scriptNode .evaluate (`return (${text})`))
       }
       catch (error)
       {
