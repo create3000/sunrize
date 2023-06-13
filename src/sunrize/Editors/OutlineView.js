@@ -905,10 +905,12 @@ module .exports = class OutlineView extends Interface
 
          name .append (document .createTextNode (" "))
 
-         const cloneCount = $("<span></span>") .addClass ("clone-count") .appendTo (name)
+         const cloneCount = node .getCloneCount ?.() ?? 0
 
-         if (node .getCloneCount () > 1)
-            cloneCount .text (node .getCloneCount () > 1 ? `[${node .getCloneCount ()}]` : "")
+         $("<span></span>")
+            .addClass ("clone-count")
+            .text (cloneCount > 1 ? `[${cloneCount}]` : "")
+            .appendTo (name)
 
          // Append empty tree to enable expander.
 
@@ -944,10 +946,12 @@ module .exports = class OutlineView extends Interface
 
    updateCloneCount (node)
    {
+      const cloneCount = node .getCloneCount ?.() ?? 0
+
       this .sceneGraph
          .find (`.node[node-id=${node .getId ()}]`)
          .find ("> .item .clone-count")
-         .text (node .getCloneCount () > 1 ? `[${node .getCloneCount ()}]` : "")
+         .text (cloneCount > 1 ? `[${cloneCount}]` : "")
    }
 
    isInParents (parent, node)
