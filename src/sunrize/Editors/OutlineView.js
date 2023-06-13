@@ -843,9 +843,9 @@ module .exports = class OutlineView extends Interface
 
          // These fields are observed and must never be disconnected, because clones would also lose connection.
 
-         node .typeName_changed   .addFieldCallback (this, this .changeNodeTypeName .bind (this, node))
-         node .name_changed       .addFieldCallback (this, this .changeNodeName     .bind (this, node))
-         node .cloneCount_changed .addFieldCallback (this, this .changeCloneCount   .bind (this, node))
+         node .typeName_changed .addFieldCallback (this, this .updateNodeTypeName .bind (this, node))
+         node .name_changed     .addFieldCallback (this, this .updateNodeName     .bind (this, node))
+         node .parents_changed  .addFieldCallback (this, this .updateCloneCount   .bind (this, node))
       }
 
       // Classes
@@ -926,7 +926,7 @@ module .exports = class OutlineView extends Interface
       return child
    }
 
-   changeNodeTypeName (node)
+   updateNodeTypeName (node)
    {
       this .sceneGraph
          .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}]`)
@@ -934,7 +934,7 @@ module .exports = class OutlineView extends Interface
          .text (node .getTypeName ())
    }
 
-   changeNodeName (node)
+   updateNodeName (node)
    {
       this .sceneGraph
          .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}]`)
@@ -942,7 +942,7 @@ module .exports = class OutlineView extends Interface
          .text (node .getDisplayName ())
    }
 
-   changeCloneCount (node)
+   updateCloneCount (node)
    {
       this .sceneGraph
          .find (`.node[node-id=${node .getId ()}]`)
@@ -1063,8 +1063,8 @@ module .exports = class OutlineView extends Interface
       this .objects .set (exportedNode .getId (), exportedNode)
       this .objects .set (node .getId (), node)
 
-      node .typeName_changed .addFieldCallback (this .exportedNodeSymbol, this .changeNodeTypeName .bind (this, node))
-      node .name_changed     .addFieldCallback (this .exportedNodeSymbol, this .changeNodeName     .bind (this, node))
+      node .typeName_changed .addFieldCallback (this .exportedNodeSymbol, this .updateNodeTypeName .bind (this, node))
+      node .name_changed     .addFieldCallback (this .exportedNodeSymbol, this .updateNodeName     .bind (this, node))
 
       // Node
 
