@@ -884,7 +884,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
 	removeColorField (element)
 	{
-		element .spectrum ("destroy")
+		element .spectrum ?.("destroy")
 	}
 
    addTimeField (time)
