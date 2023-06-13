@@ -192,9 +192,6 @@ module .exports = class Traverse
       if (!executionContext)
          return
 
-      if (executionContext .isPrivate ())
-         return
-
       hierarchy .push (executionContext)
 
       if (executionContext === object)
