@@ -40,7 +40,7 @@
     "@electron-forge/maker-rpm": "^6.1.1",
     "@electron-forge/maker-squirrel": "^6.1.1",
     "@electron-forge/maker-zip": "^6.1.1",
-    "electron": "^25.1.0"
+    "electron": "^25.1.1"
   },
   "dependencies": {
     "capitalize": "^2.0.4",
@@ -52,7 +52,7 @@
     "jquery-ui-dist": "^1.13.2",
     "jstree": "^3.3.15",
     "material-icons": "^1.13.8",
-    "material-symbols": "^0.6.0",
+    "material-symbols": "^0.8.0",
     "md5": "^2.3.0",
     "monaco-editor": "^0.39.0",
     "node-localstorage": "^2.2.1",
