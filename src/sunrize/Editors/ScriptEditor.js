@@ -11,7 +11,12 @@ const
    Console     = require ("./Console"),
    Editor      = require ("../Undo/Editor"),
    UndoManager = require ("../Undo/UndoManager"),
+   monaco      = require ("monaco-editor/min/vs/loader.js"),
    _           = require ("../Application/GetText")
+
+monaco .require .config ({
+   baseUrl: "node_modules/monaco-editor/min",
+})
 
 require ("../Controls/RenameNodeInput")
 
@@ -114,9 +119,23 @@ module .exports = class ScriptEditor extends Interface
 
       electron .ipcRenderer .on ("script-editor-menu", (event, key, ...args) => this [key] (...args))
 
+      // CSS
+
+      CSS .colorScheme .addEventListener ("change", event => this .colorScheme (event))
+
+      this .colorScheme (CSS .colorScheme)
+
       // Setup.
 
       this .setup ()
+   }
+
+   colorScheme (event)
+   {
+      monaco .require (["vs/editor/editor.main"], monaco =>
+      {
+         monaco .editor .setTheme (event .matches ? "vs-dark" : "vs-light")
+      })
    }
 
    async setNode (node)
@@ -222,13 +241,7 @@ module .exports = class ScriptEditor extends Interface
          }
          else
          {
-            const monaco = require ("monaco-editor/min/vs/loader.js")
-
-            monaco .require .config ({
-               baseUrl: "node_modules/monaco-editor/min",
-            })
-
-            monaco .require (["vs/editor/editor.main"], (monaco) =>
+            monaco .require (["vs/editor/editor.main"], monaco =>
             {
                const element = $("<div></div>")
                   .addClass ("script-editor-monaco")
@@ -240,20 +253,6 @@ module .exports = class ScriptEditor extends Interface
                   {
                      return "../../node_modules/monaco-editor/min/vs/base/worker/workerMain.js"
                   },
-               }
-
-               // CSS
-
-               if (!this .colorScheme)
-               {
-                  CSS .colorScheme .addEventListener ("change", event => this .colorScheme (event));
-
-                  this .colorScheme = function (event)
-                  {
-                     monaco .editor.setTheme (event .matches ? "vs-dark" : "vs-light")
-                  }
-
-                  this .colorScheme (CSS .colorScheme)
                }
 
                const editor = monaco .editor .create (element .get (0),
