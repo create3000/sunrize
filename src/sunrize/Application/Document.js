@@ -8,7 +8,6 @@ const
    path               = require ("path"),
    ResizeSensor       = require ("css-element-queries/src/ResizeSensor"),
    X3D                = require ("../X3D"),
-   CSS                = require ("./CSS"),
    Interface          = require ("./Interface"),
    Splitter           = require ("../Controls/Splitter"),
    Dashboard          = require ("./Dashboard"),

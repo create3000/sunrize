@@ -5,6 +5,7 @@ const
    url         = require ("url"),
    md5         = require ("md5"),
    X3D         = require ("../X3D"),
+   CSS         = require ("../Application/CSS"),
    DataStorage = require ("./DataStorage")
 
 require ("../Bits/Highlight")
@@ -28,6 +29,14 @@ module .exports = class Interface
    setup ()
    {
       this .initialize ()
+
+      // CSS
+
+      CSS .colorScheme .addEventListener ("change", event => this .colorScheme (event))
+
+      this .colorScheme (CSS .colorScheme)
+
+      // Configure
 
       this .setBrowserEvent (X3D .X3DConstants .INITIALIZED_EVENT)
    }
@@ -80,6 +89,11 @@ module .exports = class Interface
 
       this .updateFileConfigs (oldWorldURL, newWorldURL)
    }
+
+   /**
+    * @param {object} event
+    */
+   colorScheme (event) { }
 
    /**
     *

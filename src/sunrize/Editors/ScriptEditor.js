@@ -4,7 +4,6 @@ const
    $           = require ("jquery"),
    electron    = require ("electron"),
    X3D         = require ("../X3D"),
-   CSS         = require ("../Application/CSS"),
    Interface   = require ("../Application/Interface"),
    Splitter    = require ("../Controls/Splitter"),
    NodeList    = require ("./NodeList"),
@@ -118,12 +117,6 @@ module .exports = class ScriptEditor extends Interface
       this .console = new Console (this .consoleElement)
 
       electron .ipcRenderer .on ("script-editor-menu", (event, key, ...args) => this [key] (...args))
-
-      // CSS
-
-      CSS .colorScheme .addEventListener ("change", event => this .colorScheme (event))
-
-      this .colorScheme (CSS .colorScheme)
 
       // Setup.
 
