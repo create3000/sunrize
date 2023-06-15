@@ -9,6 +9,7 @@ const
    path        = require ("path"),
    fs          = require ("fs"),
    md5         = require ("md5"),
+   CSS         = require ("./CSS"),
    _           = require ("./GetText")
 
 module .exports = new class Tabs

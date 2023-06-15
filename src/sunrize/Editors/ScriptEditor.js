@@ -113,6 +113,8 @@ module .exports = class ScriptEditor extends Interface
 
       electron .ipcRenderer .on ("script-editor-menu", (event, key, ...args) => this [key] (...args))
 
+      // Setup.
+
       this .setup ()
    }
 
@@ -239,11 +241,26 @@ module .exports = class ScriptEditor extends Interface
                   },
                }
 
+               // CSS
+
+               if (!this .colorScheme)
+               {
+                  const colorScheme = window .matchMedia ("(prefers-color-scheme: dark)")
+
+                  colorScheme .addEventListener ("change", event => this .colorScheme (event));
+
+                  this .colorScheme = function (event)
+                  {
+                     monaco .editor.setTheme (event .matches ? "vs-dark" : "vs-light")
+                  }
+
+                  this .colorScheme (colorScheme)
+               }
+
                const editor = monaco .editor .create (element .get (0),
                {
                   value: this .getScriptSource (node),
                   language: this .languages [node .getTypeName ()],
-                  theme: "vs-dark",
                   contextmenu: false,
                   automaticLayout: true,
                   wordWrap: "on",

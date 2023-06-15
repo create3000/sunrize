@@ -8,6 +8,7 @@ const
    path               = require ("path"),
    ResizeSensor       = require ("css-element-queries/src/ResizeSensor"),
    X3D                = require ("../X3D"),
+   CSS                = require ("./CSS"),
    Interface          = require ("./Interface"),
    Splitter           = require ("../Controls/Splitter"),
    Dashboard          = require ("./Dashboard"),
@@ -86,22 +87,9 @@ module .exports = new class Document extends Interface
       this .browserSize  = require ("../Editors/BrowserSize")
       this .resizeSensor = new ResizeSensor ($("#browser-frame"), this .onresize .bind (this))
 
-      // CSS
-
-      const colorScheme = window .matchMedia ("(prefers-color-scheme: dark)")
-
-      colorScheme .addEventListener ("change", event => this .colorScheme (event));
-
-      this .colorScheme (colorScheme)
-
       // Change undo menu items.
 
       this .activate ()
-   }
-
-   colorScheme (event)
-   {
-      $("body") .addClass ("color-scheme", event .matches ? "dark" : "light")
    }
 
    configure ()
