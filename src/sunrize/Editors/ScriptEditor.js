@@ -4,6 +4,7 @@ const
    $           = require ("jquery"),
    electron    = require ("electron"),
    X3D         = require ("../X3D"),
+   CSS         = require ("../Application/CSS"),
    Interface   = require ("../Application/Interface"),
    Splitter    = require ("../Controls/Splitter"),
    NodeList    = require ("./NodeList"),
@@ -245,16 +246,14 @@ module .exports = class ScriptEditor extends Interface
 
                if (!this .colorScheme)
                {
-                  const colorScheme = window .matchMedia ("(prefers-color-scheme: dark)")
-
-                  colorScheme .addEventListener ("change", event => this .colorScheme (event));
+                  CSS .colorScheme .addEventListener ("change", event => this .colorScheme (event));
 
                   this .colorScheme = function (event)
                   {
                      monaco .editor.setTheme (event .matches ? "vs-dark" : "vs-light")
                   }
 
-                  this .colorScheme (colorScheme)
+                  this .colorScheme (CSS .colorScheme)
                }
 
                const editor = monaco .editor .create (element .get (0),

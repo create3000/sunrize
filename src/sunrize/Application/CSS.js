@@ -14,3 +14,5 @@ function changeColorScheme (event)
 {
    $("body") .attr ("color-scheme", event .matches ? "dark" : "light")
 }
+
+module .exports = { colorScheme }
