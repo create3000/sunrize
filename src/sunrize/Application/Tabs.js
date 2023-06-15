@@ -32,7 +32,7 @@ module .exports = new class Tabs
 
    initialize ()
    {
-      this .tabs .on ("tab-active", (tab) =>
+      this .tabs .on ("tab-active", tab =>
       {
          electron .ipcRenderer .send ("title", tab .title)
 
@@ -41,6 +41,8 @@ module .exports = new class Tabs
 
          if (tab .domReady)
             tab .webview .send ("activate")
+
+         tab .initialized = true
 
          this .saveTabs ()
       })
@@ -253,9 +255,11 @@ module .exports = new class Tabs
       if (numTabs === 1)
          return
 
-      const position = Math .max (tab .getPosition () - 1, 0)
+      const
+         position = Math .max (tab .getPosition () - 1, 0),
+         nextTab  = this .tabs .getTabByPosition (position)
 
-      this .tabs .getTabByPosition (position) .activate ()
+      nextTab .activate ()
    }
 
    tabClose (tab)
@@ -302,9 +306,11 @@ module .exports = new class Tabs
    {
       this .saveTabs ()
 
-      let numTabs = this .tabs .getTabs () .length
+      const tabs = this .tabs .getTabs () .filter (tab => tab .initialized)
 
-      for (const tab of this .tabs .getTabs ())
+      let numTabs = tabs .length
+
+      for (const tab of tabs)
       {
          tab .webview .addEventListener ("ipc-message", (event) =>
          {
@@ -318,7 +324,7 @@ module .exports = new class Tabs
          })
       }
 
-      for (const tab of this .tabs .getTabs ())
+      for (const tab of tabs)
          tab .webview .send ("close")
 
       //this .maintenance ()
