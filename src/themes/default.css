@@ -93,7 +93,8 @@ body {
   --background-color: var(--system-gray6);
   --text-color: var(--system-gray0);
   --highlight-color: var(--system-grayZ);
-  --border-color: var(--system-gray8);
+  --border-color: var(--system-gray3);
+  --expander-color: var(--system-gray1);
   --accent-color: var(--system-red);
   --separator-color: var(--system-gray3);
 
@@ -144,6 +145,8 @@ body {
 body[color-scheme=dark] {
   --text-color: var(--system-gray1);
   --highlight-color: var(--system-gray0);
+  --border-color: var(--system-gray8);
+  --expander-color: var(--system-gray8);
   --filter-text-color: var(--filter-system-gray1);
   --filter-highlight-color: var(--filter-system-gray0);
 }
@@ -1020,7 +1023,7 @@ tr.disabled ~ tr > td > div {
   top: 0;
   width: 22px;
   cursor: pointer;
-  color: var(--system-gray8);
+  color: var(--expander-color);
 }
 
 .tree-view .jstree-anchor {
