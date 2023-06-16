@@ -24,17 +24,12 @@ module .exports = class Interface
       this .config .file = this .createFileConfig ()
 
       this .browser .addBrowserCallback (this, this .setBrowserEvent .bind (this))
+      CSS .colorScheme .addEventListener ("change", this .colorScheme .bind (this))
    }
 
    setup ()
    {
       this .initialize ()
-
-      // CSS
-
-      CSS .colorScheme .addEventListener ("change", event => this .colorScheme (event))
-
-      this .colorScheme (CSS .colorScheme)
 
       // Configure
 
@@ -91,11 +86,6 @@ module .exports = class Interface
    }
 
    /**
-    * @param {object} event
-    */
-   colorScheme (event) { }
-
-   /**
     *
     * @param {string} event
     */
@@ -107,7 +97,13 @@ module .exports = class Interface
       this .config .file = this .createFileConfig (this .browser .getWorldURL ())
 
       this .configure ()
+      this .colorScheme (CSS .colorScheme)
    }
+
+   /**
+    * @param {object} event
+    */
+   colorScheme (event) { }
 
    /**
     *

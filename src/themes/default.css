@@ -21,6 +21,7 @@ body[color-scheme=light] {
   --system-pink: rgb(255, 45, 85);
   --system-brown: rgb(162, 132, 94);
 
+  --system-grayZ: #343439;
   --system-gray0: rgb(102, 102, 107);
   --system-gray1: rgb(142, 142, 147);
   --system-gray2: rgb(174, 174, 178);
@@ -34,8 +35,9 @@ body[color-scheme=light] {
   /* Filter Colors */
 
   --filter-system-red: invert(31%) sepia(82%) saturate(3000%) hue-rotate(344deg) brightness(115%) contrast(105%);
-  --filter-system-gray1: invert(63%) sepia(4%) saturate(334%) hue-rotate(201deg) brightness(89%) contrast(86%);
+  --filter-system-grayZ: invert(18%) sepia(7%) saturate(533%) hue-rotate(202deg) brightness(94%) contrast(90%);
   --filter-system-gray0: invert(36%) sepia(72%) saturate(11%) hue-rotate(222deg) brightness(95%) contrast(90%);
+  --filter-system-gray1: invert(63%) sepia(4%) saturate(334%) hue-rotate(201deg) brightness(89%) contrast(86%);
 
   /* Special Colors */
 
@@ -74,8 +76,8 @@ body[color-scheme=dark] {
   /* Filter Colors */
 
   --filter-system-red: invert(69%) sepia(59%) saturate(6315%) hue-rotate(336deg) brightness(99%) contrast(108%);
-  --filter-system-gray1: invert(72%) sepia(0%) saturate(6315%) hue-rotate(205deg) brightness(81%) contrast(62%);
   --filter-system-gray0: invert(97%) sepia(2%) saturate(509%) hue-rotate(200deg) brightness(84%) contrast(94%);
+  --filter-system-gray1: invert(72%) sepia(0%) saturate(6315%) hue-rotate(205deg) brightness(81%) contrast(62%);
 
   /* Special Colors */
 
@@ -89,8 +91,8 @@ body {
   /* Colors */
 
   --background-color: var(--system-gray6);
-  --text-color: var(--system-gray1);
-  --highlight-color: var(--system-gray0);
+  --text-color: var(--system-gray0);
+  --highlight-color: var(--system-grayZ);
   --border-color: var(--system-gray8);
   --accent-color: var(--system-red);
   --separator-color: var(--system-gray3);
@@ -110,8 +112,8 @@ body {
 
   /* Filter Colors */
 
-  --filter-text-color: var(--filter-system-gray1);
-  --filter-highlight-color: var(--filter-system-gray0);
+  --filter-text-color: var(--filter-system-gray0);
+  --filter-highlight-color: var(--filter-system-grayZ);
   --filter-accent-color: var(--filter-system-red);
 
   /* Fonts */
@@ -137,6 +139,13 @@ body {
     transparent 10px,
     transparent 20px
   )
+}
+
+body[color-scheme=dark] {
+  --text-color: var(--system-gray1);
+  --highlight-color: var(--system-gray0);
+  --filter-text-color: var(--filter-system-gray1);
+  --filter-highlight-color: var(--filter-system-gray0);
 }
 
 body {
