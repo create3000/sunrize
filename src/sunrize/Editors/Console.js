@@ -66,8 +66,7 @@ module .exports = class Console extends Interface
 
       electron .ipcRenderer .on ("console-message", this .addMessageCallback)
 
-      this .browser .printWelcomeMessage ()
-
+      this .addMessage (null, 1, "", "", this .browser .getWelcomeMessage ())
       this .setup ()
    }
 
@@ -110,7 +109,8 @@ module .exports = class Console extends Interface
 
       const
          classes = this .logLevels [level] || "log",
-         text    = $("<p></p>") .addClass (classes) .attr ("title", `${sourceId}:${line}`) .text (message)
+         title   = sourceId ? `${sourceId}:${line}`: "",
+         text    = $("<p></p>") .addClass (classes) .attr ("title", title) .text (message)
 
       if (this .messageTime && performance .now () - this .messageTime > 1000)
          text .addClass ("splitter")
