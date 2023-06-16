@@ -43,7 +43,7 @@ module .exports = new class Document extends Interface
    {
       await this .browser .loadComponents (this .browser .getComponent ("Grouping"))
 
-      this .browser .updateConcreteNode ("StaticGroup", require ("../Components/Grouping/StaticGroup"))
+      this .browser .updateConcreteNode (require ("../Components/Grouping/StaticGroup"))
 
       await this .restoreFile ()
 
