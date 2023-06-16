@@ -21,7 +21,7 @@ body[color-scheme=light] {
   --system-pink: rgb(255, 45, 85);
   --system-brown: rgb(162, 132, 94);
 
-  --system-grayZ: #343439;
+  --system-grayZ: rgb(52, 52, 57);
   --system-gray0: rgb(102, 102, 107);
   --system-gray1: rgb(142, 142, 147);
   --system-gray2: rgb(174, 174, 178);
