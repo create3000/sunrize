@@ -1162,7 +1162,9 @@ module .exports = class OutlineView extends Interface
          .appendTo (child)
 
       if (field instanceof X3D .X3DArrayField)
+      {
          name .attr ("title", util .format (_ (field .length === 1 ? "1 value" : "%s values"), field .length .toLocaleString (_.locale)))
+      }
 
       $("<span></span>")
          .addClass ("field-name")
@@ -2475,6 +2477,7 @@ module .exports = class OutlineView extends Interface
             element = $(e),
             field   = this .getField (element)
 
+         field .removeReferencesCallback (this)
          field .removeRouteCallback (this)
          field .removeFieldCallback (this)
          field .removeFieldCallback (this .fieldButtonSymbol)
