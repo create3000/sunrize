@@ -1399,7 +1399,7 @@ module .exports = class OutlineView extends Interface
 
       if (field instanceof X3D .X3DArrayField)
       {
-         name .attr ("title", util .format (_ (field .length === 1 ? "%s value" : "%s values"), field .length .toLocaleString (_.locale)))
+         name .attr ("title", util .format (field .length === 1 ? _ ("%s value") : _ ("%s values"), field .length .toLocaleString (_.locale)))
       }
    }
 
