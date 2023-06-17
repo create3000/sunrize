@@ -686,6 +686,9 @@ module .exports = class OutlineView extends Interface
          .wrapInner ("<div class=\"item no-select\"/>")
          .find (".item") .append ("<div class=\"route-curves\"><canvas></canvas></div>")
 
+      child .find (".name")
+         .on ("mouseenter", this .updateTitle .bind (this))
+
       child .find ("area.input-selector")
          .on ("mouseenter", this .hoverInConnector .bind (this, "input"))
          .on ("mouseleave", this .hoverOutConnector .bind (this, "input"))
@@ -1161,11 +1164,6 @@ module .exports = class OutlineView extends Interface
          .addClass ("name")
          .appendTo (child)
 
-      if (field instanceof X3D .X3DArrayField)
-      {
-         name .attr ("title", util .format (_ (field .length === 1 ? "1 value" : "%s values"), field .length .toLocaleString (_.locale)))
-      }
-
       $("<span></span>")
          .addClass ("field-name")
          .text (field .getName ())
@@ -1390,6 +1388,19 @@ module .exports = class OutlineView extends Interface
       $("<ul><li></li></ul>") .appendTo (child)
 
       return child
+   }
+
+   updateTitle (event)
+   {
+      const
+         name    = $(event .currentTarget),
+         element = $(event .currentTarget) .closest (".field", this .sceneGraph),
+         field   = this .objects .get (parseInt (element .attr ("field-id")))
+
+      if (field instanceof X3D .X3DArrayField)
+      {
+         name .attr ("title", util .format (_ (field .length === 1 ? "%s value" : "%s values"), field .length .toLocaleString (_.locale)))
+      }
    }
 
    updateReferences (parent, node, field)
@@ -2010,6 +2021,8 @@ module .exports = class OutlineView extends Interface
       this .setTextAreaTabs (textarea)
       this .setTextArea (textarea, node, field)
 
+      textarea .on ("mouseenter", this .updateTitle .bind (this))
+
       if ((field .isInput () || field .isInitializable ()) && this .isEditable (parent))
       {
          textarea .on ("keydown",  this .onkeydownArrayField .bind (this, textarea))
@@ -2224,8 +2237,6 @@ module .exports = class OutlineView extends Interface
 
    setTextArea (textarea, node, field)
    {
-      textarea .attr ("title", util .format (_ (field .length === 1 ? "1 value" : "%s values"), field .length .toLocaleString (_.locale)))
-
       switch (field .getType ())
       {
          case X3D .X3DConstants .MFBool:
