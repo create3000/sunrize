@@ -1395,11 +1395,16 @@ module .exports = class OutlineView extends Interface
       const
          name    = $(event .currentTarget),
          element = $(event .currentTarget) .closest (".field", this .sceneGraph),
+         node    = this .objects .get (parseInt (element .attr ("node-id"))),
          field   = this .objects .get (parseInt (element .attr ("field-id")))
 
       if (field instanceof X3D .X3DArrayField)
       {
          name .attr ("title", util .format (field .length === 1 ? _ ("%s value") : _ ("%s values"), field .length .toLocaleString (_.locale)))
+      }
+      else
+      {
+         name .attr ("title", field .toString ({ scene: node .getExecutionContext () }))
       }
    }
 
