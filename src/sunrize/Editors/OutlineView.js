@@ -1162,7 +1162,7 @@ module .exports = class OutlineView extends Interface
          .appendTo (child)
 
       if (field instanceof X3D .X3DArrayField)
-         name .attr ("title", field .length === 1 ? _ ("1 value") : util .format (_ ("%s values"), field .length .toLocaleString (_.locale)))
+         name .attr ("title", util .format (_ (field .length === 1 ? "1 value" : "%s values"), field .length .toLocaleString (_.locale)))
 
       $("<span></span>")
          .addClass ("field-name")
@@ -2222,7 +2222,7 @@ module .exports = class OutlineView extends Interface
 
    setTextArea (textarea, node, field)
    {
-      textarea .attr ("title", field .length === 1 ? _ ("1 value") : util .format (_ ("%s values"), field .length .toLocaleString (_.locale)))
+      textarea .attr ("title", util .format (_ (field .length === 1 ? "1 value" : "%s values"), field .length .toLocaleString (_.locale)))
 
       switch (field .getType ())
       {
