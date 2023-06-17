@@ -686,7 +686,7 @@ module .exports = class OutlineView extends Interface
          .wrapInner ("<div class=\"item no-select\"/>")
          .find (".item") .append ("<div class=\"route-curves\"><canvas></canvas></div>")
 
-      child .find (".name")
+      child .find (".field .name, .special .name")
          .on ("mouseenter", this .updateTitle .bind (this))
 
       child .find ("area.input-selector")
@@ -1394,7 +1394,7 @@ module .exports = class OutlineView extends Interface
    {
       const
          name    = $(event .currentTarget),
-         element = $(event .currentTarget) .closest (".field", this .sceneGraph),
+         element = $(event .currentTarget) .closest (".field, .special", this .sceneGraph),
          node    = this .objects .get (parseInt (element .attr ("node-id"))),
          field   = this .objects .get (parseInt (element .attr ("field-id")))
 
