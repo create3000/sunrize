@@ -1420,9 +1420,9 @@ module .exports = class OutlineView extends Interface
          r = Math .floor (field .r * 255),
          g = Math .floor (field .g * 255),
          b = Math .floor (field .b * 255),
-         a = field .getType () === X3D .X3DConstants .SFColorRGBA ? field .a : 1
+         a = field .a ?? 1
 
-      return "rgba(" + r + "," + g + "," + b + "," + a + ")"
+      return `rgba(${r},${g},${b},${a})`
    }
 
    getAccessTypeImage (field, active)
