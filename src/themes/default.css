@@ -1168,9 +1168,9 @@ tr.disabled ~ tr > td > div {
   top: 4px;
   width: 12px;
   height: 12px;
-  border: 1px solid var(--system-gray8);
+  border: 1px solid var(--border-color);
   border-radius: 50%;
-  background: var(--system-gray8);
+  background: var(--border-color);
 }
 
 .scene-graph .time-button {

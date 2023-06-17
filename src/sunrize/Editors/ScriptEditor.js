@@ -123,11 +123,11 @@ module .exports = class ScriptEditor extends Interface
       this .setup ()
    }
 
-   colorScheme (event)
+   colorScheme (shouldUseDarkColors)
    {
       monaco .require (["vs/editor/editor.main"], monaco =>
       {
-         monaco .editor .setTheme (event .matches ? "vs-dark" : "vs-light")
+         monaco .editor .setTheme (shouldUseDarkColors ? "vs-dark" : "vs-light")
       })
    }
 
