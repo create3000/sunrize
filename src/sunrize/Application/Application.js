@@ -564,7 +564,7 @@ module .exports = class Application
          height: Math .max (this .config .getDefaultValue ("size") [1] / 4, this .config .size [1]),
          minWidth: this .config .getDefaultValue ("size") [0] / 4,
          minHeight: this .config .getDefaultValue ("size") [1] / 4,
-         backgroundColor: "rgb(28, 28, 30)",
+         backgroundColor: electron .nativeTheme .shouldUseDarkColors ? "rgb(28, 28, 30)" : "rgb(242, 242, 247)",
          show: false,
          webPreferences: {
             preload: path .join (__dirname, `../../html/${file}.js`),
