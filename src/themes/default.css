@@ -111,6 +111,10 @@ body {
   --medium-icon-size: 18px;
   --large-icon-size: 28px;
 
+  /* Tabs */
+
+  --tabs-shadow: 0px 2px 1.5px 0px var(--border-color);
+
   /* Filter Colors */
 
   --filter-text-color: var(--filter-system-gray0);
@@ -143,12 +147,18 @@ body {
 }
 
 body[color-scheme=dark] {
+  /* Colors */
+
   --text-color: var(--system-gray1);
   --highlight-color: var(--system-gray0);
   --border-color: var(--system-gray8);
   --expander-color: var(--system-gray8);
   --filter-text-color: var(--filter-system-gray1);
   --filter-highlight-color: var(--filter-system-gray0);
+
+  /* Tabs */
+
+  --tabs-shadow: 0px 1px 1px 0px var(--border-color);
 }
 
 body {

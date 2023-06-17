@@ -24,10 +24,19 @@
 }
 
 .etabs .tab.active {
-  z-index: 1000;
-  padding-bottom: 5px;
+  z-index: 1100;
   background: var(--background-color);
   color: var(--window-tabs-highlight-color);
+}
+
+.etabs::before {
+  z-index: 1000;
+  content: "";
+  position: relative;
+  display: block;
+  height: 1px;
+  width: 100%;
+  box-shadow: var(--tabs-shadow);
 }
 
 .etabs .buttons {
