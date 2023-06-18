@@ -851,7 +851,7 @@ tr.disabled ~ tr > td > div {
 .console-output p.splitter {
   margin-top: 5px;
   border-top: 1px solid var(--system-gray3);
-  padding-top: 5px;
+  margin-bottom: 5px;
 }
 
 .console-output p.debug {
