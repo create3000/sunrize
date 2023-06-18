@@ -19,6 +19,8 @@ module .exports = class Console extends Interface
       "error",
    ]
 
+   logClasses = ["", "", "filled", "filled"]
+
    constructor (element)
    {
       super (`Sunrize.Console.${element .attr ("id")}.`)
@@ -108,7 +110,8 @@ module .exports = class Console extends Interface
          return
 
       const
-         classes = this .logLevels [level] || "log",
+         last    = this .output .children () .last (),
+         classes = [this .logLevels [level] ?? "log", this .logClasses [level]],
          title   = sourceId ? `${sourceId}:${line}`: "",
          text    = $("<p></p>") .addClass (classes) .attr ("title", title) .text (message)
 
@@ -116,6 +119,12 @@ module .exports = class Console extends Interface
          text .addClass ("splitter")
 
       this .messageTime = performance .now ()
+
+      if (last .hasClass (this .logLevels [level]))
+      {
+         last .css ("border-bottom", "none")
+         text .css ("border-top", "none")
+      }
 
       this .output .append (text)
       this .output .scrollTop (this .output .prop ("scrollHeight"))
