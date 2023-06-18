@@ -65,10 +65,13 @@ module .exports = class Console extends Interface
          this .output .html ($("#console .console-output") .html ())
          this .output .scrollTop (this .output .prop ("scrollHeight"))
       }
+      else
+      {
+         this .addMessage (null, 1, "", "", this .browser .getWelcomeMessage ())
+      }
 
       electron .ipcRenderer .on ("console-message", this .addMessageCallback)
 
-      this .addMessage (null, 1, "", "", this .browser .getWelcomeMessage ())
       this .setup ()
    }
 
@@ -110,7 +113,6 @@ module .exports = class Console extends Interface
          return
 
       const
-         last    = this .output .children () .last (),
          classes = [this .logLevels [level] ?? "log", this .logClasses [level]],
          title   = sourceId ? `${sourceId}:${line}`: "",
          text    = $("<p></p>") .addClass (classes) .attr ("title", title) .text (message)
@@ -120,10 +122,14 @@ module .exports = class Console extends Interface
 
       this .messageTime = performance .now ()
 
+      const last = this .output .children () .last ()
+
       if (last .hasClass (this .logLevels [level]))
       {
+         last .css ("margin-bottom", "0")
+         text .css ("margin-top",    "0")
          last .css ("border-bottom", "none")
-         text .css ("border-top", "none")
+         text .css ("border-top",    "none")
       }
 
       this .output .append (text)

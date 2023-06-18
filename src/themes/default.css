@@ -877,7 +877,9 @@ tr.disabled ~ tr > td > div {
 .console-output p.filled {
   position: relative;
   z-index: 0;
-  color: rgba(0, 0, 0, 0.3);
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: rgba(0, 0, 0, 0.8);
 }
 
 .console-output p.filled:before {
@@ -887,7 +889,7 @@ tr.disabled ~ tr > td > div {
   z-index: -1;
   width: 100%;
   height: 100%;
-  filter: brightness(2);
+  filter: brightness(2) opacity(60%);
 }
 
 .console-output p.warn.filled {
