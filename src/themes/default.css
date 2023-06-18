@@ -5,7 +5,7 @@
 
 @import url(../../node_modules/spectrum-colorpicker2/dist/spectrum.css);
 
-body[color-scheme=light] {
+body.light {
   /* Colors */
 
   --system-red: rgb(255, 59, 48);
@@ -47,7 +47,7 @@ body[color-scheme=light] {
   --highlight-tint-color: rgba(0, 0, 0, 0.2);
 }
 
-body[color-scheme=dark] {
+body.dark {
   /* Colors */
 
   --system-red: rgb(255, 69, 58);
@@ -146,7 +146,7 @@ body {
   )
 }
 
-body[color-scheme=dark] {
+body.dark {
   /* Colors */
 
   --text-color: var(--system-gray1);
@@ -183,7 +183,7 @@ body {
   font-family: var(--sans-serif);
 }
 
-body[color-scheme=dark] ::placeholder {
+body.dark ::placeholder {
   color: var(--system-gray3);
 }
 

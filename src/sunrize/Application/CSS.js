@@ -12,7 +12,9 @@ changeColorScheme (colorScheme)
 
 function changeColorScheme (event)
 {
-   $("body") .attr ("color-scheme", event .matches ? "dark" : "light")
+   $("body")
+      .removeClass (["light", "dark"])
+      .addClass (event .matches ? "dark" : "light")
 }
 
 module .exports = { colorScheme }
