@@ -63,10 +63,13 @@ module .exports = class Console extends Interface
          this .output .html ($("#console .console-output") .html ())
          this .output .scrollTop (this .output .prop ("scrollHeight"))
       }
+      else
+      {
+         this .addMessage (null, 1, "", "", this .browser .getWelcomeMessage ())
+      }
 
       electron .ipcRenderer .on ("console-message", this .addMessageCallback)
 
-      this .addMessage (null, 1, "", "", this .browser .getWelcomeMessage ())
       this .setup ()
    }
 
