@@ -5,7 +5,7 @@
 
 @import url(../../node_modules/spectrum-colorpicker2/dist/spectrum.css);
 
-body.light {
+body {
   /* Colors */
 
   --system-red: rgb(255, 59, 48);
@@ -88,7 +88,7 @@ body.dark {
   --highlight-tint-color: rgba(255, 255, 255, 0.2);
 }
 
-body.light {
+body {
   /* Colors */
 
   --background-color: var(--system-gray6);
