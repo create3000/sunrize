@@ -879,7 +879,7 @@ tr.disabled ~ tr > td > div {
   z-index: 0;
   margin-top: 5px;
   margin-bottom: 5px;
-  color: rgba(0, 0, 0, 0.8);
+  color: black;
 }
 
 .console-output p.filled:before {
@@ -895,7 +895,6 @@ tr.disabled ~ tr > td > div {
 .console-output p.warn.filled {
   border-top: 1px solid var(--system-yellow);
   border-bottom: 1px solid var(--system-yellow);
-  text-shadow: 0px 0px 0px var(--system-yellow);
 }
 
 .console-output p.warn.filled:before {
@@ -905,7 +904,6 @@ tr.disabled ~ tr > td > div {
 .console-output p.error.filled {
   border-top: 1px solid var(--system-red);
   border-bottom: 1px solid var(--system-red);
-  text-shadow: 0px 0px 0px var(--system-red);
 }
 
 .console-output p.error.filled:before {
