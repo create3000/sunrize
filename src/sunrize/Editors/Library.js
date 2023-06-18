@@ -38,7 +38,7 @@ module .exports = new class Library extends Dialog
       this .input = $("<input></input>")
          .appendTo (this .element)
          .addClass ("library-input")
-         .attr ("placeholder", _ ("Node type name"))
+         .attr ("placeholder", _ ("Search a node"))
          .on ("keydown", event => this .enter (event))
          .on ("keyup", () => this .update ())
 
