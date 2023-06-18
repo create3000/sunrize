@@ -113,7 +113,7 @@ module .exports = class Console extends Interface
          text    = $("<p></p>") .addClass (classes) .attr ("title", title) .text (message)
 
       if (this .messageTime && performance .now () - this .messageTime > 1000)
-         text .addClass ("splitter")
+         this .output .append ($("<p></p>") .addClass ("splitter"))
 
       this .messageTime = performance .now ()
 
