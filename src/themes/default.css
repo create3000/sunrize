@@ -721,7 +721,7 @@ body.dark .dialog {
 
 /* Library */
 
-.library ::placeholder {
+.dialog ::placeholder {
   color: var(--system-gray1);
 }
 
