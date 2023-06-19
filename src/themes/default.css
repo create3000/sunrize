@@ -683,6 +683,10 @@ tr.disabled ~ tr > td > div {
   box-shadow: var(--tool-shadow);
 }
 
+.dialog .tabs-panel {
+  padding: 0.5em 1em;
+}
+
 /* Scene Properties */
 
 .scene-properties .tabs-panel {
