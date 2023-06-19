@@ -771,12 +771,13 @@ body.dark .dialog ::placeholder {
 
 .ui-widget .library-list .component {
   margin: 1em 0;
-  border-bottom: 1px solid var(--system-gray2);
   font-size: var(--small-font-size);
+  border-bottom: 1px solid var(--system-gray1);
   color: var(--system-gray1);
 }
 
 body.dark .ui-widget .library-list .component {
+  border-bottom: 1px solid var(--system-gray2);
   color: var(--system-gray2);
 }
 
