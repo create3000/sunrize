@@ -538,7 +538,6 @@ tr.disabled ~ tr > td > div {
 .qtip input,
 .qtip select,
 .qtip button {
-  margin: 0.2em 0em;
   display: block;
   width: 100%;
   background: var(--background-color);
@@ -546,11 +545,15 @@ tr.disabled ~ tr > td > div {
   filter: opacity(80%);
 }
 
-.qtip :first-child {
+.qtip .qtip-content > div > * {
+  margin: 0.2em 0em;
+}
+
+.qtip .qtip-content > div:first-child {
   margin-top: 0em;
 }
 
-.qtip :last-child {
+.qtip .qtip-content > div:last-child {
   margin-bottom: 0em;
 }
 
