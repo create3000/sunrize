@@ -543,6 +543,7 @@ tr.disabled ~ tr > td > div {
   width: 100%;
   background: var(--background-color);
   border: 1px solid var(--border-color);
+  filter: opacity(80%);
 }
 
 .qtip :first-child,
