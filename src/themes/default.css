@@ -129,7 +129,7 @@ body {
 
   /* Tools */
 
-  --tool-backdrop-filter: blur(5px);
+  --tool-backdrop-filter: blur(25px);
   --tool-background-color: rgba(208, 219, 231, 0.8); /* --sidebar-background-color */
   --tool-border-radius: 6px;
   --tool-border: 1px solid var(--system-gray8);
@@ -161,7 +161,7 @@ body.dark {
   /* Tools */
 
   --tool-background-color: rgba(42, 50, 63, 0.8); /* --sidebar-background-color */
-  --tool-border: 1px solid var(--system-gray3);
+  --tool-border: 1px solid var(--system-gray2);
   --tool-shadow: 3px 3px 9px var(--system-gray8);
 }
 
@@ -188,7 +188,7 @@ body {
 
 ::selection {
   color: var(--system-gray0);
-  background: var(--system-gray3);
+  background: var(--system-gray4);
 }
 
 /* common */
@@ -526,8 +526,9 @@ tr.disabled ~ tr > td > div {
 }
 
 .qtip-tipsy.qtip {
-  border: 1px solid var(--border-color);
-  background: var(--system-gray7);
+  border: var(--tool-border);
+  background: var(--tool-background-color);
+  backdrop-filter: var(--tool-backdrop-filter);
 }
 
 .qtip-tipsy .qtip-content {
@@ -537,10 +538,17 @@ tr.disabled ~ tr > td > div {
 .qtip input,
 .qtip select,
 .qtip button {
+  margin: 0.2em 0em;
   display: block;
   width: 100%;
   background: var(--background-color);
   border: 1px solid var(--border-color);
+}
+
+.qtip :first-child,
+.qtip :last-child {
+  margin-top: 0em;
+  margin-bottom: 0em;
 }
 
 .qtip button:hover {
