@@ -546,9 +546,11 @@ tr.disabled ~ tr > td > div {
   filter: opacity(80%);
 }
 
-.qtip :first-child,
-.qtip :last-child {
+.qtip :first-child {
   margin-top: 0em;
+}
+
+.qtip :last-child {
   margin-bottom: 0em;
 }
 
