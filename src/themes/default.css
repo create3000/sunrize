@@ -22,7 +22,7 @@ body {
   --system-brown: rgb(162, 132, 94);
 
   --system-gray0: rgb(72, 72, 77);
-  --system-gray1: rgb(142, 142, 147);
+  --system-gray1: rgb(122, 122, 127);
   --system-gray2: rgb(174, 174, 178);
   --system-gray3: rgb(199, 199, 204);
   --system-gray4: rgb(209, 209, 214);
@@ -750,6 +750,10 @@ body.dark .library ::placeholder {
   border-bottom: 1px solid var(--system-gray2);
   font-size: var(--small-font-size);
   color: var(--system-gray1);
+}
+
+body.dark .ui-widget .library-list .component {
+  color: var(--system-gray2);
 }
 
 .ui-widget .library-list .node {
