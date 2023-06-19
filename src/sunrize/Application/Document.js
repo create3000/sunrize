@@ -89,6 +89,8 @@ module .exports = new class Document extends Interface
       // Change undo menu items.
 
       this .activate ()
+
+      setTimeout (() => require ("../Editors/SceneProperties") .open ())
    }
 
    configure ()
