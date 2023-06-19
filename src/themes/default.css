@@ -282,7 +282,7 @@ tr.disabled ~ tr input,
 tr.disabled ~ tr textarea,
 tr.disabled ~ tr select,
 tr.disabled ~ tr button {
-    pointer-events: none;
+  pointer-events: none;
 }
 
 tr.disabled ~ tr > td > input,
@@ -290,7 +290,7 @@ tr.disabled ~ tr > td > textarea,
 tr.disabled ~ tr > td > select,
 tr.disabled ~ tr > td > button,
 tr.disabled ~ tr > td > div {
-    background: var(--background-disabled);
+  background: var(--background-disabled);
 }
 
 /* Highlight animation */
@@ -542,7 +542,7 @@ tr.disabled ~ tr > td > div {
   display: block;
   width: 100%;
   background: var(--background-color);
-  border: 1px solid var(--system-gray6);
+  border: var(--tool-border);
   filter: opacity(80%);
 }
 
