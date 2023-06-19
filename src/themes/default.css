@@ -686,26 +686,10 @@ tr.disabled ~ tr > td > div {
 
 /* Dialog */
 
-.dialog.ui-dialog.ui-widget.ui-widget-content {
-  cursor: move;
-  backdrop-filter: var(--tool-backdrop-filter);
-  background-color: var(--tool-background-color);
-  border-radius: var(--tool-border-radius);
-  border: var(--tool-border);
-  box-shadow: var(--tool-shadow);
+.dialog ::selection {
+  color: var(--system-gray0);
+  background: var(--system-gray2);
 }
-
-.dialog .tabs-panel {
-  padding: 0.5em 1em;
-}
-
-/* Scene Properties */
-
-.scene-properties .tabs-panel {
-  overflow-y: auto;
-}
-
-/* Library */
 
 .dialog ::placeholder {
   color: var(--system-gray1);
@@ -715,9 +699,26 @@ body.dark .dialog ::placeholder {
   color: var(--system-gray2);
 }
 
-body.dark .library ::placeholder {
-  color: var(--system-gray2);
+.dialog .tabs-panel {
+  padding: 0.5em 1em;
 }
+
+.dialog.ui-dialog.ui-widget.ui-widget-content {
+  cursor: move;
+  backdrop-filter: var(--tool-backdrop-filter);
+  background-color: var(--tool-background-color);
+  border-radius: var(--tool-border-radius);
+  border: var(--tool-border);
+  box-shadow: var(--tool-shadow);
+}
+
+/* Scene Properties */
+
+.scene-properties .tabs-panel {
+  overflow-y: auto;
+}
+
+/* Library */
 
 .ui-widget .library-input {
   box-sizing: border-box;
