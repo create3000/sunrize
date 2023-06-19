@@ -90,7 +90,7 @@ body {
 
   --background-color: var(--system-gray6);
   --text-color: var(--system-gray0);
-  --highlight-color: var(--system-gray1);
+  --highlight-color: black;
   --border-color: var(--system-gray3);
   --expander-color: var(--system-gray1);
   --accent-color: var(--system-red);
