@@ -542,7 +542,7 @@ tr.disabled ~ tr > td > div {
   display: block;
   width: 100%;
   background: var(--background-color);
-  border: var(--tool-border);
+  border: 1px solid var(--system-gray7);
   filter: opacity(80%);
 }
 
