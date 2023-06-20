@@ -32,7 +32,7 @@ module .exports = class NodeList extends Interface
       this .executionContext = this .browser .currentScene
 
       this .update ()
-      this .setNode (this .nodes [this .config .file .index] || null)
+      this .setNode (this .nodes [this .config .file .index] ?? null, false)
 
       this .executionContext .sceneGraph_changed .addInterest ("update", this)
    }
@@ -77,10 +77,12 @@ module .exports = class NodeList extends Interface
          this .setNode (null)
    }
 
-   setNode (node)
+   setNode (node, config = true)
    {
-      this .config .file .index = this .nodes .indexOf (node)
-      this .node                = node
+      if (config)
+         this .config .file .index = this .nodes .indexOf (node)
+         
+      this .node = node
 
       this .callback (node)
    }
