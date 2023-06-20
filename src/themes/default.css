@@ -316,6 +316,7 @@ tr.disabled ~ tr > td > div {
 
 .vertical-splitter-left,
 .vertical-splitter-right {
+  background-color: var(--background-color);
   position: absolute;
   box-sizing: border-box;
   top: 0;
@@ -377,6 +378,7 @@ tr.disabled ~ tr > td > div {
 
 .horizontal-splitter-top,
 .horizontal-splitter-bottom {
+  background-color: var(--background-color);
   position: absolute;
   box-sizing: border-box;
   left: 0;
@@ -848,6 +850,7 @@ body.dark .ui-widget .library-list .component {
 }
 
 .console {
+  overflow: hidden;
   box-sizing: border-box;
 }
 

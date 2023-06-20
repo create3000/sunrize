@@ -81,7 +81,7 @@ module .exports = class NodeList extends Interface
    {
       if (config)
          this .config .file .index = this .nodes .indexOf (node)
-         
+
       this .node = node
 
       this .callback (node)
