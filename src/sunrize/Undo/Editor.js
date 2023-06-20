@@ -235,7 +235,11 @@ module .exports = class Editor
       const oldWorldURL = scene .getMetaData ("base")
 
       if (oldWorldURL)
+      {
          this .rewriteURLs (executionContext, [...newProtos, ...nodes], oldWorldURL [0], executionContext .worldURL, undoManager)
+      }
+
+      scene .removeMetaData ("base")
 
       this .requestUpdateInstances (executionContext, undoManager)
 

@@ -40,9 +40,8 @@ body {
   /* Special Colors */
 
   --sidebar-background-color: rgb(208, 219, 231);
-  --tint-color: rgba(255, 255, 255, 0.2);
-  --tint-color2: rgba(255, 255, 255, 0.4);
-  --highlight-tint-color: rgba(0, 0, 0, 0.2);
+  --tint-color: rgba(255, 255, 255, 0.35);
+  --tint-color2: rgba(255, 255, 255, 0.5);
 }
 
 body.dark {
@@ -82,7 +81,6 @@ body.dark {
   --sidebar-background-color: rgb(42, 50, 63);
   --tint-color: rgba(0, 0, 0, 0.2);
   --tint-color2: rgba(0, 0, 0, 0.4);
-  --highlight-tint-color: rgba(255, 255, 255, 0.2);
 }
 
 body {
@@ -1119,7 +1117,7 @@ body.dark .ui-widget .library-list .component {
 }
 
 .tree-view .jstree-node.primary {
-  outline: 1px solid var(--border-color);
+  outline: 1px solid var(--system-gray8);
 }
 
 .tree-view .no-select {
