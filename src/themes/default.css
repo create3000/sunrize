@@ -40,7 +40,7 @@ body {
   /* Special Colors */
 
   --sidebar-background-color: rgb(208, 219, 231);
-  --tint-color: rgba(255, 255, 255, 0.35);
+  --tint-color1: rgba(255, 255, 255, 0.3);
   --tint-color2: rgba(255, 255, 255, 0.5);
 }
 
@@ -79,7 +79,7 @@ body.dark {
   /* Special Colors */
 
   --sidebar-background-color: rgb(42, 50, 63);
-  --tint-color: rgba(0, 0, 0, 0.2);
+  --tint-color1: rgba(0, 0, 0, 0.2);
   --tint-color2: rgba(0, 0, 0, 0.4);
 }
 
@@ -135,8 +135,8 @@ body {
 
   --background-disabled: repeating-linear-gradient(
     -45deg,
-    var(--tint-color),
-    var(--tint-color) 10px,
+    var(--tint-color1),
+    var(--tint-color1) 10px,
     transparent 10px,
     transparent 20px
   )
@@ -242,7 +242,7 @@ thead tr {
 }
 
 tbody tr:nth-child(odd) {
-  background: var(--tint-color);
+  background: var(--tint-color1);
 }
 
 tbody tr:hover {
@@ -253,22 +253,22 @@ td > input:not([type]),
 td > input[type="text"],
 td > input[type="number"] {
   width: 100%;
-  border: 1px solid var(--tint-color);
+  border: 1px solid var(--tint-color1);
 }
 
 td > textarea {
   resize: vertical;
   width: 100%;
   height: 8em;
-  border: 1px solid var(--tint-color) !important;
+  border: 1px solid var(--tint-color1) !important;
 }
 
 td > select {
-  border: 1px solid var(--tint-color) !important;
+  border: 1px solid var(--tint-color1) !important;
 }
 
 td > div {
-  border: 1px solid var(--tint-color) !important;
+  border: 1px solid var(--tint-color1) !important;
 }
 
 .sticky-headers thead {
@@ -817,7 +817,7 @@ body.dark .ui-widget .library-list .component {
 }
 
 .node-list > ul > li:nth-child(odd) {
-  background-color: var(--tint-color);
+  background-color: var(--tint-color1);
 }
 
 .node-list > ul > li:hover {
@@ -1113,7 +1113,7 @@ body.dark .ui-widget .library-list .component {
 }
 
 .tree-view .jstree-node.selected {
-  background-color: var(--tint-color);
+  background-color: var(--tint-color1);
 }
 
 .tree-view .jstree-node.primary {
@@ -1346,7 +1346,7 @@ body.dark .ui-widget .library-list .component {
   padding: 0;
   min-width: calc(100% - 20px);
   max-width: calc(100% - 20px);
-  background: var(--tint-color);
+  background: var(--tint-color1);
   color: inherit;
   font-family: var(--sans-serif);
   font-size: inherit;
