@@ -44,9 +44,20 @@ module .exports = class ScriptEditor extends Interface
 
       this .vSplitter = new Splitter (this .verticalSplitter, "vertical")
 
+      this .verticalSplitter .on ("position", () => this .onSplitterPosition ())
+
       this .toolbar = $("<div></div>")
          .addClass (["toolbar", "vertical-toolbar", "script-editor-toolbar"])
          .appendTo (this .scriptEditor)
+
+      this .toggleSidebarButton = $("<span></span>")
+         .addClass (["material-symbols-outlined"])
+         .attr ("title", _ ("Toggle sidebar."))
+         .text ("dock_to_right")
+         .appendTo (this .toolbar)
+         .on ("click", () => this .toggleSidebar ())
+
+      $("<span></span>") .addClass ("separator") .appendTo (this .toolbar)
 
       this .createButton = $("<span></span>")
          .addClass ("material-icons")
@@ -615,17 +626,24 @@ main ()
       }
    }
 
-   closeLeftBar ()
+   onSplitterPosition ()
    {
-      if (this .config .file .vSplitterPosition !== undefined)
+      if (this .vSplitter .position)
+         this .toggleSidebarButton .addClass ("active")
+      else
+         this .toggleSidebarButton .removeClass ("active")
+   }
+
+   toggleSidebar ()
+   {
+      if (this .vSplitter .position)
       {
-         this .vSplitter .position = this .config .file .vSplitterPosition
-         this .config .file .vSplitterPosition = undefined
+         this .config .file .vSplitterPosition = this .vSplitter .position
+         this .vSplitter .position             = 0
       }
       else
       {
-         this .config .file .vSplitterPosition = this .vSplitter .position
-         this .vSplitter .position = 0
+         this .vSplitter .position = this .config .file .vSplitterPosition
       }
    }
 }

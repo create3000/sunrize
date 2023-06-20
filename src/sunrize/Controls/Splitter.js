@@ -58,7 +58,29 @@ module .exports = class Splitter extends Interface
    configure ()
    {
       if (this .config .file .position !== undefined)
+      {
          this .position = this .config .file .position
+      }
+      else
+      {
+         switch (this .orientation)
+         {
+            case "horizontal":
+            {
+               const top = this .splitter .find ("> .horizontal-splitter-top")
+
+               this .position = top .outerHeight () / this .splitter .innerHeight ()
+               break
+            }
+            case "vertical":
+            {
+               const left = this .splitter .find ("> .vertical-splitter-left")
+
+               this .position = left .outerWidth () / this .splitter .innerWidth ()
+               break
+            }
+         }
+      }
    }
 
    get position ()
@@ -98,5 +120,7 @@ module .exports = class Splitter extends Interface
             break
          }
       }
+
+      this .splitter .trigger ("position")
    }
 }
