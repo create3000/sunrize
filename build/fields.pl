@@ -15,10 +15,14 @@ sub node {
    return if $componentName =~ /^Annotation$/;
    return if $typeName =~ /^X3D/;
 
-   return unless $typeName =~ /TimeSensor/;
+   return unless $typeName =~ /^Transform$/;
    say "$componentName $typeName";
 
-   
+   $file = `cat ../x_ite/docs/_posts/components/$componentName/$typeName.md`;
+
+   @fields = $file =~ m|###\s*[SM]F\w+.*|go;
+
+   say $_ foreach @fields;
 
    #exit;
 }
