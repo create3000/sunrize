@@ -15,8 +15,12 @@ sub node {
    return if $componentName =~ /^Annotation$/;
    return if $typeName =~ /^X3D/;
 
+   return unless $typeName =~ /TimeSensor/;
    say "$componentName $typeName";
-   exit;
+
+   
+
+   #exit;
 }
 
 node $_ foreach sort `find ../x_ite/src/x_ite/Components -type f -mindepth 2`;
