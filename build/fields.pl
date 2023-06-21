@@ -3,6 +3,8 @@ use v5.10.0;
 use utf8;
 use open qw/:std :utf8/;
 
+use Cwd;
+
 sub node {
    $filename = shift;
    chomp $filename;
@@ -18,7 +20,7 @@ sub node {
    #return unless $typeName =~ /^Transform$/;
    #say "$componentName $typeName";
 
-   $file   = `cat ../x_ite/docs/_posts/components/$componentName/$typeName.md`;
+   $file   = `cat $cwd/../x_ite/docs/_posts/components/$componentName/$typeName.md`;
    $source = `cat $filename`;
 
    @fields = $file =~ m|###\s*[SM]F\w+.*|go;
@@ -39,12 +41,24 @@ sub field {
    $name       = $3;
    $value      = $4;
 
+   $source =~ /X3DFieldDefinition\s*\(X3DConstants\s*\.(\w+),\s*"$name",\s*new\s+Fields\s*\.(\w+)\s*\((.*?)\)\),/;
+
+   $codeAccessType = $1;
+   $codeType       = $2;
+   $codeValue      = $3;
+
+   $accessTypes = {
+      " " => "initializeOnly",
+      "in" => "inputOnly",
+      "out" => "outputOnly",
+      "in, out" => "inputOutput",
+   };
+
+   say "$typeName $name '$accessType' <-> '$codeAccessType'" unless $accessTypes -> {$accessType} eq $codeAccessType;
+   say "$typeName $name '$type' <-> '$codeType'" unless $type eq $codeType;
+
    return if $accessType eq "in";
    return if $accessType eq "out";
-
-   $source =~ /X3DFieldDefinition.*?"$name",\s*new\s+Fields\s*.*?\((.*?)\)\),/;
-
-   $codeValue = $1;
 
    if ($type eq "SFBool")
    {
@@ -219,4 +233,8 @@ sub field {
    say "$typeName $name '$value' <-> '$codeValue'";
 }
 
-node $_ foreach sort `find ../x_ite/src/x_ite/Components -type f -mindepth 2`;
+$cwd = getcwd . "";
+
+node $_ foreach sort `find $cwd/../x_ite/src/x_ite/Components -type f -mindepth 2`;
+
+say "test-done";
