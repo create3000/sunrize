@@ -15,7 +15,7 @@ sub node {
    return if $componentName =~ /^Annotation$/;
    return if $typeName =~ /^X3D/;
 
-   return unless $typeName =~ /^Transform$/;
+   #return unless $typeName =~ /^Transform$/;
    #say "$componentName $typeName";
 
    $file   = `cat ../x_ite/docs/_posts/components/$componentName/$typeName.md`;
@@ -38,14 +38,18 @@ sub node {
 
       $codeValue = $1;
 
-      if ($1 eq "SFBool")
+      if ($type eq "SFBool")
       {
          say "$typeName.$name $value <-> $codeValue" if $value eq "TRUE"  && $codeValue ne "true";
-         say "$typeName.$name$value  <-> $codeValue" if $value eq "FALSe" && $codeValue ne "";
+         say "$typeName.$name $value <-> $codeValue" if $value eq "FALSe" && $codeValue ne "";
+      }
+      elsif ($type eq "SFColor")
+      {
+         say "$typeName.$name $value <-> $codeValue" if $value eq "0 0 0"  && $codeValue ne "";
+         say "$typeName.$name $value <-> $codeValue" if $value eq "1 1 1" && $codeValue ne "1, 1, 1";
+         say "$typeName.$name $value <-> $codeValue" if $value eq "0.8 0.8 0.8" && $codeValue ne "0.8, 0.8, 0.8";
       }
    }
-
-   #exit;
 }
 
 node $_ foreach sort `find ../x_ite/src/x_ite/Components -type f -mindepth 2`;
