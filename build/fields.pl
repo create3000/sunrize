@@ -108,6 +108,11 @@ sub field {
    {
       return if $value eq "0 0 1 0" && $codeValue eq "";
    }
+   elsif ($type eq "SFString")
+   {
+      return if $value eq "\"\"" && $codeValue eq "";
+      return if $value eq $codeValue;
+   }
    elsif ($type eq "SFTime")
    {
       return if $value eq "0" && $codeValue eq "";
@@ -209,10 +214,6 @@ sub field {
    elsif ($type =~ /^(?:MFVec4d|MFVec4f)$/)
    {
       return if $value eq "[ ]" && $codeValue eq "";
-   }
-   else
-   {
-      return;
    }
 
    say "$typeName $name '$value' <-> '$codeValue'";
