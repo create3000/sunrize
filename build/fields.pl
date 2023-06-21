@@ -127,6 +127,13 @@ sub field {
       return if $value eq "0, 0, 0" && $codeValue eq "";
       return if $value eq $codeValue;
    }
+   elsif ($type =~ /^(?:SFVec4d|SFVec4f)$/)
+   {
+      $value =~s /(\s)/,$1/sgo;
+
+      return if $value eq "0, 0, 0, 0" && $codeValue eq "";
+      return if $value eq $codeValue;
+   }
    else
    {
       return;
