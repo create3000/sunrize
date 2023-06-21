@@ -108,6 +108,25 @@ sub field {
    {
       return if $value eq "0 0 1 0" && $codeValue eq "";
    }
+   elsif ($type eq "SFTime")
+   {
+      return if $value eq "0" && $codeValue eq "";
+      return if $value eq $codeValue;
+   }
+   elsif ($type =~ /^(?:SFVec2d|SFVec2f)$/)
+   {
+      $value =~s /(\s)/,$1/sgo;
+
+      return if $value eq "0, 0" && $codeValue eq "";
+      return if $value eq $codeValue;
+   }
+   elsif ($type =~ /^(?:SFVec3d|SFVec3f)$/)
+   {
+      $value =~s /(\s)/,$1/sgo;
+
+      return if $value eq "0, 0, 0" && $codeValue eq "";
+      return if $value eq $codeValue;
+   }
    else
    {
       return;
