@@ -22,7 +22,18 @@ sub node {
 
    @fields = $file =~ m|###\s*[SM]F\w+.*|go;
 
-   say $_ foreach @fields;
+   foreach $field (@fields)
+   {
+      say $field;
+
+      $field =~ /###\s*(\w+)\s*\[.*?\]\s*\*\*(\w+)\*\*\s*(.*?)(?:\s*<|$)/;
+
+      $type  = $1;
+      $name  = $2;
+      $value = $3;
+
+      say "$1 $2 $3";
+   }
 
    #exit;
 }
