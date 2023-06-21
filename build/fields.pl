@@ -159,6 +159,12 @@ sub field {
       return if $value eq "[ ]" && $codeValue eq "";
       return if $value eq "[ $codeValue ]";
    }
+   elsif ($type eq "MFInt32")
+   {
+      return if $value eq "[ ]" && $codeValue eq "";
+      return if $value eq "[ $codeValue ]";
+      return if $value =~ /^[+-]?\d+$/ && $value eq $codeValue;
+   }
    else
    {
       return;
