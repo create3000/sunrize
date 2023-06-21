@@ -51,18 +51,18 @@ sub field {
       return if $value eq "TRUE"  && $codeValue eq "true";
       return if $value eq "FALSE" && $codeValue eq "";
    }
-   # elsif ($type eq "SFColor")
-   # {
-   #    return if $value eq "0 0 0"  && $codeValue eq "";
-   #    return if $value eq "1 1 1" && $codeValue eq "1, 1, 1";
-   #    return if $value eq "0.8 0.8 0.8" && $codeValue eq "0.8, 0.8, 0.8";
-   # }
-   # elsif ($type eq "SFColorRGBA")
-   # {
-   #    return if $value eq "0 0 0"  && $codeValue eq "";
-   #    return if $value eq "1 1 1" && $codeValue eq "1, 1, 1";
-   #    return if $value eq "0.8 0.8 0.8" && $codeValue eq "0.8, 0.8, 0.8";
-   # }
+   elsif ($type eq "SFColor")
+   {
+      return if $value eq "0 0 0"       && $codeValue eq "";
+      return if $value eq "1 1 1"       && $codeValue eq "1, 1, 1";
+      return if $value eq "0.8 0.8 0.8" && $codeValue eq "0.8, 0.8, 0.8";
+   }
+   elsif ($type eq "SFColorRGBA")
+   {
+      $value =~s /(\s)/,$1/sgo;
+
+      return if ($value eq "0, 0, 0, 0" && $codeValue eq "") != ($value eq $codeValue);
+   }
    else
    {
       return;
