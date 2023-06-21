@@ -77,6 +77,12 @@ sub field {
       return if $value eq "π" && $codeValue eq "3.14159";
       return if $value eq "-π" && $codeValue eq "-3.14159";
    }
+   elsif ($type eq "SFImage")
+   {
+      $value =~s /(\s)/,$1/sgo;
+
+      return if $value eq "0, 0, 0" && $codeValue eq "";
+   }
    elsif ($type eq "SFInt32")
    {
       return if $value eq "0" && $codeValue eq "";
@@ -95,7 +101,7 @@ sub field {
       return;
    }
 
-   say "$typeName $name $value <-> $codeValue";
+   say "$typeName $name '$value' <-> '$codeValue'";
 }
 
 node $_ foreach sort `find ../x_ite/src/x_ite/Components -type f -mindepth 2`;
