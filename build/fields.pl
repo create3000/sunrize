@@ -26,13 +26,14 @@ sub node {
    {
       say $field;
 
-      $field =~ /###\s*(\w+)\s*\[.*?\]\s*\*\*(\w+)\*\*\s*(.*?)(?:\s*<|$)/;
+      $field =~ /###\s*(\w+)\s*\[(.*?)\]\s*\*\*(\w+)\*\*\s*(.*?)(?:\s*<|$)/;
 
-      $type  = $1;
-      $name  = $2;
-      $value = $3;
+      $type       = $1;
+      $accessType = $2;
+      $name       = $3;
+      $value      = $4;
 
-      say "$1 $2 $3";
+      say "$1 $3 $4";
    }
 
    #exit;
