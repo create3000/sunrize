@@ -11,6 +11,7 @@ $.fn.popover = function (options)
       position: {
          my: "top right",
          at: "bottom left",
+         viewport: $("body"),
       },
       style: {
          classes: "qtip-tipsy",
