@@ -42,7 +42,7 @@ sub field {
    return if $accessType eq "in";
    return if $accessType eq "out";
 
-   $source =~ /"$name",\s*new\s+Fields\s*.*?\((.*?)\)/;
+   $source =~ /X3DFieldDefinition.*?"$name",\s*new\s+Fields\s*.*?\((.*?)\)/;
 
    $codeValue = $1;
 
@@ -63,12 +63,39 @@ sub field {
 
       return if ($value eq "0, 0, 0, 0" && $codeValue eq "") != ($value eq $codeValue);
    }
+   elsif ($type eq "SFDouble")
+   {
+      return if $value eq "0" && $codeValue eq "";
+      return if $value eq $codeValue;
+   }
+   elsif ($type eq "SFFloat")
+   {
+      return if $value eq "0" && $codeValue eq "";
+      return if $value eq $codeValue;
+      return if $value eq "π/2" && $codeValue eq "1.5708";
+      return if $value eq "π/4" && $codeValue eq "0.785398";
+      return if $value eq "π" && $codeValue eq "3.14159";
+      return if $value eq "-π" && $codeValue eq "-3.14159";
+   }
+   elsif ($type eq "SFInt32")
+   {
+      return if $value eq "0" && $codeValue eq "";
+      return if $value eq $codeValue;
+   }
+   elsif ($type eq "SFNode")
+   {
+      return if $value eq "NULL" && $codeValue eq "";
+   }
+   elsif ($type eq "SFRotation")
+   {
+      return if $value eq "0 0 1 0" && $codeValue eq "";
+   }
    else
    {
       return;
    }
 
-   say "$typeName.$name $value <-> $codeValue";
+   say "$typeName $name $value <-> $codeValue";
 }
 
 node $_ foreach sort `find ../x_ite/src/x_ite/Components -type f -mindepth 2`;
