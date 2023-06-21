@@ -472,7 +472,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          element = $(`#${id}`),
          node    = this .objects .get (nodeId)
 
-      element .find ("> .item .node-name") .renameNodePopover (node)
+      element .find ("> .item") .renameNodePopover (node)
    }
 
    openLibrary (id, executionContextId)
@@ -746,7 +746,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          element   = $(`#${id}`),
          protoNode = this .objects .get (protoNodeId)
 
-      element .find ("> .item .node-name") .renameNodePopover (protoNode)
+      element .find ("> .item") .renameNodePopover (protoNode)
    }
 
    deletePrototype (id, executionContextId, protoNodeId, used, availableId)
