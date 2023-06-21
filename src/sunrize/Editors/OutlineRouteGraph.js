@@ -146,7 +146,6 @@ module .exports = class OutlineRouteGraph extends OutlineView
 			canvas  = $canvas .get (0),
 			context = canvas .getContext ("2d")
 
-		$canvas .width  (Math .ceil (parent .width ()))
 		$canvas .height (Math .ceil (parent .height ()))
 
 		canvas .width  = $canvas .width ()
@@ -238,7 +237,6 @@ module .exports = class OutlineRouteGraph extends OutlineView
 			canvas  = $canvas .get (0),
 			context = canvas .getContext ("2d")
 
-		$canvas .width  (Math .ceil (parent .width ()))
 		$canvas .height (Math .ceil (parent .height ()))
 
 		canvas .width  = $canvas .width ()
