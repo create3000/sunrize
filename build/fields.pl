@@ -88,6 +88,18 @@ sub field {
       return if $value eq "0" && $codeValue eq "";
       return if $value eq $codeValue;
    }
+   elsif ($type =~ /^(?:SFMatrix3d|SFMatrix3f)$/)
+   {
+      $value =~s /(\s)/,$1/sgo;
+
+      return if $value eq "1, 0, 0, 0, 1, 0, 0, 0, 1" && $codeValue eq "";
+   }
+   elsif ($type =~ /^(?:SFMatrix4d|SFMatrix4f)$/)
+   {
+      $value =~s /(\s)/,$1/sgo;
+
+      return if $value eq "1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1" && $codeValue eq "";
+   }
    elsif ($type eq "SFNode")
    {
       return if $value eq "NULL" && $codeValue eq "";
