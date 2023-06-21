@@ -140,10 +140,8 @@ sub field {
    }
    elsif ($type eq "MFColor")
    {
-      $value =~s /(\s\w+)/,$1/sgo;
-
       return if $value eq "[ ]" && $codeValue eq "";
-      return if $value eq "0, 0, 0" && $codeValue eq "new Fields .SFColor ()";
+      return if $value eq "0 0 0" && $codeValue eq "new Fields .SFColor ()";
    }
    elsif ($type eq "MFColorRGBA")
    {
@@ -159,11 +157,58 @@ sub field {
       return if $value eq "[ ]" && $codeValue eq "";
       return if $value eq "[ $codeValue ]";
    }
+   elsif ($type eq "MFImage")
+   {
+      return if $value eq "[ ]" && $codeValue eq "";
+   }
    elsif ($type eq "MFInt32")
    {
       return if $value eq "[ ]" && $codeValue eq "";
       return if $value eq "[ $codeValue ]";
       return if $value =~ /^[+-]?\d+$/ && $value eq $codeValue;
+   }
+   elsif ($type =~ /^(?:MFMatrix3d|MFMatrix3f)$/)
+   {
+      return if $value eq "[ ]" && $codeValue eq "";
+   }
+   elsif ($type =~ /^(?:MFMatrix4d|MFMatrix4f)$/)
+   {
+      return if $value eq "[ ]" && $codeValue eq "";
+   }
+   elsif ($type eq "MFNode")
+   {
+      return if $value eq "[ ]" && $codeValue eq "";
+   }
+   elsif ($type eq "MFRotation")
+   {
+      return if $value eq "[ ]" && $codeValue eq "";
+      return if $value eq "0 0 1 0" && $codeValue eq "new Rotation4 ()";
+   }
+   elsif ($type eq "MFString")
+   {
+      return if $value eq "[ ]" && $codeValue eq "";
+      return if $value eq "[ $codeValue ]";
+      return if $value =~ /^"\w+"+$/ && $value eq $codeValue;
+   }
+   elsif ($type eq "MFTime")
+   {
+      return if $value eq "[ ]" && $codeValue eq "";
+   }
+   elsif ($type =~ /^(?:MFVec2d|MFVec2f)$/)
+   {
+      return if $value eq "[ ]" && $codeValue eq "";
+      return if $value eq "[ 1 1, 1 -1, -1 -1, -1 1, 1 1 ]" && $codeValue eq "new Vector2 (1, 1), new Vector2 (1, -1), new Vector2 (-1, -1), new Vector2 (-1, 1), new Vector2 (1, 1)";
+      return if $value eq "1 1" && $codeValue eq "new Vector2 (1, 1)";
+   }
+   elsif ($type =~ /^(?:MFVec3d|MFVec3f)$/)
+   {
+      return if $value eq "[ ]" && $codeValue eq "";
+      return if $value eq "0 0 0" && $codeValue eq "new Vector3 (0, 0, 0)";
+      return if $value eq "[ 0 0 0, 0 1 0 ]" && $codeValue eq "new Vector3 (0, 0, 0), new Vector3 (0, 1, 0)";
+   }
+   elsif ($type =~ /^(?:MFVec4d|MFVec4f)$/)
+   {
+      return if $value eq "[ ]" && $codeValue eq "";
    }
    else
    {
