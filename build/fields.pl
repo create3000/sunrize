@@ -42,7 +42,7 @@ sub field {
    return if $accessType eq "in";
    return if $accessType eq "out";
 
-   $source =~ /X3DFieldDefinition.*?"$name",\s*new\s+Fields\s*.*?\((.*?)\)/;
+   $source =~ /X3DFieldDefinition.*?"$name",\s*new\s+Fields\s*.*?\((.*?)\)\),/;
 
    $codeValue = $1;
 
@@ -133,6 +133,31 @@ sub field {
 
       return if $value eq "0, 0, 0, 0" && $codeValue eq "";
       return if $value eq $codeValue;
+   }
+   elsif ($type eq "MFBool")
+   {
+      return if $value eq "[ ]" && $codeValue eq "";
+   }
+   elsif ($type eq "MFColor")
+   {
+      $value =~s /(\s\w+)/,$1/sgo;
+
+      return if $value eq "[ ]" && $codeValue eq "";
+      return if $value eq "0, 0, 0" && $codeValue eq "new Fields .SFColor ()";
+   }
+   elsif ($type eq "MFColorRGBA")
+   {
+      return if $value eq "[ ]" && $codeValue eq "";
+   }
+   elsif ($type eq "MFDouble")
+   {
+      return if $value eq "[ ]" && $codeValue eq "";
+      return if $value eq "[ 0, 0 ]" && $codeValue eq "0, 0";
+   }
+   elsif ($type eq "MFFloat")
+   {
+      return if $value eq "[ ]" && $codeValue eq "";
+      return if $value eq "[ $codeValue ]";
    }
    else
    {
