@@ -121,13 +121,18 @@ module .exports = new class Library extends Dialog
 
       const
          HTMLSupport  = X3D .require ("x_ite/Parser/HTMLSupport"),
-         input        = this .input .val () .toUpperCase () .trim (),
-         ConcreteNode = this .browser .getConcreteNode (HTMLSupport .getNodeTypeName (input))
+         input        = this .input .val () .toUpperCase () .trim ();
 
-      if (ConcreteNode)
+      try
+      {
+         const ConcreteNode = this .browser .getConcreteNode (HTMLSupport .getNodeTypeName (input))
+
          this .createNode (ConcreteNode .typeName, ConcreteNode .componentName)
-      else
+      }
+      catch
+      {
          this .createNode (first .text (), component .attr ("name"))
+      }
    }
 
    update ()
