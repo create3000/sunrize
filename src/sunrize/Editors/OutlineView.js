@@ -2108,20 +2108,16 @@ module .exports = class OutlineView extends Interface
          .addClass ("connector-description")
          .appendTo (name)
 
-      const
-         sourceNodeName      = route .getSourceNode ()      .getName () .length ? route .getSourceNode ()      .getName () : _ ("<unnamed>"),
-         destinationNodeName = route .getDestinationNode () .getName () .length ? route .getDestinationNode () .getName () : _ ("<unnamed>")
-
       switch (type)
       {
          case "input":
          {
-            connectorDescription .text (util .format (_ ("Route from %s<%s>.%s"), route .getSourceNode () .getTypeName (), sourceNodeName, route .sourceField))
+            connectorDescription .text (util .format (_ ("Route from %s<%s>.%s"), route .getSourceNode () .getTypeName (), route .getSourceNode () .getName () || _ ("unnamed"), route .sourceField))
             break
          }
          case "output":
          {
-            connectorDescription .text (util .format (_ ("Route to %s<%s>.%s"), route .getDestinationNode () .getTypeName (), destinationNodeName, route .destinationField))
+            connectorDescription .text (util .format (_ ("Route to %s<%s>.%s"), route .getDestinationNode () .getTypeName (), route .getDestinationNode () .getName () || _ ("unnamed"), route .destinationField))
             break
          }
       }
