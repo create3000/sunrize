@@ -2116,12 +2116,12 @@ module .exports = class OutlineView extends Interface
       {
          case "input":
          {
-            connectorDescription .text (util .format (_ ("Route from %s.%s"), sourceNodeName, route .sourceField))
+            connectorDescription .text (util .format (_ ("Route from %s<%s>.%s"), route .getSourceNode () .getTypeName (), sourceNodeName, route .sourceField))
             break
          }
          case "output":
          {
-            connectorDescription .text (util .format (_ ("Route to %s.%s"), destinationNodeName, route .destinationField))
+            connectorDescription .text (util .format (_ ("Route to %s<%s>.%s"), route .getDestinationNode () .getTypeName (), destinationNodeName, route .destinationField))
             break
          }
       }
