@@ -213,34 +213,19 @@ module .exports = class Application
 
                },
                { type: "separator" },
-               {
-                  label: exportPath ? util .format (_ ("Export As %s"), path .basename (exportPath)) : _ ("Export..."),
-                  accelerator: "CmdOrCtrl+E",
-                  click: async () =>
+               ... exportPath ?
+               [
                   {
-                     const exportPath = this .exportPath .get (this .currentFile)
-
-                     if (exportPath)
+                     label: util .format (_ ("Export As %s"), path .basename (exportPath)),
+                     accelerator: "CmdOrCtrl+E",
+                     click: async () =>
                      {
+                        const exportPath = this .exportPath .get (this .currentFile)
+
                         this .mainWindow .webContents .send ("export-as", exportPath)
-                     }
-                     else
-                     {
-                        const response = await this .showExportDialog (this .currentFile)
-
-                        if (response .canceled)
-                           return
-
-                        electron .app .addRecentDocument (response .filePath)
-
-                        this .exportPath .set (this .currentFile, response .filePath)
-
-                        this .mainWindow .webContents .send ("export-as", response .filePath)
-
-                        this .changeMenu ()
-                     }
-                  },
-               },
+                     },
+                  }
+               ] : [ ],
                {
                   label: _ ("Export As..."),
                   accelerator: "Shift+CmdOrCtrl+E",
