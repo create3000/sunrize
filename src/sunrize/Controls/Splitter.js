@@ -23,14 +23,10 @@ module .exports = class Splitter extends Interface
             top .resizable ({
                minHeight: 0,
                handles: "s",
-               resize: () =>
-               {
-                  this .position = top .outerHeight () / this .splitter .innerHeight ()
-               },
+               resize: () => this .position = this .position,
             })
 
             top .find ("> .ui-resizable-s") .append ($("<div></div>"))
-
             break
          }
          case "vertical":
@@ -40,14 +36,10 @@ module .exports = class Splitter extends Interface
             left .resizable ({
                minWidth: 0,
                handles: "e",
-               resize: () =>
-               {
-                  this .position = left .outerWidth () / this .splitter .innerWidth ()
-               },
+               resize: () => this .position = this .position,
             })
 
             left .find ("> .ui-resizable-e") .append ($("<div></div>"))
-
             break
          }
       }
@@ -58,34 +50,28 @@ module .exports = class Splitter extends Interface
    configure ()
    {
       if (this .config .file .position !== undefined)
-      {
          this .position = this .config .file .position
-      }
       else
-      {
-         switch (this .orientation)
-         {
-            case "horizontal":
-            {
-               const top = this .splitter .find ("> .horizontal-splitter-top")
-
-               this .position = top .outerHeight () / this .splitter .innerHeight ()
-               break
-            }
-            case "vertical":
-            {
-               const left = this .splitter .find ("> .vertical-splitter-left")
-
-               this .position = left .outerWidth () / this .splitter .innerWidth ()
-               break
-            }
-         }
-      }
+         this .splitter .trigger ("position")
    }
 
    get position ()
    {
-      return this .config .file .position
+      switch (this .orientation)
+      {
+         case "horizontal":
+         {
+            const top = this .splitter .find ("> .horizontal-splitter-top")
+
+            return this .position = top .outerHeight () / this .splitter .innerHeight ()
+         }
+         case "vertical":
+         {
+            const left = this .splitter .find ("> .vertical-splitter-left")
+
+            return left .outerWidth () / this .splitter .innerWidth ()
+         }
+      }
    }
 
    /**
