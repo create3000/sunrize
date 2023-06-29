@@ -194,7 +194,7 @@ module .exports = new class Document extends Interface
 
       if (this .filePath)
       {
-         if (path .extname (this .filePath) .match (/.(?:gltf|glb|obj|stl|svg)/i))
+         if (path .extname (this .filePath) .match (/.(?:gltf|glb|obj|stl|ply|svg)/i))
             return
 
          fs .writeFileSync (this .filePath, Editor .getContents (scene, path .extname (this .filePath)))
