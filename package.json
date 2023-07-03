@@ -17,15 +17,22 @@
     "3D",
     "editor",
     "electron",
+    "GLB",
+    "glTF2",
     "JavaScript",
     "JSON",
     "node",
     "npx",
+    "PLY",
+    "STL",
+    "SVG",
     "VRML",
+    "Wavefront-OBJ",
     "WebGL",
     "wrl",
     "x_ite",
-    "X3D"
+    "X3D",
+    "XML"
   ],
   "contributors": [
     {
