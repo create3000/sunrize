@@ -1,7 +1,7 @@
 {
   "name": "sunrize",
   "productName": "Sunrize X3D Editor",
-  "version": "1.0.52",
+  "version": "1.0.53",
   "description": "A Multi Platform X3D Editor",
   "homepage": "https://create3000.github.io/sunrize/",
   "author": "Holger Seelig",
@@ -74,7 +74,7 @@
     "sunrize": "bin/sunrize.js"
   },
   "scripts": {
-    "start": "electron-forge start --",
+    "start": "electron .",
     "development": "SUNRISE_ENVIRONMENT=DEVELOPMENT electron-forge start --",
     "package": "electron-forge package",
     "make": "electron-forge make"
