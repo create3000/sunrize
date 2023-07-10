@@ -2,14 +2,12 @@
 "use strict"
 
 const os = require ("os")
-const fs = require ("fs")
 const path = require ("path")
 const { spawn, execFileSync } = require ("child_process")
 
 process .chdir (path .resolve (__dirname, ".."))
 
-if (!fs .existsSync ((path .resolve (__dirname, "..", "node_modules"))))
-   execFileSync (os .platform () === "win32" ? "npm.cmd" : "npm", ["install", "--silent"])
+execFileSync (os .platform () === "win32" ? "npm.cmd" : "npm", ["install", "--silent"])
 
 const p = spawn (os .platform () === "win32" ? "npm.cmd" : "npm", ["start", "--silent", "--", ... process .argv .slice (2)])
 
