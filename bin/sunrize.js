@@ -7,7 +7,7 @@ const { spawn, execFileSync } = require ("child_process")
 
 process .chdir (path .resolve (__dirname, ".."))
 
-execFileSync (os .platform () === "win32" ? "npm.cmd" : "npm", ["install", "--package-lock", "false", "--silent"])
+execFileSync (os .platform () === "win32" ? "npm.cmd" : "npm", ["install", "--save", "false", "--package-lock", "false", "--silent"])
 
 const p = spawn (os .platform () === "win32" ? "npm.cmd" : "npm", ["start", "--silent", "--", ... process .argv .slice (2)])
 
