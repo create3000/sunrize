@@ -1,16 +1,13 @@
 #!/usr/bin/env node
 "use strict"
 
-const { execFile } = require ("child_process")
+const os = require ("os")
+const path = require ("path")
+const { spawn } = require ("child_process")
 
-execFile ("npm", ["start", ... process .argv .slice (2)], (error, stdout, stderr) =>
-{
-   if (error)
-      return process .stderr .write (error .message)
+process .chdir (path .resolve (__dirname, ".."))
 
-   if (stdout)
-      process .stdout .write (stdout)
+const p = spawn (os .platform () === "win32" ? "npm.cmd" : "npm", ["start", "--silent", "--", ... process .argv .slice (2)])
 
-   if (stderr)
-      process .stderr .write (stderr)
-})
+p .stdout .pipe (process .stdout)
+p .stderr .pipe (process .stderr)
