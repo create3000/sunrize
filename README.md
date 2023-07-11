@@ -8,12 +8,15 @@ Sunrize is based on [X_ITE](https://create3000.github.io/x_ite/) and is a basic 
 
 * [Website](https://create3000.github.io/sunrize/)
 
-## Usage
+## Installation
 
-You can run Sunrize without installing it using **npx**:
+Install and run Sunrize with the following commands:
 
 ```console
-$ npx sunrize [files]
+$ git clone https://github.com/create3000/sunrize.git
+$ cd sunrize
+$ npm install
+$ npm start
 ```
 
 ## License
