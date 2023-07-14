@@ -480,6 +480,10 @@ module .exports = class OutlineView extends Interface
       {
          return this .naturalCompare (a .getExportedName (), b .getExportedName ())
       })
+      .sort ((a, b) =>
+      {
+         return this .naturalCompare (a .getLocalNode () .getTypeName (), b .getLocalNode () .getTypeName ())
+      })
 
       const ul = $("<ul></ul>")
          .appendTo (child)
