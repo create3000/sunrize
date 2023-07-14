@@ -806,10 +806,14 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const
          img          = $(event .target),
          exportedNode = this .getExportedNode (img .closest (".exported-node", this .sceneGraph)),
-         inlineNode   = this .getNode (parent .closest (".node", this .sceneGraph));
+         inlineNode   = this .getNode (parent .closest (".node", this .sceneGraph)),
+         importedNode = this .executionContext .importedNodes .get (exportedNode .getExportedName ());
 
-      if (this .executionContext .importedNodes .has (exportedNode .getExportedName ()))
+      if (importedNode)
       {
+         if (importedNode .getInlineNode () !== inlineNode)
+            return;
+
          Editor .removeImportedNode (this .executionContext, exportedNode .getExportedName ());
 
          img .attr ("src", `../images/OutlineEditor/Values/FALSE.svg`)

@@ -457,18 +457,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
 
                // Remove routes.
 
-               for (const field of node .getFields ())
-               {
-                  for (const route of field .getInputRoutes ())
-                  {
-                     this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager)
-                  }
-
-                  for (const route of field .getOutputRoutes ())
-                  {
-                     this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager)
-                  }
-               }
+               this .deleteRoutes (executionContext, node, undoManager)
 
                if (node .getType () .includes (X3D .X3DConstants .X3DBindableNode))
                {
@@ -851,6 +840,13 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
          exportedName = importedNode .getExportedName ()
 
       undoManager .beginUndo (_ ("Remove Imported Node »%s«"), importedName)
+
+      try
+      {
+         this .deleteRoutes (executionContext, importedNode .getExportedNode (), undoManager);
+      }
+      catch
+      { }
 
       executionContext .removeImportedNode (importedName)
 
@@ -1337,17 +1333,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
       {
          inputRoutes  .set (field .getName (), new Set (field .getInputRoutes ()))
          outputRoutes .set (field .getName (), new Set (field .getOutputRoutes ()))
-
-         for (const route of field .getInputRoutes ())
-         {
-            this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager)
-         }
-
-         for (const route of field .getOutputRoutes ())
-         {
-            this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager)
-         }
       }
+
+      this .deleteRoutes (executionContext, instance, undoManager)
 
       // Set proto node.
 
@@ -1527,6 +1515,33 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
       this .requestUpdateInstances (executionContext, undoManager)
 
       undoManager .endUndo ()
+   }
+
+   /**
+    *
+    * @param {X3DBaseNode} node
+    * @param {UndoManager} undoManager
+    */
+   static deleteRoutes (executionContext, node, undoManager = UndoManager .shared)
+   {
+      for (const field of node .getFields ())
+      {
+         for (const route of field .getInputRoutes ())
+         {
+            if (route .getExecutionContext () !== executionContext)
+               continue;
+
+            this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager)
+         }
+
+         for (const route of field .getOutputRoutes ())
+         {
+            if (route .getExecutionContext () !== executionContext)
+               continue;
+
+            this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager)
+         }
+      }
    }
 
    /**
