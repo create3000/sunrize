@@ -801,6 +801,27 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       await Editor .turnIntoPrototype (executionContext, externproto)
    }
 
+   toggleImportedNode (event, parent)
+   {
+      const
+         img          = $(event .target),
+         exportedNode = this .getExportedNode (img .closest (".exported-node", this .sceneGraph)),
+         inlineNode   = this .getNode (parent .closest (".node", this .sceneGraph));
+
+      if (this .executionContext .importedNodes .has (exportedNode .getExportedName ()))
+      {
+         Editor .removeImportedNode (this .executionContext, exportedNode .getExportedName ());
+
+         img .attr ("src", `../images/OutlineEditor/Values/FALSE.svg`)
+      }
+      else
+      {
+         Editor .updateImportedNode (this .executionContext, inlineNode, exportedNode .getExportedName ());
+
+         img .attr ("src", `../images/OutlineEditor/Values/TRUE.svg`)
+      }
+   }
+
    addInstance (id, executionContextId, protoNodeId)
    {
       const

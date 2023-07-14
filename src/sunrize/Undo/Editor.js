@@ -821,7 +821,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
     * @param {string} importedName
     * @param {UndoManager} undoManager
     */
-   static updateImportedNode (executionContext, inlineNode, exportedName, importedName, undoManager = UndoManager .shared)
+   static updateImportedNode (executionContext, inlineNode, exportedName, importedName = exportedName, undoManager = UndoManager .shared)
    {
       undoManager .beginUndo (_ ("Update Imported Node »%s«"), importedName)
 

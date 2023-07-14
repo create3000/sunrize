@@ -1213,6 +1213,10 @@ body.dark .ui-widget .library-list .component {
   color: var(--system-brown);
 }
 
+.scene-graph .exported-node > .item .boolean-button {
+  top: 2px
+}
+
 .scene-graph .field > .item .name {
   color: var(--system-orange);
 }
@@ -1233,6 +1237,7 @@ body.dark .ui-widget .library-list .component {
 }
 
 .scene-graph .boolean-button {
+  cursor: pointer;
   position: relative;
   margin-left: 10px;
   width: 28px;
