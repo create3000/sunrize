@@ -1123,7 +1123,9 @@ module .exports = class OutlineView extends Interface
             .append ($("<span></span>") .addClass ("as-name") .text (exportedNode .getExportedName ()))
       }
 
-      if (exportedNode .getLocalNode () .getExecutionContext () .getExecutionContext () === this .executionContext)
+      const exportedExecutionContext = exportedNode .getLocalNode () .getExecutionContext ();
+
+      if (exportedExecutionContext !== this .executionContext && exportedExecutionContext .getExecutionContext () === this .executionContext)
       {
          const imported = this .executionContext .importedNodes
             .some (importedNode => importedNode .getExportedNode () === exportedNode .getLocalNode () && importedNode .getImportedName () === exportedNode .getExportedName ());
