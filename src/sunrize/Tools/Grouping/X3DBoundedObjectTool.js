@@ -44,7 +44,12 @@ class X3DBoundedObjectTool extends X3DNodeTool
    traverse (type, renderObject)
    {
       this .toolNode .traverse (type, renderObject)
+
+      renderObject .getHumanoids () .push (null)
+
       this .toolInnerNode ?.traverse (type, renderObject)
+
+      renderObject .getHumanoids () .pop ()
    }
 }
 

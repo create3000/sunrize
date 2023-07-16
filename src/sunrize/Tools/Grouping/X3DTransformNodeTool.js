@@ -24,7 +24,7 @@ class X3DTransformNodeTool extends X3DNodeTool
 
       return super .removeTool ()
    }
-   
+
    static box = new Box3 ()
 
    reshape ()
@@ -44,7 +44,12 @@ class X3DTransformNodeTool extends X3DNodeTool
    traverse (type, renderObject)
    {
       this .toolNode .traverse (type, renderObject)
+
+      renderObject .getHumanoids () .push (null)
+
       this .toolInnerNode ?.traverse (type, renderObject)
+
+      renderObject .getHumanoids () .pop ()
    }
 }
 
