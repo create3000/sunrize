@@ -26,6 +26,22 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    configure ()
    {
       super .configure ()
+
+      // Now are all nodes available.
+
+      this .matrixNodes = new Set ([
+         X3D .X3DConstants .Billboard,
+         X3D .X3DConstants .CADPart,
+         X3D .X3DConstants .GeoLocation,
+         X3D .X3DConstants .GeoTransform,
+         X3D .X3DConstants .HAnimHumanoid,
+         X3D .X3DConstants .HAnimJoint,
+         X3D .X3DConstants .HAnimSite,
+         X3D .X3DConstants .LayoutGroup,
+         X3D .X3DConstants .ScreenGroup,
+         X3D .X3DConstants .Transform,
+         X3D .X3DConstants .X3DNBodyCollidableNode,
+      ])
    }
 
    showContextMenu (event)
@@ -1970,20 +1986,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          }
       }
    }
-
-   matrixNodes = new Set ([
-      X3D .X3DConstants .Billboard,
-      X3D .X3DConstants .CADPart,
-      X3D .X3DConstants .GeoLocation,
-      X3D .X3DConstants .GeoTransform,
-      X3D .X3DConstants .HAnimHumanoid,
-      X3D .X3DConstants .HAnimJoint,
-      X3D .X3DConstants .HAnimSite,
-      X3D .X3DConstants .LayoutGroup,
-      X3D .X3DConstants .ScreenGroup,
-      X3D .X3DConstants .Transform,
-      X3D .X3DConstants .X3DNBodyCollidableNode,
-   ])
 
    getModelMatrix (nodeElement, self = true)
    {
