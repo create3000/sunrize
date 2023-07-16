@@ -23,7 +23,7 @@ module .exports = class Interface
       this .config       = { global: this .createGlobalConfig () }
       this .config .file = this .createFileConfig ()
 
-      this .browser .addBrowserCallback (this, this .setBrowserEvent .bind (this))
+      this .browser .addBrowserCallback (this, X3D .X3DConstants .INITIALIZED_EVENT, this .browserInitialized .bind (this))
       CSS .colorScheme .addEventListener ("change", event => this .colorScheme (!! event .matches))
    }
 
@@ -33,7 +33,7 @@ module .exports = class Interface
 
       // Configure
 
-      this .setBrowserEvent (X3D .X3DConstants .INITIALIZED_EVENT)
+      this .browserInitialized (X3D .X3DConstants .INITIALIZED_EVENT)
    }
 
    initialize () { }
@@ -89,11 +89,8 @@ module .exports = class Interface
     *
     * @param {string} event
     */
-   setBrowserEvent (event)
+   browserInitialized (event)
    {
-      if (event !== X3D .X3DConstants .INITIALIZED_EVENT)
-         return
-
       this .config .file = this .createFileConfig (this .browser .getWorldURL ())
 
       this .configure ()
