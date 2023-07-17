@@ -5,6 +5,15 @@ use v5.10.0;
 use utf8;
 use open qw/:std :utf8/;
 
+if (`git branch --show-current` ne "development\n")
+{
+	say "Wrong branch, must be development, cannot release version!";
+	exit;
+}
+
+system "git", "checkout", "main";
+system "git", "merge", "developement";
+
 my $version = `npm pkg get version | sed 's/"//g'`;
 chomp $version;
 say "package.json version $version";
