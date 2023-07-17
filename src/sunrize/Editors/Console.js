@@ -85,12 +85,9 @@ module .exports = class Console extends Interface
       this .historyIndex = this .history .length
    }
 
-   async setBrowserEvent (event)
+   async browserInitialized (event)
    {
-      super .setBrowserEvent (event)
-
-      if (event !== X3D .X3DConstants .INITIALIZED_EVENT)
-         return
+      super .browserInitialized (event)
 
       await this .browser .loadComponents (this .browser .getComponent ("Scripting"))
 
