@@ -8,7 +8,7 @@ use open qw/:std :utf8/;
 if (`git branch --show-current` ne "development\n")
 {
 	say "Wrong branch, must be development, cannot release version!";
-	exit;
+	exit 1;
 }
 
 system "git", "checkout", "main";
