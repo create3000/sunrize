@@ -12,7 +12,7 @@ if (`git branch --show-current` ne "development\n")
 }
 
 system "git", "checkout", "main";
-system "git", "merge", "developement";
+system "git", "merge", "development";
 
 my $version = `npm pkg get version | sed 's/"//g'`;
 chomp $version;
