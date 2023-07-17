@@ -21,3 +21,7 @@ system "git", "commit", "-am", "Published version $version";
 system "git", "push", "origin";
 
 system "npm", "publish";
+
+system "git", "checkout", "development";
+system "git", "merge", "main";
+system "git", "push", "origin";
