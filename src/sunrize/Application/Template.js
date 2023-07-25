@@ -5,9 +5,16 @@ const
 
 class Template
 {
+   static #stats = new Map ()
+
    static create (template)
    {
-      const filename = Template .filename (template)
+      const
+         filename = this .filename (template),
+         dirname  = path .dirname (template),
+         stats    = fs .statSync (dirname);
+
+      this .#stats .set (dirname, stats)
 
       const file = fs .readFileSync (template)
          .toString ()
@@ -15,13 +22,19 @@ class Template
          .replace (/(href=")(.*?)(")/sg, Template .resolve)
 
       fs .writeFileSync (filename, file)
+      fs .utimesSync (dirname, stats .atime, stats .mtime)
 
       return filename
    }
 
    static remove (template)
    {
-      fs .unlinkSync (Template .filename (template))
+      const
+         dirname = path .dirname (template),
+         stats   = this .#stats .get (dirname)
+
+      fs .unlinkSync (this .filename (template))
+      fs .utimesSync (dirname, stats .atime, stats .mtime)
    }
 
    static filename (template)
