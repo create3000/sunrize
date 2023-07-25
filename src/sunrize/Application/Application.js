@@ -6,7 +6,7 @@ const
    path         = require ("path"),
    fs           = require ("fs"),
    util         = require ("util"),
-   template     = require ("./Template"),
+   Template     = require ("./Template"),
    LocalStorage = require ("node-localstorage") .LocalStorage,
    DataStorage  = require ("../Application/DataStorage"),
    _            = require ("../Application/GetText")
@@ -55,9 +55,9 @@ module .exports = class Application
          timings: false,
       })
 
-      template (path .join (__dirname, "../../html/application-template.html"))
-      template (path .join (__dirname, "../../html/document-template.html"))
-      template (path .join (__dirname, "../../themes/default-template.css"))
+      Template .create (path .join (__dirname, "../../html/application-template.html"))
+      Template .create (path .join (__dirname, "../../html/document-template.html"))
+      Template .create (path .join (__dirname, "../../themes/default-template.css"))
 
       this .setup ()
    }
@@ -717,8 +717,12 @@ module .exports = class Application
 
    quit ()
    {
-      if (! this .applicationShouldQuitAfterLastWindowClosed)
+      if (!this .applicationShouldQuitAfterLastWindowClosed)
          return
+
+      Template .remove (path .join (__dirname, "../../html/application-template.html"))
+      Template .remove (path .join (__dirname, "../../html/document-template.html"))
+      Template .remove (path .join (__dirname, "../../themes/default-template.css"))
 
       electron .app .quit ()
    }
