@@ -3,6 +3,7 @@
 const
    $           = require ("jquery"),
    electron    = require ("electron"),
+   path        = require ("path"),
    X3D         = require ("../X3D"),
    Interface   = require ("../Application/Interface"),
    Splitter    = require ("../Controls/Splitter"),
@@ -14,7 +15,7 @@ const
    _           = require ("../Application/GetText")
 
 monaco .require .config ({
-   baseUrl: "node_modules/monaco-editor/min",
+   baseUrl: path .resolve (path .dirname (require .resolve ("monaco-editor/package.json")), "min"),
 })
 
 require ("../Controls/RenameNodeInput")
@@ -255,7 +256,7 @@ module .exports = class ScriptEditor extends Interface
                {
                   getWorkerUrl (moduleId, label)
                   {
-                     return "../../node_modules/monaco-editor/min/vs/base/worker/workerMain.js"
+                     return require .resolve ("monaco-editor/min/vs/base/worker/workerMain.js")
                   },
                }
 

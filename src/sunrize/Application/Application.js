@@ -6,6 +6,7 @@ const
    path         = require ("path"),
    fs           = require ("fs"),
    util         = require ("util"),
+   template     = require ("./Template"),
    LocalStorage = require ("node-localstorage") .LocalStorage,
    DataStorage  = require ("../Application/DataStorage"),
    _            = require ("../Application/GetText")
@@ -54,11 +55,16 @@ module .exports = class Application
          timings: false,
       })
 
+      template (path .join (__dirname, "../../html/application-template.html"))
+      template (path .join (__dirname, "../../html/document-template.html"))
+      template (path .join (__dirname, "../../themes/default-template.css"))
+
       this .setup ()
    }
 
    async setup ()
    {
+
       await electron .app .whenReady ()
 
       electron .app .on ("activate",           (event)           => this .activate ())
@@ -539,8 +545,6 @@ module .exports = class Application
 
    async createWindow ()
    {
-      const file = true ? "application" : "document"
-
       const window = new electron .BrowserWindow ({
          icon: path .join (__dirname, "../../images/icon.png"),
          x: this .config .position [0],
@@ -552,7 +556,7 @@ module .exports = class Application
          backgroundColor: electron .nativeTheme .shouldUseDarkColors ? "rgb(28, 28, 30)" : "rgb(242, 242, 247)",
          show: false,
          webPreferences: {
-            preload: path .join (__dirname, `../../html/${file}.js`),
+            preload: path .join (__dirname, "../../html/application.js"),
             nodeIntegration: true,
             contextIsolation: false,
             webviewTag: true,
@@ -576,7 +580,7 @@ module .exports = class Application
 
       window .setFullScreen (this .config .fullscreen)
 
-      await window .loadFile (path .join (__dirname, `../../html/${file}.html`))
+      await window .loadFile (path .join (__dirname, "../../html/application.html"))
    }
 
    activate ()
