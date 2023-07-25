@@ -16,7 +16,7 @@ You can run Sunrize without installing it using **npx**:
 $ npx sunrize [files]
 ```
 
-Note: The first time, it may take a while for Sunrize to start.
+**Note:** The first time, it may take a while for Sunrize to start.
 
 ## License
 
