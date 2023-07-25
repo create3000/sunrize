@@ -12,3 +12,7 @@ _site
 .jekyll-metadata
 .bundle
 vendor
+
+src/html/application.html
+src/html/document.html
+src/themes/default.css
