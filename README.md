@@ -16,6 +16,8 @@ You can run Sunrize without installing it using **npx**:
 $ npx sunrize [files]
 ```
 
+Note: The first time, it may take a while for Sunrize to start.
+
 ## License
 
 Sunrize is free software: you can redistribute it and/or modify it under the terms of the [GNU General Public License version 3](LICENSE.md) only, as published by the Free Software Foundation.

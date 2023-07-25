@@ -19,3 +19,6 @@ You can run Sunrize without installing it using **npx**:
 ```console
 $ npx sunrize [files]
 ```
+
+>**Note:** The first time, it may take a while for Sunrize to start.
+{: .prompt-info }
