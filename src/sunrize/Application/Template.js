@@ -1,6 +1,7 @@
 const
    fs   = require ("fs"),
-   path = require ("path")
+   path = require ("path"),
+   url  = require ("url")
 
 function template (template)
 {
@@ -26,7 +27,7 @@ function resolve (all, begin, filename, end)
    if (!match)
       return all
 
-   return begin + require .resolve (match [1]) + end
+   return begin + url .pathToFileURL (require .resolve (match [1])) + end
 }
 
 module .exports = template
