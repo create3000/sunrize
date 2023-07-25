@@ -3,11 +3,9 @@
 
 const os = require ("os")
 const path = require ("path")
-const { spawn, execFileSync } = require ("child_process")
+const { spawn } = require ("child_process")
 
 process .chdir (path .resolve (__dirname, ".."))
-
-execFileSync (os .platform () === "win32" ? "npm.cmd" : "npm", ["install", "--prefer-offline", "--silent"])
 
 const p = spawn (os .platform () === "win32" ? "npm.cmd" : "npm", ["start", "--silent", "--", ... process .argv .slice (2)])
 
