@@ -12,13 +12,10 @@ Sunrize is an easy-to-use editor for X3D files that is based on the [X_ITE](http
 
 ![Image of Sunrize Editor](/assets/img/sunrize.png)
 
-## Installation
+## Usage
 
-Install and run Sunrize with the following commands:
+You can run Sunrize without installing it using **npx**:
 
 ```console
-$ git clone https://github.com/create3000/sunrize.git
-$ cd sunrize
-$ npm install
-$ npm start
+$ npx sunrize [files]
 ```
