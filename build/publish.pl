@@ -14,11 +14,14 @@ if (`git branch --show-current` ne "development\n")
 system "git", "checkout", "main";
 system "git", "merge", "development";
 
+my $name = `node -p "require('./package.json').name"`;
+chomp $name;
+
 my $version = `npm pkg get version | sed 's/"//g'`;
 chomp $version;
 say "package.json version $version";
 
-my $online = `npm view sunrize version`;
+my $online = `npm view $name version`;
 chomp $online;
 say "NPM version $online";
 
