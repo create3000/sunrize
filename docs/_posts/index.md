@@ -1,5 +1,5 @@
 ---
-title: Sunrize — A Multi Platform X3D Editor
+title: Sunrize — A Multi-Platform X3D Editor
 date: 2023-04-20
 nav: main
 categories: []

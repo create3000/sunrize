@@ -1,4 +1,4 @@
-# [Sunrize](https://create3000.github.io/sunrize/) — A Multi Platform X3D Editor
+# [Sunrize](https://create3000.github.io/sunrize/) — A Multi-Platform X3D Editor
 
 ## Introduction
 
