@@ -3,15 +3,23 @@
   "productName": "Sunrize X3D Editor",
   "version": "1.0.82",
   "description": "A Multi-Platform X3D Editor",
-  "homepage": "https://create3000.github.io/sunrize/",
-  "author": "Holger Seelig",
-  "license": "GPL-3.0",
+  "main": "src/main.js",
+  "bin": {
+    "sunrize": "bin/sunrize.js"
+  },
+  "files": [
+     "bin/*",
+     "src/*"
+  ],
+  "scripts": {
+    "start": "electron .",
+    "development": "SUNRISE_ENVIRONMENT=DEVELOPMENT electron .",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/create3000/sunrize.git"
-  },
-  "bugs": {
-    "url": "https://github.com/create3000/sunrize/issues"
   },
   "keywords": [
     "3D",
@@ -34,6 +42,12 @@
     "X3D",
     "XML"
   ],
+  "author": "Holger Seelig",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/create3000/sunrize/issues"
+  },
+  "homepage": "https://create3000.github.io/sunrize/",
   "contributors": [
     {
       "name": "Holger Seelig",
@@ -68,16 +82,6 @@
     "spectrum-colorpicker2": "^2.0.10",
     "string-similarity": "^4.0.4",
     "x_ite": "^8.11.6"
-  },
-  "main": "src/main.js",
-  "bin": {
-    "sunrize": "bin/sunrize.js"
-  },
-  "scripts": {
-    "start": "electron .",
-    "development": "SUNRISE_ENVIRONMENT=DEVELOPMENT electron .",
-    "package": "electron-forge package",
-    "make": "electron-forge make"
   },
   "config": {
     "forge": {
