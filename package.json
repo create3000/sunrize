@@ -77,7 +77,7 @@
     "material-symbols": "^0.10.3",
     "md5": "^2.3.0",
     "monaco-editor": "^0.41.0",
-    "node-localstorage": "^3.0.4",
+    "node-localstorage": "^2.2.1",
     "qtip2": "^3.0.3",
     "spectrum-colorpicker2": "^2.0.10",
     "string-similarity": "^4.0.4",
