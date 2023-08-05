@@ -194,8 +194,11 @@ module .exports = new class Document extends Interface
 
       if (this .filePath)
       {
-         if (path .extname (this .filePath) .match (/.(?:gltf|glb|obj|stl|ply|svg)/i))
+         if (path .extname (this .filePath) .match (/\.(?:wrl|wrz|wrl\.gz|vrml|gltf|glb|obj|stl|ply|svg)$/i))
+         {
+            console .warn (`Cannot save ${this .filePath}. File type is not supported.`)
             return
+         }
 
          fs .writeFileSync (this .filePath, Editor .getContents (scene, path .extname (this .filePath)))
 
