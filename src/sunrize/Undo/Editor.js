@@ -182,7 +182,7 @@ module .exports = class Editor
          updatedProtos       = new Map (),
          removedProtoNodes   = new Set ()
 
-      Traverse .traverse ([...newProtos, ...nodes], Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, (node) =>
+      Traverse .traverse ([... newProtos, ... nodes], Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, (node) =>
       {
          if (!node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance))
             return
@@ -236,7 +236,7 @@ module .exports = class Editor
 
       if (oldWorldURL)
       {
-         this .rewriteURLs (executionContext, [...newProtos, ...nodes], oldWorldURL [0], executionContext .worldURL, undoManager)
+         this .rewriteURLs (executionContext, [... newProtos, ... nodes], oldWorldURL [0], executionContext .worldURL, undoManager)
       }
 
       scene .removeMetaData ("base")
