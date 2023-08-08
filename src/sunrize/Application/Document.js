@@ -94,6 +94,8 @@ module .exports = new class Document extends Interface
    configure ()
    {
       this .config .file .addDefaultValues ({ inferProfileAndComponents: true })
+
+      this .fileSaveFileTypeWarning = false
    }
 
    activate ()
@@ -196,7 +198,10 @@ module .exports = new class Document extends Interface
       {
          if (path .extname (this .filePath) .match (/\.(?:wrl|wrz|wrl\.gz|vrml|gltf|glb|obj|stl|ply|svg)$/i))
          {
-            console .warn (`Cannot save ${this .filePath}. File type is not supported.`)
+            if (!this .fileSaveFileTypeWarning)
+               console .warn (`Cannot save ${this .filePath}. File type is not supported.`)
+
+            this .fileSaveFileTypeWarning = true;
             return
          }
 
