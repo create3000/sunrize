@@ -256,7 +256,7 @@ module .exports = class Editor
     */
    static getContents (scene, type)
    {
-      switch (type .toLowerCase ())
+      switch (type ?.toLowerCase ())
       {
          case ".x3d":
          default:
