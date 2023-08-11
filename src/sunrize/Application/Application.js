@@ -169,7 +169,7 @@ module .exports = class Application
 
                      const response = await prompt ({
                         title: "Open URL...",
-                        label: "Enter URL to open in new tab:",
+                        label: "Enter URL for opening in new tab:",
                         value: this .openURLValue,
                         inputAttrs: {
                            type: "url",
