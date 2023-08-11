@@ -164,7 +164,6 @@ module .exports = class Application
                            role: "appMenu",
                         },
                         { role: "editMenu" },
-                        { role: "viewMenu" },
                      ]))
 
                      const response = await prompt ({
@@ -175,7 +174,6 @@ module .exports = class Application
                            type: "url",
                         },
                         type: "input",
-                        resizable: true,
                         customStylesheet: path .join (__dirname, "../../themes/prompt.css"),
                      },
                      this .mainWindow)
