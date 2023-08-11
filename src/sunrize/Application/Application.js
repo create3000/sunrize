@@ -37,7 +37,7 @@ module .exports = class Application
 
       process .env .ELECTRON_DISABLE_SECURITY_WARNINGS = "true"
 
-      this .menuLabels = {
+      this .menuOptions = {
          defaultEditMenu: false,
          undoLabel: _ ("Undo"),
          redoLabel: _ ("Redo"),
@@ -79,7 +79,7 @@ module .exports = class Application
       electron .ipcMain .on ("title",        (event, title)       => this .title = title)
       electron .ipcMain .on ("current-file", (event, currentFile) => this .currentFile = currentFile)
       electron .ipcMain .on ("save-file",    (event, filePath)    => this .saveFile (filePath))
-      electron .ipcMain .on ("change-menu",  (event, object)      => this .changeMenu (object))
+      electron .ipcMain .on ("change-menu",  (event, object)      => this .updateMenu (object))
       electron .ipcMain .on ("context-menu", (event, id, menu)    => this .contextMenu (id, menu))
 
       electron .ipcMain .handle ("file-path", async (event, basename) => await this .showSaveDialog (basename))
@@ -87,7 +87,7 @@ module .exports = class Application
 
       this .fullname = await require ("fullname") ()
 
-      await this .createMenu ()
+      await this .updateMenu ()
       await this .createWindow ()
 
       this .openFiles (process .argv .slice (2) .map (filePath => url .pathToFileURL (filePath) .href))
@@ -115,15 +115,10 @@ module .exports = class Application
       this .mainWindow .title = `${title} · Sunrize`
    }
 
-   changeMenu (object = { })
+   updateMenu (object = { })
    {
-      Object .assign (this .menuLabels, object)
+      Object .assign (this .menuOptions, object)
 
-      this .createMenu ()
-   }
-
-   createMenu ()
-   {
       const exportPath = this .exportPath .get (this .currentFile)
 
       const menu = electron .Menu .buildFromTemplate ([
@@ -182,7 +177,7 @@ module .exports = class Application
                      },
                      this .mainWindow)
 
-                     this .changeMenu ()
+                     this .updateMenu ()
 
                      if (response === null)
                         return
@@ -286,7 +281,7 @@ module .exports = class Application
 
                      this .mainWindow .webContents .send ("export-as", response .filePath)
 
-                     this .changeMenu ()
+                     this .updateMenu ()
                   },
                },
                { type: "separator" },
@@ -304,23 +299,23 @@ module .exports = class Application
                },
             ],
          },
-         this .menuLabels .defaultEditMenu ? { role: "editMenu" } :
+         this .menuOptions .defaultEditMenu ? { role: "editMenu" } :
          {
             role: "editMenu",
             submenu: [
                {
-                  label: this .menuLabels .undoLabel,
+                  label: this .menuOptions .undoLabel,
                   accelerator: "CmdOrCtrl+Z",
-                  enabled: this .menuLabels .undoLabel !== _ ("Undo"),
+                  enabled: this .menuOptions .undoLabel !== _ ("Undo"),
                   click: () =>
                   {
                      this .mainWindow .webContents .send ("undo")
                   },
                },
                {
-                  label: this .menuLabels .redoLabel,
+                  label: this .menuOptions .redoLabel,
                   accelerator: "Shift+CmdOrCtrl+Z",
-                  enabled: this .menuLabels .redoLabel !== _ ("Redo"),
+                  enabled: this .menuOptions .redoLabel !== _ ("Redo"),
                   click: () =>
                   {
                      this .mainWindow .webContents .send ("redo")

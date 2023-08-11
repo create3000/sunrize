@@ -147,7 +147,7 @@ module .exports = new class Document extends Interface
             contents = this .config .global .addNameSpace ("unsaved.") [id]
 
          if (contents)
-            await this .openFile ("data:model/x3d," + contents)
+            await this .openFile (encodeURI (`data:model/x3d,${contents}`))
          else
             await this .openFile ()
       }
@@ -205,7 +205,7 @@ module .exports = new class Document extends Interface
       scene .setMetaData ("comment", `Rise and Shine`)
       scene .setMetaData ("creator", this .fullname)
       scene .setMetaData ("generator", `${pkg .productName} V${pkg .version}, ${pkg .homepage}`)
-      scene .setMetaData ("identifier", scene .worldURL)
+      scene .setMetaData ("identifier", scene .worldURL .startsWith ("data:") ? scene .baseURL : scene .worldURL)
       scene .setMetaData ("modified", new Date () .toUTCString ())
 
       // Save source code.
