@@ -57,7 +57,7 @@ class Template
       const resolved = new URL (filename, url .pathToFileURL (template))
 
       if (resolved .protocol === "file:")
-         return begin + url .fileURLToPath (resolved) + end
+         return begin + resolved + end
 
       return all
    }
