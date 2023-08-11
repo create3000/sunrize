@@ -108,14 +108,30 @@ module .exports = new class Document extends Interface
 
    onfocus ()
    {
-      this .activeElement ?.off ("keyup.Document, change.Document")
-
       this .activeElement = document .activeElement ? $(document .activeElement) : null
 
-      if (this .activeElementIsInputOrOutput ())
-         this .activeElement .on ("keyup.Document, change.Document", () => this .undoManager ())
+      electron .ipcRenderer .send ("change-menu", {
+         defaultEditMenu: this .activeElementIsInputOrOutput (),
+      })
+   }
 
-      this .undoManager ()
+   activeElementIsInputOrOutput ()
+   {
+      if (!this .activeElement)
+         return false
+
+      const activeElement = this .activeElement
+
+      if (activeElement .is ("input"))
+         return activeElement .attr ("type") === undefined || activeElement .attr ("type") === "text"
+
+      if (activeElement .is ("textarea"))
+         return true
+
+      if (activeElement .is (".input, .output"))
+         return true
+
+      return false
    }
 
    async restoreFile ()
@@ -308,113 +324,50 @@ module .exports = new class Document extends Interface
 
    undo ()
    {
-      if (this .activeElementIsInputOrOutput ())
-      {
-         if (this .activeElement .closest (".script-editor-monaco") .length)
-            this .scriptEditor .monaco .getModel () .undo ()
-         else
-            document .execCommand ("undo")
-      }
-      else
-      {
-         UndoManager .shared .undo ()
-      }
+      UndoManager .shared .undo ()
    }
 
    redo ()
    {
-      if (this .activeElementIsInputOrOutput ())
-      {
-         if (this .activeElement .closest (".script-editor-monaco") .length)
-            this .scriptEditor .monaco .getModel () .redo ()
-         else
-            document .execCommand ("redo")
-      }
-      else
-      {
-         UndoManager .shared .redo ()
-      }
+      UndoManager .shared .redo ()
    }
 
    undoManager ()
    {
-      if (this .activeElementIsInputOrOutput ())
+      electron .ipcRenderer .send ("change-menu",
       {
-         electron .ipcRenderer .send ("change-menu", {
-            undoLabel: document .queryCommandEnabled ("undo") ? _ ("Undo ") : _ ("Undo"),
-            redoLabel: document .queryCommandEnabled ("redo") ? _ ("Redo ") : _ ("Redo"),
-         })
-      }
-      else
-      {
-         electron .ipcRenderer .send ("change-menu",
-         {
-            undoLabel: UndoManager .shared .undoLabel,
-            redoLabel: UndoManager .shared .redoLabel,
-         })
+         undoLabel: UndoManager .shared .undoLabel,
+         redoLabel: UndoManager .shared .redoLabel,
+      })
 
-         electron .ipcRenderer .sendToHost ("saved", !UndoManager .shared .saveNeeded)
+      electron .ipcRenderer .sendToHost ("saved", !UndoManager .shared .saveNeeded)
 
-         if (UndoManager .shared .saveNeeded)
-            this .registerAutoSave ()
-      }
+      if (UndoManager .shared .saveNeeded)
+         this .registerAutoSave ()
    }
 
    cut ()
    {
-      if (this .activeElementIsInputOrOutput ())
-         document .execCommand ("cut")
-      else
-         this .sidebar .outlineEditor .cutNodes ()
+      this .sidebar .outlineEditor .cutNodes ()
    }
 
    copy ()
    {
-      if (this .activeElementIsInputOrOutput ())
-         document .execCommand ("copy")
-      else
-         this .sidebar .outlineEditor .copyNodes ()
+      this .sidebar .outlineEditor .copyNodes ()
    }
 
    paste ()
    {
-      if (this .activeElementIsInputOrOutput ())
-         document .execCommand ("paste")
-      else
-         this .sidebar .outlineEditor .pasteNodes ()
+      this .sidebar .outlineEditor .pasteNodes ()
    }
 
    delete ()
    {
-      if (this .activeElementIsInputOrOutput ())
-         document .execCommand ("delete")
-      else
-         this .sidebar .outlineEditor .deleteNodes ()
+      this .sidebar .outlineEditor .deleteNodes ()
    }
 
    selectAll ()
    {
-      if (this .activeElementIsInputOrOutput ())
-         document .execCommand ("selectAll")
-   }
-
-   activeElementIsInputOrOutput ()
-   {
-      if (!this .activeElement)
-         return false
-
-      const activeElement = this .activeElement
-
-      if (activeElement .is ("input"))
-         return activeElement .attr ("type") === undefined || activeElement .attr ("type") === "text"
-
-      if (activeElement .is ("textarea"))
-         return true
-
-      if (activeElement .is (".input, .output"))
-         return true
-
-      return false
    }
 
    /**

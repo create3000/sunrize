@@ -38,6 +38,7 @@ module .exports = class Application
       process .env .ELECTRON_DISABLE_SECURITY_WARNINGS = "true"
 
       this .menuLabels = {
+         defaultEditMenu: false,
          undoLabel: _ ("Undo"),
          redoLabel: _ ("Redo"),
       }
@@ -303,6 +304,7 @@ module .exports = class Application
                },
             ],
          },
+         this .menuLabels .defaultEditMenu ? { role: "editMenu" } :
          {
             role: "editMenu",
             submenu: [
