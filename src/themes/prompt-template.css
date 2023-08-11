@@ -2,17 +2,6 @@
 @import url(system-colors.css);
 
 body {
-  --background-color: var(--system-gray6);
-  --text-color: var(--system-gray0);
-}
-
-@media (prefers-color-scheme: dark) {
-  body {
-    --text-color: var(--system-gray1);
-  }
-}
-
-body {
   background-color: var(--background-color);
   color: var(--text-color);
 }
