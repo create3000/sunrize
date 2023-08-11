@@ -7,7 +7,7 @@ body {
 }
 
 @media (prefers-color-scheme: dark) {
-  body.dark {
+  body {
     --text-color: var(--system-gray1);
   }
 }
