@@ -2,6 +2,7 @@
 
 const
    electron     = require ("electron"),
+   prompt       = require ("electron-prompt"),
    url          = require ("url"),
    path         = require ("path"),
    fs           = require ("fs"),
@@ -150,6 +151,41 @@ module .exports = class Application
                         return
 
                      this .openFiles (response .filePaths .map (filePath => url .pathToFileURL (filePath) .href))
+                  },
+               },
+               {
+                  label: _ ("Open URL..."),
+                  accelerator: "Shift+CmdOrCtrl+O",
+                  click: async () =>
+                  {
+                     electron .Menu .setApplicationMenu (electron .Menu .buildFromTemplate ([
+                        {
+                           label: "Sunrize",
+                           role: "appMenu",
+                        },
+                        { role: "editMenu" },
+                        { role: "viewMenu" },
+                     ]))
+
+                     const response = await prompt ({
+                        title: "Open URL...",
+                        label: "Enter a URL:",
+                        value: "http://example.org",
+                        inputAttrs: {
+                           type: "url",
+                        },
+                        type: "input",
+                        resizable: true,
+                        customStylesheet: path .join (__dirname, "../../themes/prompt.css"),
+                     },
+                     this .mainWindow)
+
+                     this .changeMenu ()
+
+                     if (response === null)
+                        return
+
+                     this .openFiles ([response])
                   },
                },
                {

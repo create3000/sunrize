@@ -67,6 +67,7 @@
     "console": "^0.7.2",
     "css-element-queries": "^1.2.3",
     "electron": "^25.4.0",
+    "electron-prompt": "^1.7.0",
     "electron-squirrel-startup": "^1.0.0",
     "electron-tabs": "^1.0.1",
     "fullname": "^4.0.1",
