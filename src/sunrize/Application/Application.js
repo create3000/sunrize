@@ -19,6 +19,7 @@ const localStorage = new LocalStorage (path .join (electron .app .getPath ("user
 module .exports = class Application
 {
    config = new DataStorage (localStorage, "Sunrize.Application.")
+   openURLValue = ""
    exportPath = new Map ()
 
    static run ()
@@ -125,8 +126,8 @@ module .exports = class Application
 
       const menu = electron .Menu .buildFromTemplate ([
          {
-            label: "Sunrize",
             role: "appMenu",
+            label: "Sunrize",
          },
          {
             role: "fileMenu",
@@ -160,15 +161,16 @@ module .exports = class Application
                   {
                      electron .Menu .setApplicationMenu (electron .Menu .buildFromTemplate ([
                         {
-                           label: "Sunrize",
                            role: "appMenu",
+                           label: "Sunrize",
                         },
                         { role: "editMenu" },
                      ]))
 
                      const response = await prompt ({
                         title: "Open URL...",
-                        label: "Enter a URL:",
+                        label: "Enter URL to open in new tab:",
+                        value: this .openURLValue,
                         inputAttrs: {
                            type: "url",
                            placeholder: "https://example.org",
@@ -183,7 +185,7 @@ module .exports = class Application
                      if (response === null)
                         return
 
-                     this .openFiles ([response])
+                     this .openFiles ([this .openURLValue = response])
                   },
                },
                {

@@ -81,6 +81,10 @@ body {
   background: var(--system-gray4);
 }
 
+#label {
+  font-size: 80% !important;
+}
+
 input {
   border: 1px solid var(--system-gray3) !important;
   background: none !important;
