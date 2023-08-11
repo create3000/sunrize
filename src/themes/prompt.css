@@ -91,6 +91,10 @@ input {
   color: var(--text-color) !important;
 }
 
+#ok {
+  background-color: var(--system-red) !important;
+}
+
 #cancel {
   border: 1px solid var(--system-gray3) !important;
   background-color: transparent !important;
@@ -99,5 +103,7 @@ input {
 
 #buttons > button,
 #buttons > input[type=submit] {
-  border-radius: 5px !important;
+  border-radius: 7px !important;
+  padding: 0.3em 1.8em !important;
+  width: 100px !important;
 }
