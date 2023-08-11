@@ -169,9 +169,9 @@ module .exports = class Application
                      const response = await prompt ({
                         title: "Open URL...",
                         label: "Enter a URL:",
-                        value: "https://example.org",
                         inputAttrs: {
                            type: "url",
+                           placeholder: "https://example.org",
                         },
                         type: "input",
                         customStylesheet: path .join (__dirname, "../../themes/prompt.css"),
