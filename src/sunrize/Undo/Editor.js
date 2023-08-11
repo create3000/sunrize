@@ -307,7 +307,7 @@ x3d-canvas {
   <body>
     <h1>${path .basename (url .fileURLToPath (scene .worldURL))}</h1>
     <x3d-canvas>
-${scene .toXMLString ({ html: true, indent: " " .repeat (6) })}
+${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     </x3d-canvas>
     <p>Made with <a href="https://create3000.github.io/sunrize/" target="_blank">Sunrize X3D Editor.</a></p>
   </body>
