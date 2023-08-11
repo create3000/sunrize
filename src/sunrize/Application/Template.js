@@ -18,8 +18,8 @@ class Template
 
       const file = fs .readFileSync (template)
          .toString ()
-         .replace (/(url\()(.*?)(\))/sg, Template .resolve)
-         .replace (/(href=")(.*?)(")/sg, Template .resolve)
+         .replace (/(url\()(.*?)(\))/sg, Template .resolve .bind (null, template))
+         .replace (/(href=")(.*?)(")/sg, Template .resolve .bind (null, template))
 
       fs .writeFileSync (filename, file)
       fs .utimesSync (dirname, stats .atime, stats .mtime)
@@ -47,14 +47,19 @@ class Template
       return filename
    }
 
-   static resolve (all, begin, filename, end)
+   static resolve (template, all, begin, filename, end)
    {
       const match = filename .match (/^.*?\/node_modules\/(.*?)$/)
 
-      if (!match)
-         return all
+      if (match)
+         return begin + url .pathToFileURL (require .resolve (match [1])) + end
 
-      return begin + url .pathToFileURL (require .resolve (match [1])) + end
+      const resolved = new URL (filename, url .pathToFileURL (template));
+
+      if (resolved .protocol === "file:")
+         return begin + url .fileURLToPath (resolved) + end
+
+      return all
    }
 }
 

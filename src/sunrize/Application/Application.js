@@ -60,6 +60,7 @@ module .exports = class Application
       Template .create (path .join (__dirname, "../../html/application-template.html"))
       Template .create (path .join (__dirname, "../../html/document-template.html"))
       Template .create (path .join (__dirname, "../../themes/default-template.css"))
+      Template .create (path .join (__dirname, "../../themes/prompt-template.css"))
 
       this .setup ()
    }
