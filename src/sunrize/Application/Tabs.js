@@ -211,7 +211,7 @@ module .exports = new class Tabs
 
    getTabs ()
    {
-      const cmp  = (a, b) => (a > b) - (a < b)
+      const cmp = (a, b) => (a > b) - (a < b)
 
       return this .tabs .getTabs ()
          .sort ((a, b) => cmp (a .getPosition (), b .getPosition ()))
