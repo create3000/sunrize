@@ -96,3 +96,8 @@ input {
   background-color: transparent !important;
   color: var(--text-color) !important;
 }
+
+#buttons > button,
+#buttons > input[type=submit] {
+  border-radius: 5px !important;
+}
