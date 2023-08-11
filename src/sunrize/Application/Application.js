@@ -170,7 +170,7 @@ module .exports = class Application
                      const response = await prompt ({
                         title: "Open URL...",
                         label: "Enter a URL:",
-                        value: "http://example.org",
+                        value: "https://example.org",
                         inputAttrs: {
                            type: "url",
                         },
