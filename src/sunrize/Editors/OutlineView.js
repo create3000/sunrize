@@ -109,14 +109,6 @@ module .exports = class OutlineView extends Interface
 
    configure ()
    {
-      this .hidableNodes = new Set ([
-         X3D .X3DConstants .X3DGroupingNode,
-         X3D .X3DConstants .X3DBackgroundNode,
-         X3D .X3DConstants .X3DFogObject,
-         X3D .X3DConstants .X3DShapeNode,
-         X3D .X3DConstants .CADFace,
-      ])
-
       if (this .executionContext)
       {
          if (this .executionContext .worldURL !== this .browser .currentScene .worldURL)
@@ -935,7 +927,7 @@ module .exports = class OutlineView extends Interface
             .text (cloneCount > 1 ? `[${cloneCount}]` : "")
             .appendTo (name)
 
-         if (node .getType () .some (type => this .hidableNodes .has (type)))
+         if (node .setHidden)
          {
             name .append (document .createTextNode (" "))
 
