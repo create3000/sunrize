@@ -167,12 +167,13 @@ module .exports = class Application
                      const response = await prompt ({
                         title: "Open URL...",
                         label: "Enter URL for opening in new tab:",
+                        type: "input",
                         value: this .openURLValue,
                         inputAttrs: {
                            type: "url",
                            placeholder: "https://example.org",
                         },
-                        type: "input",
+                        width: 500,
                         customStylesheet: path .join (__dirname, "../../themes/prompt.css"),
                      },
                      this .mainWindow)
