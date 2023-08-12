@@ -932,7 +932,8 @@ module .exports = class OutlineView extends Interface
             name .append (document .createTextNode (" "))
 
             $("<span></span>")
-               .addClass (["material-symbols-outlined", "button", "visibility"])
+               .addClass (["visibility", "button", "material-symbols-outlined"])
+               .addClass (node .isHidden () ? "off" : "")
                .text (node .isHidden () ? "visibility_off" : "visibility")
                .appendTo (name)
          }
