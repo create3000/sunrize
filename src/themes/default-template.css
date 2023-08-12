@@ -1021,6 +1021,10 @@ body.dark .ui-widget .library-list .component {
   height: 12px;
 }
 
+.scene-graph .item * {
+  vertical-align: top;
+}
+
 .scene-graph .item .node-type-name,
 .scene-graph .item .as {
   font-weight: bold;
@@ -1030,10 +1034,6 @@ body.dark .ui-widget .library-list .component {
   position: relative;
   top: 2px;
   white-space: nowrap;
-}
-
-.scene-graph .name * {
-  vertical-align: top;
 }
 
 .scene-graph .externproto > .item  .name,
