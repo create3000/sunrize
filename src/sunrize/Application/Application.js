@@ -3,6 +3,7 @@
 const
    electron     = require ("electron"),
    prompt       = require ("electron-prompt"),
+   clipboardy   = require ("node-clipboardy"),
    url          = require ("url"),
    path         = require ("path"),
    fs           = require ("fs"),
@@ -169,6 +170,8 @@ module .exports = class Application
                   accelerator: "Shift+CmdOrCtrl+O",
                   click: async () =>
                   {
+                     const clipboard = await clipboardy .read ()
+
                      this .pushMenu (electron .Menu .buildFromTemplate ([
                         {
                            role: "appMenu",
@@ -181,7 +184,7 @@ module .exports = class Application
                         title: "Open URL...",
                         label: "Enter URL for opening in new tab:",
                         type: "input",
-                        value: this .openURLValue,
+                        value: clipboard .match (/^(?:https?|file|ftp|smb):\/\/.+/) ? clipboard : this .openURLValue,
                         inputAttrs: {
                            type: "url",
                            placeholder: "https://example.org",
