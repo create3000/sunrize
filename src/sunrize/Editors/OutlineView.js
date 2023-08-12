@@ -52,8 +52,10 @@ module .exports = class OutlineView extends Interface
          .on ("dragend", this .onDragEnd .bind (this))
       .appendTo (this .treeView)
 
-      electron .ipcRenderer .on ("select-all",   () => this .selectAll ())
-      electron .ipcRenderer .on ("deselect-all", () => this .deselectAll ())
+      electron .ipcRenderer .on ("select-all",              () => this .selectAll ())
+      electron .ipcRenderer .on ("deselect-all",            () => this .deselectAll ())
+      electron .ipcRenderer .on ("hide-unselected-objects", () => this .hideUnselectedObjects ())
+      electron .ipcRenderer .on ("show-all-objects",        () => this .showAllObjects ())
 
       electron .ipcRenderer .on ("expand-extern-proto-declarations", (event, value) => this .expandExternProtoDeclarations = value)
       electron .ipcRenderer .on ("expand-prototype-instances",       (event, value) => this .expandPrototypeInstances      = value)
@@ -1841,25 +1843,6 @@ module .exports = class OutlineView extends Interface
       this .expandSFNodeComplete (elements, field)
    }
 
-   toggleVisibility (event)
-   {
-      event .preventDefault ()
-      event .stopImmediatePropagation ()
-
-      const
-         target  = $(event .target),
-         element = target .closest (".node", this .sceneGraph),
-         node    = this .getNode (element),
-         hidden  = !node .isHidden ()
-
-      node .setHidden (hidden)
-
-      target
-         .removeClass ("off")
-         .addClass (hidden ? "off" : "")
-         .text (hidden ? "visibility_off" : "visibility")
-   }
-
    expandSFNodeComplete (elements, field)
    {
       // Reopen nodes.
@@ -2603,6 +2586,80 @@ module .exports = class OutlineView extends Interface
          this .getNode ($(element)) .setUserData (_selected, false)
 
       selection .clear ()
+   }
+
+   toggleVisibility (event)
+   {
+      event .preventDefault ()
+      event .stopImmediatePropagation ()
+
+      const
+         target  = $(event .target),
+         element = target .closest (".node", this .sceneGraph),
+         node    = this .getNode (element),
+         hidden  = !node .isHidden ()
+
+      node .setHidden (hidden)
+
+      target
+         .removeClass ("off")
+         .addClass (hidden ? "off" : "")
+         .text (hidden ? "visibility_off" : "visibility")
+   }
+
+   hideUnselectedObjects ()
+   {
+      // Hide all X3DShapeNode nodes and show all other nodes.
+
+      Traverse .traverse (this .executionContext, Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, node =>
+      {
+         if (!node .setHidden)
+            return
+
+         node .setHidden (node .getType () .includes (X3D .X3DConstants .X3DShapeNode))
+
+         this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
+            .find ("> .item .visibility")
+            .removeClass ("off")
+            .addClass (node .isHidden () ? "off" : "")
+            .text (node .isHidden () ? "visibility_off" : "visibility")
+      })
+
+      // Show all nodes in selection.
+
+      const selection = require ("../Application/Selection");
+
+      Traverse .traverse ([... selection .nodes .values ()], Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, node =>
+      {
+         if (!node .setHidden)
+            return
+
+         if (!node .getType () .includes (X3D .X3DConstants .X3DShapeNode))
+            return
+
+         node .setHidden (false)
+
+         this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
+            .find ("> .item .visibility")
+            .removeClass ("off")
+            .text ("visibility")
+      })
+   }
+
+   showAllObjects ()
+   {
+      Traverse .traverse (this .executionContext, Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, node =>
+      {
+         if (!node .setHidden)
+            return
+
+         node .setHidden (false)
+
+         this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
+            .find ("> .item .visibility")
+            .removeClass ("off")
+            .text ("visibility")
+      })
    }
 
    selectNode (event, selected)

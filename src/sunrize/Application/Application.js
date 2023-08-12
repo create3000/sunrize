@@ -391,6 +391,21 @@ module .exports = class Application
                },
                { type: "separator" },
                {
+                  label: _ ("Hide Unselected Objects"),
+                  click: () =>
+                  {
+                     this .mainWindow .webContents .send ("hide-unselected-objects")
+                  },
+               },
+               {
+                  label: _ ("Show All Objects"),
+                  click: () =>
+                  {
+                     this .mainWindow .webContents .send ("show-all-objects")
+                  },
+               },
+               { type: "separator" },
+               {
                   label: _ ("Remove Empty Groups"),
                   click: () =>
                   {
