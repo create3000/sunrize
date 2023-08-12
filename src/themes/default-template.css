@@ -1032,6 +1032,10 @@ body.dark .ui-widget .library-list .component {
   white-space: nowrap;
 }
 
+.scene-graph .name * {
+  vertical-align: top;
+}
+
 .scene-graph .externproto > .item  .name,
 .scene-graph .proto > .item .name{
   color: var(--system-indigo);
@@ -1258,7 +1262,7 @@ body.dark .ui-widget .library-list .component {
 .scene-graph .material-symbols-outlined {
   font-size: var(--font-size);
   position: relative;
-  top: 3px;
+  top: 2.5px;
 }
 
 .scene-graph .button {
