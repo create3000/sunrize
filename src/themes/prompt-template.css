@@ -2,8 +2,13 @@
 @import url(system-colors.css);
 
 body {
+  overflow: hidden !important;
   background-color: var(--background-color);
   color: var(--text-color);
+}
+
+#container {
+  overflow: hidden !important;
 }
 
 ::placeholder {
