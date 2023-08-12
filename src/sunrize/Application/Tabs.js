@@ -81,6 +81,7 @@ module .exports = new class Tabs
       this .forwardToActiveTab ("select-all")
       this .forwardToActiveTab ("deselect-all")
       this .forwardToActiveTab ("hide-unselected-objects")
+      this .forwardToActiveTab ("show-selected-objects")
       this .forwardToActiveTab ("show-all-objects")
       this .forwardToActiveTab ("remove-empty-groups")
 

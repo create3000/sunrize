@@ -55,6 +55,7 @@ module .exports = class OutlineView extends Interface
       electron .ipcRenderer .on ("select-all",              () => this .selectAll ())
       electron .ipcRenderer .on ("deselect-all",            () => this .deselectAll ())
       electron .ipcRenderer .on ("hide-unselected-objects", () => this .hideUnselectedObjects ())
+      electron .ipcRenderer .on ("show-selected-objects",   () => this .showSelectedObjects ())
       electron .ipcRenderer .on ("show-all-objects",        () => this .showAllObjects ())
 
       electron .ipcRenderer .on ("expand-extern-proto-declarations", (event, value) => this .expandExternProtoDeclarations = value)
@@ -2646,11 +2647,27 @@ module .exports = class OutlineView extends Interface
       })
    }
 
-   showAllObjects ()
+   showSelectedObjects ()
    {
       const selection = require ("../Application/Selection")
 
       Traverse .traverse (selection .nodes .size ? [... selection .nodes .values ()] : this .executionContext, Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, node =>
+      {
+         if (!node .setHidden)
+            return
+
+         node .setHidden (false)
+
+         this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
+            .find ("> .item .visibility")
+            .removeClass ("off")
+            .text ("visibility")
+      })
+   }
+
+   showAllObjects ()
+   {
+      Traverse .traverse (this .executionContext, Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, node =>
       {
          if (!node .setHidden)
             return

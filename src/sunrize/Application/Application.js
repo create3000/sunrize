@@ -398,6 +398,13 @@ module .exports = class Application
                   },
                },
                {
+                  label: _ ("Show Selected Objects"),
+                  click: () =>
+                  {
+                     this .mainWindow .webContents .send ("show-selected-objects")
+                  },
+               },
+               {
                   label: _ ("Show All Objects"),
                   click: () =>
                   {
