@@ -2,7 +2,8 @@
 
 const
    OutlineEditor = require ("../Editors/OutlineEditor"),
-   Tabs          = require ("../Controls/Tabs")
+   Tabs          = require ("../Controls/Tabs"),
+   _             = require ("./GetText")
 
 module .exports = class Sidebar extends Tabs
 {
@@ -15,9 +16,13 @@ module .exports = class Sidebar extends Tabs
 
    addTabs ()
    {
-      this .addIconTab ("file-manager",   "description", "File Manager")
-      this .addIconTab ("outline-editor", "list",        "Outline Editor")
-      this .addIconTab ("node-inspector", "visibility",  "Node Inspector")
+      if (process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT")
+         this .addIconTab ("file-manager", "description", _ ("File Manager"))
+
+      this .addIconTab ("outline-editor", "list", _ ("Outline Editor"))
+
+      if (process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT")
+         this .addIconTab ("node-inspector", "visibility", _ ("Node Inspector"))
 
       this .outlineEditor = new OutlineEditor (this .getPanel ("outline-editor"))
    }
