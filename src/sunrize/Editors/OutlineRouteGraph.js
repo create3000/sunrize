@@ -400,7 +400,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 							context .strokeStyle = selectedInputRoutes ? routeSelectedColor : routeColor
 
 							context .beginPath ()
-							context .arc (0, 0, 9.5, 2 * Math.PI, 1/2 * Math .PI)
+							context .arc (0, 0, 9.5, 2 * Math .PI, 1/2 * Math .PI)
 							context .stroke ()
 						}
 					}
@@ -414,7 +414,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 							context .strokeStyle = selectedOutputRoutes ? routeSelectedColor : routeColor
 
 							context .beginPath ()
-							context .arc (0, 5, 9.5, 2 * Math.PI, 1/2 * Math .PI)
+							context .arc (0, 5, 9.5, 2 * Math .PI, 1/2 * Math .PI)
 							context .stroke ()
 						}
 					}
@@ -430,7 +430,8 @@ module .exports = class OutlineRouteGraph extends OutlineView
 							context .strokeStyle = selectedInputRoutes ? routeSelectedColor : routeColor
 
 							context .beginPath ()
-							context .arc (0, 19, 9.5, 3/2 * Math .PI, 2 * Math.PI)
+							context .arc (0, 19, 9.5, 3/2 * Math .PI, 2 * Math .PI)
+							context .lineTo (9.5, canvas .height + 1)
 							context .stroke ()
 						}
 					}
@@ -444,7 +445,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 							context .strokeStyle = selectedOutputRoutes ? routeSelectedColor : routeColor
 
 							context .beginPath ()
-							context .arc (0, 24, 9.5, 3/2 * Math .PI, 2 * Math.PI)
+							context .arc (0, 24, 9.5, 3/2 * Math .PI, 2 * Math .PI)
 							context .stroke ()
 						}
 					}
