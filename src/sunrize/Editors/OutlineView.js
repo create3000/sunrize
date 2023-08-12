@@ -2542,7 +2542,12 @@ module .exports = class OutlineView extends Interface
 
    selectAll ()
    {
-      
+      this .deselectAll ()
+
+      const elements = this .sceneGraph .find ("> .root-nodes > ul > li[node-id]")
+
+      for (const element of elements)
+         this .selectNodeElement ($(element), true)
    }
 
    deselectAll ()
