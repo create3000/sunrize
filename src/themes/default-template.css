@@ -1255,6 +1255,20 @@ body.dark .ui-widget .library-list .component {
   box-shadow: 0 2px 0 var(--system-green);
 }
 
+.scene-graph .material-symbols-outlined {
+  font-size: var(--font-size);
+  position: relative;
+  top: 3px;
+}
+
+.scene-graph .button {
+  cursor: pointer;
+}
+
+.scene-graph .button.off {
+  color: var(--text-color);
+}
+
 /* Spectrum Color Picker */
 
 .sp-container {

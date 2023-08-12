@@ -109,6 +109,14 @@ module .exports = class OutlineView extends Interface
 
    configure ()
    {
+      this .hidableNodes = new Set ([
+         X3D .X3DConstants .X3DGroupingNode,
+         X3D .X3DConstants .X3DBackgroundNode,
+         X3D .X3DConstants .X3DFogObject,
+         X3D .X3DConstants .X3DShapeNode,
+         X3D .X3DConstants .CADFace,
+      ])
+
       if (this .executionContext)
       {
          if (this .executionContext .worldURL !== this .browser .currentScene .worldURL)
@@ -248,6 +256,9 @@ module .exports = class OutlineView extends Interface
 
       child .find (".exported-node > .item .boolean-button")
          .on ("click", event => this .toggleImportedNode (event, parent))
+
+      child .find (".visibility")
+         .on ("click", this .toggleVisibility .bind (this))
 
       // Expand children.
 
@@ -915,7 +926,6 @@ module .exports = class OutlineView extends Interface
             .text (node .getDisplayName ())
             .appendTo (name)
 
-
          name .append (document .createTextNode (" "))
 
          const cloneCount = node .getCloneCount ?.() ?? 0
@@ -924,6 +934,16 @@ module .exports = class OutlineView extends Interface
             .addClass ("clone-count")
             .text (cloneCount > 1 ? `[${cloneCount}]` : "")
             .appendTo (name)
+
+         if (node .getType () .some (type => this .hidableNodes .has (type)))
+         {
+            name .append (document .createTextNode (" "))
+
+            $("<span></span>")
+               .addClass (["material-symbols-outlined", "button", "visibility"])
+               .text (node .isHidden () ? "visibility_off" : "visibility")
+               .appendTo (name)
+         }
 
          // Append empty tree to enable expander.
 
@@ -1699,6 +1719,9 @@ module .exports = class OutlineView extends Interface
             .on ("dragstart", this .onDragStartNode .bind (this))
       }
 
+      child .find (".visibility")
+         .on ("click", this .toggleVisibility .bind (this))
+
       child .find ("area.input-selector")
          .on ("mouseenter", this .hoverInSingleConnector .bind (this, "input"))
          .on ("mouseleave", this .hoverOutSingleConnector .bind (this, "input"))
@@ -1798,6 +1821,9 @@ module .exports = class OutlineView extends Interface
             .on ("dragstart", this .onDragStartNode .bind (this))
       }
 
+      child .find (".visibility")
+         .on ("click", this .toggleVisibility .bind (this))
+
       child .find ("area.input-selector")
          .on ("mouseenter", this .hoverInSingleConnector .bind (this, "input"))
          .on ("mouseleave", this .hoverOutSingleConnector .bind (this, "input"))
@@ -1820,6 +1846,25 @@ module .exports = class OutlineView extends Interface
 
       child .show ()
       this .expandSFNodeComplete (elements, field)
+   }
+
+   toggleVisibility (event)
+   {
+      event .preventDefault ()
+      event .stopImmediatePropagation ()
+
+      const
+         target  = $(event .target),
+         element = target .closest (".node", this .sceneGraph),
+         node    = this .getNode (element),
+         hidden  = !node .isHidden ()
+
+      node .setHidden (hidden)
+
+      target
+         .removeClass ("off")
+         .addClass (hidden ? "off" : "")
+         .text (hidden ? "visibility_off" : "visibility")
    }
 
    expandSFNodeComplete (elements, field)

@@ -19,6 +19,7 @@ const localStorage = new LocalStorage (path .join (electron .app .getPath ("user
 module .exports = class Application
 {
    config = new DataStorage (localStorage, "Sunrize.Application.")
+   mainMenu = [ ]
    openURLValue = ""
    exportPath = new Map ()
 
@@ -115,6 +116,18 @@ module .exports = class Application
       this .mainWindow .title = `${title} · Sunrize`
    }
 
+   pushMenu (menu)
+   {
+      this .mainMenu .push (menu)
+      electron .Menu .setApplicationMenu (menu)
+   }
+
+   popMenu ()
+   {
+      this .mainMenu .pop ()
+      electron .Menu .setApplicationMenu (this .mainMenu .at (-1))
+   }
+
    updateMenu (object = { })
    {
       Object .assign (this .menuOptions, object)
@@ -156,7 +169,7 @@ module .exports = class Application
                   accelerator: "Shift+CmdOrCtrl+O",
                   click: async () =>
                   {
-                     electron .Menu .setApplicationMenu (electron .Menu .buildFromTemplate ([
+                     this .pushMenu (electron .Menu .buildFromTemplate ([
                         {
                            role: "appMenu",
                            label: "Sunrize",
@@ -178,7 +191,7 @@ module .exports = class Application
                      },
                      this .mainWindow)
 
-                     this .updateMenu ()
+                     this .popMenu ()
 
                      if (response === null)
                         return
@@ -573,9 +586,10 @@ module .exports = class Application
          },
       ])
 
-      electron .Menu .setApplicationMenu (menu)
+      this .mainMenu [0] = menu
 
-      this .mainMenu = menu
+      if (this .mainMenu .length === 1)
+         electron .Menu .setApplicationMenu (menu)
    }
 
    async createWindow ()
