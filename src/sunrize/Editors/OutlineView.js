@@ -2648,7 +2648,9 @@ module .exports = class OutlineView extends Interface
 
    showAllObjects ()
    {
-      Traverse .traverse (this .executionContext, Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, node =>
+      const selection = require ("../Application/Selection")
+
+      Traverse .traverse (selection .nodes .size ? [... selection .nodes .values ()] : this .executionContext, Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, node =>
       {
          if (!node .setHidden)
             return
