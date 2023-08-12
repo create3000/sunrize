@@ -354,6 +354,11 @@ module .exports = class Application
                      this .mainWindow .webContents .send ("delete")
                   },
                },
+            ],
+         },
+         {
+            label: _ ("Selection"),
+            submenu: [
                {
                   label: _ ("Select All"),
                   accelerator: "CmdOrCtrl+A",
@@ -362,11 +367,6 @@ module .exports = class Application
                      this .mainWindow .webContents .send ("select-all")
                   },
                },
-            ],
-         },
-         {
-            label: _ ("Selection"),
-            submenu: [
                {
                   label: _ ("Deselect All"),
                   accelerator: "Shift+CmdOrCtrl+A",

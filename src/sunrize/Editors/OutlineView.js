@@ -52,6 +52,7 @@ module .exports = class OutlineView extends Interface
          .on ("dragend", this .onDragEnd .bind (this))
       .appendTo (this .treeView)
 
+      electron .ipcRenderer .on ("select-all",   () => this .selectAll ())
       electron .ipcRenderer .on ("deselect-all", () => this .deselectAll ())
 
       electron .ipcRenderer .on ("expand-extern-proto-declarations", (event, value) => this .expandExternProtoDeclarations = value)
@@ -2537,6 +2538,11 @@ module .exports = class OutlineView extends Interface
       // Color fields.
 
       this .removeFieldButtons (element .find (".color-button"))
+   }
+
+   selectAll ()
+   {
+      
    }
 
    deselectAll ()

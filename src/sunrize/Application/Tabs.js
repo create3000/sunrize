@@ -77,8 +77,8 @@ module .exports = new class Tabs
       this .forwardToActiveTab ("copy")
       this .forwardToActiveTab ("paste")
       this .forwardToActiveTab ("delete")
-      this .forwardToActiveTab ("select-all")
 
+      this .forwardToActiveTab ("select-all")
       this .forwardToActiveTab ("deselect-all")
       this .forwardToActiveTab ("remove-empty-groups")
 

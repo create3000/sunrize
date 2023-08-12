@@ -62,13 +62,12 @@ module .exports = new class Document extends Interface
       electron .ipcRenderer .on ("scene-properties", (event)           => require ("../Editors/SceneProperties") .open ())
       electron .ipcRenderer .on ("close",            (event)           => this .close ())
 
-      electron .ipcRenderer .on ("undo",       () => this .undo ())
-      electron .ipcRenderer .on ("redo",       () => this .redo ())
-      electron .ipcRenderer .on ("cut",        () => this .cut ())
-      electron .ipcRenderer .on ("copy",       () => this .copy ())
-      electron .ipcRenderer .on ("paste",      () => this .paste ())
-      electron .ipcRenderer .on ("delete",     () => this .delete ())
-      electron .ipcRenderer .on ("select-all", () => this .selectAll ())
+      electron .ipcRenderer .on ("undo",   () => this .undo ())
+      electron .ipcRenderer .on ("redo",   () => this .redo ())
+      electron .ipcRenderer .on ("cut",    () => this .cut ())
+      electron .ipcRenderer .on ("copy",   () => this .copy ())
+      electron .ipcRenderer .on ("paste",  () => this .paste ())
+      electron .ipcRenderer .on ("delete", () => this .delete ())
 
       electron .ipcRenderer .on ("primitive-quality",  (event, value) => this .setPrimitiveQuality (value))
       electron .ipcRenderer .on ("texture-quality",    (event, value) => this .setTextureQuality (value))
@@ -364,10 +363,6 @@ module .exports = new class Document extends Interface
    delete ()
    {
       this .sidebar .outlineEditor .deleteNodes ()
-   }
-
-   selectAll ()
-   {
    }
 
    /**
