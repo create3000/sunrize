@@ -170,7 +170,7 @@ module .exports = class Application
                   accelerator: "Shift+CmdOrCtrl+O",
                   click: async () =>
                   {
-                     const clipboard = await clipboardy .read ()
+                     const clipboard = await this .clipboard ()
 
                      this .pushMenu (electron .Menu .buildFromTemplate ([
                         {
@@ -786,6 +786,18 @@ module .exports = class Application
 
          this .config .position = this .mainWindow .getPosition ()
          this .config .size     = this .mainWindow .getSize ()
+      }
+   }
+
+   async clipboard ()
+   {
+      try
+      {
+         return await clipboardy .read ()
+      }
+      catch
+      {
+         return ""
       }
    }
 
