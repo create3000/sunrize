@@ -230,7 +230,7 @@ module .exports = new class SceneProperties extends Dialog
 
       const document = require ("../Application/Document")
 
-      this .profileAndComponents .inputs .checkbox .prop ("checked", document .config .file .inferProfileAndComponents)
+      this .profileAndComponents .inputs .checkbox .prop ("checked", document .fileConfig .inferProfileAndComponents)
 
       this .toggleInferProfileAndComponents ()
       this .updateProfile ()
@@ -254,7 +254,7 @@ module .exports = new class SceneProperties extends Dialog
    {
       const document = require ("../Application/Document")
 
-      document .config .file .inferProfileAndComponents = this .profileAndComponents .inputs .checkbox .prop ("checked")
+      document .fileConfig .inferProfileAndComponents = this .profileAndComponents .inputs .checkbox .prop ("checked")
 
       if (this .profileAndComponents .inputs .checkbox .prop ("checked"))
          this .profileAndComponents .checkboxRow .addClass ("disabled")

@@ -92,7 +92,7 @@ module .exports = new class Document extends Interface
 
    configure ()
    {
-      this .config .file .addDefaultValues ({ inferProfileAndComponents: true })
+      this .fileConfig .addDefaultValues ({ inferProfileAndComponents: true })
 
       this .fileSaveFileTypeWarning = false
    }
@@ -139,7 +139,7 @@ module .exports = new class Document extends Interface
 
       if (id)
       {
-         const contents = this .config .global .addNameSpace ("unsaved.") [id]
+         const contents = this .globalConfig .addNameSpace ("unsaved.") [id]
 
          if (contents)
             await this .loadURL (encodeURI (`data:model/x3d,${contents}`))
@@ -191,7 +191,7 @@ module .exports = new class Document extends Interface
 
       // Infer profile and components.
 
-      if (this .config .file .inferProfileAndComponents ?? true)
+      if (this .fileConfig .inferProfileAndComponents ?? true)
          Editor .inferProfileAndComponents (scene, new UndoManager ())
 
       // Add default meta data.
@@ -237,7 +237,7 @@ module .exports = new class Document extends Interface
             return
          }
 
-         this .config .global .addNameSpace ("unsaved.") [id] = Editor .getContents (scene)
+         this .globalConfig .addNameSpace ("unsaved.") [id] = Editor .getContents (scene)
       }
 
       UndoManager .shared .saveNeeded = false
@@ -289,12 +289,12 @@ module .exports = new class Document extends Interface
 
    get autoSave ()
    {
-      return this .config .global .autoSave
+      return this .globalConfig .autoSave
    }
 
    set autoSave (value)
    {
-      this .config .global .autoSave = value
+      this .globalConfig .autoSave = value
 
       if (value)
          this .registerAutoSave ()
@@ -416,9 +416,9 @@ module .exports = new class Document extends Interface
    onresize ()
    {
       const
-         enabled          = this .browserSize .config .file .enabled,
-         numerator        = this .browserSize .config .file .numerator,
-         denominator      = this .browserSize .config .file .denominator,
+         enabled          = this .browserSize .fileConfig .enabled,
+         numerator        = this .browserSize .fileConfig .numerator,
+         denominator      = this .browserSize .fileConfig .denominator,
          aspectRatio      = numerator / denominator,
          frameAspectRatio = $("#browser-frame") .width () / $("#browser-frame") .height (),
          element          = this .browser .getElement ()

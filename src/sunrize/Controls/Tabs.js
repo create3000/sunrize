@@ -28,12 +28,12 @@ module .exports = class Tabs extends Interface
 
    configure (defaults = { })
    {
-      this .config .file .addDefaultValues (Object .assign ({ active: 0 }, defaults))
+      this .fileConfig .addDefaultValues (Object .assign ({ active: 0 }, defaults))
 
-      if (this .element .tabs ("option", "active") === this .config .file .active)
+      if (this .element .tabs ("option", "active") === this .fileConfig .active)
          this .tabActivated ()
       else
-         this .element .tabs ("option", "active", this .config .file .active)
+         this .element .tabs ("option", "active", this .fileConfig .active)
    }
 
    tabActivated ()
@@ -42,7 +42,7 @@ module .exports = class Tabs extends Interface
          active = this .element .tabs ("option", "active"),
          panel  = $(this .element .find (`.tabs-panel`) .get (active))
 
-      this .config .file .active = active
+      this .fileConfig .active = active
 
       if (panel .data ("Tabs.initialized"))
          return

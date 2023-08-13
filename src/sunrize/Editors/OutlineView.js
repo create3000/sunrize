@@ -33,7 +33,7 @@ module .exports = class OutlineView extends Interface
       this .objects       = new Map () // <id, node>
       this .actionKeys    = new ActionKeys ()
 
-      this .config .global .addDefaultValues ({
+      this .globalConfig .addDefaultValues ({
          expandExternProtoDeclarations: true,
          expandPrototypeInstances: true,
          expandInlineNodes: true,
@@ -69,34 +69,34 @@ module .exports = class OutlineView extends Interface
 
    get expandExternProtoDeclarations ()
    {
-      return this .config .global .expandExternProtoDeclarations
+      return this .globalConfig .expandExternProtoDeclarations
    }
 
    set expandExternProtoDeclarations (value)
    {
-      this .config .global .expandExternProtoDeclarations = value
+      this .globalConfig .expandExternProtoDeclarations = value
       this .updateSceneGraph ()
    }
 
    get expandPrototypeInstances ()
    {
-      return this .config .global .expandPrototypeInstances
+      return this .globalConfig .expandPrototypeInstances
    }
 
    set expandPrototypeInstances (value)
    {
-      this .config .global .expandPrototypeInstances = value
+      this .globalConfig .expandPrototypeInstances = value
       this .updateSceneGraph ()
    }
 
    get expandInlineNodes ()
    {
-      return this .config .global .expandInlineNodes
+      return this .globalConfig .expandInlineNodes
    }
 
    set expandInlineNodes (value)
    {
-      this .config .global .expandInlineNodes = value
+      this .globalConfig .expandInlineNodes = value
       this .updateSceneGraph ()
    }
 
@@ -121,7 +121,7 @@ module .exports = class OutlineView extends Interface
       }
 
       this .executionContext = this .browser .currentScene
-      this .executionContext .setUserData (_config, this .config .file)
+      this .executionContext .setUserData (_config, this .fileConfig)
 
       // Clear tree.
 
@@ -3143,19 +3143,19 @@ module .exports = class OutlineView extends Interface
    {
       const expanded = new Map ()
 
-      this .config .file .addDefaultValues ({
+      this .fileConfig .addDefaultValues ({
          expanded: [ ],
          scrollTop: 0,
          scrollLeft: 0,
       })
 
-      for (const row of this .config .file .expanded)
+      for (const row of this .fileConfig .expanded)
          expanded .set (row .path, row)
 
       this .restoreExpandedNodes (this .sceneGraph .find ("> div > ul > li"), [ ], expanded)
 
-      this .treeView .scrollTop (this .config .file .scrollTop)
-      this .treeView .scrollLeft (this .config .file .scrollLeft)
+      this .treeView .scrollTop (this .fileConfig .scrollTop)
+      this .treeView .scrollLeft (this .fileConfig .scrollLeft)
    }
 
    restoreExpandedNodes (elements, path, expanded)

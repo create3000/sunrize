@@ -79,22 +79,22 @@ module .exports = new class BrowserSize extends Dialog
 
       // Set default config values.
 
-      this .config .file .addDefaultValues ({
+      this .fileConfig .addDefaultValues ({
          enabled: false,
          numerator: 1,
          denominator: 1,
       })
 
-      this .enabled .prop ("checked", this .config .file .enabled)
-      this .numerator .val (this .config .file .numerator)
-      this .denominator .val (this .config .file .denominator)
+      this .enabled .prop ("checked", this .fileConfig .enabled)
+      this .numerator .val (this .fileConfig .numerator)
+      this .denominator .val (this .fileConfig .denominator)
    }
 
    onchange ()
    {
-      this .config .file .enabled     = this .enabled .prop ("checked")
-      this .config .file .numerator   = parseFloat (this .numerator .val ())
-      this .config .file .denominator = parseFloat (this .denominator .val ())
+      this .fileConfig .enabled     = this .enabled .prop ("checked")
+      this .fileConfig .numerator   = parseFloat (this .numerator .val ())
+      this .fileConfig .denominator = parseFloat (this .denominator .val ())
 
       require ("../Application/Document") .onresize ()
    }

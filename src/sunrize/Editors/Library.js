@@ -25,7 +25,7 @@ module .exports = new class Library extends Dialog
 
       // Set default config values.
 
-      this .config .file .addDefaultValues ({
+      this .fileConfig .addDefaultValues ({
          type: "NODES",
       })
 
@@ -74,7 +74,7 @@ module .exports = new class Library extends Dialog
 
       // Configure list type.
 
-      switch (this .config .file .type)
+      switch (this .fileConfig .type)
       {
          case "NODES":
             this .button (this .nodesButton)
@@ -98,7 +98,7 @@ module .exports = new class Library extends Dialog
 
    button (button)
    {
-      this .config .file .type = button .data ("type")
+      this .fileConfig .type = button .data ("type")
 
       this .buttons .find (".library-button") .removeClass ("active")
 
@@ -137,7 +137,7 @@ module .exports = new class Library extends Dialog
 
    update ()
    {
-      switch (this .config .file .type)
+      switch (this .fileConfig .type)
       {
          case "NODES":
             this .updateNodes ()

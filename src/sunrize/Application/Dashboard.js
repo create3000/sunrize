@@ -40,7 +40,7 @@ module .exports = class Dashboard extends Interface
          .css ({ position: "relative", left: "-1px", "font-weight": "bold" })
          .text ("play_arrow")
          .appendTo (this .toolbar)
-         .on ("click", () => this .play (!this .config .file .play))
+         .on ("click", () => this .play (!this .fileConfig .play))
 
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar)
 
@@ -61,19 +61,19 @@ module .exports = class Dashboard extends Interface
 
    configure ()
    {
-      this .config .file .addDefaultValues ({
+      this .fileConfig .addDefaultValues ({
          pointer: "hand",
          play: false,
       })
 
-      this [this .config .file .pointer] ()
-      this .play (this .config .file .play)
+      this [this .fileConfig .pointer] ()
+      this .play (this .fileConfig .play)
       this .straighten (this .browser .getBrowserOption ("StraightenHorizon"))
    }
 
    hand ()
    {
-      this .config .file .pointer = "hand"
+      this .fileConfig .pointer = "hand"
 
       if (this .handButton .hasClass ("active"))
          return
@@ -84,7 +84,7 @@ module .exports = class Dashboard extends Interface
 
    arrow ()
    {
-      this .config .file .pointer = "arrow"
+      this .fileConfig .pointer = "arrow"
 
       if (this .arrowButton .hasClass ("active"))
          return
@@ -95,7 +95,7 @@ module .exports = class Dashboard extends Interface
 
    play (value)
    {
-      this .config .file .play = value
+      this .fileConfig .play = value
 
       if (value)
       {
