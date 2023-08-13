@@ -13,6 +13,7 @@ const
    _            = require ("../Application/GetText")
 
 const
+   _config       = Symbol (),
    _expanded     = Symbol (),
    _fullExpanded = Symbol (),
    _primary      = Symbol (),
@@ -114,13 +115,12 @@ module .exports = class OutlineView extends Interface
    {
       if (this .executionContext)
       {
-         if (this .executionContext .worldURL !== this .browser .currentScene .worldURL)
-            this .saveExpanded ()
-
+         this .saveExpanded ()
          this .removeSubtree (this .sceneGraph)
       }
 
       this .executionContext = this .browser .currentScene
+      this .executionContext .setUserData (_config, this .config .file)
 
       // Clear tree.
 
@@ -3106,7 +3106,7 @@ module .exports = class OutlineView extends Interface
          return
 
       const
-         config   = this .createFileConfig (this .executionContext .worldURL),
+         config   = this .executionContext .getUserData (_config),
          expanded = this .saveExpandedNodes (this .sceneGraph .find ("> div > ul > li"), [ ], [ ])
 
       config .expanded   = expanded

@@ -19,6 +19,7 @@ module .exports = class Interface
    {
       Interface .#interfaces .add (this)
 
+      this .initialScene = this .browser .currentScene
       this .namespace    = namespace
       this .config       = { global: this .createGlobalConfig () }
       this .config .file = this .createFileConfig ()
@@ -77,12 +78,24 @@ module .exports = class Interface
    set filePath (value)
    {
       const
-         oldWorldURL = this .browser .currentScene .worldURL,
+         oldFilePath = this .filePath ?? this .fieldId ?? this .browser .getWorldURL (),
          newWorldURL = value ? url .pathToFileURL (value) .href : location .href
 
       this .browser .currentScene .setWorldURL (newWorldURL)
 
-      this .updateFileConfigs (oldWorldURL, newWorldURL)
+      this .updateFileConfigs (oldFilePath, value)
+   }
+
+   get fileId ()
+   {
+      const
+         location = new URL (window .location),
+         id       = new URL (location .searchParams .get ("url"))
+
+      if (id .protocol !== "id:")
+         return undefined
+
+      return id .pathname
    }
 
    /**
@@ -91,7 +104,7 @@ module .exports = class Interface
     */
    browserInitialized (event)
    {
-      this .config .file = this .createFileConfig (this .browser .getWorldURL ())
+      this .config .file = this .createFileConfig (this .filePath ?? this .fileId ?? this .browser .getWorldURL ())
 
       this .configure ()
       this .colorScheme (!! CSS .colorScheme .matches)
@@ -114,12 +127,15 @@ module .exports = class Interface
 
    /**
     *
-    * @param {string} url
+    * @param {string} filePath
     * @returns {DataStorage}
     */
-   createFileConfig (url = "", global = this .config .global)
+   createFileConfig (filePath = "", global = this .config .global)
    {
-      return global .addNameSpace (md5 (url) + ".")
+      if (this .browser .currentScene === this .initialScene)
+         return global .addNameSpace (undefined + ".")
+
+      return global .addNameSpace (md5 (filePath) + ".")
    }
 
    /**

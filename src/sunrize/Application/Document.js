@@ -135,15 +135,11 @@ module .exports = new class Document extends Interface
 
    async restoreFile ()
    {
-      const
-         location = new URL (window .location),
-         fileURL  = location .searchParams .get ("url") || ""
+      const id = this .fileId
 
-      if (fileURL .startsWith ("id:"))
+      if (id)
       {
-         const
-            id       = fileURL .substring (3),
-            contents = this .config .global .addNameSpace ("unsaved.") [id]
+         const contents = this .config .global .addNameSpace ("unsaved.") [id]
 
          if (contents)
             await this .loadURL (encodeURI (`data:model/x3d,${contents}`))
@@ -152,6 +148,10 @@ module .exports = new class Document extends Interface
       }
       else
       {
+         const
+            location = new URL (window .location),
+            fileURL  = location .searchParams .get ("url") || ""
+
          await this .loadURL (fileURL)
       }
    }
@@ -226,11 +226,9 @@ module .exports = new class Document extends Interface
       }
       else
       {
-         const
-            location = new URL (window .location),
-            fileURL  = new URL (location .searchParams .get ("url"))
+         const id = this .fileId
 
-         if (fileURL .protocol !== "file:")
+         if (!id)
          {
             if (!this .fileSaveFileTypeWarning)
                console .warn (`Couldn't save '${fileURL}'. The file is a remote file.`)
@@ -238,8 +236,6 @@ module .exports = new class Document extends Interface
             this .fileSaveFileTypeWarning = true
             return
          }
-
-         const id = fileURL .substring (3)
 
          this .config .global .addNameSpace ("unsaved.") [id] = Editor .getContents (scene)
       }
