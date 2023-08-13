@@ -228,14 +228,14 @@ module .exports = new class Document extends Interface
       {
          const
             location = new URL (window .location),
-            fileURL  = new URL (location .searchParams .get ("url"));
+            fileURL  = new URL (location .searchParams .get ("url"))
 
          if (fileURL .protocol !== "file:")
          {
             if (!this .fileSaveFileTypeWarning)
                console .warn (`Cannot save '${fileURL}'. The file is a remote file.`)
 
-            this .fileSaveFileTypeWarning = true;
+            this .fileSaveFileTypeWarning = true
             return
          }
 
