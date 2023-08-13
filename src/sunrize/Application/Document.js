@@ -231,7 +231,7 @@ module .exports = new class Document extends Interface
          if (!id)
          {
             if (!this .fileSaveFileTypeWarning)
-               console .warn (`Couldn't save '${fileURL}'. The file is a remote file.`)
+               console .warn (`Couldn't save '${this .browser .getWorldURL ()}'. The file is a remote file.`)
 
             this .fileSaveFileTypeWarning = true
             return
