@@ -3107,8 +3107,7 @@ module .exports = class OutlineView extends Interface
          return
 
       const
-         worldURL = new URL (this .executionContext .getWorldURL ()),
-         config   = worldURL .protocol === "file:" ? this .createFileConfig (url .fileURLToPath (worldURL)) : this .executionContext .getUserData (_config),
+         config   = this .getFileConfig (this .executionContext),
          expanded = this .saveExpandedNodes (this .sceneGraph .find ("> div > ul > li"), [ ], [ ])
 
       config .expanded   = expanded

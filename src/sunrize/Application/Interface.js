@@ -21,8 +21,8 @@ module .exports = class Interface
       Interface .#interfaces .add (this)
 
       this .namespace    = namespace
-      this .config       = { global: this .createGlobalConfig () }
-      this .config .file = this .createFileConfig ()
+      this .config       = { global: this .#createGlobalConfig () }
+      this .config .file = this .#createFileConfig ("")
 
       this .browser .addBrowserCallback (this, X3D .X3DConstants .INITIALIZED_EVENT, this .browserInitialized .bind (this))
       CSS .colorScheme .addEventListener ("change", event => this .colorScheme (!! event .matches))
@@ -104,10 +104,9 @@ module .exports = class Interface
     */
    browserInitialized (event)
    {
-      if (this .browser .currentScene === Interface .#initialScene)
-         this .config .file = this .config .global .addNameSpace ("default.")
-      else
-         this .config .file = this .createFileConfig (this .filePath ?? this .fileId ?? this .browser .getWorldURL ())
+      this .config .file = this .#createFileConfig ()
+
+      this .browser .currentScene .setUserData (this .config, this .config .file)
 
       this .configure ()
       this .colorScheme (!! CSS .colorScheme .matches)
@@ -123,7 +122,7 @@ module .exports = class Interface
     * @param {string} namespace
     * @returns A new data storage
     */
-   createGlobalConfig (namespace = this .namespace)
+   #createGlobalConfig (namespace = this .namespace)
    {
       return new DataStorage (localStorage, namespace)
    }
@@ -133,9 +132,24 @@ module .exports = class Interface
     * @param {string} filePath path|URL
     * @returns {DataStorage}
     */
-   createFileConfig (filePath = "", global = this .config .global)
+   #createFileConfig (filePath, global = this .config .global)
    {
+      if (!filePath && this .browser .currentScene === Interface .#initialScene)
+         return this .config .global .addNameSpace ("default.")
+
+      filePath ??= this .filePath ?? this .fileId ?? this .browser .getWorldURL ()
+
       return global .addNameSpace (md5 (filePath) + ".")
+   }
+
+   /**
+    *
+    * @param {X3DExecutionContext} executionContext
+    * @returns {DataStorage}
+    */
+   getFileConfig (executionContext)
+   {
+      return executionContext .getUserData (this .config)
    }
 
    /**
@@ -167,11 +181,13 @@ module .exports = class Interface
       {
          const
             oldFileConfig = other .config .file,
-            newFileConfig = other .createFileConfig (to)
+            newFileConfig = other .#createFileConfig (to)
 
          newFileConfig .addDefaultValues (oldFileConfig .getDefaultValues ())
 
          other .config .file = newFileConfig
+
+         this .browser .currentScene .setUserData (other .config, newFileConfig)
       }
    }
 
