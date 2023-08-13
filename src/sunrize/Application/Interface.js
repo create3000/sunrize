@@ -67,11 +67,11 @@ module .exports = class Interface
    {
       const worldURL = this .browser .currentScene .worldURL
 
-      // New unsaved file.
+      // New, unsaved or remote file.
       if (location .href === worldURL || !worldURL .startsWith ("file:"))
          return undefined
-      else
-         return url .fileURLToPath (worldURL)
+
+      return url .fileURLToPath (worldURL)
    }
 
    set filePath (value)
