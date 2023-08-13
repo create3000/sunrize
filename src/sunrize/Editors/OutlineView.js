@@ -3,6 +3,7 @@
 const
    $            = require ("jquery"),
    electron     = require ("electron"),
+   url          = require ("url"),
    util         = require ("util"),
    jstree       = require ("jstree"),
    ResizeSensor = require ("css-element-queries/src/ResizeSensor"),
@@ -3106,7 +3107,8 @@ module .exports = class OutlineView extends Interface
          return
 
       const
-         config   = this .executionContext .getUserData (_config),
+         worldURL = new URL (this .executionContext .getWorldURL ()),
+         config   = worldURL .protocol === "file:" ? this .createFileConfig (url .fileURLToPath (worldURL)) : this .executionContext .getUserData (_config),
          expanded = this .saveExpandedNodes (this .sceneGraph .find ("> div > ul > li"), [ ], [ ])
 
       config .expanded   = expanded

@@ -133,7 +133,7 @@ module .exports = class Interface
    createFileConfig (filePath = "", global = this .config .global)
    {
       if (this .browser .currentScene === this .initialScene)
-         return global .addNameSpace (undefined + ".")
+         return global .addNameSpace ("default.")
 
       return global .addNameSpace (md5 (filePath) + ".")
    }
