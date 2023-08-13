@@ -127,7 +127,7 @@ module .exports = class Interface
 
    /**
     *
-    * @param {string} filePath
+    * @param {string} filePath path|URL
     * @returns {DataStorage}
     */
    createFileConfig (filePath = "", global = this .config .global)
@@ -140,8 +140,8 @@ module .exports = class Interface
 
    /**
     *
-    * @param {string} from URL
-    * @param {string} to URL
+    * @param {string} from path|URL
+    * @param {string} to path|URL
     */
    updateFileConfigs (from, to)
    {
