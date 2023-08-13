@@ -220,7 +220,7 @@ module .exports = new class Document extends Interface
             return
          }
 
-         fs .writeFileSync (this .filePath, Editor .getContents (scene, path .extname (this .filePath)))
+         fs .writeFile (this .filePath, Editor .getContents (scene, path .extname (this .filePath)), Function .prototype)
 
          electron .ipcRenderer .send ("save-file", this .filePath)
       }
