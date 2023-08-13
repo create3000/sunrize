@@ -214,7 +214,7 @@ module .exports = new class Document extends Interface
          if (path .extname (this .filePath) .match (/\.(?:wrl|wrz|wrl\.gz|vrml|gltf|glb|obj|stl|ply|svg)$/i))
          {
             if (!this .fileSaveFileTypeWarning)
-               console .warn (`Cannot save '${this .filePath}'. File type is not supported.`)
+               console .warn (`Couldn't save '${this .filePath}'. File type is not supported.`)
 
             this .fileSaveFileTypeWarning = true;
             return
@@ -233,7 +233,7 @@ module .exports = new class Document extends Interface
          if (fileURL .protocol !== "file:")
          {
             if (!this .fileSaveFileTypeWarning)
-               console .warn (`Cannot save '${fileURL}'. The file is a remote file.`)
+               console .warn (`Couldn't save '${fileURL}'. The file is a remote file.`)
 
             this .fileSaveFileTypeWarning = true
             return
