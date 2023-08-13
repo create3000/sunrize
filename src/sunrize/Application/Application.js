@@ -708,8 +708,11 @@ module .exports = class Application
       return await electron .dialog .showOpenDialog ({
          defaultPath: defaultPath,
          properties: ["openFile", "multiSelections"],
-         filters : [
-            {name: "X3D Document", extensions: ["x3d", "x3dz", "x3dj", "x3djz", "x3dv", "x3dvz", "wrl", "wrz", "wrl.gz", "vrml", "gltf", "glb", "obj", "stl", "ply", "svg"]},
+         filters: [
+            {
+               name: "X3D Document",
+               extensions: ["x3d", "x3dz", "x3dj", "x3djz", "x3dv", "x3dvz", "wrl", "wrz", "wrl.gz", "vrml", "gltf", "glb", "obj", "stl", "ply", "svg"],
+            },
          ],
       })
    }

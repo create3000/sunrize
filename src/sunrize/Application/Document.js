@@ -53,7 +53,7 @@ module .exports = new class Document extends Interface
 
       electron .ipcRenderer .on ("activate", () => this .activate ())
 
-      electron .ipcRenderer .on ("open-files",       (event, urls)     => this .openFile (urls [0])) // DEBUG
+      electron .ipcRenderer .on ("open-files",       (event, urls)     => this .loadURL (urls [0])) // DEBUG
       electron .ipcRenderer .on ("save-file",        (event, force)    => this .saveFile (force))
       electron .ipcRenderer .on ("save-file-as",     (event, filePath) => this .saveFileAs (filePath))
       electron .ipcRenderer .on ("save-copy-as",     (event, filePath) => this .saveCopyAs (filePath))
@@ -146,13 +146,13 @@ module .exports = new class Document extends Interface
             contents = this .config .global .addNameSpace ("unsaved.") [id]
 
          if (contents)
-            await this .openFile (encodeURI (`data:model/x3d,${contents}`))
+            await this .loadURL (encodeURI (`data:model/x3d,${contents}`))
          else
-            await this .openFile ()
+            await this .loadURL ()
       }
       else
       {
-         await this .openFile (fileURL)
+         await this .loadURL (fileURL)
       }
    }
 
@@ -161,7 +161,7 @@ module .exports = new class Document extends Interface
     * @param {string} fileURL
     * @returns {Promise<void>} Promise
     */
-   async openFile (fileURL)
+   async loadURL (fileURL)
    {
       try
       {
