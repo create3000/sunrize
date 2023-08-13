@@ -214,7 +214,7 @@ module .exports = new class Document extends Interface
          if (path .extname (this .filePath) .match (/\.(?:wrl|wrz|wrl\.gz|vrml|gltf|glb|obj|stl|ply|svg)$/i))
          {
             if (!this .fileSaveFileTypeWarning)
-               console .warn (`Cannot save ${this .filePath}. File type is not supported.`)
+               console .warn (`Cannot save '${this .filePath}'. File type is not supported.`)
 
             this .fileSaveFileTypeWarning = true;
             return
@@ -228,8 +228,18 @@ module .exports = new class Document extends Interface
       {
          const
             location = new URL (window .location),
-            fileURL  = location .searchParams .get ("url"),
-            id       = fileURL .substring (3)
+            fileURL  = new URL (location .searchParams .get ("url"));
+
+         if (fileURL .protocol !== "file:")
+         {
+            if (!this .fileSaveFileTypeWarning)
+               console .warn (`Cannot save '${fileURL}'. The file is a remote file.`)
+
+            this .fileSaveFileTypeWarning = true;
+            return
+         }
+
+         const id = fileURL .substring (3)
 
          this .config .global .addNameSpace ("unsaved.") [id] = Editor .getContents (scene)
       }
