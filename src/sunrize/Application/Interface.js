@@ -13,13 +13,13 @@ require ("../Bits/Beep")
 
 module .exports = class Interface
 {
-   static #interfaces = new Set ()
+   static #interfaces   = new Set ()
+   static #initialScene = X3D .getBrowser ("#browser") .currentScene
 
    constructor (namespace)
    {
       Interface .#interfaces .add (this)
 
-      this .initialScene = this .browser .currentScene
       this .namespace    = namespace
       this .config       = { global: this .createGlobalConfig () }
       this .config .file = this .createFileConfig ()
@@ -104,7 +104,10 @@ module .exports = class Interface
     */
    browserInitialized (event)
    {
-      this .config .file = this .createFileConfig (this .filePath ?? this .fileId ?? this .browser .getWorldURL ())
+      if (this .browser .currentScene === Interface .#initialScene)
+         this .config .file = this .config .global .addNameSpace ("default.")
+      else
+         this .config .file = this .createFileConfig (this .filePath ?? this .fileId ?? this .browser .getWorldURL ())
 
       this .configure ()
       this .colorScheme (!! CSS .colorScheme .matches)
@@ -132,9 +135,6 @@ module .exports = class Interface
     */
    createFileConfig (filePath = "", global = this .config .global)
    {
-      if (this .browser .currentScene === this .initialScene)
-         return global .addNameSpace ("default.")
-
       return global .addNameSpace (md5 (filePath) + ".")
    }
 
