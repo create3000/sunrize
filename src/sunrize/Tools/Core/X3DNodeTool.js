@@ -62,15 +62,14 @@ class X3DNodeTool
       const proxy = new Proxy (this, handler)
 
       node .setUserData (_tool, proxy)
+      node .setUserData (_changing, true)
 
       this .toolTarget = this
       this .toolProxy  = proxy
       this .toolNode   = node
 
-      this .toolNode .setUserData (_changing, true)
-
       this .replaceNode (node, proxy)
-      this .setup ()
+      proxy .setup ()
 
       return proxy
    }
@@ -133,6 +132,8 @@ class X3DNodeTool
             parent .setValue (replacement)
       }
    }
+
+   setSelected (value) { }
 
    getInnerNode ()
    {

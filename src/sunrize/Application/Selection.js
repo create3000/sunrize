@@ -10,7 +10,10 @@ module .exports = new class Selection
    clear ()
    {
       for (const node of this .nodes .values ())
+      {
+         node .getTool () ?.setSelected (false)
          node .removeTool ()
+      }
 
       this .nodes .clear ()
    }
@@ -24,11 +27,13 @@ module .exports = new class Selection
    add (node)
    {
       this .nodes .set (node .valueOf (), node .addTool ("createOnSelection"))
+      node .getTool () ?.setSelected (true)
    }
 
    remove (node)
    {
-      node .getTool () ?.removeTool ()
+      node .getTool () ?.setSelected (false)
+      node .removeTool ()
       this .nodes .delete (node .valueOf ())
    }
 }

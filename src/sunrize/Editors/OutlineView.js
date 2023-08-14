@@ -2629,7 +2629,7 @@ module .exports = class OutlineView extends Interface
 
    toggleTool (event)
    {
-      require ("../Tools/Core/X3DNodeTool")
+      require ("../Tools")
 
       event .preventDefault ()
       event .stopImmediatePropagation ()
@@ -2641,9 +2641,14 @@ module .exports = class OutlineView extends Interface
          tool    = node .getTool ()
 
       if (tool)
+      {
          tool .removeTool ()
+      }
       else
+      {
          node .addTool ("createOnDemand")
+         node .getTool () .setSelected (element .hasClass ("selected"))
+      }
 
       target
          .removeClass ("off")
