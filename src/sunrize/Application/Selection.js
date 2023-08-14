@@ -17,30 +17,18 @@ module .exports = new class Selection
 
    set (node)
    {
-      this .nodes .delete (this .node (node))
-
       this .clear ()
       this .add (node)
    }
 
    add (node)
    {
-      this .nodes .set (this .node (node), node .addTool ("createOnSelection"))
+      this .nodes .set (node .valueOf (), node .addTool ("createOnSelection"))
    }
 
    remove (node)
    {
-      this .tool (node) ?.removeTool ()
-      this .nodes .delete (this .node (node))
-   }
-
-   node (node)
-   {
-      return node .valueOf ()
-   }
-
-   tool (node)
-   {
-      return this .nodes .get (this .node (node))
+      node .getTool () ?.removeTool ()
+      this .nodes .delete (node .valueOf ())
    }
 }

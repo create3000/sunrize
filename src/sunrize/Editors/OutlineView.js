@@ -2644,6 +2644,10 @@ module .exports = class OutlineView extends Interface
          tool .removeTool ()
       else
          node .addTool ("createOnDemand")
+
+      target
+         .removeClass ("off")
+         .addClass (tool ? "off" : "")
    }
 
    hideUnselectedObjects ()

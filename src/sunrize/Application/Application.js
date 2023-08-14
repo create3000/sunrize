@@ -705,7 +705,15 @@ module .exports = class Application
 
    async showOpenDialog (defaultPath)
    {
-      return await electron .dialog .showOpenDialog ({
+      this .pushMenu (electron .Menu .buildFromTemplate ([
+         {
+            role: "appMenu",
+            label: "Sunrize",
+         },
+         { role: "editMenu" },
+      ]))
+
+      const response = await electron .dialog .showOpenDialog ({
          defaultPath: defaultPath,
          properties: ["openFile", "multiSelections"],
          filters: [
@@ -715,6 +723,10 @@ module .exports = class Application
             },
          ],
       })
+
+      this .popMenu ()
+
+      return response
    }
 
    saveFile (filePath)
