@@ -8,7 +8,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/EnvironmentalSensor/X3DEnvironmentalSensorNodeTool.x3d'/>
-    <meta name='modified' content='Mon, 14 Aug 2023 16:02:12 GMT'/>
+    <meta name='modified' content='Mon, 14 Aug 2023 16:25:24 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -73,16 +73,12 @@
 
 function initialize ()
 {
+   transform .getValue () .addTool ?.("createOnSelection")
    set_color ();
 }
 
 function set_selected ()
 {
-   if (selected)
-      transform .getValue () .addTool ?.("createOnSelection")
-   else
-      transform .getValue () .removeTool ?.()
-
    set_color ();
 }
 
