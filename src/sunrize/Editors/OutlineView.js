@@ -14,7 +14,6 @@ const
    _            = require ("../Application/GetText")
 
 const
-   _config       = Symbol (),
    _expanded     = Symbol (),
    _fullExpanded = Symbol (),
    _primary      = Symbol (),
@@ -121,7 +120,6 @@ module .exports = class OutlineView extends Interface
       }
 
       this .executionContext = this .browser .currentScene
-      this .executionContext .setUserData (_config, this .fileConfig)
 
       // Clear tree.
 
