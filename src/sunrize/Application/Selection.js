@@ -25,7 +25,7 @@ module .exports = new class Selection
 
    add (node)
    {
-      this .nodes .set (this .node (node), node .addTool ())
+      this .nodes .set (this .node (node), node .addTool ("createOnSelection"))
    }
 
    remove (node)

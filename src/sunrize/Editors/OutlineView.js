@@ -940,6 +940,17 @@ module .exports = class OutlineView extends Interface
                .appendTo (name)
          }
 
+         if (node .getType () .includes (X3D .X3DConstants .X3DEnvironmentalSensorNode))
+         {
+            name .append (document .createTextNode (" "))
+
+            $("<span></span>")
+               .addClass (["tool", "button", "material-symbols-outlined"])
+               .addClass ("off" )
+               .text ("build_circle")
+               .appendTo (name)
+         }
+
          // Append empty tree to enable expander.
 
          if (!this .isInParents (parent, node))

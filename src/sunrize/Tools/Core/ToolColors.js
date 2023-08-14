@@ -33,5 +33,5 @@ module .exports = class ToolColors
 
    static PROXIMITY_SENSOR  = new Color3 (0.5, 0, 1)
    static TRANSFORM_SENSOR  = new Color3 (0, 1, 0)
-   static VISIBILITY_SENSOR = new Color3f (1, 0, 0)
+   static VISIBILITY_SENSOR = new Color3 (1, 0, 0)
 }

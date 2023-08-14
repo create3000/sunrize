@@ -53,6 +53,8 @@ const handler =
 
 class X3DNodeTool
 {
+   static createOnSelection = true
+
    constructor (node)
    {
       const proxy = new Proxy (this, handler)
@@ -157,12 +159,17 @@ class X3DNodeTool
 
 Object .assign (X3DNode .prototype,
 {
-   addTool ()
+   addTool (type)
    {
       const module = path .resolve (__dirname, "..", this .constructor .componentName, this .constructor .typeName + "Tool.js")
 
-      if (fs .existsSync (module))
-         return new (require (module)) (this)
+      if (!fs .existsSync (module))
+         return this
+
+      const Tool = require (module)
+
+      if (Tool [type])
+         return new Tool (this)
 
       return this
    },

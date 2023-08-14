@@ -8,7 +8,7 @@ class X3DPrototypeInstanceTool extends X3DNodeTool
    {
       super (node)
 
-      this .toolNode .getInnerNode () .addTool ()
+      this .toolNode .getInnerNode () .addTool ("createOnSelection")
    }
 
    removeTool ()
