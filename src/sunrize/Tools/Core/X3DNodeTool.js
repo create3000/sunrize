@@ -82,7 +82,10 @@ class X3DNodeTool
       this .initialize ()
    }
 
-   initialize () { }
+   async initialize (... args)
+   {
+      await this .loadTool (... args)
+   }
 
    addTool ()
    {

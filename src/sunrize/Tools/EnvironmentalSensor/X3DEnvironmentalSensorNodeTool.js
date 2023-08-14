@@ -18,9 +18,7 @@ class X3DEnvironmentalSensorNodeTool extends X3DNodeTool
 
    async initialize ()
    {
-      super .initialize ()
-
-      await this .loadTool (__dirname, "X3DEnvironmentalSensorNodeTool.x3d")
+      await super .initialize (__dirname, "X3DEnvironmentalSensorNodeTool.x3d")
 
       this .toolNode ._size   .addFieldInterest (this .tool .size)
       this .toolNode ._center .addFieldInterest (this .tool .center)

@@ -18,9 +18,7 @@ class X3DLightNodeTool extends X3DNodeTool
 
    async initialize ()
    {
-      super .initialize ()
-
-      await this .loadTool (__dirname, "X3DLightNodeTool.x3d")
+      await super .initialize (__dirname, "X3DLightNodeTool.x3d")
 
       this .toolNode ._on        .addFieldInterest (this .tool .getValue () .getField ("on"))
       this .toolNode ._color     .addFieldInterest (this .tool .color)

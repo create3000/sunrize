@@ -9,9 +9,7 @@ class X3DTransformNodeTool extends X3DNodeTool
 {
    async initialize ()
    {
-      super .initialize ()
-
-      await this .loadTool (__dirname, "X3DBoundedObjectTool.x3d")
+      await super .initialize (__dirname, "X3DBoundedObjectTool.x3d")
 
       this .toolNode .getBrowser () .displayEvents () .addInterest ("reshape", this)
 

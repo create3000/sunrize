@@ -4,7 +4,6 @@ const X3DLightNodeTool = require ("./X3DLightNodeTool")
 
 class DirectionalLightTool extends X3DLightNodeTool
 {
-
    async initialize ()
    {
       await super .initialize ()
