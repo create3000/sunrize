@@ -17,7 +17,7 @@ const
    UndoManager        = require ("../Undo/UndoManager"),
    _                  = require ("./GetText")
 
-module .exports = new class Document extends Interface
+module .exports = class Document extends Interface
 {
    constructor ()
    {
@@ -30,10 +30,6 @@ module .exports = new class Document extends Interface
       this .secondaryToolbar   = new Dashboard ($("#secondary-toolbar"))
       this .footer             = new Footer ($("#footer"))
       this .sidebar            = new Sidebar ($("#sidebar"))
-
-      // Setup
-
-      this .setup ()
    }
 
    /**

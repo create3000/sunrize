@@ -96,6 +96,6 @@ module .exports = new class BrowserSize extends Dialog
       this .fileConfig .numerator   = parseFloat (this .numerator .val ())
       this .fileConfig .denominator = parseFloat (this .denominator .val ())
 
-      require ("../Application/Document") .onresize ()
+      require ("../Application/Window") .onresize ()
    }
 }

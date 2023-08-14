@@ -112,7 +112,7 @@ module .exports = class Dashboard extends Interface
    viewAll ()
    {
       const
-         outlineEditor = require ("./Document") .sidebar .outlineEditor,
+         outlineEditor = require ("./Window") .sidebar .outlineEditor,
          selection     = outlineEditor .sceneGraph .find (".node.selected")
 
       if (selection .length)

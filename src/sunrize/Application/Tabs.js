@@ -147,7 +147,7 @@ module .exports = new class Tabs
       if (!urls .length)
          return
 
-      const src = url .pathToFileURL (path .join (__dirname, "../../html/document.html"))
+      const src = url .pathToFileURL (path .join (__dirname, "../../html/window.html"))
 
       for (let fileURL of urls)
       {
@@ -161,7 +161,7 @@ module .exports = new class Tabs
          const tab = this .tabs .addTab ({
             src: src,
             webviewAttributes: {
-               preload: "document.js",
+               preload: "window.js",
                nodeIntegration: true,
                webpreferences: "contextIsolation=false",
             },
