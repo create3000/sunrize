@@ -9,12 +9,6 @@ class X3DLightNodeTool extends X3DNodeTool
    static createOnSelection = false
    static createOnDemand    = true
 
-   static lightType = new Map ([
-      [X3D .X3DConstants .DirectionalLight, 0],
-      [X3D .X3DConstants .PointLight, 1],
-      [X3D .X3DConstants .SpotLight, 2],
-   ])
-
    constructor (node)
    {
       super (node)
@@ -32,37 +26,42 @@ class X3DLightNodeTool extends X3DNodeTool
       this .toolNode ._color     .addFieldInterest (this .tool .color)
       this .toolNode ._intensity .addFieldInterest (this .tool .intensity)
 
-      this .tool .whichChoice = X3DLightNodeTool .lightType .get (this .toolNode .getType () .at (-1))
-      this .tool .on          = this .toolNode ._on
-      this .tool .color       = this .toolNode ._color
-      this .tool .intensity   = this .toolNode ._intensity
+      this .tool .on        = this .toolNode ._on
+      this .tool .color     = this .toolNode ._color
+      this .tool .intensity = this .toolNode ._intensity
 
-      if (this .toolNode ._location)
+      switch (this .toolNode .getType () .at (-1))
       {
-         this .toolNode ._location .addFieldInterest (this .tool .location)
+         case X3D .X3DConstants .DirectionalLight:
+         {
+            this .toolNode ._direction .addFieldInterest (this .tool .direction)
 
-         this .tool .location = this .toolNode ._location
-      }
+            this .tool .direction   = this .toolNode ._direction
+            this .tool .whichChoice = 0
+            break;
+         }
+         case X3D .X3DConstants .PointLight:
+         {
+            this .toolNode ._location .addFieldInterest (this .tool .location)
 
-      if (this .toolNode ._direction)
-      {
-         this .toolNode ._direction .addFieldInterest (this .tool .direction)
+            this .tool .location    = this .toolNode ._location
+            this .tool .whichChoice = 1
+            break;
+         }
+         case X3D .X3DConstants .SpotLight:
+         {
+            this .toolNode ._location    .addFieldInterest (this .tool .location)
+            this .toolNode ._direction   .addFieldInterest (this .tool .direction)
+            this .toolNode ._beamWidth   .addFieldInterest (this .tool .getValue () .getField ("beamWidth"))
+            this .toolNode ._cutOffAngle .addFieldInterest (this .tool .getValue () .getField ("cutOffAngle"))
 
-         this .tool .direction = this .toolNode ._direction
-      }
-
-      if (this .toolNode ._beamWidth)
-      {
-         this .toolNode ._beamWidth .addFieldInterest (this .tool .getValue () .getField ("beamWidth"))
-
-         this .tool .beamWidth = this .toolNode ._beamWidth
-      }
-
-      if (this .toolNode ._cutOffAngle)
-      {
-         this .toolNode ._cutOffAngle .addFieldInterest (this .tool .getValue () .getField ("cutOffAngle"))
-
-         this .tool .cutOffAngle = this .toolNode ._cutOffAngle
+            this .tool .location    = this .toolNode ._location
+            this .tool .direction   = this .toolNode ._direction
+            this .tool .beamWidth   = this .toolNode ._beamWidth
+            this .tool .cutOffAngle = this .toolNode ._cutOffAngle
+            this .tool .whichChoice = 2
+            break;
+         }
       }
    }
 
