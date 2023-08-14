@@ -29,40 +29,6 @@ class X3DLightNodeTool extends X3DNodeTool
       this .tool .on        = this .toolNode ._on
       this .tool .color     = this .toolNode ._color
       this .tool .intensity = this .toolNode ._intensity
-
-      switch (this .toolNode .getType () .at (-1))
-      {
-         case X3D .X3DConstants .DirectionalLight:
-         {
-            this .toolNode ._direction .addFieldInterest (this .tool .direction)
-
-            this .tool .direction   = this .toolNode ._direction
-            this .tool .whichChoice = 0
-            break;
-         }
-         case X3D .X3DConstants .PointLight:
-         {
-            this .toolNode ._location .addFieldInterest (this .tool .location)
-
-            this .tool .location    = this .toolNode ._location
-            this .tool .whichChoice = 1
-            break;
-         }
-         case X3D .X3DConstants .SpotLight:
-         {
-            this .toolNode ._location    .addFieldInterest (this .tool .location)
-            this .toolNode ._direction   .addFieldInterest (this .tool .direction)
-            this .toolNode ._beamWidth   .addFieldInterest (this .tool .getValue () .getField ("beamWidth"))
-            this .toolNode ._cutOffAngle .addFieldInterest (this .tool .getValue () .getField ("cutOffAngle"))
-
-            this .tool .location    = this .toolNode ._location
-            this .tool .direction   = this .toolNode ._direction
-            this .tool .beamWidth   = this .toolNode ._beamWidth
-            this .tool .cutOffAngle = this .toolNode ._cutOffAngle
-            this .tool .whichChoice = 2
-            break;
-         }
-      }
    }
 
    getType ()
