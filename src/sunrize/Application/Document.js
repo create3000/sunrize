@@ -71,8 +71,8 @@ module .exports = new class Document extends Interface
 
       electron .ipcRenderer .on ("primitive-quality",  (event, value) => this .setPrimitiveQuality (value))
       electron .ipcRenderer .on ("texture-quality",    (event, value) => this .setTextureQuality (value))
-      electron .ipcRenderer .on ("display-rubberband", (event, value) => this .displayRubberband (value))
-      electron .ipcRenderer .on ("display-timings",    (event, value) => this .displayTimings (value))
+      electron .ipcRenderer .on ("display-rubberband", (event, value) => this .setDisplayRubberband (value))
+      electron .ipcRenderer .on ("display-timings",    (event, value) => this .setDisplayTimings (value))
       electron .ipcRenderer .on ("show-library",       (event)        => require ("../Editors/Library") .open (this .browser .currentScene))
 
       electron .ipcRenderer .on ("browser-size", () => this .browserSize .open ())
@@ -395,7 +395,7 @@ module .exports = new class Document extends Interface
     *
     * @param {boolean} value
     */
-   displayRubberband (value)
+   setDisplayRubberband (value)
    {
       this .browser .setBrowserOption ("Rubberband", value)
       this .browser .setDescription (`Rubberband: ${value ? "on" : "off"}`)
@@ -405,7 +405,7 @@ module .exports = new class Document extends Interface
     *
     * @param {boolean} value
     */
-   displayTimings (value)
+   setDisplayTimings (value)
    {
       this .browser .setBrowserOption ("Timings", value)
    }
