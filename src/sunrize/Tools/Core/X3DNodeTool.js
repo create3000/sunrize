@@ -51,6 +51,10 @@ const handler =
    {
       return Object .getOwnPropertyDescriptor (target .toolNode, key)
    },
+   getPrototypeOf (target)
+   {
+      return Object .getPrototypeOf (target .toolNode);
+   },
 }
 
 class X3DNodeTool
