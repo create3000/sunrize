@@ -943,7 +943,7 @@ module .exports = class OutlineView extends Interface
                .appendTo (name)
          }
 
-         if (node .getType () .includes (X3D .X3DConstants .X3DEnvironmentalSensorNode))
+         if (node .valueOf () .getType () .includes (X3D .X3DConstants .X3DEnvironmentalSensorNode))
          {
             name .append (document .createTextNode (" "))
 
