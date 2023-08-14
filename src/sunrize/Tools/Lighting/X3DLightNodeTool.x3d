@@ -9,7 +9,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Lighting/X3DLightNodeTool.x3d'/>
-    <meta name='modified' content='Mon, 14 Aug 2023 19:43:52 GMT'/>
+    <meta name='modified' content='Mon, 14 Aug 2023 20:11:40 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -19,9 +19,9 @@
         <field accessType='inputOutput' type='SFBool' name='selected'/>
         <field accessType='inputOutput' type='SFInt32' name='whichChoice'/>
         <field accessType='inputOutput' type='SFBool' name='on' value='true'/>
-        <field accessType='inputOutput' type='SFVec3f' name='location'/>
         <field accessType='inputOutput' type='SFColor' name='color' value='1 1 1'/>
         <field accessType='inputOutput' type='SFFloat' name='intensity' value='1'/>
+        <field accessType='inputOutput' type='SFVec3f' name='location'/>
         <field accessType='inputOutput' type='SFVec3f' name='direction' value='0 0 -1'/>
         <field accessType='inputOutput' type='SFFloat' name='beamWidth'/>
         <field accessType='inputOutput' type='SFFloat' name='cutOffAngle'/>
@@ -243,10 +243,13 @@
               <connect nodeField='translation' protoField='location'/>
               <connect nodeField='visible' protoField='selected'/>
             </IS>
-            <ScreenGroup>
+            <ScreenGroup DEF='_8'>
               <Group
                   bboxSize='60 60 60'/>
             </ScreenGroup>
+          </Transform>
+          <Transform DEF='_9'>
+            <ScreenGroup USE='_8'/>
           </Transform>
         </Collision>
         <Script DEF='Tool'
@@ -285,7 +288,7 @@
 
 function initialize ()
 {
-	// init
+	transform .getValue () .addTool ?.("createOnSelection");
 }
 
 function set_directionalLight ()
@@ -409,6 +412,8 @@ function set_connectRotation (value)
         <ROUTE fromNode='TransformTool' fromField='translation_changed' toNode='_1' toField='set_translation'/>
         <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='_1' toField='set_rotation'/>
         <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='Tool' toField='set_rotation'/>
+        <ROUTE fromNode='TransformTool' fromField='translation_changed' toNode='_9' toField='set_translation'/>
+        <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='_9' toField='set_rotation'/>
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>

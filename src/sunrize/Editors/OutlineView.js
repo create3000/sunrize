@@ -28,9 +28,10 @@ module .exports = class OutlineView extends Interface
    {
       super (`Sunrize.OutlineEditor.${element .attr ("id")}.`)
 
-      this .outlineEditor = element
-      this .objects       = new Map () // <id, node>
-      this .actionKeys    = new ActionKeys ()
+      this .outlineEditor     = element
+      this .objects           = new Map () // <id, node>
+      this .actionKeys        = new ActionKeys ()
+      this .onDemandToolNodes = new Set ()
 
       this .globalConfig .addDefaultValues ({
          expandExternProtoDeclarations: true,
@@ -113,6 +114,11 @@ module .exports = class OutlineView extends Interface
 
    configure ()
    {
+      this .onDemandToolNodes = new Set ([
+         X3D .X3DConstants .X3DEnvironmentalSensorNode,
+         X3D .X3DConstants .X3DLightNode,
+      ])
+
       if (this .executionContext)
       {
          this .saveExpanded ()
@@ -943,7 +949,7 @@ module .exports = class OutlineView extends Interface
                .appendTo (name)
          }
 
-         if (node .valueOf () .getType () .includes (X3D .X3DConstants .X3DEnvironmentalSensorNode))
+         if (node .valueOf () .getType () .some (t => this .onDemandToolNodes .has (t)))
          {
             name .append (document .createTextNode (" "))
 

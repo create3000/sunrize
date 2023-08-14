@@ -125,6 +125,9 @@ class X3DNodeTool
       }
 
       this .toolInnerNode = this .tool .getValue () .getInnerNode ()
+
+      if (this .tool ?.selected !== undefined)
+         this .tool .selected = this .toolSelected
    }
 
    replaceNode (node, replacement)
@@ -136,7 +139,13 @@ class X3DNodeTool
       }
    }
 
-   setSelected (value) { }
+   setSelected (value)
+   {
+      this .toolSelected = value
+
+      if (this .tool ?.selected !== undefined)
+         this .tool .selected = value
+   }
 
    getInnerNode ()
    {

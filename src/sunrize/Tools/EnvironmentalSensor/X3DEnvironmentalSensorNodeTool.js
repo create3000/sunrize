@@ -25,7 +25,6 @@ class X3DEnvironmentalSensorNodeTool extends X3DNodeTool
       this .toolNode ._size   .addFieldInterest (this .tool .size)
       this .toolNode ._center .addFieldInterest (this .tool .center)
 
-      this .tool .selected = this .toolSelected
       this .tool .boxColor = this .toolBoxColor
       this .tool .size     = this .toolNode ._size
       this .tool .center   = this .toolNode ._center
@@ -34,14 +33,6 @@ class X3DEnvironmentalSensorNodeTool extends X3DNodeTool
    getType ()
    {
       return this .toolType
-   }
-
-   setSelected (value)
-   {
-      this .toolSelected = value
-
-      if (this .tool)
-         this .tool .selected = value
    }
 }
 
