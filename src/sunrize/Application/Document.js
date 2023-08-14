@@ -378,7 +378,7 @@ module .exports = new class Document extends Interface
    setPrimitiveQuality (value)
    {
       this .browser .setBrowserOption ("PrimitiveQuality", value)
-      this .browser .setDescription ("Primitive Quality: " + value .toLowerCase ())
+      this .browser .setDescription (`Primitive Quality: ${value .toLowerCase ()}`)
    }
 
    /**
@@ -388,7 +388,7 @@ module .exports = new class Document extends Interface
    setTextureQuality (value)
    {
       this .browser .setBrowserOption ("TextureQuality", value)
-      this .browser .setDescription ("Texture Quality: " + value .toLowerCase ())
+      this .browser .setDescription (`Texture Quality: ${value .toLowerCase ()}`)
    }
 
    /**
@@ -398,7 +398,7 @@ module .exports = new class Document extends Interface
    displayRubberband (value)
    {
       this .browser .setBrowserOption ("Rubberband", value)
-      this .browser .setDescription ("Rubberband: " + (value ? "on" : "off"))
+      this .browser .setDescription (`Rubberband: ${value ? "on" : "off"}`)
    }
 
    /**
