@@ -9,7 +9,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Lighting/X3DLightNodeTool.x3d'/>
-    <meta name='modified' content='Mon, 14 Aug 2023 20:37:40 GMT'/>
+    <meta name='modified' content='Mon, 14 Aug 2023 22:02:01 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -243,13 +243,10 @@
               <connect nodeField='translation' protoField='location'/>
               <connect nodeField='visible' protoField='selected'/>
             </IS>
-            <ScreenGroup DEF='_8'>
+            <ScreenGroup>
               <Group
                   bboxSize='60 60 60'/>
             </ScreenGroup>
-          </Transform>
-          <Transform DEF='_9'>
-            <ScreenGroup USE='_8'/>
           </Transform>
         </Collision>
         <Script DEF='Tool'
@@ -383,8 +380,6 @@ function set_angle ()
         <ROUTE fromNode='TransformTool' fromField='translation_changed' toNode='_1' toField='set_translation'/>
         <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='_1' toField='set_rotation'/>
         <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='Tool' toField='set_rotation'/>
-        <ROUTE fromNode='TransformTool' fromField='translation_changed' toNode='_9' toField='set_translation'/>
-        <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='_9' toField='set_rotation'/>
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
