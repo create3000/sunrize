@@ -860,7 +860,7 @@ module .exports = class OutlineView extends Interface
    {
       if (node)
       {
-         this .objects .set (node .getId (), node)
+         this .objects .set (node .getId (), node .valueOf ())
 
          // These fields are observed and must never be disconnected, because clones would also lose connection.
 
@@ -932,7 +932,7 @@ module .exports = class OutlineView extends Interface
             .text (cloneCount > 1 ? `[${cloneCount}]` : "")
             .appendTo (name)
 
-         if (node .setHidden)
+         if (node .setHidden && !(node .getExecutionContext () .getOuterNode () instanceof X3D .X3DProtoDeclaration))
          {
             name .append (document .createTextNode (" "))
 
@@ -1107,7 +1107,7 @@ module .exports = class OutlineView extends Interface
       const node = exportedNode .getLocalNode ()
 
       this .objects .set (exportedNode .getId (), exportedNode)
-      this .objects .set (node .getId (), node)
+      this .objects .set (node .getId (), node .valueOf ())
 
       node .typeName_changed .addFieldCallback (this .exportedNodeSymbol, this .updateNodeTypeName .bind (this, node))
       node .name_changed     .addFieldCallback (this .exportedNodeSymbol, this .updateNodeName     .bind (this, node))
