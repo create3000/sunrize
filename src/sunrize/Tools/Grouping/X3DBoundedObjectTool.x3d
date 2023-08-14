@@ -214,39 +214,39 @@
 
 function eventsProcessed ()
 {
-	var bboxSize1_2 = bboxSize .divide (2);
+   var bboxSize1_2 = bboxSize .divide (2);
 
-	// Axes
+   // Axes
 
-	axes .point = new MFVec3f (new SFVec3f (0, 0, 0),
-	                           new SFVec3f (bboxSize1_2 .x, 0, 0),
-	                           new SFVec3f (0, bboxSize1_2 .y, 0),
-	                           new SFVec3f (0, 0, bboxSize1_2 .z),
-	                           new SFVec3f (0, 0, 0));
+   axes .point = new MFVec3f (new SFVec3f (0, 0, 0),
+                              new SFVec3f (bboxSize1_2 .x, 0, 0),
+                              new SFVec3f (0, bboxSize1_2 .y, 0),
+                              new SFVec3f (0, 0, bboxSize1_2 .z),
+                              new SFVec3f (0, 0, 0));
 
 
-	// BBox
+   // BBox
 
-	bbox .point = new MFVec3f (new SFVec3f (-bboxSize1_2 .x,  bboxSize1_2 .y,  bboxSize1_2 .z),
-	                           new SFVec3f (-bboxSize1_2 .x, -bboxSize1_2 .y,  bboxSize1_2 .z),
-	                           new SFVec3f ( bboxSize1_2 .x, -bboxSize1_2 .y,  bboxSize1_2 .z),
-	                           new SFVec3f ( bboxSize1_2 .x,  bboxSize1_2 .y,  bboxSize1_2 .z),
-	                           new SFVec3f (-bboxSize1_2 .x,  bboxSize1_2 .y, -bboxSize1_2 .z),
-	                           new SFVec3f (-bboxSize1_2 .x, -bboxSize1_2 .y, -bboxSize1_2 .z),
-	                           new SFVec3f ( bboxSize1_2 .x, -bboxSize1_2 .y, -bboxSize1_2 .z),
-	                           new SFVec3f ( bboxSize1_2 .x,  bboxSize1_2 .y, -bboxSize1_2 .z));
+   bbox .point = new MFVec3f (new SFVec3f (-bboxSize1_2 .x,  bboxSize1_2 .y,  bboxSize1_2 .z),
+                              new SFVec3f (-bboxSize1_2 .x, -bboxSize1_2 .y,  bboxSize1_2 .z),
+                              new SFVec3f ( bboxSize1_2 .x, -bboxSize1_2 .y,  bboxSize1_2 .z),
+                              new SFVec3f ( bboxSize1_2 .x,  bboxSize1_2 .y,  bboxSize1_2 .z),
+                              new SFVec3f (-bboxSize1_2 .x,  bboxSize1_2 .y, -bboxSize1_2 .z),
+                              new SFVec3f (-bboxSize1_2 .x, -bboxSize1_2 .y, -bboxSize1_2 .z),
+                              new SFVec3f ( bboxSize1_2 .x, -bboxSize1_2 .y, -bboxSize1_2 .z),
+                              new SFVec3f ( bboxSize1_2 .x,  bboxSize1_2 .y, -bboxSize1_2 .z));
 
-	if (rectangleDisplay)
-	{
-		var bboxSize1_2 = rectangleSize .divide (2);
+   if (rectangleDisplay)
+   {
+      var bboxSize1_2 = rectangleSize .divide (2);
 
-		// BBox
+      // BBox
 
-		rectangle .point = new MFVec3f (new SFVec3f (-bboxSize1_2 .x,  bboxSize1_2 .y,  0),
-		                                new SFVec3f (-bboxSize1_2 .x, -bboxSize1_2 .y,  0),
-		                                new SFVec3f ( bboxSize1_2 .x, -bboxSize1_2 .y,  0),
-		                                new SFVec3f ( bboxSize1_2 .x,  bboxSize1_2 .y,  0));
-	}
+      rectangle .point = new MFVec3f (new SFVec3f (-bboxSize1_2 .x,  bboxSize1_2 .y,  0),
+                                      new SFVec3f (-bboxSize1_2 .x, -bboxSize1_2 .y,  0),
+                                      new SFVec3f ( bboxSize1_2 .x, -bboxSize1_2 .y,  0),
+                                      new SFVec3f ( bboxSize1_2 .x,  bboxSize1_2 .y,  0));
+   }
 }
 ]]>
         </Script>
@@ -269,13 +269,18 @@ function eventsProcessed ()
 
 function eventsProcessed ()
 {
-	// Position arrows
+   // Position arrows
 
-	var bboxSize1_2 = bboxSize .divide (2);
+   var bboxSize1_2 = bboxSize .divide (2);
 
-	x .translation = new SFVec3f (bboxSize1_2 .x, 0, 0);
-	y .translation = new SFVec3f (0, bboxSize1_2 .y, 0);
-	z .translation = new SFVec3f (0, 0, bboxSize1_2 .z);
+   x .translation = new SFVec3f (bboxSize1_2 .x, 0, 0);
+   y .translation = new SFVec3f (0, bboxSize1_2 .y, 0);
+   z .translation = new SFVec3f (0, 0, bboxSize1_2 .z);
+
+   if (bboxSize1_2 .x || bboxSize1_2 .y || bboxSize1_2 .z)
+      x .scale = y .scale = z .scale = new SFVec3f (1, 1, 1);
+   else
+      x .scale = y .scale = z .scale = new SFVec3f ();
 }
 ]]>
         </Script>
@@ -296,8 +301,8 @@ function eventsProcessed ()
 
 function eventsProcessed ()
 {
-	coord .point [0] = center;
-	coord .point [1] = bboxCenter;
+   coord .point [0] = center;
+   coord .point [1] = bboxCenter;
 }
 ]]>
         </Script>
@@ -318,17 +323,17 @@ function eventsProcessed ()
 
 function eventsProcessed ()
 {
-	if (vector .x == 0 && vector .y == 0 && vector .z == 0)
-	{
-		inline .visible = false;
-	}
-	else
-	{
-		inline .load    = true;
-		inline .visible = true;
+   if (vector .x == 0 && vector .y == 0 && vector .z == 0)
+   {
+      inline .visible = false;
+   }
+   else
+   {
+      inline .load    = true;
+      inline .visible = true;
 
-		transform .rotation = new SFRotation (zAxis, vector);
-	}
+      transform .rotation = new SFRotation (zAxis, vector);
+   }
 }
 ]]>
         </Script>

@@ -285,95 +285,95 @@
 
 function initialize ()
 {
-	transform .getValue () .addTool ?.("createOnSelection");
+   transform .getValue () .addTool ?.("createOnSelection");
 }
 
 function set_on ()
 {
-	set_material ();
+   set_material ();
 }
 
 function set_color ()
 {
-	set_material ();
+   set_material ();
 }
 
 function set_intensity ()
 {
-	set_material ();
+   set_material ();
 }
 
 function set_material ()
 {
-	if (on)
-	{
-		const i = Math .min (Math .max (intensity, 0), 1) * emissiveStrength;
+   if (on)
+   {
+      const i = Math .min (Math .max (intensity, 0), 1) * emissiveStrength;
 
-		material .diffuseColor  = color;
-		material .emissiveColor = new SFColor (color .r * i,
-		                                       color .g * i,
-		                                       color .b * i);
-	}
-	else
-	{
-		material .diffuseColor  = new SFColor ();
-		material .emissiveColor = new SFColor ();
-	}
+      material .diffuseColor  = color;
+      material .emissiveColor = new SFColor (color .r * i,
+                                             color .g * i,
+                                             color .b * i);
+   }
+   else
+   {
+      material .diffuseColor  = new SFColor ();
+      material .emissiveColor = new SFColor ();
+   }
 }
 
 function set_direction (value)
 {
-	transform .rotation = new SFRotation (new SFVec3f (0, 0, 1), value);
+   transform .rotation = new SFRotation (new SFVec3f (0, 0, 1), value);
 
-	Browser .deleteRoute (transform, 'rotation', self, 'set_rotation');
-	Browser .addRoute (transform, 'rotation', self, 'set_connectRotation');
+   Browser .deleteRoute (transform, 'rotation', self, 'set_rotation');
+   Browser .addRoute (transform, 'rotation', self, 'set_connectRotation');
 }
 
 function set_rotation (value)
 {
-	// light .direction = transform .rotation .multVec (new SFVec3f (0, 0, 1));
+   // light .direction = transform .rotation .multVec (new SFVec3f (0, 0, 1));
 
-	// Browser .deleteRoute (light, 'direction', self, 'set_lightDirection');
-	// Browser .addRoute (light, 'direction', self, 'set_connectLightDirection');
+   // Browser .deleteRoute (light, 'direction', self, 'set_lightDirection');
+   // Browser .addRoute (light, 'direction', self, 'set_connectLightDirection');
 }
 
 function set_connectDirection (value)
 {
-	// Browser .deleteRoute (light, 'direction', self, 'set_connectLightDirection');
-	// Browser .addRoute (light, 'direction', self, 'set_lightDirection');
+   // Browser .deleteRoute (light, 'direction', self, 'set_connectLightDirection');
+   // Browser .addRoute (light, 'direction', self, 'set_lightDirection');
 }
 
 function set_connectRotation (value)
 {
-	Browser .deleteRoute (transform, 'rotation', self, 'set_connectRotation');
-	Browser .addRoute (transform, 'rotation', self, 'set_rotation');
+   Browser .deleteRoute (transform, 'rotation', self, 'set_connectRotation');
+   Browser .addRoute (transform, 'rotation', self, 'set_rotation');
 }
 
 function set_beamWidth ()
 {
-	set_angle ();
+   set_angle ();
 }
 
 function set_cutOffAngle ()
 {
-	set_angle ();
+   set_angle ();
 }
 
 function set_angle ()
 {
-	const
-		height = 2,
-		radius = 1.2,
-		side   = Math .sqrt (height * height + radius * radius);
+   const
+      height = 2,
+      radius = 1.2,
+      side   = Math .sqrt (height * height + radius * radius);
 
-	const
-		angle = Math .min (beamWidth, cutOffAngle),
-		r     = side * Math .sin (angle),
-		h     = side * Math .cos (angle);
+   const
+      angle = Math .min (beamWidth, cutOffAngle),
+      r     = side * Math .sin (angle),
+      h     = side * Math .cos (angle);
 
-	cone .scale .x = r / radius;
-	cone .scale .y = r / radius;
-	cone .scale .z = h / height;
+   cone .scale .x = r / radius;
+   cone .scale .y = r / radius;
+   cone .scale .z = h / height;
 }
 ]]>
         </Script>

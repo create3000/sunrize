@@ -13,7 +13,7 @@ class X3DEnvironmentalSensorNodeTool extends X3DNodeTool
    {
       super (node)
 
-      this .toolType = [0, X3D .X3DConstants .X3DNode, X3D .X3DConstants .X3DChildNode]
+      this .toolType = [... node .getType (), X3D .X3DConstants .X3DVisibleObject]
    }
 
    async initialize ()
