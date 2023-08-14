@@ -9,7 +9,9 @@ const
    Fields   = X3D .require ("x_ite/Fields"),
    X3DNode  = X3D .require ("x_ite/Components/Core/X3DNode")
 
-const _changing = Symbol .for ("Sunrize.changing")
+const
+   _tool     = Symbol (),
+   _changing = Symbol .for ("Sunrize.changing")
 
 const handler =
 {
@@ -59,6 +61,8 @@ class X3DNodeTool
    {
       const proxy = new Proxy (this, handler)
 
+      node .setUserData (_tool, proxy)
+
       this .toolTarget = this
       this .toolProxy  = proxy
       this .toolNode   = node
@@ -87,6 +91,7 @@ class X3DNodeTool
    {
       Traverse .traverse (this .tool, Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES, node => node .dispose ())
 
+      this .toolNode .removeUserData (_tool)
       this .toolNode .setUserData (_changing, true)
 
       this .replaceNode (this, this .toolNode)
@@ -159,6 +164,10 @@ class X3DNodeTool
 
 Object .assign (X3DNode .prototype,
 {
+   getTool ()
+   {
+      return this .getUserData (_tool)
+   },
    addTool (type)
    {
       const module = path .resolve (__dirname, "..", this .constructor .componentName, this .constructor .typeName + "Tool.js")
@@ -168,10 +177,10 @@ Object .assign (X3DNode .prototype,
 
       const Tool = require (module)
 
-      if (Tool [type])
-         return new Tool (this)
+      if (!Tool [type])
+         return this
 
-      return this
+      return new Tool (this)
    },
    removeTool ()
    {

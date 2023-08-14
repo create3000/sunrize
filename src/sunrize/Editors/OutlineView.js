@@ -254,6 +254,9 @@ module .exports = class OutlineView extends Interface
       child .find (".visibility")
          .on ("click", this .toggleVisibility .bind (this))
 
+      child .find (".tool")
+         .on ("click", this .toggleTool .bind (this))
+
       // Expand children.
 
       const
@@ -946,7 +949,7 @@ module .exports = class OutlineView extends Interface
 
             $("<span></span>")
                .addClass (["tool", "button", "material-symbols-outlined"])
-               .addClass ("off" )
+               .addClass (node .valueOf () === node ? "off" : "" )
                .text ("build_circle")
                .appendTo (name)
          }
@@ -1728,6 +1731,9 @@ module .exports = class OutlineView extends Interface
       child .find (".visibility")
          .on ("click", this .toggleVisibility .bind (this))
 
+      child .find (".tool")
+         .on ("click", this .toggleTool .bind (this))
+
       child .find ("area.input-selector")
          .on ("mouseenter", this .hoverInSingleConnector .bind (this, "input"))
          .on ("mouseleave", this .hoverOutSingleConnector .bind (this, "input"))
@@ -1829,6 +1835,9 @@ module .exports = class OutlineView extends Interface
 
       child .find (".visibility")
          .on ("click", this .toggleVisibility .bind (this))
+
+      child .find (".tool")
+         .on ("click", this .toggleTool .bind (this))
 
       child .find ("area.input-selector")
          .on ("mouseenter", this .hoverInSingleConnector .bind (this, "input"))
@@ -2616,6 +2625,25 @@ module .exports = class OutlineView extends Interface
          .removeClass ("off")
          .addClass (hidden ? "off" : "")
          .text (hidden ? "visibility_off" : "visibility")
+   }
+
+   toggleTool (event)
+   {
+      require ("../Tools/Core/X3DNodeTool")
+
+      event .preventDefault ()
+      event .stopImmediatePropagation ()
+
+      const
+         target  = $(event .target),
+         element = target .closest (".node", this .sceneGraph),
+         node    = this .getNode (element),
+         tool    = node .getTool ()
+
+      if (tool)
+         tool .removeTool ()
+      else
+         node .addTool ("createOnDemand")
    }
 
    hideUnselectedObjects ()
