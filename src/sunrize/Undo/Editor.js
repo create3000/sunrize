@@ -108,7 +108,7 @@ module .exports = class Editor
       scene .rootNodes = nodes
 
       for (const route of routes)
-         scene .routes .add (X3D .X3DRoute .getId (route .getSourceField (), route .getDestinationField ()), route)
+         scene .routes .add (route .getRouteId (), route)
 
       // Return VRML string.
 

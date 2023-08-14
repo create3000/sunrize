@@ -40,17 +40,6 @@ class X3DBoundedObjectTool extends X3DNodeTool
       if (!this .tool .bboxCenter .getValue () .equals (bboxCenter))
          this .tool .bboxCenter = bboxCenter
    }
-
-   traverse (type, renderObject)
-   {
-      this .toolNode .traverse (type, renderObject)
-
-      renderObject .getHumanoids () .push (null)
-
-      this .toolInnerNode ?.traverse (type, renderObject)
-
-      renderObject .getHumanoids () .pop ()
-   }
 }
 
 module .exports = X3DBoundedObjectTool

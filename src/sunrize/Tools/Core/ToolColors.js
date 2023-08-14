@@ -30,4 +30,8 @@ module .exports = class ToolColors
 
    static GREY      = new Color3 (0.7, 0.7, 0.7)       //
    static DARK_GREY = new Color3 (0.35, 0.35, 0.35)    // StaticGroup
+
+   static PROXIMITY_SENSOR  = new Color3 (0.5, 0, 1)
+   static TRANSFORM_SENSOR  = new Color3 (0, 1, 0)
+   static VISIBILITY_SENSOR = new Color3f (1, 0, 0)
 }

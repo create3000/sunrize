@@ -137,6 +137,17 @@ class X3DNodeTool
       return this .toolNode .valueOf ()
    }
 
+   traverse (type, renderObject)
+   {
+      this .toolNode .traverse (type, renderObject)
+
+      renderObject .getHumanoids () .push (null)
+
+      this .toolInnerNode ?.traverse (type, renderObject)
+
+      renderObject .getHumanoids () .pop ()
+   }
+
    dispose ()
    {
       this .removeTool ()

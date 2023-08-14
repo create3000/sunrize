@@ -724,7 +724,15 @@ module .exports = class Application
 
    async showSaveDialog (defaultPath)
    {
-      return await electron .dialog .showSaveDialog ({
+      this .pushMenu (electron .Menu .buildFromTemplate ([
+         {
+            role: "appMenu",
+            label: "Sunrize",
+         },
+         { role: "editMenu" },
+      ]))
+
+      const response = await electron .dialog .showSaveDialog ({
          defaultPath: defaultPath,
          properties: ["createDirectory", "showOverwriteConfirmation"],
          filters : [
@@ -736,17 +744,33 @@ module .exports = class Application
             { name: "X3D VRML Classic Document GZipped", extensions: ["x3dvz"] },
          ],
       })
+
+      this .popMenu ()
+
+      return response
    }
 
    async showExportDialog (defaultPath)
    {
-      return await electron .dialog .showSaveDialog ({
+      this .pushMenu (electron .Menu .buildFromTemplate ([
+         {
+            role: "appMenu",
+            label: "Sunrize",
+         },
+         { role: "editMenu" },
+      ]))
+
+      const response = await electron .dialog .showSaveDialog ({
          defaultPath: defaultPath,
          properties: ["createDirectory", "showOverwriteConfirmation"],
          filters : [
             { name: "HTML Document", extensions: ["html"] },
          ],
       })
+
+      this .popMenu ()
+
+      return response
    }
 
    maximize ()

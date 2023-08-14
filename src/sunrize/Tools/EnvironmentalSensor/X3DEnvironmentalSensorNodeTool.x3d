@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Scripting' level='1'/>
+    <meta name='created' content='Mon, 14 Aug 2023 12:10:25 GMT'/>
+    <meta name='comment' content='Rise and Shine'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
+    <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/EnvironmentalSensor/X3DEnvironmentalSensorNodeTool.x3d'/>
+    <meta name='modified' content='Mon, 14 Aug 2023 12:33:23 GMT'/>
+  </head>
+  <Scene>
+    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
+    </ExternProtoDeclare>
+    <ProtoDeclare name='Tool'>
+      <ProtoInterface>
+        <field accessType='inputOutput' type='SFBool' name='selected'/>
+        <field accessType='inputOutput' type='SFColor' name='color' value='0.35 1 0.7'/>
+        <field accessType='inputOutput' type='SFVec3f' name='size' value='1 1 1'/>
+        <field accessType='inputOutput' type='SFVec3f' name='center'/>
+      </ProtoInterface>
+      <ProtoBody>
+        <Collision
+            enabled='false'>
+          <Transform DEF='Box'>
+            <Shape>
+              <Appearance>
+                <Material DEF='BoxMaterial'
+                    ambientIntensity='0'
+                    diffuseColor='0.2 0.2 0.2'
+                    emissiveColor='0.0875 0.25 0.175'
+                    shininess='0'
+                    transparency='0.5'/>
+                <ProtoInstance name='ToolShader' DEF='_1' containerField='shaders'/>
+              </Appearance>
+              <Box
+                  size='1 1 1'/>
+            </Shape>
+          </Transform>
+          <Transform DEF='TransformTool'>
+            <IS>
+              <connect nodeField='translation' protoField='center'/>
+              <connect nodeField='scale' protoField='size'/>
+              <connect nodeField='visible' protoField='selected'/>
+            </IS>
+            <Shape>
+              <Appearance>
+                <Material
+                    transparency='1'/>
+                <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
+              </Appearance>
+              <Box
+                  size='1 1 1'/>
+            </Shape>
+          </Transform>
+        </Collision>
+        <Script DEF='Tool'
+            directOutput='true'>
+          <field accessType='inputOutput' type='SFBool' name='selected'/>
+          <field accessType='inputOutput' type='SFColor' name='color'/>
+          <field accessType='initializeOnly' type='SFNode' name='material'>
+            <Material USE='BoxMaterial'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='transform'>
+            <Transform USE='TransformTool'/>
+          </field>
+          <IS>
+            <connect nodeField='selected' protoField='selected'/>
+            <connect nodeField='color' protoField='color'/>
+          </IS>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+	set_color ();
+}
+
+function set_selected ()
+{
+	set_color ();
+}
+
+function set_color ()
+{
+	if (selected)
+		material .emissiveColor = color;
+	else
+		material .emissiveColor = new SFColor (color .r / 4, color .g / 4, color .b / 4);
+}
+]]>
+        </Script>
+        <ROUTE fromNode='TransformTool' fromField='translation_changed' toNode='Box' toField='set_translation'/>
+        <ROUTE fromNode='TransformTool' fromField='scale_changed' toNode='Box' toField='set_scale'/>
+      </ProtoBody>
+    </ProtoDeclare>
+    <ProtoInstance name='Tool'/>
+  </Scene>
+</X3D>
