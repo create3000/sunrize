@@ -6,7 +6,7 @@ const
 
 class BillboardTool extends X3DBoundedObjectTool
 {
-   bboxColor = ToolColors .PINK
+   toolBBoxColor = ToolColors .PINK
 
    async initialize ()
    {

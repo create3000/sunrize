@@ -6,7 +6,7 @@ const
 
 class LODTool extends X3DBoundedObjectTool
 {
-   bboxColor = ToolColors .CYAN
+   toolBBoxColor = ToolColors .CYAN
 
    async initialize ()
    {

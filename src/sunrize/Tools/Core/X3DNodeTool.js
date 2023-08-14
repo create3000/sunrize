@@ -64,9 +64,8 @@ class X3DNodeTool
       node .setUserData (_tool, proxy)
       node .setUserData (_changing, true)
 
-      this .toolTarget = this
-      this .toolProxy  = proxy
-      this .toolNode   = node
+      this .toolProxy = proxy
+      this .toolNode  = node
 
       this .replaceNode (node, proxy)
       proxy .setup ()

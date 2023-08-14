@@ -6,7 +6,7 @@ const
 
 class X3DVolumeDataNodeTool extends X3DBoundedObjectTool
 {
-   bboxColor = ToolColors .DARK_ORANGE
+   toolBBoxColor = ToolColors .DARK_ORANGE
 }
 
 module .exports = X3DVolumeDataNodeTool

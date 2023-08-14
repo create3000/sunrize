@@ -6,7 +6,7 @@ const
 
 class ProximitySensorTool extends X3DEnvironmentalSensorNodeTool
 {
-   boxColor = ToolColors .PROXIMITY_SENSOR
+   toolBoxColor = ToolColors .PROXIMITY_SENSOR
 }
 
 module .exports = ProximitySensorTool

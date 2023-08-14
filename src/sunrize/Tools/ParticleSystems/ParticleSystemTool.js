@@ -6,7 +6,7 @@ const
 
 class ParticleSystemTool extends X3DBoundedObjectTool
 {
-   bboxColor = ToolColors .ORANGE
+   toolBBoxColor = ToolColors .ORANGE
 }
 
 module .exports = ParticleSystemTool

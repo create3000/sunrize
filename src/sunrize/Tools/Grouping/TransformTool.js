@@ -6,7 +6,7 @@ const
 
 class TransformTool extends X3DTransformNodeTool
 {
-   bboxColor = ToolColors .GREEN
+   toolBBoxColor = ToolColors .GREEN
 }
 
 module .exports = TransformTool

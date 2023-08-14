@@ -6,7 +6,7 @@ const
 
 class StaticGroupTool extends X3DBoundedObjectTool
 {
-   bboxColor = ToolColors .DARK_GREY
+   toolBBoxColor = ToolColors .DARK_GREY
 }
 
 module .exports = StaticGroupTool

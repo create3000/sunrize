@@ -13,14 +13,14 @@ class X3DTransformNodeTool extends X3DNodeTool
 
       await this .loadTool (__dirname, "X3DBoundedObjectTool.x3d")
 
-      this .toolNode .getBrowser () .displayEvents () .addInterest ("reshape", this .toolTarget)
+      this .toolNode .getBrowser () .displayEvents () .addInterest ("reshape", this)
 
-      this .tool .bboxColor = this .bboxColor
+      this .tool .bboxColor = this .toolBBoxColor
    }
 
    removeTool ()
    {
-      this .toolNode .getBrowser () .displayEvents () .removeInterest ("reshape", this .toolTarget)
+      this .toolNode .getBrowser () .displayEvents () .removeInterest ("reshape", this)
 
       return super .removeTool ()
    }

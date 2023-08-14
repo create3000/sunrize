@@ -6,7 +6,7 @@ const
 
 class ScreenGroupTool extends X3DBoundedObjectTool
 {
-   bboxColor = ToolColors .LIME
+   toolBBoxColor = ToolColors .LIME
 }
 
 module .exports = ScreenGroupTool

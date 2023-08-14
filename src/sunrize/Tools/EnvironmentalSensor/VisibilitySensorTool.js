@@ -6,7 +6,7 @@ const
 
 class VisibilitySensorTool extends X3DEnvironmentalSensorNodeTool
 {
-   boxColor = ToolColors .VISIBILITY_SENSOR
+   toolBoxColor = ToolColors .VISIBILITY_SENSOR
 }
 
 module .exports = VisibilitySensorTool

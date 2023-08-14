@@ -6,7 +6,7 @@ const
 
 class HAnimHumanoidTool extends X3DTransformNodeTool
 {
-   bboxColor = ToolColors .GREEN
+   toolBBoxColor = ToolColors .GREEN
 }
 
 module .exports = HAnimHumanoidTool

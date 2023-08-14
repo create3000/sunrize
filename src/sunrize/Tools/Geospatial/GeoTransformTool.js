@@ -6,7 +6,7 @@ const
 
 class GeoTransformTool extends X3DBoundedObjectTool
 {
-   bboxColor = ToolColors .GREEN
+   toolBBoxColor = ToolColors .GREEN
 }
 
 module .exports = GeoTransformTool

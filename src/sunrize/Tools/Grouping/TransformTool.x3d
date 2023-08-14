@@ -12,7 +12,7 @@
   <Scene>
     <ProtoDeclare name='Tool'>
       <ProtoInterface>
-        <field accessType='inputOnly' type='SFColor' name='bboxColor'/>
+        <field accessType='inputOnly' type='SFColor' name='toolBBoxColor'/>
       </ProtoInterface>
       <ProtoBody>
         <Transform DEF='IndexedLineSet'>
@@ -21,7 +21,7 @@
             <Appearance>
               <UnlitMaterial>
                 <IS>
-                  <connect nodeField='emissiveColor' protoField='bboxColor'/>
+                  <connect nodeField='emissiveColor' protoField='toolBBoxColor'/>
                 </IS>
               </UnlitMaterial>
             </Appearance>

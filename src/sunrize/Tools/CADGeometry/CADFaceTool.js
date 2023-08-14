@@ -6,7 +6,7 @@ const
 
 class CADFaceTool extends X3DBoundedObjectTool
 {
-   bboxColor = ToolColors .BROWN
+   toolBBoxColor = ToolColors .BROWN
 }
 
 module .exports = CADFaceTool

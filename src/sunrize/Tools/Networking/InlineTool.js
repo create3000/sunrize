@@ -6,7 +6,7 @@ const
 
 class InlineTool extends X3DBoundedObjectTool
 {
-   bboxColor = ToolColors .WHITE
+   toolBBoxColor = ToolColors .WHITE
 }
 
 module .exports = InlineTool

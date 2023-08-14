@@ -6,7 +6,7 @@ const
 
 class AnchorTool extends X3DBoundedObjectTool
 {
-   bboxColor = ToolColors .LILA
+   toolBBoxColor = ToolColors .LILA
 }
 
 module .exports = AnchorTool

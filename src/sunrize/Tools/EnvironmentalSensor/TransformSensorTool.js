@@ -6,7 +6,7 @@ const
 
 class TransformSensorTool extends X3DEnvironmentalSensorNodeTool
 {
-   boxColor = ToolColors .TRANSFORM_SENSOR
+   toolBoxColor = ToolColors .TRANSFORM_SENSOR
 }
 
 module .exports = TransformSensorTool

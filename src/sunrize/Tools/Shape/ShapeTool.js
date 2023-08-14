@@ -6,7 +6,7 @@ const
 
 class ShapeTool extends X3DBoundedObjectTool
 {
-   bboxColor = ToolColors .ORANGE
+   toolBBoxColor = ToolColors .ORANGE
 }
 
 module .exports = ShapeTool

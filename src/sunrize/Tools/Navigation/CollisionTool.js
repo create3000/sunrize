@@ -9,20 +9,20 @@ const
 
 class CollisionTool extends X3DBoundedObjectTool
 {
-   bboxColor = ToolColors .RED
+   toolBBoxColor = ToolColors .RED
 
    async initialize ()
    {
       await super .initialize ()
 
-      this .toolNode ._enabled .addInterest (_set_enabled, this .toolTarget)
+      this .toolNode ._enabled .addInterest (_set_enabled, this)
 
       this [_set_enabled] ()
    }
 
    removeTool ()
    {
-      this .toolNode ._enabled .removeInterest (_set_enabled, this .toolTarget)
+      this .toolNode ._enabled .removeInterest (_set_enabled, this)
 
       return super .removeTool ()
    }

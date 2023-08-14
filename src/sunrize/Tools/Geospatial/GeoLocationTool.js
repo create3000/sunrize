@@ -6,7 +6,7 @@ const
 
 class GeoLocationTool extends X3DBoundedObjectTool
 {
-   bboxColor = ToolColors .DARK_GREEN
+   toolBBoxColor = ToolColors .DARK_GREEN
 }
 
 module .exports = GeoLocationTool

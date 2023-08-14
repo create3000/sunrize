@@ -6,7 +6,7 @@ const
 
 class CADLayerTool extends X3DBoundedObjectTool
 {
-   bboxColor = ToolColors .DARK_YELLOW
+   toolBBoxColor = ToolColors .DARK_YELLOW
 }
 
 module .exports = CADLayerTool

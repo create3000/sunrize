@@ -6,7 +6,7 @@ const
 
 class SwitchTool extends X3DBoundedObjectTool
 {
-   bboxColor = ToolColors .YELLOW
+   toolBBoxColor = ToolColors .YELLOW
 }
 
 module .exports = SwitchTool

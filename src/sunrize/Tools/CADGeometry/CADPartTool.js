@@ -6,7 +6,7 @@ const
 
 class CADPartTool extends X3DTransformNodeTool
 {
-   bboxColor = ToolColors .GREEN
+   toolBBoxColor = ToolColors .GREEN
 }
 
 module .exports = CADPartTool

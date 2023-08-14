@@ -8,7 +8,7 @@ const
 
 class GeoLODTool extends X3DBoundedObjectTool
 {
-   bboxColor = ToolColors .DARK_CYAN
+   toolBBoxColor = ToolColors .DARK_CYAN
 
    async initialize ()
    {

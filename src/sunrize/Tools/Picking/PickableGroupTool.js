@@ -6,7 +6,7 @@ const
 
 class PickableGroupTool extends X3DBoundedObjectTool
 {
-   bboxColor = ToolColors .ROSE
+   toolBBoxColor = ToolColors .ROSE
 }
 
 module .exports = PickableGroupTool
