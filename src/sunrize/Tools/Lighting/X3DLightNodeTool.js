@@ -13,7 +13,7 @@ class X3DLightNodeTool extends X3DNodeTool
    {
       super (node)
 
-      this .toolType = [... node .getType (), X3D .X3DConstants .X3DVisibleObject]
+      this .toolType = [X3D .X3DConstants .X3DVisibleObject, ... node .getType ()]
    }
 
    async initialize ()
