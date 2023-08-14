@@ -8,7 +8,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/EnvironmentalSensor/X3DEnvironmentalSensorNodeTool.x3d'/>
-    <meta name='modified' content='Mon, 14 Aug 2023 16:25:24 GMT'/>
+    <meta name='modified' content='Mon, 14 Aug 2023 18:11:28 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -32,27 +32,20 @@
                     emissiveColor='0.0875 0.25 0.175'
                     shininess='0'
                     transparency='0.5'/>
-                <ProtoInstance name='ToolShader' DEF='_1' containerField='shaders'/>
+                <ProtoInstance name='ToolShader' containerField='shaders'/>
               </Appearance>
               <Box
-                  size='1 1 1'/>
+                  size='1 1 1'
+                  solid='false'/>
             </Shape>
           </Transform>
-          <Transform DEF='TransformTool'>
+          <Transform DEF='TransformTool'
+              bboxSize='1 1 1'>
             <IS>
               <connect nodeField='translation' protoField='center'/>
               <connect nodeField='scale' protoField='size'/>
               <connect nodeField='visible' protoField='selected'/>
             </IS>
-            <Shape>
-              <Appearance>
-                <Material
-                    transparency='1'/>
-                <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
-              </Appearance>
-              <Box
-                  size='1 1 1'/>
-            </Shape>
           </Transform>
         </Collision>
         <Script DEF='Tool'
