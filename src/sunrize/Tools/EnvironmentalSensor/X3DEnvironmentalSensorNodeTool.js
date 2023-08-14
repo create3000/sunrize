@@ -9,6 +9,13 @@ class X3DEnvironmentalSensorNodeTool extends X3DNodeTool
    static createOnSelection = false
    static createOnDemand    = true
 
+   constructor (node)
+   {
+      super (node)
+
+      this .toolType = [0, X3D .X3DConstants .X3DNode, X3D .X3DConstants .X3DChildNode]
+   }
+
    async initialize ()
    {
       super .initialize ()
@@ -22,6 +29,11 @@ class X3DEnvironmentalSensorNodeTool extends X3DNodeTool
       this .tool .boxColor = this .toolBoxColor
       this .tool .size     = this .toolNode ._size
       this .tool .center   = this .toolNode ._center
+   }
+
+   getType ()
+   {
+      return this .toolType
    }
 
    setSelected (value)
