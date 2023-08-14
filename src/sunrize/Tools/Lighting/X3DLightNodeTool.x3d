@@ -9,7 +9,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Lighting/X3DLightNodeTool.x3d'/>
-    <meta name='modified' content='Mon, 14 Aug 2023 20:11:40 GMT'/>
+    <meta name='modified' content='Mon, 14 Aug 2023 20:37:40 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -261,8 +261,8 @@
           <field accessType='inputOutput' type='SFVec3f' name='direction'/>
           <field accessType='inputOutput' type='SFFloat' name='beamWidth'/>
           <field accessType='inputOutput' type='SFFloat' name='cutOffAngle'/>
-          <field accessType='inputOnly' type='SFVec3f' name='set_connectDirection'/>
           <field accessType='inputOnly' type='SFRotation' name='set_rotation'/>
+          <field accessType='inputOnly' type='SFVec3f' name='set_connectDirection'/>
           <field accessType='inputOnly' type='SFRotation' name='set_connectRotation'/>
           <field accessType='initializeOnly' type='SFNode' name='transform'>
             <Transform USE='TransformTool'/>
@@ -289,35 +289,6 @@
 function initialize ()
 {
 	transform .getValue () .addTool ?.("createOnSelection");
-}
-
-function set_directionalLight ()
-{
-	Browser .addRoute (light, 'direction', self, 'set_direction');
-	Browser .addRoute (transform, 'rotation', self, 'set_rotation');
-
-	set_direction (light .direction);
-
-	whichChoice_changed = 0;
-}
-
-function set_pointLight ()
-{
-	transform .translation = light .location;
-
-	whichChoice_changed = 1;
-}
-
-function set_spotLight ()
-{
-	Browser .addRoute (light, 'direction', self, 'set_direction');
-	Browser .addRoute (transform, 'rotation', self, 'set_rotation');
-
-	transform .translation = light .location;
-	set_direction (light .direction);
-	set_angle ();
-
-	whichChoice_changed = 2;
 }
 
 function set_on ()
@@ -361,10 +332,24 @@ function set_direction (value)
 	Browser .addRoute (transform, 'rotation', self, 'set_connectRotation');
 }
 
-function set_connectLightDirection (value)
+function set_rotation (value)
 {
-	Browser .deleteRoute (light, 'direction', self, 'set_connectLightDirection');
-	Browser .addRoute (light, 'direction', self, 'set_lightDirection');
+	// light .direction = transform .rotation .multVec (new SFVec3f (0, 0, 1));
+
+	// Browser .deleteRoute (light, 'direction', self, 'set_lightDirection');
+	// Browser .addRoute (light, 'direction', self, 'set_connectLightDirection');
+}
+
+function set_connectDirection (value)
+{
+	// Browser .deleteRoute (light, 'direction', self, 'set_connectLightDirection');
+	// Browser .addRoute (light, 'direction', self, 'set_lightDirection');
+}
+
+function set_connectRotation (value)
+{
+	Browser .deleteRoute (transform, 'rotation', self, 'set_connectRotation');
+	Browser .addRoute (transform, 'rotation', self, 'set_rotation');
 }
 
 function set_beamWidth ()
@@ -392,20 +377,6 @@ function set_angle ()
 	cone .scale .x = r / radius;
 	cone .scale .y = r / radius;
 	cone .scale .z = h / height;
-}
-
-function set_rotation (value)
-{
-	light .direction = transform .rotation .multVec (new SFVec3f (0, 0, 1));
-
-	Browser .deleteRoute (light, 'direction', self, 'set_lightDirection');
-	Browser .addRoute (light, 'direction', self, 'set_connectLightDirection');
-}
-
-function set_connectRotation (value)
-{
-	Browser .deleteRoute (transform, 'rotation', self, 'set_connectRotation');
-	Browser .addRoute (transform, 'rotation', self, 'set_rotation');
 }
 ]]>
         </Script>

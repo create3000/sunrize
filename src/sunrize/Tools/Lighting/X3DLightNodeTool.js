@@ -50,6 +50,20 @@ class X3DLightNodeTool extends X3DNodeTool
 
          this .tool .direction = this .toolNode ._direction
       }
+
+      if (this .toolNode ._beamWidth)
+      {
+         this .toolNode ._beamWidth .addFieldInterest (this .tool .getValue () .getField ("beamWidth"))
+
+         this .tool .beamWidth = this .toolNode ._beamWidth
+      }
+
+      if (this .toolNode ._cutOffAngle)
+      {
+         this .toolNode ._cutOffAngle .addFieldInterest (this .tool .getValue () .getField ("cutOffAngle"))
+
+         this .tool .cutOffAngle = this .toolNode ._cutOffAngle
+      }
    }
 
    getType ()

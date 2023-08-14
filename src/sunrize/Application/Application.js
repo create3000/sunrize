@@ -607,7 +607,15 @@ module .exports = class Application
          },
          {
             role: "help",
-            submenu: [ ],
+            submenu: [
+               {
+                  label: "Learn More",
+                  click: async () =>
+                  {
+                     await electron .shell .openExternal ("https://create3000.github.io/x_ite/")
+                  },
+               },
+            ],
          },
       ])
 
