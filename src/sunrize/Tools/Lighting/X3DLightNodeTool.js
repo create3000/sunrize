@@ -28,7 +28,7 @@ class X3DLightNodeTool extends X3DNodeTool
 
       await this .loadTool (__dirname, "X3DLightNodeTool.x3d")
 
-      this .toolNode ._on        .addFieldInterest (this .tool .on)
+      this .toolNode ._on        .addFieldInterest (this .tool .getValue () .getField ("on"))
       this .toolNode ._color     .addFieldInterest (this .tool .color)
       this .toolNode ._intensity .addFieldInterest (this .tool .intensity)
 
