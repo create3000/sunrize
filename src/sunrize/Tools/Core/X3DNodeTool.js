@@ -77,9 +77,12 @@ class X3DNodeTool
       return proxy
    }
 
-   setup ()
+   async setup ()
    {
-      this .initialize ()
+      await this .initialize ()
+
+      this .tool .visible  = true
+      this .tool .selected = this .toolSelected
    }
 
    async initialize (... args)
@@ -128,9 +131,6 @@ class X3DNodeTool
       }
 
       this .toolInnerNode = this .tool .getValue () .getInnerNode ()
-
-      if (this .tool ?.selected !== undefined)
-         this .tool .selected = this .toolSelected
    }
 
    replaceNode (node, replacement)
@@ -166,7 +166,8 @@ class X3DNodeTool
 
       renderObject .getHumanoids () .push (null)
 
-      this .toolInnerNode ?.traverse (type, renderObject)
+      if (this .tool ?.visible)
+         this .toolInnerNode ?.traverse (type, renderObject)
 
       renderObject .getHumanoids () .pop ()
    }

@@ -9,13 +9,15 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Grouping/X3DBoundedObjectTool.x3d'/>
-    <meta name='modified' content='Mon, 14 Aug 2023 16:17:11 GMT'/>
+    <meta name='modified' content='Mon, 14 Aug 2023 23:17:43 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
     </ExternProtoDeclare>
     <ProtoDeclare name='Tool'>
       <ProtoInterface>
+        <field accessType='inputOutput' type='SFBool' name='visible'/>
+        <field accessType='inputOutput' type='SFBool' name='selected'/>
         <field accessType='inputOutput' type='SFVec3f' name='center'/>
         <field accessType='inputOutput' type='SFBool' name='centerDisplay'/>
         <field accessType='inputOutput' type='SFVec3f' name='axisOfRotation'/>
@@ -30,6 +32,9 @@
       <ProtoBody>
         <Collision
             enabled='false'>
+          <IS>
+            <connect nodeField='visible' protoField='visible'/>
+          </IS>
           <Transform DEF='BoundingBox'>
             <IS>
               <connect nodeField='translation' protoField='bboxCenter'/>
@@ -276,11 +281,6 @@ function eventsProcessed ()
    x .translation = new SFVec3f (bboxSize1_2 .x, 0, 0);
    y .translation = new SFVec3f (0, bboxSize1_2 .y, 0);
    z .translation = new SFVec3f (0, 0, bboxSize1_2 .z);
-
-   if (bboxSize1_2 .x || bboxSize1_2 .y || bboxSize1_2 .z)
-      x .scale = y .scale = z .scale = new SFVec3f (1, 1, 1);
-   else
-      x .scale = y .scale = z .scale = new SFVec3f ();
 }
 ]]>
         </Script>

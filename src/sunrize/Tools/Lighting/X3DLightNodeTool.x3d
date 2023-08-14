@@ -9,13 +9,14 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Lighting/X3DLightNodeTool.x3d'/>
-    <meta name='modified' content='Mon, 14 Aug 2023 22:02:01 GMT'/>
+    <meta name='modified' content='Mon, 14 Aug 2023 23:20:18 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
     </ExternProtoDeclare>
     <ProtoDeclare name='Tool'>
       <ProtoInterface>
+        <field accessType='inputOutput' type='SFBool' name='visible'/>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
         <field accessType='inputOutput' type='SFInt32' name='whichChoice'/>
         <field accessType='inputOutput' type='SFBool' name='on' value='true'/>
@@ -29,6 +30,9 @@
       <ProtoBody>
         <Collision
             enabled='false'>
+          <IS>
+            <connect nodeField='visible' protoField='visible'/>
+          </IS>
           <Transform DEF='_1'
               rotation='0 1 0 3.14159265358979'>
             <ScreenGroup>
@@ -383,6 +387,7 @@ function set_angle ()
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
+      <fieldValue name='visible' value='true'/>
       <fieldValue name='on' value='false'/>
       <fieldValue name='color' value='0 0 0'/>
       <fieldValue name='intensity' value='0'/>

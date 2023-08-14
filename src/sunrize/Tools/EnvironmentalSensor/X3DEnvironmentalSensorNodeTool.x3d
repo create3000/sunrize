@@ -8,13 +8,14 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/EnvironmentalSensor/X3DEnvironmentalSensorNodeTool.x3d'/>
-    <meta name='modified' content='Mon, 14 Aug 2023 18:56:21 GMT'/>
+    <meta name='modified' content='Mon, 14 Aug 2023 23:13:12 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
     </ExternProtoDeclare>
     <ProtoDeclare name='Tool'>
       <ProtoInterface>
+        <field accessType='inputOutput' type='SFBool' name='visible'/>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
         <field accessType='inputOutput' type='SFColor' name='boxColor' value='0.35 1 0.7'/>
         <field accessType='inputOutput' type='SFVec3f' name='size' value='1 1 1'/>
@@ -23,6 +24,9 @@
       <ProtoBody>
         <Collision
             enabled='false'>
+          <IS>
+            <connect nodeField='visible' protoField='visible'/>
+          </IS>
           <Transform DEF='Box'>
             <Shape>
               <Appearance>
