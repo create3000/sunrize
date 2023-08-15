@@ -7,7 +7,6 @@ const
 class X3DViewpointNodeTool extends X3DNodeTool
 {
    static createOnSelection = false
-   static createOnDemand    = true
 
    toolWhichChoice = 0
 

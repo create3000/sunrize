@@ -7,7 +7,6 @@ const
 class X3DLightNodeTool extends X3DNodeTool
 {
    static createOnSelection = false
-   static createOnDemand    = true
 
    async initialize ()
    {
