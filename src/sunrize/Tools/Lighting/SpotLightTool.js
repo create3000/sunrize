@@ -10,8 +10,8 @@ class SpotLightTool extends X3DLightNodeTool
 
       this .toolNode ._location    .addFieldInterest (this .tool .location)
       this .toolNode ._direction   .addFieldInterest (this .tool .direction)
-      this .toolNode ._beamWidth   .addFieldInterest (this .tool .getValue () .getField ("beamWidth"))
-      this .toolNode ._cutOffAngle .addFieldInterest (this .tool .getValue () .getField ("cutOffAngle"))
+      this .toolNode ._beamWidth   .addFieldInterest (this .tool .getField ("beamWidth"))
+      this .toolNode ._cutOffAngle .addFieldInterest (this .tool .getField ("cutOffAngle"))
 
       this .tool .location    = this .toolNode ._location
       this .tool .direction   = this .toolNode ._direction

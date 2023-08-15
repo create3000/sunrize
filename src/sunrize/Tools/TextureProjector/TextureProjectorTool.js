@@ -8,10 +8,10 @@ class TextureProjectorTool extends X3DTextureProjectorNodeTool
    {
       await super .initialize ()
 
-      this .toolNode ._fieldOfView  .addFieldInterest (this .tool .getValue () .getField ("perspectiveFieldOfView"))
-      this .toolNode ._nearDistance .addFieldInterest (this .tool .getValue () .getField ("perspectiveNearDistance"))
-      this .toolNode ._farDistance  .addFieldInterest (this .tool .getValue () .getField ("perspectiveFarDistance"))
-      this .toolNode ._aspectRatio  .addFieldInterest (this .tool .getValue () .getField ("perspectiveAspectRatio"))
+      this .toolNode ._fieldOfView  .addFieldInterest (this .tool .getField ("perspectiveFieldOfView"))
+      this .toolNode ._nearDistance .addFieldInterest (this .tool .getField ("perspectiveNearDistance"))
+      this .toolNode ._farDistance  .addFieldInterest (this .tool .getField ("perspectiveFarDistance"))
+      this .toolNode ._aspectRatio  .addFieldInterest (this .tool .getField ("perspectiveAspectRatio"))
 
       this .tool .perspectiveFieldOfView  = this .toolNode ._fieldOfView
       this .tool .perspectiveNearDistance = this .toolNode ._nearDistance

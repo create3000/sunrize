@@ -16,10 +16,10 @@ class SoundTool extends X3DNodeTool
 
       this .toolNode ._location  .addFieldInterest (this .tool .location)
       this .toolNode ._direction .addFieldInterest (this .tool .direction)
-      this .toolNode ._minBack   .addFieldInterest (this .tool .getValue () .getField ("minBack"))
-      this .toolNode ._minFront  .addFieldInterest (this .tool .getValue () .getField ("minFront"))
-      this .toolNode ._maxBack   .addFieldInterest (this .tool .getValue () .getField ("maxBack"))
-      this .toolNode ._maxFront  .addFieldInterest (this .tool .getValue () .getField ("maxFront"))
+      this .toolNode ._minBack   .addFieldInterest (this .tool .getField ("minBack"))
+      this .toolNode ._minFront  .addFieldInterest (this .tool .getField ("minFront"))
+      this .toolNode ._maxBack   .addFieldInterest (this .tool .getField ("maxBack"))
+      this .toolNode ._maxFront  .addFieldInterest (this .tool .getField ("maxFront"))
 
       this .tool .location  = this .toolNode ._location
       this .tool .direction = this .toolNode ._direction
