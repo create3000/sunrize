@@ -68,7 +68,7 @@
 
 function initialize ()
 {
-   transform .getValue () .addTool ?.("createOnSelection")
+   transform .getValue () .addTool ?.()
    set_color ();
 }
 

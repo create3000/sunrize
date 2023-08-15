@@ -60,6 +60,7 @@ const handler =
 class X3DNodeTool
 {
    static createOnSelection = true
+   static createOnDemand    = true
 
    constructor (node)
    {
@@ -185,7 +186,7 @@ Object .assign (X3DNode .prototype,
    {
       return this .getUserData (_tool)
    },
-   addTool (type)
+   addTool (type = "createOnDemand")
    {
       const module = path .resolve (__dirname, "..", this .constructor .componentName, this .constructor .typeName + "Tool.js")
 

@@ -9,7 +9,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Lighting/X3DLightNodeTool.x3d'/>
-    <meta name='modified' content='Tue, 15 Aug 2023 06:57:34 GMT'/>
+    <meta name='modified' content='Tue, 15 Aug 2023 07:18:41 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -287,7 +287,7 @@
 
 function initialize ()
 {
-   transform .getValue () .addTool ?.("createOnSelection");
+   transform .getValue () .addTool ?.();
 }
 
 function set_on ()
@@ -384,12 +384,5 @@ function set_angle ()
         <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='Tool' toField='set_rotation'/>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='Tool'>
-      <fieldValue name='visible' value='true'/>
-      <fieldValue name='on' value='false'/>
-      <fieldValue name='color' value='0 0 0'/>
-      <fieldValue name='intensity' value='0'/>
-      <fieldValue name='direction' value='0 0 0'/>
-    </ProtoInstance>
   </Scene>
 </X3D>

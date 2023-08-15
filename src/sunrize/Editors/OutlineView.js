@@ -117,6 +117,7 @@ module .exports = class OutlineView extends Interface
       this .onDemandToolNodes = new Set ([
          X3D .X3DConstants .X3DEnvironmentalSensorNode,
          X3D .X3DConstants .X3DLightNode,
+         X3D .X3DConstants .X3DViewpointNode,
       ])
 
       if (this .executionContext)
