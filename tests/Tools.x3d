@@ -5,6 +5,8 @@
     <component name='CADGeometry' level='2'/>
     <component name='EnvironmentalSensor' level='3'/>
     <component name='Geospatial' level='2'/>
+    <component name='Layering' level='1'/>
+    <component name='Layout' level='2'/>
     <component name='Scripting' level='1'/>
     <component name='Sound' level='3'/>
     <component name='TextureProjector' level='2'/>
@@ -13,7 +15,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/tests/Tools.x3d'/>
-    <meta name='modified' content='Tue, 15 Aug 2023 22:12:22 GMT'/>
+    <meta name='modified' content='Tue, 15 Aug 2023 23:51:41 GMT'/>
   </head>
   <Scene>
     <Viewpoint/>
@@ -33,16 +35,6 @@ function set_field (value, time)
     </Script>
     <CADAssembly
         bboxSize='1 1 1'/>
-    <Group DEF='Grouping'>
-      <Group
-          bboxSize='1 1 1'/>
-      <Transform
-          bboxSize='1 1 1'/>
-      <StaticGroup
-          bboxSize='1 1 1'/>
-      <Switch
-          bboxSize='1 1 1'/>
-    </Group>
     <Group DEF='EnvironmentalSensors'>
       <ProximitySensor
           size='1 1 1'
@@ -53,6 +45,27 @@ function set_field (value, time)
           size='1 1 1'
           center='0 -2 0'/>
     </Group>
+    <Group DEF='Grouping'>
+      <Group
+          bboxSize='1 1 1'/>
+      <Transform
+          bboxSize='1 1 1'/>
+      <StaticGroup
+          bboxSize='1 1 1'/>
+      <Switch
+          bboxSize='1 1 1'/>
+    </Group>
+    <LayerSet
+        order='0, 1, 2'>
+      <Layer>
+        <Group
+            bboxSize='1 1 1'/>
+      </Layer>
+      <LayoutLayer>
+        <Group
+            bboxSize='1 1 1'/>
+      </LayoutLayer>
+    </LayerSet>
     <Group DEF='Lights'>
       <PointLight
           color='1 0.8509804 0.4'
@@ -77,9 +90,6 @@ function set_field (value, time)
           geoSystem='"GC"'
           position='0 -2 0'/>
     </Group>
-    <Sound
-        location='0 2 0'
-        direction='-1 0 0'/>
     <Group DEF='TextureProjectors'>
       <TextureProjector
           nearDistance='1'
@@ -97,5 +107,8 @@ function set_field (value, time)
         <PixelTexture USE='_1'/>
       </TextureProjectorParallel>
     </Group>
+    <Sound
+        location='0 2 0'
+        direction='-1 0 0'/>
   </Scene>
 </X3D>
