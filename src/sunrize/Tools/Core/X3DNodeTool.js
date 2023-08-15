@@ -113,8 +113,8 @@ class X3DNodeTool
    async loadTool (... args)
    {
       const
-         URL   = url .pathToFileURL (path .resolve (... args)),
-         scene = X3DNodeTool .scenes .get (URL .href)
+         protoURL = url .pathToFileURL (path .resolve (... args)),
+         scene    = X3DNodeTool .scenes .get (protoURL .href)
 
       if (scene)
       {
@@ -122,9 +122,9 @@ class X3DNodeTool
       }
       else
       {
-         const scene = await X3D .getBrowser ("#browser") .createX3DFromURL (new X3D .MFString (URL))
+         const scene = await this .toolNode .getBrowser () .createX3DFromURL (new X3D .MFString (protoURL))
 
-         X3DNodeTool .scenes .set (URL .href, scene)
+         X3DNodeTool .scenes .set (protoURL .href, scene)
 
          scene .setLive (true)
 
