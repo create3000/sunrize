@@ -136,7 +136,7 @@ class X3DNodeTool
    {
       for (const parent of new Set (node .getParents ()))
       {
-         if (parent instanceof X3D .Fields .SFNode)
+         if (parent instanceof X3D .SFNode)
             parent .setValue (replacement)
       }
    }

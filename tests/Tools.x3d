@@ -12,7 +12,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/tests/Tools.x3d'/>
-    <meta name='modified' content='Tue, 15 Aug 2023 13:25:35 GMT'/>
+    <meta name='modified' content='Tue, 15 Aug 2023 16:44:48 GMT'/>
   </head>
   <Scene>
     <Viewpoint/>
@@ -30,27 +30,15 @@ function set_field (value, time)
 }
 ]]>
     </Script>
-    <Group DEF='Boxes'>
-      <Transform DEF='Box_1'
-          translation='-2 0 0'
-          scale='0.2 0.2 0.2'>
-        <Shape>
-          <Appearance>
-            <Material/>
-          </Appearance>
-          <Box DEF='_1'/>
-        </Shape>
-      </Transform>
-      <Transform DEF='Box'
-          translation='2 0 0'
-          scale='0.2 0.2 0.2'>
-        <Shape>
-          <Appearance>
-            <Material/>
-          </Appearance>
-          <Box USE='_1'/>
-        </Shape>
-      </Transform>
+    <Group DEF='Grouping'>
+      <Group
+          bboxSize='1 1 1'/>
+      <Transform
+          bboxSize='1 1 1'/>
+      <StaticGroup
+          bboxSize='1 1 1'/>
+      <Switch
+          bboxSize='1 1 1'/>
     </Group>
     <Group DEF='EnvironmentalSensors'>
       <ProximitySensor
@@ -93,7 +81,7 @@ function set_field (value, time)
       <TextureProjector
           nearDistance='1'
           farDistance='10'>
-        <PixelTexture DEF='_2'
+        <PixelTexture DEF='_1'
             image='2 2 3
               0xff000 0xff00
               0xff 0xff00ff'/>
@@ -103,12 +91,8 @@ function set_field (value, time)
           upVector='0 1 0'
           nearDistance='1'
           farDistance='10'>
-        <PixelTexture USE='_2'/>
+        <PixelTexture USE='_1'/>
       </TextureProjectorParallel>
     </Group>
-    <ROUTE fromNode='Box_1' fromField='rotation_changed' toNode='Box' toField='set_rotation'/>
-    <ROUTE fromNode='Box' fromField='rotation_changed' toNode='Box_1' toField='set_rotation'/>
-    <ROUTE fromNode='Box_1' fromField='scale_changed' toNode='Box' toField='set_scale'/>
-    <ROUTE fromNode='Box' fromField='scale_changed' toNode='Box_1' toField='set_scale'/>
   </Scene>
 </X3D>

@@ -73,12 +73,12 @@ Object .defineProperties (StaticGroup,
    fieldDefinitions:
    {
       value: new X3D .FieldDefinitionArray ([
-         new X3D .X3DFieldDefinition (X3D .X3DConstants .inputOutput,    "metadata",    new X3D .Fields .SFNode ()),
-         new X3D .X3DFieldDefinition (X3D .X3DConstants .inputOutput,    "visible",     new X3D .Fields .SFBool (true)),
-         new X3D .X3DFieldDefinition (X3D .X3DConstants .inputOutput,    "bboxDisplay", new X3D .Fields .SFBool ()),
-         new X3D .X3DFieldDefinition (X3D .X3DConstants .initializeOnly, "bboxSize",    new X3D .Fields .SFVec3f (-1, -1, -1)),
-         new X3D .X3DFieldDefinition (X3D .X3DConstants .initializeOnly, "bboxCenter",  new X3D .Fields .SFVec3f ()),
-         new X3D .X3DFieldDefinition (X3D .X3DConstants .initializeOnly, "children",    new X3D .Fields .MFNode ()),
+         new X3D .X3DFieldDefinition (X3D .X3DConstants .inputOutput,    "metadata",    new X3D .SFNode ()),
+         new X3D .X3DFieldDefinition (X3D .X3DConstants .inputOutput,    "visible",     new X3D .SFBool (true)),
+         new X3D .X3DFieldDefinition (X3D .X3DConstants .inputOutput,    "bboxDisplay", new X3D .SFBool ()),
+         new X3D .X3DFieldDefinition (X3D .X3DConstants .initializeOnly, "bboxSize",    new X3D .SFVec3f (-1, -1, -1)),
+         new X3D .X3DFieldDefinition (X3D .X3DConstants .initializeOnly, "bboxCenter",  new X3D .SFVec3f ()),
+         new X3D .X3DFieldDefinition (X3D .X3DConstants .initializeOnly, "children",    new X3D .MFNode ()),
       ]),
    },
 });

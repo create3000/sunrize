@@ -197,7 +197,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field)
             {
                const
                   index    = fields .indexOf (field),
-                  newField = new X3D .Fields [typeName] ()
+                  newField = new X3D [typeName] ()
 
                UndoManager .shared .beginUndo (_ ("Change Type of Field »%s«"), field .getName ())
 
@@ -229,7 +229,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field)
 
             // Add field.
 
-            const field = new X3D .Fields [typeName] ()
+            const field = new X3D [typeName] ()
 
             field .setAccessType (accessType)
             field .setName (name)
