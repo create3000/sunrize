@@ -19,10 +19,10 @@ class X3DViewpointNodeTool extends X3DNodeTool
       this .toolNode ._orientation .addFieldInterest (this .tool .orientation)
       this .toolNode ._isBound     .addFieldInterest (this .tool .getValue () .getField ("bound"))
 
+      this .tool .whichChoice = this .toolWhichChoice
       this .tool .position    = this .toolNode ._position
       this .tool .orientation = this .toolNode ._orientation
       this .tool .bound       = this .toolNode ._isBound
-      this .tool .whichChoice = this .toolWhichChoice
    }
 
    getMustDisplay ()
