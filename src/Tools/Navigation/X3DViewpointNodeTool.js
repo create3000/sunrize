@@ -14,12 +14,10 @@ class X3DViewpointNodeTool extends X3DNodeTool
    {
       await super .initialize (__dirname, "X3DViewpointNodeTool.x3d")
 
-      this .toolNode ._position    .addFieldInterest (this .tool .position)
       this .toolNode ._orientation .addFieldInterest (this .tool .orientation)
       this .toolNode ._isBound     .addFieldInterest (this .tool .getField ("bound"))
 
       this .tool .whichChoice = this .toolWhichChoice
-      this .tool .position    = this .toolNode ._position
       this .tool .orientation = this .toolNode ._orientation
       this .tool .bound       = this .toolNode ._isBound
    }
