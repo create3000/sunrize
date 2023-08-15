@@ -6,12 +6,13 @@
     <component name='Geospatial' level='2'/>
     <component name='Scripting' level='1'/>
     <component name='Sound' level='3'/>
+    <component name='TextureProjector' level='2'/>
     <meta name='created' content='Fri, 11 Aug 2023 21:33:17 GMT'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/tests/Tools.x3d'/>
-    <meta name='modified' content='Tue, 15 Aug 2023 10:50:29 GMT'/>
+    <meta name='modified' content='Tue, 15 Aug 2023 11:51:03 GMT'/>
   </head>
   <Scene>
     <Viewpoint/>
@@ -88,6 +89,21 @@ function set_field (value, time)
     <Sound
         location='0 2 0'
         direction='-1 0 0'/>
+    <Group DEF='TextureProjectors'>
+      <TextureProjector
+          nearDistance='1'
+          farDistance='10'>
+        <PixelTexture DEF='_2'
+            image='2 2 3
+              0xff000 0xff00
+              0xff 0xff00ff'/>
+      </TextureProjector>
+      <TextureProjectorParallel
+          nearDistance='1'
+          farDistance='10'>
+        <PixelTexture USE='_2'/>
+      </TextureProjectorParallel>
+    </Group>
     <ROUTE fromNode='Box_1' fromField='rotation_changed' toNode='Box' toField='set_rotation'/>
     <ROUTE fromNode='Box' fromField='rotation_changed' toNode='Box_1' toField='set_rotation'/>
     <ROUTE fromNode='Box_1' fromField='scale_changed' toNode='Box' toField='set_scale'/>

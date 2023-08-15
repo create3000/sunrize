@@ -114,13 +114,6 @@ module .exports = class OutlineView extends Interface
 
    configure ()
    {
-      this .onDemandToolNodes = new Set ([
-         X3D .X3DConstants .X3DEnvironmentalSensorNode,
-         X3D .X3DConstants .X3DLightNode,
-         X3D .X3DConstants .X3DViewpointNode,
-         X3D .X3DConstants .Sound,
-      ])
-
       if (this .executionContext)
       {
          this .saveExpanded ()
@@ -951,7 +944,15 @@ module .exports = class OutlineView extends Interface
                .appendTo (name)
          }
 
-         if (node .valueOf () .getType () .some (t => this .onDemandToolNodes .has (t)))
+         const onDemandToolNodes = new Set ([
+            X3D .X3DConstants .Sound,
+            X3D .X3DConstants .X3DEnvironmentalSensorNode,
+            X3D .X3DConstants .X3DLightNode,
+            X3D .X3DConstants .X3DTextureProjectorNode,
+            X3D .X3DConstants .X3DViewpointNode,
+         ])
+
+         if (node .valueOf () .getType () .some (t => onDemandToolNodes .has (t)))
          {
             name .append (document .createTextNode (" "))
 

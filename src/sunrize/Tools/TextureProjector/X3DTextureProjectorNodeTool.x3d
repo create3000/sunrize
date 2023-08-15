@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Layout' level='2'/>
+    <component name='Scripting' level='1'/>
+    <meta name='comment' content='Rise and Shine'/>
+    <meta name='created' content='Fri, 01 Aug 2014 17:41:58 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
+    <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/TextureProjector/X3DTextureProjectorNodeTool.x3d'/>
+    <meta name='modified' content='Tue, 15 Aug 2023 11:42:14 GMT'/>
+  </head>
+  <Scene>
+    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
+    </ExternProtoDeclare>
+    <ProtoDeclare name='Tool'>
+      <ProtoInterface>
+        <field accessType='inputOutput' type='SFBool' name='visible'/>
+        <field accessType='inputOutput' type='SFBool' name='selected'/>
+        <field accessType='inputOutput' type='SFVec3f' name='location'/>
+        <field accessType='inputOutput' type='SFVec3f' name='direction'/>
+        <field accessType='inputOutput' type='SFVec3f' name='upVector'/>
+        <field accessType='inputOutput' type='MFFloat' name='parallelFieldOfView'/>
+        <field accessType='inputOutput' type='SFFloat' name='parallelNearDistance'/>
+        <field accessType='inputOutput' type='SFFloat' name='parallelFarDistance'/>
+        <field accessType='inputOutput' type='SFFloat' name='parallelAspectRatio'/>
+        <field accessType='inputOutput' type='SFFloat' name='perspectiveFieldOfView'/>
+        <field accessType='inputOutput' type='SFFloat' name='perspectiveNearDistance'/>
+        <field accessType='inputOutput' type='SFFloat' name='perspectiveFarDistance'/>
+        <field accessType='inputOutput' type='SFFloat' name='perspectiveAspectRatio'/>
+        <field accessType='inputOutput' type='SFNode' name='texture'/>
+      </ProtoInterface>
+      <ProtoBody>
+        <Collision
+            enabled='false'>
+          <Transform DEF='Projector'>
+            <ScreenGroup DEF='Beamer'>
+              <Transform
+                  translation='0 0 -15'>
+                <Transform DEF='Box_1'>
+                  <Shape>
+                    <Appearance DEF='_1'>
+                      <Material
+                          diffuseColor='0.2 0.2 0.2'
+                          specularColor='1 1 1'/>
+                      <ProtoInstance name='ToolShader' DEF='_2' containerField='shaders'/>
+                    </Appearance>
+                    <Box
+                        size='40 20 30'/>
+                  </Shape>
+                </Transform>
+                <Transform DEF='Cylinder'
+                    translation='0 0 15'
+                    rotation='0.999999999993254 3.67320512848233e-6 1.19222813476655e-18 1.5707963267949'>
+                  <Shape>
+                    <Appearance USE='_1'/>
+                    <Cylinder
+                        top='false'
+                        height='20'
+                        radius='12'
+                        solid='false'/>
+                  </Shape>
+                </Transform>
+              </Transform>
+            </ScreenGroup>
+            <Transform DEF='Frustum'>
+              <Shape>
+                <Appearance>
+                  <Material
+                      emissiveColor='1 0.985342 0.807597'/>
+                  <ProtoInstance name='ToolShader' USE='_2' containerField='shaders'/>
+                </Appearance>
+                <IndexedLineSet
+                    coordIndex='0, 4, -1, 4, 8, -1, 1, 5, -1, 5, 9, -1, 2, 6, -1, 6, 10, -1, 3, 7, -1, 7, 11, -1, 0, 1, 2, 3, 0, -1, 4, 5, 6, 7, 4, -1, 8, 9, 10, 11, 8, -1'>
+                  <Coordinate DEF='_3'
+                      point='0 0 0, 0 0 0, 0 0 0, 0 0 0, 1 1 1, -1 1 1, -1 -1 1, 1 -1 1, 2 2 2, -2 2 2, -2 -2 2, 2 -2 2'/>
+                </IndexedLineSet>
+              </Shape>
+            </Transform>
+            <Switch>
+              <Transform DEF='Image'>
+                <Shape>
+                  <Appearance>
+                    <IS>
+                      <connect nodeField='texture' protoField='texture'/>
+                    </IS>
+                    <Material
+                        transparency='0.5'/>
+                    <ProtoInstance name='ToolShader' USE='_2' containerField='shaders'/>
+                  </Appearance>
+                  <IndexedFaceSet
+                      solid='false'
+                      texCoordIndex='0, 1, 2, 3, -1'
+                      coordIndex='4, 5, 6, 7, -1'>
+                    <TextureCoordinate
+                        point='1 1, 0 1, 0 0, 1 0'/>
+                    <Coordinate USE='_3'/>
+                  </IndexedFaceSet>
+                </Shape>
+              </Transform>
+            </Switch>
+          </Transform>
+          <Transform DEF='TransformTool'>
+            <IS>
+              <connect nodeField='translation' protoField='location'/>
+              <connect nodeField='visible' protoField='selected'/>
+            </IS>
+            <ScreenGroup>
+              <Group
+                  bboxSize='60 60 60'/>
+            </ScreenGroup>
+          </Transform>
+        </Collision>
+        <Script DEF='ToolScript'
+            directOutput='true'>
+          <field accessType='inputOutput' type='SFVec3f' name='direction'/>
+          <field accessType='inputOutput' type='SFVec3f' name='upVector'/>
+          <field accessType='inputOutput' type='SFRotation' name='rotation'/>
+          <field accessType='inputOutput' type='MFFloat' name='parallelFieldOfView'/>
+          <field accessType='inputOutput' type='SFFloat' name='parallelNearDistance'/>
+          <field accessType='inputOutput' type='SFFloat' name='parallelFarDistance'/>
+          <field accessType='inputOutput' type='SFFloat' name='parallelAspectRatio'/>
+          <field accessType='inputOutput' type='SFFloat' name='perspectiveFieldOfView'/>
+          <field accessType='inputOutput' type='SFFloat' name='perspectiveNearDistance'/>
+          <field accessType='inputOutput' type='SFFloat' name='perspectiveFarDistance'/>
+          <field accessType='inputOutput' type='SFFloat' name='perspectiveAspectRatio'/>
+          <field accessType='initializeOnly' type='SFNode' name='projector'>
+            <Transform USE='Projector'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='frustum'>
+            <Coordinate USE='_3'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='transform'>
+            <Transform USE='TransformTool'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='self'>
+            <Script USE='ToolScript'/>
+          </field>
+          <IS>
+            <connect nodeField='direction' protoField='direction'/>
+            <connect nodeField='upVector' protoField='upVector'/>
+            <connect nodeField='parallelFieldOfView' protoField='parallelFieldOfView'/>
+            <connect nodeField='parallelNearDistance' protoField='parallelNearDistance'/>
+            <connect nodeField='parallelFarDistance' protoField='parallelFarDistance'/>
+            <connect nodeField='parallelAspectRatio' protoField='parallelAspectRatio'/>
+            <connect nodeField='perspectiveFieldOfView' protoField='perspectiveFieldOfView'/>
+            <connect nodeField='perspectiveNearDistance' protoField='perspectiveNearDistance'/>
+            <connect nodeField='perspectiveFarDistance' protoField='perspectiveFarDistance'/>
+            <connect nodeField='perspectiveAspectRatio' protoField='perspectiveAspectRatio'/>
+          </IS>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+   transform .getValue () .addTool ?. ()
+}
+
+function set_direction ()
+{
+   set_directionAndUpVector ();
+}
+
+function set_upVector ()
+{
+   set_directionAndUpVector ();
+}
+
+function set_directionAndUpVector ()
+{
+   const rotation = new SFRotation (new SFVec3f (0, 0, 1), direction);
+
+   transform .rotation = straightenHorizon (rotation);
+}
+
+function set_rotation ()
+{
+   // direction = transform .rotation .multVec (new SFVec3f (0, 0, 1));
+   // upVector  = transform .rotation .multVec (new SFVec3f (0, 1, 0));
+}
+
+function straightenHorizon (orientation)
+{
+   const
+      localXAxis = orientation .multVec (new SFVec3f (-1, 0, 0)),
+      localZAxis = orientation .multVec (new SFVec3f (0, 0, 1)),
+      upVectorN  = upVector .normalize (),
+      vector     = localZAxis .cross (upVectorN);
+
+   // If viewer looks along the up vector.
+   if (Math .abs (localZAxis .dot (upVectorN)) >= 1)
+      return orientation;
+
+   if (Math .abs (vector .dot (localXAxis)) >= 1)
+      return orientation;
+
+   const rotation = new SFRotation (localXAxis, vector);
+
+   return orientation .multiply (rotation);
+}
+
+function set_parallelFieldOfView ()
+{
+   set_parallel ();
+}
+
+function set_parallelNearDistance ()
+{
+   set_parallel ();
+}
+
+function set_parallelFarDistance ()
+{
+   set_parallel ();
+}
+
+function set_parallelAspectRatio ()
+{
+   set_perspective ();
+}
+
+function set_parallel ()
+{
+   const
+      fov    = parallelFieldOfView,
+      minX   = fov .length > 0 ? fov [0] : -1,
+      minY   = fov .length > 1 ? fov [1] : -1,
+      maxX   = fov .length > 2 ? fov [2] :  1,
+      maxY   = fov .length > 3 ? fov [3] :  1,
+      sizeX  = maxX - minX,
+      sizeY  = maxY - minY,
+      aspect = parallelAspectRatio;
+
+   if (aspect > sizeX / sizeY)
+   {
+      const
+         center  = (minX + maxX) / 2,
+         size1_2 = (sizeY * aspect) / 2;
+
+      var
+         x1 = center - size1_2,
+         x2 = center + size1_2,
+         y1 = minY,
+         y2 = maxY;
+   }
+   else
+   {
+      const
+         center  = (minY + maxY) / 2,
+         size1_2 = (sizeX / aspect) / 2;
+
+      var
+         x1 = minX,
+         x2 = maxX,
+         y1 = center - size1_2,
+         y2 = center + size1_2;
+   }
+
+   x1 = -x1;
+   x2 = -x2;
+
+   const parallel = false; // First point of frustum.
+
+   if (parallel)
+   {
+      frustum .point [0] = new SFVec3f (x2, y2, 0);
+      frustum .point [1] = new SFVec3f (x1, y2, 0);
+      frustum .point [2] = new SFVec3f (x1, y1, 0);
+      frustum .point [3] = new SFVec3f (x2, y1, 0);
+   }
+   else
+   {
+      frustum .point [0] = new SFVec3f ();
+      frustum .point [1] = new SFVec3f ();
+      frustum .point [2] = new SFVec3f ();
+      frustum .point [3] = new SFVec3f ();
+   }
+
+   frustum .point [4] = new SFVec3f (x2, y2, parallelNearDistance);
+   frustum .point [5] = new SFVec3f (x1, y2, parallelNearDistance);
+   frustum .point [6] = new SFVec3f (x1, y1, parallelNearDistance);
+   frustum .point [7] = new SFVec3f (x2, y1, parallelNearDistance);
+
+   frustum .point [8]  = new SFVec3f (x2, y2, parallelFarDistance);
+   frustum .point [9]  = new SFVec3f (x1, y2, parallelFarDistance);
+   frustum .point [10] = new SFVec3f (x1, y1, parallelFarDistance);
+   frustum .point [11] = new SFVec3f (x2, y1, parallelFarDistance);
+}
+
+function set_perspectiveFieldOfView ()
+{
+   set_perspective ();
+}
+
+function set_perspectiveNearDistance ()
+{
+   set_perspective ();
+}
+
+function set_perspectiveFarDistance ()
+{
+   set_perspective ();
+}
+
+function set_perspectiveAspectRatio ()
+{
+   set_perspective ();
+}
+
+function set_perspective ()
+{
+   let fov = perspectiveFieldOfView;
+
+   fov = fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
+
+   const
+      n = Math .tan (fov / 2) * perspectiveNearDistance,
+      f = Math .tan (fov / 2) * perspectiveFarDistance;
+
+   let
+      w = 1,
+      h = 1;
+
+   if (perspectiveAspectRatio > 1)
+      w = perspectiveAspectRatio;
+   else
+      h = 1 / perspectiveAspectRatio;
+
+   frustum .point [0] = new SFVec3f ();
+   frustum .point [1] = new SFVec3f ();
+   frustum .point [2] = new SFVec3f ();
+   frustum .point [3] = new SFVec3f ();
+
+   frustum .point [4] = new SFVec3f (-n * w,  n * h, perspectiveNearDistance);
+   frustum .point [5] = new SFVec3f ( n * w,  n * h, perspectiveNearDistance);
+   frustum .point [6] = new SFVec3f ( n * w, -n * h, perspectiveNearDistance);
+   frustum .point [7] = new SFVec3f (-n * w, -n * h, perspectiveNearDistance);
+
+   frustum .point [8]  = new SFVec3f (-f * w,  f * h, perspectiveFarDistance);
+   frustum .point [9]  = new SFVec3f ( f * w,  f * h, perspectiveFarDistance);
+   frustum .point [10] = new SFVec3f ( f * w, -f * h, perspectiveFarDistance);
+   frustum .point [11] = new SFVec3f (-f * w, -f * h, perspectiveFarDistance);
+}
+]]>
+        </Script>
+        <ROUTE fromNode='TransformTool' fromField='translation_changed' toNode='Projector' toField='set_translation'/>
+        <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='Projector' toField='set_rotation'/>
+        <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='ToolScript' toField='set_rotation'/>
+      </ProtoBody>
+    </ProtoDeclare>
+    <ProtoInstance name='Tool'>
+      <fieldValue name='direction' value='0 0 1'/>
+    </ProtoInstance>
+  </Scene>
+</X3D>
