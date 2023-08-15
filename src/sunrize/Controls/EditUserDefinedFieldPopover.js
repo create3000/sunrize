@@ -14,7 +14,8 @@ require ("../Bits/Validate")
 const config = new DataStorage (localStorage, "Sunrize.UserDefinedFieldPopover.")
 
 config .setDefaultValues ({
-
+   typeName:"",
+   accessType: X3D .X3DConstants .initializeOnly,
 })
 
 const accessTypes = new Map ([
@@ -23,10 +24,6 @@ const accessTypes = new Map ([
    [X3D .X3DConstants .outputOnly,     "outputOnly"],
    [X3D .X3DConstants .inputOutput,    "inputOutput"],
 ])
-
-let
-   lastTypeName   = "",
-   lastAccessType = X3D .X3DConstants .initializeOnly
 
 $.fn.editUserDefinedFieldPopover = function (executionContext, node, field)
 {
@@ -123,12 +120,12 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field)
    {
       typeNameMenu
          .find ("option")
-         .filter ((i, e) => $(e) .text () === lastTypeName)
+         .filter ((i, e) => $(e) .text () === config .typeName)
          .prop ("selected", true)
 
       accessTypeMenu
          .find ("option")
-         .filter ((i, e) => $(e) .text () === accessTypes .get (lastAccessType))
+         .filter ((i, e) => $(e) .text () === accessTypes .get (config .accessType))
          .prop ("selected", true)
    }
 
@@ -165,8 +162,8 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field)
          accessType = X3D .X3DConstants [accessTypeMenu .find ("option:selected") .text ()],
          name       = nameInput .val ()
 
-      lastTypeName   = typeName
-      lastAccessType = accessType
+      config .typeName   = typeName
+      config .accessType = accessType
 
       if (field)
       {
