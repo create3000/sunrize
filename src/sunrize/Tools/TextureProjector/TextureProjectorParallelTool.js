@@ -2,13 +2,13 @@
 
 const X3DTextureProjectorNodeTool = require ("./X3DTextureProjectorNodeTool")
 
-class TextureProjectorTool extends X3DTextureProjectorNodeTool
+class TextureProjectorParallelTool extends X3DTextureProjectorNodeTool
 {
    async initialize ()
    {
       await super .initialize ()
 
-      this .toolNode ._fieldOfView  .addFieldInterest (this .tool .getValue () .getField ("parallelFieldOfView"))
+      this .toolNode ._fieldOfView  .addFieldInterest (this .tool .parallelFieldOfView)
       this .toolNode ._nearDistance .addFieldInterest (this .tool .getValue () .getField ("parallelNearDistance"))
       this .toolNode ._farDistance  .addFieldInterest (this .tool .getValue () .getField ("parallelFarDistance"))
       this .toolNode ._aspectRatio  .addFieldInterest (this .tool .getValue () .getField ("parallelAspectRatio"))
@@ -20,4 +20,4 @@ class TextureProjectorTool extends X3DTextureProjectorNodeTool
    }
 }
 
-module .exports = TextureProjectorTool
+module .exports = TextureProjectorParallelTool
