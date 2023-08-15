@@ -10,14 +10,13 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Navigation/X3DViewpointNodeTool.x3d'/>
-    <meta name='modified' content='Tue, 15 Aug 2023 12:30:49 GMT'/>
+    <meta name='modified' content='Tue, 15 Aug 2023 23:33:06 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
     </ExternProtoDeclare>
     <ProtoDeclare name='Tool'>
       <ProtoInterface>
-        <field accessType='inputOutput' type='SFBool' name='visible'/>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
         <field accessType='inputOutput' type='SFInt32' name='whichChoice'/>
         <field accessType='inputOutput' type='SFVec3f' name='position'/>
@@ -165,7 +164,6 @@ function initialize ()
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
-      <fieldValue name='visible' value='true'/>
       <fieldValue name='bound' value='true'/>
     </ProtoInstance>
   </Scene>

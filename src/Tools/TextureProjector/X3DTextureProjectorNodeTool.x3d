@@ -9,7 +9,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/TextureProjector/X3DTextureProjectorNodeTool.x3d'/>
-    <meta name='modified' content='Tue, 15 Aug 2023 23:12:05 GMT'/>
+    <meta name='modified' content='Tue, 15 Aug 2023 23:31:52 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -26,7 +26,6 @@
     </ExternProtoDeclare>
     <ProtoDeclare name='Tool'>
       <ProtoInterface>
-        <field accessType='inputOutput' type='SFBool' name='visible'/>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
         <field accessType='inputOutput' type='SFBool' name='on'/>
         <field accessType='inputOutput' type='SFVec3f' name='location'/>

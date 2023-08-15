@@ -80,7 +80,7 @@ class X3DNodeTool
    {
       await this .initialize ()
 
-      this .tool .visible  = true
+      this .toolInnerNode  = this .tool .getValue () .getInnerNode ()
       this .tool .selected = this .toolSelected
    }
 
@@ -128,8 +128,6 @@ class X3DNodeTool
 
          this .tool = scene .createProto ("Tool")
       }
-
-      this .toolInnerNode = this .tool .getValue () .getInnerNode ()
    }
 
    replaceNode (node, replacement)
@@ -165,8 +163,7 @@ class X3DNodeTool
 
       renderObject .getHumanoids () .push (null)
 
-      if (this .tool ?.visible)
-         this .toolInnerNode ?.traverse (type, renderObject)
+      this .toolInnerNode ?.traverse (type, renderObject)
 
       renderObject .getHumanoids () .pop ()
    }
