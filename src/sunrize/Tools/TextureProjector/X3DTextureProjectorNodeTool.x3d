@@ -9,7 +9,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/TextureProjector/X3DTextureProjectorNodeTool.x3d'/>
-    <meta name='modified' content='Tue, 15 Aug 2023 12:16:25 GMT'/>
+    <meta name='modified' content='Tue, 15 Aug 2023 12:39:27 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -18,6 +18,7 @@
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='visible'/>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
+        <field accessType='inputOutput' type='SFBool' name='on'/>
         <field accessType='inputOutput' type='SFVec3f' name='location'/>
         <field accessType='inputOutput' type='SFVec3f' name='direction'/>
         <field accessType='inputOutput' type='SFVec3f' name='upVector'/>
@@ -38,23 +39,17 @@
             <ScreenGroup DEF='Beamer'>
               <Transform
                   translation='0 0 -15'>
-                <Transform DEF='Box_1'>
+                <Transform DEF='Cylinder'
+                    translation='NaN NaN NaN'
+                    rotation='NaN NaN NaN NaN'
+                    scale='NaN NaN NaN'>
                   <Shape>
-                    <Appearance DEF='_1'>
+                    <Appearance>
                       <Material
                           diffuseColor='0.2 0.2 0.2'
                           specularColor='1 1 1'/>
-                      <ProtoInstance name='ToolShader' DEF='_2' containerField='shaders'/>
+                      <ProtoInstance name='ToolShader' containerField='shaders'/>
                     </Appearance>
-                    <Box
-                        size='40 20 30'/>
-                  </Shape>
-                </Transform>
-                <Transform DEF='Cylinder'
-                    translation='0 0 15'
-                    rotation='0.999999999993254 3.67320512848233e-6 1.19222813476655e-18 1.5707963267949'>
-                  <Shape>
-                    <Appearance USE='_1'/>
                     <Cylinder
                         top='false'
                         height='20'
@@ -62,21 +57,61 @@
                         solid='false'/>
                   </Shape>
                 </Transform>
+                <Transform DEF='Box_1'>
+                  <Shape>
+                    <Appearance>
+                      <Material
+                          diffuseColor='0.2 0.2 0.2'
+                          specularColor='1 1 1'/>
+                      <ProtoInstance name='ToolShader' DEF='_1' containerField='shaders'/>
+                    </Appearance>
+                    <Box
+                        size='40 20 30'/>
+                  </Shape>
+                </Transform>
+                <Transform DEF='RedLight'
+                    translation='8 12 5'
+                    scale='2.18 2.18 2.18'>
+                  <IS>
+                    <connect nodeField='visible' protoField='on'/>
+                  </IS>
+                  <Shape>
+                    <Appearance>
+                      <Material
+                          diffuseColor='0 0 0'
+                          specularColor='1 1 1'
+                          emissiveColor='1 0 0'/>
+                      <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
+                    </Appearance>
+                    <Cylinder/>
+                  </Shape>
+                </Transform>
               </Transform>
             </ScreenGroup>
             <Transform DEF='Frustum'>
-              <Shape>
-                <Appearance>
-                  <Material
-                      emissiveColor='1 0.985342 0.807597'/>
-                  <ProtoInstance name='ToolShader' USE='_2' containerField='shaders'/>
-                </Appearance>
-                <IndexedLineSet
-                    coordIndex='0, 4, -1, 4, 8, -1, 1, 5, -1, 5, 9, -1, 2, 6, -1, 6, 10, -1, 3, 7, -1, 7, 11, -1, 0, 1, 2, 3, 0, -1, 4, 5, 6, 7, 4, -1, 8, 9, 10, 11, 8, -1'>
-                  <Coordinate DEF='_3'
-                      point='0 0 0, 0 0 0, 0 0 0, 0 0 0, 1 1 1, -1 1 1, -1 -1 1, 1 -1 1, 2 2 2, -2 2 2, -2 -2 2, 2 -2 2'/>
-                </IndexedLineSet>
-              </Shape>
+              <Switch DEF='_2'
+                  whichChoice='0'>
+                <Shape>
+                  <Appearance>
+                    <Material
+                        emissiveColor='0.5686275 0.5568627 0.4392157'/>
+                    <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
+                  </Appearance>
+                  <IndexedLineSet DEF='_3'
+                      coordIndex='0, 4, -1, 4, 8, -1, 1, 5, -1, 5, 9, -1, 2, 6, -1, 6, 10, -1, 3, 7, -1, 7, 11, -1, 0, 1, 2, 3, 0, -1, 4, 5, 6, 7, 4, -1, 8, 9, 10, 11, 8, -1'>
+                    <Coordinate DEF='_4'
+                        point='0 0 0, 0 0 0, 0 0 0, 0 0 0, 1 1 1, -1 1 1, -1 -1 1, 1 -1 1, 2 2 2, -2 2 2, -2 -2 2, 2 -2 2'/>
+                  </IndexedLineSet>
+                </Shape>
+                <Shape>
+                  <Appearance>
+                    <Material
+                        emissiveColor='1 0.985342 0.807597'/>
+                    <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
+                  </Appearance>
+                  <IndexedLineSet USE='_3'/>
+                </Shape>
+              </Switch>
             </Transform>
             <Switch>
               <Transform DEF='Image'>
@@ -87,7 +122,7 @@
                     </IS>
                     <Material
                         transparency='0.5'/>
-                    <ProtoInstance name='ToolShader' USE='_2' containerField='shaders'/>
+                    <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
                   </Appearance>
                   <IndexedFaceSet
                       solid='false'
@@ -95,7 +130,7 @@
                       coordIndex='4, 5, 6, 7, -1'>
                     <TextureCoordinate
                         point='1 1, 0 1, 0 0, 1 0'/>
-                    <Coordinate USE='_3'/>
+                    <Coordinate USE='_4'/>
                   </IndexedFaceSet>
                 </Shape>
               </Transform>
@@ -114,6 +149,7 @@
         </Collision>
         <Script DEF='ToolScript'
             directOutput='true'>
+          <field accessType='inputOutput' type='SFBool' name='selected'/>
           <field accessType='inputOutput' type='SFVec3f' name='direction'/>
           <field accessType='inputOutput' type='SFVec3f' name='upVector'/>
           <field accessType='inputOutput' type='SFRotation' name='rotation'/>
@@ -125,11 +161,12 @@
           <field accessType='inputOutput' type='SFFloat' name='perspectiveNearDistance'/>
           <field accessType='inputOutput' type='SFFloat' name='perspectiveFarDistance'/>
           <field accessType='inputOutput' type='SFFloat' name='perspectiveAspectRatio'/>
+          <field accessType='outputOnly' type='SFInt32' name='whichChoice_changed'/>
           <field accessType='initializeOnly' type='SFNode' name='projector'>
             <Transform USE='Projector'/>
           </field>
           <field accessType='initializeOnly' type='SFNode' name='frustum'>
-            <Coordinate USE='_3'/>
+            <Coordinate USE='_4'/>
           </field>
           <field accessType='initializeOnly' type='SFNode' name='transform'>
             <Transform USE='TransformTool'/>
@@ -138,6 +175,7 @@
             <Script USE='ToolScript'/>
           </field>
           <IS>
+            <connect nodeField='selected' protoField='selected'/>
             <connect nodeField='direction' protoField='direction'/>
             <connect nodeField='upVector' protoField='upVector'/>
             <connect nodeField='parallelFieldOfView' protoField='parallelFieldOfView'/>
@@ -154,6 +192,11 @@
 function initialize ()
 {
    transform .getValue () .addTool ?. ()
+}
+
+function set_selected ()
+{
+   whichChoice_changed = selected;
 }
 
 function set_direction ()
@@ -346,6 +389,7 @@ function set_perspective ()
         <ROUTE fromNode='TransformTool' fromField='translation_changed' toNode='Projector' toField='set_translation'/>
         <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='Projector' toField='set_rotation'/>
         <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='ToolScript' toField='set_rotation'/>
+        <ROUTE fromNode='ToolScript' fromField='whichChoice_changed' toNode='_2' toField='set_whichChoice'/>
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>

@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Navigation/X3DViewpointNodeTool.x3d'/>
-    <meta name='modified' content='Tue, 15 Aug 2023 07:14:05 GMT'/>
+    <meta name='modified' content='Tue, 15 Aug 2023 12:30:49 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -110,7 +110,7 @@
                     </Transform>
                   </Transform>
                 </Switch>
-                <Transform DEF='Cylinder_2'
+                <Transform DEF='RedLight'
                     translation='-4.9011e-6 0.512245 -1.22191'
                     rotation='-1.01210999999348e-8 3.60999999997648e-6 -0.999999999993484 1.57079530717959'
                     scale='0.182131 1.15274 0.182131'
@@ -164,6 +164,9 @@ function initialize ()
         <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='_1' toField='set_rotation'/>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='Tool'/>
+    <ProtoInstance name='Tool'>
+      <fieldValue name='visible' value='true'/>
+      <fieldValue name='bound' value='true'/>
+    </ProtoInstance>
   </Scene>
 </X3D>
