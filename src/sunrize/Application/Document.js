@@ -88,7 +88,7 @@ module .exports = class Document extends Interface
 
    configure ()
    {
-      this .fileConfig .addDefaultValues ({ inferProfileAndComponents: true })
+      this .fileConfig .setDefaultValues ({ inferProfileAndComponents: true })
 
       this .fileSaveFileTypeWarning = false
    }

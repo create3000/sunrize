@@ -22,7 +22,7 @@ module .exports = new class Tabs
    {
       this .tabs = $("tab-group") .get (0)
 
-      this .config .addDefaultValues ({
+      this .config .setDefaultValues ({
          openTabs: [ ],
          scrollLeft: 0,
       })

@@ -2,6 +2,7 @@
 
 const
    $           = require ("jquery"),
+   DataStorage = require ("../Application/DataStorage"),
    X3D         = require ("../X3D"),
    Editor      = require ("../Undo/Editor"),
    UndoManager = require ("../Undo/UndoManager"),
@@ -9,6 +10,12 @@ const
 
 require ("./Popover")
 require ("../Bits/Validate")
+
+const config = new DataStorage (localStorage, "Sunrize.UserDefinedFieldPopover.")
+
+config .setDefaultValues ({
+
+})
 
 const accessTypes = new Map ([
    [X3D .X3DConstants .initializeOnly, "initializeOnly"],

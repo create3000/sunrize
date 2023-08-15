@@ -47,7 +47,7 @@ module .exports = class Dialog extends Interface
    {
       // Set default config values.
 
-      this .fileConfig .addDefaultValues (Object .assign ({
+      this .fileConfig .setDefaultValues (Object .assign ({
          position: undefined,
          size: [400, 250],
       },

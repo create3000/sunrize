@@ -183,7 +183,7 @@ module .exports = class Interface
             oldFileConfig = other .fileConfig,
             newFileConfig = other .#createFileConfig (to)
 
-         newFileConfig .addDefaultValues (oldFileConfig .getDefaultValues ())
+         newFileConfig .setDefaultValues (oldFileConfig .getDefaultValues ())
 
          other .fileConfig = newFileConfig
 

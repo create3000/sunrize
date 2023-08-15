@@ -12,7 +12,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/tests/Tools.x3d'/>
-    <meta name='modified' content='Tue, 15 Aug 2023 12:40:18 GMT'/>
+    <meta name='modified' content='Tue, 15 Aug 2023 13:25:35 GMT'/>
   </head>
   <Scene>
     <Viewpoint/>
@@ -99,7 +99,8 @@ function set_field (value, time)
               0xff 0xff00ff'/>
       </TextureProjector>
       <TextureProjectorParallel
-          upVector='0 1 1'
+          direction='1 1 1'
+          upVector='0 1 0'
           nearDistance='1'
           farDistance='10'>
         <PixelTexture USE='_2'/>

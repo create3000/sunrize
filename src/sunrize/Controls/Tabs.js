@@ -28,7 +28,7 @@ module .exports = class Tabs extends Interface
 
    configure (defaults = { })
    {
-      this .fileConfig .addDefaultValues (Object .assign ({ active: 0 }, defaults))
+      this .fileConfig .setDefaultValues (Object .assign ({ active: 0 }, defaults))
 
       if (this .element .tabs ("option", "active") === this .fileConfig .active)
          this .tabActivated ()

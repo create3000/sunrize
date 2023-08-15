@@ -33,7 +33,7 @@ module .exports = class OutlineView extends Interface
       this .actionKeys        = new ActionKeys ()
       this .onDemandToolNodes = new Set ()
 
-      this .globalConfig .addDefaultValues ({
+      this .globalConfig .setDefaultValues ({
          expandExternProtoDeclarations: true,
          expandPrototypeInstances: true,
          expandInlineNodes: true,
@@ -3209,7 +3209,7 @@ module .exports = class OutlineView extends Interface
    {
       const expanded = new Map ()
 
-      this .fileConfig .addDefaultValues ({
+      this .fileConfig .setDefaultValues ({
          expanded: [ ],
          scrollTop: 0,
          scrollLeft: 0,

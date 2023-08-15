@@ -21,7 +21,7 @@ $.fn.addPrototypePopover = function (executionContext, type)
 
    const config = new DataStorage (localStorage, "Sunrize.")
 
-   config .addDefaultValues ({ selectedIndex: 1 })
+   config .setDefaultValues ({ selectedIndex: 1 })
 
    // Create content.
 

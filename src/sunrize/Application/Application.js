@@ -45,7 +45,7 @@ module .exports = class Application
          redoLabel: _ ("Redo"),
       }
 
-      this .config .addDefaultValues ({
+      this .config .setDefaultValues ({
          position: [undefined, undefined],
          size: [1100, 680],
          maximized: false,

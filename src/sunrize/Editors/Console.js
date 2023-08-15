@@ -79,7 +79,7 @@ module .exports = class Console extends Interface
    {
       super .configure ()
 
-      this .fileConfig .addDefaultValues ({ history: [ ] })
+      this .fileConfig .setDefaultValues ({ history: [ ] })
 
       this .history      = this .fileConfig .history .slice (-this .HISTORY_MAX)
       this .historyIndex = this .history .length

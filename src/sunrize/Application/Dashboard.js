@@ -61,7 +61,7 @@ module .exports = class Dashboard extends Interface
 
    configure ()
    {
-      this .fileConfig .addDefaultValues ({
+      this .fileConfig .setDefaultValues ({
          pointer: "hand",
          play: false,
       })

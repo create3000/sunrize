@@ -25,7 +25,7 @@ module .exports = new class Library extends Dialog
 
       // Set default config values.
 
-      this .fileConfig .addDefaultValues ({
+      this .fileConfig .setDefaultValues ({
          type: "NODES",
       })
 

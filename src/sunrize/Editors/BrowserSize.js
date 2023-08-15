@@ -79,7 +79,7 @@ module .exports = new class BrowserSize extends Dialog
 
       // Set default config values.
 
-      this .fileConfig .addDefaultValues ({
+      this .fileConfig .setDefaultValues ({
          enabled: false,
          numerator: 1,
          denominator: 1,

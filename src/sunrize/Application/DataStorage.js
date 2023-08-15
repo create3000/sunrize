@@ -123,7 +123,7 @@ module .exports = class DataStorage
 	 *
 	 * @param {object} object
 	 */
-	addDefaultValues (object)
+	setDefaultValues (object)
 	{
 		Object .assign (defaults .get (this .target), object)
 	}
