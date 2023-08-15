@@ -118,9 +118,17 @@ module .exports = class OutlineView extends Interface
       {
          this .saveExpanded ()
          this .removeSubtree (this .sceneGraph)
+
+         this .executionContext .profile_changed .removeInterest ("updateComponents", this)
+         this .executionContext .components      .removeInterest ("updateComponents", this)
       }
 
       this .executionContext = this .browser .currentScene
+
+      this .executionContext .profile_changed .addInterest ("updateComponents", this)
+      this .executionContext .components      .addInterest ("updateComponents", this)
+
+      this .updateComponents ()
 
       // Clear tree.
 
@@ -133,6 +141,17 @@ module .exports = class OutlineView extends Interface
 
       this .expandScene (this .sceneGraph, this .executionContext)
       this .restoreExpanded ()
+   }
+
+   updateComponents ()
+   {
+      this .onDemandToolNodes = new Set ([
+         X3D .X3DConstants .Sound,
+         X3D .X3DConstants .X3DEnvironmentalSensorNode,
+         X3D .X3DConstants .X3DLightNode,
+         X3D .X3DConstants .X3DTextureProjectorNode,
+         X3D .X3DConstants .X3DViewpointNode,
+      ])
    }
 
    updateSceneGraph ()
@@ -944,15 +963,7 @@ module .exports = class OutlineView extends Interface
                .appendTo (name)
          }
 
-         const onDemandToolNodes = new Set ([
-            X3D .X3DConstants .Sound,
-            X3D .X3DConstants .X3DEnvironmentalSensorNode,
-            X3D .X3DConstants .X3DLightNode,
-            X3D .X3DConstants .X3DTextureProjectorNode,
-            X3D .X3DConstants .X3DViewpointNode,
-         ])
-
-         if (node .valueOf () .getType () .some (t => onDemandToolNodes .has (t)))
+         if (node .valueOf () .getType () .some (t => this .onDemandToolNodes .has (t)))
          {
             name .append (document .createTextNode (" "))
 

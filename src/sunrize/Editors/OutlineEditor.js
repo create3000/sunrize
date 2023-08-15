@@ -23,11 +23,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       this .setup ()
    }
 
-   configure ()
+   updateComponents ()
    {
-      super .configure ()
-
-      // Now are all nodes available.
+      super .updateComponents ()
 
       this .matrixNodes = new Set ([
          X3D .X3DConstants .Billboard,
