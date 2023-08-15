@@ -80,9 +80,6 @@ class X3DNodeTool
    {
       await this .initialize ()
 
-      if (!this .tool)
-         return
-
       this .tool .visible  = true
       this .tool .selected = this .toolSelected
    }

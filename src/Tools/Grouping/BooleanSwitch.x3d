@@ -7,7 +7,7 @@
     <meta name='created' content='Tue, 15 Aug 2023 21:44:34 GMT'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='modified' content='Tue, 15 Aug 2023 21:54:00 GMT'/>
+    <meta name='modified' content='Tue, 15 Aug 2023 23:11:32 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='BooleanSwitch'>
@@ -57,8 +57,5 @@ function set_whichChoice (value)
         </Script>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='BooleanSwitch'>
-      <fieldValue name='bboxSize' value='1 1 1'/>
-    </ProtoInstance>
   </Scene>
 </X3D>
