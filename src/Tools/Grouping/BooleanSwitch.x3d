@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Scripting' level='1'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
+    <meta name='created' content='Tue, 15 Aug 2023 21:44:34 GMT'/>
+    <meta name='comment' content='Rise and Shine'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='modified' content='Tue, 15 Aug 2023 21:54:00 GMT'/>
+  </head>
+  <Scene>
+    <ProtoDeclare name='BooleanSwitch'>
+      <ProtoInterface>
+        <field accessType='inputOutput' type='SFBool' name='whichChoice'/>
+        <field accessType='inputOutput' type='SFBool' name='visible' value='true'/>
+        <field accessType='inputOutput' type='SFBool' name='bboxDisplay'/>
+        <field accessType='initializeOnly' type='SFVec3f' name='bboxSize' value='-1 -1 -1'/>
+        <field accessType='initializeOnly' type='SFVec3f' name='bboxCenter'/>
+        <field accessType='inputOnly' type='MFNode' name='addChildren'/>
+        <field accessType='inputOnly' type='MFNode' name='removeChildren'/>
+        <field accessType='inputOutput' type='MFNode' name='children'/>
+      </ProtoInterface>
+      <ProtoBody>
+        <Switch DEF='Switch'>
+          <IS>
+            <connect nodeField='visible' protoField='visible'/>
+            <connect nodeField='bboxDisplay' protoField='bboxDisplay'/>
+            <connect nodeField='bboxSize' protoField='bboxSize'/>
+            <connect nodeField='bboxCenter' protoField='bboxCenter'/>
+            <connect nodeField='addChildren' protoField='addChildren'/>
+            <connect nodeField='removeChildren' protoField='removeChildren'/>
+            <connect nodeField='children' protoField='children'/>
+          </IS>
+        </Switch>
+        <Script
+            directOutput='true'>
+          <field accessType='inputOutput' type='SFBool' name='whichChoice'/>
+          <field accessType='initializeOnly' type='SFNode' name='group'>
+            <Switch USE='Switch'/>
+          </field>
+          <IS>
+            <connect nodeField='whichChoice' protoField='whichChoice'/>
+          </IS>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+	set_whichChoice (whichChoice);
+}
+
+function set_whichChoice (value)
+{
+	group .whichChoice = value
+}
+]]>
+        </Script>
+      </ProtoBody>
+    </ProtoDeclare>
+    <ProtoInstance name='BooleanSwitch'>
+      <fieldValue name='bboxSize' value='1 1 1'/>
+    </ProtoInstance>
+  </Scene>
+</X3D>
