@@ -181,7 +181,7 @@ Object .assign (X3D .X3DNode .prototype,
    {
       return this .getUserData (_tool)
    },
-   addTool (type = "createOnDemand")
+   addTool (action = "createOnDemand")
    {
       const module = path .resolve (__dirname, "..", this .constructor .componentName, this .constructor .typeName + "Tool.js")
 
@@ -190,7 +190,7 @@ Object .assign (X3D .X3DNode .prototype,
 
       const Tool = require (module)
 
-      if (!Tool [type])
+      if (!Tool [action])
          return this
 
       return new Tool (this)
