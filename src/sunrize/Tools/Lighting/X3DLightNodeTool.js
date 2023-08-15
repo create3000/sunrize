@@ -9,13 +9,6 @@ class X3DLightNodeTool extends X3DNodeTool
    static createOnSelection = false
    static createOnDemand    = true
 
-   constructor (node)
-   {
-      super (node)
-
-      this .toolType = [X3D .X3DConstants .X3DVisibleObject, ... node .getType ()]
-   }
-
    async initialize ()
    {
       await super .initialize (__dirname, "X3DLightNodeTool.x3d")
@@ -29,9 +22,9 @@ class X3DLightNodeTool extends X3DNodeTool
       this .tool .intensity = this .toolNode ._intensity
    }
 
-   getType ()
+   getMustDisplay ()
    {
-      return this .toolType
+      return true
    }
 }
 
