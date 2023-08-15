@@ -853,11 +853,7 @@ module .exports = class Application
       if (!this .applicationShouldQuitAfterLastWindowClosed)
          return
 
-      Template .remove (path .join (__dirname, "../assets/html/application-template.html"))
-      Template .remove (path .join (__dirname, "../assets/html/window-template.html"))
-      Template .remove (path .join (__dirname, "../assets/themes/default-template.css"))
-      Template .remove (path .join (__dirname, "../assets/themes/prompt-template.css"))
-
+      Template .removeAll ()
       electron .app .quit ()
    }
 }

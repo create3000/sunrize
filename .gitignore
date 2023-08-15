@@ -13,8 +13,8 @@ _site
 .bundle
 vendor
 
-src/html/application.html
-src/html/document.html
-src/html/window.html
-src/themes/default.css
-src/themes/prompt.css
+src/assets/html/application.html
+src/assets/html/document.html
+src/assets/html/window.html
+src/assets/themes/default.css
+src/assets/themes/prompt.css

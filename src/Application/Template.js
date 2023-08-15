@@ -5,7 +5,8 @@ const
 
 class Template
 {
-   static #stats = new Map ()
+   static #templates = new Set ()
+   static #stats     = new Map ()
 
    static create (template)
    {
@@ -14,6 +15,7 @@ class Template
          dirname  = path .dirname (template),
          stats    = fs .statSync (dirname);
 
+      this .#templates .add (template)
       this .#stats .set (dirname, stats)
 
       const file = fs .readFileSync (template)
@@ -27,6 +29,12 @@ class Template
       return filename
    }
 
+   static removeAll ()
+   {
+      for (const template of new Set (this .#templates))
+         this .remove (template)
+   }
+
    static remove (template)
    {
       const
@@ -35,6 +43,8 @@ class Template
 
       fs .unlinkSync (this .filename (template))
       fs .utimesSync (dirname, stats .atime, stats .mtime)
+
+      this .#templates .delete (template)
    }
 
    static filename (template)
