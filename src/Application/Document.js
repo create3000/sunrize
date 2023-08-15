@@ -200,7 +200,6 @@ module .exports = class Document extends Interface
       scene .setMetaData ("comment", `Rise and Shine`)
       scene .setMetaData ("creator", this .fullname)
       scene .setMetaData ("generator", `${pkg .productName} V${pkg .version}, ${pkg .homepage}`)
-      scene .setMetaData ("identifier", scene .worldURL .startsWith ("data:") ? scene .baseURL : scene .worldURL)
       scene .setMetaData ("modified", new Date () .toUTCString ())
 
       // Save source code.
