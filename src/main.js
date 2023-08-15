@@ -2,7 +2,7 @@
 {
    "use strict"
 
-   const Application = require ("./sunrize/Application/Application")
+   const Application = require ("./Application/Application")
 
    Application .run ()
 })

@@ -2,5 +2,5 @@
 
 window .addEventListener ("DOMContentLoaded", () =>
 {
-   require ("../sunrize/Application/Tabs")
+   require ("../../Application/Tabs")
 })

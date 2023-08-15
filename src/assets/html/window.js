@@ -4,5 +4,5 @@ window .addEventListener ("DOMContentLoaded", () =>
 {
    const electron = require ("electron")
 
-   electron .ipcRenderer .on ("activate", () => require ("../sunrize/Application/Window"))
+   electron .ipcRenderer .on ("activate", () => require ("../../Application/Window"))
 })

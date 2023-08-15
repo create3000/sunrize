@@ -192,7 +192,7 @@ module .exports = class Document extends Interface
 
       // Add default meta data.
 
-      const pkg = require ("../../../package.json")
+      const pkg = require ("../../package.json")
 
       if (!scene .getMetaData ("created"))
          scene .setMetaData ("created", new Date () .toUTCString ())

@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <!-- Theme -->
+    <link rel="stylesheet" type="text/css" href="file:///Users/holger/Desktop/X_ITE/sunrize/src/assets/themes/default.css"/>
+  </head>
+  <body>
+    <tab-group sortable="true">
+      <style>
+.etabs .nav {
+  height: var(--window-tabs-height);
+  background: var(--background-color);
+  box-shadow: none;
+  border: none;
+}
+
+.etabs .tab {
+  background: var(--window-tabs-background-color);
+  border-color: var(--border-color) !important;
+  padding: 4px 3px;
+  color: var(--window-tabs-text-color);
+  font-family: var(--sans-serif);
+  box-shadow: none;
+}
+
+.etabs .tab.active {
+  z-index: 1100;
+  background: var(--background-color);
+  color: var(--window-tabs-highlight-color);
+}
+
+.etabs::before {
+  z-index: 1000;
+  content: "";
+  position: relative;
+  display: block;
+  height: 1px;
+  width: 100%;
+  box-shadow: var(--tabs-shadow);
+}
+
+.etabs .buttons {
+  border-color: var(--border-color);
+}
+
+.etabs .buttons:hover button,
+.etabs .tab-close button:hover {
+  background: none;
+}
+
+.etabs .buttons button:hover,
+.etabs .tab-close:hover button {
+  color: var(--system-gray0);
+}
+
+.etabs .tab-close button {
+  visibility: hidden;
+}
+
+.etabs .tab.active .tab-close button,
+.etabs .tab:hover .tab-close button {
+  visibility: visible;
+}
+
+.etabs .tab-close {
+  margin-left: 4px;
+}
+      </style>
+    </tab-group>
+  </body>
+</html>

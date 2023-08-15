@@ -147,7 +147,7 @@ module .exports = new class Tabs
       if (!urls .length)
          return
 
-      const src = url .pathToFileURL (path .join (__dirname, "../../html/window.html"))
+      const src = url .pathToFileURL (path .join (__dirname, "../assets/html/window.html"))
 
       for (let fileURL of urls)
       {

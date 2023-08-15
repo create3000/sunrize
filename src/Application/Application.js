@@ -60,10 +60,10 @@ module .exports = class Application
          timings: false,
       })
 
-      Template .create (path .join (__dirname, "../../html/application-template.html"))
-      Template .create (path .join (__dirname, "../../html/window-template.html"))
-      Template .create (path .join (__dirname, "../../themes/default-template.css"))
-      Template .create (path .join (__dirname, "../../themes/prompt-template.css"))
+      Template .create (path .join (__dirname, "../assets/html/application-template.html"))
+      Template .create (path .join (__dirname, "../assets/html/window-template.html"))
+      Template .create (path .join (__dirname, "../assets/themes/default-template.css"))
+      Template .create (path .join (__dirname, "../assets/themes/prompt-template.css"))
 
       this .setup ()
    }
@@ -190,7 +190,7 @@ module .exports = class Application
                            placeholder: "https://example.org",
                         },
                         width: 500,
-                        customStylesheet: path .join (__dirname, "../../themes/prompt.css"),
+                        customStylesheet: path .join (__dirname, "../assets/themes/prompt.css"),
                      },
                      this .mainWindow)
 
@@ -628,7 +628,7 @@ module .exports = class Application
    async createWindow ()
    {
       const window = new electron .BrowserWindow ({
-         icon: path .join (__dirname, "../../images/icon.png"),
+         icon: path .join (__dirname, "../assets/images/icon.png"),
          x: this .config .position [0],
          y: this .config .position [1],
          width: Math .max (this .config .getDefaultValue ("size") [0] / 4, this .config .size [0]),
@@ -638,7 +638,7 @@ module .exports = class Application
          backgroundColor: electron .nativeTheme .shouldUseDarkColors ? "rgb(28, 28, 30)" : "rgb(242, 242, 247)",
          show: false,
          webPreferences: {
-            preload: path .join (__dirname, "../../html/application.js"),
+            preload: path .join (__dirname, "../assets/html/application.js"),
             nodeIntegration: true,
             contextIsolation: false,
             webviewTag: true,
@@ -662,7 +662,7 @@ module .exports = class Application
 
       window .setFullScreen (this .config .fullscreen)
 
-      await window .loadFile (path .join (__dirname, "../../html/application.html"))
+      await window .loadFile (path .join (__dirname, "../assets/html/application.html"))
    }
 
    activate ()
@@ -853,9 +853,10 @@ module .exports = class Application
       if (!this .applicationShouldQuitAfterLastWindowClosed)
          return
 
-      Template .remove (path .join (__dirname, "../../html/application-template.html"))
-      Template .remove (path .join (__dirname, "../../html/window-template.html"))
-      Template .remove (path .join (__dirname, "../../themes/default-template.css"))
+      Template .remove (path .join (__dirname, "../assets/html/application-template.html"))
+      Template .remove (path .join (__dirname, "../assets/html/window-template.html"))
+      Template .remove (path .join (__dirname, "../assets/themes/default-template.css"))
+      Template .remove (path .join (__dirname, "../assets/themes/prompt-template.css"))
 
       electron .app .quit ()
    }
