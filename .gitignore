@@ -15,5 +15,6 @@ vendor
 
 src/html/application.html
 src/html/document.html
+src/html/window.html
 src/themes/default.css
 src/themes/prompt.css
