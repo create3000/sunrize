@@ -17,6 +17,10 @@ const accessTypes = new Map ([
    [X3D .X3DConstants .inputOutput,    "inputOutput"],
 ])
 
+let
+   lastTypeName   = "",
+   lastAccessType = X3D .X3DConstants .initializeOnly
+
 $.fn.editUserDefinedFieldPopover = function (executionContext, node, field)
 {
    const Fields = X3D .require ("x_ite/Fields")
@@ -108,6 +112,18 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field)
 
       nameInput .val (field .getName ())
    }
+   else
+   {
+      typeNameMenu
+         .find ("option")
+         .filter ((i, e) => $(e) .text () === lastTypeName)
+         .prop ("selected", true)
+
+      accessTypeMenu
+         .find ("option")
+         .filter ((i, e) => $(e) .text () === accessTypes .get (lastAccessType))
+         .prop ("selected", true)
+   }
 
    // Create tooltip.
 
@@ -141,6 +157,9 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field)
          type       = X3D .X3DConstants [typeName],
          accessType = X3D .X3DConstants [accessTypeMenu .find ("option:selected") .text ()],
          name       = nameInput .val ()
+
+      lastTypeName   = typeName
+      lastAccessType = accessType
 
       if (field)
       {
