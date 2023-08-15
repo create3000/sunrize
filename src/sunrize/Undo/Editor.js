@@ -140,9 +140,7 @@ module .exports = class Editor
 
       try
       {
-         const
-            GoldenGate = X3D .require ("x_ite/Parser/GoldenGate"),
-            parser     = new GoldenGate (scene)
+         const parser = new X3D .GoldenGate (scene)
 
          parser .pushExecutionContext (executionContext)
          await new Promise ((resolve, reject) => parser .parseIntoScene (x3dSyntax, resolve, reject))
@@ -2031,14 +2029,10 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          oldCenter = node ._center .getValue () .copy ()
 
       const
-         Vector3   = X3D .require ("standard/Math/Numbers/Vector3"),
-         Rotation4 = X3D .require ("standard/Math/Numbers/Rotation4")
-
-      const
-         translation      = new Vector3 (0, 0, 0),
-         rotation         = new Rotation4 (0, 0, 1, 0),
-         scale            = new Vector3 (1, 1, 1),
-         scaleOrientation = new Rotation4 (0, 0, 1, 0)
+         translation      = new X3D .Vector3 (0, 0, 0),
+         rotation         = new X3D .Rotation4 (0, 0, 1, 0),
+         scale            = new X3D .Vector3 (1, 1, 1),
+         scaleOrientation = new X3D .Rotation4 (0, 0, 1, 0)
 
       matrix .get (translation,
                    rotation,

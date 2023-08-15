@@ -2,8 +2,7 @@
 
 const
    X3DNodeTool = require ("../Core/X3DNodeTool"),
-   X3D         = require ("../../X3D"),
-   Box3        = X3D .require ("standard/Math/Geometry/Box3")
+   X3D         = require ("../../X3D")
 
 class X3DBoundedObjectTool extends X3DNodeTool
 {
@@ -23,7 +22,7 @@ class X3DBoundedObjectTool extends X3DNodeTool
       return super .removeTool ()
    }
 
-   static box = new Box3 ()
+   static box = new X3D .Box3 ()
 
    reshape ()
    {

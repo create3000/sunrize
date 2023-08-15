@@ -4,7 +4,6 @@ const
    $         = require ("jquery"),
    X3D       = require ("../X3D"),
    Interface = require ("./Interface"),
-   Box3      = X3D .require ("standard/Math/Geometry/Box3"),
    _         = require ("./GetText")
 
 module .exports = class Dashboard extends Interface
@@ -120,7 +119,7 @@ module .exports = class Dashboard extends Interface
          const
             layerNode     = this .browser .getActiveLayer (),
             viewpointNode = this .browser .getActiveViewpoint (),
-            bbox          = new Box3 (),
+            bbox          = new X3D .Box3 (),
             straighten    = this .browser .getBrowserOption ("StraightenHorizon")
 
          for (const element of selection)
@@ -134,7 +133,7 @@ module .exports = class Dashboard extends Interface
 
                const modelMatrix = outlineEditor .getModelMatrix ($(element), false)
 
-               bbox .add (node .getBBox (new Box3 ()) .multRight (modelMatrix))
+               bbox .add (node .getBBox (new X3D .Box3 ()) .multRight (modelMatrix))
             }
             catch
             { }

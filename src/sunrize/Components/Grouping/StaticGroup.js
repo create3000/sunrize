@@ -1,32 +1,24 @@
 "use strict"
 
-const
-   X3D                  = require ("../../X3D"),
-   Fields               = X3D .require ("x_ite/Fields"),
-   X3DFieldDefinition   = X3D .require ("x_ite/Base/X3DFieldDefinition"),
-   FieldDefinitionArray = X3D .require ("x_ite/Base/FieldDefinitionArray"),
-   X3DConstants         = X3D .require ("x_ite/Base/X3DConstants"),
-   X3DChildNode         = X3D .require ("x_ite/Components/Core/X3DChildNode"),
-   X3DBoundedObject     = X3D .require ("x_ite/Components/Grouping/X3DBoundedObject"),
-   Group                = X3D .require ("x_ite/Components/Grouping/Group");
+const X3D = require ("../../X3D");
 
 function StaticGroup (executionContext)
 {
-   X3DChildNode     .call (this, executionContext);
-   X3DBoundedObject .call (this, executionContext);
+   X3D .X3DChildNode     .call (this, executionContext);
+   X3D .X3DBoundedObject .call (this, executionContext);
 
-   this .addType (X3DConstants .StaticGroup);
+   this .addType (X3D .X3DConstants .StaticGroup);
 
-   this .groupNode = new Group (this .getExecutionContext ());
+   this .groupNode = new X3D .Group (this .getExecutionContext ());
 }
 
-Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .prototype),
-   X3DBoundedObject .prototype,
+Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3D .X3DChildNode .prototype),
+   X3D .X3DBoundedObject .prototype,
 {
    initialize ()
    {
-      X3DChildNode     .prototype .initialize .call (this);
-      X3DBoundedObject .prototype .initialize .call (this);
+      X3D .X3DChildNode     .prototype .initialize .call (this);
+      X3D .X3DBoundedObject .prototype .initialize .call (this);
 
       this ._bboxSize   .addFieldInterest (this .groupNode ._bboxSize);
       this ._bboxCenter .addFieldInterest (this .groupNode ._bboxCenter);
@@ -55,8 +47,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
    },
    dispose ()
    {
-      X3DBoundedObject .prototype .dispose .call (this);
-      X3DChildNode     .prototype .dispose .call (this);
+      X3D .X3DBoundedObject .prototype .dispose .call (this);
+      X3D .X3DChildNode     .prototype .dispose .call (this);
    },
 });
 
@@ -80,13 +72,13 @@ Object .defineProperties (StaticGroup,
    },
    fieldDefinitions:
    {
-      value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "children",    new Fields .MFNode ()),
+      value: new X3D .FieldDefinitionArray ([
+         new X3D .X3DFieldDefinition (X3D .X3DConstants .inputOutput,    "metadata",    new X3D .Fields .SFNode ()),
+         new X3D .X3DFieldDefinition (X3D .X3DConstants .inputOutput,    "visible",     new X3D .Fields .SFBool (true)),
+         new X3D .X3DFieldDefinition (X3D .X3DConstants .inputOutput,    "bboxDisplay", new X3D .Fields .SFBool ()),
+         new X3D .X3DFieldDefinition (X3D .X3DConstants .initializeOnly, "bboxSize",    new X3D .Fields .SFVec3f (-1, -1, -1)),
+         new X3D .X3DFieldDefinition (X3D .X3DConstants .initializeOnly, "bboxCenter",  new X3D .Fields .SFVec3f ()),
+         new X3D .X3DFieldDefinition (X3D .X3DConstants .initializeOnly, "children",    new X3D .Fields .MFNode ()),
       ]),
    },
 });

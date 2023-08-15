@@ -4,7 +4,6 @@ const
    X3DBoundedObjectTool = require ("../Grouping/X3DBoundedObjectTool"),
    ToolColors           = require ("../Core/ToolColors"),
    X3D                  = require ("../../X3D")
-   Vector3              = X3D .require ("standard/Math/Numbers/Vector3")
 
 class GeoLODTool extends X3DBoundedObjectTool
 {
@@ -17,7 +16,7 @@ class GeoLODTool extends X3DBoundedObjectTool
       this .tool .centerDisplay = true
    }
 
-   static center = new Vector3 (0, 0, 0)
+   static center = new X3D .Vector3 (0, 0, 0)
 
    reshape ()
    {

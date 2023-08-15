@@ -27,8 +27,6 @@ const accessTypes = new Map ([
 
 $.fn.editUserDefinedFieldPopover = function (executionContext, node, field)
 {
-   const Fields = X3D .require ("x_ite/Fields")
-
    // Create content.
 
    const content = $("<div></div>")
@@ -199,7 +197,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field)
             {
                const
                   index    = fields .indexOf (field),
-                  newField = new Fields [typeName] ()
+                  newField = new X3D .Fields [typeName] ()
 
                UndoManager .shared .beginUndo (_ ("Change Type of Field »%s«"), field .getName ())
 
@@ -231,7 +229,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field)
 
             // Add field.
 
-            const field = new Fields [typeName] ()
+            const field = new X3D .Fields [typeName] ()
 
             field .setAccessType (accessType)
             field .setName (name)

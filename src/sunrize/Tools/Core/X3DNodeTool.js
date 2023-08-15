@@ -5,9 +5,7 @@ const
    url      = require ("url"),
    fs       = require ("fs"),
    Traverse = require("../../Application/Traverse"),
-   X3D      = require ("../../X3D"),
-   Fields   = X3D .require ("x_ite/Fields"),
-   X3DNode  = X3D .require ("x_ite/Components/Core/X3DNode")
+   X3D      = require ("../../X3D")
 
 const
    _tool     = Symbol (),
@@ -138,7 +136,7 @@ class X3DNodeTool
    {
       for (const parent of new Set (node .getParents ()))
       {
-         if (parent instanceof Fields .SFNode)
+         if (parent instanceof X3D .Fields .SFNode)
             parent .setValue (replacement)
       }
    }
@@ -180,7 +178,7 @@ class X3DNodeTool
    }
 }
 
-Object .assign (X3DNode .prototype,
+Object .assign (X3D .X3DNode .prototype,
 {
    getTool ()
    {

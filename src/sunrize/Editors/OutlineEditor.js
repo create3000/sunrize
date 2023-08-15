@@ -599,7 +599,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    unlinkClone (id, executionContextId, nodeId)
    {
       const
-         X3DBaseNode        = X3D .require ("x_ite/Base/X3DBaseNode"),
          element            = $(`#${id}`),
          executionContext   = this .objects .get (executionContextId),
          parentFieldElement = element .closest (".field, .scene", this .sceneGraph),
@@ -607,7 +606,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          parentNode         = this .getNode (parentNodeElement),
          parentField        = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement),
          node               = this .objects .get (nodeId),
-         copy               = X3DBaseNode .prototype .copy .call (node, executionContext),
+         copy               = X3D .X3DBaseNode .prototype .copy .call (node, executionContext),
          index              = parseInt (element .attr ("index"))
 
       UndoManager .shared .beginUndo (_ ("Unlink Clone"))
@@ -1988,7 +1987,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    getModelMatrix (nodeElement, self = true)
    {
       if (!nodeElement .length)
-         return new (X3D .require ("standard/Math/Numbers/Matrix4")) ()
+         return new X3D .Matrix4 ()
 
       const
          node        = this .getNode (nodeElement),
