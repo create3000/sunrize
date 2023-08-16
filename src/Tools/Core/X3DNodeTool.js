@@ -108,15 +108,15 @@ class X3DNodeTool
 
    static scenes = new Map ()
 
-   async loadTool (... args)
+   loadTool (... args)
    {
       const
          protoURL = url .pathToFileURL (path .resolve (... args)),
-         scene    = await X3DNodeTool .scenes .get (protoURL .href)
+         promise  = X3DNodeTool .scenes .get (protoURL .href)
 
-      if (scene)
+      if (promise)
       {
-         this .tool = scene .createProto ("Tool")
+         return promise .then (scene => this .tool = scene .createProto ("Tool"))
       }
       else
       {
@@ -143,7 +143,7 @@ class X3DNodeTool
 
          X3DNodeTool .scenes .set (protoURL .href, promise)
 
-         await promise
+         return promise
       }
    }
 
