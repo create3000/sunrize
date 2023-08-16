@@ -14,7 +14,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/tests/Tools.x3d'/>
-    <meta name='modified' content='Wed, 16 Aug 2023 11:29:35 GMT'/>
+    <meta name='modified' content='Wed, 16 Aug 2023 14:03:27 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='Test'>
@@ -89,7 +89,7 @@
           farDistance='10'>
         <PixelTexture DEF='_1'
             image='2 2 3
-              0xff000 0xff00
+              0xff0000 0xff00
               0xff 0xff00ff'/>
       </TextureProjector>
       <TextureProjectorParallel

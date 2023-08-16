@@ -24,7 +24,7 @@ class X3DTextureProjectorNodeTool extends X3DChildNodeTool
       this .tool .location  = this .toolNode ._location
       this .tool .direction = this .toolNode ._direction
       this .tool .upVector  = this .toolNode ._upVector
-      // this .tool .texture   = this .toolNode ._texture
+      this .tool .texture   = this .toolNode ._texture
    }
 }
 

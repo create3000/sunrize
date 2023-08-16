@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/TextureProjector/X3DTextureProjectorNodeTool.x3d'/>
-    <meta name='modified' content='Wed, 16 Aug 2023 11:28:17 GMT'/>
+    <meta name='modified' content='Wed, 16 Aug 2023 14:00:36 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -120,29 +120,25 @@
                   <connect nodeField='whichChoice' protoField='selected'/>
                 </IS>
               </ProtoInstance>
-            </Transform>
-            <Switch>
-              <Transform DEF='Image'>
-                <Shape>
-                  <Appearance>
+              <Shape DEF='Image'>
+                <Appearance>
+                  <UnlitMaterial
+                      transparency='0.75'>
                     <IS>
-                      <connect nodeField='texture' protoField='texture'/>
+                      <connect nodeField='emissiveTexture' protoField='texture'/>
                     </IS>
-                    <Material
-                        transparency='0.5'/>
-                    <ProtoInstance name='ToolShader' USE='_3' containerField='shaders'/>
-                  </Appearance>
-                  <IndexedFaceSet
-                      solid='false'
-                      texCoordIndex='0, 1, 2, 3, -1'
-                      coordIndex='4, 5, 6, 7, -1'>
-                    <TextureCoordinate
-                        point='1 1, 0 1, 0 0, 1 0'/>
-                    <Coordinate USE='_6'/>
-                  </IndexedFaceSet>
-                </Shape>
-              </Transform>
-            </Switch>
+                  </UnlitMaterial>
+                </Appearance>
+                <IndexedFaceSet
+                    solid='false'
+                    texCoordIndex='0, 1, 2, 3, -1'
+                    coordIndex='4, 5, 6, 7, -1'>
+                  <TextureCoordinate
+                      point='1 1, 0 1, 0 0, 1 0'/>
+                  <Coordinate USE='_6'/>
+                </IndexedFaceSet>
+              </Shape>
+            </Transform>
           </Transform>
           <Transform DEF='TransformTool'>
             <IS>
@@ -410,6 +406,12 @@ function set_perspective ()
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
       <fieldValue name='on' value='true'/>
+      <fieldValue name='texture'>
+        <PixelTexture DEF='_1'
+            image='2 2 3
+              0xff0000 0xff00
+              0xff 0xff00ff'/>
+      </fieldValue>
     </ProtoInstance>
   </Scene>
 </X3D>
