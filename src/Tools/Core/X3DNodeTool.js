@@ -67,13 +67,23 @@ class X3DNodeTool
       node .setUserData (_tool, proxy)
       node .setUserData (_changing, true)
 
-      this .toolProxy = proxy
-      this .toolNode  = node
+      this .toolProxy         = proxy
+      this .toolNode          = node
+      this .toolExternalNodes = new Map ()
 
       this .replaceNode (node, proxy)
       proxy .setup ()
 
       return proxy
+   }
+
+   replaceNode (node, replacement)
+   {
+      for (const parent of new Set (node .getParents ()))
+      {
+         if (parent instanceof X3D .SFNode)
+            parent .setValue (replacement)
+      }
    }
 
    async setup ()
@@ -89,6 +99,14 @@ class X3DNodeTool
 
    async initialize () { }
 
+   setSelected (value)
+   {
+      this .toolSelected = value
+
+      if (this .tool ?.selected !== undefined)
+         this .tool .selected = value
+   }
+
    async getProto ()
    {
       await this .toolPromise
@@ -103,7 +121,18 @@ class X3DNodeTool
 
    removeTool ()
    {
-      Traverse .traverse (this .tool, Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES, node => node .dispose ())
+      const nodesToDispose = [ ];
+
+      Traverse .traverse (this .tool, Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES, node => nodesToDispose .push (node))
+
+      for (const node of nodesToDispose)
+      {
+         if (!this .toolExternalNodes .has (node))
+            node .dispose ()
+      }
+
+      for (const field of this .toolExternalNodes .values ())
+         field .removeInterest ("addExternalNode", this)
 
       this .toolNode .removeUserData (_tool)
       this .toolNode .setUserData (_changing, true)
@@ -154,21 +183,11 @@ class X3DNodeTool
       }
    }
 
-   replaceNode (node, replacement)
+   addExternalNode (field)
    {
-      for (const parent of new Set (node .getParents ()))
-      {
-         if (parent instanceof X3D .SFNode)
-            parent .setValue (replacement)
-      }
-   }
+      field .addInterest ("addExternalNode", this)
 
-   setSelected (value)
-   {
-      this .toolSelected = value
-
-      if (this .tool ?.selected !== undefined)
-         this .tool .selected = value
+      this .toolExternalNodes .set (field .getValue (), field)
    }
 
    getInnerNode ()
