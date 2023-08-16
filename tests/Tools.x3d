@@ -7,7 +7,6 @@
     <component name='Geospatial' level='2'/>
     <component name='Layering' level='1'/>
     <component name='Layout' level='2'/>
-    <component name='Scripting' level='1'/>
     <component name='Sound' level='3'/>
     <component name='TextureProjector' level='2'/>
     <meta name='created' content='Fri, 11 Aug 2023 21:33:17 GMT'/>
@@ -15,26 +14,19 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/tests/Tools.x3d'/>
-    <meta name='modified' content='Tue, 15 Aug 2023 23:51:41 GMT'/>
+    <meta name='modified' content='Wed, 16 Aug 2023 00:19:32 GMT'/>
   </head>
   <Scene>
+    <ProtoDeclare name='Test'>
+      <ProtoBody>
+        <Transform
+            bboxSize='1 1 1'/>
+      </ProtoBody>
+    </ProtoDeclare>
     <Viewpoint/>
-    <Script DEF='NewScript'>
-<![CDATA[ecmascript:
-
-function initialize ()
-{
-   // Add code herre.
-}
-
-function set_field (value, time)
-{
-   console .log ("set_field", time, value);
-}
-]]>
-    </Script>
     <CADAssembly
         bboxSize='1 1 1'/>
+    <ProtoInstance name='Test'/>
     <Group DEF='EnvironmentalSensors'>
       <ProximitySensor
           size='1 1 1'
