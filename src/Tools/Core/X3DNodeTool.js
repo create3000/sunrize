@@ -89,6 +89,13 @@ class X3DNodeTool
 
    async initialize () { }
 
+   async getProto ()
+   {
+      await this .toolPromise
+
+      return this .tool
+   }
+
    addTool ()
    {
       return this .toolProxy
@@ -116,7 +123,7 @@ class X3DNodeTool
 
       if (promise)
       {
-         return promise .then (scene => this .tool = scene .createProto ("Tool"))
+         return this .toolPromise = promise .then (scene => this .tool = scene .createProto ("Tool"))
       }
       else
       {
@@ -143,7 +150,7 @@ class X3DNodeTool
 
          X3DNodeTool .scenes .set (protoURL .href, promise)
 
-         return promise
+         return this .toolPromise = promise
       }
    }
 
@@ -198,6 +205,11 @@ Object .assign (X3D .X3DNode .prototype,
 
       if (!Tool [action])
          return this
+
+      const tool = this .getUserData (_tool)
+
+      if (tool)
+         return tool
 
       return new Tool (this)
    },

@@ -4,12 +4,13 @@
   <head>
     <component name='Layout' level='2'/>
     <component name='Scripting' level='1'/>
+    <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 01 Aug 2014 17:41:58 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/TextureProjector/X3DTextureProjectorNodeTool.x3d'/>
-    <meta name='modified' content='Tue, 15 Aug 2023 23:31:52 GMT'/>
+    <meta name='modified' content='Wed, 16 Aug 2023 11:01:26 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -49,9 +50,8 @@
               <Transform
                   translation='0 0 -15'>
                 <Transform DEF='Cylinder'
-                    translation='NaN NaN NaN'
-                    rotation='NaN NaN NaN NaN'
-                    scale='NaN NaN NaN'>
+                    translation='0 0 15'
+                    rotation='1 0 0 90'>
                   <Shape>
                     <Appearance>
                       <Material
@@ -199,9 +199,14 @@
           </IS>
 <![CDATA[ecmascript:
 
-function initialize ()
+async function initialize ()
 {
-   transform .getValue () .addTool ?. ()
+   const tool = await transform .getValue () .addTool ?.() .getProto ();
+
+   if (!tool)
+      return
+
+   tool .bboxDisplay = false;
 }
 
 function set_direction ()
@@ -396,5 +401,6 @@ function set_perspective ()
         <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='ToolScript' toField='set_rotation'/>
       </ProtoBody>
     </ProtoDeclare>
+    <ProtoInstance name='Tool'/>
   </Scene>
 </X3D>

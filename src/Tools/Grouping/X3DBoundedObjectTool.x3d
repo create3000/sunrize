@@ -9,7 +9,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Grouping/X3DBoundedObjectTool.x3d'/>
-    <meta name='modified' content='Tue, 15 Aug 2023 23:32:07 GMT'/>
+    <meta name='modified' content='Wed, 16 Aug 2023 10:15:18 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -23,6 +23,7 @@
         <field accessType='inputOutput' type='SFBool' name='rectangleDisplay'/>
         <field accessType='inputOutput' type='SFVec3f' name='rectangleSize' value='1 1 1'/>
         <field accessType='inputOutput' type='SFVec3f' name='rectangleCenter'/>
+        <field accessType='inputOutput' type='SFBool' name='bboxDisplay'/>
         <field accessType='inputOutput' type='SFInt32' name='bboxStyle' value='1'/>
         <field accessType='inputOutput' type='SFColor' name='bboxColor' value='1 1 1'/>
         <field accessType='inputOutput' type='SFVec3f' name='bboxSize' value='1 1 1'/>
@@ -30,14 +31,16 @@
       </ProtoInterface>
       <ProtoBody>
         <Collision
-            enabled='false'
-            visible='false'>
+            enabled='false'>
           <Transform DEF='BoundingBox'>
             <IS>
               <connect nodeField='translation' protoField='bboxCenter'/>
             </IS>
             <Shape DEF='Box'
                 castShadow='false'>
+              <IS>
+                <connect nodeField='visible' protoField='bboxDisplay'/>
+              </IS>
               <Appearance>
                 <LineProperties
                     linewidthScaleFactor='2'>
@@ -336,5 +339,8 @@ function eventsProcessed ()
         </Script>
       </ProtoBody>
     </ProtoDeclare>
+    <ProtoInstance name='Tool'>
+      <fieldValue name='bboxDisplay' value='true'/>
+    </ProtoInstance>
   </Scene>
 </X3D>

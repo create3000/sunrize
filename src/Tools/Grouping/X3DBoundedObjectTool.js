@@ -12,7 +12,8 @@ class X3DBoundedObjectTool extends X3DChildNodeTool
 
       this .toolNode .getBrowser () .displayEvents () .addInterest ("reshape", this)
 
-      this .tool .bboxColor = this .toolBBoxColor
+      this .tool .bboxDisplay = true
+      this .tool .bboxColor   = this .toolBBoxColor
    }
 
    removeTool ()

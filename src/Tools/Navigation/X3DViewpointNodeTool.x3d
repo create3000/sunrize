@@ -154,9 +154,14 @@
           </field>
 <![CDATA[ecmascript:
 
-function initialize ()
+async function initialize ()
 {
-   transform .getValue () .addTool ?.()
+   const tool = await transform .getValue () .addTool ?.() .getProto ();
+
+   if (!tool)
+      return
+
+   tool .bboxDisplay = false;
 }]]>
         </Script>
         <ROUTE fromNode='TransformTool' fromField='translation_changed' toNode='_1' toField='set_translation'/>

@@ -9,14 +9,13 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Lighting/X3DLightNodeTool.x3d'/>
-    <meta name='modified' content='Tue, 15 Aug 2023 07:18:41 GMT'/>
+    <meta name='modified' content='Wed, 16 Aug 2023 10:52:00 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
     </ExternProtoDeclare>
     <ProtoDeclare name='Tool'>
       <ProtoInterface>
-        <field accessType='inputOutput' type='SFBool' name='visible'/>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
         <field accessType='inputOutput' type='SFInt32' name='whichChoice'/>
         <field accessType='inputOutput' type='SFBool' name='on' value='true'/>
@@ -29,8 +28,7 @@
       </ProtoInterface>
       <ProtoBody>
         <Collision
-            enabled='false'
-            visible='false'>
+            enabled='false'>
           <Transform DEF='_1'
               rotation='0 1 0 3.14159265358979'>
             <ScreenGroup>
@@ -285,9 +283,14 @@
           </IS>
 <![CDATA[ecmascript:
 
-function initialize ()
+async function initialize ()
 {
-   transform .getValue () .addTool ?.();
+   const tool = await transform .getValue () .addTool ?.() .getProto ();
+
+   if (!tool)
+      return
+
+   tool .bboxDisplay = false;
 }
 
 function set_on ()
