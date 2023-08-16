@@ -11,8 +11,6 @@ class X3DPrototypeInstanceTool extends X3DNodeTool
       this .toolNode .getInnerNode () .addTool ()
    }
 
-   async setup () { }
-
    removeTool ()
    {
       this .toolNode .getInnerNode () .removeTool ()

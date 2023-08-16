@@ -1,10 +1,10 @@
 "use strict"
 
 const
-   X3DNodeTool = require ("../Core/X3DNodeTool"),
-   X3D         = require ("../../X3D")
+   X3DChildNodeTool = require ("../Core/X3DChildNodeTool"),
+   X3D              = require ("../../X3D")
 
-class X3DTransformNodeTool extends X3DNodeTool
+class X3DTransformNodeTool extends X3DChildNodeTool
 {
    async initialize ()
    {

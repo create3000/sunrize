@@ -1,10 +1,10 @@
 "use strict"
 
 const
-   X3DNodeTool = require ("../Core/X3DNodeTool"),
-   X3D         = require ("../../X3D")
+   X3DChildNodeTool = require ("../Core/X3DChildNodeTool"),
+   X3D              = require ("../../X3D")
 
-class SoundTool extends X3DNodeTool
+class SoundTool extends X3DChildNodeTool
 {
    static createOnSelection = false
 
@@ -27,11 +27,6 @@ class SoundTool extends X3DNodeTool
       this .tool .minFront  = this .toolNode ._minFront
       this .tool .maxBack   = this .toolNode ._maxBack
       this .tool .maxFront  = this .toolNode ._maxFront
-   }
-
-   getMustDisplay ()
-   {
-      return true
    }
 }
 

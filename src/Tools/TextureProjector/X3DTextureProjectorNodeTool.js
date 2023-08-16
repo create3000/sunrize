@@ -1,10 +1,10 @@
 "use strict"
 
 const
-   X3DNodeTool = require ("../Core/X3DNodeTool"),
-   X3D         = require ("../../X3D")
+   X3DChildNodeTool = require ("../Core/X3DChildNodeTool"),
+   X3D              = require ("../../X3D")
 
-class X3DTextureProjectorNodeTool extends X3DNodeTool
+class X3DTextureProjectorNodeTool extends X3DChildNodeTool
 {
    static createOnSelection = false
 
@@ -25,11 +25,6 @@ class X3DTextureProjectorNodeTool extends X3DNodeTool
       this .tool .direction = this .toolNode ._direction
       this .tool .upVector  = this .toolNode ._upVector
       // this .tool .texture   = this .toolNode ._texture
-   }
-
-   getMustDisplay ()
-   {
-      return true
    }
 }
 

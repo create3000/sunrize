@@ -80,14 +80,14 @@ class X3DNodeTool
    {
       await this .initialize ()
 
+      if (!this .tool)
+         return
+
       this .toolInnerNode  = this .tool .getValue () .getInnerNode ()
       this .tool .selected = this .toolSelected
    }
 
-   async initialize (... args)
-   {
-      await this .loadTool (... args)
-   }
+   async initialize () { }
 
    addTool ()
    {
@@ -155,17 +155,6 @@ class X3DNodeTool
    valueOf ()
    {
       return this .toolNode .valueOf ()
-   }
-
-   traverse (type, renderObject)
-   {
-      this .toolNode .traverse (type, renderObject)
-
-      renderObject .getHumanoids () .push (null)
-
-      this .toolInnerNode ?.traverse (type, renderObject)
-
-      renderObject .getHumanoids () .pop ()
    }
 
    dispose ()
