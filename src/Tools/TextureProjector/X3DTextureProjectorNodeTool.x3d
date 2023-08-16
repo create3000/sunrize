@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/TextureProjector/X3DTextureProjectorNodeTool.x3d'/>
-    <meta name='modified' content='Wed, 16 Aug 2023 15:09:05 GMT'/>
+    <meta name='modified' content='Wed, 16 Aug 2023 15:31:18 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -206,12 +206,12 @@
 
 async function initialize ()
 {
-   textureMaterial .getValue () .setPrivate (true);
-
    const tool = await transform .getValue () .addTool ?.() .getToolInstance ();
 
    if (!tool)
       return
+
+   textureMaterial .getValue () .setPrivate (true);
 
    tool .bboxDisplay = false;
 }
