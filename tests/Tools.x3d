@@ -14,7 +14,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/tests/Tools.x3d'/>
-    <meta name='modified' content='Wed, 16 Aug 2023 00:19:32 GMT'/>
+    <meta name='modified' content='Wed, 16 Aug 2023 09:50:31 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='Test'>
@@ -101,6 +101,6 @@
     </Group>
     <Sound
         location='0 2 0'
-        direction='-1 0 0'/>
+        direction='1 0 1'/>
   </Scene>
 </X3D>

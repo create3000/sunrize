@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Sound/SoundTool.x3d'/>
-    <meta name='modified' content='Tue, 15 Aug 2023 23:32:01 GMT'/>
+    <meta name='modified' content='Wed, 16 Aug 2023 09:55:04 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -53,15 +53,18 @@
                       <ProtoInstance name='ToolShader' DEF='_2' containerField='shaders'/>
                     </Appearance>
                     <Cone
+                        bottom='false'
                         height='20'
-                        bottomRadius='24'/>
+                        bottomRadius='24'
+                        solid='false'/>
                   </Shape>
                 </Transform>
-                <Transform DEF='Cylinder'>
+                <Transform DEF='Cylinder'
+                    translation='0 5 0'>
                   <Shape>
                     <Appearance USE='_1'/>
                     <Cylinder
-                        height='20'
+                        height='10'
                         radius='12'/>
                   </Shape>
                 </Transform>
@@ -243,5 +246,6 @@ function set_maxRange ()
         <ROUTE fromNode='SoundScript' fromField='rotation_changed' toNode='Sound' toField='set_rotation'/>
       </ProtoBody>
     </ProtoDeclare>
+    <ProtoInstance name='Tool'/>
   </Scene>
 </X3D>
