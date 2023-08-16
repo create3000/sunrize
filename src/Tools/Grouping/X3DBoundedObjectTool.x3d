@@ -9,7 +9,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Grouping/X3DBoundedObjectTool.x3d'/>
-    <meta name='modified' content='Wed, 16 Aug 2023 10:15:18 GMT'/>
+    <meta name='modified' content='Wed, 16 Aug 2023 12:03:56 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -217,6 +217,11 @@
           </IS>
 <![CDATA[ecmascript:
 
+function initialize ()
+{
+   eventsProcessed ();
+}
+
 function eventsProcessed ()
 {
    var bboxSize1_2 = bboxSize .divide (2);
@@ -272,6 +277,11 @@ function eventsProcessed ()
           </IS>
 <![CDATA[ecmascript:
 
+function initialize ()
+{
+   eventsProcessed ();
+}
+
 function eventsProcessed ()
 {
    // Position arrows
@@ -299,6 +309,11 @@ function eventsProcessed ()
           </IS>
 <![CDATA[ecmascript:
 
+function initialize ()
+{
+   eventsProcessed ();
+}
+
 function eventsProcessed ()
 {
    coord .point [0] = center;
@@ -320,6 +335,11 @@ function eventsProcessed ()
             <connect nodeField='vector' protoField='axisOfRotation'/>
           </IS>
 <![CDATA[ecmascript:
+
+function initialize ()
+{
+   eventsProcessed ();
+}
 
 function eventsProcessed ()
 {
