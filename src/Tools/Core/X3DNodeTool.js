@@ -51,7 +51,7 @@ const handler =
    },
    getPrototypeOf (target)
    {
-      return Object .getPrototypeOf (target .toolNode);
+      return Object .getPrototypeOf (target .toolNode)
    },
 }
 
@@ -121,7 +121,7 @@ class X3DNodeTool
 
    removeTool ()
    {
-      const nodesToDispose = [ ];
+      const nodesToDispose = [ ]
 
       Traverse .traverse (this .tool, Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES, node => nodesToDispose .push (node))
 
