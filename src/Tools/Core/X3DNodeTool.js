@@ -112,7 +112,7 @@ class X3DNodeTool
    {
       const
          protoURL = url .pathToFileURL (path .resolve (... args)),
-         scene    = X3DNodeTool .scenes .get (protoURL .href)
+         scene    = await X3DNodeTool .scenes .get (protoURL .href)
 
       if (scene)
       {
@@ -120,16 +120,30 @@ class X3DNodeTool
       }
       else
       {
-         const scene = await this .toolNode .getBrowser () .createX3DFromURL (new X3D .MFString (protoURL))
+         const promise = new Promise (async (resolve, reject) =>
+         {
+            try
+            {
+               const scene = await this .toolNode .getBrowser () .createX3DFromURL (new X3D .MFString (protoURL))
 
-         X3DNodeTool .scenes .set (protoURL .href, scene)
+               scene .setLive (true)
 
-         scene .setLive (true)
+               for (const externproto of scene .externprotos)
+                  await externproto .requestImmediateLoad ()
 
-         for (const externproto of scene .externprotos)
-            await externproto .requestImmediateLoad ()
+               this .tool = scene .createProto ("Tool")
 
-         this .tool = scene .createProto ("Tool")
+               resolve (scene)
+            }
+            catch (error)
+            {
+               reject (error)
+            }
+         })
+
+         X3DNodeTool .scenes .set (protoURL .href, promise)
+
+         await promise
       }
    }
 
