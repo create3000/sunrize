@@ -152,7 +152,7 @@ class X3DNodeTool
 
       if (promise)
       {
-         return this .toolPromise = promise .then (scene => this .tool = scene .createProto ("Tool"))
+         return this .toolPromise = promise .then (scene => this .tool = this .createTool (scene))
       }
       else
       {
@@ -167,7 +167,7 @@ class X3DNodeTool
                for (const externproto of scene .externprotos)
                   await externproto .requestImmediateLoad ()
 
-               this .tool = scene .createProto ("Tool")
+               this .tool = this .createTool (scene)
 
                resolve (scene)
             }
@@ -181,6 +181,15 @@ class X3DNodeTool
 
          return this .toolPromise = promise
       }
+   }
+
+   createTool (scene)
+   {
+      const tool = scene .createProto ("Tool")
+
+      tool .getValue () .setPrivate (true)
+
+      return tool
    }
 
    addExternalNode (field)

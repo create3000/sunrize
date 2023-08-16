@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/TextureProjector/X3DTextureProjectorNodeTool.x3d'/>
-    <meta name='modified' content='Wed, 16 Aug 2023 14:49:22 GMT'/>
+    <meta name='modified' content='Wed, 16 Aug 2023 15:09:05 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -128,7 +128,7 @@
               <Shape DEF='Image'
                   castShadow='false'>
                 <Appearance>
-                  <UnlitMaterial
+                  <UnlitMaterial DEF='_8'
                       transparency='0.75'>
                     <IS>
                       <connect nodeField='emissiveTexture' protoField='texture'/>
@@ -177,8 +177,11 @@
           <field accessType='initializeOnly' type='SFNode' name='frustum'>
             <Coordinate USE='_6'/>
           </field>
-          <field accessType='initializeOnly' type='SFNode' name='material'>
+          <field accessType='initializeOnly' type='SFNode' name='frustumMaterial'>
             <Material USE='_2'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='textureMaterial'>
+            <UnlitMaterial USE='_8'/>
           </field>
           <field accessType='initializeOnly' type='SFNode' name='transform'>
             <Transform USE='TransformTool'/>
@@ -203,6 +206,8 @@
 
 async function initialize ()
 {
+   textureMaterial .getValue () .setPrivate (true);
+
    const tool = await transform .getValue () .addTool ?.() .getToolInstance ();
 
    if (!tool)
@@ -213,7 +218,7 @@ async function initialize ()
 
 function set_selected ()
 {
-   material .emissiveColor = selected
+   frustumMaterial .emissiveColor = selected
       ? new SFColor (0.1, 0.1, 0.1)
       : new SFColor ();
 }
