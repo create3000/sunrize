@@ -445,7 +445,9 @@ module .exports = class OutlineView extends Interface
          if (!node ?.getNodeUserData (_changing))
             continue
 
-         setTimeout (() => node .setNodeUserData (_changing, false))
+         const nodes = Array .from (scene .rootNodes)
+
+         setTimeout (() => nodes .forEach (n => n .setNodeUserData (_changing, false)))
          return
       }
 
@@ -1591,7 +1593,9 @@ module .exports = class OutlineView extends Interface
                if (!node ?.getNodeUserData (_changing))
                   continue
 
-               setTimeout (() => node .setNodeUserData (_changing, false))
+               const nodes = Array .from (field)
+
+               setTimeout (() => nodes .forEach (n => n .setNodeUserData (_changing, false)))
                return
             }
 
