@@ -206,12 +206,7 @@ Object .assign (X3D .X3DNode .prototype,
       if (!Tool [action])
          return this
 
-      const tool = this .getUserData (_tool)
-
-      if (tool)
-         return tool
-
-      return new Tool (this)
+      return this .getUserData (_tool) ?? new Tool (this)
    },
    removeTool ()
    {
