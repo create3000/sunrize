@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/TextureProjector/X3DTextureProjectorNodeTool.x3d'/>
-    <meta name='modified' content='Wed, 16 Aug 2023 11:01:26 GMT'/>
+    <meta name='modified' content='Wed, 16 Aug 2023 11:28:17 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -53,10 +53,10 @@
                     translation='0 0 15'
                     rotation='1 0 0 90'>
                   <Shape>
-                    <Appearance>
-                      <Material
-                          diffuseColor='0.2 0.2 0.2'
-                          specularColor='1 1 1'/>
+                    <Appearance DEF='_1'>
+                      <Material DEF='_2'
+                          diffuseColor='0.2705882 0.2705882 0.2705882'
+                          specularColor='0.8627451 0.8588235 0.8588235'/>
                       <ProtoInstance name='ToolShader' containerField='shaders'/>
                     </Appearance>
                     <Cylinder
@@ -68,18 +68,13 @@
                 </Transform>
                 <Transform DEF='Box_1'>
                   <Shape>
-                    <Appearance>
-                      <Material
-                          diffuseColor='0.2 0.2 0.2'
-                          specularColor='1 1 1'/>
-                      <ProtoInstance name='ToolShader' DEF='_1' containerField='shaders'/>
-                    </Appearance>
+                    <Appearance USE='_1'/>
                     <Box
                         size='40 20 30'/>
                   </Shape>
                 </Transform>
                 <Transform DEF='RedLight'
-                    translation='8 12 5'
+                    translation='12 12 5'
                     scale='2.18 2.18 2.18'>
                   <IS>
                     <connect nodeField='visible' protoField='on'/>
@@ -90,7 +85,7 @@
                           diffuseColor='0 0 0'
                           specularColor='1 1 1'
                           emissiveColor='1 0 0'/>
-                      <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
+                      <ProtoInstance name='ToolShader' DEF='_3' containerField='shaders'/>
                     </Appearance>
                     <Cylinder/>
                   </Shape>
@@ -100,25 +95,25 @@
             <Transform DEF='Frustum'>
               <ProtoInstance name='BooleanSwitch'>
                 <fieldValue name='children'>
-                  <Shape DEF='_2'>
+                  <Shape DEF='_4'>
                     <Appearance>
                       <Material
                           emissiveColor='0.5686275 0.5568627 0.4392157'/>
-                      <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
+                      <ProtoInstance name='ToolShader' USE='_3' containerField='shaders'/>
                     </Appearance>
-                    <IndexedLineSet DEF='_3'
+                    <IndexedLineSet DEF='_5'
                         coordIndex='0, 4, -1, 4, 8, -1, 1, 5, -1, 5, 9, -1, 2, 6, -1, 6, 10, -1, 3, 7, -1, 7, 11, -1, 0, 1, 2, 3, 0, -1, 4, 5, 6, 7, 4, -1, 8, 9, 10, 11, 8, -1'>
-                      <Coordinate DEF='_4'
+                      <Coordinate DEF='_6'
                           point='0 0 0, 0 0 0, 0 0 0, 0 0 0, 1 1 1, -1 1 1, -1 -1 1, 1 -1 1, 2 2 2, -2 2 2, -2 -2 2, 2 -2 2'/>
                     </IndexedLineSet>
                   </Shape>
-                  <Shape DEF='_5'>
+                  <Shape DEF='_7'>
                     <Appearance>
                       <Material
                           emissiveColor='1 0.985342 0.807597'/>
-                      <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
+                      <ProtoInstance name='ToolShader' USE='_3' containerField='shaders'/>
                     </Appearance>
-                    <IndexedLineSet USE='_3'/>
+                    <IndexedLineSet USE='_5'/>
                   </Shape>
                 </fieldValue>
                 <IS>
@@ -135,7 +130,7 @@
                     </IS>
                     <Material
                         transparency='0.5'/>
-                    <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
+                    <ProtoInstance name='ToolShader' USE='_3' containerField='shaders'/>
                   </Appearance>
                   <IndexedFaceSet
                       solid='false'
@@ -143,7 +138,7 @@
                       coordIndex='4, 5, 6, 7, -1'>
                     <TextureCoordinate
                         point='1 1, 0 1, 0 0, 1 0'/>
-                    <Coordinate USE='_4'/>
+                    <Coordinate USE='_6'/>
                   </IndexedFaceSet>
                 </Shape>
               </Transform>
@@ -162,6 +157,7 @@
         </Collision>
         <Script DEF='ToolScript'
             directOutput='true'>
+          <field accessType='inputOutput' type='SFBool' name='selected'/>
           <field accessType='inputOutput' type='SFVec3f' name='direction'/>
           <field accessType='inputOutput' type='SFVec3f' name='upVector'/>
           <field accessType='inputOutput' type='SFRotation' name='rotation'/>
@@ -177,7 +173,10 @@
             <Transform USE='Projector'/>
           </field>
           <field accessType='initializeOnly' type='SFNode' name='frustum'>
-            <Coordinate USE='_4'/>
+            <Coordinate USE='_6'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='material'>
+            <Material USE='_2'/>
           </field>
           <field accessType='initializeOnly' type='SFNode' name='transform'>
             <Transform USE='TransformTool'/>
@@ -186,6 +185,7 @@
             <Script USE='ToolScript'/>
           </field>
           <IS>
+            <connect nodeField='selected' protoField='selected'/>
             <connect nodeField='direction' protoField='direction'/>
             <connect nodeField='upVector' protoField='upVector'/>
             <connect nodeField='parallelFieldOfView' protoField='parallelFieldOfView'/>
@@ -207,6 +207,13 @@ async function initialize ()
       return
 
    tool .bboxDisplay = false;
+}
+
+function set_selected ()
+{
+   material .emissiveColor = selected 
+      ? new SFColor (0.1, 0.1, 0.1) 
+      : new SFColor ();
 }
 
 function set_direction ()
@@ -401,6 +408,8 @@ function set_perspective ()
         <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='ToolScript' toField='set_rotation'/>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='Tool'/>
+    <ProtoInstance name='Tool'>
+      <fieldValue name='on' value='true'/>
+    </ProtoInstance>
   </Scene>
 </X3D>

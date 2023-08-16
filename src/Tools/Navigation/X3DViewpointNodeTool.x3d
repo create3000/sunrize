@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Navigation/X3DViewpointNodeTool.x3d'/>
-    <meta name='modified' content='Tue, 15 Aug 2023 23:33:06 GMT'/>
+    <meta name='modified' content='Wed, 16 Aug 2023 11:17:35 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -37,10 +37,10 @@
                     scaleOrientation='-0.0108843975971709 -0.025452394381154 -0.999616779325564 0.785487'>
                   <Shape DEF='_2'>
                     <Appearance DEF='_3'>
-                      <Material
-                          diffuseColor='0.2 0.2 0.2'
-                          specularColor='0.164 0.164 0.164'/>
-                      <ProtoInstance name='ToolShader' DEF='_4' containerField='shaders'/>
+                      <Material DEF='_4'
+                          diffuseColor='0.2705882 0.2705882 0.2705882'
+                          specularColor='0.8627451 0.8588235 0.8588235'/>
+                      <ProtoInstance name='ToolShader' DEF='_5' containerField='shaders'/>
                     </Appearance>
                     <Cylinder/>
                   </Shape>
@@ -84,7 +84,7 @@
                         translation='1.1422e-21 -0.0999999 1.18352'
                         scale='0.709888 0.709874 0.709874'
                         scaleOrientation='-0.999999999999964 2.6894099999999e-8 -2.65377999999991e-7 1.5708'>
-                      <Shape DEF='_5'>
+                      <Shape DEF='_6'>
                         <Appearance USE='_3'/>
                         <Rectangle2D/>
                       </Shape>
@@ -105,7 +105,7 @@
                     </Transform>
                     <Transform DEF='Rectangle2D_1'
                         translation='-6.98802e-20 -0.0862152 1.46945'>
-                      <Shape USE='_5'/>
+                      <Shape USE='_6'/>
                     </Transform>
                   </Transform>
                 </Switch>
@@ -124,7 +124,7 @@
                           specularColor='1 1 1'
                           emissiveColor='1 0 0'
                           shininess='0.15'/>
-                      <ProtoInstance name='ToolShader' USE='_4' containerField='shaders'/>
+                      <ProtoInstance name='ToolShader' USE='_5' containerField='shaders'/>
                     </Appearance>
                     <Cylinder/>
                   </Shape>
@@ -144,14 +144,18 @@
             </ScreenGroup>
           </Transform>
         </Collision>
-        <Script DEF='Tool'
+        <Script DEF='ToolScript'
             directOutput='true'>
+          <field accessType='inputOutput' type='SFBool' name='selected'/>
+          <field accessType='initializeOnly' type='SFNode' name='material'>
+            <Material USE='_4'/>
+          </field>
           <field accessType='initializeOnly' type='SFNode' name='transform'>
             <Transform USE='TransformTool'/>
           </field>
-          <field accessType='inputOutput' type='SFNode' name='self'>
-            <Script USE='Tool'/>
-          </field>
+          <IS>
+            <connect nodeField='selected' protoField='selected'/>
+          </IS>
 <![CDATA[ecmascript:
 
 async function initialize ()
@@ -162,6 +166,13 @@ async function initialize ()
       return
 
    tool .bboxDisplay = false;
+}
+
+function set_selected ()
+{
+   material .emissiveColor = selected 
+      ? new SFColor (0.1, 0.1, 0.1) 
+      : new SFColor ();
 }]]>
         </Script>
         <ROUTE fromNode='TransformTool' fromField='translation_changed' toNode='_1' toField='set_translation'/>
