@@ -8,7 +8,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/EnvironmentalSensor/X3DEnvironmentalSensorNodeTool.x3d'/>
-    <meta name='modified' content='Wed, 16 Aug 2023 10:11:43 GMT'/>
+    <meta name='modified' content='Wed, 16 Aug 2023 14:52:09 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -24,7 +24,8 @@
         <Collision
             enabled='false'>
           <Transform DEF='Box'>
-            <Shape>
+            <Shape
+                castShadow='false'>
               <Appearance>
                 <Material DEF='BoxMaterial'
                     ambientIntensity='0'

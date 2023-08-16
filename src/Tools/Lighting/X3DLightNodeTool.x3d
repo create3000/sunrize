@@ -9,7 +9,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Lighting/X3DLightNodeTool.x3d'/>
-    <meta name='modified' content='Wed, 16 Aug 2023 11:05:44 GMT'/>
+    <meta name='modified' content='Wed, 16 Aug 2023 14:54:19 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -44,7 +44,8 @@
                       translation='0 0 -0.16262'
                       scale='2 2 2'>
                     <Transform DEF='Rays'>
-                      <Shape>
+                      <Shape
+                          castShadow='false'>
                         <Appearance DEF='_2'>
                           <LineProperties
                               linewidthScaleFactor='2'/>
@@ -65,7 +66,8 @@
                     </Transform>
                     <Transform DEF='Box_1'
                         scale='1 0.61803 0.1'>
-                      <Shape>
+                      <Shape
+                          castShadow='false'>
                         <Appearance DEF='_5'>
                           <Material USE='_3'/>
                           <ProtoInstance name='ToolShader' USE='_4' containerField='shaders'/>
@@ -79,7 +81,8 @@
                           rotation='0.999999999993426 3.62584999997617e-6 -1.62382999998933e-10 1.5708'
                           scale='0.15 0.15 0.15'
                           scaleOrientation='0.999999999986306 2.43262999996669e-6 4.63356999993655e-6 0.785354'>
-                        <Shape DEF='_6'>
+                        <Shape DEF='_6'
+                            castShadow='false'>
                           <Appearance USE='_5'/>
                           <Cone
                               height='3'/>
@@ -146,7 +149,8 @@
                   <Transform DEF='PointLight'>
                     <Transform DEF='Ray1'
                         scale='2 2 2'>
-                      <Shape DEF='_7'>
+                      <Shape DEF='_7'
+                          castShadow='false'>
                         <Appearance USE='_2'/>
                         <IndexedLineSet
                             coordIndex='0, 1, -1, 2, 3, -1, 4, 5, -1'>
@@ -167,7 +171,8 @@
                         scaleOrientation='-0.985767661913664 0.161218944707131 -0.0476504836574296 0.470038'>
                       <Shape USE='_7'/>
                     </Transform>
-                    <Shape DEF='Sphere'>
+                    <Shape DEF='Sphere'
+                        castShadow='false'>
                       <Appearance USE='_5'/>
                       <Sphere/>
                     </Shape>
@@ -178,7 +183,8 @@
                           translation='0 0 -0.373349'
                           rotation='1 0 0 4.71239'
                           scale='1.70236 1.70236 1.70236'>
-                        <Shape>
+                        <Shape
+                            castShadow='false'>
                           <Appearance USE='_2'/>
                           <IndexedLineSet
                               coordIndex='0, 1, 2, 0, -1, 2, 3, 0, -1, 3, 4, 0, -1, 4, 5, 0, -1, 5, 6, 0, -1, 6, 7, 0, -1, 7, 8, 0, -1, 8, 9, 0, -1, 9, 10, 0, -1, 10, 11, 0, -1, 11, 12, 0, -1, 12, 13, 0, -1, 13, 14, 0, -1, 14, 15, 0, -1, 15, 16, 0, -1, 16, 17, 0, -1, 17, 18, 0, -1, 18, 19, 0, -1, 19, 20, 0, -1, 20, 21, 0, -1, 21, 22, 0, -1, 22, 23, 0, -1, 23, 24, 0, -1, 24, 25, 0, -1, 25, 26, 0, -1, 26, 27, 0, -1, 27, 28, 0, -1, 28, 29, 0, -1, 29, 30, 0, -1, 30, 31, 0, -1, 31, 32, 0, -1, 32, 1, -1'>
@@ -190,13 +196,15 @@
                     </Transform>
                     <Transform DEF='Bulb'
                         translation='0 0 1.46147'>
-                      <Shape DEF='Sphere_1'>
+                      <Shape DEF='Sphere_1'
+                          castShadow='false'>
                         <Appearance USE='_5'/>
                         <Sphere/>
                       </Shape>
                       <Transform DEF='Ray1_1'
                           scale='2 2 2'>
-                        <Shape>
+                        <Shape
+                            castShadow='false'>
                           <Appearance USE='_2'/>
                           <IndexedLineSet
                               coordIndex='0, 1, -1, 2, 3, -1, 4, 5, -1'>
@@ -209,7 +217,8 @@
                           rotation='0.28108510281603 -0.678597248219043 -0.678599248219775 1.09606'
                           scale='2 2 2'
                           scaleOrientation='0.747418900311875 -0.663392911518968 0.035704795237819 1.19385'>
-                        <Shape>
+                        <Shape
+                            castShadow='false'>
                           <Appearance USE='_2'/>
                           <IndexedLineSet
                               coordIndex='0, 1, -1, 2, 3, -1, 4, 5, -1'>
@@ -222,7 +231,8 @@
                           rotation='-0.281083991080502 0.678599978466327 -0.678596978466422 1.09606'
                           scale='2 2 2'
                           scaleOrientation='-0.805953410514892 -0.138029070305539 0.575662293215391 0.849512'>
-                        <Shape>
+                        <Shape
+                            castShadow='false'>
                           <Appearance USE='_2'/>
                           <IndexedLineSet
                               coordIndex='0, 1, -1, 2, 3, -1, 4, 5, -1'>

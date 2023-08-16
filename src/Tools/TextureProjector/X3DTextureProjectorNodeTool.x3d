@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/TextureProjector/X3DTextureProjectorNodeTool.x3d'/>
-    <meta name='modified' content='Wed, 16 Aug 2023 14:00:36 GMT'/>
+    <meta name='modified' content='Wed, 16 Aug 2023 14:49:22 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -52,7 +52,8 @@
                 <Transform DEF='Cylinder'
                     translation='0 0 15'
                     rotation='1 0 0 90'>
-                  <Shape>
+                  <Shape
+                      castShadow='false'>
                     <Appearance DEF='_1'>
                       <Material DEF='_2'
                           diffuseColor='0.2705882 0.2705882 0.2705882'
@@ -67,7 +68,8 @@
                   </Shape>
                 </Transform>
                 <Transform DEF='Box_1'>
-                  <Shape>
+                  <Shape
+                      castShadow='false'>
                     <Appearance USE='_1'/>
                     <Box
                         size='40 20 30'/>
@@ -79,7 +81,8 @@
                   <IS>
                     <connect nodeField='visible' protoField='on'/>
                   </IS>
-                  <Shape>
+                  <Shape
+                      castShadow='false'>
                     <Appearance>
                       <Material
                           diffuseColor='0 0 0'
@@ -95,7 +98,8 @@
             <Transform DEF='Frustum'>
               <ProtoInstance name='BooleanSwitch'>
                 <fieldValue name='children'>
-                  <Shape DEF='_4'>
+                  <Shape DEF='_4'
+                      castShadow='false'>
                     <Appearance>
                       <Material
                           emissiveColor='0.5686275 0.5568627 0.4392157'/>
@@ -107,7 +111,8 @@
                           point='0 0 0, 0 0 0, 0 0 0, 0 0 0, 1 1 1, -1 1 1, -1 -1 1, 1 -1 1, 2 2 2, -2 2 2, -2 -2 2, 2 -2 2'/>
                     </IndexedLineSet>
                   </Shape>
-                  <Shape DEF='_7'>
+                  <Shape DEF='_7'
+                      castShadow='false'>
                     <Appearance>
                       <Material
                           emissiveColor='1 0.985342 0.807597'/>
@@ -120,7 +125,8 @@
                   <connect nodeField='whichChoice' protoField='selected'/>
                 </IS>
               </ProtoInstance>
-              <Shape DEF='Image'>
+              <Shape DEF='Image'
+                  castShadow='false'>
                 <Appearance>
                   <UnlitMaterial
                       transparency='0.75'>
@@ -277,6 +283,10 @@ function set_parallelAspectRatio ()
 
 function set_parallel ()
 {
+  const
+    nearDistance = parallelNearDistance === -1 ? 0.125 : parallelNearDistance,
+    farDistance  = parallelFarDistance === -1 ? 100_000 : parallelFarDistance;
+
    const
       fov    = parallelFieldOfView,
       minX   = fov .length > 0 ? fov [0] : -1,
@@ -332,15 +342,15 @@ function set_parallel ()
       frustum .point [3] = new SFVec3f ();
    }
 
-   frustum .point [4] = new SFVec3f (x2, y2, parallelNearDistance);
-   frustum .point [5] = new SFVec3f (x1, y2, parallelNearDistance);
-   frustum .point [6] = new SFVec3f (x1, y1, parallelNearDistance);
-   frustum .point [7] = new SFVec3f (x2, y1, parallelNearDistance);
+   frustum .point [4] = new SFVec3f (x2, y2, nearDistance);
+   frustum .point [5] = new SFVec3f (x1, y2, nearDistance);
+   frustum .point [6] = new SFVec3f (x1, y1, nearDistance);
+   frustum .point [7] = new SFVec3f (x2, y1, nearDistance);
 
-   frustum .point [8]  = new SFVec3f (x2, y2, parallelFarDistance);
-   frustum .point [9]  = new SFVec3f (x1, y2, parallelFarDistance);
-   frustum .point [10] = new SFVec3f (x1, y1, parallelFarDistance);
-   frustum .point [11] = new SFVec3f (x2, y1, parallelFarDistance);
+   frustum .point [8]  = new SFVec3f (x2, y2, farDistance);
+   frustum .point [9]  = new SFVec3f (x1, y2, farDistance);
+   frustum .point [10] = new SFVec3f (x1, y1, farDistance);
+   frustum .point [11] = new SFVec3f (x2, y1, farDistance);
 }
 
 function set_perspectiveFieldOfView ()
@@ -365,13 +375,17 @@ function set_perspectiveAspectRatio ()
 
 function set_perspective ()
 {
+  const
+    nearDistance = perspectiveNearDistance === -1 ? 0.125 : perspectiveNearDistance,
+    farDistance  = perspectiveFarDistance === -1 ? 100_000 : perspectiveFarDistance;
+
    let fov = perspectiveFieldOfView;
 
    fov = fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
 
    const
-      n = Math .tan (fov / 2) * perspectiveNearDistance,
-      f = Math .tan (fov / 2) * perspectiveFarDistance;
+      n = Math .tan (fov / 2) * nearDistance,
+      f = Math .tan (fov / 2) * farDistance;
 
    let
       w = 1,
@@ -387,15 +401,15 @@ function set_perspective ()
    frustum .point [2] = new SFVec3f ();
    frustum .point [3] = new SFVec3f ();
 
-   frustum .point [4] = new SFVec3f (-n * w,  n * h, perspectiveNearDistance);
-   frustum .point [5] = new SFVec3f ( n * w,  n * h, perspectiveNearDistance);
-   frustum .point [6] = new SFVec3f ( n * w, -n * h, perspectiveNearDistance);
-   frustum .point [7] = new SFVec3f (-n * w, -n * h, perspectiveNearDistance);
+   frustum .point [4] = new SFVec3f (-n * w,  n * h, nearDistance);
+   frustum .point [5] = new SFVec3f ( n * w,  n * h, nearDistance);
+   frustum .point [6] = new SFVec3f ( n * w, -n * h, nearDistance);
+   frustum .point [7] = new SFVec3f (-n * w, -n * h, nearDistance);
 
-   frustum .point [8]  = new SFVec3f (-f * w,  f * h, perspectiveFarDistance);
-   frustum .point [9]  = new SFVec3f ( f * w,  f * h, perspectiveFarDistance);
-   frustum .point [10] = new SFVec3f ( f * w, -f * h, perspectiveFarDistance);
-   frustum .point [11] = new SFVec3f (-f * w, -f * h, perspectiveFarDistance);
+   frustum .point [8]  = new SFVec3f (-f * w,  f * h, farDistance);
+   frustum .point [9]  = new SFVec3f ( f * w,  f * h, farDistance);
+   frustum .point [10] = new SFVec3f ( f * w, -f * h, farDistance);
+   frustum .point [11] = new SFVec3f (-f * w, -f * h, farDistance);
 }
 ]]>
         </Script>

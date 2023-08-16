@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Navigation/X3DViewpointNodeTool.x3d'/>
-    <meta name='modified' content='Wed, 16 Aug 2023 11:17:35 GMT'/>
+    <meta name='modified' content='Wed, 16 Aug 2023 14:50:39 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -35,7 +35,8 @@
                     translation='0 0.51224 0.129679'
                     rotation='6.52104999995729e-10 -3.61946999997629e-6 0.99999999999345 4.71239'
                     scaleOrientation='-0.0108843975971709 -0.025452394381154 -0.999616779325564 0.785487'>
-                  <Shape DEF='_2'>
+                  <Shape DEF='_2'
+                      castShadow='false'>
                     <Appearance DEF='_3'>
                       <Material DEF='_4'
                           diffuseColor='0.2705882 0.2705882 0.2705882'
@@ -55,7 +56,8 @@
                 <Transform DEF='Box_1'
                     translation='-2.8327e-21 -0.13107 -0.550901'
                     scale='1 1.22448 1.25897'>
-                  <Shape>
+                  <Shape
+                      castShadow='false'>
                     <Appearance USE='_3'/>
                     <Box/>
                   </Shape>
@@ -70,7 +72,8 @@
                         rotation='0.999999999993201 3.68565999997494e-6 1.20211999999183e-7 4.71239'
                         scale='1.22447 1.22447 1.22447'
                         scaleOrientation='0.997968674291363 0.0016424394639544 0.0636853792149007 0.198092'>
-                      <Shape>
+                      <Shape
+                          castShadow='false'>
                         <Appearance USE='_3'/>
                         <IndexedFaceSet DEF='Cube'
                             solid='false'
@@ -84,7 +87,8 @@
                         translation='1.1422e-21 -0.0999999 1.18352'
                         scale='0.709888 0.709874 0.709874'
                         scaleOrientation='-0.999999999999964 2.6894099999999e-8 -2.65377999999991e-7 1.5708'>
-                      <Shape DEF='_6'>
+                      <Shape DEF='_6'
+                          castShadow='false'>
                         <Appearance USE='_3'/>
                         <Rectangle2D/>
                       </Shape>
@@ -93,7 +97,8 @@
                   <Transform DEF='OrthoViewpoint'>
                     <Transform DEF='Box_2'
                         translation='5.50571e-21 -0.0862152 1.44525'>
-                      <Shape>
+                      <Shape
+                          castShadow='false'>
                         <Appearance USE='_3'/>
                         <IndexedFaceSet DEF='Cube_1'
                             solid='false'
@@ -117,7 +122,8 @@
                   <IS>
                     <connect nodeField='visible' protoField='bound'/>
                   </IS>
-                  <Shape>
+                  <Shape
+                      castShadow='false'>
                     <Appearance>
                       <Material
                           diffuseColor='0 0 0'
