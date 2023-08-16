@@ -440,6 +440,14 @@ module .exports = class Application
                   visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
                },
                {
+                  label: "Reload Tab",
+                  visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
+                  click: () =>
+                  {
+                     this .mainWindow .webContents .send ("reload")
+                  },
+               },
+               {
                   label: "Toggle Tab Developer Tools",
                   visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
                   click: () =>
