@@ -126,6 +126,9 @@ class X3DNodeTool
 
          scene .setLive (true)
 
+         for (const externproto of scene .externprotos)
+            await externproto .requestImmediateLoad ()
+
          this .tool = scene .createProto ("Tool")
       }
    }
