@@ -107,7 +107,7 @@ class X3DNodeTool
          this .tool .selected = value
    }
 
-   async getProto ()
+   async getToolInstance ()
    {
       await this .toolPromise
 

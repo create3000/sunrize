@@ -287,7 +287,7 @@
 
 async function initialize ()
 {
-   const tool = await transform .getValue () .addTool ?.() .getProto ();
+   const tool = await transform .getValue () .addTool ?.() .getToolInstance ();
 
    if (!tool)
       return
@@ -298,7 +298,7 @@ async function initialize ()
 function set_selected ()
 {
    emissiveStrength = selected ? 1 : 0.5;
-   
+
    set_material ()
 }
 

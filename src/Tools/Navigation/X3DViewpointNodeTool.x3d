@@ -160,7 +160,7 @@
 
 async function initialize ()
 {
-   const tool = await transform .getValue () .addTool ?.() .getProto ();
+   const tool = await transform .getValue () .addTool ?.() .getToolInstance ();
 
    if (!tool)
       return
@@ -170,8 +170,8 @@ async function initialize ()
 
 function set_selected ()
 {
-   material .emissiveColor = selected 
-      ? new SFColor (0.1, 0.1, 0.1) 
+   material .emissiveColor = selected
+      ? new SFColor (0.1, 0.1, 0.1)
       : new SFColor ();
 }]]>
         </Script>
