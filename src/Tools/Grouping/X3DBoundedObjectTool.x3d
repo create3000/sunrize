@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Grouping/X3DBoundedObjectTool.x3d'/>
-    <meta name='modified' content='Thu, 17 Aug 2023 23:22:23 GMT'/>
+    <meta name='modified' content='Thu, 17 Aug 2023 23:58:26 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -76,12 +76,12 @@
               <IS>
                 <connect nodeField='visible' protoField='xAxisDisplay'/>
               </IS>
-              <Appearance>
-                <UnlitMaterial
-                    emissiveColor='1 0 0'/>
-              </Appearance>
               <IndexedLineSet
+                  colorPerVertex='false'
+                  colorIndex='0'
                   coordIndex='0, 1, -1'>
+                <Color DEF='_1'
+                    color='1 0 0, 0 1 0, 0 0 1'/>
                 <Coordinate DEF='AxesCoord'
                     point='0 0 0, 0.5 0 0, 0 0.5 0, 0 0 0.5, 0 0 0'/>
               </IndexedLineSet>
@@ -91,12 +91,11 @@
               <IS>
                 <connect nodeField='visible' protoField='yAxisDisplay'/>
               </IS>
-              <Appearance>
-                <UnlitMaterial
-                    emissiveColor='0 1 0'/>
-              </Appearance>
               <IndexedLineSet
+                  colorPerVertex='false'
+                  colorIndex='1'
                   coordIndex='0, 2, -1'>
+                <Color USE='_1'/>
                 <Coordinate USE='AxesCoord'/>
               </IndexedLineSet>
             </Shape>
@@ -105,12 +104,11 @@
               <IS>
                 <connect nodeField='visible' protoField='zAxisDisplay'/>
               </IS>
-              <Appearance>
-                <UnlitMaterial
-                    emissiveColor='0 0 1'/>
-              </Appearance>
               <IndexedLineSet
+                  colorPerVertex='false'
+                  colorIndex='2'
                   coordIndex='0, 3, -1'>
+                <Color USE='_1'/>
                 <Coordinate USE='AxesCoord'/>
               </IndexedLineSet>
             </Shape>
@@ -133,7 +131,7 @@
                     <Appearance DEF='Red'>
                       <Material
                           diffuseColor='1 0 0'/>
-                      <ProtoInstance name='ToolShader' DEF='_1' containerField='shaders'/>
+                      <ProtoInstance name='ToolShader' DEF='_2' containerField='shaders'/>
                     </Appearance>
                     <Cone DEF='Arrow'
                         height='12'
@@ -155,7 +153,7 @@
                     <Appearance DEF='Green'>
                       <Material
                           diffuseColor='0 1 0'/>
-                      <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
+                      <ProtoInstance name='ToolShader' USE='_2' containerField='shaders'/>
                     </Appearance>
                     <Cone USE='Arrow'/>
                   </Shape>
@@ -176,7 +174,7 @@
                     <Appearance DEF='Blue'>
                       <Material
                           diffuseColor='0 0 1'/>
-                      <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
+                      <ProtoInstance name='ToolShader' USE='_2' containerField='shaders'/>
                     </Appearance>
                     <Cone USE='Arrow'/>
                   </Shape>
@@ -203,7 +201,7 @@
                     point='0 0 0, 0 0 0'/>
               </IndexedLineSet>
             </Shape>
-            <Transform DEF='_2'>
+            <Transform DEF='_3'>
               <IS>
                 <connect nodeField='translation' protoField='center'/>
               </IS>
@@ -213,7 +211,7 @@
                   <Appearance>
                     <Material
                         diffuseColor='1 1 0'/>
-                    <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
+                    <ProtoInstance name='ToolShader' USE='_2' containerField='shaders'/>
                   </Appearance>
                   <Sphere
                       radius='5'/>
@@ -238,7 +236,7 @@
                     linewidthScaleFactor='2'/>
                 <Material DEF='BBoxMaterial_1'
                     emissiveColor='0 1 0'/>
-                <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
+                <ProtoInstance name='ToolShader' USE='_2' containerField='shaders'/>
               </Appearance>
               <IndexedLineSet
                   coordIndex='0, 1, 2, 3, 0, -1'>
@@ -378,7 +376,7 @@ function eventsProcessed ()
           <field accessType='inputOutput' type='SFVec3f' name='vector'/>
           <field accessType='initializeOnly' type='SFVec3f' name='zAxis' value='0 0 1'/>
           <field accessType='initializeOnly' type='SFNode' name='transform'>
-            <Transform USE='_2'/>
+            <Transform USE='_3'/>
           </field>
           <field accessType='initializeOnly' type='SFNode' name='inline'>
             <Inline USE='Vector'/>
