@@ -93,8 +93,7 @@ module .exports = class Console extends Interface
 
       const Script = this .browser .getConcreteNode ("Script")
 
-      this .scriptNode       = new Script (this .browser .currentScene)
-      this .scriptNode ._url = new X3D .MFString ("ecmascript:")
+      this .scriptNode = new Script (this .browser .currentScene)
 
       this .scriptNode .setup ()
    }
