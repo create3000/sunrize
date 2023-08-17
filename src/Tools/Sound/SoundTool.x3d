@@ -171,9 +171,6 @@
           <field accessType='initializeOnly' type='SFNode' name='material'>
             <Material USE='_2'/>
           </field>
-          <field accessType='initializeOnly' type='SFNode' name='self'>
-            <Script USE='SoundScript'/>
-          </field>
           <IS>
             <connect nodeField='selected' protoField='selected'/>
             <connect nodeField='direction' protoField='direction'/>
@@ -195,8 +192,8 @@ function initialize ()
 
 function set_selected ()
 {
-   material .emissiveColor = selected 
-      ? new SFColor (0.1, 0.1, 0.1) 
+   material .emissiveColor = selected
+      ? new SFColor (0.1, 0.1, 0.1)
       : new SFColor ();
 }
 function set_direction ()
@@ -216,19 +213,19 @@ function set_minFront ()
 
 function set_maxBack ()
 {
-   
+
    set_maxRange ();
 }
 
 function set_maxFront ()
 {
-   
+
    set_maxRange ();
 }
 
 function set_minRange ()
 {
-   const 
+   const
       back  = Math .max (minBack,  0),
       front = Math .max (minFront, 0);
 
@@ -243,11 +240,11 @@ function set_minRange ()
 
 function set_maxRange ()
 {
-   const 
+   const
       back  = Math .max (maxBack,  0),
       front = Math .max (maxFront, 0);
 
-   const 
+   const
       a = (back + front) / 2,
       e = a - back,
       b = Math .sqrt (a * a - e * e);

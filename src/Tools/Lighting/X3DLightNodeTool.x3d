@@ -281,9 +281,6 @@
           <field accessType='initializeOnly' type='SFNode' name='cone'>
             <Transform USE='Cone'/>
           </field>
-          <field accessType='inputOutput' type='SFNode' name='self'>
-            <Script USE='Tool'/>
-          </field>
           <IS>
             <connect nodeField='selected' protoField='selected'/>
             <connect nodeField='on' protoField='on'/>
@@ -349,28 +346,28 @@ function set_direction (value)
 {
    transform .rotation = new SFRotation (new SFVec3f (0, 0, 1), value);
 
-   Browser .deleteRoute (transform, 'rotation', self, 'set_rotation');
-   Browser .addRoute (transform, 'rotation', self, 'set_connectRotation');
+   Browser .deleteRoute (transform, 'rotation', this, 'set_rotation');
+   Browser .addRoute (transform, 'rotation', this, 'set_connectRotation');
 }
 
 function set_rotation (value)
 {
    // light .direction = transform .rotation .multVec (new SFVec3f (0, 0, 1));
 
-   // Browser .deleteRoute (light, 'direction', self, 'set_lightDirection');
-   // Browser .addRoute (light, 'direction', self, 'set_connectLightDirection');
+   // Browser .deleteRoute (light, 'direction', this, 'set_lightDirection');
+   // Browser .addRoute (light, 'direction', this, 'set_connectLightDirection');
 }
 
 function set_connectDirection (value)
 {
-   // Browser .deleteRoute (light, 'direction', self, 'set_connectLightDirection');
-   // Browser .addRoute (light, 'direction', self, 'set_lightDirection');
+   // Browser .deleteRoute (light, 'direction', this, 'set_connectLightDirection');
+   // Browser .addRoute (light, 'direction', this, 'set_lightDirection');
 }
 
 function set_connectRotation (value)
 {
-   Browser .deleteRoute (transform, 'rotation', self, 'set_connectRotation');
-   Browser .addRoute (transform, 'rotation', self, 'set_rotation');
+   Browser .deleteRoute (transform, 'rotation', this, 'set_connectRotation');
+   Browser .addRoute (transform, 'rotation', this, 'set_rotation');
 }
 
 function set_beamWidth ()
