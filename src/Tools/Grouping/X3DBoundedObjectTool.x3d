@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Grouping/X3DBoundedObjectTool.x3d'/>
-    <meta name='modified' content='Thu, 17 Aug 2023 23:16:53 GMT'/>
+    <meta name='modified' content='Thu, 17 Aug 2023 23:22:23 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -411,6 +411,8 @@ function eventsProcessed ()
         </Script>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='Tool'/>
+    <ProtoInstance name='Tool'>
+      <fieldValue name='bboxSize' value='2 3 4'/>
+    </ProtoInstance>
   </Scene>
 </X3D>
