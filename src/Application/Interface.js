@@ -8,6 +8,7 @@ const
    CSS         = require ("../Application/CSS"),
    DataStorage = require ("./DataStorage")
 
+require ("../Tools")
 require ("../Bits/Highlight")
 require ("../Bits/Beep")
 

@@ -168,9 +168,6 @@ async function initialize ()
 {
    const tool = await transform .getValue () .addTool ?.() .getToolInstance ();
 
-   if (!tool)
-      return
-
    tool .bboxDisplay = false;
 }
 

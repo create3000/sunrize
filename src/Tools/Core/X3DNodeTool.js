@@ -3,12 +3,11 @@
 const
    path     = require ("path"),
    url      = require ("url"),
-   fs       = require ("fs"),
-   Traverse = require("../../Application/Traverse"),
-   X3D      = require ("../../X3D")
+   X3D      = require ("../../X3D"),
+   Traverse = require("../../Application/Traverse")
 
 const
-   _tool     = Symbol (),
+   _tool     = Symbol .for ("Sunrize.tool"),
    _changing = Symbol .for ("Sunrize.changing")
 
 const handler =
@@ -215,31 +214,5 @@ class X3DNodeTool
       this .toolNode .dispose ()
    }
 }
-
-Object .assign (X3D .X3DNode .prototype,
-{
-   getTool ()
-   {
-      return this .getUserData (_tool)
-   },
-   addTool (action = "createOnDemand")
-   {
-      const module = path .resolve (__dirname, "..", this .constructor .componentName, this .constructor .typeName + "Tool.js")
-
-      if (!fs .existsSync (module))
-         return this
-
-      const Tool = require (module)
-
-      if (!Tool [action])
-         return this
-
-      return this .getUserData (_tool) ?? new Tool (this)
-   },
-   removeTool ()
-   {
-      return this
-   },
-})
 
 module .exports = X3DNodeTool

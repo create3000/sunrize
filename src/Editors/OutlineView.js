@@ -2653,8 +2653,6 @@ module .exports = class OutlineView extends Interface
 
    toggleTool (event)
    {
-      require ("../Tools")
-
       event .preventDefault ()
       event .stopImmediatePropagation ()
 

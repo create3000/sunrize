@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/TextureProjector/X3DTextureProjectorNodeTool.x3d'/>
-    <meta name='modified' content='Thu, 17 Aug 2023 00:17:59 GMT'/>
+    <meta name='modified' content='Thu, 17 Aug 2023 14:52:41 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -204,9 +204,6 @@
 async function initialize ()
 {
    const tool = await transform .getValue () .addTool ?.() .getToolInstance ();
-
-   if (!tool)
-      return
 
    textureMaterial .getValue () .setPrivate (true);
 
@@ -423,7 +420,7 @@ function set_perspective ()
     <ProtoInstance name='Tool'>
       <fieldValue name='on' value='true'/>
       <fieldValue name='texture'>
-        <PixelTexture DEF='_1'
+        <PixelTexture
             image='2 2 3
               0xff0000 0xff00
               0xff 0xff00ff'/>

@@ -1,5 +1,3 @@
-require ("../Tools")
-
 module .exports = new class Selection
 {
    constructor ()
