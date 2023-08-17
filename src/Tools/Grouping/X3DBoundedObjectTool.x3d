@@ -4,12 +4,13 @@
   <head>
     <component name='Layout' level='2'/>
     <component name='Scripting' level='1'/>
+    <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Grouping/X3DBoundedObjectTool.x3d'/>
-    <meta name='modified' content='Wed, 16 Aug 2023 12:03:56 GMT'/>
+    <meta name='modified' content='Thu, 17 Aug 2023 22:50:31 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -17,6 +18,10 @@
     <ProtoDeclare name='Tool'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
+        <field accessType='inputOutput' type='SFVec3f' name='translation'/>
+        <field accessType='inputOutput' type='SFRotation' name='rotation'/>
+        <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
+        <field accessType='inputOutput' type='SFRotation' name='scaleOrientation'/>
         <field accessType='inputOutput' type='SFVec3f' name='center'/>
         <field accessType='inputOutput' type='SFBool' name='centerDisplay'/>
         <field accessType='inputOutput' type='SFVec3f' name='axisOfRotation'/>
@@ -81,7 +86,7 @@
               <ScreenGroup>
                 <Transform
                     translation='6 0 0'
-                    rotation='0 0 -1 1.5708'>
+                    rotation='0 0 -1 90.0002104591497'>
                   <Shape
                       castShadow='false'>
                     <Appearance DEF='Red'>
@@ -118,7 +123,7 @@
               <ScreenGroup>
                 <Transform
                     translation='0 0 6'
-                    rotation='1 0 0 1.5708'>
+                    rotation='1 0 0 90.0002104591497'>
                   <Shape
                       castShadow='false'>
                     <Appearance DEF='Blue'>
@@ -343,7 +348,7 @@ function initialize ()
 
 function eventsProcessed ()
 {
-   if (vector .x == 0 && vector .y == 0 && vector .z == 0)
+   if (vector .x === 0 && vector .y === 0 && vector .z === 0)
    {
       inline .visible = false;
    }
@@ -359,8 +364,6 @@ function eventsProcessed ()
         </Script>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='Tool'>
-      <fieldValue name='bboxDisplay' value='true'/>
-    </ProtoInstance>
+    <ProtoInstance name='Tool'/>
   </Scene>
 </X3D>
