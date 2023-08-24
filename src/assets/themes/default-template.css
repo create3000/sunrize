@@ -657,6 +657,7 @@ body.dark .ui-widget .library-list .component {
   user-select: none;
   margin: 0;
   padding: 3px 10px;
+  white-space: nowrap;
 }
 
 .node-list > ul > li:nth-child(odd) {
