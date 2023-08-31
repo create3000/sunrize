@@ -652,8 +652,17 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       undoManager .endUndo ()
    }
 
+   /**
+    *
+    * @param {X3DExecutionContext} scene
+    * @param {string} name
+    * @param {UndoManager} undoManager
+    */
    static addComponent (scene, name, undoManager = UndoManager .shared)
    {
+      if (!(scene instanceof X3D .X3DScene))
+         scene = scene .getScene ()
+
       if (scene .hasComponent (name))
          return
 
@@ -672,8 +681,17 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       undoManager .endUndo ()
    }
 
+   /**
+    *
+    * @param {X3DExecutionContext} scene
+    * @param {string} name
+    * @param {UndoManager} undoManager
+    */
    static removeComponent (scene, name, undoManager = UndoManager .shared)
    {
+      if (!(scene instanceof X3D .X3DScene))
+         scene = scene .getScene ()
+
       if (!scene .hasComponent (name))
          return
 
