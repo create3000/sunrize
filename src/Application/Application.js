@@ -87,7 +87,7 @@ module .exports = class Application
       electron .ipcMain .handle ("file-path", async (event, basename) => await this .showSaveDialog (basename))
       electron .ipcMain .handle ("fullname", async () => this .fullname)
 
-      this .fullname = await require ("fullname") ()
+      this .fullname = await (await import ("fullname")) .default ()
 
       await this .updateMenu ()
       await this .createWindow ()
