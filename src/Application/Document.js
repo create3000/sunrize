@@ -37,13 +37,7 @@ module .exports = class Document extends Interface
     */
    async initialize ()
    {
-      await this .browser .loadComponents (this .browser .getComponent ("Grouping"))
-
-      this .browser .updateConcreteNode (require ("../Components/Grouping/StaticGroup"))
-
       await this .restoreFile ()
-
-      UndoManager .shared .addInterest (this, () => this .undoManager ())
 
       // Actions
 
@@ -82,6 +76,8 @@ module .exports = class Document extends Interface
       this .resizeSensor = new ResizeSensor ($("#browser-frame"), this .onresize .bind (this))
 
       // Change undo menu items.
+
+      UndoManager .shared .addInterest (this, () => this .undoManager ())
 
       this .activate ()
    }
@@ -131,11 +127,15 @@ module .exports = class Document extends Interface
 
    async restoreFile ()
    {
-      const id = this .fileId
+      $("body") .addClass ("modal")
 
-      if (id)
+      await this .browser .loadComponents (this .browser .getComponent ("Grouping"))
+
+      this .browser .updateConcreteNode (require ("../Components/Grouping/StaticGroup"))
+
+      if (this .fileId)
       {
-         const contents = this .globalConfig .addNameSpace ("unsaved.") [id]
+         const contents = this .globalConfig .addNameSpace ("unsaved.") [this .fileId]
 
          if (contents)
             await this .loadURL (encodeURI (`data:model/x3d,${contents}`))
@@ -150,6 +150,8 @@ module .exports = class Document extends Interface
 
          await this .loadURL (fileURL)
       }
+
+      $("body") .removeClass ("modal")
    }
 
    /**
