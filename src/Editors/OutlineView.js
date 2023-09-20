@@ -2645,7 +2645,8 @@ module .exports = class OutlineView extends Interface
 
       node .setHidden (hidden)
 
-      target
+      this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
+         .find ("> .item .visibility")
          .removeClass ("off")
          .addClass (hidden ? "off" : "")
          .text (hidden ? "visibility_off" : "visibility")
@@ -2672,7 +2673,8 @@ module .exports = class OutlineView extends Interface
          node .getTool () .setSelected (element .hasClass ("selected"))
       }
 
-      target
+      this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
+         .find ("> .item .tool")
          .removeClass ("off")
          .addClass (tool ? "off" : "")
    }
