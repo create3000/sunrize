@@ -2621,7 +2621,7 @@ module .exports = class OutlineView extends Interface
          selection = require ("../Application/Selection"),
          nodes     = this .sceneGraph .find (".primary, .selected")
 
-      nodes .removeClass ("primary") .removeClass ("selected")
+      nodes .removeClass (["primary", "selected"])
 
       for (const element of nodes)
          this .getNode ($(element)) .setUserData (_primary, false)
@@ -2799,7 +2799,7 @@ module .exports = class OutlineView extends Interface
          }
          else
          {
-            element .addClass (["primary", "selected"])
+            element .addClass ("primary")
             elements .addClass ("selected")
          }
 
@@ -2817,7 +2817,7 @@ module .exports = class OutlineView extends Interface
          node .setUserData (_selected, true)
 
          selectedElements .removeClass ("selected")
-         element .addClass (["primary", "selected"])
+         element .addClass ("primary")
          elements .addClass ("selected")
          selection .set (node)
       }

@@ -551,7 +551,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    deleteNodes ()
    {
       const
-         primary  = $(".node.primary"),
+         primary   = $(".node.primary"),
          selected  = this .sceneGraph .find (".node.selected"),
          selection = selected .filter (primary) .length ? selected : primary,
          ids       = selection .map (function () { return this .id }) .get ()

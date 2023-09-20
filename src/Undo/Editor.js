@@ -416,11 +416,11 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
             const children = new Set ()
 
-            Traverse .traverse (nodesToRemove, Traverse .ROOT_NODES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY, node => { children .add (node) })
+            Traverse .traverse (nodesToRemove, Traverse .ROOT_NODES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY, node => { children .add (node .valueOf ()) })
 
             // Remove nodes still in scene graph.
 
-            Traverse .traverse (executionContext, Traverse .ROOT_NODES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY, node => { children .delete (node) })
+            Traverse .traverse (executionContext, Traverse .ROOT_NODES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY, node => { children .delete (node .valueOf ()) })
 
             if (children .size === 0)
                continue
