@@ -6,7 +6,6 @@ const
    url          = require ("url"),
    util         = require ("util"),
    jstree       = require ("jstree"),
-   ResizeSensor = require ("css-element-queries/src/ResizeSensor"),
    X3D          = require ("../X3D"),
    Interface    = require ("../Application/Interface"),
    ActionKeys   = require ("../Application/ActionKeys"),
@@ -44,7 +43,9 @@ module .exports = class OutlineView extends Interface
          .addClass ("tree-view")
          .appendTo (this .outlineEditor)
 
-      this .resizeSensor = new ResizeSensor (this .treeView, this .onresize .bind (this))
+      this .resizeObserver = new ResizeObserver (this .onresize .bind (this))
+
+      this .resizeObserver .observe (this .treeView [0])
 
       this .sceneGraph = $("<div><div/>")
          .addClass (["tree", "scene-graph", "scene"])

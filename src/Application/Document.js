@@ -6,7 +6,6 @@ const
    electron           = require ("electron"),
    fs                 = require ("fs"),
    path               = require ("path"),
-   ResizeSensor       = require ("css-element-queries/src/ResizeSensor"),
    X3D                = require ("../X3D"),
    Interface          = require ("./Interface"),
    Splitter           = require ("../Controls/Splitter"),
@@ -71,9 +70,11 @@ module .exports = class Document extends Interface
          .on ("focusin",  () => this .onfocus ())
          .on ("focusout", () => this .onfocus ())
 
-      this .fullname     = await electron .ipcRenderer .invoke ("fullname")
-      this .browserSize  = require ("../Editors/BrowserSize")
-      this .resizeSensor = new ResizeSensor ($("#browser-frame"), this .onresize .bind (this))
+      this .fullname       = await electron .ipcRenderer .invoke ("fullname")
+      this .browserSize    = require ("../Editors/BrowserSize")
+      this .resizeObserver = new ResizeObserver (this .onresize .bind (this))
+
+      this .resizeObserver .observe ($("#browser-frame") [0])
 
       // Change undo menu items.
 
