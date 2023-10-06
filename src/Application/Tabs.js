@@ -34,7 +34,7 @@ module .exports = new class Tabs
    {
       this .tabs .on ("tab-active", tab =>
       {
-         electron .ipcRenderer .send ("title", tab .title)
+         electron .ipcRenderer .send ("title", tab .getTitle ())
 
          if (tab .url .startsWith ("file:"))
             electron .ipcRenderer .send ("current-file", url .fileURLToPath (tab .url))
@@ -240,6 +240,8 @@ module .exports = new class Tabs
       tab .setTitle ((fileURL .startsWith ("id:") ? _ ("New Scene") : path .basename (decodeURIComponent (new URL (fileURL) .pathname))) + (saved ? "" : "*"))
 
       $(tab .element) .find (".tab-title") .attr ("title", fileURL .startsWith ("id:") ? _ ("Currently still unsaved.") : decodeURI (fileURL))
+
+      electron .ipcRenderer .send ("title", tab .getTitle ())
 
       this .saveTabs ()
    }
