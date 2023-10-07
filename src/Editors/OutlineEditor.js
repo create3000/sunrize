@@ -1717,12 +1717,12 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             destinationParentField = destinationParentFieldElement .hasClass ("scene") ? destinationParentNode .rootNodes : this .getField (destinationParentFieldElement),
             destinationIndex       = parseInt (destinationElement .attr ("index"))
 
-         if (destinationElement .hasClass ("node") && destinationElement .data ("drag-type") ==="drag-after")
+         if (destinationElement .hasClass ("node") && destinationElement .data ("drag-type") === "drag-after")
             ++ destinationIndex
 
          if (destinationElement .attr ("node-id") !== "NULL")
          {
-            if (destinationElement .hasClass ("node") && destinationElement .data ("drag-type") ==="drag-into")
+            if (destinationElement .hasClass ("node") && destinationElement .data ("drag-type") === "drag-into")
             {
                destinationParentNode = this .getNode (destinationElement)
             }
@@ -1867,7 +1867,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             // Adjust matrix.
 
-            if (destinationElement .data ("dropEffect") .match (/copy|move/))
+            if (destinationElement .data ("dropEffect") ?.match (/copy|move/))
             {
                if (sourceNode .getType () .includes (X3D .X3DConstants .X3DTransformNode))
                {
