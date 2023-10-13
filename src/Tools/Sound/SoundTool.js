@@ -14,8 +14,8 @@ class SoundTool extends X3DChildNodeTool
    {
       await super .initialize (__dirname, "SoundTool.x3d")
 
-      this .toolNode ._location  .addFieldInterest (this .tool .location)
-      this .toolNode ._direction .addFieldInterest (this .tool .direction)
+      this .toolNode ._location  .addFieldInterest (this .tool .getField ("location"))
+      this .toolNode ._direction .addFieldInterest (this .tool .getField ("direction"))
       this .toolNode ._minBack   .addFieldInterest (this .tool .getField ("minBack"))
       this .toolNode ._minFront  .addFieldInterest (this .tool .getField ("minFront"))
       this .toolNode ._maxBack   .addFieldInterest (this .tool .getField ("maxBack"))

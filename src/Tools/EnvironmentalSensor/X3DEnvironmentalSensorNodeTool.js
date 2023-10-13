@@ -12,8 +12,8 @@ class X3DEnvironmentalSensorNodeTool extends X3DChildNodeTool
    {
       await super .initialize (__dirname, "X3DEnvironmentalSensorNodeTool.x3d")
 
-      this .toolNode ._size   .addFieldInterest (this .tool .size)
-      this .toolNode ._center .addFieldInterest (this .tool .center)
+      this .toolNode ._size   .addFieldInterest (this .tool .getField ("size"))
+      this .toolNode ._center .addFieldInterest (this .tool .getField ("center"))
 
       this .tool .boxColor = this .toolBoxColor
       this .tool .size     = this .toolNode ._size

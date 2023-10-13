@@ -8,7 +8,7 @@ class DirectionalLightTool extends X3DLightNodeTool
    {
       await super .initialize ()
 
-      this .toolNode ._direction .addFieldInterest (this .tool .direction)
+      this .toolNode ._direction .addFieldInterest (this .tool .getField ("direction"))
 
       this .tool .direction   = this .toolNode ._direction
       this .tool .whichChoice = 0

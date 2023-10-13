@@ -8,7 +8,7 @@ class TextureProjectorParallelTool extends X3DTextureProjectorNodeTool
    {
       await super .initialize ()
 
-      this .toolNode ._fieldOfView  .addFieldInterest (this .tool .parallelFieldOfView)
+      this .toolNode ._fieldOfView  .addFieldInterest (this .tool .getField ("parallelFieldOfView"))
       this .toolNode ._nearDistance .addFieldInterest (this .tool .getField ("parallelNearDistance"))
       this .toolNode ._farDistance  .addFieldInterest (this .tool .getField ("parallelFarDistance"))
       this .toolNode ._aspectRatio  .addFieldInterest (this .tool .getField ("parallelAspectRatio"))
