@@ -29,6 +29,6 @@ Object .assign (X3D .X3DNode .prototype,
    },
    removeTool ()
    {
-      return this
+      return this .getTool () ?.removeTool ()
    },
 })

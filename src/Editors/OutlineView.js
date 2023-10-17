@@ -2764,45 +2764,63 @@ module .exports = class OutlineView extends Interface
    selectNodeElement (element, add = false)
    {
       if (!element .hasClass ("node"))
-         return
+         return;
 
       if (!this .isEditable (element))
-         return
+         return;
 
       const
          selection        = require ("../Application/Selection"),
          selected         = element .hasClass ("manual"),
          selectedElements = this .sceneGraph .find (".primary, .selected"),
          node             = this .getNode (element),
-         elements         = $(`.node[node-id=${node .getId ()}]`)
+         elements         = $(`.node[node-id=${node .getId ()}]`);
 
-      selectedElements .removeClass ("primary")
+      selectedElements .removeClass ("primary");
 
       if (add)
       {
-         node .setUserData (_selected, !selected)
-
          if (selected)
-            element .removeClass (["manual", "selected"]) .addClass ("primary")
+         {
+            if (elements .length === 1)
+            {
+               element .removeClass (["manual", "selected"]);
+            }
+            else
+            {
+               if (elements .filter (".manual") .length === 1)
+                  elements .removeClass (["manual", "selected"]);
+               else
+                  element .removeClass ("manual");
+            }
+         }
          else
-            element .addClass (["primary", "manual", "selected"])
+         {
+            element .addClass (["primary", "manual", "selected"]);
+         }
 
-         if (selected)
-            selection .remove (node)
+         if (elements .filter (".manual") .length)
+         {
+            node .setUserData (_selected, true);
+            selection .add (node);
+         }
          else
-            selection .add (node)
+         {
+            node .setUserData (_selected, false);
+            selection .remove (node);
+         }
       }
       else
       {
          for (const element of selectedElements)
-            this .getNode ($(element)) .setUserData (_selected, false)
+            this .getNode ($(element)) .setUserData (_selected, false);
 
-         node .setUserData (_selected, true)
+         node .setUserData (_selected, true);
 
-         selectedElements .removeClass (["manual", "selected"])
-         element .addClass (["primary", "manual"])
-         elements .addClass ("selected")
-         selection .set (node)
+         selectedElements .removeClass (["manual", "selected"]);
+         element .addClass (["primary", "manual"]);
+         elements .addClass ("selected");
+         selection .set (node);
       }
    }
 
