@@ -15,7 +15,6 @@ const
 const
    _expanded     = Symbol (),
    _fullExpanded = Symbol (),
-   _primary      = Symbol (),
    _selected     = Symbol (),
    _changing     = Symbol .for ("Sunrize.changing")
 
@@ -900,9 +899,6 @@ module .exports = class OutlineView extends Interface
 
       if (node)
       {
-         if (node .getUserData (_primary))
-            classes .push ("primary")
-
          if (node .getUserData (_selected))
             classes .push ("selected")
 
@@ -1210,9 +1206,6 @@ module .exports = class OutlineView extends Interface
       // Classes
 
       const classes = [type]
-
-      if (field .getUserData (_primary))
-         classes .push ("primary")
 
       if (field .hasReferences ())
          classes .push ("references")
@@ -2627,9 +2620,6 @@ module .exports = class OutlineView extends Interface
       nodes .removeClass (["primary", "manual", "selected"])
 
       for (const element of nodes)
-         this .getNode ($(element)) .setUserData (_primary, false)
-
-      for (const element of nodes)
          this .getNode ($(element)) .setUserData (_selected, false)
 
       selection .clear ()
@@ -2786,14 +2776,10 @@ module .exports = class OutlineView extends Interface
          node             = this .getNode (element),
          elements         = $(`.node[node-id=${node .getId ()}]`)
 
-      for (const element of selectedElements)
-         this .getNode ($(element)) .setUserData (_primary, false)
-
       selectedElements .removeClass ("primary")
 
       if (add)
       {
-         node .setUserData (_primary,  true)
          node .setUserData (_selected, !selected)
 
          if (selected)
@@ -2811,7 +2797,6 @@ module .exports = class OutlineView extends Interface
          for (const element of selectedElements)
             this .getNode ($(element)) .setUserData (_selected, false)
 
-         node .setUserData (_primary,  true)
          node .setUserData (_selected, true)
 
          selectedElements .removeClass (["manual", "selected"])
