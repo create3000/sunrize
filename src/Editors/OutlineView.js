@@ -2797,14 +2797,9 @@ module .exports = class OutlineView extends Interface
          node .setUserData (_selected, !selected)
 
          if (selected)
-         {
             element .removeClass ("selected") .addClass ("primary")
-         }
          else
-         {
-            element .addClass ("primary")
-            elements .addClass ("selected")
-         }
+            element .addClass (["primary", "manual", "selected"])
 
          if (selected)
             selection .remove (node)
@@ -2820,7 +2815,7 @@ module .exports = class OutlineView extends Interface
          node .setUserData (_selected, true)
 
          selectedElements .removeClass ("selected")
-         element .addClass ("primary")
+         element .addClass (["primary", "manual"])
          elements .addClass ("selected")
          selection .set (node)
       }

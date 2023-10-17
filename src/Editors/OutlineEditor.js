@@ -497,7 +497,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    {
       const
          primary     = $(".node.primary, .proto.primary, .externproto.primary"),
-         selected    = this .sceneGraph .find (".node.selected"),
+         selected    = this .sceneGraph .find (".node.manual.selected"),
          selection   = selected .filter (primary) .length ? selected : primary,
          ids         = selection .map (function () { return this .id }) .get (),
          elements    = ids .map (id => $(`#${id}`)),
@@ -552,7 +552,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    {
       const
          primary   = $(".node.primary"),
-         selected  = this .sceneGraph .find (".node.selected"),
+         selected  = this .sceneGraph .find (".node.manual.selected"),
          selection = selected .filter (primary) .length ? selected : primary,
          ids       = selection .map (function () { return this .id }) .get ()
 
@@ -1284,7 +1284,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    {
       const
          element   = $(event .target) .closest (".node", this .sceneGraph),
-         selected  = this .sceneGraph .find (".node.selected"),
+         selected  = this .sceneGraph .find (".node.manual.selected"),
          selection = selected .filter (element) .length ? selected : element,
          ids       = selection .map (function () { return this .id }) .get ()
 
@@ -2018,7 +2018,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    removeEmptyGroups ()
    {
       const
-         selection = this .sceneGraph .find (".node.primary, .node.selected"),
+         selection = this .sceneGraph .find (".node.primary, .node.manual.selected"),
          ids       = selection .map (function () { return this .id }) .get (),
          nodes     = ids .length ? ids .map (id => this .getNode ($(`#${id}`))) : this .executionContext .rootNodes
 
