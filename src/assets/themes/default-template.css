@@ -964,6 +964,10 @@ body.dark .ui-widget .library-list .component {
   background-color: var(--tint-color1);
 }
 
+.tree-view .jstree-node.manual {
+  outline: 1px dashed var(--system-gray8);
+}
+
 .tree-view .jstree-node.primary {
   outline: 1px solid var(--system-gray8);
 }
