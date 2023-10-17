@@ -964,12 +964,21 @@ body.dark .ui-widget .library-list .component {
   background-color: var(--tint-color1);
 }
 
-.tree-view .jstree-node.manual {
-  outline: 1px dashed var(--system-gray2);
+.tree-view .jstree-node.manual.node {
+  outline: 1px dashed var(--system-blue);
 }
 
-.tree-view .jstree-node.primary {
-  outline: 1px solid var(--system-gray8);
+.tree-view .jstree-node.primary.externproto,
+.tree-view .jstree-node.primary.proto {
+    outline: 1px solid var(--system-indigo);
+}
+
+.tree-view .jstree-node.primary.node {
+  outline: 1px solid var(--system-blue);
+}
+
+.tree-view .jstree-node.primary.field {
+  outline: 1px solid var(--system-orange);
 }
 
 .tree-view .no-select {
