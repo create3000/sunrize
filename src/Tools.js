@@ -1,34 +1,34 @@
-"use strict"
+"use strict";
 
 const
    fs   = require ("fs"),
    path = require ("path"),
-   X3D  = require ("./X3D")
+   X3D  = require ("./X3D");
 
-const _tool = Symbol .for ("Sunrize.tool")
+const _tool = Symbol .for ("Sunrize.tool");
 
 Object .assign (X3D .X3DNode .prototype,
 {
    getTool ()
    {
-      return this .getUserData (_tool)
+      return this .getUserData (_tool);
    },
    addTool (action = "createOnDemand")
    {
-      const module = path .resolve (__dirname, "Tools", this .constructor .componentName, this .constructor .typeName + "Tool.js")
+      const module = path .resolve (__dirname, "Tools", this .constructor .componentName, this .constructor .typeName + "Tool.js");
 
       if (!fs .existsSync (module))
-         return this
+         return this;
 
-      const Tool = require (module)
+      const Tool = require (module);
 
       if (!Tool [action])
-         return this
+         return this;
 
-      return this .getUserData (_tool) ?? new Tool (this)
+      return this .getUserData (_tool) ?? new Tool (this);
    },
    removeTool ()
    {
-      return this .getTool () ?.removeTool ()
+      return this .getTool () ?.removeTool () ?? this;
    },
 })
