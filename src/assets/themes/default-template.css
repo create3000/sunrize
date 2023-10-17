@@ -965,7 +965,7 @@ body.dark .ui-widget .library-list .component {
 }
 
 .tree-view .jstree-node.manual {
-  outline: 1px dashed var(--system-gray8);
+  outline: 1px dashed var(--system-gray2);
 }
 
 .tree-view .jstree-node.primary {
