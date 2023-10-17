@@ -1796,7 +1796,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             if (destinationElement .attr ("node-id") !== "NULL")
             {
-               if (destinationElement .hasClass ("node") && destinationElement .data ("drag-type") ==="drag-into")
+               if (destinationElement .hasClass ("node") && destinationElement .data ("drag-type") === "drag-into")
                {
                   try
                   {
