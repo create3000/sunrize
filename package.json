@@ -56,6 +56,7 @@
     }
   ],
   "devDependencies": {
+    "electron": "^27.0.0",
     "@electron-forge/cli": "^6.4.2",
     "@electron-forge/maker-deb": "^6.4.2",
     "@electron-forge/maker-rpm": "^6.4.2",
@@ -65,7 +66,6 @@
   "dependencies": {
     "capitalize": "^2.0.4",
     "console": "^0.7.2",
-    "electron": "^27.0.0",
     "electron-prompt": "^1.7.0",
     "electron-squirrel-startup": "^1.0.0",
     "electron-tabs": "^1.0.2",
@@ -87,7 +87,7 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "icon": "./src/images/icon.png"
+        "icon": "./src/assets/images/icon.png"
       },
       "makers": [
         {
