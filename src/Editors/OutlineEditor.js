@@ -607,29 +607,29 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          parentField        = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement),
          node               = this .objects .get (nodeId),
          copy               = X3D .X3DBaseNode .prototype .copy .call (node, executionContext),
-         index              = parseInt (element .attr ("index"))
+         index              = parseInt (element .attr ("index"));
+
+      UndoManager .shared .beginUndo (_ ("Unlink Clone"));
 
       if (node .getName ())
-         executionContext .addNamedNode (executionContext .getUniqueName (node .getName ()), copy);
-
-      UndoManager .shared .beginUndo (_ ("Unlink Clone"))
+         Editor .updateNamedNode (executionContext, executionContext .getUniqueName (node .getName ()), copy);
 
       switch (parentField .getType ())
       {
          case X3D .X3DConstants .SFNode:
          {
-            Editor .setFieldValue (executionContext, parentNode, parentField, copy)
-            break
+            Editor .setFieldValue (executionContext, parentNode, parentField, copy);
+            break;
          }
          case X3D .X3DConstants .MFNode:
          {
-            Editor .removeValueFromArray (executionContext, parentNode, parentField, index)
-            Editor .insertValueIntoArray (executionContext, parentNode, parentField, index, copy)
-            break
+            Editor .removeValueFromArray (executionContext, parentNode, parentField, index);
+            Editor .insertValueIntoArray (executionContext, parentNode, parentField, index, copy);
+            break;
          }
       }
 
-      UndoManager .shared .endUndo ()
+      UndoManager .shared .endUndo ();
    }
 
    addParentGroup (id, executionContextId, nodeId, component, typeName, fieldName)
