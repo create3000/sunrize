@@ -1770,7 +1770,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
          // Move, copy, link nodes.
 
-         const sources = [ ];
+         const sourceIndexOffsets = new Map ()
 
          for (const sourceElementId of sourceElementsIds)
          {
@@ -1783,13 +1783,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                sourceExecutionContextElement = sourceElement .closest (".scene", this .sceneGraph),
                sourceExecutionContext        = this .getNode (sourceExecutionContextElement)
 
-            sources .push ({ sourceElement, sourceParentNode, sourceParentField, sourceExecutionContext });
-         }
-
-         const sourceIndexOffsets = new Map ()
-
-         for (const { sourceElement, sourceParentNode, sourceParentField, sourceExecutionContext } of sources)
-         {
             let
                sourceNode  = this .getNode (sourceElement),
                sourceIndex = parseInt (sourceElement .attr ("index"))
@@ -1903,13 +1896,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                }
             }
 
-            // Update node name and clone count.
-
-            if (destinationElement .data ("dropEffect") === "link")
-            {
-               this .registerUpdateSceneGraph ()
-            }
-
             // End.
 
             ++ destinationIndex
@@ -2007,19 +1993,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       }
 
       return modelMatrix
-   }
-
-   // Call update.
-
-   registerUpdateSceneGraph (undoManager = UndoManager .shared)
-   {
-      this .updateSceneGraph ()
-
-      undoManager .registerUndo (() =>
-      {
-         this .registerUpdateSceneGraph (undoManager)
-      },
-      true)
    }
 
    removeEmptyGroups ()
