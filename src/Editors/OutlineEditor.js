@@ -609,6 +609,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          copy               = X3D .X3DBaseNode .prototype .copy .call (node, executionContext),
          index              = parseInt (element .attr ("index"))
 
+      if (node .getName ())
+         executionContext .addNamedNode (executionContext .getUniqueName (node .getName ()), copy);
+
       UndoManager .shared .beginUndo (_ ("Unlink Clone"))
 
       switch (parentField .getType ())
