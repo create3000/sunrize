@@ -1,7 +1,7 @@
 {
   "name": "sunrize",
   "productName": "Sunrize X3D Editor",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "A Multi-Platform X3D Editor",
   "main": "src/main.js",
   "bin": {
@@ -56,12 +56,12 @@
     }
   ],
   "devDependencies": {
-    "electron": "^27.0.2",
     "@electron-forge/cli": "^6.4.2",
     "@electron-forge/maker-deb": "^6.4.2",
     "@electron-forge/maker-rpm": "^6.4.2",
     "@electron-forge/maker-squirrel": "^6.4.2",
-    "@electron-forge/maker-zip": "^6.4.2"
+    "@electron-forge/maker-zip": "^6.4.2",
+    "electron": "^27.0.2"
   },
   "dependencies": {
     "capitalize": "^2.0.4",
@@ -82,7 +82,7 @@
     "qtip2": "^3.0.3",
     "spectrum-colorpicker2": "^2.0.10",
     "string-similarity": "^4.0.4",
-    "x_ite": "^8.12.5"
+    "x_ite": "^9.0.0"
   },
   "config": {
     "forge": {
@@ -104,7 +104,7 @@
         },
         {
           "name": "@electron-forge/maker-deb",
-          "config": { }
+          "config": {}
         },
         {
           "name": "@electron-forge/maker-rpm",
