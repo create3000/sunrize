@@ -69,7 +69,7 @@ module .exports = class Editor
 
       Traverse .traverse (nodes, 0, node =>
       {
-         componentNames .add (node .getComponentName ())
+         componentNames .add (node .getComponentInfo () .name)
          children .add (node)
 
          for (const field of node .getFields ())
@@ -558,7 +558,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          if (node .getScene () !== scene)
             return
 
-         components .add (node .getComponentName ())
+         components .add (node .getComponentInfo () .name)
       })
 
       return components
