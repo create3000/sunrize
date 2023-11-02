@@ -2,7 +2,7 @@
 
 module .exports = [
    {
-      componentName: "EnvironmentalEffects",
+      componentInfo: { name: "EnvironmentalEffects" },
       typeName: "Background Gray",
       x3dSyntax: `
 DEF Gray Background {
@@ -11,7 +11,7 @@ DEF Gray Background {
 `
    },
    {
-      componentName: "EnvironmentalEffects",
+      componentInfo: { name: "EnvironmentalEffects" },
       typeName: "Background Summer",
       x3dSyntax: `
 DEF Summer Background {
@@ -44,7 +44,7 @@ DEF Summer Background {
    }`
    },
    {
-      componentName: "EnvironmentalEffects",
+      componentInfo: { name: "EnvironmentalEffects" },
       typeName: "Background Sunny",
       x3dSyntax: `
 DEF Sunny Background {
@@ -70,7 +70,7 @@ DEF Sunny Background {
 `
    },
    {
-      componentName: "EnvironmentalEffects",
+      componentInfo: { name: "EnvironmentalEffects" },
       typeName: "Background White",
       x3dSyntax: `
 DEF White Background {
@@ -79,7 +79,7 @@ DEF White Background {
 `
    },
    {
-      componentName: "EnvironmentalSensor",
+      componentInfo: { name: "EnvironmentalSensor" },
       typeName: "ProximitySensor",
       x3dSyntax: `
 DEF ProximitySensor Transform {
@@ -90,7 +90,7 @@ DEF ProximitySensor Transform {
 `
    },
    {
-      componentName: "EnvironmentalSensor",
+      componentInfo: { name: "EnvironmentalSensor" },
       typeName: "TransformSensor",
       x3dSyntax: `
 DEF TransformSensor Transform {
@@ -101,7 +101,7 @@ DEF TransformSensor Transform {
 `
    },
    {
-      componentName: "EnvironmentalSensor",
+      componentInfo: { name: "EnvironmentalSensor" },
       typeName: "VisibilitySensor",
       x3dSyntax: `
 DEF VisibilitySensor Transform {
@@ -112,7 +112,7 @@ DEF VisibilitySensor Transform {
 `
    },
    {
-      componentName: "Geometry2D",
+      componentInfo: { name: "Geometry2D" },
       typeName: "Arc2D",
       x3dSyntax: `
 DEF Arc2D Transform {
@@ -128,7 +128,7 @@ DEF Arc2D Transform {
 `
    },
    {
-      componentName: "Geometry2D",
+      componentInfo: { name: "Geometry2D" },
       typeName: "ArcClose2D",
       x3dSyntax: `
 DEF ArcClose2D Transform {
@@ -142,7 +142,7 @@ DEF ArcClose2D Transform {
 `
    },
    {
-      componentName: "Geometry2D",
+      componentInfo: { name: "Geometry2D" },
       typeName: "Circle2D",
       x3dSyntax: `
 DEF Circle2D Transform {
@@ -158,7 +158,7 @@ DEF Circle2D Transform {
 `
    },
    {
-      componentName: "Geometry2D",
+      componentInfo: { name: "Geometry2D" },
       typeName: "Disk2D",
       x3dSyntax: `
 DEF Disk2D Transform {
@@ -172,7 +172,7 @@ DEF Disk2D Transform {
 `
    },
    {
-      componentName: "Geometry2D",
+      componentInfo: { name: "Geometry2D" },
       typeName: "Polyline2D",
       x3dSyntax: `
 DEF Polyline2D Transform {
@@ -196,7 +196,7 @@ DEF Polyline2D Transform {
 `
    },
    {
-      componentName: "Geometry2D",
+      componentInfo: { name: "Geometry2D" },
       typeName: "Polypoint2D",
       x3dSyntax: `
 DEF Polypoint2D Transform {
@@ -220,7 +220,7 @@ DEF Polypoint2D Transform {
 `
    },
    {
-      componentName: "Geometry2D",
+      componentInfo: { name: "Geometry2D" },
       typeName: "Rectangle2D",
       x3dSyntax: `
 DEF Rectangle2D Transform {
@@ -234,7 +234,7 @@ DEF Rectangle2D Transform {
 `
    },
    {
-      componentName: "Geometry2D",
+      componentInfo: { name: "Geometry2D" },
       typeName: "TriangleSet2D",
       x3dSyntax: `
 DEF TriangleSet2D Transform {
@@ -257,7 +257,7 @@ DEF TriangleSet2D Transform {
 `
    },
    {
-      componentName: "Geometry3D",
+      componentInfo: { name: "Geometry3D" },
       typeName: "Box",
       x3dSyntax: `
 DEF Box Transform {
@@ -271,7 +271,7 @@ DEF Box Transform {
 `
    },
    {
-      componentName: "Geometry3D",
+      componentInfo: { name: "Geometry3D" },
       typeName: "Cone",
       x3dSyntax: `
 DEF Cone Transform {
@@ -285,7 +285,7 @@ DEF Cone Transform {
 `
    },
    {
-      componentName: "Geometry3D",
+      componentInfo: { name: "Geometry3D" },
       typeName: "Cylinder",
       x3dSyntax: `
 DEF Cylinder Transform {
@@ -299,7 +299,7 @@ DEF Cylinder Transform {
 `
    },
    {
-      componentName: "Geometry3D",
+      componentInfo: { name: "Geometry3D" },
       typeName: "ElevationGrid",
       x3dSyntax: `
 DEF ElevationGrid Transform {
@@ -316,7 +316,7 @@ DEF ElevationGrid Transform {
 `
    },
    {
-      componentName: "Geometry3D",
+      componentInfo: { name: "Geometry3D" },
       typeName: "Extrusion",
       x3dSyntax: `
 DEF Extrusion Transform {
@@ -330,7 +330,7 @@ DEF Extrusion Transform {
 `
    },
    {
-      componentName: "Geometry3D",
+      componentInfo: { name: "Geometry3D" },
       typeName: "IndexedFaceSet",
       x3dSyntax: `
 DEF IndexedFaceSet Transform {
@@ -344,7 +344,7 @@ DEF IndexedFaceSet Transform {
 `
    },
    {
-      componentName: "Geometry3D",
+      componentInfo: { name: "Geometry3D" },
       typeName: "Sphere",
       x3dSyntax: `
 DEF Sphere Transform {
@@ -358,7 +358,7 @@ DEF Sphere Transform {
 `
    },
    {
-      componentName: "Text",
+      componentInfo: { name: "Text" },
       typeName: "Text",
       x3dSyntax: `
 DEF Text Transform {
@@ -374,7 +374,7 @@ DEF Text Transform {
 `
    },
    {
-      componentName: "Rendering",
+      componentInfo: { name: "Rendering" },
       typeName: "IndexedLineSet",
       x3dSyntax: `
 DEF IndexedLineSet Transform {
@@ -427,7 +427,7 @@ DEF IndexedLineSet Transform {
 `
    },
    {
-      componentName: "Rendering",
+      componentInfo: { name: "Rendering" },
       typeName: "PointSet",
       x3dSyntax: `
 DEF PointSet Transform {
