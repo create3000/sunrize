@@ -58,9 +58,9 @@ Object .defineProperties (StaticGroup,
    {
       value: "StaticGroup",
    },
-   componentName:
+   componentInfo:
    {
-      value: "Grouping",
+      value: Object .freeze ({ name: "Grouping", level: 1 }),
    },
    containerField:
    {
