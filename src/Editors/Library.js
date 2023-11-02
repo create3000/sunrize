@@ -125,7 +125,7 @@ module .exports = new class Library extends Dialog
       {
          const ConcreteNode = this .browser .getConcreteNode (X3D .HTMLSupport .getNodeTypeName (input))
 
-         this .createNode (ConcreteNode .typeName, ConcreteNode .componentName)
+         this .createNode (ConcreteNode .typeName, ConcreteNode .componentInfo .name)
       }
       catch
       {
@@ -167,7 +167,7 @@ module .exports = new class Library extends Dialog
       const nodes = [... this .browser .getConcreteNodes ()]
          .filter (filter)
          .sort ((a, b) => cmp (a .typeName, b .typeName))
-         .sort ((a, b) => cmp (a .componentName, b .componentName))
+         .sort ((a, b) => cmp (a .componentInfo .name, b .componentInfo .name))
 
       // Create list elements.
 
@@ -175,14 +175,14 @@ module .exports = new class Library extends Dialog
 
       for (const node of nodes)
       {
-         if (node .componentName !== componentName)
+         if (node .componentInfo .name !== componentName)
          {
-            componentName = node .componentName
+            componentName = node .componentInfo .name
 
             $("<li></li>")
                .addClass ("component")
-               .attr ("name", node .componentName)
-               .text (this .browser .getSupportedComponents () .get (node .componentName) .title)
+               .attr ("name", node .componentInfo .name)
+               .text (this .browser .getSupportedComponents () .get (node .componentInfo .name) .title)
                .appendTo (this .list)
          }
 
@@ -190,7 +190,7 @@ module .exports = new class Library extends Dialog
             .addClass ("node")
             .text (node .typeName)
             .appendTo (this .list)
-            .on ("dblclick", () => this .createNode (node .typeName, node .componentName))
+            .on ("dblclick", () => this .createNode (node .typeName, node .componentInfo .name))
       }
    }
 
@@ -229,7 +229,7 @@ module .exports = new class Library extends Dialog
       const nodes = Primitives
          .filter (filter)
          .sort ((a, b) => cmp (a .typeName,  b .typeName))
-         .sort ((a, b) => cmp (a .componentName, b .componentName))
+         .sort ((a, b) => cmp (a .componentInfo .name, b .componentInfo .name))
 
       // Create list elements.
 
@@ -237,13 +237,13 @@ module .exports = new class Library extends Dialog
 
       for (const node of nodes)
       {
-         if (node .componentName !== componentName)
+         if (node .componentInfo .name !== componentName)
          {
-            componentName = node .componentName
+            componentName = node .componentInfo .name
 
             $("<li></li>")
                .addClass ("component")
-               .text (node .componentName)
+               .text (node .componentInfo .name)
                .appendTo (this .list)
          }
 

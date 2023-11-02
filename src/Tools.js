@@ -15,7 +15,7 @@ Object .assign (X3D .X3DNode .prototype,
    },
    addTool (action = "createOnDemand")
    {
-      const module = path .resolve (__dirname, "Tools", this .constructor .componentName, this .constructor .typeName + "Tool.js");
+      const module = path .resolve (__dirname, "Tools", this .constructor .componentInfo .name, this .constructor .typeName + "Tool.js");
 
       if (!fs .existsSync (module))
          return this;
