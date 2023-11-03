@@ -710,7 +710,7 @@ module .exports = class Application
 
       let separator = false;
 
-      for (const menuItem of menu .filter (menuItem => menuItem .visible !== false))
+      for (const menuItem of menu .filter (menuItem => menuItem .visible ??= true))
       {
          if (separator && menuItem .type === "separator")
             continue;
