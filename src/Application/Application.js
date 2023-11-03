@@ -712,8 +712,6 @@ module .exports = class Application
 
       for (const menuItem of menu .filter (menuItem => menuItem .visible !== false))
       {
-         console .log (menuItem .type)
-
          if (separator && menuItem .type === "separator")
             continue;
 
