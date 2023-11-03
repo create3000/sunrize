@@ -691,7 +691,7 @@ module .exports = class Application
    {
       const template = [ ];
 
-      for (const menuItem of menu)
+      for (const menuItem of this .filterSeparators (menu))
       {
          if (menuItem .submenu)
             menuItem .submenu = this .createMenuTemplate (id, menuItem .submenu);
@@ -702,6 +702,31 @@ module .exports = class Application
       }
 
       return template;
+   }
+
+   filterSeparators (menu)
+   {
+      const filtered = [ ];
+
+      let separator = false;
+
+      for (const menuItem of menu)
+      {
+         if (separator && menuItem .type === "separator")
+            continue;
+
+         separator = menuItem .type === "separator";
+
+         filtered .push (menuItem);
+      }
+
+      if (filtered .at (0) ?.type === "separator")
+         filtered .shift ();
+
+      if (filtered .at (-1) ?.type === "separator")
+         filtered .pop ();
+
+      return filtered;
    }
 
    /**
