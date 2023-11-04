@@ -651,40 +651,40 @@ module .exports = class Application
             contextIsolation: false,
             webviewTag: true,
          },
-      })
+      });
 
-      this .mainWindow = window
+      this .mainWindow = window;
 
-      window .setVisibleOnAllWorkspaces (true)
-      window .once ("ready-to-show", () => window .show ())
+      window .setVisibleOnAllWorkspaces (true);
+      window .once ("ready-to-show", () => window .show ());
 
-      window .on ("maximize", ()          => this .maximize ())
-      window .on ("unmaximize", ()        => this .unmaximize ())
-      window .on ("enter-full-screen", () => this .enterFullscreen ())
-      window .on ("leave-full-screen", () => this .leaveFullscreen ())
-      window .on ("blur", ()              => this .blur ())
-      window .on ("close", (event)        => this .close (event))
+      window .on ("maximize", ()          => this .maximize ());
+      window .on ("unmaximize", ()        => this .unmaximize ());
+      window .on ("enter-full-screen", () => this .enterFullscreen ());
+      window .on ("leave-full-screen", () => this .leaveFullscreen ());
+      window .on ("blur", ()              => this .blur ());
+      window .on ("close", (event)        => this .close (event));
 
       if (this .config .maximized)
-         window .maximize ()
+         window .maximize ();
 
-      window .setFullScreen (this .config .fullscreen)
+      window .setFullScreen (this .config .fullscreen);
 
-      await window .loadFile (path .join (__dirname, "../assets/html/application.html"))
+      await window .loadFile (path .join (__dirname, "../assets/html/application.html"));
    }
 
    activate ()
    {
       if (electron .BrowserWindow .getAllWindows () .length)
-         return
+         return;
 
-      this .createWindow ()
+      this .createWindow ();
    }
 
    contextMenu (id, menu)
    {
       electron .Menu .buildFromTemplate (this .createMenuTemplate (id, menu))
-         .popup ({ window: this .mainWindow })
+         .popup ({ window: this .mainWindow });
    }
 
    createMenuTemplate (id, menu)
