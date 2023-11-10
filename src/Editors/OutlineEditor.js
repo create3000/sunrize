@@ -145,9 +145,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                args: ["resetToDefaultValue", element .attr ("id"), executionContext .getId (), node .getId (), field .getId ()],
             },
             {
-               label: "Add Event",
+               label: "Trigger Event",
                visible: field .getAccessType () !== X3D .X3DConstants .outputOnly,
-               args: ["addEvent", element .attr ("id"), node .getId (), field .getId ()],
+               args: ["triggerEvent", element .attr ("id"), node .getId (), field .getId ()],
             },
          ]
       }
@@ -458,7 +458,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          Editor .setFieldValue (executionContext, node, field, fieldDefinition .value)
    }
 
-   addEvent (id, nodeId, fieldId)
+   triggerEvent (id, nodeId, fieldId)
    {
       const field = this .objects .get (fieldId)
 
