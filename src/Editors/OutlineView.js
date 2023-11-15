@@ -2774,7 +2774,10 @@ module .exports = class OutlineView extends Interface
          selected         = element .hasClass ("manual"),
          selectedElements = this .sceneGraph .find (".primary, .selected"),
          node             = this .getNode (element),
-         elements         = $(`.node[node-id=${node .getId ()}]`);
+         elements         = $(`.node[node-id=${node ?.getId ()}]`);
+
+      if (!node)
+         return; // NULL node
 
       selectedElements .removeClass ("primary");
 
