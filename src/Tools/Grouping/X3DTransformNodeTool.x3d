@@ -8,8 +8,8 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 18 Aug 2023 15:29:52 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Thu, 16 Nov 2023 16:12:30 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -123,7 +123,7 @@
               </IS>
               <ScreenGroup>
                 <Transform
-                    translation='6 0 0'
+                    translation='9 0 0'
                     rotation='0 0 -1 90'>
                   <Shape
                       castShadow='false'>
@@ -133,8 +133,8 @@
                       <ProtoInstance name='ToolShader' DEF='_2' containerField='shaders'/>
                     </Appearance>
                     <Cone DEF='Arrow'
-                        height='12'
-                        bottomRadius='4'/>
+                        height='18'
+                        bottomRadius='6'/>
                   </Shape>
                 </Transform>
               </ScreenGroup>
@@ -146,7 +146,7 @@
               </IS>
               <ScreenGroup>
                 <Transform
-                    translation='0 6 0'>
+                    translation='0 9 0'>
                   <Shape
                       castShadow='false'>
                     <Appearance DEF='Green'>
@@ -166,7 +166,7 @@
               </IS>
               <ScreenGroup>
                 <Transform
-                    translation='0 0 6'
+                    translation='0 0 9'
                     rotation='1 0 0 90'>
                   <Shape
                       castShadow='false'>
