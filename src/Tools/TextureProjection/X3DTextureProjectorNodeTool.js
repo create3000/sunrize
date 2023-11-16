@@ -14,19 +14,19 @@ class X3DTextureProjectorNodeTool extends X3DChildNodeTool
    {
       await super .initialize (__dirname, "X3DTextureProjectorNodeTool.x3d")
 
-      this .toolNode ._on        .addFieldInterest (this .tool .getField ("on"))
-      this .toolNode ._location  .addFieldInterest (this .tool .getField ("location"))
-      this .toolNode ._direction .addFieldInterest (this .tool .getField ("direction"))
-      this .toolNode ._upVector  .addFieldInterest (this .tool .getField ("upVector"))
-      this .toolNode ._texture   .addFieldInterest (this .tool .getField ("texture"))
+      this .node ._on        .addFieldInterest (this .tool .getField ("on"))
+      this .node ._location  .addFieldInterest (this .tool .getField ("location"))
+      this .node ._direction .addFieldInterest (this .tool .getField ("direction"))
+      this .node ._upVector  .addFieldInterest (this .tool .getField ("upVector"))
+      this .node ._texture   .addFieldInterest (this .tool .getField ("texture"))
 
-      this .tool .on        = this .toolNode ._on
-      this .tool .location  = this .toolNode ._location
-      this .tool .direction = this .toolNode ._direction
-      this .tool .upVector  = this .toolNode ._upVector
-      this .tool .texture   = this .toolNode ._texture
+      this .tool .on        = this .node ._on
+      this .tool .location  = this .node ._location
+      this .tool .direction = this .node ._direction
+      this .tool .upVector  = this .node ._upVector
+      this .tool .texture   = this .node ._texture
 
-      this .addExternalNode (this .toolNode ._texture)
+      this .addExternalNode (this .node ._texture)
    }
 }
 

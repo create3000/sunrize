@@ -16,7 +16,7 @@ class X3DChildNodeTool extends X3DNodeTool
 
    traverse (type, renderObject)
    {
-      this .toolNode .traverse (type, renderObject)
+      this .node .traverse (type, renderObject)
 
       renderObject .getHumanoids () .push (null)
 

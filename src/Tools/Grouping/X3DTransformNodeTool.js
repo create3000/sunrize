@@ -17,11 +17,11 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
       this .tool .getField ("isActive") .addInterest ("set_active", this);
 
-      this .tool .getField ("translation")      .addReference (this .toolNode ._translation);
-      this .tool .getField ("rotation")         .addReference (this .toolNode ._rotation);
-      this .tool .getField ("scale")            .addReference (this .toolNode ._scale);
-      this .tool .getField ("scaleOrientation") .addReference (this .toolNode ._scaleOrientation);
-      this .tool .getField ("center")           .addReference (this .toolNode ._center);
+      this .tool .getField ("translation")      .addReference (this .node ._translation);
+      this .tool .getField ("rotation")         .addReference (this .node ._rotation);
+      this .tool .getField ("scale")            .addReference (this .node ._scale);
+      this .tool .getField ("scaleOrientation") .addReference (this .node ._scaleOrientation);
+      this .tool .getField ("center")           .addReference (this .node ._center);
 
       this .tool .centerDisplay = false;
       this .tool .bboxDisplay   = true;
@@ -73,11 +73,11 @@ class X3DTransformNodeTool extends X3DChildNodeTool
                break;
          }
 
-         Editor .setFieldValue (this .getExecutionContext (), this .toolNode, this ._translation,      translation);
-         Editor .setFieldValue (this .getExecutionContext (), this .toolNode, this ._rotation,         rotation);
-         Editor .setFieldValue (this .getExecutionContext (), this .toolNode, this ._scale,            scale);
-         Editor .setFieldValue (this .getExecutionContext (), this .toolNode, this ._scaleOrientation, scaleOrientation);
-         Editor .setFieldValue (this .getExecutionContext (), this .toolNode, this ._center,           center);
+         Editor .setFieldValue (this .getExecutionContext (), this .node, this ._translation,      translation);
+         Editor .setFieldValue (this .getExecutionContext (), this .node, this ._rotation,         rotation);
+         Editor .setFieldValue (this .getExecutionContext (), this .node, this ._scale,            scale);
+         Editor .setFieldValue (this .getExecutionContext (), this .node, this ._scaleOrientation, scaleOrientation);
+         Editor .setFieldValue (this .getExecutionContext (), this .node, this ._center,           center);
 
          UndoManager .shared .endUndo ()
       }
@@ -88,7 +88,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
    reshape ()
    {
       const
-         bbox       = this .toolNode .getBBox (X3DTransformNodeTool .box),
+         bbox       = this .node .getBBox (X3DTransformNodeTool .box),
          bboxSize   = bbox .size,
          bboxCenter = bbox .center;
 

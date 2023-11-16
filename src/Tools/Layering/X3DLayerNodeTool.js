@@ -8,12 +8,12 @@ class X3DLayerNodeTool extends X3DNodeTool
    {
       super (node)
 
-      this .toolNode .groupNode = this .toolNode .getGroup () .addTool ()
+      this .node .groupNode = this .node .getGroup () .addTool ()
    }
 
    removeTool ()
    {
-      this .toolNode .groupNode = this .toolNode .getGroup () .removeTool ()
+      this .node .groupNode = this .node .getGroup () .removeTool ()
 
       return super .removeTool ()
    }

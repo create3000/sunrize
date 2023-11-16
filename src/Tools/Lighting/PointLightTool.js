@@ -8,9 +8,9 @@ class PointLightTool extends X3DLightNodeTool
    {
       await super .initialize ()
 
-      this .toolNode ._location .addFieldInterest (this .tool .getField ("location"))
+      this .node ._location .addFieldInterest (this .tool .getField ("location"))
 
-      this .tool .location    = this .toolNode ._location
+      this .tool .location    = this .node ._location
       this .tool .whichChoice = 1
    }
 }

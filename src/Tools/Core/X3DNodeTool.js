@@ -17,10 +17,10 @@ const handler =
       if (key in target)
          return target [key]
 
-      const property = target .toolNode [key]
+      const property = target .node [key]
 
       if (typeof property === "function")
-         return property .bind (target .toolNode)
+         return property .bind (target .node)
 
       else
          return property
@@ -33,24 +33,24 @@ const handler =
          return true
       }
 
-      target .toolNode [key] = value
+      target .node [key] = value
       return true
    },
    has (target, key)
    {
-      return key in target .toolNode
+      return key in target .node
    },
    ownKeys (target)
    {
-      return Object .keys (target .toolNode)
+      return Object .keys (target .node)
    },
    getOwnPropertyDescriptor (target, key)
    {
-      return Object .getOwnPropertyDescriptor (target .toolNode, key)
+      return Object .getOwnPropertyDescriptor (target .node, key)
    },
    getPrototypeOf (target)
    {
-      return Object .getPrototypeOf (target .toolNode)
+      return Object .getPrototypeOf (target .node)
    },
 }
 
@@ -66,9 +66,9 @@ class X3DNodeTool
       node .setUserData (_tool, proxy)
       node .setUserData (_changing, true)
 
-      this .toolProxy         = proxy
-      this .toolNode          = node
-      this .toolExternalNodes = new Map ()
+      this .proxy         = proxy
+      this .node          = node
+      this .externalNodes = new Map ()
 
       this .replaceNode (node, proxy)
       proxy .setup ()
@@ -115,7 +115,7 @@ class X3DNodeTool
 
    addTool ()
    {
-      return this .toolProxy
+      return this .proxy
    }
 
    removeTool ()
@@ -126,19 +126,19 @@ class X3DNodeTool
 
       for (const node of nodesToDispose)
       {
-         if (!this .toolExternalNodes .has (node))
+         if (!this .externalNodes .has (node))
             node .dispose ()
       }
 
-      for (const field of this .toolExternalNodes .values ())
+      for (const field of this .externalNodes .values ())
          field .removeInterest ("addExternalNode", this)
 
-      this .toolNode .removeUserData (_tool)
-      this .toolNode .setUserData (_changing, true)
+      this .node .removeUserData (_tool)
+      this .node .setUserData (_changing, true)
 
-      this .replaceNode (this, this .toolNode)
+      this .replaceNode (this, this .node)
 
-      return this .toolNode
+      return this .node
    }
 
    static scenes = new Map ()
@@ -195,23 +195,23 @@ class X3DNodeTool
    {
       field .addInterest ("addExternalNode", this)
 
-      this .toolExternalNodes .set (field .getValue (), field)
+      this .externalNodes .set (field .getValue (), field)
    }
 
    getInnerNode ()
    {
-      return this .toolProxy
+      return this .proxy
    }
 
    valueOf ()
    {
-      return this .toolNode .valueOf ()
+      return this .node .valueOf ()
    }
 
    dispose ()
    {
       this .removeTool ()
-      this .toolNode .dispose ()
+      this .node .dispose ()
    }
 }
 

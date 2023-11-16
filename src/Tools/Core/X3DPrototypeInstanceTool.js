@@ -8,19 +8,19 @@ class X3DPrototypeInstanceTool extends X3DNodeTool
    {
       super (node)
 
-      this .toolNode .getInnerNode () .addTool ()
+      this .node .getInnerNode () .addTool ()
    }
 
    removeTool ()
    {
-      this .toolNode .getInnerNode () .removeTool ()
+      this .node .getInnerNode () .removeTool ()
 
       return super .removeTool ()
    }
 
    getInnerNode ()
    {
-      return this .toolNode .getInnerNode ()
+      return this .node .getInnerNode ()
    }
 }
 

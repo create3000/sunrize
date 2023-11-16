@@ -8,15 +8,15 @@ class SpotLightTool extends X3DLightNodeTool
    {
       await super .initialize ()
 
-      this .toolNode ._location    .addFieldInterest (this .tool .getField ("location"))
-      this .toolNode ._direction   .addFieldInterest (this .tool .getField ("direction"))
-      this .toolNode ._beamWidth   .addFieldInterest (this .tool .getField ("beamWidth"))
-      this .toolNode ._cutOffAngle .addFieldInterest (this .tool .getField ("cutOffAngle"))
+      this .node ._location    .addFieldInterest (this .tool .getField ("location"))
+      this .node ._direction   .addFieldInterest (this .tool .getField ("direction"))
+      this .node ._beamWidth   .addFieldInterest (this .tool .getField ("beamWidth"))
+      this .node ._cutOffAngle .addFieldInterest (this .tool .getField ("cutOffAngle"))
 
-      this .tool .location    = this .toolNode ._location
-      this .tool .direction   = this .toolNode ._direction
-      this .tool .beamWidth   = this .toolNode ._beamWidth
-      this .tool .cutOffAngle = this .toolNode ._cutOffAngle
+      this .tool .location    = this .node ._location
+      this .tool .direction   = this .node ._direction
+      this .tool .beamWidth   = this .node ._beamWidth
+      this .tool .cutOffAngle = this .node ._cutOffAngle
       this .tool .whichChoice = 2
    }
 }

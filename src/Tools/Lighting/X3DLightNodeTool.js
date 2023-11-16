@@ -12,13 +12,13 @@ class X3DLightNodeTool extends X3DChildNodeTool
    {
       await super .initialize (__dirname, "X3DLightNodeTool.x3d")
 
-      this .toolNode ._on        .addFieldInterest (this .tool .getField ("on"))
-      this .toolNode ._color     .addFieldInterest (this .tool .getField ("color"))
-      this .toolNode ._intensity .addFieldInterest (this .tool .getField ("intensity"))
+      this .node ._on        .addFieldInterest (this .tool .getField ("on"))
+      this .node ._color     .addFieldInterest (this .tool .getField ("color"))
+      this .node ._intensity .addFieldInterest (this .tool .getField ("intensity"))
 
-      this .tool .on        = this .toolNode ._on
-      this .tool .color     = this .toolNode ._color
-      this .tool .intensity = this .toolNode ._intensity
+      this .tool .on        = this .node ._on
+      this .tool .color     = this .node ._color
+      this .tool .intensity = this .node ._intensity
    }
 }
 

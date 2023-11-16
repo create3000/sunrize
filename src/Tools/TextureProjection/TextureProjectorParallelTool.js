@@ -8,15 +8,15 @@ class TextureProjectorParallelTool extends X3DTextureProjectorNodeTool
    {
       await super .initialize ()
 
-      this .toolNode ._fieldOfView  .addFieldInterest (this .tool .getField ("parallelFieldOfView"))
-      this .toolNode ._nearDistance .addFieldInterest (this .tool .getField ("parallelNearDistance"))
-      this .toolNode ._farDistance  .addFieldInterest (this .tool .getField ("parallelFarDistance"))
-      this .toolNode ._aspectRatio  .addFieldInterest (this .tool .getField ("parallelAspectRatio"))
+      this .node ._fieldOfView  .addFieldInterest (this .tool .getField ("parallelFieldOfView"))
+      this .node ._nearDistance .addFieldInterest (this .tool .getField ("parallelNearDistance"))
+      this .node ._farDistance  .addFieldInterest (this .tool .getField ("parallelFarDistance"))
+      this .node ._aspectRatio  .addFieldInterest (this .tool .getField ("parallelAspectRatio"))
 
-      this .tool .parallelFieldOfView  = this .toolNode ._fieldOfView
-      this .tool .parallelNearDistance = this .toolNode ._nearDistance
-      this .tool .parallelFarDistance  = this .toolNode ._farDistance
-      this .tool .parallelAspectRatio  = this .toolNode ._aspectRatio
+      this .tool .parallelFieldOfView  = this .node ._fieldOfView
+      this .tool .parallelNearDistance = this .node ._nearDistance
+      this .tool .parallelFarDistance  = this .node ._farDistance
+      this .tool .parallelAspectRatio  = this .node ._aspectRatio
    }
 }
 

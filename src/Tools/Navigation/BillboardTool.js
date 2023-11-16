@@ -12,15 +12,15 @@ class BillboardTool extends X3DBoundedObjectTool
    {
       await super .initialize ()
 
-      this .toolNode ._axisOfRotation .addFieldInterest (this .tool .getField ("axisOfRotation"))
+      this .node ._axisOfRotation .addFieldInterest (this .tool .getField ("axisOfRotation"))
 
       this .tool .centerDisplay  = true
-      this .tool .axisOfRotation = this .toolNode ._axisOfRotation
+      this .tool .axisOfRotation = this .node ._axisOfRotation
    }
 
    removeTool ()
    {
-      this .toolNode ._axisOfRotation .removeFieldInterest (this .tool .axisOfRotation)
+      this .node ._axisOfRotation .removeFieldInterest (this .tool .axisOfRotation)
 
       return super .removeTool ()
    }
