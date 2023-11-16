@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 16 Nov 2023 21:28:31 GMT'/>
+    <meta name='modified' content='Thu, 16 Nov 2023 21:46:02 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -118,7 +118,7 @@
               <Transform DEF='XFront'
                   translation='0.5 0 0'>
                 <ScreenGroup>
-                  <Switch
+                  <Switch DEF='_27'
                       whichChoice='0'>
                     <Transform
                         translation='9 0 0'
@@ -159,7 +159,7 @@
               <Transform DEF='XBack_1'
                   translation='-0.5 0 0'>
                 <ScreenGroup>
-                  <Switch
+                  <Switch DEF='_26'
                       whichChoice='0'>
                     <Transform DEF='_8'
                         translation='-1.5 0 0'
@@ -194,6 +194,7 @@
                   description='x-Axis'
                   autoOffset='false'
                   maxPosition='-1 0'/>
+              <TouchSensor DEF='ModeTouch'/>
             </Group>
             <Group DEF='YHandle'>
               <IS>
@@ -202,7 +203,7 @@
               <Transform DEF='YFront'
                   translation='0 0.5 0'>
                 <ScreenGroup>
-                  <Switch
+                  <Switch DEF='_25'
                       whichChoice='0'>
                     <Transform
                         translation='0 9 0'>
@@ -238,7 +239,7 @@
               <Transform DEF='YBack_1'
                   translation='0 -0.5 0'>
                 <ScreenGroup>
-                  <Switch
+                  <Switch DEF='_24'
                       whichChoice='0'>
                     <Transform DEF='_13'
                         translation='0 -1.5 0'
@@ -266,6 +267,7 @@
                   description='y-Axis'
                   autoOffset='false'
                   maxPosition='0 -1'/>
+              <TouchSensor USE='ModeTouch'/>
             </Group>
             <Group DEF='ZHandle'>
               <IS>
@@ -274,7 +276,7 @@
               <Transform DEF='ZFront'
                   translation='0 0 0.5'>
                 <ScreenGroup>
-                  <Switch
+                  <Switch DEF='_23'
                       whichChoice='0'>
                     <Transform
                         translation='0 0 9'
@@ -311,7 +313,7 @@
               <Transform DEF='ZBack'
                   translation='0 0 -0.5'>
                 <ScreenGroup>
-                  <Switch
+                  <Switch DEF='_22'
                       whichChoice='0'>
                     <Transform DEF='_19'
                         translation='0 0 -1.5'
@@ -339,6 +341,7 @@
                   axisRotation='0 -1 0 90'
                   autoOffset='false'
                   maxPosition='-1 0'/>
+              <TouchSensor USE='ModeTouch'/>
             </Group>
           </Transform>
           <Group DEF='Center'>
@@ -499,6 +502,32 @@ function eventsProcessed ()
 }
 ]]>
         </Script>
+        <Script DEF='ModeScript'>
+          <field accessType='inputOnly' type='SFTime' name='set_time'/>
+          <field accessType='outputOnly' type='SFInt32' name='whichChoice_changed'/>
+          <field accessType='initializeOnly' type='SFTime' name='time'/>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+   whichChoice_changed = 0;
+}
+
+function set_time (value)
+{
+   if (value - time < 0.4)
+   {
+      time = 0;
+
+      whichChoice_changed = (whichChoice_changed + 1) % 3;
+   }
+   else
+   {
+      time = value;
+   }
+}
+]]>
+        </Script>
         <Script DEF='TranslateScript'
             directOutput='true'>
           <field accessType='inputOnly' type='SFBool' name='set_active'/>
@@ -594,6 +623,13 @@ function translate (value)
         <ROUTE fromNode='ZTranslationSensor' fromField='isActive' toNode='TranslateScript' toField='set_active'/>
         <ROUTE fromNode='YTranslationSensor' fromField='isActive' toNode='TranslateScript' toField='set_active'/>
         <ROUTE fromNode='XTranslationSensor' fromField='isActive' toNode='TranslateScript' toField='set_active'/>
+        <ROUTE fromNode='ModeTouch' fromField='touchTime' toNode='ModeScript' toField='set_time'/>
+        <ROUTE fromNode='ModeScript' fromField='whichChoice_changed' toNode='_22' toField='set_whichChoice'/>
+        <ROUTE fromNode='ModeScript' fromField='whichChoice_changed' toNode='_23' toField='set_whichChoice'/>
+        <ROUTE fromNode='ModeScript' fromField='whichChoice_changed' toNode='_24' toField='set_whichChoice'/>
+        <ROUTE fromNode='ModeScript' fromField='whichChoice_changed' toNode='_25' toField='set_whichChoice'/>
+        <ROUTE fromNode='ModeScript' fromField='whichChoice_changed' toNode='_26' toField='set_whichChoice'/>
+        <ROUTE fromNode='ModeScript' fromField='whichChoice_changed' toNode='_27' toField='set_whichChoice'/>
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
