@@ -15,6 +15,10 @@ Object .assign (X3D .X3DNode .prototype,
    },
    addTool (action = "createOnDemand")
    {
+      // Prevent creation of tool of nodes inside proto.
+      if (this .getExecutionContext () .getOuterNode ())
+         return this;
+
       const module = path .resolve (__dirname, "Tools", this .constructor .componentInfo .name, this .constructor .typeName + "Tool.js");
 
       if (!fs .existsSync (module))
