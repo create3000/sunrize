@@ -2,7 +2,10 @@
 
 const
    X3DChildNodeTool = require ("../Core/X3DChildNodeTool"),
-   X3D              = require ("../../X3D");
+   X3D              = require ("../../X3D"),
+   Editor           = require ("../../Undo/Editor"),
+   UndoManager      = require ("../../Undo/UndoManager"),
+   _                = require ("../../Application/GetText");
 
 class X3DTransformNodeTool extends X3DChildNodeTool
 {
@@ -36,11 +39,36 @@ class X3DTransformNodeTool extends X3DChildNodeTool
    {
       if (active .getValue ())
       {
-
+         this .initialTranslation      = this ._translation      .copy ();
+         this .initialRotation         = this ._rotation         .copy ();
+         this .initialScale            = this ._scale            .copy ();
+         this .initialScaleOrientation = this ._scaleOrientation .copy ();
+         this .initialCenter           = this ._center           .copy ();
       }
       else
       {
+         const
+            translation      = this ._translation      .copy (),
+            rotation         = this ._rotation         .copy (),
+            scale            = this ._scale            .copy (),
+            scaleOrientation = this ._scaleOrientation .copy (),
+            center           = this ._center           .copy ();
 
+         this ._translation      = this .initialTranslation;
+         this ._rotation         = this .initialRotation;
+         this ._scale            = this .initialScale;
+         this ._scaleOrientation = this .initialScaleOrientation;
+         this ._center           = this .initialCenter;
+
+         UndoManager .shared .beginUndo (_ ("Edit Transform"));
+
+         Editor .setFieldValue (this .getExecutionContext (), this .toolNode, this ._translation,      translation);
+         Editor .setFieldValue (this .getExecutionContext (), this .toolNode, this ._rotation,         rotation);
+         Editor .setFieldValue (this .getExecutionContext (), this .toolNode, this ._scale,            scale);
+         Editor .setFieldValue (this .getExecutionContext (), this .toolNode, this ._scaleOrientation, scaleOrientation);
+         Editor .setFieldValue (this .getExecutionContext (), this .toolNode, this ._center,           center);
+
+         UndoManager .shared .endUndo ()
       }
    }
 

@@ -1587,6 +1587,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             case "copy":
             {
                UndoManager .shared .beginUndo (_ ("Copy Extern Proto »%s«"), sourceExternProto .getName ())
+
                await Editor .importX3D (destinationExecutionContext, Editor .exportVRML (sourceExecutionContext, [sourceExternProto]))
 
                const
