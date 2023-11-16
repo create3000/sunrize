@@ -9,7 +9,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 16 Nov 2023 15:56:51 GMT'/>
+    <meta name='modified' content='Thu, 16 Nov 2023 16:31:11 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -64,32 +64,12 @@
                 castShadow='false'>
               <IndexedLineSet
                   colorPerVertex='false'
-                  colorIndex='0'
-                  coordIndex='0, 1, -1'>
-                <Color DEF='_1'
+                  colorIndex='0, 1, 2'
+                  coordIndex='0, 1, -1, 0, 2, -1, 0, 3, -1'>
+                <Color
                     color='1 0 0, 0 1 0, 0 0 1'/>
                 <Coordinate DEF='AxesCoord'
-                    point='0 0 0, 0.5 0 0, 0 0.5 0, 0 0 0.5, 0 0 0'/>
-              </IndexedLineSet>
-            </Shape>
-            <Shape DEF='yAxis_1'
-                castShadow='false'>
-              <IndexedLineSet
-                  colorPerVertex='false'
-                  colorIndex='1'
-                  coordIndex='0, 2, -1'>
-                <Color USE='_1'/>
-                <Coordinate USE='AxesCoord'/>
-              </IndexedLineSet>
-            </Shape>
-            <Shape DEF='zAxis'
-                castShadow='false'>
-              <IndexedLineSet
-                  colorPerVertex='false'
-                  colorIndex='2'
-                  coordIndex='0, 3, -1'>
-                <Color USE='_1'/>
-                <Coordinate USE='AxesCoord'/>
+                    point='0 0 0, 0.5 0 0, 0 0.5 0, 0 0 0.5'/>
               </IndexedLineSet>
             </Shape>
           </Transform>
@@ -252,8 +232,7 @@ function eventsProcessed ()
    axes .point = new MFVec3f (new SFVec3f (0, 0, 0),
                               new SFVec3f (bboxSize1_2 .x, 0, 0),
                               new SFVec3f (0, bboxSize1_2 .y, 0),
-                              new SFVec3f (0, 0, bboxSize1_2 .z),
-                              new SFVec3f (0, 0, 0));
+                              new SFVec3f (0, 0, bboxSize1_2 .z));
 
 
    // BBox

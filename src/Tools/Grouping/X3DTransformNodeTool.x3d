@@ -9,7 +9,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 16 Nov 2023 16:12:30 GMT'/>
+    <meta name='modified' content='Thu, 16 Nov 2023 16:53:10 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -79,10 +79,10 @@
                   colorPerVertex='false'
                   colorIndex='0'
                   coordIndex='0, 1, -1'>
-                <Color DEF='_1'
+                <Color DEF='_4'
                     color='1 0 0, 0 1 0, 0 0 1'/>
                 <Coordinate DEF='AxesCoord'
-                    point='0 0 0, 0.5 0 0, 0 0.5 0, 0 0 0.5, 0 0 0'/>
+                    point='-0.5 0 0, 0.5 0 0, 0 -0.5 0, 0 0.5 0, 0 0 -0.5, 0 0 0.6'/>
               </IndexedLineSet>
             </Shape>
             <Shape DEF='yAxis_1'
@@ -93,8 +93,8 @@
               <IndexedLineSet
                   colorPerVertex='false'
                   colorIndex='1'
-                  coordIndex='0, 2, -1'>
-                <Color USE='_1'/>
+                  coordIndex='2, 3, -1'>
+                <Color USE='_4'/>
                 <Coordinate USE='AxesCoord'/>
               </IndexedLineSet>
             </Shape>
@@ -106,8 +106,8 @@
               <IndexedLineSet
                   colorPerVertex='false'
                   colorIndex='2'
-                  coordIndex='0, 3, -1'>
-                <Color USE='_1'/>
+                  coordIndex='4, 5, -1'>
+                <Color USE='_4'/>
                 <Coordinate USE='AxesCoord'/>
               </IndexedLineSet>
             </Shape>
@@ -116,70 +116,120 @@
             <IS>
               <connect nodeField='translation' protoField='bboxCenter'/>
             </IS>
-            <Transform DEF='XHandle'
-                translation='0.5 0 0'>
-              <IS>
-                <connect nodeField='visible' protoField='xAxisDisplay'/>
-              </IS>
-              <ScreenGroup>
-                <Transform
-                    translation='9 0 0'
-                    rotation='0 0 -1 90'>
-                  <Shape
-                      castShadow='false'>
-                    <Appearance DEF='Red'>
-                      <Material
-                          diffuseColor='1 0 0'/>
-                      <ProtoInstance name='ToolShader' DEF='_2' containerField='shaders'/>
-                    </Appearance>
-                    <Cone DEF='Arrow'
-                        height='18'
-                        bottomRadius='6'/>
-                  </Shape>
-                </Transform>
-              </ScreenGroup>
-            </Transform>
-            <Transform DEF='YHandle'
-                translation='0 0.5 0'>
-              <IS>
-                <connect nodeField='visible' protoField='yAxisDisplay'/>
-              </IS>
-              <ScreenGroup>
-                <Transform
-                    translation='0 9 0'>
-                  <Shape
-                      castShadow='false'>
-                    <Appearance DEF='Green'>
-                      <Material
-                          diffuseColor='0 1 0'/>
-                      <ProtoInstance name='ToolShader' USE='_2' containerField='shaders'/>
-                    </Appearance>
-                    <Cone USE='Arrow'/>
-                  </Shape>
-                </Transform>
-              </ScreenGroup>
-            </Transform>
-            <Transform DEF='ZHandle'
-                translation='0 0 0.5'>
-              <IS>
-                <connect nodeField='visible' protoField='zAxisDisplay'/>
-              </IS>
-              <ScreenGroup>
-                <Transform
-                    translation='0 0 9'
-                    rotation='1 0 0 90'>
-                  <Shape
-                      castShadow='false'>
-                    <Appearance DEF='Blue'>
-                      <Material
-                          diffuseColor='0 0 1'/>
-                      <ProtoInstance name='ToolShader' USE='_2' containerField='shaders'/>
-                    </Appearance>
-                    <Cone USE='Arrow'/>
-                  </Shape>
-                </Transform>
-              </ScreenGroup>
-            </Transform>
+            <Group DEF='XHandle_2'>
+              <Transform DEF='XFront_1'
+                  translation='0.5 0 0'>
+                <IS>
+                  <connect nodeField='visible' protoField='xAxisDisplay'/>
+                </IS>
+                <ScreenGroup>
+                  <Transform
+                      translation='9 0 0'
+                      rotation='0 0 -1 90'>
+                    <Shape
+                        castShadow='false'>
+                      <Appearance DEF='Red_1'>
+                        <Material
+                            diffuseColor='1 0 0'/>
+                        <ProtoInstance name='ToolShader' DEF='_1' containerField='shaders'/>
+                      </Appearance>
+                      <Cone DEF='Arrow'
+                          height='18'
+                          bottomRadius='6'/>
+                    </Shape>
+                  </Transform>
+                </ScreenGroup>
+              </Transform>
+              <Transform DEF='XBack_1'
+                  translation='-0.5 0 0'>
+                <ScreenGroup>
+                  <Transform
+                      translation='3 0 0'
+                      rotation='0 0 -1 90'>
+                    <Shape
+                        castShadow='false'>
+                      <Appearance USE='Red_1'/>
+                      <Cylinder DEF='Back'
+                          height='3'
+                          radius='6'/>
+                    </Shape>
+                  </Transform>
+                </ScreenGroup>
+              </Transform>
+            </Group>
+            <Group DEF='YHandle'>
+              <Transform DEF='YFront'
+                  translation='0 0.5 0'>
+                <IS>
+                  <connect nodeField='visible' protoField='yAxisDisplay'/>
+                </IS>
+                <ScreenGroup>
+                  <Transform
+                      translation='0 9 0'>
+                    <Shape
+                        castShadow='false'>
+                      <Appearance DEF='Green_1'>
+                        <Material
+                            diffuseColor='0 1 0'/>
+                        <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
+                      </Appearance>
+                      <Cone USE='Arrow'/>
+                    </Shape>
+                  </Transform>
+                </ScreenGroup>
+              </Transform>
+              <Transform DEF='YBack_1'
+                  translation='0 -0.5 0'>
+                <ScreenGroup>
+                  <Transform
+                      translation='0 3 0'
+                      rotation='0 0 -1 1.5707963267949'>
+                    <Shape
+                        castShadow='false'>
+                      <Appearance USE='Green_1'/>
+                      <Cylinder USE='Back'/>
+                    </Shape>
+                  </Transform>
+                </ScreenGroup>
+              </Transform>
+            </Group>
+            <Group DEF='ZHandle'>
+              <Transform DEF='ZFront'
+                  translation='0 0 0.5'>
+                <IS>
+                  <connect nodeField='visible' protoField='zAxisDisplay'/>
+                </IS>
+                <ScreenGroup>
+                  <Transform
+                      translation='0 0 9'
+                      rotation='1 0 0 90'>
+                    <Shape
+                        castShadow='false'>
+                      <Appearance DEF='Blue'>
+                        <Material
+                            diffuseColor='0 0 1'/>
+                        <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
+                      </Appearance>
+                      <Cone USE='Arrow'/>
+                    </Shape>
+                  </Transform>
+                </ScreenGroup>
+              </Transform>
+              <Transform DEF='ZBack'
+                  translation='0 0 -0.5'>
+                <ScreenGroup>
+                  <Transform
+                      translation='0 0 3'
+                      rotation='1 0 0 90'>
+                    <Shape
+                        castShadow='false'>
+                      <Appearance USE='Blue'/>
+                      <Cylinder USE='Back'/>
+                    </Shape>
+                  </Transform>
+                </ScreenGroup>
+              </Transform>
+            </Group>
           </Transform>
           <Transform DEF='Center'>
             <IS>
@@ -210,7 +260,7 @@
                   <Appearance>
                     <Material
                         diffuseColor='1 1 0'/>
-                    <ProtoInstance name='ToolShader' USE='_2' containerField='shaders'/>
+                    <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
                   </Appearance>
                   <Sphere
                       radius='5'/>
@@ -235,7 +285,7 @@
                     linewidthScaleFactor='2'/>
                 <Material DEF='BBoxMaterial_1'
                     emissiveColor='0 1 0'/>
-                <ProtoInstance name='ToolShader' USE='_2' containerField='shaders'/>
+                <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
               </Appearance>
               <IndexedLineSet
                   coordIndex='0, 1, 2, 3, 0, -1'>
@@ -277,11 +327,12 @@ function eventsProcessed ()
 
    // Axes
 
-   axes .point = new MFVec3f (new SFVec3f (0, 0, 0),
-                              new SFVec3f (bboxSize1_2 .x, 0, 0),
-                              new SFVec3f (0, bboxSize1_2 .y, 0),
-                              new SFVec3f (0, 0, bboxSize1_2 .z),
-                              new SFVec3f (0, 0, 0));
+   axes .point = new MFVec3f (new SFVec3f (-bboxSize1_2 .x, 0, 0),
+                              new SFVec3f ( bboxSize1_2 .x, 0, 0),
+                              new SFVec3f (0, -bboxSize1_2 .y, 0),
+                              new SFVec3f (0,  bboxSize1_2 .y, 0),
+                              new SFVec3f (0, 0, -bboxSize1_2 .z),
+                              new SFVec3f (0, 0,  bboxSize1_2 .z));
 
 
    // BBox
@@ -309,17 +360,26 @@ function eventsProcessed ()
 }
 ]]>
         </Script>
-        <Script DEF='ArrowsScript'
+        <Script DEF='HandesScript'
             directOutput='true'>
           <field accessType='inputOutput' type='SFVec3f' name='bboxSize'/>
-          <field accessType='initializeOnly' type='SFNode' name='x'>
-            <Transform USE='XHandle'/>
+          <field accessType='initializeOnly' type='SFNode' name='xFront'>
+            <Transform USE='XFront_1'/>
           </field>
-          <field accessType='initializeOnly' type='SFNode' name='y'>
-            <Transform USE='YHandle'/>
+          <field accessType='initializeOnly' type='SFNode' name='yFront'>
+            <Transform USE='YFront'/>
           </field>
-          <field accessType='initializeOnly' type='SFNode' name='z'>
-            <Transform USE='ZHandle'/>
+          <field accessType='initializeOnly' type='SFNode' name='zFront'>
+            <Transform USE='ZFront'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='xBack'>
+            <Transform USE='XBack_1'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='yBack'>
+            <Transform USE='YBack_1'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='zBack'>
+            <Transform USE='ZBack'/>
           </field>
           <IS>
             <connect nodeField='bboxSize' protoField='bboxSize'/>
@@ -335,11 +395,15 @@ function eventsProcessed ()
 {
    // Position arrows
 
-   var bboxSize1_2 = bboxSize .divide (2);
+   const bboxSize1_2 = bboxSize .divide (2);
 
-   x .translation = new SFVec3f (bboxSize1_2 .x, 0, 0);
-   y .translation = new SFVec3f (0, bboxSize1_2 .y, 0);
-   z .translation = new SFVec3f (0, 0, bboxSize1_2 .z);
+   xFront .translation = new SFVec3f (bboxSize1_2 .x, 0, 0);
+   yFront .translation = new SFVec3f (0, bboxSize1_2 .y, 0);
+   zFront .translation = new SFVec3f (0, 0, bboxSize1_2 .z);
+
+   xBack .translation = new SFVec3f (-bboxSize1_2 .x, 0, 0);
+   yBack .translation = new SFVec3f (0, -bboxSize1_2 .y, 0);
+   zBack .translation = new SFVec3f (0, 0, -bboxSize1_2 .z);
 }
 ]]>
         </Script>
