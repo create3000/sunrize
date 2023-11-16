@@ -15,7 +15,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
       this .getBrowser () .displayEvents () .addInterest ("reshape", this);
 
-      this .tool .getField ("isActive") .addInterest ("set_active", this);
+      this .tool .getField ("activeTool") .addInterest ("set_activeTool", this);
 
       this .tool .getField ("translation")      .addReference (this .node ._translation);
       this .tool .getField ("rotation")         .addReference (this .node ._rotation);
@@ -35,15 +35,16 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       return super .removeTool ();
    }
 
-   set_active (active)
+   set_activeTool (activeTool)
    {
-      if (active .getValue ())
+      if (activeTool .getValue ())
       {
          this .initialTranslation      = this ._translation      .copy ();
          this .initialRotation         = this ._rotation         .copy ();
          this .initialScale            = this ._scale            .copy ();
          this .initialScaleOrientation = this ._scaleOrientation .copy ();
          this .initialCenter           = this ._center           .copy ();
+         this .activeTool              = this .tool .activeTool;
       }
       else
       {
@@ -60,7 +61,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
          this ._scaleOrientation = this .initialScaleOrientation;
          this ._center           = this .initialCenter;
 
-         switch (this .tool .activeTool)
+         switch (this .activeTool)
          {
             case 1:
                UndoManager .shared .beginUndo (_ ("Move Transform"));

@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 16 Nov 2023 19:48:57 GMT'/>
+    <meta name='modified' content='Thu, 16 Nov 2023 19:57:05 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -32,7 +32,6 @@
         <field accessType='inputOutput' type='SFColor' name='bboxColor' value='1 1 1'/>
         <field accessType='inputOutput' type='SFVec3f' name='bboxSize' value='1 1 1'/>
         <field accessType='inputOutput' type='SFVec3f' name='bboxCenter'/>
-        <field accessType='outputOnly' type='SFBool' name='isActive'/>
         <field accessType='outputOnly' type='SFInt32' name='activeTool'/>
       </ProtoInterface>
       <ProtoBody>
@@ -155,11 +154,7 @@
               <PlaneSensor DEF='XTranslationSensor'
                   description='x-Axis'
                   autoOffset='false'
-                  maxPosition='-1 0'>
-                <IS>
-                  <connect nodeField='isActive' protoField='isActive'/>
-                </IS>
-              </PlaneSensor>
+                  maxPosition='-1 0'/>
             </Group>
             <Group DEF='YHandle'>
               <IS>
@@ -199,11 +194,7 @@
               <PlaneSensor DEF='YTranslationSensor'
                   description='y-Axis'
                   autoOffset='false'
-                  maxPosition='0 -1'>
-                <IS>
-                  <connect nodeField='isActive' protoField='isActive'/>
-                </IS>
-              </PlaneSensor>
+                  maxPosition='0 -1'/>
             </Group>
             <Group DEF='ZHandle'>
               <IS>
@@ -245,11 +236,7 @@
                   description='z-Axis'
                   axisRotation='0 -1 0 90'
                   autoOffset='false'
-                  maxPosition='-1 0'>
-                <IS>
-                  <connect nodeField='isActive' protoField='isActive'/>
-                </IS>
-              </PlaneSensor>
+                  maxPosition='-1 0'/>
             </Group>
           </Transform>
           <Group DEF='Center'>
@@ -410,7 +397,8 @@ function eventsProcessed ()
 }
 ]]>
         </Script>
-        <Script DEF='TranslateScript'>
+        <Script DEF='TranslateScript'
+            directOutput='true'>
           <field accessType='inputOnly' type='SFBool' name='set_active'/>
           <field accessType='inputOnly' type='SFVec3f' name='set_xTranslation'/>
           <field accessType='inputOnly' type='SFVec3f' name='set_yTranslation'/>
@@ -443,6 +431,10 @@ function set_active (value)
 
       initialTranslation = translation;
       initialCenter      = center;
+   }
+   else
+   {
+      activeTool = 0;
    }
 
    events = 4;
