@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 16 Nov 2023 19:26:57 GMT'/>
+    <meta name='modified' content='Thu, 16 Nov 2023 19:36:02 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -34,6 +34,7 @@
         <field accessType='inputOutput' type='SFVec3f' name='bboxSize' value='1 1 1'/>
         <field accessType='inputOutput' type='SFVec3f' name='bboxCenter'/>
         <field accessType='outputOnly' type='SFBool' name='isActive'/>
+        <field accessType='outputOnly' type='SFInt32' name='activeTool'/>
       </ProtoInterface>
       <ProtoBody>
         <Collision
@@ -462,6 +463,7 @@ function eventsProcessed ()
           <field accessType='inputOutput' type='SFRotation' name='scaleOrientation'/>
           <field accessType='inputOutput' type='SFVec3f' name='center'/>
           <field accessType='inputOutput' type='SFBool' name='keepCenter'/>
+          <field accessType='outputOnly' type='SFInt32' name='activeTool'/>
           <field accessType='initializeOnly' type='SFVec3f' name='initialTranslation'/>
           <field accessType='initializeOnly' type='SFVec3f' name='initialCenter'/>
           <field accessType='initializeOnly' type='SFInt32' name='events'/>
@@ -471,6 +473,7 @@ function eventsProcessed ()
             <connect nodeField='scale' protoField='scale'/>
             <connect nodeField='scaleOrientation' protoField='scaleOrientation'/>
             <connect nodeField='center' protoField='center'/>
+            <connect nodeField='activeTool' protoField='activeTool'/>
           </IS>
 <![CDATA[ecmascript:
 
@@ -478,15 +481,11 @@ function set_active (value)
 {
 	if (value)
 	{
-		// activeTool_changed = 1;
+		activeTool = 1;
 
 		initialTranslation = translation;
 		initialCenter      = center;
 	}
-	else
-   {
-		// activeTool_changed = 0;
-   }
 
 	events = 4;
 }

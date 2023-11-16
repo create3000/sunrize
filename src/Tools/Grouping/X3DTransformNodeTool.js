@@ -60,7 +60,18 @@ class X3DTransformNodeTool extends X3DChildNodeTool
          this ._scaleOrientation = this .initialScaleOrientation;
          this ._center           = this .initialCenter;
 
-         UndoManager .shared .beginUndo (_ ("Edit Transform"));
+         switch (this .tool .activeTool)
+         {
+            case 1:
+               UndoManager .shared .beginUndo (_ ("Move Transform"));
+               break;
+            case 2:
+               UndoManager .shared .beginUndo (_ ("Rotate Transform"));
+               break;
+            case 3:
+               UndoManager .shared .beginUndo (_ ("Scale Transform"));
+               break;
+         }
 
          Editor .setFieldValue (this .getExecutionContext (), this .toolNode, this ._translation,      translation);
          Editor .setFieldValue (this .getExecutionContext (), this .toolNode, this ._rotation,         rotation);
