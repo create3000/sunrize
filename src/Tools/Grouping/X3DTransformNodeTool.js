@@ -12,7 +12,15 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
       this .toolNode .getBrowser () .displayEvents () .addInterest ("reshape", this);
 
-      // this .tool .centerDisplay = true;
+      this .tool .getField ("isActive") .addInterest ("set_active", this);
+
+      this .tool .getField ("translation")      .addReference (this .toolNode ._translation);
+      this .tool .getField ("rotation")         .addReference (this .toolNode ._rotation);
+      this .tool .getField ("scale")            .addReference (this .toolNode ._scale);
+      this .tool .getField ("scaleOrientation") .addReference (this .toolNode ._scaleOrientation);
+      this .tool .getField ("center")           .addReference (this .toolNode ._center);
+
+      this .tool .centerDisplay = false;
       this .tool .bboxDisplay   = true;
       this .tool .bboxColor     = this .toolBBoxColor;
    }
@@ -22,6 +30,11 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       this .toolNode .getBrowser () .displayEvents () .removeInterest ("reshape", this);
 
       return super .removeTool ();
+   }
+
+   set_active (value)
+   {
+      console .log (value .toString ());
    }
 
    static box = new X3D .Box3 ();

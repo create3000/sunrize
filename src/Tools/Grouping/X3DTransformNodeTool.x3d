@@ -3,13 +3,14 @@
 <X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
   <head>
     <component name='Layout' level='2'/>
+    <component name='PointingDeviceSensor' level='1'/>
     <component name='Scripting' level='1'/>
     <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 16 Nov 2023 17:37:29 GMT'/>
+    <meta name='modified' content='Thu, 16 Nov 2023 18:39:47 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -32,6 +33,7 @@
         <field accessType='inputOutput' type='SFColor' name='bboxColor' value='1 1 1'/>
         <field accessType='inputOutput' type='SFVec3f' name='bboxSize' value='1 1 1'/>
         <field accessType='inputOutput' type='SFVec3f' name='bboxCenter'/>
+        <field accessType='outputOnly' type='SFBool' name='isActive'/>
       </ProtoInterface>
       <ProtoBody>
         <Collision
@@ -150,6 +152,14 @@
                   </Transform>
                 </ScreenGroup>
               </Transform>
+              <PlaneSensor DEF='XTranslationSensor'
+                  description='x-Axis'
+                  autoOffset='false'
+                  maxPosition='-1 0'>
+                <IS>
+                  <connect nodeField='isActive' protoField='isActive'/>
+                </IS>
+              </PlaneSensor>
             </Group>
             <Group DEF='YHandle'>
               <IS>
@@ -186,6 +196,14 @@
                   </Transform>
                 </ScreenGroup>
               </Transform>
+              <PlaneSensor DEF='YTranslationSensor'
+                  description='y-Axis'
+                  autoOffset='false'
+                  maxPosition='0 -1'>
+                <IS>
+                  <connect nodeField='isActive' protoField='isActive'/>
+                </IS>
+              </PlaneSensor>
             </Group>
             <Group DEF='ZHandle'>
               <IS>
@@ -223,6 +241,15 @@
                   </Transform>
                 </ScreenGroup>
               </Transform>
+              <PlaneSensor DEF='ZTranslationSensor'
+                  description='z-Axis'
+                  axisRotation='0 -1 0 90'
+                  autoOffset='false'
+                  maxPosition='-1 0'>
+                <IS>
+                  <connect nodeField='isActive' protoField='isActive'/>
+                </IS>
+              </PlaneSensor>
             </Group>
           </Transform>
           <Group DEF='Center'>
@@ -424,6 +451,102 @@ function eventsProcessed ()
 }
 ]]>
         </Script>
+        <Script DEF='MoveScript'>
+          <field accessType='inputOnly' type='SFBool' name='set_active'/>
+          <field accessType='inputOnly' type='SFVec3f' name='set_xTranslation'/>
+          <field accessType='inputOnly' type='SFVec3f' name='set_yTranslation'/>
+          <field accessType='inputOnly' type='SFVec3f' name='set_zTranslation'/>
+          <field accessType='inputOutput' type='SFVec3f' name='translation'/>
+          <field accessType='inputOutput' type='SFRotation' name='rotation'/>
+          <field accessType='inputOutput' type='SFVec3f' name='scale'/>
+          <field accessType='inputOutput' type='SFRotation' name='scaleOrientation'/>
+          <field accessType='inputOutput' type='SFVec3f' name='center'/>
+          <field accessType='inputOutput' type='SFVec3f' name='bboxSize'/>
+          <field accessType='inputOutput' type='SFBool' name='keepCenter'/>
+          <field accessType='initializeOnly' type='SFVec3f' name='initialTranslation'/>
+          <field accessType='initializeOnly' type='SFVec3f' name='initialSize'/>
+          <field accessType='initializeOnly' type='SFVec3f' name='initialCenter'/>
+          <field accessType='initializeOnly' type='SFInt32' name='events'/>
+          <IS>
+            <connect nodeField='translation' protoField='translation'/>
+            <connect nodeField='rotation' protoField='rotation'/>
+            <connect nodeField='scale' protoField='scale'/>
+            <connect nodeField='scaleOrientation' protoField='scaleOrientation'/>
+            <connect nodeField='center' protoField='center'/>
+            <connect nodeField='bboxSize' protoField='bboxSize'/>
+          </IS>
+<![CDATA[ecmascript:
+
+function set_active (value)
+{
+	if (value)
+	{
+		// activeTool_changed = 1;
+
+		initialTranslation = translation;
+		initialSize        = bboxSize;
+		initialCenter      = center;
+	}
+	else
+   {
+		// activeTool_changed = 0;
+   }
+
+	events = 4;
+}
+
+function set_xTranslation (value)
+{
+	translate (new SFVec3f (value .x, 0, 0));
+}
+
+function set_yTranslation (value)
+{
+	translate (new SFVec3f (0, value .y, 0));
+}
+
+function set_zTranslation (value)
+{
+	translate (new SFVec3f (0, 0, value .z));
+}
+
+function translate (value)
+{
+   // Prevent accidentially move.
+	if (events)
+   {
+      -- events;
+		return;
+   }
+
+	if (keepCenter)
+	{
+		translation = initialTranslation .add (value);
+		center      = initialCenter .subtract (value);
+	}
+	else
+	{
+		const matrix = new SFMatrix4f ();
+
+		matrix .setTransform (translation,
+		                      rotation,
+		                      scale,
+		                      scaleOrientation,
+		                      center);
+
+		const offset = matrix .multDirMatrix (value);
+
+		translation = initialTranslation .add (offset);
+	}
+}
+]]>
+        </Script>
+        <ROUTE fromNode='XTranslationSensor' fromField='translation_changed' toNode='MoveScript' toField='set_xTranslation'/>
+        <ROUTE fromNode='YTranslationSensor' fromField='translation_changed' toNode='MoveScript' toField='set_yTranslation'/>
+        <ROUTE fromNode='ZTranslationSensor' fromField='translation_changed' toNode='MoveScript' toField='set_zTranslation'/>
+        <ROUTE fromNode='ZTranslationSensor' fromField='isActive' toNode='MoveScript' toField='set_active'/>
+        <ROUTE fromNode='YTranslationSensor' fromField='isActive' toNode='MoveScript' toField='set_active'/>
+        <ROUTE fromNode='XTranslationSensor' fromField='isActive' toNode='MoveScript' toField='set_active'/>
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
