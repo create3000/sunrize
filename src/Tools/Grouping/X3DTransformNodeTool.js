@@ -100,4 +100,4 @@ class X3DTransformNodeTool extends X3DChildNodeTool
    }
 }
 
-module .exports = X3DTransformNodeTool
+module .exports = X3DTransformNodeTool;
