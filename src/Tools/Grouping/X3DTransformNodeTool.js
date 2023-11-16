@@ -79,7 +79,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
          Editor .setFieldValue (this .getExecutionContext (), this .node, this ._scaleOrientation, scaleOrientation);
          Editor .setFieldValue (this .getExecutionContext (), this .node, this ._center,           center);
 
-         UndoManager .shared .endUndo ()
+         UndoManager .shared .endUndo ();
       }
    }
 
