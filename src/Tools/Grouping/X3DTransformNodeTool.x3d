@@ -8,8 +8,8 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 16 Nov 2023 15:56:51 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Fri, 18 Aug 2023 15:29:52 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -17,8 +17,18 @@
     <ProtoDeclare name='Tool'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
+        <field accessType='inputOutput' type='SFVec3f' name='translation'/>
+        <field accessType='inputOutput' type='SFBool' name='translationHandles'/>
+        <field accessType='inputOutput' type='SFRotation' name='rotation'/>
+        <field accessType='inputOutput' type='SFBool' name='rotationHandles'/>
+        <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
+        <field accessType='inputOutput' type='SFBool' name='scaleHandles'/>
+        <field accessType='inputOutput' type='SFRotation' name='scaleOrientation'/>
         <field accessType='inputOutput' type='SFVec3f' name='center'/>
         <field accessType='inputOutput' type='SFBool' name='centerDisplay'/>
+        <field accessType='inputOutput' type='SFBool' name='xAxisDisplay' value='true'/>
+        <field accessType='inputOutput' type='SFBool' name='yAxisDisplay' value='true'/>
+        <field accessType='inputOutput' type='SFBool' name='zAxisDisplay' value='true'/>
         <field accessType='inputOutput' type='SFVec3f' name='axisOfRotation'/>
         <field accessType='inputOutput' type='SFBool' name='rectangleDisplay'/>
         <field accessType='inputOutput' type='SFVec3f' name='rectangleSize' value='1 1 1'/>
@@ -62,6 +72,9 @@
             </Shape>
             <Shape DEF='xAxis_1'
                 castShadow='false'>
+              <IS>
+                <connect nodeField='visible' protoField='xAxisDisplay'/>
+              </IS>
               <IndexedLineSet
                   colorPerVertex='false'
                   colorIndex='0'
@@ -74,6 +87,9 @@
             </Shape>
             <Shape DEF='yAxis_1'
                 castShadow='false'>
+              <IS>
+                <connect nodeField='visible' protoField='yAxisDisplay'/>
+              </IS>
               <IndexedLineSet
                   colorPerVertex='false'
                   colorIndex='1'
@@ -84,6 +100,9 @@
             </Shape>
             <Shape DEF='zAxis'
                 castShadow='false'>
+              <IS>
+                <connect nodeField='visible' protoField='zAxisDisplay'/>
+              </IS>
               <IndexedLineSet
                   colorPerVertex='false'
                   colorIndex='2'
@@ -99,6 +118,9 @@
             </IS>
             <Transform DEF='XHandle'
                 translation='0.5 0 0'>
+              <IS>
+                <connect nodeField='visible' protoField='xAxisDisplay'/>
+              </IS>
               <ScreenGroup>
                 <Transform
                     translation='6 0 0'
@@ -119,6 +141,9 @@
             </Transform>
             <Transform DEF='YHandle'
                 translation='0 0.5 0'>
+              <IS>
+                <connect nodeField='visible' protoField='yAxisDisplay'/>
+              </IS>
               <ScreenGroup>
                 <Transform
                     translation='0 6 0'>
@@ -136,6 +161,9 @@
             </Transform>
             <Transform DEF='ZHandle'
                 translation='0 0 0.5'>
+              <IS>
+                <connect nodeField='visible' protoField='zAxisDisplay'/>
+              </IS>
               <ScreenGroup>
                 <Transform
                     translation='0 0 6'

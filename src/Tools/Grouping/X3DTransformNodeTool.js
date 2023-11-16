@@ -1,18 +1,45 @@
 "use strict"
 
 const
-   X3DBoundedObjectTool = require ("./X3DBoundedObjectTool"),
-   X3D                  = require ("../../X3D")
+   X3DChildNodeTool = require ("../Core/X3DChildNodeTool"),
+   X3D              = require ("../../X3D")
 
-class X3DTransformNodeTool extends X3DBoundedObjectTool
+class X3DTransformNodeTool extends X3DChildNodeTool
 {
    async initialize ()
    {
-      await super .initialize ()
+      await super .initialize (__dirname, "X3DTransformNodeTool.x3d")
+
+      this .toolNode .getBrowser () .displayEvents () .addInterest ("reshape", this)
 
       this .tool .translationHandles = true
       this .tool .rotationHandles    = true
       this .tool .scaleHandles       = true
+      this .tool .bboxDisplay        = true
+      this .tool .bboxColor          = this .toolBBoxColor
+   }
+
+   removeTool ()
+   {
+      this .toolNode .getBrowser () .displayEvents () .removeInterest ("reshape", this)
+
+      return super .removeTool ()
+   }
+
+   static box = new X3D .Box3 ()
+
+   reshape ()
+   {
+      const
+         bbox       = this .toolNode .getBBox (X3DTransformNodeTool .box),
+         bboxSize   = bbox .size,
+         bboxCenter = bbox .center
+
+      if (!this .tool .bboxSize .getValue () .equals (bboxSize))
+         this .tool .bboxSize = bboxSize
+
+      if (!this .tool .bboxCenter .getValue () .equals (bboxCenter))
+         this .tool .bboxCenter = bboxCenter
    }
 }
 
