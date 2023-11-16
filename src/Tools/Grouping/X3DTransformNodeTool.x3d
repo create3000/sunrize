@@ -9,7 +9,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 16 Nov 2023 17:06:32 GMT'/>
+    <meta name='modified' content='Thu, 16 Nov 2023 17:17:57 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -27,9 +27,6 @@
         <field accessType='inputOutput' type='SFBool' name='yAxisDisplay' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='zAxisDisplay' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='centerDisplay'/>
-        <field accessType='inputOutput' type='SFBool' name='rectangleDisplay'/>
-        <field accessType='inputOutput' type='SFVec3f' name='rectangleSize' value='1 1 1'/>
-        <field accessType='inputOutput' type='SFVec3f' name='rectangleCenter'/>
         <field accessType='inputOutput' type='SFBool' name='bboxDisplay'/>
         <field accessType='inputOutput' type='SFInt32' name='bboxStyle' value='1'/>
         <field accessType='inputOutput' type='SFColor' name='bboxColor' value='1 1 1'/>
@@ -228,7 +225,7 @@
               </Transform>
             </Group>
           </Transform>
-          <Transform DEF='Center'>
+          <Group DEF='Center'>
             <IS>
               <connect nodeField='visible' protoField='centerDisplay'/>
             </IS>
@@ -269,36 +266,16 @@
                   url='"Vector.x3d"'
                   visible='false'/>
             </Transform>
-          </Transform>
-          <Transform DEF='Rectangle'>
-            <IS>
-              <connect nodeField='translation' protoField='rectangleCenter'/>
-              <connect nodeField='visible' protoField='rectangleDisplay'/>
-            </IS>
-            <Shape DEF='Box_1'
-                castShadow='false'>
-              <Appearance>
-                <LineProperties
-                    linewidthScaleFactor='2'/>
-                <Material DEF='BBoxMaterial_1'
-                    emissiveColor='0 1 0'/>
-                <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
-              </Appearance>
-              <IndexedLineSet
-                  coordIndex='0, 1, 2, 3, 0, -1'>
-                <Coordinate DEF='Rectangle_1'
-                    point='-0.5 0.5 0, -0.5 -0.5 0, 0.5 -0.5 0, 0.5 0.5 0'/>
-              </IndexedLineSet>
-            </Shape>
-          </Transform>
+          </Group>
         </Collision>
         <Script DEF='BBoxScript'
             directOutput='true'>
           <field accessType='inputOutput' type='SFBool' name='rectangleDisplay'/>
-          <field accessType='inputOutput' type='SFVec3f' name='rectangleSize'/>
+          <field accessType='inputOutput' type='SFVec3f' name='rectangleSize' value='1 1 1'/>
           <field accessType='inputOutput' type='SFVec3f' name='bboxSize'/>
           <field accessType='initializeOnly' type='SFNode' name='rectangle'>
-            <Coordinate USE='Rectangle_1'/>
+            <Coordinate DEF='Rectangle_1'
+                point='-0.5 0.5 0, -0.5 -0.5 0, 0.5 -0.5 0, 0.5 0.5 0'/>
           </field>
           <field accessType='initializeOnly' type='SFNode' name='bbox'>
             <Coordinate USE='BBox'/>
@@ -307,8 +284,6 @@
             <Coordinate USE='AxesCoord'/>
           </field>
           <IS>
-            <connect nodeField='rectangleDisplay' protoField='rectangleDisplay'/>
-            <connect nodeField='rectangleSize' protoField='rectangleSize'/>
             <connect nodeField='bboxSize' protoField='bboxSize'/>
           </IS>
 <![CDATA[ecmascript:

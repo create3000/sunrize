@@ -9,7 +9,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 16 Nov 2023 16:31:11 GMT'/>
+    <meta name='modified' content='Thu, 16 Nov 2023 17:17:15 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -133,7 +133,7 @@
               </ScreenGroup>
             </Transform>
           </Transform>
-          <Transform DEF='Center'>
+          <Group DEF='Center'>
             <IS>
               <connect nodeField='visible' protoField='centerDisplay'/>
             </IS>
@@ -174,7 +174,7 @@
                   url='"Vector.x3d"'
                   visible='false'/>
             </Transform>
-          </Transform>
+          </Group>
           <Transform DEF='Rectangle'>
             <IS>
               <connect nodeField='translation' protoField='rectangleCenter'/>
