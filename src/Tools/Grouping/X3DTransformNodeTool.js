@@ -64,13 +64,13 @@ class X3DTransformNodeTool extends X3DChildNodeTool
          switch (this .activeTool)
          {
             case 1:
-               UndoManager .shared .beginUndo (_ ("Move Transform"));
+               UndoManager .shared .beginUndo (_ ("Move %s"), this .getTypeName ());
                break;
             case 2:
-               UndoManager .shared .beginUndo (_ ("Rotate Transform"));
+               UndoManager .shared .beginUndo (_ ("Rotate %s"), this .getTypeName ());
                break;
             case 3:
-               UndoManager .shared .beginUndo (_ ("Scale Transform"));
+               UndoManager .shared .beginUndo (_ ("Scale %s"), this .getTypeName ());
                break;
          }
 
