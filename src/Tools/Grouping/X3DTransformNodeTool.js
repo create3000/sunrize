@@ -12,11 +12,8 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
       this .toolNode .getBrowser () .displayEvents () .addInterest ("reshape", this)
 
-      this .tool .translationHandles = true
-      this .tool .rotationHandles    = true
-      this .tool .scaleHandles       = true
-      this .tool .bboxDisplay        = true
-      this .tool .bboxColor          = this .toolBBoxColor
+      this .tool .bboxDisplay = true
+      this .tool .bboxColor   = this .toolBBoxColor
    }
 
    removeTool ()
