@@ -9,7 +9,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 16 Nov 2023 17:17:57 GMT'/>
+    <meta name='modified' content='Thu, 16 Nov 2023 17:37:29 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -114,7 +114,7 @@
               <IS>
                 <connect nodeField='visible' protoField='xAxisDisplay'/>
               </IS>
-              <Transform DEF='XFront_1'
+              <Transform DEF='XFront'
                   translation='0.5 0 0'>
                 <ScreenGroup>
                   <Transform
@@ -270,13 +270,7 @@
         </Collision>
         <Script DEF='BBoxScript'
             directOutput='true'>
-          <field accessType='inputOutput' type='SFBool' name='rectangleDisplay'/>
-          <field accessType='inputOutput' type='SFVec3f' name='rectangleSize' value='1 1 1'/>
           <field accessType='inputOutput' type='SFVec3f' name='bboxSize'/>
-          <field accessType='initializeOnly' type='SFNode' name='rectangle'>
-            <Coordinate DEF='Rectangle_1'
-                point='-0.5 0.5 0, -0.5 -0.5 0, 0.5 -0.5 0, 0.5 0.5 0'/>
-          </field>
           <field accessType='initializeOnly' type='SFNode' name='bbox'>
             <Coordinate USE='BBox'/>
           </field>
@@ -295,7 +289,7 @@ function initialize ()
 
 function eventsProcessed ()
 {
-   var bboxSize1_2 = bboxSize .divide (2);
+   const bboxSize1_2 = bboxSize .divide (2);
 
    // Axes
 
@@ -317,18 +311,6 @@ function eventsProcessed ()
                               new SFVec3f (-bboxSize1_2 .x, -bboxSize1_2 .y, -bboxSize1_2 .z),
                               new SFVec3f ( bboxSize1_2 .x, -bboxSize1_2 .y, -bboxSize1_2 .z),
                               new SFVec3f ( bboxSize1_2 .x,  bboxSize1_2 .y, -bboxSize1_2 .z));
-
-   if (rectangleDisplay)
-   {
-      var bboxSize1_2 = rectangleSize .divide (2);
-
-      // BBox
-
-      rectangle .point = new MFVec3f (new SFVec3f (-bboxSize1_2 .x,  bboxSize1_2 .y,  0),
-                                      new SFVec3f (-bboxSize1_2 .x, -bboxSize1_2 .y,  0),
-                                      new SFVec3f ( bboxSize1_2 .x, -bboxSize1_2 .y,  0),
-                                      new SFVec3f ( bboxSize1_2 .x,  bboxSize1_2 .y,  0));
-   }
 }
 ]]>
         </Script>
@@ -336,7 +318,7 @@ function eventsProcessed ()
             directOutput='true'>
           <field accessType='inputOutput' type='SFVec3f' name='bboxSize'/>
           <field accessType='initializeOnly' type='SFNode' name='xFront'>
-            <Transform USE='XFront_1'/>
+            <Transform USE='XFront'/>
           </field>
           <field accessType='initializeOnly' type='SFNode' name='yFront'>
             <Transform USE='YFront'/>

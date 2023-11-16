@@ -9,7 +9,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 16 Nov 2023 17:17:15 GMT'/>
+    <meta name='modified' content='Thu, 16 Nov 2023 17:38:26 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -225,7 +225,7 @@ function initialize ()
 
 function eventsProcessed ()
 {
-   var bboxSize1_2 = bboxSize .divide (2);
+   const bboxSize1_2 = bboxSize .divide (2);
 
    // Axes
 
@@ -248,7 +248,7 @@ function eventsProcessed ()
 
    if (rectangleDisplay)
    {
-      var bboxSize1_2 = rectangleSize .divide (2);
+      const bboxSize1_2 = rectangleSize .divide (2);
 
       // BBox
 
@@ -284,9 +284,9 @@ function initialize ()
 
 function eventsProcessed ()
 {
-   // Position arrows
+   // Position the arrows.
 
-   var bboxSize1_2 = bboxSize .divide (2);
+   const bboxSize1_2 = bboxSize .divide (2);
 
    x .translation = new SFVec3f (bboxSize1_2 .x, 0, 0);
    y .translation = new SFVec3f (0, bboxSize1_2 .y, 0);
