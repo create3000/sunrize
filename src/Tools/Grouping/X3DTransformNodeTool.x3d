@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 16 Nov 2023 19:57:05 GMT'/>
+    <meta name='modified' content='Thu, 16 Nov 2023 21:28:31 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -118,37 +118,76 @@
               <Transform DEF='XFront'
                   translation='0.5 0 0'>
                 <ScreenGroup>
-                  <Transform
-                      translation='9 0 0'
-                      rotation='0 0 -1 90'>
-                    <Shape
-                        castShadow='false'>
-                      <Appearance DEF='Red_1'>
-                        <Material
-                            diffuseColor='1 0 0'/>
-                        <ProtoInstance name='ToolShader' DEF='_1' containerField='shaders'/>
-                      </Appearance>
-                      <Cone DEF='Arrow'
-                          height='18'
-                          bottomRadius='6'/>
-                    </Shape>
-                  </Transform>
+                  <Switch
+                      whichChoice='0'>
+                    <Transform
+                        translation='9 0 0'
+                        rotation='0 0 -1 90'>
+                      <Shape
+                          castShadow='false'>
+                        <Appearance DEF='Red_1'>
+                          <Material
+                              diffuseColor='1 0 0'/>
+                          <ProtoInstance name='ToolShader' DEF='_17' containerField='shaders'/>
+                        </Appearance>
+                        <Cone DEF='Arrow_1'
+                            height='18'
+                            bottomRadius='6'/>
+                      </Shape>
+                    </Transform>
+                    <Transform
+                        translation='6 0 0'>
+                      <Shape
+                          castShadow='false'>
+                        <Appearance USE='Red_1'/>
+                        <Sphere DEF='Sphere_1'
+                            radius='6'/>
+                      </Shape>
+                    </Transform>
+                    <Transform
+                        translation='6 0 0'>
+                      <Shape
+                          castShadow='false'>
+                        <Appearance USE='Red_1'/>
+                        <Box DEF='Box_2'
+                            size='12 12 12'/>
+                      </Shape>
+                    </Transform>
+                  </Switch>
                 </ScreenGroup>
               </Transform>
               <Transform DEF='XBack_1'
                   translation='-0.5 0 0'>
                 <ScreenGroup>
-                  <Transform
-                      translation='-3 0 0'
-                      rotation='0 0 -1 90'>
-                    <Shape
-                        castShadow='false'>
-                      <Appearance USE='Red_1'/>
-                      <Cylinder DEF='Back'
-                          height='3'
-                          radius='6'/>
-                    </Shape>
-                  </Transform>
+                  <Switch
+                      whichChoice='0'>
+                    <Transform DEF='_8'
+                        translation='-1.5 0 0'
+                        rotation='0 0 -1 90'>
+                      <Shape
+                          castShadow='false'>
+                        <Appearance USE='Red_1'/>
+                        <Cylinder DEF='Back_1'
+                            height='3'
+                            radius='6'/>
+                      </Shape>
+                    </Transform>
+                    <Transform USE='_8'/>
+                    <Transform
+                        translation='-1.5 0 0'
+                        rotation='0 1 0 90'>
+                      <Shape
+                          castShadow='false'>
+                        <Appearance DEF='Red_2'>
+                          <Material
+                              diffuseColor='1 0 0'/>
+                          <ProtoInstance name='ToolShader' containerField='shaders'/>
+                        </Appearance>
+                        <Box DEF='_21'
+                            size='12 12 3'/>
+                      </Shape>
+                    </Transform>
+                  </Switch>
                 </ScreenGroup>
               </Transform>
               <PlaneSensor DEF='XTranslationSensor'
@@ -163,32 +202,64 @@
               <Transform DEF='YFront'
                   translation='0 0.5 0'>
                 <ScreenGroup>
-                  <Transform
-                      translation='0 9 0'>
-                    <Shape
-                        castShadow='false'>
-                      <Appearance DEF='Green_1'>
-                        <Material
-                            diffuseColor='0 1 0'/>
-                        <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
-                      </Appearance>
-                      <Cone USE='Arrow'/>
-                    </Shape>
-                  </Transform>
+                  <Switch
+                      whichChoice='0'>
+                    <Transform
+                        translation='0 9 0'>
+                      <Shape
+                          castShadow='false'>
+                        <Appearance DEF='Green_1'>
+                          <Material
+                              diffuseColor='0 1 0'/>
+                          <ProtoInstance name='ToolShader' USE='_17' containerField='shaders'/>
+                        </Appearance>
+                        <Cone USE='Arrow_1'/>
+                      </Shape>
+                    </Transform>
+                    <Transform
+                        translation='0 6 0'>
+                      <Shape
+                          castShadow='false'>
+                        <Appearance USE='Green_1'/>
+                        <Sphere USE='Sphere_1'/>
+                      </Shape>
+                    </Transform>
+                    <Transform
+                        translation='0 6 0'>
+                      <Shape
+                          castShadow='false'>
+                        <Appearance USE='Green_1'/>
+                        <Box USE='Box_2'/>
+                      </Shape>
+                    </Transform>
+                  </Switch>
                 </ScreenGroup>
               </Transform>
               <Transform DEF='YBack_1'
                   translation='0 -0.5 0'>
                 <ScreenGroup>
-                  <Transform
-                      translation='0 -3 0'
-                      rotation='0 0 -1 1.5707963267949'>
-                    <Shape
-                        castShadow='false'>
-                      <Appearance USE='Green_1'/>
-                      <Cylinder USE='Back'/>
-                    </Shape>
-                  </Transform>
+                  <Switch
+                      whichChoice='0'>
+                    <Transform DEF='_13'
+                        translation='0 -1.5 0'
+                        rotation='0 0 -1 1.5707963267949'>
+                      <Shape
+                          castShadow='false'>
+                        <Appearance USE='Green_1'/>
+                        <Cylinder USE='Back_1'/>
+                      </Shape>
+                    </Transform>
+                    <Transform USE='_13'/>
+                    <Transform
+                        translation='0 -1.5 0'
+                        rotation='1 0 0 90'>
+                      <Shape
+                          castShadow='false'>
+                        <Appearance USE='Green_1'/>
+                        <Box USE='_21'/>
+                      </Shape>
+                    </Transform>
+                  </Switch>
                 </ScreenGroup>
               </Transform>
               <PlaneSensor DEF='YTranslationSensor'
@@ -203,33 +274,64 @@
               <Transform DEF='ZFront'
                   translation='0 0 0.5'>
                 <ScreenGroup>
-                  <Transform
-                      translation='0 0 9'
-                      rotation='1 0 0 90'>
-                    <Shape
-                        castShadow='false'>
-                      <Appearance DEF='Blue'>
-                        <Material
-                            diffuseColor='0 0 1'/>
-                        <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
-                      </Appearance>
-                      <Cone USE='Arrow'/>
-                    </Shape>
-                  </Transform>
+                  <Switch
+                      whichChoice='0'>
+                    <Transform
+                        translation='0 0 9'
+                        rotation='1 0 0 90'>
+                      <Shape
+                          castShadow='false'>
+                        <Appearance DEF='Blue'>
+                          <Material
+                              diffuseColor='0 0 1'/>
+                          <ProtoInstance name='ToolShader' USE='_17' containerField='shaders'/>
+                        </Appearance>
+                        <Cone USE='Arrow_1'/>
+                      </Shape>
+                    </Transform>
+                    <Transform
+                        translation='0 0 6'>
+                      <Shape
+                          castShadow='false'>
+                        <Appearance USE='Blue'/>
+                        <Sphere USE='Sphere_1'/>
+                      </Shape>
+                    </Transform>
+                    <Transform
+                        translation='0 0 6'>
+                      <Shape
+                          castShadow='false'>
+                        <Appearance USE='Blue'/>
+                        <Box USE='Box_2'/>
+                      </Shape>
+                    </Transform>
+                  </Switch>
                 </ScreenGroup>
               </Transform>
               <Transform DEF='ZBack'
                   translation='0 0 -0.5'>
                 <ScreenGroup>
-                  <Transform
-                      translation='0 0 -3'
-                      rotation='1 0 0 90'>
-                    <Shape
-                        castShadow='false'>
-                      <Appearance USE='Blue'/>
-                      <Cylinder USE='Back'/>
-                    </Shape>
-                  </Transform>
+                  <Switch
+                      whichChoice='0'>
+                    <Transform DEF='_19'
+                        translation='0 0 -1.5'
+                        rotation='1 0 0 90'>
+                      <Shape
+                          castShadow='false'>
+                        <Appearance USE='Blue'/>
+                        <Cylinder USE='Back_1'/>
+                      </Shape>
+                    </Transform>
+                    <Transform USE='_19'/>
+                    <Transform
+                        translation='0 0 -1.5'>
+                      <Shape
+                          castShadow='false'>
+                        <Appearance USE='Blue'/>
+                        <Box USE='_21'/>
+                      </Shape>
+                    </Transform>
+                  </Switch>
                 </ScreenGroup>
               </Transform>
               <PlaneSensor DEF='ZTranslationSensor'
@@ -268,7 +370,7 @@
                   <Appearance>
                     <Material
                         diffuseColor='1 1 0'/>
-                    <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
+                    <ProtoInstance name='ToolShader' USE='_17' containerField='shaders'/>
                   </Appearance>
                   <Sphere
                       radius='5'/>
