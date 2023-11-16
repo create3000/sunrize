@@ -10,7 +10,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
    {
       await super .initialize (__dirname, "X3DTransformNodeTool.x3d");
 
-      this .toolNode .getBrowser () .displayEvents () .addInterest ("reshape", this);
+      this .getBrowser () .displayEvents () .addInterest ("reshape", this);
 
       this .tool .getField ("isActive") .addInterest ("set_active", this);
 
@@ -27,14 +27,21 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
    removeTool ()
    {
-      this .toolNode .getBrowser () .displayEvents () .removeInterest ("reshape", this);
+      this .getBrowser () .displayEvents () .removeInterest ("reshape", this);
 
       return super .removeTool ();
    }
 
-   set_active (value)
+   set_active (active)
    {
-      console .log (value .toString ());
+      if (active .getValue ())
+      {
+
+      }
+      else
+      {
+
+      }
    }
 
    static box = new X3D .Box3 ();

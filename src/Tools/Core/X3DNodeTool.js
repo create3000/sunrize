@@ -159,7 +159,7 @@ class X3DNodeTool
          {
             try
             {
-               const scene = await this .toolNode .getBrowser () .createX3DFromURL (new X3D .MFString (protoURL))
+               const scene = await this .getBrowser () .createX3DFromURL (new X3D .MFString (protoURL))
 
                scene .setLive (true)
 
