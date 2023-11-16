@@ -65,7 +65,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
             case 0:
                UndoManager .shared .beginUndo (_ ("Move %s"), this .getTypeName ());
                break;
-            case 21:
+            case 1:
                UndoManager .shared .beginUndo (_ ("Rotate %s"), this .getTypeName ());
                break;
             case 2:
