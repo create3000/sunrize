@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 16 Nov 2023 19:36:02 GMT'/>
+    <meta name='modified' content='Thu, 16 Nov 2023 19:46:34 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -479,60 +479,60 @@ function eventsProcessed ()
 
 function set_active (value)
 {
-	if (value)
-	{
-		activeTool = 1;
+   if (value)
+   {
+      activeTool = 1;
 
-		initialTranslation = translation;
-		initialCenter      = center;
-	}
+      initialTranslation = translation;
+      initialCenter      = center;
+   }
 
-	events = 4;
+   events = 4;
 }
 
 function set_xTranslation (value)
 {
-	translate (new SFVec3f (value .x, 0, 0));
+   translate (new SFVec3f (value .x, 0, 0));
 }
 
 function set_yTranslation (value)
 {
-	translate (new SFVec3f (0, value .y, 0));
+   translate (new SFVec3f (0, value .y, 0));
 }
 
 function set_zTranslation (value)
 {
-	translate (new SFVec3f (0, 0, value .z));
+   translate (new SFVec3f (0, 0, value .z));
 }
 
 function translate (value)
 {
    // Prevent accidentially move.
-	if (events)
+   if (events)
    {
       -- events;
-		return;
+      return;
    }
 
-	if (keepCenter)
-	{
-		translation = initialTranslation .add (value);
-		center      = initialCenter .subtract (value);
-	}
-	else
-	{
-		const matrix = new SFMatrix4f ();
+   if (keepCenter)
+   {
+      translation = initialTranslation .add (value);
+      center      = initialCenter .subtract (value);
+   }
+   else
+   {
+      const matrix = new SFMatrix4f ();
 
-		matrix .setTransform (translation,
-		                      rotation,
-		                      scale,
-		                      scaleOrientation,
-		                      center);
+      matrix .setTransform (translation,
+                            rotation,
+                            scale,
+                            scaleOrientation,
+                            center);
 
-		const offset = matrix .multDirMatrix (value);
+      const offset = matrix .multDirMatrix (value);
 
-		translation = initialTranslation .add (offset);
-	}
+      translation = initialTranslation .add (offset);
+   }
 }
 ]]>
         </Script>
