@@ -9,7 +9,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 16 Nov 2023 16:53:10 GMT'/>
+    <meta name='modified' content='Thu, 16 Nov 2023 16:55:06 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -144,7 +144,7 @@
                   translation='-0.5 0 0'>
                 <ScreenGroup>
                   <Transform
-                      translation='3 0 0'
+                      translation='-3 0 0'
                       rotation='0 0 -1 90'>
                     <Shape
                         castShadow='false'>
@@ -182,7 +182,7 @@
                   translation='0 -0.5 0'>
                 <ScreenGroup>
                   <Transform
-                      translation='0 3 0'
+                      translation='0 -3 0'
                       rotation='0 0 -1 1.5707963267949'>
                     <Shape
                         castShadow='false'>
@@ -219,7 +219,7 @@
                   translation='0 0 -0.5'>
                 <ScreenGroup>
                   <Transform
-                      translation='0 0 3'
+                      translation='0 0 -3'
                       rotation='1 0 0 90'>
                     <Shape
                         castShadow='false'>
