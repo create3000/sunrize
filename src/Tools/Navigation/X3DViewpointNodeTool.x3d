@@ -164,14 +164,11 @@
           </IS>
 <![CDATA[ecmascript:
 
-function initialize ()
+async function initialize ()
 {
-   setTimeout (async () =>
-   {
-      const tool = await transform .getValue () .addTool () .getToolInstance ();
+   const tool = await transform .getValue () .addTool () .getToolInstance ();
 
-      tool .bboxDisplay = false;
-   });
+   tool .bboxDisplay = false;
 }
 
 function set_selected ()

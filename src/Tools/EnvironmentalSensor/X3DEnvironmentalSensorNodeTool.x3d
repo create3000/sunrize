@@ -67,9 +67,9 @@
 
 function initialize ()
 {
-  set_color ();
+   set_color ();
 
-  setTimeout (() => transform .getValue () .addTool ());
+   transform .getValue () .addTool ();
 }
 
 function set_selected ()
