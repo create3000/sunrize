@@ -158,7 +158,7 @@ module .exports = class Editor
       finally
       {
          // Restore profile.
-         scene .setProfile (profile)
+         scene .setProfile (profile);
       }
 
       // Undo.
