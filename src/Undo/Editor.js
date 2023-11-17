@@ -2220,25 +2220,25 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static removeValueFromArray (executionContext, node, field, index, undoManager = UndoManager .shared)
    {
-      field = typeof field === "string" ? node .getField (field) : field
+      field = typeof field === "string" ? node .getField (field) : field;
 
       const
          instance = node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance),
          name     = field .getName (),
-         oldValue = field .copy ()
+         oldValue = field .copy ();
 
-      undoManager .beginUndo (_ ("Remove Value from %s »%s«"), node .getTypeName (), field .getName ())
+      undoManager .beginUndo (_ ("Remove Value from %s »%s«"), node .getTypeName (), field .getName ());
 
-      this .removeNodesFromExecutionContextIfNecessary (executionContext, field .splice (index, 1), undoManager)
+      this .removeNodesFromExecutionContextIfNecessary (executionContext, field .splice (index, 1), undoManager);
 
       undoManager .registerUndo (() =>
       {
-         this .setFieldValue (executionContext, node, instance ? name : field, oldValue, undoManager)
+         this .setFieldValue (executionContext, node, instance ? name : field, oldValue, undoManager);
       })
 
-      this .requestUpdateInstances (node, undoManager)
-
-      undoManager .endUndo ()
+      this .requestUpdateInstances (node, undoManager);
+;
+      undoManager .endUndo ();
    }
 
    /**
@@ -2249,40 +2249,40 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static removeEmptyGroups (executionContext, nodes, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_ ("Remove Empty Groups"))
+      undoManager .beginUndo (_ ("Remove Empty Groups"));
 
       if (nodes instanceof X3D .MFNode)
       {
-         this .#removeEmptyGroupsFromArray (executionContext, nodes, undoManager)
+         this .#removeEmptyGroupsFromArray (executionContext, nodes, undoManager);
       }
       else
       {
          for (const node of nodes)
-            this .#removeEmptyGroupsFromNode (node, undoManager)
+            this .#removeEmptyGroupsFromNode (node, undoManager);
       }
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    static #removeEmptyGroupsFromArray (node, field, undoManager = UndoManager .shared)
    {
       for (let index = field .length - 1; index >= 0; -- index)
       {
-         const value = field [index]
+         const value = field [index];
 
          if (!this .#removeEmptyGroupsFromNode (value ? value .getValue () : null, undoManager))
-            continue
+            continue;
 
-         this .removeValueFromArray (node .getExecutionContext (), node, field, index, undoManager)
+         this .removeValueFromArray (node .getExecutionContext (), node, field, index, undoManager);
       }
 
-      return field .length === 0
+      return field .length === 0;
    }
 
    static #removeEmptyGroupsFromNode (node, undoManager = UndoManager .shared)
    {
       if (!node)
-         return true
+         return true;
 
       return node .getFields () .every (field =>
       {
@@ -2290,14 +2290,14 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          {
             case X3D .X3DConstants .SFNode:
             {
-               return !field .getValue ()
+               return !field .getValue ();
             }
             case X3D .X3DConstants .MFNode:
             {
-               return this .#removeEmptyGroupsFromArray (node, field, undoManager)
+               return this .#removeEmptyGroupsFromArray (node, field, undoManager);
             }
             default:
-               return true
+               return true;
          }
       })
    }
