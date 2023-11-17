@@ -155,10 +155,11 @@ module .exports = class Editor
          console .error (error);
          return [ ];
       }
-
-      // Restore profile.
-
-      scene .setProfile (profile)
+      finally
+      {
+         // Restore profile.
+         scene .setProfile (profile)
+      }
 
       // Undo.
 
