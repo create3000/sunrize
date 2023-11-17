@@ -24,9 +24,7 @@ module .exports = class ActionKeys
 
    dispose ()
    {
-      $(window)
-         .off (`keydown.${this .id}`)
-         .off (`keyup.${this .id}`);
+      $(window) .off (`.${this .id}`);
    }
 
    onkeydown (event)
