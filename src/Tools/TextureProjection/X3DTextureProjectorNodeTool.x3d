@@ -8,9 +8,9 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 01 Aug 2014 17:41:58 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/TextureProjector/X3DTextureProjectorNodeTool.x3d'/>
-    <meta name='modified' content='Thu, 17 Aug 2023 14:53:58 GMT'/>
+    <meta name='modified' content='Fri, 17 Nov 2023 01:03:30 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -201,13 +201,16 @@
           </IS>
 <![CDATA[ecmascript:
 
-async function initialize ()
+function initialize ()
 {
-   const tool = await transform .getValue () .addTool () .getToolInstance ();
+   setTimeout (async () =>
+   {
+      const tool = await transform .getValue () .addTool () .getToolInstance ();
 
-   textureMaterial .getValue () .setPrivate (true);
+      textureMaterial .getValue () .setPrivate (true);
 
-   tool .bboxDisplay = false;
+      tool .bboxDisplay = false;
+   });
 }
 
 function set_selected ()

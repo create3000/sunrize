@@ -31,8 +31,8 @@ Object .assign (X3D .X3DNode .prototype,
 
       return this .getUserData (_tool) ?? new Tool (this);
    },
-   removeTool ()
+   removeTool (action = "createOnDemand")
    {
-      return this .getTool () ?.removeTool () ?? this;
+      return this .getTool () ?.removeTool (action) ?? this;
    },
 })

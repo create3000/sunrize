@@ -292,11 +292,14 @@
           </IS>
 <![CDATA[ecmascript:
 
-async function initialize ()
+function initialize ()
 {
-   const tool = await transform .getValue () .addTool () .getToolInstance ();
+   setTimeout (async () =>
+   {
+      const tool = await transform .getValue () .addTool () .getToolInstance ();
 
-   tool .bboxDisplay = false;
+      tool .bboxDisplay = false;
+   });
 }
 
 function set_selected ()

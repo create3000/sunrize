@@ -15,13 +15,13 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
       this .getBrowser () .displayEvents () .addInterest ("reshape", this);
 
-      this .tool .getField ("isActive") .addInterest ("set_active", this);
-
       this .tool .getField ("translation")      .addReference (this .node ._translation);
       this .tool .getField ("rotation")         .addReference (this .node ._rotation);
       this .tool .getField ("scale")            .addReference (this .node ._scale);
       this .tool .getField ("scaleOrientation") .addReference (this .node ._scaleOrientation);
       this .tool .getField ("center")           .addReference (this .node ._center);
+
+      this .tool .getField ("isActive") .addInterest ("set_active", this);
 
       this .tool .centerDisplay = false;
       this .tool .bboxDisplay   = true;

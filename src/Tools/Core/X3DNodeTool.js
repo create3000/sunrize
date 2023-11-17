@@ -119,8 +119,11 @@ class X3DNodeTool
       return this .proxy;
    }
 
-   removeTool ()
+   removeTool (action = "createOnDemand")
    {
+      if (!this .constructor [action])
+         return this;
+
       const nodesToDispose = [ ]
 
       Traverse .traverse (this .tool, Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES, node => nodesToDispose .push (node));

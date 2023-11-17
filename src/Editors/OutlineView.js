@@ -2647,29 +2647,29 @@ module .exports = class OutlineView extends Interface
 
    toggleTool (event)
    {
-      event .preventDefault ()
-      event .stopImmediatePropagation ()
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
 
       const
          target  = $(event .target),
          element = target .closest (".node", this .sceneGraph),
          node    = this .getNode (element),
-         tool    = node .getTool ()
+         tool    = node .getTool ();
 
       if (tool)
       {
-         tool .removeTool ()
+         tool .removeTool ("createOnDemand");
       }
       else
       {
-         node .addTool ("createOnDemand")
-         node .getTool () .setSelected (element .hasClass ("selected"))
+         node .addTool ("createOnDemand");
+         node .getTool () .setSelected (element .hasClass ("selected"));
       }
 
       this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
          .find ("> .item .tool")
          .removeClass ("off")
-         .addClass (tool ? "off" : "")
+         .addClass (tool ? "off" : "");
    }
 
    hideUnselectedObjects ()
