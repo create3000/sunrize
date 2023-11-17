@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 17 Nov 2023 21:30:56 GMT'/>
+    <meta name='modified' content='Fri, 17 Nov 2023 22:10:10 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -28,6 +28,8 @@
         <field accessType='inputOutput' type='SFBool' name='scaleYAxis' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='scaleZAxis' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='scaleUniform' value='true'/>
+        <field accessType='inputOutput' type='SFString' name='scaleMode' value='SCALE_FROM_CENTER'/>
+        <field accessType='inputOutput' type='MFString' name='connectedAxes'/>
         <field accessType='inputOutput' type='SFBool' name='xAxisDisplay' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='yAxisDisplay' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='zAxisDisplay' value='true'/>
@@ -576,13 +578,13 @@ function eventsProcessed ()
 }
 ]]>
         </Script>
-        <Script DEF='ToolsScript'>
+        <Script DEF='ModeScript'>
           <field accessType='inputOnly' type='SFTime' name='set_time'/>
           <field accessType='inputOutput' type='MFString' name='tools'/>
           <field accessType='inputOutput' type='SFBool' name='scaleXAxis'/>
           <field accessType='inputOutput' type='SFBool' name='scaleYAxis'/>
           <field accessType='inputOutput' type='SFBool' name='scaleZAxis'/>
-          <field accessType='inputOutput' type='SFBool' name='scaleUnform'/>
+          <field accessType='inputOutput' type='SFBool' name='scaleUniform'/>
           <field accessType='inputOutput' type='SFVec3f' name='bboxSize'/>
           <field accessType='outputOnly' type='SFBool' name='translate'/>
           <field accessType='outputOnly' type='SFBool' name='rotate'/>
@@ -597,7 +599,7 @@ function eventsProcessed ()
             <connect nodeField='scaleXAxis' protoField='scaleXAxis'/>
             <connect nodeField='scaleYAxis' protoField='scaleYAxis'/>
             <connect nodeField='scaleZAxis' protoField='scaleZAxis'/>
-            <connect nodeField='scaleUnform' protoField='scaleUniform'/>
+            <connect nodeField='scaleUniform' protoField='scaleUniform'/>
             <connect nodeField='bboxSize' protoField='bboxSize'/>
             <connect nodeField='activeTool' protoField='activeTool'/>
           </IS>
@@ -692,11 +694,11 @@ function set_tool (value)
 
 function set_active (value)
 {
-   if (value)
-   {
-      initialTranslation = translation;
-      initialCenter      = center;
-   }
+   if (!value)
+      return;
+
+   initialTranslation = translation;
+   initialCenter      = center;
 
    events = 4;
 }
@@ -747,31 +749,235 @@ function translate (value)
 }
 ]]>
         </Script>
+        <Script DEF='ScaleScript'>
+          <field accessType='inputOnly' type='SFBool' name='set_active'/>
+          <field accessType='inputOnly' type='SFVec3f' name='set_xScaleFront'/>
+          <field accessType='inputOnly' type='SFVec3f' name='set_yScaleFront'/>
+          <field accessType='inputOnly' type='SFVec3f' name='set_zScaleFront'/>
+          <field accessType='inputOnly' type='SFVec3f' name='set_xScaleBack'/>
+          <field accessType='inputOnly' type='SFVec3f' name='set_yScaleBack'/>
+          <field accessType='inputOnly' type='SFVec3f' name='set_zScaleBack'/>
+          <field accessType='inputOutput' type='SFVec3f' name='translation'/>
+          <field accessType='inputOutput' type='SFRotation' name='rotation'/>
+          <field accessType='inputOutput' type='SFVec3f' name='scale'/>
+          <field accessType='inputOutput' type='SFRotation' name='scaleOrientation'/>
+          <field accessType='inputOutput' type='SFVec3f' name='center'/>
+          <field accessType='inputOutput' type='SFVec3f' name='bboxSize'/>
+          <field accessType='inputOutput' type='SFVec3f' name='bboxCenter'/>
+          <field accessType='inputOutput' type='SFString' name='scaleMode'/>
+          <field accessType='inputOutput' type='MFString' name='connectedAxes'/>
+          <field accessType='inputOutput' type='SFBool' name='keepCenter'/>
+          <field accessType='initializeOnly' type='SFVec3f' name='initalTranslation'/>
+          <field accessType='initializeOnly' type='SFVec3f' name='initialScale'/>
+          <field accessType='initializeOnly' type='SFVec3f' name='initialCenter'/>
+          <field accessType='initializeOnly' type='SFMatrix4f' name='initialMatrix'/>
+          <field accessType='initializeOnly' type='SFVec3f' name='distanceFromCenter'/>
+          <field accessType='initializeOnly' type='SFInt32' name='events'/>
+          <IS>
+            <connect nodeField='translation' protoField='translation'/>
+            <connect nodeField='rotation' protoField='rotation'/>
+            <connect nodeField='scale' protoField='scale'/>
+            <connect nodeField='scaleOrientation' protoField='scaleOrientation'/>
+            <connect nodeField='center' protoField='center'/>
+            <connect nodeField='bboxSize' protoField='bboxSize'/>
+            <connect nodeField='bboxCenter' protoField='bboxCenter'/>
+            <connect nodeField='scaleMode' protoField='scaleMode'/>
+            <connect nodeField='connectedAxes' protoField='connectedAxes'/>
+          </IS>
+<![CDATA[ecmascript:
+
+function set_active (value)
+{
+   if (!value)
+      return;
+
+   initalTranslation = translation;
+   initialScale      = scale;
+   initialCenter     = center;
+
+   initialMatrix .setTransform (translation,
+                                rotation,
+                                scale,
+                                scaleOrientation,
+                                center);
+
+   distanceFromCenter = bboxCenter .subtract (center);
+
+   events = 4;
+}
+
+function set_xScaleFront (value)
+{
+   if (bboxSize .x)
+      set_scaleAxis ("x", value, 1);
+}
+
+function set_yScaleFront (value)
+{
+   if (bboxSize .y)
+      set_scaleAxis ("y", value, 1);
+}
+
+function set_zScaleFront (value)
+{
+   if (bboxSize .z)
+      set_scaleAxis ("z", value, 1);
+}
+
+function set_xScaleBack (value)
+{             
+   if (bboxSize .x)
+      set_scaleAxis ("x", value, -1);
+}
+
+function set_yScaleBack (value)
+{
+   if (bboxSize .y)
+      set_scaleAxis ("y", value, -1);
+}
+
+function set_zScaleBack (value)
+{
+   if (bboxSize .z)
+      set_scaleAxis ("z", value, -1);
+}
+
+function set_scaleAxis (axis, value, sgn)
+{
+   value = value [axis];
+
+   if (scaleMode === "SCALE_FROM_EDGE")
+   {
+      const
+         vector = new SFVec3f (1, 1, 1),
+         offset = new SFVec3f ();
+   
+      vector [axis] = 1 + sgn * value / bboxSize [axis];
+      offset [axis] = -sgn * bboxSize [axis] / 2;
+
+      connectAxis (axis, vector, offset);
+
+      scaleTransform (vector, offset);
+   }
+   else if (scaleMode === "SCALE_FROM_CENTER")
+   {
+      const
+         vector = new SFVec3f (1, 1, 1),
+         offset = new SFVec3f ();
+   
+      vector [axis] = 1 + 2 * sgn * value / bboxSize [axis];
+
+      connectAxis (axis, vector, offset);
+
+      scaleTransform (vector, offset);
+   }
+}
+
+function connectAxis (axis, vector, offset)
+{
+   for (const connectedAxis of connectedAxes)
+   {
+      const
+         lhs = connectedAxis [0] .toLowerCase (),
+         rhs = connectedAxis [1] .toLowerCase ();
+   
+      if (rhs == axis)
+      {
+         vector [lhs] = vector [rhs];
+         offset [lhs] = offset [rhs];
+      }
+   }
+}
+
+function scaleTransform (value, centerOffset)
+{
+   if (events)
+   {
+      // Prevent accidentially move.
+      -- events;
+      return;
+   }
+
+   const scaleMatrix = new SFMatrix4f ();
+   scaleMatrix .setTransform (new SFVec3f (), new SFRotation (), value);
+
+   const
+      scaledMatrix = initialMatrix .multLeft (scaleMatrix),
+      t            = new SFVec3f (),
+      r            = new SFRotation (),
+      s            = new SFVec3f (),
+      so           = new SFRotation ();
+
+   scaledMatrix .getTransform (t, r, s, so, center);
+
+   if (s .x && s .y && s .z)
+   {
+      translation      = t;
+      rotation         = r;
+      scale            = s;
+      scaleOrientation = so;
+
+      if (keepCenter)
+         translateKeepCenter (scaledMatrix, distanceFromCenter .add (centerOffset));
+      else
+         translate (scaledMatrix, distanceFromCenter .add (centerOffset));
+   }
+}
+
+function translateKeepCenter (scaledMatrix, distanceFromCenter)
+{
+   const centerOffset = scaledMatrix .inverse () .multDirMatrix (scaledMatrix .multDirMatrix (distanceFromCenter) .subtract (initialMatrix .multDirMatrix (distanceFromCenter)));
+
+   translation = initalTranslation .subtract (centerOffset);
+   center      = initalCenter .add (centerOffset);
+}
+
+function translate (scaledMatrix, distanceFromCenter)
+{
+   const centerOffset = scaledMatrix .multDirMatrix (distanceFromCenter) .subtract (initialMatrix .multDirMatrix (distanceFromCenter));
+
+   translation = initalTranslation .subtract (centerOffset);
+}
+]]>
+        </Script>
         <ROUTE fromNode='XTranslationSensor' fromField='translation_changed' toNode='TranslateScript' toField='set_xTranslation'/>
         <ROUTE fromNode='YTranslationSensor' fromField='translation_changed' toNode='TranslateScript' toField='set_yTranslation'/>
         <ROUTE fromNode='ZTranslationSensor' fromField='translation_changed' toNode='TranslateScript' toField='set_zTranslation'/>
         <ROUTE fromNode='ZTranslationSensor' fromField='isActive' toNode='TranslateScript' toField='set_active'/>
         <ROUTE fromNode='YTranslationSensor' fromField='isActive' toNode='TranslateScript' toField='set_active'/>
         <ROUTE fromNode='XTranslationSensor' fromField='isActive' toNode='TranslateScript' toField='set_active'/>
-        <ROUTE fromNode='ToggleToolTouch' fromField='touchTime' toNode='ToolsScript' toField='set_time'/>
-        <ROUTE fromNode='ToolsScript' fromField='activeTool' toNode='_22' toField='set_whichChoice'/>
-        <ROUTE fromNode='ToolsScript' fromField='activeTool' toNode='_23' toField='set_whichChoice'/>
-        <ROUTE fromNode='ToolsScript' fromField='activeTool' toNode='_24' toField='set_whichChoice'/>
-        <ROUTE fromNode='ToolsScript' fromField='activeTool' toNode='_25' toField='set_whichChoice'/>
-        <ROUTE fromNode='ToolsScript' fromField='activeTool' toNode='_26' toField='set_whichChoice'/>
-        <ROUTE fromNode='ToolsScript' fromField='activeTool' toNode='_27' toField='set_whichChoice'/>
-        <ROUTE fromNode='ToolsScript' fromField='translate' toNode='ZTranslationSensor' toField='set_enabled'/>
-        <ROUTE fromNode='ToolsScript' fromField='translate' toNode='YTranslationSensor' toField='set_enabled'/>
-        <ROUTE fromNode='ToolsScript' fromField='translate' toNode='XTranslationSensor' toField='set_enabled'/>
-        <ROUTE fromNode='ToolsScript' fromField='scaleZ' toNode='ZScaleBackSensor' toField='set_enabled'/>
-        <ROUTE fromNode='ToolsScript' fromField='scaleZ' toNode='ZScaleFrontSensor' toField='set_enabled'/>
-        <ROUTE fromNode='ToolsScript' fromField='scaleY' toNode='YScaleBackSensor' toField='set_enabled'/>
-        <ROUTE fromNode='ToolsScript' fromField='scaleY' toNode='YScaleFrontSensor' toField='set_enabled'/>
-        <ROUTE fromNode='ToolsScript' fromField='scaleX' toNode='XScaleBackSensor' toField='set_enabled'/>
-        <ROUTE fromNode='ToolsScript' fromField='scaleX' toNode='XScaleFrontSensor' toField='set_enabled'/>
+        <ROUTE fromNode='ToggleToolTouch' fromField='touchTime' toNode='ModeScript' toField='set_time'/>
+        <ROUTE fromNode='ModeScript' fromField='activeTool' toNode='_22' toField='set_whichChoice'/>
+        <ROUTE fromNode='ModeScript' fromField='activeTool' toNode='_23' toField='set_whichChoice'/>
+        <ROUTE fromNode='ModeScript' fromField='activeTool' toNode='_24' toField='set_whichChoice'/>
+        <ROUTE fromNode='ModeScript' fromField='activeTool' toNode='_25' toField='set_whichChoice'/>
+        <ROUTE fromNode='ModeScript' fromField='activeTool' toNode='_26' toField='set_whichChoice'/>
+        <ROUTE fromNode='ModeScript' fromField='activeTool' toNode='_27' toField='set_whichChoice'/>
+        <ROUTE fromNode='ModeScript' fromField='translate' toNode='ZTranslationSensor' toField='set_enabled'/>
+        <ROUTE fromNode='ModeScript' fromField='translate' toNode='YTranslationSensor' toField='set_enabled'/>
+        <ROUTE fromNode='ModeScript' fromField='translate' toNode='XTranslationSensor' toField='set_enabled'/>
+        <ROUTE fromNode='ModeScript' fromField='scaleZ' toNode='ZScaleBackSensor' toField='set_enabled'/>
+        <ROUTE fromNode='ModeScript' fromField='scaleZ' toNode='ZScaleFrontSensor' toField='set_enabled'/>
+        <ROUTE fromNode='ModeScript' fromField='scaleY' toNode='YScaleBackSensor' toField='set_enabled'/>
+        <ROUTE fromNode='ModeScript' fromField='scaleY' toNode='YScaleFrontSensor' toField='set_enabled'/>
+        <ROUTE fromNode='ModeScript' fromField='scaleX' toNode='XScaleBackSensor' toField='set_enabled'/>
+        <ROUTE fromNode='ModeScript' fromField='scaleX' toNode='XScaleFrontSensor' toField='set_enabled'/>
+        <ROUTE fromNode='ZScaleBackSensor' fromField='isActive' toNode='ScaleScript' toField='set_active'/>
+        <ROUTE fromNode='ZScaleFrontSensor' fromField='isActive' toNode='ScaleScript' toField='set_active'/>
+        <ROUTE fromNode='YScaleBackSensor' fromField='isActive' toNode='ScaleScript' toField='set_active'/>
+        <ROUTE fromNode='YScaleFrontSensor' fromField='isActive' toNode='ScaleScript' toField='set_active'/>
+        <ROUTE fromNode='XScaleBackSensor' fromField='isActive' toNode='ScaleScript' toField='set_active'/>
+        <ROUTE fromNode='XScaleFrontSensor' fromField='isActive' toNode='ScaleScript' toField='set_active'/>
+        <ROUTE fromNode='XScaleFrontSensor' fromField='translation_changed' toNode='ScaleScript' toField='set_xScaleFront'/>
+        <ROUTE fromNode='YScaleFrontSensor' fromField='translation_changed' toNode='ScaleScript' toField='set_yScaleFront'/>
+        <ROUTE fromNode='ZScaleFrontSensor' fromField='translation_changed' toNode='ScaleScript' toField='set_zScaleFront'/>
+        <ROUTE fromNode='XScaleBackSensor' fromField='translation_changed' toNode='ScaleScript' toField='set_xScaleBack'/>
+        <ROUTE fromNode='YScaleBackSensor' fromField='translation_changed' toNode='ScaleScript' toField='set_yScaleBack'/>
+        <ROUTE fromNode='ZScaleBackSensor' fromField='translation_changed' toNode='ScaleScript' toField='set_zScaleBack'/>
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
+      <fieldValue name='scaleMode' value=''/>
       <fieldValue name='bboxDisplay' value='true'/>
       <fieldValue name='bboxSize' value='2 3 4'/>
     </ProtoInstance>
