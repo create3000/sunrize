@@ -132,44 +132,39 @@ module .exports = class Editor
       // Parse string.
 
       const
-         scene        = executionContext instanceof X3D .X3DScene ? executionContext : executionContext .getScene (),
-         profile      = scene .getProfile (),
+         scene        = executionContext .getBrowser () .createScene (),
          externprotos = new Map (Array .from (executionContext .externprotos, p => [p .getName (), p])),
          protos       = new Map (Array .from (executionContext .protos,       p => [p .getName (), p])),
-         rootNodes    = executionContext .rootNodes .copy ()
+         rootNodes    = executionContext .rootNodes .copy ();
 
       try
       {
-         const parser = new X3D .GoldenGate (scene)
+         const parser = new X3D .GoldenGate (scene);
 
-         parser .pushExecutionContext (executionContext)
-         await new Promise ((resolve, reject) => parser .parseIntoScene (x3dSyntax, resolve, reject))
+         parser .pushExecutionContext (executionContext);
+         await new Promise ((resolve, reject) => parser .parseIntoScene (x3dSyntax, resolve, reject));
       }
       catch (error)
       {
-         console .error (error)
-         return [ ]
+         console .error (error);
+         return [ ];
       }
 
-      undoManager .beginUndo (_ ("Import X3D"))
+      undoManager .beginUndo (_ ("Import X3D"));
 
       // Undo.
 
       undoManager .registerUndo (() =>
       {
          // Restore ExternProtos.
-         this .setExternProtoDeclarations (executionContext, externprotos, undoManager)
+         this .setExternProtoDeclarations (executionContext, externprotos, undoManager);
 
          // Restore Protos.
-         this .setProtoDeclarations (executionContext, protos, undoManager)
+         this .setProtoDeclarations (executionContext, protos, undoManager);
 
          // Restore Root Nodes.
-         this .setFieldValue (executionContext, executionContext, executionContext .rootNodes, rootNodes, undoManager)
-      })
-
-      // Restore profile.
-
-      scene .setProfile (profile)
+         this .setFieldValue (executionContext, executionContext, executionContext .rootNodes, rootNodes, undoManager);
+      });
 
       // Remove protos that already exists in context.
 
@@ -178,72 +173,72 @@ module .exports = class Editor
          newProtos           = [... executionContext .protos] .slice (protos .length),
          updatedExternProtos = new Map (),
          updatedProtos       = new Map (),
-         removedProtoNodes   = new Set ()
+         removedProtoNodes   = new Set ();
 
       Traverse .traverse ([... newProtos, ... nodes], Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, (node) =>
       {
          if (!node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance))
-            return
+            return;
 
          if (node .getProtoNode () .getExecutionContext () !== executionContext)
-            return
+            return;
 
-         const proto = protos .get (node .getTypeName ())
+         const proto = protos .get (node .getTypeName ());
 
          if (proto)
          {
-            updatedProtos .set (node .getTypeName (), proto)
-            this .setProtoNode (executionContext, node, proto, undoManager)
-            return
+            updatedProtos .set (node .getTypeName (), proto);
+            this .setProtoNode (executionContext, node, proto, undoManager);
+            return;
          }
 
-         const externproto = externprotos .get (node .getTypeName ())
+         const externproto = externprotos .get (node .getTypeName ());
 
          if (externproto)
          {
-            updatedExternProtos .set (node .getTypeName (), externproto)
-            this .setProtoNode (executionContext, node, externproto, undoManager)
-            return
+            updatedExternProtos .set (node .getTypeName (), externproto);
+            this .setProtoNode (executionContext, node, externproto, undoManager);
+            return;
          }
 
-         const available = this .getNextAvailableProtoNode (executionContext, node .getTypeName ())
+         const available = this .getNextAvailableProtoNode (executionContext, node .getTypeName ());
 
          if (available)
          {
-            removedProtoNodes .add (node .getProtoNode ())
-            this .setProtoNode (executionContext, node, available, undoManager)
-            return
+            removedProtoNodes .add (node .getProtoNode ());
+            this .setProtoNode (executionContext, node, available, undoManager);
+            return;
          }
       })
 
       for (const [name, externproto] of updatedExternProtos)
-         this .updateExternProtoDeclaration (executionContext, name, externproto, undoManager)
+         this .updateExternProtoDeclaration (executionContext, name, externproto, undoManager);
 
       for (const [name, proto] of updatedProtos)
-         this .updateProtoDeclaration (executionContext, name, proto, undoManager)
+         this .updateProtoDeclaration (executionContext, name, proto, undoManager);
 
       for (const protoNode of removedProtoNodes)
       {
          if (protoNode .isExternProto)
-            this .removeExternProtoDeclaration (executionContext, protoNode .getName (), undoManager)
+            this .removeExternProtoDeclaration (executionContext, protoNode .getName (), undoManager);
          else
-            this .removeProtoDeclaration (executionContext, protoNode .getName (), undoManager)
+            this .removeProtoDeclaration (executionContext, protoNode .getName (), undoManager);
       }
 
-      const oldWorldURL = scene .getMetaData ("base")
+      const oldWorldURL = scene .getMetaData ("base");
 
       if (oldWorldURL)
       {
-         this .rewriteURLs (executionContext, [... newProtos, ... nodes], oldWorldURL [0], executionContext .worldURL, undoManager)
+         this .rewriteURLs (executionContext, [... newProtos, ... nodes], oldWorldURL [0], executionContext .worldURL, undoManager);
       }
 
-      scene .removeMetaData ("base")
+      // TODO: add exported nodes.
 
-      this .requestUpdateInstances (executionContext, undoManager)
+      this .requestUpdateInstances (executionContext, undoManager);
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
 
-      return nodes
+      return nodes;
    }
 
    /**
