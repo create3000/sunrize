@@ -277,18 +277,36 @@ module .exports = new class Library extends Dialog
 
    async importX3D (typeName, x3dSyntax)
    {
-      UndoManager .shared .beginUndo (_ ("Import %s"), typeName)
+      UndoManager .shared .beginUndo (_ ("Import %s"), typeName);
 
-      const nodes = await Editor .importX3D (this .executionContext, x3dSyntax)
+      const
+         nodes = await Editor .importX3D (this .executionContext, x3dSyntax),
+         field = $.try (() => this .node ?.getField (nodes [0] .getContainerField ()), true);
+
+      switch (field ?.getType ())
+      {
+         case X3D .X3DConstants .SFNode:
+         {
+            Editor .setFieldValue (this .executionContext, this .node, field, nodes [0]);
+            Editor .removeValueFromArray (this .executionContext, this .executionContext, this .executionContext .rootNodes, this .executionContext .rootNodes .length - 1);
+            break;
+         }
+         case X3D .X3DConstants .MFNode:
+         {
+            Editor .insertValueIntoArray (this .executionContext, this .node, field, field .length, nodes [0]);
+            Editor .removeValueFromArray (this .executionContext, this .executionContext, this .executionContext .rootNodes, this .executionContext .rootNodes .length - 1);
+            break;
+         }
+      }
 
       for (const node of nodes)
       {
          if (!node .getType () .includes (X3D .X3DConstants .X3DBindableNode))
-            continue
+            continue;
 
-         Editor .setFieldValue (this .executionContext, node, node ._set_bind, true)
+         Editor .setFieldValue (this .executionContext, node, node ._set_bind, true);
       }
 
-      UndoManager .shared .endUndo ()
+      UndoManager .shared .endUndo ();
    }
 }
