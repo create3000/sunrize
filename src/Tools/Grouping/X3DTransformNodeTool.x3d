@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 17 Nov 2023 11:39:21 GMT'/>
+    <meta name='modified' content='Fri, 17 Nov 2023 19:46:35 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -510,10 +510,13 @@ function eventsProcessed ()
 }
 ]]>
         </Script>
-        <Script DEF='ModeScript'>
+        <Script DEF='ToolScript'>
           <field accessType='inputOnly' type='SFTime' name='set_time'/>
           <field accessType='inputOutput' type='MFString' name='tools'/>
           <field accessType='inputOutput' type='SFVec3f' name='bboxSize'/>
+          <field accessType='outputOnly' type='SFBool' name='translate'/>
+          <field accessType='outputOnly' type='SFBool' name='rotate'/>
+          <field accessType='outputOnly' type='SFBool' name='scale'/>
           <field accessType='outputOnly' type='SFInt32' name='activeTool'/>
           <field accessType='initializeOnly' type='SFTime' name='time'/>
           <IS>
@@ -552,20 +555,27 @@ function set_time (value)
 
 function set_tool (value)
 {
+   translate = false;
+   rotate    = false;
+   scale     = false;
+
    switch (tools [value])
    {
       case "TRANSLATE":
       {
+         translate  = true;
          activeTool = 0;
          break;
       }
       case "ROTATE":
       {
+         rotate     = true;
          activeTool = 1;
          break;
       }
       case "SCALE":
       {
+         scale      = true;
          activeTool = 2;
          break;
       }
@@ -660,13 +670,16 @@ function translate (value)
         <ROUTE fromNode='ZTranslationSensor' fromField='isActive' toNode='TranslateScript' toField='set_active'/>
         <ROUTE fromNode='YTranslationSensor' fromField='isActive' toNode='TranslateScript' toField='set_active'/>
         <ROUTE fromNode='XTranslationSensor' fromField='isActive' toNode='TranslateScript' toField='set_active'/>
-        <ROUTE fromNode='ModeTouch' fromField='touchTime' toNode='ModeScript' toField='set_time'/>
-        <ROUTE fromNode='ModeScript' fromField='activeTool' toNode='_22' toField='set_whichChoice'/>
-        <ROUTE fromNode='ModeScript' fromField='activeTool' toNode='_23' toField='set_whichChoice'/>
-        <ROUTE fromNode='ModeScript' fromField='activeTool' toNode='_24' toField='set_whichChoice'/>
-        <ROUTE fromNode='ModeScript' fromField='activeTool' toNode='_25' toField='set_whichChoice'/>
-        <ROUTE fromNode='ModeScript' fromField='activeTool' toNode='_26' toField='set_whichChoice'/>
-        <ROUTE fromNode='ModeScript' fromField='activeTool' toNode='_27' toField='set_whichChoice'/>
+        <ROUTE fromNode='ModeTouch' fromField='touchTime' toNode='ToolScript' toField='set_time'/>
+        <ROUTE fromNode='ToolScript' fromField='activeTool' toNode='_22' toField='set_whichChoice'/>
+        <ROUTE fromNode='ToolScript' fromField='activeTool' toNode='_23' toField='set_whichChoice'/>
+        <ROUTE fromNode='ToolScript' fromField='activeTool' toNode='_24' toField='set_whichChoice'/>
+        <ROUTE fromNode='ToolScript' fromField='activeTool' toNode='_25' toField='set_whichChoice'/>
+        <ROUTE fromNode='ToolScript' fromField='activeTool' toNode='_26' toField='set_whichChoice'/>
+        <ROUTE fromNode='ToolScript' fromField='activeTool' toNode='_27' toField='set_whichChoice'/>
+        <ROUTE fromNode='ToolScript' fromField='translate' toNode='ZTranslationSensor' toField='set_enabled'/>
+        <ROUTE fromNode='ToolScript' fromField='translate' toNode='YTranslationSensor' toField='set_enabled'/>
+        <ROUTE fromNode='ToolScript' fromField='translate' toNode='XTranslationSensor' toField='set_enabled'/>
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
