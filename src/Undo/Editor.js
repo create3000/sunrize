@@ -28,11 +28,11 @@ module .exports = class Editor
       const
          externprotos = new Set (objects .filter (o => o instanceof X3D .X3DExternProtoDeclaration)),
          protos       = new Set (objects .filter (o => o instanceof X3D .X3DProtoDeclaration)),
-         nodes        = new X3D .MFNode (... objects .filter (o => o .getType () .includes (X3D .X3DConstants .X3DNode)))
+         nodes        = new X3D .MFNode (... objects .filter (o => o .getType () .includes (X3D .X3DConstants .X3DNode)));
 
       const
          browser = executionContext .getBrowser (),
-         scene   = browser .createScene ()
+         scene   = browser .createScene ();
 
       // Determine protos.
 
@@ -41,23 +41,23 @@ module .exports = class Editor
       Traverse .traverse (objects, Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES | Traverse .PROTOTYPE_INSTANCES, (node) =>
       {
          if (node instanceof X3D .X3DProtoDeclarationNode)
-            protoNodes .add (node)
+            protoNodes .add (node);
          else if (node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance))
-            protoNodes .add (node .getProtoNode ())
-      })
+            protoNodes .add (node .getProtoNode ());
+      });
 
       for (const protoNode of protoNodes)
       {
          if (protoNode .getExecutionContext () !== executionContext)
-            protoNodes .delete (protoNode)
+            protoNodes .delete (protoNode);
       }
 
       for (const protoNode of protoNodes)
       {
          if (protoNode .isExternProto)
-            externprotos .add (protoNode)
+            externprotos .add (protoNode);
          else
-            protos .add (protoNode)
+            protos .add (protoNode);
       }
 
       // Determine components and routes.
@@ -65,59 +65,60 @@ module .exports = class Editor
       const
          componentNames = new Set (),
          children       = new Set (),
-         childRoutes    = new Set ()
+         childRoutes    = new Set ();
 
-      Traverse .traverse (nodes, 0, node =>
+      Traverse .traverse (nodes, Traverse .ROOT_NODES, node =>
       {
-         componentNames .add (node .getComponentInfo () .name)
-         children .add (node)
+         componentNames .add (node .getComponentInfo () .name);
+         children .add (node .valueOf ());
 
          for (const field of node .getFields ())
          {
             for (const route of field .getInputRoutes ())
-               childRoutes .add (route)
+               childRoutes .add (route);
 
             for (const route of field .getOutputRoutes ())
-               childRoutes .add (route)
+               childRoutes .add (route);
          }
       })
 
-      const routes = [... childRoutes] .filter (route => children .has (route .getSourceNode ()) && children .has (route .getDestinationNode ()))
+      const routes = [... childRoutes] .filter (route => children .has (route .getSourceNode () .valueOf ()) && children .has (route .getDestinationNode () .valueOf ()));
 
       // Store world url.
 
-      scene .setMetaData ("base", executionContext .worldURL)
+      if (!executionContext .worldURL .startsWith ("data:"))
+         scene .setMetaData ("base", executionContext .worldURL);
 
       // Add protos.
 
       for (const externproto of externprotos)
-         scene .externprotos .add (externproto .getName (), externproto)
+         scene .externprotos .add (externproto .getName (), externproto);
 
       for (const proto of protos)
-         scene .protos .add (proto .getName (), proto)
+         scene .protos .add (proto .getName (), proto);
 
       // Set profile and components.
 
-      scene .setProfile (browser .getProfile ("Core"))
+      scene .setProfile (browser .getProfile ("Core"));
 
       for (const name of componentNames)
-         scene .addComponent (browser .getComponent (name))
+         scene .addComponent (browser .getComponent (name));
 
       // Set nodes.
 
-      scene .rootNodes = nodes
+      scene .rootNodes = nodes;
 
       for (const route of routes)
-         scene .routes .add (route .getRouteId (), route)
+         scene .routes .add (route .getRouteId (), route);
 
       // Return VRML string.
 
-      const x3dSyntax = scene .toVRMLString ()
+      const x3dSyntax = scene .toVRMLString ();
 
-      scene .dispose ()
-      nodes .dispose ()
+      scene .dispose ();
+      nodes .dispose ();
 
-      return x3dSyntax
+      return x3dSyntax;
    }
 
    /**
