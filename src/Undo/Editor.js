@@ -133,14 +133,19 @@ module .exports = class Editor
       // Parse string.
 
       const
-         scene        = executionContext .getBrowser () .createScene (),
+         browser      = executionContext .getBrowser (),
+         scene        = executionContext instanceof X3D .X3DScene ? executionContext : executionContext .getScene (),
+         profile      = executionContext .getScene () .getProfile (),
          externprotos = new Map (Array .from (executionContext .externprotos, p => [p .getName (), p])),
          protos       = new Map (Array .from (executionContext .protos,       p => [p .getName (), p])),
-         rootNodes    = executionContext .rootNodes .copy ();
+         rootNodes    = executionContext .rootNodes .copy (),
+         tempScene    = browser .createScene ();
+
+      scene .setProfile (browser .getProfile ("Full"));
 
       try
       {
-         const parser = new X3D .GoldenGate (scene);
+         const parser = new X3D .GoldenGate (tempScene);
 
          parser .pushExecutionContext (executionContext);
          await new Promise ((resolve, reject) => parser .parseIntoScene (x3dSyntax, resolve, reject));
@@ -151,9 +156,13 @@ module .exports = class Editor
          return [ ];
       }
 
-      undoManager .beginUndo (_ ("Import X3D"));
+      // Restore profile.
+
+      scene .setProfile (profile)
 
       // Undo.
+
+      undoManager .beginUndo (_ ("Import X3D"));
 
       undoManager .registerUndo (() =>
       {
@@ -226,7 +235,7 @@ module .exports = class Editor
             this .removeProtoDeclaration (executionContext, protoNode .getName (), undoManager);
       }
 
-      const oldWorldURL = scene .getMetaData ("base");
+      const oldWorldURL = tempScene .getMetaData ("base");
 
       if (oldWorldURL)
       {
