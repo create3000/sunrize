@@ -1,36 +1,36 @@
-"use strict"
+"use strict";
 
 const
    X3DBoundedObjectTool = require ("../Grouping/X3DBoundedObjectTool"),
-   ToolColors           = require ("../Core/ToolColors")
+   ToolColors           = require ("../Core/ToolColors");
 
 const
-   _set_enabled = Symbol ()
+   _set_enabled = Symbol ();
 
 class CollisionTool extends X3DBoundedObjectTool
 {
-   toolBBoxColor = ToolColors .RED
+   toolBBoxColor = ToolColors .RED;
 
    async initialize ()
    {
-      await super .initialize ()
+      await super .initialize ();
 
-      this .node ._enabled .addInterest (_set_enabled, this)
+      this .node ._enabled .addInterest (_set_enabled, this);
 
-      this [_set_enabled] ()
+      this [_set_enabled] ();
    }
 
    removeTool ()
    {
-      this .node ._enabled .removeInterest (_set_enabled, this)
+      this .node ._enabled .removeInterest (_set_enabled, this);
 
-      return super .removeTool ()
+      return super .removeTool ();
    }
 
    [_set_enabled] ()
    {
-      this .tool .bboxStyle = this .node ._enabled .getValue () ? 1 : 2
+      this .tool .bboxStyle = this .node ._enabled .getValue () ? 1 : 2;
    }
 }
 
-module .exports = CollisionTool
+module .exports = CollisionTool;

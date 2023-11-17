@@ -1,22 +1,22 @@
-"use strict"
+"use strict";
 
-const X3DNodeTool = require ("../Core/X3DNodeTool")
+const X3DNodeTool = require ("../Core/X3DNodeTool");
 
 class X3DLayerNodeTool extends X3DNodeTool
 {
    constructor (node)
    {
-      super (node)
+      super (node);
 
-      this .node .groupNode = this .node .getGroup () .addTool ()
+      this .node .groupNode = this .node .getGroup () .addTool ();
    }
 
    removeTool ()
    {
-      this .node .groupNode = this .node .getGroup () .removeTool ()
+      this .node .groupNode = this .node .getGroup () .removeTool ();
 
-      return super .removeTool ()
+      return super .removeTool ();
    }
 }
 
-module .exports = X3DLayerNodeTool
+module .exports = X3DLayerNodeTool;
