@@ -21,7 +21,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       this .tool .getField ("scaleOrientation") .addReference (this .node ._scaleOrientation);
       this .tool .getField ("center")           .addReference (this .node ._center);
 
-      this .tool .getField ("isActive") .addInterest ("set_active", this);
+      this .tool .getField ("isActive") .addInterest ("set_active__", this);
 
       this .tool .centerDisplay = false;
       this .tool .bboxDisplay   = true;
@@ -33,7 +33,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       this .getBrowser () .displayEvents () .removeInterest ("reshape", this);
    }
 
-   set_active (active)
+   set_active__ (active)
    {
       if (active .getValue ())
       {
