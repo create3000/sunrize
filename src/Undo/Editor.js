@@ -1704,17 +1704,19 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     * @param {X3DField} field
     * @param {UndoManager} undoManager
     */
-   static addUserDefinedField (executionContext, node, field, undoManager = UndoManager .shared)
+   static addUserDefinedField (executionContext, node, field, index, undoManager = UndoManager .shared)
    {
-      const fields = Array .from (node .getUserDefinedFields ())
+      const fields = Array .from (node .getUserDefinedFields ());
 
-      undoManager .beginUndo (_ ("Add Field »%s«"), field .getName ())
+      index = Math .min (index < 0 ? fields .length : index, fields .length);
 
-      fields .push (field)
+      undoManager .beginUndo (_ ("Add Field »%s«"), field .getName ());
 
-      this .setUserDefinedFields (executionContext, node, fields, undoManager)
+      fields .splice (index, 0, field);
 
-      undoManager .endUndo ()
+      this .setUserDefinedFields (executionContext, node, fields, undoManager);
+
+      undoManager .endUndo ();
    }
 
    /**

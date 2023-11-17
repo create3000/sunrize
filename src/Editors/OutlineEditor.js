@@ -119,7 +119,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             {
                label: "Add Field...",
                visible: node .canUserDefinedFields (),
-               args: ["addUserDefinedField", element .attr ("id"), executionContext .getId (), node .getId ()],
+               args: ["addUserDefinedField", element .attr ("id"), executionContext .getId (), node .getId (), field .getId ()],
             },
             {
                label: "Edit Field...",
@@ -393,16 +393,18 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       electron .ipcRenderer .send ("context-menu", "outline-editor-menu", menu)
    }
 
-   addUserDefinedField (id, executionContextId, nodeId)
+   addUserDefinedField (id, executionContextId, nodeId, fieldId)
    {
       require ("../Controls/EditUserDefinedFieldPopover")
 
       const
          element          = $(`#${id}`),
          executionContext = this .objects .get (executionContextId),
-         node             = this .objects .get (nodeId)
+         node             = this .objects .get (nodeId),
+         field            = this .objects .get (fieldId),
+         index            = node .getUserDefinedFields () .indexOf (field);
 
-      element .find ("> .item") .editUserDefinedFieldPopover (executionContext, node)
+      element .find ("> .item") .editUserDefinedFieldPopover (executionContext, node, index < 0 ? -1 : index + 1);
    }
 
    editUserDefinedField (id, executionContextId, nodeId, fieldId)
@@ -411,11 +413,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       const
          element          = $(`#${id}`),
-         node             = this .objects .get (nodeId),
          executionContext = this .objects .get (executionContextId),
-         field            = this .objects .get (fieldId)
+         node             = this .objects .get (nodeId),
+         field            = this .objects .get (fieldId);
 
-      element .find ("> .item") .editUserDefinedFieldPopover (executionContext, node, field)
+      element .find ("> .item") .editUserDefinedFieldPopover (executionContext, node, field);
    }
 
    deleteUserDefinedField (id, executionContextId, nodeId, fieldId)
@@ -423,9 +425,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const
          executionContext = this .objects .get (executionContextId),
          node             = this .objects .get (nodeId),
-         field            = this .objects .get (fieldId)
+         field            = this .objects .get (fieldId);
 
-      Editor .removeUserDefinedField (executionContext, node, field)
+      Editor .removeUserDefinedField (executionContext, node, field);
    }
 
    addReference (protoId, protoFieldId, nodeId, fieldId)
