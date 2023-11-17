@@ -103,8 +103,10 @@ class X3DNodeTool
    {
       this .toolSelected = value;
 
-      if (this .tool ?.selected !== undefined)
-         this .tool .selected = value;
+      if (!this .tool)
+         return;
+
+      this .tool .selected = value;
    }
 
    async getToolInstance ()
@@ -127,6 +129,8 @@ class X3DNodeTool
       const nodesToDispose = [ ]
 
       Traverse .traverse (this .tool, Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES, node => nodesToDispose .push (node));
+
+      this .tool = null;
 
       for (const node of nodesToDispose .filter (node => !this .externalNodes .has (node)))
          node .dispose ();
