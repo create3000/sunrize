@@ -5,6 +5,7 @@ const
    X3D              = require ("../../X3D"),
    Editor           = require ("../../Undo/Editor"),
    UndoManager      = require ("../../Undo/UndoManager"),
+   ActionKeys       = require ("../../Application/ActionKeys"),
    _                = require ("../../Application/GetText");
 
 class X3DTransformNodeTool extends X3DChildNodeTool
@@ -26,11 +27,19 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       this .tool .centerDisplay = false;
       this .tool .bboxDisplay   = true;
       this .tool .bboxColor     = this .toolBBoxColor;
+
+      this .keys = new ActionKeys (`X3DTransformNodeTool${this .getId ()}`, this .set_keys__ .bind (this));
    }
 
    disposeTool ()
    {
       this .getBrowser () .displayEvents () .removeInterest ("reshapeTool", this);
+      this .keys .dispose ();
+   }
+
+   set_keys__ (value)
+   {
+      this .tool .scaleMode = value === ActionKeys .Option ? "SCALE_FROM_EDGE" : "SCALE_FROM_CENTER";
    }
 
    set_active__ (active)

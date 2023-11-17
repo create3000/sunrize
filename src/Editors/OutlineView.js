@@ -28,7 +28,7 @@ module .exports = class OutlineView extends Interface
 
       this .outlineEditor     = element
       this .objects           = new Map () // <id, node>
-      this .actionKeys        = new ActionKeys ()
+      this .actionKeys        = new ActionKeys ("OutlineView")
       this .onDemandToolNodes = new Set ()
 
       this .globalConfig .setDefaultValues ({

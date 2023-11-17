@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 17 Nov 2023 22:10:10 GMT'/>
+    <meta name='modified' content='Fri, 17 Nov 2023 22:41:20 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -846,30 +846,37 @@ function set_scaleAxis (axis, value, sgn)
 {
    value = value [axis];
 
-   if (scaleMode === "SCALE_FROM_EDGE")
+   switch (scaleMode)
    {
-      const
-         vector = new SFVec3f (1, 1, 1),
-         offset = new SFVec3f ();
-   
-      vector [axis] = 1 + sgn * value / bboxSize [axis];
-      offset [axis] = -sgn * bboxSize [axis] / 2;
+      case "SCALE_FROM_EDGE":
+      {
+         const
+            vector = new SFVec3f (1, 1, 1),
+            offset = new SFVec3f ();
+      
+         vector [axis] = 1 + sgn * value / bboxSize [axis];
+         offset [axis] = -sgn * bboxSize [axis] / 2;
 
-      connectAxis (axis, vector, offset);
+         connectAxis (axis, vector, offset);
 
-      scaleTransform (vector, offset);
-   }
-   else if (scaleMode === "SCALE_FROM_CENTER")
-   {
-      const
-         vector = new SFVec3f (1, 1, 1),
-         offset = new SFVec3f ();
-   
-      vector [axis] = 1 + 2 * sgn * value / bboxSize [axis];
+         scaleTransform (vector, offset);
 
-      connectAxis (axis, vector, offset);
+         break;
+      }
+      case "SCALE_FROM_CENTER":
+      {
+         const
+            vector = new SFVec3f (1, 1, 1),
+            offset = new SFVec3f ();
+      
+         vector [axis] = 1 + 2 * sgn * value / bboxSize [axis];
 
-      scaleTransform (vector, offset);
+         connectAxis (axis, vector, offset);
+
+         scaleTransform (vector, offset);
+
+         break;
+      }
    }
 }
 
