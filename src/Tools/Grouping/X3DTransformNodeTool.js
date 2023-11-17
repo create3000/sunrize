@@ -106,7 +106,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       const modelViewMatrix = renderObject .getModelViewMatrix ();
 
       modelViewMatrix .push ();
-      modelViewMatrix .multLeft (this .matrix);
+      modelViewMatrix .multLeft (this .getMatrix ());
       renderObject .getHumanoids () .push (null);
 
       this .toolInnerNode ?.traverse (type, renderObject);
