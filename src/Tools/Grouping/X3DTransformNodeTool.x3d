@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 17 Nov 2023 10:17:54 GMT'/>
+    <meta name='modified' content='Fri, 17 Nov 2023 11:12:35 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -18,6 +18,7 @@
     <ProtoDeclare name='Tool'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
+        <field accessType='inputOutput' type='MFString' name='tools' value='"TRANSLATE", "ROTATE", "SCALE"'/>
         <field accessType='inputOutput' type='SFVec3f' name='translation'/>
         <field accessType='inputOutput' type='SFRotation' name='rotation'/>
         <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
@@ -511,9 +512,13 @@ function eventsProcessed ()
         </Script>
         <Script DEF='ModeScript'>
           <field accessType='inputOnly' type='SFTime' name='set_time'/>
+          <field accessType='inputOutput' type='MFString' name='tools'/>
+          <field accessType='inputOutput' type='SFVec3f' name='bboxSize'/>
           <field accessType='outputOnly' type='SFInt32' name='activeTool'/>
           <field accessType='initializeOnly' type='SFTime' name='time'/>
           <IS>
+            <connect nodeField='tools' protoField='tools'/>
+            <connect nodeField='bboxSize' protoField='bboxSize'/>
             <connect nodeField='activeTool' protoField='activeTool'/>
           </IS>
 <![CDATA[ecmascript:
@@ -529,12 +534,37 @@ function set_time (value)
    {
       time = 0;
 
-      activeTool = (activeTool + 1) % 3;
+      if (bboxSize .length ())
+         set_tool ((activeTool + 1) % tools .length);
+      else
+         set_tool (0);
    }
    else
    {
       time = value;
    }
+}
+
+function set_tool (value)
+{
+   switch (tools [value])
+   {
+      case "TRANSLATE":
+      {
+         activeTool = 0;
+         break;
+      }
+      case "ROTATE":
+      {
+         activeTool = 1;
+         break;
+      }
+      case "SCALE":
+      {
+         activeTool = 2;
+         break;
+      }
+  }
 }
 ]]>
         </Script>

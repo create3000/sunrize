@@ -65,11 +65,13 @@
           </IS>
 <![CDATA[ecmascript:
 
-function initialize ()
+async function initialize ()
 {
    set_color ();
 
-   transform .getValue () .addTool ();
+   const tool = await transform .getValue () .addTool () .getToolInstance ();
+
+   tool .tools = new MFString ("TRANSLATE", "SCALE");
 }
 
 function set_selected ()

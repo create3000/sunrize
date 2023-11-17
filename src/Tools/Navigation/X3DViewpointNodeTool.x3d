@@ -168,6 +168,7 @@ async function initialize ()
 {
    const tool = await transform .getValue () .addTool () .getToolInstance ();
 
+   tool .tools       = new MFString ("TRANSLATE", "ROTATE");
    tool .bboxDisplay = false;
 }
 
