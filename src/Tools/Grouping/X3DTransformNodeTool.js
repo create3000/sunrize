@@ -13,7 +13,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
    {
       await super .initializeTool (__dirname, "X3DTransformNodeTool.x3d");
 
-      this .getBrowser () .displayEvents () .addInterest ("reshape", this);
+      this .getBrowser () .displayEvents () .addInterest ("reshapeTool", this);
 
       this .tool .getField ("translation")      .addReference (this .node ._translation);
       this .tool .getField ("rotation")         .addReference (this .node ._rotation);
@@ -30,7 +30,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
    disposeTool ()
    {
-      this .getBrowser () .displayEvents () .removeInterest ("reshape", this);
+      this .getBrowser () .displayEvents () .removeInterest ("reshapeTool", this);
    }
 
    set_active__ (active)
@@ -83,7 +83,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
    static box = new X3D .Box3 ();
 
-   reshape ()
+   reshapeTool ()
    {
       const
          bbox       = this .node .getSubBBox (X3DTransformNodeTool .box),

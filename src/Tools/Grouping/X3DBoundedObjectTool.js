@@ -10,7 +10,7 @@ class X3DBoundedObjectTool extends X3DChildNodeTool
    {
       await super .initializeTool (__dirname, "X3DBoundedObjectTool.x3d");
 
-      this .getBrowser () .displayEvents () .addInterest ("reshape", this);
+      this .getBrowser () .displayEvents () .addInterest ("reshapeTool", this);
 
       this .tool .bboxDisplay = true;
       this .tool .bboxColor   = this .toolBBoxColor;
@@ -18,12 +18,12 @@ class X3DBoundedObjectTool extends X3DChildNodeTool
 
    disposeTool ()
    {
-      this .getBrowser () .displayEvents () .removeInterest ("reshape", this);
+      this .getBrowser () .displayEvents () .removeInterest ("reshapeTool", this);
    }
 
    static box = new X3D .Box3 ();
 
-   reshape ()
+   reshapeTool ()
    {
       const
          bbox       = this .node .getBBox (X3DBoundedObjectTool .box),

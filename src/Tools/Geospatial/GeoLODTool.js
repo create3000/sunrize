@@ -18,9 +18,9 @@ class GeoLODTool extends X3DBoundedObjectTool
 
    static center = new X3D .Vector3 (0, 0, 0)
 
-   reshape ()
+   reshapeTool ()
    {
-      super .reshape ()
+      super .reshapeTool ()
 
       const center = this .node .getCoord (this .node ._center, GeoLODTool .center)
 
