@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 17 Nov 2023 22:41:20 GMT'/>
+    <meta name='modified' content='Fri, 17 Nov 2023 22:47:26 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -28,6 +28,7 @@
         <field accessType='inputOutput' type='SFBool' name='scaleYAxis' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='scaleZAxis' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='scaleUniform' value='true'/>
+        <field accessType='inputOutput' type='MFString' name='scaleModes' value='"SCALE_FROM_CENTER", "SCALE_FROM_EDGE"'/>
         <field accessType='inputOutput' type='SFString' name='scaleMode' value='SCALE_FROM_CENTER'/>
         <field accessType='inputOutput' type='MFString' name='connectedAxes'/>
         <field accessType='inputOutput' type='SFBool' name='xAxisDisplay' value='true'/>
@@ -984,7 +985,6 @@ function translate (scaledMatrix, distanceFromCenter)
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
-      <fieldValue name='scaleMode' value=''/>
       <fieldValue name='bboxDisplay' value='true'/>
       <fieldValue name='bboxSize' value='2 3 4'/>
     </ProtoInstance>
