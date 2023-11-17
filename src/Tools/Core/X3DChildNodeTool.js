@@ -1,29 +1,29 @@
-"use strict"
+"use strict";
 
-const X3DNodeTool = require ("./X3DNodeTool")
+const X3DNodeTool = require ("./X3DNodeTool");
 
 class X3DChildNodeTool extends X3DNodeTool
 {
    getMustDisplay ()
    {
-      return true
+      return true;
    }
 
    async initialize (... args)
    {
-      await this .loadTool (... args)
+      await this .loadTool (... args);
    }
 
    traverse (type, renderObject)
    {
-      this .node .traverse (type, renderObject)
+      this .node .traverse (type, renderObject);
 
-      renderObject .getHumanoids () .push (null)
+      renderObject .getHumanoids () .push (null);
 
-      this .toolInnerNode ?.traverse (type, renderObject)
+      this .toolInnerNode ?.traverse (type, renderObject);
 
-      renderObject .getHumanoids () .pop ()
+      renderObject .getHumanoids () .pop ();
    }
 }
 
-module .exports = X3DChildNodeTool
+module .exports = X3DChildNodeTool;

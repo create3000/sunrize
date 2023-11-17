@@ -88,7 +88,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
    reshape ()
    {
       const
-         bbox       = this .node .getBBox (X3DTransformNodeTool .box),
+         bbox       = this .node .getSubBBox (X3DTransformNodeTool .box),
          bboxSize   = bbox .size,
          bboxCenter = bbox .center;
 
@@ -97,6 +97,22 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
       if (!this .tool .bboxCenter .getValue () .equals (bboxCenter))
          this .tool .bboxCenter = bboxCenter;
+   }
+
+   traverse (type, renderObject)
+   {
+      this .node .traverse (type, renderObject);
+
+      const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+      modelViewMatrix .push ();
+      modelViewMatrix .multLeft (this .matrix);
+      renderObject .getHumanoids () .push (null);
+
+      this .toolInnerNode ?.traverse (type, renderObject);
+
+      renderObject .getHumanoids () .pop ();
+      modelViewMatrix .pop ();
    }
 }
 
