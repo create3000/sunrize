@@ -3122,36 +3122,44 @@ module .exports = class OutlineView extends Interface
 
    expandHierarchy (hierarchy, parent)
    {
-      const object = hierarchy .shift ()
+      const object = hierarchy .shift ();
 
       if (!object)
-         return
+         return;
 
       if (object instanceof X3D .X3DField)
       {
-         const element = parent .find (`.field[field-id=${object .getId ()}]`)
+         let element = parent .find (`.field[field-id=${object .getId ()}]`);
 
-         element .jstree ("open_node", element)
+         if (element .length === 0)
+         {
+            parent .jstree ("close_node", parent);
+            parent .jstree ("open_node",  parent);
 
-         this .expandHierarchy (hierarchy, element)
+            element = parent .find (`.field[field-id=${object .getId ()}]`);
+         }
+
+         element .jstree ("open_node", element);
+
+         this .expandHierarchy (hierarchy, element);
       }
       else if (object instanceof X3D .X3DImportedNode)
       {
-         const element = parent .find (`.imported-node[imported-node-id=${object .getId ()}]`)
+         const element = parent .find (`.imported-node[imported-node-id=${object .getId ()}]`);
 
-         element .jstree ("open_node", element)
+         element .jstree ("open_node", element);
 
-         this .expandHierarchy (hierarchy, element)
+         this .expandHierarchy (hierarchy, element);
       }
       else
       {
          const
             objectClass = OutlineView .objectClasses [object .getTypeName ()] || "node",
-            element     = parent .find (`.${objectClass}[node-id=${object .getId ()}]`)
+            element     = parent .find (`.${objectClass}[node-id=${object .getId ()}]`);
 
-         element .jstree ("open_node", element)
+         element .jstree ("open_node", element);
 
-         this .expandHierarchy (hierarchy, element)
+         this .expandHierarchy (hierarchy, element);
       }
    }
 

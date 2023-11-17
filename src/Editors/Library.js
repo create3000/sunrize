@@ -8,7 +8,7 @@ const
    UndoManager      = require ("../Undo/UndoManager"),
    Primitives       = require ("./Primitives"),
    StringSimilarity = require ("string-similarity"),
-   _                = require ("../Application/GetText")
+   _                = require ("../Application/GetText");
 
 module .exports = new class Library extends Dialog
 {
@@ -224,7 +224,9 @@ module .exports = new class Library extends Dialog
          }
       }
 
-      UndoManager .shared .endUndo ()
+      UndoManager .shared .endUndo ();
+
+      require ("../Application/Window") .sidebar .outlineEditor .expandTo (node .getValue ());
    }
 
    updatePrimitives ()
@@ -308,5 +310,7 @@ module .exports = new class Library extends Dialog
       }
 
       UndoManager .shared .endUndo ();
+
+      require ("../Application/Window") .sidebar .outlineEditor .expandTo (nodes [0]);
    }
 }
