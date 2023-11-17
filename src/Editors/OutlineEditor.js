@@ -111,6 +111,12 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
          var menu = [
             {
+               label: "Add Node...",
+               visible: field .getType () === X3D .X3DConstants .SFNode || field .getType () === X3D .X3DConstants .MFNode,
+               args: ["openLibrary", element .attr ("id"), executionContext .getId (), node .getId (), field .getId ()],
+            },
+            { type: "separator" },
+            {
                label: "Add Field...",
                visible: node .canUserDefinedFields (),
                args: ["addUserDefinedField", element .attr ("id"), executionContext .getId (), node .getId ()],
@@ -472,17 +478,18 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const
          element = $(`#${id}`),
          node    = this .objects .get (nodeId);
-         
+
       element .find ("> .item") .renameNodePopover (node);
    }
 
-   openLibrary (id, executionContextId, nodeId)
+   openLibrary (id, executionContextId, nodeId, fieldId)
    {
       const
+         executionContext = this .objects .get (executionContextId),
          node             = this .objects .get (nodeId),
-         executionContext = this .objects .get (executionContextId);
+         field            = this .objects .get (fieldId);
 
-      require ("./Library") .open (executionContext, node);
+      require ("./Library") .open (executionContext, node, field);
    }
 
    cutNodes ()

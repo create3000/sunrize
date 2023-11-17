@@ -85,12 +85,13 @@ module .exports = new class Library extends Dialog
       }
    }
 
-   async open (executionContext, node)
+   async open (executionContext, node, field)
    {
       await this .browser .loadComponents (this .browser .getProfile ("Full"));
 
       this .executionContext = executionContext;
       this .node             = node;
+      this .field            = field;
 
       super .open ();
       this .update ();
@@ -203,7 +204,7 @@ module .exports = new class Library extends Dialog
 
       const
          node  = this .executionContext .createNode (typeName),
-         field = $.try (() => this .node ?.getField (node .getValue () .getContainerField ()));
+         field = this .field ?? $.try (() => this .node ?.getField (node .getValue () .getContainerField ()));
 
       switch (field ?.getType ())
       {
@@ -283,7 +284,7 @@ module .exports = new class Library extends Dialog
 
       const
          nodes = await Editor .importX3D (this .executionContext, x3dSyntax),
-         field = $.try (() => this .node ?.getField (nodes [0] .getContainerField ()));
+         field = this .field ?? $.try (() => this .node ?.getField (nodes [0] .getContainerField ()));
 
       switch (field ?.getType ())
       {
