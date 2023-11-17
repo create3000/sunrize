@@ -37,9 +37,9 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       this .keys .dispose ();
    }
 
-   set_keys__ (value)
+   set_keys__ (keys)
    {
-      this .tool .scaleMode = value === ActionKeys .Option ? "SCALE_FROM_EDGE" : "SCALE_FROM_CENTER";
+      this .tool .scaleMode = keys === ActionKeys .Option ? "SCALE_FROM_EDGE" : "SCALE_FROM_CENTER";
    }
 
    set_active__ (active)
