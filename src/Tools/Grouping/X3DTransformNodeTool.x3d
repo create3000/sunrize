@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 17 Nov 2023 21:21:29 GMT'/>
+    <meta name='modified' content='Fri, 17 Nov 2023 21:30:56 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -115,7 +115,7 @@
               <IS>
                 <connect nodeField='visible' protoField='xAxisDisplay'/>
               </IS>
-              <Group>
+              <Group DEF='Front'>
                 <Transform DEF='XFront'
                     translation='0.5 0 0'>
                   <ScreenGroup>
@@ -157,13 +157,16 @@
                     </Switch>
                   </ScreenGroup>
                 </Transform>
-                <PlaneSensor DEF='XScaleFrontSensor'>
+                <PlaneSensor DEF='XScaleFrontSensor'
+                    description='x-Axis'
+                    autoOffset='false'
+                    maxPosition='-1 0'>
                   <IS>
                     <connect nodeField='isActive' protoField='isActive'/>
                   </IS>
                 </PlaneSensor>
               </Group>
-              <Group>
+              <Group DEF='Back'>
                 <Transform DEF='XBack_1'
                     translation='-0.5 0 0'>
                   <ScreenGroup>
@@ -198,7 +201,10 @@
                     </Switch>
                   </ScreenGroup>
                 </Transform>
-                <PlaneSensor DEF='XScaleBackSensor'>
+                <PlaneSensor DEF='XScaleBackSensor'
+                    description='x-Axis'
+                    autoOffset='false'
+                    maxPosition='-1 0'>
                   <IS>
                     <connect nodeField='isActive' protoField='isActive'/>
                   </IS>
@@ -218,7 +224,7 @@
               <IS>
                 <connect nodeField='visible' protoField='yAxisDisplay'/>
               </IS>
-              <Group>
+              <Group DEF='Front_1'>
                 <Transform DEF='YFront'
                     translation='0 0.5 0'>
                   <ScreenGroup>
@@ -255,13 +261,16 @@
                     </Switch>
                   </ScreenGroup>
                 </Transform>
-                <PlaneSensor DEF='YScaleFrontSensor'>
+                <PlaneSensor DEF='YScaleFrontSensor'
+                    description='y-Axis'
+                    autoOffset='false'
+                    maxPosition='0 -1'>
                   <IS>
                     <connect nodeField='isActive' protoField='isActive'/>
                   </IS>
                 </PlaneSensor>
               </Group>
-              <Group>
+              <Group DEF='Back_2'>
                 <Transform DEF='YBack_1'
                     translation='0 -0.5 0'>
                   <ScreenGroup>
@@ -289,7 +298,10 @@
                     </Switch>
                   </ScreenGroup>
                 </Transform>
-                <PlaneSensor DEF='YScaleBackSensor'>
+                <PlaneSensor DEF='YScaleBackSensor'
+                    description='y-Axis'
+                    autoOffset='false'
+                    maxPosition='0 -1'>
                   <IS>
                     <connect nodeField='isActive' protoField='isActive'/>
                   </IS>
@@ -309,7 +321,7 @@
               <IS>
                 <connect nodeField='visible' protoField='zAxisDisplay'/>
               </IS>
-              <Group>
+              <Group DEF='Front_2'>
                 <Transform DEF='ZFront'
                     translation='0 0 0.5'>
                   <ScreenGroup>
@@ -347,13 +359,17 @@
                     </Switch>
                   </ScreenGroup>
                 </Transform>
-                <PlaneSensor DEF='ZScaleFrontSensor'>
+                <PlaneSensor DEF='ZScaleFrontSensor'
+                    description='z-Axis'
+                    axisRotation='0 -1 0 90'
+                    autoOffset='false'
+                    maxPosition='-1 0'>
                   <IS>
                     <connect nodeField='isActive' protoField='isActive'/>
                   </IS>
                 </PlaneSensor>
               </Group>
-              <Group>
+              <Group DEF='Back_3'>
                 <Transform DEF='ZBack'
                     translation='0 0 -0.5'>
                   <ScreenGroup>
@@ -380,7 +396,11 @@
                     </Switch>
                   </ScreenGroup>
                 </Transform>
-                <PlaneSensor DEF='ZScaleBackSensor'>
+                <PlaneSensor DEF='ZScaleBackSensor'
+                    description='z-Axis'
+                    axisRotation='0 -1 0 90'
+                    autoOffset='false'
+                    maxPosition='-1 0'>
                   <IS>
                     <connect nodeField='isActive' protoField='isActive'/>
                   </IS>
@@ -752,10 +772,6 @@ function translate (value)
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
-      <fieldValue name='scaleXAxis' value='false'/>
-      <fieldValue name='scaleYAxis' value='false'/>
-      <fieldValue name='scaleZAxis' value='false'/>
-      <fieldValue name='scaleUniform' value='false'/>
       <fieldValue name='bboxDisplay' value='true'/>
       <fieldValue name='bboxSize' value='2 3 4'/>
     </ProtoInstance>
