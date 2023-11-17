@@ -4,9 +4,9 @@ const X3DLightNodeTool = require ("./X3DLightNodeTool")
 
 class SpotLightTool extends X3DLightNodeTool
 {
-   async initialize ()
+   async initializeTool ()
    {
-      await super .initialize ()
+      await super .initializeTool ()
 
       this .node ._location    .addFieldInterest (this .tool .getField ("location"))
       this .node ._direction   .addFieldInterest (this .tool .getField ("direction"))

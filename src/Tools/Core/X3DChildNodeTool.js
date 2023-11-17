@@ -9,7 +9,7 @@ class X3DChildNodeTool extends X3DNodeTool
       return true;
    }
 
-   async initialize (... args)
+   async initializeTool (... args)
    {
       await this .loadTool (... args);
    }

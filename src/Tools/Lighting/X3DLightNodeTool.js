@@ -8,9 +8,9 @@ class X3DLightNodeTool extends X3DChildNodeTool
 {
    static createOnSelection = false
 
-   async initialize ()
+   async initializeTool ()
    {
-      await super .initialize (__dirname, "X3DLightNodeTool.x3d")
+      await super .initializeTool (__dirname, "X3DLightNodeTool.x3d")
 
       this .node ._on        .addFieldInterest (this .tool .getField ("on"))
       this .node ._color     .addFieldInterest (this .tool .getField ("color"))

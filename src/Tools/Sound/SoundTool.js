@@ -10,9 +10,9 @@ class SoundTool extends X3DChildNodeTool
 
    toolWhichChoice = 0
 
-   async initialize ()
+   async initializeTool ()
    {
-      await super .initialize (__dirname, "SoundTool.x3d")
+      await super .initializeTool (__dirname, "SoundTool.x3d")
 
       this .node ._location  .addFieldInterest (this .tool .getField ("location"))
       this .node ._direction .addFieldInterest (this .tool .getField ("direction"))

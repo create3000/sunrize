@@ -8,9 +8,9 @@ class X3DEnvironmentalSensorNodeTool extends X3DChildNodeTool
 {
    static createOnSelection = false
 
-   async initialize ()
+   async initializeTool ()
    {
-      await super .initialize (__dirname, "X3DEnvironmentalSensorNodeTool.x3d")
+      await super .initializeTool (__dirname, "X3DEnvironmentalSensorNodeTool.x3d")
 
       this .node ._size   .addFieldInterest (this .tool .getField ("size"))
       this .node ._center .addFieldInterest (this .tool .getField ("center"))

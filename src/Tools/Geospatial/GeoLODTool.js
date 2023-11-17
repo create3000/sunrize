@@ -9,9 +9,9 @@ class GeoLODTool extends X3DBoundedObjectTool
 {
    toolBBoxColor = ToolColors .DARK_CYAN
 
-   async initialize ()
+   async initializeTool ()
    {
-      await super .initialize ()
+      await super .initializeTool ()
 
       this .tool .centerDisplay = true
    }

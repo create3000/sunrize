@@ -6,9 +6,9 @@ class OrthoViewpointTool extends X3DViewpointNodeTool
 {
    toolWhichChoice = 1
 
-   async initialize ()
+   async initializeTool ()
    {
-      await super .initialize ()
+      await super .initializeTool ()
 
       this .node ._position .addFieldInterest (this .tool .getField ("position"))
 

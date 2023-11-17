@@ -4,9 +4,9 @@ const X3DTextureProjectorNodeTool = require ("./X3DTextureProjectorNodeTool")
 
 class TextureProjectorTool extends X3DTextureProjectorNodeTool
 {
-   async initialize ()
+   async initializeTool ()
    {
-      await super .initialize ()
+      await super .initializeTool ()
 
       this .node ._fieldOfView  .addFieldInterest (this .tool .getField ("perspectiveFieldOfView"))
       this .node ._nearDistance .addFieldInterest (this .tool .getField ("perspectiveNearDistance"))

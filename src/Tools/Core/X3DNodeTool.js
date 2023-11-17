@@ -72,7 +72,7 @@ class X3DNodeTool
       this .externalNodes = new Map ();
 
       this .replaceNode (node, proxy);
-      proxy .setup ();
+      proxy .setupTool ();
 
       return proxy;
    }
@@ -86,9 +86,9 @@ class X3DNodeTool
       }
    }
 
-   async setup ()
+   async setupTool ()
    {
-      await this .initialize ();
+      await this .initializeTool ();
 
       if (!this .tool)
          return;
@@ -97,7 +97,7 @@ class X3DNodeTool
       this .tool .selected = this .toolSelected;
    }
 
-   async initialize () { }
+   async initializeTool () { }
 
    setSelected (value)
    {
@@ -126,6 +126,8 @@ class X3DNodeTool
       if (!this .constructor [action])
          return this;
 
+      this .disposeTool ();
+
       const nodesToDispose = [ ]
 
       Traverse .traverse (this .tool, Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES, node => nodesToDispose .push (node));
@@ -145,6 +147,8 @@ class X3DNodeTool
 
       return this .node;
    }
+
+   disposeTool () { }
 
    static scenes = new Map ();
 

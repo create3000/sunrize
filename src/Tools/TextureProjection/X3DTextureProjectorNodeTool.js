@@ -10,9 +10,9 @@ class X3DTextureProjectorNodeTool extends X3DChildNodeTool
 
    toolWhichChoice = 0;
 
-   async initialize ()
+   async initializeTool ()
    {
-      await super .initialize (__dirname, "X3DTextureProjectorNodeTool.x3d");
+      await super .initializeTool (__dirname, "X3DTextureProjectorNodeTool.x3d");
 
       this .node ._on        .addFieldInterest (this .tool .getField ("on"));
       this .node ._location  .addFieldInterest (this .tool .getField ("location"));

@@ -4,9 +4,9 @@ const X3DViewpointNodeTool = require ("./X3DViewpointNodeTool")
 
 class ViewpointTool extends X3DViewpointNodeTool
 {
-   async initialize ()
+   async initializeTool ()
    {
-      await super .initialize ()
+      await super .initializeTool ()
 
       this .node ._position .addFieldInterest (this .tool .getField ("position"))
 

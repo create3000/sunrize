@@ -8,9 +8,9 @@ class BillboardTool extends X3DBoundedObjectTool
 {
    toolBBoxColor = ToolColors .PINK;
 
-   async initialize ()
+   async initializeTool ()
    {
-      await super .initialize ();
+      await super .initializeTool ();
 
       this .node ._axisOfRotation .addFieldInterest (this .tool .getField ("axisOfRotation"));
 
@@ -18,11 +18,9 @@ class BillboardTool extends X3DBoundedObjectTool
       this .tool .axisOfRotation = this .node ._axisOfRotation;
    }
 
-   removeTool ()
+   disposeTool ()
    {
       this .node ._axisOfRotation .removeFieldInterest (this .tool .axisOfRotation);
-
-      return super .removeTool ();
    }
 }
 

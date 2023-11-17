@@ -4,9 +4,9 @@ const X3DViewpointNodeTool = require ("../Navigation/X3DViewpointNodeTool")
 
 class GeoViewpointTool extends X3DViewpointNodeTool
 {
-   async initialize ()
+   async initializeTool ()
    {
-      await super .initialize ()
+      await super .initializeTool ()
 
       this .node ._position .addInterest ("set_node_position__", this)
 

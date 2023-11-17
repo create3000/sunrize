@@ -8,9 +8,9 @@ class LODTool extends X3DBoundedObjectTool
 {
    toolBBoxColor = ToolColors .CYAN;
 
-   async initialize ()
+   async initializeTool ()
    {
-      await super .initialize ();
+      await super .initializeTool ();
 
       this .node ._center .addFieldInterest (this .tool .getField ("center"));
 
@@ -18,11 +18,9 @@ class LODTool extends X3DBoundedObjectTool
       this .tool .center        = this .node ._center;
    }
 
-   removeTool ()
+   disposeTool ()
    {
       this .node ._center .removeFieldInterest (this .tool .center);
-
-      return super .removeTool ();
    }
 }
 
