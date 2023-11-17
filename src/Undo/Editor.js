@@ -1730,18 +1730,18 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       const
          oldAccessType = field .getAccessType (),
          oldName       = field .getName (),
-         fields        = Array .from (node .getUserDefinedFields ())
+         fields        = Array .from (node .getUserDefinedFields ());
 
-      undoManager .beginUndo (_ ("Update Fields of Node %s"), node .getTypeName ())
-
-      for (const field of fields)
-         node .removeUserDefinedField (field .getName ())
-
-      field .setAccessType (accessType)
-      field .setName (name)
+      undoManager .beginUndo (_ ("Update Fields of Node %s"), node .getTypeName ());
 
       for (const field of fields)
-         node .addUserDefinedField (field .getAccessType (), field .getName (), field)
+         node .removeUserDefinedField (field .getName ());
+
+      field .setAccessType (accessType);
+      field .setName (name);
+
+      for (const field of fields)
+         node .addUserDefinedField (field .getAccessType (), field .getName (), field);
 
       if (accessType !== oldAccessType)
       {
@@ -1749,7 +1749,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          {
             const
                proto        = node,
-               updatedField = field
+               updatedField = field;
 
             Traverse .traverse (proto, Traverse .PROTO_DECLARATION | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, (node) =>
             {
@@ -1760,10 +1760,10 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   if (field .getReferences () .has (updatedField))
                   {
                      if (!updatedField .isReference (field .getAccessType ()))
-                        this .removeReference (proto, updatedField, node, field, undoManager)
+                        this .removeReference (proto, updatedField, node, field, undoManager);
                   }
                }
-            })
+            });
 
             // Remove routes.
 
@@ -1771,13 +1771,13 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                if (node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance) && node .getProtoNode () === proto)
                {
-                  const field = node .getField (oldName)
+                  const field = node .getField (oldName);
 
                   if (! updatedField .isInput ())
                   {
                      for (const route of field .getInputRoutes ())
                      {
-                        this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager)
+                        this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager);
                      }
                   }
 
@@ -1785,13 +1785,13 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   {
                      for (const route of field .getOutputRoutes ())
                      {
-                        this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager)
+                        this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager);
                      }
                   }
                }
-            })
+            });
 
-            this .updateInstances (proto, undoManager)
+            this .updateInstances (proto, undoManager);
          }
          else
          {
@@ -1800,7 +1800,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             for (const reference of field .getReferences ())
             {
                if (!reference .isReference (field .getAccessType ()))
-                  this .removeReference (proto, reference, node, field, undoManager)
+                  this .removeReference (proto, reference, node, field, undoManager);
             }
 
             // Remove routes.
@@ -1809,7 +1809,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                for (const route of field .getInputRoutes ())
                {
-                  this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager)
+                  this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager);
                }
             }
 
@@ -1817,7 +1817,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                for (const route of field .getOutputRoutes ())
                {
-                  this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager)
+                  this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager);
                }
             }
          }
@@ -1825,12 +1825,12 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       undoManager .registerUndo (() =>
       {
-         this .updateUserDefinedField (executionContext, node, field, oldAccessType, oldName, undoManager)
-      })
+         this .updateUserDefinedField (executionContext, node, field, oldAccessType, oldName, undoManager);
+      });
 
-      this .requestUpdateInstances (node, undoManager)
+      this .requestUpdateInstances (node, undoManager);
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -1841,13 +1841,13 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static removeUserDefinedField (executionContext, node, field, undoManager = UndoManager .shared)
    {
-      const fields = [... node .getUserDefinedFields ()] .filter (f => f !== field)
+      const fields = [... node .getUserDefinedFields ()] .filter (f => f !== field);
 
-      undoManager .beginUndo (_ ("Remove Field »%s«"), field .getName ())
+      undoManager .beginUndo (_ ("Remove Field »%s«"), field .getName ());
 
-      this .setUserDefinedFields (executionContext, node, fields, undoManager)
+      this .setUserDefinedFields (executionContext, node, fields, undoManager);
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -1860,15 +1860,15 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       const
          oldFields     = Array .from (node .getUserDefinedFields ()),
-         removedFields = oldFields .filter (f => !fields .includes (f))
+         removedFields = oldFields .filter (f => !fields .includes (f));
 
-      undoManager .beginUndo (_ ("Update Fields of Node %s"), node .getTypeName ())
+      undoManager .beginUndo (_ ("Update Fields of Node %s"), node .getTypeName ());
 
       if (removedFields .length)
       {
          if (node instanceof X3D .X3DProtoDeclaration)
          {
-            const proto = node
+            const proto = node;
 
             // Remove references.
 
@@ -1879,16 +1879,16 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   for (const removedField of removedFields)
                   {
                      if (field .getReferences () .has (removedField))
-                        this .removeReference (proto, removedField, node, field, undoManager)
+                        this .removeReference (proto, removedField, node, field, undoManager);
                   }
 
                   for (const reference of field .getReferences ())
                   {
                      if (! reference .isReference (field .getAccessType ()))
-                        this .removeReference (proto, reference, node, field, undoManager)
+                        this .removeReference (proto, reference, node, field, undoManager);
                   }
                }
-            })
+            });
 
             // Remove routes, and undo set value.
 
@@ -1898,49 +1898,49 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                {
                   for (const removedField of removedFields)
                   {
-                     const field = node .getField (removedField .getName ())
+                     const field = node .getField (removedField .getName ());
 
                      if (field .isInitializable ())
                      {
                         const
                            name     = field .getName (),
-                           oldValue = field .copy ()
+                           oldValue = field .copy ();
 
                         undoManager .registerUndo (() =>
                         {
-                           this .setFieldValue (node .getExecutionContext (), node, name, oldValue, undoManager)
+                           this .setFieldValue (node .getExecutionContext (), node, name, oldValue, undoManager);
                         })
                      }
 
                      for (const route of field .getInputRoutes ())
                      {
-                        this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager)
+                        this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager);
                      }
 
                      for (const route of field .getOutputRoutes ())
                      {
-                        this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager)
+                        this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager);
                      }
                   }
                }
-            })
+            });
 
-            this .updateInstances (proto, undoManager)
+            this .updateInstances (proto, undoManager);
          }
          else
          {
             // Remove references.
 
-            const outerNode = executionContext .getOuterNode ()
+            const outerNode = executionContext .getOuterNode ();
 
             if (outerNode && outerNode instanceof X3D .X3DProtoDeclaration)
             {
-               const proto = outerNode
+               const proto = outerNode;
 
                for (const removedField of removedFields)
                {
                   for (const reference of removedField .getReferences ())
-                     this .removeReference (proto, reference, node, removedField, undoManager)
+                     this .removeReference (proto, reference, node, removedField, undoManager);
                }
             }
 
@@ -1950,12 +1950,12 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                for (const route of removedField .getInputRoutes ())
                {
-                  this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager)
+                  this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager);
                }
 
                for (const route of removedField .getOutputRoutes ())
                {
-                  this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager)
+                  this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager);
                }
             }
          }
@@ -1964,21 +1964,21 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       // Set new fields, to make delete route work.
 
       for (const field of oldFields)
-         node .removeUserDefinedField (field .getName ())
+         node .removeUserDefinedField (field .getName ());
 
       for (const field of fields)
-         node .addUserDefinedField (field .getAccessType (), field .getName (), field)
+         node .addUserDefinedField (field .getAccessType (), field .getName (), field);
 
       //
 
       undoManager .registerUndo (() =>
       {
-         this .setUserDefinedFields (executionContext, node, oldFields, undoManager)
+         this .setUserDefinedFields (executionContext, node, oldFields, undoManager);
       })
 
-      this .requestUpdateInstances (node, undoManager)
+      this .requestUpdateInstances (node, undoManager);
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
