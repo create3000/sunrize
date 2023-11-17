@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 17 Nov 2023 22:53:49 GMT'/>
+    <meta name='modified' content='Fri, 17 Nov 2023 22:57:28 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -160,6 +160,15 @@
                     </Switch>
                   </ScreenGroup>
                 </Transform>
+                <TouchSensor DEF='ModeTouch'/>
+                <PlaneSensor DEF='XTranslationSensor'
+                    description='x-Axis'
+                    autoOffset='false'
+                    maxPosition='-1 0'>
+                  <IS>
+                    <connect nodeField='isActive' protoField='isActive'/>
+                  </IS>
+                </PlaneSensor>
                 <PlaneSensor DEF='XScaleFrontSensor'
                     description='x-Axis'
                     autoOffset='false'
@@ -204,6 +213,8 @@
                     </Switch>
                   </ScreenGroup>
                 </Transform>
+                <TouchSensor USE='ModeTouch'/>
+                <PlaneSensor USE='XTranslationSensor'/>
                 <PlaneSensor DEF='XScaleBackSensor'
                     description='x-Axis'
                     autoOffset='false'
@@ -213,15 +224,6 @@
                   </IS>
                 </PlaneSensor>
               </Group>
-              <PlaneSensor DEF='XTranslationSensor'
-                  description='x-Axis'
-                  autoOffset='false'
-                  maxPosition='-1 0'>
-                <IS>
-                  <connect nodeField='isActive' protoField='isActive'/>
-                </IS>
-              </PlaneSensor>
-              <TouchSensor DEF='ToggleToolTouch'/>
             </Group>
             <Group DEF='YHandle'>
               <IS>
@@ -264,6 +266,15 @@
                     </Switch>
                   </ScreenGroup>
                 </Transform>
+                <TouchSensor USE='ModeTouch'/>
+                <PlaneSensor DEF='YTranslationSensor'
+                    description='y-Axis'
+                    autoOffset='false'
+                    maxPosition='0 -1'>
+                  <IS>
+                    <connect nodeField='isActive' protoField='isActive'/>
+                  </IS>
+                </PlaneSensor>
                 <PlaneSensor DEF='YScaleFrontSensor'
                     description='y-Axis'
                     autoOffset='false'
@@ -301,6 +312,8 @@
                     </Switch>
                   </ScreenGroup>
                 </Transform>
+                <TouchSensor USE='ModeTouch'/>
+                <PlaneSensor USE='YTranslationSensor'/>
                 <PlaneSensor DEF='YScaleBackSensor'
                     description='y-Axis'
                     autoOffset='false'
@@ -310,15 +323,6 @@
                   </IS>
                 </PlaneSensor>
               </Group>
-              <PlaneSensor DEF='YTranslationSensor'
-                  description='y-Axis'
-                  autoOffset='false'
-                  maxPosition='0 -1'>
-                <IS>
-                  <connect nodeField='isActive' protoField='isActive'/>
-                </IS>
-              </PlaneSensor>
-              <TouchSensor USE='ToggleToolTouch'/>
             </Group>
             <Group DEF='ZHandle'>
               <IS>
@@ -362,6 +366,16 @@
                     </Switch>
                   </ScreenGroup>
                 </Transform>
+                <TouchSensor USE='ModeTouch'/>
+                <PlaneSensor DEF='ZTranslationSensor'
+                    description='z-Axis'
+                    axisRotation='0 -1 0 90'
+                    autoOffset='false'
+                    maxPosition='-1 0'>
+                  <IS>
+                    <connect nodeField='isActive' protoField='isActive'/>
+                  </IS>
+                </PlaneSensor>
                 <PlaneSensor DEF='ZScaleFrontSensor'
                     description='z-Axis'
                     axisRotation='0 -1 0 90'
@@ -399,6 +413,8 @@
                     </Switch>
                   </ScreenGroup>
                 </Transform>
+                <TouchSensor USE='ModeTouch'/>
+                <PlaneSensor USE='ZTranslationSensor'/>
                 <PlaneSensor DEF='ZScaleBackSensor'
                     description='z-Axis'
                     axisRotation='0 -1 0 90'
@@ -409,16 +425,6 @@
                   </IS>
                 </PlaneSensor>
               </Group>
-              <PlaneSensor DEF='ZTranslationSensor'
-                  description='z-Axis'
-                  axisRotation='0 -1 0 90'
-                  autoOffset='false'
-                  maxPosition='-1 0'>
-                <IS>
-                  <connect nodeField='isActive' protoField='isActive'/>
-                </IS>
-              </PlaneSensor>
-              <TouchSensor USE='ToggleToolTouch'/>
             </Group>
           </Group>
           <Group DEF='Center'>
@@ -952,7 +958,7 @@ function translate (scaledMatrix, distanceFromCenter)
         <ROUTE fromNode='ZTranslationSensor' fromField='isActive' toNode='TranslateScript' toField='set_active'/>
         <ROUTE fromNode='YTranslationSensor' fromField='isActive' toNode='TranslateScript' toField='set_active'/>
         <ROUTE fromNode='XTranslationSensor' fromField='isActive' toNode='TranslateScript' toField='set_active'/>
-        <ROUTE fromNode='ToggleToolTouch' fromField='touchTime' toNode='ModeScript' toField='set_time'/>
+        <ROUTE fromNode='ModeTouch' fromField='touchTime' toNode='ModeScript' toField='set_time'/>
         <ROUTE fromNode='ModeScript' fromField='activeTool' toNode='_22' toField='set_whichChoice'/>
         <ROUTE fromNode='ModeScript' fromField='activeTool' toNode='_23' toField='set_whichChoice'/>
         <ROUTE fromNode='ModeScript' fromField='activeTool' toNode='_24' toField='set_whichChoice'/>
