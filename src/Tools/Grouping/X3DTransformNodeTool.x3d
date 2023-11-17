@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 17 Nov 2023 21:04:42 GMT'/>
+    <meta name='modified' content='Fri, 17 Nov 2023 21:21:29 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -18,13 +18,16 @@
     <ProtoDeclare name='Tool'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
-        <field accessType='inputOutput' type='MFString' name='tools' value='"TRANSLATE", "ROTATE", "SCALE"'/>
-        <field accessType='outputOnly' type='SFBool' name='scaleX'/>
         <field accessType='inputOutput' type='SFVec3f' name='translation'/>
         <field accessType='inputOutput' type='SFRotation' name='rotation'/>
         <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
         <field accessType='inputOutput' type='SFRotation' name='scaleOrientation'/>
         <field accessType='inputOutput' type='SFVec3f' name='center'/>
+        <field accessType='inputOutput' type='MFString' name='tools' value='"TRANSLATE", "ROTATE", "SCALE"'/>
+        <field accessType='inputOutput' type='SFBool' name='scaleXAxis' value='true'/>
+        <field accessType='inputOutput' type='SFBool' name='scaleYAxis' value='true'/>
+        <field accessType='inputOutput' type='SFBool' name='scaleZAxis' value='true'/>
+        <field accessType='inputOutput' type='SFBool' name='scaleUniform' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='xAxisDisplay' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='yAxisDisplay' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='zAxisDisplay' value='true'/>
@@ -553,20 +556,28 @@ function eventsProcessed ()
 }
 ]]>
         </Script>
-        <Script DEF='ToolScript'>
+        <Script DEF='ToolsScript'>
           <field accessType='inputOnly' type='SFTime' name='set_time'/>
           <field accessType='inputOutput' type='MFString' name='tools'/>
+          <field accessType='inputOutput' type='SFBool' name='scaleXAxis'/>
+          <field accessType='inputOutput' type='SFBool' name='scaleYAxis'/>
+          <field accessType='inputOutput' type='SFBool' name='scaleZAxis'/>
+          <field accessType='inputOutput' type='SFBool' name='scaleUnform'/>
           <field accessType='inputOutput' type='SFVec3f' name='bboxSize'/>
           <field accessType='outputOnly' type='SFBool' name='translate'/>
           <field accessType='outputOnly' type='SFBool' name='rotate'/>
-          <field accessType='outputOnly' type='SFBool' name='scale'/>
           <field accessType='outputOnly' type='SFBool' name='scaleX'/>
           <field accessType='outputOnly' type='SFBool' name='scaleY'/>
           <field accessType='outputOnly' type='SFBool' name='scaleZ'/>
+          <field accessType='outputOnly' type='SFBool' name='scale'/>
           <field accessType='outputOnly' type='SFInt32' name='activeTool'/>
           <field accessType='initializeOnly' type='SFTime' name='time'/>
           <IS>
             <connect nodeField='tools' protoField='tools'/>
+            <connect nodeField='scaleXAxis' protoField='scaleXAxis'/>
+            <connect nodeField='scaleYAxis' protoField='scaleYAxis'/>
+            <connect nodeField='scaleZAxis' protoField='scaleZAxis'/>
+            <connect nodeField='scaleUnform' protoField='scaleUniform'/>
             <connect nodeField='bboxSize' protoField='bboxSize'/>
             <connect nodeField='activeTool' protoField='activeTool'/>
           </IS>
@@ -603,6 +614,9 @@ function set_tool (value)
 {
    translate = false;
    rotate    = false;
+   scaleX    = false;
+   scaleY    = false;
+   scaleZ    = false;
    scale     = false;
 
    switch (tools [value])
@@ -621,7 +635,10 @@ function set_tool (value)
       }
       case "SCALE":
       {
-         scale      = true;
+         scaleX     = scaleXAxis;
+         scaleY     = scaleYAxis;
+         scaleZ     = scaleZAxis;
+         scale      = scaleUniform;
          activeTool = 2;
          break;
       }
@@ -716,25 +733,29 @@ function translate (value)
         <ROUTE fromNode='ZTranslationSensor' fromField='isActive' toNode='TranslateScript' toField='set_active'/>
         <ROUTE fromNode='YTranslationSensor' fromField='isActive' toNode='TranslateScript' toField='set_active'/>
         <ROUTE fromNode='XTranslationSensor' fromField='isActive' toNode='TranslateScript' toField='set_active'/>
-        <ROUTE fromNode='ToggleToolTouch' fromField='touchTime' toNode='ToolScript' toField='set_time'/>
-        <ROUTE fromNode='ToolScript' fromField='activeTool' toNode='_22' toField='set_whichChoice'/>
-        <ROUTE fromNode='ToolScript' fromField='activeTool' toNode='_23' toField='set_whichChoice'/>
-        <ROUTE fromNode='ToolScript' fromField='activeTool' toNode='_24' toField='set_whichChoice'/>
-        <ROUTE fromNode='ToolScript' fromField='activeTool' toNode='_25' toField='set_whichChoice'/>
-        <ROUTE fromNode='ToolScript' fromField='activeTool' toNode='_26' toField='set_whichChoice'/>
-        <ROUTE fromNode='ToolScript' fromField='activeTool' toNode='_27' toField='set_whichChoice'/>
-        <ROUTE fromNode='ToolScript' fromField='translate' toNode='ZTranslationSensor' toField='set_enabled'/>
-        <ROUTE fromNode='ToolScript' fromField='translate' toNode='YTranslationSensor' toField='set_enabled'/>
-        <ROUTE fromNode='ToolScript' fromField='translate' toNode='XTranslationSensor' toField='set_enabled'/>
-        <ROUTE fromNode='ToolScript' fromField='scaleZ' toNode='ZScaleBackSensor' toField='set_enabled'/>
-        <ROUTE fromNode='ToolScript' fromField='scaleZ' toNode='ZScaleFrontSensor' toField='set_enabled'/>
-        <ROUTE fromNode='ToolScript' fromField='scaleY' toNode='YScaleBackSensor' toField='set_enabled'/>
-        <ROUTE fromNode='ToolScript' fromField='scaleY' toNode='YScaleFrontSensor' toField='set_enabled'/>
-        <ROUTE fromNode='ToolScript' fromField='scaleX' toNode='XScaleBackSensor' toField='set_enabled'/>
-        <ROUTE fromNode='ToolScript' fromField='scaleX' toNode='XScaleFrontSensor' toField='set_enabled'/>
+        <ROUTE fromNode='ToggleToolTouch' fromField='touchTime' toNode='ToolsScript' toField='set_time'/>
+        <ROUTE fromNode='ToolsScript' fromField='activeTool' toNode='_22' toField='set_whichChoice'/>
+        <ROUTE fromNode='ToolsScript' fromField='activeTool' toNode='_23' toField='set_whichChoice'/>
+        <ROUTE fromNode='ToolsScript' fromField='activeTool' toNode='_24' toField='set_whichChoice'/>
+        <ROUTE fromNode='ToolsScript' fromField='activeTool' toNode='_25' toField='set_whichChoice'/>
+        <ROUTE fromNode='ToolsScript' fromField='activeTool' toNode='_26' toField='set_whichChoice'/>
+        <ROUTE fromNode='ToolsScript' fromField='activeTool' toNode='_27' toField='set_whichChoice'/>
+        <ROUTE fromNode='ToolsScript' fromField='translate' toNode='ZTranslationSensor' toField='set_enabled'/>
+        <ROUTE fromNode='ToolsScript' fromField='translate' toNode='YTranslationSensor' toField='set_enabled'/>
+        <ROUTE fromNode='ToolsScript' fromField='translate' toNode='XTranslationSensor' toField='set_enabled'/>
+        <ROUTE fromNode='ToolsScript' fromField='scaleZ' toNode='ZScaleBackSensor' toField='set_enabled'/>
+        <ROUTE fromNode='ToolsScript' fromField='scaleZ' toNode='ZScaleFrontSensor' toField='set_enabled'/>
+        <ROUTE fromNode='ToolsScript' fromField='scaleY' toNode='YScaleBackSensor' toField='set_enabled'/>
+        <ROUTE fromNode='ToolsScript' fromField='scaleY' toNode='YScaleFrontSensor' toField='set_enabled'/>
+        <ROUTE fromNode='ToolsScript' fromField='scaleX' toNode='XScaleBackSensor' toField='set_enabled'/>
+        <ROUTE fromNode='ToolsScript' fromField='scaleX' toNode='XScaleFrontSensor' toField='set_enabled'/>
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
+      <fieldValue name='scaleXAxis' value='false'/>
+      <fieldValue name='scaleYAxis' value='false'/>
+      <fieldValue name='scaleZAxis' value='false'/>
+      <fieldValue name='scaleUniform' value='false'/>
       <fieldValue name='bboxDisplay' value='true'/>
       <fieldValue name='bboxSize' value='2 3 4'/>
     </ProtoInstance>
