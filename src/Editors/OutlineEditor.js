@@ -165,7 +165,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             },
             {
                label: "Add Node...",
-               args: ["openLibrary", element .attr ("id"), executionContext .getId ()],
+               args: ["openLibrary", element .attr ("id"), executionContext .getId (), node .getId ()],
             },
             { type: "separator" },
             {
@@ -467,30 +467,32 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
    renameNode (id, executionContextId, nodeId)
    {
-      require ("../Controls/RenameNodePopover")
+      require ("../Controls/RenameNodePopover");
 
       const
          element = $(`#${id}`),
-         node    = this .objects .get (nodeId)
-
-      element .find ("> .item") .renameNodePopover (node)
+         node    = this .objects .get (nodeId);
+         
+      element .find ("> .item") .renameNodePopover (node);
    }
 
-   openLibrary (id, executionContextId)
+   openLibrary (id, executionContextId, nodeId)
    {
-      const executionContext = this .objects .get (executionContextId)
+      const
+         node             = this .objects .get (nodeId),
+         executionContext = this .objects .get (executionContextId);
 
-      require ("./Library") .open (executionContext)
+      require ("./Library") .open (executionContext, node);
    }
 
    cutNodes ()
    {
-      UndoManager .shared .beginUndo (_ ("Cut Nodes"))
+      UndoManager .shared .beginUndo (_ ("Cut Nodes"));
 
-      this .copyNodes ()
-      this .deleteNodes ()
+      this .copyNodes ();
+      this .deleteNodes ();
 
-      UndoManager .shared .endUndo ()
+      UndoManager .shared .endUndo ();
    }
 
    copyNodes ()

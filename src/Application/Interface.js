@@ -12,6 +12,22 @@ require ("../Tools")
 require ("../Bits/Highlight")
 require ("../Bits/Beep")
 
+Object .assign ($,
+{
+   try (callback, logError = false)
+   {
+      try
+      {
+         return callback ();
+      }
+      catch (error)
+      {
+         if (logError)
+            console .error (error .message);
+      }
+   },
+});
+
 module .exports = class Interface
 {
    static #interfaces   = new Set ()

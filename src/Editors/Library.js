@@ -85,15 +85,16 @@ module .exports = new class Library extends Dialog
       }
    }
 
-   async open (executionContext)
+   async open (executionContext, node)
    {
-      await this .browser .loadComponents (this .browser .getProfile ("Full"))
+      await this .browser .loadComponents (this .browser .getProfile ("Full"));
 
-      this .executionContext = executionContext
+      this .executionContext = executionContext;
+      this .node             = node;
 
-      super .open ()
-      this .update ()
-      this .input .trigger ("focus")
+      super .open ();
+      this .update ();
+      this .input .trigger ("focus");
    }
 
    button (button)
@@ -138,11 +139,11 @@ module .exports = new class Library extends Dialog
       switch (this .fileConfig .type)
       {
          case "NODES":
-            this .updateNodes ()
-            break
+            this .updateNodes ();
+            break;
          case "PRIMITIVES":
-            this .updatePrimitives ()
-            break
+            this .updatePrimitives ();
+            break;
       }
    }
 
@@ -200,9 +201,28 @@ module .exports = new class Library extends Dialog
 
       Editor .addComponent (this .executionContext, componentName)
 
-      const node = this .executionContext .createNode (typeName)
+      const
+         node  = this .executionContext .createNode (typeName),
+         field = $.try (() => this .node ?.getField (node .getValue () .getContainerField ()));
 
-      Editor .insertValueIntoArray (this .executionContext, this .executionContext, this .executionContext .rootNodes, this .executionContext .rootNodes .length, node)
+      switch (field ?.getType ())
+      {
+         case X3D .X3DConstants .SFNode:
+         {
+            Editor .setFieldValue (this .executionContext, this .node, field, node);
+            break;
+         }
+         case X3D .X3DConstants .MFNode:
+         {
+            Editor .insertValueIntoArray (this .executionContext, this .node, field, field .length, node);
+            break;
+         }
+         default:
+         {
+            Editor .insertValueIntoArray (this .executionContext, this .executionContext, this .executionContext .rootNodes, this .executionContext .rootNodes .length, node)
+            break;
+         }
+      }
 
       UndoManager .shared .endUndo ()
    }
