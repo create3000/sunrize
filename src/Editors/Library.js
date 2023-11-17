@@ -283,7 +283,7 @@ module .exports = new class Library extends Dialog
 
       const
          nodes = await Editor .importX3D (this .executionContext, x3dSyntax),
-         field = $.try (() => this .node ?.getField (nodes [0] .getContainerField ()), true);
+         field = $.try (() => this .node ?.getField (nodes [0] .getContainerField ()));
 
       switch (field ?.getType ())
       {
