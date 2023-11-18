@@ -114,7 +114,14 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
    traverse (type, renderObject)
    {
-      this .node .traverse (type, renderObject);
+      switch (type)
+      {
+         case X3D .TraverseType .POINTER:
+            break;
+         default:
+            this .node .traverse (type, renderObject);
+            break;
+      }
 
       const modelViewMatrix = renderObject .getModelViewMatrix ();
 
