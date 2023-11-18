@@ -1102,7 +1102,6 @@ body.dark .ui-widget .library-list .component {
 }
 
 .scene-graph .boolean-button {
-  cursor: pointer;
   position: relative;
   margin-left: 10px;
   width: 28px;

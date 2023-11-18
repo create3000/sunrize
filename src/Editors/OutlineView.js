@@ -1125,45 +1125,45 @@ module .exports = class OutlineView extends Interface
 
    createExportedNodeElement (type, parent, exportedNode)
    {
-      const node = exportedNode .getLocalNode ()
+      const node = exportedNode .getLocalNode ();
 
-      this .objects .set (exportedNode .getId (), exportedNode)
-      this .objects .set (node .getId (), node .valueOf ())
+      this .objects .set (exportedNode .getId (), exportedNode);
+      this .objects .set (node .getId (), node .valueOf ());
 
-      node .typeName_changed .addFieldCallback (this .exportedNodeSymbol, this .updateNodeTypeName .bind (this, node))
-      node .name_changed     .addFieldCallback (this .exportedNodeSymbol, this .updateNodeName     .bind (this, node))
+      node .typeName_changed .addFieldCallback (this .exportedNodeSymbol, this .updateNodeTypeName .bind (this, node));
+      node .name_changed     .addFieldCallback (this .exportedNodeSymbol, this .updateNodeName     .bind (this, node));
 
       // Node
 
       const child = $("<li></li>")
          .addClass (type)
          .attr ("exported-node-id", exportedNode .getId ())
-         .attr ("node-id", node .getId ())
+         .attr ("node-id", node .getId ());
 
       // Icon
 
       const icon = $("<img></img>")
          .addClass ("icon")
          .attr ("src", `../images/OutlineEditor/Node/${this .nodeIcons [type]}.svg`)
-         .appendTo (child)
+         .appendTo (child);
 
       // Name
 
       const name = $("<div></div>")
          .addClass ("name")
-         .appendTo (child)
+         .appendTo (child);
 
       $("<span></span>")
          .addClass ("node-type-name")
          .text (node .getTypeName ())
-         .appendTo (name)
+         .appendTo (name);
 
-      name .append (document .createTextNode (" "))
+      name .append (document .createTextNode (" "));
 
       $("<span></span>")
          .addClass ("node-name")
          .text (node .getName ())
-         .appendTo (name)
+         .appendTo (name);
 
       if (exportedNode .getExportedName () !== node .getName ())
       {
@@ -1171,7 +1171,7 @@ module .exports = class OutlineView extends Interface
             .append (document .createTextNode (" "))
             .append ($("<span></span>") .addClass ("as") .text ("AS"))
             .append (document .createTextNode (" "))
-            .append ($("<span></span>") .addClass ("as-name") .text (exportedNode .getExportedName ()))
+            .append ($("<span></span>") .addClass ("as-name") .text (exportedNode .getExportedName ()));
       }
 
       const exportedExecutionContext = exportedNode .getLocalNode () .getExecutionContext ();
@@ -1182,17 +1182,17 @@ module .exports = class OutlineView extends Interface
             .some (importedNode => importedNode .getExportedNode () === exportedNode .getLocalNode () && importedNode .getImportedName () === exportedNode .getExportedName ());
 
          $("<img></img>")
-            .addClass ("boolean-button")
+            .addClass (["boolean-button", "pointer"])
             .attr ("src", `../images/OutlineEditor/Values/${imported ? "TRUE" : "FALSE"}.svg`)
             .attr ("title", _ ("Toggle value."))
-            .appendTo (child)
+            .appendTo (child);
       }
 
       // Append empty tree to enable expander.
 
-      $("<ul><li></li></ul>") .appendTo (child)
+      $("<ul><li></li></ul>") .appendTo (child);
 
-      return child
+      return child;
    }
 
    static connectorId = 0
