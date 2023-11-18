@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Sound/SoundTool.x3d'/>
-    <meta name='modified' content='Sat, 18 Nov 2023 00:50:11 GMT'/>
+    <meta name='modified' content='Sat, 18 Nov 2023 00:54:45 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -222,7 +222,7 @@ function set_maxFront ()
 
 function set_minRange ()
 {
-   const [a, b, e] = getParams (minBack, minFront);
+   const [a, b, e] = getEllipsoidParams (minBack, minFront);
 
    minTranslation_changed = new SFVec3f (0, 0, e);
    minScale_changed       = new SFVec3f (b, b, a);
@@ -230,13 +230,13 @@ function set_minRange ()
 
 function set_maxRange ()
 {
-   const [a, b, e] = getParams (maxBack, maxFront);
+   const [a, b, e] = getEllipsoidParams (maxBack, maxFront);
 
    maxTranslation_changed = new SFVec3f (0, 0, e);
    maxScale_changed       = new SFVec3f (b, b, a);
 }
 
-function getParams (back, front)
+function getEllipsoidParams (back, front)
 {
    back  = Math .max (back,  0),
    front = Math .max (front, 0);
