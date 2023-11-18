@@ -689,6 +689,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          parentNodeElement      = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
          parentNode             = this .getNode (parentNodeElement),
          parentField            = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement),
+         selectedNodes          = Array .from (this .sceneGraph .find (".node.selected"), e => this .getNode ($(e))),
          selectedElements       = Array .from (this .sceneGraph .find (".node.selected:not(.primary)"), e => $(e)),
          destinationModelMatrix = this .getModelMatrix (parentNodeElement);
 
@@ -718,6 +719,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       if (field .getType () === X3D .X3DConstants .MFNode)
       {
+         // Add other selected nodes.
+
          for (const element of selectedElements .sort ((a, b) => b .attr ("index") - a .attr ("index")))
          {
             const
@@ -753,6 +756,10 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                   break;
             }
          }
+
+         // Reorder nodes.
+
+         Editor .setFieldValue (executionContext, parentNode, parentField, selectedNodes);
       }
 
       UndoManager .shared .endUndo ();
