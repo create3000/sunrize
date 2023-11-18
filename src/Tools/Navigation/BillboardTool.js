@@ -21,6 +21,8 @@ class BillboardTool extends X3DBoundedObjectTool
    disposeTool ()
    {
       this .node ._axisOfRotation .removeFieldInterest (this .tool .axisOfRotation);
+
+      super .disposeTool ();
    }
 }
 

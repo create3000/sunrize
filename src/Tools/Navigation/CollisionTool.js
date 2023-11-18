@@ -23,6 +23,8 @@ class CollisionTool extends X3DBoundedObjectTool
    disposeTool ()
    {
       this .node ._enabled .removeInterest (_set_enabled, this);
+
+      super .disposeTool ();
    }
 
    [_set_enabled] ()

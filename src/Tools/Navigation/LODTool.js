@@ -21,6 +21,8 @@ class LODTool extends X3DBoundedObjectTool
    disposeTool ()
    {
       this .node ._center .removeFieldInterest (this .tool .center);
+
+      super .disposeTool ();
    }
 }
 

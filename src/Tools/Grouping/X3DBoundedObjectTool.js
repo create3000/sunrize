@@ -19,6 +19,8 @@ class X3DBoundedObjectTool extends X3DChildNodeTool
    disposeTool ()
    {
       this .getBrowser () .displayEvents () .removeInterest ("reshapeTool", this);
+
+      super .disposeTool ();
    }
 
    static box = new X3D .Box3 ();

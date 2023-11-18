@@ -35,6 +35,8 @@ class X3DTransformNodeTool extends X3DChildNodeTool
    {
       this .getBrowser () .displayEvents () .removeInterest ("reshapeTool", this);
       this .keys .dispose ();
+
+      super .disposeTool ();
    }
 
    set_keys__ (keys)
