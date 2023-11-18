@@ -519,29 +519,29 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          ids         = selection .map (function () { return this .id }) .get (),
          elements    = ids .map (id => $(`#${id}`)),
          nodes       = elements .map (element => this .getNode (element)),
-         undoManager = new UndoManager ()
+         undoManager = new UndoManager ();
 
-      undoManager .beginUndo ()
+      undoManager .beginUndo ();
 
       for (const element of elements)
       {
-         const node = this .getNode (element)
+         const node = this .getNode (element);
 
          if (!node .getType () .includes (X3D .X3DConstants .X3DTransformNode))
-            continue
+            continue;
 
-         Editor .setMatrixWithCenter (node, this .getModelMatrix (element), undefined, undoManager)
+         Editor .setMatrixWithCenter (node, this .getModelMatrix (element), undefined, undoManager);
       }
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
 
-      const x3dSyntax = Editor .exportVRML (this .executionContext, nodes)
+      const x3dSyntax = Editor .exportVRML (this .executionContext, nodes);
 
       //console .log (x3dSyntax)
 
-      navigator .clipboard .writeText (x3dSyntax)
+      navigator .clipboard .writeText (x3dSyntax);
 
-      undoManager .undo ()
+      undoManager .undo ();
    }
 
    async pasteNodes (id, executionContextId, nodeId, fieldId)
@@ -688,34 +688,34 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          parentFieldElement = element .closest (".field, .scene", this .sceneGraph),
          parentNodeElement  = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
          parentNode         = this .getNode (parentNodeElement),
-         parentField        = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement)
+         parentField        = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement);
 
-      UndoManager .shared .beginUndo (_ ("Add Parent Group %s to Node %s"), typeName, childNode .getTypeName ())
+      UndoManager .shared .beginUndo (_ ("Add Parent Group %s to Node %s"), typeName, childNode .getTypeName ());
 
-      Editor .addComponent (executionContext, component)
+      Editor .addComponent (executionContext, component);
 
       const
          node  = executionContext .createNode (typeName) .getValue (),
-         field = node .getField (fieldName)
+         field = node .getField (fieldName);
 
       if (field instanceof X3D .X3DArrayField)
-         Editor .insertValueIntoArray (executionContext, node, field, 0, childNode)
+         Editor .insertValueIntoArray (executionContext, node, field, 0, childNode);
       else
-         Editor .setFieldValue (executionContext, node, field, childNode)
+         Editor .setFieldValue (executionContext, node, field, childNode);
 
       if (parentField instanceof X3D .X3DArrayField)
       {
-         Editor .insertValueIntoArray (executionContext, parentNode, parentField, childIndex, node)
-         Editor .removeValueFromArray (executionContext, parentNode, parentField, childIndex + 1)
+         Editor .insertValueIntoArray (executionContext, parentNode, parentField, childIndex, node);
+         Editor .removeValueFromArray (executionContext, parentNode, parentField, childIndex + 1);
       }
       else
       {
-         Editor .setFieldValue (executionContext, parentNode, parentField, node)
+         Editor .setFieldValue (executionContext, parentNode, parentField, node);
       }
 
-      UndoManager .shared .endUndo ()
+      UndoManager .shared .endUndo ();
 
-      requestAnimationFrame (() => this .expandTo (node))
+      requestAnimationFrame (() => this .expandTo (node));
    }
 
    removeParent (id, executionContextId, nodeId)
