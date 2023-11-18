@@ -24,9 +24,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
       this .tool .getField ("isActive") .addInterest ("set_active__", this);
 
-      this .tool .centerDisplay = false;
-      this .tool .bboxDisplay   = true;
-      this .tool .bboxColor     = this .toolBBoxColor;
+      this .tool .bboxColor = this .toolBBoxColor;
 
       this .keys = new ActionKeys (`X3DTransformNodeTool${this .getId ()}`, this .set_keys__ .bind (this));
    }

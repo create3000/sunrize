@@ -73,6 +73,7 @@ async function initialize ()
 
    tool .tools         = new MFString ("TRANSLATE", "SCALE");
    tool .centerDisplay = false;
+   tool .bboxDisplay   = false;
 }
 
 function set_selected ()
