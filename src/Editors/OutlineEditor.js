@@ -783,100 +783,100 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          parent2FieldElement = parentNodeElement .closest (".field, .scene", this .sceneGraph),
          parent2NodeElement  = parent2FieldElement .closest (".node, .proto, .scene", this .sceneGraph),
          parent2Node         = this .getNode (parent2NodeElement),
-         parent2Field        = parent2FieldElement .hasClass ("scene") ? parent2Node .rootNodes : this .getField (parent2FieldElement)
+         parent2Field        = parent2FieldElement .hasClass ("scene") ? parent2Node .rootNodes : this .getField (parent2FieldElement);
 
-      UndoManager .shared .beginUndo (_ ("Remove Parent of %s"), childNode .getTypeName ())
+      UndoManager .shared .beginUndo (_ ("Remove Parent of %s"), childNode .getTypeName ());
 
       if (parent2Field instanceof X3D .X3DArrayField)
       {
          if (parentField instanceof X3D .X3DArrayField)
          {
-            const length = parentField .length
+            const length = parentField .length;
 
             for (let i = 0; i < length; ++ i)
-               Editor .insertValueIntoArray (executionContext, parent2Node, parent2Field, parentIndex + i, parentField [i])
+               Editor .insertValueIntoArray (executionContext, parent2Node, parent2Field, parentIndex + i, parentField [i]);
 
-            Editor .removeValueFromArray (executionContext, parent2Node, parent2Field, parentIndex + length)
+            Editor .removeValueFromArray (executionContext, parent2Node, parent2Field, parentIndex + length);
          }
          else
          {
-            Editor .insertValueIntoArray (executionContext, parent2Node, parent2Field, parentIndex, childNode)
-            Editor .removeValueFromArray (executionContext, parent2Node, parent2Field, parentIndex + 1)
+            Editor .insertValueIntoArray (executionContext, parent2Node, parent2Field, parentIndex, childNode);
+            Editor .removeValueFromArray (executionContext, parent2Node, parent2Field, parentIndex + 1);
          }
       }
       else
       {
-         Editor .setFieldValue (executionContext, parent2Node, parent2Field, childNode)
+         Editor .setFieldValue (executionContext, parent2Node, parent2Field, childNode);
       }
 
       if (parentField instanceof X3D .X3DArrayField)
-         Editor .setFieldValue (executionContext, parentNode, parentField, new X3D .MFNode ())
+         Editor .setFieldValue (executionContext, parentNode, parentField, new X3D .MFNode ());
       else
-         Editor .setFieldValue (executionContext, parentNode, parentField, null)
+         Editor .setFieldValue (executionContext, parentNode, parentField, null);
 
-      UndoManager .shared .endUndo ()
+      UndoManager .shared .endUndo ();
    }
 
    addPrototype (id, executionContextId)
    {
-      require ("../Controls/AddPrototypePopover")
+      require ("../Controls/AddPrototypePopover");
 
-      let element = $(`#${id}`)
+      let element = $(`#${id}`);
 
-      const executionContext = this .objects .get (executionContextId)
+      const executionContext = this .objects .get (executionContextId);
 
       if (element .is ("#outline-editor"))
       {
-         element = element .find (".scene-graph > div > ul > .externprotos, .scene-graph > div > ul > .protos, .scene-graph > div > ul > .root-nodes, .scene-graph > div > ul > .empty-scene") .first ()
+         element = element .find (".scene-graph > div > ul > .externprotos, .scene-graph > div > ul > .protos, .scene-graph > div > ul > .root-nodes, .scene-graph > div > ul > .empty-scene") .first ();
       }
 
       if (element .is (".externprotos, .externproto"))
-         element .addPrototypePopover (executionContext, "externproto")
+         element .addPrototypePopover (executionContext, "externproto");
       else if (element .is (".protos, .proto"))
-         element .addPrototypePopover (executionContext, "proto")
+         element .addPrototypePopover (executionContext, "proto");
       else
-         element .addPrototypePopover (executionContext)
+         element .addPrototypePopover (executionContext);
    }
 
    renamePrototype (id, executionContextId, protoNodeId)
    {
-      require ("../Controls/RenameNodePopover")
+      require ("../Controls/RenameNodePopover");
 
       const
          element   = $(`#${id}`),
-         protoNode = this .objects .get (protoNodeId)
+         protoNode = this .objects .get (protoNodeId);
 
-      element .find ("> .item") .renameNodePopover (protoNode)
+      element .find ("> .item") .renameNodePopover (protoNode);
    }
 
    deletePrototype (id, executionContextId, protoNodeId, used, availableId)
    {
       const
          executionContext = this .objects .get (executionContextId),
-         protoNode        = this .objects .get (protoNodeId)
+         protoNode        = this .objects .get (protoNodeId);
 
       if (protoNode .isExternProto)
       {
-         UndoManager .shared .beginUndo (_ ("Remove Extern Prototype Declaration »%s«"), protoNode .getName ())
-         Editor .removeExternProtoDeclaration (executionContext, protoNode .getName ())
+         UndoManager .shared .beginUndo (_ ("Remove Extern Prototype Declaration »%s«"), protoNode .getName ());
+         Editor .removeExternProtoDeclaration (executionContext, protoNode .getName ());
       }
       else
       {
-         UndoManager .shared .beginUndo (_ ("Remove Prototype Declaration »%s«"), protoNode .getName ())
-         Editor .removeProtoDeclaration (executionContext, protoNode .getName ())
+         UndoManager .shared .beginUndo (_ ("Remove Prototype Declaration »%s«"), protoNode .getName ());
+         Editor .removeProtoDeclaration (executionContext, protoNode .getName ());
       }
 
       if (used)
-         Editor .replaceProtoNodes (executionContext, protoNode, this .objects .get (availableId))
+         Editor .replaceProtoNodes (executionContext, protoNode, this .objects .get (availableId));
 
-      UndoManager .shared .endUndo ()
+      UndoManager .shared .endUndo ();
    }
 
    loadNow (id, protoNodeId)
    {
-      const externproto = this .objects .get (protoNodeId)
+      const externproto = this .objects .get (protoNodeId);
 
-      externproto .loadNow () .catch (Function .prototype)
+      externproto .loadNow () .catch (Function .prototype);
    }
 
    async turnIntoExternPrototype (id, executionContextId, protoNodeId)
@@ -884,21 +884,21 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const
          executionContext = this .objects .get (executionContextId),
          proto            = this .objects .get (protoNodeId),
-         response         = await electron .ipcRenderer .invoke ("file-path", proto .getName ())
+         response         = await electron .ipcRenderer .invoke ("file-path", proto .getName ());
 
       if (response .canceled)
-         return
+         return;
 
-      await Editor .turnIntoExternProto (executionContext, proto, response .filePath)
+      await Editor .turnIntoExternProto (executionContext, proto, response .filePath);
    }
 
    async turnIntoPrototype (id, executionContextId, protoNodeId)
    {
       const
          executionContext = this .objects .get (executionContextId),
-         externproto      = this .objects .get (protoNodeId)
+         externproto      = this .objects .get (protoNodeId);
 
-      await Editor .turnIntoPrototype (executionContext, externproto)
+      await Editor .turnIntoPrototype (executionContext, externproto);
    }
 
    toggleImportedNode (event, parent)
@@ -931,13 +931,13 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const
          executionContext = this .objects .get (executionContextId),
          protoNode        = this .objects .get (protoNodeId),
-         instance         = executionContext .createProto (protoNode .getName ())
+         instance         = executionContext .createProto (protoNode .getName ());
 
-      UndoManager .shared .beginUndo (_ ("Add Instance of Type »%s«"), protoNode .getName ())
+      UndoManager .shared .beginUndo (_ ("Add Instance of Type »%s«"), protoNode .getName ());
 
-      Editor .appendValueToArray (executionContext, executionContext, executionContext .rootNodes, instance)
+      Editor .appendValueToArray (executionContext, executionContext, executionContext .rootNodes, instance);
 
-      UndoManager .shared .endUndo ()
+      UndoManager .shared .endUndo ();
    }
 
    addBooleanField (boolean)
@@ -945,29 +945,29 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const
          element  = boolean .closest (".field"),
          node     = this .getNode (element),
-         field    = this .getField (element)
+         field    = this .getField (element);
 
       if (field .getAccessType () === X3D .X3DConstants .outputOnly)
-         return
+         return;
 
       boolean .addClass ("pointer") .on ("click", () =>
       {
-         Editor .setFieldValue (node .getExecutionContext (), node, field, !field .getValue ())
-      })
+         Editor .setFieldValue (node .getExecutionContext (), node, field, !field .getValue ());
+      });
    }
 
    addColorField (color)
    {
       //https://seballot.github.io/spectrum/#skinning-nonInput
-      require ("spectrum-colorpicker2")
+      require ("spectrum-colorpicker2");
 
       const
          element  = color .closest (".field"),
          node     = this .getNode (element),
-         field    = this .getField (element)
+         field    = this .getField (element);
 
       if (field .getAccessType () === X3D .X3DConstants .outputOnly)
-         return
+         return;
 
       color .addClass ("pointer") .spectrum ({
          type: "color",
@@ -976,40 +976,40 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          showInput: false,
 			preferredFormat: "name",
          showButtons: false,
-         allowEmpty: false
+         allowEmpty: false,
       })
       .on ("beforeShow.spectrum", (event) =>
       {
-         color .spectrum ("set", color .css ("background-color"))
+         color .spectrum ("set", color .css ("background-color"));
       })
       .on("move.spectrum", (event, tinyColor) =>
       {
          const
             rgb   = tinyColor .toRgb (),
-            value = field .copy ()
+            value = field .copy ();
 
-         value .r = rgb .r / 255
-         value .g = rgb .g / 255
-         value .b = rgb .b / 255
+         value .r = rgb .r / 255;
+         value .g = rgb .g / 255;
+         value .b = rgb .b / 255;
 
 			if (value .getType () === X3D .X3DConstants .SFColorRGBA)
-            value .a = rgb .a
+            value .a = rgb .a;
 
-         Editor .setFieldValue (node .getExecutionContext (), node, field, value)
+         Editor .setFieldValue (node .getExecutionContext (), node, field, value);
       })
       .on ("dragstart.spectrum", (event, tinyColor) =>
       {
-         UndoManager .shared .beginUndo (_ ("Change Field »%s.%s«"), node .getTypeName (), field .getName ())
+         UndoManager .shared .beginUndo (_ ("Change Field »%s.%s«"), node .getTypeName (), field .getName ());
       })
       .on ("dragstop.spectrum", (event, tinyColor) =>
       {
-         UndoManager .shared .endUndo ()
-      })
+         UndoManager .shared .endUndo ();
+      });
    }
 
 	removeColorField (element)
 	{
-		element .spectrum ?.("destroy")
+		element .spectrum ?.("destroy");
 	}
 
    addTimeField (time)
@@ -1017,15 +1017,15 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const
          element  = time .closest (".field"),
          node     = this .getNode (element),
-         field    = this .getField (element)
+         field    = this .getField (element);
 
       if (field .getAccessType () === X3D .X3DConstants .outputOnly)
-         return
+         return;
 
       time .addClass ("pointer") .on ("click", () =>
       {
-         Editor .setFieldValue (node .getExecutionContext (), node, field, Date .now () / 1000)
-      })
+         Editor .setFieldValue (node .getExecutionContext (), node, field, Date .now () / 1000);
+      });
    }
 
    /*
@@ -1037,14 +1037,14 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       try
       {
          if (field .getType () === X3D .X3DConstants .SFString)
-            Editor .setFieldValue (node .getExecutionContext (), node, field, input .val ())
+            Editor .setFieldValue (node .getExecutionContext (), node, field, input .val ());
          else
-            Editor .setFieldFromString (node .getExecutionContext (), node, field, input .val ())
+            Editor .setFieldFromString (node .getExecutionContext (), node, field, input .val ());
       }
       catch
       {
-         $ .beep ()
-         input .highlight ()
+         $ .beep ();
+         input .highlight ();
       }
    }
 
@@ -1052,12 +1052,12 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    {
       try
       {
-         Editor .setFieldFromString (node .getExecutionContext (), node, field, "[" + textarea .val () + "]")
+         Editor .setFieldFromString (node .getExecutionContext (), node, field, "[" + textarea .val () + "]");
       }
       catch
       {
-         $ .beep ()
-         textarea .highlight ()
+         $ .beep ();
+         textarea .highlight ();
       }
    }
 
@@ -1068,12 +1068,12 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    clearConnectors ()
    {
       if (!this .connector)
-         return
+         return;
 
       this .sceneGraph .find (".field .access-type img.active.activated")
-         .removeClass ("activated")
+         .removeClass ("activated");
 
-      delete this .connector
+      delete this .connector;
    }
 
    hoverInConnector (type, event)
