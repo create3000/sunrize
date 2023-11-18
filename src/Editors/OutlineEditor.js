@@ -759,7 +759,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
          // Reorder nodes.
 
-         Editor .setFieldValue (executionContext, parentNode, parentField, selectedNodes);
+         Editor .setFieldValue (executionContext, node, field, selectedNodes);
       }
 
       UndoManager .shared .endUndo ();
