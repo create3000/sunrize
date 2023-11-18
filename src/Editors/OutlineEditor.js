@@ -688,12 +688,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          parentFieldElement     = element .closest (".field, .scene", this .sceneGraph),
          parentNodeElement      = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
          parentNode             = this .getNode (parentNodeElement),
-         parentField            = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement),
-         selectedNodes          = Array .from (this .sceneGraph .find (".node.selected"), e => this .getNode ($(e))),
-         selectedElements       = Array .from (this .sceneGraph .find (".node.selected:not(.primary)"), e => $(e)),
-         destinationModelMatrix = this .getModelMatrix (parentNodeElement);
+         parentField            = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement);
 
-      UndoManager .shared .beginUndo (_ ("Add Parent Group %s to Node %s"), typeName, childNode .getTypeName ());
+      UndoManager .shared .beginUndo (_ ("Add Parent %s to Node %s"), typeName, childNode .getTypeName ());
 
       await Editor .addComponent (executionContext, component);
 
@@ -719,6 +716,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       if (field .getType () === X3D .X3DConstants .MFNode)
       {
+         const
+            selectedNodes          = Array .from (this .sceneGraph .find (".node.selected"), e => this .getNode ($(e))),
+            selectedElements       = Array .from (this .sceneGraph .find (".node.selected:not(.primary)"), e => $(e)),
+            destinationModelMatrix = this .getModelMatrix (parentNodeElement);
+
          // Add other selected nodes.
 
          for (const element of selectedElements .sort ((a, b) => b .attr ("index") - a .attr ("index")))
