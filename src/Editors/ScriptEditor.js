@@ -417,7 +417,7 @@ main ()
    {
       UndoManager .shared .beginUndo (_ ("Create New Script"));
 
-      Editor .addComponent (this .browser .currentScene, "Scripting");
+      await Editor .addComponent (this .browser .currentScene, "Scripting");
 
       const nodes = await Editor .importX3D (this .browser .currentScene, `
 DEF NewScript Script {
@@ -445,7 +445,7 @@ function set_field (value, time)
    {
       UndoManager .shared .beginUndo (_ ("Create New Shader"));
 
-      Editor .addComponent (this .browser .currentScene, "Shaders");
+      await Editor .addComponent (this .browser .currentScene, "Shaders");
 
       const nodes = await Editor .importX3D (this .browser .currentScene, `
 DEF NewShader ComposedShader {

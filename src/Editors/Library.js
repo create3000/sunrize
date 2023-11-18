@@ -206,11 +206,11 @@ module .exports = new class Library extends Dialog
       }
    }
 
-   createNode (typeName, componentName)
+   async createNode (typeName, componentName)
    {
       UndoManager .shared .beginUndo (_ ("Create Node %s"), typeName);
 
-      Editor .addComponent (this .executionContext, componentName);
+      await Editor .addComponent (this .executionContext, componentName);
 
       const
          node  = this .executionContext .createNode (typeName),

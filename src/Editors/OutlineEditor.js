@@ -678,39 +678,81 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       UndoManager .shared .endUndo ();
    }
 
-   addParentGroup (id, executionContextId, nodeId, component, typeName, fieldName)
+   async addParentGroup (id, executionContextId, nodeId, component, typeName, fieldName)
    {
       const
-         element            = $(`#${id}`),
-         executionContext   = this .objects .get (executionContextId),
-         childNode          = this .objects .get (nodeId),
-         childIndex         = parseInt (element .attr ("index")),
-         parentFieldElement = element .closest (".field, .scene", this .sceneGraph),
-         parentNodeElement  = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
-         parentNode         = this .getNode (parentNodeElement),
-         parentField        = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement);
+         element                = $(`#${id}`),
+         executionContext       = this .objects .get (executionContextId),
+         childNode              = this .objects .get (nodeId),
+         childIndex             = parseInt (element .attr ("index")),
+         parentFieldElement     = element .closest (".field, .scene", this .sceneGraph),
+         parentNodeElement      = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
+         parentNode             = this .getNode (parentNodeElement),
+         parentField            = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement),
+         selectedElements       = Array .from (this .sceneGraph .find (".node.selected:not(.primary)"), e => $(e)),
+         destinationModelMatrix = this .getModelMatrix (parentNodeElement);
 
       UndoManager .shared .beginUndo (_ ("Add Parent Group %s to Node %s"), typeName, childNode .getTypeName ());
 
-      Editor .addComponent (executionContext, component);
+      await Editor .addComponent (executionContext, component);
 
       const
          node  = executionContext .createNode (typeName) .getValue (),
          field = node .getField (fieldName);
 
-      if (field instanceof X3D .X3DArrayField)
+      if (field .getType () === X3D .X3DConstants .MFNode)
          Editor .insertValueIntoArray (executionContext, node, field, 0, childNode);
       else
          Editor .setFieldValue (executionContext, node, field, childNode);
 
-      if (parentField instanceof X3D .X3DArrayField)
+      switch (parentField .getType ())
       {
-         Editor .insertValueIntoArray (executionContext, parentNode, parentField, childIndex, node);
-         Editor .removeValueFromArray (executionContext, parentNode, parentField, childIndex + 1);
+         case X3D .X3DConstants .SFNode:
+            Editor .setFieldValue (executionContext, parentNode, parentField, node);
+            break;
+         case X3D .X3DConstants .MFNode:
+            Editor .insertValueIntoArray (executionContext, parentNode, parentField, childIndex, node);
+            Editor .removeValueFromArray (executionContext, parentNode, parentField, childIndex + 1);
+            break;
       }
-      else
+
+      if (field .getType () === X3D .X3DConstants .MFNode)
       {
-         Editor .setFieldValue (executionContext, parentNode, parentField, node);
+         for (const element of selectedElements .sort ((a, b) => b .attr ("index") - a .attr ("index")))
+         {
+            const
+               childNode          = this .getNode (element),
+               childIndex         = parseInt (element .attr ("index")),
+               parentFieldElement = element .closest (".field, .scene", this .sceneGraph),
+               parentNodeElement  = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
+               parentNode         = this .getNode (parentNodeElement),
+               parentField        = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement);
+
+            // Adjust matrix.
+
+            if (childNode .getType () .includes (X3D .X3DConstants .X3DTransformNode))
+            {
+               const
+                  sourceModelMatrix = this .getModelMatrix (element),
+                  matrix            = destinationModelMatrix .copy () .inverse () .multLeft (sourceModelMatrix);
+
+               Editor .setMatrixWithCenter (childNode, matrix);
+            }
+
+            // Move node.
+
+            Editor .insertValueIntoArray (executionContext, node, field, 1, childNode);
+
+            switch (parentField .getType ())
+            {
+               case X3D .X3DConstants .SFNode:
+                  Editor .setFieldValue (executionContext, parentNode, parentField, null);
+                  break;
+               case X3D .X3DConstants .MFNode:
+                  Editor .removeValueFromArray (executionContext, parentNode, parentField, childIndex);
+                  break;
+            }
+         }
       }
 
       UndoManager .shared .endUndo ();

@@ -664,27 +664,27 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     * @param {string} name
     * @param {UndoManager} undoManager
     */
-   static addComponent (scene, name, undoManager = UndoManager .shared)
+   static async addComponent (scene, name, undoManager = UndoManager .shared)
    {
       if (!(scene instanceof X3D .X3DScene))
-         scene = scene .getScene ()
+         scene = scene .getScene ();
 
       if (scene .hasComponent (name))
-         return
+         return;
 
-      const browser = scene .getBrowser ()
+      const browser = scene .getBrowser ();
 
-      undoManager .beginUndo (_ ("Add Component %s"), name)
+      undoManager .beginUndo (_ ("Add Component %s"), name);
 
-      browser .loadComponents (name)
-      scene .addComponent (browser .getComponent (name))
+      await browser .loadComponents (name);
+      scene .addComponent (browser .getComponent (name));
 
       undoManager .registerUndo (() =>
       {
-         this .removeComponent (scene, name, undoManager)
+         this .removeComponent (scene, name, undoManager);
       })
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
