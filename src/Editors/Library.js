@@ -114,24 +114,32 @@ module .exports = new class Library extends Dialog
       if (event .key !== "Enter")
          return;
 
-      const
-         first     = this .list .find (".node") .first (),
-         component = this .list .find (".component") .first ();
+      const nodes = Array .from (this .list .find (".node"), element => $(element));
 
-      if (!first .length)
+      if (!nodes .length)
          return;
-
-      const input = this .input .val () .toUpperCase () .trim ();
 
       try
       {
-         const ConcreteNode = this .browser .getConcreteNode (X3D .HTMLSupport .getNodeTypeName (input));
+         const
+            input        = this .fileConfig .type === "NODES" ? this .input .val () .toUpperCase () .trim () : "",
+            ConcreteNode = this .browser .getConcreteNode (X3D .HTMLSupport .getNodeTypeName (input));
 
          this .createNode (ConcreteNode .typeName, ConcreteNode .componentInfo .name);
       }
       catch
       {
-         this .createNode (first .text (), component .attr ("name"));
+         const node = nodes .sort ((a, b) => a .attr ("similarity") - b .attr ("similarity")) .pop ();
+
+         switch (this .fileConfig .type)
+         {
+            case "NODES":
+               this .createNode (node .text (), node .attr ("componentName"));
+               break;
+            case "PRIMITIVES":
+               this .importX3D (node .text (), node .attr ("x3dSyntax"));
+               break;
+         }
       }
    }
 
@@ -191,6 +199,8 @@ module .exports = new class Library extends Dialog
          $("<li></li>")
             .addClass ("node")
             .text (node .typeName)
+            .attr ("componentName", node .componentInfo .name)
+            .attr ("similarity", StringSimilarity .compareTwoStrings (node .typeName .toLowerCase (), input))
             .appendTo (this .list)
             .on ("dblclick", () => this .createNode (node .typeName, node .componentInfo .name));
       }
@@ -273,6 +283,8 @@ module .exports = new class Library extends Dialog
          $("<li></li>")
             .addClass ("node")
             .text (node .typeName)
+            .attr ("x3dSyntax", node .x3dSyntax)
+            .attr ("similarity", StringSimilarity .compareTwoStrings (node .typeName .toLowerCase (), input))
             .appendTo (this .list)
             .on ("dblclick", () => this .importX3D (node .typeName, node .x3dSyntax));
       }
