@@ -551,16 +551,15 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          const
             primary                 = $(".node.primary"),
             executionContextElement = primary .closest (".scene", this .sceneGraph),
-            executionContext        = executionContextId ? this .objects .get (executionContextId) : this .getNode (executionContextElement) || this .executionContext,
-            targetNode              = this .objects .get (nodeId),
+            executionContext        = this .objects .get (executionContextId) ?? this .getNode (executionContextElement) ?? this .executionContext,
+            targetNode              = this .objects .get (nodeId) ?? this .getNode (primary),
             targetField             = this .objects .get (fieldId),
+            numRootNodes            = executionContext .rootNodes .length,
             x3dSyntax               = await navigator .clipboard .readText ();
 
          UndoManager .shared .beginUndo (_ ("Paste Nodes"));
 
-         const
-            numRootNodes = executionContext .rootNodes .length,
-            nodes        = await Editor .importX3D (executionContext, x3dSyntax);
+         const nodes = await Editor .importX3D (executionContext, x3dSyntax);
 
          for (const node of nodes)
          {
