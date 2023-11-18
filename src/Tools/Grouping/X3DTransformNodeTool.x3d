@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sat, 18 Nov 2023 00:01:07 GMT'/>
+    <meta name='modified' content='Sat, 18 Nov 2023 00:07:46 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -285,7 +285,8 @@
                   </IS>
                 </PlaneSensor>
                 <PlaneSensor DEF='YPlaneSensor'
-                    axisRotation='-1 0 0 90'>
+                    axisRotation='-1 0 0 90'
+                    autoOffset='false'>
                   <IS>
                     <connect nodeField='isActive' protoField='isActive'/>
                   </IS>
