@@ -584,47 +584,47 @@ module .exports = class OutlineView extends Interface
 
    updateNode (parent, node, full)
    {
-      this .saveScrollPositions ()
+      this .saveScrollPositions ();
 
-      this .removeSubtree (parent)
-      this .expandNode (parent, node, full)
+      this .removeSubtree (parent);
+      this .expandNode (parent, node, full);
 
-      this .restoreScrollPositions ()
+      this .restoreScrollPositions ();
    }
 
    expandNode (parent, node, full)
    {
-      parent .data ("expanded",      true)
-      parent .data ("full-expanded", full)
+      parent .data ("expanded",      true);
+      parent .data ("full-expanded", full);
 
       // Generate tree.
 
       const child = $("<div></div>")
-         .addClass ("subtree")
+         .addClass ("subtree");
 
       const ul = $("<ul></ul>")
-         .appendTo (child)
+         .appendTo (child);
 
       // Fields
 
-      let fields = full ? node .getFields () : node .getChangedFields (true)
+      let fields = full ? node .getFields () : node .getChangedFields (true);
 
       if (!fields .length)
-         fields = node .getFields ()
+         fields = node .getFields ();
 
       if (node .canUserDefinedFields ())
       {
          // Move user-defined fields on top.
 
-         const userDefinedFields = node .getUserDefinedFields ()
+         const userDefinedFields = node .getUserDefinedFields ();
 
          fields .sort ((a, b) =>
          {
             const
                ua = userDefinedFields .get (a .getName ()) === a,
-               ub = userDefinedFields .get (b .getName ()) === b
+               ub = userDefinedFields .get (b .getName ()) === b;
 
-            return ub - ua
+            return ub - ua;
          })
 
          // Move metadata field on top.
@@ -633,20 +633,20 @@ module .exports = class OutlineView extends Interface
          {
             const
                ma = a .getName () === "metadata",
-               mb = b .getName () === "metadata"
+               mb = b .getName () === "metadata";
 
-            return mb - ma
+            return mb - ma;
          })
 
          // Proto fields, user-defined fields.
          // Instances are updated, because they completely change.
 
-         node .getPredefinedFields ()  .addInterest ("updateNode", this, parent, node, full)
-         node .getUserDefinedFields () .addInterest ("updateNode", this, parent, node, full)
+         node .getPredefinedFields ()  .addInterest ("updateNode", this, parent, node, full);
+         node .getUserDefinedFields () .addInterest ("updateNode", this, parent, node, full);
       }
 
       for (const field of fields)
-         ul .append (this .createFieldElement (parent, node, field))
+         ul .append (this .createFieldElement (parent, node, field));
 
       // Extern proto
 
@@ -654,30 +654,30 @@ module .exports = class OutlineView extends Interface
       {
          // URL
 
-         ul .append (this .createFieldElement (parent, node, node ._url, "special"))
+         ul .append (this .createFieldElement (parent, node, node ._url, "special"));
 
          // Proto
 
-         node .getLoadState () .addFieldCallback (this, this .updateNode .bind (this, parent, node, full))
+         node .getLoadState () .addFieldCallback (this, this .updateNode .bind (this, parent, node, full));
 
          if (this .expandExternProtoDeclarations && node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE)
-            ul .append (this .createNodeElement ("proto", parent, node .getProtoDeclaration ()))
+            ul .append (this .createNodeElement ("proto", parent, node .getProtoDeclaration ()));
          else
-            ul .append (this .createLoadStateElement (node .checkLoadState (), "Extern Prototype"))
+            ul .append (this .createLoadStateElement (node .checkLoadState (), "Extern Prototype"));
       }
 
       // Proto Body or Instance Body
 
       if (node instanceof X3D .X3DProtoDeclaration)
       {
-         ul .append (this .createSceneElement (node .getBody (), "Body", "proto-scene"))
+         ul .append (this .createSceneElement (node .getBody (), "Body", "proto-scene"));
       }
       else if (this .expandPrototypeInstances && node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance))
       {
          if (node .getBody ())
-            ul .append (this .createSceneElement (node .getBody (), "Body", "instance-scene"))
+            ul .append (this .createSceneElement (node .getBody (), "Body", "instance-scene"));
          else
-            ul .append (this .createLoadStateElement (node .getProtoNode () .checkLoadState (), node .getTypeName ()))
+            ul .append (this .createLoadStateElement (node .getProtoNode () .checkLoadState (), node .getTypeName ()));
       }
 
       // X3DUrlObject scene or load state
@@ -686,7 +686,23 @@ module .exports = class OutlineView extends Interface
       {
          // X3DUrlObject
 
-         node .getLoadState () .addFieldCallback (this, this .updateNode .bind (this, parent, node, full))
+         if (node .getType () .includes (X3D .X3DConstants .Inline))
+         {
+            node .getLoadState () .addFieldCallback (this, this .updateNode .bind (this, parent, node, full));
+         }
+         else
+         {
+            node .getLoadState () .addFieldCallback (this, () =>
+            {
+               const [className, description] = this .getLoadState (node .checkLoadState (), node .getTypeName ());
+
+               this .sceneGraph .find (`.load-state-${node .getId ()}`)
+                  .removeClass (["not-started-state", "in-progress-state", "complete-state", "failed-state"])
+                  .addClass (className)
+                  .find ("a")
+                  .text (description);
+            });
+         }
 
          if (node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE && this .expandInlineNodes && node .getType () .includes (X3D .X3DConstants .Inline))
          {
@@ -694,7 +710,7 @@ module .exports = class OutlineView extends Interface
          }
          else
          {
-            ul .append (this .createLoadStateElement (node .checkLoadState (), node .getTypeName ()))
+            ul .append (this .createLoadStateElement (node .checkLoadState (), node .getTypeName ()) .addClass (`load-state-${node .getId ()}`));
          }
       }
 
@@ -707,67 +723,67 @@ module .exports = class OutlineView extends Interface
          .on ("close_node.jstree",  this .fieldCloseNode .bind (this))
          .on ("select_node.jstree", this .selectField .bind (this))
          .appendTo (parent)
-         .hide ()
-
+         .hide ();
+;
       child
          .removeAttr ("tabindex")
          .find (".jstree-anchor")
             .removeAttr ("href")
-            .removeAttr ("tabindex")
+            .removeAttr ("tabindex");
 
       child .find ("li")
-         .on ("dblclick", this .activateField .bind (this))
+         .on ("dblclick", this .activateField .bind (this));
 
       child .find (".jstree-ocl")
          .addClass ("material-icons")
          .text ("arrow_right")
          .on ("click", this .selectExpander .bind (this))
-         .on ("dblclick", this .activateExpander .bind (this))
+         .on ("dblclick", this .activateExpander .bind (this));
 
       child .find (".jstree-node")
          .wrapInner ("<div class=\"item no-select\"/>")
-         .find (".item") .append ("<div class=\"route-curves\"><canvas></canvas></div>")
+         .find (".item") .append ("<div class=\"route-curves\"><canvas></canvas></div>");
 
       child .find (".field .name, .special .name")
-         .on ("mouseenter", this .updateTitle .bind (this))
+         .on ("mouseenter", this .updateTitle .bind (this));
 
       child .find ("area.input-selector")
          .on ("mouseenter", this .hoverInConnector .bind (this, "input"))
          .on ("mouseleave", this .hoverOutConnector .bind (this, "input"))
-         .on ("click", this .selectConnector .bind (this, "input"))
+         .on ("click", this .selectConnector .bind (this, "input"));
 
       child .find ("area.output-selector")
          .on ("mouseenter", this .hoverInConnector .bind (this, "output"))
          .on ("mouseleave", this .hoverOutConnector .bind (this, "output"))
-         .on ("click", this .selectConnector .bind (this, "output"))
+         .on ("click", this .selectConnector .bind (this, "output"));
 
       child .find ("area.input-routes-selector")
-         .on ("click", this .selectRoutes .bind (this, "input"))
+         .on ("click", this .selectRoutes .bind (this, "input"));
 
       child .find ("area.output-routes-selector")
-         .on ("click", this .selectRoutes .bind (this, "output"))
+         .on ("click", this .selectRoutes .bind (this, "output"));
 
       if (this .isEditable (parent))
       {
          child .find (".field > .item")
             .attr ("draggable", "true")
-            .on ("dragstart", this .onDragStartField .bind (this))
+            .on ("dragstart", this .onDragStartField .bind (this));
       }
 
       // Field Tools
 
       if (this .isEditable (parent))
-         this .addFieldButtons (child .find (".boolean-button, .color-button, .time-button"))
+         this .addFieldButtons (child .find (".boolean-button, .color-button, .time-button"));
 
       // Expand children.
 
       const
          protos   = child .find (".proto"),
          scenes   = child .find (".scene"),
-         elements = child .find (".field, .special")
+         elements = child .find (".field, .special");
 
-      child .show ()
-      this .expandNodeComplete (protos, scenes, elements)
+      child .show ();
+      this .expandNodeComplete (protos, scenes, elements);
    }
 
    expandNodeComplete (protos, scenes, elements)
@@ -851,32 +867,25 @@ module .exports = class OutlineView extends Interface
 
    createLoadStateElement (loadState, typeName)
    {
+      const [className, description] = this .getLoadState (loadState, typeName);
+
+      return $("<li></li>")
+         .addClass (["description", "load-state", className, "no-select"])
+         .text (description);
+   }
+
+   getLoadState (loadState, typeName)
+   {
       switch (loadState)
       {
          case X3D .X3DConstants .NOT_STARTED_STATE:
-         {
-            return $("<li></li>")
-               .addClass (["description", "load-state", "not-started-state", "no-select"])
-               .text (util .format (_ ("Loading %s not started"), typeName))
-         }
+            return ["not-started-state", util .format (_ ("Loading %s not started"), typeName)];
          case X3D .X3DConstants .IN_PROGRESS_STATE:
-         {
-            return $("<li></li>")
-               .addClass (["description", "load-state", "in-progress-state", "no-select"])
-               .text (util .format (_ ("Loading %s in progress"), typeName))
-         }
+            return ["in-progress-state", util .format (_ ("Loading %s in progress"), typeName)];
          case X3D .X3DConstants .COMPLETE_STATE:
-         {
-            return $("<li></li>")
-               .addClass (["description", "load-state", "complete-state", "no-select"])
-               .text (util .format (_ ("Loading %s completed"), typeName))
-         }
+            return ["complete-state", util .format (_ ("Loading %s completed"), typeName)];
          case X3D .X3DConstants .FAILED_STATE:
-         {
-            return $("<li></li>")
-                  .addClass (["description", "load-state", "failed-state", "no-select"])
-                  .text (util .format (_ ("Loading %s failed"), typeName))
-         }
+            return ["failed-state", util .format (_ ("Loading %s failed"), typeName)];
       }
    }
 
