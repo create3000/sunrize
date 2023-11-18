@@ -698,10 +698,14 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          node  = executionContext .createNode (typeName) .getValue (),
          field = node .getField (fieldName);
 
+      // Add primary node to new parent node.
+
       if (field .getType () === X3D .X3DConstants .MFNode)
          Editor .insertValueIntoArray (executionContext, node, field, 0, childNode);
       else
          Editor .setFieldValue (executionContext, node, field, childNode);
+
+      // Insert new parent node.
 
       switch (parentField .getType ())
       {
@@ -713,6 +717,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             Editor .removeValueFromArray (executionContext, parentNode, parentField, childIndex + 1);
             break;
       }
+
+      const primaryParentField = parentField;
 
       if (field .getType () === X3D .X3DConstants .MFNode)
       {
@@ -735,13 +741,16 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             // Adjust matrix.
 
-            if (childNode .getType () .includes (X3D .X3DConstants .X3DTransformNode))
+            if (parentField !== primaryParentField)
             {
-               const
-                  sourceModelMatrix = this .getModelMatrix (element),
-                  matrix            = destinationModelMatrix .copy () .inverse () .multLeft (sourceModelMatrix);
+               if (childNode .getType () .includes (X3D .X3DConstants .X3DTransformNode))
+               {
+                  const
+                     sourceModelMatrix = this .getModelMatrix (element),
+                     matrix            = destinationModelMatrix .copy () .inverse () .multLeft (sourceModelMatrix);
 
-               Editor .setMatrixWithCenter (childNode, matrix);
+                  Editor .setMatrixWithCenter (childNode, matrix);
+               }
             }
 
             // Move node.
