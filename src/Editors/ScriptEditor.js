@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const
    $           = require ("jquery"),
@@ -13,229 +13,229 @@ const
    Editor      = require ("../Undo/Editor"),
    UndoManager = require ("../Undo/UndoManager"),
    monaco      = require ("monaco-editor/min/vs/loader.js"),
-   _           = require ("../Application/GetText")
+   _           = require ("../Application/GetText");
 
 monaco .require .config ({
    baseUrl: url .pathToFileURL (path .resolve (path .dirname (require .resolve ("monaco-editor/package.json")), "min")) + "/",
-})
+});
 
-require ("../Controls/RenameNodeInput")
+require ("../Controls/RenameNodeInput");
 
 module .exports = class ScriptEditor extends Interface
 {
    constructor (element)
    {
-      super (`Sunrize.ScriptEditor.${element .attr ("id")}.`)
+      super (`Sunrize.ScriptEditor.${element .attr ("id")}.`);
 
-      this .scriptEditor = element
+      this .scriptEditor = element;
 
       this .verticalSplitter = $("<div></div>")
          .attr ("id", "script-editor-left")
          .addClass (["script-editor-left", "vertical-splitter"])
-         .appendTo (this .scriptEditor)
+         .appendTo (this .scriptEditor);
 
       this .verticalSplitterLeft = $("<div></div>")
          .addClass ("vertical-splitter-left")
          .css ("width", "30%")
-         .appendTo (this .verticalSplitter)
+         .appendTo (this .verticalSplitter);
 
       this .verticalSplitterRight = $("<div></div>")
          .addClass ("vertical-splitter-right")
          .css ("width", "70%")
-         .appendTo (this .verticalSplitter)
+         .appendTo (this .verticalSplitter);
 
-      this .vSplitter = new Splitter (this .verticalSplitter, "vertical")
+      this .vSplitter = new Splitter (this .verticalSplitter, "vertical");
 
-      this .verticalSplitter .on ("position", () => this .onSplitterPosition ())
+      this .verticalSplitter .on ("position", () => this .onSplitterPosition ());
 
       this .toolbar = $("<div></div>")
          .addClass (["toolbar", "vertical-toolbar", "script-editor-toolbar"])
-         .appendTo (this .scriptEditor)
+         .appendTo (this .scriptEditor);
 
       this .toggleSidebarButton = $("<span></span>")
          .addClass (["material-symbols-outlined"])
          .attr ("title", _ ("Toggle sidebar."))
          .text ("dock_to_right")
          .appendTo (this .toolbar)
-         .on ("click", () => this .toggleSidebar ())
+         .on ("click", () => this .toggleSidebar ());
 
-      $("<span></span>") .addClass ("separator") .appendTo (this .toolbar)
+      $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
       this .createButton = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _ ("Create new Script node or shader."))
          .text ("add")
          .appendTo (this .toolbar)
-         .on ("click", () => this .create ())
+         .on ("click", () => this .create ());
 
       this .applyButton = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _ ("Apply script source to node."))
          .text ("check_circle")
          .appendTo (this .toolbar)
-         .on ("click", () => this .apply ())
+         .on ("click", () => this .apply ());
 
-      $("<span></span>") .addClass ("separator") .appendTo (this .toolbar)
+      $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
       this .directOutputButton = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _ ("Toggle direct output."))
          .text ("radio_button_checked")
          .appendTo (this .toolbar)
-         .on ("click", () => this .toggleDirectOutput ())
+         .on ("click", () => this .toggleDirectOutput ());
 
       this .mustEvaluateButton = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _ ("Toggle must evaluate."))
          .text ("priority_high")
          .appendTo (this .toolbar)
-         .on ("click", () => this .toggleMustEvaluate ())
+         .on ("click", () => this .toggleMustEvaluate ());
 
       this .shaderTypeButton = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _ ("Change shader type."))
          .text ("auto_awesome")
          .appendTo (this .toolbar)
-         .on ("click", () => this .changeShaderType ())
+         .on ("click", () => this .changeShaderType ());
 
       this .horizontalSplitterTop = $("<div></div>")
          .addClass ("horizontal-splitter-top")
          .css ("height", "50%")
-         .appendTo (this .verticalSplitterLeft)
+         .appendTo (this .verticalSplitterLeft);
 
       this .horizontalSplitterBottom = $("<div></div>")
          .addClass ("horizontal-splitter-bottom")
          .css ("height", "50%")
-         .appendTo (this .verticalSplitterLeft)
+         .appendTo (this .verticalSplitterLeft);
 
-      this .hSplitter = new Splitter (this .verticalSplitterLeft, "horizontal")
+      this .hSplitter = new Splitter (this .verticalSplitterLeft, "horizontal");
 
       this .nodeListElement = $("<div></div>")
          .addClass ("node-list")
-         .appendTo (this .horizontalSplitterTop)
+         .appendTo (this .horizontalSplitterTop);
 
       this .nodeName = $("<input></input>")
          .addClass ("node-name")
          .attr ("placeholder", _ ("Enter node name."))
          .appendTo (this .horizontalSplitterTop)
-         .renameNodeInput (null, null)
+         .renameNodeInput (null, null);
 
-      this .nodeList = new NodeList (this .nodeListElement, (node) => node .getTypeName () .match (/^(?:Script|ShaderPart)$/), (node) => this .setNode (node))
+      this .nodeList = new NodeList (this .nodeListElement, (node) => node .getTypeName () .match (/^(?:Script|ShaderPart)$/), (node) => this .setNode (node));
 
       this .consoleElement = $("<div></div>")
          .attr ("id", "script-editor-console")
          .addClass ("console")
-         .appendTo (this .horizontalSplitterBottom)
+         .appendTo (this .horizontalSplitterBottom);
 
-      this .console = new Console (this .consoleElement)
+      this .console = new Console (this .consoleElement);
 
-      electron .ipcRenderer .on ("script-editor-menu", (event, key, ...args) => this [key] (...args))
+      electron .ipcRenderer .on ("script-editor-menu", (event, key, ...args) => this [key] (...args));
 
       // Setup.
 
-      this .setup ()
+      this .setup ();
    }
 
    colorScheme (shouldUseDarkColors)
    {
       monaco .require (["vs/editor/editor.main"], monaco =>
       {
-         monaco .editor .setTheme (shouldUseDarkColors ? "vs-dark" : "vs-light")
-      })
+         monaco .editor .setTheme (shouldUseDarkColors ? "vs-dark" : "vs-light");
+      });
    }
 
    async setNode (node)
    {
-      this .directOutputButton .hide ()
-      this .mustEvaluateButton .hide ()
-      this .shaderTypeButton   .hide ()
+      this .directOutputButton .hide ();
+      this .mustEvaluateButton .hide ();
+      this .shaderTypeButton   .hide ();
 
       if (this .node)
       {
-         this .node ._url .removeFieldCallback (this)
+         this .node ._url .removeFieldCallback (this);
 
          switch (this .node .getTypeName ())
          {
             case "Script":
             {
-               this .node ._directOutput .removeInterest ("set_directOutput", this)
-               this .node ._mustEvaluate .removeInterest ("set_mustEvaluate", this)
-               break
+               this .node ._directOutput .removeInterest ("set_directOutput", this);
+               this .node ._mustEvaluate .removeInterest ("set_mustEvaluate", this);
+               break;
             }
             case "ShaderPart":
             {
-               this .node ._type .removeInterest ("set_shaderType", this)
-               break
+               this .node ._type .removeInterest ("set_shaderType", this);
+               break;
             }
          }
 
          if (this .monaco)
-            this .monaco .viewState = this .monaco .saveViewState ()
+            this .monaco .viewState = this .monaco .saveViewState ();
       }
 
-      this .node = node
+      this .node = node;
 
       if (this .node)
       {
-         const editor = await this .getEditor (this .node)
+         const editor = await this .getEditor (this .node);
 
-         this .nodeName .renameNodeInput (this .node)
-         this .applyButton .show ()
+         this .nodeName .renameNodeInput (this .node);
+         this .applyButton .show ();
 
          if (this .editor)
-            this .editor .detach ()
+            this .editor .detach ();
 
-         this .editor = editor .element .appendTo (this .verticalSplitterRight)
-         this .monaco = editor .monaco
+         this .editor = editor .element .appendTo (this .verticalSplitterRight);
+         this .monaco = editor .monaco;
 
-         this .monaco .restoreViewState (this .monaco .viewState)
+         this .monaco .restoreViewState (this .monaco .viewState);
 
-         this .node ._url .addFieldCallback (this, this .set_url .bind (this))
+         this .node ._url .addFieldCallback (this, this .set_url .bind (this));
 
          switch (this .node .getTypeName ())
          {
             case "Script":
             {
-               this .directOutputButton .show ()
-               this .mustEvaluateButton .show ()
+               this .directOutputButton .show ();
+               this .mustEvaluateButton .show ();
 
-               this .node ._directOutput .addInterest ("set_directOutput", this)
-               this .node ._mustEvaluate .addInterest ("set_mustEvaluate", this)
+               this .node ._directOutput .addInterest ("set_directOutput", this);
+               this .node ._mustEvaluate .addInterest ("set_mustEvaluate", this);
 
-               this .set_directOutput ()
-               this .set_mustEvaluate ()
+               this .set_directOutput ();
+               this .set_mustEvaluate ();
                break
             }
             case "ShaderPart":
             {
-               this .shaderTypeButton .show ()
+               this .shaderTypeButton .show ();
 
-               this .node ._type .addInterest ("set_shaderType", this)
+               this .node ._type .addInterest ("set_shaderType", this);
 
-               this .set_shaderType ()
-               break
+               this .set_shaderType ();
+               break;
             }
          }
       }
       else
       {
-         this .nodeName .renameNodeInput (null, null)
-         this .applyButton .hide ()
+         this .nodeName .renameNodeInput (null, null);
+         this .applyButton .hide ();
 
          if (this .editor)
-            this .editor .detach ()
+            this .editor .detach ();
 
-         this .editor = null
-         this .monaco = null
+         this .editor = null;
+         this .monaco = null;
       }
    }
 
-   editors = new Map ()
+   editors = new Map ();
 
    languages = {
       "Script": "javascript",
       "ShaderPart": "c",
-   }
+   };
 
    getEditor (node)
    {
@@ -243,7 +243,7 @@ module .exports = class ScriptEditor extends Interface
       {
          if (this .editors .has (node))
          {
-            resolve (this .editors .get (node))
+            resolve (this .editors .get (node));
          }
          else
          {
@@ -251,15 +251,15 @@ module .exports = class ScriptEditor extends Interface
             {
                const element = $("<div></div>")
                   .addClass ("script-editor-monaco")
-                  .appendTo (this .verticalSplitterRight)
+                  .appendTo (this .verticalSplitterRight);
 
                self .MonacoEnvironment =
                {
                   getWorkerUrl (moduleId, label)
                   {
-                     return url .pathToFileURL (require .resolve ("monaco-editor/min/vs/base/worker/workerMain.js"))
+                     return url .pathToFileURL (require .resolve ("monaco-editor/min/vs/base/worker/workerMain.js"));
                   },
-               }
+               };
 
                const editor = monaco .editor .create (element .get (0),
                {
@@ -270,22 +270,22 @@ module .exports = class ScriptEditor extends Interface
                   wordWrap: "on",
                   wrappingIndent: "indent",
                   minimap: { enabled: false },
-               })
+               });
 
-               editor .onDidBlurEditorWidget (() => this .apply ())
+               editor .onDidBlurEditorWidget (() => this .apply ());
 
-               editor .viewState = editor .saveViewState ()
+               editor .viewState = editor .saveViewState ();
 
-               element .on ("contextmenu", (event) => this .showContextMenu ())
-               element .detach ()
+               element .on ("contextmenu", (event) => this .showContextMenu ());
+               element .detach ();
 
                //this .debugFindActions (editor)
-               this .editors .set (node, { element: element, monaco: editor })
+               this .editors .set (node, { element: element, monaco: editor });
 
-               resolve (this .editors .get (node))
-            })
+               resolve (this .editors .get (node));
+            });
          }
-      })
+      });
    }
 
    defaultSources = {
@@ -308,19 +308,19 @@ main ()
    // Add code here.
 }
 `,
-   }
+   };
 
    getScriptSource (node)
    {
       if (node ._url .length && node ._url [0] .length)
-         return node ._url [0]
+         return node ._url [0];
 
-      const value = this .defaultSources [node .getTypeName ()]
+      const value = this .defaultSources [node .getTypeName ()];
 
       if (node .getTypeName () === "ShaderPart" && node ._type .getValue () === "FRAGMENT")
-         return value .replace ("x-vertex", "x-fragment")
+         return value .replace ("x-vertex", "x-fragment");
 
-      return value
+      return value;
    }
 
    showContextMenu ()
@@ -382,19 +382,19 @@ main ()
             label: _ ("Command Palette"),
             args: ["runAction", "editor.action.quickCommand"],
          },
-      ]
+      ];
 
-      electron .ipcRenderer .send ("context-menu", "script-editor-menu", menu)
+      electron .ipcRenderer .send ("context-menu", "script-editor-menu", menu);
    }
 
    runAction (id)
    {
-      this .monaco .getAction (id) .run ()
+      this .monaco .getAction (id) .run ();
    }
 
    execCommand (command)
    {
-      document .execCommand (command)
+      document .execCommand (command);
    }
 
    create ()
@@ -408,16 +408,16 @@ main ()
             label: _ ("Create New Shader"),
             args: ["createShader"],
          },
-      ]
+      ];
 
-      electron .ipcRenderer .send ("context-menu", "script-editor-menu", menu)
+      electron .ipcRenderer .send ("context-menu", "script-editor-menu", menu);
    }
 
    async createScript ()
    {
-      UndoManager .shared .beginUndo (_ ("Create New Script"))
+      UndoManager .shared .beginUndo (_ ("Create New Script"));
 
-      Editor .addComponent (this .browser .currentScene, "Scripting")
+      Editor .addComponent (this .browser .currentScene, "Scripting");
 
       const nodes = await Editor .importX3D (this .browser .currentScene, `
 DEF NewScript Script {
@@ -434,18 +434,18 @@ function set_field (value, time)
 }
 "
 }
-      `)
+      `);
 
-      UndoManager .shared .endUndo ()
+      UndoManager .shared .endUndo ();
 
-      this .setNode (nodes [0])
+      this .setNode (nodes [0]);
    }
 
    async createShader ()
    {
-      UndoManager .shared .beginUndo (_ ("Create New Shader"))
+      UndoManager .shared .beginUndo (_ ("Create New Shader"));
 
-      Editor .addComponent (this .browser .currentScene, "Shaders")
+      Editor .addComponent (this .browser .currentScene, "Shaders");
 
       const nodes = await Editor .importX3D (this .browser .currentScene, `
 DEF NewShader ComposedShader {
@@ -488,34 +488,34 @@ main ()
       }
    ]
 }
-      `)
+      `);
 
-      UndoManager .shared .endUndo ()
+      UndoManager .shared .endUndo ();
 
-      this .setNode (nodes [0] ._parts [0] .getValue ())
+      this .setNode (nodes [0] ._parts [0] .getValue ());
    }
 
    apply ()
    {
       if (!this .node)
-         return
+         return;
 
       if (!this .monaco)
-         return
+         return;
 
-      const value = new X3D .MFString (this .monaco .getModel () .getValue ())
+      const value = new X3D .MFString (this .monaco .getModel () .getValue ());
 
       if (this .node ._url .equals (value))
-         return
+         return;
 
-      this .node ._url .addFieldCallback (this, () => this .node ._url .addFieldCallback (this, this .set_url .bind (this)))
+      this .node ._url .addFieldCallback (this, () => this .node ._url .addFieldCallback (this, this .set_url .bind (this)));
 
-      Editor .setFieldValue (this .node .getExecutionContext (), this .node, this .node ._url, value)
+      Editor .setFieldValue (this .node .getExecutionContext (), this .node, this .node ._url, value);
    }
 
    set_url ()
    {
-      this .monaco .getModel () .setValue (this .node ._url [0])
+      this .monaco .getModel () .setValue (this .node ._url [0]);
    }
 
    debugFindActions (editor)
@@ -525,69 +525,69 @@ main ()
          switch (action .label)
          {
             case "Go to Definition": // editor.action.revealDefinition
-               console .log (action .label, action .id)
-               break
+               console .log (action .label, action .id);
+               break;
             case "Go to References": // editor.action.goToReferences
-               console .log (action .label, action .id)
-               break
+               console .log (action .label, action .id);
+               break;
             case "Go to Symbol...": // editor.action.quickOutline
-               console .log (action .label, action .id)
-               break
+               console .log (action .label, action .id);
+               break;
             case "Peek Definition": // editor.action.peekDefinition
-               console .log (action .label, action .id)
-               break
+               console .log (action .label, action .id);
+               break;
             case "Peek References": // editor.action.referenceSearch.trigger
-               console .log (action .label, action .id)
-               break
+               console .log (action .label, action .id);
+               break;
             case "Rename Symbol": // editor.action.rename
-               console .log (action .label, action .id)
-               break
+               console .log (action .label, action .id);
+               break;
             case "Change All Occurrences": // editor.action.changeAll
-               console .log (action .label, action .id)
-               break
+               console .log (action .label, action .id);
+               break;
             case "Format Document": // editor.action.formatDocument
-               console .log (action .label, action .id)
-               break
+               console .log (action .label, action .id);
+               break;
             case "Cut": //
-               console .log (action .label, action .id)
-               break
+               console .log (action .label, action .id);
+               break;
             case "Copy": //
-               console .log (action .label, action .id)
-               break
+               console .log (action .label, action .id);
+               break;
             case "Paste": //
-               console .log (action .label, action .id)
-               break
+               console .log (action .label, action .id);
+               break;
             case "Command Palette": // editor.action.quickCommand
-               console .log (action .label, action .id)
-               break
+               console .log (action .label, action .id);
+               break;
          }
       }
    }
 
    toggleDirectOutput ()
    {
-      Editor .setFieldValue (this .node .getExecutionContext (), this .node, this .node ._directOutput, !this .node ._directOutput .getValue ())
+      Editor .setFieldValue (this .node .getExecutionContext (), this .node, this .node ._directOutput, !this .node ._directOutput .getValue ());
    }
 
    set_directOutput ()
    {
       if (this .node ._directOutput .getValue ())
-         this .directOutputButton .addClass ("active")
+         this .directOutputButton .addClass ("active");
       else
-         this .directOutputButton .removeClass ("active")
+         this .directOutputButton .removeClass ("active");
    }
 
    toggleMustEvaluate ()
    {
-      Editor .setFieldValue (this .node .getExecutionContext (), this .node, this .node ._mustEvaluate, !this .node ._mustEvaluate .getValue ())
+      Editor .setFieldValue (this .node .getExecutionContext (), this .node, this .node ._mustEvaluate, !this .node ._mustEvaluate .getValue ());
    }
 
    set_mustEvaluate ()
    {
       if (this .node ._mustEvaluate .getValue ())
-         this .mustEvaluateButton .addClass ("active")
+         this .mustEvaluateButton .addClass ("active");
       else
-         this .mustEvaluateButton .removeClass ("active")
+         this .mustEvaluateButton .removeClass ("active");
    }
 
    changeShaderType ()
@@ -601,14 +601,14 @@ main ()
             label: "FRAGMENT",
             args: ["changeShaderTypeTo", "FRAGMENT"],
          },
-      ]
+      ];
 
-      electron .ipcRenderer .send ("context-menu", "script-editor-menu", menu)
+      electron .ipcRenderer .send ("context-menu", "script-editor-menu", menu);
    }
 
    changeShaderTypeTo (type)
    {
-      Editor .setFieldValue (this .node .getExecutionContext (), this .node, this .node ._type, type)
+      Editor .setFieldValue (this .node .getExecutionContext (), this .node, this .node ._type, type);
    }
 
    set_shaderType ()
@@ -617,13 +617,13 @@ main ()
       {
          case "VERTEX":
          {
-            this .shaderTypeButton .text ("timeline")
-            break
+            this .shaderTypeButton .text ("timeline");
+            break;
          }
          case "FRAGMENT":
          {
-            this .shaderTypeButton .text ("auto_awesome")
-            break
+            this .shaderTypeButton .text ("auto_awesome");
+            break;
          }
       }
    }
@@ -631,21 +631,21 @@ main ()
    onSplitterPosition ()
    {
       if (this .vSplitter .position)
-         this .toggleSidebarButton .addClass ("active")
+         this .toggleSidebarButton .addClass ("active");
       else
-         this .toggleSidebarButton .removeClass ("active")
+         this .toggleSidebarButton .removeClass ("active");
    }
 
    toggleSidebar ()
    {
       if (this .vSplitter .position)
       {
-         this .fileConfig .vSplitterPosition = this .vSplitter .position
-         this .vSplitter .position             = 0
+         this .fileConfig .vSplitterPosition = this .vSplitter .position;
+         this .vSplitter .position           = 0;
       }
       else
       {
-         this .vSplitter .position = this .fileConfig .vSplitterPosition
+         this .vSplitter .position = this .fileConfig .vSplitterPosition;
       }
    }
-}
+};
