@@ -542,6 +542,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       navigator .clipboard .writeText (x3dSyntax);
 
       undoManager .undo ();
+
+      primary .removeClass ("primary");
    }
 
    async pasteNodes (id, executionContextId, nodeId, fieldId)
