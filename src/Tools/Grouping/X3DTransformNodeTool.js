@@ -111,29 +111,6 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       if (!this .tool .bboxCenter .getValue () .equals (bboxCenter))
          this .tool .bboxCenter = bboxCenter;
    }
-
-   traverse (type, renderObject)
-   {
-      switch (type)
-      {
-         case X3D .TraverseType .POINTER:
-            break;
-         default:
-            this .node .traverse (type, renderObject);
-            break;
-      }
-
-      const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-      modelViewMatrix .push ();
-      modelViewMatrix .multLeft (this .getMatrix ());
-      renderObject .getHumanoids () .push (null);
-
-      this .toolInnerNode ?.traverse (type, renderObject);
-
-      renderObject .getHumanoids () .pop ();
-      modelViewMatrix .pop ();
-   }
 }
 
 module .exports = X3DTransformNodeTool;

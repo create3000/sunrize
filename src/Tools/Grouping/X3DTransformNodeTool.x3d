@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sat, 18 Nov 2023 10:25:44 GMT'/>
+    <meta name='modified' content='Sat, 18 Nov 2023 11:10:23 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -47,12 +47,19 @@
       <ProtoBody>
         <Collision
             enabled='false'>
-          <Transform>
+          <Transform DEF='Transform'>
             <IS>
-              <connect nodeField='translation' protoField='bboxCenter'/>
+              <connect nodeField='translation' protoField='translation'/>
+              <connect nodeField='rotation' protoField='rotation'/>
+              <connect nodeField='scale' protoField='scale'/>
+              <connect nodeField='scaleOrientation' protoField='scaleOrientation'/>
+              <connect nodeField='center' protoField='center'/>
             </IS>
-            <Group DEF='BoundingBox'>
-              <Shape DEF='Box'
+            <Transform>
+              <IS>
+                <connect nodeField='translation' protoField='bboxCenter'/>
+              </IS>
+              <Shape DEF='BoundingBox_1'
                   castShadow='false'>
                 <IS>
                   <connect nodeField='visible' protoField='bboxDisplay'/>
@@ -76,423 +83,423 @@
                       point='-0.5 0.5 0.5, -0.5 -0.5 0.5, 0.5 -0.5 0.5, 0.5 0.5 0.5, -0.5 0.5 -0.5, -0.5 -0.5 -0.5, 0.5 -0.5 -0.5, 0.5 0.5 -0.5'/>
                 </IndexedLineSet>
               </Shape>
-              <Shape DEF='xAxis_1'
-                  castShadow='false'>
+              <Group DEF='XHandle_2'>
                 <IS>
                   <connect nodeField='visible' protoField='xAxisDisplay'/>
                 </IS>
-                <IndexedLineSet
-                    colorPerVertex='false'
-                    colorIndex='0'
-                    coordIndex='0, 1, -1'>
-                  <Color DEF='_4'
-                      color='1 0 0, 0 1 0, 0 0 1'/>
-                  <Coordinate DEF='AxesCoord'
-                      point='-0.5 0 0, 0.5 0 0, 0 -0.5 0, 0 0.5 0, 0 0 -0.5, 0 0 0.6'/>
-                </IndexedLineSet>
-              </Shape>
-              <Shape DEF='yAxis_1'
-                  castShadow='false'>
+                <Group DEF='Front'>
+                  <Transform DEF='XFront'
+                      translation='0.5 0 0'>
+                    <ScreenGroup>
+                      <Switch DEF='_27'
+                          whichChoice='0'>
+                        <Transform
+                            translation='10 0 0'
+                            rotation='0 0 -1 90'>
+                          <Shape
+                              castShadow='false'>
+                            <Appearance DEF='Red_1'>
+                              <Material
+                                  diffuseColor='1 0 0'/>
+                              <ProtoInstance name='ToolShader' DEF='_17' containerField='shaders'/>
+                            </Appearance>
+                            <Cone DEF='Arrow_1'
+                                height='18'
+                                bottomRadius='6'/>
+                          </Shape>
+                        </Transform>
+                        <Transform
+                            translation='7 0 0'>
+                          <Shape
+                              castShadow='false'>
+                            <Appearance USE='Red_1'/>
+                            <Sphere DEF='Sphere_1'
+                                radius='6'/>
+                          </Shape>
+                        </Transform>
+                        <Transform
+                            translation='7 0 0'>
+                          <Shape
+                              castShadow='false'>
+                            <Appearance USE='Red_1'/>
+                            <Box DEF='Box_2'
+                                size='12 12 12'/>
+                          </Shape>
+                        </Transform>
+                      </Switch>
+                    </ScreenGroup>
+                  </Transform>
+                  <TouchSensor DEF='ModeTouch'/>
+                  <PlaneSensor DEF='XTranslationSensor'
+                      description='x-Axis'
+                      autoOffset='false'
+                      maxPosition='-1 0'>
+                    <IS>
+                      <connect nodeField='isActive' protoField='isActive'/>
+                    </IS>
+                  </PlaneSensor>
+                  <PlaneSensor DEF='XPlaneSensor_1'
+                      axisRotation='0 1 0 90'
+                      autoOffset='false'>
+                    <IS>
+                      <connect nodeField='isActive' protoField='isActive'/>
+                    </IS>
+                  </PlaneSensor>
+                  <PlaneSensor DEF='XScaleFrontSensor'
+                      description='x-Axis'
+                      autoOffset='false'
+                      maxPosition='-1 0'>
+                    <IS>
+                      <connect nodeField='isActive' protoField='isActive'/>
+                    </IS>
+                  </PlaneSensor>
+                </Group>
+                <Group DEF='Back'>
+                  <Transform DEF='XBack_1'
+                      translation='-0.5 0 0'>
+                    <ScreenGroup>
+                      <Switch DEF='_26'
+                          whichChoice='0'>
+                        <Transform DEF='_8'
+                            translation='-2.5 0 0'
+                            rotation='0 0 -1 90'>
+                          <Shape
+                              castShadow='false'>
+                            <Appearance USE='Red_1'/>
+                            <Cylinder DEF='Back_1'
+                                height='3'
+                                radius='6'/>
+                          </Shape>
+                        </Transform>
+                        <Transform USE='_8'/>
+                        <Transform
+                            translation='-2.5 0 0'
+                            rotation='0 1 0 90'>
+                          <Shape
+                              castShadow='false'>
+                            <Appearance DEF='Red_2'>
+                              <Material
+                                  diffuseColor='1 0 0'/>
+                              <ProtoInstance name='ToolShader' containerField='shaders'/>
+                            </Appearance>
+                            <Box DEF='_21'
+                                size='12 12 3'/>
+                          </Shape>
+                        </Transform>
+                      </Switch>
+                    </ScreenGroup>
+                  </Transform>
+                  <TouchSensor USE='ModeTouch'/>
+                  <PlaneSensor USE='XTranslationSensor'/>
+                  <PlaneSensor USE='XPlaneSensor_1'/>
+                  <PlaneSensor DEF='XScaleBackSensor'
+                      description='x-Axis'
+                      autoOffset='false'
+                      maxPosition='-1 0'>
+                    <IS>
+                      <connect nodeField='isActive' protoField='isActive'/>
+                    </IS>
+                  </PlaneSensor>
+                </Group>
+                <Shape DEF='xAxis_1'
+                    castShadow='false'>
+                  <IS>
+                    <connect nodeField='visible' protoField='xAxisDisplay'/>
+                  </IS>
+                  <IndexedLineSet
+                      colorPerVertex='false'
+                      colorIndex='0'
+                      coordIndex='0, 1, -1'>
+                    <Color DEF='_4'
+                        color='1 0 0, 0 1 0, 0 0 1'/>
+                    <Coordinate DEF='AxesCoord'
+                        point='-0.5 0 0, 0.5 0 0, 0 -0.5 0, 0 0.5 0, 0 0 -0.5, 0 0 0.6'/>
+                  </IndexedLineSet>
+                </Shape>
+              </Group>
+              <Group DEF='YHandle'>
                 <IS>
                   <connect nodeField='visible' protoField='yAxisDisplay'/>
                 </IS>
-                <IndexedLineSet
-                    colorPerVertex='false'
-                    colorIndex='1'
-                    coordIndex='2, 3, -1'>
-                  <Color USE='_4'/>
-                  <Coordinate USE='AxesCoord'/>
-                </IndexedLineSet>
-              </Shape>
-              <Shape DEF='zAxis'
-                  castShadow='false'>
+                <Group DEF='Front_1'>
+                  <Transform DEF='YFront'
+                      translation='0 0.5 0'>
+                    <ScreenGroup>
+                      <Switch DEF='_25'
+                          whichChoice='0'>
+                        <Transform
+                            translation='0 10 0'>
+                          <Shape
+                              castShadow='false'>
+                            <Appearance DEF='Green_1'>
+                              <Material
+                                  diffuseColor='0 1 0'/>
+                              <ProtoInstance name='ToolShader' USE='_17' containerField='shaders'/>
+                            </Appearance>
+                            <Cone USE='Arrow_1'/>
+                          </Shape>
+                        </Transform>
+                        <Transform
+                            translation='0 7 0'>
+                          <Shape
+                              castShadow='false'>
+                            <Appearance USE='Green_1'/>
+                            <Sphere USE='Sphere_1'/>
+                          </Shape>
+                        </Transform>
+                        <Transform
+                            translation='0 7 0'>
+                          <Shape
+                              castShadow='false'>
+                            <Appearance USE='Green_1'/>
+                            <Box USE='Box_2'/>
+                          </Shape>
+                        </Transform>
+                      </Switch>
+                    </ScreenGroup>
+                  </Transform>
+                  <TouchSensor USE='ModeTouch'/>
+                  <PlaneSensor DEF='YTranslationSensor'
+                      description='y-Axis'
+                      autoOffset='false'
+                      maxPosition='0 -1'>
+                    <IS>
+                      <connect nodeField='isActive' protoField='isActive'/>
+                    </IS>
+                  </PlaneSensor>
+                  <PlaneSensor DEF='YPlaneSensor'
+                      axisRotation='-1 0 0 90'
+                      autoOffset='false'>
+                    <IS>
+                      <connect nodeField='isActive' protoField='isActive'/>
+                    </IS>
+                  </PlaneSensor>
+                  <PlaneSensor DEF='YScaleFrontSensor'
+                      description='y-Axis'
+                      autoOffset='false'
+                      maxPosition='0 -1'>
+                    <IS>
+                      <connect nodeField='isActive' protoField='isActive'/>
+                    </IS>
+                  </PlaneSensor>
+                </Group>
+                <Group DEF='Back_2'>
+                  <Transform DEF='YBack_1'
+                      translation='0 -0.5 0'>
+                    <ScreenGroup>
+                      <Switch DEF='_24'
+                          whichChoice='0'>
+                        <Transform DEF='_13'
+                            translation='0 -2.5 0'
+                            rotation='0 0 -1 1.5707963267949'>
+                          <Shape
+                              castShadow='false'>
+                            <Appearance USE='Green_1'/>
+                            <Cylinder USE='Back_1'/>
+                          </Shape>
+                        </Transform>
+                        <Transform USE='_13'/>
+                        <Transform
+                            translation='0 -2.5 0'
+                            rotation='1 0 0 90'>
+                          <Shape
+                              castShadow='false'>
+                            <Appearance USE='Green_1'/>
+                            <Box USE='_21'/>
+                          </Shape>
+                        </Transform>
+                      </Switch>
+                    </ScreenGroup>
+                  </Transform>
+                  <TouchSensor USE='ModeTouch'/>
+                  <PlaneSensor USE='YTranslationSensor'/>
+                  <PlaneSensor USE='YPlaneSensor'/>
+                  <PlaneSensor DEF='YScaleBackSensor'
+                      description='y-Axis'
+                      autoOffset='false'
+                      maxPosition='0 -1'>
+                    <IS>
+                      <connect nodeField='isActive' protoField='isActive'/>
+                    </IS>
+                  </PlaneSensor>
+                </Group>
+                <Shape DEF='yAxis_1'
+                    castShadow='false'>
+                  <IS>
+                    <connect nodeField='visible' protoField='yAxisDisplay'/>
+                  </IS>
+                  <IndexedLineSet
+                      colorPerVertex='false'
+                      colorIndex='1'
+                      coordIndex='2, 3, -1'>
+                    <Color USE='_4'/>
+                    <Coordinate USE='AxesCoord'/>
+                  </IndexedLineSet>
+                </Shape>
+              </Group>
+              <Group DEF='ZHandle'>
                 <IS>
                   <connect nodeField='visible' protoField='zAxisDisplay'/>
                 </IS>
-                <IndexedLineSet
-                    colorPerVertex='false'
-                    colorIndex='2'
-                    coordIndex='4, 5, -1'>
-                  <Color USE='_4'/>
-                  <Coordinate USE='AxesCoord'/>
+                <Group DEF='Front_2'>
+                  <Transform DEF='ZFront'
+                      translation='0 0 0.5'>
+                    <ScreenGroup>
+                      <Switch DEF='_23'
+                          whichChoice='0'>
+                        <Transform
+                            translation='0 0 10'
+                            rotation='1 0 0 90'>
+                          <Shape
+                              castShadow='false'>
+                            <Appearance DEF='Blue'>
+                              <Material
+                                  diffuseColor='0 0 1'/>
+                              <ProtoInstance name='ToolShader' USE='_17' containerField='shaders'/>
+                            </Appearance>
+                            <Cone USE='Arrow_1'/>
+                          </Shape>
+                        </Transform>
+                        <Transform
+                            translation='0 0 7'>
+                          <Shape
+                              castShadow='false'>
+                            <Appearance USE='Blue'/>
+                            <Sphere USE='Sphere_1'/>
+                          </Shape>
+                        </Transform>
+                        <Transform
+                            translation='0 0 7'>
+                          <Shape
+                              castShadow='false'>
+                            <Appearance USE='Blue'/>
+                            <Box USE='Box_2'/>
+                          </Shape>
+                        </Transform>
+                      </Switch>
+                    </ScreenGroup>
+                  </Transform>
+                  <TouchSensor USE='ModeTouch'/>
+                  <PlaneSensor DEF='ZTranslationSensor'
+                      description='z-Axis'
+                      axisRotation='0 -1 0 90'
+                      autoOffset='false'
+                      maxPosition='-1 0'>
+                    <IS>
+                      <connect nodeField='isActive' protoField='isActive'/>
+                    </IS>
+                  </PlaneSensor>
+                  <PlaneSensor DEF='ZPlaneSensor_1'
+                      autoOffset='false'>
+                    <IS>
+                      <connect nodeField='isActive' protoField='isActive'/>
+                    </IS>
+                  </PlaneSensor>
+                  <PlaneSensor DEF='ZScaleFrontSensor'
+                      description='z-Axis'
+                      axisRotation='0 -1 0 90'
+                      autoOffset='false'
+                      maxPosition='-1 0'>
+                    <IS>
+                      <connect nodeField='isActive' protoField='isActive'/>
+                    </IS>
+                  </PlaneSensor>
+                </Group>
+                <Group DEF='Back_3'>
+                  <Transform DEF='ZBack'
+                      translation='0 0 -0.5'>
+                    <ScreenGroup>
+                      <Switch DEF='_22'
+                          whichChoice='0'>
+                        <Transform DEF='_19'
+                            translation='0 0 -2.5'
+                            rotation='1 0 0 90'>
+                          <Shape
+                              castShadow='false'>
+                            <Appearance USE='Blue'/>
+                            <Cylinder USE='Back_1'/>
+                          </Shape>
+                        </Transform>
+                        <Transform USE='_19'/>
+                        <Transform
+                            translation='0 0 -2.5'>
+                          <Shape
+                              castShadow='false'>
+                            <Appearance USE='Blue'/>
+                            <Box USE='_21'/>
+                          </Shape>
+                        </Transform>
+                      </Switch>
+                    </ScreenGroup>
+                  </Transform>
+                  <TouchSensor USE='ModeTouch'/>
+                  <PlaneSensor USE='ZTranslationSensor'/>
+                  <PlaneSensor USE='ZPlaneSensor_1'/>
+                  <PlaneSensor DEF='ZScaleBackSensor'
+                      description='z-Axis'
+                      axisRotation='0 -1 0 90'
+                      autoOffset='false'
+                      maxPosition='-1 0'>
+                    <IS>
+                      <connect nodeField='isActive' protoField='isActive'/>
+                    </IS>
+                  </PlaneSensor>
+                </Group>
+                <Shape DEF='zAxis'
+                    castShadow='false'>
+                  <IS>
+                    <connect nodeField='visible' protoField='zAxisDisplay'/>
+                  </IS>
+                  <IndexedLineSet
+                      colorPerVertex='false'
+                      colorIndex='2'
+                      coordIndex='4, 5, -1'>
+                    <Color USE='_4'/>
+                    <Coordinate USE='AxesCoord'/>
+                  </IndexedLineSet>
+                </Shape>
+              </Group>
+            </Transform>
+            <Group DEF='Center'>
+              <IS>
+                <connect nodeField='visible' protoField='centerDisplay'/>
+              </IS>
+              <Shape DEF='CenterLine'
+                  castShadow='false'>
+                <Appearance>
+                  <LineProperties
+                      linetype='3'
+                      linewidthScaleFactor='2'/>
+                </Appearance>
+                <IndexedLineSet DEF='CenterIndexedLineSet'
+                    coordIndex='0, 1, -1'>
+                  <Color
+                      color='1 1 0, 1 1 0'/>
+                  <Coordinate DEF='CenterLineCoord'
+                      point='0 0 0, 0 0 0'/>
                 </IndexedLineSet>
               </Shape>
-            </Group>
-            <Group DEF='XHandle_2'>
-              <IS>
-                <connect nodeField='visible' protoField='xAxisDisplay'/>
-              </IS>
-              <Group DEF='Front'>
-                <Transform DEF='XFront'
-                    translation='0.5 0 0'>
-                  <ScreenGroup>
-                    <Switch DEF='_27'
-                        whichChoice='0'>
-                      <Transform
-                          translation='10 0 0'
-                          rotation='0 0 -1 90'>
-                        <Shape
-                            castShadow='false'>
-                          <Appearance DEF='Red_1'>
-                            <Material
-                                diffuseColor='1 0 0'/>
-                            <ProtoInstance name='ToolShader' DEF='_17' containerField='shaders'/>
-                          </Appearance>
-                          <Cone DEF='Arrow_1'
-                              height='18'
-                              bottomRadius='6'/>
-                        </Shape>
-                      </Transform>
-                      <Transform
-                          translation='7 0 0'>
-                        <Shape
-                            castShadow='false'>
-                          <Appearance USE='Red_1'/>
-                          <Sphere DEF='Sphere_1'
-                              radius='6'/>
-                        </Shape>
-                      </Transform>
-                      <Transform
-                          translation='7 0 0'>
-                        <Shape
-                            castShadow='false'>
-                          <Appearance USE='Red_1'/>
-                          <Box DEF='Box_2'
-                              size='12 12 12'/>
-                        </Shape>
-                      </Transform>
-                    </Switch>
-                  </ScreenGroup>
-                </Transform>
-                <TouchSensor DEF='ModeTouch'/>
-                <PlaneSensor DEF='XTranslationSensor'
-                    description='x-Axis'
-                    autoOffset='false'
-                    maxPosition='-1 0'>
-                  <IS>
-                    <connect nodeField='isActive' protoField='isActive'/>
-                  </IS>
-                </PlaneSensor>
-                <PlaneSensor DEF='XPlaneSensor_1'
-                    axisRotation='0 1 0 90'
-                    autoOffset='false'>
-                  <IS>
-                    <connect nodeField='isActive' protoField='isActive'/>
-                  </IS>
-                </PlaneSensor>
-                <PlaneSensor DEF='XScaleFrontSensor'
-                    description='x-Axis'
-                    autoOffset='false'
-                    maxPosition='-1 0'>
-                  <IS>
-                    <connect nodeField='isActive' protoField='isActive'/>
-                  </IS>
-                </PlaneSensor>
-              </Group>
-              <Group DEF='Back'>
-                <Transform DEF='XBack_1'
-                    translation='-0.5 0 0'>
-                  <ScreenGroup>
-                    <Switch DEF='_26'
-                        whichChoice='0'>
-                      <Transform DEF='_8'
-                          translation='-2.5 0 0'
-                          rotation='0 0 -1 90'>
-                        <Shape
-                            castShadow='false'>
-                          <Appearance USE='Red_1'/>
-                          <Cylinder DEF='Back_1'
-                              height='3'
-                              radius='6'/>
-                        </Shape>
-                      </Transform>
-                      <Transform USE='_8'/>
-                      <Transform
-                          translation='-2.5 0 0'
-                          rotation='0 1 0 90'>
-                        <Shape
-                            castShadow='false'>
-                          <Appearance DEF='Red_2'>
-                            <Material
-                                diffuseColor='1 0 0'/>
-                            <ProtoInstance name='ToolShader' containerField='shaders'/>
-                          </Appearance>
-                          <Box DEF='_21'
-                              size='12 12 3'/>
-                        </Shape>
-                      </Transform>
-                    </Switch>
-                  </ScreenGroup>
-                </Transform>
-                <TouchSensor USE='ModeTouch'/>
-                <PlaneSensor USE='XTranslationSensor'/>
-                <PlaneSensor USE='XPlaneSensor_1'/>
-                <PlaneSensor DEF='XScaleBackSensor'
-                    description='x-Axis'
-                    autoOffset='false'
-                    maxPosition='-1 0'>
-                  <IS>
-                    <connect nodeField='isActive' protoField='isActive'/>
-                  </IS>
-                </PlaneSensor>
-              </Group>
-            </Group>
-            <Group DEF='YHandle'>
-              <IS>
-                <connect nodeField='visible' protoField='yAxisDisplay'/>
-              </IS>
-              <Group DEF='Front_1'>
-                <Transform DEF='YFront'
-                    translation='0 0.5 0'>
-                  <ScreenGroup>
-                    <Switch DEF='_25'
-                        whichChoice='0'>
-                      <Transform
-                          translation='0 10 0'>
-                        <Shape
-                            castShadow='false'>
-                          <Appearance DEF='Green_1'>
-                            <Material
-                                diffuseColor='0 1 0'/>
-                            <ProtoInstance name='ToolShader' USE='_17' containerField='shaders'/>
-                          </Appearance>
-                          <Cone USE='Arrow_1'/>
-                        </Shape>
-                      </Transform>
-                      <Transform
-                          translation='0 7 0'>
-                        <Shape
-                            castShadow='false'>
-                          <Appearance USE='Green_1'/>
-                          <Sphere USE='Sphere_1'/>
-                        </Shape>
-                      </Transform>
-                      <Transform
-                          translation='0 7 0'>
-                        <Shape
-                            castShadow='false'>
-                          <Appearance USE='Green_1'/>
-                          <Box USE='Box_2'/>
-                        </Shape>
-                      </Transform>
-                    </Switch>
-                  </ScreenGroup>
-                </Transform>
-                <TouchSensor USE='ModeTouch'/>
-                <PlaneSensor DEF='YTranslationSensor'
-                    description='y-Axis'
-                    autoOffset='false'
-                    maxPosition='0 -1'>
-                  <IS>
-                    <connect nodeField='isActive' protoField='isActive'/>
-                  </IS>
-                </PlaneSensor>
-                <PlaneSensor DEF='YPlaneSensor'
-                    axisRotation='-1 0 0 90'
-                    autoOffset='false'>
-                  <IS>
-                    <connect nodeField='isActive' protoField='isActive'/>
-                  </IS>
-                </PlaneSensor>
-                <PlaneSensor DEF='YScaleFrontSensor'
-                    description='y-Axis'
-                    autoOffset='false'
-                    maxPosition='0 -1'>
-                  <IS>
-                    <connect nodeField='isActive' protoField='isActive'/>
-                  </IS>
-                </PlaneSensor>
-              </Group>
-              <Group DEF='Back_2'>
-                <Transform DEF='YBack_1'
-                    translation='0 -0.5 0'>
-                  <ScreenGroup>
-                    <Switch DEF='_24'
-                        whichChoice='0'>
-                      <Transform DEF='_13'
-                          translation='0 -2.5 0'
-                          rotation='0 0 -1 1.5707963267949'>
-                        <Shape
-                            castShadow='false'>
-                          <Appearance USE='Green_1'/>
-                          <Cylinder USE='Back_1'/>
-                        </Shape>
-                      </Transform>
-                      <Transform USE='_13'/>
-                      <Transform
-                          translation='0 -2.5 0'
-                          rotation='1 0 0 90'>
-                        <Shape
-                            castShadow='false'>
-                          <Appearance USE='Green_1'/>
-                          <Box USE='_21'/>
-                        </Shape>
-                      </Transform>
-                    </Switch>
-                  </ScreenGroup>
-                </Transform>
-                <TouchSensor USE='ModeTouch'/>
-                <PlaneSensor USE='YTranslationSensor'/>
-                <PlaneSensor USE='YPlaneSensor'/>
-                <PlaneSensor DEF='YScaleBackSensor'
-                    description='y-Axis'
-                    autoOffset='false'
-                    maxPosition='0 -1'>
-                  <IS>
-                    <connect nodeField='isActive' protoField='isActive'/>
-                  </IS>
-                </PlaneSensor>
-              </Group>
-            </Group>
-            <Group DEF='ZHandle'>
-              <IS>
-                <connect nodeField='visible' protoField='zAxisDisplay'/>
-              </IS>
-              <Group DEF='Front_2'>
-                <Transform DEF='ZFront'
-                    translation='0 0 0.5'>
-                  <ScreenGroup>
-                    <Switch DEF='_23'
-                        whichChoice='0'>
-                      <Transform
-                          translation='0 0 10'
-                          rotation='1 0 0 90'>
-                        <Shape
-                            castShadow='false'>
-                          <Appearance DEF='Blue'>
-                            <Material
-                                diffuseColor='0 0 1'/>
-                            <ProtoInstance name='ToolShader' USE='_17' containerField='shaders'/>
-                          </Appearance>
-                          <Cone USE='Arrow_1'/>
-                        </Shape>
-                      </Transform>
-                      <Transform
-                          translation='0 0 7'>
-                        <Shape
-                            castShadow='false'>
-                          <Appearance USE='Blue'/>
-                          <Sphere USE='Sphere_1'/>
-                        </Shape>
-                      </Transform>
-                      <Transform
-                          translation='0 0 7'>
-                        <Shape
-                            castShadow='false'>
-                          <Appearance USE='Blue'/>
-                          <Box USE='Box_2'/>
-                        </Shape>
-                      </Transform>
-                    </Switch>
-                  </ScreenGroup>
-                </Transform>
-                <TouchSensor USE='ModeTouch'/>
-                <PlaneSensor DEF='ZTranslationSensor'
-                    description='z-Axis'
-                    axisRotation='0 -1 0 90'
-                    autoOffset='false'
-                    maxPosition='-1 0'>
-                  <IS>
-                    <connect nodeField='isActive' protoField='isActive'/>
-                  </IS>
-                </PlaneSensor>
-                <PlaneSensor DEF='ZPlaneSensor_1'
-                    autoOffset='false'>
-                  <IS>
-                    <connect nodeField='isActive' protoField='isActive'/>
-                  </IS>
-                </PlaneSensor>
-                <PlaneSensor DEF='ZScaleFrontSensor'
-                    description='z-Axis'
-                    axisRotation='0 -1 0 90'
-                    autoOffset='false'
-                    maxPosition='-1 0'>
-                  <IS>
-                    <connect nodeField='isActive' protoField='isActive'/>
-                  </IS>
-                </PlaneSensor>
-              </Group>
-              <Group DEF='Back_3'>
-                <Transform DEF='ZBack'
-                    translation='0 0 -0.5'>
-                  <ScreenGroup>
-                    <Switch DEF='_22'
-                        whichChoice='0'>
-                      <Transform DEF='_19'
-                          translation='0 0 -2.5'
-                          rotation='1 0 0 90'>
-                        <Shape
-                            castShadow='false'>
-                          <Appearance USE='Blue'/>
-                          <Cylinder USE='Back_1'/>
-                        </Shape>
-                      </Transform>
-                      <Transform USE='_19'/>
-                      <Transform
-                          translation='0 0 -2.5'>
-                        <Shape
-                            castShadow='false'>
-                          <Appearance USE='Blue'/>
-                          <Box USE='_21'/>
-                        </Shape>
-                      </Transform>
-                    </Switch>
-                  </ScreenGroup>
-                </Transform>
-                <TouchSensor USE='ModeTouch'/>
-                <PlaneSensor USE='ZTranslationSensor'/>
-                <PlaneSensor USE='ZPlaneSensor_1'/>
-                <PlaneSensor DEF='ZScaleBackSensor'
-                    description='z-Axis'
-                    axisRotation='0 -1 0 90'
-                    autoOffset='false'
-                    maxPosition='-1 0'>
-                  <IS>
-                    <connect nodeField='isActive' protoField='isActive'/>
-                  </IS>
-                </PlaneSensor>
-              </Group>
+              <Transform DEF='CenterPoint'>
+                <IS>
+                  <connect nodeField='translation' protoField='center'/>
+                </IS>
+                <ScreenGroup>
+                  <Shape
+                      castShadow='false'>
+                    <Appearance>
+                      <Material
+                          diffuseColor='1 1 0'/>
+                      <ProtoInstance name='ToolShader' USE='_17' containerField='shaders'/>
+                    </Appearance>
+                    <Sphere
+                        radius='5'/>
+                  </Shape>
+                </ScreenGroup>
+                <TouchSensor
+                    description='Center'/>
+              </Transform>
             </Group>
           </Transform>
-          <Group DEF='Center'>
-            <IS>
-              <connect nodeField='visible' protoField='centerDisplay'/>
-            </IS>
-            <Shape DEF='CenterLine'
-                castShadow='false'>
-              <Appearance>
-                <LineProperties
-                    linetype='3'
-                    linewidthScaleFactor='2'/>
-              </Appearance>
-              <IndexedLineSet DEF='CenterIndexedLineSet'
-                  coordIndex='0, 1, -1'>
-                <Color
-                    color='1 1 0, 1 1 0'/>
-                <Coordinate DEF='CenterLineCoord'
-                    point='0 0 0, 0 0 0'/>
-              </IndexedLineSet>
-            </Shape>
-            <Transform DEF='CenterPoint'>
-              <IS>
-                <connect nodeField='translation' protoField='center'/>
-              </IS>
-              <ScreenGroup>
-                <Shape
-                    castShadow='false'>
-                  <Appearance>
-                    <Material
-                        diffuseColor='1 1 0'/>
-                    <ProtoInstance name='ToolShader' USE='_17' containerField='shaders'/>
-                  </Appearance>
-                  <Sphere
-                      radius='5'/>
-                </Shape>
-              </ScreenGroup>
-              <TouchSensor
-                  description='Center'/>
-            </Transform>
-          </Group>
         </Collision>
         <Script DEF='BBoxScript'
             directOutput='true'>
@@ -1056,7 +1063,6 @@ function translate (scaledMatrix, distanceFromCenter)
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
       <fieldValue name='bboxSize' value='2 3 4'/>
-      <fieldValue name='bboxCenter' value='1 0 0'/>
     </ProtoInstance>
   </Scene>
 </X3D>

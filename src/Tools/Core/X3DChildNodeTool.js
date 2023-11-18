@@ -1,6 +1,8 @@
 "use strict";
 
-const X3DNodeTool = require ("./X3DNodeTool");
+const
+   X3DNodeTool = require ("./X3DNodeTool"),
+   X3D         = require ("../../X3D");
 
 class X3DChildNodeTool extends X3DNodeTool
 {
@@ -16,7 +18,14 @@ class X3DChildNodeTool extends X3DNodeTool
 
    traverse (type, renderObject)
    {
-      this .node .traverse (type, renderObject);
+      switch (type)
+      {
+         case X3D .TraverseType .POINTER:
+            break;
+         default:
+            this .node .traverse (type, renderObject);
+            break;
+      }
 
       renderObject .getHumanoids () .push (null);
 

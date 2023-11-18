@@ -9,7 +9,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sat, 18 Nov 2023 09:53:24 GMT'/>
+    <meta name='modified' content='Sat, 18 Nov 2023 11:08:02 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -32,11 +32,11 @@
       <ProtoBody>
         <Collision
             enabled='false'>
-          <Transform DEF='BoundingBox'>
+          <Transform>
             <IS>
               <connect nodeField='translation' protoField='bboxCenter'/>
             </IS>
-            <Shape DEF='Box'
+            <Shape DEF='BoundingBox_1'
                 castShadow='false'>
               <IS>
                 <connect nodeField='visible' protoField='bboxDisplay'/>
@@ -60,23 +60,6 @@
                     point='-0.5 0.5 0.5, -0.5 -0.5 0.5, 0.5 -0.5 0.5, 0.5 0.5 0.5, -0.5 0.5 -0.5, -0.5 -0.5 -0.5, 0.5 -0.5 -0.5, 0.5 0.5 -0.5'/>
               </IndexedLineSet>
             </Shape>
-            <Shape DEF='xAxis_1'
-                castShadow='false'>
-              <IndexedLineSet
-                  colorPerVertex='false'
-                  colorIndex='0, 1, 2'
-                  coordIndex='0, 1, -1, 0, 2, -1, 0, 3, -1'>
-                <Color
-                    color='1 0 0, 0 1 0, 0 0 1'/>
-                <Coordinate DEF='AxesCoord'
-                    point='0 0 0, 0.5 0 0, 0 0.5 0, 0 0 0.5'/>
-              </IndexedLineSet>
-            </Shape>
-          </Transform>
-          <Transform DEF='AdjustmentHandles'>
-            <IS>
-              <connect nodeField='translation' protoField='bboxCenter'/>
-            </IS>
             <Transform DEF='XHandle'
                 translation='0.5 0 0'>
               <ScreenGroup>
@@ -132,6 +115,18 @@
                 </Transform>
               </ScreenGroup>
             </Transform>
+            <Shape DEF='Axes'
+                castShadow='false'>
+              <IndexedLineSet
+                  colorPerVertex='false'
+                  colorIndex='0, 1, 2'
+                  coordIndex='0, 1, -1, 0, 2, -1, 0, 3, -1'>
+                <Color
+                    color='1 0 0, 0 1 0, 0 0 1'/>
+                <Coordinate DEF='AxesCoord'
+                    point='0 0 0, 0.5 0 0, 0 0.5 0, 0 0 0.5'/>
+              </IndexedLineSet>
+            </Shape>
           </Transform>
           <Group DEF='Center'>
             <IS>
