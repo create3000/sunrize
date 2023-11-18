@@ -699,7 +699,7 @@ module .exports = class OutlineView extends Interface
                this .sceneGraph .find (`.load-state-${node .getId ()}`)
                   .removeClass (["not-started-state", "in-progress-state", "complete-state", "failed-state"])
                   .addClass (className)
-                  .find ("a")
+                  .find ("span")
                   .text (description);
             });
          }
@@ -871,7 +871,7 @@ module .exports = class OutlineView extends Interface
 
       return $("<li></li>")
          .addClass (["description", "load-state", className, "no-select"])
-         .text (description);
+         .append ($("<span></span>") .text (description));
    }
 
    getLoadState (loadState, typeName)
