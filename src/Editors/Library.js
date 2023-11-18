@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const
    $                = require ("jquery"),
@@ -14,24 +14,24 @@ module .exports = new class Library extends Dialog
 {
    constructor ()
    {
-      super ("Sunrize.Library.")
+      super ("Sunrize.Library.");
 
-      this .setup ()
+      this .setup ();
    }
 
    configure ()
    {
-      super .configure ({ size: [600, 400] })
+      super .configure ({ size: [600, 400] });
 
       // Set default config values.
 
       this .fileConfig .setDefaultValues ({
          type: "NODES",
-      })
+      });
 
       // Add class.
 
-      this .element .addClass ("library")
+      this .element .addClass ("library");
 
       // Input
 
@@ -40,48 +40,48 @@ module .exports = new class Library extends Dialog
          .addClass ("library-input")
          .attr ("placeholder", _ ("Search a node"))
          .on ("keydown", event => this .enter (event))
-         .on ("keyup", () => this .update ())
+         .on ("keyup", () => this .update ());
 
       // Buttons
 
       this .buttons = $("<div></div>")
          .appendTo (this .element)
-         .addClass ("library-buttons")
+         .addClass ("library-buttons");
 
       this .nodesButton = $("<span></span>")
          .appendTo (this .buttons)
          .addClass ("library-button")
          .data ("type", "NODES")
          .text (_ ("Nodes"))
-         .on ("click", () => this .button (this .nodesButton))
+         .on ("click", () => this .button (this .nodesButton));
 
       this .primitivesButton = $("<span></span>")
          .appendTo (this .buttons)
          .addClass ("library-button")
          .data ("type", "PRIMITIVES")
          .text (_ ("Primitives"))
-         .on ("click", () => this .button (this .primitivesButton))
+         .on ("click", () => this .button (this .primitivesButton));
 
       // Output
 
       this .output = $("<div></div>")
          .appendTo (this .element)
-         .addClass ("library-output")
+         .addClass ("library-output");
 
       this .list = $("<ul></ul>")
          .appendTo (this .output)
-         .addClass ("library-list")
+         .addClass ("library-list");
 
       // Configure list type.
 
       switch (this .fileConfig .type)
       {
          case "NODES":
-            this .button (this .nodesButton)
-            break
+            this .button (this .nodesButton);
+            break;
          case "PRIMITIVES":
-            this .button (this .primitivesButton)
-            break
+            this .button (this .primitivesButton);
+            break;
       }
    }
 
@@ -100,38 +100,38 @@ module .exports = new class Library extends Dialog
 
    button (button)
    {
-      this .fileConfig .type = button .data ("type")
+      this .fileConfig .type = button .data ("type");
 
-      this .buttons .find (".library-button") .removeClass ("active")
+      this .buttons .find (".library-button") .removeClass ("active");
 
-      button .addClass ("active")
+      button .addClass ("active");
 
-      this .update ()
+      this .update ();
    }
 
    enter (event)
    {
       if (event .key !== "Enter")
-         return
+         return;
 
       const
          first     = this .list .find (".node") .first (),
-         component = this .list .find (".component") .first ()
+         component = this .list .find (".component") .first ();
 
       if (!first .length)
-         return
+         return;
 
       const input = this .input .val () .toUpperCase () .trim ();
 
       try
       {
-         const ConcreteNode = this .browser .getConcreteNode (X3D .HTMLSupport .getNodeTypeName (input))
+         const ConcreteNode = this .browser .getConcreteNode (X3D .HTMLSupport .getNodeTypeName (input));
 
-         this .createNode (ConcreteNode .typeName, ConcreteNode .componentInfo .name)
+         this .createNode (ConcreteNode .typeName, ConcreteNode .componentInfo .name);
       }
       catch
       {
-         this .createNode (first .text (), component .attr ("name"))
+         this .createNode (first .text (), component .attr ("name"));
       }
    }
 
@@ -150,57 +150,57 @@ module .exports = new class Library extends Dialog
 
    updateNodes ()
    {
-      const cmp = (a, b) => (a > b) - (a < b)
+      const cmp = (a, b) => (a > b) - (a < b);
 
       // Clear list.
 
-      this .list .empty ()
+      this .list .empty ();
 
       // Make filter.
 
-      const input = this .input .val () .toLowerCase () .trim ()
+      const input = this .input .val () .toLowerCase () .trim ();
 
       const filter = input
          ? ConcreteNode => StringSimilarity .compareTwoStrings (ConcreteNode .typeName .toLowerCase (), input) > 0.4
-         : () => true
+         : () => true;
 
       // Get supported nodes.
 
       const nodes = [... this .browser .getConcreteNodes ()]
          .filter (filter)
          .sort ((a, b) => cmp (a .typeName, b .typeName))
-         .sort ((a, b) => cmp (a .componentInfo .name, b .componentInfo .name))
+         .sort ((a, b) => cmp (a .componentInfo .name, b .componentInfo .name));
 
       // Create list elements.
 
-      let componentName = ""
+      let componentName = "";
 
       for (const node of nodes)
       {
          if (node .componentInfo .name !== componentName)
          {
-            componentName = node .componentInfo .name
+            componentName = node .componentInfo .name;
 
             $("<li></li>")
                .addClass ("component")
                .attr ("name", node .componentInfo .name)
                .text (this .browser .getSupportedComponents () .get (node .componentInfo .name) .title)
-               .appendTo (this .list)
+               .appendTo (this .list);
          }
 
          $("<li></li>")
             .addClass ("node")
             .text (node .typeName)
             .appendTo (this .list)
-            .on ("dblclick", () => this .createNode (node .typeName, node .componentInfo .name))
+            .on ("dblclick", () => this .createNode (node .typeName, node .componentInfo .name));
       }
    }
 
    createNode (typeName, componentName)
    {
-      UndoManager .shared .beginUndo (_ ("Create Node %s"), typeName)
+      UndoManager .shared .beginUndo (_ ("Create Node %s"), typeName);
 
-      Editor .addComponent (this .executionContext, componentName)
+      Editor .addComponent (this .executionContext, componentName);
 
       const
          node  = this .executionContext .createNode (typeName),
@@ -220,7 +220,7 @@ module .exports = new class Library extends Dialog
          }
          default:
          {
-            Editor .insertValueIntoArray (this .executionContext, this .executionContext, this .executionContext .rootNodes, this .executionContext .rootNodes .length, node)
+            Editor .insertValueIntoArray (this .executionContext, this .executionContext, this .executionContext .rootNodes, this .executionContext .rootNodes .length, node);
             break;
          }
       }
@@ -232,49 +232,49 @@ module .exports = new class Library extends Dialog
 
    updatePrimitives ()
    {
-      const cmp = (a, b) => (a > b) - (a < b)
+      const cmp = (a, b) => (a > b) - (a < b);
 
       // Clear list.
 
-      this .list .empty ()
+      this .list .empty ();
 
       // Make filter.
 
-      const input = this .input .val () .toLowerCase () .trim ()
+      const input = this .input .val () .toLowerCase () .trim ();
 
       if (input)
-         var filter = (object) => StringSimilarity .compareTwoStrings (object .typeName .toLowerCase (), input) > 0.4
+         var filter = (object) => StringSimilarity .compareTwoStrings (object .typeName .toLowerCase (), input) > 0.4;
       else
-         var filter = () => true
+         var filter = () => true;
 
       // Get primitives.
 
       const nodes = Primitives
          .filter (filter)
          .sort ((a, b) => cmp (a .typeName,  b .typeName))
-         .sort ((a, b) => cmp (a .componentInfo .name, b .componentInfo .name))
+         .sort ((a, b) => cmp (a .componentInfo .name, b .componentInfo .name));
 
       // Create list elements.
 
-      let componentName = ""
+      let componentName = "";
 
       for (const node of nodes)
       {
          if (node .componentInfo .name !== componentName)
          {
-            componentName = node .componentInfo .name
+            componentName = node .componentInfo .name;
 
             $("<li></li>")
                .addClass ("component")
                .text (node .componentInfo .name)
-               .appendTo (this .list)
+               .appendTo (this .list);
          }
 
          $("<li></li>")
             .addClass ("node")
             .text (node .typeName)
             .appendTo (this .list)
-            .on ("dblclick", () => this .importX3D (node .typeName, node .x3dSyntax))
+            .on ("dblclick", () => this .importX3D (node .typeName, node .x3dSyntax));
       }
    }
 
