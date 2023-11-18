@@ -296,8 +296,9 @@ async function initialize ()
 {
    const tool = await transform .getValue () .addTool () .getToolInstance ();
 
-   tool .tools       = new MFString ("TRANSLATE", "ROTATE");
-   tool .bboxDisplay = false;
+   tool .tools         = new MFString ("TRANSLATE", "ROTATE");
+   tool .centerDisplay = false;
+   tool .bboxDisplay   = false;
 }
 
 function set_selected ()

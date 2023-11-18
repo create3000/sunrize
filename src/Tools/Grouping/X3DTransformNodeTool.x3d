@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sat, 18 Nov 2023 00:07:46 GMT'/>
+    <meta name='modified' content='Sat, 18 Nov 2023 01:12:13 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -35,7 +35,7 @@
         <field accessType='inputOutput' type='SFBool' name='xAxisDisplay' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='yAxisDisplay' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='zAxisDisplay' value='true'/>
-        <field accessType='inputOutput' type='SFBool' name='centerDisplay'/>
+        <field accessType='inputOutput' type='SFBool' name='centerDisplay' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='bboxDisplay'/>
         <field accessType='inputOutput' type='SFInt32' name='bboxStyle' value='1'/>
         <field accessType='inputOutput' type='SFColor' name='bboxColor' value='1 1 1'/>
