@@ -45,42 +45,42 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    showContextMenu (event)
    {
       const element = $(document .elementFromPoint (event .pageX, event .pageY))
-         .closest ("li, #outline-editor", this .outlineEditor)
+         .closest ("li, #outline-editor", this .outlineEditor);
 
       if (!this .isEditable (element))
-         return
+         return;
 
       if (element .is (".externproto, .proto, .proto-scene, .node, .field"))
-         this .selectPrimaryElement (element)
+         this .selectPrimaryElement (element);
 
       const
          executionContextElement = element .closest (".scene"),
          executionContext        = this .getNode (executionContextElement) || this .executionContext,
-         node                    = this .getNode (element)
+         node                    = this .getNode (element);
 
       if (element .is (".field"))
       {
          const
             outerNode   = executionContext .getOuterNode (),
             field       = this .getField (element),
-            userDefined = node .getUserDefinedFields () .has (field .getName ())
+            userDefined = node .getUserDefinedFields () .has (field .getName ());
 
          const
             addReferences    = [ ],
-            removeReferences = [ ]
+            removeReferences = [ ];
 
          if (outerNode instanceof X3D .X3DProtoDeclaration && node .getType () .includes (X3D .X3DConstants .X3DNode))
          {
             const
                proto      = outerNode,
-               references = [ ]
+               references = [ ];
 
             for (const protoField of proto .getUserDefinedFields ())
             {
                if (protoField .getType () === field .getType () &&
-                     protoField .isReference (field .getAccessType ()))
+                   protoField .isReference (field .getAccessType ()));
                {
-                  references .push (protoField)
+                  references .push (protoField);
                }
             }
 
@@ -93,17 +93,17 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                   const menuItem = {
                      label: reference .getName (),
                      args: [proto .getId (), reference .getId (), node .getId (), field .getId ()],
-                  }
+                  };
 
                   if (field .getReferences () .has (reference))
                   {
-                     menuItem .args .unshift ("removeReference")
-                     removeReferences .push (menuItem)
+                     menuItem .args .unshift ("removeReference");
+                     removeReferences .push (menuItem);
                   }
                   else
                   {
-                     menuItem .args .unshift ("addReference")
-                     addReferences .push (menuItem)
+                     menuItem .args .unshift ("addReference");
+                     addReferences .push (menuItem);
                   }
                }
             }
@@ -161,14 +161,14 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                visible: field .getAccessType () !== X3D .X3DConstants .outputOnly,
                args: ["triggerEvent", element .attr ("id"), node .getId (), field .getId ()],
             },
-         ]
+         ];
       }
 
       else if (element .is (".node"))
       {
          const
             parentFieldElement = element .closest (".field, .scene", this .sceneGraph),
-            parentNodeElement  = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph)
+            parentNodeElement  = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph);
 
          var menu = [
             {
@@ -318,7 +318,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                enabled: parentNodeElement .hasClass ("node"),
                args: ["removeParent", element .attr ("id"), executionContext .getId (), node .getId ()],
             },
-         ]
+         ];
       }
 
       else if (element .is (".externproto, .proto"))
@@ -327,7 +327,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             protoNode = node,
             used      = Editor .isProtoNodeUsed (executionContext, protoNode),
             available = Editor .getNextAvailableProtoNode (executionContext, protoNode),
-            proto     = protoNode .isExternProto && executionContext .protos .get (protoNode .getName ())
+            proto     = protoNode .isExternProto && executionContext .protos .get (protoNode .getName ());
 
          var menu = [
             {
@@ -389,19 +389,19 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                label: "Paste",
                args: ["pasteNodes", element .attr ("id"), executionContext .getId ()],
             },
-         ]
+         ];
       }
       else
       {
-         return
+         return;
       }
 
-      electron .ipcRenderer .send ("context-menu", "outline-editor-menu", menu)
+      electron .ipcRenderer .send ("context-menu", "outline-editor-menu", menu);
    }
 
    addUserDefinedField (id, executionContextId, nodeId, fieldId)
    {
-      require ("../Controls/EditUserDefinedFieldPopover")
+      require ("../Controls/EditUserDefinedFieldPopover");
 
       const
          element          = $(`#${id}`),
@@ -415,7 +415,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
    editUserDefinedField (id, executionContextId, nodeId, fieldId)
    {
-      require ("../Controls/EditUserDefinedFieldPopover")
+      require ("../Controls/EditUserDefinedFieldPopover");
 
       const
          element          = $(`#${id}`),
