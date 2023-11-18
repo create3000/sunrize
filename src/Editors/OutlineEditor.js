@@ -117,6 +117,12 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             },
             { type: "separator" },
             {
+               label: "Paste",
+               visible: field .getType () === X3D .X3DConstants .SFNode || field .getType () === X3D .X3DConstants .MFNode,
+               args: ["pasteNodes", element .attr ("id"), executionContext .getId (), node .getId (), field .getId ()],
+            },
+            { type: "separator" },
+            {
                label: "Add Field...",
                visible: node .canUserDefinedFields (),
                args: ["addUserDefinedField", element .attr ("id"), executionContext .getId (), node .getId (), field .getId ()],
@@ -184,7 +190,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             },
             {
                label: "Paste",
-               args: ["pasteNodes", element .attr ("id"), executionContext .getId ()],
+               args: ["pasteNodes", element .attr ("id"), executionContext .getId (), node .getId ()],
             },
             {
                label: "Delete",
@@ -538,7 +544,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       undoManager .undo ()
    }
 
-   async pasteNodes (id, executionContextId)
+   async pasteNodes (id, executionContextId, nodeId, fieldId)
    {
       try
       {
@@ -546,16 +552,46 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             primary                 = $(".node.primary"),
             executionContextElement = primary .closest (".scene", this .sceneGraph),
             executionContext        = executionContextId ? this .objects .get (executionContextId) : this .getNode (executionContextElement) || this .executionContext,
-            x3dSyntax               = await navigator .clipboard .readText ()
+            targetNode              = this .objects .get (nodeId),
+            targetField             = this .objects .get (fieldId),
+            x3dSyntax               = await navigator .clipboard .readText ();
 
-         UndoManager .shared .beginUndo (_ ("Paste Nodes"))
-         await Editor .importX3D (executionContext, x3dSyntax)
-         UndoManager .shared .endUndo ()
+         UndoManager .shared .beginUndo (_ ("Paste Nodes"));
+
+         const
+            numRootNodes = executionContext .rootNodes .length,
+            nodes        = await Editor .importX3D (executionContext, x3dSyntax);
+
+         for (const node of nodes)
+         {
+            const field = targetField ?? $.try (() => targetNode ?.getField (node .getContainerField ()));
+
+            switch (field ?.getType ())
+            {
+               case X3D .X3DConstants .SFNode:
+               {
+                  Editor .setFieldValue (executionContext, targetNode, field, node);
+                  Editor .removeValueFromArray (executionContext, executionContext, executionContext .rootNodes, numRootNodes);
+                  break;
+               }
+               case X3D .X3DConstants .MFNode:
+               {
+                  Editor .insertValueIntoArray (executionContext, targetNode, field, field .length, node);
+                  Editor .removeValueFromArray (executionContext, executionContext, executionContext .rootNodes, numRootNodes);
+                  break;
+               }
+            }
+         }
+
+         UndoManager .shared .endUndo ();
+
+         for (const node of nodes)
+            this .expandTo (node);
       }
       catch (error)
       {
          // Catch "Document is not focused." from navigator.clipboard.readText.
-         console .error (`Paste failed: ${error .message}`)
+         console .error (`Paste failed: ${error .message}`);
       }
    }
 
@@ -565,16 +601,16 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          primary   = $(".node.primary"),
          selected  = this .sceneGraph .find (".node.manual.selected"),
          selection = selected .filter (primary) .length ? selected : primary,
-         ids       = selection .map (function () { return this .id }) .get ()
+         ids       = selection .map (function () { return this .id }) .get ();
 
       if (ids .length > 1)
-         UndoManager .shared .beginUndo (_ ("Delete %s Nodes"), ids .length)
+         UndoManager .shared .beginUndo (_ ("Delete %s Nodes"), ids .length);
       else if (ids .length === 1)
-         UndoManager .shared .beginUndo (_ ("Delete Node %s"), this .getNode ($(`#${ids [0]}`)) .getTypeName ())
+         UndoManager .shared .beginUndo (_ ("Delete Node %s"), this .getNode ($(`#${ids [0]}`)) .getTypeName ());
       else
-         return
+         return;
 
-      const nodes = [ ]
+      const nodes = [ ];
 
       for (const id of ids .reverse ())
       {
@@ -587,24 +623,24 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             parentField             = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement),
             index                   = parseInt (element .attr ("index")),
             executionContextElement = element .closest (".scene", this .sceneGraph),
-            executionContext        = this .getNode (executionContextElement)
+            executionContext        = this .getNode (executionContextElement);
 
          switch (parentField .getType ())
          {
             case X3D .X3DConstants .SFNode:
-               Editor .setFieldValue (executionContext, parentNode, parentField, null)
-               break
+               Editor .setFieldValue (executionContext, parentNode, parentField, null);
+               break;
             case X3D .X3DConstants .MFNode:
-               Editor .removeValueFromArray (executionContext, parentNode, parentField, index)
-               break
+               Editor .removeValueFromArray (executionContext, parentNode, parentField, index);
+               break;
          }
 
-         nodes .push (node)
+         nodes .push (node);
       }
 
-      Editor .removeNodesFromExecutionContextIfNecessary (this .executionContext, nodes)
+      Editor .removeNodesFromExecutionContextIfNecessary (this .executionContext, nodes);
 
-      UndoManager .shared .endUndo ()
+      UndoManager .shared .endUndo ();
    }
 
    unlinkClone (id, executionContextId, nodeId)
