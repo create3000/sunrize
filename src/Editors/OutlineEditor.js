@@ -269,20 +269,20 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                   },
                   { type: "separator" },
                   {
-                     label: "CADAssembly",
-                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADAssembly", "children"],
-                  },
-                  {
-                     label: "CADFace",
-                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADFace", "shape"],
-                  },
-                  {
                      label: "CADLayer",
                      args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADLayer", "children"],
                   },
                   {
+                     label: "CADAssembly",
+                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADAssembly", "children"],
+                  },
+                  {
                      label: "CADPart",
                      args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADPart", "children"],
+                  },
+                  {
+                     label: "CADFace",
+                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADFace", "shape"],
                   },
                   { type: "separator" },
                   {
@@ -304,12 +304,12 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                   },
                   { type: "separator" },
                   {
-                     label: "CollidableShape",
-                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "RigidBodyPhysics", "CollidableShape", "shape"],
-                  },
-                  {
                      label: "CollidableOffset",
                      args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "RigidBodyPhysics", "CollidableOffset", "collidable"],
+                  },
+                  {
+                     label: "CollidableShape",
+                     args:[ "addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "RigidBodyPhysics", "CollidableShape", "shape"],
                   },
                ],
             },
