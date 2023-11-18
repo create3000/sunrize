@@ -692,16 +692,7 @@ module .exports = class OutlineView extends Interface
          }
          else
          {
-            node .getLoadState () .addFieldCallback (this, () =>
-            {
-               const [className, description] = this .getLoadState (node .checkLoadState (), node .getTypeName ());
-
-               this .sceneGraph .find (`.load-state-${node .getId ()}`)
-                  .removeClass (["not-started-state", "in-progress-state", "complete-state", "failed-state"])
-                  .addClass (className)
-                  .find (".load-state-text")
-                  .text (description);
-            });
+            node .getLoadState () .addFieldCallback (this, this .updateLoadState .bind (this , node));
          }
 
          if (node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE && this .expandInlineNodes && node .getType () .includes (X3D .X3DConstants .Inline))
@@ -863,6 +854,17 @@ module .exports = class OutlineView extends Interface
             element .jstree ("open_node", element)
          }
       }
+   }
+
+   updateLoadState (node)
+   {
+      const [className, description] = this .getLoadState (node .checkLoadState (), node .getTypeName ());
+
+      this .sceneGraph .find (`.load-state-${node .getId ()}`)
+         .removeClass (["not-started-state", "in-progress-state", "complete-state", "failed-state"])
+         .addClass (className)
+         .find (".load-state-text")
+         .text (description);
    }
 
    createLoadStateElement (loadState, typeName)
