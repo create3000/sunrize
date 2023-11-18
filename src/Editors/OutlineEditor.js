@@ -557,7 +557,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             targetNode              = this .objects .get (nodeId) ?? this .getNode (primary),
             targetField             = this .objects .get (fieldId),
             numRootNodes            = executionContext .rootNodes .length,
-            x3dSyntax               = await navigator .clipboard .readText ();
+            x3dSyntax               = await navigator .clipboard .readText (),
+            destinationModelMatrix  = nodeId !== undefined ? this .getModelMatrix ($(`.node[node-id=${nodeId}]`)) : new X3D .Matrix4 ();
 
          UndoManager .shared .beginUndo (_ ("Paste Nodes"));
 
@@ -567,7 +568,23 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          {
             const field = targetField ?? $.try (() => targetNode ?.getField (node .getContainerField ()));
 
-            switch (field ?.getType ())
+            if (!field)
+               continue;
+
+            // Adjust matrix.
+
+            if (node .getType () .includes (X3D .X3DConstants .X3DTransformNode))
+            {
+               const
+                  sourceModelMatrix = node .getMatrix (),
+                  matrix            = destinationModelMatrix .copy () .inverse () .multLeft (sourceModelMatrix);
+
+               Editor .setMatrixWithCenter (node, matrix);
+            }
+
+            // Move node.
+
+            switch (field .getType ())
             {
                case X3D .X3DConstants .SFNode:
                {
