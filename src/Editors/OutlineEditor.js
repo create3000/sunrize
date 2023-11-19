@@ -503,13 +503,13 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    {
       UndoManager .shared .beginUndo (_ ("Cut Nodes"));
 
-      this .copyNodes ();
+      this .copyNodes (false);
       this .deleteNodes ();
 
       UndoManager .shared .endUndo ();
    }
 
-   copyNodes ()
+   copyNodes (removePrimary = true)
    {
       const
          primary     = $(".node.primary, .proto.primary, .externproto.primary"),
@@ -542,7 +542,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       undoManager .undo ();
 
-      primary .removeClass ("primary");
+      if (removePrimary)
+         primary .removeClass ("primary");
    }
 
    async pasteNodes (id, executionContextId, nodeId, fieldId)

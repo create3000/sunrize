@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 19 Nov 2023 19:01:57 GMT'/>
+    <meta name='modified' content='Sun, 19 Nov 2023 19:35:50 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -93,6 +93,21 @@
                   <connect nodeField='visible' protoField='xAxisDisplay'/>
                 </IS>
                 <Group DEF='Front'>
+                  <Shape DEF='xAxis'
+                      castShadow='false'>
+                    <IS>
+                      <connect nodeField='visible' protoField='xAxisDisplay'/>
+                    </IS>
+                    <IndexedLineSet
+                        colorPerVertex='false'
+                        colorIndex='0'
+                        coordIndex='0, 1, -1'>
+                      <Color DEF='_28'
+                          color='1 0 0, 0 1 0, 0 0 1'/>
+                      <Coordinate DEF='AxesCoord_1'
+                          point='-0.5 0 0, 0.5 0 0, 0 -0.5 0, 0 0.5 0, 0 0 -0.5, 0 0 0.6'/>
+                    </IndexedLineSet>
+                  </Shape>
                   <Transform DEF='XFront'
                       translation='0.5 0 0'>
                     <ScreenGroup>
@@ -153,6 +168,7 @@
                   </PlaneSensor>
                 </Group>
                 <Group DEF='Back'>
+                  <Shape USE='xAxis'/>
                   <Transform DEF='XBack_1'
                       translation='-0.5 0 0'>
                     <ScreenGroup>
@@ -189,13 +205,6 @@
                   </Transform>
                   <TouchSensor USE='ModeTouch'/>
                   <PlaneSensor USE='XTranslationSensor'/>
-                  <PlaneSensor DEF='XPlaneSensor_1'
-                      axisRotation='0 1 0 90'
-                      autoOffset='false'>
-                    <IS>
-                      <connect nodeField='isActive' protoField='isActive'/>
-                    </IS>
-                  </PlaneSensor>
                   <PlaneSensor DEF='XScaleBackSensor'
                       description='x-Axis'
                       autoOffset='false'
@@ -205,27 +214,25 @@
                     </IS>
                   </PlaneSensor>
                 </Group>
-                <Shape DEF='xAxis_1'
-                    castShadow='false'>
-                  <IS>
-                    <connect nodeField='visible' protoField='xAxisDisplay'/>
-                  </IS>
-                  <IndexedLineSet
-                      colorPerVertex='false'
-                      colorIndex='0'
-                      coordIndex='0, 1, -1'>
-                    <Color DEF='_4'
-                        color='1 0 0, 0 1 0, 0 0 1'/>
-                    <Coordinate DEF='AxesCoord'
-                        point='-0.5 0 0, 0.5 0 0, 0 -0.5 0, 0 0.5 0, 0 0 -0.5, 0 0 0.6'/>
-                  </IndexedLineSet>
-                </Shape>
               </Group>
               <Group DEF='YHandle'>
                 <IS>
                   <connect nodeField='visible' protoField='yAxisDisplay'/>
                 </IS>
                 <Group DEF='Front_1'>
+                  <Shape DEF='yAxis_1'
+                      castShadow='false'>
+                    <IS>
+                      <connect nodeField='visible' protoField='yAxisDisplay'/>
+                    </IS>
+                    <IndexedLineSet
+                        colorPerVertex='false'
+                        colorIndex='1'
+                        coordIndex='2, 3, -1'>
+                      <Color USE='_28'/>
+                      <Coordinate USE='AxesCoord_1'/>
+                    </IndexedLineSet>
+                  </Shape>
                   <Transform DEF='YFront'
                       translation='0 0.5 0'>
                     <ScreenGroup>
@@ -281,6 +288,7 @@
                   </PlaneSensor>
                 </Group>
                 <Group DEF='Back_2'>
+                  <Shape USE='yAxis_1'/>
                   <Transform DEF='YBack_1'
                       translation='0 -0.5 0'>
                     <ScreenGroup>
@@ -310,13 +318,6 @@
                   </Transform>
                   <TouchSensor USE='ModeTouch'/>
                   <PlaneSensor USE='YTranslationSensor'/>
-                  <PlaneSensor DEF='YPlaneSensor'
-                      axisRotation='-1 0 0 90'
-                      autoOffset='false'>
-                    <IS>
-                      <connect nodeField='isActive' protoField='isActive'/>
-                    </IS>
-                  </PlaneSensor>
                   <PlaneSensor DEF='YScaleBackSensor'
                       description='y-Axis'
                       autoOffset='false'
@@ -326,25 +327,25 @@
                     </IS>
                   </PlaneSensor>
                 </Group>
-                <Shape DEF='yAxis_1'
-                    castShadow='false'>
-                  <IS>
-                    <connect nodeField='visible' protoField='yAxisDisplay'/>
-                  </IS>
-                  <IndexedLineSet
-                      colorPerVertex='false'
-                      colorIndex='1'
-                      coordIndex='2, 3, -1'>
-                    <Color USE='_4'/>
-                    <Coordinate USE='AxesCoord'/>
-                  </IndexedLineSet>
-                </Shape>
               </Group>
               <Group DEF='ZHandle'>
                 <IS>
                   <connect nodeField='visible' protoField='zAxisDisplay'/>
                 </IS>
                 <Group DEF='Front_2'>
+                  <Shape DEF='zAxis'
+                      castShadow='false'>
+                    <IS>
+                      <connect nodeField='visible' protoField='zAxisDisplay'/>
+                    </IS>
+                    <IndexedLineSet
+                        colorPerVertex='false'
+                        colorIndex='2'
+                        coordIndex='4, 5, -1'>
+                      <Color USE='_28'/>
+                      <Coordinate USE='AxesCoord_1'/>
+                    </IndexedLineSet>
+                  </Shape>
                   <Transform DEF='ZFront'
                       translation='0 0 0.5'>
                     <ScreenGroup>
@@ -403,6 +404,7 @@
                   </PlaneSensor>
                 </Group>
                 <Group DEF='Back_3'>
+                  <Shape USE='zAxis'/>
                   <Transform DEF='ZBack'
                       translation='0 0 -0.5'>
                     <ScreenGroup>
@@ -431,12 +433,6 @@
                   </Transform>
                   <TouchSensor USE='ModeTouch'/>
                   <PlaneSensor USE='ZTranslationSensor'/>
-                  <PlaneSensor DEF='ZPlaneSensor_1'
-                      autoOffset='false'>
-                    <IS>
-                      <connect nodeField='isActive' protoField='isActive'/>
-                    </IS>
-                  </PlaneSensor>
                   <PlaneSensor DEF='ZScaleBackSensor'
                       description='z-Axis'
                       axisRotation='0 -1 0 90'
@@ -447,19 +443,6 @@
                     </IS>
                   </PlaneSensor>
                 </Group>
-                <Shape DEF='zAxis'
-                    castShadow='false'>
-                  <IS>
-                    <connect nodeField='visible' protoField='zAxisDisplay'/>
-                  </IS>
-                  <IndexedLineSet
-                      colorPerVertex='false'
-                      colorIndex='2'
-                      coordIndex='4, 5, -1'>
-                    <Color USE='_4'/>
-                    <Coordinate USE='AxesCoord'/>
-                  </IndexedLineSet>
-                </Shape>
               </Group>
               <Switch DEF='UniformScaleHandles'>
                 <IS>
@@ -564,21 +547,35 @@
               <IS>
                 <connect nodeField='visible' protoField='centerDisplay'/>
               </IS>
-              <Shape DEF='CenterLine'
-                  castShadow='false'>
-                <Appearance>
-                  <LineProperties
-                      linetype='3'
-                      linewidthScaleFactor='2'/>
-                </Appearance>
-                <IndexedLineSet DEF='CenterIndexedLineSet'
-                    coordIndex='0, 1, -1'>
-                  <Color
-                      color='1 1 0, 1 1 0'/>
-                  <Coordinate DEF='CenterLineCoord'
-                      point='0 0 0, 0 0 0'/>
-                </IndexedLineSet>
-              </Shape>
+              <ProtoInstance name='BooleanSwitch' DEF='_15'>
+                <fieldValue name='children'>
+                  <Shape DEF='CenterLine'
+                      castShadow='false'>
+                    <Appearance DEF='CenterLineStyle'>
+                      <LineProperties
+                          linetype='3'
+                          linewidthScaleFactor='2'/>
+                    </Appearance>
+                    <IndexedLineSet DEF='CenterIndexedLineSet_1'
+                        coordIndex='0, 1, -1'>
+                      <Color DEF='Yellow_1'
+                          color='1 1 0, 1 1 0'/>
+                      <Coordinate DEF='CenterLineCoord'
+                          point='0 0 0, 0 0 0'/>
+                    </IndexedLineSet>
+                  </Shape>
+                  <Shape DEF='CenterLine_1'
+                      castShadow='false'>
+                    <Appearance USE='CenterLineStyle'/>
+                    <IndexedLineSet
+                        coordIndex='0, 1, -1'>
+                      <Color DEF='SkyBlue_1'
+                          color='0 0.5 1, 0 0.5 1'/>
+                      <Coordinate USE='CenterLineCoord'/>
+                    </IndexedLineSet>
+                  </Shape>
+                </fieldValue>
+              </ProtoInstance>
               <Transform DEF='CenterPoint'>
                 <IS>
                   <connect nodeField='translation' protoField='center'/>
@@ -607,9 +604,16 @@
                     </fieldValue>
                   </ProtoInstance>
                 </ScreenGroup>
-                <TouchSensor DEF='_10'
-                    description='Center'/>
               </Transform>
+              <ScreenGroup>
+                <Transform
+                    scale='0.6666667 0.6666667 0.6666667'>
+                  <ProtoInstance name='BooleanSwitch' USE='_1'/>
+                  <ProtoInstance name='BooleanSwitch' USE='_1'/>
+                </Transform>
+              </ScreenGroup>
+              <TouchSensor DEF='_10'
+                  description='Center'/>
             </Group>
           </Transform>
         </Collision>
@@ -620,7 +624,7 @@
             <Coordinate USE='BBox'/>
           </field>
           <field accessType='initializeOnly' type='SFNode' name='axes'>
-            <Coordinate USE='AxesCoord'/>
+            <Coordinate USE='AxesCoord_1'/>
           </field>
           <IS>
             <connect nodeField='bboxSize' protoField='bboxSize'/>
@@ -1380,9 +1384,6 @@ function set_bboxCenter ()
         <ROUTE fromNode='XScaleBackSensor' fromField='translation_changed' toNode='ScaleScript' toField='set_xScaleBack'/>
         <ROUTE fromNode='YScaleBackSensor' fromField='translation_changed' toNode='ScaleScript' toField='set_yScaleBack'/>
         <ROUTE fromNode='ZScaleBackSensor' fromField='translation_changed' toNode='ScaleScript' toField='set_zScaleBack'/>
-        <ROUTE fromNode='YPlaneSensor' fromField='isActive' toNode='TranslateScript' toField='set_active'/>
-        <ROUTE fromNode='ZPlaneSensor_1' fromField='isActive' toNode='TranslateScript' toField='set_active'/>
-        <ROUTE fromNode='XPlaneSensor_1' fromField='isActive' toNode='TranslateScript' toField='set_active'/>
         <ROUTE fromNode='ModeScript' fromField='activeTool' toNode='UniformScaleHandles' toField='set_whichChoice'/>
         <ROUTE fromNode='ScaleSensor8' fromField='isActive' toNode='ScaleScript' toField='set_active'/>
         <ROUTE fromNode='ScaleSensor8' fromField='translation_changed' toNode='ScaleScript' toField='set_scale8'/>
@@ -1404,9 +1405,11 @@ function set_bboxCenter ()
         <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='TranslateScript' toField='set_keepCenter'/>
         <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='_1' toField='set_whichChoice'/>
         <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='ScaleScript' toField='set_keepCenter'/>
+        <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='_15' toField='set_whichChoice'/>
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
+      <fieldValue name='center' value='2 0 0'/>
       <fieldValue name='bboxSize' value='2 3 4'/>
     </ProtoInstance>
   </Scene>
