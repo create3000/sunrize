@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 19 Nov 2023 11:58:31 GMT'/>
+    <meta name='modified' content='Sun, 19 Nov 2023 11:59:49 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -1039,11 +1039,11 @@ function set_scale ()
                          scaleOrientation,
                          center);
 
-   const sr = new SFMatrix3f (matrix [0], matrix [1], matrix [2],
-                              matrix [4], matrix [5], matrix [6],
-                              matrix [8], matrix [9], matrix [10]);
+   const sub = new SFMatrix3f (matrix [0], matrix [1], matrix [2],
+                               matrix [4], matrix [5], matrix [6],
+                               matrix [8], matrix [9], matrix [10]);
 
-   if (sr .determinant () >= 0)
+   if (sub .determinant () >= 0)
       lineProperties .linetype = 1; // SOLID
    else
       lineProperties .linetype = 2; // Negtative scale, DASHED
