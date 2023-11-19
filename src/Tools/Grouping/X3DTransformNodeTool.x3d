@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 19 Nov 2023 18:06:03 GMT'/>
+    <meta name='modified' content='Sun, 19 Nov 2023 19:01:57 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -597,7 +597,11 @@
                       </Shape>
                       <Shape DEF='RedPoint'
                           castShadow='false'>
-                        <Appearance USE='Red_1'/>
+                        <Appearance DEF='SkyBlue'>
+                          <Material
+                              diffuseColor='0 0.5 1'/>
+                          <ProtoInstance name='ToolShader' USE='_9' containerField='shaders'/>
+                        </Appearance>
                         <Sphere USE='Sphere_1'/>
                       </Shape>
                     </fieldValue>
