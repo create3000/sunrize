@@ -189,11 +189,8 @@ module .exports = class Editor
 
       // Add components.
 
-      for (const component of tempScene .getProfile () .components)
-         await this .addComponent (scene, component .name, undoManager);
-
-      for (const component of tempScene .getComponents ())
-         await this .addComponent (scene, component .name, undoManager);
+      await Promise .all ([... tempScene .getProfile () .components, ... tempScene .getComponents ()]
+         .map (component => this .addComponent (scene, component, undoManager)));
 
       // Remove protos that already exists in context.
 
@@ -679,13 +676,13 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    /**
     *
     * @param {X3DExecutionContext} scene
-    * @param {string} name
+    * @param {string|ComponentInfo} name
     * @param {UndoManager} undoManager
     */
    static async addComponent (scene, name, undoManager = UndoManager .shared)
    {
-      if (!(scene instanceof X3D .X3DScene))
-         scene = scene .getScene ();
+      scene = this .getScene (scene);
+      name  = name instanceof X3D .ComponentInfo ? name .name : name;
 
       if (scene .hasComponent (name))
          return;
@@ -708,27 +705,27 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    /**
     *
     * @param {X3DExecutionContext} scene
-    * @param {string} name
+    * @param {string|ComponentInfo} name
     * @param {UndoManager} undoManager
     */
    static removeComponent (scene, name, undoManager = UndoManager .shared)
    {
-      if (!(scene instanceof X3D .X3DScene))
-         scene = scene .getScene ()
+      scene = this .getScene (scene);
+      name  = name instanceof X3D .ComponentInfo ? name .name : name;
 
       if (!scene .hasComponent (name))
-         return
+         return;
 
-      undoManager .beginUndo (_ ("Remove Component %s"), name)
+      undoManager .beginUndo (_ ("Remove Component %s"), name);
 
-      scene .removeComponent (name)
+      scene .removeComponent (name);
 
       undoManager .registerUndo (() =>
       {
-         this .addComponent (scene, name, undoManager)
+         this .addComponent (scene, name, undoManager);
       })
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
