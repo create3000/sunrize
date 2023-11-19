@@ -566,7 +566,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
          for (const node of nodes)
          {
-            const field = targetField ?? $.try (() => targetNode ?.getField (node .getContainerField ()));
+            const
+               containerField = $.try (() => node .getInnerNode () .getContainerField ()) ?? node .getContainerField (),
+               field          = targetField ?? $.try (() => targetNode ?.getField (containerField));
 
             if (!field)
                continue;
@@ -1681,10 +1683,10 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
    async onDrop (event)
    {
-      // console .log ("onDrop")
+      // console .log ("onDrop");
 
-      event .preventDefault ()
-      event .stopPropagation ()
+      event .preventDefault ();
+      event .stopPropagation ();
 
       if (event .originalEvent .dataTransfer .types .includes ("sunrize/externproto"))
       {
@@ -1693,70 +1695,70 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             sourceElement                 = $("#" + sourceElementId),
             sourceExecutionContextElement = sourceElement .closest (".scene", this .sceneGraph),
             sourceExecutionContext        = this .getNode (sourceExecutionContextElement),
-            sourceIndex                   = parseInt (sourceElement .attr ("index"))
+            sourceIndex                   = parseInt (sourceElement .attr ("index"));
 
-         let sourceExternProto = this .getNode (sourceElement)
+         let sourceExternProto = this .getNode (sourceElement);
 
          const
             destinationElement                 = $(event .target) .closest (".externproto, .externprotos, .scene", this .sceneGraph),
             destinationExecutionContextElement = destinationElement .closest (".scene", this .sceneGraph),
-            destinationExecutionContext        = this .getNode (destinationExecutionContextElement)
+            destinationExecutionContext        = this .getNode (destinationExecutionContextElement);
 
-         let destinationIndex = destinationElement .hasClass ("externproto") ? parseInt (destinationElement .attr ("index")) : destinationExecutionContext .externprotos .length
+         let destinationIndex = destinationElement .hasClass ("externproto") ? parseInt (destinationElement .attr ("index")) : destinationExecutionContext .externprotos .length;
 
          if (destinationElement .hasClass ("externproto") && destinationElement .data ("drag-type") ==="drag-after")
-            ++ destinationIndex
+            ++ destinationIndex;
 
          switch (destinationElement .data ("dropEffect"))
          {
             case "copy":
             {
-               UndoManager .shared .beginUndo (_ ("Copy Extern Proto »%s«"), sourceExternProto .getName ())
+               UndoManager .shared .beginUndo (_ ("Copy Extern Proto »%s«"), sourceExternProto .getName ());
 
-               await Editor .importX3D (destinationExecutionContext, Editor .exportVRML (sourceExecutionContext, [sourceExternProto]))
+               await Editor .importX3D (destinationExecutionContext, Editor .exportVRML (sourceExecutionContext, [sourceExternProto]));
 
                const
                   externprotos = Array .from (destinationExecutionContext .externprotos),
-                  externproto  = externprotos .pop ()
+                  externproto  = externprotos .pop ();
 
-               externprotos .splice (destinationIndex, 0, externproto)
+               externprotos .splice (destinationIndex, 0, externproto);
 
-               Editor .setExternProtoDeclarations (destinationExecutionContext, externprotos)
+               Editor .setExternProtoDeclarations (destinationExecutionContext, externprotos);
 
                if (Editor .isParentContext (sourceExecutionContext, destinationExecutionContext))
                {
                   if (!destinationExecutionContext .protos .get (externproto .getName ()))
                   {
-                     const available = Editor .getNextAvailableProtoNode (destinationExecutionContext, externproto)
+                     const available = Editor .getNextAvailableProtoNode (destinationExecutionContext, externproto);
 
-                     Editor .replaceProtoNodes (destinationExecutionContext, available, externproto)
+                     Editor .replaceProtoNodes (destinationExecutionContext, available, externproto);
                   }
                }
 
-               UndoManager .shared .endUndo ()
-               break
+               UndoManager .shared .endUndo ();
+               break;
             }
             case "move":
             {
                if (sourceExecutionContext !== destinationExecutionContext)
-                  break
+                  break;
 
                if (sourceIndex === destinationIndex || sourceIndex + 1 === destinationIndex)
-                  break
+                  break;
 
-               UndoManager .shared .beginUndo (_ ("Move Extern Proto »%s«"), sourceExternProto .getName ())
+               UndoManager .shared .beginUndo (_ ("Move Extern Proto »%s«"), sourceExternProto .getName ());
 
-               const externprotos = Array .from (destinationExecutionContext .externprotos)
+               const externprotos = Array .from (destinationExecutionContext .externprotos);
 
                if (sourceIndex < destinationIndex)
-                  -- destinationIndex
+                  -- destinationIndex;
 
-               externprotos .splice (sourceIndex, 1)
-               externprotos .splice (destinationIndex, 0, sourceExternProto)
+               externprotos .splice (sourceIndex, 1);
+               externprotos .splice (destinationIndex, 0, sourceExternProto);
 
-               Editor .setExternProtoDeclarations (destinationExecutionContext, externprotos)
-               UndoManager .shared .endUndo ()
-               break
+               Editor .setExternProtoDeclarations (destinationExecutionContext, externprotos);
+               UndoManager .shared .endUndo ();
+               break;
             }
          }
       }
@@ -1767,93 +1769,93 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             sourceElement                 = $("#" + sourceElementId),
             sourceExecutionContextElement = sourceElement .closest (".scene", this .sceneGraph),
             sourceExecutionContext        = this .getNode (sourceExecutionContextElement),
-            sourceIndex                   = parseInt (sourceElement .attr ("index"))
+            sourceIndex                   = parseInt (sourceElement .attr ("index"));
 
-         let sourceProto = this .getNode (sourceElement)
+         let sourceProto = this .getNode (sourceElement);
 
          const
             destinationElement                 = $(event .target) .closest (".proto, .protos, .scene", this .sceneGraph),
             destinationExecutionContextElement = destinationElement .closest (".scene", this .sceneGraph),
-            destinationExecutionContext        = this .getNode (destinationExecutionContextElement)
+            destinationExecutionContext        = this .getNode (destinationExecutionContextElement);
 
-         let destinationIndex = destinationElement .hasClass ("proto") ? parseInt (destinationElement .attr ("index")) : destinationExecutionContext .protos .length
+         let destinationIndex = destinationElement .hasClass ("proto") ? parseInt (destinationElement .attr ("index")) : destinationExecutionContext .protos .length;
 
          if (destinationElement .hasClass ("proto") && destinationElement .data ("drag-type") ==="drag-after")
-            ++ destinationIndex
+            ++ destinationIndex;
 
          switch (destinationElement .data ("dropEffect"))
          {
             case "copy":
             {
-               UndoManager .shared .beginUndo (_ ("Copy Prototype »%s«"), sourceProto .getName ())
-               await Editor .importX3D (destinationExecutionContext, Editor .exportVRML (sourceExecutionContext, [sourceProto]))
+               UndoManager .shared .beginUndo (_ ("Copy Prototype »%s«"), sourceProto .getName ());
+               await Editor .importX3D (destinationExecutionContext, Editor .exportVRML (sourceExecutionContext, [sourceProto]));
 
                const
                   protos = Array .from (destinationExecutionContext .protos),
-                  proto  = protos .pop ()
+                  proto  = protos .pop ();
 
-               protos .splice (destinationIndex, 0, proto)
+               protos .splice (destinationIndex, 0, proto);
 
-               Editor .setProtoDeclarations (destinationExecutionContext, protos)
+               Editor .setProtoDeclarations (destinationExecutionContext, protos);
 
                if (Editor .isParentContext (sourceExecutionContext, destinationExecutionContext))
                {
-                  const available = Editor .getNextAvailableProtoNode (destinationExecutionContext, proto)
+                  const available = Editor .getNextAvailableProtoNode (destinationExecutionContext, proto);
 
-                  Editor .replaceProtoNodes (destinationExecutionContext, available, proto)
+                  Editor .replaceProtoNodes (destinationExecutionContext, available, proto);
                }
 
-               UndoManager .shared .endUndo ()
-               break
+               UndoManager .shared .endUndo ();
+               break;
             }
             case "move":
             {
                if (sourceExecutionContext !== destinationExecutionContext)
-                  break
+                  break;
 
                if (sourceIndex === destinationIndex || sourceIndex + 1 === destinationIndex)
-                  break
+                  break;
 
-               UndoManager .shared .beginUndo (_ ("Move Prototype »%s«"), sourceProto .getName ())
+               UndoManager .shared .beginUndo (_ ("Move Prototype »%s«"), sourceProto .getName ());
 
-               const protos = Array .from (destinationExecutionContext .protos)
+               const protos = Array .from (destinationExecutionContext .protos);
 
                if (sourceIndex < destinationIndex)
-                  -- destinationIndex
+                  -- destinationIndex;
 
-               protos .splice (sourceIndex, 1)
-               protos .splice (destinationIndex, 0, sourceProto)
+               protos .splice (sourceIndex, 1);
+               protos .splice (destinationIndex, 0, sourceProto);
 
-               Editor .setProtoDeclarations (destinationExecutionContext, protos)
-               UndoManager .shared .endUndo ()
-               break
+               Editor .setProtoDeclarations (destinationExecutionContext, protos);
+               UndoManager .shared .endUndo ();
+               break;
             }
          }
       }
       else if (event .originalEvent .dataTransfer .types .includes ("sunrize/nodes"))
       {
-         const sourceElementsIds = event .originalEvent .dataTransfer .getData ("sunrize/nodes") .split (",")
+         const sourceElementsIds = event .originalEvent .dataTransfer .getData ("sunrize/nodes") .split (",");
 
          const
             destinationElement                 = $(event .target) .closest ("li, .scene", this .sceneGraph),
             destinationParentFieldElement      = destinationElement .closest (".field, .scene", this .sceneGraph),
             destinationParentNodeElement       = destinationParentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
             destinationExecutionContextElement = destinationElement .closest (".scene", this .sceneGraph),
-            destinationExecutionContext        = this .getNode (destinationExecutionContextElement)
+            destinationExecutionContext        = this .getNode (destinationExecutionContextElement);
 
          let
             destinationParentNode  = this .getNode (destinationParentNodeElement),
             destinationParentField = destinationParentFieldElement .hasClass ("scene") ? destinationParentNode .rootNodes : this .getField (destinationParentFieldElement),
-            destinationIndex       = parseInt (destinationElement .attr ("index"))
+            destinationIndex       = parseInt (destinationElement .attr ("index"));
 
          if (destinationElement .hasClass ("node") && destinationElement .data ("drag-type") === "drag-after")
-            ++ destinationIndex
+            ++ destinationIndex;
 
          if (destinationElement .attr ("node-id") !== "NULL")
          {
             if (destinationElement .hasClass ("node") && destinationElement .data ("drag-type") === "drag-into")
             {
-               destinationParentNode = this .getNode (destinationElement)
+               destinationParentNode = this .getNode (destinationElement);
             }
          }
 
@@ -1863,18 +1865,18 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          {
             const
                sourceElement = $("#" + sourceElementsIds [0]),
-               sourceNode    = this .getNode (sourceElement)
+               sourceNode    = this .getNode (sourceElement);
 
-            UndoManager .shared .beginUndo (this .getUndoDescriptionForNode (destinationElement .data ("dropEffect"), sourceNode), sourceNode .getTypeName (), sourceNode .getDisplayName ())
+            UndoManager .shared .beginUndo (this .getUndoDescriptionForNode (destinationElement .data ("dropEffect"), sourceNode), sourceNode .getTypeName (), sourceNode .getDisplayName ());
          }
          else
          {
-            UndoManager .shared .beginUndo (this .getUndoDescriptionForNode (destinationElement .data ("dropEffect"), sourceElementsIds), sourceElementsIds .length)
+            UndoManager .shared .beginUndo (this .getUndoDescriptionForNode (destinationElement .data ("dropEffect"), sourceElementsIds), sourceElementsIds .length);
          }
 
          // Copy source nodes if needed.
 
-         const sourceNodes = [ ]
+         const sourceNodes = [ ];
 
          for (const sourceElementId of sourceElementsIds)
          {
@@ -1882,24 +1884,24 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                sourceElement                 = $("#" + sourceElementId),
                sourceNode                    = this .getNode (sourceElement),
                sourceExecutionContextElement = sourceElement .closest (".scene", this .sceneGraph),
-               sourceExecutionContext        = this .getNode (sourceExecutionContextElement)
+               sourceExecutionContext        = this .getNode (sourceExecutionContextElement);
 
             if (destinationElement .data ("dropEffect") === "copy" || sourceExecutionContext !== destinationExecutionContext)
             {
-               sourceNodes .push (sourceNode)
+               sourceNodes .push (sourceNode);
             }
          }
 
          const copiedNodes = sourceNodes .length
             ? await Editor .importX3D (destinationExecutionContext, Editor .exportVRML (this .executionContext, sourceNodes))
-            : [ ]
+            : [ ];
 
          if (copiedNodes .length)
-            destinationExecutionContext .rootNodes .length -= copiedNodes .length
+            destinationExecutionContext .rootNodes .length -= copiedNodes .length;
 
          // Move, copy, link nodes.
 
-         const sourceIndexOffsets = new Map ()
+         const sourceIndexOffsets = new Map ();
 
          for (const sourceElementId of sourceElementsIds)
          {
@@ -1910,35 +1912,37 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                sourceParentNode              = this .getNode (sourceParentNodeElement),
                sourceParentField             = sourceParentFieldElement .hasClass ("scene") ? sourceParentNode .rootNodes : this .getField (sourceParentFieldElement),
                sourceExecutionContextElement = sourceElement .closest (".scene", this .sceneGraph),
-               sourceExecutionContext        = this .getNode (sourceExecutionContextElement)
+               sourceExecutionContext        = this .getNode (sourceExecutionContextElement);
 
             let
                sourceNode  = this .getNode (sourceElement),
-               sourceIndex = parseInt (sourceElement .attr ("index"))
+               sourceIndex = parseInt (sourceElement .attr ("index"));
 
             if (destinationElement .attr ("node-id") !== "NULL")
             {
                if (destinationElement .hasClass ("node") && destinationElement .data ("drag-type") === "drag-into")
                {
-                  try
-                  {
-                     if (destinationParentNode === sourceNode)
-                        continue
+                  if (destinationParentNode === sourceNode)
+                     continue;
 
-                     destinationParentField = destinationParentNode .getField (sourceNode .getContainerField ())
-                  }
-                  catch
+                  const containerField = $.try (() => sourceNode .getInnerNode () .getContainerField ())
+                     ?? sourceNode .getContainerField ();
+
+                  if (containerField)
+                     destinationParentField = $.try (() => destinationParentNode .getField (containerField));
+
+                  if (!destinationParentField)
                   {
                      for (const field of destinationParentNode .getFields () .reverse ())
                      {
                         if (!field .isInitializable ())
-                           continue
+                           continue;
 
                         if (field .getType () !== X3D .X3DConstants .SFNode && field .getType () !== X3D .X3DConstants .MFNode)
-                           continue
+                           continue;
 
-                        destinationParentField = field
-                        break
+                        destinationParentField = field;
+                        break;
                      }
                   }
                }
@@ -1949,20 +1953,20 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             if (sourceIndexOffsets .has (sourceParentField))
             {
                if (sourceParentField !== destinationParentField || destinationIndex > sourceIndex || isNaN (destinationIndex))
-                  sourceIndexOffsets .set (sourceParentField, sourceIndexOffsets .get (sourceParentField) - 1)
+                  sourceIndexOffsets .set (sourceParentField, sourceIndexOffsets .get (sourceParentField) - 1);
             }
             else
             {
-               sourceIndexOffsets .set (sourceParentField, 0)
+               sourceIndexOffsets .set (sourceParentField, 0);
             }
 
-            sourceIndex += sourceIndexOffsets .get (sourceParentField)
+            sourceIndex += sourceIndexOffsets .get (sourceParentField);
 
             // If source equal destination, continue.
 
             if (sourceParentField === destinationParentField && (sourceIndex === destinationIndex || sourceIndex + 1 === destinationIndex || isNaN (sourceIndex) && isNaN (destinationIndex)) && destinationElement .data ("dropEffect") === "move")
             {
-               continue
+               continue;
             }
 
             // Remove source node.
@@ -1973,16 +1977,16 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                {
                   case X3D .X3DConstants .SFNode:
                   {
-                     Editor .setFieldValue (sourceExecutionContext, sourceParentNode, sourceParentField, null)
-                     break
+                     Editor .setFieldValue (sourceExecutionContext, sourceParentNode, sourceParentField, null);
+                     break;
                   }
                   case X3D .X3DConstants .MFNode:
                   {
                      if (sourceParentField === destinationParentField && destinationIndex >= sourceIndex)
-                        -- destinationIndex
+                        -- destinationIndex;
 
-                     Editor .removeValueFromArray (sourceExecutionContext, sourceParentNode, sourceParentField, sourceIndex)
-                     break
+                     Editor .removeValueFromArray (sourceExecutionContext, sourceParentNode, sourceParentField, sourceIndex);
+                     break;
                   }
                }
             }
@@ -1991,7 +1995,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             if (destinationElement .data ("dropEffect") === "copy" || sourceExecutionContext !== destinationExecutionContext)
             {
-               sourceNode = copiedNodes .shift ()
+               sourceNode = copiedNodes .shift ();
             }
 
             // Adjust matrix.
@@ -2002,10 +2006,10 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                {
                   const
                      sourceModelMatrix      = this .getModelMatrix (sourceElement),
-                     destinationModelMatrix = this .getModelMatrix (destinationParentNodeElement)
+                     destinationModelMatrix = this .getModelMatrix (destinationParentNodeElement);
 
-                  destinationModelMatrix .inverse () .multLeft (sourceModelMatrix)
-                  Editor .setMatrixWithCenter (sourceNode, destinationModelMatrix)
+                  destinationModelMatrix .inverse () .multLeft (sourceModelMatrix);
+                  Editor .setMatrixWithCenter (sourceNode, destinationModelMatrix);
                }
             }
 
@@ -2015,24 +2019,24 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             {
                case X3D .X3DConstants .SFNode:
                {
-                  Editor .setFieldValue (destinationExecutionContext, destinationParentNode, destinationParentField, sourceNode)
-                  break
+                  Editor .setFieldValue (destinationExecutionContext, destinationParentNode, destinationParentField, sourceNode);
+                  break;
                }
                case X3D .X3DConstants .MFNode:
                {
-                  Editor .insertValueIntoArray (destinationExecutionContext, destinationParentNode, destinationParentField, isNaN (destinationIndex) ? destinationParentField .length : destinationIndex, sourceNode)
-                  break
+                  Editor .insertValueIntoArray (destinationExecutionContext, destinationParentNode, destinationParentField, isNaN (destinationIndex) ? destinationParentField .length : destinationIndex, sourceNode);
+                  break;
                }
             }
 
             // End.
 
-            ++ destinationIndex
+            ++ destinationIndex;
          }
 
          // End undo.
 
-         UndoManager .shared .endUndo ()
+         UndoManager .shared .endUndo ();
       }
       if (event .originalEvent .dataTransfer .types .includes ("sunrize/field"))
       {
@@ -2044,26 +2048,26 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             sourceField                   = this .getField (sourceElement),
             sourceIndex                   = sourceFields .indexOf (sourceField),
             sourceExecutionContextElement = sourceElement .closest (".scene", this .sceneGraph),
-            sourceExecutionContext        = this .getNode (sourceExecutionContextElement)
+            sourceExecutionContext        = this .getNode (sourceExecutionContextElement);
 
          const
             destinationElement = $(event .target) .closest (".field", this .sceneGraph),
-            destinationField   = this .getField (destinationElement)
+            destinationField   = this .getField (destinationElement);
 
          let destinationIndex = sourceFields .indexOf (destinationField)
 
          if (destinationElement .data ("drag-type") ==="drag-after")
-            ++ destinationIndex
+            ++ destinationIndex;
 
          if (sourceIndex === destinationIndex || sourceIndex + 1 === destinationIndex)
-            return
+            return;
 
-         sourceFields .splice (sourceIndex, 1)
-         sourceFields .splice (sourceIndex < destinationIndex ? destinationIndex - 1 : destinationIndex, 0, sourceField)
+         sourceFields .splice (sourceIndex, 1);
+         sourceFields .splice (sourceIndex < destinationIndex ? destinationIndex - 1 : destinationIndex, 0, sourceField);
 
-         UndoManager .shared .beginUndo (_ ("Move Field »%s«"), sourceField .getName ())
-         Editor .setUserDefinedFields (sourceExecutionContext, sourceNode, sourceFields)
-         UndoManager .shared .endUndo ()
+         UndoManager .shared .beginUndo (_ ("Move Field »%s«"), sourceField .getName ());
+         Editor .setUserDefinedFields (sourceExecutionContext, sourceNode, sourceFields);
+         UndoManager .shared .endUndo ();
       }
    }
 
@@ -2078,9 +2082,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       {
          switch (dropEffect)
          {
-            case "copy": return _ ("Copy %s Nodes", node .length)
-            case "link": return _ ("Link %s Nodes", node .length)
-            case "move": return _ ("Move %s Nodes", node .length)
+            case "copy": return _ ("Copy %s Nodes", node .length);
+            case "link": return _ ("Link %s Nodes", node .length);
+            case "move": return _ ("Move %s Nodes", node .length);
          }
       }
       else
@@ -2089,18 +2093,18 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          {
             switch (dropEffect)
             {
-               case "copy": return _ ("Copy Node %s »%s«")
-               case "link": return _ ("Link Node %s »%s«")
-               case "move": return _ ("Move Node %s »%s«")
+               case "copy": return _ ("Copy Node %s »%s«");
+               case "link": return _ ("Link Node %s »%s«");
+               case "move": return _ ("Move Node %s »%s«");
             }
          }
          else
          {
             switch (dropEffect)
             {
-               case "copy": return _ ("Copy Node %s")
-               case "link": return _ ("Link Node %s")
-               case "move": return _ ("Move Node %s")
+               case "copy": return _ ("Copy Node %s");
+               case "link": return _ ("Link Node %s");
+               case "move": return _ ("Move Node %s");
             }
          }
       }
@@ -2109,19 +2113,19 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    getModelMatrix (nodeElement, self = true)
    {
       if (!nodeElement .length)
-         return new X3D .Matrix4 ()
+         return new X3D .Matrix4 ();
 
       const
          node        = this .getNode (nodeElement),
-         modelMatrix = this .getModelMatrix (nodeElement .parent () .closest (".node", this .sceneGraph))
+         modelMatrix = this .getModelMatrix (nodeElement .parent () .closest (".node", this .sceneGraph));
 
       if (self)
       {
          if (node .getType () .some (Set .prototype .has, this .matrixNodes))
-            modelMatrix .multLeft (node .getMatrix ())
+            modelMatrix .multLeft (node .getMatrix ());
       }
 
-      return modelMatrix
+      return modelMatrix;
    }
 
    removeEmptyGroups ()
@@ -2129,8 +2133,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const
          selection = this .sceneGraph .find (".node.primary, .node.manual.selected"),
          ids       = selection .map (function () { return this .id }) .get (),
-         nodes     = ids .length ? ids .map (id => this .getNode ($(`#${id}`))) : this .executionContext .rootNodes
+         nodes     = ids .length ? ids .map (id => this .getNode ($(`#${id}`))) : this .executionContext .rootNodes;
 
-      Editor .removeEmptyGroups (this .executionContext, nodes)
+      Editor .removeEmptyGroups (this .executionContext, nodes);
    }
 }
