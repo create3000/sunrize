@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const
    $ = window .jQuery = require ("jquery"),
@@ -14,21 +14,21 @@ const
    Sidebar            = require ("./Sidebar"),
    Editor             = require ("../Undo/Editor"),
    UndoManager        = require ("../Undo/UndoManager"),
-   _                  = require ("./GetText")
+   _                  = require ("./GetText");
 
 module .exports = class Document extends Interface
 {
    constructor ()
    {
-      super ("Sunrize.Document.")
+      super ("Sunrize.Document.");
 
       // Layout
 
-      this .verticalSplitter   = new Splitter ($("#vertical-splitter"), "vertical")
-      this .horizontalSplitter = new Splitter ($("#horizontal-splitter"), "horizontal")
-      this .secondaryToolbar   = new Dashboard ($("#secondary-toolbar"))
-      this .footer             = new Footer ($("#footer"))
-      this .sidebar            = new Sidebar ($("#sidebar"))
+      this .verticalSplitter   = new Splitter ($("#vertical-splitter"), "vertical");
+      this .horizontalSplitter = new Splitter ($("#horizontal-splitter"), "horizontal");
+      this .secondaryToolbar   = new Dashboard ($("#secondary-toolbar"));
+      this .footer             = new Footer ($("#footer"));
+      this .sidebar            = new Sidebar ($("#sidebar"));
    }
 
    /**
@@ -36,123 +36,123 @@ module .exports = class Document extends Interface
     */
    async initialize ()
    {
-      await this .restoreFile ()
+      await this .restoreFile ();
 
       // Actions
 
-      electron .ipcRenderer .on ("activate", () => this .activate ())
+      electron .ipcRenderer .on ("activate", () => this .activate ());
 
-      electron .ipcRenderer .on ("open-files",       (event, urls)     => this .loadURL (urls [0])) // DEBUG
-      electron .ipcRenderer .on ("save-file",        (event, force)    => this .saveFile (force))
-      electron .ipcRenderer .on ("save-file-as",     (event, filePath) => this .saveFileAs (filePath))
-      electron .ipcRenderer .on ("save-copy-as",     (event, filePath) => this .saveCopyAs (filePath))
-      electron .ipcRenderer .on ("auto-save",        (event, value)    => this .autoSave = value)
-      electron .ipcRenderer .on ("export-as",        (event, filePath) => this .exportAs (filePath))
-      electron .ipcRenderer .on ("scene-properties", (event)           => require ("../Editors/SceneProperties") .open ())
-      electron .ipcRenderer .on ("close",            (event)           => this .close ())
+      electron .ipcRenderer .on ("open-files",       (event, urls)     => this .loadURL (urls [0])); // DEBUG
+      electron .ipcRenderer .on ("save-file",        (event, force)    => this .saveFile (force));
+      electron .ipcRenderer .on ("save-file-as",     (event, filePath) => this .saveFileAs (filePath));
+      electron .ipcRenderer .on ("save-copy-as",     (event, filePath) => this .saveCopyAs (filePath));
+      electron .ipcRenderer .on ("auto-save",        (event, value)    => this .autoSave = value);
+      electron .ipcRenderer .on ("export-as",        (event, filePath) => this .exportAs (filePath));
+      electron .ipcRenderer .on ("scene-properties", (event)           => require ("../Editors/SceneProperties") .open ());
+      electron .ipcRenderer .on ("close",            (event)           => this .close ());
 
-      electron .ipcRenderer .on ("undo",   () => this .undo ())
-      electron .ipcRenderer .on ("redo",   () => this .redo ())
-      electron .ipcRenderer .on ("cut",    () => this .cut ())
-      electron .ipcRenderer .on ("copy",   () => this .copy ())
-      electron .ipcRenderer .on ("paste",  () => this .paste ())
-      electron .ipcRenderer .on ("delete", () => this .delete ())
+      electron .ipcRenderer .on ("undo",   () => this .undo ());
+      electron .ipcRenderer .on ("redo",   () => this .redo ());
+      electron .ipcRenderer .on ("cut",    () => this .cut ());
+      electron .ipcRenderer .on ("copy",   () => this .copy ());
+      electron .ipcRenderer .on ("paste",  () => this .paste ());
+      electron .ipcRenderer .on ("delete", () => this .delete ());
 
-      electron .ipcRenderer .on ("primitive-quality",  (event, value) => this .setPrimitiveQuality (value))
-      electron .ipcRenderer .on ("texture-quality",    (event, value) => this .setTextureQuality (value))
-      electron .ipcRenderer .on ("display-rubberband", (event, value) => this .setDisplayRubberband (value))
-      electron .ipcRenderer .on ("display-timings",    (event, value) => this .setDisplayTimings (value))
-      electron .ipcRenderer .on ("show-library",       (event)        => require ("../Editors/Library") .open (this .browser .currentScene))
+      electron .ipcRenderer .on ("primitive-quality",  (event, value) => this .setPrimitiveQuality (value));
+      electron .ipcRenderer .on ("texture-quality",    (event, value) => this .setTextureQuality (value));
+      electron .ipcRenderer .on ("display-rubberband", (event, value) => this .setDisplayRubberband (value));
+      electron .ipcRenderer .on ("display-timings",    (event, value) => this .setDisplayTimings (value));
+      electron .ipcRenderer .on ("show-library",       (event)        => require ("../Editors/Library") .open (this .browser .currentScene));
 
-      electron .ipcRenderer .on ("browser-size", () => this .browserSize .open ())
+      electron .ipcRenderer .on ("browser-size", () => this .browserSize .open ());
 
       $(window)
          .on ("focusin",  () => this .onfocus ())
-         .on ("focusout", () => this .onfocus ())
+         .on ("focusout", () => this .onfocus ());
 
-      this .fullname       = await electron .ipcRenderer .invoke ("fullname")
-      this .browserSize    = require ("../Editors/BrowserSize")
-      this .resizeObserver = new ResizeObserver (this .onresize .bind (this))
+      this .fullname       = await electron .ipcRenderer .invoke ("fullname");
+      this .browserSize    = require ("../Editors/BrowserSize");
+      this .resizeObserver = new ResizeObserver (this .onresize .bind (this));
 
-      this .resizeObserver .observe ($("#browser-frame") [0])
+      this .resizeObserver .observe ($("#browser-frame") [0]);
 
       // Change undo menu items.
 
-      UndoManager .shared .addInterest (this, () => this .undoManager ())
+      UndoManager .shared .addInterest (this, () => this .undoManager ());
 
-      this .activate ()
+      this .activate ();
    }
 
    configure ()
    {
-      this .fileConfig .setDefaultValues ({ inferProfileAndComponents: true })
+      this .fileConfig .setDefaultValues ({ inferProfileAndComponents: true });
 
-      this .fileSaveFileTypeWarning = false
+      this .fileSaveFileTypeWarning = false;
    }
 
    activate ()
    {
       // When tab is activated/selected.
-      this .undoManager ()
+      this .undoManager ();
    }
 
    activeElement = null
 
    onfocus ()
    {
-      this .activeElement = document .activeElement ? $(document .activeElement) : null
+      this .activeElement = document .activeElement ? $(document .activeElement) : null;
 
       electron .ipcRenderer .send ("change-menu", {
          defaultEditMenu: this .activeElementIsInputOrOutput (),
-      })
+      });
    }
 
    activeElementIsInputOrOutput ()
    {
       if (!this .activeElement)
-         return false
+         return false;
 
-      const activeElement = this .activeElement
+      const activeElement = this .activeElement;
 
       if (activeElement .is ("input"))
-         return activeElement .attr ("type") === undefined || activeElement .attr ("type") === "text"
+         return activeElement .attr ("type") === undefined || activeElement .attr ("type") === "text";
 
       if (activeElement .is ("textarea"))
-         return true
+         return true;
 
       if (activeElement .is (".input, .output"))
-         return true
+         return true;
 
-      return false
+      return false;
    }
 
    async restoreFile ()
    {
-      $("body") .addClass ("modal")
+      $("body") .addClass ("modal");
 
-      await this .browser .loadComponents (this .browser .getComponent ("Grouping"))
+      await this .browser .loadComponents (this .browser .getComponent ("Grouping"));
 
-      this .browser .updateConcreteNode (require ("../Components/Grouping/StaticGroup"))
+      this .browser .updateConcreteNode (require ("../Components/Grouping/StaticGroup"));
 
       if (this .fileId)
       {
-         const contents = this .globalConfig .addNameSpace ("unsaved.") [this .fileId]
+         const contents = this .globalConfig .addNameSpace ("unsaved.") [this .fileId];
 
          if (contents)
-            await this .loadURL (encodeURI (`data:model/x3d,${contents}`))
+            await this .loadURL (encodeURI (`data:model/x3d,${contents}`));
          else
-            await this .loadURL ()
+            await this .loadURL ();
       }
       else
       {
          const
             location = new URL (window .location),
-            fileURL  = location .searchParams .get ("url") || ""
+            fileURL  = location .searchParams .get ("url") || "";
 
-         await this .loadURL (fileURL)
+         await this .loadURL (fileURL);
       }
 
-      $("body") .removeClass ("modal")
+      $("body") .removeClass ("modal");
    }
 
    /**
@@ -165,13 +165,13 @@ module .exports = class Document extends Interface
       try
       {
          if (fileURL)
-            await this .browser .loadURL (new X3D .MFString (fileURL))
+            await this .browser .loadURL (new X3D .MFString (fileURL));
          else
-            await this .browser .replaceWorld (null)
+            await this .browser .replaceWorld (null);
       }
       catch (error)
       {
-         console .log (error)
+         console .log (error);
       }
    }
 
@@ -181,29 +181,29 @@ module .exports = class Document extends Interface
     */
    saveFile (force = false)
    {
-      this .footer .scriptEditor ?.apply ()
+      this .footer .scriptEditor ?.apply ();
 
       if (!UndoManager .shared .saveNeeded && !force)
-         return
+         return;
 
-      const scene = this .browser .currentScene
+      const scene = this .browser .currentScene;
 
       // Infer profile and components.
 
       if (this .fileConfig .inferProfileAndComponents ?? true)
-         Editor .inferProfileAndComponents (scene, new UndoManager ())
+         Editor .inferProfileAndComponents (scene, new UndoManager ());
 
       // Add default meta data.
 
-      const pkg = require ("../../package.json")
+      const pkg = require ("../../package.json");
 
       if (!scene .getMetaData ("created"))
-         scene .setMetaData ("created", new Date () .toUTCString ())
+         scene .setMetaData ("created", new Date () .toUTCString ());
 
-      scene .setMetaData ("comment", `Rise and Shine`)
-      scene .setMetaData ("creator", this .fullname)
-      scene .setMetaData ("generator", `${pkg .productName} V${pkg .version}, ${pkg .homepage}`)
-      scene .setMetaData ("modified", new Date () .toUTCString ())
+      scene .setMetaData ("comment", `Rise and Shine`);
+      scene .setMetaData ("creator", this .fullname);
+      scene .setMetaData ("generator", `${pkg .productName} V${pkg .version}, ${pkg .homepage}`);
+      scene .setMetaData ("modified", new Date () .toUTCString ());
 
       // Save source code.
 
@@ -212,35 +212,35 @@ module .exports = class Document extends Interface
          if (path .extname (this .filePath) .match (/\.(?:wrl|wrz|wrl\.gz|vrml|gltf|glb|obj|stl|ply|svg)$/i))
          {
             if (!this .fileSaveFileTypeWarning)
-               console .warn (`Couldn't save '${this .filePath}'. File type is not supported.`)
+               console .warn (`Couldn't save '${this .filePath}'. File type is not supported.`);
 
             this .fileSaveFileTypeWarning = true;
-            return
+            return;
          }
 
-         fs .writeFile (this .filePath, Editor .getContents (scene, path .extname (this .filePath)), Function .prototype)
+         fs .writeFile (this .filePath, Editor .getContents (scene, path .extname (this .filePath)), Function .prototype);
 
-         electron .ipcRenderer .send ("save-file", this .filePath)
+         electron .ipcRenderer .send ("save-file", this .filePath);
       }
       else
       {
-         const id = this .fileId
+         const id = this .fileId;
 
          if (!id)
          {
             if (!this .fileSaveFileTypeWarning)
-               console .warn (`Couldn't save '${this .browser .getWorldURL ()}'. The file is a remote file.`)
+               console .warn (`Couldn't save '${this .browser .getWorldURL ()}'. The file is a remote file.`);
 
-            this .fileSaveFileTypeWarning = true
-            return
+            this .fileSaveFileTypeWarning = true;
+            return;
          }
 
-         this .globalConfig .addNameSpace ("unsaved.") [id] = Editor .getContents (scene)
+         this .globalConfig .addNameSpace ("unsaved.") [id] = Editor .getContents (scene);
       }
 
-      UndoManager .shared .saveNeeded = false
+      UndoManager .shared .saveNeeded = false;
 
-      electron .ipcRenderer .sendToHost ("saved", true)
+      electron .ipcRenderer .sendToHost ("saved", true);
    }
 
    /**
@@ -251,13 +251,13 @@ module .exports = class Document extends Interface
    {
       const
          scene       = this .browser .currentScene,
-         oldWorldURL = scene .worldURL
+         oldWorldURL = scene .worldURL;
 
-      this .filePath = filePath
+      this .filePath = filePath;
 
-      Editor .rewriteURLs (scene, scene, oldWorldURL, scene .worldURL)
+      Editor .rewriteURLs (scene, scene, oldWorldURL, scene .worldURL);
 
-      this .saveFile (true)
+      this .saveFile (true);
    }
 
    /**
@@ -270,49 +270,49 @@ module .exports = class Document extends Interface
          scene       = this .browser .currentScene,
          oldFilePath = this .filePath,
          oldWorldURL = scene .worldURL,
-         undoManager = new UndoManager ()
+         undoManager = new UndoManager ();
 
-      this .filePath = filePath
+      this .filePath = filePath;
 
-      const newWorldURL = scene .worldURL
+      const newWorldURL = scene .worldURL;
 
-      Editor .rewriteURLs (scene, scene, oldWorldURL, newWorldURL, undoManager)
+      Editor .rewriteURLs (scene, scene, oldWorldURL, newWorldURL, undoManager);
 
-      this .saveFile (true)
+      this .saveFile (true);
 
-      undoManager .undo ()
+      undoManager .undo ();
 
-      this .filePath = oldFilePath
+      this .filePath = oldFilePath;
    }
 
    get autoSave ()
    {
-      return this .globalConfig .autoSave
+      return this .globalConfig .autoSave;
    }
 
    set autoSave (value)
    {
-      this .globalConfig .autoSave = value
+      this .globalConfig .autoSave = value;
 
       if (value)
-         this .registerAutoSave ()
+         this .registerAutoSave ();
    }
 
-   #saveTimeoutId = undefined
+   #saveTimeoutId = undefined;
 
    registerAutoSave ()
    {
       if (!this .autoSave)
-         return
+         return;
 
-      clearTimeout (this .#saveTimeoutId)
+      clearTimeout (this .#saveTimeoutId);
 
-      this .#saveTimeoutId = setTimeout (() => this .saveFile (), 3000)
+      this .#saveTimeoutId = setTimeout (() => this .saveFile (), 3000);
    }
 
    exportAs (filePath)
    {
-      this .saveCopyAs (filePath)
+      this .saveCopyAs (filePath);
    }
 
    /**
@@ -320,19 +320,19 @@ module .exports = class Document extends Interface
     */
    close ()
    {
-      this .saveFile ()
+      this .saveFile ();
 
-      electron .ipcRenderer .sendToHost ("closed")
+      electron .ipcRenderer .sendToHost ("closed");
    }
 
    undo ()
    {
-      UndoManager .shared .undo ()
+      UndoManager .shared .undo ();
    }
 
    redo ()
    {
-      UndoManager .shared .redo ()
+      UndoManager .shared .redo ();
    }
 
    undoManager ()
@@ -341,32 +341,32 @@ module .exports = class Document extends Interface
       {
          undoLabel: UndoManager .shared .undoLabel,
          redoLabel: UndoManager .shared .redoLabel,
-      })
+      });
 
-      electron .ipcRenderer .sendToHost ("saved", !UndoManager .shared .saveNeeded)
+      electron .ipcRenderer .sendToHost ("saved", !UndoManager .shared .saveNeeded);
 
       if (UndoManager .shared .saveNeeded)
-         this .registerAutoSave ()
+         this .registerAutoSave ();
    }
 
    cut ()
    {
-      this .sidebar .outlineEditor .cutNodes ()
+      this .sidebar .outlineEditor .cutNodes ();
    }
 
    copy ()
    {
-      this .sidebar .outlineEditor .copyNodes ()
+      this .sidebar .outlineEditor .copyNodes ();
    }
 
    paste ()
    {
-      this .sidebar .outlineEditor .pasteNodes ()
+      this .sidebar .outlineEditor .pasteNodes ();
    }
 
    delete ()
    {
-      this .sidebar .outlineEditor .deleteNodes ()
+      this .sidebar .outlineEditor .deleteNodes ();
    }
 
    /**
@@ -375,8 +375,8 @@ module .exports = class Document extends Interface
     */
    setPrimitiveQuality (value)
    {
-      this .browser .setBrowserOption ("PrimitiveQuality", value)
-      this .browser .setDescription (`Primitive Quality: ${value .toLowerCase ()}`)
+      this .browser .setBrowserOption ("PrimitiveQuality", value);
+      this .browser .setDescription (`Primitive Quality: ${value .toLowerCase ()}`);
    }
 
    /**
@@ -385,8 +385,8 @@ module .exports = class Document extends Interface
     */
    setTextureQuality (value)
    {
-      this .browser .setBrowserOption ("TextureQuality", value)
-      this .browser .setDescription (`Texture Quality: ${value .toLowerCase ()}`)
+      this .browser .setBrowserOption ("TextureQuality", value);
+      this .browser .setDescription (`Texture Quality: ${value .toLowerCase ()}`);
    }
 
    /**
@@ -395,8 +395,8 @@ module .exports = class Document extends Interface
     */
    setDisplayRubberband (value)
    {
-      this .browser .setBrowserOption ("Rubberband", value)
-      this .browser .setDescription (`Rubberband: ${value ? "on" : "off"}`)
+      this .browser .setBrowserOption ("Rubberband", value);
+      this .browser .setDescription (`Rubberband: ${value ? "on" : "off"}`);
    }
 
    /**
@@ -405,7 +405,7 @@ module .exports = class Document extends Interface
     */
    setDisplayTimings (value)
    {
-      this .browser .setBrowserOption ("Timings", value)
+      this .browser .setBrowserOption ("Timings", value);
    }
 
    /**
@@ -419,20 +419,20 @@ module .exports = class Document extends Interface
          denominator      = this .browserSize .fileConfig .denominator,
          aspectRatio      = numerator / denominator,
          frameAspectRatio = $("#browser-frame") .width () / $("#browser-frame") .height (),
-         element          = this .browser .getElement ()
+         element          = this .browser .getElement ();
 
       if (enabled && aspectRatio)
       {
-         element .css ({ "aspect-ratio": `${numerator} / ${denominator}` })
+         element .css ({ "aspect-ratio": `${numerator} / ${denominator}` });
 
          if (aspectRatio > frameAspectRatio)
-            element .css ({ "width": "100%", "height": "auto" })
+            element .css ({ "width": "100%", "height": "auto" });
          else
-            element .css ({ "width": "auto", "height": "100%" })
+            element .css ({ "width": "auto", "height": "100%" });
       }
       else
       {
-         element .css ({ "aspect-ratio": "unset", "width": "100%", "height": "100%" })
+         element .css ({ "aspect-ratio": "unset", "width": "100%", "height": "100%" });
       }
    }
-}
+};
