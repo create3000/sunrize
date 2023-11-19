@@ -44,7 +44,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       if (!this .tool .scaleModes .includes (scaleMode))
          scaleMode = this .tool .scaleModes [0];
 
-      this .tool .translateMode = keys === ActionKeys .Option ? "TRANSLATE_PLANE" : "TRANSLATE_AXIS";
+      this .tool .translateMode = keys === ActionKeys .Option ? "TRANSLATE_ALONG_PLANE" : "TRANSLATE_ALONG_AXIS";
       this .tool .scaleMode     = scaleMode;
    }
 

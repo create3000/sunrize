@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 19 Nov 2023 13:53:05 GMT'/>
+    <meta name='modified' content='Sun, 19 Nov 2023 16:20:47 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -24,7 +24,7 @@
         <field accessType='inputOutput' type='SFRotation' name='scaleOrientation'/>
         <field accessType='inputOutput' type='SFVec3f' name='center'/>
         <field accessType='inputOutput' type='MFString' name='tools' value='"TRANSLATE", "ROTATE", "SCALE"'/>
-        <field accessType='inputOutput' type='SFString' name='translateMode' value='TRANSLATE_AXIS'/>
+        <field accessType='inputOutput' type='SFString' name='translateMode' value='TRANSLATE_ALONG_AXIS'/>
         <field accessType='inputOutput' type='SFBool' name='scaleXAxis' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='scaleYAxis' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='scaleZAxis' value='true'/>
@@ -694,7 +694,7 @@ function set_translateMode ()
 
    switch (translateMode)
    {
-      case "TRANSLATE_AXIS":
+      case "TRANSLATE_ALONG_AXIS":
       {
          translateSensors [0] .axisRotation = new SFRotation ();
          translateSensors [1] .axisRotation = new SFRotation ();
@@ -705,7 +705,7 @@ function set_translateMode ()
          translateSensors [2] .maxPosition = new SFVec2f (-1, 0);
          break;
       }
-      case "TRANSLATE_PLANE":
+      case "TRANSLATE_ALONG_PLANE":
       {
          translateSensors [0] .axisRotation = new SFRotation (0, 1, 0, Math .PI / 2);
          translateSensors [1] .axisRotation = new SFRotation (-1, 0, 0, Math .PI / 2);
@@ -922,9 +922,9 @@ function set_xTranslation (value)
 
    switch (translateMode)
    {
-      case "TRANSLATE_AXIS":
+      case "TRANSLATE_ALONG_AXIS":
          return translate (new SFVec3f (value .x, 0, 0));
-      case "TRANSLATE_PLANE":
+      case "TRANSLATE_ALONG_PLANE":
          return translate (new SFVec3f (0, value .y, value .z));
    }
 }
@@ -935,11 +935,11 @@ function set_yTranslation (value)
 
    switch (translateMode)
    {
-      case "TRANSLATE_AXIS":
+      case "TRANSLATE_ALONG_AXIS":
          return translate (new SFVec3f (0, value .y, 0));
-      case "TRANSLATE_PLANE":
+      case "TRANSLATE_ALONG_PLANE":
          return translate (new SFVec3f (value .x, 0, value .z));
-   }   
+   }
 }
 
 function set_zTranslation (value)
@@ -948,11 +948,11 @@ function set_zTranslation (value)
 
    switch (translateMode)
    {
-      case "TRANSLATE_AXIS":
+      case "TRANSLATE_ALONG_AXIS":
          return translate (new SFVec3f (0, 0, value .z));
-      case "TRANSLATE_PLANE":
+      case "TRANSLATE_ALONG_PLANE":
          return translate (new SFVec3f (value .x, value .y, 0));
-   }   
+   }
 }
 
 function translate (value)
@@ -1109,9 +1109,9 @@ function set_zScaleFront (value)
 }
 
 function set_xScaleBack (value)
-{    
+{
    [lastScaleFunction, lastValue] = [set_xScaleBack, value];
-         
+
    if (bboxSize .x)
       set_scaleAxis ("x", value, -1);
 }
@@ -1199,7 +1199,7 @@ function set_scaleAxis (axis, value, sgn)
          const
             vector = new SFVec3f (1, 1, 1),
             offset = new SFVec3f ();
-      
+
          vector [axis] = 1 + sgn * value / bboxSize [axis];
          offset [axis] = -sgn * bboxSize [axis] / 2;
 
@@ -1213,7 +1213,7 @@ function set_scaleAxis (axis, value, sgn)
          const
             vector = new SFVec3f (1, 1, 1),
             offset = new SFVec3f ();
-      
+
          vector [axis] = 1 + 2 * sgn * value / bboxSize [axis];
 
          connectAxis (axis, vector, offset);
@@ -1254,7 +1254,7 @@ function connectAxis (axis, vector, offset)
       const
          lhs = connectedAxis [0] .toLowerCase (),
          rhs = connectedAxis [1] .toLowerCase ();
-   
+
       if (rhs == axis)
       {
          vector [lhs] = vector [rhs];
