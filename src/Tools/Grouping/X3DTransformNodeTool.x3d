@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 19 Nov 2023 11:05:39 GMT'/>
+    <meta name='modified' content='Sun, 19 Nov 2023 11:31:46 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -469,7 +469,11 @@
                   <Transform DEF='ScaleHandle1'>
                     <PlaneSensor DEF='ScaleSensor1_1'
                         autoOffset='false'
-                        maxPosition='-1 0'/>
+                        maxPosition='-1 0'>
+                      <IS>
+                        <connect nodeField='isActive' protoField='isActive'/>
+                      </IS>
+                    </PlaneSensor>
                     <ScreenGroup DEF='_1'>
                       <Shape>
                         <Appearance>
@@ -484,43 +488,71 @@
                   <Transform DEF='ScaleHandle2'>
                     <PlaneSensor DEF='ScaleSensor2'
                         autoOffset='false'
-                        maxPosition='-1 0'/>
+                        maxPosition='-1 0'>
+                      <IS>
+                        <connect nodeField='isActive' protoField='isActive'/>
+                      </IS>
+                    </PlaneSensor>
                     <ScreenGroup USE='_1'/>
                   </Transform>
                   <Transform DEF='ScaleHandle3'>
                     <PlaneSensor DEF='ScaleSensor3'
                         autoOffset='false'
-                        maxPosition='-1 0'/>
+                        maxPosition='-1 0'>
+                      <IS>
+                        <connect nodeField='isActive' protoField='isActive'/>
+                      </IS>
+                    </PlaneSensor>
                     <ScreenGroup USE='_1'/>
                   </Transform>
                   <Transform DEF='ScaleHandle4'>
                     <PlaneSensor DEF='ScaleSensor4'
                         autoOffset='false'
-                        maxPosition='-1 0'/>
+                        maxPosition='-1 0'>
+                      <IS>
+                        <connect nodeField='isActive' protoField='isActive'/>
+                      </IS>
+                    </PlaneSensor>
                     <ScreenGroup USE='_1'/>
                   </Transform>
                   <Transform DEF='ScaleHandle5'>
                     <PlaneSensor DEF='ScaleSensor5'
                         autoOffset='false'
-                        maxPosition='-1 0'/>
+                        maxPosition='-1 0'>
+                      <IS>
+                        <connect nodeField='isActive' protoField='isActive'/>
+                      </IS>
+                    </PlaneSensor>
                     <ScreenGroup USE='_1'/>
                   </Transform>
                   <Transform DEF='ScaleHandle6'>
                     <PlaneSensor DEF='ScaleSensor6'
                         autoOffset='false'
-                        maxPosition='-1 0'/>
+                        maxPosition='-1 0'>
+                      <IS>
+                        <connect nodeField='isActive' protoField='isActive'/>
+                      </IS>
+                    </PlaneSensor>
                     <ScreenGroup USE='_1'/>
                   </Transform>
                   <Transform DEF='ScaleHandle7'>
                     <PlaneSensor DEF='ScaleSensor7'
                         autoOffset='false'
-                        maxPosition='-1 0'/>
+                        maxPosition='-1 0'>
+                      <IS>
+                        <connect nodeField='isActive' protoField='isActive'/>
+                      </IS>
+                    </PlaneSensor>
                     <ScreenGroup USE='_1'/>
                   </Transform>
                   <Transform DEF='ScaleHandle8'>
                     <PlaneSensor DEF='ScaleSensor8'
                         autoOffset='false'
-                        maxPosition='-1 0'/>
+                        maxPosition='-1 0'>
+                      <IS>
+                        <connect nodeField='isActive' protoField='isActive'/>
+                      </IS>
+                    </PlaneSensor>
                     <ScreenGroup USE='_1'/>
                   </Transform>
                 </Group>
@@ -659,6 +691,8 @@ function eventsProcessed ()
           </IS>
 <![CDATA[ecmascript:
 
+const xAxis = new SFVec3f (1, 0, 0);
+
 function initialize ()
 {
    eventsProcessed ();
@@ -687,6 +721,8 @@ function positionArrows ()
 
 function positionScalers ()
 {
+   // Position uniform scale handles and set axis rotation of corresponding sensor.
+
 	const bboxSize1_2 = bboxSize .divide (2);
 
 	scaleHandles [0] .translation = new SFVec3f ( bboxSize1_2 .x,  bboxSize1_2 .y,  bboxSize1_2 .z);
@@ -699,17 +735,8 @@ function positionScalers ()
 	scaleHandles [6] .translation = new SFVec3f (-bboxSize1_2 .x, -bboxSize1_2 .y, -bboxSize1_2 .z);
 	scaleHandles [7] .translation = new SFVec3f ( bboxSize1_2 .x, -bboxSize1_2 .y, -bboxSize1_2 .z);
 
-	const xAxis = new SFVec3f (1, 0, 0);
-
-	scaleSensors [0] .axisRotation = new SFRotation (xAxis, scaleHandles [0] .translation);
-	scaleSensors [1] .axisRotation = new SFRotation (xAxis, scaleHandles [1] .translation);
-	scaleSensors [2] .axisRotation = new SFRotation (xAxis, scaleHandles [2] .translation);
-	scaleSensors [3] .axisRotation = new SFRotation (xAxis, scaleHandles [3] .translation);
-
-	scaleSensors [4] .axisRotation = new SFRotation (xAxis, scaleHandles [4] .translation);
-	scaleSensors [5] .axisRotation = new SFRotation (xAxis, scaleHandles [5] .translation);
-	scaleSensors [6] .axisRotation = new SFRotation (xAxis, scaleHandles [6] .translation);
-	scaleSensors [7] .axisRotation = new SFRotation (xAxis, scaleHandles [7] .translation);
+   for (let i = 0; i < 8; ++ i)
+	   scaleSensors [i] .axisRotation = new SFRotation (xAxis, scaleHandles [i] .translation);
 }
 ]]>
         </Script>
@@ -947,6 +974,14 @@ function translate (value)
           <field accessType='inputOnly' type='SFVec3f' name='set_xScaleBack'/>
           <field accessType='inputOnly' type='SFVec3f' name='set_yScaleBack'/>
           <field accessType='inputOnly' type='SFVec3f' name='set_zScaleBack'/>
+          <field accessType='inputOnly' type='SFVec3f' name='set_scale1'/>
+          <field accessType='inputOnly' type='SFVec3f' name='set_scale2'/>
+          <field accessType='inputOnly' type='SFVec3f' name='set_scale3'/>
+          <field accessType='inputOnly' type='SFVec3f' name='set_scale4'/>
+          <field accessType='inputOnly' type='SFVec3f' name='set_scale5'/>
+          <field accessType='inputOnly' type='SFVec3f' name='set_scale6'/>
+          <field accessType='inputOnly' type='SFVec3f' name='set_scale7'/>
+          <field accessType='inputOnly' type='SFVec3f' name='set_scale8'/>
           <field accessType='inputOutput' type='SFVec3f' name='translation'/>
           <field accessType='inputOutput' type='SFRotation' name='rotation'/>
           <field accessType='inputOutput' type='SFVec3f' name='scale'/>
@@ -1032,6 +1067,46 @@ function set_zScaleBack (value)
       set_scaleAxis ("z", value, -1);
 }
 
+function set_scale1 (value)
+{
+   set_scaleUniform (value, Math .sign (value .x), new SFVec3f (-1, -1, -1));
+}
+
+function set_scale2 (value)
+{
+   set_scaleUniform (value, Math .sign (-value .x), new SFVec3f (1, -1, -1));
+}
+
+function set_scale3 (value)
+{
+   set_scaleUniform (value, Math .sign (-value .x), new SFVec3f (1, 1, -1));
+}
+
+function set_scale4 (value)
+{
+   set_scaleUniform (value, Math .sign (value .x), new SFVec3f (-1, 1, -1));
+}
+
+function set_scale5 (value)
+{
+   set_scaleUniform (value, Math .sign (value .x), new SFVec3f (-1, -1, 1));
+}
+
+function set_scale6 (value)
+{
+   set_scaleUniform (value, Math .sign (-value .x), new SFVec3f (1, -1, 1));
+}
+
+function set_scale7 (value)
+{
+   set_scaleUniform (value, Math .sign (-value .x), new SFVec3f (1, 1, 1));
+}
+
+function set_scale8 (value)
+{
+   set_scaleUniform (value, Math .sign (value .x), new SFVec3f (-1, 1, 1));
+}
+
 function set_scaleAxis (axis, value, sgn)
 {
    value = value [axis];
@@ -1063,6 +1138,29 @@ function set_scaleAxis (axis, value, sgn)
          connectAxis (axis, vector, offset);
 
          scaleTransform (vector, offset);
+         break;
+      }
+   }
+}
+
+function set_scaleUniform (value, sgn, centerOffset)
+{
+   switch (scaleMode)
+   {
+      case "SCALE_FROM_EDGE":
+      {
+         const s = 1 + sgn * value .length () / bboxSize .length ();
+
+         centerOffset = centerOffset .multVec (bboxSize .divide (2));
+
+         scaleTransform (new SFVec3f (s, s, s), centerOffset);
+         break;
+      }
+      case "SCALE_FROM_CENTER":
+      {
+         const s = 1 + 2 * sgn * value .length () / bboxSize .length ();
+
+         scaleTransform (new SFVec3f (s, s, s), new SFVec3f ());
          break;
       }
    }
@@ -1179,6 +1277,22 @@ function translate (scaledMatrix, distanceFromCenter)
         <ROUTE fromNode='ZPlaneSensor_1' fromField='isActive' toNode='TranslateScript' toField='set_active'/>
         <ROUTE fromNode='XPlaneSensor_1' fromField='isActive' toNode='TranslateScript' toField='set_active'/>
         <ROUTE fromNode='ModeScript' fromField='activeTool' toNode='UniformScaleHandles' toField='set_whichChoice'/>
+        <ROUTE fromNode='ScaleSensor8' fromField='isActive' toNode='ScaleScript' toField='set_active'/>
+        <ROUTE fromNode='ScaleSensor8' fromField='translation_changed' toNode='ScaleScript' toField='set_scale8'/>
+        <ROUTE fromNode='ScaleSensor7' fromField='isActive' toNode='ScaleScript' toField='set_active'/>
+        <ROUTE fromNode='ScaleSensor7' fromField='translation_changed' toNode='ScaleScript' toField='set_scale7'/>
+        <ROUTE fromNode='ScaleSensor6' fromField='isActive' toNode='ScaleScript' toField='set_active'/>
+        <ROUTE fromNode='ScaleSensor6' fromField='translation_changed' toNode='ScaleScript' toField='set_scale6'/>
+        <ROUTE fromNode='ScaleSensor5' fromField='isActive' toNode='ScaleScript' toField='set_active'/>
+        <ROUTE fromNode='ScaleSensor5' fromField='translation_changed' toNode='ScaleScript' toField='set_scale5'/>
+        <ROUTE fromNode='ScaleSensor4' fromField='isActive' toNode='ScaleScript' toField='set_active'/>
+        <ROUTE fromNode='ScaleSensor4' fromField='translation_changed' toNode='ScaleScript' toField='set_scale4'/>
+        <ROUTE fromNode='ScaleSensor3' fromField='isActive' toNode='ScaleScript' toField='set_active'/>
+        <ROUTE fromNode='ScaleSensor3' fromField='translation_changed' toNode='ScaleScript' toField='set_scale3'/>
+        <ROUTE fromNode='ScaleSensor2' fromField='isActive' toNode='ScaleScript' toField='set_active'/>
+        <ROUTE fromNode='ScaleSensor2' fromField='translation_changed' toNode='ScaleScript' toField='set_scale2'/>
+        <ROUTE fromNode='ScaleSensor1_1' fromField='translation_changed' toNode='ScaleScript' toField='set_scale1'/>
+        <ROUTE fromNode='ScaleSensor1_1' fromField='isActive' toNode='ScaleScript' toField='set_active'/>
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
