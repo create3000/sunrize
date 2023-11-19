@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 19 Nov 2023 11:31:46 GMT'/>
+    <meta name='modified' content='Sun, 19 Nov 2023 11:58:31 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -37,7 +37,6 @@
         <field accessType='inputOutput' type='SFBool' name='zAxisDisplay' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='centerDisplay' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='bboxDisplay' value='true'/>
-        <field accessType='inputOutput' type='SFInt32' name='bboxStyle' value='1'/>
         <field accessType='inputOutput' type='SFColor' name='bboxColor' value='1 1 1'/>
         <field accessType='inputOutput' type='SFVec3f' name='bboxSize' value='1 1 1'/>
         <field accessType='inputOutput' type='SFVec3f' name='bboxCenter'/>
@@ -65,12 +64,8 @@
                   <connect nodeField='visible' protoField='bboxDisplay'/>
                 </IS>
                 <Appearance>
-                  <LineProperties
-                      linewidthScaleFactor='2'>
-                    <IS>
-                      <connect nodeField='linetype' protoField='bboxStyle'/>
-                    </IS>
-                  </LineProperties>
+                  <LineProperties DEF='_2'
+                      linewidthScaleFactor='2'/>
                   <UnlitMaterial DEF='BBoxMaterial'>
                     <IS>
                       <connect nodeField='emissiveColor' protoField='bboxColor'/>
@@ -997,6 +992,9 @@ function translate (value)
           <field accessType='initializeOnly' type='SFVec3f' name='initialCenter'/>
           <field accessType='initializeOnly' type='SFMatrix4f' name='initialMatrix'/>
           <field accessType='initializeOnly' type='SFVec3f' name='distanceFromCenter'/>
+          <field accessType='initializeOnly' type='SFNode' name='lineProperties'>
+            <LineProperties USE='_2'/>
+          </field>
           <field accessType='initializeOnly' type='SFInt32' name='events'/>
           <IS>
             <connect nodeField='translation' protoField='translation'/>
@@ -1029,6 +1027,26 @@ function set_active (value)
    distanceFromCenter = bboxCenter .subtract (center);
 
    events = 4;
+}
+
+function set_scale ()
+{
+   const matrix = new SFMatrix4f ();
+
+   matrix .setTransform (translation,
+                         rotation,
+                         scale,
+                         scaleOrientation,
+                         center);
+
+   const sr = new SFMatrix3f (matrix [0], matrix [1], matrix [2],
+                              matrix [4], matrix [5], matrix [6],
+                              matrix [8], matrix [9], matrix [10]);
+
+   if (sr .determinant () >= 0)
+      lineProperties .linetype = 1; // SOLID
+   else
+      lineProperties .linetype = 2; // Negtative scale, DASHED
 }
 
 function set_xScaleFront (value)
