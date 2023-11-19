@@ -77,34 +77,33 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             for (const protoField of proto .getUserDefinedFields ())
             {
-               if (protoField .getType () === field .getType () &&
-                   protoField .isReference (field .getAccessType ()));
-               {
-                  references .push (protoField);
-               }
+               if (protoField .getType () !== field .getType ())
+                  continue;
+
+               if (!protoField .isReference (field .getAccessType ()))
+                  continue;
+
+               references .push (protoField);
             }
 
-            if (references .length)
+            // Make menus.
+
+            for (const reference of references)
             {
-               // Make menus.
+               const menuItem = {
+                  label: reference .getName (),
+                  args: [proto .getId (), reference .getId (), node .getId (), field .getId ()],
+               };
 
-               for (const reference of references)
+               if (field .getReferences () .has (reference))
                {
-                  const menuItem = {
-                     label: reference .getName (),
-                     args: [proto .getId (), reference .getId (), node .getId (), field .getId ()],
-                  };
-
-                  if (field .getReferences () .has (reference))
-                  {
-                     menuItem .args .unshift ("removeReference");
-                     removeReferences .push (menuItem);
-                  }
-                  else
-                  {
-                     menuItem .args .unshift ("addReference");
-                     addReferences .push (menuItem);
-                  }
+                  menuItem .args .unshift ("removeReference");
+                  removeReferences .push (menuItem);
+               }
+               else
+               {
+                  menuItem .args .unshift ("addReference");
+                  addReferences .push (menuItem);
                }
             }
          }
