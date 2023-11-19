@@ -129,17 +129,9 @@ module .exports = new class Library extends Dialog
       }
       catch
       {
-         const node = nodes .sort ((a, b) => a .attr ("similarity") - b .attr ("similarity")) .pop ();
-
-         switch (this .fileConfig .type)
-         {
-            case "NODES":
-               this .createNode (node .text (), node .attr ("componentName"));
-               break;
-            case "PRIMITIVES":
-               this .importX3D (node .text (), node .attr ("x3dSyntax"));
-               break;
-         }
+         nodes .sort ((a, b) => a .attr ("similarity") - b .attr ("similarity"))
+            .pop ()
+            .trigger ("dblclick");
       }
    }
 
@@ -156,6 +148,39 @@ module .exports = new class Library extends Dialog
       }
    }
 
+   getProtos (executionContext = this .executionContext, protos = new Map (), outerNode)
+   {
+      if (!executionContext)
+         return protos;
+
+      for (const proto of executionContext .protos)
+      {
+         if (proto === outerNode)
+            break;
+
+         if (protos .has (proto .name))
+            continue;
+
+         protos .set (proto .name, proto);
+      }
+
+      for (const proto of executionContext .externprotos)
+      {
+         if (proto === outerNode)
+            break;
+
+         if (protos .has (proto .name))
+            continue;
+
+         protos .set (proto .name, proto);
+      }
+
+      if (!(executionContext instanceof X3D .X3DScene))
+         this .getProtos (executionContext .getExecutionContext (), protos, executionContext .getOuterNode ());
+
+      return protos;
+   }
+
    updateNodes ()
    {
       const cmp = (a, b) => (a > b) - (a < b);
@@ -164,22 +189,51 @@ module .exports = new class Library extends Dialog
 
       this .list .empty ();
 
-      // Make filter.
-
       const input = this .input .val () .toLowerCase () .trim ();
 
-      const filter = input
-         ? ConcreteNode => StringSimilarity .compareTwoStrings (ConcreteNode .typeName .toLowerCase (), input) > 0.4
+      // Get protos.
+
+      const protoFilter = input
+         ? proto => StringSimilarity .compareTwoStrings (proto .name .toLowerCase (), input) > 0.4
          : () => true;
+
+      const protos = Array .from (this .getProtos () .values ())
+         .filter (protoFilter)
+         .sort ((a, b) => cmp (a .name, b .name));
 
       // Get supported nodes.
 
+      const nodeFilter = input
+         ? ConcreteNode => StringSimilarity .compareTwoStrings (ConcreteNode .typeName .toLowerCase (), input) > 0.4
+         : () => true;
+
       const nodes = [... this .browser .getConcreteNodes ()]
-         .filter (filter)
+         .filter (nodeFilter)
          .sort ((a, b) => cmp (a .typeName, b .typeName))
          .sort ((a, b) => cmp (a .componentInfo .name, b .componentInfo .name));
 
-      // Create list elements.
+      // Create list for proto elements
+
+      if (protos .length)
+      {
+         $("<li></li>")
+            .addClass ("component")
+            .attr ("name", "prototypes")
+            .text ("Prototypes")
+            .appendTo (this .list);
+
+         for (const proto of protos)
+         {
+            $("<li></li>")
+               .addClass ("node")
+               .text (proto .name)
+               .attr ("similarity", StringSimilarity .compareTwoStrings (proto .name .toLowerCase (), input))
+               .appendTo (this .list)
+               .on ("dblclick", () => this .createProto (proto));
+         }
+      }
+
+      // Create list for nodes elements.
 
       let componentName = "";
 
@@ -214,6 +268,38 @@ module .exports = new class Library extends Dialog
 
       const
          node  = this .executionContext .createNode (typeName),
+         field = this .field ?? $.try (() => this .node ?.getField (node .getValue () .getContainerField ()));
+
+      switch (field ?.getType ())
+      {
+         case X3D .X3DConstants .SFNode:
+         {
+            Editor .setFieldValue (this .executionContext, this .node, field, node);
+            break;
+         }
+         case X3D .X3DConstants .MFNode:
+         {
+            Editor .insertValueIntoArray (this .executionContext, this .node, field, field .length, node);
+            break;
+         }
+         default:
+         {
+            Editor .insertValueIntoArray (this .executionContext, this .executionContext, this .executionContext .rootNodes, this .executionContext .rootNodes .length, node);
+            break;
+         }
+      }
+
+      UndoManager .shared .endUndo ();
+
+      require ("../Application/Window") .sidebar .outlineEditor .expandTo (node .getValue ());
+   }
+
+   async createProto (proto)
+   {
+      UndoManager .shared .beginUndo (_ ("Create Proto Instance %s"), proto .name);
+
+      const
+         node  = proto .createInstance (this .executionContext),
          field = this .field ?? $.try (() => this .node ?.getField (node .getValue () .getContainerField ()));
 
       switch (field ?.getType ())
