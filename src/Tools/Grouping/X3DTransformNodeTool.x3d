@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 19 Nov 2023 20:14:49 GMT'/>
+    <meta name='modified' content='Sun, 19 Nov 2023 22:08:51 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -51,6 +51,7 @@
         <field accessType='inputOutput' type='SFVec3f' name='bboxSize' value='1 1 1'/>
         <field accessType='inputOutput' type='SFVec3f' name='bboxCenter'/>
         <field accessType='outputOnly' type='SFInt32' name='activeTool'/>
+        <field accessType='outputOnly' type='SFBool' name='isCenterActive'/>
         <field accessType='outputOnly' type='SFBool' name='isActive'/>
       </ProtoInterface>
       <ProtoBody>
@@ -582,6 +583,7 @@
                 </IS>
                 <ScreenGroup>
                   <ProtoInstance name='BooleanSwitch' DEF='_1'>
+                    <fieldValue name='bboxSize' value='32 32 32'/>
                     <fieldValue name='children'>
                       <Shape DEF='YellowPoint'
                           castShadow='false'>
@@ -605,15 +607,17 @@
                   </ProtoInstance>
                 </ScreenGroup>
               </Transform>
-              <ScreenGroup>
+              <ScreenGroup DEF='MiniCenterPoint'>
                 <Transform
                     scale='0.6666667 0.6666667 0.6666667'>
                   <ProtoInstance name='BooleanSwitch' USE='_1'/>
                   <ProtoInstance name='BooleanSwitch' USE='_1'/>
                 </Transform>
               </ScreenGroup>
+              <Transform DEF='CenterTool'/>
               <TouchSensor DEF='_10'
                   description='Center'/>
+              <ProtoInstance name='ToolShader'/>
             </Group>
           </Transform>
         </Collision>
@@ -1316,32 +1320,84 @@ function translate (scaledMatrix, distanceFromCenter)
         <Script DEF='CenterScript'
             directOutput='true'>
           <field accessType='inputOnly' type='SFTime' name='set_time'/>
+          <field accessType='inputOnly' type='SFBool' name='set_active'/>
+          <field accessType='inputOutput' type='SFVec3f' name='translation'/>
+          <field accessType='inputOutput' type='SFRotation' name='rotation'/>
+          <field accessType='inputOutput' type='SFVec3f' name='scale'/>
+          <field accessType='inputOutput' type='SFRotation' name='scaleOrientation'/>
           <field accessType='inputOutput' type='SFVec3f' name='center'/>
           <field accessType='inputOutput' type='SFVec3f' name='bboxCenter'/>
           <field accessType='outputOnly' type='SFBool' name='keepCenter'/>
+          <field accessType='outputOnly' type='SFBool' name='isActive'/>
+          <field accessType='initializeOnly' type='SFMatrix4f' name='initialMatrix'/>
+          <field accessType='initializeOnly' type='SFVec3f' name='initialCenter'/>
           <field accessType='initializeOnly' type='SFNode' name='coord'>
             <Coordinate USE='CenterLineCoord'/>
           </field>
+          <field accessType='initializeOnly' type='SFNode' name='centerPoint'>
+            <Transform USE='CenterPoint'/>
+          </field>
           <IS>
+            <connect nodeField='translation' protoField='translation'/>
+            <connect nodeField='rotation' protoField='rotation'/>
+            <connect nodeField='scale' protoField='scale'/>
+            <connect nodeField='scaleOrientation' protoField='scaleOrientation'/>
             <connect nodeField='center' protoField='center'/>
             <connect nodeField='bboxCenter' protoField='bboxCenter'/>
+            <connect nodeField='isActive' protoField='isCenterActive'/>
           </IS>
 <![CDATA[ecmascript:
+
+let centerTool;
 
 function initialize ()
 {
    set_center ();
 }
 
-function set_time ()
+async function set_time ()
 {
    keepCenter = !keepCenter;
+
+   if (keepCenter)
+   {
+      centerTool = await centerPoint .getValue () .addTool () .getToolInstance ();
+
+      Browser .addRoute (centerTool, "isActive", this, "set_active");
+ 
+      centerTool .tools         = new MFString ("TRANSLATE");
+      centerTool .centerDisplay = false;
+      centerTool .bboxDisplay   = false;
+  }
+   else
+   {
+      centerPoint .getValue () .removeTool ();
+   }
+}
+
+function set_active (value)
+{
+   isActive = value;
+
+   if (value)
+   {
+      initialMatrix .setTransform (translation,
+                                   rotation,
+                                   scale,
+                                   scaleOrientation,
+                                   center);
+   }
 }
 
 function set_center ()
 {
    coord .point [0] = center;
    coord .point [1] = bboxCenter;
+
+   if (isActive)
+   {
+      initialMatrix .getTransform (translation, null, null, null, center);
+   }
 }
 
 function set_bboxCenter ()
@@ -1409,7 +1465,8 @@ function set_bboxCenter ()
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
-      <fieldValue name='center' value='2 0 0'/>
+      <fieldValue name='translation' value='-0.8999743 0 0'/>
+      <fieldValue name='center' value='3.799949 0 0'/>
       <fieldValue name='bboxSize' value='2 3 4'/>
     </ProtoInstance>
   </Scene>
