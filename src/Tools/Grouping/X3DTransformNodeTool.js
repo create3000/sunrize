@@ -18,6 +18,8 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
       this .getBrowser () .displayEvents () .addInterest ("reshapeTool", this);
 
+      this .keys = new ActionKeys (`X3DTransformNodeTool${this .getId ()}`, this .set_keys__ .bind (this));
+
       this .tool .getField ("translation")      .addReference (this .node ._translation);
       this .tool .getField ("rotation")         .addReference (this .node ._rotation);
       this .tool .getField ("scale")            .addReference (this .node ._scale);
@@ -28,8 +30,6 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       this .tool .getField ("isActive")       .addInterest ("set_active__", this);
 
       this .tool .bboxColor = this .toolBBoxColor;
-
-      this .keys = new ActionKeys (`X3DTransformNodeTool${this .getId ()}`, this .set_keys__ .bind (this));
    }
 
    disposeTool ()
