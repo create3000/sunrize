@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 19 Nov 2023 17:28:18 GMT'/>
+    <meta name='modified' content='Sun, 19 Nov 2023 17:32:26 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -1003,7 +1003,7 @@ function translate (value)
           <field accessType='inputOutput' type='SFString' name='scaleMode'/>
           <field accessType='inputOutput' type='MFString' name='connectedAxes'/>
           <field accessType='inputOutput' type='SFBool' name='keepCenter'/>
-          <field accessType='initializeOnly' type='SFVec3f' name='initalTranslation'/>
+          <field accessType='initializeOnly' type='SFVec3f' name='initialTranslation'/>
           <field accessType='initializeOnly' type='SFVec3f' name='initialScale'/>
           <field accessType='initializeOnly' type='SFVec3f' name='initialCenter'/>
           <field accessType='initializeOnly' type='SFMatrix4f' name='initialMatrix'/>
@@ -1032,9 +1032,9 @@ function set_active (value)
    if (!value)
       return;
 
-   initalTranslation = translation;
-   initialScale      = scale;
-   initialCenter     = center;
+   initialTranslation = translation;
+   initialScale       = scale;
+   initialCenter      = center;
 
    initialMatrix .setTransform (translation,
                                 rotation,
@@ -1293,15 +1293,15 @@ function translateKeepCenter (scaledMatrix, distanceFromCenter)
 {
    const centerOffset = scaledMatrix .inverse () .multDirMatrix (scaledMatrix .multDirMatrix (distanceFromCenter) .subtract (initialMatrix .multDirMatrix (distanceFromCenter)));
 
-   translation = initalTranslation .subtract (centerOffset);
-   center      = initalCenter .add (centerOffset);
+   translation = initialTranslation .subtract (centerOffset);
+   center      = initialCenter .add (centerOffset);
 }
 
 function translate (scaledMatrix, distanceFromCenter)
 {
    const centerOffset = scaledMatrix .multDirMatrix (distanceFromCenter) .subtract (initialMatrix .multDirMatrix (distanceFromCenter));
 
-   translation = initalTranslation .subtract (centerOffset);
+   translation = initialTranslation .subtract (centerOffset);
 }
 ]]>
         </Script>
@@ -1399,6 +1399,7 @@ function set_bboxCenter ()
         <ROUTE fromNode='_10' fromField='touchTime' toNode='CenterScript' toField='set_time'/>
         <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='TranslateScript' toField='set_keepCenter'/>
         <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='_1' toField='set_whichChoice'/>
+        <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='ScaleScript' toField='set_keepCenter'/>
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
