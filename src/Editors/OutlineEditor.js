@@ -618,7 +618,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const
          primary   = $(".node.primary"),
          selected  = this .sceneGraph .find (".node.manual.selected"),
-         selection = selected .filter (primary) .length ? selected : primary,
+         selection = !primary .length || selected .filter (primary) .length ? selected : primary,
          ids       = selection .map (function () { return this .id }) .get ();
 
       if (ids .length > 1)
