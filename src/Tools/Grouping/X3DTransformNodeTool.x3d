@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 19 Nov 2023 11:59:49 GMT'/>
+    <meta name='modified' content='Sun, 19 Nov 2023 12:09:53 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -1009,6 +1009,8 @@ function translate (value)
           </IS>
 <![CDATA[ecmascript:
 
+let lastScaleFunction, lastValue;
+
 function set_active (value)
 {
    if (!value)
@@ -1027,6 +1029,11 @@ function set_active (value)
    distanceFromCenter = bboxCenter .subtract (center);
 
    events = 4;
+}
+
+function set_scaleMode ()
+{
+   lastScaleFunction ?.call (this, lastValue);
 }
 
 function set_scale ()
@@ -1051,77 +1058,105 @@ function set_scale ()
 
 function set_xScaleFront (value)
 {
+   [lastScaleFunction, lastValue] = [set_xScaleFront, value];
+
    if (bboxSize .x)
       set_scaleAxis ("x", value, 1);
 }
 
 function set_yScaleFront (value)
 {
+   [lastScaleFunction, lastValue] = [set_yScaleFront, value];
+
    if (bboxSize .y)
       set_scaleAxis ("y", value, 1);
 }
 
 function set_zScaleFront (value)
 {
+   [lastScaleFunction, lastValue] = [set_zScaleFront, value];
+
    if (bboxSize .z)
       set_scaleAxis ("z", value, 1);
 }
 
 function set_xScaleBack (value)
-{             
+{    
+   [lastScaleFunction, lastValue] = [set_xScaleBack, value];
+         
    if (bboxSize .x)
       set_scaleAxis ("x", value, -1);
 }
 
 function set_yScaleBack (value)
 {
+   [lastScaleFunction, lastValue] = [set_yScaleBack, value];
+
    if (bboxSize .y)
       set_scaleAxis ("y", value, -1);
 }
 
 function set_zScaleBack (value)
 {
+   [lastScaleFunction, lastValue] = [set_zScaleBack, value];
+
    if (bboxSize .z)
       set_scaleAxis ("z", value, -1);
 }
 
 function set_scale1 (value)
 {
+   [lastScaleFunction, lastValue] = [set_scale1, value];
+
    set_scaleUniform (value, Math .sign (value .x), new SFVec3f (-1, -1, -1));
 }
 
 function set_scale2 (value)
 {
+   [lastScaleFunction, lastValue] = [set_scale2, value];
+
    set_scaleUniform (value, Math .sign (-value .x), new SFVec3f (1, -1, -1));
 }
 
 function set_scale3 (value)
 {
+   [lastScaleFunction, lastValue] = [set_scale3, value];
+
    set_scaleUniform (value, Math .sign (-value .x), new SFVec3f (1, 1, -1));
 }
 
 function set_scale4 (value)
 {
+   [lastScaleFunction, lastValue] = [set_scale4, value];
+
    set_scaleUniform (value, Math .sign (value .x), new SFVec3f (-1, 1, -1));
 }
 
 function set_scale5 (value)
 {
+   [lastScaleFunction, lastValue] = [set_scale5, value];
+
    set_scaleUniform (value, Math .sign (value .x), new SFVec3f (-1, -1, 1));
 }
 
 function set_scale6 (value)
 {
+   [lastScaleFunction, lastValue] = [set_scale6, value];
+
    set_scaleUniform (value, Math .sign (-value .x), new SFVec3f (1, -1, 1));
 }
 
 function set_scale7 (value)
 {
+   [lastScaleFunction, lastValue] = [set_scale7, value];
+
    set_scaleUniform (value, Math .sign (-value .x), new SFVec3f (1, 1, 1));
 }
 
 function set_scale8 (value)
 {
+   [lastScaleFunction, lastValue] = [set_scale8, value];
+
    set_scaleUniform (value, Math .sign (value .x), new SFVec3f (-1, 1, 1));
 }
 
