@@ -25,7 +25,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
    updateComponents ()
    {
-      super .updateComponents ()
+      super .updateComponents ();
 
       this .matrixNodes = new Set ([
          X3D .X3DConstants .Billboard,
@@ -39,7 +39,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          X3D .X3DConstants .ScreenGroup,
          X3D .X3DConstants .Transform,
          X3D .X3DConstants .X3DNBodyCollidableNode,
-      ])
+      ]);
    }
 
    showContextMenu (event)
