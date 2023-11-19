@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 19 Nov 2023 22:08:51 GMT'/>
+    <meta name='modified' content='Sun, 19 Nov 2023 22:28:54 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -1348,8 +1348,6 @@ function translate (scaledMatrix, distanceFromCenter)
           </IS>
 <![CDATA[ecmascript:
 
-let centerTool;
-
 function initialize ()
 {
    set_center ();
@@ -1361,14 +1359,18 @@ async function set_time ()
 
    if (keepCenter)
    {
-      centerTool = await centerPoint .getValue () .addTool () .getToolInstance ();
+      const
+         centerTool         = centerPoint .getValue () .addTool (),
+         centerToolInstance = await centerTool .getToolInstance ();
 
-      Browser .addRoute (centerTool, "isActive", this, "set_active");
+      Browser .addRoute (centerToolInstance, "isActive", this, "set_active");
  
-      centerTool .tools         = new MFString ("TRANSLATE");
-      centerTool .centerDisplay = false;
-      centerTool .bboxDisplay   = false;
-  }
+      centerTool .undoEnabled = false;
+      
+      centerToolInstance .tools         = new MFString ("TRANSLATE");
+      centerToolInstance .centerDisplay = false;
+      centerToolInstance .bboxDisplay   = false;
+   }
    else
    {
       centerPoint .getValue () .removeTool ();

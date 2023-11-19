@@ -10,6 +10,8 @@ const
 
 class X3DTransformNodeTool extends X3DChildNodeTool
 {
+   undoEnabled = true;
+
    async initializeTool ()
    {
       await super .initializeTool (__dirname, "X3DTransformNodeTool.x3d");
@@ -22,7 +24,8 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       this .tool .getField ("scaleOrientation") .addReference (this .node ._scaleOrientation);
       this .tool .getField ("center")           .addReference (this .node ._center);
 
-      this .tool .getField ("isActive") .addInterest ("set_active__", this);
+      this .tool .getField ("isCenterActive") .addInterest ("set_active__", this);
+      this .tool .getField ("isActive")       .addInterest ("set_active__", this);
 
       this .tool .bboxColor = this .toolBBoxColor;
 
@@ -50,6 +53,9 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
    set_active__ (active)
    {
+      if (!this .undoEnabled)
+         return;
+
       if (active .getValue ())
       {
          this .initialTranslation      = this ._translation      .copy ();
@@ -57,6 +63,8 @@ class X3DTransformNodeTool extends X3DChildNodeTool
          this .initialScale            = this ._scale            .copy ();
          this .initialScaleOrientation = this ._scaleOrientation .copy ();
          this .initialCenter           = this ._center           .copy ();
+
+         this .specialTool = this .tool .isCenterActive ? "CENTER" : undefined;
       }
       else
       {
@@ -73,7 +81,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
          this ._scaleOrientation = this .initialScaleOrientation;
          this ._center           = this .initialCenter;
 
-         switch (this .tool .tools [this .tool .activeTool])
+         switch (this .specialTool ?? this .tool .tools [this .tool .activeTool])
          {
             case "TRANSLATE":
                UndoManager .shared .beginUndo (_ ("Translate %s"), this .getTypeName ());
@@ -84,6 +92,9 @@ class X3DTransformNodeTool extends X3DChildNodeTool
             case "SCALE":
                UndoManager .shared .beginUndo (_ ("Scale %s"), this .getTypeName ());
                break;
+            case "CENTER":
+               UndoManager .shared .beginUndo (_ ("Translate Center of %s"), this .getTypeName ());
+               break;
          }
 
          Editor .setFieldValue (this .getExecutionContext (), this .node, this ._translation,      translation);
@@ -93,6 +104,8 @@ class X3DTransformNodeTool extends X3DChildNodeTool
          Editor .setFieldValue (this .getExecutionContext (), this .node, this ._center,           center);
 
          UndoManager .shared .endUndo ();
+
+         this .specialTool = undefined;
       }
    }
 
