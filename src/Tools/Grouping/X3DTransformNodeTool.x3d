@@ -10,10 +10,20 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 19 Nov 2023 16:20:47 GMT'/>
+    <meta name='modified' content='Sun, 19 Nov 2023 17:28:18 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
+    </ExternProtoDeclare>
+    <ExternProtoDeclare name='BooleanSwitch' url='"BooleanSwitch.x3d#BooleanSwitch"'>
+      <field accessType='inputOutput' type='SFBool' name='whichChoice'/>
+      <field accessType='inputOutput' type='SFBool' name='visible'/>
+      <field accessType='inputOutput' type='SFBool' name='bboxDisplay'/>
+      <field accessType='initializeOnly' type='SFVec3f' name='bboxSize'/>
+      <field accessType='initializeOnly' type='SFVec3f' name='bboxCenter'/>
+      <field accessType='inputOnly' type='MFNode' name='addChildren'/>
+      <field accessType='inputOnly' type='MFNode' name='removeChildren'/>
+      <field accessType='inputOutput' type='MFNode' name='children'/>
     </ExternProtoDeclare>
     <ProtoDeclare name='Tool'>
       <ProtoInterface>
@@ -466,7 +476,7 @@
                         <connect nodeField='isActive' protoField='isActive'/>
                       </IS>
                     </PlaneSensor>
-                    <ScreenGroup DEF='_1'>
+                    <ScreenGroup DEF='_12'>
                       <Shape>
                         <Appearance>
                           <Material DEF='White'
@@ -485,7 +495,7 @@
                         <connect nodeField='isActive' protoField='isActive'/>
                       </IS>
                     </PlaneSensor>
-                    <ScreenGroup USE='_1'/>
+                    <ScreenGroup USE='_12'/>
                   </Transform>
                   <Transform DEF='ScaleHandle3'>
                     <PlaneSensor DEF='ScaleSensor3'
@@ -495,7 +505,7 @@
                         <connect nodeField='isActive' protoField='isActive'/>
                       </IS>
                     </PlaneSensor>
-                    <ScreenGroup USE='_1'/>
+                    <ScreenGroup USE='_12'/>
                   </Transform>
                   <Transform DEF='ScaleHandle4'>
                     <PlaneSensor DEF='ScaleSensor4'
@@ -505,7 +515,7 @@
                         <connect nodeField='isActive' protoField='isActive'/>
                       </IS>
                     </PlaneSensor>
-                    <ScreenGroup USE='_1'/>
+                    <ScreenGroup USE='_12'/>
                   </Transform>
                   <Transform DEF='ScaleHandle5'>
                     <PlaneSensor DEF='ScaleSensor5'
@@ -515,7 +525,7 @@
                         <connect nodeField='isActive' protoField='isActive'/>
                       </IS>
                     </PlaneSensor>
-                    <ScreenGroup USE='_1'/>
+                    <ScreenGroup USE='_12'/>
                   </Transform>
                   <Transform DEF='ScaleHandle6'>
                     <PlaneSensor DEF='ScaleSensor6'
@@ -525,7 +535,7 @@
                         <connect nodeField='isActive' protoField='isActive'/>
                       </IS>
                     </PlaneSensor>
-                    <ScreenGroup USE='_1'/>
+                    <ScreenGroup USE='_12'/>
                   </Transform>
                   <Transform DEF='ScaleHandle7'>
                     <PlaneSensor DEF='ScaleSensor7'
@@ -535,7 +545,7 @@
                         <connect nodeField='isActive' protoField='isActive'/>
                       </IS>
                     </PlaneSensor>
-                    <ScreenGroup USE='_1'/>
+                    <ScreenGroup USE='_12'/>
                   </Transform>
                   <Transform DEF='ScaleHandle8'>
                     <PlaneSensor DEF='ScaleSensor8'
@@ -545,7 +555,7 @@
                         <connect nodeField='isActive' protoField='isActive'/>
                       </IS>
                     </PlaneSensor>
-                    <ScreenGroup USE='_1'/>
+                    <ScreenGroup USE='_12'/>
                   </Transform>
                 </Group>
               </Switch>
@@ -574,18 +584,26 @@
                   <connect nodeField='translation' protoField='center'/>
                 </IS>
                 <ScreenGroup>
-                  <Shape
-                      castShadow='false'>
-                    <Appearance>
-                      <Material
-                          diffuseColor='1 1 0'/>
-                      <ProtoInstance name='ToolShader' USE='_9' containerField='shaders'/>
-                    </Appearance>
-                    <Sphere
-                        radius='5'/>
-                  </Shape>
+                  <ProtoInstance name='BooleanSwitch' DEF='_1'>
+                    <fieldValue name='children'>
+                      <Shape DEF='YellowPoint'
+                          castShadow='false'>
+                        <Appearance DEF='Yellow'>
+                          <Material
+                              diffuseColor='1 1 0'/>
+                          <ProtoInstance name='ToolShader' USE='_9' containerField='shaders'/>
+                        </Appearance>
+                        <Sphere USE='Sphere_1'/>
+                      </Shape>
+                      <Shape DEF='RedPoint'
+                          castShadow='false'>
+                        <Appearance USE='Red_1'/>
+                        <Sphere USE='Sphere_1'/>
+                      </Shape>
+                    </fieldValue>
+                  </ProtoInstance>
                 </ScreenGroup>
-                <TouchSensor
+                <TouchSensor DEF='_10'
                     description='Center'/>
               </Transform>
             </Group>
@@ -747,33 +765,6 @@ function set_bboxSize ()
 
    for (let i = 0; i < 8; ++ i)
 	   scaleSensors [i] .axisRotation = new SFRotation (xAxis, scaleHandles [i] .translation);
-}
-]]>
-        </Script>
-        <Script DEF='CenterScript'
-            directOutput='true'>
-          <field accessType='inputOutput' type='SFVec3f' name='center'/>
-          <field accessType='inputOutput' type='SFVec3f' name='bboxSize'/>
-          <field accessType='inputOutput' type='SFVec3f' name='bboxCenter'/>
-          <field accessType='initializeOnly' type='SFNode' name='coord'>
-            <Coordinate USE='CenterLineCoord'/>
-          </field>
-          <IS>
-            <connect nodeField='center' protoField='center'/>
-            <connect nodeField='bboxSize' protoField='bboxSize'/>
-            <connect nodeField='bboxCenter' protoField='bboxCenter'/>
-          </IS>
-<![CDATA[ecmascript:
-
-function initialize ()
-{
-   eventsProcessed ();
-}
-
-function eventsProcessed ()
-{
-   coord .point [0] = center;
-   coord .point [1] = bboxCenter;
 }
 ]]>
         </Script>
@@ -1314,6 +1305,43 @@ function translate (scaledMatrix, distanceFromCenter)
 }
 ]]>
         </Script>
+        <Script DEF='CenterScript'
+            directOutput='true'>
+          <field accessType='inputOnly' type='SFTime' name='set_time'/>
+          <field accessType='inputOutput' type='SFVec3f' name='center'/>
+          <field accessType='inputOutput' type='SFVec3f' name='bboxCenter'/>
+          <field accessType='outputOnly' type='SFBool' name='keepCenter'/>
+          <field accessType='initializeOnly' type='SFNode' name='coord'>
+            <Coordinate USE='CenterLineCoord'/>
+          </field>
+          <IS>
+            <connect nodeField='center' protoField='center'/>
+            <connect nodeField='bboxCenter' protoField='bboxCenter'/>
+          </IS>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+   set_center ();
+}
+
+function set_time ()
+{
+   keepCenter = !keepCenter;
+}
+
+function set_center ()
+{
+   coord .point [0] = center;
+   coord .point [1] = bboxCenter;
+}
+
+function set_bboxCenter ()
+{
+   set_center ();
+}
+]]>
+        </Script>
         <ROUTE fromNode='XTranslationSensor' fromField='translation_changed' toNode='TranslateScript' toField='set_xTranslation'/>
         <ROUTE fromNode='YTranslationSensor' fromField='translation_changed' toNode='TranslateScript' toField='set_yTranslation'/>
         <ROUTE fromNode='ZTranslationSensor' fromField='translation_changed' toNode='TranslateScript' toField='set_zTranslation'/>
@@ -1368,6 +1396,9 @@ function translate (scaledMatrix, distanceFromCenter)
         <ROUTE fromNode='ScaleSensor2' fromField='translation_changed' toNode='ScaleScript' toField='set_scale2'/>
         <ROUTE fromNode='ScaleSensor1_1' fromField='translation_changed' toNode='ScaleScript' toField='set_scale1'/>
         <ROUTE fromNode='ScaleSensor1_1' fromField='isActive' toNode='ScaleScript' toField='set_active'/>
+        <ROUTE fromNode='_10' fromField='touchTime' toNode='CenterScript' toField='set_time'/>
+        <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='TranslateScript' toField='set_keepCenter'/>
+        <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='_1' toField='set_whichChoice'/>
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>

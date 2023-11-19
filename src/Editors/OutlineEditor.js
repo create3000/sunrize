@@ -743,7 +743,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       if (field .getType () === X3D .X3DConstants .MFNode)
       {
          const
-            selectedNodes          = Array .from (this .sceneGraph .find (".node.selected"), e => this .getNode ($(e))),
+            selectedNodes          = Array .from (this .sceneGraph .find (".node.selected,.node.primary"), e => this .getNode ($(e))),
             selectedElements       = Array .from (this .sceneGraph .find (".node.selected:not(.primary)"), e => $(e)),
             destinationModelMatrix = this .getModelMatrix (parentNodeElement);
 
