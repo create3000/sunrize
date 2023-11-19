@@ -266,41 +266,27 @@ module .exports = new class Library extends Dialog
 
       await Editor .addComponent (this .executionContext, componentName);
 
-      const
-         node  = this .executionContext .createNode (typeName),
-         field = this .field ?? $.try (() => this .node ?.getField (node .getValue () .getContainerField ()));
+      const node = this .executionContext .createNode (typeName);
 
-      switch (field ?.getType ())
-      {
-         case X3D .X3DConstants .SFNode:
-         {
-            Editor .setFieldValue (this .executionContext, this .node, field, node);
-            break;
-         }
-         case X3D .X3DConstants .MFNode:
-         {
-            Editor .insertValueIntoArray (this .executionContext, this .node, field, field .length, node);
-            break;
-         }
-         default:
-         {
-            Editor .insertValueIntoArray (this .executionContext, this .executionContext, this .executionContext .rootNodes, this .executionContext .rootNodes .length, node);
-            break;
-         }
-      }
+      this .addNode (node);
 
       UndoManager .shared .endUndo ();
-
-      require ("../Application/Window") .sidebar .outlineEditor .expandTo (node .getValue ());
    }
 
    async createProto (proto)
    {
       UndoManager .shared .beginUndo (_ ("Create Proto Instance %s"), proto .name);
 
-      const
-         node  = proto .createInstance (this .executionContext),
-         field = this .field ?? $.try (() => this .node ?.getField (node .getValue () .getContainerField ()));
+      const node  = proto .createInstance (this .executionContext);
+
+      this .addNode (node);
+
+      UndoManager .shared .endUndo ();
+   }
+
+   addNode (node)
+   {
+      const field = this .field ?? $.try (() => this .node ?.getField (node .getValue () .getContainerField ()));
 
       switch (field ?.getType ())
       {
@@ -320,8 +306,6 @@ module .exports = new class Library extends Dialog
             break;
          }
       }
-
-      UndoManager .shared .endUndo ();
 
       require ("../Application/Window") .sidebar .outlineEditor .expandTo (node .getValue ());
    }
@@ -381,35 +365,30 @@ module .exports = new class Library extends Dialog
       UndoManager .shared .beginUndo (_ ("Import %s"), typeName);
 
       const
-         nodes = await Editor .importX3D (this .executionContext, x3dSyntax),
-         field = this .field ?? $.try (() => this .node ?.getField (nodes [0] .getContainerField ()));
+         node  = (await Editor .importX3D (this .executionContext, x3dSyntax)) .pop (),
+         field = this .field ?? $.try (() => this .node ?.getField (node .getContainerField ()));
 
       switch (field ?.getType ())
       {
          case X3D .X3DConstants .SFNode:
          {
-            Editor .setFieldValue (this .executionContext, this .node, field, nodes [0]);
+            Editor .setFieldValue (this .executionContext, this .node, field, node);
             Editor .removeValueFromArray (this .executionContext, this .executionContext, this .executionContext .rootNodes, this .executionContext .rootNodes .length - 1);
             break;
          }
          case X3D .X3DConstants .MFNode:
          {
-            Editor .insertValueIntoArray (this .executionContext, this .node, field, field .length, nodes [0]);
+            Editor .insertValueIntoArray (this .executionContext, this .node, field, field .length, node);
             Editor .removeValueFromArray (this .executionContext, this .executionContext, this .executionContext .rootNodes, this .executionContext .rootNodes .length - 1);
             break;
          }
       }
 
-      for (const node of nodes)
-      {
-         if (!node .getType () .includes (X3D .X3DConstants .X3DBindableNode))
-            continue;
-
+      if (node .getType () .includes (X3D .X3DConstants .X3DBindableNode))
          Editor .setFieldValue (this .executionContext, node, node ._set_bind, true);
-      }
 
       UndoManager .shared .endUndo ();
 
-      require ("../Application/Window") .sidebar .outlineEditor .expandTo (nodes [0]);
+      require ("../Application/Window") .sidebar .outlineEditor .expandTo (node);
    }
 }
