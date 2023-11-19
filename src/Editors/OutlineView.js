@@ -761,10 +761,9 @@ module .exports = class OutlineView extends Interface
             .on ("dragstart", this .onDragStartField .bind (this));
       }
 
-      // Field Tools
+      // Add special field buttons.
 
-      if (this .isEditable (parent))
-         this .addFieldButtons (child .find (".boolean-button, .color-button, .time-button"));
+      this .addFieldButtons (parent, child, node);
 
       // Expand children.
 
@@ -2959,65 +2958,73 @@ module .exports = class OutlineView extends Interface
    isEditable (parent)
    {
       if (parent .is (".externproto, .special"))
-         parent = parent .closest (".scene")
+         parent = parent .closest (".scene");
 
       if (parent .closest (".externproto, .instance-scene, .internal-scene, .imported-node .node, .imported-node .field", this .sceneGraph) .length)
       {
-         return false
+         return false;
       }
 
-      return true
+      return true;
    }
 
    getNode (element)
    {
-      return this .objects .get (parseInt (element .attr ("node-id")))
+      return this .objects .get (parseInt (element .attr ("node-id")));
    }
 
    getExportedNode (element)
    {
-      return this .objects .get (parseInt (element .attr ("exported-node-id")))
+      return this .objects .get (parseInt (element .attr ("exported-node-id")));
    }
 
    getField (element)
    {
-      return this .objects .get (parseInt (element .attr ("field-id")))
+      return this .objects .get (parseInt (element .attr ("field-id")));
    }
 
 	getRoute (element, routes)
 	{
-		const id = parseInt (element .attr ("route-id"))
+		const id = parseInt (element .attr ("route-id"));
 
 		for (const route of routes)
 		{
 			if (route .getId () === id)
-				return route
+				return route;
 		}
 
-		return null
+		return null;
 	}
 
    onresize ()
    {
-      this .updateRouteGraph ()
+      this .updateRouteGraph ();
    }
 
-   addFieldButtons (elements)
+   addFieldButtons (parent, child, node)
    {
-      elements .each ((i, e) =>
-      {
-         const element = $(e)
+      if (!this .isEditable (parent))
+         return;
 
-         switch (element .attr ("class"))
+      if (node instanceof X3D .X3DExternProtoDeclaration)
+         return;
+
+      child
+         .find (".boolean-button, .color-button, .time-button")
+         .each ((i, e) =>
          {
-            case "boolean-button":
-               return this .addBooleanField (element)
-            case "color-button":
-               return this .addColorField (element)
-            case "time-button":
-               return this .addTimeField (element)
-         }
-      })
+            const element = $(e);
+
+            switch (element .attr ("class"))
+            {
+               case "boolean-button":
+                  return this .addBooleanField (element);
+               case "color-button":
+                  return this .addColorField (element);
+               case "time-button":
+                  return this .addTimeField (element);
+            }
+         });
    }
 
    addBooleanField (element) { }

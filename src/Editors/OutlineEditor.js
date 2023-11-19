@@ -973,9 +973,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    addBooleanField (boolean)
    {
       const
-         element  = boolean .closest (".field"),
-         node     = this .getNode (element),
-         field    = this .getField (element);
+         element = boolean .closest (".field"),
+         node    = this .getNode (element),
+         field   = this .getField (element);
 
       if (field .getAccessType () === X3D .X3DConstants .outputOnly)
          return;
@@ -992,9 +992,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       require ("spectrum-colorpicker2");
 
       const
-         element  = color .closest (".field"),
-         node     = this .getNode (element),
-         field    = this .getField (element);
+         element = color .closest (".field"),
+         node    = this .getNode (element),
+         field   = this .getField (element);
 
       if (field .getAccessType () === X3D .X3DConstants .outputOnly)
          return;
