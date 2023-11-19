@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const
    $                 = require ("jquery"),
@@ -7,20 +7,20 @@ const
    OutlineRouteGraph = require ("./OutlineRouteGraph"),
    Editor            = require ("../Undo/Editor"),
    UndoManager       = require ("../Undo/UndoManager"),
-   _                 = require ("../Application/GetText")
+   _                 = require ("../Application/GetText");
 
 module .exports = class OutlineEditor extends OutlineRouteGraph
 {
    constructor (element)
    {
-      super (element)
+      super (element);
 
-      element .on ("contextmenu", (event) => this .showContextMenu (event))
+      element .on ("contextmenu", (event) => this .showContextMenu (event));
 
-      electron .ipcRenderer .on ("outline-editor-menu", (event, key, ...args) => this [key] (...args))
-      electron .ipcRenderer .on ("remove-empty-groups", (event) => this .removeEmptyGroups ())
+      electron .ipcRenderer .on ("outline-editor-menu", (event, key, ...args) => this [key] (...args));
+      electron .ipcRenderer .on ("remove-empty-groups", (event) => this .removeEmptyGroups ());
 
-      this .setup ()
+      this .setup ();
    }
 
    updateComponents ()
