@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 19 Nov 2023 19:35:50 GMT'/>
+    <meta name='modified' content='Sun, 19 Nov 2023 19:43:51 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -121,7 +121,7 @@
                             <Appearance DEF='Red_1'>
                               <Material
                                   diffuseColor='1 0 0'/>
-                              <ProtoInstance name='ToolShader' DEF='_9' containerField='shaders'/>
+                              <ProtoInstance name='ToolShader' DEF='_3' containerField='shaders'/>
                             </Appearance>
                             <Cone DEF='Arrow_1'
                                 height='18'
@@ -133,7 +133,7 @@
                           <Shape
                               castShadow='false'>
                             <Appearance USE='Red_1'/>
-                            <Sphere DEF='Sphere_1'
+                            <Sphere DEF='Sphere'
                                 radius='6'/>
                           </Shape>
                         </Transform>
@@ -245,7 +245,7 @@
                             <Appearance DEF='Green_1'>
                               <Material
                                   diffuseColor='0 1 0'/>
-                              <ProtoInstance name='ToolShader' USE='_9' containerField='shaders'/>
+                              <ProtoInstance name='ToolShader' USE='_3' containerField='shaders'/>
                             </Appearance>
                             <Cone USE='Arrow_1'/>
                           </Shape>
@@ -255,7 +255,7 @@
                           <Shape
                               castShadow='false'>
                             <Appearance USE='Green_1'/>
-                            <Sphere USE='Sphere_1'/>
+                            <Sphere USE='Sphere'/>
                           </Shape>
                         </Transform>
                         <Transform
@@ -359,7 +359,7 @@
                             <Appearance DEF='Blue'>
                               <Material
                                   diffuseColor='0 0 1'/>
-                              <ProtoInstance name='ToolShader' USE='_9' containerField='shaders'/>
+                              <ProtoInstance name='ToolShader' USE='_3' containerField='shaders'/>
                             </Appearance>
                             <Cone USE='Arrow_1'/>
                           </Shape>
@@ -369,7 +369,7 @@
                           <Shape
                               castShadow='false'>
                             <Appearance USE='Blue'/>
-                            <Sphere USE='Sphere_1'/>
+                            <Sphere USE='Sphere'/>
                           </Shape>
                         </Transform>
                         <Transform
@@ -464,7 +464,7 @@
                         <Appearance>
                           <Material DEF='White'
                               diffuseColor='1 1 1'/>
-                          <ProtoInstance name='ToolShader' USE='_9' containerField='shaders'/>
+                          <ProtoInstance name='ToolShader' USE='_3' containerField='shaders'/>
                         </Appearance>
                         <Box USE='_21'/>
                       </Shape>
@@ -588,18 +588,18 @@
                         <Appearance DEF='Yellow'>
                           <Material
                               diffuseColor='1 1 0'/>
-                          <ProtoInstance name='ToolShader' USE='_9' containerField='shaders'/>
+                          <ProtoInstance name='ToolShader' USE='_3' containerField='shaders'/>
                         </Appearance>
-                        <Sphere USE='Sphere_1'/>
+                        <Sphere USE='Sphere'/>
                       </Shape>
-                      <Shape DEF='RedPoint'
+                      <Shape DEF='RedPoint_1'
                           castShadow='false'>
-                        <Appearance DEF='SkyBlue'>
+                        <Appearance DEF='SkyBlue_2'>
                           <Material
                               diffuseColor='0 0.5 1'/>
-                          <ProtoInstance name='ToolShader' USE='_9' containerField='shaders'/>
+                          <ProtoInstance name='ToolShader' USE='_3' containerField='shaders'/>
                         </Appearance>
-                        <Sphere USE='Sphere_1'/>
+                        <Sphere USE='Sphere'/>
                       </Shape>
                     </fieldValue>
                   </ProtoInstance>

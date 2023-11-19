@@ -3028,7 +3028,7 @@ module .exports = class OutlineView extends Interface
 
 	removeFieldButtons (elements)
    {
-      elements .each ((i, e) => this .removeColorField ($(e)))
+      elements .each ((i, e) => this .removeColorField ($(e)));
    }
 
    removeColorField (element) { }
@@ -3096,31 +3096,31 @@ module .exports = class OutlineView extends Interface
 
    expandTo (object)
    {
-      let flags = Traverse .ROOT_NODES
+      let flags = Traverse .ROOT_NODES;
 
       if (this .expandExternProtoDeclarations)
-         flags |= Traverse .EXTERNPROTO_DECLARATIONS | Traverse .EXTERNPROTO_DECLARATION_SCENE
+         flags |= Traverse .EXTERNPROTO_DECLARATIONS | Traverse .EXTERNPROTO_DECLARATION_SCENE;
 
-      flags |= Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY
+      flags |= Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY;
 
       if (this .expandInlineNodes)
-         flags |= Traverse .INLINE_SCENE
+         flags |= Traverse .INLINE_SCENE;
 
-      flags |= Traverse .ROOT_NODES
+      flags |= Traverse .ROOT_NODES;
 
       if (this .expandPrototypeInstances)
-         flags |= Traverse .PROTOTYPE_INSTANCES
+         flags |= Traverse .PROTOTYPE_INSTANCES;
 
-      flags |= Traverse .IMPORTED_NODES
+      flags |= Traverse .IMPORTED_NODES;
 
-      const hierarchies = Traverse .find (this .executionContext, object, flags)
+      const hierarchies = Traverse .find (this .executionContext, object, flags);
 
-      for (const hierarchy of hierarchies .reverse ())
+      for (const hierarchy of hierarchies)
       {
-         hierarchy .shift () // execution context
+         hierarchy .shift (); // execution context
 
-         this .expandHierarchy (hierarchy, this .sceneGraph)
-         break
+         this .expandHierarchy (hierarchy, this .sceneGraph);
+         break;
       }
    }
 
@@ -3129,7 +3129,7 @@ module .exports = class OutlineView extends Interface
       "X3DProtoDeclaration": "proto",
       "X3DScene": "scene",
       "X3DExecutionContext": "scene",
-   }
+   };
 
    expandHierarchy (hierarchy, parent)
    {
@@ -3174,102 +3174,102 @@ module .exports = class OutlineView extends Interface
       }
    }
 
-   scrollPositions = [ ]
-   scrollTimeoutId = 0
+   scrollPositions = [ ];
+   scrollTimeoutId = 0;
 
    saveScrollPositions ()
    {
-      this .scrollPositions .push ([this .treeView .scrollTop (), this .treeView .scrollLeft ()])
+      this .scrollPositions .push ([this .treeView .scrollTop (), this .treeView .scrollLeft ()]);
 
-      cancelAnimationFrame (this .scrollTimeoutId)
+      cancelAnimationFrame (this .scrollTimeoutId);
 
-      this .scrollTimeoutId = requestAnimationFrame (() => this .scrollPositions .length = 0)
+      this .scrollTimeoutId = requestAnimationFrame (() => this .scrollPositions .length = 0);
    }
 
    restoreScrollPositions ()
    {
-      const scrollPositions = this .scrollPositions [0]
+      const scrollPositions = this .scrollPositions [0];
 
-      this .treeView .scrollTop (scrollPositions [0])
-      this .treeView .scrollLeft (scrollPositions [1])
+      this .treeView .scrollTop (scrollPositions [0]);
+      this .treeView .scrollLeft (scrollPositions [1]);
    }
 
    saveExpanded ()
    {
       if (!this .executionContext)
-         return
+         return;
 
       const
          config   = this .getFileConfig (this .executionContext),
-         expanded = this .saveExpandedNodes (this .sceneGraph .find ("> div > ul > li"), [ ], [ ])
+         expanded = this .saveExpandedNodes (this .sceneGraph .find ("> div > ul > li"), [ ], [ ]);
 
-      config .expanded   = expanded
-      config .scrollTop  = this .treeView .scrollTop ()
-      config .scrollLeft = this .treeView .scrollLeft ()
+      config .expanded   = expanded;
+      config .scrollTop  = this .treeView .scrollTop ();
+      config .scrollLeft = this .treeView .scrollLeft ();
    }
 
    saveExpandedNodes (elements, path, expanded)
    {
       elements .each ((i, e) =>
       {
-         const element = $(e)
+         const element = $(e);
 
-         path .push (element .hasClass ("field") ? this .getField (element) .getName () : i)
+         path .push (element .hasClass ("field") ? this .getField (element) .getName () : i);
 
          if (element .data ("expanded"))
          {
             expanded .push ({
             	path: path .join (":"),
             	fullExpanded: element .data ("full-expanded"),
-            })
+            });
          }
 
-         this .saveExpandedNodes (element .find ("> div > ul > li"), path, expanded)
+         this .saveExpandedNodes (element .find ("> div > ul > li"), path, expanded);
 
-         path .pop ()
+         path .pop ();
       })
 
-      return expanded
+      return expanded;
    }
 
    restoreExpanded ()
    {
-      const expanded = new Map ()
+      const expanded = new Map ();
 
       this .fileConfig .setDefaultValues ({
          expanded: [ ],
          scrollTop: 0,
          scrollLeft: 0,
-      })
+      });
 
       for (const row of this .fileConfig .expanded)
-         expanded .set (row .path, row)
+         expanded .set (row .path, row);
 
-      this .restoreExpandedNodes (this .sceneGraph .find ("> div > ul > li"), [ ], expanded)
+      this .restoreExpandedNodes (this .sceneGraph .find ("> div > ul > li"), [ ], expanded);
 
-      this .treeView .scrollTop (this .fileConfig .scrollTop)
-      this .treeView .scrollLeft (this .fileConfig .scrollLeft)
+      this .treeView .scrollTop (this .fileConfig .scrollTop);
+      this .treeView .scrollLeft (this .fileConfig .scrollLeft);
    }
 
    restoreExpandedNodes (elements, path, expanded)
    {
       elements .each ((i, e) =>
       {
-         const element = $(e)
+         const element = $(e);
 
-         path .push (element .hasClass ("field") ? this .getField (element) .getName () : i)
+         path .push (element .hasClass ("field") ? this .getField (element) .getName () : i);
 
-         const data = expanded .get (path .join (":"))
+         const data = expanded .get (path .join (":"));
 
          if (data)
          {
-            element .data ("full-expanded", data .fullExpanded)
-            element .jstree ("open_node", element)
+            element .data ("full-expanded", data .fullExpanded);
+            element .jstree ("open_node", element);
 
-            this .restoreExpandedNodes (element .find ("> div > ul > li"), path, expanded)
+            this .restoreExpandedNodes (element .find ("> div > ul > li"), path, expanded);
          }
 
-         path .pop ()
+         path .pop ();
       })
    }
 }
