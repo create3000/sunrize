@@ -20,6 +20,16 @@ module .exports = class Editor
    /**
     *
     * @param {X3DExecutionContext} executionContext source execution context
+    * @returns {X3DScene} corresponding scene
+    */
+   static getScene (executionContext)
+   {
+      return executionContext instanceof X3D .X3DScene ? executionContext : executionContext .getScene ();
+   }
+
+   /**
+    *
+    * @param {X3DExecutionContext} executionContext source execution context
     * @param {Array<X3DNode|X3DExternProtoDeclaration|X3DProtoDeclaration>} objects objects to export
     * @returns {string} x3dSyntax
     */
@@ -134,12 +144,12 @@ module .exports = class Editor
 
       const
          browser      = executionContext .getBrowser (),
-         scene        = executionContext instanceof X3D .X3DScene ? executionContext : executionContext .getScene (),
+         scene        = this .getScene (executionContext),
          profile      = executionContext .getScene () .getProfile (),
          externprotos = new Map (Array .from (executionContext .externprotos, p => [p .getName (), p])),
          protos       = new Map (Array .from (executionContext .protos,       p => [p .getName (), p])),
          rootNodes    = executionContext .rootNodes .copy (),
-         tempScene    = browser .createScene ();
+         tempScene    = browser .createScene (browser .getProfile ("Core"));
 
       scene .setProfile (browser .getProfile ("Full"));
 
@@ -176,6 +186,14 @@ module .exports = class Editor
          // Restore Root Nodes.
          this .setFieldValue (executionContext, executionContext, executionContext .rootNodes, rootNodes, undoManager);
       });
+
+      // Add components.
+
+      for (const component of tempScene .getProfile () .components)
+         await this .addComponent (scene, component .name, undoManager);
+
+      for (const component of tempScene .getComponents ())
+         await this .addComponent (scene, component .name, undoManager);
 
       // Remove protos that already exists in context.
 
