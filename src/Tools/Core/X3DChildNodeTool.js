@@ -6,8 +6,6 @@ const
 
 class X3DChildNodeTool extends X3DNodeTool
 {
-   traversePointer = false;
-
    getMustDisplay ()
    {
       return true;
@@ -23,16 +21,10 @@ class X3DChildNodeTool extends X3DNodeTool
       switch (type)
       {
          case X3D .TraverseType .POINTER:
-         {
-            if (!this .traversePointer)
-               break;
-            // Proceed with next case:
-         }
+            break;
          default:
-         {
             this .node .traverse (type, renderObject);
             break;
-         }
       }
 
       renderObject .getHumanoids () .push (null);

@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 19 Nov 2023 22:57:25 GMT'/>
+    <meta name='modified' content='Sun, 19 Nov 2023 23:31:09 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -615,6 +615,16 @@
                   <ProtoInstance name='BooleanSwitch' USE='_1'/>
                 </Transform>
               </ScreenGroup>
+              <Transform DEF='CenterTool'>
+                <IS>
+                  <connect nodeField='translation' protoField='center'/>
+                  <connect nodeField='visible' protoField='centerTool'/>
+                </IS>
+                <ScreenGroup>
+                  <Group
+                      bboxSize='40 40 40'/>
+                </ScreenGroup>
+              </Transform>
               <TouchSensor DEF='_10'
                   description='Center'>
                 <IS>
@@ -1338,8 +1348,8 @@ function translate (scaledMatrix, distanceFromCenter)
           <field accessType='initializeOnly' type='SFNode' name='coord'>
             <Coordinate USE='CenterLineCoord'/>
           </field>
-          <field accessType='initializeOnly' type='SFNode' name='centerPoint'>
-            <Transform USE='CenterPoint'/>
+          <field accessType='initializeOnly' type='SFNode' name='centerTool'>
+            <Transform USE='CenterTool'/>
           </field>
           <IS>
             <connect nodeField='translation' protoField='translation'/>
@@ -1364,21 +1374,20 @@ async function set_time ()
    if (keepCenter)
    {
       const
-         centerTool         = centerPoint .getValue () .addTool (),
-         centerToolInstance = await centerTool .getToolInstance ();
+         tool     = centerTool .getValue () .addTool (),
+         instance = await tool .getToolInstance ();
 
-      Browser .addRoute (centerToolInstance, "isActive", this, "set_active");
+      Browser .addRoute (instance, "isActive", this, "set_active");
  
-      centerTool .traversePointer = true;
-      centerTool .undoEnabled     = false;
+      tool .undoEnabled = false;
        
-      centerToolInstance .tools         = new MFString ("TRANSLATE");
-      centerToolInstance .centerDisplay = false;
-      centerToolInstance .bboxDisplay   = false;
+      instance .tools         = new MFString ("TRANSLATE");
+      instance .centerDisplay = false;
+      instance .bboxDisplay   = false;
    }
    else
    {
-      centerPoint .getValue () .removeTool ();
+      centerTool .getValue () .removeTool ();
    }
 }
 
