@@ -71,9 +71,8 @@ async function initialize ()
 
    const tool = await transform .getValue () .addTool () .getToolInstance ();
 
-   tool .tools       = new MFString ("TRANSLATE", "SCALE");
-   tool .centerTool  = false;
-   tool .bboxDisplay = true;
+   tool .tools      = new MFString ("TRANSLATE", "SCALE");
+   tool .centerTool = false;
 }
 
 function set_selected ()
