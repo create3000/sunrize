@@ -40,6 +40,8 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
    set_keys__ (keys)
    {
+      this .tool .snapRotation = keys === ActionKeys .Shift;
+
       if (!this .tool .keys)
          return;
 

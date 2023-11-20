@@ -11,7 +11,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Mon, 20 Nov 2023 22:21:59 GMT'/>
+    <meta name='modified' content='Mon, 20 Nov 2023 22:35:58 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -38,6 +38,7 @@
         <field accessType='inputOutput' type='SFBool' name='keys' value='true'/>
         <field accessType='inputOutput' type='MFString' name='tools' value='"TRANSLATE", "ROTATE", "SCALE"'/>
         <field accessType='inputOutput' type='SFString' name='translateMode' value='TRANSLATE_ALONG_AXIS'/>
+        <field accessType='inputOutput' type='SFBool' name='snapRotation'/>
         <field accessType='inputOutput' type='SFString' name='scaleMode' value='SCALE_FROM_CENTER'/>
         <field accessType='inputOutput' type='SFBool' name='scaleUniform'/>
         <field accessType='inputOutput' type='SFBool' name='xAxisDisplay' value='true'/>
@@ -1088,6 +1089,7 @@ function translate (value)
             <connect nodeField='rotation' protoField='rotation'/>
             <connect nodeField='scale' protoField='scale'/>
             <connect nodeField='scaleOrientation' protoField='scaleOrientation'/>
+            <connect nodeField='snap' protoField='snapRotation'/>
           </IS>
 <![CDATA[ecmascript:
 
