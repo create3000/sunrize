@@ -84,17 +84,37 @@ class X3DTransformNodeTool extends X3DChildNodeTool
          switch (this .specialTool ?? this .tool .tools [this .tool .activeTool])
          {
             case "TRANSLATE":
-               UndoManager .shared .beginUndo (_ ("Translate %s"), this .getTypeName ());
+            {
+               if (this .getDisplayName ())
+                  UndoManager .shared .beginUndo (_ ("Translate %s '%s'"), this .getTypeName (), this .getDisplayName ());
+               else
+                  UndoManager .shared .beginUndo (_ ("Translate %s"), this .getTypeName ());
                break;
+            }
             case "ROTATE":
-               UndoManager .shared .beginUndo (_ ("Rotate %s"), this .getTypeName ());
+            {
+               if (this .getDisplayName ())
+                  UndoManager .shared .beginUndo (_ ("Rotate %s '%s'"), this .getTypeName (), this .getDisplayName ());
+               else
+                  UndoManager .shared .beginUndo (_ ("Rotate %s"), this .getTypeName ());
                break;
+            }
             case "SCALE":
-               UndoManager .shared .beginUndo (_ ("Scale %s"), this .getTypeName ());
+            {
+               if (this .getDisplayName ())
+                  UndoManager .shared .beginUndo (_ ("Scale %s '%s'"), this .getTypeName (), this .getDisplayName ());
+               else
+                  UndoManager .shared .beginUndo (_ ("Scale %s"), this .getTypeName ());
                break;
+            }
             case "CENTER":
-               UndoManager .shared .beginUndo (_ ("Translate Center of %s"), this .getTypeName ());
+            {
+               if (this .getDisplayName ())
+                  UndoManager .shared .beginUndo (_ ("Translate Center Of %s '%s'"), this .getTypeName (), this .getDisplayName ());
+               else
+                  UndoManager .shared .beginUndo (_ ("Translate Center Of %s"), this .getTypeName ());
                break;
+            }
          }
 
          Editor .setFieldValue (this .getExecutionContext (), this .node, this ._translation,      translation);
