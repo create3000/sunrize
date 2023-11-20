@@ -12,6 +12,12 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 {
    undoEnabled = true;
 
+   #tools = [
+      "TRANSLATE",
+      "ROTATE",
+      "SCALE",
+   ];
+
    async initializeTool ()
    {
       await super .initializeTool (__dirname, "X3DTransformNodeTool.x3d");
@@ -75,7 +81,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       }
       else
       {
-         switch (this .specialTool ?? this .tool .tools [this .tool .activeTool])
+         switch (this .specialTool ?? this .#tools [this .tool .activeTool])
          {
             case "TRANSLATE":
             {
