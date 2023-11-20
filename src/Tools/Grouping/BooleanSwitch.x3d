@@ -46,12 +46,12 @@
 
 function initialize ()
 {
-	set_whichChoice (whichChoice);
+   set_whichChoice (whichChoice);
 }
 
 function set_whichChoice (value)
 {
-	group .whichChoice = value
+   group .whichChoice = value
 }
 ]]>
         </Script>

@@ -774,18 +774,18 @@ function set_bboxSize ()
 
    // Position uniform scale handles and set axis rotation of corresponding sensor.
 
-	scaleHandles [0] .translation = new SFVec3f ( bboxSize1_2 .x,  bboxSize1_2 .y,  bboxSize1_2 .z);
-	scaleHandles [1] .translation = new SFVec3f (-bboxSize1_2 .x,  bboxSize1_2 .y,  bboxSize1_2 .z);
-	scaleHandles [2] .translation = new SFVec3f (-bboxSize1_2 .x, -bboxSize1_2 .y,  bboxSize1_2 .z);
-	scaleHandles [3] .translation = new SFVec3f ( bboxSize1_2 .x, -bboxSize1_2 .y,  bboxSize1_2 .z);
+   scaleHandles [0] .translation = new SFVec3f ( bboxSize1_2 .x,  bboxSize1_2 .y,  bboxSize1_2 .z);
+   scaleHandles [1] .translation = new SFVec3f (-bboxSize1_2 .x,  bboxSize1_2 .y,  bboxSize1_2 .z);
+   scaleHandles [2] .translation = new SFVec3f (-bboxSize1_2 .x, -bboxSize1_2 .y,  bboxSize1_2 .z);
+   scaleHandles [3] .translation = new SFVec3f ( bboxSize1_2 .x, -bboxSize1_2 .y,  bboxSize1_2 .z);
 
-	scaleHandles [4] .translation = new SFVec3f ( bboxSize1_2 .x,  bboxSize1_2 .y, -bboxSize1_2 .z);
-	scaleHandles [5] .translation = new SFVec3f (-bboxSize1_2 .x,  bboxSize1_2 .y, -bboxSize1_2 .z);
-	scaleHandles [6] .translation = new SFVec3f (-bboxSize1_2 .x, -bboxSize1_2 .y, -bboxSize1_2 .z);
-	scaleHandles [7] .translation = new SFVec3f ( bboxSize1_2 .x, -bboxSize1_2 .y, -bboxSize1_2 .z);
+   scaleHandles [4] .translation = new SFVec3f ( bboxSize1_2 .x,  bboxSize1_2 .y, -bboxSize1_2 .z);
+   scaleHandles [5] .translation = new SFVec3f (-bboxSize1_2 .x,  bboxSize1_2 .y, -bboxSize1_2 .z);
+   scaleHandles [6] .translation = new SFVec3f (-bboxSize1_2 .x, -bboxSize1_2 .y, -bboxSize1_2 .z);
+   scaleHandles [7] .translation = new SFVec3f ( bboxSize1_2 .x, -bboxSize1_2 .y, -bboxSize1_2 .z);
 
    for (let i = 0; i < 8; ++ i)
-	   scaleSensors [i] .axisRotation = new SFRotation (xAxis, scaleHandles [i] .translation);
+      scaleSensors [i] .axisRotation = new SFRotation (xAxis, scaleHandles [i] .translation);
 }
 ]]>
         </Script>
