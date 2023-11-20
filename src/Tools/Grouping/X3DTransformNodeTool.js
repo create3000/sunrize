@@ -68,19 +68,6 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       }
       else
       {
-         const
-            translation      = this ._translation      .copy (),
-            rotation         = this ._rotation         .copy (),
-            scale            = this ._scale            .copy (),
-            scaleOrientation = this ._scaleOrientation .copy (),
-            center           = this ._center           .copy ();
-
-         this ._translation      = this .initialTranslation;
-         this ._rotation         = this .initialRotation;
-         this ._scale            = this .initialScale;
-         this ._scaleOrientation = this .initialScaleOrientation;
-         this ._center           = this .initialCenter;
-
          switch (this .specialTool ?? this .tool .tools [this .tool .activeTool])
          {
             case "TRANSLATE":
@@ -116,6 +103,19 @@ class X3DTransformNodeTool extends X3DChildNodeTool
                break;
             }
          }
+
+         const
+            translation      = this ._translation      .copy (),
+            rotation         = this ._rotation         .copy (),
+            scale            = this ._scale            .copy (),
+            scaleOrientation = this ._scaleOrientation .copy (),
+            center           = this ._center           .copy ();
+
+         this ._translation      = this .initialTranslation;
+         this ._rotation         = this .initialRotation;
+         this ._scale            = this .initialScale;
+         this ._scaleOrientation = this .initialScaleOrientation;
+         this ._center           = this .initialCenter;
 
          Editor .setFieldValue (this .getExecutionContext (), this .node, this ._translation,      translation);
          Editor .setFieldValue (this .getExecutionContext (), this .node, this ._rotation,         rotation);
