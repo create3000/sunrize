@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Mon, 20 Nov 2023 01:42:30 GMT'/>
+    <meta name='modified' content='Mon, 20 Nov 2023 11:23:50 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -97,9 +97,10 @@
                 <Group DEF='Front'>
                   <Shape DEF='xAxis'
                       castShadow='false'>
-                    <IS>
-                      <connect nodeField='visible' protoField='xAxisDisplay'/>
-                    </IS>
+                    <Appearance DEF='AxisStyle'>
+                      <LineProperties
+                          linewidthScaleFactor='2'/>
+                    </Appearance>
                     <IndexedLineSet
                         colorPerVertex='false'
                         colorIndex='0'
@@ -224,9 +225,7 @@
                 <Group DEF='Front_1'>
                   <Shape DEF='yAxis_1'
                       castShadow='false'>
-                    <IS>
-                      <connect nodeField='visible' protoField='yAxisDisplay'/>
-                    </IS>
+                    <Appearance USE='AxisStyle'/>
                     <IndexedLineSet
                         colorPerVertex='false'
                         colorIndex='1'
@@ -337,9 +336,7 @@
                 <Group DEF='Front_2'>
                   <Shape DEF='zAxis'
                       castShadow='false'>
-                    <IS>
-                      <connect nodeField='visible' protoField='zAxisDisplay'/>
-                    </IS>
+                    <Appearance USE='AxisStyle'/>
                     <IndexedLineSet
                         colorPerVertex='false'
                         colorIndex='2'
@@ -1400,9 +1397,9 @@ async function set_time ()
          instance = await tool .getToolInstance ();
 
       Browser .addRoute (instance, "isActive", this, "active");
- 
+
       tool .undoEnabled = false;
-       
+
       instance .tools         = new MFString ("TRANSLATE");
       instance .centerDisplay = false;
       instance .bboxDisplay   = false;
@@ -1501,7 +1498,6 @@ function set_bboxCenter ()
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
       <fieldValue name='translation' value='-0.8999743 0 0'/>
-      <fieldValue name='center' value='2.961857 0 0'/>
       <fieldValue name='bboxSize' value='2 3 4'/>
     </ProtoInstance>
   </Scene>
