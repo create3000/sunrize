@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Sound/SoundTool.x3d'/>
-    <meta name='modified' content='Sat, 18 Nov 2023 00:54:45 GMT'/>
+    <meta name='modified' content='Mon, 20 Nov 2023 21:08:32 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -151,6 +151,16 @@
               </Transform>
             </Transform>
           </Transform>
+          <Transform DEF='TransformTool'>
+            <IS>
+              <connect nodeField='translation' protoField='location'/>
+              <connect nodeField='visible' protoField='selected'/>
+            </IS>
+            <ScreenGroup>
+              <Group
+                  bboxSize='60 60 60'/>
+            </ScreenGroup>
+          </Transform>
         </Collision>
         <Script DEF='SoundScript'
             directOutput='true'>
@@ -165,6 +175,9 @@
           <field accessType='outputOnly' type='SFVec3f' name='maxTranslation_changed'/>
           <field accessType='outputOnly' type='SFVec3f' name='minScale_changed'/>
           <field accessType='outputOnly' type='SFVec3f' name='maxScale_changed'/>
+          <field accessType='initializeOnly' type='SFNode' name='transform'>
+            <Transform USE='TransformTool'/>
+          </field>
           <field accessType='initializeOnly' type='SFNode' name='material'>
             <Material USE='_2'/>
           </field>
@@ -180,11 +193,18 @@
 
 const zAxis = new SFVec3f (0, 0, 1);
 
-function initialize ()
+async function initialize ()
 {
    set_direction ();
    set_minRange ();
    set_maxRange ();
+
+   const tool = await transform .getValue () .addTool () .getToolInstance ();
+
+   tool .undo          = false;
+   tool .tools         = new MFString ("TRANSLATE", "ROTATE");
+   tool .centerDisplay = false;
+   tool .bboxDisplay   = false;
 }
 
 function set_selected ()
