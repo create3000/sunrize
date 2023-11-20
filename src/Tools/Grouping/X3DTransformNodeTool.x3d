@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 19 Nov 2023 23:42:10 GMT'/>
+    <meta name='modified' content='Mon, 20 Nov 2023 00:34:28 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -1332,7 +1332,7 @@ function translate (scaledMatrix, distanceFromCenter)
         <Script DEF='CenterScript'
             directOutput='true'>
           <field accessType='inputOnly' type='SFTime' name='set_time'/>
-          <field accessType='inputOnly' type='SFBool' name='set_active'/>
+          <field accessType='inputOutput' type='SFBool' name='active'/>
           <field accessType='inputOutput' type='SFVec3f' name='translation'/>
           <field accessType='inputOutput' type='SFRotation' name='rotation'/>
           <field accessType='inputOutput' type='SFVec3f' name='scale'/>
@@ -1340,7 +1340,6 @@ function translate (scaledMatrix, distanceFromCenter)
           <field accessType='inputOutput' type='SFVec3f' name='center'/>
           <field accessType='inputOutput' type='SFVec3f' name='bboxCenter'/>
           <field accessType='outputOnly' type='SFBool' name='keepCenter'/>
-          <field accessType='outputOnly' type='SFBool' name='isActive'/>
           <field accessType='initializeOnly' type='SFMatrix4f' name='initialMatrix'/>
           <field accessType='initializeOnly' type='SFNode' name='coord'>
             <Coordinate USE='CenterLineCoord'/>
@@ -1349,13 +1348,13 @@ function translate (scaledMatrix, distanceFromCenter)
             <Transform USE='CenterTool'/>
           </field>
           <IS>
+            <connect nodeField='active' protoField='isCenterActive'/>
             <connect nodeField='translation' protoField='translation'/>
             <connect nodeField='rotation' protoField='rotation'/>
             <connect nodeField='scale' protoField='scale'/>
             <connect nodeField='scaleOrientation' protoField='scaleOrientation'/>
             <connect nodeField='center' protoField='center'/>
             <connect nodeField='bboxCenter' protoField='bboxCenter'/>
-            <connect nodeField='isActive' protoField='isCenterActive'/>
           </IS>
 <![CDATA[ecmascript:
 
@@ -1374,7 +1373,7 @@ async function set_time ()
          tool     = centerTool .getValue () .addTool (),
          instance = await tool .getToolInstance ();
 
-      Browser .addRoute (instance, "isActive", this, "set_active");
+      Browser .addRoute (instance, "isActive", this, "active");
  
       tool .undoEnabled = false;
        
@@ -1390,8 +1389,6 @@ async function set_time ()
 
 function set_active (value)
 {
-   isActive = value;
-
    if (value)
    {
       initialMatrix .setTransform (translation,
@@ -1407,10 +1404,8 @@ function set_center ()
    coord .point [0] = center;
    coord .point [1] = bboxCenter;
 
-   if (isActive)
-   {
+   if (active)
       initialMatrix .getTransform (translation, null, null, null, center);
-   }
 }
 
 function set_bboxCenter ()
