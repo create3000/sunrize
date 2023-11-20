@@ -48,6 +48,9 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
    set_keys__ (keys)
    {
+      if (!this .tool .keys)
+         return;
+
       if (this .tool .tools .includes ("TRANSLATE"))
       {
          var scaleMode = keys === ActionKeys .Option || keys === (ActionKeys .Shift | ActionKeys .Option)

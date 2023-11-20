@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Mon, 20 Nov 2023 14:27:20 GMT'/>
+    <meta name='modified' content='Mon, 20 Nov 2023 18:34:31 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -33,11 +33,11 @@
         <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
         <field accessType='inputOutput' type='SFRotation' name='scaleOrientation'/>
         <field accessType='inputOutput' type='SFVec3f' name='center'/>
+        <field accessType='inputOutput' type='SFBool' name='keys' value='true'/>
         <field accessType='inputOutput' type='MFString' name='tools' value='"TRANSLATE", "ROTATE", "SCALE"'/>
         <field accessType='inputOutput' type='SFString' name='translateMode' value='TRANSLATE_ALONG_AXIS'/>
         <field accessType='inputOutput' type='SFString' name='scaleMode' value='SCALE_FROM_CENTER'/>
         <field accessType='inputOutput' type='SFBool' name='scaleUniform'/>
-        <field accessType='inputOutput' type='MFString' name='connectedAxes'/>
         <field accessType='inputOutput' type='SFBool' name='xAxisDisplay' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='yAxisDisplay' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='zAxisDisplay' value='true'/>
@@ -566,11 +566,7 @@
                   <ProtoInstance name='BooleanSwitch' USE='_1'/>
                 </Transform>
                 <TouchSensor DEF='_4'
-                    description='BBox Center'>
-                  <IS>
-                    <connect nodeField='isOver' protoField='isCenterActive'/>
-                  </IS>
-                </TouchSensor>
+                    description='BBox Center'/>
               </ScreenGroup>
             </Transform>
             <Group DEF='Center'>
@@ -1009,7 +1005,6 @@ function translate (value)
           <field accessType='inputOutput' type='SFVec3f' name='bboxCenter'/>
           <field accessType='inputOutput' type='SFString' name='scaleMode'/>
           <field accessType='inputOutput' type='SFBool' name='scaleUniform'/>
-          <field accessType='inputOutput' type='MFString' name='connectedAxes'/>
           <field accessType='inputOutput' type='SFBool' name='keepCenter'/>
           <field accessType='initializeOnly' type='SFVec3f' name='initialTranslation'/>
           <field accessType='initializeOnly' type='SFVec3f' name='initialScale'/>
@@ -1030,7 +1025,6 @@ function translate (value)
             <connect nodeField='bboxCenter' protoField='bboxCenter'/>
             <connect nodeField='scaleMode' protoField='scaleMode'/>
             <connect nodeField='scaleUniform' protoField='scaleUniform'/>
-            <connect nodeField='connectedAxes' protoField='connectedAxes'/>
           </IS>
 <![CDATA[ecmascript:
 
@@ -1238,8 +1232,6 @@ function scaleTransformAxis (axis, value, sgn)
          vector [axis] = 1 + sgn * value / bboxSize [axis];
          offset [axis] = -sgn * bboxSize [axis] / 2;
 
-         connectAxes (axis, vector, offset);
-
          scaleTransform (vector, offset);
          break;
       }
@@ -1251,26 +1243,8 @@ function scaleTransformAxis (axis, value, sgn)
 
          vector [axis] = 1 + 2 * sgn * value / bboxSize [axis];
 
-         connectAxes (axis, vector, offset);
-
          scaleTransform (vector, offset);
          break;
-      }
-   }
-}
-
-function connectAxes (axis, vector, offset)
-{
-   for (const connectedAxis of connectedAxes)
-   {
-      const
-         lhs = connectedAxis [0] .toLowerCase (),
-         rhs = connectedAxis [1] .toLowerCase ();
-
-      if (rhs == axis)
-      {
-         vector [lhs] = vector [rhs];
-         offset [lhs] = offset [rhs];
       }
    }
 }
@@ -1523,7 +1497,10 @@ function set_bboxCenter ()
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
       <fieldValue name='translation' value='-0.8999743 0 0'/>
+      <fieldValue name='center' value='-1.84176 0 0'/>
+      <fieldValue name='scaleUniform' value='true'/>
       <fieldValue name='bboxSize' value='2 3 4'/>
+      <fieldValue name='bboxCenter' value='1 0 0'/>
     </ProtoInstance>
   </Scene>
 </X3D>
