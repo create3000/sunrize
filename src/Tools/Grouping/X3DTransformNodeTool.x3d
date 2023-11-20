@@ -2,6 +2,7 @@
 <!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
 <X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
   <head>
+    <component name='Geometry2D' level='2'/>
     <component name='Layout' level='2'/>
     <component name='PointingDeviceSensor' level='1'/>
     <component name='Scripting' level='1'/>
@@ -10,7 +11,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Mon, 20 Nov 2023 21:23:43 GMT'/>
+    <meta name='modified' content='Mon, 20 Nov 2023 22:21:59 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -445,8 +446,9 @@
                 <IS>
                   <connect nodeField='visible' protoField='scaleDisplay'/>
                 </IS>
-                <Group/>
-                <Group/>
+                <Group DEF='Empty'
+                    visible='false'/>
+                <Group USE='Empty'/>
                 <Group>
                   <Transform DEF='ScaleHandle1'>
                     <PlaneSensor DEF='ScaleSensor1_1'
@@ -628,6 +630,85 @@
                 </ScreenGroup>
               </Transform>
             </Group>
+            <Switch DEF='RotationHandles'>
+              <Group USE='Empty'/>
+              <Transform>
+                <IS>
+                  <connect nodeField='translation' protoField='center'/>
+                </IS>
+                <ScreenGroup>
+                  <Group DEF='XHandle'>
+                    <CylinderSensor DEF='XRotationSensor_1'
+                        description='x-Axis'
+                        axisRotation='0 0 1 90'
+                        diskAngle='74.4845'
+                        autoOffset='false'>
+                      <IS>
+                        <connect nodeField='isActive' protoField='isActive'/>
+                      </IS>
+                    </CylinderSensor>
+                    <Transform DEF='XRotationHandle_1'
+                        rotation='0 1 0 90'
+                        scale='80 80 80'>
+                      <Shape>
+                        <Appearance>
+                          <LineProperties DEF='_29'
+                              linewidthScaleFactor='3'/>
+                          <UnlitMaterial
+                              emissiveColor='1 0 0'/>
+                        </Appearance>
+                        <Circle2D/>
+                      </Shape>
+                    </Transform>
+                  </Group>
+                  <Group DEF='YHandle_1'>
+                    <CylinderSensor DEF='YRotationSensor_1'
+                        description='y-Axis'
+                        diskAngle='74.48451'
+                        autoOffset='false'>
+                      <IS>
+                        <connect nodeField='isActive' protoField='isActive'/>
+                      </IS>
+                    </CylinderSensor>
+                    <Transform DEF='YRotationHandle_1'
+                        rotation='1 0 0 90'
+                        scale='80 80 80'>
+                      <Shape>
+                        <Appearance>
+                          <LineProperties USE='_29'/>
+                          <UnlitMaterial
+                              emissiveColor='0 1 0'/>
+                        </Appearance>
+                        <Circle2D/>
+                      </Shape>
+                    </Transform>
+                  </Group>
+                  <Group DEF='ZHandle_1'>
+                    <CylinderSensor DEF='ZRotationSensor'
+                        description='z-Axis'
+                        axisRotation='1 0 0 90'
+                        diskAngle='74.48451'
+                        autoOffset='false'>
+                      <IS>
+                        <connect nodeField='isActive' protoField='isActive'/>
+                      </IS>
+                    </CylinderSensor>
+                    <Transform DEF='ZRotationHandle'
+                        scale='80 80 80'>
+                      <Shape>
+                        <Appearance>
+                          <LineProperties USE='_29'/>
+                          <UnlitMaterial
+                              emissiveColor='0 0 1'/>
+                        </Appearance>
+                        <Circle2D/>
+                      </Shape>
+                    </Transform>
+                  </Group>
+                </ScreenGroup>
+              </Transform>
+              <Group USE='Empty'/>
+            </Switch>
           </Transform>
         </Collision>
         <Script DEF='BBoxScript'
@@ -991,7 +1072,6 @@ function translate (value)
         <Script DEF='RotateScript'
             directOutput='true'>
           <field accessType='inputOnly' type='SFBool' name='set_active'/>
-          <field accessType='inputOnly' type='SFRotation' name='set_rotation'/>
           <field accessType='inputOnly' type='SFRotation' name='set_xRotation'/>
           <field accessType='inputOnly' type='SFRotation' name='set_yRotation'/>
           <field accessType='inputOnly' type='SFRotation' name='set_zRotation'/>
@@ -1575,15 +1655,20 @@ function set_bboxCenter ()
         <ROUTE fromNode='ModeScript' fromField='scale' toNode='YScaleFrontSensor' toField='set_enabled'/>
         <ROUTE fromNode='ModeScript' fromField='scale' toNode='XScaleBackSensor' toField='set_enabled'/>
         <ROUTE fromNode='ModeScript' fromField='scale' toNode='XScaleFrontSensor' toField='set_enabled'/>
+        <ROUTE fromNode='ModeScript' fromField='activeTool' toNode='RotationHandles' toField='set_whichChoice'/>
+        <ROUTE fromNode='ZRotationSensor' fromField='isActive' toNode='RotateScript' toField='set_active'/>
+        <ROUTE fromNode='YRotationSensor_1' fromField='isActive' toNode='RotateScript' toField='set_active'/>
+        <ROUTE fromNode='XRotationSensor_1' fromField='isActive' toNode='RotateScript' toField='set_active'/>
+        <ROUTE fromNode='XRotationSensor_1' fromField='rotation_changed' toNode='RotateScript' toField='set_xRotation'/>
+        <ROUTE fromNode='YRotationSensor_1' fromField='rotation_changed' toNode='RotateScript' toField='set_yRotation'/>
+        <ROUTE fromNode='ZRotationSensor' fromField='rotation_changed' toNode='RotateScript' toField='set_zRotation'/>
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
       <fieldValue name='translation' value='-0.8999743 0 0'/>
-      <fieldValue name='center' value='1 0 0'/>
       <fieldValue name='undo' value='false'/>
       <fieldValue name='scaleUniform' value='true'/>
       <fieldValue name='bboxSize' value='2 3 4'/>
-      <fieldValue name='bboxCenter' value='1 0 0'/>
     </ProtoInstance>
   </Scene>
 </X3D>
