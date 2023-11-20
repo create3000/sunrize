@@ -82,38 +82,42 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       }
       else
       {
+         const
+            typeName = this .tool .typeName || this .getTypeName (),
+            name     = this .tool .typeName ? "" : this .getDisplayName ();
+
          switch (this .specialTool ?? this .#tools [this .tool .activeTool])
          {
             case "TRANSLATE":
             {
-               if (this .getDisplayName ())
-                  UndoManager .shared .beginUndo (_ ("Translate %s '%s'"), this .getTypeName (), this .getDisplayName ());
+               if (name)
+                  UndoManager .shared .beginUndo (_ ("Translate %s '%s'"), typeName, name);
                else
-                  UndoManager .shared .beginUndo (_ ("Translate %s"), this .getTypeName ());
+                  UndoManager .shared .beginUndo (_ ("Translate %s"), typeName);
                break;
             }
             case "ROTATE":
             {
-               if (this .getDisplayName ())
-                  UndoManager .shared .beginUndo (_ ("Rotate %s '%s'"), this .getTypeName (), this .getDisplayName ());
+               if (name)
+                  UndoManager .shared .beginUndo (_ ("Rotate %s '%s'"), typeName, name);
                else
-                  UndoManager .shared .beginUndo (_ ("Rotate %s"), this .getTypeName ());
+                  UndoManager .shared .beginUndo (_ ("Rotate %s"), typeName);
                break;
             }
             case "SCALE":
             {
-               if (this .getDisplayName ())
-                  UndoManager .shared .beginUndo (_ ("Scale %s '%s'"), this .getTypeName (), this .getDisplayName ());
+               if (name)
+                  UndoManager .shared .beginUndo (_ ("Scale %s '%s'"), typeName, name);
                else
-                  UndoManager .shared .beginUndo (_ ("Scale %s"), this .getTypeName ());
+                  UndoManager .shared .beginUndo (_ ("Scale %s"), typeName);
                break;
             }
             case "CENTER":
             {
-               if (this .getDisplayName ())
-                  UndoManager .shared .beginUndo (_ ("Translate Center Of %s '%s'"), this .getTypeName (), this .getDisplayName ());
+               if (name)
+                  UndoManager .shared .beginUndo (_ ("Translate Center Of %s '%s'"), typeName, name);
                else
-                  UndoManager .shared .beginUndo (_ ("Translate Center Of %s"), this .getTypeName ());
+                  UndoManager .shared .beginUndo (_ ("Translate Center Of %s"), typeName);
                break;
             }
          }
