@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Mon, 20 Nov 2023 00:39:12 GMT'/>
+    <meta name='modified' content='Mon, 20 Nov 2023 00:56:11 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -544,6 +544,36 @@
                   </Transform>
                 </Group>
               </Switch>
+              <ScreenGroup DEF='BBoxCenterPoint'>
+                <Transform
+                    scale='0.6666667 0.6666667 0.6666667'>
+                  <ProtoInstance name='BooleanSwitch' DEF='_1'>
+                    <fieldValue name='children'>
+                      <Shape DEF='YellowPoint'
+                          castShadow='false'>
+                        <Appearance DEF='Yellow'>
+                          <Material
+                              diffuseColor='1 1 0'/>
+                          <ProtoInstance name='ToolShader' USE='_3' containerField='shaders'/>
+                        </Appearance>
+                        <Sphere USE='Sphere'/>
+                      </Shape>
+                      <Shape DEF='RedPoint_1'
+                          castShadow='false'>
+                        <Appearance DEF='SkyBlue_2'>
+                          <Material
+                              diffuseColor='0 0.5 1'/>
+                          <ProtoInstance name='ToolShader' USE='_3' containerField='shaders'/>
+                        </Appearance>
+                        <Sphere USE='Sphere'/>
+                      </Shape>
+                    </fieldValue>
+                  </ProtoInstance>
+                  <ProtoInstance name='BooleanSwitch' USE='_1'/>
+                </Transform>
+                <TouchSensor DEF='_4'
+                    description='BBox Center'/>
+              </ScreenGroup>
             </Transform>
             <Group DEF='Center'>
               <IS>
@@ -583,28 +613,7 @@
                   <connect nodeField='translation' protoField='center'/>
                 </IS>
                 <ScreenGroup>
-                  <ProtoInstance name='BooleanSwitch' DEF='_1'>
-                    <fieldValue name='children'>
-                      <Shape DEF='YellowPoint'
-                          castShadow='false'>
-                        <Appearance DEF='Yellow'>
-                          <Material
-                              diffuseColor='1 1 0'/>
-                          <ProtoInstance name='ToolShader' USE='_3' containerField='shaders'/>
-                        </Appearance>
-                        <Sphere USE='Sphere'/>
-                      </Shape>
-                      <Shape DEF='RedPoint_1'
-                          castShadow='false'>
-                        <Appearance DEF='SkyBlue_2'>
-                          <Material
-                              diffuseColor='0 0.5 1'/>
-                          <ProtoInstance name='ToolShader' USE='_3' containerField='shaders'/>
-                        </Appearance>
-                        <Sphere USE='Sphere'/>
-                      </Shape>
-                    </fieldValue>
-                  </ProtoInstance>
+                  <ProtoInstance name='BooleanSwitch' USE='_1'/>
                 </ScreenGroup>
                 <TouchSensor DEF='_10'
                     description='Center'>
@@ -613,13 +622,6 @@
                   </IS>
                 </TouchSensor>
               </Transform>
-              <ScreenGroup DEF='MiniCenterPoint'>
-                <Transform
-                    scale='0.6666667 0.6666667 0.6666667'>
-                  <ProtoInstance name='BooleanSwitch' USE='_1'/>
-                  <ProtoInstance name='BooleanSwitch' USE='_1'/>
-                </Transform>
-              </ScreenGroup>
               <Transform DEF='CenterTool'>
                 <IS>
                   <connect nodeField='translation' protoField='center'/>
@@ -1470,6 +1472,7 @@ function set_bboxCenter ()
         <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='_1' toField='set_whichChoice'/>
         <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='ScaleScript' toField='set_keepCenter'/>
         <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='_15' toField='set_whichChoice'/>
+        <ROUTE fromNode='_4' fromField='touchTime' toNode='CenterScript' toField='set_time'/>
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
