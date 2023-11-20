@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Mon, 20 Nov 2023 11:56:37 GMT'/>
+    <meta name='modified' content='Mon, 20 Nov 2023 12:03:18 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -34,13 +34,13 @@
         <field accessType='inputOutput' type='SFRotation' name='scaleOrientation'/>
         <field accessType='inputOutput' type='SFVec3f' name='center'/>
         <field accessType='inputOutput' type='MFString' name='tools' value='"TRANSLATE", "ROTATE", "SCALE"'/>
+        <field accessType='inputOutput' type='SFString' name='translateMode' value='TRANSLATE_ALONG_AXIS'/>
+        <field accessType='inputOutput' type='SFString' name='scaleMode' value='SCALE_FROM_CENTER'/>
+        <field accessType='inputOutput' type='MFString' name='connectedAxes'/>
         <field accessType='inputOutput' type='SFBool' name='xAxisDisplay' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='yAxisDisplay' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='zAxisDisplay' value='true'/>
-        <field accessType='inputOutput' type='SFString' name='translateMode' value='TRANSLATE_ALONG_AXIS'/>
-        <field accessType='inputOutput' type='SFString' name='scaleMode' value='SCALE_FROM_CENTER'/>
-        <field accessType='inputOutput' type='SFBool' name='scaleUniform' value='true'/>
-        <field accessType='inputOutput' type='MFString' name='connectedAxes'/>
+        <field accessType='inputOutput' type='SFBool' name='scaleDisplay' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='centerDisplay' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='centerTool' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='bboxDisplay' value='true'/>
@@ -441,7 +441,7 @@
               </Group>
               <Switch DEF='UniformScaleHandles'>
                 <IS>
-                  <connect nodeField='visible' protoField='scaleUniform'/>
+                  <connect nodeField='visible' protoField='scaleDisplay'/>
                 </IS>
                 <Group/>
                 <Group/>
