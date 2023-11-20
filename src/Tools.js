@@ -35,4 +35,4 @@ Object .assign (X3D .X3DNode .prototype,
    {
       return this .getTool () ?.removeTool (action) ?? this;
    },
-})
+});

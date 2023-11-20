@@ -1,9 +1,9 @@
 (function ()
 {
-   "use strict"
+   "use strict";
 
-   const Application = require ("./Application/Application")
+   const Application = require ("./Application/Application");
 
-   Application .run ()
+   Application .run ();
 })
-()
+();
