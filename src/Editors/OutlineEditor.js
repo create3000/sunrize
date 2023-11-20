@@ -409,7 +409,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          field            = this .objects .get (fieldId),
          index            = node .getUserDefinedFields () .indexOf (field);
 
-      element .find ("> .item") .editUserDefinedFieldPopover (executionContext, node, index < 0 ? -1 : index + 1);
+      element .find ("> .item") .editUserDefinedFieldPopover (executionContext, node, index < 0 ? 0 : index + 1);
    }
 
    editUserDefinedField (id, executionContextId, nodeId, fieldId)

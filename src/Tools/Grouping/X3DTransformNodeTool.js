@@ -10,12 +10,6 @@ const
 
 class X3DTransformNodeTool extends X3DChildNodeTool
 {
-   #tools = [
-      "TRANSLATE",
-      "ROTATE",
-      "SCALE",
-   ];
-
    async initializeTool ()
    {
       await super .initializeTool (__dirname, "X3DTransformNodeTool.x3d");
@@ -78,49 +72,13 @@ class X3DTransformNodeTool extends X3DChildNodeTool
          this .initialScaleOrientation = this ._scaleOrientation .copy ();
          this .initialCenter           = this ._center           .copy ();
 
-         this .specialTool = this .tool .isCenterActive ? "CENTER" : undefined;
+         this .specialTool = this .tool .isCenterActive ? 3 : undefined;
       }
       else
       {
-         const
-            typeName = this .getTypeName (),
-            name     = this .getDisplayName ();
-
-         switch (this .specialTool ?? this .#tools [this .tool .activeTool])
-         {
-            case "TRANSLATE":
-            {
-               if (name)
-                  UndoManager .shared .beginUndo (_ ("Translate %s »%s«"), typeName, name);
-               else
-                  UndoManager .shared .beginUndo (_ ("Translate %s"), typeName);
-               break;
-            }
-            case "ROTATE":
-            {
-               if (name)
-                  UndoManager .shared .beginUndo (_ ("Rotate %s »%s«"), typeName, name);
-               else
-                  UndoManager .shared .beginUndo (_ ("Rotate %s"), typeName);
-               break;
-            }
-            case "SCALE":
-            {
-               if (name)
-                  UndoManager .shared .beginUndo (_ ("Scale %s »%s«"), typeName, name);
-               else
-                  UndoManager .shared .beginUndo (_ ("Scale %s"), typeName);
-               break;
-            }
-            case "CENTER":
-            {
-               if (name)
-                  UndoManager .shared .beginUndo (_ ("Translate Center Of %s »%s«"), typeName, name);
-               else
-                  UndoManager .shared .beginUndo (_ ("Translate Center Of %s"), typeName);
-               break;
-            }
-         }
+         X3DTransformNodeTool .beginUndo (this .specialTool ?? this .tool .activeTool,
+                                          this .getTypeName (),
+                                          this .getDisplayName ());
 
          const
             translation      = this ._translation      .copy (),
@@ -144,6 +102,52 @@ class X3DTransformNodeTool extends X3DChildNodeTool
          UndoManager .shared .endUndo ();
 
          this .specialTool = undefined;
+      }
+   }
+
+   static #tools = [
+      "TRANSLATE",
+      "ROTATE",
+      "SCALE",
+      "CENTER",
+   ];
+
+   static beginUndo (tool, typeName, name)
+   {
+      switch (this .#tools [tool])
+      {
+         case "TRANSLATE":
+         {
+            if (name)
+               UndoManager .shared .beginUndo (_ ("Translate %s »%s«"), typeName, name);
+            else
+               UndoManager .shared .beginUndo (_ ("Translate %s"), typeName);
+            break;
+         }
+         case "ROTATE":
+         {
+            if (name)
+               UndoManager .shared .beginUndo (_ ("Rotate %s »%s«"), typeName, name);
+            else
+               UndoManager .shared .beginUndo (_ ("Rotate %s"), typeName);
+            break;
+         }
+         case "SCALE":
+         {
+            if (name)
+               UndoManager .shared .beginUndo (_ ("Scale %s »%s«"), typeName, name);
+            else
+               UndoManager .shared .beginUndo (_ ("Scale %s"), typeName);
+            break;
+         }
+         case "CENTER":
+         {
+            if (name)
+               UndoManager .shared .beginUndo (_ ("Translate Center Of %s »%s«"), typeName, name);
+            else
+               UndoManager .shared .beginUndo (_ ("Translate Center Of %s"), typeName);
+            break;
+         }
       }
    }
 

@@ -8,7 +8,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/EnvironmentalSensor/X3DEnvironmentalSensorNodeTool.x3d'/>
-    <meta name='modified' content='Mon, 20 Nov 2023 18:57:47 GMT'/>
+    <meta name='modified' content='Mon, 20 Nov 2023 20:29:09 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -19,11 +19,17 @@
         <field accessType='inputOutput' type='SFColor' name='boxColor' value='0.35 1 0.7'/>
         <field accessType='inputOutput' type='SFVec3f' name='size' value='1 1 1'/>
         <field accessType='inputOutput' type='SFVec3f' name='center'/>
+        <field accessType='outputOnly' type='SFInt32' name='activeTool'/>
+        <field accessType='outputOnly' type='SFBool' name='isActive'/>
       </ProtoInterface>
       <ProtoBody>
         <Collision
             enabled='false'>
           <Transform DEF='Box'>
+            <IS>
+              <connect nodeField='translation' protoField='center'/>
+              <connect nodeField='scale' protoField='size'/>
+            </IS>
             <Shape
                 castShadow='false'>
               <Appearance>
@@ -51,6 +57,8 @@
         </Collision>
         <Script DEF='Tool'
             directOutput='true'>
+          <field accessType='inputOutput' type='SFInt32' name='activeTool'/>
+          <field accessType='inputOutput' type='SFBool' name='active'/>
           <field accessType='inputOutput' type='SFBool' name='selected'/>
           <field accessType='inputOutput' type='SFColor' name='color'/>
           <field accessType='initializeOnly' type='SFNode' name='material'>
@@ -60,6 +68,8 @@
             <Transform USE='TransformTool'/>
           </field>
           <IS>
+            <connect nodeField='activeTool' protoField='activeTool'/>
+            <connect nodeField='active' protoField='isActive'/>
             <connect nodeField='selected' protoField='selected'/>
             <connect nodeField='color' protoField='boxColor'/>
           </IS>
@@ -70,6 +80,9 @@ async function initialize ()
    set_color ();
 
    const tool = await transform .getValue () .addTool () .getToolInstance ();
+
+   Browser .addRoute (tool, "activeTool", this, "activeTool");
+   Browser .addRoute (tool, "isActive",   this, "active");
 
    tool .undo       = false;
    tool .tools      = new MFString ("TRANSLATE", "SCALE");
@@ -90,9 +103,11 @@ function set_color ()
 }
 ]]>
         </Script>
-        <ROUTE fromNode='TransformTool' fromField='translation_changed' toNode='Box' toField='set_translation'/>
-        <ROUTE fromNode='TransformTool' fromField='scale_changed' toNode='Box' toField='set_scale'/>
       </ProtoBody>
     </ProtoDeclare>
+    <ProtoInstance name='Tool'>
+      <fieldValue name='selected' value='true'/>
+      <fieldValue name='size' value='3 3 3'/>
+    </ProtoInstance>
   </Scene>
 </X3D>
