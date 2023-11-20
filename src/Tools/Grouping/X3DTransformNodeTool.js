@@ -40,8 +40,6 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
    set_keys__ (keys)
    {
-      this .tool .snapRotation = keys === ActionKeys .Shift;
-
       if (!this .tool .keys)
          return;
 
@@ -57,6 +55,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       }
 
       this .tool .translateMode = keys === ActionKeys .Option ? "TRANSLATE_ALONG_PLANE" : "TRANSLATE_ALONG_AXIS";
+      this .tool .snapRotation  = keys === ActionKeys .Shift;
       this .tool .scaleMode     = scaleMode;
       this .tool .scaleUniform  = keys === ActionKeys .Shift || keys === (ActionKeys .Shift | ActionKeys .Option);
    }
