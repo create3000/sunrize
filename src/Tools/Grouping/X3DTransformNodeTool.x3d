@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Mon, 20 Nov 2023 19:57:12 GMT'/>
+    <meta name='modified' content='Mon, 20 Nov 2023 21:23:43 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -985,6 +985,83 @@ function translate (value)
 
       translation = initialTranslation .add (offset);
    }
+}
+]]>
+        </Script>
+        <Script DEF='RotateScript'
+            directOutput='true'>
+          <field accessType='inputOnly' type='SFBool' name='set_active'/>
+          <field accessType='inputOnly' type='SFRotation' name='set_rotation'/>
+          <field accessType='inputOnly' type='SFRotation' name='set_xRotation'/>
+          <field accessType='inputOnly' type='SFRotation' name='set_yRotation'/>
+          <field accessType='inputOnly' type='SFRotation' name='set_zRotation'/>
+          <field accessType='inputOutput' type='SFRotation' name='rotation'/>
+          <field accessType='inputOutput' type='SFVec3f' name='scale'/>
+          <field accessType='inputOutput' type='SFRotation' name='scaleOrientation'/>
+          <field accessType='inputOutput' type='SFBool' name='snap'/>
+          <field accessType='inputOutput' type='SFDouble' name='snapAngle' value='0.19634954'/>
+          <field accessType='initializeOnly' type='SFRotation' name='initialRotation'/>
+          <field accessType='initializeOnly' type='SFVec3f' name='initialScale' value='1 1 1'/>
+          <field accessType='initializeOnly' type='SFRotation' name='initialScaleOrientation'/>
+          <field accessType='initializeOnly' type='SFInt32' name='events'/>
+          <IS>
+            <connect nodeField='rotation' protoField='rotation'/>
+            <connect nodeField='scale' protoField='scale'/>
+            <connect nodeField='scaleOrientation' protoField='scaleOrientation'/>
+          </IS>
+<![CDATA[ecmascript:
+
+function set_active (value)
+{
+   if (!value)
+      return;
+
+   // Normalize scale rotation matrix.
+
+   const scaleRotation = new SFMatrix4f ();
+
+   scaleRotation .setTransform (null, rotation, scale, scaleOrientation);
+   scaleRotation .getTransform (null, initialRotation, initialScale, initialScaleOrientation);
+
+   rotation         = initialRotation;
+   scale            = initialScale;
+   scaleOrientation = initialScaleOrientation;
+
+   events = 4;
+}
+
+function set_xRotation (value)
+{
+   rotate (value);
+}
+
+function set_yRotation (value)
+{
+   rotate (value);
+}
+
+function set_zRotation (value)
+{
+   rotate (value);
+}
+
+function rotate (value)
+{
+   if (events)
+   {
+      // Prevent accidentially move.
+      -- events;
+      return;
+   }
+
+   if (snap)
+   {
+      const angle = Math .round (value .angle / snapAngle) * snapAngle;
+
+      value = new SFRotation (value .getAxis (), angle);
+   }
+
+   rotation = value .multiply (initialRotation);
 }
 ]]>
         </Script>
