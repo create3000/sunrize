@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Mon, 20 Nov 2023 18:34:31 GMT'/>
+    <meta name='modified' content='Mon, 20 Nov 2023 18:47:11 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -33,6 +33,7 @@
         <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
         <field accessType='inputOutput' type='SFRotation' name='scaleOrientation'/>
         <field accessType='inputOutput' type='SFVec3f' name='center'/>
+        <field accessType='inputOutput' type='SFBool' name='undo' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='keys' value='true'/>
         <field accessType='inputOutput' type='MFString' name='tools' value='"TRANSLATE", "ROTATE", "SCALE"'/>
         <field accessType='inputOutput' type='SFString' name='translateMode' value='TRANSLATE_ALONG_AXIS'/>
@@ -1383,17 +1384,14 @@ async function set_time ()
 
    if (keepCenter)
    {
-      const
-         tool     = centerTool .getValue () .addTool (),
-         instance = await tool .getToolInstance ();
+      const tool = await centerTool .getValue () .addTool () .getToolInstance ();
 
-      Browser .addRoute (instance, "isActive", this, "active");
+      Browser .addRoute (tool, "isActive", this, "active");
 
-      tool .undoEnabled = false;
-
-      instance .tools         = new MFString ("TRANSLATE");
-      instance .centerDisplay = false;
-      instance .bboxDisplay   = false;
+      tool .undo          = false;
+      tool .tools         = new MFString ("TRANSLATE");
+      tool .centerDisplay = false;
+      tool .bboxDisplay   = false;
    }
    else
    {
@@ -1497,7 +1495,8 @@ function set_bboxCenter ()
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
       <fieldValue name='translation' value='-0.8999743 0 0'/>
-      <fieldValue name='center' value='-1.84176 0 0'/>
+      <fieldValue name='center' value='1 0 0'/>
+      <fieldValue name='undo' value='false'/>
       <fieldValue name='scaleUniform' value='true'/>
       <fieldValue name='bboxSize' value='2 3 4'/>
       <fieldValue name='bboxCenter' value='1 0 0'/>

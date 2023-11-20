@@ -10,8 +10,6 @@ const
 
 class X3DTransformNodeTool extends X3DChildNodeTool
 {
-   undoEnabled = true;
-
    #tools = [
       "TRANSLATE",
       "ROTATE",
@@ -69,7 +67,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
    set_active__ (active)
    {
-      if (!this .undoEnabled)
+      if (!this .tool .undo)
          return;
 
       if (active .getValue ())
