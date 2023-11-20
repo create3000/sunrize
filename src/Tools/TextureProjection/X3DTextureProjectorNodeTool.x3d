@@ -8,9 +8,9 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 01 Aug 2014 17:41:58 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/TextureProjector/X3DTextureProjectorNodeTool.x3d'/>
-    <meta name='modified' content='Thu, 17 Aug 2023 14:53:58 GMT'/>
+    <meta name='modified' content='Mon, 20 Nov 2023 20:58:30 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -378,8 +378,8 @@ function set_perspectiveAspectRatio ()
 function set_perspective ()
 {
   const
-    nearDistance = perspectiveNearDistance === -1 ? 0.125 : perspectiveNearDistance,
-    farDistance  = perspectiveFarDistance === -1 ? 100_000 : perspectiveFarDistance;
+    nearDistance = perspectiveNearDistance < 0 ? 0.125 : perspectiveNearDistance,
+    farDistance  = perspectiveFarDistance < 0 ? 100_000 : perspectiveFarDistance;
 
    let fov = perspectiveFieldOfView;
 
@@ -423,6 +423,10 @@ function set_perspective ()
     <ProtoInstance name='Tool'>
       <fieldValue name='selected' value='true'/>
       <fieldValue name='on' value='true'/>
+      <fieldValue name='perspectiveFieldOfView' value='0.78'/>
+      <fieldValue name='perspectiveNearDistance' value='1'/>
+      <fieldValue name='perspectiveFarDistance' value='10'/>
+      <fieldValue name='perspectiveAspectRatio' value='1'/>
       <fieldValue name='texture'>
         <PixelTexture
             image='2 2 3

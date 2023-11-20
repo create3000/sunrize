@@ -11,7 +11,17 @@ class TextureProjectorParallelTool extends X3DTextureProjectorNodeTool
       this .tool .getField ("parallelFieldOfView")  .addReference (this .node ._fieldOfView);
       this .tool .getField ("parallelNearDistance") .addReference (this .node ._nearDistance);
       this .tool .getField ("parallelFarDistance")  .addReference (this .node ._farDistance);
-      this .tool .getField ("parallelAspectRatio")  .addReference (this .node ._aspectRatio);
+
+      this .node ._aspectRatio .addFieldInterest (this .tool .getField ("parallelAspectRatio"));
+
+      this .tool .perspectiveAspectRatio = this .node ._aspectRatio;
+   }
+
+   disposeTool ()
+   {
+      this .node ._aspectRatio .removeFieldInterest (this .tool .getField ("parallelAspectRatio"));
+
+      super .disposeTool ();
    }
 }
 
