@@ -91,7 +91,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
             case "TRANSLATE":
             {
                if (name)
-                  UndoManager .shared .beginUndo (_ ("Translate %s '%s'"), typeName, name);
+                  UndoManager .shared .beginUndo (_ ("Translate %s »%s«"), typeName, name);
                else
                   UndoManager .shared .beginUndo (_ ("Translate %s"), typeName);
                break;
@@ -99,7 +99,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
             case "ROTATE":
             {
                if (name)
-                  UndoManager .shared .beginUndo (_ ("Rotate %s '%s'"), typeName, name);
+                  UndoManager .shared .beginUndo (_ ("Rotate %s »%s«"), typeName, name);
                else
                   UndoManager .shared .beginUndo (_ ("Rotate %s"), typeName);
                break;
@@ -107,7 +107,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
             case "SCALE":
             {
                if (name)
-                  UndoManager .shared .beginUndo (_ ("Scale %s '%s'"), typeName, name);
+                  UndoManager .shared .beginUndo (_ ("Scale %s »%s«"), typeName, name);
                else
                   UndoManager .shared .beginUndo (_ ("Scale %s"), typeName);
                break;
@@ -115,7 +115,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
             case "CENTER":
             {
                if (name)
-                  UndoManager .shared .beginUndo (_ ("Translate Center Of %s '%s'"), typeName, name);
+                  UndoManager .shared .beginUndo (_ ("Translate Center Of %s »%s«"), typeName, name);
                else
                   UndoManager .shared .beginUndo (_ ("Translate Center Of %s"), typeName);
                break;
