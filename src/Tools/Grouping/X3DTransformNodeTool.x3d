@@ -1132,7 +1132,7 @@ function set_xScaleBack (value)
 {
    [lastScaleFunction, lastValue] = [set_xScaleBack, value];
 
-   if (!bboxSize .x)  
+   if (!bboxSize .x)
       return;
 
    if (scaleUniform)
@@ -1229,7 +1229,7 @@ function scaleTransformAxis (axis, value, sgn)
 
    switch (scaleMode)
    {
-      case "SCALE_FROM_EDGE":
+      case "SCALE_FROM_OPPOSITE_HANDLE":
       {
          const
             vector = new SFVec3f (1, 1, 1),
@@ -1279,7 +1279,7 @@ function scaleTransformUniform (value, sgn, centerOffset)
 {
    switch (scaleMode)
    {
-      case "SCALE_FROM_EDGE":
+      case "SCALE_FROM_OPPOSITE_HANDLE":
       {
          const s = 1 + sgn * value .length () / bboxSize .length ();
 

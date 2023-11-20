@@ -45,7 +45,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       if (this .tool .tools .includes ("TRANSLATE"))
       {
          var scaleMode = keys === ActionKeys .Option || keys === (ActionKeys .Shift | ActionKeys .Option)
-            ? "SCALE_FROM_EDGE"
+            ? "SCALE_FROM_OPPOSITE_HANDLE"
             : "SCALE_FROM_CENTER";
       }
       else
