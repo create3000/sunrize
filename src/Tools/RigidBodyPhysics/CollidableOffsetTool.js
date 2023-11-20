@@ -1,7 +1,7 @@
-"use strict"
+"use strict";
 
-const X3DNBodyCollidableNodeTool = require ("./X3DNBodyCollidableNodeTool")
+const X3DNBodyCollidableNodeTool = require ("./X3DNBodyCollidableNodeTool");
 
 class CollidableOffsetTool extends X3DNBodyCollidableNodeTool { }
 
-module .exports = CollidableOffsetTool
+module .exports = CollidableOffsetTool;

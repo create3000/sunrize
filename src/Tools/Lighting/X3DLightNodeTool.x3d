@@ -7,9 +7,9 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 01 Aug 2014 17:41:58 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Lighting/X3DLightNodeTool.x3d'/>
-    <meta name='modified' content='Thu, 17 Aug 2023 14:59:56 GMT'/>
+    <meta name='modified' content='Mon, 20 Nov 2023 19:27:04 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -17,7 +17,7 @@
     <ProtoDeclare name='Tool'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
-        <field accessType='inputOutput' type='SFInt32' name='whichChoice'/>
+        <field accessType='inputOutput' type='SFInt32' name='type'/>
         <field accessType='inputOutput' type='SFBool' name='on' value='true'/>
         <field accessType='inputOutput' type='SFColor' name='color' value='1 1 1'/>
         <field accessType='inputOutput' type='SFFloat' name='intensity' value='1'/>
@@ -38,7 +38,7 @@
                   scaleOrientation='0 0 -1 0.785398163397448'>
                 <Switch>
                   <IS>
-                    <connect nodeField='whichChoice' protoField='whichChoice'/>
+                    <connect nodeField='whichChoice' protoField='type'/>
                   </IS>
                   <Transform DEF='DirectionalLight'
                       translation='0 0 -0.16262'
@@ -296,6 +296,7 @@ async function initialize ()
 {
    const tool = await transform .getValue () .addTool () .getToolInstance ();
 
+   tool .undo          = false;
    tool .tools         = new MFString ("TRANSLATE", "ROTATE");
    tool .centerDisplay = false;
    tool .bboxDisplay   = false;

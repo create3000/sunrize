@@ -71,7 +71,7 @@ async function initialize ()
 
    const tool = await transform .getValue () .addTool () .getToolInstance ();
 
-   tool .typeName   = "ProximitySensor";
+   tool .undo       = false;
    tool .tools      = new MFString ("TRANSLATE", "SCALE");
    tool .centerTool = false;
 }

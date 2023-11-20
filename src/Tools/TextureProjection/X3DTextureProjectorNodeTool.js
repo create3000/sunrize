@@ -8,23 +8,15 @@ class X3DTextureProjectorNodeTool extends X3DChildNodeTool
 {
    static createOnSelection = false;
 
-   toolWhichChoice = 0;
-
    async initializeTool ()
    {
       await super .initializeTool (__dirname, "X3DTextureProjectorNodeTool.x3d");
 
-      this .node ._on        .addFieldInterest (this .tool .getField ("on"));
-      this .node ._location  .addFieldInterest (this .tool .getField ("location"));
-      this .node ._direction .addFieldInterest (this .tool .getField ("direction"));
-      this .node ._upVector  .addFieldInterest (this .tool .getField ("upVector"));
-      this .node ._texture   .addFieldInterest (this .tool .getField ("texture"));
-
-      this .tool .on        = this .node ._on;
-      this .tool .location  = this .node ._location;
-      this .tool .direction = this .node ._direction;
-      this .tool .upVector  = this .node ._upVector;
-      this .tool .texture   = this .node ._texture;
+      this .tool .getField ("on")        .addReference (this .node ._on);
+      this .tool .getField ("location")  .addReference (this .node ._location);
+      this .tool .getField ("direction") .addReference (this .node ._direction);
+      this .tool .getField ("upVector")  .addReference (this .node ._upVector);
+      this .tool .getField ("texture")   .addReference (this .node ._texture);
 
       this .addExternalNode (this .node ._texture);
    }

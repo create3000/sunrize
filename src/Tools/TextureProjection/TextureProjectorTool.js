@@ -1,23 +1,18 @@
-"use strict"
+"use strict";
 
-const X3DTextureProjectorNodeTool = require ("./X3DTextureProjectorNodeTool")
+const X3DTextureProjectorNodeTool = require ("./X3DTextureProjectorNodeTool");
 
 class TextureProjectorTool extends X3DTextureProjectorNodeTool
 {
    async initializeTool ()
    {
-      await super .initializeTool ()
+      await super .initializeTool ();
 
-      this .node ._fieldOfView  .addFieldInterest (this .tool .getField ("perspectiveFieldOfView"))
-      this .node ._nearDistance .addFieldInterest (this .tool .getField ("perspectiveNearDistance"))
-      this .node ._farDistance  .addFieldInterest (this .tool .getField ("perspectiveFarDistance"))
-      this .node ._aspectRatio  .addFieldInterest (this .tool .getField ("perspectiveAspectRatio"))
-
-      this .tool .perspectiveFieldOfView  = this .node ._fieldOfView
-      this .tool .perspectiveNearDistance = this .node ._nearDistance
-      this .tool .perspectiveFarDistance  = this .node ._farDistance
-      this .tool .perspectiveAspectRatio  = this .node ._aspectRatio
+      this .tool .getField ("perspectiveFieldOfView")  .addReference (this .node ._fieldOfView);
+      this .tool .getField ("perspectiveNearDistance") .addReference (this .node ._nearDistance);
+      this .tool .getField ("perspectiveFarDistance")  .addReference (this .node ._farDistance);
+      this .tool .getField ("perspectiveAspectRatio")  .addReference (this .node ._aspectRatio);
    }
 }
 
-module .exports = TextureProjectorTool
+module .exports = TextureProjectorTool;

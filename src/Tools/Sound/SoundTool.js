@@ -1,33 +1,24 @@
-"use strict"
+"use strict";
 
 const
    X3DChildNodeTool = require ("../Core/X3DChildNodeTool"),
-   X3D              = require ("../../X3D")
+   X3D              = require ("../../X3D");
 
 class SoundTool extends X3DChildNodeTool
 {
-   static createOnSelection = false
-
-   toolWhichChoice = 0
+   static createOnSelection = false;
 
    async initializeTool ()
    {
-      await super .initializeTool (__dirname, "SoundTool.x3d")
+      await super .initializeTool (__dirname, "SoundTool.x3d");
 
-      this .node ._location  .addFieldInterest (this .tool .getField ("location"))
-      this .node ._direction .addFieldInterest (this .tool .getField ("direction"))
-      this .node ._minBack   .addFieldInterest (this .tool .getField ("minBack"))
-      this .node ._minFront  .addFieldInterest (this .tool .getField ("minFront"))
-      this .node ._maxBack   .addFieldInterest (this .tool .getField ("maxBack"))
-      this .node ._maxFront  .addFieldInterest (this .tool .getField ("maxFront"))
-
-      this .tool .location  = this .node ._location
-      this .tool .direction = this .node ._direction
-      this .tool .minBack   = this .node ._minBack
-      this .tool .minFront  = this .node ._minFront
-      this .tool .maxBack   = this .node ._maxBack
-      this .tool .maxFront  = this .node ._maxFront
+      this .tool .getField ("location")  .addReference (this .node ._location);
+      this .tool .getField ("direction") .addReference (this .node ._direction);
+      this .tool .getField ("minBack")   .addReference (this .node ._minBack);
+      this .tool .getField ("minFront")  .addReference (this .node ._minFront);
+      this .tool .getField ("maxBack")   .addReference (this .node ._maxBack);
+      this .tool .getField ("maxFront")  .addReference (this .node ._maxFront);
    }
 }
 
-module .exports = SoundTool
+module .exports = SoundTool;

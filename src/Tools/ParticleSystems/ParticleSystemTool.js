@@ -1,12 +1,12 @@
-"use strict"
+"use strict";
 
 const
    X3DBoundedObjectTool = require ("../Grouping/X3DBoundedObjectTool"),
-   ToolColors           = require ("../Core/ToolColors")
+   ToolColors           = require ("../Core/ToolColors");
 
 class ParticleSystemTool extends X3DBoundedObjectTool
 {
-   toolBBoxColor = ToolColors .ORANGE
+   toolBBoxColor = ToolColors .ORANGE;
 }
 
-module .exports = ParticleSystemTool
+module .exports = ParticleSystemTool;

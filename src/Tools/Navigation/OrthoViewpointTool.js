@@ -1,19 +1,17 @@
-"use strict"
+"use strict";
 
-const X3DViewpointNodeTool = require ("./X3DViewpointNodeTool")
+const X3DViewpointNodeTool = require ("./X3DViewpointNodeTool");
 
 class OrthoViewpointTool extends X3DViewpointNodeTool
 {
-   toolWhichChoice = 1
+   toolType = 1;
 
    async initializeTool ()
    {
-      await super .initializeTool ()
+      await super .initializeTool ();
 
-      this .node ._position .addFieldInterest (this .tool .getField ("position"))
-
-      this .tool .position = this .node ._position
+      this .tool .getField ("position") .addReference (this .node ._position);
    }
 }
 
-module .exports = OrthoViewpointTool
+module .exports = OrthoViewpointTool;

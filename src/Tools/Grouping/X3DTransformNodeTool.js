@@ -83,8 +83,8 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       else
       {
          const
-            typeName = this .tool .typeName || this .getTypeName (),
-            name     = this .tool .typeName ? "" : this .getDisplayName ();
+            typeName = this .getTypeName (),
+            name     = this .getDisplayName ();
 
          switch (this .specialTool ?? this .#tools [this .tool .activeTool])
          {
