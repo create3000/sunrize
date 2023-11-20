@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Mon, 20 Nov 2023 00:56:11 GMT'/>
+    <meta name='modified' content='Mon, 20 Nov 2023 01:42:30 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -572,7 +572,11 @@
                   <ProtoInstance name='BooleanSwitch' USE='_1'/>
                 </Transform>
                 <TouchSensor DEF='_4'
-                    description='BBox Center'/>
+                    description='BBox Center'>
+                  <IS>
+                    <connect nodeField='isOver' protoField='isCenterActive'/>
+                  </IS>
+                </TouchSensor>
               </ScreenGroup>
             </Transform>
             <Group DEF='Center'>
@@ -1333,6 +1337,7 @@ function translate (scaledMatrix, distanceFromCenter)
         </Script>
         <Script DEF='CenterScript'
             directOutput='true'>
+          <field accessType='inputOnly' type='SFTime' name='set_moveCenterToBBoxCenter'/>
           <field accessType='inputOnly' type='SFTime' name='set_time'/>
           <field accessType='inputOutput' type='SFBool' name='active'/>
           <field accessType='inputOutput' type='SFVec3f' name='translation'/>
@@ -1363,6 +1368,25 @@ function translate (scaledMatrix, distanceFromCenter)
 function initialize ()
 {
    set_center ();
+}
+
+function set_moveCenterToBBoxCenter ()
+{
+   const matrix = new SFMatrix4f ();
+
+   matrix .setTransform (translation,
+                         rotation,
+                         scale,
+                         scaleOrientation,
+                         center);
+
+   matrix .getTransform (translation,
+                         null,
+                         null,
+                         null,
+                         bboxCenter);
+
+   center = bboxCenter;
 }
 
 async function set_time ()
@@ -1472,7 +1496,7 @@ function set_bboxCenter ()
         <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='_1' toField='set_whichChoice'/>
         <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='ScaleScript' toField='set_keepCenter'/>
         <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='_15' toField='set_whichChoice'/>
-        <ROUTE fromNode='_4' fromField='touchTime' toNode='CenterScript' toField='set_time'/>
+        <ROUTE fromNode='_4' fromField='touchTime' toNode='CenterScript' toField='set_moveCenterToBBoxCenter'/>
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
