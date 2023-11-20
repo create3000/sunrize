@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Mon, 20 Nov 2023 19:11:38 GMT'/>
+    <meta name='modified' content='Mon, 20 Nov 2023 19:57:12 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -799,6 +799,7 @@ function set_bboxSize ()
           <field accessType='outputOnly' type='SFBool' name='scale'/>
           <field accessType='outputOnly' type='SFInt32' name='activeTool'/>
           <field accessType='initializeOnly' type='SFTime' name='time'/>
+          <field accessType='initializeOnly' type='SFInt32' name='tool'/>
           <IS>
             <connect nodeField='tools' protoField='tools'/>
             <connect nodeField='translateMode' protoField='translateMode'/>
@@ -823,10 +824,7 @@ function set_time (value)
    {
       time = 0;
 
-      if (bboxSize .length ())
-         set_tool ((activeTool + 1) % tools .length);
-      else
-         set_tool (0);
+      set_next ();
    }
    else
    {
@@ -834,8 +832,17 @@ function set_time (value)
    }
 }
 
+function set_next ()
+{
+   if (bboxSize .length ())
+      set_tool ((tool + 1) % tools .length);
+   else
+      set_tool (0);
+}
+
 function set_tool (value)
 {
+   tool      = value;
    translate = false;
    rotate    = false;
    scale     = false;
