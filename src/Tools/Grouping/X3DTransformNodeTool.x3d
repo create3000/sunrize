@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Mon, 20 Nov 2023 12:05:14 GMT'/>
+    <meta name='modified' content='Mon, 20 Nov 2023 13:18:05 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -36,6 +36,7 @@
         <field accessType='inputOutput' type='MFString' name='tools' value='"TRANSLATE", "ROTATE", "SCALE"'/>
         <field accessType='inputOutput' type='SFString' name='translateMode' value='TRANSLATE_ALONG_AXIS'/>
         <field accessType='inputOutput' type='SFString' name='scaleMode' value='SCALE_FROM_CENTER'/>
+        <field accessType='inputOutput' type='SFBool' name='scaleUniform'/>
         <field accessType='inputOutput' type='MFString' name='connectedAxes'/>
         <field accessType='inputOutput' type='SFBool' name='xAxisDisplay' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='yAxisDisplay' value='true'/>
@@ -1007,6 +1008,7 @@ function translate (value)
           <field accessType='inputOutput' type='SFVec3f' name='bboxSize'/>
           <field accessType='inputOutput' type='SFVec3f' name='bboxCenter'/>
           <field accessType='inputOutput' type='SFString' name='scaleMode'/>
+          <field accessType='inputOutput' type='SFBool' name='scaleUniform'/>
           <field accessType='inputOutput' type='MFString' name='connectedAxes'/>
           <field accessType='inputOutput' type='SFBool' name='keepCenter'/>
           <field accessType='initializeOnly' type='SFVec3f' name='initialTranslation'/>
@@ -1027,6 +1029,7 @@ function translate (value)
             <connect nodeField='bboxSize' protoField='bboxSize'/>
             <connect nodeField='bboxCenter' protoField='bboxCenter'/>
             <connect nodeField='scaleMode' protoField='scaleMode'/>
+            <connect nodeField='scaleUniform' protoField='scaleUniform'/>
             <connect nodeField='connectedAxes' protoField='connectedAxes'/>
           </IS>
 <![CDATA[ecmascript:
@@ -1085,107 +1088,137 @@ function set_xScaleFront (value)
 {
    [lastScaleFunction, lastValue] = [set_xScaleFront, value];
 
-   if (bboxSize .x)
-      set_scaleAxis ("x", value, 1);
+   if (!bboxSize .x)
+      return;
+
+   if (scaleUniform)
+      scaleTransformUniform (value, Math .sign (value .x), new SFVec3f (-1, 0, 0));
+   else
+      scaleTransformAxis ("x", value, 1);
 }
 
 function set_yScaleFront (value)
 {
    [lastScaleFunction, lastValue] = [set_yScaleFront, value];
 
-   if (bboxSize .y)
-      set_scaleAxis ("y", value, 1);
+   if (!bboxSize .y)
+      return;
+
+   if (scaleUniform)
+      scaleTransformUniform (value, Math .sign (value .y), new SFVec3f (0, -1, 0));
+  else
+      scaleTransformAxis ("y", value, 1);
 }
 
 function set_zScaleFront (value)
 {
    [lastScaleFunction, lastValue] = [set_zScaleFront, value];
 
-   if (bboxSize .z)
-      set_scaleAxis ("z", value, 1);
+   if (!bboxSize .z)
+      return;
+
+   if (scaleUniform)
+      scaleTransformUniform (value, Math .sign (value .z), new SFVec3f (0, 0, -1));
+   else
+      scaleTransformAxis ("z", value, 1);
 }
 
 function set_xScaleBack (value)
 {
    [lastScaleFunction, lastValue] = [set_xScaleBack, value];
 
-   if (bboxSize .x)
-      set_scaleAxis ("x", value, -1);
+   if (!bboxSize .x)  
+      return;
+
+   if (scaleUniform)
+      scaleTransformUniform (value, Math .sign (-value .x), new SFVec3f (1, 0, 0));
+   else
+      scaleTransformAxis ("x", value, -1);
 }
 
 function set_yScaleBack (value)
 {
    [lastScaleFunction, lastValue] = [set_yScaleBack, value];
 
-   if (bboxSize .y)
-      set_scaleAxis ("y", value, -1);
+   if (!bboxSize .y)
+      return;
+
+   if (scaleUniform)
+      scaleTransformUniform (value, Math .sign (-value .y), new SFVec3f (0, 1, 0));
+   else
+      scaleTransformAxis ("y", value, -1);
 }
 
 function set_zScaleBack (value)
 {
    [lastScaleFunction, lastValue] = [set_zScaleBack, value];
 
-   if (bboxSize .z)
-      set_scaleAxis ("z", value, -1);
+   if (!bboxSize .z)
+      return;
+
+   if (scaleUniform)
+      scaleTransformUniform (value, Math .sign (-value .z), new SFVec3f (0, 0, 1));
+   else
+      scaleTransformAxis ("z", value, -1);
 }
 
 function set_scale1 (value)
 {
    [lastScaleFunction, lastValue] = [set_scale1, value];
 
-   set_scaleUniform (value, Math .sign (value .x), new SFVec3f (-1, -1, -1));
+   scaleTransformUniform (value, Math .sign (value .x), new SFVec3f (-1, -1, -1));
 }
 
 function set_scale2 (value)
 {
    [lastScaleFunction, lastValue] = [set_scale2, value];
 
-   set_scaleUniform (value, Math .sign (-value .x), new SFVec3f (1, -1, -1));
+   scaleTransformUniform (value, Math .sign (-value .x), new SFVec3f (1, -1, -1));
 }
 
 function set_scale3 (value)
 {
    [lastScaleFunction, lastValue] = [set_scale3, value];
 
-   set_scaleUniform (value, Math .sign (-value .x), new SFVec3f (1, 1, -1));
+   scaleTransformUniform (value, Math .sign (-value .x), new SFVec3f (1, 1, -1));
 }
 
 function set_scale4 (value)
 {
    [lastScaleFunction, lastValue] = [set_scale4, value];
 
-   set_scaleUniform (value, Math .sign (value .x), new SFVec3f (-1, 1, -1));
+   scaleTransformUniform (value, Math .sign (value .x), new SFVec3f (-1, 1, -1));
 }
 
 function set_scale5 (value)
 {
    [lastScaleFunction, lastValue] = [set_scale5, value];
 
-   set_scaleUniform (value, Math .sign (value .x), new SFVec3f (-1, -1, 1));
+   scaleTransformUniform (value, Math .sign (value .x), new SFVec3f (-1, -1, 1));
 }
 
 function set_scale6 (value)
 {
    [lastScaleFunction, lastValue] = [set_scale6, value];
 
-   set_scaleUniform (value, Math .sign (-value .x), new SFVec3f (1, -1, 1));
+   scaleTransformUniform (value, Math .sign (-value .x), new SFVec3f (1, -1, 1));
 }
 
 function set_scale7 (value)
 {
    [lastScaleFunction, lastValue] = [set_scale7, value];
 
-   set_scaleUniform (value, Math .sign (-value .x), new SFVec3f (1, 1, 1));
+   scaleTransformUniform (value, Math .sign (-value .x), new SFVec3f (1, 1, 1));
 }
 
 function set_scale8 (value)
 {
    [lastScaleFunction, lastValue] = [set_scale8, value];
 
-   set_scaleUniform (value, Math .sign (value .x), new SFVec3f (-1, 1, 1));
+   scaleTransformUniform (value, Math .sign (value .x), new SFVec3f (-1, 1, 1));
 }
 
-function set_scaleAxis (axis, value, sgn)
+function scaleTransformAxis (axis, value, sgn)
 {
    value = value [axis];
 
@@ -1200,7 +1233,7 @@ function set_scaleAxis (axis, value, sgn)
          vector [axis] = 1 + sgn * value / bboxSize [axis];
          offset [axis] = -sgn * bboxSize [axis] / 2;
 
-         connectAxis (axis, vector, offset);
+         connectAxes (axis, vector, offset);
 
          scaleTransform (vector, offset);
          break;
@@ -1213,7 +1246,7 @@ function set_scaleAxis (axis, value, sgn)
 
          vector [axis] = 1 + 2 * sgn * value / bboxSize [axis];
 
-         connectAxis (axis, vector, offset);
+         connectAxes (axis, vector, offset);
 
          scaleTransform (vector, offset);
          break;
@@ -1221,7 +1254,23 @@ function set_scaleAxis (axis, value, sgn)
    }
 }
 
-function set_scaleUniform (value, sgn, centerOffset)
+function connectAxes (axis, vector, offset)
+{
+   for (const connectedAxis of connectedAxes)
+   {
+      const
+         lhs = connectedAxis [0] .toLowerCase (),
+         rhs = connectedAxis [1] .toLowerCase ();
+
+      if (rhs == axis)
+      {
+         vector [lhs] = vector [rhs];
+         offset [lhs] = offset [rhs];
+      }
+   }
+}
+
+function scaleTransformUniform (value, sgn, centerOffset)
 {
    switch (scaleMode)
    {
@@ -1240,22 +1289,6 @@ function set_scaleUniform (value, sgn, centerOffset)
 
          scaleTransform (new SFVec3f (s, s, s), new SFVec3f ());
          break;
-      }
-   }
-}
-
-function connectAxis (axis, vector, offset)
-{
-   for (const connectedAxis of connectedAxes)
-   {
-      const
-         lhs = connectedAxis [0] .toLowerCase (),
-         rhs = connectedAxis [1] .toLowerCase ();
-
-      if (rhs == axis)
-      {
-         vector [lhs] = vector [rhs];
-         offset [lhs] = offset [rhs];
       }
    }
 }
