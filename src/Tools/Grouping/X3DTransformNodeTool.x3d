@@ -11,7 +11,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Mon, 20 Nov 2023 23:18:15 GMT'/>
+    <meta name='modified' content='Tue, 21 Nov 2023 01:08:14 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -1493,7 +1493,7 @@ function translate (scaledMatrix, distanceFromCenter)
         </Script>
         <Script DEF='CenterScript'
             directOutput='true'>
-          <field accessType='inputOnly' type='SFTime' name='set_moveCenterToBBoxCenter'/>
+          <field accessType='inputOnly' type='SFBool' name='set_moveCenterToBBoxCenter'/>
           <field accessType='inputOnly' type='SFTime' name='set_time'/>
           <field accessType='inputOutput' type='SFBool' name='active'/>
           <field accessType='inputOutput' type='SFVec3f' name='translation'/>
@@ -1526,23 +1526,23 @@ function initialize ()
    set_center ();
 }
 
-function set_moveCenterToBBoxCenter ()
+function set_moveCenterToBBoxCenter (value)
 {
-   const matrix = new SFMatrix4f ();
+   if (value)
+   {
+      active = true;
+   }
+   else
+   {
+      const matrix = new SFMatrix4f ();
 
-   matrix .setTransform (translation,
-                         rotation,
-                         scale,
-                         scaleOrientation,
-                         center);
+      matrix .setTransform (translation, rotation, scale, scaleOrientation, center);
+      matrix .getTransform (translation, null, null, null, bboxCenter);
 
-   matrix .getTransform (translation,
-                         null,
-                         null,
-                         null,
-                         bboxCenter);
+      center = bboxCenter;
 
-   center = bboxCenter;
+      setTimeout (() => active = false);
+   }
 }
 
 async function set_time ()
@@ -1570,11 +1570,7 @@ function set_active (value)
 {
    if (value)
    {
-      initialMatrix .setTransform (translation,
-                                   rotation,
-                                   scale,
-                                   scaleOrientation,
-                                   center);
+      initialMatrix .setTransform (translation, rotation, scale, scaleOrientation, center);
    }
 }
 
@@ -1643,7 +1639,6 @@ function set_bboxCenter ()
         <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='_1' toField='set_whichChoice'/>
         <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='ScaleScript' toField='set_keepCenter'/>
         <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='_15' toField='set_whichChoice'/>
-        <ROUTE fromNode='_4' fromField='touchTime' toNode='CenterScript' toField='set_moveCenterToBBoxCenter'/>
         <ROUTE fromNode='ModeScript' fromField='scale' toNode='ScaleSensor1_1' toField='set_enabled'/>
         <ROUTE fromNode='ModeScript' fromField='scale' toNode='ScaleSensor2' toField='set_enabled'/>
         <ROUTE fromNode='ModeScript' fromField='scale' toNode='ScaleSensor3' toField='set_enabled'/>
@@ -1665,6 +1660,7 @@ function set_bboxCenter ()
         <ROUTE fromNode='XRotationSensor_1' fromField='rotation_changed' toNode='RotateScript' toField='set_xRotation'/>
         <ROUTE fromNode='YRotationSensor_1' fromField='rotation_changed' toNode='RotateScript' toField='set_yRotation'/>
         <ROUTE fromNode='ZRotationSensor' fromField='rotation_changed' toNode='RotateScript' toField='set_zRotation'/>
+        <ROUTE fromNode='_4' fromField='isActive' toNode='CenterScript' toField='set_moveCenterToBBoxCenter'/>
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
