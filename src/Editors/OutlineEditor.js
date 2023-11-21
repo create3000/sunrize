@@ -724,7 +724,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          node  = executionContext .createNode (typeName) .getValue (),
          field = node .getField (fieldName);
 
-      switch (node .getTypeName ())
+      switch (typeName)
       {
          case "Switch":
          {
