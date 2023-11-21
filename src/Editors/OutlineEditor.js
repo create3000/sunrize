@@ -722,6 +722,15 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          node  = executionContext .createNode (typeName) .getValue (),
          field = node .getField (fieldName);
 
+      switch (node .getTypeName ())
+      {
+         case "Switch":
+         {
+            node ._whichChoice = 0;
+            break;
+         }
+      }
+
       // Add primary node to new parent node.
 
       if (field .getType () === X3D .X3DConstants .MFNode)
