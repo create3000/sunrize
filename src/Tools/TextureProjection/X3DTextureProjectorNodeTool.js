@@ -1,8 +1,10 @@
 "use strict";
 
 const
-   X3DChildNodeTool = require ("../Core/X3DChildNodeTool"),
-   X3D              = require ("../../X3D");
+   X3DChildNodeTool     = require ("../Core/X3DChildNodeTool"),
+   X3DTransformNodeTool = require ("../Grouping/X3DTransformNodeTool"),
+   Editor               = require ("../../Undo/Editor"),
+   UndoManager          = require ("../../Undo/UndoManager");
 
 class X3DTextureProjectorNodeTool extends X3DChildNodeTool
 {
@@ -18,7 +20,38 @@ class X3DTextureProjectorNodeTool extends X3DChildNodeTool
       this .tool .getField ("upVector")  .addReference (this .node ._upVector);
       this .tool .getField ("texture")   .addReference (this .node ._texture);
 
+      this .tool .getField ("isActive") .addInterest ("set_active__", this);
+
       this .addExternalNode (this .node ._texture);
+   }
+
+   set_active__ (active)
+   {
+      if (active .getValue ())
+      {
+         this .initialLocation  = this ._location  .copy ();
+         this .initialDirection = this ._direction .copy ();
+         this .initialUpVector  = this ._upVector  .copy ();
+      }
+      else
+      {
+         X3DTransformNodeTool .beginUndo (this .tool .activeTool, this .getTypeName (), this .getDisplayName ());
+
+         const
+            location  = this ._location  .copy (),
+            direction = this ._direction .copy (),
+            upVector  = this ._upVector  .copy ();
+
+         this ._location  = this .initialLocation;
+         this ._direction = this .initialDirection;
+         this ._upVector  = this .initialUpVector;
+
+         Editor .setFieldValue (this .getExecutionContext (), this .node, this ._location,  location);
+         Editor .setFieldValue (this .getExecutionContext (), this .node, this ._direction, direction);
+         Editor .setFieldValue (this .getExecutionContext (), this .node, this ._upVector,  upVector);
+
+         UndoManager .shared .endUndo ();
+      }
    }
 }
 

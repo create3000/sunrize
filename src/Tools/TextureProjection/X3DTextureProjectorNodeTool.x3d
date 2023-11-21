@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/TextureProjector/X3DTextureProjectorNodeTool.x3d'/>
-    <meta name='modified' content='Tue, 21 Nov 2023 20:21:00 GMT'/>
+    <meta name='modified' content='Tue, 21 Nov 2023 20:40:45 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -41,6 +41,8 @@
         <field accessType='inputOutput' type='SFFloat' name='perspectiveFarDistance'/>
         <field accessType='inputOutput' type='SFFloat' name='perspectiveAspectRatio'/>
         <field accessType='inputOutput' type='SFNode' name='texture'/>
+        <field accessType='outputOnly' type='SFInt32' name='activeTool'/>
+        <field accessType='outputOnly' type='SFBool' name='isActive'/>
       </ProtoInterface>
       <ProtoBody>
         <Collision
@@ -171,6 +173,8 @@
           <field accessType='inputOutput' type='SFFloat' name='perspectiveNearDistance'/>
           <field accessType='inputOutput' type='SFFloat' name='perspectiveFarDistance'/>
           <field accessType='inputOutput' type='SFFloat' name='perspectiveAspectRatio'/>
+          <field accessType='inputOutput' type='SFInt32' name='activeTool'/>
+          <field accessType='inputOutput' type='SFBool' name='active'/>
           <field accessType='initializeOnly' type='SFNode' name='projector'>
             <Transform USE='Projector'/>
           </field>
@@ -198,6 +202,8 @@
             <connect nodeField='perspectiveNearDistance' protoField='perspectiveNearDistance'/>
             <connect nodeField='perspectiveFarDistance' protoField='perspectiveFarDistance'/>
             <connect nodeField='perspectiveAspectRatio' protoField='perspectiveAspectRatio'/>
+            <connect nodeField='activeTool' protoField='activeTool'/>
+            <connect nodeField='active' protoField='isActive'/>
           </IS>
 <![CDATA[ecmascript:
 
@@ -206,6 +212,9 @@ async function initialize ()
    textureMaterial .getValue () .collectCloneCount = () => 0;
 
    const tool = await transform .getValue () .addTool () .getToolInstance ();
+
+   Browser .addRoute (tool, "activeTool", this, "activeTool");
+   Browser .addRoute (tool, "isActive",   this, "active");
 
    tool .undo          = false;
    tool .tools         = new MFString ("TRANSLATE", "ROTATE");
@@ -222,16 +231,26 @@ function set_selected ()
 
 function set_direction ()
 {
-   set_directionAndUpVector ();
+   set_directionAndUpVector (0);
 }
 
 function set_upVector ()
 {
-   set_directionAndUpVector ();
+   set_directionAndUpVector (1);
 }
 
-function set_directionAndUpVector ()
+let changing = [false, false];
+
+function set_directionAndUpVector (i)
 {
+   if (changing [i])
+   {
+      changing [i] = false;
+      return;
+   }
+
+   changing [i] = true;
+
    const rotation = new SFRotation (new SFVec3f (0, 0, 1), direction);
 
    transform .rotation = straightenHorizon (rotation, upVector .normalize ());
@@ -239,8 +258,16 @@ function set_directionAndUpVector ()
 
 function set_rotation ()
 {
-   // direction = transform .rotation .multVec (new SFVec3f (0, 0, 1));
-   // upVector  = transform .rotation .multVec (new SFVec3f (0, 1, 0));
+   if (changing .includes (true))
+   {
+      changing = [false, false];
+      return;
+   }
+
+   changing = [true, true];
+
+   direction = transform .rotation .multVec (new SFVec3f (0, 0, 1));
+   upVector  = transform .rotation .multVec (new SFVec3f (0, 1, 0));
 }
 
 function straightenHorizon (orientation, upVector)
