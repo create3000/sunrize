@@ -1,8 +1,10 @@
 "use strict";
 
 const
-   X3DChildNodeTool = require ("../Core/X3DChildNodeTool"),
-   X3D              = require ("../../X3D");
+   X3DChildNodeTool     = require ("../Core/X3DChildNodeTool"),
+   X3DTransformNodeTool = require ("../Grouping/X3DTransformNodeTool"),
+   Editor               = require ("../../Undo/Editor"),
+   UndoManager          = require ("../../Undo/UndoManager");
 
 class SoundTool extends X3DChildNodeTool
 {
@@ -18,6 +20,33 @@ class SoundTool extends X3DChildNodeTool
       this .tool .getField ("minFront")  .addReference (this .node ._minFront);
       this .tool .getField ("maxBack")   .addReference (this .node ._maxBack);
       this .tool .getField ("maxFront")  .addReference (this .node ._maxFront);
+
+      this .tool .getField ("isActive") .addInterest ("set_active__", this);
+   }
+
+   set_active__ (active)
+   {
+      if (active .getValue ())
+      {
+         this .initialLocation  = this ._location  .copy ();
+         this .initialDirection = this ._direction .copy ();
+      }
+      else
+      {
+         X3DTransformNodeTool .beginUndo (this .tool .activeTool, this .getTypeName (), this .getDisplayName ());
+
+         const
+            location  = this ._location  .copy (),
+            direction = this ._direction .copy ();
+
+         this ._location  = this .initialLocation;
+         this ._direction = this .initialDirection;
+
+         Editor .setFieldValue (this .getExecutionContext (), this .node, this ._location,  location);
+         Editor .setFieldValue (this .getExecutionContext (), this .node, this ._direction, direction);
+
+         UndoManager .shared .endUndo ();
+      }
    }
 }
 

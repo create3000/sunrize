@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Sound/SoundTool.x3d'/>
-    <meta name='modified' content='Mon, 20 Nov 2023 21:08:32 GMT'/>
+    <meta name='modified' content='Tue, 21 Nov 2023 20:55:38 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -34,6 +34,8 @@
         <field accessType='inputOutput' type='SFFloat' name='minFront'/>
         <field accessType='inputOutput' type='SFFloat' name='maxBack'/>
         <field accessType='inputOutput' type='SFFloat' name='maxFront'/>
+        <field accessType='outputOnly' type='SFInt32' name='activeTool'/>
+        <field accessType='outputOnly' type='SFBool' name='isActive'/>
       </ProtoInterface>
       <ProtoBody>
         <Collision
@@ -166,15 +168,17 @@
             directOutput='true'>
           <field accessType='inputOutput' type='SFBool' name='selected'/>
           <field accessType='inputOutput' type='SFVec3f' name='direction'/>
+          <field accessType='inputOnly' type='SFRotation' name='set_rotation'/>
           <field accessType='inputOutput' type='SFFloat' name='minBack'/>
           <field accessType='inputOutput' type='SFFloat' name='minFront'/>
           <field accessType='inputOutput' type='SFFloat' name='maxBack'/>
           <field accessType='inputOutput' type='SFFloat' name='maxFront'/>
-          <field accessType='outputOnly' type='SFRotation' name='rotation_changed'/>
           <field accessType='outputOnly' type='SFVec3f' name='minTranslation_changed'/>
           <field accessType='outputOnly' type='SFVec3f' name='maxTranslation_changed'/>
           <field accessType='outputOnly' type='SFVec3f' name='minScale_changed'/>
           <field accessType='outputOnly' type='SFVec3f' name='maxScale_changed'/>
+          <field accessType='inputOutput' type='SFInt32' name='activeTool'/>
+          <field accessType='inputOutput' type='SFBool' name='active'/>
           <field accessType='initializeOnly' type='SFNode' name='transform'>
             <Transform USE='TransformTool'/>
           </field>
@@ -188,6 +192,8 @@
             <connect nodeField='minFront' protoField='minFront'/>
             <connect nodeField='maxBack' protoField='maxBack'/>
             <connect nodeField='maxFront' protoField='maxFront'/>
+            <connect nodeField='activeTool' protoField='activeTool'/>
+            <connect nodeField='active' protoField='isActive'/>
           </IS>
 <![CDATA[ecmascript:
 
@@ -195,11 +201,14 @@ const zAxis = new SFVec3f (0, 0, 1);
 
 async function initialize ()
 {
-   set_direction ();
+   set_direction (direction);
    set_minRange ();
    set_maxRange ();
 
-   const tool = await transform .getValue () .addTool () .getToolInstance ();
+   const tool = await transform .getValue () .addTool () .getToolInstance (); 
+
+   Browser .addRoute (tool, "activeTool", this, "activeTool");
+   Browser .addRoute (tool, "isActive",   this, "active");
 
    tool .undo          = false;
    tool .tools         = new MFString ("TRANSLATE", "ROTATE");
@@ -213,9 +222,53 @@ function set_selected ()
       ? new SFColor (0.1, 0.1, 0.1)
       : new SFColor ();
 }
-function set_direction ()
+
+let changing = false;
+
+function set_direction (value)
 {
-   rotation_changed = new SFRotation (zAxis, direction);
+   if (changing)
+   {
+      changing = false;
+      return;
+   }
+
+   changing = true;
+
+   transform .rotation = straightenHorizon (new SFRotation (new SFVec3f (0, 0, 1), value), 
+                                            new SFVec3f (0, 1, 0));
+}
+
+function set_rotation (value)
+{
+   if (changing)
+   {
+      changing = false;
+      return;
+   }
+
+   changing = true;
+
+   direction = transform .rotation .multVec (new SFVec3f (0, 0, 1));
+}
+
+function straightenHorizon (orientation, upVector)
+{
+   const
+      localXAxis = orientation .multVec (new SFVec3f (-1, 0, 0)),
+      localZAxis = orientation .multVec (new SFVec3f (0, 0, 1)),
+      vector     = localZAxis .cross (upVector);
+
+   // If viewer looks along the up vector.
+   if (Math .abs (localZAxis .dot (upVector)) >= 1)
+      return orientation;
+
+   if (Math .abs (vector .dot (localXAxis)) >= 1)
+      return orientation;
+
+   const rotation = new SFRotation (localXAxis, vector);
+
+   return orientation .multiply (rotation);
 }
 
 function set_minBack ()
@@ -273,7 +326,8 @@ function getEllipsoidParams (back, front)
         <ROUTE fromNode='SoundScript' fromField='minScale_changed' toNode='MinEllipsoid' toField='set_scale'/>
         <ROUTE fromNode='SoundScript' fromField='maxTranslation_changed' toNode='MaxEllipsoid' toField='set_translation'/>
         <ROUTE fromNode='SoundScript' fromField='maxScale_changed' toNode='MaxEllipsoid' toField='set_scale'/>
-        <ROUTE fromNode='SoundScript' fromField='rotation_changed' toNode='Sound' toField='set_rotation'/>
+        <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='Sound' toField='set_rotation'/>
+        <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='SoundScript' toField='set_rotation'/>
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
