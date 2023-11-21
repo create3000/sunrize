@@ -5,10 +5,18 @@ module .exports = new class Selection
       this .nodes = new Map ();
    }
 
-   clear ()
+   has (node)
    {
-      for (const node of this .nodes .values ())
+      return this .nodes .has (node .valueOf ());
+   }
+
+   clear (exclude /* private option */)
+   {
+      for (const node of this .nodes .keys ())
       {
+         if (node === exclude ?.valueOf ())
+            continue;
+
          node .getTool () ?.setSelected (false);
          node .removeTool ("createOnSelection");
       }
@@ -18,7 +26,7 @@ module .exports = new class Selection
 
    set (node)
    {
-      this .clear ();
+      this .clear (node);
       this .add (node);
    }
 
