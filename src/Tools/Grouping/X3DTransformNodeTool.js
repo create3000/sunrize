@@ -152,12 +152,12 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       }
    }
 
-   static box = new X3D .Box3 ();
+   static #box = new X3D .Box3 ();
 
    reshapeTool ()
    {
       const
-         bbox       = this .node .getSubBBox (X3DTransformNodeTool .box),
+         bbox       = this .node .getSubBBox (X3DTransformNodeTool .#box),
          bboxSize   = bbox .size,
          bboxCenter = bbox .center;
 

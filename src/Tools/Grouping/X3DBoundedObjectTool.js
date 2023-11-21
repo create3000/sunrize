@@ -23,12 +23,12 @@ class X3DBoundedObjectTool extends X3DChildNodeTool
       super .disposeTool ();
    }
 
-   static box = new X3D .Box3 ();
+   static #box = new X3D .Box3 ();
 
    reshapeTool ()
    {
       const
-         bbox       = this .node .getBBox (X3DBoundedObjectTool .box),
+         bbox       = this .node .getBBox (X3DBoundedObjectTool .#box),
          bboxSize   = bbox .size,
          bboxCenter = bbox .center;
 
