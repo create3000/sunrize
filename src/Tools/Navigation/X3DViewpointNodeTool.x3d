@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Navigation/X3DViewpointNodeTool.x3d'/>
-    <meta name='modified' content='Mon, 20 Nov 2023 19:11:07 GMT'/>
+    <meta name='modified' content='Tue, 21 Nov 2023 19:41:52 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -22,6 +22,8 @@
         <field accessType='inputOutput' type='SFVec3f' name='position'/>
         <field accessType='inputOutput' type='SFRotation' name='orientation'/>
         <field accessType='inputOutput' type='SFBool' name='bound'/>
+        <field accessType='outputOnly' type='SFInt32' name='activeTool'/>
+        <field accessType='outputOnly' type='SFBool' name='isActive'/>
       </ProtoInterface>
       <ProtoBody>
         <Collision
@@ -153,6 +155,8 @@
         <Script DEF='ToolScript'
             directOutput='true'>
           <field accessType='inputOutput' type='SFBool' name='selected'/>
+          <field accessType='inputOutput' type='SFInt32' name='activeTool'/>
+          <field accessType='inputOutput' type='SFBool' name='active'/>
           <field accessType='initializeOnly' type='SFNode' name='material'>
             <Material USE='_4'/>
           </field>
@@ -161,12 +165,17 @@
           </field>
           <IS>
             <connect nodeField='selected' protoField='selected'/>
+            <connect nodeField='activeTool' protoField='activeTool'/>
+            <connect nodeField='active' protoField='isActive'/>
           </IS>
 <![CDATA[ecmascript:
 
 async function initialize ()
 {
    const tool = await transform .getValue () .addTool () .getToolInstance ();
+
+   Browser .addRoute (tool, "activeTool", this, "activeTool");
+   Browser .addRoute (tool, "isActive",   this, "active");
 
    tool .undo          = false;
    tool .tools         = new MFString ("TRANSLATE", "ROTATE");
