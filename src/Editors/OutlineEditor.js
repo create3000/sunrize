@@ -718,6 +718,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       await Editor .addComponent (executionContext, component);
 
+      // Create new parent node.
+
       const
          node  = executionContext .createNode (typeName) .getValue (),
          field = node .getField (fieldName);
