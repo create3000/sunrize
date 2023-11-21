@@ -10,7 +10,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Tue, 21 Nov 2023 15:55:29 GMT'/>
+    <meta name='modified' content='Tue, 21 Nov 2023 18:32:21 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -61,7 +61,23 @@
                     point='-0.5 0.5 0.5, -0.5 -0.5 0.5, 0.5 -0.5 0.5, 0.5 0.5 0.5, -0.5 0.5 -0.5, -0.5 -0.5 -0.5, 0.5 -0.5 -0.5, 0.5 0.5 -0.5'/>
               </IndexedLineSet>
             </Shape>
-            <Transform DEF='XHandle'
+            <Shape DEF='Axes'
+                castShadow='false'>
+              <Appearance>
+                <DepthMode DEF='_12'
+                    depthRange='0 0.1'/>
+              </Appearance>
+              <IndexedLineSet
+                  colorPerVertex='false'
+                  colorIndex='0, 1, 2'
+                  coordIndex='0, 1, -1, 2, 3, -1, 4, 5, -1'>
+                <Color
+                    color='1 0 0, 0 1 0, 0 0 1'/>
+                <Coordinate DEF='AxesCoord'
+                    point='-0.5 0 0, 0.5 0 0, 0 -0.5 0, 0 0.5 0, 0 0 -0.5, 0 0 0.5'/>
+              </IndexedLineSet>
+            </Shape>
+            <Transform DEF='XFrontHandle_1'
                 translation='0.5 0 0'>
               <ScreenGroup>
                 <Transform
@@ -69,39 +85,67 @@
                     rotation='0 0 -1 90'>
                   <Shape
                       castShadow='false'>
-                    <Appearance DEF='Red'>
+                    <Appearance DEF='Red_1'>
                       <Material
                           diffuseColor='1 0 0'/>
-                      <ProtoInstance name='ToolShader' DEF='_2' containerField='shaders'/>
-                      <DepthMode DEF='_4'
-                          depthRange='0 0.1'/>
+                      <ProtoInstance name='ToolShader' DEF='_11' containerField='shaders'/>
+                      <DepthMode USE='_12'/>
                     </Appearance>
-                    <Cone DEF='Arrow'
+                    <Cone DEF='Arrow_1'
                         height='12'
                         bottomRadius='4'/>
                   </Shape>
                 </Transform>
               </ScreenGroup>
             </Transform>
-            <Transform DEF='YHandle'
+            <Transform DEF='XBackHandle'
+                translation='-0.5 0 0'>
+              <ScreenGroup>
+                <Transform
+                    translation='-1.5 0 0'
+                    rotation='0 0 -1 90.0000000000002'>
+                  <Shape
+                      castShadow='false'>
+                    <Appearance USE='Red_1'/>
+                    <Cylinder DEF='_10'
+                        height='3'
+                        radius='4'/>
+                  </Shape>
+                </Transform>
+              </ScreenGroup>
+            </Transform>
+            <Transform DEF='YFrontHandle_1'
                 translation='0 0.5 0'>
               <ScreenGroup>
                 <Transform
                     translation='0 7 0'>
                   <Shape
                       castShadow='false'>
-                    <Appearance DEF='Green'>
+                    <Appearance DEF='Green_1'>
                       <Material
                           diffuseColor='0 1 0'/>
-                      <ProtoInstance name='ToolShader' USE='_2' containerField='shaders'/>
-                      <DepthMode USE='_4'/>
+                      <ProtoInstance name='ToolShader' USE='_11' containerField='shaders'/>
+                      <DepthMode USE='_12'/>
                     </Appearance>
-                    <Cone USE='Arrow'/>
+                    <Cone USE='Arrow_1'/>
                   </Shape>
                 </Transform>
               </ScreenGroup>
             </Transform>
-            <Transform DEF='ZHandle'
+            <Transform DEF='YBackHandle'
+                translation='0 -0.5 0'>
+              <ScreenGroup>
+                <Transform
+                    translation='0 -1.5 0'>
+                  <Shape
+                      castShadow='false'>
+                    <Appearance USE='Green_1'/>
+                    <Cylinder USE='_10'/>
+                  </Shape>
+                </Transform>
+              </ScreenGroup>
+            </Transform>
+            <Transform DEF='ZFrontHandle_1'
                 translation='0 0 0.5'>
               <ScreenGroup>
                 <Transform
@@ -109,32 +153,31 @@
                     rotation='1 0 0 90'>
                   <Shape
                       castShadow='false'>
-                    <Appearance DEF='Blue'>
+                    <Appearance DEF='Blue_1'>
                       <Material
                           diffuseColor='0 0 1'/>
-                      <ProtoInstance name='ToolShader' USE='_2' containerField='shaders'/>
-                      <DepthMode USE='_4'/>
+                      <ProtoInstance name='ToolShader' USE='_11' containerField='shaders'/>
+                      <DepthMode USE='_12'/>
                     </Appearance>
-                    <Cone USE='Arrow'/>
+                    <Cone USE='Arrow_1'/>
                   </Shape>
                 </Transform>
               </ScreenGroup>
             </Transform>
-            <Shape DEF='Axes'
-                castShadow='false'>
-              <Appearance>
-                <DepthMode USE='_4'/>
-              </Appearance>
-              <IndexedLineSet
-                  colorPerVertex='false'
-                  colorIndex='0, 1, 2'
-                  coordIndex='0, 1, -1, 0, 2, -1, 0, 3, -1'>
-                <Color
-                    color='1 0 0, 0 1 0, 0 0 1'/>
-                <Coordinate DEF='AxesCoord'
-                    point='0 0 0, 0.5 0 0, 0 0.5 0, 0 0 0.5'/>
-              </IndexedLineSet>
-            </Shape>
+            <Transform DEF='ZBackHandle'
+                translation='0 0 -0.5'>
+              <ScreenGroup>
+                <Transform
+                    translation='0 0 -1.5'
+                    rotation='1 0 0 90'>
+                  <Shape
+                      castShadow='false'>
+                    <Appearance USE='Blue_1'/>
+                    <Cylinder USE='_10'/>
+                  </Shape>
+                </Transform>
+              </ScreenGroup>
+            </Transform>
           </Transform>
           <Group DEF='Center'>
             <IS>
@@ -146,7 +189,7 @@
                 <LineProperties
                     linetype='3'
                     linewidthScaleFactor='2'/>
-                <DepthMode USE='_4'/>
+                <DepthMode USE='_12'/>
               </Appearance>
               <IndexedLineSet DEF='CenterIndexedLineSet'
                   coordIndex='0, 1, -1'>
@@ -166,8 +209,8 @@
                   <Appearance>
                     <Material
                         diffuseColor='1 1 0'/>
-                    <ProtoInstance name='ToolShader' USE='_2' containerField='shaders'/>
-                    <DepthMode USE='_4'/>
+                    <ProtoInstance name='ToolShader' USE='_11' containerField='shaders'/>
+                    <DepthMode USE='_12'/>
                   </Appearance>
                   <Sphere
                       radius='5'/>
@@ -192,8 +235,8 @@
                     linewidthScaleFactor='2'/>
                 <Material DEF='BBoxMaterial_1'
                     emissiveColor='0 1 0'/>
-                <ProtoInstance name='ToolShader' USE='_2' containerField='shaders'/>
-                <DepthMode USE='_4'/>
+                <ProtoInstance name='ToolShader' USE='_11' containerField='shaders'/>
+                <DepthMode USE='_12'/>
               </Appearance>
               <IndexedLineSet
                   coordIndex='0, 1, 2, 3, 0, -1'>
@@ -235,10 +278,12 @@ function eventsProcessed ()
 
    // Axes
 
-   axes .point = new MFVec3f (new SFVec3f (0, 0, 0),
-                              new SFVec3f (bboxSize1_2 .x, 0, 0),
-                              new SFVec3f (0, bboxSize1_2 .y, 0),
-                              new SFVec3f (0, 0, bboxSize1_2 .z));
+   axes .point = new MFVec3f (new SFVec3f (-bboxSize1_2 .x, 0, 0),
+                              new SFVec3f ( bboxSize1_2 .x, 0, 0),
+                              new SFVec3f (0, -bboxSize1_2 .y, 0),
+                              new SFVec3f (0,  bboxSize1_2 .y, 0),
+                              new SFVec3f (0, 0, -bboxSize1_2 .z),
+                              new SFVec3f (0, 0,  bboxSize1_2 .z));
 
 
    // BBox
@@ -266,17 +311,26 @@ function eventsProcessed ()
 }
 ]]>
         </Script>
-        <Script DEF='ArrowsScript'
+        <Script DEF='HandlesScript'
             directOutput='true'>
           <field accessType='inputOutput' type='SFVec3f' name='bboxSize'/>
-          <field accessType='initializeOnly' type='SFNode' name='x'>
-            <Transform USE='XHandle'/>
+          <field accessType='initializeOnly' type='SFNode' name='xFront'>
+            <Transform USE='XFrontHandle_1'/>
           </field>
-          <field accessType='initializeOnly' type='SFNode' name='y'>
-            <Transform USE='YHandle'/>
+          <field accessType='initializeOnly' type='SFNode' name='xBack'>
+            <Transform USE='XBackHandle'/>
           </field>
-          <field accessType='initializeOnly' type='SFNode' name='z'>
-            <Transform USE='ZHandle'/>
+          <field accessType='initializeOnly' type='SFNode' name='yFront'>
+            <Transform USE='YFrontHandle_1'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='yBack'>
+            <Transform USE='YBackHandle'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='zFront'>
+            <Transform USE='ZFrontHandle_1'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='zBack'>
+            <Transform USE='ZBackHandle'/>
           </field>
           <IS>
             <connect nodeField='bboxSize' protoField='bboxSize'/>
@@ -294,9 +348,12 @@ function eventsProcessed ()
 
    const bboxSize1_2 = bboxSize .divide (2);
 
-   x .translation = new SFVec3f (bboxSize1_2 .x, 0, 0);
-   y .translation = new SFVec3f (0, bboxSize1_2 .y, 0);
-   z .translation = new SFVec3f (0, 0, bboxSize1_2 .z);
+   xBack  .translation = new SFVec3f (-bboxSize1_2 .x, 0, 0);
+   xFront .translation = new SFVec3f ( bboxSize1_2 .x, 0, 0);
+   yBack  .translation = new SFVec3f (0, -bboxSize1_2 .y, 0);
+   yFront .translation = new SFVec3f (0,  bboxSize1_2 .y, 0);
+   zBack  .translation = new SFVec3f (0, 0, -bboxSize1_2 .z);
+   zFront .translation = new SFVec3f (0, 0,  bboxSize1_2 .z);
 }
 ]]>
         </Script>

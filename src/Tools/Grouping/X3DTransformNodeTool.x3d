@@ -12,7 +12,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Tue, 21 Nov 2023 16:32:57 GMT'/>
+    <meta name='modified' content='Tue, 21 Nov 2023 18:35:47 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -120,7 +120,7 @@
                       <Switch DEF='_27'
                           whichChoice='0'>
                         <Transform
-                            translation='10 0 0'
+                            translation='9 0 0'
                             rotation='0 0 -1 90'>
                           <Shape
                               castShadow='false'>
@@ -136,7 +136,7 @@
                           </Shape>
                         </Transform>
                         <Transform
-                            translation='7 0 0'>
+                            translation='6 0 0'>
                           <Shape
                               castShadow='false'>
                             <Appearance USE='Red_1'/>
@@ -145,7 +145,7 @@
                           </Shape>
                         </Transform>
                         <Transform
-                            translation='7 0 0'>
+                            translation='6 0 0'>
                           <Shape
                               castShadow='false'>
                             <Appearance USE='Red_1'/>
@@ -182,7 +182,7 @@
                       <Switch DEF='_26'
                           whichChoice='0'>
                         <Transform DEF='_8'
-                            translation='-2.5 0 0'
+                            translation='-1.5 0 0'
                             rotation='0 0 -1 90'>
                           <Shape
                               castShadow='false'>
@@ -194,7 +194,7 @@
                         </Transform>
                         <Transform USE='_8'/>
                         <Transform
-                            translation='-2.5 0 0'
+                            translation='-1.5 0 0'
                             rotation='0 1 0 90'>
                           <Shape
                               castShadow='false'>
@@ -244,7 +244,7 @@
                       <Switch DEF='_25'
                           whichChoice='0'>
                         <Transform
-                            translation='0 10 0'>
+                            translation='0 9 0'>
                           <Shape
                               castShadow='false'>
                             <Appearance DEF='Green_1'>
@@ -257,7 +257,7 @@
                           </Shape>
                         </Transform>
                         <Transform
-                            translation='0 7 0'>
+                            translation='0 6 0'>
                           <Shape
                               castShadow='false'>
                             <Appearance USE='Green_1'/>
@@ -265,7 +265,7 @@
                           </Shape>
                         </Transform>
                         <Transform
-                            translation='0 7 0'>
+                            translation='0 6 0'>
                           <Shape
                               castShadow='false'>
                             <Appearance USE='Green_1'/>
@@ -301,7 +301,7 @@
                       <Switch DEF='_24'
                           whichChoice='0'>
                         <Transform DEF='_13'
-                            translation='0 -2.5 0'
+                            translation='0 -1.5 0'
                             rotation='0 0 -1 1.5707963267949'>
                           <Shape
                               castShadow='false'>
@@ -311,7 +311,7 @@
                         </Transform>
                         <Transform USE='_13'/>
                         <Transform
-                            translation='0 -2.5 0'
+                            translation='0 -1.5 0'
                             rotation='1 0 0 90'>
                           <Shape
                               castShadow='false'>
@@ -356,7 +356,7 @@
                       <Switch DEF='_23'
                           whichChoice='0'>
                         <Transform
-                            translation='0 0 10'
+                            translation='0 0 9'
                             rotation='1 0 0 90'>
                           <Shape
                               castShadow='false'>
@@ -370,7 +370,7 @@
                           </Shape>
                         </Transform>
                         <Transform
-                            translation='0 0 7'>
+                            translation='0 0 6'>
                           <Shape
                               castShadow='false'>
                             <Appearance USE='Blue'/>
@@ -378,7 +378,7 @@
                           </Shape>
                         </Transform>
                         <Transform
-                            translation='0 0 7'>
+                            translation='0 0 6'>
                           <Shape
                               castShadow='false'>
                             <Appearance USE='Blue'/>
@@ -416,7 +416,7 @@
                       <Switch DEF='_22'
                           whichChoice='0'>
                         <Transform DEF='_19'
-                            translation='0 0 -2.5'
+                            translation='0 0 -1.5'
                             rotation='1 0 0 90'>
                           <Shape
                               castShadow='false'>
@@ -426,7 +426,7 @@
                         </Transform>
                         <Transform USE='_19'/>
                         <Transform
-                            translation='0 0 -2.5'>
+                            translation='0 0 -1.5'>
                           <Shape
                               castShadow='false'>
                             <Appearance USE='Blue'/>
