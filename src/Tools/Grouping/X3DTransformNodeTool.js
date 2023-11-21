@@ -73,7 +73,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
          this .initialScaleOrientation = this ._scaleOrientation .copy ();
          this .initialCenter           = this ._center           .copy ();
 
-         this .specialTool = this .tool .isCenterActive ? 3 : undefined;
+         this .specialTool = this .tool .isCenterActive ? 3 : undefined; // CENTER
       }
       else
       {
