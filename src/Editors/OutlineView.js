@@ -715,7 +715,7 @@ module .exports = class OutlineView extends Interface
          .on ("select_node.jstree", this .selectField .bind (this))
          .appendTo (parent)
          .hide ();
-;
+
       child
          .removeAttr ("tabindex")
          .find (".jstree-anchor")
@@ -2840,43 +2840,36 @@ module .exports = class OutlineView extends Interface
    selectPrimaryElement (element)
    {
       if (!this .isEditable (element))
-         return
+         return;
 
-      this .sceneGraph .find (".primary") .removeClass ("primary")
+      this .sceneGraph .find (".primary") .removeClass ("primary");
 
-      element .addClass ("primary")
+      element .addClass ("primary");
    }
 
    selectField (event, selected)
    {
       // Click on field.
 
-      selected .instance .deselect_node (selected .node)
+      selected .instance .deselect_node (selected .node);
 
-      this .clearConnectors ()
+      this .clearConnectors ();
 
       // Make primary selection from user defined field.
 
-      const element = $(`#${selected .node .id}`)
+      const element = $(`#${selected .node .id}`);
 
       if (!element .hasClass ("field"))
-         return
+         return;
 
-      const
-         node  = this .getNode (element),
-         field = this .getField (element)
-
-      if (node .canUserDefinedFields () && node .getUserDefinedFields () .has (field .getName ()) && this .isEditable (element .parent ()))
-      {
-         this .selectPrimaryElement (element)
-      }
+      this .selectPrimaryElement (element);
    }
 
    selectExpander ()
    {
       // Click on expander.
 
-      this .treeView .trigger ("focus")
+      this .treeView .trigger ("focus");
    }
 
    clearConnectors ()
@@ -2888,71 +2881,71 @@ module .exports = class OutlineView extends Interface
    {
       // Double click on expander.
 
-      event .preventDefault ()
-      event .stopImmediatePropagation ()
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
    }
 
    activateNode (event)
    {
       // Double click on externproto, proto, node.
 
-      event .preventDefault ()
-      event .stopImmediatePropagation ()
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
    }
 
    activateField (event)
    {
       // Double click on field.
 
-      event .preventDefault ()
-      event .stopImmediatePropagation ()
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
    }
 
    updateFieldAccessType (node, field)
    {
-      const element = this .sceneGraph .find (`.field[field-id=${field .getId ()}]`)
+      const element = this .sceneGraph .find (`.field[field-id=${field .getId ()}]`);
 
       // Update access type image.
 
       element
          .find ("> .item .access-type img.image")
-         .attr ("src", this .getAccessTypeImage (field))
+         .attr ("src", this .getAccessTypeImage (field));
 
       // Update route selectors.
 
       if (field .getAccessType () == X3D .X3DConstants .inputOutput)
       {
-         const area = element .find ("area.output-routes-selector")
+         const area = element .find ("area.output-routes-selector");
 
          if (field .getInputRoutes () .size)
-            area .attr ("coords", "48,5,56,12")
+            area .attr ("coords", "48,5,56,12");
          else
-            area .attr ("coords", "34,5,42,12")
+            area .attr ("coords", "34,5,42,12");
       }
 
       if (field .getInputRoutes () .size)
       {
-         const area = element .find ("area.input-routes-selector")
+         const area = element .find ("area.input-routes-selector");
 
          if (field .getInputRoutes () .size)
-            area .attr ("href", "#")
+            area .attr ("href", "#");
          else
-            area .removeAttr ("href")
+            area .removeAttr ("href");
       }
 
       if (field .getOutputRoutes () .size)
       {
-         const area = element .find ("area.output-routes-selector")
+         const area = element .find ("area.output-routes-selector");
 
          if (field .getOutputRoutes () .size)
-            area .attr ("href", "#")
+            area .attr ("href", "#");
          else
-            area .removeAttr ("href")
+            area .removeAttr ("href");
       }
 
       // Update route graph.
 
-      this .updateRouteGraph ()
+      this .updateRouteGraph ();
    }
 
    isEditable (parent)
