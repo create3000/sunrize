@@ -6,12 +6,13 @@
     <component name='Layout' level='2'/>
     <component name='PointingDeviceSensor' level='1'/>
     <component name='Scripting' level='1'/>
+    <component name='X_ITE' level='1'/>
     <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Tue, 21 Nov 2023 01:20:06 GMT'/>
+    <meta name='modified' content='Tue, 21 Nov 2023 16:32:57 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -100,6 +101,8 @@
                     <Appearance DEF='AxisStyle'>
                       <LineProperties
                           linewidthScaleFactor='2'/>
+                      <DepthMode DEF='_4'
+                          depthRange='0 0.1'/>
                     </Appearance>
                     <IndexedLineSet
                         colorPerVertex='false'
@@ -125,6 +128,7 @@
                               <Material
                                   diffuseColor='1 0 0'/>
                               <ProtoInstance name='ToolShader' DEF='_3' containerField='shaders'/>
+                              <DepthMode USE='_4'/>
                             </Appearance>
                             <Cone DEF='Arrow_1'
                                 height='18'
@@ -247,6 +251,7 @@
                               <Material
                                   diffuseColor='0 1 0'/>
                               <ProtoInstance name='ToolShader' USE='_3' containerField='shaders'/>
+                              <DepthMode USE='_4'/>
                             </Appearance>
                             <Cone USE='Arrow_1'/>
                           </Shape>
@@ -359,6 +364,7 @@
                               <Material
                                   diffuseColor='0 0 1'/>
                               <ProtoInstance name='ToolShader' USE='_3' containerField='shaders'/>
+                              <DepthMode USE='_4'/>
                             </Appearance>
                             <Cone USE='Arrow_1'/>
                           </Shape>
@@ -465,6 +471,7 @@
                           <Material DEF='White'
                               diffuseColor='1 1 1'/>
                           <ProtoInstance name='ToolShader' USE='_3' containerField='shaders'/>
+                          <DepthMode USE='_4'/>
                         </Appearance>
                         <Box USE='Box_2'/>
                       </Shape>
@@ -553,23 +560,24 @@
                           <Material
                               diffuseColor='1 1 0'/>
                           <ProtoInstance name='ToolShader' USE='_3' containerField='shaders'/>
+                          <DepthMode USE='_4'/>
                         </Appearance>
                         <Sphere USE='Sphere'/>
                       </Shape>
-                      <Shape DEF='RedPoint_1'
+                      <Shape DEF='BluePoint'
                           castShadow='false'>
                         <Appearance DEF='SkyBlue_2'>
                           <Material
                               diffuseColor='0 0.5 1'/>
                           <ProtoInstance name='ToolShader' USE='_3' containerField='shaders'/>
+                          <DepthMode USE='_4'/>
                         </Appearance>
                         <Sphere USE='Sphere'/>
                       </Shape>
                     </fieldValue>
                   </ProtoInstance>
-                  <ProtoInstance name='BooleanSwitch' USE='_1'/>
                 </Transform>
-                <TouchSensor DEF='_4'
+                <TouchSensor DEF='_14'
                     description='BBox Center'/>
               </ScreenGroup>
             </Transform>
@@ -577,14 +585,15 @@
               <IS>
                 <connect nodeField='visible' protoField='centerDisplay'/>
               </IS>
-              <ProtoInstance name='BooleanSwitch' DEF='_15'>
+              <ProtoInstance name='BooleanSwitch' DEF='CenterLine'>
                 <fieldValue name='children'>
-                  <Shape DEF='CenterLine'
+                  <Shape DEF='_16'
                       castShadow='false'>
                     <Appearance DEF='CenterLineStyle'>
                       <LineProperties
                           linetype='3'
                           linewidthScaleFactor='2'/>
+                      <DepthMode USE='_4'/>
                     </Appearance>
                     <IndexedLineSet DEF='CenterIndexedLineSet_1'
                         coordIndex='0, 1, -1'>
@@ -620,15 +629,17 @@
                   </IS>
                 </TouchSensor>
               </Transform>
-              <Transform DEF='CenterTool'>
-                <IS>
-                  <connect nodeField='translation' protoField='center'/>
-                  <connect nodeField='visible' protoField='centerTool'/>
-                </IS>
-                <ScreenGroup>
-                  <Group
-                      bboxSize='40 40 40'/>
-                </ScreenGroup>
+              <Transform DEF='_30'>
+                <Transform DEF='CenterTool'>
+                  <IS>
+                    <connect nodeField='translation' protoField='center'/>
+                    <connect nodeField='visible' protoField='centerTool'/>
+                  </IS>
+                  <ScreenGroup>
+                    <Group
+                        bboxSize='40 40 40'/>
+                  </ScreenGroup>
+                </Transform>
               </Transform>
             </Group>
             <Switch DEF='RotationHandles'>
@@ -657,6 +668,7 @@
                               linewidthScaleFactor='3'/>
                           <UnlitMaterial
                               emissiveColor='1 0 0'/>
+                          <DepthMode USE='_4'/>
                         </Appearance>
                         <Circle2D/>
                       </Shape>
@@ -679,6 +691,7 @@
                           <LineProperties USE='_29'/>
                           <UnlitMaterial
                               emissiveColor='0 1 0'/>
+                          <DepthMode USE='_4'/>
                         </Appearance>
                         <Circle2D/>
                       </Shape>
@@ -701,6 +714,7 @@
                           <LineProperties USE='_29'/>
                           <UnlitMaterial
                               emissiveColor='0 0 1'/>
+                          <DepthMode USE='_4'/>
                         </Appearance>
                         <Circle2D/>
                       </Shape>
@@ -1549,21 +1563,20 @@ async function set_time ()
 {
    keepCenter = !keepCenter;
 
-   if (keepCenter)
-   {
-      const tool = await centerTool .getValue () .addTool () .getToolInstance ();
+   if (!keepCenter)
+      return;
 
-      Browser .addRoute (tool, "isActive", this, "active");
+   if (centerTool .getValue () .getTool ())
+      return;
 
-      tool .undo          = false;
-      tool .tools         = new MFString ("TRANSLATE");
-      tool .centerDisplay = false;
-      tool .bboxDisplay   = false;
-   }
-   else
-   {
-      centerTool .getValue () .removeTool ();
-   }
+   const tool = await centerTool .getValue () .addTool () .getToolInstance ();
+
+   Browser .addRoute (tool, "isActive", this, "active");
+
+   tool .undo          = false;
+   tool .tools         = new MFString ("TRANSLATE");
+   tool .centerDisplay = false;
+   tool .bboxDisplay   = false;
 }
 
 function set_active (value)
@@ -1638,7 +1651,7 @@ function set_bboxCenter ()
         <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='TranslateScript' toField='set_keepCenter'/>
         <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='_1' toField='set_whichChoice'/>
         <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='ScaleScript' toField='set_keepCenter'/>
-        <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='_15' toField='set_whichChoice'/>
+        <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='CenterLine' toField='set_whichChoice'/>
         <ROUTE fromNode='ModeScript' fromField='scale' toNode='ScaleSensor1_1' toField='set_enabled'/>
         <ROUTE fromNode='ModeScript' fromField='scale' toNode='ScaleSensor2' toField='set_enabled'/>
         <ROUTE fromNode='ModeScript' fromField='scale' toNode='ScaleSensor3' toField='set_enabled'/>
@@ -1660,7 +1673,8 @@ function set_bboxCenter ()
         <ROUTE fromNode='XRotationSensor_1' fromField='rotation_changed' toNode='RotateScript' toField='set_xRotation'/>
         <ROUTE fromNode='YRotationSensor_1' fromField='rotation_changed' toNode='RotateScript' toField='set_yRotation'/>
         <ROUTE fromNode='ZRotationSensor' fromField='rotation_changed' toNode='RotateScript' toField='set_zRotation'/>
-        <ROUTE fromNode='_4' fromField='isActive' toNode='CenterScript' toField='set_moveCenterToBBoxCenter'/>
+        <ROUTE fromNode='_14' fromField='isActive' toNode='CenterScript' toField='set_moveCenterToBBoxCenter'/>
+        <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='_30' toField='set_visible'/>
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>

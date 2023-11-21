@@ -4,12 +4,13 @@
   <head>
     <component name='Geometry2D' level='2'/>
     <component name='Layout' level='2'/>
+    <component name='X_ITE' level='1'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Sun, 03 Aug 2014 14:43:17 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.0.36, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Grouping/Vector.x3d'/>
-    <meta name='modified' content='Mon, 29 May 2023 16:22:15 GMT'/>
+    <meta name='modified' content='Tue, 21 Nov 2023 15:58:46 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -26,6 +27,8 @@
               <Material
                   diffuseColor='0.8 0.8 0.16'/>
               <ProtoInstance name='ToolShader' DEF='_2' containerField='shaders'/>
+              <DepthMode DEF='_4'
+                  depthRange='0 0.1'/>
             </Appearance>
             <Cone/>
           </Shape>
@@ -53,8 +56,8 @@
               scale='15 1 15'>
             <Shape
                 castShadow='false'>
-              <Appearance>
-                <ProtoInstance name='ToolShader' containerField='shaders'/>
+              <Appearance DEF='_5'>
+                <DepthMode USE='_4'/>
               </Appearance>
               <IndexedLineSet
                   colorPerVertex='false'
@@ -75,6 +78,7 @@
                 <Material
                     emissiveColor='1 0.2 0.2'/>
                 <ProtoInstance name='ToolShader' USE='_2' containerField='shaders'/>
+                <DepthMode USE='_4'/>
               </Appearance>
               <Circle2D
                   radius='18'/>
@@ -87,6 +91,7 @@
             </Shape>
             <Shape
                 castShadow='false'>
+              <Appearance USE='_5'/>
               <IndexedLineSet
                   colorPerVertex='false'
                   colorIndex='0, 1, 2'

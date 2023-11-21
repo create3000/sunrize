@@ -139,6 +139,9 @@ module .exports = class Dashboard extends Interface
             { }
          }
 
+         if (!bbox .size .magnitude ())
+            return;
+
          viewpointNode .lookAtBBox (layerNode, bbox, 1, straighten)
       }
       else

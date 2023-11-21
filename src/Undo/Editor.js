@@ -145,13 +145,15 @@ module .exports = class Editor
       const
          browser      = executionContext .getBrowser (),
          scene        = this .getScene (executionContext),
-         profile      = executionContext .getScene () .getProfile (),
+         profile      = scene .getProfile (),
+         x_ite        = scene .hasComponent ("X_ITE"),
          externprotos = new Map (Array .from (executionContext .externprotos, p => [p .getName (), p])),
          protos       = new Map (Array .from (executionContext .protos,       p => [p .getName (), p])),
          rootNodes    = executionContext .rootNodes .copy (),
          tempScene    = browser .createScene (browser .getProfile ("Core"));
 
       scene .setProfile (browser .getProfile ("Full"));
+      scene .updateComponent (browser .getComponent ("X_ITE"));
 
       try
       {
@@ -167,8 +169,12 @@ module .exports = class Editor
       }
       finally
       {
-         // Restore profile.
+         // Restore profile and components.
+
          scene .setProfile (profile);
+
+         if (!x_ite)
+            scene .removeComponent ("X_ITE");
       }
 
       // Undo.

@@ -4,12 +4,13 @@
   <head>
     <component name='Layout' level='2'/>
     <component name='Scripting' level='1'/>
+    <component name='X_ITE' level='1'/>
     <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sat, 18 Nov 2023 11:08:02 GMT'/>
+    <meta name='modified' content='Tue, 21 Nov 2023 15:55:29 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -72,6 +73,8 @@
                       <Material
                           diffuseColor='1 0 0'/>
                       <ProtoInstance name='ToolShader' DEF='_2' containerField='shaders'/>
+                      <DepthMode DEF='_4'
+                          depthRange='0 0.1'/>
                     </Appearance>
                     <Cone DEF='Arrow'
                         height='12'
@@ -91,6 +94,7 @@
                       <Material
                           diffuseColor='0 1 0'/>
                       <ProtoInstance name='ToolShader' USE='_2' containerField='shaders'/>
+                      <DepthMode USE='_4'/>
                     </Appearance>
                     <Cone USE='Arrow'/>
                   </Shape>
@@ -109,6 +113,7 @@
                       <Material
                           diffuseColor='0 0 1'/>
                       <ProtoInstance name='ToolShader' USE='_2' containerField='shaders'/>
+                      <DepthMode USE='_4'/>
                     </Appearance>
                     <Cone USE='Arrow'/>
                   </Shape>
@@ -117,6 +122,9 @@
             </Transform>
             <Shape DEF='Axes'
                 castShadow='false'>
+              <Appearance>
+                <DepthMode USE='_4'/>
+              </Appearance>
               <IndexedLineSet
                   colorPerVertex='false'
                   colorIndex='0, 1, 2'
@@ -138,6 +146,7 @@
                 <LineProperties
                     linetype='3'
                     linewidthScaleFactor='2'/>
+                <DepthMode USE='_4'/>
               </Appearance>
               <IndexedLineSet DEF='CenterIndexedLineSet'
                   coordIndex='0, 1, -1'>
@@ -158,6 +167,7 @@
                     <Material
                         diffuseColor='1 1 0'/>
                     <ProtoInstance name='ToolShader' USE='_2' containerField='shaders'/>
+                    <DepthMode USE='_4'/>
                   </Appearance>
                   <Sphere
                       radius='5'/>
@@ -183,6 +193,7 @@
                 <Material DEF='BBoxMaterial_1'
                     emissiveColor='0 1 0'/>
                 <ProtoInstance name='ToolShader' USE='_2' containerField='shaders'/>
+                <DepthMode USE='_4'/>
               </Appearance>
               <IndexedLineSet
                   coordIndex='0, 1, 2, 3, 0, -1'>
