@@ -56,12 +56,12 @@
     }
   ],
   "devDependencies": {
-    "@electron-forge/cli": "^6.4.2",
-    "@electron-forge/maker-deb": "^6.4.2",
-    "@electron-forge/maker-rpm": "^6.4.2",
-    "@electron-forge/maker-squirrel": "^6.4.2",
-    "@electron-forge/maker-zip": "^6.4.2",
-    "electron": "^27.0.4"
+    "@electron-forge/cli": "^7.1.0",
+    "@electron-forge/maker-deb": "^7.1.0",
+    "@electron-forge/maker-rpm": "^7.1.0",
+    "@electron-forge/maker-squirrel": "^7.1.0",
+    "@electron-forge/maker-zip": "^7.1.0",
+    "electron": "^27.1.0"
   },
   "dependencies": {
     "capitalize": "^2.0.4",
@@ -74,7 +74,7 @@
     "jquery-ui-dist": "^1.13.2",
     "jstree": "^3.3.16",
     "material-icons": "^1.13.12",
-    "material-symbols": "^0.14.0",
+    "material-symbols": "^0.14.1",
     "md5": "^2.3.0",
     "monaco-editor": "^0.44.0",
     "node-clipboardy": "^1.0.3",
