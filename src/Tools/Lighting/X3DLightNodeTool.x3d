@@ -9,7 +9,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Lighting/X3DLightNodeTool.x3d'/>
-    <meta name='modified' content='Mon, 20 Nov 2023 22:32:35 GMT'/>
+    <meta name='modified' content='Tue, 21 Nov 2023 20:21:49 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -25,6 +25,8 @@
         <field accessType='inputOutput' type='SFVec3f' name='direction' value='0 0 -1'/>
         <field accessType='inputOutput' type='SFFloat' name='beamWidth'/>
         <field accessType='inputOutput' type='SFFloat' name='cutOffAngle'/>
+        <field accessType='outputOnly' type='SFInt32' name='activeTool'/>
+        <field accessType='outputOnly' type='SFBool' name='isActive'/>
       </ProtoInterface>
       <ProtoBody>
         <Collision
@@ -271,8 +273,8 @@
           <field accessType='inputOutput' type='SFFloat' name='beamWidth'/>
           <field accessType='inputOutput' type='SFFloat' name='cutOffAngle'/>
           <field accessType='inputOnly' type='SFRotation' name='set_rotation'/>
-          <field accessType='inputOnly' type='SFVec3f' name='set_connectDirection'/>
-          <field accessType='inputOnly' type='SFRotation' name='set_connectRotation'/>
+          <field accessType='inputOutput' type='SFInt32' name='activeTool'/>
+          <field accessType='inputOutput' type='SFBool' name='active'/>
           <field accessType='initializeOnly' type='SFNode' name='transform'>
             <Transform USE='TransformTool'/>
           </field>
@@ -291,12 +293,17 @@
             <connect nodeField='direction' protoField='direction'/>
             <connect nodeField='beamWidth' protoField='beamWidth'/>
             <connect nodeField='cutOffAngle' protoField='cutOffAngle'/>
+            <connect nodeField='activeTool' protoField='activeTool'/>
+            <connect nodeField='active' protoField='isActive'/>
           </IS>
 <![CDATA[ecmascript:
 
 async function initialize ()
 {
    const tool = await transform .getValue () .addTool () .getToolInstance ();
+
+   Browser .addRoute (tool, "activeTool", this, "activeTool");
+   Browser .addRoute (tool, "isActive",   this, "active");
 
    tool .undo          = false;
    tool .tools         = new MFString ("TRANSLATE");
@@ -354,32 +361,52 @@ function set_material ()
    }
 }
 
+let changing = false;
+
 function set_direction (value)
 {
-   transform .rotation = new SFRotation (new SFVec3f (0, 0, 1), value);
+   if (changing)
+   {
+      changing = false;
+      return;
+   }
 
-   Browser .deleteRoute (transform, 'rotation', this, 'set_rotation');
-   Browser .addRoute (transform, 'rotation', this, 'set_connectRotation');
+   changing = true;
+
+   transform .rotation = straightenHorizon (new SFRotation (new SFVec3f (0, 0, 1), value), 
+                                            new SFVec3f (0, 1, 0));
+}
+
+function straightenHorizon (orientation, upVector)
+{
+   const
+      localXAxis = orientation .multVec (new SFVec3f (-1, 0, 0)),
+      localZAxis = orientation .multVec (new SFVec3f (0, 0, 1)),
+      vector     = localZAxis .cross (upVector);
+
+   // If viewer looks along the up vector.
+   if (Math .abs (localZAxis .dot (upVector)) >= 1)
+      return orientation;
+
+   if (Math .abs (vector .dot (localXAxis)) >= 1)
+      return orientation;
+
+   const rotation = new SFRotation (localXAxis, vector);
+
+   return orientation .multiply (rotation);
 }
 
 function set_rotation (value)
 {
-   // light .direction = transform .rotation .multVec (new SFVec3f (0, 0, 1));
+   if (changing)
+   {
+      changing = false;
+      return;
+   }
 
-   // Browser .deleteRoute (light, 'direction', this, 'set_lightDirection');
-   // Browser .addRoute (light, 'direction', this, 'set_connectLightDirection');
-}
+   changing = true;
 
-function set_connectDirection (value)
-{
-   // Browser .deleteRoute (light, 'direction', this, 'set_connectLightDirection');
-   // Browser .addRoute (light, 'direction', this, 'set_lightDirection');
-}
-
-function set_connectRotation (value)
-{
-   Browser .deleteRoute (transform, 'rotation', this, 'set_connectRotation');
-   Browser .addRoute (transform, 'rotation', this, 'set_rotation');
+   direction = transform .rotation .multVec (new SFVec3f (0, 0, 1));
 }
 
 function set_beamWidth ()
