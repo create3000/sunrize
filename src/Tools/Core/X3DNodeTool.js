@@ -5,7 +5,7 @@ const
    url      = require ("url"),
    X3D      = require ("../../X3D"),
    Traverse = require("../../Application/Traverse"),
-   DEBUG    = process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT";
+   DEBUG    = false && process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT";
 
 const
    _tool     = Symbol .for ("Sunrize.tool"),

@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/TextureProjector/X3DTextureProjectorNodeTool.x3d'/>
-    <meta name='modified' content='Tue, 21 Nov 2023 20:40:45 GMT'/>
+    <meta name='modified' content='Tue, 21 Nov 2023 21:18:50 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -260,11 +260,11 @@ function set_rotation ()
 {
    if (changing .includes (true))
    {
-      changing = [false, false];
+      changing .fill (false);
       return;
    }
 
-   changing = [true, true];
+   changing .fill (true);
 
    direction = transform .rotation .multVec (new SFVec3f (0, 0, 1));
    upVector  = transform .rotation .multVec (new SFVec3f (0, 1, 0));
