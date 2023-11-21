@@ -50,6 +50,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       if (!this .isEditable (element))
          return;
 
+      if (!element .is (".manual.selected"))
+         this .sceneGraph .find (".manual.selected") .removeClass ("manual");
+
       if (element .is (".externproto, .proto, .proto-scene, .node, .field"))
          this .selectPrimaryElement (element);
 
@@ -744,8 +747,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       if (field .getType () === X3D .X3DConstants .MFNode)
       {
          const
-            selectedNodes          = Array .from (this .sceneGraph .find (".node.selected,.node.primary"), e => this .getNode ($(e))),
-            selectedElements       = Array .from (this .sceneGraph .find (".node.selected:not(.primary)"), e => $(e)),
+            selectedNodes          = Array .from (this .sceneGraph .find (".node.manual.selected,.node.primary"), e => this .getNode ($(e))),
+            selectedElements       = Array .from (this .sceneGraph .find (".node.manual.selected:not(.primary)"), e => $(e)),
             destinationModelMatrix = this .getModelMatrix (parentNodeElement);
 
          // Add other selected nodes.
