@@ -58,7 +58,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       const
          executionContextElement = element .closest (".scene"),
-         executionContext        = this .getNode (executionContextElement) || this .executionContext,
+         executionContext        = this .getNode (executionContextElement) ?? this .executionContext,
          node                    = this .getNode (element);
 
       if (element .is (".field"))
