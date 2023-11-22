@@ -22,12 +22,15 @@ class X3DEnvironmentalSensorNodeTool extends X3DChildNodeTool
       this .tool .boxColor = this .toolBoxColor;
    }
 
+   #initialSize;
+   #initialCenter;
+
    set_active__ (active)
    {
       if (active .getValue ())
       {
-         this .initialSize   = this ._size   .copy ();
-         this .initialCenter = this ._center .copy ();
+         this .#initialSize   = this ._size   .copy ();
+         this .#initialCenter = this ._center .copy ();
       }
       else
       {
@@ -37,8 +40,8 @@ class X3DEnvironmentalSensorNodeTool extends X3DChildNodeTool
             size   = this ._size   .copy (),
             center = this ._center .copy ();
 
-         this ._size   = this .initialSize;
-         this ._center = this .initialCenter;
+         this ._size   = this .#initialSize;
+         this ._center = this .#initialCenter;
 
          Editor .setFieldValue (this .getExecutionContext (), this .node, this ._size,   size);
          Editor .setFieldValue (this .getExecutionContext (), this .node, this ._center, center);

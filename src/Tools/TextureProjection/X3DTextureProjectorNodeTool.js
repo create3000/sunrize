@@ -25,13 +25,17 @@ class X3DTextureProjectorNodeTool extends X3DChildNodeTool
       this .addExternalNode (this .node ._texture);
    }
 
+   #initialLocation;
+   #initialDirection;
+   #initialUpVector;
+
    set_active__ (active)
    {
       if (active .getValue ())
       {
-         this .initialLocation  = this ._location  .copy ();
-         this .initialDirection = this ._direction .copy ();
-         this .initialUpVector  = this ._upVector  .copy ();
+         this .#initialLocation  = this ._location  .copy ();
+         this .#initialDirection = this ._direction .copy ();
+         this .#initialUpVector  = this ._upVector  .copy ();
       }
       else
       {
@@ -42,9 +46,9 @@ class X3DTextureProjectorNodeTool extends X3DChildNodeTool
             direction = this ._direction .copy (),
             upVector  = this ._upVector  .copy ();
 
-         this ._location  = this .initialLocation;
-         this ._direction = this .initialDirection;
-         this ._upVector  = this .initialUpVector;
+         this ._location  = this .#initialLocation;
+         this ._direction = this .#initialDirection;
+         this ._upVector  = this .#initialUpVector;
 
          Editor .setFieldValue (this .getExecutionContext (), this .node, this ._location,  location);
          Editor .setFieldValue (this .getExecutionContext (), this .node, this ._direction, direction);

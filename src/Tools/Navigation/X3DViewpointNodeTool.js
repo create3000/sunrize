@@ -33,12 +33,15 @@ class X3DViewpointNodeTool extends X3DChildNodeTool
       super .disposeTool ();
    }
 
+   #initialPosition;
+   #initialOrientation;
+
    set_active__ (active)
    {
       if (active .getValue ())
       {
-         this .initialPosition    = this ._position    .copy ();
-         this .initialOrientation = this ._orientation .copy ();
+         this .#initialPosition    = this ._position    .copy ();
+         this .#initialOrientation = this ._orientation .copy ();
       }
       else
       {
@@ -48,8 +51,8 @@ class X3DViewpointNodeTool extends X3DChildNodeTool
             position    = this ._position    .copy (),
             orientation = this ._orientation .copy ();
 
-         this ._position    = this .initialPosition;
-         this ._orientation = this .initialOrientation;
+         this ._position    = this .#initialPosition;
+         this ._orientation = this .#initialOrientation;
 
          Editor .setFieldValue (this .getExecutionContext (), this .node, this ._position,    position);
          Editor .setFieldValue (this .getExecutionContext (), this .node, this ._orientation, orientation);

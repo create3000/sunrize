@@ -21,12 +21,15 @@ class X3DLightNodeTool extends X3DChildNodeTool
       this .tool .getField ("isActive") .addInterest ("set_active__", this);
    }
 
+   #initialLocation;
+   #initialDirection;
+
    set_active__ (active)
    {
       if (active .getValue ())
       {
-         this .initialLocation  = this ._location  ?.copy ();
-         this .initialDirection = this ._direction ?.copy ();
+         this .#initialLocation  = this ._location  ?.copy ();
+         this .#initialDirection = this ._direction ?.copy ();
       }
       else
       {
@@ -37,10 +40,10 @@ class X3DLightNodeTool extends X3DChildNodeTool
             direction = this ._direction ?.copy ();
 
          if (location)
-            this ._location = this .initialLocation;
+            this ._location = this .#initialLocation;
 
          if (direction)
-            this ._direction = this .initialDirection;
+            this ._direction = this .#initialDirection;
 
          if (location)
             Editor .setFieldValue (this .getExecutionContext (), this .node, this ._location, location);

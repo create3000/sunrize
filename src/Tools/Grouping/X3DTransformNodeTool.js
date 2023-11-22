@@ -71,6 +71,12 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       this .tool .scaleUniform  = keys === ActionKeys .Shift || keys === (ActionKeys .Shift | ActionKeys .Option);
    }
 
+   #initialTranslation;
+   #initialRotation;
+   #initialScale;
+   #initialScaleOrientation;
+   #initialCenter;
+
    set_active__ (active)
    {
       if (!this .tool .undo)
@@ -107,11 +113,11 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
          for (const other of X3DTransformNodeTool .#transformTools)
          {
-            other .initialTranslation      = other ._translation      .copy ();
-            other .initialRotation         = other ._rotation         .copy ();
-            other .initialScale            = other ._scale            .copy ();
-            other .initialScaleOrientation = other ._scaleOrientation .copy ();
-            other .initialCenter           = other ._center           .copy ();
+            other .#initialTranslation      = other ._translation      .copy ();
+            other .#initialRotation         = other ._rotation         .copy ();
+            other .#initialScale            = other ._scale            .copy ();
+            other .#initialScaleOrientation = other ._scaleOrientation .copy ();
+            other .#initialCenter           = other ._center           .copy ();
          }
       }
       else
@@ -132,11 +138,11 @@ class X3DTransformNodeTool extends X3DChildNodeTool
                scaleOrientation = other ._scaleOrientation .copy (),
                center           = other ._center           .copy ();
 
-            other ._translation      = other .initialTranslation;
-            other ._rotation         = other .initialRotation;
-            other ._scale            = other .initialScale;
-            other ._scaleOrientation = other .initialScaleOrientation;
-            other ._center           = other .initialCenter;
+            other ._translation      = other .#initialTranslation;
+            other ._rotation         = other .#initialRotation;
+            other ._scale            = other .#initialScale;
+            other ._scaleOrientation = other .#initialScaleOrientation;
+            other ._center           = other .#initialCenter;
 
             Editor .setFieldValue (other .getExecutionContext (), other .node, other ._translation,      translation);
             Editor .setFieldValue (other .getExecutionContext (), other .node, other ._rotation,         rotation);

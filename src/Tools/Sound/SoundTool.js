@@ -24,12 +24,15 @@ class SoundTool extends X3DChildNodeTool
       this .tool .getField ("isActive") .addInterest ("set_active__", this);
    }
 
+   #initialLocation;
+   #initialDirection;
+
    set_active__ (active)
    {
       if (active .getValue ())
       {
-         this .initialLocation  = this ._location  .copy ();
-         this .initialDirection = this ._direction .copy ();
+         this .#initialLocation  = this ._location  .copy ();
+         this .#initialDirection = this ._direction .copy ();
       }
       else
       {
@@ -39,8 +42,8 @@ class SoundTool extends X3DChildNodeTool
             location  = this ._location  .copy (),
             direction = this ._direction .copy ();
 
-         this ._location  = this .initialLocation;
-         this ._direction = this .initialDirection;
+         this ._location  = this .#initialLocation;
+         this ._direction = this .#initialDirection;
 
          Editor .setFieldValue (this .getExecutionContext (), this .node, this ._location,  location);
          Editor .setFieldValue (this .getExecutionContext (), this .node, this ._direction, direction);
