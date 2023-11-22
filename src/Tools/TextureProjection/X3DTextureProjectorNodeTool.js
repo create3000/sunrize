@@ -18,7 +18,7 @@ class X3DTextureProjectorNodeTool extends X3DChildNodeTool
       this .tool .getField ("upVector")  .addReference (this .node ._upVector);
       this .tool .getField ("texture")   .addReference (this .node ._texture);
 
-      this .tool .getField ("isActive") .addInterest ("set_tool_active__", this);
+      this .tool .getField ("isActive") .addInterest ("handleUndo", this);
 
       this .addExternalNode (this .node ._texture);
    }

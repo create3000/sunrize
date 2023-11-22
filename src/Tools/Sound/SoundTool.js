@@ -19,7 +19,7 @@ class SoundTool extends X3DChildNodeTool
       this .tool .getField ("maxBack")   .addReference (this .node ._maxBack);
       this .tool .getField ("maxFront")  .addReference (this .node ._maxFront);
 
-      this .tool .getField ("isActive") .addInterest ("set_tool_active__", this);
+      this .tool .getField ("isActive") .addInterest ("handleUndo", this);
    }
 
    #initialLocation;

@@ -30,8 +30,8 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       this .tool .getField ("scaleOrientation") .addReference (this .node ._scaleOrientation);
       this .tool .getField ("center")           .addReference (this .node ._center);
 
-      this .tool .getField ("isCenterActive") .addInterest ("set_tool_active__",  this);
-      this .tool .getField ("isActive")       .addInterest ("set_tool_active__",  this);
+      this .tool .getField ("isCenterActive") .addInterest ("handleUndo", this);
+      this .tool .getField ("isActive")       .addInterest ("handleUndo", this);
 
       this .tool .bboxColor = this .toolBBoxColor;
    }

@@ -15,7 +15,7 @@ class X3DEnvironmentalSensorNodeTool extends X3DChildNodeTool
       this .tool .getField ("size")   .addReference (this .node ._size);
       this .tool .getField ("center") .addReference (this .node ._center);
 
-      this .tool .getField ("isActive") .addInterest ("set_tool_active__", this);
+      this .tool .getField ("isActive") .addInterest ("handleUndo", this);
 
       this .tool .boxColor = this .toolBoxColor;
    }

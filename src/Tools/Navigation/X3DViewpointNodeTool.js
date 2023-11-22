@@ -16,7 +16,7 @@ class X3DViewpointNodeTool extends X3DChildNodeTool
 
       this .tool .getField ("orientation") .addReference (this .node ._orientation);
 
-      this .tool .getField ("isActive") .addInterest ("set_tool_active__", this);
+      this .tool .getField ("isActive") .addInterest ("handleUndo", this);
 
       this .node ._isBound .addFieldInterest (this .tool .getField ("bound"));
 

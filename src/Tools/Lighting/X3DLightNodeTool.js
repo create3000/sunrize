@@ -16,7 +16,7 @@ class X3DLightNodeTool extends X3DChildNodeTool
       this .tool .getField ("color")     .addReference (this .node ._color);
       this .tool .getField ("intensity") .addReference (this .node ._intensity);
 
-      this .tool .getField ("isActive") .addInterest ("set_tool_active__", this);
+      this .tool .getField ("isActive") .addInterest ("handleUndo", this);
    }
 
    #initialLocation;

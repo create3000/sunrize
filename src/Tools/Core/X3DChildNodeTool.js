@@ -29,7 +29,7 @@ class X3DChildNodeTool extends X3DNodeTool
       super .disposeTool ();
    }
 
-   set_tool_active__ (active)
+   handleUndo (active)
    {
       if (!this .tool .undo)
          return;
