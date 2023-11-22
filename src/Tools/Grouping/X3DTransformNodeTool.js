@@ -214,10 +214,10 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
       matrix .get (translation, rotation, scale, scaleOrientation, center);
 
-      Editor .roundToIntegerIfAlmostEqual (translation,      1e-8);
-      Editor .roundToIntegerIfAlmostEqual (rotation,         1e-8);
-      Editor .roundToIntegerIfAlmostEqual (scale,            1e-8);
-      Editor .roundToIntegerIfAlmostEqual (scaleOrientation, 1e-8);
+      Editor .roundToIntegerIfAlmostEqual (translation);
+      Editor .roundToIntegerIfAlmostEqual (rotation);
+      Editor .roundToIntegerIfAlmostEqual (scale);
+      Editor .roundToIntegerIfAlmostEqual (scaleOrientation);
 
       if ((scale .x === scale .y) && (scale .x === scale .z))
          scaleOrientation .set (0, 0, 1, 0);

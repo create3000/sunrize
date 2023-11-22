@@ -2087,10 +2087,10 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                    scaleOrientation,
                    center ?? node ._center .getValue ())
 
-      this .roundToIntegerIfAlmostEqual (translation,      1e-8);
-      this .roundToIntegerIfAlmostEqual (rotation,         1e-8);
-      this .roundToIntegerIfAlmostEqual (scale,            1e-8);
-      this .roundToIntegerIfAlmostEqual (scaleOrientation, 1e-8);
+      this .roundToIntegerIfAlmostEqual (translation);
+      this .roundToIntegerIfAlmostEqual (rotation);
+      this .roundToIntegerIfAlmostEqual (scale);
+      this .roundToIntegerIfAlmostEqual (scaleOrientation);
 
       if ((scale .x === scale .y) && (scale .x === scale .z))
          scaleOrientation .set (0, 0, 1, 0);
@@ -2116,7 +2116,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     * @param {object} vector
     * @param {number} epsilon
     */
-   static roundToIntegerIfAlmostEqual (vector, epsilon)
+   static roundToIntegerIfAlmostEqual (vector, epsilon = 1e-8)
    {
       for (const key in vector)
       {
