@@ -103,11 +103,10 @@ class X3DTransformNodeTool extends X3DChildNodeTool
             other .tool .grouped = true;
          }
 
-         // Store values.
+         // Save values.
 
          for (const other of X3DTransformNodeTool .#transformTools)
          {
-
             other .initialTranslation      = other ._translation      .copy ();
             other .initialRotation         = other ._rotation         .copy ();
             other .initialScale            = other ._scale            .copy ();
@@ -117,8 +116,12 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       }
       else
       {
+         // Finish grouping.
+
          for (const other of X3DTransformNodeTool .#transformTools)
             other .tool .grouped = false;
+
+         // End undo.
 
          for (const other of X3DTransformNodeTool .#transformTools)
          {
