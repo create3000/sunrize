@@ -27,6 +27,9 @@ class X3DBoundedObjectTool extends X3DChildNodeTool
 
    reshapeTool ()
    {
+      if (!this .tool)
+         return;
+
       const
          bbox       = this .node .getBBox (X3DBoundedObjectTool .#box),
          bboxSize   = bbox .size,

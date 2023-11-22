@@ -16,13 +16,16 @@ class GeoLODTool extends X3DBoundedObjectTool
       this .tool .centerDisplay = true;
    }
 
-   static center = new X3D .Vector3 (0, 0, 0);
+   static #center = new X3D .Vector3 (0, 0, 0);
 
    reshapeTool ()
    {
+      if (!this .tool)
+         return;
+
       super .reshapeTool ();
 
-      const center = this .node .getCoord (this .node ._center, GeoLODTool .center);
+      const center = this .node .getCoord (this .node ._center, GeoLODTool .#center);
 
       if (!this .tool .center .getValue () .equals (center))
          this .tool .center = center;
