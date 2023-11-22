@@ -216,9 +216,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
       this .roundToIntegerIfAlmostEqual (translation,      1e-8);
       this .roundToIntegerIfAlmostEqual (rotation,         1e-8);
-      this .roundToIntegerIfAlmostEqual (rotation,         1e-8);
       this .roundToIntegerIfAlmostEqual (scale,            1e-8);
-      this .roundToIntegerIfAlmostEqual (scaleOrientation, 1e-8);
       this .roundToIntegerIfAlmostEqual (scaleOrientation, 1e-8);
 
       if ((scale .x === scale .y) && (scale .x === scale .z))
