@@ -193,6 +193,17 @@ class X3DTransformNodeTool extends X3DChildNodeTool
          this .setMatrixWithCenter (matrix, this ._center .getValue ());
    }
 
+   setMatrixKeepCenter (matrix)
+   {
+      const center = this ._center .getValue () .copy ()
+         .add (this ._translation .getValue ())
+         .subtract (matrix .origin);
+
+		matrix .copy () .inverse () .multDirMatrix (center);
+
+		this .setMatrixWithCenter (matrix, center);
+   }
+
    setMatrixWithCenter (matrix, center)
    {
       const
@@ -208,17 +219,6 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       this ._scale            = scale;
       this ._scaleOrientation = scaleOrientation;
       this ._center           = center;
-   }
-
-   setMatrixKeepCenter (matrix)
-   {
-      const center = this ._center .getValue () .copy ()
-         .add (this ._translation .getValue ())
-         .subtract (matrix .origin);
-
-		matrix .copy () .inverse () .multDirMatrix (center);
-
-		this .setMatrixWithCenter (matrix, center);
    }
 
    static #box = new X3D .Box3 ();
