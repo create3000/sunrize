@@ -10,13 +10,19 @@ const
 
 class X3DTransformNodeTool extends X3DChildNodeTool
 {
+   static #transformTools = new Set ();
+
    async initializeTool ()
    {
       await super .initializeTool (__dirname, "X3DTransformNodeTool.x3d");
 
+      X3DTransformNodeTool .#transformTools .add (this);
+
       this .getBrowser () .displayEvents () .addInterest ("reshapeTool", this);
 
       this .keys = new ActionKeys (`X3DTransformNodeTool${this .getId ()}`, this .set_keys__ .bind (this));
+
+      this .node .addInterest ("transformGroups", this);
 
       this .tool .getField ("translation")      .addReference (this .node ._translation);
       this .tool .getField ("rotation")         .addReference (this .node ._rotation);
@@ -24,16 +30,21 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       this .tool .getField ("scaleOrientation") .addReference (this .node ._scaleOrientation);
       this .tool .getField ("center")           .addReference (this .node ._center);
 
-      this .tool .getField ("isCenterActive") .addInterest ("set_active__", this);
-      this .tool .getField ("isActive")       .addInterest ("set_active__", this);
+      this .tool .getField ("isCenterActive") .addInterest ("set_active__",  this);
+      this .tool .getField ("isActive")       .addInterest ("set_active__",  this);
 
       this .tool .bboxColor = this .toolBBoxColor;
    }
 
    disposeTool ()
    {
+      X3DTransformNodeTool .#transformTools .delete (this);
+
       this .getBrowser () .displayEvents () .removeInterest ("reshapeTool", this);
+
       this .keys .dispose ();
+
+      this .node .removeInterest ("transformGroups", this);
 
       super .disposeTool ();
    }
@@ -65,44 +76,56 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       if (!this .tool .undo)
          return;
 
+      for (const other of X3DTransformNodeTool .#transformTools)
+      {
+         other .#groupMatrix .assign (other .getMatrix ());
+
+         if (other .tool .name !== this .tool .name)
+            continue;
+
+         other .tool .grouped = active;
+      }
+
       if (active .getValue ())
       {
-         this .initialTranslation      = this ._translation      .copy ();
-         this .initialRotation         = this ._rotation         .copy ();
-         this .initialScale            = this ._scale            .copy ();
-         this .initialScaleOrientation = this ._scaleOrientation .copy ();
-         this .initialCenter           = this ._center           .copy ();
+         X3DTransformNodeTool .beginUndo (this .tool .isCenterActive ? 3 : this .tool .activeTool,
+            this .getTypeName (),
+            this .getDisplayName ());
 
-         this .specialTool = this .tool .isCenterActive ? 3 : undefined; // CENTER
+         for (const other of X3DTransformNodeTool .#transformTools)
+         {
+            other .initialTranslation      = other ._translation      .copy ();
+            other .initialRotation         = other ._rotation         .copy ();
+            other .initialScale            = other ._scale            .copy ();
+            other .initialScaleOrientation = other ._scaleOrientation .copy ();
+            other .initialCenter           = other ._center           .copy ();
+         }
       }
       else
       {
-         X3DTransformNodeTool .beginUndo (this .specialTool ?? this .tool .activeTool,
-                                          this .getTypeName (),
-                                          this .getDisplayName ());
+         for (const other of X3DTransformNodeTool .#transformTools)
+         {
+            const
+               translation      = other ._translation      .copy (),
+               rotation         = other ._rotation         .copy (),
+               scale            = other ._scale            .copy (),
+               scaleOrientation = other ._scaleOrientation .copy (),
+               center           = other ._center           .copy ();
 
-         const
-            translation      = this ._translation      .copy (),
-            rotation         = this ._rotation         .copy (),
-            scale            = this ._scale            .copy (),
-            scaleOrientation = this ._scaleOrientation .copy (),
-            center           = this ._center           .copy ();
+            other ._translation      = other .initialTranslation;
+            other ._rotation         = other .initialRotation;
+            other ._scale            = other .initialScale;
+            other ._scaleOrientation = other .initialScaleOrientation;
+            other ._center           = other .initialCenter;
 
-         this ._translation      = this .initialTranslation;
-         this ._rotation         = this .initialRotation;
-         this ._scale            = this .initialScale;
-         this ._scaleOrientation = this .initialScaleOrientation;
-         this ._center           = this .initialCenter;
-
-         Editor .setFieldValue (this .getExecutionContext (), this .node, this ._translation,      translation);
-         Editor .setFieldValue (this .getExecutionContext (), this .node, this ._rotation,         rotation);
-         Editor .setFieldValue (this .getExecutionContext (), this .node, this ._scale,            scale);
-         Editor .setFieldValue (this .getExecutionContext (), this .node, this ._scaleOrientation, scaleOrientation);
-         Editor .setFieldValue (this .getExecutionContext (), this .node, this ._center,           center);
+            Editor .setFieldValue (other .getExecutionContext (), other .node, other ._translation,      translation);
+            Editor .setFieldValue (other .getExecutionContext (), other .node, other ._rotation,         rotation);
+            Editor .setFieldValue (other .getExecutionContext (), other .node, other ._scale,            scale);
+            Editor .setFieldValue (other .getExecutionContext (), other .node, other ._scaleOrientation, scaleOrientation);
+            Editor .setFieldValue (other .getExecutionContext (), other .node, other ._center,           center);
+         }
 
          UndoManager .shared .endUndo ();
-
-         this .specialTool = undefined;
       }
    }
 
@@ -152,6 +175,77 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       }
    }
 
+   #modelMatrix = new X3D .Matrix4 ();
+   #groupMatrix = new X3D .Matrix4 ();
+
+   transformGroups ()
+   {
+      if (!this .tool .isActive)
+         return;
+
+      const differenceMatrix = this .#groupMatrix .copy ()
+         .inverse ()
+         .multRight (this .node .getMatrix ());
+
+      for (const other of X3DTransformNodeTool .#transformTools)
+      {
+         if (other === this)
+            continue;
+
+         if (!other ._visible .getValue ())
+            continue;
+
+         if (other .tool .name !== this .tool .name)
+            continue;
+
+         other .addAbsoluteMatrix (differenceMatrix, other .tool .keepCenter);
+      }
+   }
+
+   addAbsoluteMatrix (absoluteMatrix, keepCenter)
+   {
+      const relativeMatrix = this .#modelMatrix .copy ()
+         .multRight (absoluteMatrix)
+         .multRight (this .#modelMatrix .copy () .inverse ());
+
+      // Set matrix.
+
+      const matrix = this .#groupMatrix .copy () .multRight (relativeMatrix);
+
+      if (keepCenter)
+         this .setMatrixKeepCenter (matrix);
+      else
+         this .setMatrixWithCenter (matrix, this ._center .getValue ());
+   }
+
+   setMatrixWithCenter (matrix, center)
+   {
+      const
+         translation      = new X3D .Vector3 (0, 0, 0),
+         rotation         = new X3D .Rotation4 (),
+         scale            = new X3D .Vector3 (0, 0, 0),
+         scaleOrientation = new X3D .Rotation4 ();
+
+      matrix .get (translation, rotation, scale, scaleOrientation, center);
+
+      this ._translation      = translation;
+      this ._rotation         = rotation;
+      this ._scale            = scale;
+      this ._scaleOrientation = scaleOrientation;
+      this ._center           = center;
+   }
+
+   setMatrixKeepCenter (matrix)
+   {
+      const center = this ._center .getValue () .copy ()
+         .add (this ._translation .getValue ())
+         .subtract (matrix .origin);
+
+		matrix .copy () .inverse () .multDirMatrix (center);
+
+		this .setMatrixWithCenter (matrix, center);
+   }
+
    static #box = new X3D .Box3 ();
 
    reshapeTool ()
@@ -169,6 +263,22 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
       if (!this .tool .bboxCenter .getValue () .equals (bboxCenter))
          this .tool .bboxCenter = bboxCenter;
+   }
+
+   traverse (type, renderObject)
+   {
+      switch (type)
+      {
+         case X3D .TraverseType .DISPLAY:
+         {
+            this .#modelMatrix .assign (renderObject .getModelViewMatrix () .get ())
+               .multRight (renderObject .getCameraSpaceMatrix () .get ());
+
+            break;
+         }
+      }
+
+      super .traverse (type, renderObject);
    }
 }
 
