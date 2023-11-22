@@ -109,15 +109,14 @@ class X3DTransformNodeTool extends X3DChildNodeTool
             other .tool .grouped = true;
          }
 
-         // Save values.
+         // Begin undo.
 
          for (const other of X3DTransformNodeTool .#transformTools)
          {
-            other .#initialTranslation      = other ._translation      .copy ();
-            other .#initialRotation         = other ._rotation         .copy ();
-            other .#initialScale            = other ._scale            .copy ();
-            other .#initialScaleOrientation = other ._scaleOrientation .copy ();
-            other .#initialCenter           = other ._center           .copy ();
+            if (!other .tool .grouped)
+               continue;
+
+            other .beginUndo ();
          }
       }
       else
@@ -129,24 +128,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
             if (!other .tool .grouped)
                continue;
 
-            const
-               translation      = other ._translation      .copy (),
-               rotation         = other ._rotation         .copy (),
-               scale            = other ._scale            .copy (),
-               scaleOrientation = other ._scaleOrientation .copy (),
-               center           = other ._center           .copy ();
-
-            other ._translation      = other .#initialTranslation;
-            other ._rotation         = other .#initialRotation;
-            other ._scale            = other .#initialScale;
-            other ._scaleOrientation = other .#initialScaleOrientation;
-            other ._center           = other .#initialCenter;
-
-            Editor .setFieldValue (other .getExecutionContext (), other .node, other ._translation,      translation);
-            Editor .setFieldValue (other .getExecutionContext (), other .node, other ._rotation,         rotation);
-            Editor .setFieldValue (other .getExecutionContext (), other .node, other ._scale,            scale);
-            Editor .setFieldValue (other .getExecutionContext (), other .node, other ._scaleOrientation, scaleOrientation);
-            Editor .setFieldValue (other .getExecutionContext (), other .node, other ._center,           center);
+            other .endUndo ();
          }
 
          // Finish grouping.
@@ -156,6 +138,37 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
          UndoManager .shared .endUndo ();
       }
+   }
+
+   beginUndo ()
+   {
+      this .#initialTranslation      = this ._translation      .copy ();
+      this .#initialRotation         = this ._rotation         .copy ();
+      this .#initialScale            = this ._scale            .copy ();
+      this .#initialScaleOrientation = this ._scaleOrientation .copy ();
+      this .#initialCenter           = this ._center           .copy ();
+   }
+
+   endUndo ()
+   {
+      const
+         translation      = this ._translation      .copy (),
+         rotation         = this ._rotation         .copy (),
+         scale            = this ._scale            .copy (),
+         scaleOrientation = this ._scaleOrientation .copy (),
+         center           = this ._center           .copy ();
+
+      this ._translation      = this .#initialTranslation;
+      this ._rotation         = this .#initialRotation;
+      this ._scale            = this .#initialScale;
+      this ._scaleOrientation = this .#initialScaleOrientation;
+      this ._center           = this .#initialCenter;
+
+      Editor .setFieldValue (this .getExecutionContext (), this .node, this ._translation,      translation);
+      Editor .setFieldValue (this .getExecutionContext (), this .node, this ._rotation,         rotation);
+      Editor .setFieldValue (this .getExecutionContext (), this .node, this ._scale,            scale);
+      Editor .setFieldValue (this .getExecutionContext (), this .node, this ._scaleOrientation, scaleOrientation);
+      Editor .setFieldValue (this .getExecutionContext (), this .node, this ._center,           center);
    }
 
    static #tools = [
