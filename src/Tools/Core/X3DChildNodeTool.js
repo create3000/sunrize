@@ -45,7 +45,7 @@ class X3DChildNodeTool extends X3DNodeTool
       // Begin undo.
 
       const
-         tool    = center ? 3 : this .tool .activeTool,
+         tool     = center ? 3 : this .tool .activeTool,
          typeName = this .getTypeName (),
          name     = this .getDisplayName ();
 
