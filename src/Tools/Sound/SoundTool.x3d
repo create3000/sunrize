@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Sound/SoundTool.x3d'/>
-    <meta name='modified' content='Tue, 21 Nov 2023 20:55:38 GMT'/>
+    <meta name='modified' content='Wed, 22 Nov 2023 20:50:35 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -28,6 +28,9 @@
     <ProtoDeclare name='Tool'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
+        <field accessType='inputOutput' type='SFString' name='group' value='TRANSFORM_TOOL'/>
+        <field accessType='inputOutput' type='SFBool' name='grouped'/>
+        <field accessType='inputOutput' type='SFBool' name='undo' value='true'/>
         <field accessType='inputOutput' type='SFVec3f' name='location'/>
         <field accessType='inputOutput' type='SFVec3f' name='direction' value='0 0 1'/>
         <field accessType='inputOutput' type='SFFloat' name='minBack'/>
@@ -332,6 +335,8 @@ function getEllipsoidParams (back, front)
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
       <fieldValue name='selected' value='true'/>
+      <fieldValue name='group' value=''/>
+      <fieldValue name='undo' value='false'/>
       <fieldValue name='minBack' value='10'/>
       <fieldValue name='minFront' value='10'/>
       <fieldValue name='maxBack' value='10'/>

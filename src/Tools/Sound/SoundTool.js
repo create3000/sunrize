@@ -2,8 +2,7 @@
 
 const
    X3DChildNodeTool = require ("../Core/X3DChildNodeTool"),
-   Editor           = require ("../../Undo/Editor"),
-   UndoManager      = require ("../../Undo/UndoManager");
+   Editor           = require ("../../Undo/Editor");
 
 class SoundTool extends X3DChildNodeTool
 {
@@ -20,35 +19,29 @@ class SoundTool extends X3DChildNodeTool
       this .tool .getField ("maxBack")   .addReference (this .node ._maxBack);
       this .tool .getField ("maxFront")  .addReference (this .node ._maxFront);
 
-      this .tool .getField ("isActive") .addInterest ("set_active__", this);
+      this .tool .getField ("isActive") .addInterest ("set_tool_active__", this);
    }
 
    #initialLocation;
    #initialDirection;
 
-   set_active__ (active)
+   beginUndo ()
    {
-      if (active .getValue ())
-      {
-         this .#initialLocation  = this ._location  .copy ();
-         this .#initialDirection = this ._direction .copy ();
-      }
-      else
-      {
-         X3DChildNodeTool .beginUndo (this .tool .activeTool, this .getTypeName (), this .getDisplayName ());
+      this .#initialLocation  = this ._location  .copy ();
+      this .#initialDirection = this ._direction .copy ();
+   }
 
-         const
-            location  = this ._location  .copy (),
-            direction = this ._direction .copy ();
+   endUndo ()
+   {
+      const
+         location  = this ._location  .copy (),
+         direction = this ._direction .copy ();
 
-         this ._location  = this .#initialLocation;
-         this ._direction = this .#initialDirection;
+      this ._location  = this .#initialLocation;
+      this ._direction = this .#initialDirection;
 
-         Editor .setFieldValue (this .getExecutionContext (), this .node, this ._location,  location);
-         Editor .setFieldValue (this .getExecutionContext (), this .node, this ._direction, direction);
-
-         UndoManager .shared .endUndo ();
-      }
+      Editor .setFieldValue (this .getExecutionContext (), this .node, this ._location,  location);
+      Editor .setFieldValue (this .getExecutionContext (), this .node, this ._direction, direction);
    }
 }
 
