@@ -28,7 +28,7 @@ class X3DBoundedObjectTool extends X3DChildNodeTool
    reshapeTool ()
    {
       if (!this .tool)
-         return;
+         return console .warn ("reshapeTool called, although already disposed.");
 
       const
          bbox       = this .node .getBBox (X3DBoundedObjectTool .#box),

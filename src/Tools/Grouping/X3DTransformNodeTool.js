@@ -157,8 +157,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
    reshapeTool ()
    {
       if (!this .tool)
-         return;
-
+         return console .warn ("reshapeTool called, although already disposed.");
       const
          bbox       = this .node .getSubBBox (X3DTransformNodeTool .#box),
          bboxSize   = bbox .size,
