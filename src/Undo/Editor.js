@@ -2092,7 +2092,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       this .roundToIntegerIfAlmostEqual (scale);
       this .roundToIntegerIfAlmostEqual (scaleOrientation);
 
-      if ((scale .x === scale .y) && (scale .x === scale .z))
+      if (this .almostEqual (scale .x, scale .y) && this .almostEqual (scale .x, scale .z))
          scaleOrientation .set (0, 0, 1, 0);
 
       node ._translation      = translation
@@ -2124,9 +2124,14 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             value   = vector [key],
             integer = Math .round (value);
 
-         if (Math .abs (value - integer) < epsilon)
+         if (this .almostEqual (value, integer, epsilon))
             vector [key] = integer;
       }
+   }
+
+   static almostEqual (target, value, epsilon = 1e-8)
+   {
+      return Math .abs (target - value) < epsilon;
    }
 
    /**

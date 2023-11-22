@@ -219,7 +219,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       Editor .roundToIntegerIfAlmostEqual (scale);
       Editor .roundToIntegerIfAlmostEqual (scaleOrientation);
 
-      if ((scale .x === scale .y) && (scale .x === scale .z))
+      if (Editor .almostEqual (scale .x, scale .y) && Editor .almostEqual (scale .x, scale .z))
          scaleOrientation .set (0, 0, 1, 0);
 
       this ._translation      = translation;
