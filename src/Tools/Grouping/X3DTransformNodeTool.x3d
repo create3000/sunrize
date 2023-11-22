@@ -12,7 +12,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Wed, 22 Nov 2023 01:48:09 GMT'/>
+    <meta name='modified' content='Wed, 22 Nov 2023 07:47:27 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -159,6 +159,7 @@
                   <TouchSensor DEF='ModeTouch'/>
                   <PlaneSensor DEF='XTranslationSensor'
                       description='x-Axis'
+                      enabled='false'
                       autoOffset='false'
                       maxPosition='-1 0'>
                     <IS>
@@ -167,6 +168,7 @@
                   </PlaneSensor>
                   <PlaneSensor DEF='XScaleFrontSensor'
                       description='x-Axis'
+                      enabled='false'
                       autoOffset='false'
                       maxPosition='-1 0'>
                     <IS>
@@ -225,6 +227,7 @@
                   <PlaneSensor USE='XTranslationSensor'/>
                   <PlaneSensor DEF='XScaleBackSensor'
                       description='x-Axis'
+                      enabled='false'
                       autoOffset='false'
                       maxPosition='-1 0'>
                     <IS>
@@ -289,6 +292,7 @@
                   <TouchSensor USE='ModeTouch'/>
                   <PlaneSensor DEF='YTranslationSensor'
                       description='y-Axis'
+                      enabled='false'
                       autoOffset='false'
                       maxPosition='0 -1'>
                     <IS>
@@ -297,6 +301,7 @@
                   </PlaneSensor>
                   <PlaneSensor DEF='YScaleFrontSensor'
                       description='y-Axis'
+                      enabled='false'
                       autoOffset='false'
                       maxPosition='0 -1'>
                     <IS>
@@ -347,6 +352,7 @@
                   <PlaneSensor USE='YTranslationSensor'/>
                   <PlaneSensor DEF='YScaleBackSensor'
                       description='y-Axis'
+                      enabled='false'
                       autoOffset='false'
                       maxPosition='0 -1'>
                     <IS>
@@ -412,6 +418,7 @@
                   <TouchSensor USE='ModeTouch'/>
                   <PlaneSensor DEF='ZTranslationSensor'
                       description='z-Axis'
+                      enabled='false'
                       axisRotation='0 -1 0 90'
                       autoOffset='false'
                       maxPosition='-1 0'>
@@ -421,6 +428,7 @@
                   </PlaneSensor>
                   <PlaneSensor DEF='ZScaleFrontSensor'
                       description='z-Axis'
+                      enabled='false'
                       axisRotation='0 -1 0 90'
                       autoOffset='false'
                       maxPosition='-1 0'>
@@ -490,6 +498,7 @@
                 <Group>
                   <Transform DEF='ScaleHandle1'>
                     <PlaneSensor DEF='ScaleSensor1_1'
+                        enabled='false'
                         autoOffset='false'
                         maxPosition='-1 0'>
                       <IS>
@@ -511,6 +520,7 @@
                   </Transform>
                   <Transform DEF='ScaleHandle2'>
                     <PlaneSensor DEF='ScaleSensor2'
+                        enabled='false'
                         autoOffset='false'
                         maxPosition='-1 0'>
                       <IS>
@@ -521,6 +531,7 @@
                   </Transform>
                   <Transform DEF='ScaleHandle3'>
                     <PlaneSensor DEF='ScaleSensor3'
+                        enabled='false'
                         autoOffset='false'
                         maxPosition='-1 0'>
                       <IS>
@@ -531,6 +542,7 @@
                   </Transform>
                   <Transform DEF='ScaleHandle4'>
                     <PlaneSensor DEF='ScaleSensor4'
+                        enabled='false'
                         autoOffset='false'
                         maxPosition='-1 0'>
                       <IS>
@@ -541,6 +553,7 @@
                   </Transform>
                   <Transform DEF='ScaleHandle5'>
                     <PlaneSensor DEF='ScaleSensor5'
+                        enabled='false'
                         autoOffset='false'
                         maxPosition='-1 0'>
                       <IS>
@@ -571,6 +584,7 @@
                   </Transform>
                   <Transform DEF='ScaleHandle8'>
                     <PlaneSensor DEF='ScaleSensor8'
+                        enabled='false'
                         autoOffset='false'
                         maxPosition='-1 0'>
                       <IS>
@@ -684,6 +698,7 @@
                   <Group DEF='XHandle'>
                     <CylinderSensor DEF='XRotationSensor_1'
                         description='x-Axis'
+                        enabled='false'
                         axisRotation='0 0 1 90'
                         diskAngle='74.4845'
                         autoOffset='false'>
@@ -710,6 +725,7 @@
                   <Group DEF='YHandle_1'>
                     <CylinderSensor DEF='YRotationSensor_1'
                         description='y-Axis'
+                        enabled='false'
                         diskAngle='74.48451'
                         autoOffset='false'>
                       <IS>
@@ -734,6 +750,7 @@
                   <Group DEF='ZHandle_1'>
                     <CylinderSensor DEF='ZRotationSensor'
                         description='z-Axis'
+                        enabled='false'
                         axisRotation='1 0 0 90'
                         diskAngle='74.48451'
                         autoOffset='false'>
