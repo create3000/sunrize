@@ -29,8 +29,26 @@ class X3DChildNodeTool extends X3DNodeTool
       super .disposeTool ();
    }
 
-   static beginUndo (tool, typeName, name)
+   set_tool_active__ (active)
    {
+      if (!this .tool .undo)
+         return;
+
+      if (active .getValue ())
+         this .prepareUndo ();
+      else
+         this .finishUndo ()
+   }
+
+   prepareUndo (center = false)
+   {
+      // Begin undo.
+
+      const
+         tool    = center ? 3 : this .tool .activeTool,
+         typeName = this .getTypeName (),
+         name     = this .getDisplayName ();
+
       switch (tool)
       {
          case 0: // "TRANSLATE"
@@ -66,24 +84,6 @@ class X3DChildNodeTool extends X3DNodeTool
             break;
          }
       }
-   }
-
-   set_tool_active__ (active)
-   {
-      if (!this .tool .undo)
-         return;
-
-      if (active .getValue ())
-         this .prepareUndo ();
-      else
-         this .finishUndo ()
-   }
-
-   prepareUndo (center = false)
-   {
-      X3DChildNodeTool .beginUndo (center ? 3 : this .tool .activeTool,
-         this .getTypeName (),
-         this .getDisplayName ());
 
       // Prepare grouping.
 
