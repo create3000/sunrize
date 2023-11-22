@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/TextureProjector/X3DTextureProjectorNodeTool.x3d'/>
-    <meta name='modified' content='Wed, 22 Nov 2023 07:08:22 GMT'/>
+    <meta name='modified' content='Wed, 22 Nov 2023 20:54:10 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -28,6 +28,9 @@
     <ProtoDeclare name='Tool'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
+        <field accessType='inputOutput' type='SFString' name='group' value='TRANSFORM_TOOL'/>
+        <field accessType='inputOutput' type='SFBool' name='grouped'/>
+        <field accessType='inputOutput' type='SFBool' name='undo' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='on'/>
         <field accessType='inputOutput' type='SFVec3f' name='location'/>
         <field accessType='inputOutput' type='SFVec3f' name='direction'/>
@@ -448,6 +451,8 @@ function set_perspective ()
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
       <fieldValue name='selected' value='true'/>
+      <fieldValue name='group' value=''/>
+      <fieldValue name='undo' value='false'/>
       <fieldValue name='on' value='true'/>
       <fieldValue name='perspectiveFieldOfView' value='0.78'/>
       <fieldValue name='perspectiveNearDistance' value='1'/>
