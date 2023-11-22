@@ -2077,15 +2077,23 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       const
          translation      = new X3D .Vector3 (0, 0, 0),
-         rotation         = new X3D .Rotation4 (0, 0, 1, 0),
+         rotation         = new X3D .Rotation4 (),
          scale            = new X3D .Vector3 (1, 1, 1),
-         scaleOrientation = new X3D .Rotation4 (0, 0, 1, 0)
+         scaleOrientation = new X3D .Rotation4 ()
 
       matrix .get (translation,
                    rotation,
                    scale,
                    scaleOrientation,
                    center ?? node ._center .getValue ())
+
+      this .roundToIntegerIfAlmostEqual (translation,      1e-8);
+      this .roundToIntegerIfAlmostEqual (rotation,         1e-8);
+      this .roundToIntegerIfAlmostEqual (scale,            1e-8);
+      this .roundToIntegerIfAlmostEqual (scaleOrientation, 1e-8);
+
+      if ((scale .x === scale .y) && (scale .x === scale .z))
+         scaleOrientation .set (0, 0, 1, 0);
 
       node ._translation      = translation
       node ._rotation         = rotation
@@ -2101,6 +2109,24 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       this .requestUpdateInstances (node, undoManager)
 
       undoManager .endUndo ()
+   }
+
+   /**
+    *
+    * @param {object} vector
+    * @param {number} epsilon
+    */
+   static roundToIntegerIfAlmostEqual (vector, epsilon)
+   {
+      for (const key in vector)
+      {
+         const
+            value   = vector [key],
+            integer = Math .round (value);
+
+         if (Math .abs (value - integer) < epsilon)
+            vector [key] = integer;
+      }
    }
 
    /**

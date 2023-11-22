@@ -214,10 +214,10 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
       matrix .get (translation, rotation, scale, scaleOrientation, center);
 
-      this .roundToIntegerIfAlmostEqual (translation,      1e-8);
-      this .roundToIntegerIfAlmostEqual (rotation,         1e-8);
-      this .roundToIntegerIfAlmostEqual (scale,            1e-8);
-      this .roundToIntegerIfAlmostEqual (scaleOrientation, 1e-8);
+      Editor .roundToIntegerIfAlmostEqual (translation,      1e-8);
+      Editor .roundToIntegerIfAlmostEqual (rotation,         1e-8);
+      Editor .roundToIntegerIfAlmostEqual (scale,            1e-8);
+      Editor .roundToIntegerIfAlmostEqual (scaleOrientation, 1e-8);
 
       if ((scale .x === scale .y) && (scale .x === scale .z))
          scaleOrientation .set (0, 0, 1, 0);
@@ -227,19 +227,6 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       this ._scale            = scale;
       this ._scaleOrientation = scaleOrientation;
       this ._center           = center;
-   }
-
-   roundToIntegerIfAlmostEqual (vector, epsilon)
-   {
-      for (const key in vector)
-      {
-         const
-            value   = vector [key],
-            integer = Math .round (value);
-
-         if (Math .abs (value - integer) < epsilon)
-            vector [key] = integer;
-      }
    }
 
    static #box = new X3D .Box3 ();
