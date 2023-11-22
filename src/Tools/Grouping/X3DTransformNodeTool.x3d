@@ -12,7 +12,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Wed, 22 Nov 2023 18:52:22 GMT'/>
+    <meta name='modified' content='Wed, 22 Nov 2023 19:20:52 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -30,7 +30,7 @@
     <ProtoDeclare name='Tool'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
-        <field accessType='inputOutput' type='SFString' name='name' value='TRANSFORM_TOOL'/>
+        <field accessType='inputOutput' type='SFString' name='group' value='TRANSFORM_TOOL'/>
         <field accessType='inputOutput' type='SFBool' name='grouped'/>
         <field accessType='inputOutput' type='SFVec3f' name='translation'/>
         <field accessType='inputOutput' type='SFRotation' name='rotation'/>
@@ -1634,7 +1634,7 @@ async function set_toggleCenterTool ()
    Browser .addRoute (tool, "grouped",  this, "grouped");
    Browser .addRoute (tool, "isActive", this, "active");
 
-   tool .name          = "CENTER_TOOL";
+   tool .group         = "CENTER_TOOL";
    tool .undo          = false;
    tool .tools         = new MFString ("TRANSLATE");
    tool .centerDisplay = false;
@@ -1748,7 +1748,7 @@ function set_bboxCenter ()
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
-      <fieldValue name='name' value=''/>
+      <fieldValue name='group' value=''/>
       <fieldValue name='translation' value='-0.8999743 0 0'/>
       <fieldValue name='undo' value='false'/>
       <fieldValue name='scaleUniform' value='true'/>

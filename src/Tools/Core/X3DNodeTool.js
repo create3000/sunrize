@@ -4,7 +4,7 @@ const
    path     = require ("path"),
    url      = require ("url"),
    X3D      = require ("../../X3D"),
-   Traverse = require("../../Application/Traverse"),
+   Traverse = require ("../../Application/Traverse"),
    DEBUG    = false && process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT";
 
 const
@@ -78,6 +78,11 @@ class X3DNodeTool
       return proxy;
    }
 
+   getInnerNode ()
+   {
+      return this .proxy;
+   }
+
    replaceNode (node, replacement)
    {
       for (const parent of new Set (node .getParents ()))
@@ -122,42 +127,13 @@ class X3DNodeTool
       return this .proxy;
    }
 
-   removeTool (action = "createOnDemand")
-   {
-      if (!this .constructor [action])
-         return this;
-
-      this .disposeTool ();
-
-      const nodesToDispose = [ ]
-
-      Traverse .traverse (this .tool, Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES, node => nodesToDispose .push (node));
-
-      this .tool = null;
-
-      for (const node of nodesToDispose .filter (node => !this .externalNodes .has (node)))
-         node .dispose ();
-
-      for (const field of this .externalNodes .values ())
-         field .removeInterest ("addExternalNode", this);
-
-      this .node .removeUserData (_tool);
-      this .node .setUserData (_changing, true);
-
-      this .replaceNode (this, this .node);
-
-      return this .node;
-   }
-
-   disposeTool () { }
-
-   static scenes = new Map ();
+   static #scenes = new Map ();
 
    loadTool (... args)
    {
       const
          protoURL = url .pathToFileURL (path .resolve (... args)),
-         promise  = X3DNodeTool .scenes .get (protoURL .href);
+         promise  = X3DNodeTool .#scenes .get (protoURL .href);
 
       if (promise && !DEBUG)
       {
@@ -186,7 +162,7 @@ class X3DNodeTool
             }
          });
 
-         X3DNodeTool .scenes .set (protoURL .href, promise);
+         X3DNodeTool .#scenes .set (protoURL .href, promise);
 
          return this .toolPromise = promise;
       }
@@ -208,10 +184,34 @@ class X3DNodeTool
       this .externalNodes .set (field .getValue (), field);
    }
 
-   getInnerNode ()
+   removeTool (action = "createOnDemand")
    {
-      return this .proxy;
+      if (!this .constructor [action])
+         return this;
+
+      this .disposeTool ();
+
+      this .tool = null;
+
+      this .node .removeUserData (_tool);
+      this .node .setUserData (_changing, true);
+
+      const nodesToDispose = [ ]
+
+      Traverse .traverse (this .tool, Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES, node => nodesToDispose .push (node));
+
+      for (const node of nodesToDispose .filter (node => !this .externalNodes .has (node)))
+         node .dispose ();
+
+      for (const field of this .externalNodes .values ())
+         field .removeInterest ("addExternalNode", this);
+
+      this .replaceNode (this, this .node);
+
+      return this .node;
    }
+
+   disposeTool () { }
 
    valueOf ()
    {

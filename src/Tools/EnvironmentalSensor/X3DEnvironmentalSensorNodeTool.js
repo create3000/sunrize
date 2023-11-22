@@ -1,10 +1,9 @@
 "use strict";
 
 const
-   X3DChildNodeTool     = require ("../Core/X3DChildNodeTool"),
-   X3DTransformNodeTool = require ("../Grouping/X3DTransformNodeTool"),
-   Editor               = require ("../../Undo/Editor"),
-   UndoManager          = require ("../../Undo/UndoManager");
+   X3DChildNodeTool = require ("../Core/X3DChildNodeTool"),
+   Editor           = require ("../../Undo/Editor"),
+   UndoManager      = require ("../../Undo/UndoManager");
 
 class X3DEnvironmentalSensorNodeTool extends X3DChildNodeTool
 {
@@ -34,7 +33,7 @@ class X3DEnvironmentalSensorNodeTool extends X3DChildNodeTool
       }
       else
       {
-         X3DTransformNodeTool .beginUndo (this .tool .activeTool, this .getTypeName (), this .getDisplayName ());
+         X3DChildNodeTool .beginUndo (this .tool .activeTool, this .getTypeName (), this .getDisplayName ());
 
          const
             size   = this ._size   .copy (),

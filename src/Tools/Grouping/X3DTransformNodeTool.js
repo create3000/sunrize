@@ -30,8 +30,8 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       this .tool .getField ("scaleOrientation") .addReference (this .node ._scaleOrientation);
       this .tool .getField ("center")           .addReference (this .node ._center);
 
-      this .tool .getField ("isCenterActive") .addInterest ("set_active__",  this);
-      this .tool .getField ("isActive")       .addInterest ("set_active__",  this);
+      this .tool .getField ("isCenterActive") .addInterest ("set_tool_active__",  this);
+      this .tool .getField ("isActive")       .addInterest ("set_tool_active__",  this);
 
       this .tool .bboxColor = this .toolBBoxColor;
    }
@@ -77,69 +77,19 @@ class X3DTransformNodeTool extends X3DChildNodeTool
    #initialScaleOrientation;
    #initialCenter;
 
-   set_active__ (active)
+   prepareUndo ()
    {
-      if (!this .tool .undo)
-         return;
-
-      if (active .getValue ())
-      {
-         X3DTransformNodeTool .beginUndo (this .tool .isCenterActive ? 3 : this .tool .activeTool,
-            this .getTypeName (),
-            this .getDisplayName ());
-
-         // Prepare grouping.
-
-         for (const other of X3DTransformNodeTool .#transformTools)
-         {
-            if (other .isHidden ())
-               continue;
-
-            if (!other ._visible .getValue ())
-               continue;
-
-            if (!this .tool .isCenterActive)
-            {
-               if (other .tool .name !== this .tool .name)
-                  continue;
-            }
-
-            other .tool .grouped = true;
-         }
-
-         // Begin undo.
-
-         for (const other of X3DTransformNodeTool .#transformTools)
-         {
-            if (!other .tool .grouped)
-               continue;
-
-            other .beginUndo ();
-         }
-      }
-      else
-      {
-         // End undo.
-
-         for (const other of X3DTransformNodeTool .#transformTools)
-         {
-            if (!other .tool .grouped)
-               continue;
-
-            other .endUndo ();
-         }
-
-         // Finish grouping.
-
-         for (const other of X3DTransformNodeTool .#transformTools)
-            other .tool .grouped = false;
-
-         UndoManager .shared .endUndo ();
-      }
+      super .prepareUndo (this .tool .isCenterActive);
    }
 
    beginUndo ()
    {
+      if (this .isHidden ())
+         return false;
+
+      if (!this ._visible .getValue ())
+         return false;
+
       this .#initialMatrix .assign (this .getMatrix ());
 
       this .#initialTranslation      = this ._translation      .copy ();
@@ -171,52 +121,6 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       Editor .setFieldValue (this .getExecutionContext (), this .node, this ._center,           center);
    }
 
-   static #tools = [
-      "TRANSLATE",
-      "ROTATE",
-      "SCALE",
-      "CENTER",
-   ];
-
-   static beginUndo (tool, typeName, name)
-   {
-      switch (this .#tools [tool])
-      {
-         case "TRANSLATE":
-         {
-            if (name)
-               UndoManager .shared .beginUndo (_ ("Translate %s »%s«"), typeName, name);
-            else
-               UndoManager .shared .beginUndo (_ ("Translate %s"), typeName);
-            break;
-         }
-         case "ROTATE":
-         {
-            if (name)
-               UndoManager .shared .beginUndo (_ ("Rotate %s »%s«"), typeName, name);
-            else
-               UndoManager .shared .beginUndo (_ ("Rotate %s"), typeName);
-            break;
-         }
-         case "SCALE":
-         {
-            if (name)
-               UndoManager .shared .beginUndo (_ ("Scale %s »%s«"), typeName, name);
-            else
-               UndoManager .shared .beginUndo (_ ("Scale %s"), typeName);
-            break;
-         }
-         case "CENTER":
-         {
-            if (name)
-               UndoManager .shared .beginUndo (_ ("Translate Center Of %s »%s«"), typeName, name);
-            else
-               UndoManager .shared .beginUndo (_ ("Translate Center Of %s"), typeName);
-            break;
-         }
-      }
-   }
-
    #modelMatrix   = new X3D .Matrix4 ();
    #initialMatrix = new X3D .Matrix4 ();
 
@@ -242,7 +146,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
          if (!other ._visible .getValue ())
             continue;
 
-         if (other .tool .name !== this .tool .name)
+         if (other .tool .group !== this .tool .group)
             continue;
 
          other .addAbsoluteMatrix (differenceMatrix, other .tool .keepCenter);
