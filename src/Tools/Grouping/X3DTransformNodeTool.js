@@ -86,7 +86,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
          for (const other of X3DTransformNodeTool .#transformTools)
          {
-            other .#groupMatrix .assign (other .getMatrix ());
+            other .#initialMatrix .assign (other .getMatrix ());
 
             if (other .isHidden ())
                continue;
@@ -195,15 +195,15 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       }
    }
 
-   #modelMatrix = new X3D .Matrix4 ();
-   #groupMatrix = new X3D .Matrix4 ();
+   #modelMatrix   = new X3D .Matrix4 ();
+   #initialMatrix = new X3D .Matrix4 ();
 
    transformGroups ()
    {
       if (!this .tool .isActive)
          return;
 
-      const differenceMatrix = this .#groupMatrix .copy ()
+      const differenceMatrix = this .#initialMatrix .copy ()
          .multRight (this .#modelMatrix)
          .inverse ()
          .multRight (this .node .getMatrix ())
@@ -235,7 +235,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
       // Set matrix.
 
-      const matrix = this .#groupMatrix .copy () .multRight (relativeMatrix);
+      const matrix = this .#initialMatrix .copy () .multRight (relativeMatrix);
 
       if (keepCenter)
          this .setMatrixKeepCenter (matrix);
