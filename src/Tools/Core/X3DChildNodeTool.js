@@ -89,8 +89,11 @@ class X3DChildNodeTool extends X3DNodeTool
 
       for (const other of X3DChildNodeTool .#tools)
       {
-         if (!other .group)
-            continue;
+         if (other !== this)
+         {
+            if (!other .group)
+               continue;
+         }
 
          if (!center)
          {
