@@ -91,7 +91,7 @@ class X3DChildNodeTool extends X3DNodeTool
       {
          if (other !== this)
          {
-            if (!other .group)
+            if (!other .tool .group)
                continue;
          }
 
