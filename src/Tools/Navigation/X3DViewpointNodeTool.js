@@ -2,8 +2,7 @@
 
 const
    X3DChildNodeTool = require ("../Core/X3DChildNodeTool"),
-   Editor           = require ("../../Undo/Editor"),
-   UndoManager      = require ("../../Undo/UndoManager");
+   Editor           = require ("../../Undo/Editor");
 
 class X3DViewpointNodeTool extends X3DChildNodeTool
 {
@@ -17,7 +16,7 @@ class X3DViewpointNodeTool extends X3DChildNodeTool
 
       this .tool .getField ("orientation") .addReference (this .node ._orientation);
 
-      this .tool .getField ("isActive") .addInterest ("set_active__", this);
+      this .tool .getField ("isActive") .addInterest ("set_tool_active__", this);
 
       this .node ._isBound .addFieldInterest (this .tool .getField ("bound"));
 
@@ -35,29 +34,23 @@ class X3DViewpointNodeTool extends X3DChildNodeTool
    #initialPosition;
    #initialOrientation;
 
-   set_active__ (active)
+   beginUndo ()
    {
-      if (active .getValue ())
-      {
-         this .#initialPosition    = this ._position    .copy ();
-         this .#initialOrientation = this ._orientation .copy ();
-      }
-      else
-      {
-         X3DChildNodeTool .beginUndo (this .tool .activeTool, this .getTypeName (), this .getDisplayName ());
+      this .#initialPosition    = this ._position    .copy ();
+      this .#initialOrientation = this ._orientation .copy ();
+   }
 
-         const
-            position    = this ._position    .copy (),
-            orientation = this ._orientation .copy ();
+   endUndo ()
+   {
+      const
+         position    = this ._position    .copy (),
+         orientation = this ._orientation .copy ();
 
-         this ._position    = this .#initialPosition;
-         this ._orientation = this .#initialOrientation;
+      this ._position    = this .#initialPosition;
+      this ._orientation = this .#initialOrientation;
 
-         Editor .setFieldValue (this .getExecutionContext (), this .node, this ._position,    position);
-         Editor .setFieldValue (this .getExecutionContext (), this .node, this ._orientation, orientation);
-
-         UndoManager .shared .endUndo ();
-      }
+      Editor .setFieldValue (this .getExecutionContext (), this .node, this ._position,    position);
+      Editor .setFieldValue (this .getExecutionContext (), this .node, this ._orientation, orientation);
    }
 }
 
