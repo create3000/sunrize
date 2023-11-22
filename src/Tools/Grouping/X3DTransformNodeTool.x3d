@@ -12,7 +12,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Wed, 22 Nov 2023 00:07:49 GMT'/>
+    <meta name='modified' content='Wed, 22 Nov 2023 01:48:09 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -1711,6 +1711,9 @@ function set_bboxCenter ()
         <ROUTE fromNode='ZRotationSensor' fromField='rotation_changed' toNode='RotateScript' toField='set_zRotation'/>
         <ROUTE fromNode='_14' fromField='isActive' toNode='CenterScript' toField='set_moveCenterToBBoxCenter'/>
         <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='_30' toField='set_visible'/>
+        <ROUTE fromNode='ModeScript' fromField='rotate' toNode='XRotationSensor_1' toField='set_enabled'/>
+        <ROUTE fromNode='ModeScript' fromField='rotate' toNode='YRotationSensor_1' toField='set_enabled'/>
+        <ROUTE fromNode='ModeScript' fromField='rotate' toNode='ZRotationSensor' toField='set_enabled'/>
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
