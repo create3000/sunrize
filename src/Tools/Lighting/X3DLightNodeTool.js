@@ -2,8 +2,7 @@
 
 const
    X3DChildNodeTool = require ("../Core/X3DChildNodeTool"),
-   Editor           = require ("../../Undo/Editor"),
-   UndoManager      = require ("../../Undo/UndoManager");
+   Editor           = require ("../../Undo/Editor");
 
 class X3DLightNodeTool extends X3DChildNodeTool
 {
@@ -17,41 +16,35 @@ class X3DLightNodeTool extends X3DChildNodeTool
       this .tool .getField ("color")     .addReference (this .node ._color);
       this .tool .getField ("intensity") .addReference (this .node ._intensity);
 
-      this .tool .getField ("isActive") .addInterest ("set_active__", this);
+      this .tool .getField ("isActive") .addInterest ("set_tool_active__", this);
    }
 
    #initialLocation;
    #initialDirection;
 
-   set_active__ (active)
+   beginUndo ()
    {
-      if (active .getValue ())
-      {
-         this .#initialLocation  = this ._location  ?.copy ();
-         this .#initialDirection = this ._direction ?.copy ();
-      }
-      else
-      {
-         X3DChildNodeTool .beginUndo (this .tool .activeTool, this .getTypeName (), this .getDisplayName ());
+      this .#initialLocation  = this ._location  ?.copy ();
+      this .#initialDirection = this ._direction ?.copy ();
+   }
 
-         const
-            location  = this ._location  ?.copy (),
-            direction = this ._direction ?.copy ();
+   endUndo ()
+   {
+      const
+         location  = this ._location  ?.copy (),
+         direction = this ._direction ?.copy ();
 
-         if (location)
-            this ._location = this .#initialLocation;
+      if (location)
+         this ._location = this .#initialLocation;
 
-         if (direction)
-            this ._direction = this .#initialDirection;
+      if (direction)
+         this ._direction = this .#initialDirection;
 
-         if (location)
-            Editor .setFieldValue (this .getExecutionContext (), this .node, this ._location, location);
+      if (location)
+         Editor .setFieldValue (this .getExecutionContext (), this .node, this ._location, location);
 
-         if (direction)
-            Editor .setFieldValue (this .getExecutionContext (), this .node, this ._direction, direction);
-
-         UndoManager .shared .endUndo ();
-      }
+      if (direction)
+         Editor .setFieldValue (this .getExecutionContext (), this .node, this ._direction, direction);
    }
 }
 
