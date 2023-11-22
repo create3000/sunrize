@@ -76,30 +76,38 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       if (!this .tool .undo)
          return;
 
-      for (const other of X3DTransformNodeTool .#transformTools)
-      {
-         other .#groupMatrix .assign (other .getMatrix ());
-
-         if (other .isHidden ())
-            continue;
-
-         if (!other ._visible .getValue ())
-            continue;
-
-         if (other .tool .name !== this .tool .name)
-            continue;
-
-         other .tool .grouped = active;
-      }
-
       if (active .getValue ())
       {
          X3DTransformNodeTool .beginUndo (this .tool .isCenterActive ? 3 : this .tool .activeTool,
             this .getTypeName (),
             this .getDisplayName ());
 
+         // Prepare grouping.
+
          for (const other of X3DTransformNodeTool .#transformTools)
          {
+            other .#groupMatrix .assign (other .getMatrix ());
+
+            if (other .isHidden ())
+               continue;
+
+            if (!other ._visible .getValue ())
+               continue;
+
+            if (!this .tool .isCenterActive)
+            {
+               if (other .tool .name !== this .tool .name)
+                  continue;
+            }
+
+            other .tool .grouped = true;
+         }
+
+         // Store values.
+
+         for (const other of X3DTransformNodeTool .#transformTools)
+         {
+
             other .initialTranslation      = other ._translation      .copy ();
             other .initialRotation         = other ._rotation         .copy ();
             other .initialScale            = other ._scale            .copy ();
@@ -109,6 +117,9 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       }
       else
       {
+         for (const other of X3DTransformNodeTool .#transformTools)
+            other .tool .grouped = false;
+
          for (const other of X3DTransformNodeTool .#transformTools)
          {
             const
