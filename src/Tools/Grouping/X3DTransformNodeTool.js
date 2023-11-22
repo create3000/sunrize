@@ -161,7 +161,28 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
       // Set matrix.
 
-      const matrix = this .#initialMatrix .copy () .multRight (relativeMatrix);
+      const
+         matrix           = this .#initialMatrix .copy () .multRight (relativeMatrix),
+         translation      = new X3D .Vector3 (),
+         rotation         = new X3D .Rotation4 (),
+         scale            = new X3D .Vector3 (),
+         scaleOrientation = new X3D .Rotation4 ();
+
+		matrix .get (translation, rotation, scale, scaleOrientation);
+
+		if (!this .tool .tools .includes ("TRANSLATE"))
+			translation .set (0, 0, 0);
+
+		if (!this .tool .tools .includes ("ROTATE"))
+			rotation .set (0, 0, 1, 0);
+
+		if (!this .tool .tools .includes ("SCALE"))
+      {
+			scale .set (1, 1, 1);
+			scaleOrientation .set (0, 0, 1, 0);
+      }
+
+		matrix .set (translation, rotation, scale, scaleOrientation);
 
       if (keepCenter)
          this .setMatrixKeepCenter (matrix);

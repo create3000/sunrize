@@ -2,8 +2,7 @@
 
 const
    X3DChildNodeTool = require ("../Core/X3DChildNodeTool"),
-   Editor           = require ("../../Undo/Editor"),
-   UndoManager      = require ("../../Undo/UndoManager");
+   Editor           = require ("../../Undo/Editor");
 
 class X3DEnvironmentalSensorNodeTool extends X3DChildNodeTool
 {
@@ -16,7 +15,7 @@ class X3DEnvironmentalSensorNodeTool extends X3DChildNodeTool
       this .tool .getField ("size")   .addReference (this .node ._size);
       this .tool .getField ("center") .addReference (this .node ._center);
 
-      this .tool .getField ("isActive") .addInterest ("set_active__", this);
+      this .tool .getField ("isActive") .addInterest ("set_tool_active__", this);
 
       this .tool .boxColor = this .toolBoxColor;
    }
@@ -24,29 +23,23 @@ class X3DEnvironmentalSensorNodeTool extends X3DChildNodeTool
    #initialSize;
    #initialCenter;
 
-   set_active__ (active)
+   beginUndo ()
    {
-      if (active .getValue ())
-      {
-         this .#initialSize   = this ._size   .copy ();
-         this .#initialCenter = this ._center .copy ();
-      }
-      else
-      {
-         X3DChildNodeTool .beginUndo (this .tool .activeTool, this .getTypeName (), this .getDisplayName ());
+      this .#initialSize   = this ._size   .copy ();
+      this .#initialCenter = this ._center .copy ();
+   }
 
-         const
-            size   = this ._size   .copy (),
-            center = this ._center .copy ();
+   endUndo ()
+   {
+      const
+         size   = this ._size   .copy (),
+         center = this ._center .copy ();
 
-         this ._size   = this .#initialSize;
-         this ._center = this .#initialCenter;
+      this ._size   = this .#initialSize;
+      this ._center = this .#initialCenter;
 
-         Editor .setFieldValue (this .getExecutionContext (), this .node, this ._size,   size);
-         Editor .setFieldValue (this .getExecutionContext (), this .node, this ._center, center);
-
-         UndoManager .shared .endUndo ();
-      }
+      Editor .setFieldValue (this .getExecutionContext (), this .node, this ._size,   size);
+      Editor .setFieldValue (this .getExecutionContext (), this .node, this ._center, center);
    }
 }
 
