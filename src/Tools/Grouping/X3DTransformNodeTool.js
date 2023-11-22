@@ -80,6 +80,12 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       {
          other .#groupMatrix .assign (other .getMatrix ());
 
+         if (other .isHidden ())
+            continue;
+
+         if (!other ._visible .getValue ())
+            continue;
+
          if (other .tool .name !== this .tool .name)
             continue;
 
@@ -190,6 +196,9 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       for (const other of X3DTransformNodeTool .#transformTools)
       {
          if (other === this)
+            continue;
+
+         if (other .isHidden ())
             continue;
 
          if (!other ._visible .getValue ())
