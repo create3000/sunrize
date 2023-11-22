@@ -204,8 +204,10 @@ class X3DTransformNodeTool extends X3DChildNodeTool
          return;
 
       const differenceMatrix = this .#groupMatrix .copy ()
+         .multRight (this .#modelMatrix)
          .inverse ()
-         .multRight (this .node .getMatrix ());
+         .multRight (this .node .getMatrix ())
+         .multRight (this .#modelMatrix);
 
       for (const other of X3DTransformNodeTool .#transformTools)
       {
