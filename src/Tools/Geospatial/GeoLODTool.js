@@ -21,7 +21,7 @@ class GeoLODTool extends X3DBoundedObjectTool
    reshapeTool ()
    {
       if (!this .tool)
-         return console .warn ("reshapeTool called, although already disposed.");
+         return console .warn ("reshapeTool called, although already disposed.", this .getBrowser () .displayEvents () .hasInterest ("reshapeTool", this));
 
       super .reshapeTool ();
 
