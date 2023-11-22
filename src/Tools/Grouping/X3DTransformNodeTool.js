@@ -92,8 +92,6 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
          for (const other of X3DTransformNodeTool .#transformTools)
          {
-            other .#initialMatrix .assign (other .getMatrix ());
-
             if (other .isHidden ())
                continue;
 
@@ -142,6 +140,8 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
    beginUndo ()
    {
+      this .#initialMatrix .assign (this .getMatrix ());
+
       this .#initialTranslation      = this ._translation      .copy ();
       this .#initialRotation         = this ._rotation         .copy ();
       this .#initialScale            = this ._scale            .copy ();
