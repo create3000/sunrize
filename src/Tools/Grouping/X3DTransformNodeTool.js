@@ -122,15 +122,13 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       }
       else
       {
-         // Finish grouping.
-
-         for (const other of X3DTransformNodeTool .#transformTools)
-            other .tool .grouped = false;
-
          // End undo.
 
          for (const other of X3DTransformNodeTool .#transformTools)
          {
+            if (!other .tool .grouped)
+               continue;
+
             const
                translation      = other ._translation      .copy (),
                rotation         = other ._rotation         .copy (),
@@ -150,6 +148,11 @@ class X3DTransformNodeTool extends X3DChildNodeTool
             Editor .setFieldValue (other .getExecutionContext (), other .node, other ._scaleOrientation, scaleOrientation);
             Editor .setFieldValue (other .getExecutionContext (), other .node, other ._center,           center);
          }
+
+         // Finish grouping.
+
+         for (const other of X3DTransformNodeTool .#transformTools)
+            other .tool .grouped = false;
 
          UndoManager .shared .endUndo ();
       }
