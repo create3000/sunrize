@@ -28,7 +28,7 @@
                   diffuseColor='0.8 0.8 0.16'/>
               <ProtoInstance name='ToolShader' DEF='_2' containerField='shaders'/>
               <DepthMode DEF='_4'
-                  depthRange='0 0.1'/>
+                  depthRange='0 0.01'/>
             </Appearance>
             <Cone/>
           </Shape>

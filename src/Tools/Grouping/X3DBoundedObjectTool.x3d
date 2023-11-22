@@ -65,7 +65,7 @@
                 castShadow='false'>
               <Appearance>
                 <DepthMode DEF='_12'
-                    depthRange='0 0.1'/>
+                    depthRange='0 0.01'/>
               </Appearance>
               <IndexedLineSet
                   colorPerVertex='false'

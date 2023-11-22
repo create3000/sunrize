@@ -102,7 +102,7 @@
                       <LineProperties
                           linewidthScaleFactor='2'/>
                       <DepthMode DEF='_4'
-                          depthRange='0 0.1'/>
+                          depthRange='0 0.01'/>
                     </Appearance>
                     <IndexedLineSet
                         colorPerVertex='false'
