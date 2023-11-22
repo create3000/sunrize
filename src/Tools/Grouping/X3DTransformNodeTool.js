@@ -214,11 +214,30 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
       matrix .get (translation, rotation, scale, scaleOrientation, center);
 
+      this .assignIfAlmostEqual (translation,      0, 1e-8);
+      this .assignIfAlmostEqual (rotation,         0, 1e-8);
+      this .assignIfAlmostEqual (rotation,         1, 1e-8);
+      this .assignIfAlmostEqual (scale,            1, 1e-8);
+      this .assignIfAlmostEqual (scaleOrientation, 0, 1e-8);
+      this .assignIfAlmostEqual (scaleOrientation, 1, 1e-8);
+
+      if ((scale .x === scale .y) && (scale .x === scale .z))
+         scaleOrientation .set (0, 0, 1, 0);
+
       this ._translation      = translation;
       this ._rotation         = rotation;
       this ._scale            = scale;
       this ._scaleOrientation = scaleOrientation;
       this ._center           = center;
+   }
+
+   assignIfAlmostEqual (vector, value, epsilon)
+   {
+      for (const key in vector)
+      {
+         if (Math .abs (vector [key] - value) < epsilon)
+            vector [key] = value;
+      }
    }
 
    static #box = new X3D .Box3 ();
