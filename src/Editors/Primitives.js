@@ -82,10 +82,8 @@ DEF White Background {
       componentInfo: { name: "EnvironmentalSensor" },
       typeName: "ProximitySensor",
       x3dSyntax: `
-DEF ProximitySensor Transform {
-   children ProximitySensor {
-      size 1 1 1
-   }
+DEF ProximitySensor ProximitySensor {
+   size 1 1 1
 }
 `
    },
@@ -93,10 +91,8 @@ DEF ProximitySensor Transform {
       componentInfo: { name: "EnvironmentalSensor" },
       typeName: "TransformSensor",
       x3dSyntax: `
-DEF TransformSensor Transform {
-   children TransformSensor {
-      size 1 1 1
-   }
+DEF TransformSensor TransformSensor {
+   size 1 1 1
 }
 `
    },
@@ -104,10 +100,8 @@ DEF TransformSensor Transform {
       componentInfo: { name: "EnvironmentalSensor" },
       typeName: "VisibilitySensor",
       x3dSyntax: `
-DEF VisibilitySensor Transform {
-   children VisibilitySensor {
-      size 1 1 1
-   }
+DEF VisibilitySensor VisibilitySensor {
+   size 1 1 1
 }
 `
    },
