@@ -1,7 +1,7 @@
 {
   "name": "sunrize",
   "productName": "Sunrize X3D Editor",
-  "version": "1.1.9",
+  "version": "1.2.0",
   "description": "A Multi-Platform X3D Editor",
   "main": "src/main.js",
   "bin": {
