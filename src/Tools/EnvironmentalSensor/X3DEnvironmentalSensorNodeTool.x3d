@@ -8,7 +8,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/EnvironmentalSensor/X3DEnvironmentalSensorNodeTool.x3d'/>
-    <meta name='modified' content='Wed, 22 Nov 2023 20:27:09 GMT'/>
+    <meta name='modified' content='Thu, 23 Nov 2023 01:47:03 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -22,6 +22,7 @@
         <field accessType='inputOutput' type='SFColor' name='boxColor' value='0.35 1 0.7'/>
         <field accessType='inputOutput' type='SFVec3f' name='size' value='1 1 1'/>
         <field accessType='inputOutput' type='SFVec3f' name='center'/>
+        <field accessType='outputOnly' type='SFNode' name='transformTool'/>
         <field accessType='outputOnly' type='SFInt32' name='activeTool'/>
         <field accessType='outputOnly' type='SFBool' name='isActive'/>
       </ProtoInterface>
@@ -67,7 +68,7 @@
           <field accessType='initializeOnly' type='SFNode' name='material'>
             <Material USE='BoxMaterial'/>
           </field>
-          <field accessType='initializeOnly' type='SFNode' name='transform'>
+          <field accessType='inputOutput' type='SFNode' name='transform'>
             <Transform USE='TransformTool'/>
           </field>
           <IS>
@@ -75,6 +76,7 @@
             <connect nodeField='color' protoField='boxColor'/>
             <connect nodeField='activeTool' protoField='activeTool'/>
             <connect nodeField='active' protoField='isActive'/>
+            <connect nodeField='transform' protoField='transformTool'/>
           </IS>
 <![CDATA[ecmascript:
 
@@ -111,7 +113,6 @@ function set_color ()
     <ProtoInstance name='Tool'>
       <fieldValue name='selected' value='true'/>
       <fieldValue name='group' value=''/>
-      <fieldValue name='undo' value='false'/>
       <fieldValue name='size' value='3 3 3'/>
     </ProtoInstance>
   </Scene>
