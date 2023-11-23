@@ -123,6 +123,10 @@ class X3DChildNodeTool extends X3DNodeTool
       UndoManager .shared .endUndo ();
    }
 
+   beginUndo () { }
+
+   endUndo () { }
+
    traverse (type, renderObject)
    {
       switch (type)
