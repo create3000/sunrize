@@ -82,7 +82,7 @@
     "qtip2": "^3.0.3",
     "spectrum-colorpicker2": "^2.0.10",
     "string-similarity": "^4.0.4",
-    "x_ite": "^9.0.3"
+    "x_ite": "^9.1.0"
   },
   "config": {
     "forge": {
