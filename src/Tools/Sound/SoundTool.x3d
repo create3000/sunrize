@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Sound/SoundTool.x3d'/>
-    <meta name='modified' content='Wed, 22 Nov 2023 20:50:35 GMT'/>
+    <meta name='modified' content='Thu, 23 Nov 2023 02:13:35 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -37,6 +37,7 @@
         <field accessType='inputOutput' type='SFFloat' name='minFront'/>
         <field accessType='inputOutput' type='SFFloat' name='maxBack'/>
         <field accessType='inputOutput' type='SFFloat' name='maxFront'/>
+        <field accessType='outputOnly' type='SFNode' name='transformTool'/>
         <field accessType='outputOnly' type='SFInt32' name='activeTool'/>
         <field accessType='outputOnly' type='SFBool' name='isActive'/>
       </ProtoInterface>
@@ -182,7 +183,7 @@
           <field accessType='outputOnly' type='SFVec3f' name='maxScale_changed'/>
           <field accessType='inputOutput' type='SFInt32' name='activeTool'/>
           <field accessType='inputOutput' type='SFBool' name='active'/>
-          <field accessType='initializeOnly' type='SFNode' name='transform'>
+          <field accessType='inputOutput' type='SFNode' name='transform'>
             <Transform USE='TransformTool'/>
           </field>
           <field accessType='initializeOnly' type='SFNode' name='material'>
@@ -197,6 +198,7 @@
             <connect nodeField='maxFront' protoField='maxFront'/>
             <connect nodeField='activeTool' protoField='activeTool'/>
             <connect nodeField='active' protoField='isActive'/>
+            <connect nodeField='transform' protoField='transformTool'/>
           </IS>
 <![CDATA[ecmascript:
 
@@ -335,8 +337,6 @@ function getEllipsoidParams (back, front)
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
       <fieldValue name='selected' value='true'/>
-      <fieldValue name='group' value=''/>
-      <fieldValue name='undo' value='false'/>
       <fieldValue name='minBack' value='10'/>
       <fieldValue name='minFront' value='10'/>
       <fieldValue name='maxBack' value='10'/>

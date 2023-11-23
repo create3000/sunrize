@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Navigation/X3DViewpointNodeTool.x3d'/>
-    <meta name='modified' content='Wed, 22 Nov 2023 20:46:37 GMT'/>
+    <meta name='modified' content='Thu, 23 Nov 2023 02:13:30 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -25,6 +25,7 @@
         <field accessType='inputOutput' type='SFVec3f' name='position'/>
         <field accessType='inputOutput' type='SFRotation' name='orientation'/>
         <field accessType='inputOutput' type='SFBool' name='bound'/>
+        <field accessType='outputOnly' type='SFNode' name='transformTool'/>
         <field accessType='outputOnly' type='SFInt32' name='activeTool'/>
         <field accessType='outputOnly' type='SFBool' name='isActive'/>
       </ProtoInterface>
@@ -163,13 +164,14 @@
           <field accessType='initializeOnly' type='SFNode' name='material'>
             <Material USE='_4'/>
           </field>
-          <field accessType='initializeOnly' type='SFNode' name='transform'>
+          <field accessType='inputOutput' type='SFNode' name='transform'>
             <Transform USE='TransformTool'/>
           </field>
           <IS>
             <connect nodeField='selected' protoField='selected'/>
             <connect nodeField='activeTool' protoField='activeTool'/>
             <connect nodeField='active' protoField='isActive'/>
+            <connect nodeField='transform' protoField='transformTool'/>
           </IS>
 <![CDATA[ecmascript:
 
@@ -198,8 +200,6 @@ function set_selected ()
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
-      <fieldValue name='group' value=''/>
-      <fieldValue name='undo' value='false'/>
       <fieldValue name='bound' value='true'/>
     </ProtoInstance>
   </Scene>
