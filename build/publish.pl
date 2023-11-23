@@ -36,8 +36,6 @@ system "git", "commit", "-am", "Published version $version";
 system "git", "push", "origin";
 
 # tag
-system "git", "tag", "--delete", $version;
-system "git", "push", "--delete", "origin", $version;
 system "git", "tag", $version;
 system "git", "push", "origin", "--tags";
 
