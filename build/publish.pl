@@ -11,9 +11,11 @@ if (`git branch --show-current` ne "development\n")
 	exit 1;
 }
 
+# merge
 system "git", "checkout", "main";
 system "git", "merge", "development";
 
+# version
 my $name = `node -p "require('./package.json').name"`;
 chomp $name;
 
@@ -28,12 +30,21 @@ say "NPM version $online";
 system "npm version patch --no-git-tag-version --force" if $version eq $online;
 system "npm i x_ite\@latest";
 
+# commit
 system "git", "add", "-A";
 system "git", "commit", "-am", "Published version $version";
 system "git", "push", "origin";
 
+# tag
+system "git", "tag", "--delete", $version;
+system "git", "push", "--delete", "origin", $version;
+system "git", "tag", $version;
+system "git", "push", "origin", "--tags";
+
+# npm
 system "npm", "publish";
 
+# development
 system "git", "checkout", "development";
 system "git", "merge", "main";
 system "git", "push", "origin";
