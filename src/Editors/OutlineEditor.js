@@ -50,8 +50,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       if (!this .isEditable (element))
          return;
 
-      if (!element .is (".manual.selected"))
-         this .sceneGraph .find (".manual.selected") .removeClass ("manual");
+      if (!element .is (".manually.selected"))
+         this .sceneGraph .find (".manually.selected") .removeClass ("manually");
 
       if (element .is (".externproto, .proto, .proto-scene, .node, .field"))
          this .selectPrimaryElement (element);
@@ -520,7 +520,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    {
       const
          primary     = $(".node.primary, .proto.primary, .externproto.primary"),
-         selected    = this .sceneGraph .find (".node.manual.selected"),
+         selected    = this .sceneGraph .find (".node.manually.selected"),
          selection   = selected .filter (primary) .length ? selected : primary,
          ids         = selection .map (function () { return this .id }) .get (),
          elements    = ids .map (id => $(`#${id}`)),
@@ -626,7 +626,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    {
       const
          primary   = $(".node.primary"),
-         selected  = this .sceneGraph .find (".node.manual.selected"),
+         selected  = this .sceneGraph .find (".node.manually.selected"),
          selection = !primary .length || selected .filter (primary) .length ? selected : primary,
          ids       = selection .map (function () { return this .id }) .get ();
 
@@ -762,8 +762,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       if (field .getType () === X3D .X3DConstants .MFNode)
       {
          const
-            selectedNodes          = Array .from (this .sceneGraph .find (".node.manual.selected,.node.primary"), e => this .getNode ($(e))),
-            selectedElements       = Array .from (this .sceneGraph .find (".node.manual.selected:not(.primary)"), e => $(e)),
+            selectedNodes          = Array .from (this .sceneGraph .find (".node.manually.selected,.node.primary"), e => this .getNode ($(e))),
+            selectedElements       = Array .from (this .sceneGraph .find (".node.manually.selected:not(.primary)"), e => $(e)),
             destinationModelMatrix = this .getModelMatrix (parentNodeElement);
 
          // Add other selected nodes.
@@ -1479,7 +1479,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    {
       const
          element   = $(event .target) .closest (".node", this .sceneGraph),
-         selected  = this .sceneGraph .find (".node.manual.selected"),
+         selected  = this .sceneGraph .find (".node.manually.selected"),
          selection = selected .filter (element) .length ? selected : element,
          ids       = selection .map (function () { return this .id }) .get ()
 
@@ -2196,7 +2196,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    removeEmptyGroups ()
    {
       const
-         selection = this .sceneGraph .find (".node.primary, .node.manual.selected"),
+         selection = this .sceneGraph .find (".node.primary, .node.manually.selected"),
          ids       = selection .map (function () { return this .id }) .get (),
          nodes     = ids .length ? ids .map (id => this .getNode ($(`#${id}`))) : this .executionContext .rootNodes;
 

@@ -2627,7 +2627,7 @@ module .exports = class OutlineView extends Interface
          selection = require ("../Application/Selection"),
          nodes     = this .sceneGraph .find (".primary, .selected")
 
-      nodes .removeClass (["primary", "manual", "selected"])
+      nodes .removeClass (["primary", "manually", "selected"])
 
       for (const element of nodes)
          this .getNode ($(element)) .setUserData (_selected, false)
@@ -2781,7 +2781,7 @@ module .exports = class OutlineView extends Interface
 
       const
          selection        = require ("../Application/Selection"),
-         selected         = element .hasClass ("manual"),
+         selected         = element .hasClass ("manually"),
          selectedElements = this .sceneGraph .find (".primary, .selected"),
          node             = this .getNode (element),
          elements         = $(`.node[node-id=${node ?.getId ()}]`);
@@ -2797,22 +2797,22 @@ module .exports = class OutlineView extends Interface
          {
             if (elements .length === 1)
             {
-               element .removeClass (["manual", "selected"]);
+               element .removeClass (["manually", "selected"]);
             }
             else
             {
-               if (elements .filter (".manual") .length === 1)
-                  elements .removeClass (["manual", "selected"]);
+               if (elements .filter (".manually") .length === 1)
+                  elements .removeClass (["manually", "selected"]);
                else
-                  element .removeClass ("manual");
+                  element .removeClass ("manually");
             }
          }
          else
          {
-            element .addClass (["primary", "manual", "selected"]);
+            element .addClass (["primary", "manually", "selected"]);
          }
 
-         if (elements .filter (".manual") .length)
+         if (elements .filter (".manually") .length)
          {
             node .setUserData (_selected, true);
             selection .add (node);
@@ -2830,8 +2830,8 @@ module .exports = class OutlineView extends Interface
 
          node .setUserData (_selected, true);
 
-         selectedElements .removeClass (["manual", "selected"]);
-         element .addClass (["primary", "manual"]);
+         selectedElements .removeClass (["manually", "selected"]);
+         element .addClass (["primary", "manually"]);
          elements .addClass ("selected");
          selection .set (node);
       }
