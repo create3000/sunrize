@@ -112,7 +112,7 @@ VisibilitySensor {
 DEF Arc2D Transform {
    children Shape {
       appearance Appearance {
-         material Material {
+         material UnlitMaterial {
             emissiveColor 1 1 1
          }
       }
@@ -142,7 +142,7 @@ DEF ArcClose2D Transform {
 DEF Circle2D Transform {
    children Shape {
       appearance Appearance {
-         material Material {
+         material UnlitMaterial {
             emissiveColor 1 1 1
          }
       }
@@ -172,7 +172,7 @@ DEF Disk2D Transform {
 DEF Polyline2D Transform {
    children Shape {
       appearance Appearance {
-         material Material {
+         material UnlitMaterial {
             emissiveColor 1 1 1
          }
       }
@@ -196,7 +196,7 @@ DEF Polyline2D Transform {
 DEF Polypoint2D Transform {
    children Shape {
       appearance Appearance {
-         material Material {
+         material UnlitMaterial {
             emissiveColor 1 1 1
          }
       }
