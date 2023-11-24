@@ -113,6 +113,14 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       this ._scaleOrientation = this .#initialScaleOrientation;
       this ._center           = this .#initialCenter;
 
+      Editor .roundToIntegerIfAlmostEqual (translation);
+      Editor .roundToIntegerIfAlmostEqual (rotation);
+      Editor .roundToIntegerIfAlmostEqual (scale);
+      Editor .roundToIntegerIfAlmostEqual (scaleOrientation);
+
+      if (Editor .almostEqual (scale .x, scale .y) && Editor .almostEqual (scale .x, scale .z))
+         scaleOrientation .assign (new X3D .SFRotation ());
+
       Editor .setFieldValue (this .getExecutionContext (), this .node, this ._translation,      translation);
       Editor .setFieldValue (this .getExecutionContext (), this .node, this ._rotation,         rotation);
       Editor .setFieldValue (this .getExecutionContext (), this .node, this ._scale,            scale);
@@ -221,14 +229,6 @@ class X3DTransformNodeTool extends X3DChildNodeTool
          scaleOrientation = new X3D .Rotation4 ();
 
       matrix .get (translation, rotation, scale, scaleOrientation, center);
-
-      Editor .roundToIntegerIfAlmostEqual (translation);
-      Editor .roundToIntegerIfAlmostEqual (rotation);
-      Editor .roundToIntegerIfAlmostEqual (scale);
-      Editor .roundToIntegerIfAlmostEqual (scaleOrientation);
-
-      if (Editor .almostEqual (scale .x, scale .y) && Editor .almostEqual (scale .x, scale .z))
-         scaleOrientation .set (0, 0, 1, 0);
 
       this ._translation      = translation;
       this ._rotation         = rotation;
