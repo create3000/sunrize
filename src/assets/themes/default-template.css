@@ -1213,8 +1213,9 @@ body.dark .ui-widget .library-list .component {
   border: 0;
   margin: 2px 0 2px 20px;
   padding: 0;
-  min-width: calc(100% - 20px);
+  min-width: 300px;
   max-width: calc(100% - 20px);
+  width: calc(100% - 20px);
   background: var(--tint-color1);
   color: inherit;
   font-family: var(--sans-serif);
