@@ -48,7 +48,7 @@ class X3DChildNodeTool extends X3DNodeTool
       const
          typeName    = this .getTypeName (),
          name        = this .getDisplayName (),
-         description = this .getUndoDescription (this .tool .activeTool, typeName, name);
+         description = this .getUndoDescription (this .tool .activeTool, name);
 
       UndoManager .shared .beginUndo (description, typeName, name);
 
@@ -85,7 +85,7 @@ class X3DChildNodeTool extends X3DNodeTool
       }
    }
 
-   getUndoDescription (activeTool, typeName, name)
+   getUndoDescription (activeTool, name)
    {
       switch (activeTool)
       {
