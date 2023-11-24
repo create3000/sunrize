@@ -71,7 +71,7 @@ class X3DNodeTool
       node .setUserData (_tool, proxy);
       node .setUserData (_changing, true);
 
-      X3D .SFNodeCache .add (this, X3D .SFNodeCache .get (node));
+      X3D .SFNodeCache .add (proxy, X3D .SFNodeCache .get (node));
 
       this .node            = node;
       this [_proxy]         = proxy;
