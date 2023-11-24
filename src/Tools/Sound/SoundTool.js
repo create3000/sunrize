@@ -34,9 +34,9 @@ class SoundTool extends X3DChildNodeTool
          case "MAX_BACK":
          {
             if (name)
-               return _ ("Translate MaxBack Of %s »%s«");
+               return _ ("Translate field »maxBack« of Node %s »%s«");
 
-            return _ ("Translate MaxBack Of %s");
+            return _ ("Translate »maxBack« of Node %s");
          }
          default:
          {

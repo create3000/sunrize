@@ -2160,7 +2160,10 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       const oldValue = field .copy ()
 
-      undoManager .beginUndo (_ ("Change Field %s »%s«"), node .getTypeName (), field .getName ())
+      if (node .getDisplayName ())
+         undoManager .beginUndo (_ ("Change Field »%s« of Node %s »%s«"), field .getName (), node .getTypeName (), node .getDisplayName ());
+      else
+         undoManager .beginUndo (_ ("Change Field »%s« of Node %s"), field .getName (), node .getTypeName ())
 
       field .assign (auxillary)
 
@@ -2201,7 +2204,10 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       const oldValue = field .copy ();
 
-      undoManager .beginUndo (_ ("Change Field %s »%s«"), node .getTypeName (), field .getName ());
+      if (node .getDisplayName ())
+         undoManager .beginUndo (_ ("Change Field »%s« of Node %s »%s«"), field .getName (), node .getTypeName (), node .getDisplayName ());
+      else
+         undoManager .beginUndo (_ ("Change Field »%s« of Node %s"), field .getName (), node .getTypeName ());
 
       field .assign (auxillary);
 

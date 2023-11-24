@@ -74,6 +74,8 @@ class X3DNodeTool
       this .replaceNode (node, proxy);
       proxy .setupTool ();
 
+      // TODO: store proxy in SFNodeCache.
+
       return proxy;
    }
 

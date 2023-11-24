@@ -118,9 +118,9 @@ class X3DChildNodeTool extends X3DNodeTool
          case "CENTER":
          {
             if (name)
-               return _ ("Translate Center Of %s »%s«");
+               return _ ("Translate Center of Node %s »%s«");
 
-            return _ ("Translate Center Of %s");
+            return _ ("Translate Center of Node %s");
          }
          default:
          {
