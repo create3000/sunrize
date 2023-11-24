@@ -55,6 +55,10 @@ const handler =
    },
 }
 
+const
+   _proxy         = Symbol (),
+   _externalNodes = Symbol ();
+
 class X3DNodeTool
 {
    static createOnSelection = true;
@@ -69,9 +73,9 @@ class X3DNodeTool
 
       X3D .SFNodeCache .add (this, X3D .SFNodeCache .get (node));
 
-      this .proxy         = proxy;
-      this .node          = node;
-      this .externalNodes = new Map ();
+      this .node            = node;
+      this [_proxy]         = proxy;
+      this [_externalNodes] = new Map ();
 
       this .replaceNode (node, proxy);
       proxy .setupTool ();
@@ -81,7 +85,7 @@ class X3DNodeTool
 
    getInnerNode ()
    {
-      return this .proxy;
+      return this [_proxy];
    }
 
    replaceNode (node, replacement)
@@ -125,7 +129,7 @@ class X3DNodeTool
 
    addTool ()
    {
-      return this .proxy;
+      return this [_proxy];
    }
 
    static #scenes = new Map ();
@@ -182,7 +186,7 @@ class X3DNodeTool
    {
       field .addInterest ("addExternalNode", this);
 
-      this .externalNodes .set (field .getValue (), field);
+      this [_externalNodes] .set (field .getValue (), field);
    }
 
    removeTool (action = "createOnDemand")
@@ -197,16 +201,16 @@ class X3DNodeTool
       this .node .removeUserData (_tool);
       this .node .setUserData (_changing, true);
 
-      X3D .SFNodeCache .delete (this .proxy);
+      X3D .SFNodeCache .delete (this [_proxy]);
 
       const nodesToDispose = [ ]
 
       Traverse .traverse (this .tool, Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES, node => nodesToDispose .push (node));
 
-      for (const node of nodesToDispose .filter (node => !this .externalNodes .has (node)))
+      for (const node of nodesToDispose .filter (node => !this [_externalNodes] .has (node)))
          node .dispose ();
 
-      for (const field of this .externalNodes .values ())
+      for (const field of this [_externalNodes] .values ())
          field .removeInterest ("addExternalNode", this);
 
       this .replaceNode (this, this .node);
