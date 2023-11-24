@@ -96,7 +96,9 @@ module .exports = class Application
 
       electron .app .on ("second-instance", (event, argv, cwd) =>
       {
-         this .openFiles (argv .slice (1) .filter (filePath => fs .existsSync (filePath) && fs .lstatSync (filePath) .isFile ()) .map (filePath => url .pathToFileURL (filePath) .href));
+         this .openFiles (argv .slice (1)
+            .filter (filePath => fs .existsSync (filePath) && fs .lstatSync (filePath) .isFile ())
+            .map (filePath => url .pathToFileURL (filePath) .href));
 
          this .mainWindow .show ();
       });
