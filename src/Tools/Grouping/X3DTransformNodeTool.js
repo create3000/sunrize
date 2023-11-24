@@ -128,10 +128,16 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       if (!this .tool .isActive)
          return;
 
+      if (!this .tool .activeTool .match (/^(?:TRANSLATE|ROTATE|SCALE)$/))
+         return;
+
       if (this .tool .group === "NONE")
          return;
 
-      if (!this .tool .activeTool .match (/^(?:TRANSLATE|ROTATE|SCALE)$/))
+      if (this .isHidden ())
+         return;
+
+      if (!this ._visible .getValue ())
          return;
 
       const differenceMatrix = this .#initialMatrix .copy ()
