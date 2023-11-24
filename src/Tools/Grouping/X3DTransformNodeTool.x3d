@@ -12,7 +12,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.2.1, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 24 Nov 2023 00:22:32 GMT'/>
+    <meta name='modified' content='Fri, 24 Nov 2023 01:25:58 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -32,12 +32,12 @@
         <field accessType='inputOutput' type='SFBool' name='selected'/>
         <field accessType='inputOutput' type='SFString' name='group' value='TRANSFORM_TOOL'/>
         <field accessType='inputOutput' type='SFBool' name='grouping'/>
+        <field accessType='inputOutput' type='SFBool' name='undo' value='true'/>
         <field accessType='inputOutput' type='SFVec3f' name='translation'/>
         <field accessType='inputOutput' type='SFRotation' name='rotation'/>
         <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
         <field accessType='inputOutput' type='SFRotation' name='scaleOrientation'/>
         <field accessType='inputOutput' type='SFVec3f' name='center'/>
-        <field accessType='inputOutput' type='SFBool' name='undo' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='keys' value='true'/>
         <field accessType='inputOutput' type='MFString' name='tools' value='"TRANSLATE", "ROTATE", "SCALE"'/>
         <field accessType='inputOutput' type='SFString' name='translateMode' value='TRANSLATE_ALONG_AXIS'/>
@@ -1759,8 +1759,8 @@ function set_bboxCenter ()
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
       <fieldValue name='group' value=''/>
-      <fieldValue name='translation' value='-0.8999743 0 0'/>
       <fieldValue name='undo' value='false'/>
+      <fieldValue name='translation' value='-0.8999743 0 0'/>
       <fieldValue name='scaleUniform' value='true'/>
       <fieldValue name='bboxSize' value='2 3 4'/>
     </ProtoInstance>
