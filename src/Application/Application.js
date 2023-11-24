@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const
    electron     = require ("electron"),
@@ -11,39 +11,39 @@ const
    Template     = require ("./Template"),
    LocalStorage = require ("node-localstorage") .LocalStorage,
    DataStorage  = require ("../Application/DataStorage"),
-   _            = require ("../Application/GetText")
+   _            = require ("../Application/GetText");
 
 // Use electron@15.3
 
-const localStorage = new LocalStorage (path .join (electron .app .getPath ("userData"), "Global Storage"))
+const localStorage = new LocalStorage (path .join (electron .app .getPath ("userData"), "Global Storage"));
 
 module .exports = class Application
 {
-   config = new DataStorage (localStorage, "Sunrize.Application.")
-   mainMenu = [ ]
-   openURLValue = ""
-   exportPath = new Map ()
+   config = new DataStorage (localStorage, "Sunrize.Application.");
+   mainMenu = [ ];
+   openURLValue = "";
+   exportPath = new Map ();
 
    static run ()
    {
       if (electron .app .requestSingleInstanceLock ())
-         new this ()
+         new this ();
       else
-         electron .app .quit ()
+         electron .app .quit ();
    }
 
    constructor ()
    {
       if (process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT")
-         process .env .ELECTRON_ENABLE_LOGGING = 1
+         process .env .ELECTRON_ENABLE_LOGGING = 1;
 
-      process .env .ELECTRON_DISABLE_SECURITY_WARNINGS = "true"
+      process .env .ELECTRON_DISABLE_SECURITY_WARNINGS = "true";
 
       this .menuOptions = {
          defaultEditMenu: false,
          undoLabel: _ ("Undo"),
          redoLabel: _ ("Redo"),
-      }
+      };
 
       this .config .setDefaultValues ({
          position: [undefined, undefined],
@@ -58,82 +58,82 @@ module .exports = class Application
          textureQuality: "MEDIUM",
          rubberband: true,
          timings: false,
-      })
+      });
 
-      Template .create (path .join (__dirname, "../assets/html/application-template.html"))
-      Template .create (path .join (__dirname, "../assets/html/window-template.html"))
-      Template .create (path .join (__dirname, "../assets/themes/default-template.css"))
-      Template .create (path .join (__dirname, "../assets/themes/prompt-template.css"))
+      Template .create (path .join (__dirname, "../assets/html/application-template.html"));
+      Template .create (path .join (__dirname, "../assets/html/window-template.html"));
+      Template .create (path .join (__dirname, "../assets/themes/default-template.css"));
+      Template .create (path .join (__dirname, "../assets/themes/prompt-template.css"));
 
-      this .setup ()
+      this .setup ();
    }
 
    async setup ()
    {
 
-      await electron .app .whenReady ()
+      await electron .app .whenReady ();
 
-      electron .app .on ("activate",           (event)           => this .activate ())
-      electron .app .on ("new-window-for-tab", (event)           => this .createWindow ())
-      electron .app .on ("open-file",          (event, filePath) => this .openFiles ([url .pathToFileURL (filePath) .href]))
-      electron .app .on ("window-all-closed",  (event)           => this .quit ())
+      electron .app .on ("activate",           (event)           => this .activate ());
+      electron .app .on ("new-window-for-tab", (event)           => this .createWindow ());
+      electron .app .on ("open-file",          (event, filePath) => this .openFiles ([url .pathToFileURL (filePath) .href]));
+      electron .app .on ("window-all-closed",  (event)           => this .quit ());
 
-      electron .ipcMain .on ("title",        (event, title)       => this .title = title)
-      electron .ipcMain .on ("current-file", (event, currentFile) => this .currentFile = currentFile)
-      electron .ipcMain .on ("save-file",    (event, filePath)    => this .saveFile (filePath))
-      electron .ipcMain .on ("change-menu",  (event, object)      => this .updateMenu (object))
-      electron .ipcMain .on ("context-menu", (event, id, menu)    => this .contextMenu (id, menu))
+      electron .ipcMain .on ("title",        (event, title)       => this .title = title);
+      electron .ipcMain .on ("current-file", (event, currentFile) => this .currentFile = currentFile);
+      electron .ipcMain .on ("save-file",    (event, filePath)    => this .saveFile (filePath));
+      electron .ipcMain .on ("change-menu",  (event, object)      => this .updateMenu (object));
+      electron .ipcMain .on ("context-menu", (event, id, menu)    => this .contextMenu (id, menu));
 
-      electron .ipcMain .handle ("file-path", async (event, basename) => await this .showSaveDialog (basename))
-      electron .ipcMain .handle ("fullname", async () => this .fullname)
+      electron .ipcMain .handle ("file-path", async (event, basename) => await this .showSaveDialog (basename));
+      electron .ipcMain .handle ("fullname", async () => this .fullname);
 
-      this .fullname = await (await import ("fullname")) .default ()
+      this .fullname = await (await import ("fullname")) .default ();
 
-      await this .updateMenu ()
-      await this .createWindow ()
+      await this .updateMenu ();
+      await this .createWindow ();
 
-      this .openFiles (process .argv .slice (2) .map (filePath => url .pathToFileURL (filePath) .href))
+      this .openFiles (process .argv .slice (2) .map (filePath => url .pathToFileURL (filePath) .href));
 
       electron .app .on ("second-instance", (event, argv, cwd) =>
       {
-         this .openFiles (argv .slice (1) .filter (filePath => fs .existsSync (filePath) && fs .lstatSync (filePath) .isFile ()) .map (filePath => url .pathToFileURL (filePath) .href))
+         this .openFiles (argv .slice (1) .filter (filePath => fs .existsSync (filePath) && fs .lstatSync (filePath) .isFile ()) .map (filePath => url .pathToFileURL (filePath) .href));
 
-         this .mainWindow .show ()
+         this .mainWindow .show ();
       })
    }
 
    get applicationShouldQuitAfterLastWindowClosed ()
    {
-      return true || process .platform !== "darwin" || process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT"
+      return true || process .platform !== "darwin" || process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT";
    }
 
    get title ()
    {
-      return this .mainWindow .title
+      return this .mainWindow .title;
    }
 
    set title (title)
    {
-      this .mainWindow .title = `${title} · Sunrize`
+      this .mainWindow .title = `${title} · Sunrize`;
    }
 
    pushMenu (menu)
    {
-      this .mainMenu .push (menu)
+      this .mainMenu .push (menu);
       electron .Menu .setApplicationMenu (menu)
    }
 
    popMenu ()
    {
-      this .mainMenu .pop ()
-      electron .Menu .setApplicationMenu (this .mainMenu .at (-1))
+      this .mainMenu .pop ();
+      electron .Menu .setApplicationMenu (this .mainMenu .at (-1));
    }
 
    updateMenu (object = { })
    {
-      Object .assign (this .menuOptions, object)
+      Object .assign (this .menuOptions, object);
 
-      const exportPath = this .exportPath .get (this .currentFile)
+      const exportPath = this .exportPath .get (this .currentFile);
 
       const menu = electron .Menu .buildFromTemplate ([
          {
@@ -148,7 +148,7 @@ module .exports = class Application
                   accelerator: "CmdOrCtrl+N",
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("open-files")
+                     this .mainWindow .webContents .send ("open-files");
                   },
                },
                { type: "separator" },
@@ -157,12 +157,12 @@ module .exports = class Application
                   accelerator: "CmdOrCtrl+O",
                   click: async () =>
                   {
-                     const response = await this .showOpenDialog (this .currentFile)
+                     const response = await this .showOpenDialog (this .currentFile);
 
                      if (response .canceled)
-                        return
+                        return;
 
-                     this .openFiles (response .filePaths .map (filePath => url .pathToFileURL (filePath) .href))
+                     this .openFiles (response .filePaths .map (filePath => url .pathToFileURL (filePath) .href));
                   },
                },
                {
@@ -170,7 +170,7 @@ module .exports = class Application
                   accelerator: "Shift+CmdOrCtrl+O",
                   click: async () =>
                   {
-                     const clipboard = await this .clipboard ()
+                     const clipboard = await this .clipboard ();
 
                      this .pushMenu (electron .Menu .buildFromTemplate ([
                         {
@@ -178,7 +178,7 @@ module .exports = class Application
                            label: "Sunrize",
                         },
                         { role: "editMenu" },
-                     ]))
+                     ]));
 
                      const response = await prompt ({
                         title: "Open URL...",
@@ -192,21 +192,21 @@ module .exports = class Application
                         width: 500,
                         customStylesheet: path .join (__dirname, "../assets/themes/prompt.css"),
                      },
-                     this .mainWindow)
+                     this .mainWindow);
 
-                     this .popMenu ()
+                     this .popMenu ();
 
                      if (response === null)
-                        return
+                        return;
 
-                     this .openFiles ([this .openURLValue = response])
+                     this .openFiles ([this .openURLValue = response]);
                   },
                },
                {
-                  role: "recentdocuments",
+                  role: "recentDocuments",
                   submenu: [
                      {
-                        role: "clearrecentdocuments",
+                        role: "clearRecentDocuments",
                      },
                   ],
                },
@@ -216,7 +216,7 @@ module .exports = class Application
                   accelerator: "CmdOrCtrl+S",
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("save-file")
+                     this .mainWindow .webContents .send ("save-file");
                   },
                },
                {
@@ -224,28 +224,28 @@ module .exports = class Application
                   accelerator: "Shift+CmdOrCtrl+S",
                   click: async () =>
                   {
-                     const response = await this .showSaveDialog (this .currentFile)
+                     const response = await this .showSaveDialog (this .currentFile);
 
                      if (response .canceled)
-                        return
+                        return;
 
-                     electron .app .addRecentDocument (response .filePath)
+                     electron .app .addRecentDocument (response .filePath);
 
-                     this .mainWindow .webContents .send ("save-file-as", response .filePath)
+                     this .mainWindow .webContents .send ("save-file-as", response .filePath);
                   },
                },
                {
                   label: _ ("Save Copy As..."),
                   click: async () =>
                   {
-                     const response = await this .showSaveDialog (this .currentFile)
+                     const response = await this .showSaveDialog (this .currentFile);
 
                      if (response .canceled)
-                        return
+                        return;
 
-                     electron .app .addRecentDocument (response .filePath)
+                     electron .app .addRecentDocument (response .filePath);
 
-                     this .mainWindow .webContents .send ("save-copy-as", response .filePath)
+                     this .mainWindow .webContents .send ("save-copy-as", response .filePath);
                   },
                },
                {
@@ -253,7 +253,7 @@ module .exports = class Application
                   accelerator: "Alt+CmdOrCtrl+S",
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("save-all-files")
+                     this .mainWindow .webContents .send ("save-all-files");
                   },
                },
                { type: "separator" },
@@ -263,8 +263,8 @@ module .exports = class Application
                   checked: this .config .autoSave,
                   click: () =>
                   {
-                     this .config .autoSave = !this .config .autoSave
-                     this .mainWindow .webContents .send ("auto-save", this .config .autoSave)
+                     this .config .autoSave = !this .config .autoSave;
+                     this .mainWindow .webContents .send ("auto-save", this .config .autoSave);
                   },
 
                },
@@ -276,9 +276,9 @@ module .exports = class Application
                      accelerator: "CmdOrCtrl+E",
                      click: async () =>
                      {
-                        const exportPath = this .exportPath .get (this .currentFile)
+                        const exportPath = this .exportPath .get (this .currentFile);
 
-                        this .mainWindow .webContents .send ("export-as", exportPath)
+                        this .mainWindow .webContents .send ("export-as", exportPath);
                      },
                   }
                ] : [ ],
@@ -287,18 +287,18 @@ module .exports = class Application
                   accelerator: "Shift+CmdOrCtrl+E",
                   click: async () =>
                   {
-                     const response = await this .showExportDialog (this .currentFile)
+                     const response = await this .showExportDialog (this .currentFile);
 
                      if (response .canceled)
-                        return
+                        return;
 
-                     electron .app .addRecentDocument (response .filePath)
+                     electron .app .addRecentDocument (response .filePath);
 
-                     this .exportPath .set (this .currentFile, response .filePath)
+                     this .exportPath .set (this .currentFile, response .filePath);
 
-                     this .mainWindow .webContents .send ("export-as", response .filePath)
+                     this .mainWindow .webContents .send ("export-as", response .filePath);
 
-                     this .updateMenu ()
+                     this .updateMenu ();
                   },
                },
                { type: "separator" },
@@ -307,7 +307,7 @@ module .exports = class Application
                   accelerator: "CmdOrCtrl+I",
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("scene-properties")
+                     this .mainWindow .webContents .send ("scene-properties");
                   },
                },
                { type: "separator" },
@@ -326,7 +326,7 @@ module .exports = class Application
                   enabled: this .menuOptions .undoLabel !== _ ("Undo"),
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("undo")
+                     this .mainWindow .webContents .send ("undo");
                   },
                },
                {
@@ -335,7 +335,7 @@ module .exports = class Application
                   enabled: this .menuOptions .redoLabel !== _ ("Redo"),
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("redo")
+                     this .mainWindow .webContents .send ("redo");
                   },
                },
                { type: "separator" },
@@ -344,7 +344,7 @@ module .exports = class Application
                   accelerator: "CmdOrCtrl+X",
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("cut")
+                     this .mainWindow .webContents .send ("cut");
                   },
                },
                {
@@ -352,7 +352,7 @@ module .exports = class Application
                   accelerator: "CmdOrCtrl+C",
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("copy")
+                     this .mainWindow .webContents .send ("copy");
                   },
                },
                {
@@ -360,7 +360,7 @@ module .exports = class Application
                   accelerator: "CmdOrCtrl+V",
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("paste")
+                     this .mainWindow .webContents .send ("paste");
                   },
                },
                {
@@ -368,7 +368,7 @@ module .exports = class Application
                   accelerator: "CmdOrCtrl+Backspace",
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("delete")
+                     this .mainWindow .webContents .send ("delete");
                   },
                },
             ],
@@ -381,7 +381,7 @@ module .exports = class Application
                   accelerator: "CmdOrCtrl+A",
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("select-all")
+                     this .mainWindow .webContents .send ("select-all");
                   },
                },
                {
@@ -389,7 +389,7 @@ module .exports = class Application
                   accelerator: "Shift+CmdOrCtrl+A",
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("deselect-all")
+                     this .mainWindow .webContents .send ("deselect-all");
                   },
                },
                { type: "separator" },
@@ -397,21 +397,21 @@ module .exports = class Application
                   label: _ ("Hide Unselected Objects"),
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("hide-unselected-objects")
+                     this .mainWindow .webContents .send ("hide-unselected-objects");
                   },
                },
                {
                   label: _ ("Show Selected Objects"),
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("show-selected-objects")
+                     this .mainWindow .webContents .send ("show-selected-objects");
                   },
                },
                {
                   label: _ ("Show All Objects"),
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("show-all-objects")
+                     this .mainWindow .webContents .send ("show-all-objects");
                   },
                },
                { type: "separator" },
@@ -419,7 +419,7 @@ module .exports = class Application
                   label: _ ("Remove Empty Groups"),
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("remove-empty-groups")
+                     this .mainWindow .webContents .send ("remove-empty-groups");
                   },
                },
             ],
@@ -444,7 +444,7 @@ module .exports = class Application
                   visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("reload")
+                     this .mainWindow .webContents .send ("reload");
                   },
                },
                {
@@ -452,7 +452,7 @@ module .exports = class Application
                   visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("toggle-developer-tools")
+                     this .mainWindow .webContents .send ("toggle-developer-tools");
                   },
                },
                { type: "separator" },
@@ -465,8 +465,8 @@ module .exports = class Application
                         checked: this .config .expandExternProtoDeclarations,
                         click: () =>
                         {
-                           this .config .expandExternProtoDeclarations = !this .config .expandExternProtoDeclarations
-                           this .mainWindow .webContents .send ("expand-extern-proto-declarations", this .config .expandExternProtoDeclarations)
+                           this .config .expandExternProtoDeclarations = !this .config .expandExternProtoDeclarations;
+                           this .mainWindow .webContents .send ("expand-extern-proto-declarations", this .config .expandExternProtoDeclarations);
                         },
                      },
                      {
@@ -475,8 +475,8 @@ module .exports = class Application
                         checked: this .config .expandPrototypeInstances,
                         click: () =>
                         {
-                           this .config .expandPrototypeInstances = !this .config .expandPrototypeInstances
-                           this .mainWindow .webContents .send ("expand-prototype-instances", this .config .expandPrototypeInstances)
+                           this .config .expandPrototypeInstances = !this .config .expandPrototypeInstances;
+                           this .mainWindow .webContents .send ("expand-prototype-instances", this .config .expandPrototypeInstances);
                         },
                      },
                      {
@@ -485,8 +485,8 @@ module .exports = class Application
                         checked: this .config .expandInlineNodes,
                         click: () =>
                         {
-                           this .config .expandInlineNodes = !this .config .expandInlineNodes
-                           this .mainWindow .webContents .send ("expand-inline-nodes", this .config .expandInlineNodes)
+                           this .config .expandInlineNodes = !this .config .expandInlineNodes;
+                           this .mainWindow .webContents .send ("expand-inline-nodes", this .config .expandInlineNodes);
                         },
                      },
                   ],
@@ -501,8 +501,8 @@ module .exports = class Application
                         checked: this .config .primitiveQuality === "HIGH",
                         click: () =>
                         {
-                           this .config .primitiveQuality = "HIGH"
-                           this .mainWindow .webContents .send ("primitive-quality", this .config .primitiveQuality)
+                           this .config .primitiveQuality = "HIGH";
+                           this .mainWindow .webContents .send ("primitive-quality", this .config .primitiveQuality);
                         },
                      },
                      {
@@ -511,8 +511,8 @@ module .exports = class Application
                         checked: this .config .primitiveQuality === "MEDIUM" || this .config .primitiveQuality === undefined,
                         click: () =>
                         {
-                           this .config .primitiveQuality = "MEDIUM"
-                           this .mainWindow .webContents .send ("primitive-quality", this .config .primitiveQuality)
+                           this .config .primitiveQuality = "MEDIUM";
+                           this .mainWindow .webContents .send ("primitive-quality", this .config .primitiveQuality);
                         },
                      },
                      {
@@ -521,8 +521,8 @@ module .exports = class Application
                         checked: this .config .primitiveQuality === "LOW",
                         click: () =>
                         {
-                           this .config .primitiveQuality = "LOW"
-                           this .mainWindow .webContents .send ("primitive-quality", this .config .primitiveQuality)
+                           this .config .primitiveQuality = "LOW";
+                           this .mainWindow .webContents .send ("primitive-quality", this .config .primitiveQuality);
                         },
                      }
                   ],
@@ -536,8 +536,8 @@ module .exports = class Application
                         checked: this .config .textureQuality === "HIGH",
                         click: () =>
                         {
-                           this .config .textureQuality = "HIGH"
-                           this .mainWindow .webContents .send ("texture-quality", this .config .textureQuality)
+                           this .config .textureQuality = "HIGH";
+                           this .mainWindow .webContents .send ("texture-quality", this .config .textureQuality);
                         },
                      },
                      {
@@ -546,8 +546,8 @@ module .exports = class Application
                         checked: this .config .textureQuality === "MEDIUM" || this .config .textureQuality === undefined,
                         click: () =>
                         {
-                           this .config .textureQuality = "MEDIUM"
-                           this .mainWindow .webContents .send ("texture-quality",this .config .textureQuality)
+                           this .config .textureQuality = "MEDIUM";
+                           this .mainWindow .webContents .send ("texture-quality",this .config .textureQuality);
                         },
                      },
                      {
@@ -556,8 +556,8 @@ module .exports = class Application
                         checked: this .config .textureQuality === "LOW",
                         click: () =>
                         {
-                           this .config .textureQuality = "LOW"
-                           this .mainWindow .webContents .send ("texture-quality", this .config .textureQuality)
+                           this .config .textureQuality = "LOW";
+                           this .mainWindow .webContents .send ("texture-quality", this .config .textureQuality);
                         },
                      }
                   ],
@@ -568,8 +568,8 @@ module .exports = class Application
                   checked: this .config .rubberband,
                   click: () =>
                   {
-                     this .config .rubberband = !this .config .rubberband
-                     this .mainWindow .webContents .send ("display-rubberband", this .config .rubberband)
+                     this .config .rubberband = !this .config .rubberband;
+                     this .mainWindow .webContents .send ("display-rubberband", this .config .rubberband);
                   },
                },
                {
@@ -578,8 +578,8 @@ module .exports = class Application
                   checked: this .config .timings,
                   click: () =>
                   {
-                     this .config .timings = !this .config .timings
-                     this .mainWindow .webContents .send ("display-timings", this .config .timings)
+                     this .config .timings = !this .config .timings;
+                     this .mainWindow .webContents .send ("display-timings", this .config .timings);
                   },
                },
                { type: "separator" },
@@ -588,7 +588,7 @@ module .exports = class Application
                   accelerator: "Shift+CmdOrCtrl+L",
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("show-library")
+                     this .mainWindow .webContents .send ("show-library");
                   },
                },
                { type: "separator" },
@@ -604,7 +604,7 @@ module .exports = class Application
                   label: _ ("Browser Size..."),
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("browser-size")
+                     this .mainWindow .webContents .send ("browser-size");
                   },
                },
             ],
@@ -620,17 +620,17 @@ module .exports = class Application
                   label: "Learn More",
                   click: async () =>
                   {
-                     await electron .shell .openExternal ("https://create3000.github.io/x_ite/")
+                     await electron .shell .openExternal ("https://create3000.github.io/x_ite/");
                   },
                },
             ],
          },
-      ])
+      ]);
 
-      this .mainMenu [0] = menu
+      this .mainMenu [0] = menu;
 
       if (this .mainMenu .length === 1)
-         electron .Menu .setApplicationMenu (menu)
+         electron .Menu .setApplicationMenu (menu);
    }
 
    async createWindow ()
@@ -738,10 +738,10 @@ module .exports = class Application
       for (const URL of urls)
       {
          if (URL .startsWith ("file:"))
-            electron .app .addRecentDocument (url .fileURLToPath (URL))
+            electron .app .addRecentDocument (url .fileURLToPath (URL));
       }
 
-      this .mainWindow .webContents .send ("open-files", urls)
+      this .mainWindow .webContents .send ("open-files", urls);
    }
 
    async showOpenDialog (defaultPath)
@@ -752,7 +752,7 @@ module .exports = class Application
             label: "Sunrize",
          },
          { role: "editMenu" },
-      ]))
+      ]));
 
       const response = await electron .dialog .showOpenDialog ({
          defaultPath: defaultPath,
@@ -763,16 +763,16 @@ module .exports = class Application
                extensions: ["x3d", "x3dz", "x3dj", "x3djz", "x3dv", "x3dvz", "wrl", "wrz", "wrl.gz", "vrml", "gltf", "glb", "obj", "stl", "ply", "svg"],
             },
          ],
-      })
+      });
 
-      this .popMenu ()
+      this .popMenu ();
 
-      return response
+      return response;
    }
 
    saveFile (filePath)
    {
-      electron .app .addRecentDocument (filePath)
+      electron .app .addRecentDocument (filePath);
    }
 
    async showSaveDialog (defaultPath)
@@ -783,7 +783,7 @@ module .exports = class Application
             label: "Sunrize",
          },
          { role: "editMenu" },
-      ]))
+      ]));
 
       const response = await electron .dialog .showSaveDialog ({
          defaultPath: defaultPath,
@@ -796,11 +796,11 @@ module .exports = class Application
             { name: "X3D VRML Classic Document", extensions: ["x3dv"] },
             { name: "X3D VRML Classic Document GZipped", extensions: ["x3dvz"] },
          ],
-      })
+      });
 
-      this .popMenu ()
+      this .popMenu ();
 
-      return response
+      return response;
    }
 
    async showExportDialog (defaultPath)
@@ -811,7 +811,7 @@ module .exports = class Application
             label: "Sunrize",
          },
          { role: "editMenu" },
-      ]))
+      ]));
 
       const response = await electron .dialog .showSaveDialog ({
          defaultPath: defaultPath,
@@ -819,53 +819,53 @@ module .exports = class Application
          filters : [
             { name: "HTML Document", extensions: ["html"] },
          ],
-      })
+      });
 
-      this .popMenu ()
+      this .popMenu ();
 
-      return response
+      return response;
    }
 
    maximize ()
    {
-      this .config .maximized = true
+      this .config .maximized = true;
    }
 
    unmaximize ()
    {
-      this .config .maximized = false
+      this .config .maximized = false;
    }
 
    enterFullscreen ()
    {
-      this .config .fullscreen = true
+      this .config .fullscreen = true;
    }
 
    leaveFullscreen ()
    {
-      this .config .fullscreen = false
+      this .config .fullscreen = false;
    }
 
    blur ()
    {
-      this .mainWindow .webContents .send ("save-all-files")
+      this .mainWindow .webContents .send ("save-all-files");
    }
 
    close (event)
    {
       if (!this .mainWindow .closing)
       {
-         event .preventDefault ()
-         this .mainWindow .closing = true
-         this .mainWindow .webContents .send ("quit")
+         event .preventDefault ();
+         this .mainWindow .closing = true;
+         this .mainWindow .webContents .send ("quit");
       }
       else
       {
          if (this .config .maximized || this .config .fullscreen)
-            return
+            return;
 
-         this .config .position = this .mainWindow .getPosition ()
-         this .config .size     = this .mainWindow .getSize ()
+         this .config .position = this .mainWindow .getPosition ();
+         this .config .size     = this .mainWindow .getSize ();
       }
    }
 
@@ -873,20 +873,20 @@ module .exports = class Application
    {
       try
       {
-         return await clipboardy .read ()
+         return await clipboardy .read ();
       }
       catch
       {
-         return ""
+         return "";
       }
    }
 
    quit ()
    {
       if (!this .applicationShouldQuitAfterLastWindowClosed)
-         return
+         return;
 
-      Template .removeAll ()
-      electron .app .quit ()
+      Template .removeAll ();
+      electron .app .quit ();
    }
-}
+};
