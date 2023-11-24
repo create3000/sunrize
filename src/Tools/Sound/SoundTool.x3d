@@ -12,7 +12,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.2.1, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Sound/SoundTool.x3d'/>
-    <meta name='modified' content='Fri, 24 Nov 2023 19:45:12 GMT'/>
+    <meta name='modified' content='Fri, 24 Nov 2023 19:52:54 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -161,8 +161,8 @@
             </Transform>
             <Group DEF='MinBack'>
               <Transform DEF='CenterPoint_2'
-                  translation='0 0 1'>
-                <ScreenGroup>
+                  translation='0 0 -1'>
+                <ScreenGroup DEF='_19'>
                   <Shape
                       castShadow='false'>
                     <Appearance DEF='Red'>
@@ -183,13 +183,30 @@
                 </TouchSensor>
               </Transform>
               <Transform DEF='MinBackTool'
-                  translation='0 0 1'
+                  translation='0 0 -1'
                   rotation='0 1 0 90'
                   visible='false'>
                 <ScreenGroup DEF='_4'>
                   <Group
                       bboxSize='30 30 30'/>
                 </ScreenGroup>
+              </Transform>
+            </Group>
+            <Group DEF='MinFront'>
+              <Transform DEF='CenterPoint_3'
+                  translation='0 0 1'>
+                <ScreenGroup USE='_19'/>
+                <TouchSensor DEF='_24'>
+                  <IS>
+                    <connect nodeField='enabled' protoField='selected'/>
+                  </IS>
+                </TouchSensor>
+              </Transform>
+              <Transform DEF='MinFrontTool'
+                  translation='0 0 1'
+                  rotation='0 1 0 -90'
+                  visible='false'>
+                <ScreenGroup USE='_4'/>
               </Transform>
             </Group>
             <Group DEF='MaxBack'>
@@ -286,7 +303,9 @@
           <field accessType='initializeOnly' type='SFNode' name='minBackTransform'>
             <Transform USE='MinBackTool'/>
           </field>
-          <field accessType='initializeOnly' type='SFNode' name='minFrontTransform'/>
+          <field accessType='initializeOnly' type='SFNode' name='minFrontTransform'>
+            <Transform USE='MinFrontTool'/>
+          </field>
           <field accessType='initializeOnly' type='SFNode' name='maxBackTransform'>
             <Transform USE='MaxBackTool'/>
           </field>
@@ -452,9 +471,71 @@ function set_minBack (value)
 
 // minFront
 
+let minFrontChanging = false;
+
+async function set_minFrontTime ()
+{
+   minFrontDisplay            = !minFrontDisplay;
+   minFrontTransform .visible = selected && minFrontDisplay;
+
+   if (minFrontTransform .getValue () .getTool ())
+      return;
+
+   const tool = await minFrontTransform .getValue () .addTool () .getToolInstance ();
+
+   Browser .addRoute (tool, "isActive", this, "set_minFrontActive");
+
+   tool .group         = "NONE";
+   tool .undo          = false;
+   tool .tools         = new MFString ("TRANSLATE");
+   tool .yAxisDisplay  = false;
+   tool .zAxisDisplay  = false;
+   tool .centerDisplay = false;
+   tool .bboxDisplay   = false;
+}
+
+async function set_minFrontActive (value)
+{
+   if (value)
+   {
+      activeTool = "MIN_FRONT";
+      active     = true;
+   }
+   else
+   {
+      const tool = await transform .getValue () .addTool () .getToolInstance ();
+
+      activeTool = tool .activeTool;
+      active     = false;
+   }
+}
+
+function set_minFrontTranslation (value)
+{
+   if (minFrontChanging)
+   {
+      minFrontChanging = false;
+      return;
+   }
+
+   minFrontChanging = true;
+
+   minFront = value .z;
+}
+
 function set_minFront (value)
 {
    set_minRange ();
+
+   if (minFrontChanging)
+   {
+      minFrontChanging = false;
+      return;
+   }
+
+   minFrontChanging = true;
+
+   minFrontTransform .translation .z = value;
 }
 
 // maxBack
@@ -641,6 +722,9 @@ function getEllipsoidParams (back, front)
         <ROUTE fromNode='MinBackTool' fromField='translation_changed' toNode='CenterPoint_2' toField='set_translation'/>
         <ROUTE fromNode='_18' fromField='touchTime' toNode='SoundScript' toField='set_minBackTime'/>
         <ROUTE fromNode='MinBackTool' fromField='translation_changed' toNode='SoundScript' toField='set_minBackTranslation'/>
+        <ROUTE fromNode='MinFrontTool' fromField='translation_changed' toNode='CenterPoint_3' toField='set_translation'/>
+        <ROUTE fromNode='_24' fromField='touchTime' toNode='SoundScript' toField='set_minFrontTime'/>
+        <ROUTE fromNode='MinFrontTool' fromField='translation_changed' toNode='SoundScript' toField='set_minFrontTranslation'/>
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
