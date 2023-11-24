@@ -12,7 +12,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.2.1, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Sound/SoundTool.x3d'/>
-    <meta name='modified' content='Fri, 24 Nov 2023 19:12:44 GMT'/>
+    <meta name='modified' content='Fri, 24 Nov 2023 19:22:54 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -162,7 +162,7 @@
             <Group DEF='MaxBack'>
               <Transform DEF='CenterPoint'
                   translation='0 0 -10'>
-                <ScreenGroup>
+                <ScreenGroup DEF='_3'>
                   <Shape DEF='YellowPoint'
                       castShadow='false'>
                     <Appearance DEF='Green'>
@@ -186,10 +186,27 @@
                   translation='0 0 -10'
                   rotation='1 0 0 -90'
                   visible='false'>
-                <ScreenGroup>
+                <ScreenGroup DEF='_4'>
                   <Group
                       bboxSize='30 30 30'/>
                 </ScreenGroup>
+              </Transform>
+            </Group>
+            <Group DEF='MaxFront'>
+              <Transform DEF='CenterPoint_1'
+                  translation='0 0 10'>
+                <ScreenGroup USE='_3'/>
+                <TouchSensor DEF='_17'>
+                  <IS>
+                    <connect nodeField='enabled' protoField='selected'/>
+                  </IS>
+                </TouchSensor>
+              </Transform>
+              <Transform DEF='MaxFrontTool'
+                  translation='0 0 10'
+                  rotation='1 0 0 90'
+                  visible='false'>
+                <ScreenGroup USE='_4'/>
               </Transform>
             </Group>
           </Transform>
@@ -210,13 +227,25 @@
           <field accessType='inputOutput' type='SFBool' name='active'/>
           <field accessType='inputOutput' type='SFVec3f' name='direction'/>
           <field accessType='inputOnly' type='SFRotation' name='set_rotation'/>
+          <field accessType='inputOnly' type='SFTime' name='set_minBackTime'/>
+          <field accessType='inputOnly' type='SFBool' name='set_minBackActive'/>
+          <field accessType='inputOnly' type='SFVec3f' name='set_minBackTranslation'/>
+          <field accessType='initializeOnly' type='SFBool' name='minBackDisplay'/>
           <field accessType='inputOutput' type='SFFloat' name='minBack'/>
+          <field accessType='inputOnly' type='SFTime' name='set_minFrontTime'/>
+          <field accessType='inputOnly' type='SFBool' name='set_minFrontActive'/>
+          <field accessType='inputOnly' type='SFVec3f' name='set_minFrontTranslation'/>
+          <field accessType='initializeOnly' type='SFBool' name='minFrontDisplay'/>
           <field accessType='inputOutput' type='SFFloat' name='minFront'/>
           <field accessType='inputOnly' type='SFTime' name='set_maxBackTime'/>
           <field accessType='inputOnly' type='SFBool' name='set_maxBackActive'/>
           <field accessType='inputOnly' type='SFVec3f' name='set_maxBackTranslation'/>
           <field accessType='initializeOnly' type='SFBool' name='maxBackDisplay'/>
           <field accessType='inputOutput' type='SFFloat' name='maxBack'/>
+          <field accessType='inputOnly' type='SFTime' name='set_maxFrontTime'/>
+          <field accessType='inputOnly' type='SFBool' name='set_maxFrontActive'/>
+          <field accessType='inputOnly' type='SFVec3f' name='set_maxFrontTranslation'/>
+          <field accessType='initializeOnly' type='SFBool' name='maxFrontDisplay'/>
           <field accessType='inputOutput' type='SFFloat' name='maxFront'/>
           <field accessType='outputOnly' type='SFVec3f' name='minTranslation_changed'/>
           <field accessType='outputOnly' type='SFVec3f' name='maxTranslation_changed'/>
@@ -226,8 +255,13 @@
           <field accessType='inputOutput' type='SFNode' name='transform'>
             <Transform USE='TransformTool'/>
           </field>
+          <field accessType='initializeOnly' type='SFNode' name='minBackTransform'/>
+          <field accessType='initializeOnly' type='SFNode' name='minFrontTransform'/>
           <field accessType='initializeOnly' type='SFNode' name='maxBackTransform'>
             <Transform USE='MaxBackTool'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='maxFrontTransform'>
+            <Transform USE='MaxFrontTool'/>
           </field>
           <field accessType='initializeOnly' type='SFNode' name='material'>
             <Material USE='_2'/>
@@ -400,9 +434,71 @@ function set_maxBack (value)
 
 // maxFront
 
+let maxFrontChanging = false;
+
+async function set_maxFrontTime ()
+{
+   maxFrontDisplay            = !maxFrontDisplay;
+   maxFrontTransform .visible = selected && maxFrontDisplay;
+
+   if (maxFrontTransform .getValue () .getTool ())
+      return;
+
+   const tool = await maxFrontTransform .getValue () .addTool () .getToolInstance ();
+
+   Browser .addRoute (tool, "isActive", this, "set_maxFrontActive");
+
+   tool .group         = "NONE";
+   tool .undo          = false;
+   tool .tools         = new MFString ("TRANSLATE");
+   tool .xAxisDisplay  = false;
+   tool .zAxisDisplay  = false;
+   tool .centerDisplay = false;
+   tool .bboxDisplay   = false;
+}
+
+async function set_maxFrontActive (value)
+{
+   if (value)
+   {
+      activeTool = "MAX_FRONT";
+      active     = true;
+   }
+   else
+   {
+      const tool = await transform .getValue () .addTool () .getToolInstance ();
+
+      activeTool = tool .activeTool;
+      active     = false;
+   }
+}
+
+function set_maxFrontTranslation (value)
+{
+   if (maxFrontChanging)
+   {
+      maxFrontChanging = false;
+      return;
+   }
+
+   maxFrontChanging = true;
+
+   maxFront = value .z;
+}
+
 function set_maxFront (value)
 {
    set_maxRange ();
+
+   if (maxFrontChanging)
+   {
+      maxFrontChanging = false;
+      return;
+   }
+
+   maxFrontChanging = true;
+
+   maxFrontTransform .translation .z = value;
 }
 
 // Ranges
@@ -445,6 +541,9 @@ function getEllipsoidParams (back, front)
         <ROUTE fromNode='MaxBackTool' fromField='translation_changed' toNode='CenterPoint' toField='set_translation'/>
         <ROUTE fromNode='_16' fromField='touchTime' toNode='SoundScript' toField='set_maxBackTime'/>
         <ROUTE fromNode='MaxBackTool' fromField='translation_changed' toNode='SoundScript' toField='set_maxBackTranslation'/>
+        <ROUTE fromNode='MaxFrontTool' fromField='translation_changed' toNode='CenterPoint_1' toField='set_translation'/>
+        <ROUTE fromNode='MaxFrontTool' fromField='translation_changed' toNode='SoundScript' toField='set_maxFrontTranslation'/>
+        <ROUTE fromNode='_17' fromField='touchTime' toNode='SoundScript' toField='set_maxFrontTime'/>
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>

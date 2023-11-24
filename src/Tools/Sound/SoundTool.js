@@ -24,7 +24,7 @@ class SoundTool extends X3DChildNodeTool
 
    beginUndo ()
    {
-      this .undoSaveInitialValues (["location", "direction", "maxBack"]);
+      this .undoSaveInitialValues (["location", "direction", "maxBack", "maxFront"]);
    }
 
    getUndoDescription (activeTool, name)
@@ -37,6 +37,13 @@ class SoundTool extends X3DChildNodeTool
                return _ ("Translate field »maxBack« of Node %s »%s«");
 
             return _ ("Translate »maxBack« of Node %s");
+         }
+         case "MAX_FRONT":
+         {
+            if (name)
+               return _ ("Translate field »maxFront« of Node %s »%s«");
+
+            return _ ("Translate »maxFront of Node %s");
          }
          default:
          {

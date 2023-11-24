@@ -38,8 +38,6 @@ class X3DChildNodeTool extends X3DNodeTool
       if (!this .tool .undo)
          return;
 
-      console .log (this .getTypeName (), active .getValue (), this .tool .activeTool)
-
       if (active .getValue ())
          this .prepareUndo ();
       else
