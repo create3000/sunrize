@@ -9,7 +9,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.2.1, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Lighting/X3DLightNodeTool.x3d'/>
-    <meta name='modified' content='Fri, 24 Nov 2023 09:51:12 GMT'/>
+    <meta name='modified' content='Fri, 24 Nov 2023 10:07:29 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -161,7 +161,7 @@
                         <IndexedLineSet
                             coordIndex='0, 1, -1, 2, 3, -1, 4, 5, -1, 6, 7, -1, 8, 9, -1, 10, 11, -1, 12, 13, -1, 14, 15, -1, 16, 17, -1'>
                           <Coordinate
-                              point='-1 0 0, 1 0 0, 0 -1 0, 0 1 0, 0 0 -1, 0 0 1, -0.4999975 0.7071091 -0.4999992, 0.4999975 -0.7071091 0.4999992, -0.5000012 -0.7071044 -0.5000021, 0.5000012 0.7071044 0.5000021, 0.7071076 -4.105466e-7 -0.7071059, -0.7071076 4.105466e-7 0.7071059, -0.4999972 0.7071071 0.5000023, 0.4999972 -0.7071071 -0.5000023, -0.4999992 -0.7071065 0.5000012, 0.4999992 0.7071065 -0.5000012, -0.7071093 1.568988e-6 -0.7071042, 0.7071093 -1.568988e-6 0.7071042'/>
+                              point='-1 0 0, 1 0 0, 0 -1 0, 0 1 0, 0 0 -1, 0 0 1, -0.5 0.7071068 -0.5, 0.5 -0.7071068 0.5, -0.5 -0.7071068 -0.5, 0.5 0.7071068 0.5, 0.7071068 0 -0.7071068, -0.7071068 0 0.7071068, -0.5 0.7071068 0.5, 0.5 -0.7071068 -0.5, -0.5 -0.7071068 0.5, 0.5 0.7071068 -0.5, -0.7071068 0 -0.7071068, 0.7071068 0 0.7071068'/>
                         </IndexedLineSet>
                       </Shape>
                     </Transform>
@@ -203,7 +203,7 @@
                           <IndexedLineSet
                               coordIndex='0, 1, -1, 2, 3, -1, 4, 5, -1, 6, 7, -1, 8, 9, -1, 10, 11, -1, 12, 13, -1, 14, 15, -1, 16, 17, -1'>
                             <Coordinate
-                                point='-1 0 0, 1 0 0, 0 -1 0, 0 1 0, 0 0 0, 0 0 1, 0 0 0, 0.4999975 -0.7071091 0.4999992, 0 0 0, 0.5000012 0.7071044 0.5000021, 0 0 0, -0.7071076 4.105466e-7 0.7071059, -0.4999972 0.7071071 0.5000023, 0 0 0, -0.4999992 -0.7071065 0.5000012, 0 0 0, 0 0 0, 0.7071093 -1.568988e-6 0.7071042'/>
+                                point='-1 0 0, 1 0 0, 0 -1 0, 0 1 0, 0 0 0, 0 0 1, 0 0 0, 0.5 -0.7071068 0.5, 0 0 0, 0.5 0.7071068 0.5, 0 0 0, -0.7071068 0 0.7071068, -0.5 0.7071068 0.5, 0 0 0, -0.5 -0.7071068 0.5, 0 0 0, 0 0 0, 0.7071068 0 0.7071068'/>
                           </IndexedLineSet>
                         </Shape>
                       </Transform>
@@ -407,6 +407,8 @@ function set_angle ()
         <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='Tool' toField='set_rotation'/>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='Tool'/>
+    <ProtoInstance name='Tool'>
+      <fieldValue name='type' value='2'/>
+    </ProtoInstance>
   </Scene>
 </X3D>
