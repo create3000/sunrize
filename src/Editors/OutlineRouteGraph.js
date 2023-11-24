@@ -321,14 +321,14 @@ module .exports = class OutlineRouteGraph extends OutlineView
 					routeId = element .attr ("route-id") !== undefined ? parseInt (element .attr ("route-id")) : undefined;
 
 				let
-					inputRoutesDown          = 0,
-					inputRoutesUp            = 0,
-					outputRoutesDown         = 0,
-					outputRoutesUp           = 0,
-					selectedInputRoutesUp    = 0,
-					selectedInputRoutesDown  = 0,
-					selectedOutputRoutesUp   = 0,
-					selectedOutputRoutesDown = 0;
+					numInputRoutesDown          = 0,
+					numInputRoutesUp            = 0,
+					numOutputRoutesDown         = 0,
+					numOutputRoutesUp           = 0,
+					numSelectedInputRoutesUp    = 0,
+					numSelectedInputRoutesDown  = 0,
+					numSelectedOutputRoutesUp   = 0,
+					numSelectedOutputRoutesDown = 0;
 
 				field .getInputRoutes () .forEach (route =>
 				{
@@ -340,16 +340,16 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 					if (routes .has (route))
 					{
-						inputRoutesUp         += 1;
-						selectedInputRoutesUp += this .selectedRoutes .has (route .getId ());
+						numInputRoutesUp         += 1;
+						numSelectedInputRoutesUp += this .selectedRoutes .has (route .getId ());
 
 						routes         .delete (route);
 						selectedRoutes .delete (route);
 					}
 					else
 					{
-						inputRoutesDown         += 1;
-						selectedInputRoutesDown += this .selectedRoutes .has (route .getId ());
+						numInputRoutesDown         += 1;
+						numSelectedInputRoutesDown += this .selectedRoutes .has (route .getId ());
 
 						routes .add (route);
 					}
@@ -366,16 +366,16 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 					if (routes .has (route))
 					{
-						outputRoutesUp         += 1;
-						selectedOutputRoutesUp += this .selectedRoutes .has (route .getId ());
+						numOutputRoutesUp         += 1;
+						numSelectedOutputRoutesUp += this .selectedRoutes .has (route .getId ());
 
 						routes         .delete (route);
 						selectedRoutes .delete (route);
 					}
 					else
 					{
-						outputRoutesDown         += 1;
-						selectedOutputRoutesDown += this .selectedRoutes .has (route .getId ());
+						numOutputRoutesDown         += 1;
+						numSelectedOutputRoutesDown += this .selectedRoutes .has (route .getId ());
 
 						routes .add (route);
 					}
@@ -391,13 +391,13 @@ module .exports = class OutlineRouteGraph extends OutlineView
 				{
 					// Draw curve up.
 
-					if (inputRoutesUp)
+					if (numInputRoutesUp)
 					{
 						// Input curve up.
 
-						if (draw (state, selectedInputRoutesUp))
+						if (draw (state, numSelectedInputRoutesUp))
 						{
-							context .strokeStyle = selectedInputRoutesUp ? routeSelectedColor : routeColor;
+							context .strokeStyle = numSelectedInputRoutesUp ? routeSelectedColor : routeColor;
 
 							context .beginPath ();
 							context .arc (0, 0, 9.5, 1/2 * Math .PI, 2 * Math .PI, true);
@@ -406,13 +406,13 @@ module .exports = class OutlineRouteGraph extends OutlineView
 						}
 					}
 
-					if (outputRoutesUp)
+					if (numOutputRoutesUp)
 					{
 						// Output curve up.
 
-						if (draw (state, selectedOutputRoutesUp))
+						if (draw (state, numSelectedOutputRoutesUp))
 						{
-							context .strokeStyle = selectedOutputRoutesUp ? routeSelectedColor : routeColor;
+							context .strokeStyle = numSelectedOutputRoutesUp ? routeSelectedColor : routeColor;
 
 							context .beginPath ();
 							context .arc (0, 5, 9.5, 1/2 * Math .PI, 2 * Math .PI, true);
@@ -423,13 +423,13 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 					// Draw curve down.
 
-					if (inputRoutesDown)
+					if (numInputRoutesDown)
 					{
 						// Input curve down.
 
-						if (draw (state, selectedInputRoutesDown))
+						if (draw (state, numSelectedInputRoutesDown))
 						{
-							context .strokeStyle = selectedInputRoutesDown ? routeSelectedColor : routeColor;
+							context .strokeStyle = numSelectedInputRoutesDown ? routeSelectedColor : routeColor;
 
 							context .beginPath ();
 							context .arc (0, 19, 9.5, 3/2 * Math .PI, 2 * Math .PI);
@@ -438,13 +438,13 @@ module .exports = class OutlineRouteGraph extends OutlineView
 						}
 					}
 
-					if (outputRoutesDown)
+					if (numOutputRoutesDown)
 					{
 						// Output curve down.
 
-						if (draw (state, selectedOutputRoutesDown))
+						if (draw (state, numSelectedOutputRoutesDown))
 						{
-							context .strokeStyle = selectedOutputRoutesDown ? routeSelectedColor : routeColor;
+							context .strokeStyle = numSelectedOutputRoutesDown ? routeSelectedColor : routeColor;
 
 							context .beginPath ();
 							context .arc (0, 24, 9.5, 3/2 * Math .PI, 2 * Math .PI);
@@ -455,7 +455,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 					// Draw vertical line.
 
-					if (routes .size - (inputRoutesDown + outputRoutesDown) > 0)
+					if (routes .size - (numInputRoutesDown + numOutputRoutesDown) > 0)
 					{
 						if (draw (state, verticalSelectedRoute))
 						{
