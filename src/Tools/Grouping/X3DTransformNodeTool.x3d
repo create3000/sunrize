@@ -11,8 +11,8 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Wed, 22 Nov 2023 19:20:52 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.2.1, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Fri, 24 Nov 2023 00:22:32 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -55,8 +55,7 @@
         <field accessType='inputOutput' type='SFVec3f' name='bboxSize' value='1 1 1'/>
         <field accessType='inputOutput' type='SFVec3f' name='bboxCenter'/>
         <field accessType='outputOnly' type='SFBool' name='keepCenter'/>
-        <field accessType='outputOnly' type='SFInt32' name='activeTool'/>
-        <field accessType='outputOnly' type='SFBool' name='isCenterActive'/>
+        <field accessType='outputOnly' type='SFString' name='activeTool'/>
         <field accessType='outputOnly' type='SFBool' name='isActive'/>
       </ProtoInterface>
       <ProtoBody>
@@ -636,7 +635,7 @@
               </IS>
               <ProtoInstance name='BooleanSwitch' DEF='CenterLine'>
                 <fieldValue name='children'>
-                  <Shape DEF='_16'
+                  <Shape DEF='_15'
                       castShadow='false'>
                     <Appearance DEF='CenterLineStyle'>
                       <LineProperties
@@ -951,7 +950,8 @@ function set_bboxSize ()
           <field accessType='outputOnly' type='SFBool' name='translate'/>
           <field accessType='outputOnly' type='SFBool' name='rotate'/>
           <field accessType='outputOnly' type='SFBool' name='scale'/>
-          <field accessType='outputOnly' type='SFInt32' name='activeTool'/>
+          <field accessType='outputOnly' type='SFInt32' name='whichChoice_changed'/>
+          <field accessType='outputOnly' type='SFString' name='activeTool'/>
           <field accessType='initializeOnly' type='SFTime' name='time'/>
           <field accessType='initializeOnly' type='SFInt32' name='tool'/>
           <IS>
@@ -996,29 +996,30 @@ function set_next ()
 
 function set_tool (value)
 {
-   tool      = value;
-   translate = false;
-   rotate    = false;
-   scale     = false;
+   tool       = value;
+   translate  = false;
+   rotate     = false;
+   scale      = false;
+   activeTool = tools [value];
 
-   switch (tools [value])
+   switch (activeTool)
    {
       case "TRANSLATE":
       {
-         translate  = true;
-         activeTool = 0;
+         translate           = true;
+         whichChoice_changed = 0;
          break;
       }
       case "ROTATE":
       {
-         rotate     = true;
-         activeTool = 1;
+         rotate              = true;
+         whichChoice_changed = 1;
          break;
       }
       case "SCALE":
       {
-         scale      = true;
-         activeTool = 2;
+         scale               = true;
+         whichChoice_changed = 2;
          break;
       }
    }
@@ -1576,6 +1577,8 @@ function translate (scaledMatrix, distanceFromCenter)
           <field accessType='inputOutput' type='SFVec3f' name='center'/>
           <field accessType='inputOutput' type='SFVec3f' name='bboxCenter'/>
           <field accessType='outputOnly' type='SFBool' name='keepCenter'/>
+          <field accessType='outputOnly' type='SFString' name='activeTool'/>
+          <field accessType='outputOnly' type='SFBool' name='isActive'/>
           <field accessType='initializeOnly' type='SFMatrix4f' name='initialMatrix'/>
           <field accessType='initializeOnly' type='SFNode' name='coord'>
             <Coordinate USE='CenterLineCoord'/>
@@ -1583,8 +1586,10 @@ function translate (scaledMatrix, distanceFromCenter)
           <field accessType='initializeOnly' type='SFNode' name='centerTool'>
             <Transform USE='CenterTool'/>
           </field>
+          <field accessType='initializeOnly' type='SFNode' name='modeScript'>
+            <Script USE='ModeScript'/>
+          </field>
           <IS>
-            <connect nodeField='active' protoField='isCenterActive'/>
             <connect nodeField='translation' protoField='translation'/>
             <connect nodeField='rotation' protoField='rotation'/>
             <connect nodeField='scale' protoField='scale'/>
@@ -1592,6 +1597,8 @@ function translate (scaledMatrix, distanceFromCenter)
             <connect nodeField='center' protoField='center'/>
             <connect nodeField='bboxCenter' protoField='bboxCenter'/>
             <connect nodeField='keepCenter' protoField='keepCenter'/>
+            <connect nodeField='activeTool' protoField='activeTool'/>
+            <connect nodeField='isActive' protoField='isActive'/>
           </IS>
 <![CDATA[ecmascript:
 
@@ -1643,15 +1650,18 @@ async function set_toggleCenterTool ()
 
 function set_grouped (value)
 {
-   set_active (value);
-}
-
-function set_active (value)
-{
    if (!value)
       return;
 
    initialMatrix .setTransform (translation, rotation, scale, scaleOrientation, center);
+}
+
+function set_active (value)
+{
+   activeTool = value ? "CENTER" : modeScript .activeTool;
+   isActive   = value;
+
+   set_grouped (value);
 }
 
 function set_center ()
@@ -1676,12 +1686,12 @@ function set_bboxCenter ()
         <ROUTE fromNode='YTranslationSensor' fromField='isActive' toNode='TranslateScript' toField='set_active'/>
         <ROUTE fromNode='XTranslationSensor' fromField='isActive' toNode='TranslateScript' toField='set_active'/>
         <ROUTE fromNode='ModeTouch' fromField='touchTime' toNode='ModeScript' toField='set_time'/>
-        <ROUTE fromNode='ModeScript' fromField='activeTool' toNode='_22' toField='set_whichChoice'/>
-        <ROUTE fromNode='ModeScript' fromField='activeTool' toNode='_23' toField='set_whichChoice'/>
-        <ROUTE fromNode='ModeScript' fromField='activeTool' toNode='_24' toField='set_whichChoice'/>
-        <ROUTE fromNode='ModeScript' fromField='activeTool' toNode='_25' toField='set_whichChoice'/>
-        <ROUTE fromNode='ModeScript' fromField='activeTool' toNode='_26' toField='set_whichChoice'/>
-        <ROUTE fromNode='ModeScript' fromField='activeTool' toNode='_27' toField='set_whichChoice'/>
+        <ROUTE fromNode='ModeScript' fromField='whichChoice_changed' toNode='_22' toField='set_whichChoice'/>
+        <ROUTE fromNode='ModeScript' fromField='whichChoice_changed' toNode='_23' toField='set_whichChoice'/>
+        <ROUTE fromNode='ModeScript' fromField='whichChoice_changed' toNode='_24' toField='set_whichChoice'/>
+        <ROUTE fromNode='ModeScript' fromField='whichChoice_changed' toNode='_25' toField='set_whichChoice'/>
+        <ROUTE fromNode='ModeScript' fromField='whichChoice_changed' toNode='_26' toField='set_whichChoice'/>
+        <ROUTE fromNode='ModeScript' fromField='whichChoice_changed' toNode='_27' toField='set_whichChoice'/>
         <ROUTE fromNode='ModeScript' fromField='translate' toNode='ZTranslationSensor' toField='set_enabled'/>
         <ROUTE fromNode='ModeScript' fromField='translate' toNode='YTranslationSensor' toField='set_enabled'/>
         <ROUTE fromNode='ModeScript' fromField='translate' toNode='XTranslationSensor' toField='set_enabled'/>
@@ -1697,7 +1707,7 @@ function set_bboxCenter ()
         <ROUTE fromNode='XScaleBackSensor' fromField='translation_changed' toNode='ScaleScript' toField='set_xScaleBack'/>
         <ROUTE fromNode='YScaleBackSensor' fromField='translation_changed' toNode='ScaleScript' toField='set_yScaleBack'/>
         <ROUTE fromNode='ZScaleBackSensor' fromField='translation_changed' toNode='ScaleScript' toField='set_zScaleBack'/>
-        <ROUTE fromNode='ModeScript' fromField='activeTool' toNode='UniformScaleHandles' toField='set_whichChoice'/>
+        <ROUTE fromNode='ModeScript' fromField='whichChoice_changed' toNode='UniformScaleHandles' toField='set_whichChoice'/>
         <ROUTE fromNode='ScaleSensor8' fromField='isActive' toNode='ScaleScript' toField='set_active'/>
         <ROUTE fromNode='ScaleSensor8' fromField='translation_changed' toNode='ScaleScript' toField='set_scale8'/>
         <ROUTE fromNode='ScaleSensor7' fromField='isActive' toNode='ScaleScript' toField='set_active'/>
@@ -1733,7 +1743,7 @@ function set_bboxCenter ()
         <ROUTE fromNode='ModeScript' fromField='scale' toNode='YScaleFrontSensor' toField='set_enabled'/>
         <ROUTE fromNode='ModeScript' fromField='scale' toNode='XScaleBackSensor' toField='set_enabled'/>
         <ROUTE fromNode='ModeScript' fromField='scale' toNode='XScaleFrontSensor' toField='set_enabled'/>
-        <ROUTE fromNode='ModeScript' fromField='activeTool' toNode='RotationHandles' toField='set_whichChoice'/>
+        <ROUTE fromNode='ModeScript' fromField='whichChoice_changed' toNode='RotationHandles' toField='set_whichChoice'/>
         <ROUTE fromNode='ZRotationSensor' fromField='isActive' toNode='RotateScript' toField='set_active'/>
         <ROUTE fromNode='YRotationSensor_1' fromField='isActive' toNode='RotateScript' toField='set_active'/>
         <ROUTE fromNode='XRotationSensor_1' fromField='isActive' toNode='RotateScript' toField='set_active'/>

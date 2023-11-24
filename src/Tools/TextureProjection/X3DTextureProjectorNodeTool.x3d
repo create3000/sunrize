@@ -45,7 +45,7 @@
         <field accessType='inputOutput' type='SFFloat' name='perspectiveAspectRatio'/>
         <field accessType='inputOutput' type='SFNode' name='texture'/>
         <field accessType='outputOnly' type='SFNode' name='transformTool'/>
-        <field accessType='outputOnly' type='SFInt32' name='activeTool'/>
+        <field accessType='outputOnly' type='SFString' name='activeTool'/>
         <field accessType='outputOnly' type='SFBool' name='isActive'/>
       </ProtoInterface>
       <ProtoBody>
@@ -177,7 +177,7 @@
           <field accessType='inputOutput' type='SFFloat' name='perspectiveNearDistance'/>
           <field accessType='inputOutput' type='SFFloat' name='perspectiveFarDistance'/>
           <field accessType='inputOutput' type='SFFloat' name='perspectiveAspectRatio'/>
-          <field accessType='inputOutput' type='SFInt32' name='activeTool'/>
+          <field accessType='inputOutput' type='SFString' name='activeTool'/>
           <field accessType='inputOutput' type='SFBool' name='active'/>
           <field accessType='initializeOnly' type='SFNode' name='projector'>
             <Transform USE='Projector'/>

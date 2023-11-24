@@ -30,8 +30,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       this .tool .getField ("scaleOrientation") .addReference (this .node ._scaleOrientation);
       this .tool .getField ("center")           .addReference (this .node ._center);
 
-      this .tool .getField ("isCenterActive") .addInterest ("handleUndo", this);
-      this .tool .getField ("isActive")       .addInterest ("handleUndo", this);
+      this .tool .getField ("isActive") .addInterest ("handleUndo", this);
 
       this .tool .bboxColor = this .toolBBoxColor;
    }
@@ -79,7 +78,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
    prepareUndo ()
    {
-      super .prepareUndo (this .tool .isCenterActive);
+      super .prepareUndo ();
    }
 
    beginUndo ()
@@ -129,6 +128,12 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       if (!this .tool .isActive)
          return;
 
+      if (this .tool .group === "NONE")
+         return;
+
+      if (!this .tool .activeTool .match (/^(?:TRANSLATE|ROTATE|SCALE)$/))
+         return;
+
       const differenceMatrix = this .#initialMatrix .copy ()
          .multRight (this .#modelMatrix)
          .inverse ()
@@ -144,9 +149,6 @@ class X3DTransformNodeTool extends X3DChildNodeTool
             continue;
 
          if (!other ._visible .getValue ())
-            continue;
-
-         if (other .tool .group === "NONE")
             continue;
 
          if (other .tool .group !== this .tool .group)

@@ -23,7 +23,7 @@
         <field accessType='inputOutput' type='SFVec3f' name='size' value='1 1 1'/>
         <field accessType='inputOutput' type='SFVec3f' name='center'/>
         <field accessType='outputOnly' type='SFNode' name='transformTool'/>
-        <field accessType='outputOnly' type='SFInt32' name='activeTool'/>
+        <field accessType='outputOnly' type='SFString' name='activeTool'/>
         <field accessType='outputOnly' type='SFBool' name='isActive'/>
       </ProtoInterface>
       <ProtoBody>
@@ -63,7 +63,7 @@
             directOutput='true'>
           <field accessType='inputOutput' type='SFBool' name='selected'/>
           <field accessType='inputOutput' type='SFColor' name='color'/>
-          <field accessType='inputOutput' type='SFInt32' name='activeTool'/>
+          <field accessType='inputOutput' type='SFString' name='activeTool'/>
           <field accessType='inputOutput' type='SFBool' name='active'/>
           <field accessType='initializeOnly' type='SFNode' name='material'>
             <Material USE='BoxMaterial'/>

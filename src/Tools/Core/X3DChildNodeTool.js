@@ -40,18 +40,19 @@ class X3DChildNodeTool extends X3DNodeTool
          this .finishUndo ()
    }
 
-   prepareUndo (center = false)
+   #groupedTools = new Set ();
+
+   prepareUndo ()
    {
       // Begin undo.
 
       const
-         tool     = center ? 3 : this .tool .activeTool,
          typeName = this .getTypeName (),
          name     = this .getDisplayName ();
 
-      switch (tool)
+      switch (this .tool .activeTool)
       {
-         case 0: // "TRANSLATE"
+         case "TRANSLATE":
          {
             if (name)
                UndoManager .shared .beginUndo (_ ("Translate %s »%s«"), typeName, name);
@@ -59,7 +60,7 @@ class X3DChildNodeTool extends X3DNodeTool
                UndoManager .shared .beginUndo (_ ("Translate %s"), typeName);
             break;
          }
-         case 1: // "ROTATE"
+         case "ROTATE":
          {
             if (name)
                UndoManager .shared .beginUndo (_ ("Rotate %s »%s«"), typeName, name);
@@ -67,7 +68,7 @@ class X3DChildNodeTool extends X3DNodeTool
                UndoManager .shared .beginUndo (_ ("Rotate %s"), typeName);
             break;
          }
-         case 2: // "SCALE"
+         case "SCALE":
          {
             if (name)
                UndoManager .shared .beginUndo (_ ("Scale %s »%s«"), typeName, name);
@@ -75,7 +76,7 @@ class X3DChildNodeTool extends X3DNodeTool
                UndoManager .shared .beginUndo (_ ("Scale %s"), typeName);
             break;
          }
-         case 3: // "CENTER"
+         case "CENTER":
          {
             if (name)
                UndoManager .shared .beginUndo (_ ("Translate Center Of %s »%s«"), typeName, name);
@@ -89,22 +90,25 @@ class X3DChildNodeTool extends X3DNodeTool
 
       for (const other of X3DChildNodeTool .#tools)
       {
+         if (other .tool .group === `${this .tool .activeTool}_TOOL`)
+            other .tool .grouped = true;
+      }
+
+      for (const other of X3DChildNodeTool .#tools)
+      {
          if (other !== this)
          {
             if (other .tool .group === "NONE")
                continue;
          }
 
-         if (!center)
-         {
-            if (other .tool .group !== this .tool .group)
-               continue;
-         }
-
-         if (other .beginUndo (this) === false)
+         if (other .tool .group !== this .tool .group)
             continue;
 
-         other .tool .grouped = true;
+         if (other .beginUndo () === false)
+            continue;
+
+         this .#groupedTools .add (other);
       }
    }
 
@@ -112,13 +116,14 @@ class X3DChildNodeTool extends X3DNodeTool
    {
       for (const other of X3DChildNodeTool .#tools)
       {
-         if (!other .tool .grouped)
-            continue;
-
-         other .tool .grouped = false;
-
-         other .endUndo ();
+         if (other .tool .grouped)
+            other .tool .grouped = false;
       }
+
+      for (const other of this .#groupedTools)
+         other .endUndo ();
+
+      this .#groupedTools .clear ();
 
       UndoManager .shared .endUndo ();
    }

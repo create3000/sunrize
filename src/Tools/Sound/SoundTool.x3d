@@ -38,7 +38,7 @@
         <field accessType='inputOutput' type='SFFloat' name='maxBack'/>
         <field accessType='inputOutput' type='SFFloat' name='maxFront'/>
         <field accessType='outputOnly' type='SFNode' name='transformTool'/>
-        <field accessType='outputOnly' type='SFInt32' name='activeTool'/>
+        <field accessType='outputOnly' type='SFString' name='activeTool'/>
         <field accessType='outputOnly' type='SFBool' name='isActive'/>
       </ProtoInterface>
       <ProtoBody>
@@ -181,7 +181,7 @@
           <field accessType='outputOnly' type='SFVec3f' name='maxTranslation_changed'/>
           <field accessType='outputOnly' type='SFVec3f' name='minScale_changed'/>
           <field accessType='outputOnly' type='SFVec3f' name='maxScale_changed'/>
-          <field accessType='inputOutput' type='SFInt32' name='activeTool'/>
+          <field accessType='inputOutput' type='SFString' name='activeTool'/>
           <field accessType='inputOutput' type='SFBool' name='active'/>
           <field accessType='inputOutput' type='SFNode' name='transform'>
             <Transform USE='TransformTool'/>
@@ -210,7 +210,7 @@ async function initialize ()
    set_minRange ();
    set_maxRange ();
 
-   const tool = await transform .getValue () .addTool () .getToolInstance (); 
+   const tool = await transform .getValue () .addTool () .getToolInstance ();
 
    Browser .addRoute (tool, "activeTool", this, "activeTool");
    Browser .addRoute (tool, "isActive",   this, "active");
@@ -240,7 +240,7 @@ function set_direction (value)
 
    changing = true;
 
-   transform .rotation = straightenHorizon (new SFRotation (new SFVec3f (0, 0, 1), value), 
+   transform .rotation = straightenHorizon (new SFRotation (new SFVec3f (0, 0, 1), value),
                                             new SFVec3f (0, 1, 0));
 }
 

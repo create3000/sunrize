@@ -26,7 +26,7 @@
         <field accessType='inputOutput' type='SFRotation' name='orientation'/>
         <field accessType='inputOutput' type='SFBool' name='bound'/>
         <field accessType='outputOnly' type='SFNode' name='transformTool'/>
-        <field accessType='outputOnly' type='SFInt32' name='activeTool'/>
+        <field accessType='outputOnly' type='SFString' name='activeTool'/>
         <field accessType='outputOnly' type='SFBool' name='isActive'/>
       </ProtoInterface>
       <ProtoBody>
@@ -159,7 +159,7 @@
         <Script DEF='ToolScript'
             directOutput='true'>
           <field accessType='inputOutput' type='SFBool' name='selected'/>
-          <field accessType='inputOutput' type='SFInt32' name='activeTool'/>
+          <field accessType='inputOutput' type='SFString' name='activeTool'/>
           <field accessType='inputOutput' type='SFBool' name='active'/>
           <field accessType='initializeOnly' type='SFNode' name='material'>
             <Material USE='_4'/>

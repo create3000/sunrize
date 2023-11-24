@@ -29,7 +29,7 @@
         <field accessType='inputOutput' type='SFFloat' name='beamWidth'/>
         <field accessType='inputOutput' type='SFFloat' name='cutOffAngle'/>
         <field accessType='outputOnly' type='SFNode' name='transformTool'/>
-        <field accessType='outputOnly' type='SFInt32' name='activeTool'/>
+        <field accessType='outputOnly' type='SFString' name='activeTool'/>
         <field accessType='outputOnly' type='SFBool' name='isActive'/>
       </ProtoInterface>
       <ProtoBody>
@@ -277,7 +277,7 @@
           <field accessType='inputOnly' type='SFRotation' name='set_rotation'/>
           <field accessType='inputOutput' type='SFFloat' name='beamWidth'/>
           <field accessType='inputOutput' type='SFFloat' name='cutOffAngle'/>
-          <field accessType='inputOutput' type='SFInt32' name='activeTool'/>
+          <field accessType='inputOutput' type='SFString' name='activeTool'/>
           <field accessType='inputOutput' type='SFBool' name='active'/>
           <field accessType='inputOutput' type='SFNode' name='transform'>
             <Transform USE='TransformTool'/>
@@ -327,7 +327,7 @@ async function set_type (value)
 {
    if (value === 1)
       return;
-   
+
    const tool = await transform .getValue () .addTool () .getToolInstance ();
 
    tool .tools .push ("ROTATE");
@@ -378,7 +378,7 @@ function set_direction (value)
 
    changing = true;
 
-   transform .rotation = straightenHorizon (new SFRotation (new SFVec3f (0, 0, 1), value), 
+   transform .rotation = straightenHorizon (new SFRotation (new SFVec3f (0, 0, 1), value),
                                             new SFVec3f (0, 1, 0));
 }
 
