@@ -442,7 +442,7 @@ function set_field (value, time)
 
       UndoManager .shared .endUndo ();
 
-      this .setNode (nodes [0]);
+      this .nodeList .setNode (nodes [0]);
    }
 
    async createShader ()
@@ -496,7 +496,7 @@ main ()
 
       UndoManager .shared .endUndo ();
 
-      this .setNode (nodes [0] ._parts [0] .getValue ());
+      this .nodeList .setNode (nodes [0] ._parts [0] .getValue ());
    }
 
    apply ()
