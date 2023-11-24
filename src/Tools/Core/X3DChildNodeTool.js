@@ -46,44 +46,11 @@ class X3DChildNodeTool extends X3DNodeTool
       // Begin undo.
 
       const
-         typeName = this .getTypeName (),
-         name     = this .getDisplayName ();
+         typeName    = this .getTypeName (),
+         name        = this .getDisplayName (),
+         description = this .getUndoDescription (this .tool .activeTool, typeName, name);
 
-      switch (this .tool .activeTool)
-      {
-         case "TRANSLATE":
-         {
-            if (name)
-               UndoManager .shared .beginUndo (_ ("Translate %s »%s«"), typeName, name);
-            else
-               UndoManager .shared .beginUndo (_ ("Translate %s"), typeName);
-            break;
-         }
-         case "ROTATE":
-         {
-            if (name)
-               UndoManager .shared .beginUndo (_ ("Rotate %s »%s«"), typeName, name);
-            else
-               UndoManager .shared .beginUndo (_ ("Rotate %s"), typeName);
-            break;
-         }
-         case "SCALE":
-         {
-            if (name)
-               UndoManager .shared .beginUndo (_ ("Scale %s »%s«"), typeName, name);
-            else
-               UndoManager .shared .beginUndo (_ ("Scale %s"), typeName);
-            break;
-         }
-         case "CENTER":
-         {
-            if (name)
-               UndoManager .shared .beginUndo (_ ("Translate Center Of %s »%s«"), typeName, name);
-            else
-               UndoManager .shared .beginUndo (_ ("Translate Center Of %s"), typeName);
-            break;
-         }
-      }
+      UndoManager .shared .beginUndo (description, typeName, name);
 
       // Prepare undo.
 
@@ -115,6 +82,45 @@ class X3DChildNodeTool extends X3DNodeTool
             continue;
 
          this .#groupedTools .add (other);
+      }
+   }
+
+   getUndoDescription (activeTool, typeName, name)
+   {
+      switch (activeTool)
+      {
+         case "TRANSLATE":
+         {
+            if (name)
+               return _ ("Translate %s »%s«");
+
+            return _ ("Translate %s");
+         }
+         case "ROTATE":
+         {
+            if (name)
+               return _ ("Rotate %s »%s«");
+
+            return _ ("Rotate %s");
+         }
+         case "SCALE":
+         {
+            if (name)
+               return _ ("Scale %s »%s«");
+
+            return _ ("Scale %s");
+         }
+         case "CENTER":
+         {
+            if (name)
+               return _ ("Translate Center Of %s »%s«");
+
+            return _ ("Translate Center Of %s");
+         }
+         default:
+         {
+            return `No Undo Description Available For '${activeTool}'`;
+         }
       }
    }
 
