@@ -85,13 +85,15 @@ class X3DChildNodeTool extends X3DNodeTool
          }
       }
 
-      // Prepare grouping.
+      // Prepare undo.
 
       if (this .beginUndo ())
          this .#groupedTools .add (this);
 
       if (this .tool .group === "NONE")
          return;
+
+      // Prepare grouping.
 
       for (const other of X3DChildNodeTool .#tools)
       {
