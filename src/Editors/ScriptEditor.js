@@ -152,7 +152,8 @@ module .exports = class ScriptEditor extends Interface
 
       if (this .node)
       {
-         this .node ._url .removeFieldCallback (this);
+         this .node ._url       .removeFieldCallback (this);
+         this .node ._loadState .removeFieldCallback (this);
 
          switch (this .node .getTypeName ())
          {
@@ -190,7 +191,10 @@ module .exports = class ScriptEditor extends Interface
 
          this .monaco .restoreViewState (this .monaco .viewState);
 
-         this .node ._url .addFieldCallback (this, this .set_url .bind (this));
+         this .node ._url       .addFieldCallback (this, this .set_url       .bind (this));
+         this .node ._loadState .addFieldCallback (this, this .set_loadState .bind (this));
+
+         this .set_loadState ();
 
          switch (this .node .getTypeName ())
          {
@@ -516,6 +520,26 @@ main ()
    set_url ()
    {
       this .monaco .getModel () .setValue (this .node ._url [0]);
+   }
+
+   set_loadState ()
+   {
+      this .applyButton .removeClass (["red", "green", "yellow"]);
+
+      switch (this .node .checkLoadState ())
+      {
+         case X3D .X3DConstants .NOT_STATED_STATE:
+            break;
+         case X3D .X3DConstants .IN_PROGRESS_STATE:
+            this .applyButton .addClass ("yellow");
+            break;
+         case X3D .X3DConstants .COMPLETE_STATE:
+            this .applyButton .addClass ("green");
+            break;
+         case X3D .X3DConstants .FAILED_STATE:
+            this .applyButton .addClass ("red");
+            break;
+      }
    }
 
    debugFindActions (editor)

@@ -34,6 +34,18 @@ body {
 
 /* common */
 
+.green {
+  color: var(--system-green);
+}
+
+.red {
+  color: var(--system-red);
+}
+
+.yellow {
+  color: var(--system-yellow);
+}
+
 .modal {
   pointer-events: none;
 }
