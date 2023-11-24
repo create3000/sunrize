@@ -12,7 +12,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.2.1, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Sound/SoundTool.x3d'/>
-    <meta name='modified' content='Fri, 24 Nov 2023 19:22:54 GMT'/>
+    <meta name='modified' content='Fri, 24 Nov 2023 19:45:12 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -159,21 +159,52 @@
                 </ProtoInstance>
               </Transform>
             </Transform>
-            <Group DEF='MaxBack'>
-              <Transform DEF='CenterPoint'
-                  translation='0 0 -10'>
-                <ScreenGroup DEF='_3'>
-                  <Shape DEF='YellowPoint'
+            <Group DEF='MinBack'>
+              <Transform DEF='CenterPoint_2'
+                  translation='0 0 1'>
+                <ScreenGroup>
+                  <Shape
                       castShadow='false'>
-                    <Appearance DEF='Green'>
+                    <Appearance DEF='Red'>
                       <Material
-                          diffuseColor='0 1 0'/>
-                      <ProtoInstance name='ToolShader' containerField='shaders'/>
-                      <DepthMode
+                          diffuseColor='1 0 0'/>
+                      <ProtoInstance name='ToolShader' DEF='_21' containerField='shaders'/>
+                      <DepthMode DEF='_22'
                           depthRange='0 0.01'/>
                     </Appearance>
                     <Sphere DEF='Sphere'
                         radius='6'/>
+                  </Shape>
+                </ScreenGroup>
+                <TouchSensor DEF='_18'>
+                  <IS>
+                    <connect nodeField='enabled' protoField='selected'/>
+                  </IS>
+                </TouchSensor>
+              </Transform>
+              <Transform DEF='MinBackTool'
+                  translation='0 0 1'
+                  rotation='0 1 0 90'
+                  visible='false'>
+                <ScreenGroup DEF='_4'>
+                  <Group
+                      bboxSize='30 30 30'/>
+                </ScreenGroup>
+              </Transform>
+            </Group>
+            <Group DEF='MaxBack'>
+              <Transform DEF='CenterPoint'
+                  translation='0 0 -10'>
+                <ScreenGroup DEF='_3'>
+                  <Shape
+                      castShadow='false'>
+                    <Appearance DEF='Green'>
+                      <Material
+                          diffuseColor='0 1 0'/>
+                      <ProtoInstance name='ToolShader' USE='_21' containerField='shaders'/>
+                      <DepthMode USE='_22'/>
+                    </Appearance>
+                    <Sphere USE='Sphere'/>
                   </Shape>
                 </ScreenGroup>
                 <TouchSensor DEF='_16'>
@@ -186,10 +217,7 @@
                   translation='0 0 -10'
                   rotation='1 0 0 -90'
                   visible='false'>
-                <ScreenGroup DEF='_4'>
-                  <Group
-                      bboxSize='30 30 30'/>
-                </ScreenGroup>
+                <ScreenGroup USE='_4'/>
               </Transform>
             </Group>
             <Group DEF='MaxFront'>
@@ -255,7 +283,9 @@
           <field accessType='inputOutput' type='SFNode' name='transform'>
             <Transform USE='TransformTool'/>
           </field>
-          <field accessType='initializeOnly' type='SFNode' name='minBackTransform'/>
+          <field accessType='initializeOnly' type='SFNode' name='minBackTransform'>
+            <Transform USE='MinBackTool'/>
+          </field>
           <field accessType='initializeOnly' type='SFNode' name='minFrontTransform'/>
           <field accessType='initializeOnly' type='SFNode' name='maxBackTransform'>
             <Transform USE='MaxBackTool'/>
@@ -298,7 +328,9 @@ function set_selected ()
       ? new SFColor (0.1, 0.1, 0.1)
       : new SFColor ();
 
-   set_maxBackTime .call (this);
+   minBackTransform  .visible = selected && minBackDisplay;
+   maxBackTransform  .visible = selected && maxBackDisplay;
+   maxFrontTransform .visible = selected && maxFrontDisplay;
 }
 
 let changing = false;
@@ -351,9 +383,71 @@ function straightenHorizon (orientation, upVector)
 
 // minBack
 
+let minBackChanging = false;
+
+async function set_minBackTime ()
+{
+   minBackDisplay            = !minBackDisplay;
+   minBackTransform .visible = selected && minBackDisplay;
+
+   if (minBackTransform .getValue () .getTool ())
+      return;
+
+   const tool = await minBackTransform .getValue () .addTool () .getToolInstance ();
+
+   Browser .addRoute (tool, "isActive", this, "set_minBackActive");
+
+   tool .group         = "NONE";
+   tool .undo          = false;
+   tool .tools         = new MFString ("TRANSLATE");
+   tool .yAxisDisplay  = false;
+   tool .zAxisDisplay  = false;
+   tool .centerDisplay = false;
+   tool .bboxDisplay   = false;
+}
+
+async function set_minBackActive (value)
+{
+   if (value)
+   {
+      activeTool = "MIN_BACK";
+      active     = true;
+   }
+   else
+   {
+      const tool = await transform .getValue () .addTool () .getToolInstance ();
+
+      activeTool = tool .activeTool;
+      active     = false;
+   }
+}
+
+function set_minBackTranslation (value)
+{
+   if (minBackChanging)
+   {
+      minBackChanging = false;
+      return;
+   }
+
+   minBackChanging = true;
+
+   minBack = -value .z;
+}
+
 function set_minBack (value)
 {
    set_minRange ();
+
+   if (minBackChanging)
+   {
+      minBackChanging = false;
+      return;
+   }
+
+   minBackChanging = true;
+
+   minBackTransform .translation .z = -value;
 }
 
 // minFront
@@ -544,6 +638,9 @@ function getEllipsoidParams (back, front)
         <ROUTE fromNode='MaxFrontTool' fromField='translation_changed' toNode='CenterPoint_1' toField='set_translation'/>
         <ROUTE fromNode='MaxFrontTool' fromField='translation_changed' toNode='SoundScript' toField='set_maxFrontTranslation'/>
         <ROUTE fromNode='_17' fromField='touchTime' toNode='SoundScript' toField='set_maxFrontTime'/>
+        <ROUTE fromNode='MinBackTool' fromField='translation_changed' toNode='CenterPoint_2' toField='set_translation'/>
+        <ROUTE fromNode='_18' fromField='touchTime' toNode='SoundScript' toField='set_minBackTime'/>
+        <ROUTE fromNode='MinBackTool' fromField='translation_changed' toNode='SoundScript' toField='set_minBackTranslation'/>
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>

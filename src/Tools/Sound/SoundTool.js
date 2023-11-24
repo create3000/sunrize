@@ -24,13 +24,27 @@ class SoundTool extends X3DChildNodeTool
 
    beginUndo ()
    {
-      this .undoSaveInitialValues (["location", "direction", "maxBack", "maxFront"]);
+      this .undoSaveInitialValues (["location", "direction", "minBack", "minFront", "maxBack", "maxFront"]);
    }
 
    getUndoDescription (activeTool, name)
    {
       switch (activeTool)
       {
+         case "MIN_BACK":
+         {
+            if (name)
+               return _ ("Translate field »minBack« of Node %s »%s«");
+
+            return _ ("Translate »minBack« of Node %s");
+         }
+         case "MIN_FRONT":
+         {
+            if (name)
+               return _ ("Translate field »minFront of Node %s »%s«");
+
+            return _ ("Translate »minFront« of Node %s");
+         }
          case "MAX_BACK":
          {
             if (name)
