@@ -12,7 +12,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.2.1, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Sound/SoundTool.x3d'/>
-    <meta name='modified' content='Fri, 24 Nov 2023 18:41:59 GMT'/>
+    <meta name='modified' content='Fri, 24 Nov 2023 18:43:47 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -380,8 +380,6 @@ function set_maxBackTranslation (value)
 
    maxBackChanging = true;
 
-   print (transform.getId (), "set_maxBackTranslation", value .z)
-
    maxBack = -value .z;
 }
 
@@ -396,8 +394,6 @@ function set_maxBack (value)
    }
 
    maxBackChanging = true;
-
-   print (transform .getId (), "set_maxBack", value)
 
    maxBackTransform .translation .z = -value;
 }

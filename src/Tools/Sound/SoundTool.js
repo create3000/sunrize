@@ -3,7 +3,7 @@
 const
    X3DChildNodeTool = require ("../Core/X3DChildNodeTool"),
    _                = require ("../../Application/GetText");
-   
+
 class SoundTool extends X3DChildNodeTool
 {
    static createOnSelection = false;
