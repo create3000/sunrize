@@ -321,14 +321,14 @@ module .exports = class OutlineRouteGraph extends OutlineView
 					routeId = element .attr ("route-id") !== undefined ? parseInt (element .attr ("route-id")) : undefined;
 
 				let
-					inputAdds                = 0,
-					inputDeletes             = 0,
-					outputAdds               = 0,
-					outputDeletes            = 0,
-					selectedInputRoutesUp    = false,
-					selectedInputRoutesDown  = false,
-					selectedOutputRoutesUp   = false,
-					selectedOutputRoutesDown = false;
+					inputRoutesDown          = 0,
+					inputRoutesUp            = 0,
+					outputRoutesDown         = 0,
+					outputRoutesUp           = 0,
+					selectedInputRoutesUp    = 0,
+					selectedInputRoutesDown  = 0,
+					selectedOutputRoutesUp   = 0,
+					selectedOutputRoutesDown = 0;
 
 				field .getInputRoutes () .forEach (route =>
 				{
@@ -340,16 +340,16 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 					if (routes .has (route))
 					{
-						++ inputDeletes;
-						selectedInputRoutesUp = this .selectedRoutes .has (route .getId ());
+						inputRoutesUp         += 1;
+						selectedInputRoutesUp += this .selectedRoutes .has (route .getId ());
 
 						routes         .delete (route);
 						selectedRoutes .delete (route);
 					}
 					else
 					{
-						++ inputAdds;
-						selectedInputRoutesDown = this .selectedRoutes .has (route .getId ());
+						inputRoutesDown         += 1;
+						selectedInputRoutesDown += this .selectedRoutes .has (route .getId ());
 
 						routes .add (route);
 					}
@@ -366,16 +366,16 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 					if (routes .has (route))
 					{
-						++ outputDeletes;
-						selectedOutputRoutesUp = this .selectedRoutes .has (route .getId ());
+						outputRoutesUp         += 1;
+						selectedOutputRoutesUp += this .selectedRoutes .has (route .getId ());
 
 						routes         .delete (route);
 						selectedRoutes .delete (route);
 					}
 					else
 					{
-						++ outputAdds;
-						selectedOutputRoutesDown = this .selectedRoutes .has (route .getId ());
+						outputRoutesDown         += 1;
+						selectedOutputRoutesDown += this .selectedRoutes .has (route .getId ());
 
 						routes .add (route);
 					}
@@ -391,7 +391,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 				{
 					// Draw curve up.
 
-					if (inputDeletes)
+					if (inputRoutesUp)
 					{
 						// Input curve up.
 
@@ -406,7 +406,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 						}
 					}
 
-					if (outputDeletes)
+					if (outputRoutesUp)
 					{
 						// Output curve up.
 
@@ -423,7 +423,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 					// Draw curve down.
 
-					if (inputAdds)
+					if (inputRoutesDown)
 					{
 						// Input curve down.
 
@@ -438,7 +438,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 						}
 					}
 
-					if (outputAdds)
+					if (outputRoutesDown)
 					{
 						// Output curve down.
 
@@ -455,7 +455,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 					// Draw vertical line.
 
-					if (routes .size - (inputAdds + outputAdds) > 0)
+					if (routes .size - (inputRoutesDown + outputRoutesDown) > 0)
 					{
 						if (draw (state, verticalSelectedRoute))
 						{
