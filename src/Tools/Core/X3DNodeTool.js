@@ -67,14 +67,14 @@ class X3DNodeTool
       node .setUserData (_tool, proxy);
       node .setUserData (_changing, true);
 
+      X3D .SFNodeCache .add (this, X3D .SFNodeCache .get (node));
+
       this .proxy         = proxy;
       this .node          = node;
       this .externalNodes = new Map ();
 
       this .replaceNode (node, proxy);
       proxy .setupTool ();
-
-      // TODO: store proxy in SFNodeCache.
 
       return proxy;
    }
@@ -196,6 +196,8 @@ class X3DNodeTool
 
       this .node .removeUserData (_tool);
       this .node .setUserData (_changing, true);
+
+      X3D .SFNodeCache .delete (this .proxy);
 
       const nodesToDispose = [ ]
 
