@@ -100,7 +100,7 @@ class X3DChildNodeTool extends X3DNodeTool
       for (const other of X3DChildNodeTool .#tools)
       {
          if (other .tool .group === `${this .tool .activeTool}_TOOL`)
-            other .tool .grouped = true;
+            other .tool .grouping = true;
       }
 
       for (const other of X3DChildNodeTool .#tools)
@@ -122,8 +122,8 @@ class X3DChildNodeTool extends X3DNodeTool
    {
       for (const other of X3DChildNodeTool .#tools)
       {
-         if (other .tool .grouped)
-            other .tool .grouped = false;
+         if (other .tool .grouping)
+            other .tool .grouping = false;
       }
 
       for (const other of this .#groupedTools)

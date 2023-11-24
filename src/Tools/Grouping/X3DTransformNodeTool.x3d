@@ -31,7 +31,7 @@
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
         <field accessType='inputOutput' type='SFString' name='group' value='TRANSFORM_TOOL'/>
-        <field accessType='inputOutput' type='SFBool' name='grouped'/>
+        <field accessType='inputOutput' type='SFBool' name='grouping'/>
         <field accessType='inputOutput' type='SFVec3f' name='translation'/>
         <field accessType='inputOutput' type='SFRotation' name='rotation'/>
         <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
@@ -1568,7 +1568,7 @@ function translate (scaledMatrix, distanceFromCenter)
             directOutput='true'>
           <field accessType='inputOnly' type='SFBool' name='set_moveCenterToBBoxCenter'/>
           <field accessType='inputOnly' type='SFTime' name='set_toggleCenterTool'/>
-          <field accessType='inputOutput' type='SFBool' name='grouped'/>
+          <field accessType='inputOutput' type='SFBool' name='grouping'/>
           <field accessType='inputOutput' type='SFBool' name='active'/>
           <field accessType='inputOutput' type='SFVec3f' name='translation'/>
           <field accessType='inputOutput' type='SFRotation' name='rotation'/>
@@ -1638,7 +1638,7 @@ async function set_toggleCenterTool ()
 
    const tool = await centerTool .getValue () .addTool () .getToolInstance ();
 
-   Browser .addRoute (tool, "grouped",  this, "grouped");
+   Browser .addRoute (tool, "grouping",  this, "grouping");
    Browser .addRoute (tool, "isActive", this, "active");
 
    tool .group         = "CENTER_TOOL";
@@ -1648,7 +1648,7 @@ async function set_toggleCenterTool ()
    tool .bboxDisplay   = false;
 }
 
-function set_grouped (value)
+function set_grouping (value)
 {
    if (!value)
       return;
@@ -1661,7 +1661,7 @@ function set_active (value)
    activeTool = value ? "CENTER" : modeScript .activeTool;
    isActive   = value;
 
-   set_grouped (value);
+   set_grouping (value);
 }
 
 function set_center ()
@@ -1669,7 +1669,7 @@ function set_center ()
    coord .point [0] = center;
    coord .point [1] = bboxCenter;
 
-   if (active || grouped)
+   if (active || grouping)
       initialMatrix .getTransform (translation, null, null, null, center);
 }
 

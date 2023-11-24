@@ -29,7 +29,7 @@
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
         <field accessType='inputOutput' type='SFString' name='group' value='TRANSFORM_TOOL'/>
-        <field accessType='inputOutput' type='SFBool' name='grouped'/>
+        <field accessType='inputOutput' type='SFBool' name='grouping'/>
         <field accessType='inputOutput' type='SFBool' name='undo' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='on'/>
         <field accessType='inputOutput' type='SFVec3f' name='location'/>
