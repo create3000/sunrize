@@ -11,8 +11,8 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.2.1, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 24 Nov 2023 01:25:58 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.2.2, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Fri, 24 Nov 2023 22:43:39 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -978,7 +978,7 @@ function set_time (value)
    {
       time = 0;
 
-      set_next ();
+      set_dlbclick ();
    }
    else
    {
@@ -986,7 +986,7 @@ function set_time (value)
    }
 }
 
-function set_next ()
+function set_dlbclick ()
 {
    if (bboxSize .length ())
       set_tool ((tool + 1) % tools .length);
