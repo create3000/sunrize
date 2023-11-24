@@ -82,8 +82,6 @@
 
 async function initialize ()
 {
-   set_color ();
-
    const tool = await transform .getValue () .addTool () .getToolInstance ();
 
    Browser .addRoute (tool, "activeTool", this, "activeTool");

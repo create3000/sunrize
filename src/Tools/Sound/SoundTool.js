@@ -2,8 +2,8 @@
 
 const
    X3DChildNodeTool = require ("../Core/X3DChildNodeTool"),
-   Editor           = require ("../../Undo/Editor");
-
+   _                = require ("../../Application/GetText");
+   
 class SoundTool extends X3DChildNodeTool
 {
    static createOnSelection = false;
@@ -22,26 +22,27 @@ class SoundTool extends X3DChildNodeTool
       this .tool .getField ("isActive") .addInterest ("handleUndo", this);
    }
 
-   #initialLocation;
-   #initialDirection;
-
    beginUndo ()
    {
-      this .#initialLocation  = this ._location  .copy ();
-      this .#initialDirection = this ._direction .copy ();
+      this .undoSaveInitialValues (["location", "direction", "maxBack"]);
    }
 
-   endUndo ()
+   getUndoDescription (activeTool, name)
    {
-      const
-         location  = this ._location  .copy (),
-         direction = this ._direction .copy ();
+      switch (activeTool)
+      {
+         case "MAX_BACK":
+         {
+            if (name)
+               return _ ("Translate MaxBack Of %s »%s«");
 
-      this ._location  = this .#initialLocation;
-      this ._direction = this .#initialDirection;
-
-      Editor .setFieldValue (this .getExecutionContext (), this .node, this ._location,  location);
-      Editor .setFieldValue (this .getExecutionContext (), this .node, this ._direction, direction);
+            return _ ("Translate MaxBack Of %s");
+         }
+         default:
+         {
+            return super .getUndoDescription (activeTool, name);
+         }
+      }
    }
 }
 

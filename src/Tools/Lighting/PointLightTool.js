@@ -12,6 +12,11 @@ class PointLightTool extends X3DLightNodeTool
 
       this .tool .type = 1;
    }
+
+   beginUndo ()
+   {
+      this .undoSaveInitialValues (["location"]);
+   }
 }
 
 module .exports = PointLightTool;

@@ -12,6 +12,11 @@ class DirectionalLightTool extends X3DLightNodeTool
 
       this .tool .type = 0;
    }
+
+   beginUndo ()
+   {
+      this .undoSaveInitialValues (["direction"]);
+   }
 }
 
 module .exports = DirectionalLightTool;

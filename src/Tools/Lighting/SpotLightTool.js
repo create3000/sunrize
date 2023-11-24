@@ -15,6 +15,11 @@ class SpotLightTool extends X3DLightNodeTool
 
       this .tool .type = 2;
    }
+
+   beginUndo ()
+   {
+      this .undoSaveInitialValues (["location", "direction"]);
+   }
 }
 
 module .exports = SpotLightTool;

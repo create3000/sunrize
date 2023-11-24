@@ -4,8 +4,7 @@ const
    path     = require ("path"),
    url      = require ("url"),
    X3D      = require ("../../X3D"),
-   Traverse = require ("../../Application/Traverse"),
-   DEBUG    = false && process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT";
+   Traverse = require ("../../Application/Traverse");
 
 const
    _tool     = Symbol .for ("Sunrize.tool"),
@@ -135,7 +134,7 @@ class X3DNodeTool
          protoURL = url .pathToFileURL (path .resolve (... args)),
          promise  = X3DNodeTool .#scenes .get (protoURL .href);
 
-      if (promise && !DEBUG)
+      if (promise)
       {
          return this .toolPromise = promise .then (scene => this .tool = this .createTool (scene));
       }

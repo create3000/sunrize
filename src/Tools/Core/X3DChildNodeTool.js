@@ -3,13 +3,16 @@
 const
    X3DNodeTool = require ("./X3DNodeTool"),
    X3D         = require ("../../X3D"),
+   Editor      = require ("../../Undo/Editor"),
    UndoManager = require ("../../Undo/UndoManager"),
    _           = require ("../../Application/GetText");
 
 class X3DChildNodeTool extends X3DNodeTool
 {
    static #tools = new Set ();
-   #groupedTools = new Set ();
+
+   #groupedTools  = new Set ();
+   #initialValues = new Map ();
 
    getMustDisplay ()
    {
@@ -34,6 +37,8 @@ class X3DChildNodeTool extends X3DNodeTool
    {
       if (!this .tool .undo)
          return;
+
+      console .log (this .getTypeName (), active .getValue (), this .tool .activeTool)
 
       if (active .getValue ())
          this .prepareUndo ();
@@ -142,7 +147,30 @@ class X3DChildNodeTool extends X3DNodeTool
 
    beginUndo () { }
 
-   endUndo () { }
+   endUndo ()
+   {
+      this .undoSetValues ();
+   }
+
+   undoSaveInitialValues (fields)
+   {
+      for (const name of fields)
+         this .#initialValues .set (name, this .getField (name) .copy ());
+   }
+
+   undoSetValues ()
+   {
+      for (const [name, initialValue] of this .#initialValues)
+      {
+         const value = this .getField (name) .copy ();
+
+         this .getField (name) .assign (initialValue);
+
+         Editor .setFieldValue (this .getExecutionContext (), this .node, this .getField (name), value);
+      }
+
+      this .#initialValues .clear ();
+   }
 
    traverse (type, renderObject)
    {
