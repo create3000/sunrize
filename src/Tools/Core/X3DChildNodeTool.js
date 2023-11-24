@@ -9,6 +9,7 @@ const
 class X3DChildNodeTool extends X3DNodeTool
 {
    static #tools = new Set ();
+   #groupedTools = new Set ();
 
    getMustDisplay ()
    {
@@ -39,8 +40,6 @@ class X3DChildNodeTool extends X3DNodeTool
       else
          this .finishUndo ()
    }
-
-   #groupedTools = new Set ();
 
    prepareUndo ()
    {
