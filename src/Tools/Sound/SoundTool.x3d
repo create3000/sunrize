@@ -12,7 +12,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.2.1, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Sound/SoundTool.x3d'/>
-    <meta name='modified' content='Fri, 24 Nov 2023 20:01:22 GMT'/>
+    <meta name='modified' content='Fri, 24 Nov 2023 22:20:23 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -162,6 +162,9 @@
             <Group DEF='MinBack'>
               <Transform DEF='CenterPoint_2'
                   translation='0 0 -1'>
+                <IS>
+                  <connect nodeField='visible' protoField='selected'/>
+                </IS>
                 <ScreenGroup DEF='_19'>
                   <Shape
                       castShadow='false'>
@@ -177,11 +180,7 @@
                   </Shape>
                 </ScreenGroup>
                 <TouchSensor DEF='_18'
-                    description='Min Back'>
-                  <IS>
-                    <connect nodeField='enabled' protoField='selected'/>
-                  </IS>
-                </TouchSensor>
+                    description='Min Back'/>
               </Transform>
               <Transform DEF='MinBackTool'
                   translation='0 0 -1'
@@ -196,13 +195,12 @@
             <Group DEF='MinFront'>
               <Transform DEF='CenterPoint_3'
                   translation='0 0 1'>
+                <IS>
+                  <connect nodeField='visible' protoField='selected'/>
+                </IS>
                 <ScreenGroup USE='_19'/>
                 <TouchSensor DEF='_24'
-                    description='Min Front'>
-                  <IS>
-                    <connect nodeField='enabled' protoField='selected'/>
-                  </IS>
-                </TouchSensor>
+                    description='Min Front'/>
               </Transform>
               <Transform DEF='MinFrontTool'
                   translation='0 0 1'
@@ -216,6 +214,9 @@
             <Group DEF='MaxBack'>
               <Transform DEF='CenterPoint'
                   translation='0 0 -10'>
+                <IS>
+                  <connect nodeField='visible' protoField='selected'/>
+                </IS>
                 <ScreenGroup DEF='_3'>
                   <Shape
                       castShadow='false'>
@@ -229,11 +230,7 @@
                   </Shape>
                 </ScreenGroup>
                 <TouchSensor DEF='_16'
-                    description='Max Back'>
-                  <IS>
-                    <connect nodeField='enabled' protoField='selected'/>
-                  </IS>
-                </TouchSensor>
+                    description='Max Back'/>
               </Transform>
               <Transform DEF='MaxBackTool'
                   translation='0 0 -10'
@@ -247,13 +244,12 @@
             <Group DEF='MaxFront'>
               <Transform DEF='CenterPoint_1'
                   translation='0 0 10'>
+                <IS>
+                  <connect nodeField='visible' protoField='selected'/>
+                </IS>
                 <ScreenGroup USE='_3'/>
                 <TouchSensor DEF='_17'
-                    description='Max Front'>
-                  <IS>
-                    <connect nodeField='enabled' protoField='selected'/>
-                  </IS>
-                </TouchSensor>
+                    description='Max Front'/>
               </Transform>
               <Transform DEF='MaxFrontTool'
                   translation='0 0 10'
@@ -417,8 +413,9 @@ let minBackChanging = false;
 
 async function set_minBackTime ()
 {
-   minBackDisplay            = !minBackDisplay;
-   minBackTransform .visible = selected && minBackDisplay;
+   minBackDisplay = !minBackDisplay;
+
+   set_selected ();
 
    if (minBackTransform .getValue () .getTool ())
       return;
@@ -486,8 +483,9 @@ let minFrontChanging = false;
 
 async function set_minFrontTime ()
 {
-   minFrontDisplay            = !minFrontDisplay;
-   minFrontTransform .visible = selected && minFrontDisplay;
+   minFrontDisplay = !minFrontDisplay;
+
+   set_selected ();
 
    if (minFrontTransform .getValue () .getTool ())
       return;
@@ -555,8 +553,9 @@ let maxBackChanging = false;
 
 async function set_maxBackTime ()
 {
-   maxBackDisplay            = !maxBackDisplay;
-   maxBackTransform .visible = selected && maxBackDisplay;
+   maxBackDisplay = !maxBackDisplay;
+   
+   set_selected ();
 
    if (maxBackTransform .getValue () .getTool ())
       return;
@@ -624,8 +623,9 @@ let maxFrontChanging = false;
 
 async function set_maxFrontTime ()
 {
-   maxFrontDisplay            = !maxFrontDisplay;
-   maxFrontTransform .visible = selected && maxFrontDisplay;
+   maxFrontDisplay = !maxFrontDisplay;
+   
+   set_selected ();
 
    if (maxFrontTransform .getValue () .getTool ())
       return;
