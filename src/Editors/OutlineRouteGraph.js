@@ -382,9 +382,9 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 				// Determine vertical selected lines.
 
-				const verticalSelectedRoute = this .haveSelectedRoute (selectedRoutes);
-
-				function draw (state, selected) { return (state === "normal" && !selected) || (state === "selected" && selected) }
+				const
+					hasVerticalSelectedRoutes = this .haveSelectedRoute (selectedRoutes),
+					draw = (state, selected) => (state === "normal" && !selected) || (state === "selected" && selected);
 
 				["normal", "selected"] .forEach (state =>
 				{
@@ -456,9 +456,9 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 					if (routes .size - (numInputRoutesDown + numOutputRoutesDown) > 0)
 					{
-						if (draw (state, verticalSelectedRoute))
+						if (draw (state, hasVerticalSelectedRoutes))
 						{
-							context .strokeStyle = verticalSelectedRoute ? routeSelectedColor : routeColor;
+							context .strokeStyle = hasVerticalSelectedRoutes ? routeSelectedColor : routeColor;
 
 							context .beginPath ();
 							context .moveTo (9.5, 0);
