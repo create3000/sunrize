@@ -60,8 +60,7 @@
     "@electron-forge/maker-deb": "^7.1.0",
     "@electron-forge/maker-rpm": "^7.1.0",
     "@electron-forge/maker-squirrel": "^7.1.0",
-    "@electron-forge/maker-zip": "^7.1.0",
-    "electron": "^27.1.2"
+    "@electron-forge/maker-zip": "^7.1.0"
   },
   "dependencies": {
     "capitalize": "^2.0.4",
