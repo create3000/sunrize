@@ -87,8 +87,9 @@ class X3DChildNodeTool extends X3DNodeTool
 
       // Prepare undo.
 
-      if (this .beginUndo ())
-         this .#groupedTools .add (this);
+      this .beginUndo ();
+
+      this .#groupedTools .add (this);
 
       if (this .tool .group === "NONE")
          return;
