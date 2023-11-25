@@ -8,4 +8,4 @@ docs:
 	cd docs && bundle exec jekyll serve --incremental
 
 publish:
-	perl build/publish.pl
+	node build/publish.js
