@@ -77,7 +77,7 @@ module .exports = class Application
       electron .app .on ("window-all-closed",  (event)           => this .quit ());
 
       electron .ipcMain .on ("title",               (event, title)       => this .title = title);
-      electron .ipcMain .on ("current-file",        (event, currentFile) => this .setCurrentFile (currentFile));
+      electron .ipcMain .on ("current-file",        (event, currentFile) => this .currentFile = currentFile);
       electron .ipcMain .on ("add-recent-document", (event, filePath)    => this .addRecentDocument (filePath));
       electron .ipcMain .on ("change-menu",         (event, object)      => this .updateMenu (object));
       electron .ipcMain .on ("context-menu",        (event, id, menu)    => this .contextMenu (id, menu));
@@ -117,11 +117,18 @@ module .exports = class Application
       this .mainWindow .title = `${title} · Sunrize`;
    }
 
-   setCurrentFile (currentFile)
-   {
-      this .currentFile = currentFile .startsWith ("file:") ? url .fileURLToPath (currentFile) : "";
+   #currentFile = "";
 
-      this .mainWindow .setRepresentedFilename (this .currentFile);
+   get currentFile ()
+   {
+      return this .#currentFile;
+   }
+
+   set currentFile (currentFile)
+   {
+      this .#currentFile = currentFile .startsWith ("file:") ? url .fileURLToPath (currentFile) : "";
+
+      this .mainWindow .setRepresentedFilename (this .#currentFile);
    }
 
    pushMenu (menu)
