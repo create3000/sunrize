@@ -20,7 +20,7 @@
     "premake": "npm i -D electron",
     "make": "electron-forge make",
     "postmake": "npm i -P electron",
-    "publish": "node build/publish.js",
+    "release": "node build/publish.js",
     "docs": "cd docs && bundle exec jekyll serve --incremental --host=192.168.0.18"
   },
   "repository": {
