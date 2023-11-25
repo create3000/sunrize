@@ -114,7 +114,7 @@ module .exports = class Application
 
    set title (title)
    {
-      this .mainWindow .title = `${title} · Sunrize`;
+      this .mainWindow .title = `${title} · ${electron .app .getName ()}`;
    }
 
    #currentFile = "";
@@ -152,7 +152,7 @@ module .exports = class Application
       const menu = electron .Menu .buildFromTemplate ([
          {
             role: "appMenu",
-            label: "Sunrize",
+            label: electron .app .getName (),
          },
          {
             role: "fileMenu",
@@ -189,7 +189,7 @@ module .exports = class Application
                      this .pushMenu (electron .Menu .buildFromTemplate ([
                         {
                            role: "appMenu",
-                           label: "Sunrize",
+                           label: electron .app .getName (),
                         },
                         { role: "editMenu" },
                      ]));
@@ -775,7 +775,7 @@ module .exports = class Application
       this .pushMenu (electron .Menu .buildFromTemplate ([
          {
             role: "appMenu",
-            label: "Sunrize",
+            label: electron .app .getName (),
          },
          { role: "editMenu" },
       ]));
@@ -806,7 +806,7 @@ module .exports = class Application
       this .pushMenu (electron .Menu .buildFromTemplate ([
          {
             role: "appMenu",
-            label: "Sunrize",
+            label: electron .app .getName (),
          },
          { role: "editMenu" },
       ]));
@@ -834,7 +834,7 @@ module .exports = class Application
       this .pushMenu (electron .Menu .buildFromTemplate ([
          {
             role: "appMenu",
-            label: "Sunrize",
+            label: electron .app .getName (),
          },
          { role: "editMenu" },
       ]));
