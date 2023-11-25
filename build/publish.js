@@ -26,7 +26,7 @@ const
 if (sh`npm pkg get version | sed 's/"//g'` .trim () === online)
 	sh`npm version patch --no-git-tag-version --force`;
 
-const version = version = sh`npm pkg get version | sed 's/"//g'` .trim ();
+const version = sh`npm pkg get version | sed 's/"//g'` .trim ();
 
 console .log (`NPM version ${online}`);
 console .log (`New version ${version}`);
