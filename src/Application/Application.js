@@ -78,11 +78,11 @@ module .exports = class Application
       electron .app .on ("open-file",          (event, filePath) => this .openFiles ([url .pathToFileURL (filePath) .href]));
       electron .app .on ("window-all-closed",  (event)           => this .quit ());
 
-      electron .ipcMain .on ("title",        (event, title)       => this .title = title);
-      electron .ipcMain .on ("current-file", (event, currentFile) => this .currentFile = currentFile);
-      electron .ipcMain .on ("save-file",    (event, filePath)    => this .saveFile (filePath));
-      electron .ipcMain .on ("change-menu",  (event, object)      => this .updateMenu (object));
-      electron .ipcMain .on ("context-menu", (event, id, menu)    => this .contextMenu (id, menu));
+      electron .ipcMain .on ("title",               (event, title)       => this .title = title);
+      electron .ipcMain .on ("current-file",        (event, currentFile) => this .currentFile = currentFile);
+      electron .ipcMain .on ("add-recent-document", (event, filePath)    => this .addRecentDocument (filePath));
+      electron .ipcMain .on ("change-menu",         (event, object)      => this .updateMenu (object));
+      electron .ipcMain .on ("context-menu",        (event, id, menu)    => this .contextMenu (id, menu));
 
       electron .ipcMain .handle ("file-path", async (event, basename) => await this .showSaveDialog (basename));
       electron .ipcMain .handle ("fullname", async () => this .fullname);
@@ -772,7 +772,7 @@ module .exports = class Application
       return response;
    }
 
-   saveFile (filePath)
+   addRecentDocument (filePath)
    {
       electron .app .addRecentDocument (filePath);
    }

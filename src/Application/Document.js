@@ -220,7 +220,7 @@ module .exports = class Document extends Interface
 
          fs .writeFile (this .filePath, Editor .getContents (scene, path .extname (this .filePath)), Function .prototype);
 
-         electron .ipcRenderer .send ("save-file", this .filePath);
+         electron .ipcRenderer .send ("add-recent-document", this .filePath);
       }
       else
       {
