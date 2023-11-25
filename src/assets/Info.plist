@@ -60,10 +60,6 @@
 				<string>io.castleengine.view3dscene.x3d</string>
 				<string>public.data</string>
 			</array>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>Gzip</string>
-			</array>
     </dict>
     <dict>
       <key>CFBundleTypeExtensions</key>
@@ -121,10 +117,6 @@
 				<string>io.castleengine.view3dscene.x3dv</string>
 				<string>public.data</string>
 			</array>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>Gzip</string>
-			</array>
     </dict>
     <dict>
       <key>CFBundleTypeExtensions</key>
@@ -181,10 +173,6 @@
 				<string>io.github.create3000.x3dv</string>
 				<string>io.castleengine.view3dscene.x3dv</string>
 				<string>public.data</string>
-			</array>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>Gzip</string>
 			</array>
     </dict>
     <dict>
@@ -246,10 +234,6 @@
 				<string>io.github.create3000.vrml</string>
 				<string>io.castleengine.view3dscene.vrml</string>
 				<string>public.data</string>
-			</array>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>Gzip</string>
 			</array>
     </dict>
     <dict>
