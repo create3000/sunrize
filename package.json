@@ -1,7 +1,7 @@
 {
   "name": "sunrize",
   "productName": "Sunrize X3D Editor",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "A Multi-Platform X3D Editor",
   "main": "src/main.js",
   "bin": {
@@ -17,7 +17,8 @@
     "package": "electron-forge package",
     "premake": "npm i -D electron",
     "make": "electron-forge make",
-    "postmake": "npm i -P electron"
+    "postmake": "npm i -P electron",
+    "publish": "node build/publish.js"
   },
   "repository": {
     "type": "git",

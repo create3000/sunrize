@@ -6,6 +6,3 @@ x_ite-for-sunrize:
 .PHONY: docs
 docs:
 	cd docs && bundle exec jekyll serve --incremental
-
-publish:
-	node build/publish.js
