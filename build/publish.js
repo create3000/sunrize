@@ -34,7 +34,7 @@ sh`npm i x_ite@latest`;
 
 // commit
 sh`git add -A`;
-sh`git commit -am Published version ${version}`;
+sh`git commit -am 'Published version ${version}'`;
 sh`git push origin`;
 
 // tag
