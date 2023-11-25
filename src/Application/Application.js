@@ -19,10 +19,10 @@ const localStorage = new LocalStorage (path .join (electron .app .getPath ("user
 
 module .exports = class Application
 {
-   config = new DataStorage (localStorage, "Sunrize.Application.");
-   mainMenu = [ ];
+   config       = new DataStorage (localStorage, "Sunrize.Application.");
+   mainMenu     = [ ];
    openURLValue = "";
-   exportPath = new Map ();
+   exportPath   = new Map ();
 
    static run ()
    {
@@ -70,7 +70,6 @@ module .exports = class Application
 
    async setup ()
    {
-
       await electron .app .whenReady ();
 
       electron .app .on ("activate",           (event)           => this .activate ());
@@ -85,14 +84,13 @@ module .exports = class Application
       electron .ipcMain .on ("context-menu",        (event, id, menu)    => this .contextMenu (id, menu));
 
       electron .ipcMain .handle ("file-path", async (event, basename) => await this .showSaveDialog (basename));
-      electron .ipcMain .handle ("fullname", async () => this .fullname);
-
-      this .fullname = await (await import ("fullname")) .default ();
+      electron .ipcMain .handle ("fullname", async () => await (await import ("fullname")) .default ());
 
       await this .updateMenu ();
       await this .createWindow ();
 
-      this .openFiles (process .argv .slice (2) .map (filePath => url .pathToFileURL (filePath) .href));
+      this .openFiles (process .argv .slice (electron .app .isPackaged ? 1 : 2)
+         .map (filePath => url .pathToFileURL (filePath) .href));
 
       electron .app .on ("second-instance", (event, argv, cwd) =>
       {
