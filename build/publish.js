@@ -33,6 +33,9 @@ console .log (`New version ${version}`);
 
 sh`npm i x_ite@latest`;
 
+// make
+sh`npm run make`;
+
 // commit
 sh`git add -A`;
 sh`git commit -am 'Published version ${version}'`;
