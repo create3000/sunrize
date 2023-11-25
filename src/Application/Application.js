@@ -19,10 +19,11 @@ const localStorage = new LocalStorage (path .join (electron .app .getPath ("user
 
 module .exports = class Application
 {
-   config       = new DataStorage (localStorage, "Sunrize.Application.");
-   mainMenu     = [ ];
-   openURLValue = "";
-   exportPath   = new Map ();
+   config        = new DataStorage (localStorage, "Sunrize.Application.");
+   receivedFiles = [ ];
+   mainMenu      = [ ];
+   openURLValue  = "";
+   exportPath    = new Map ();
 
    static run ()
    {
@@ -70,8 +71,6 @@ module .exports = class Application
 
    async setup ()
    {
-      await electron .app .whenReady ();
-
       electron .app .on ("activate",           (event)           => this .activate ());
       electron .app .on ("new-window-for-tab", (event)           => this .createWindow ());
       electron .app .on ("open-file",          (event, filePath) => this .openFiles ([url .pathToFileURL (filePath) .href]));
@@ -86,11 +85,14 @@ module .exports = class Application
       electron .ipcMain .handle ("file-path", async (event, basename) => await this .showSaveDialog (basename));
       electron .ipcMain .handle ("fullname", async () => await (await import ("fullname")) .default ());
 
+      await electron .app .whenReady ();
       await this .updateMenu ();
       await this .createWindow ();
 
       this .openFiles (process .argv .slice (electron .app .isPackaged ? 1 : 2)
          .map (filePath => url .pathToFileURL (filePath) .href));
+
+      this .openFiles (this .receivedFiles);
 
       electron .app .on ("second-instance", (event, argv, cwd) =>
       {
@@ -680,6 +682,8 @@ module .exports = class Application
       window .setFullScreen (this .config .fullscreen);
 
       await window .loadFile (path .join (__dirname, "../assets/html/application.html"));
+
+      this .ready = true;
    }
 
    activate ()
@@ -744,13 +748,20 @@ module .exports = class Application
     */
    openFiles (urls)
    {
-      for (const URL of urls)
+      if (this .ready)
       {
-         if (URL .startsWith ("file:"))
-            this .addRecentDocument (url .fileURLToPath (URL));
-      }
+         for (const URL of urls)
+         {
+            if (URL .startsWith ("file:"))
+               this .addRecentDocument (url .fileURLToPath (URL));
+         }
 
-      this .mainWindow .webContents .send ("open-files", urls);
+         this .mainWindow .webContents .send ("open-files", urls);
+      }
+      else
+      {
+         this .receivedFiles .push (... urls);
+      }
    }
 
    async showOpenDialog (defaultPath)
