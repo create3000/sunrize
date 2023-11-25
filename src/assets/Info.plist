@@ -8,66 +8,106 @@
       <key>CFBundleTypeExtensions</key>
       <array>
         <string>x3d</string>
+        <string>X3D</string>
         <string>x3dz</string>
+        <string>X3DZ</string>
+        <string>x3d.gz</string>
+        <string>X3D.GZ</string>
       </array>
       <key>CFBundleTypeMIMETypes</key>
       <array>
         <string>model/x3d+xml</string>
       </array>
       <key>CFBundleTypeName</key>
-      <string>X3D XML Document</string>
+			<string>X3D Model (XML Encoding)</string>
       <key>CFBundleTypeIconFile</key>
       <string>electron.icns</string>
       <key>CFBundleTypeRole</key>
       <string>Editor</string>
       <key>LSHandlerRank</key>
       <string>Owner</string>
+      <key>LSIsAppleDefaultForType</key>
+      <true/>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>io.github.create3000.x3d</string>
+				<string>io.castleengine.view3dscene.x3d</string>
+				<string>public.data</string>
+			</array>
     </dict>
     <dict>
       <key>CFBundleTypeExtensions</key>
       <array>
         <string>x3dv</string>
+        <string>X3DV</string>
         <string>x3dvz</string>
+        <string>X3DVZ</string>
+        <string>x3dv.gz</string>
+        <string>X3DV.GZ</string>
       </array>
       <key>CFBundleTypeMIMETypes</key>
       <array>
         <string>model/x3d+vrml</string>
       </array>
       <key>CFBundleTypeName</key>
-      <string>X3D VRML Document</string>
+			<string>X3D Model (Classic VRML Encoding)</string>
       <key>CFBundleTypeIconFile</key>
       <string>electron.icns</string>
       <key>CFBundleTypeRole</key>
       <string>Editor</string>
       <key>LSHandlerRank</key>
       <string>Owner</string>
+      <key>LSIsAppleDefaultForType</key>
+      <true/>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>io.github.create3000.x3dv</string>
+				<string>io.castleengine.view3dscene.x3dv</string>
+				<string>public.data</string>
+			</array>
     </dict>
     <dict>
       <key>CFBundleTypeExtensions</key>
       <array>
         <string>x3dj</string>
+        <string>X3DJ</string>
         <string>x3djz</string>
+        <string>X3DJZ</string>
+        <string>x3dj.gz</string>
+        <string>X3DJ.GZ</string>
       </array>
       <key>CFBundleTypeMIMETypes</key>
       <array>
         <string>model/x3d+json</string>
       </array>
       <key>CFBundleTypeName</key>
-      <string>X3D JSON Document</string>
+			<string>X3D Model (JSON Encoding)</string>
       <key>CFBundleTypeIconFile</key>
       <string>electron.icns</string>
       <key>CFBundleTypeRole</key>
       <string>Editor</string>
       <key>LSHandlerRank</key>
       <string>Owner</string>
+      <key>LSIsAppleDefaultForType</key>
+      <true/>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>io.github.create3000.x3dj</string>
+				<string>io.castleengine.view3dscene.x3dj</string>
+				<string>public.data</string>
+			</array>
     </dict>
     <dict>
       <key>CFBundleTypeExtensions</key>
       <array>
         <string>wrl</string>
+        <string>WRL</string>
         <string>wrz</string>
+        <string>WRZ</string>
         <string>wrl.gz</string>
+        <string>WRL.GZ</string>
         <string>vrml</string>
+        <string>VRML</string>
       </array>
       <key>CFBundleTypeMIMETypes</key>
       <array>
@@ -75,90 +115,112 @@
         <string>x-world/x-vrml</string>
       </array>
       <key>CFBundleTypeName</key>
-      <string>VRML Document</string>
+			<string>VRML Document</string>
       <key>CFBundleTypeIconFile</key>
       <string>electron.icns</string>
       <key>CFBundleTypeRole</key>
       <string>Editor</string>
       <key>LSHandlerRank</key>
       <string>Owner</string>
+      <key>LSIsAppleDefaultForType</key>
+      <true/>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>io.github.create3000.vrml</string>
+				<string>io.castleengine.view3dscene.vrml</string>
+				<string>public.data</string>
+			</array>
     </dict>
     <dict>
       <key>CFBundleTypeExtensions</key>
       <array>
         <string>gltf</string>
+        <string>GLTF</string>
         <string>glb</string>
+        <string>GLB</string>
       </array>
       <key>CFBundleTypeMIMETypes</key>
       <array>
         <string>model/gltf+json</string>
       </array>
       <key>CFBundleTypeName</key>
-      <string>glTF Document</string>
+      <string>glTF Model</string>
       <key>CFBundleTypeRole</key>
       <string>Editor</string>
       <key>LSHandlerRank</key>
       <string>Alternate</string>
+      <key>LSIsAppleDefaultForType</key>
+      <true/>
     </dict>
     <dict>
       <key>CFBundleTypeExtensions</key>
       <array>
         <string>obj</string>
+        <string>OBJ</string>
       </array>
       <key>CFBundleTypeMIMETypes</key>
       <array>
         <string>model/obj</string>
       </array>
       <key>CFBundleTypeName</key>
-      <string>OBJ Document</string>
+      <string>Geometry Definition File Format</string>
       <key>CFBundleTypeRole</key>
       <string>Editor</string>
       <key>LSHandlerRank</key>
       <string>Alternate</string>
+      <key>LSIsAppleDefaultForType</key>
+      <true/>
     </dict>
     <dict>
       <key>CFBundleTypeExtensions</key>
       <array>
         <string>stl</string>
+        <string>STL</string>
       </array>
       <key>CFBundleTypeMIMETypes</key>
       <array>
         <string>model/stl</string>
       </array>
       <key>CFBundleTypeName</key>
-      <string>STL Document</string>
+      <string>Standard Tesselated Geometry File Format</string>
       <key>CFBundleTypeRole</key>
       <string>Editor</string>
       <key>LSHandlerRank</key>
       <string>Alternate</string>
+      <key>LSIsAppleDefaultForType</key>
+      <true/>
     </dict>
     <dict>
       <key>CFBundleTypeExtensions</key>
       <array>
         <string>ply</string>
+        <string>PLY</string>
       </array>
       <key>CFBundleTypeMIMETypes</key>
       <array>
         <string>model/ply</string>
       </array>
       <key>CFBundleTypeName</key>
-      <string>PLY Document</string>
+      <string>Polygon File Format</string>
       <key>CFBundleTypeRole</key>
       <string>Editor</string>
       <key>LSHandlerRank</key>
       <string>Alternate</string>
+      <key>LSIsAppleDefaultForType</key>
+      <true/>
     </dict>
     <dict>
       <key>CFBundleTypeExtensions</key>
       <array>
         <string>svg</string>
+        <string>SVG</string>
       </array>
       <key>CFBundleTypeMIMETypes</key>
       <array>
         <string>image/svg+xml</string>
       </array>
       <key>CFBundleTypeName</key>
-      <string>SVG Document</string>
+      <string>Scalable Vector Graphics Image</string>
       <key>CFBundleTypeRole</key>
       <string>Editor</string>
       <key>LSHandlerRank</key>
