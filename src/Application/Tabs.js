@@ -128,6 +128,9 @@ module .exports = new class Tabs
          return false
       })
 
+      for (const fileURL of openTabs .filter (URL => URL .startsWith ("file:")))
+         electron .ipcRenderer .send ("add-recent-document", url .fileURLToPath (fileURL));
+
       if (openTabs .length)
          this .openTabs (openTabs, false)
 

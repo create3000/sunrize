@@ -231,7 +231,7 @@ module .exports = class Application
                      if (response .canceled)
                         return;
 
-                     electron .app .addRecentDocument (response .filePath);
+                     this .addRecentDocument (response .filePath);
 
                      this .mainWindow .webContents .send ("save-file-as", response .filePath);
                   },
@@ -245,7 +245,7 @@ module .exports = class Application
                      if (response .canceled)
                         return;
 
-                     electron .app .addRecentDocument (response .filePath);
+                     this .addRecentDocument (response .filePath);
 
                      this .mainWindow .webContents .send ("save-copy-as", response .filePath);
                   },
@@ -294,7 +294,7 @@ module .exports = class Application
                      if (response .canceled)
                         return;
 
-                     electron .app .addRecentDocument (response .filePath);
+                     this .addRecentDocument (response .filePath);
 
                      this .exportPath .set (this .currentFile, response .filePath);
 
@@ -740,7 +740,7 @@ module .exports = class Application
       for (const URL of urls)
       {
          if (URL .startsWith ("file:"))
-            electron .app .addRecentDocument (url .fileURLToPath (URL));
+            this .addRecentDocument (url .fileURLToPath (URL));
       }
 
       this .mainWindow .webContents .send ("open-files", urls);
