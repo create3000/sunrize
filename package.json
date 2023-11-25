@@ -19,12 +19,7 @@
     "make": "electron-forge make",
     "postmake": "npm i -P electron",
     "publish": "node build/publish.js",
-    "docs": "cd docs && bundle exec jekyll serve --incremental --host=192.168.0.18",
-    "docs-update": "cd docs && bundle update",
-    "docs-components": "node build/docs/components.js",
-    "docs-nodes": "perl build/docs/nodes.pl",
-    "glTF-samples": "perl build/docs/glTF-samples.pl",
-    "make-test": "perl build/bin/tests.pl"
+    "docs": "cd docs && bundle exec jekyll serve --incremental --host=192.168.0.18"
   },
   "repository": {
     "type": "git",
