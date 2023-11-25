@@ -99,8 +99,6 @@ module .exports = class Application
          this .openFiles (argv .slice (1)
             .filter (filePath => fs .existsSync (filePath) && fs .lstatSync (filePath) .isFile ())
             .map (filePath => url .pathToFileURL (filePath) .href));
-
-         this .mainWindow .show ();
       });
    }
 
@@ -689,9 +687,9 @@ module .exports = class Application
    activate ()
    {
       if (electron .BrowserWindow .getAllWindows () .length)
-         return;
-
-      this .createWindow ();
+         this .mainWindow .show ();
+      else
+         this .createWindow ();
    }
 
    contextMenu (id, menu)
@@ -757,6 +755,7 @@ module .exports = class Application
          }
 
          this .mainWindow .webContents .send ("open-files", urls);
+         this .mainWindow .show ();
       }
       else
       {
