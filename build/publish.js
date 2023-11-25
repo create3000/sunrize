@@ -21,14 +21,15 @@ sh`git merge development`;
 // version
 const
 	name    = sh`node -p "require('./package.json').name"` .trim (),
-	version = sh`npm pkg get version | sed 's/"//g'` .trim (),
 	online  = sh`npm view ${name} version` .trim ();
 
-console .log (`package.json version ${version}`);
-console .log (`NPM version ${online}`);
-
-if (version === online)
+if (sh`npm pkg get version | sed 's/"//g'` .trim () === online)
 	sh`npm version patch --no-git-tag-version --force`;
+
+const version = version = sh`npm pkg get version | sed 's/"//g'` .trim ();
+
+console .log (`NPM version ${online}`);
+console .log (`New version ${version}`);
 
 sh`npm i x_ite@latest`;
 
