@@ -34,74 +34,72 @@ module .exports = new class Tabs
    {
       this .tabs .on ("tab-active", tab =>
       {
-         electron .ipcRenderer .send ("title", tab .getTitle ())
-
-         if (tab .url .startsWith ("file:"))
-            electron .ipcRenderer .send ("current-file", url .fileURLToPath (tab .url))
+         electron .ipcRenderer .send ("title", tab .getTitle ());
+         electron .ipcRenderer .send ("current-file", tab .url);
 
          if (tab .domReady)
-            tab .webview .send ("activate")
+            tab .webview .send ("activate");
 
-         tab .initialized = true
+         tab .initialized = true;
 
-         this .saveTabs ()
-      })
+         this .saveTabs ();
+      });
 
-      this .tabs .on ("tab-removed", (tab) => this .saveTabs ())
+      this .tabs .on ("tab-removed", (tab) => this .saveTabs ());
 
       // Actions
 
-      electron .ipcRenderer .on ("open-files",     (event, urls)     => this .openTabs (urls))
-      electron .ipcRenderer .on ("save-file",      (event)           => this .saveFile ())
-      electron .ipcRenderer .on ("save-file-as",   (event, filePath) => this .saveFileAs (filePath))
-      electron .ipcRenderer .on ("save-all-files", (event)           => this .saveAllFiles ())
-      electron .ipcRenderer .on ("reload"        , (event)           => this .reloadTab ())
-      electron .ipcRenderer .on ("quit",           (event)           => this .quit ())
+      electron .ipcRenderer .on ("open-files",     (event, urls)     => this .openTabs (urls));
+      electron .ipcRenderer .on ("save-file",      (event)           => this .saveFile ());
+      electron .ipcRenderer .on ("save-file-as",   (event, filePath) => this .saveFileAs (filePath));
+      electron .ipcRenderer .on ("save-all-files", (event)           => this .saveAllFiles ());
+      electron .ipcRenderer .on ("reload"        , (event)           => this .reloadTab ());
+      electron .ipcRenderer .on ("quit",           (event)           => this .quit ());
 
-      electron .ipcRenderer .on ("toggle-developer-tools", (event) => this .tabs .getActiveTab () .webview .openDevTools ())
+      electron .ipcRenderer .on ("toggle-developer-tools", (event) => this .tabs .getActiveTab () .webview .openDevTools ());
 
-      $(window) .on ("beforeunload", () => this .close ())
+      $(window) .on ("beforeunload", () => this .close ());
 
       // Forward Actions
 
-      this .forwardToAllTabs ("auto-save")
-      this .forwardToActiveTab ("export-as")
+      this .forwardToAllTabs ("auto-save");
+      this .forwardToActiveTab ("export-as");
 
-      this .forwardToActiveTab ("scene-properties")
-      this .forwardToActiveTab ("save-copy-as")
-      this .forwardToActiveTab ("scene-properties")
+      this .forwardToActiveTab ("scene-properties");
+      this .forwardToActiveTab ("save-copy-as");
+      this .forwardToActiveTab ("scene-properties");
 
-      this .forwardToActiveTab ("undo")
-      this .forwardToActiveTab ("redo")
+      this .forwardToActiveTab ("undo");
+      this .forwardToActiveTab ("redo");
 
-      this .forwardToActiveTab ("cut")
-      this .forwardToActiveTab ("copy")
-      this .forwardToActiveTab ("paste")
-      this .forwardToActiveTab ("delete")
+      this .forwardToActiveTab ("cut");
+      this .forwardToActiveTab ("copy");
+      this .forwardToActiveTab ("paste");
+      this .forwardToActiveTab ("delete");
 
-      this .forwardToActiveTab ("select-all")
-      this .forwardToActiveTab ("deselect-all")
-      this .forwardToActiveTab ("hide-unselected-objects")
-      this .forwardToActiveTab ("show-selected-objects")
-      this .forwardToActiveTab ("show-all-objects")
-      this .forwardToActiveTab ("remove-empty-groups")
+      this .forwardToActiveTab ("select-all");
+      this .forwardToActiveTab ("deselect-all");
+      this .forwardToActiveTab ("hide-unselected-objects");
+      this .forwardToActiveTab ("show-selected-objects");
+      this .forwardToActiveTab ("show-all-objects");
+      this .forwardToActiveTab ("remove-empty-groups");
 
-      this .forwardToAllTabs ("expand-extern-proto-declarations")
-      this .forwardToAllTabs ("expand-prototype-instances")
-      this .forwardToAllTabs ("expand-inline-nodes")
+      this .forwardToAllTabs ("expand-extern-proto-declarations");
+      this .forwardToAllTabs ("expand-prototype-instances");
+      this .forwardToAllTabs ("expand-inline-nodes");
 
-      this .forwardToAllTabs ("primitive-quality")
-      this .forwardToAllTabs ("texture-quality")
-      this .forwardToAllTabs ("display-rubberband")
-      this .forwardToAllTabs ("display-timings")
+      this .forwardToAllTabs ("primitive-quality");
+      this .forwardToAllTabs ("texture-quality");
+      this .forwardToAllTabs ("display-rubberband");
+      this .forwardToAllTabs ("display-timings");
 
-      this .forwardToActiveTab ("show-library")
-      this .forwardToActiveTab ("browser-size")
-      this .forwardToActiveTab ("script-editor-menu")
-      this .forwardToActiveTab ("outline-editor-menu")
+      this .forwardToActiveTab ("show-library");
+      this .forwardToActiveTab ("browser-size");
+      this .forwardToActiveTab ("script-editor-menu");
+      this .forwardToActiveTab ("outline-editor-menu");
 
       // Restore tabs.
-      this .restoreTabs (this .config .activeTab)
+      this .restoreTabs (this .config .activeTab);
    }
 
    // Tab handling

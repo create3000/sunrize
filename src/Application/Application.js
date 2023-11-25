@@ -121,15 +121,15 @@ module .exports = class Application
 
    setCurrentFile (currentFile)
    {
-      this .currentFile = currentFile;
+      this .currentFile = currentFile .startsWith ("file:") ? url .fileURLToPath (currentFile) : "";
 
-      this .mainWindow .setRepresentedFilename (currentFile);
+      this .mainWindow .setRepresentedFilename (this .currentFile);
    }
 
    pushMenu (menu)
    {
       this .mainMenu .push (menu);
-      electron .Menu .setApplicationMenu (menu)
+      electron .Menu .setApplicationMenu (menu);
    }
 
    popMenu ()
