@@ -18,7 +18,7 @@
         {
             "label": "Make X_ITE for Sunrize",
             "type": "shell",
-            "command": "make x_ite-for-sunrize",
+            "command": "npm run make-x_ite-for-sunrize",
             "problemMatcher": []
         }
     ]
