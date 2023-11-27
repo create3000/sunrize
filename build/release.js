@@ -1,12 +1,7 @@
 #!/usr/bin/env node
 "use strict";
 
-function sh (strings, ... values)
-{
-   const { execSync } = require ("child_process");
-
-   return execSync (String .raw ({ raw: strings }, ... values), { encoding: "utf8", maxBuffer: Infinity });
-}
+const { sh } = require ("shell-tools");
 
 if (sh`git branch --show-current` !== "development\n")
 {
