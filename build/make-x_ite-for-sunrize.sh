@@ -1,5 +1,5 @@
 #!/bin/sh
 cd ../x_ite;
-make dist;
+npm run dist;
 rsync -a --delete --exclude=".*" dist/ ../sunrize/x_ite/;
 git checkout -- dist;
