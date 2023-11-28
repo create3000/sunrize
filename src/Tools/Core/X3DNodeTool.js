@@ -132,10 +132,7 @@ class X3DNodeTool
       this .tool .selected = this [_selected];
    }
 
-   async initializeTool (... args)
-   {
-      await this .loadTool (... args);
-   }
+   async initializeTool () { }
 
    static #scenes = new Map ();
 

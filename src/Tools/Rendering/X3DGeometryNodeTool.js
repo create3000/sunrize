@@ -6,7 +6,7 @@ class X3DGeometryNodeTool extends X3DNodeTool
 {
    async initializeTool ()
    {
-      await super .initializeTool (__dirname, "X3DGeometryNodeTool.x3d");
+      await super .loadTool (__dirname, "X3DGeometryNodeTool.x3d");
    }
 }
 
