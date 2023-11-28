@@ -11,8 +11,8 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.2.2, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 24 Nov 2023 22:43:39 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.2.7, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Tue, 28 Nov 2023 22:34:44 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -86,6 +86,8 @@
                       <connect nodeField='emissiveColor' protoField='bboxColor'/>
                     </IS>
                   </UnlitMaterial>
+                  <DepthMode
+                      polygonOffset='-1 -1'/>
                 </Appearance>
                 <IndexedLineSet
                     coordIndex='0, 1, 2, 3, 0, -1, 4, 5, 6, 7, 4, -1, 0, 4, -1, 3, 7, -1, 1, 5, -1, 2, 6, -1'>
@@ -600,7 +602,7 @@
               <ScreenGroup DEF='BBoxCenterPoint'>
                 <Transform
                     scale='0.6666667 0.6666667 0.6666667'>
-                  <ProtoInstance name='BooleanSwitch' DEF='_1'>
+                  <ProtoInstance name='BooleanSwitch' DEF='_16'>
                     <fieldValue name='children'>
                       <Shape DEF='YellowPoint'
                           castShadow='false'>
@@ -668,7 +670,7 @@
                   <connect nodeField='translation' protoField='center'/>
                 </IS>
                 <ScreenGroup>
-                  <ProtoInstance name='BooleanSwitch' USE='_1'/>
+                  <ProtoInstance name='BooleanSwitch' USE='_16'/>
                 </ScreenGroup>
                 <TouchSensor DEF='_10'
                     description='Center'>
@@ -1726,7 +1728,7 @@ function set_bboxCenter ()
         <ROUTE fromNode='ScaleSensor1_1' fromField='isActive' toNode='ScaleScript' toField='set_active'/>
         <ROUTE fromNode='_10' fromField='touchTime' toNode='CenterScript' toField='set_toggleCenterTool'/>
         <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='TranslateScript' toField='set_keepCenter'/>
-        <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='_1' toField='set_whichChoice'/>
+        <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='_16' toField='set_whichChoice'/>
         <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='ScaleScript' toField='set_keepCenter'/>
         <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='CenterLine' toField='set_whichChoice'/>
         <ROUTE fromNode='ModeScript' fromField='scale' toNode='ScaleSensor1_1' toField='set_enabled'/>

@@ -21,7 +21,7 @@ class X3DChildNodeTool extends X3DNodeTool
 
    async initializeTool (... args)
    {
-      await this .loadTool (... args);
+      await super .initializeTool (... args);
 
       X3DChildNodeTool .#tools .add (this);
    }
@@ -168,24 +168,6 @@ class X3DChildNodeTool extends X3DNodeTool
       }
 
       this .#initialValues .clear ();
-   }
-
-   traverse (type, renderObject)
-   {
-      switch (type)
-      {
-         case X3D .TraverseType .POINTER:
-            break;
-         default:
-            this .node .traverse (type, renderObject);
-            break;
-      }
-
-      renderObject .getHumanoids () .push (null);
-
-      this .toolInnerNode ?.traverse (type, renderObject);
-
-      renderObject .getHumanoids () .pop ();
    }
 }
 

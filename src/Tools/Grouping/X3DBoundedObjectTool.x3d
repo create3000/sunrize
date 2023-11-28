@@ -9,8 +9,8 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Tue, 21 Nov 2023 18:32:21 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.2.7, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Tue, 28 Nov 2023 22:34:13 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -54,6 +54,8 @@
                     <connect nodeField='emissiveColor' protoField='bboxColor'/>
                   </IS>
                 </UnlitMaterial>
+                <DepthMode
+                    polygonOffset='-1 -1'/>
               </Appearance>
               <IndexedLineSet
                   coordIndex='0, 1, 2, 3, 0, -1, 4, 5, 6, 7, 4, -1, 0, 4, -1, 3, 7, -1, 1, 5, -1, 2, 6, -1'>
@@ -423,6 +425,7 @@ function eventsProcessed ()
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'>
+      <fieldValue name='bboxDisplay' value='true'/>
       <fieldValue name='bboxSize' value='2 3 4'/>
     </ProtoInstance>
   </Scene>

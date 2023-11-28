@@ -57,7 +57,9 @@ const handler =
 
 const
    _proxy         = Symbol (),
-   _externalNodes = Symbol ();
+   _externalNodes = Symbol (),
+   _selected      = Symbol (),
+   _innerNode     = Symbol ();
 
 class X3DNodeTool
 {
@@ -83,7 +85,29 @@ class X3DNodeTool
       return proxy;
    }
 
+   setSelected (value)
+   {
+      this [_selected] = value;
+
+      if (!this .tool)
+         return;
+
+      this .tool .selected = value;
+   }
+
    getInnerNode ()
+   {
+      return this [_proxy];
+   }
+
+   async getToolInstance ()
+   {
+      await this .toolPromise;
+
+      return this .tool;
+   }
+
+   addTool ()
    {
       return this [_proxy];
    }
@@ -104,32 +128,13 @@ class X3DNodeTool
       if (!this .tool)
          return;
 
-      this .toolInnerNode  = this .tool .getValue () .getInnerNode ();
-      this .tool .selected = this .toolSelected;
+      this [_innerNode]    = this .tool .getValue () .getInnerNode ();
+      this .tool .selected = this [_selected];
    }
 
-   async initializeTool () { }
-
-   setSelected (value)
+   async initializeTool (... args)
    {
-      this .toolSelected = value;
-
-      if (!this .tool)
-         return;
-
-      this .tool .selected = value;
-   }
-
-   async getToolInstance ()
-   {
-      await this .toolPromise;
-
-      return this .tool;
-   }
-
-   addTool ()
-   {
-      return this [_proxy];
+      await this .loadTool (... args);
    }
 
    static #scenes = new Map ();
@@ -223,6 +228,24 @@ class X3DNodeTool
    valueOf ()
    {
       return this .node .valueOf ();
+   }
+
+   traverse (type, renderObject)
+   {
+      switch (type)
+      {
+         case X3D .TraverseType .POINTER:
+            break;
+         default:
+            this .node .traverse (type, renderObject);
+            break;
+      }
+
+      renderObject .getHumanoids () .push (null);
+
+      this [_innerNode] ?.traverse (type, renderObject);
+
+      renderObject .getHumanoids () .pop ();
    }
 
    dispose ()
