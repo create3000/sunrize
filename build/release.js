@@ -5,7 +5,7 @@ const { sh, systemSync } = require ("shell-tools");
 
 function main ()
 {
-	if (sh`git branch --show-current` !== "development\n")
+	if (sh (`git branch --show-current`) !== "development\n")
 	{
 		console .error ("Wrong branch, must be development, cannot release version!");
 		process .exit (1);
@@ -17,13 +17,13 @@ function main ()
 
 	// version
 	const
-		name    = sh`node -p "require('./package.json').name"` .trim (),
-		online  = sh`npm view ${name} version` .trim ();
+		name    = sh (`node -p "require('./package.json').name"`) .trim (),
+		online  = sh (`npm view ${name} version`) .trim ();
 
-	if (sh`npm pkg get version | sed 's/"//g'` .trim () === online)
+	if (sh (`npm pkg get version | sed 's/"//g'`) .trim () === online)
 		systemSync (`npm version patch --no-git-tag-version --force`);
 
-	const version = sh`npm pkg get version | sed 's/"//g'` .trim ();
+	const version = sh (`npm pkg get version | sed 's/"//g'`) .trim ();
 
 	console .log (`NPM version ${online}`);
 	console .log (`New version ${version}`);
