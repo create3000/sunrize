@@ -30,6 +30,8 @@ class SphereTool extends X3DGeometryNodeTool
    {
       this .tool .set_linesCoordIndex = optionNode .getGeometry () ._coordIndex;
       this .tool .linesCoord          = optionNode .getGeometry () ._coord;
+
+      this .addExternalNode (optionNode .getGeometry () ._coord);
    }
 }
 

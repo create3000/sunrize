@@ -7,13 +7,13 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.2.7, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Wed, 29 Nov 2023 10:31:49 GMT'/>
+    <meta name='modified' content='Wed, 29 Nov 2023 21:43:46 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='Tool'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
-        <field accessType='inputOutput' type='SFVec3f' name='size'/>
+        <field accessType='inputOutput' type='SFVec3f' name='size' value='1 1 1'/>
         <field accessType='inputOutput' type='SFBool' name='linesDisplay'/>
         <field accessType='inputOutput' type='SFColor' name='linesColor' value='1 1 1'/>
         <field accessType='inputOnly' type='MFInt32' name='set_linesCoordIndex'/>

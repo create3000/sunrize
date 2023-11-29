@@ -57,6 +57,8 @@ class CylinderTool extends X3DGeometryNodeTool
 
       this .tool .set_linesCoordIndex = coordIndex;
       this .tool .linesCoord          = optionNode .getSideGeometry () ._coord;
+
+      this .addExternalNode (optionNode .getSideGeometry () ._coord);
    }
 }
 
