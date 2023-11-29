@@ -7,6 +7,8 @@ class GeoElevationGridTool extends X3DGeometryNodeTool
    async initializeTool ()
    {
       await super .initializeTool ();
+
+      this .tool .linewidthScaleFactor = 1;
    }
 }
 

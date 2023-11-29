@@ -57,6 +57,7 @@ const handler =
 
 const
    _proxy         = Symbol (),
+   _promise       = Symbol (),
    _externalNodes = Symbol (),
    _selected      = Symbol (),
    _innerNode     = Symbol ();
@@ -85,6 +86,11 @@ class X3DNodeTool
       return proxy;
    }
 
+   getInnerNode ()
+   {
+      return this [_proxy];
+   }
+
    setSelected (value)
    {
       this [_selected] = value;
@@ -95,16 +101,16 @@ class X3DNodeTool
       this .tool .selected = value;
    }
 
-   getInnerNode ()
-   {
-      return this [_proxy];
-   }
-
    async getToolInstance ()
    {
-      await this .toolPromise;
+      await this [_promise];
 
       return this .tool;
+   }
+
+   getToolScene ()
+   {
+      return this .tool .getValue () .getExecutionContext ();
    }
 
    addTool ()
@@ -144,7 +150,7 @@ class X3DNodeTool
 
       if (promise)
       {
-         return this .toolPromise = promise .then (scene => this .tool = this .createTool (scene));
+         return this [_promise] = promise .then (scene => this .tool = this .createTool (scene));
       }
       else
       {
@@ -171,7 +177,7 @@ class X3DNodeTool
 
          X3DNodeTool .#scenes .set (protoURL .href, promise);
 
-         return this .toolPromise = promise;
+         return this [_promise] = promise;
       }
    }
 
