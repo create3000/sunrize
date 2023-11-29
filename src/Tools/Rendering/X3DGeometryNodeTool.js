@@ -15,12 +15,17 @@ class X3DGeometryNodeTool extends X3DNodeTool
       if (type === "CUSTOM")
          return;
 
-      this .node .addInterest ("set_vertices", this);
+      this .node ._rebuild .addInterest ("set_vertices", this);
 
       this .tool .linesDisplay = true;
       this .tool .linesCoord   = this .getExecutionContext () .createNode ("Coordinate");
 
       this .set_vertices ();
+   }
+
+   disposeTool ()
+   {
+      this .node ._rebuild .removeInterest ("set_vertices", this);
    }
 
    set_vertices ()

@@ -19,6 +19,12 @@ class Rectangle2DTool extends X3DGeometryNodeTool
       this .set_optionNode (this .getBrowser () .getRectangle2DOptions ());
    }
 
+   disposeTool ()
+   {
+      this .node ._size                             .removeInterest ("set_size",       this);
+      this .getBrowser () .getRectangle2DOptions () .removeInterest ("set_optionNode", this);
+   }
+
    set_size (size)
    {
       const

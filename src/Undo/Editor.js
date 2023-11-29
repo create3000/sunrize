@@ -2307,7 +2307,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       })
 
       this .requestUpdateInstances (node, undoManager);
-;
+
       undoManager .endUndo ();
    }
 

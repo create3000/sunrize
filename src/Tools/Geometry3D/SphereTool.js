@@ -19,6 +19,12 @@ class SphereTool extends X3DGeometryNodeTool
       this .set_optionNode (this .getBrowser () .getSphereOptions ());
    }
 
+   disposeTool ()
+   {
+      this .node ._radius                      .removeInterest ("set_radius",     this);
+      this .getBrowser () .getSphereOptions () .removeInterest ("set_optionNode", this);
+   }
+
    set_radius (radius)
    {
       const r = Math .abs (radius .getValue ());

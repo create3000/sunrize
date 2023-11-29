@@ -24,6 +24,17 @@ class CylinderTool extends X3DGeometryNodeTool
       this .set_optionNode ();
    }
 
+   disposeTool ()
+   {
+      this .node ._height .removeInterest ("set_height_and_radius", this);
+      this .node ._radius .removeInterest ("set_height_and_radius", this);
+
+      this .node ._side                          .removeInterest ("set_optionNode", this);
+      this .node ._bottom                        .removeInterest ("set_optionNode", this);
+      this .node ._top                           .removeInterest ("set_optionNode", this);
+      this .getBrowser () .getCylinderOptions () .removeInterest ("set_optionNode", this);
+   }
+
    set_height_and_radius ()
    {
       const
