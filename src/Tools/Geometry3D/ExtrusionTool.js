@@ -1,8 +1,6 @@
 "use strict";
 
-const
-   X3DGeometryNodeTool = require ("../Rendering/X3DGeometryNodeTool"),
-   X3D                 = require ("../../X3D");
+const X3DGeometryNodeTool = require ("../Rendering/X3DGeometryNodeTool");
 
 class ExtrusionTool extends X3DGeometryNodeTool
 {
