@@ -375,8 +375,20 @@ module .exports = class Document extends Interface
     */
    setPrimitiveQuality (value)
    {
+      const live = this .browser .isLive ();
+
+      this .browser .beginUpdate ();
       this .browser .setBrowserOption ("PrimitiveQuality", value);
       this .browser .setDescription (`Primitive Quality: ${value .toLowerCase ()}`);
+
+      if (!live)
+      {
+         this .browser .finishedEvents () .addFieldCallback (this, () =>
+         {
+            this .browser .finishedEvents () .removeFieldCallback (this);
+            this .browser .endUpdate ();
+         })
+      }
    }
 
    /**
