@@ -4,7 +4,7 @@ const
    X3DGeometryNodeTool = require ("../Rendering/X3DGeometryNodeTool"),
    X3D                 = require ("../../X3D");
 
-class ElevationGridTool extends X3DGeometryNodeTool
+class ExtrusionTool extends X3DGeometryNodeTool
 {
    async initializeTool ()
    {
@@ -12,4 +12,4 @@ class ElevationGridTool extends X3DGeometryNodeTool
    }
 }
 
-module .exports = ElevationGridTool;
+module .exports = ExtrusionTool;
