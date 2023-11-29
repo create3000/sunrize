@@ -42,7 +42,10 @@ class ConeTool extends X3DGeometryNodeTool
          coordIndex .push (... optionNode .getSideGeometry () ._coordIndex);
 
       if (this .node ._bottom .getValue ())
+      {
          coordIndex .push (... optionNode .getBottomGeometry () ._coordIndex);
+         coordIndex .splice (-1, 0, optionNode ._xDimension .getValue () - 1);
+      }
 
       this .tool .set_linesCoordIndex = coordIndex;
       this .tool .linesCoord          = optionNode .getSideGeometry () ._coord;
