@@ -126,19 +126,14 @@ module .exports = class Dashboard extends Interface
 
          for (const element of selection)
          {
-            try
-            {
-               const node = outlineEditor .getNode ($(element)) .getInnerNode ();
+            const node = outlineEditor .getNode ($(element)) .getInnerNode ();
 
-               if (!node .getType () .some (type => types .has (type)))
-                  continue;
+            if (!node .getType () .some (type => types .has (type)))
+               continue;
 
-               const modelMatrix = outlineEditor .getModelMatrix ($(element), false);
+            const modelMatrix = outlineEditor .getModelMatrix ($(element), false);
 
-               bbox .add (node .getBBox (new X3D .Box3 ()) .multRight (modelMatrix));
-            }
-            catch
-            { }
+            bbox .add (node .getBBox (new X3D .Box3 ()) .copy () .multRight (modelMatrix));
          }
 
          if (!bbox .size .magnitude ())
