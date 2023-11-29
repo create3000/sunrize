@@ -8,7 +8,7 @@ class ConeTool extends X3DGeometryNodeTool
 {
    async initializeTool ()
    {
-      await super .initializeTool ();
+      await super .initializeTool ("CUSTOM");
 
       this .node ._height       .addInterest ("set_height_and_bottomRadius", this);
       this .node ._bottomRadius .addInterest ("set_height_and_bottomRadius", this);

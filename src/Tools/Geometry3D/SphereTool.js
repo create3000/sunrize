@@ -8,7 +8,7 @@ class SphereTool extends X3DGeometryNodeTool
 {
    async initializeTool ()
    {
-      await super .initializeTool ();
+      await super .initializeTool ("CUSTOM");
 
       this .node ._radius                      .addInterest ("set_radius",     this);
       this .getBrowser () .getSphereOptions () .addInterest ("set_optionNode", this);

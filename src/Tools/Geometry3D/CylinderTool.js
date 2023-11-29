@@ -8,7 +8,7 @@ class CylinderTool extends X3DGeometryNodeTool
 {
    async initializeTool ()
    {
-      await super .initializeTool ();
+      await super .initializeTool ("CUSTOM");
 
       this .node ._height .addInterest ("set_height_and_radius", this);
       this .node ._radius .addInterest ("set_height_and_radius", this);

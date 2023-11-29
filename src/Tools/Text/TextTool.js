@@ -2,7 +2,7 @@
 
 const X3DGeometryNodeTool = require ("../Rendering/X3DGeometryNodeTool");
 
-class ExtrusionTool extends X3DGeometryNodeTool
+class TextTool extends X3DGeometryNodeTool
 {
    async initializeTool ()
    {
@@ -10,4 +10,4 @@ class ExtrusionTool extends X3DGeometryNodeTool
    }
 }
 
-module .exports = ExtrusionTool;
+module .exports = TextTool;

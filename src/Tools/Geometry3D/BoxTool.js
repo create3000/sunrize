@@ -8,7 +8,7 @@ class BoxTool extends X3DGeometryNodeTool
 {
    async initializeTool ()
    {
-      await super .initializeTool ();
+      await super .initializeTool ("CUSTOM");
 
       this .node ._size                     .addInterest ("set_size",      this);
       this .getBrowser () .getBoxOptions () .addInterest ("set_optionNode", this);

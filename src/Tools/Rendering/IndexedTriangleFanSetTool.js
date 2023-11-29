@@ -6,7 +6,7 @@ class IndexedTriangleFanSetTool extends X3DGeometryNodeTool
 {
    async initializeTool ()
    {
-      await super .initializeTool ("STANDARD");
+      await super .initializeTool ();
    }
 }
 

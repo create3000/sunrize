@@ -12,9 +12,9 @@ class X3DGeometryNodeTool extends X3DNodeTool
 
       this .tool .linesColor = ToolColors .BLUE;
 
-      if (type !== "STANDARD")
+      if (type === "CUSTOM")
          return;
-      
+
       this .node .addInterest ("set_vertices", this);
 
       this .tool .linesDisplay = true;
