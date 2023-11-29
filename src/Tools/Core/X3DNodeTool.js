@@ -227,6 +227,8 @@ class X3DNodeTool
       return this .node .valueOf ();
    }
 
+   static #sensors = [ ];
+
    traverse (type, renderObject)
    {
       switch (type)
@@ -239,9 +241,11 @@ class X3DNodeTool
       }
 
       renderObject .getHumanoids () .push (null);
+      renderObject .getSensors ()   .push (X3DNodeTool .#sensors);
 
       this [_innerNode] ?.traverse (type, renderObject);
 
+      renderObject .getSensors ()   .pop ();
       renderObject .getHumanoids () .pop ();
    }
 
