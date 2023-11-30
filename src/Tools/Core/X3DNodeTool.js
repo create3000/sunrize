@@ -81,12 +81,12 @@ class X3DNodeTool extends X3DBaseTool
    {
       const proxy = super (node);
 
+      this .#proxy = proxy;
+
       node .setUserData (_tool, proxy);
       node .setUserData (_changing, true);
 
       X3D .SFNodeCache .add (proxy, X3D .SFNodeCache .get (node));
-
-      this .#proxy = proxy;
 
       this .replaceNode (node, proxy);
       proxy .setupTool ();
