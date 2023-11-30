@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='X_ITE' level='1'/>
+    <meta name='created' content='Tue, 28 Nov 2023 21:59:27 GMT'/>
+    <meta name='comment' content='Rise and Shine'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.2.7, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Thu, 30 Nov 2023 09:48:53 GMT'/>
+  </head>
+  <Scene>
+    <ProtoDeclare name='Tool'>
+      <ProtoInterface>
+        <field accessType='inputOutput' type='SFBool' name='selected'/>
+        <field accessType='inputOutput' type='SFBool' name='pointsDisplay' value='true'/>
+        <field accessType='inputOutput' type='SFFloat' name='pointSize' value='5'/>
+        <field accessType='inputOutput' type='SFColor' name='pointsColor' value='1 1 1'/>
+        <field accessType='inputOutput' type='SFNode' name='pointsCoord'/>
+      </ProtoInterface>
+      <ProtoBody>
+        <Shape DEF='Lines'>
+          <IS>
+            <connect nodeField='visible' protoField='pointsDisplay'/>
+          </IS>
+          <Appearance>
+            <PointProperties>
+              <IS>
+                <connect nodeField='pointSizeScaleFactor' protoField='pointSize'/>
+                <connect nodeField='pointSizeMinValue' protoField='pointSize'/>
+                <connect nodeField='pointSizeMaxValue' protoField='pointSize'/>
+              </IS>
+            </PointProperties>
+            <UnlitMaterial>
+              <IS>
+                <connect nodeField='emissiveColor' protoField='pointsColor'/>
+              </IS>
+            </UnlitMaterial>
+            <DepthMode
+                polygonOffset='-1 -1'/>
+          </Appearance>
+          <PointSet>
+            <IS>
+              <connect nodeField='coord' protoField='pointsCoord'/>
+            </IS>
+          </PointSet>
+        </Shape>
+      </ProtoBody>
+    </ProtoDeclare>
+    <ProtoInstance name='Tool'/>
+  </Scene>
+</X3D>
