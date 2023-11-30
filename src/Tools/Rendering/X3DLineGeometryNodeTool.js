@@ -15,19 +15,19 @@ class X3DLineGeometryNodeTool extends X3DGeometryNodeTool
       if (type === "CUSTOM")
          return;
 
-      this .node ._rebuild .addInterest ("set_geometry", this);
+      this .node ._rebuild .addInterest ("set_toolGeometry", this);
 
       this .tool .pointsCoord = this .getToolScene () .createNode ("CoordinateDouble");
 
-      this .set_geometry ();
+      this .set_toolGeometry ();
    }
 
    disposeTool ()
    {
-      this .node ._rebuild .removeInterest ("set_geometry", this);
+      this .node ._rebuild .removeInterest ("set_toolGeometry", this);
    }
 
-   set_geometry ()
+   set_toolGeometry ()
    {
       const points = this .node .getVertices () .filter ((_, i) => i % 4 !== 3);
 
