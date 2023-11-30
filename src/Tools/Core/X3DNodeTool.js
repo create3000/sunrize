@@ -1,10 +1,13 @@
 "use strict";
 
 const
-   path     = require ("path"),
-   url      = require ("url"),
-   X3D      = require ("../../X3D"),
-   Traverse = require ("../../Application/Traverse");
+   path        = require ("path"),
+   url         = require ("url"),
+   X3D         = require ("../../X3D"),
+   Editor      = require ("../../Undo/Editor"),
+   UndoManager = require ("../../Undo/UndoManager"),
+   Traverse    = require ("../../Application/Traverse"),
+   _           = require ("../../Application/GetText");
 
 const
    _tool     = Symbol .for ("Sunrize.tool"),
@@ -60,12 +63,18 @@ const
    _promise       = Symbol (),
    _externalNodes = Symbol (),
    _selected      = Symbol (),
-   _innerNode     = Symbol ();
+   _innerNode     = Symbol (),
+   _groupedTools  = Symbol (),
+   _initialValues = Symbol ();
 
 class X3DNodeTool
 {
    static createOnSelection = true;
    static createOnDemand    = true;
+
+   static #scenes  = new Map (); // Loaded tool proto scenes.
+   static #tools   = new Set (); // Set of all this tools.
+   static #sensors = [ ];        // Always empty
 
    constructor (node)
    {
@@ -79,6 +88,9 @@ class X3DNodeTool
       this .node            = node;
       this [_proxy]         = proxy;
       this [_externalNodes] = new Map ();
+
+      this [_groupedTools]  = new Set ();
+      this [_initialValues] = new Map ();
 
       this .replaceNode (node, proxy);
       proxy .setupTool ();
@@ -140,8 +152,6 @@ class X3DNodeTool
 
    async initializeTool () { }
 
-   static #scenes = new Map ();
-
    loadTool (... args)
    {
       const
@@ -187,6 +197,8 @@ class X3DNodeTool
 
       tool .getValue () .setPrivate (true);
 
+      X3DNodeTool .#tools .add (this);
+
       return tool;
    }
 
@@ -211,6 +223,8 @@ class X3DNodeTool
 
       X3D .SFNodeCache .delete (this [_proxy]);
 
+      X3DNodeTool .#tools .delete (this);
+
       const nodesToDispose = [ ]
 
       Traverse .traverse (this .tool, Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES, node => nodesToDispose .push (node));
@@ -233,7 +247,145 @@ class X3DNodeTool
       return this .node .valueOf ();
    }
 
-   static #sensors = [ ];
+   handleUndo (active)
+   {
+      if (!this .tool .undo)
+         return;
+
+      if (active .getValue ())
+         this .prepareUndo ();
+      else
+         this .finishUndo ()
+   }
+
+   prepareUndo ()
+   {
+      // Begin undo.
+
+      const
+         typeName    = this .getTypeName (),
+         name        = this .getDisplayName (),
+         description = this .getUndoDescription (this .tool .activeTool, name);
+
+      UndoManager .shared .beginUndo (description, typeName, name);
+
+      // Prepare undo.
+
+      if (this .beginUndo () === false)
+         return;
+
+      this [_groupedTools] .add (this);
+
+      if (this .tool .group === "NONE")
+         return;
+
+      // Prepare grouping.
+
+      for (const other of X3DNodeTool .#tools)
+      {
+         if (other .tool .group === `${this .tool .activeTool}_TOOL`)
+            other .tool .grouping = true;
+      }
+
+      for (const other of X3DNodeTool .#tools)
+      {
+         if (other === this)
+            continue;
+
+         if (other .tool .group !== this .tool .group)
+            continue;
+
+         if (other .beginUndo () === false)
+            continue;
+
+         this [_groupedTools] .add (other);
+      }
+   }
+
+   getUndoDescription (activeTool, name)
+   {
+      switch (activeTool)
+      {
+         case "TRANSLATE":
+         {
+            if (name)
+               return _ ("Translate %s »%s«");
+
+            return _ ("Translate %s");
+         }
+         case "ROTATE":
+         {
+            if (name)
+               return _ ("Rotate %s »%s«");
+
+            return _ ("Rotate %s");
+         }
+         case "SCALE":
+         {
+            if (name)
+               return _ ("Scale %s »%s«");
+
+            return _ ("Scale %s");
+         }
+         case "CENTER":
+         {
+            if (name)
+               return _ ("Translate Center of Node %s »%s«");
+
+            return _ ("Translate Center of Node %s");
+         }
+         default:
+         {
+            return `No Undo Description Available For '${activeTool}'`;
+         }
+      }
+   }
+
+   finishUndo ()
+   {
+      for (const other of X3DNodeTool .#tools)
+      {
+         if (other .tool .grouping)
+            other .tool .grouping = false;
+      }
+
+      for (const other of this [_groupedTools])
+         other .endUndo ();
+
+      this [_groupedTools] .clear ();
+
+      UndoManager .shared .endUndo ();
+   }
+
+   beginUndo ()
+   {
+      return false;
+   }
+
+   endUndo ()
+   {
+      this .undoSetValues ();
+   }
+
+   undoSaveInitialValues (fields)
+   {
+      for (const name of fields)
+         this [_initialValues] .set (name, this .getField (name) .copy ());
+   }
+
+   undoSetValues ()
+   {
+      for (const [name, initialValue] of this [_initialValues])
+      {
+         const value = this .getField (name) .copy ();
+
+         this .getField (name) .assign (initialValue);
+
+         Editor .setFieldValue (this .getExecutionContext (), this .node, this .getField (name), value);
+      }
+
+      this [_initialValues] .clear ();
+   }
 
    traverse (type, renderObject)
    {

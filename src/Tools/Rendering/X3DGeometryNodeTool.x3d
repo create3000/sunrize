@@ -7,52 +7,64 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.2.7, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 30 Nov 2023 09:38:37 GMT'/>
+    <meta name='modified' content='Thu, 30 Nov 2023 19:46:02 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='Tool'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
+        <field accessType='inputOutput' type='SFString' name='group' value='NONE'/>
+        <field accessType='inputOutput' type='SFBool' name='undo'/>
         <field accessType='inputOutput' type='SFVec3f' name='size' value='1 1 1'/>
         <field accessType='inputOutput' type='SFBool' name='linesDisplay' value='true'/>
         <field accessType='inputOutput' type='SFFloat' name='linewidthScaleFactor' value='2'/>
         <field accessType='inputOutput' type='SFColor' name='linesColor' value='1 1 1'/>
         <field accessType='inputOnly' type='MFInt32' name='set_linesCoordIndex'/>
         <field accessType='inputOutput' type='SFNode' name='linesCoord'/>
+        <field accessType='inputOnly' type='MFNode' name='addChildren'/>
+        <field accessType='inputOnly' type='MFNode' name='removeChildren'/>
       </ProtoInterface>
       <ProtoBody>
-        <Transform>
+        <Group>
           <IS>
-            <connect nodeField='scale' protoField='size'/>
+            <connect nodeField='addChildren' protoField='addChildren'/>
+            <connect nodeField='removeChildren' protoField='removeChildren'/>
           </IS>
-          <Shape>
+          <Transform>
             <IS>
-              <connect nodeField='visible' protoField='linesDisplay'/>
+              <connect nodeField='scale' protoField='size'/>
             </IS>
-            <Appearance>
-              <LineProperties>
-                <IS>
-                  <connect nodeField='linewidthScaleFactor' protoField='linewidthScaleFactor'/>
-                </IS>
-              </LineProperties>
-              <UnlitMaterial>
-                <IS>
-                  <connect nodeField='emissiveColor' protoField='linesColor'/>
-                </IS>
-              </UnlitMaterial>
-              <DepthMode
-                  polygonOffset='-1 -1'/>
-            </Appearance>
-            <IndexedLineSet>
+            <Shape>
               <IS>
-                <connect nodeField='set_coordIndex' protoField='set_linesCoordIndex'/>
-                <connect nodeField='coord' protoField='linesCoord'/>
+                <connect nodeField='visible' protoField='linesDisplay'/>
               </IS>
-            </IndexedLineSet>
-          </Shape>
-        </Transform>
+              <Appearance>
+                <LineProperties>
+                  <IS>
+                    <connect nodeField='linewidthScaleFactor' protoField='linewidthScaleFactor'/>
+                  </IS>
+                </LineProperties>
+                <UnlitMaterial>
+                  <IS>
+                    <connect nodeField='emissiveColor' protoField='linesColor'/>
+                  </IS>
+                </UnlitMaterial>
+                <DepthMode
+                    polygonOffset='-1 -1'/>
+              </Appearance>
+              <IndexedLineSet>
+                <IS>
+                  <connect nodeField='set_coordIndex' protoField='set_linesCoordIndex'/>
+                  <connect nodeField='coord' protoField='linesCoord'/>
+                </IS>
+              </IndexedLineSet>
+            </Shape>
+          </Transform>
+        </Group>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='Tool'/>
+    <ProtoInstance name='Tool'>
+      <fieldValue name='group' value=''/>
+    </ProtoInstance>
   </Scene>
 </X3D>

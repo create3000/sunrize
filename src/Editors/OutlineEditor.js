@@ -1107,7 +1107,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
    beginUndoSetFieldValue (node, field)
    {
-      if (node .getTool ?.() ?.tool .undo)
+      if (node .getTool ?.() ?.tool .undo && node .getTool ?.() ?.tool .group !== "NONE")
       {
          if (node .getDisplayName ())
             UndoManager .shared .beginUndo (_ ("Change Field »%s« of Node %s »%s«"), field .getName (), node .getTypeName (), node .getDisplayName ());
@@ -1122,7 +1122,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
    endUndoSetFieldValue (node, field)
    {
-      if (node .getTool ?.() ?.tool .undo)
+      if (node .getTool ?.() ?.tool .undo && node .getTool ?.() ?.tool .group !== "NONE")
       {
          const innerTool = node .getTool () .tool .transformTool ?.getValue () .getTool ();
 
