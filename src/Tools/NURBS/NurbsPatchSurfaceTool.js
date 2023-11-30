@@ -2,12 +2,6 @@
 
 const X3DGeometryNodeTool = require ("../Rendering/X3DGeometryNodeTool");
 
-class NurbsPatchSurfaceTool extends X3DGeometryNodeTool
-{
-   async initializeTool ()
-   {
-      await super .initializeTool ();
-   }
-}
+class NurbsPatchSurfaceTool extends X3DGeometryNodeTool { }
 
 module .exports = NurbsPatchSurfaceTool;

@@ -2,12 +2,6 @@
 
 const X3DGeometryNodeTool = require ("./X3DGeometryNodeTool");
 
-class IndexedTriangleSetTool extends X3DGeometryNodeTool
-{
-   async initializeTool ()
-   {
-      await super .initializeTool ();
-   }
-}
+class IndexedTriangleSetTool extends X3DGeometryNodeTool { }
 
 module .exports = IndexedTriangleSetTool;
