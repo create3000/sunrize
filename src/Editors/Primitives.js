@@ -327,12 +327,23 @@ DEF Extrusion Transform {
       componentInfo: { name: "Geometry3D" },
       typeName: "IndexedFaceSet",
       x3dSyntax: `
-DEF IndexedFaceSet Transform {
+DEF Pyramid Transform {
    children Shape {
       appearance Appearance {
          material Material { }
       }
-      geometry IndexedFaceSet { }
+      geometry IndexedFaceSet {
+         coordIndex [3, 2, 1, 0, -1, 0, 1, 4, -1, 1, 2, 4, -1, 2, 3, 4, -1, 3, 0, 4, -1]
+         coord Coordinate {
+            point [
+               -1 -0.8660254037844386 1,
+                1 -0.8660254037844386 1,
+                1 -0.8660254037844386 -1,
+               -1 -0.8660254037844386 -1,
+               0 0.8660254037844386 0
+            ]
+         }
+      }
    }
 }
 `
