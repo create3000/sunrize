@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const
    $           = require ("jquery"),
@@ -10,24 +10,24 @@ const
    fs          = require ("fs"),
    md5         = require ("md5"),
    CSS         = require ("./CSS"),
-   _           = require ("./GetText")
+   _           = require ("./GetText");
 
 module .exports = new class Tabs
 {
    // Construction
 
-   config = new DataStorage (localStorage, "Sunrize.Application.")
+   config = new DataStorage (localStorage, "Sunrize.Application.");
 
    constructor ()
    {
-      this .tabs = $("tab-group") .get (0)
+      this .tabs = $("tab-group") .get (0);
 
       this .config .setDefaultValues ({
          openTabs: [ ],
          scrollLeft: 0,
-      })
+      });
 
-      $(() => this .initialize ())
+      $(() => this .initialize ());
    }
 
    initialize ()
@@ -106,59 +106,60 @@ module .exports = new class Tabs
 
    restoreTabs (activeTab)
    {
-      const config = new DataStorage (localStorage, "Sunrize.")
+      const config = new DataStorage (localStorage, "Sunrize.");
 
       const openTabs = this .config .openTabs .filter (fileURL =>
       {
          if (!fileURL .startsWith ("file:"))
-            return true
+            return true;
 
          if (fs .existsSync (url .fileURLToPath (fileURL)))
-            return true
+            return true;
 
          // Delete keys of deleted file.
 
-         const hash = `.${md5 (fileURL)}.`
+         const hash = `.${md5 (fileURL)}.`;
 
          for (const key of Object .keys (config) .filter (key => key .includes (hash)))
-            config [key] = undefined
+            config [key] = undefined;
 
-         return false
+         return false;
       })
 
       for (const fileURL of openTabs .filter (fileURL => fileURL .startsWith ("file:")))
          electron .ipcRenderer .send ("add-recent-document", url .fileURLToPath (fileURL));
 
       if (openTabs .length)
-         this .openTabs (openTabs, false)
+         this .openTabs (openTabs, false);
 
       if (this .tabs .getTabs () .length)
       {
-         const tab = this .getTabByURL (activeTab) ?? this .tabs .getTabByPosition (0)
+         const tab = this .getTabByURL (activeTab) ?? this .tabs .getTabByPosition (0);
 
-         tab .activate ()
+         tab .activate ();
       }
       else
       {
-         this .openTabs ()
+         this .openTabs ();
       }
    }
 
    openTabs (urls = [""], activate = true)
    {
       if (!urls .length)
-         return
+         return;
 
-      const src = url .pathToFileURL (path .join (__dirname, "../assets/html/window.html"))
+      const src = url .pathToFileURL (path .join (__dirname, "../assets/html/window.html"));
 
       for (let fileURL of urls)
       {
          if (fileURL && this .tabs .getTabs () .some (tab => tab .url === fileURL))
-            continue
+            continue;
 
-         if (!fileURL) fileURL = `id:${md5 (Math .random ())}`
+         if (!fileURL)
+            fileURL = `id:${md5 (Math .random ())}`;
 
-         src .searchParams .set ("url", fileURL)
+         src .searchParams .set ("url", fileURL);
 
          const tab = this .tabs .addTab ({
             src: src,
@@ -169,38 +170,38 @@ module .exports = new class Tabs
             },
             visible: true,
             active: false,
-         })
+         });
 
-         this .setTabURL (tab, fileURL)
+         this .setTabURL (tab, fileURL);
 
          tab .webview .addEventListener ("console-message", (event) =>
          {
-            tab .webview .send ("console-message", event .level, event .sourceId, event .line, event .message)
-         })
+            tab .webview .send ("console-message", event .level, event .sourceId, event .line, event .message);
+         });
 
-         tab .on ("closing", (tab, abort) => this .tabClosing (tab, abort))
-         tab .on ("close", (tab) => this .tabClose (tab))
+         tab .on ("closing", (tab, abort) => this .tabClosing (tab, abort));
+         tab .on ("close", (tab) => this .tabClose (tab));
 
          tab .webview .addEventListener ("ipc-message", (event, value) =>
          {
             if (event .channel !== "saved")
-               return
+               return;
 
-            this .setTabURL (tab, tab .url, ...event .args)
-         })
+            this .setTabURL (tab, tab .url, ...event .args);
+         });
 
          tab .webview .addEventListener ("dom-ready", () =>
          {
             // Workaround for focus issue with webview.
-            tab .webview .focus ()
-            window .blur ()
-            window .focus ()
+            tab .webview .focus ();
+            window .blur ();
+            window .focus ();
 
-            tab .domReady = true
+            tab .domReady = true;
 
             if (this .tabs .getActiveTab () === tab)
-               tab .webview .send ("activate")
-         })
+               tab .webview .send ("activate");
+         });
       }
 
       if (activate)
@@ -208,72 +209,72 @@ module .exports = new class Tabs
          const tab = this .getTabs () .find (tab => urls .includes (tab .url))
             ?? this .tabs .getTabByPosition (this .tabs .getTabs () .length - 1)
 
-         tab .activate ()
+         tab .activate ();
       }
 
-      this .saveTabs ()
+      this .saveTabs ();
    }
 
    reloadTab ()
    {
-      const tab = this .tabs .getActiveTab ()
+      const tab = this .tabs .getActiveTab ();
 
-      tab .webview .src = tab .webview .src
+      tab .webview .src = tab .webview .src;
    }
 
    getTabs ()
    {
-      const cmp = (a, b) => (a > b) - (a < b)
+      const cmp = (a, b) => (a > b) - (a < b);
 
       return this .tabs .getTabs ()
-         .sort ((a, b) => cmp (a .getPosition (), b .getPosition ()))
+         .sort ((a, b) => cmp (a .getPosition (), b .getPosition ()));
    }
 
    getTabByURL (fileURL)
    {
-      return this .getTabs () .findLast (tab => tab .url === fileURL)
+      return this .getTabs () .findLast (tab => tab .url === fileURL);
    }
 
    setTabURL (tab, fileURL, saved = true)
    {
-      tab .url = fileURL
+      tab .url = fileURL;
 
-      tab .setTitle ((fileURL .startsWith ("id:") ? _ ("New Scene") : path .basename (decodeURIComponent (new URL (fileURL) .pathname))) + (saved ? "" : "*"))
+      tab .setTitle ((fileURL .startsWith ("id:") ? _ ("New Scene") : path .basename (decodeURIComponent (new URL (fileURL) .pathname))) + (saved ? "" : "*"));
 
-      $(tab .element) .find (".tab-title") .attr ("title", fileURL .startsWith ("id:") ? _ ("Currently still unsaved.") : decodeURI (fileURL))
+      $(tab .element) .find (".tab-title") .attr ("title", fileURL .startsWith ("id:") ? _ ("Currently still unsaved.") : decodeURI (fileURL));
 
-      electron .ipcRenderer .send ("title", tab .getTitle ())
+      electron .ipcRenderer .send ("title", tab .getTitle ());
 
-      this .saveTabs ()
+      this .saveTabs ();
    }
 
    saveTabs ()
    {
       const
          tabs = this .getTabs (),
-         urls = tabs .map (tab => tab .url)
+         urls = tabs .map (tab => tab .url);
 
-      this .config .openTabs  = urls
-      this .config .activeTab = tabs .length ? this .tabs .getActiveTab () .url : undefined
+      this .config .openTabs  = urls;
+      this .config .activeTab = tabs .length ? this .tabs .getActiveTab () .url : undefined;
    }
 
    tabClosing (tab, abort)
    {
-      tab .webview .send ("close")
+      tab .webview .send ("close");
 
       if (tab !== this .tabs .getActiveTab ())
-         return
-
-      const numTabs = this .tabs .getTabs () .length
+         return;
+;
+      const numTabs = this .tabs .getTabs () .length;
 
       if (numTabs === 1)
-         return
+         return;
 
       const
          position = Math .max (tab .getPosition () - 1, 0),
-         nextTab  = this .tabs .getTabByPosition (position)
+         nextTab  = this .tabs .getTabByPosition (position);
 
-      nextTab .activate ()
+      nextTab .activate ();
    }
 
    tabClose (tab)
@@ -281,84 +282,84 @@ module .exports = new class Tabs
       // If all tabs are closed, open empty tab.
 
       if (!this .tabs .getTabs () .length)
-         this .openTabs ()
+         this .openTabs ();
 
-      this .saveTabs ()
+      this .saveTabs ();
    }
 
    saveFile ()
    {
-      this .tabs .getActiveTab () .webview .send ("save-file", true)
+      this .tabs .getActiveTab () .webview .send ("save-file", true);
    }
 
    saveFileAs (filePath)
    {
       const
          tab     = this .tabs .getActiveTab (),
-         fileURL = url .pathToFileURL (filePath) .href
+         fileURL = url .pathToFileURL (filePath) .href;
 
-      this .setTabURL (tab, fileURL)
+      this .setTabURL (tab, fileURL);
 
-      tab .webview .send ("save-file-as", filePath)
+      tab .webview .send ("save-file-as", filePath);
    }
 
    saveAllFiles ()
    {
       for (const tab of this .tabs .getTabs ())
-         tab .webview .send ("save-file")
+         tab .webview .send ("save-file");
    }
 
    close ()
    {
-      this .saveTabs ()
+      this .saveTabs ();
 
       for (const tab of this .tabs .getTabs ())
-         tab .webview .send ("close")
+         tab .webview .send ("close");
    }
 
    quit ()
    {
-      this .saveTabs ()
+      this .saveTabs ();
 
-      const tabs = this .tabs .getTabs () .filter (tab => tab .initialized)
+      const tabs = this .tabs .getTabs () .filter (tab => tab .initialized);
 
-      let numTabs = tabs .length
+      let numTabs = tabs .length;
 
       for (const tab of tabs)
       {
          tab .webview .addEventListener ("ipc-message", (event) =>
          {
             if (event .channel !== "closed")
-               return
+               return;
 
             if (--numTabs)
-               return
+               return;
 
-            window .close ()
-         })
+            window .close ();
+         });
       }
 
       for (const tab of tabs)
-         tab .webview .send ("close")
+         tab .webview .send ("close");
 
-      //this .maintenance ()
+      //this .maintenance ();
    }
 
    maintenance ()
    {
       // Remove items older than one year, time in milliseconds.
-      new DataStorage (localStorage, "Sunrize.") .removeItems (Date .now () - (1000 * 60 * 60 * 24 * 365))
+      new DataStorage (localStorage, "Sunrize.") .removeItems (Date .now () - (1000 * 60 * 60 * 24 * 365));
    }
 
    // Send messages to tabs
 
    forwardToActiveTab (channel)
    {
-      electron .ipcRenderer .on (channel, (event, ...args) => this .tabs .getActiveTab () .webview .send (channel, ...args))
+      electron .ipcRenderer .on (channel, (event, ...args) => this .tabs .getActiveTab () .webview .send (channel, ...args));
    }
 
    forwardToAllTabs (channel)
    {
-      electron .ipcRenderer .on (channel, (event, ...args) => this .tabs .getTabs () .forEach (tab => tab .webview .send (channel, ...args)))
+      electron .ipcRenderer .on (channel, (event, ...args) => this .tabs .getTabs () .forEach (tab => tab .webview .send (channel, ...args)));
    }
-}
+};
