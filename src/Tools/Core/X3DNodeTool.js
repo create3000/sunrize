@@ -1,12 +1,13 @@
 "use strict";
 
 const
-   path        = require ("path"),
-   url         = require ("url"),
+   X3DBaseTool = require ("./X3DBaseTool"),
    X3D         = require ("../../X3D"),
    Editor      = require ("../../Undo/Editor"),
    UndoManager = require ("../../Undo/UndoManager"),
    Traverse    = require ("../../Application/Traverse"),
+   path        = require ("path"),
+   url         = require ("url"),
    _           = require ("../../Application/GetText");
 
 const
@@ -58,16 +59,7 @@ const handler =
    },
 }
 
-const
-   _proxy         = Symbol (),
-   _promise       = Symbol (),
-   _externalNodes = Symbol (),
-   _selected      = Symbol (),
-   _innerNode     = Symbol (),
-   _groupedTools  = Symbol (),
-   _initialValues = Symbol ();
-
-class X3DNodeTool
+class X3DNodeTool extends X3DBaseTool
 {
    static createOnSelection = true;
    static createOnDemand    = true;
@@ -76,21 +68,25 @@ class X3DNodeTool
    static #tools   = new Set (); // Set of all this tools.
    static #sensors = [ ];        // Always empty
 
+   tool           = null;
+   #proxy         = null;
+   #selected      = false;
+   #promise       = null;
+   #innerNode     = null;
+   #externalNodes = new Map ();
+   #groupedTools  = new Set ();
+   #initialValues = new Map ();
+
    constructor (node)
    {
-      const proxy = new Proxy (this, handler);
+      const proxy = super (node);
 
       node .setUserData (_tool, proxy);
       node .setUserData (_changing, true);
 
       X3D .SFNodeCache .add (proxy, X3D .SFNodeCache .get (node));
 
-      this .node            = node;
-      this [_proxy]         = proxy;
-      this [_externalNodes] = new Map ();
-
-      this [_groupedTools]  = new Set ();
-      this [_initialValues] = new Map ();
+      this .#proxy = proxy;
 
       this .replaceNode (node, proxy);
       proxy .setupTool ();
@@ -98,14 +94,18 @@ class X3DNodeTool
       return proxy;
    }
 
+   // Prototype Support
+
    getInnerNode ()
    {
-      return this [_proxy];
+      return this .#proxy;
    }
+
+   // Selection Handling
 
    setSelected (value)
    {
-      this [_selected] = value;
+      this .#selected = value;
 
       if (!this .tool)
          return;
@@ -113,9 +113,11 @@ class X3DNodeTool
       this .tool .selected = value;
    }
 
+   // Tool Loading
+
    async getToolInstance ()
    {
-      await this [_promise];
+      await this .#promise;
 
       return this .tool;
    }
@@ -127,7 +129,7 @@ class X3DNodeTool
 
    addTool ()
    {
-      return this [_proxy];
+      return this .#proxy;
    }
 
    replaceNode (node, replacement)
@@ -143,11 +145,8 @@ class X3DNodeTool
    {
       await this .initializeTool ();
 
-      if (!this .tool)
-         return;
-
-      this [_innerNode]    = this .tool .getValue () .getInnerNode ();
-      this .tool .selected = this [_selected];
+      this .#innerNode     = this .tool .getValue () .getInnerNode ();
+      this .tool .selected = this .#selected;
    }
 
    async initializeTool () { }
@@ -160,7 +159,7 @@ class X3DNodeTool
 
       if (promise)
       {
-         return this [_promise] = promise .then (scene => this .tool = this .createTool (scene));
+         return this .#promise = promise .then (scene => this .createTool (scene));
       }
       else
       {
@@ -175,7 +174,7 @@ class X3DNodeTool
                for (const externproto of scene .externprotos)
                   await externproto .requestImmediateLoad ();
 
-               this .tool = this .createTool (scene);
+               this .createTool (scene);
 
                resolve (scene);
             }
@@ -187,26 +186,24 @@ class X3DNodeTool
 
          X3DNodeTool .#scenes .set (protoURL .href, promise);
 
-         return this [_promise] = promise;
+         return this .#promise = promise;
       }
    }
 
    createTool (scene)
    {
-      const tool = scene .createProto ("Tool");
+      this .tool = scene .createProto ("Tool");
 
-      tool .getValue () .setPrivate (true);
+      this .tool .getValue () .setPrivate (true);
 
       X3DNodeTool .#tools .add (this);
-
-      return tool;
    }
 
    addExternalNode (field)
    {
       field .addInterest ("addExternalNode", this);
 
-      this [_externalNodes] .set (field .getValue (), field);
+      this .#externalNodes .set (field .getValue (), field);
    }
 
    removeTool (action = "createOnDemand")
@@ -216,12 +213,10 @@ class X3DNodeTool
 
       this .disposeTool ();
 
-      this .tool = null;
-
       this .node .removeUserData (_tool);
       this .node .setUserData (_changing, true);
 
-      X3D .SFNodeCache .delete (this [_proxy]);
+      X3D .SFNodeCache .delete (this .#proxy);
 
       X3DNodeTool .#tools .delete (this);
 
@@ -229,10 +224,10 @@ class X3DNodeTool
 
       Traverse .traverse (this .tool, Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES, node => nodesToDispose .push (node));
 
-      for (const node of nodesToDispose .filter (node => !this [_externalNodes] .has (node)))
+      for (const node of nodesToDispose .filter (node => !this .#externalNodes .has (node)))
          node .dispose ();
 
-      for (const field of this [_externalNodes] .values ())
+      for (const field of this .#externalNodes .values ())
          field .removeInterest ("addExternalNode", this);
 
       this .replaceNode (this, this .node);
@@ -242,10 +237,7 @@ class X3DNodeTool
 
    disposeTool () { }
 
-   valueOf ()
-   {
-      return this .node .valueOf ();
-   }
+   // Undo/Redo Handling
 
    handleUndo (active)
    {
@@ -274,7 +266,7 @@ class X3DNodeTool
       if (this .beginUndo () === false)
          return;
 
-      this [_groupedTools] .add (this);
+      this .#groupedTools .add (this);
 
       if (this .tool .group === "NONE")
          return;
@@ -298,7 +290,7 @@ class X3DNodeTool
          if (other .beginUndo () === false)
             continue;
 
-         this [_groupedTools] .add (other);
+         this .#groupedTools .add (other);
       }
    }
 
@@ -349,10 +341,10 @@ class X3DNodeTool
             other .tool .grouping = false;
       }
 
-      for (const other of this [_groupedTools])
+      for (const other of this .#groupedTools)
          other .endUndo ();
 
-      this [_groupedTools] .clear ();
+      this .#groupedTools .clear ();
 
       UndoManager .shared .endUndo ();
    }
@@ -370,12 +362,12 @@ class X3DNodeTool
    undoSaveInitialValues (fields)
    {
       for (const name of fields)
-         this [_initialValues] .set (name, this .getField (name) .copy ());
+         this .#initialValues .set (name, this .getField (name) .copy ());
    }
 
    undoSetValues ()
    {
-      for (const [name, initialValue] of this [_initialValues])
+      for (const [name, initialValue] of this .#initialValues)
       {
          const value = this .getField (name) .copy ();
 
@@ -384,8 +376,10 @@ class X3DNodeTool
          Editor .setFieldValue (this .getExecutionContext (), this .node, this .getField (name), value);
       }
 
-      this [_initialValues] .clear ();
+      this .#initialValues .clear ();
    }
+
+   // Traverse
 
    traverse (type, renderObject)
    {
@@ -401,11 +395,13 @@ class X3DNodeTool
       renderObject .getHumanoids () .push (null);
       renderObject .getSensors ()   .push (X3DNodeTool .#sensors);
 
-      this [_innerNode] ?.traverse (type, renderObject);
+      this .#innerNode ?.traverse (type, renderObject);
 
       renderObject .getSensors ()   .pop ();
       renderObject .getHumanoids () .pop ();
    }
+
+   // Destruction
 
    dispose ()
    {
