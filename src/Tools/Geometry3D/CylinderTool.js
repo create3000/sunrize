@@ -18,8 +18,6 @@ class CylinderTool extends X3DGeometryNodeTool
       this .node ._top                           .addInterest ("set_optionNode", this);
       this .getBrowser () .getCylinderOptions () .addInterest ("set_optionNode", this);
 
-      this .tool .linesDisplay = true;
-
       this .set_height_and_radius ();
       this .set_optionNode ();
    }

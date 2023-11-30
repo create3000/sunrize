@@ -17,8 +17,6 @@ class ConeTool extends X3DGeometryNodeTool
       this .node ._bottom                    .addInterest ("set_optionNode", this);
       this .getBrowser () .getConeOptions () .addInterest ("set_optionNode", this);
 
-      this .tool .linesDisplay = true;
-
       this .set_height_and_bottomRadius ();
       this .set_optionNode ();
    }

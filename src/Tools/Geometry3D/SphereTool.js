@@ -13,8 +13,6 @@ class SphereTool extends X3DGeometryNodeTool
       this .node ._radius                      .addInterest ("set_radius",     this);
       this .getBrowser () .getSphereOptions () .addInterest ("set_optionNode", this);
 
-      this .tool .linesDisplay = true;
-
       this .set_radius (this .node ._radius);
       this .set_optionNode (this .getBrowser () .getSphereOptions ());
    }

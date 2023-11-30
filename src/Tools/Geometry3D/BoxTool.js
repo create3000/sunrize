@@ -13,8 +13,6 @@ class BoxTool extends X3DGeometryNodeTool
       this .node ._size                     .addInterest ("set_size",       this);
       this .getBrowser () .getBoxOptions () .addInterest ("set_optionNode", this);
 
-      this .tool .linesDisplay = true;
-
       this .set_size (this .node ._size);
       this .set_optionNode (this .getBrowser () .getBoxOptions ());
    }
