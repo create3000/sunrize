@@ -17,7 +17,7 @@ class X3DLineGeometryNodeTool extends X3DGeometryNodeTool
 
       this .node ._rebuild .addInterest ("set_geometry", this);
 
-      this .tool .pointsCoord = this .getToolScene () .createNode ("Coordinate");
+      this .tool .pointsCoord = this .getToolScene () .createNode ("CoordinateDouble");
 
       this .set_geometry ();
    }
