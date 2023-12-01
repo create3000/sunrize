@@ -12,7 +12,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.2.7, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Tue, 28 Nov 2023 22:34:44 GMT'/>
+    <meta name='modified' content='Fri, 01 Dec 2023 19:04:39 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -44,6 +44,7 @@
         <field accessType='inputOutput' type='SFBool' name='snapRotation'/>
         <field accessType='inputOutput' type='SFString' name='scaleMode' value='SCALE_FROM_CENTER'/>
         <field accessType='inputOutput' type='SFBool' name='scaleUniform'/>
+        <field accessType='inputOutput' type='MFString' name='connectedAxes'/>
         <field accessType='inputOutput' type='SFBool' name='xAxisDisplay' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='yAxisDisplay' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='zAxisDisplay' value='true'/>
@@ -1248,6 +1249,7 @@ function rotate (value)
           <field accessType='inputOutput' type='SFVec3f' name='bboxCenter'/>
           <field accessType='inputOutput' type='SFString' name='scaleMode'/>
           <field accessType='inputOutput' type='SFBool' name='scaleUniform'/>
+          <field accessType='inputOutput' type='MFString' name='connectedAxes'/>
           <field accessType='inputOutput' type='SFBool' name='keepCenter'/>
           <field accessType='initializeOnly' type='SFVec3f' name='initialTranslation'/>
           <field accessType='initializeOnly' type='SFVec3f' name='initialScale'/>
@@ -1268,6 +1270,7 @@ function rotate (value)
             <connect nodeField='bboxCenter' protoField='bboxCenter'/>
             <connect nodeField='scaleMode' protoField='scaleMode'/>
             <connect nodeField='scaleUniform' protoField='scaleUniform'/>
+            <connect nodeField='connectedAxes' protoField='connectedAxes'/>
           </IS>
 <![CDATA[ecmascript:
 
@@ -1475,6 +1478,7 @@ function scaleTransformAxis (axis, value, sgn)
          vector [axis] = 1 + sgn * value / bboxSize [axis];
          offset [axis] = -sgn * bboxSize [axis] / 2;
 
+         connectAxes (axis, vector, offset);
          scaleTransform (vector, offset);
          break;
       }
@@ -1486,10 +1490,27 @@ function scaleTransformAxis (axis, value, sgn)
 
          vector [axis] = 1 + 2 * sgn * value / bboxSize [axis];
 
+         connectAxes (axis, vector, offset);
          scaleTransform (vector, offset);
          break;
       }
    }
+}
+
+function connectAxes (axis, vector, offset)
+{
+	for (const connectedAxis of connectedAxes)
+	{
+		const
+			lhs = connectedAxis [0] .toLowerCase (),
+			rhs = connectedAxis [1] .toLowerCase ();
+	
+		if (rhs !== axis)
+         continue;
+
+		vector [lhs] = vector [rhs];
+		offset [lhs] = offset [rhs];
+	}
 }
 
 function scaleTransformUniform (value, sgn, centerOffset)

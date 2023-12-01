@@ -1121,6 +1121,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       {
          case "Rectangle2D":
          case "Box":
+         case "Sphere":
          {
             toolNode .getTransformTool () .tool .getField ("isActive") .setValue (true);
             break;
@@ -1158,6 +1159,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       {
          case "Rectangle2D":
          case "Box":
+         case "Sphere":
          {
             this .browser .finishedEvents () .addFieldCallback (this, () =>
             {

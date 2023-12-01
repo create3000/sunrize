@@ -4,7 +4,7 @@ const
    X3DGeometryNodeTool = require ("../Rendering/X3DGeometryNodeTool"),
    X3D                 = require ("../../X3D"),
    _                   = require ("../../Application/GetText");
-   
+
 class BoxTool extends X3DGeometryNodeTool
 {
    #transformNode = null;
@@ -29,7 +29,6 @@ class BoxTool extends X3DGeometryNodeTool
       transformTool .undo         = false;
       transformTool .tools        = ["SCALE"];
       transformTool .centerTool   = false;
-      transformTool .zAxisDisplay = false;
       transformTool .bboxDisplay  = false;
 
       this .tool .group       = "Box";
