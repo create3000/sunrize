@@ -27,7 +27,7 @@ class Circle2DTool extends X3DLineGeometryNodeTool
       transformTool .getField ("isActive") .addInterest ("handleUndo", this);
 
       transformNode .bboxSize      = new X3D .Vector3 (2, 2, 0);
-      transformTool .group         = "Circle2D";
+      transformTool .group         = this .getTypeName ();
       transformTool .undo          = false;
       transformTool .tools         = ["SCALE"];
       transformTool .connectedAxes = ["XY", "YX", "ZX"];
@@ -35,7 +35,7 @@ class Circle2DTool extends X3DLineGeometryNodeTool
       transformTool .zAxisDisplay  = false;
       transformTool .bboxColor     = ToolColors .BLUE;
 
-      this .tool .group       = "Circle2D";
+      this .tool .group       = this .getTypeName ();
       this .tool .undo        = true;
       this .tool .addChildren = new X3D .MFNode (transformNode);
 

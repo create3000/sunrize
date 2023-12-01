@@ -28,14 +28,14 @@ class CylinderTool extends X3DGeometryNodeTool
       transformTool .getField ("isActive") .addInterest ("handleUndo", this);
 
       transformNode .bboxSize      = new X3D .Vector3 (2, 2, 2);
-      transformTool .group         = "Cylinder";
+      transformTool .group         = this .getTypeName ();
       transformTool .undo          = false;
       transformTool .tools         = ["SCALE"];
       transformTool .connectedAxes = ["XZ", "ZX"];
       transformTool .centerTool    = false;
       transformTool .bboxColor     = ToolColors .BLUE;
 
-      this .tool .group       = "Cylinder";
+      this .tool .group       = this .getTypeName ();
       this .tool .undo        = true;
       this .tool .addChildren = new X3D .MFNode (transformNode);
 

@@ -1119,6 +1119,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       switch (node .getTypeName ())
       {
+         case "Arc2D":
+         case "ArcClose2D":
          case "Circle2D":
          case "Rectangle2D":
          case "Box":
@@ -1160,6 +1162,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       switch (node .getTypeName ())
       {
+         case "Arc2D":
+         case "ArcClose2D":
          case "Circle2D":
          case "Rectangle2D":
          case "Box":
