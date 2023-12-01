@@ -8,7 +8,6 @@ const
 class Rectangle2DTool extends X3DGeometryNodeTool
 {
    #transformNode = null;
-   #transformTool = null;
    #changing      = false;
 
    async initializeTool ()
@@ -78,7 +77,11 @@ class Rectangle2DTool extends X3DGeometryNodeTool
 
       this .#changing = true;
 
-      this .#transformNode .scale = new X3D .Vector3 (size .x / 2, size .y / 2, 1);
+      const
+         x = Math .abs (size .x / 2),
+         y = Math .abs (size .y / 2);
+
+      this .#transformNode .scale = new X3D .Vector3 (x, y, 1);
    }
 
    set_optionNode (optionNode)
