@@ -14,6 +14,8 @@ class Rectangle2DTool extends X3DGeometryNodeTool
    {
       await super .initializeTool ("CUSTOM");
 
+      // Transform Tool
+
       const
          transformNode = this .getToolScene () .createNode ("Transform"),
          transformTool = await transformNode .getValue () .addTool () .getToolInstance ();
@@ -35,6 +37,8 @@ class Rectangle2DTool extends X3DGeometryNodeTool
       this .tool .group       = "Rectangle2D";
       this .tool .undo        = true;
       this .tool .addChildren = new X3D .MFNode (transformNode);
+
+      // Connections
 
       this .node ._size                             .addInterest ("set_size",       this);
       this .getBrowser () .getRectangle2DOptions () .addInterest ("set_optionNode", this);
@@ -64,7 +68,7 @@ class Rectangle2DTool extends X3DGeometryNodeTool
 
       this .#changing = true;
 
-      this .node ._size = new X3D .Vector2 (scale .x * 2, scale .y * 2);
+      this .node ._size = new X3D .Vector2 (scale .x, scale .y) .abs () .multiply (2);
    }
 
    set_size (size)

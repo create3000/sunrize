@@ -2,13 +2,45 @@
 
 const
    X3DGeometryNodeTool = require ("../Rendering/X3DGeometryNodeTool"),
-   X3D                 = require ("../../X3D");
+   ToolColors          = require ("../Core/ToolColors"),
+   X3D                 = require ("../../X3D"),
+   _                   = require ("../../Application/GetText");
 
 class ConeTool extends X3DGeometryNodeTool
 {
+   #transformNode = null;
+   #changing      = false;
+
    async initializeTool ()
    {
       await super .initializeTool ("CUSTOM");
+
+      // Transform Tool
+
+      const
+         transformNode = this .getToolScene () .createNode ("Transform"),
+         transformTool = await transformNode .getValue () .addTool () .getToolInstance ();
+
+      this .#transformNode = transformNode;
+
+      transformNode .scale .addInterest ("set_scale", this);
+      transformNode .scale .addFieldInterest (this .tool .size);
+      transformTool .getField ("isActive") .addInterest ("handleUndo", this);
+
+      transformNode .bboxSize      = new X3D .Vector3 (2, 2, 2);
+      transformTool .group         = "Sphere";
+      transformTool .undo          = false;
+      transformTool .tools         = ["SCALE"];
+      transformTool .connectedAxes = ["XZ", "ZX"];
+      transformTool .centerTool    = false;
+      transformTool .bboxDisplay   = true;
+      transformTool .bboxColor     = ToolColors .BLUE;
+
+      this .tool .group       = "Sphere";
+      this .tool .undo        = true;
+      this .tool .addChildren = new X3D .MFNode (transformNode);
+
+      // Connections
 
       this .node ._height       .addInterest ("set_height_and_bottomRadius", this);
       this .node ._bottomRadius .addInterest ("set_height_and_bottomRadius", this);
@@ -31,13 +63,35 @@ class ConeTool extends X3DGeometryNodeTool
       this .getBrowser () .getConeOptions () .removeInterest ("set_optionNode", this);
    }
 
+   set_scale (scale)
+   {
+      if (this .#changing)
+      {
+         this .#changing = false;
+         return;
+      }
+
+      this .#changing = true;
+
+      this .node ._height       = Math .abs (scale .y) * 2;
+      this .node ._bottomRadius = (Math .abs (scale .x) + Math .abs (scale .z)) / 2;
+   }
+
    set_height_and_bottomRadius ()
    {
+      if (this .#changing)
+      {
+         this .#changing = false;
+         return;
+      }
+
+      this .#changing = true;
+
       const
          y = Math .abs (this .node ._height .getValue () / 2),
          r = Math .abs (this .node ._bottomRadius .getValue ());
 
-      this .tool .size = new X3D .Vector3 (r, y, r);
+      this .#transformNode .scale = new X3D .Vector3 (r, y, r);
    }
 
    set_optionNode ()
@@ -60,6 +114,19 @@ class ConeTool extends X3DGeometryNodeTool
       this .tool .linesCoord          = optionNode .getSideGeometry () ._coord;
 
       this .addExternalNode (optionNode .getSideGeometry () ._coord);
+   }
+
+   beginUndo ()
+   {
+      this .undoSaveInitialValues (["height", "bottomRadius"]);
+   }
+
+   getUndoDescription (activeTool, name)
+   {
+      if (name)
+         return _ ("Resize Node %s »%s«");
+
+      return _ ("Resize Node %s");
    }
 }
 

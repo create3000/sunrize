@@ -14,6 +14,8 @@ class BoxTool extends X3DGeometryNodeTool
    {
       await super .initializeTool ("CUSTOM");
 
+      // Transform Tool
+
       const
          transformNode = this .getToolScene () .createNode ("Transform"),
          transformTool = await transformNode .getValue () .addTool () .getToolInstance ();
@@ -34,6 +36,8 @@ class BoxTool extends X3DGeometryNodeTool
       this .tool .group       = "Box";
       this .tool .undo        = true;
       this .tool .addChildren = new X3D .MFNode (transformNode);
+
+      // Connections
 
       this .node ._size                     .addInterest ("set_size",       this);
       this .getBrowser () .getBoxOptions () .addInterest ("set_optionNode", this);
@@ -63,7 +67,7 @@ class BoxTool extends X3DGeometryNodeTool
 
       this .#changing = true;
 
-      this .node ._size = new X3D .Vector3 (scale .x * 2, scale .y * 2, scale .z * 2);
+      this .node ._size = new X3D .Vector3 (scale .x, scale .y, scale .z) .abs () .multiply (2);
    }
 
    set_size (size)

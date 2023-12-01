@@ -15,6 +15,8 @@ class SphereTool extends X3DGeometryNodeTool
    {
       await super .initializeTool ("CUSTOM");
 
+      // Transform Tool
+
       const
          transformNode = this .getToolScene () .createNode ("Transform"),
          transformTool = await transformNode .getValue () .addTool () .getToolInstance ();
@@ -37,6 +39,8 @@ class SphereTool extends X3DGeometryNodeTool
       this .tool .group       = "Sphere";
       this .tool .undo        = true;
       this .tool .addChildren = new X3D .MFNode (transformNode);
+
+      // Connections
 
       this .node ._radius                      .addInterest ("set_radius",     this);
       this .getBrowser () .getSphereOptions () .addInterest ("set_optionNode", this);
@@ -66,7 +70,7 @@ class SphereTool extends X3DGeometryNodeTool
 
       this .#changing = true;
 
-      this .node ._radius = (scale .x + scale .y + scale .z) / 3;
+      this .node ._radius = (Math .abs (scale .x) + Math .abs (scale .y) + Math .abs (scale .z)) / 3;
    }
 
    set_radius (radius)
@@ -76,6 +80,8 @@ class SphereTool extends X3DGeometryNodeTool
          this .#changing = false;
          return;
       }
+
+      this .#changing = true;
 
       const r = Math .abs (radius .getValue ());
 
