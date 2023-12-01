@@ -1147,10 +1147,15 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             break;
          }
+         case "CADPart":
          case "ProximitySensor":
          case "TransformSensor":
          case "VisibilitySensor":
          case "GeoViewpoint":
+         case "Transform":
+         case "HAnimHumanoid":
+         case "HAnimJoint":
+         case "HAnimSite":
          case "DirectionalLight":
          case "PointLight":
          case "SpotLight":
@@ -1225,10 +1230,15 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             break;
          }
+         case "CADPart":
          case "ProximitySensor":
          case "TransformSensor":
          case "VisibilitySensor":
          case "GeoViewpoint":
+         case "Transform":
+         case "HAnimHumanoid":
+         case "HAnimJoint":
+         case "HAnimSite":
          case "DirectionalLight":
          case "PointLight":
          case "SpotLight":
