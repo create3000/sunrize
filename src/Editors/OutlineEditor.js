@@ -1125,7 +1125,18 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             toolNode .getTransformTool () .tool .getField ("isActive") .setValue (true);
             break;
          }
-         default: // TransformTool, Sound, X3DEnvironmentalSensorNode, ...
+         case "ProximitySensor":
+         case "TransformSensor":
+         case "VisibilitySensor":
+         case "GeoViewpoint":
+         case "DirectionalLight":
+         case "PointLight":
+         case "SpotLight":
+         case "OrthoViewpoint":
+         case "Viewpoint":
+         case "Sound":
+         case "TextureProjectorParallel":
+         case "TextureProjector":
          {
             toolNode .tool .getField ("isActive") .setValue (true);
             toolNode .tool .transformTool ?.getValue () .getTool () ?.tool .getField ("isActive") .setValue (true);
@@ -1161,7 +1172,18 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             break;
          }
-         default:
+         case "ProximitySensor":
+         case "TransformSensor":
+         case "VisibilitySensor":
+         case "GeoViewpoint":
+         case "DirectionalLight":
+         case "PointLight":
+         case "SpotLight":
+         case "OrthoViewpoint":
+         case "Viewpoint":
+         case "Sound":
+         case "TextureProjectorParallel":
+         case "TextureProjector":
          {
             const innerTool = toolNode .tool .transformTool ?.getValue () .getTool ();
 
