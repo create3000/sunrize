@@ -4,7 +4,6 @@ const
    X3DChildNodeTool = require ("../Core/X3DChildNodeTool"),
    X3D              = require ("../../X3D"),
    Editor           = require ("../../Undo/Editor"),
-   UndoManager      = require ("../../Undo/UndoManager"),
    ActionKeys       = require ("../../Application/ActionKeys"),
    _                = require ("../../Application/GetText");
 
