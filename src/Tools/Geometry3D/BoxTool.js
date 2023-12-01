@@ -2,8 +2,9 @@
 
 const
    X3DGeometryNodeTool = require ("../Rendering/X3DGeometryNodeTool"),
-   X3D                 = require ("../../X3D");
-
+   X3D                 = require ("../../X3D"),
+   _                   = require ("../../Application/GetText");
+   
 class BoxTool extends X3DGeometryNodeTool
 {
    #transformNode = null;
@@ -90,6 +91,19 @@ class BoxTool extends X3DGeometryNodeTool
       this .tool .linesCoord          = optionNode .getGeometry () ._coord;
 
       this .addExternalNode (optionNode .getGeometry () ._coord);
+   }
+
+   beginUndo ()
+   {
+      this .undoSaveInitialValues (["size"]);
+   }
+
+   getUndoDescription (activeTool, name)
+   {
+      if (name)
+         return _ ("Resize Node %s »%s«");
+
+      return _ ("Resize Node %s");
    }
 }
 

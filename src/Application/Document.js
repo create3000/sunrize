@@ -307,7 +307,7 @@ module .exports = class Document extends Interface
 
       clearTimeout (this .#saveTimeoutId);
 
-      this .#saveTimeoutId = setTimeout (() => this .saveFile (), 2000);
+      this .#saveTimeoutId = setTimeout (() => this .saveFile (), 1000);
    }
 
    exportAs (filePath)
