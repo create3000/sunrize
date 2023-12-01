@@ -1133,8 +1133,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       }
    }
 
-   #setFieldValueSymbol = Symbol ();
-
    endUndoSetFieldValue (node, field)
    {
       if (node .getTool ?.() ?.tool .undo)
@@ -1143,14 +1141,14 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          {
             case "Rectangle2D":
             {
-               this .browser .finishedEvents () .addFieldCallback (this .#setFieldValueSymbol, () =>
+               this .browser .finishedEvents () .addFieldCallback (this, () =>
                {
-                  this .browser .finishedEvents () .removeFieldCallback (this .#setFieldValueSymbol);
+                  this .browser .finishedEvents () .removeFieldCallback (this);
 
                   node .getTool () .getTransformTool () .transformGroups ();
                   node .getTool () .handleUndo (new X3D .SFBool ());
                   node .getTool () .getTransformTool () .tool .getField ("isActive") .setValue (false);
-                  
+
                   UndoManager .shared .endUndo ();
                });
 
@@ -1164,9 +1162,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                {
                   // Sound, X3DEnvironmentalSensorNode, ...
 
-                  this .browser .finishedEvents () .addFieldCallback (this .#setFieldValueSymbol, () =>
+                  this .browser .finishedEvents () .addFieldCallback (this, () =>
                   {
-                     this .browser .finishedEvents () .removeFieldCallback (this .#setFieldValueSymbol);
+                     this .browser .finishedEvents () .removeFieldCallback (this);
 
                      innerTool .transformGroups ();
                      node .getTool () .handleUndo (new X3D .SFBool ());
