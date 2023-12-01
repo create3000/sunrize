@@ -38,7 +38,7 @@
         <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
         <field accessType='inputOutput' type='SFRotation' name='scaleOrientation'/>
         <field accessType='inputOutput' type='SFVec3f' name='center'/>
-        <field accessType='inputOutput' type='SFBool' name='keys' value='true'/>
+        <field accessType='inputOutput' type='MFString' name='keys' value='"SHIFT", "OPTION"'/>
         <field accessType='inputOutput' type='MFString' name='tools' value='"TRANSLATE", "ROTATE", "SCALE"'/>
         <field accessType='inputOutput' type='SFString' name='translateMode' value='TRANSLATE_ALONG_AXIS'/>
         <field accessType='inputOutput' type='SFBool' name='snapRotation'/>
@@ -1504,7 +1504,7 @@ function connectAxes (axis, vector, offset)
 		const
 			lhs = connectedAxis [0] .toLowerCase (),
 			rhs = connectedAxis [1] .toLowerCase ();
-	
+
 		if (rhs !== axis)
          continue;
 

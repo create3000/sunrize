@@ -35,6 +35,7 @@ class Disk2DTool extends X3DGeometryNodeTool
          transformTool .group         = `${this .getTypeName ()}.innerRadius`;
          transformTool .undo          = false;
          transformTool .tools         = ["SCALE"];
+         transformNode .keys          = [ ];
          transformTool .connectedAxes = ["XY", "YX", "ZX"];
          transformTool .centerDisplay = false;
          transformTool .centerTool    = false;
@@ -68,6 +69,7 @@ class Disk2DTool extends X3DGeometryNodeTool
          transformTool .group         = `${this .getTypeName ()}.outerRadius`;
          transformTool .undo          = false;
          transformTool .tools         = ["SCALE"];
+         transformNode .keys          = [ ];
          transformTool .connectedAxes = ["XY", "YX", "ZX"];
          transformTool .centerDisplay = false;
          transformTool .centerTool    = false;

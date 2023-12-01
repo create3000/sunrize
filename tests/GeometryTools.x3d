@@ -7,14 +7,15 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.2.7, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 01 Dec 2023 21:37:13 GMT'/>
+    <meta name='modified' content='Fri, 01 Dec 2023 21:56:42 GMT'/>
   </head>
   <Scene>
     <Viewpoint
         position='7.441267 0.826218 21.13446'
         centerOfRotation='7.441268 0.826218 0'/>
     <Transform DEF='Box_1'
-        translation='-4.5 0 0'>
+        translation='-4.5 0 0'
+        scale='1.239375 1.239375 1.239375'>
       <Shape>
         <Appearance>
           <Material/>
@@ -195,7 +196,7 @@
         </Appearance>
         <Disk2D
             innerRadius='0.4897927'
-            outerRadius='0.8777971'/>
+            outerRadius='0.6523092'/>
       </Shape>
     </Transform>
   </Scene>

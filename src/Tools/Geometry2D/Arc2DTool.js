@@ -30,6 +30,7 @@ class Arc2DTool extends X3DLineGeometryNodeTool
       transformTool .group         = this .getTypeName ();
       transformTool .undo          = false;
       transformTool .tools         = ["SCALE"];
+      transformNode .keys          = [ ];
       transformTool .connectedAxes = ["XY", "YX", "ZX"];
       transformTool .centerDisplay = false;
       transformTool .centerTool    = false;

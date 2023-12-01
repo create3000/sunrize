@@ -30,6 +30,7 @@ class BoxTool extends X3DGeometryNodeTool
       transformTool .group         = this .getTypeName ();
       transformTool .undo          = false;
       transformTool .tools         = ["SCALE"];
+      transformNode .keys          = ["SHIFT"];
       transformTool .centerDisplay = false;
       transformTool .centerTool    = false;
       transformTool .bboxDisplay   = false;

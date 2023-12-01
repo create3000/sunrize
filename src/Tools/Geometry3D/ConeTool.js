@@ -31,6 +31,7 @@ class ConeTool extends X3DGeometryNodeTool
       transformTool .group         = this .getTypeName ();
       transformTool .undo          = false;
       transformTool .tools         = ["SCALE"];
+      transformNode .keys          = ["SHIFT"];
       transformTool .connectedAxes = ["XZ", "ZX"];
       transformTool .centerDisplay = false;
       transformTool .centerTool    = false;

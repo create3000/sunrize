@@ -50,7 +50,10 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
    set_keys__ (keys)
    {
-      if (!this .tool .keys)
+      if ((keys & ActionKeys .Option) && !this .tool .keys .includes ("OPTION"))
+         return;
+
+      if ((keys & ActionKeys .Shift) && !this .tool .keys .includes ("SHIFT"))
          return;
 
       if (this .tool .tools .includes ("TRANSLATE"))
