@@ -1624,7 +1624,7 @@ function set_moveCenterToBBoxCenter (value)
 
       center = bboxCenter;
 
-      setTimeout (() => active = false);
+      setTimeout (() => active = false, 1);
    }
 }
 
