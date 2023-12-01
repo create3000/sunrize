@@ -52,6 +52,8 @@ class SphereTool extends X3DGeometryNodeTool
    {
       this .node ._radius                      .removeInterest ("set_radius",     this);
       this .getBrowser () .getSphereOptions () .removeInterest ("set_optionNode", this);
+
+      super .disposeTool ();
    }
 
    getTransformTool ()

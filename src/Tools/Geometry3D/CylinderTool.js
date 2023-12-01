@@ -9,7 +9,7 @@ const
 class CylinderTool extends X3DGeometryNodeTool
 {
    #transformNode = null;
-   #changing      = false;
+   #changing      = [false, false];
 
    async initializeTool ()
    {
@@ -41,8 +41,8 @@ class CylinderTool extends X3DGeometryNodeTool
 
       // Connections
 
-      this .node ._height .addInterest ("set_height_and_radius", this);
-      this .node ._radius .addInterest ("set_height_and_radius", this);
+      this .node ._height .addInterest ("set_height", this);
+      this .node ._radius .addInterest ("set_radius", this);
 
       this .node ._side                          .addInterest ("set_optionNode", this);
       this .node ._bottom                        .addInterest ("set_optionNode", this);
@@ -55,13 +55,15 @@ class CylinderTool extends X3DGeometryNodeTool
 
    disposeTool ()
    {
-      this .node ._height .removeInterest ("set_height_and_radius", this);
-      this .node ._radius .removeInterest ("set_height_and_radius", this);
+      this .node ._height .removeInterest ("set_height", this);
+      this .node ._radius .removeInterest ("set_radius", this);
 
       this .node ._side                          .removeInterest ("set_optionNode", this);
       this .node ._bottom                        .removeInterest ("set_optionNode", this);
       this .node ._top                           .removeInterest ("set_optionNode", this);
       this .getBrowser () .getCylinderOptions () .removeInterest ("set_optionNode", this);
+
+      super .disposeTool ();
    }
 
    getTransformTool ()
@@ -71,27 +73,37 @@ class CylinderTool extends X3DGeometryNodeTool
 
    set_scale (scale)
    {
-      if (this .#changing)
+      if (this .#changing .includes (true))
       {
-         this .#changing = false;
+         this .#changing .fill (false);
          return;
       }
 
-      this .#changing = true;
+      this .#changing .fill (true);
 
       this .node ._height = Math .abs (scale .y) * 2;
       this .node ._radius = (Math .abs (scale .x) + Math .abs (scale .z)) / 2;
    }
 
-   set_height_and_radius ()
+   set_height ()
    {
-      if (this .#changing)
+      this .set_height_and_radius (0);
+   }
+
+   set_radius ()
+   {
+      this .set_height_and_radius (1);
+   }
+
+   set_height_and_radius (i)
+   {
+      if (this .#changing [i])
       {
-         this .#changing = false;
+         this .#changing [i] = false;
          return;
       }
 
-      this .#changing = true;
+      this .#changing [i] = true;
 
       const
          y = Math .abs (this .node ._height .getValue () / 2),

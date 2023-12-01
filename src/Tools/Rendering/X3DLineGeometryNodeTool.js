@@ -25,6 +25,8 @@ class X3DLineGeometryNodeTool extends X3DGeometryNodeTool
    disposeTool ()
    {
       this .node ._rebuild .removeInterest ("set_toolGeometry", this);
+
+      super .disposeTool ();
    }
 
    set_toolGeometry ()

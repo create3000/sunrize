@@ -1131,6 +1131,22 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             toolNode .getTransformTool () .tool .getField ("isActive") .setValue (true);
             break;
          }
+         case "Disk2D":
+         {
+            if (field .getName () === "innerRadius")
+            {
+               toolNode .tool .group = `${node .getTypeName ()}.innerRadius`;
+               toolNode .getInnerRadiusTransformTool () .tool .getField ("isActive") .setValue (true);
+            }
+
+            if (field .getName () === "outerRadius")
+            {
+               toolNode .tool .group = `${node .getTypeName ()}.outerRadius`;
+               toolNode .getOuterRadiusTransformTool () .tool .getField ("isActive") .setValue (true);
+            }
+
+            break;
+         }
          case "ProximitySensor":
          case "TransformSensor":
          case "VisibilitySensor":
@@ -1178,6 +1194,31 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                toolNode .getTransformTool () .transformGroups ();
                toolNode .handleUndo (new X3D .SFBool ());
                toolNode .getTransformTool () .tool .getField ("isActive") .setValue (false);
+
+               UndoManager .shared .endUndo ();
+            });
+
+            break;
+         }
+         case "Disk2D":
+         {
+            this .browser .finishedEvents () .addFieldCallback (this, () =>
+            {
+               this .browser .finishedEvents () .removeFieldCallback (this);
+
+               if (field .getName () === "innerRadius")
+                  toolNode .getInnerRadiusTransformTool () .transformGroups ();
+
+               if (field .getName () === "outerRadius")
+                  toolNode .getOuterRadiusTransformTool () .transformGroups ();
+
+               toolNode .handleUndo (new X3D .SFBool ());
+
+               if (field .getName () === "innerRadius")
+                  toolNode .getInnerRadiusTransformTool () .tool .getField ("isActive") .setValue (false);
+
+               if (field .getName () === "outerRadius")
+                  toolNode .getOuterRadiusTransformTool () .tool .getField ("isActive") .setValue (false);
 
                UndoManager .shared .endUndo ();
             });

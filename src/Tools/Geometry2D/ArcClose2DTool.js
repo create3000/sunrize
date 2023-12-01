@@ -1,12 +1,12 @@
 "use strict";
 
 const
-   X3DLineGeometryNodeTool = require ("../Rendering/X3DLineGeometryNodeTool"),
-   ToolColors              = require ("../Core/ToolColors"),
-   X3D                     = require ("../../X3D"),
-   _                       = require ("../../Application/GetText");
+   X3DGeometryNodeTool = require ("../Rendering/X3DGeometryNodeTool"),
+   ToolColors          = require ("../Core/ToolColors"),
+   X3D                 = require ("../../X3D"),
+   _                   = require ("../../Application/GetText");
 
-class ArcClose2DTool extends X3DLineGeometryNodeTool
+class ArcClose2DTool extends X3DGeometryNodeTool
 {
    #transformNode = null;
    #changing      = false;
@@ -49,6 +49,8 @@ class ArcClose2DTool extends X3DLineGeometryNodeTool
    disposeTool ()
    {
       this .node ._radius .removeInterest ("set_radius", this);
+
+      super .disposeTool ();
    }
 
    getTransformTool ()

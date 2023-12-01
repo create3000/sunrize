@@ -49,6 +49,8 @@ class Arc2DTool extends X3DLineGeometryNodeTool
    disposeTool ()
    {
       this .node ._radius .removeInterest ("set_radius", this);
+
+      super .disposeTool ();
    }
 
    getTransformTool ()

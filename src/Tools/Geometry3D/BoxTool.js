@@ -50,6 +50,8 @@ class BoxTool extends X3DGeometryNodeTool
    {
       this .node ._size                     .removeInterest ("set_size",       this);
       this .getBrowser () .getBoxOptions () .removeInterest ("set_optionNode", this);
+
+      super .disposeTool ();
    }
 
    getTransformTool ()
