@@ -71,8 +71,6 @@ class Disk2DTool extends X3DGeometryNodeTool
          transformTool .connectedAxes = ["XY", "YX", "ZX"];
          transformTool .centerDisplay = false;
          transformTool .centerTool    = false;
-         transformTool .xAxisDisplay  = false;
-         transformTool .yAxisDisplay  = false;
          transformTool .zAxisDisplay  = false;
          transformTool .bboxColor     = ToolColors .BLUE;
 
