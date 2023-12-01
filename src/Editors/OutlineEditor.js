@@ -1107,88 +1107,93 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
    beginUndoSetFieldValue (node, field)
    {
-      if (node .getTool ?.() ?.tool .undo)
+      const toolNode = node .getTool ?.();
+
+      if (!toolNode ?.tool .undo)
+         return;
+
+      if (node .getDisplayName ())
+         UndoManager .shared .beginUndo (_ ("Change Field »%s« of Node %s »%s«"), field .getName (), node .getTypeName (), node .getDisplayName ());
+      else
+         UndoManager .shared .beginUndo (_ ("Change Field »%s« of Node %s"), field .getName (), node .getTypeName ());
+
+      switch (node .getTypeName ())
       {
-         if (node .getDisplayName ())
-            UndoManager .shared .beginUndo (_ ("Change Field »%s« of Node %s »%s«"), field .getName (), node .getTypeName (), node .getDisplayName ());
-         else
-            UndoManager .shared .beginUndo (_ ("Change Field »%s« of Node %s"), field .getName (), node .getTypeName ());
-
-         switch (node .getTypeName ())
+         case "Rectangle2D":
+         case "Box":
          {
-            case "Rectangle2D":
-            case "Box":
-            {
-               node .getTool () .getTransformTool () .tool .getField ("isActive") .setValue (true);
-               break;
-            }
-            default: // TransformTool, Sound, X3DEnvironmentalSensorNode, ...
-            {
-               node .getTool () .tool .getField ("isActive") .setValue (true);
-               node .getTool () .tool .transformTool ?.getValue () .getTool () ?.tool .getField ("isActive") .setValue (true);
-               break;
-            }
+            toolNode .getTransformTool () .tool .getField ("isActive") .setValue (true);
+            break;
          }
-
-         node .getTool () .handleUndo (new X3D .SFBool (true));
+         default: // TransformTool, Sound, X3DEnvironmentalSensorNode, ...
+         {
+            toolNode .tool .getField ("isActive") .setValue (true);
+            toolNode .tool .transformTool ?.getValue () .getTool () ?.tool .getField ("isActive") .setValue (true);
+            break;
+         }
       }
+
+      toolNode .handleUndo (new X3D .SFBool (true));
    }
 
    endUndoSetFieldValue (node, field)
    {
-      if (node .getTool ?.() ?.tool .undo)
+      const toolNode = node .getTool ?.();
+
+      if (!toolNode ?.tool .undo)
+         return;
+
+      switch (node .getTypeName ())
       {
-         switch (node .getTypeName ())
+         case "Rectangle2D":
+         case "Box":
          {
-            case "Rectangle2D":
-            case "Box":
+            this .browser .finishedEvents () .addFieldCallback (this, () =>
             {
+               this .browser .finishedEvents () .removeFieldCallback (this);
+
+               toolNode .getTransformTool () .transformGroups ();
+               toolNode .handleUndo (new X3D .SFBool ());
+               toolNode .getTransformTool () .tool .getField ("isActive") .setValue (false);
+
+               UndoManager .shared .endUndo ();
+            });
+
+            break;
+         }
+         default:
+         {
+            const innerTool = toolNode .tool .transformTool ?.getValue () .getTool ();
+
+            if (innerTool)
+            {
+               // Sound, X3DEnvironmentalSensorNode, ...
+
                this .browser .finishedEvents () .addFieldCallback (this, () =>
                {
                   this .browser .finishedEvents () .removeFieldCallback (this);
 
-                  node .getTool () .getTransformTool () .transformGroups ();
-                  node .getTool () .handleUndo (new X3D .SFBool ());
-                  node .getTool () .getTransformTool () .tool .getField ("isActive") .setValue (false);
+                  innerTool .transformGroups ();
+                  toolNode .handleUndo (new X3D .SFBool ());
+
+                  toolNode  .tool .getField ("isActive") .setValue (false);
+                  innerTool .tool .getField ("isActive") .setValue (false);
 
                   UndoManager .shared .endUndo ();
                });
-
-               break;
             }
-            default:
+            else
             {
-               const innerTool = node .getTool () .tool .transformTool ?.getValue () .getTool ();
+               // TransformTool
 
-               if (innerTool)
-               {
-                  // Sound, X3DEnvironmentalSensorNode, ...
+               toolNode .transformGroups ();
+               toolNode .handleUndo (new X3D .SFBool ());
+               toolNode .tool .getField ("isActive") .setValue (false);
 
-                  this .browser .finishedEvents () .addFieldCallback (this, () =>
-                  {
-                     this .browser .finishedEvents () .removeFieldCallback (this);
-
-                     innerTool .transformGroups ();
-                     node .getTool () .handleUndo (new X3D .SFBool ());
-                     node .getTool () .tool .getField ("isActive") .setValue (false);
-                     innerTool .tool .getField ("isActive") .setValue (false);
-
-                     UndoManager .shared .endUndo ();
-                  });
-               }
-               else
-               {
-                  // TransformTool
-
-                  node .getTool () .transformGroups ();
-                  node .getTool () .handleUndo (new X3D .SFBool ());
-                  node .getTool () .tool .getField ("isActive") .setValue (false);
-
-                  UndoManager .shared .endUndo ();
-               }
-
-               break;
+               UndoManager .shared .endUndo ();
             }
+
+            break;
          }
       }
    }
