@@ -31,6 +31,7 @@ class ArcClose2DTool extends X3DGeometryNodeTool
       transformTool .undo          = false;
       transformTool .tools         = ["SCALE"];
       transformTool .connectedAxes = ["XY", "YX", "ZX"];
+      transformTool .centerDisplay = false;
       transformTool .centerTool    = false;
       transformTool .zAxisDisplay  = false;
       transformTool .bboxColor     = ToolColors .BLUE;

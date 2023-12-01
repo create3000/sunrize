@@ -32,6 +32,7 @@ class ConeTool extends X3DGeometryNodeTool
       transformTool .undo          = false;
       transformTool .tools         = ["SCALE"];
       transformTool .connectedAxes = ["XZ", "ZX"];
+      transformTool .centerDisplay = false;
       transformTool .centerTool    = false;
       transformTool .bboxColor     = ToolColors .BLUE;
 

@@ -26,12 +26,13 @@ class BoxTool extends X3DGeometryNodeTool
       transformNode .scale .addFieldInterest (this .tool .size);
       transformTool .getField ("isActive") .addInterest ("handleUndo", this);
 
-      transformNode .bboxSize     = new X3D .Vector3 (2, 2, 2);
-      transformTool .group        = this .getTypeName ();
-      transformTool .undo         = false;
-      transformTool .tools        = ["SCALE"];
-      transformTool .centerTool   = false;
-      transformTool .bboxDisplay  = false;
+      transformNode .bboxSize      = new X3D .Vector3 (2, 2, 2);
+      transformTool .group         = this .getTypeName ();
+      transformTool .undo          = false;
+      transformTool .tools         = ["SCALE"];
+      transformTool .centerDisplay = false;
+      transformTool .centerTool    = false;
+      transformTool .bboxDisplay   = false;
 
       this .tool .group       = this .getTypeName ();
       this .tool .undo        = true;
