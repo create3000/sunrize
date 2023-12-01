@@ -63,6 +63,11 @@ class ConeTool extends X3DGeometryNodeTool
       this .getBrowser () .getConeOptions () .removeInterest ("set_optionNode", this);
    }
 
+   getTransformTool ()
+   {
+      return this .#transformNode .getValue () .getTool ();
+   }
+
    set_scale (scale)
    {
       if (this .#changing)
