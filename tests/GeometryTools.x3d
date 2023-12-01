@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Geometry2D' level='2'/>
+    <meta name='created' content='Tue, 28 Nov 2023 18:23:35 GMT'/>
+    <meta name='comment' content='Rise and Shine'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.2.7, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Fri, 01 Dec 2023 21:09:42 GMT'/>
+  </head>
+  <Scene>
+    <Viewpoint
+        position='7.441267 0.826218 21.13446'
+        centerOfRotation='7.441268 0.826218 0'/>
+    <Transform DEF='Box_1'
+        translation='-4.5 0 0'>
+      <Shape>
+        <Appearance>
+          <Material/>
+        </Appearance>
+        <Box
+            size='1.990524 1.332772 2.267893'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='Box'
+        translation='-4.5 2 0'>
+      <Shape>
+        <Appearance>
+          <Material/>
+        </Appearance>
+        <Box
+            size='1.990524 1.332772 2.267893'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='Sphere_1'
+        translation='-1.5 0 0'>
+      <Shape>
+        <Appearance>
+          <Material/>
+        </Appearance>
+        <Sphere
+            radius='1.347564'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='Sphere'
+        translation='-1.5 2 0'>
+      <Shape>
+        <Appearance>
+          <Material/>
+        </Appearance>
+        <Sphere
+            radius='0.4353791'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='Cone'
+        translation='1.5 0 0'
+        center='0 -3.056489 0'>
+      <Shape>
+        <Appearance>
+          <Material/>
+        </Appearance>
+        <Cone
+            height='1'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='Cone_1'
+        translation='1.5 2 0'
+        center='0 -3.056489 0'>
+      <Shape>
+        <Appearance>
+          <Material/>
+        </Appearance>
+        <Cone
+            height='0.5248202'
+            bottomRadius='0.5'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='Cylinder_1'
+        translation='4.5 0 0'>
+      <Shape>
+        <Appearance>
+          <Material/>
+        </Appearance>
+        <Cylinder
+            height='0.1183239'
+            radius='0.4666482'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='Cylinder'
+        translation='4.5 2 0'>
+      <Shape>
+        <Appearance>
+          <Material/>
+        </Appearance>
+        <Cylinder
+            height='0.5'
+            radius='0.5'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='Rectangle2D'
+        translation='7.5 0 0'>
+      <Shape>
+        <Appearance>
+          <Material/>
+        </Appearance>
+        <Rectangle2D
+            size='1 1'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='Rectangle2D_1'
+        translation='7.5 2 0'>
+      <Shape>
+        <Appearance>
+          <Material/>
+        </Appearance>
+        <Rectangle2D
+            size='1 1'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='Circle2D_1'
+        translation='10.5 0 0'>
+      <Shape>
+        <Appearance>
+          <UnlitMaterial/>
+        </Appearance>
+        <Circle2D
+            radius='0.25'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='Circle2D_2'
+        translation='10.5 2 0'>
+      <Shape>
+        <Appearance>
+          <UnlitMaterial/>
+        </Appearance>
+        <Circle2D
+            radius='0.5'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='Arc2D_1'
+        translation='13.5 0 0'>
+      <Shape>
+        <Appearance>
+          <UnlitMaterial/>
+        </Appearance>
+        <Arc2D
+            radius='0.7466799'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='Arc2D'
+        translation='13.5 2 0'>
+      <Shape>
+        <Appearance>
+          <UnlitMaterial/>
+        </Appearance>
+        <Arc2D/>
+      </Shape>
+    </Transform>
+    <Transform DEF='ArcClose2D_1'
+        translation='16.5 0 0'>
+      <Shape>
+        <Appearance>
+          <Material/>
+        </Appearance>
+        <ArcClose2D
+            radius='0.5117411'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='ArcClose2D'
+        translation='16.5 2 0'>
+      <Shape>
+        <Appearance>
+          <Material/>
+        </Appearance>
+        <ArcClose2D/>
+      </Shape>
+    </Transform>
+    <Transform DEF='Disk2D_1'
+        translation='19.5 0 0'>
+      <Shape>
+        <Appearance>
+          <Material/>
+        </Appearance>
+        <Disk2D
+            innerRadius='0.2448964'
+            outerRadius='0.5266783'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='Disk2D'
+        translation='19.5 2 0'>
+      <Shape>
+        <Appearance>
+          <Material/>
+        </Appearance>
+        <Disk2D
+            innerRadius='0.4897927'
+            outerRadius='0.8777971'/>
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>
