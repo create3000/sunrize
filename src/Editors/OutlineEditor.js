@@ -1107,44 +1107,88 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
    beginUndoSetFieldValue (node, field)
    {
-      if (node .getTool ?.() ?.tool .undo && node .getTool ?.() ?.tool .group !== "NONE")
+      if (node .getTool ?.() ?.tool .undo)
       {
          if (node .getDisplayName ())
             UndoManager .shared .beginUndo (_ ("Change Field »%s« of Node %s »%s«"), field .getName (), node .getTypeName (), node .getDisplayName ());
          else
             UndoManager .shared .beginUndo (_ ("Change Field »%s« of Node %s"), field .getName (), node .getTypeName ());
 
-         node .getTool () .tool .getField ("isActive") .setValue (true);
-         node .getTool () .tool .transformTool ?.getValue () .getTool () ?.tool .getField ("isActive") .setValue (true);
+         switch (node .getTypeName ())
+         {
+            case "Rectangle2D":
+            {
+               node .getTool () .getTransformTool () .tool .getField ("isActive") .setValue (true);
+               break;
+            }
+            default: // TransformTool, Sound, X3DEnvironmentalSensorNode, ...
+            {
+               node .getTool () .tool .getField ("isActive") .setValue (true);
+               node .getTool () .tool .transformTool ?.getValue () .getTool () ?.tool .getField ("isActive") .setValue (true);
+               break;
+            }
+         }
+
          node .getTool () .handleUndo (new X3D .SFBool (true));
       }
    }
 
+   #setFieldValueSymbol = Symbol ();
+
    endUndoSetFieldValue (node, field)
    {
-      if (node .getTool ?.() ?.tool .undo && node .getTool ?.() ?.tool .group !== "NONE")
+      if (node .getTool ?.() ?.tool .undo)
       {
-         const innerTool = node .getTool () .tool .transformTool ?.getValue () .getTool ();
-
-         if (innerTool)
+         switch (node .getTypeName ())
          {
-            setTimeout (() =>
+            case "Rectangle2D":
             {
-               innerTool .transformGroups ();
-               node .getTool () .handleUndo (new X3D .SFBool ());
-               node .getTool () .tool .getField ("isActive") .setValue (false);
-               innerTool .tool .getField ("isActive") .setValue (false);
+               this .browser .finishedEvents () .addFieldCallback (this .#setFieldValueSymbol, () =>
+               {
+                  this .browser .finishedEvents () .removeFieldCallback (this .#setFieldValueSymbol);
 
-               UndoManager .shared .endUndo ();
-            });
-         }
-         else
-         {
-            node .getTool () .transformGroups ();
-            node .getTool () .handleUndo (new X3D .SFBool ());
-            node .getTool () .tool .getField ("isActive") .setValue (false);
+                  node .getTool () .getTransformTool () .transformGroups ();
+                  node .getTool () .handleUndo (new X3D .SFBool ());
+                  node .getTool () .getTransformTool () .tool .getField ("isActive") .setValue (false);
+                  
+                  UndoManager .shared .endUndo ();
+               });
 
-            UndoManager .shared .endUndo ();
+               break;
+            }
+            default:
+            {
+               const innerTool = node .getTool () .tool .transformTool ?.getValue () .getTool ();
+
+               if (innerTool)
+               {
+                  // Sound, X3DEnvironmentalSensorNode, ...
+
+                  this .browser .finishedEvents () .addFieldCallback (this .#setFieldValueSymbol, () =>
+                  {
+                     this .browser .finishedEvents () .removeFieldCallback (this .#setFieldValueSymbol);
+
+                     innerTool .transformGroups ();
+                     node .getTool () .handleUndo (new X3D .SFBool ());
+                     node .getTool () .tool .getField ("isActive") .setValue (false);
+                     innerTool .tool .getField ("isActive") .setValue (false);
+
+                     UndoManager .shared .endUndo ();
+                  });
+               }
+               else
+               {
+                  // TransformTool
+
+                  node .getTool () .transformGroups ();
+                  node .getTool () .handleUndo (new X3D .SFBool ());
+                  node .getTool () .tool .getField ("isActive") .setValue (false);
+
+                  UndoManager .shared .endUndo ();
+               }
+
+               break;
+            }
          }
       }
    }

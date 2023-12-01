@@ -8,6 +8,7 @@ const
 class Rectangle2DTool extends X3DGeometryNodeTool
 {
    #transformNode = null;
+   #transformTool = null;
    #changing      = false;
 
    async initializeTool ()
@@ -25,13 +26,14 @@ class Rectangle2DTool extends X3DGeometryNodeTool
       transformTool .getField ("isActive") .addInterest ("handleUndo", this);
 
       transformNode .bboxSize     = new X3D .Vector3 (2, 2, 0);
-      transformTool .group        = "NONE";
+      transformTool .group        = "Rectangle2D";
       transformTool .undo         = false;
       transformTool .tools        = ["SCALE"];
       transformTool .centerTool   = false;
       transformTool .zAxisDisplay = false;
       transformTool .bboxDisplay  = false;
 
+      this .tool .group       = "Rectangle2D";
       this .tool .undo        = true;
       this .tool .addChildren = new X3D .MFNode (transformNode);
 
@@ -46,6 +48,11 @@ class Rectangle2DTool extends X3DGeometryNodeTool
    {
       this .node ._size                             .removeInterest ("set_size",       this);
       this .getBrowser () .getRectangle2DOptions () .removeInterest ("set_optionNode", this);
+   }
+
+   getTransformTool ()
+   {
+      return this .#transformNode .getValue () .getTool ();
    }
 
    set_scale (scale)
