@@ -1149,7 +1149,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          }
          default:
          {
-            if (toolNode .tool .group !== "TRANSFORM_TOOL")
+            if (toolNode .tool .group !== "Transform")
                break;
 
             toolNode .tool .getField ("isActive") .setValue (true);
@@ -1219,7 +1219,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          }
          default:
          {
-            if (toolNode .tool .group !== "TRANSFORM_TOOL")
+            if (toolNode .tool .group !== "Transform")
                break;
 
             const innerTool = toolNode .tool .transformTool ?.getValue () .getTool ();

@@ -7,7 +7,7 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.2.7, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 01 Dec 2023 22:32:24 GMT'/>
+    <meta name='modified' content='Fri, 01 Dec 2023 22:34:28 GMT'/>
   </head>
   <Scene>
     <Viewpoint
@@ -20,7 +20,7 @@
           <Material/>
         </Appearance>
         <Box
-            size='1.990524 1.332772 2.267893'/>
+            size='1.864381 1.332772 2.267893'/>
       </Shape>
     </Transform>
     <Transform DEF='Box'
