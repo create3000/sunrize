@@ -7,44 +7,54 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.2.7, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 30 Nov 2023 09:48:53 GMT'/>
+    <meta name='modified' content='Fri, 01 Dec 2023 19:43:17 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='Tool'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
+        <field accessType='inputOutput' type='SFString' name='group' value='NONE'/>
+        <field accessType='inputOutput' type='SFBool' name='undo'/>
         <field accessType='inputOutput' type='SFBool' name='pointsDisplay' value='true'/>
         <field accessType='inputOutput' type='SFFloat' name='pointSize' value='5'/>
         <field accessType='inputOutput' type='SFColor' name='pointsColor' value='1 1 1'/>
         <field accessType='inputOutput' type='SFNode' name='pointsCoord'/>
+        <field accessType='inputOnly' type='MFNode' name='addChildren'/>
+        <field accessType='inputOnly' type='MFNode' name='removeChildren'/>
       </ProtoInterface>
       <ProtoBody>
-        <Shape DEF='Lines'>
+        <Group>
           <IS>
-            <connect nodeField='visible' protoField='pointsDisplay'/>
+            <connect nodeField='addChildren' protoField='addChildren'/>
+            <connect nodeField='removeChildren' protoField='removeChildren'/>
           </IS>
-          <Appearance>
-            <PointProperties>
-              <IS>
-                <connect nodeField='pointSizeScaleFactor' protoField='pointSize'/>
-                <connect nodeField='pointSizeMinValue' protoField='pointSize'/>
-                <connect nodeField='pointSizeMaxValue' protoField='pointSize'/>
-              </IS>
-            </PointProperties>
-            <UnlitMaterial>
-              <IS>
-                <connect nodeField='emissiveColor' protoField='pointsColor'/>
-              </IS>
-            </UnlitMaterial>
-            <DepthMode
-                polygonOffset='-1 -1'/>
-          </Appearance>
-          <PointSet>
+          <Shape DEF='Lines'>
             <IS>
-              <connect nodeField='coord' protoField='pointsCoord'/>
+              <connect nodeField='visible' protoField='pointsDisplay'/>
             </IS>
-          </PointSet>
-        </Shape>
+            <Appearance>
+              <PointProperties>
+                <IS>
+                  <connect nodeField='pointSizeScaleFactor' protoField='pointSize'/>
+                  <connect nodeField='pointSizeMinValue' protoField='pointSize'/>
+                  <connect nodeField='pointSizeMaxValue' protoField='pointSize'/>
+                </IS>
+              </PointProperties>
+              <UnlitMaterial>
+                <IS>
+                  <connect nodeField='emissiveColor' protoField='pointsColor'/>
+                </IS>
+              </UnlitMaterial>
+              <DepthMode
+                  polygonOffset='-1 -1'/>
+            </Appearance>
+            <PointSet>
+              <IS>
+                <connect nodeField='coord' protoField='pointsCoord'/>
+              </IS>
+            </PointSet>
+          </Shape>
+        </Group>
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='Tool'/>
