@@ -12,7 +12,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.2.7, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 01 Dec 2023 19:04:39 GMT'/>
+    <meta name='modified' content='Fri, 01 Dec 2023 22:12:19 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -1337,7 +1337,7 @@ function set_xScaleFront (value)
       return;
 
    if (scaleUniform)
-      scaleTransformUniform (value, Math .sign (value .x), new SFVec3f (-1, 0, 0));
+      scaleTransformUniform (value, 1, new SFVec3f (-1, 0, 0), "x");
    else
       scaleTransformAxis ("x", value, 1);
 }
@@ -1350,7 +1350,7 @@ function set_yScaleFront (value)
       return;
 
    if (scaleUniform)
-      scaleTransformUniform (value, Math .sign (value .y), new SFVec3f (0, -1, 0));
+      scaleTransformUniform (value, 1, new SFVec3f (0, -1, 0), "y");
   else
       scaleTransformAxis ("y", value, 1);
 }
@@ -1363,7 +1363,7 @@ function set_zScaleFront (value)
       return;
 
    if (scaleUniform)
-      scaleTransformUniform (value, Math .sign (value .z), new SFVec3f (0, 0, -1));
+      scaleTransformUniform (value, 1, new SFVec3f (0, 0, -1), "z");
    else
       scaleTransformAxis ("z", value, 1);
 }
@@ -1376,7 +1376,7 @@ function set_xScaleBack (value)
       return;
 
    if (scaleUniform)
-      scaleTransformUniform (value, Math .sign (-value .x), new SFVec3f (1, 0, 0));
+      scaleTransformUniform (value, 1, new SFVec3f (1, 0, 0), "x");
    else
       scaleTransformAxis ("x", value, -1);
 }
@@ -1389,7 +1389,7 @@ function set_yScaleBack (value)
       return;
 
    if (scaleUniform)
-      scaleTransformUniform (value, Math .sign (-value .y), new SFVec3f (0, 1, 0));
+      scaleTransformUniform (value, 1, new SFVec3f (0, 1, 0), "y");
    else
       scaleTransformAxis ("y", value, -1);
 }
@@ -1402,7 +1402,7 @@ function set_zScaleBack (value)
       return;
 
    if (scaleUniform)
-      scaleTransformUniform (value, Math .sign (-value .z), new SFVec3f (0, 0, 1));
+      scaleTransformUniform (value, 1, new SFVec3f (0, 0, 1), "z");
    else
       scaleTransformAxis ("z", value, -1);
 }
@@ -1513,13 +1513,15 @@ function connectAxes (axis, vector, offset)
 	}
 }
 
-function scaleTransformUniform (value, sgn, centerOffset)
+function scaleTransformUniform (value, sgn, centerOffset, axis)
 {
+   const a = axis ? value [axis] / bboxSize [axis] : value .length () / bboxSize .length ();
+
    switch (scaleMode)
    {
       case "SCALE_FROM_OPPOSITE_HANDLE":
       {
-         const s = 1 + sgn * value .length () / bboxSize .length ();
+         const  s = 1 + sgn * a;
 
          centerOffset = centerOffset .multVec (bboxSize .divide (2));
 
@@ -1528,7 +1530,7 @@ function scaleTransformUniform (value, sgn, centerOffset)
       }
       case "SCALE_FROM_CENTER":
       {
-         const s = 1 + 2 * sgn * value .length () / bboxSize .length ();
+         const s = 1 + 2 * sgn * a;
 
          scaleTransform (new SFVec3f (s, s, s), new SFVec3f ());
          break;
