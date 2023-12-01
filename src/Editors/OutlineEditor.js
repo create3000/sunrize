@@ -1147,24 +1147,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             break;
          }
-         case "CADPart":
-         case "ProximitySensor":
-         case "TransformSensor":
-         case "VisibilitySensor":
-         case "GeoViewpoint":
-         case "Transform":
-         case "HAnimHumanoid":
-         case "HAnimJoint":
-         case "HAnimSite":
-         case "DirectionalLight":
-         case "PointLight":
-         case "SpotLight":
-         case "OrthoViewpoint":
-         case "Viewpoint":
-         case "Sound":
-         case "TextureProjectorParallel":
-         case "TextureProjector":
+         default:
          {
+            if (toolNode .tool .group !== "TRANSFORM_TOOL")
+               break;
+
             toolNode .tool .getField ("isActive") .setValue (true);
             toolNode .tool .transformTool ?.getValue () .getTool () ?.tool .getField ("isActive") .setValue (true);
             break;
@@ -1230,24 +1217,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             break;
          }
-         case "CADPart":
-         case "ProximitySensor":
-         case "TransformSensor":
-         case "VisibilitySensor":
-         case "GeoViewpoint":
-         case "Transform":
-         case "HAnimHumanoid":
-         case "HAnimJoint":
-         case "HAnimSite":
-         case "DirectionalLight":
-         case "PointLight":
-         case "SpotLight":
-         case "OrthoViewpoint":
-         case "Viewpoint":
-         case "Sound":
-         case "TextureProjectorParallel":
-         case "TextureProjector":
+         default:
          {
+            if (toolNode .tool .group !== "TRANSFORM_TOOL")
+               break;
+
             const innerTool = toolNode .tool .transformTool ?.getValue () .getTool ();
 
             if (innerTool)
