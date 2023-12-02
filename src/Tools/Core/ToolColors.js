@@ -22,7 +22,7 @@ module .exports = class ToolColors
    static DARK_YELLOW = new X3D .Color3 (0.7, 0.7, 0.35);    // CADLayer
    static BROWN       = new X3D .Color3 (0.5, 0.35, 0);      // CADFace
    static DARK_CYAN   = new X3D .Color3 (0.175, 0.5, 0.5);   // GeoLOD
-   static DARK_BLUE   = new X3D .Color3 (0.35, 0.35, 1);     //
+   static DARK_BLUE   = new X3D .Color3 (0.175, 0.35, 1);    //
    static DARK_RED    = new X3D .Color3 (0.5, 0.175, 0.175); //
    static DARK_ORANGE = new X3D .Color3 (0.5, 0.35, 0.175);  // VolumeData
 
