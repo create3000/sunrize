@@ -14,7 +14,7 @@ module .exports = class ToolColors
 
    static WHITE  = new X3D .Color3 (1, 1, 1);                // Inline
    static ORANGE = new X3D .Color3 (1, 0.7, 0.35);           // Shape
-   static BLUE   = new X3D .Color3 (0.5, 0.75, 1);            // Normals, Edges, Other
+   static BLUE   = new X3D .Color3 (0.35, 0.7, 1);           // Normals, Edges, Other
    static LIME   = new X3D .Color3 (0.35, 1, 0.35);          // ScreenGroup
    static ROSE   = new X3D .Color3 (1, 0.7, 0.7);            // PickableGroup
 
