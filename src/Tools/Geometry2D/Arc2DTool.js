@@ -70,7 +70,7 @@ class Arc2DTool extends X3DLineGeometryNodeTool
 
       this .#changing = true;
 
-      this .node ._radius = (Math .abs (scale .x) + Math .abs (scale .y)) / 2;
+      this .node ._radius = scale .abs () .dot (new X3D .SFVec3f (1, 1, 0)) / 2;
    }
 
    set_radius (radius)

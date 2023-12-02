@@ -119,7 +119,7 @@ class Disk2DTool extends X3DGeometryNodeTool
 
       this .#innerRadiusChanging = true;
 
-      this .node ._innerRadius = (Math .abs (scale .x) + Math .abs (scale .y)) / 2;
+      this .node ._innerRadius = scale .abs () .dot (new X3D .SFVec3f (1, 1, 0)) / 2;
    }
 
    set_innerRadius (innerRadius)
@@ -160,7 +160,7 @@ class Disk2DTool extends X3DGeometryNodeTool
 
       this .#outerRadiusChanging = true;
 
-      this .node ._outerRadius = (Math .abs (scale .x) + Math .abs (scale .y)) / 2;
+      this .node ._outerRadius = scale .abs () .dot (new X3D .SFVec3f (1, 1, 0)) / 2;
    }
 
    set_outerRadius (outerRadius)

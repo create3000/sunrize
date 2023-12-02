@@ -84,7 +84,7 @@ class CylinderTool extends X3DGeometryNodeTool
       this .#changing .fill (true);
 
       this .node ._height = Math .abs (scale .y) * 2;
-      this .node ._radius = (Math .abs (scale .x) + Math .abs (scale .z)) / 2;
+      this .node ._radius = scale .abs () .dot (new X3D .SFVec3f (1, 0, 1)) / 2;
    }
 
    set_height ()
