@@ -7,7 +7,7 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.2.7, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 01 Dec 2023 22:34:28 GMT'/>
+    <meta name='modified' content='Sat, 02 Dec 2023 10:33:35 GMT'/>
   </head>
   <Scene>
     <Viewpoint
@@ -125,7 +125,7 @@
           <UnlitMaterial/>
         </Appearance>
         <Circle2D
-            radius='0.25'/>
+            radius='0.2885312'/>
       </Shape>
     </Transform>
     <Transform DEF='Circle2D_2'
@@ -196,6 +196,19 @@
         <Disk2D
             innerRadius='0.4897927'
             outerRadius='0.6523092'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='Pyramid'
+        translation='-4.5 -2 0'>
+      <Shape>
+        <Appearance>
+          <Material/>
+        </Appearance>
+        <IndexedFaceSet
+            coordIndex='3, 2, 1, 0, -1, 0, 1, 4, -1, 1, 2, 4, -1, 2, 3, 4, -1, 3, 0, 4, -1'>
+          <Coordinate
+              point='-1 -0.8660254 1, 1 -0.8660254 1, 1 -0.8660254 -1, -1 -0.8660254 -1, 0 0.8660254 0'/>
+        </IndexedFaceSet>
       </Shape>
     </Transform>
   </Scene>
