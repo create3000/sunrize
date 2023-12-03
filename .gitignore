@@ -1,5 +1,6 @@
 node_modules/
 out/
+download/
 x_ite/
 package-lock.json
 
