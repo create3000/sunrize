@@ -26,13 +26,6 @@ $ npx sunrize [files]
 <!-- ## Download -->
 
 <!--
-https://bytesbin.com/skip-google-drive-virus-scan-warning-large-files/
-Drive Link: https://drive.google.com/file/d/1zpMw3bicueHHd-v3qyr-V8-Crt-BkwDE/view?usp=share_link
-APIKey: AIzaSyBS1kY_jt2w1Ozw72iVPEjJ9wbPfrFU1f8
-Pattern: https://www.googleapis.com/drive/v3/files/FileID?alt=media&key=APIKey
--->
-
-<!--
 * [Windows]()
 * [macOS](https://www.googleapis.com/drive/v3/files/1zpMw3bicueHHd-v3qyr-V8-Crt-BkwDE?alt=media&key=AIzaSyBS1kY_jt2w1Ozw72iVPEjJ9wbPfrFU1f8)
 -->
