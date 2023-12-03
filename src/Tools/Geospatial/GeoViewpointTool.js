@@ -10,13 +10,13 @@ class GeoViewpointTool extends X3DViewpointNodeTool
    {
       await super .initializeTool ();
 
-      this .node ._position             .addInterest ("set_node_position__", this);
-      this .tool .getField ("position") .addInterest ("set_tool_position__", this);
+      this .node ._position             .addInterest ("set_node_position", this);
+      this .tool .getField ("position") .addInterest ("set_tool_position", this);
 
-      this .set_node_position__ ();
+      this .set_node_position ();
    }
 
-   set_node_position__ ()
+   set_node_position ()
    {
       if (this .#changing)
       {
@@ -29,7 +29,7 @@ class GeoViewpointTool extends X3DViewpointNodeTool
       this .tool .position = this .node .getPosition ();
    }
 
-   set_tool_position__ ()
+   set_tool_position ()
    {
       if (this .#changing)
       {

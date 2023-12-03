@@ -4,8 +4,7 @@ const
    X3DChildNodeTool = require ("../Core/X3DChildNodeTool"),
    X3D              = require ("../../X3D"),
    Editor           = require ("../../Undo/Editor"),
-   ActionKeys       = require ("../../Application/ActionKeys"),
-   _                = require ("../../Application/GetText");
+   ActionKeys       = require ("../../Application/ActionKeys");
 
 console .info ("Double-click on the handles of the arrow, sphere and box axes to cycle through the translation, rotation and scaling tools.");
 
@@ -21,7 +20,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
       this .getBrowser () .displayEvents () .addInterest ("reshapeTool", this);
 
-      this .keys = new ActionKeys (`X3DTransformNodeTool${this .getId ()}`, this .set_keys__ .bind (this));
+      this .keys = new ActionKeys (`X3DTransformNodeTool${this .getId ()}`, this .set_keys .bind (this));
 
       this .node .addInterest ("transformGroups", this);
 
@@ -49,7 +48,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       super .disposeTool ();
    }
 
-   set_keys__ (keys)
+   set_keys (keys)
    {
       if ((keys & ActionKeys .Option) && !this .tool .keys .includes ("OPTION"))
          return;
