@@ -7,7 +7,7 @@ const
    ActionKeys       = require ("../../Application/ActionKeys"),
    _                = require ("../../Application/GetText");
 
-console .info ("Double-click the arrow, sphere and box handles to cycle through the translation, rotation and scaling tools.");
+console .info ("Double-click on the handles of the arrow, sphere and box axes to cycle through the translation, rotation and scaling tools.");
 
 class X3DTransformNodeTool extends X3DChildNodeTool
 {
