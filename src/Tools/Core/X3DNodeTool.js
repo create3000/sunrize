@@ -145,6 +145,11 @@ class X3DNodeTool extends X3DBaseTool
    {
       await this .initializeTool ();
 
+      // X3DLayerNodeTool and X3DPrototypeInstanceTool have no own tool.
+
+      if (!this .tool)
+         return;
+
       this .#innerNode     = this .tool .getValue () .getInnerNode ();
       this .tool .selected = this .#selected;
    }
@@ -381,7 +386,7 @@ class X3DNodeTool extends X3DBaseTool
 
    // Traverse
 
-   traverse (type, renderObject)
+   traverse (type, renderObject = this .node)
    {
       switch (type)
       {
