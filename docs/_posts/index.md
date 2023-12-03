@@ -23,7 +23,7 @@ $ npx sunrize [files]
 >**Note:** The first time, it may take a while for Sunrize to start.
 {: .prompt-info }
 
-## Download
+<!-- ## Download -->
 
 <!--
 https://bytesbin.com/skip-google-drive-virus-scan-warning-large-files/
