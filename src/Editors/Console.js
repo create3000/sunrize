@@ -4,13 +4,13 @@
 const
    $         = require ("jquery"),
    electron  = require ("electron"),
-   X3D       = require ("../X3D"),
    Interface = require ("../Application/Interface"),
    _         = require ("../Application/GetText")
 
 module .exports = class Console extends Interface
 {
-   HISTORY_MAX = 100
+   HISTORY_MAX = 100;
+   CONSOLE_MAX = 1000;
 
    logLevels = [
       "debug",
@@ -118,7 +118,9 @@ module .exports = class Console extends Interface
 
       this .messageTime = performance .now ()
 
-      const last = this .output .children () .last ()
+      const
+         children = this .output .children (),
+         last     = children .last ();
 
       if (last .hasClass (this .logLevels [level]))
       {
@@ -127,6 +129,8 @@ module .exports = class Console extends Interface
          last .css ("border-bottom", "none")
          text .css ("border-top",    "none")
       }
+
+      children .slice (0, Math .max (children .length - this .CONSOLE_MAX, 0)) .remove ();
 
       this .output .append (text)
       this .output .scrollTop (this .output .prop ("scrollHeight"))
