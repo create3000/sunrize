@@ -1,6 +1,6 @@
-"use strict"
+"use strict";
 
 window .addEventListener ("DOMContentLoaded", () =>
 {
-   require ("../../Application/Tabs")
-})
+   require ("../../Application/Tabs");
+});
