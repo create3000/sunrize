@@ -1,11 +1,11 @@
 
-"use strict"
+"use strict";
 
 const
    $         = require ("jquery"),
    electron  = require ("electron"),
    Interface = require ("../Application/Interface"),
-   _         = require ("../Application/GetText")
+   _         = require ("../Application/GetText");
 
 module .exports = class Console extends Interface
 {
@@ -17,106 +17,106 @@ module .exports = class Console extends Interface
       "log",
       "warn",
       "error",
-   ]
+   ];
 
-   logClasses = ["", "", "filled", "filled"]
+   logClasses = ["", "", "filled", "filled"];
 
    constructor (element)
    {
-      super (`Sunrize.Console.${element .attr ("id")}.`)
+      super (`Sunrize.Console.${element .attr ("id")}.`);
 
-      this .suspendConsole     = false
-      this .messageTime        = 0
-      this .historyIndex       = 0
-      this .history            = [ ]
-      this .addMessageCallback = this .addMessage .bind (this)
+      this .suspendConsole     = false;
+      this .messageTime        = 0;
+      this .historyIndex       = 0;
+      this .history            = [ ];
+      this .addMessageCallback = this .addMessage .bind (this);
 
-      this .console   = element
-      this .left      = $("<div></div>") .addClass ("console-left") .appendTo (this .console)
-      this .toolbar   = $("<div></div>") .addClass (["toolbar", "vertical-toolbar", "console-toolbar"]) .appendTo (this .console)
-      this .output    = $("<div></div>") .addClass (["console-output", "output"]) .attr ("tabindex", 0) .appendTo (this .left)
-      this .input     = $("<div></div>") .addClass ("console-input") .appendTo (this .left)
+      this .console   = element;
+      this .left      = $("<div></div>") .addClass ("console-left") .appendTo (this .console);
+      this .toolbar   = $("<div></div>") .addClass (["toolbar", "vertical-toolbar", "console-toolbar"]) .appendTo (this .console);
+      this .output    = $("<div></div>") .addClass (["console-output", "output"]) .attr ("tabindex", 0) .appendTo (this .left);
+      this .input     = $("<div></div>") .addClass ("console-input") .appendTo (this .left);
 
       this .suspendButton = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _ ("Suspend console output."))
          .text ("cancel")
          .appendTo (this .toolbar)
-         .on ("click", () => this .setSuspendConsole (!this .suspendConsole))
+         .on ("click", () => this .setSuspendConsole (!this .suspendConsole));
 
       this .clearButton = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _ ("Clear console."))
          .text ("delete_forever")
          .appendTo (this .toolbar)
-         .on ("click", () => this .clearConsole ())
+         .on ("click", () => this .clearConsole ());
 
-      $("<span></span>") .addClass ("separator") .appendTo (this .toolbar)
+      $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
       this .textarea = $("<textarea></textarea>")
          .attr ("placeholder", _ ("Evaluate JavaScript code here."))
          .attr ("tabindex", 0)
          .appendTo (this .input)
          .on ("keydown", event => this .onkeydown (event))
-         .on ("keyup", event => this .onkeyup (event))
+         .on ("keyup", event => this .onkeyup (event));
 
       if (this .console .attr ("id") !== "console")
       {
-         this .output .html ($("#console .console-output") .html ())
-         this .output .scrollTop (this .output .prop ("scrollHeight"))
+         this .output .html ($("#console .console-output") .html ());
+         this .output .scrollTop (this .output .prop ("scrollHeight"));
       }
       else
       {
-         this .addMessage (null, 1, "", "", this .browser .getWelcomeMessage ())
+         this .addMessage (null, 1, "", "", this .browser .getWelcomeMessage ());
       }
 
-      electron .ipcRenderer .on ("console-message", this .addMessageCallback)
+      electron .ipcRenderer .on ("console-message", this .addMessageCallback);
 
-      this .setup ()
+      this .setup ();
    }
 
    configure ()
    {
-      super .configure ()
+      super .configure ();
 
-      this .fileConfig .setDefaultValues ({ history: [ ] })
+      this .fileConfig .setDefaultValues ({ history: [ ] });
 
-      this .history      = this .fileConfig .history .slice (-this .HISTORY_MAX)
-      this .historyIndex = this .history .length
+      this .history      = this .fileConfig .history .slice (-this .HISTORY_MAX);
+      this .historyIndex = this .history .length;
    }
 
    async browserInitialized (event)
    {
-      super .browserInitialized (event)
+      super .browserInitialized (event);
 
-      await this .browser .loadComponents (this .browser .getComponent ("Scripting"))
+      await this .browser .loadComponents (this .browser .getComponent ("Scripting"));
 
-      const Script = this .browser .getConcreteNode ("Script")
+      const Script = this .browser .getConcreteNode ("Script");
 
-      this .scriptNode = new Script (this .browser .currentScene)
+      this .scriptNode = new Script (this .browser .currentScene);
 
-      this .scriptNode .setup ()
+      this .scriptNode .setup ();
    }
 
    excludes = new Set ([
       "The vm module of Node.js is deprecated in the renderer process and will be removed.",
       "Invalid asm.js: Invalid member of stdlib",
-   ])
+   ]);
 
    addMessage (event, level, sourceId, line, message)
    {
       if (this .excludes .has (message))
-         return
+         return;
 
       const
          classes = [this .logLevels [level] ?? "log", this .logClasses [level]],
          title   = sourceId ? `${sourceId}:${line}`: "",
-         text    = $("<p></p>") .addClass (classes) .attr ("title", title) .text (message)
+         text    = $("<p></p>") .addClass (classes) .attr ("title", title) .text (message);
 
       if (this .messageTime && performance .now () - this .messageTime > 1000)
-         this .output .append ($("<p></p>") .addClass ("splitter"))
+         this .output .append ($("<p></p>") .addClass ("splitter"));
 
-      this .messageTime = performance .now ()
+      this .messageTime = performance .now ();
 
       const
          children = this .output .children (),
@@ -124,42 +124,42 @@ module .exports = class Console extends Interface
 
       if (last .hasClass (this .logLevels [level]))
       {
-         last .css ("margin-bottom", "0")
-         text .css ("margin-top",    "0")
-         last .css ("border-bottom", "none")
-         text .css ("border-top",    "none")
+         last .css ("margin-bottom", "0");
+         text .css ("margin-top",    "0");
+         last .css ("border-bottom", "none");
+         text .css ("border-top",    "none");
       }
 
       children .slice (0, Math .max (children .length - this .CONSOLE_MAX, 0)) .remove ();
 
-      this .output .append (text)
-      this .output .scrollTop (this .output .prop ("scrollHeight"))
+      this .output .append (text);
+      this .output .scrollTop (this .output .prop ("scrollHeight"));
    }
 
    setSuspendConsole (value)
    {
-      this .suspendConsole = value
+      this .suspendConsole = value;
 
       if (value)
       {
-         electron .ipcRenderer .off ("console-message", this .addMessageCallback)
-         this .addMessage (null, "info", __filename, 0, `Console output suspended at ${new Date () .toLocaleTimeString ()}.`)
-         this .suspendButton .addClass ("active")
+         electron .ipcRenderer .off ("console-message", this .addMessageCallback);
+         this .addMessage (null, "info", __filename, 0, `Console output suspended at ${new Date () .toLocaleTimeString ()}.`);
+         this .suspendButton .addClass ("active");
       }
       else
       {
-         electron .ipcRenderer .on ("console-message", this .addMessageCallback)
-         this .addMessage (null, "info", __filename, 0, `Console output enabled at ${new Date () .toLocaleTimeString ()}.`)
-         this .suspendButton .removeClass ("active")
+         electron .ipcRenderer .on ("console-message", this .addMessageCallback);
+         this .addMessage (null, "info", __filename, 0, `Console output enabled at ${new Date () .toLocaleTimeString ()}.`);
+         this .suspendButton .removeClass ("active");
       }
    }
 
    clearConsole ()
    {
-      this .messageTime = 0
+      this .messageTime = 0;
 
-      this .output .empty ()
-      this .addMessage (null, "info", __filename, 0, `Console cleared at ${new Date () .toLocaleTimeString ()}.`)
+      this .output .empty ();
+      this .addMessage (null, "info", __filename, 0, `Console cleared at ${new Date () .toLocaleTimeString ()}.`);
    }
 
    onkeydown (event)
@@ -168,45 +168,45 @@ module .exports = class Console extends Interface
       {
          case "Enter":
          {
-            this .evaluateSourceCode (event)
-            return
+            this .evaluateSourceCode (event);
+            return;
          }
          case "ArrowUp":
          {
             if (this .historyIndex === this .history .length)
             {
-               const text = this .textarea .val () .trim ()
+               const text = this .textarea .val () .trim ();
 
                if (text && text !== this .history .at (-1))
-                  this .history .push (text)
+                  this .history .push (text);
             }
 
-            this .fileConfig .history = this .history
+            this .fileConfig .history = this .history;
 
-            this .historyIndex = Math .max (this .historyIndex - 1, 0)
+            this .historyIndex = Math .max (this .historyIndex - 1, 0);
 
             if (this .historyIndex < this .history .length)
-               this .textarea .val (this .history [this .historyIndex])
+               this .textarea .val (this .history [this .historyIndex]);
 
-            this .adjustTextAreaHeight ()
-            return
+            this .adjustTextAreaHeight ();
+            return;
          }
          case "ArrowDown":
          {
-            this .historyIndex = Math .min (this .historyIndex + 1, this .history .length - 1)
+            this .historyIndex = Math .min (this .historyIndex + 1, this .history .length - 1);
 
             if (this .historyIndex < this .history .length)
-               this .textarea .val (this .history [this .historyIndex])
+               this .textarea .val (this .history [this .historyIndex]);
 
-            this .adjustTextAreaHeight ()
-            return
+            this .adjustTextAreaHeight ();
+            return;
          }
       }
    }
 
    onkeyup (event)
    {
-      this .adjustTextAreaHeight ()
+      this .adjustTextAreaHeight ();
    }
 
    adjustTextAreaHeight ()
@@ -218,41 +218,41 @@ module .exports = class Console extends Interface
             "word-wrap": "break-word",
          })
          .text (this .textarea .val ())
-         .appendTo ($("body"))
+         .appendTo ($("body"));
 
-      this .input .css ("height", `${div .height () + 5}px`)
-      this .output .css ("height", `calc(100% - ${this .input .height ()}px)`)
+      this .input .css ("height", `${div .height () + 5}px`);
+      this .output .css ("height", `calc(100% - ${this .input .height ()}px)`);
 
-      div .remove ()
+      div .remove ();
    }
 
    evaluateSourceCode (event)
    {
-      event .preventDefault ()
+      event .preventDefault ();
 
-      const text = this .textarea .val () .trim ()
+      const text = this .textarea .val () .trim ();
 
       if (!text)
-         return
+         return;
 
       if (text !== this .history .at (-1))
-         this .history .push (text)
+         this .history .push (text);
 
-      this .fileConfig .history = this .history
+      this .fileConfig .history = this .history;
 
-      this .historyIndex = this .history .length
+      this .historyIndex = this .history .length;
 
-      console .info (text)
+      console .info (text);
 
       try
       {
-         console .debug (String (this .scriptNode .evaluate (text)))
+         console .debug (String (this .scriptNode .evaluate (text)));
       }
       catch (error)
       {
-         console .error (`${error .name}: ${error .message}`)
+         console .error (`${error .name}: ${error .message}`);
       }
 
-      this .textarea .val ("")
+      this .textarea .val ("");
    }
-}
+};
