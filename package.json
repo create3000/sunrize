@@ -14,9 +14,7 @@
   "scripts": {
     "start": "electron .",
     "development": "SUNRISE_ENVIRONMENT=DEVELOPMENT electron .",
-    "prepackage": "npm i -D electron",
-    "package": "electron-forge package",
-    "postpackage": "npm i -P electron",
+    "package": "node build/package.js",
     "premake": "npm i -D electron",
     "make": "electron-forge make",
     "postmake": "npm i -P electron",

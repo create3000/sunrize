@@ -46,6 +46,9 @@ function main ()
 	systemSync (`git checkout development`);
 	systemSync (`git merge main`);
 	systemSync (`git push origin`);
+
+	// package
+	systemSync (`npm run package`);
 }
 
 main ();

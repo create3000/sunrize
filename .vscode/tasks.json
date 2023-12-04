@@ -12,7 +12,7 @@
         {
             "label": "Package Sunrize",
             "type": "shell",
-            "command": "npm run make",
+            "command": "npm run package",
             "problemMatcher": []
         },
         {
