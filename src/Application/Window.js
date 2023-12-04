@@ -1,13 +1,15 @@
-const Document = require ("./Document")
+"use strict";
+
+const Document = require ("./Document");
 
 module .exports = new class Window extends Document
 {
    constructor ()
    {
-      super ()
+      super ();
 
       // Setup
 
-      this .setup ()
+      this .setup ();
    }
-}
+};

@@ -1,8 +1,8 @@
-"use strict"
+"use strict";
 
 window .addEventListener ("DOMContentLoaded", () =>
 {
-   const electron = require ("electron")
+   const electron = require ("electron");
 
-   electron .ipcRenderer .on ("activate", () => require ("../../Application/Window"))
-})
+   electron .ipcRenderer .on ("activate", () => require ("../../Application/Window"));
+});
