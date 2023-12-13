@@ -8,7 +8,7 @@ permalink: /
 ---
 ## Introduction
 
-Sunrize is an easy-to-use editor for X3D files that is based on the [X_ITE](https://create3000.github.io/x_ite/) framework. The Outline Editor allows for intuitive scene editing, while the Script Editor provides comprehensive editing of Script nodes and ComposedShader nodes.
+Sunrize is an easy-to-use editor for X3D files that is based on the [X_ITE](/x_ite/) framework. The Outline Editor allows for intuitive scene editing, while the Script Editor provides comprehensive editing of Script nodes and ComposedShader nodes.
 
 ![Image of Sunrize Editor](/assets/img/sunrize.png)
 
