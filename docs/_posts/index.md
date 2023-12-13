@@ -14,7 +14,7 @@ Sunrize is an easy-to-use editor for X3D files that is based on the [X_ITE](/x_i
 
 ## Usage
 
-Because Sunrize is a Node program it can be run without installing it using NPM's **npx** command:
+Because Sunrize is a Node program, it can be run without installing it using NPM's **npx** command:
 
 ```console
 $ npx sunrize [files]
