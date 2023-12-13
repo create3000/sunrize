@@ -75,7 +75,7 @@ small, .small {
   font-size: 60%;
 }
 
-#nav-wrapper {
+.nav-wrapper {
   border-left: 1px solid var(--nav-border-color);
   margin-bottom: 4rem;
   transition: top 0.2s ease-in-out;
@@ -83,7 +83,7 @@ small, .small {
   animation: fade-up 0.8s;
 }
 
-#nav-wrapper a.active {
+.nav-wrapper a.active {
   color: var(--nav-active-page);
 }
 
