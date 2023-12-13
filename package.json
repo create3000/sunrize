@@ -24,6 +24,7 @@
     "docs": "cd docs && bundle exec jekyll serve --incremental --host=`ipconfig getifaddr en0`",
     "docs-install": "cd docs && bundle install",
     "docs-update": "cd docs && bundle update",
+		"release-docs": "sh build/bin/release-docs.sh",
     "make-x_ite-for-sunrize": "sh build/make-x_ite-for-sunrize.sh"
   },
   "repository": {
