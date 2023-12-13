@@ -5,8 +5,8 @@
 
 {% if enable_nav %}
 {% for item in site.data.nav[page.nav] %}
-<div id="nav-wrapper">
-  <div class="panel-heading pl-3 pt-2 mb-2">{{ item.title }}</div>
+<section id="nav-wrapper" class="ps-0 pe-4">
+  <h2 class="panel-heading ps-3 pt-2 mb-2">{{ item.title }}</h2>
   <nav id="pages">
     <ul>
       {% for item in item.children %}
@@ -14,6 +14,6 @@
       {% endfor %}
     </ul>
   </nav>
-</div>
+</section>
 {% endfor %}
 {% endif %}

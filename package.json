@@ -20,7 +20,10 @@
     "postmake": "npm i -P electron",
     "release": "node build/release.js",
     "download": "node build/download.js",
-    "docs": "cd docs && bundle exec jekyll serve --incremental --host=192.168.0.18",
+    "predocs": "rm -r docs/_site/",
+		"docs": "cd docs && bundle exec jekyll serve --incremental --host=`ipconfig getifaddr en0`",
+		"docs-install": "cd docs && bundle install",
+		"docs-update": "cd docs && bundle update",
     "make-x_ite-for-sunrize": "sh build/make-x_ite-for-sunrize.sh"
   },
   "repository": {
