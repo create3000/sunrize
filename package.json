@@ -20,7 +20,7 @@
     "postmake": "npm i -P electron",
     "release": "node build/release.js",
     "download": "node build/download.js",
-		"predocs": "mkdir -p docs/_site/ && rm -r docs/_site/",
+		"predocs": "rm -f -r docs/_site/",
     "docs": "cd docs && bundle exec jekyll serve --incremental --host=`ipconfig getifaddr en0`",
     "docs-install": "cd docs && bundle install",
     "docs-update": "cd docs && bundle update",
