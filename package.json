@@ -99,7 +99,8 @@
     "forge": {
       "packagerConfig": {
         "icon": "./src/assets/images/icon.png",
-        "extendInfo": "./src/assets/Info.plist"
+        "extendInfo": "./src/assets/Info.plist",
+        "ignore": "^/(?!bin|build|docs|download|tests|x_ite)"
       },
       "makers": [
         {
