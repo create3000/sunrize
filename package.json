@@ -100,7 +100,7 @@
       "packagerConfig": {
         "icon": "./src/assets/images/icon.png",
         "extendInfo": "./src/assets/Info.plist",
-        "ignore": "^/(?!bin|build|docs|download|tests|x_ite)"
+        "ignore": "^/(?!src|package\\.json)"
       },
       "makers": [
         {
