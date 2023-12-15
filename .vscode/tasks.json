@@ -10,9 +10,9 @@
             "problemMatcher": [],
         },
         {
-            "label": "Package Sunrize",
+            "label": "Package Sunrize for Download",
             "type": "shell",
-            "command": "npm run package",
+            "command": "npm run download",
             "problemMatcher": []
         },
         {

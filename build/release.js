@@ -52,8 +52,8 @@ function main ()
 	systemSync (`git merge main`);
 	systemSync (`git push origin`);
 
-	// package
-	systemSync (`npm run download`);
+	// // package
+	// systemSync (`npm run download`);
 }
 
 function docs ()
