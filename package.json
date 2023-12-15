@@ -14,7 +14,9 @@
   "scripts": {
     "start": "electron .",
     "development": "SUNRISE_ENVIRONMENT=DEVELOPMENT electron .",
-    "package": "node build/package.js",
+    "prepackage": "npm i -D electron",
+    "package": "electron-forge package",
+    "postpackage": "npm i -P electron",
     "premake": "npm i -D electron",
     "make": "electron-forge make",
     "postmake": "npm i -P electron",
@@ -71,12 +73,12 @@
     "@electron-forge/maker-rpm": "^7.2.0",
     "@electron-forge/maker-squirrel": "^7.2.0",
     "@electron-forge/maker-zip": "^7.2.0",
+    "electron": "^28.0.0",
     "shell-tools": "^1.1.7"
   },
   "dependencies": {
     "capitalize": "^2.0.4",
     "console": "^0.7.2",
-    "electron": "^28.0.0",
     "electron-prompt": "^1.7.0",
     "electron-squirrel-startup": "^1.0.0",
     "electron-tabs": "^1.0.2",
@@ -100,6 +102,7 @@
       "packagerConfig": {
         "icon": "./src/assets/images/icon.png",
         "extendInfo": "./src/assets/Info.plist",
+        "dir": "./src",
         "ignore": "^/(?!src|package\\.json|node_modules)"
       },
       "makers": [

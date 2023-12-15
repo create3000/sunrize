@@ -48,7 +48,14 @@ function main ()
 	systemSync (`git push origin`);
 
 	// package
-	systemSync (`npm run package`);
+	package ();
+}
+
+function package ()
+{
+   systemSync (`npm run make`);
+   systemSync (`mkdir -p download`);
+   systemSync (`cp`, `out/make/zip/darwin/x64/${pkg .productName}-darwin-x64-${pkg .version}.zip`, `download/Sunrize-macos.zip`);
 }
 
 main ();
