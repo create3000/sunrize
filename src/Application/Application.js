@@ -90,6 +90,7 @@ module .exports = class Application
       await this .createWindow ();
 
       this .openFiles (process .argv .slice (electron .app .isPackaged ? 1 : 2)
+         .filter (filePath => !filePath .startsWith ("--squirrel-"))
          .map (filePath => url .pathToFileURL (filePath) .href));
 
       this .openFiles (this .receivedFiles);
