@@ -8,8 +8,8 @@ const
 function main ()
 {
    systemSync (`npm run make`);
-   systemSync (`mkdir -p download`);
-   systemSync (`cp`, `out/make/zip/darwin/x64/${pkg .productName}-darwin-x64-${pkg .version}.zip`, `download/Sunrize-macos.zip`);
+   systemSync (`mkdir -p downloads`);
+   systemSync (`cp`, `out/make/zip/darwin/x64/${pkg .productName}-darwin-x64-${pkg .version}.zip`, `downloads/Sunrize-macos.zip`);
 }
 
 main ();
