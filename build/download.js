@@ -8,7 +8,7 @@ const
 
 function main ()
 {
-   // make ();
+   make ();
    docs();
 }
 
