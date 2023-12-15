@@ -34,8 +34,8 @@ function docs ()
 	let config = sh (`cat 'docs/_config.yml'`);
 
 	config = config .replace (/\bversion:\s*[\d\.]+/sg, `version: ${version}`);
-	config = config .replace (/\download_dmg:\s*\d+/sg, `download_dmg: ${dmg}`);
-	config = config .replace (/\download_exe:\s*\d+/sg, `download_exe: ${exe}`);
+	config = config .replace (/\bdownload_dmg:\s*\d+/sg, `download_dmg: ${dmg}`);
+	config = config .replace (/\bdownload_exe:\s*\d+/sg, `download_exe: ${exe}`);
 
 	fs .writeFileSync ("docs/_config.yml", config);
 
