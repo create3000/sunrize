@@ -47,9 +47,8 @@ function docs ()
 	// release
 	systemSync (`git checkout main`);
 	systemSync (`git merge development`);
-	systemSync (`git checkout development`);
-	systemSync (`git merge main`);
 	systemSync (`git push origin`);
+	systemSync (`git checkout development`);
 }
 
 main ();
