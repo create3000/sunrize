@@ -17,7 +17,7 @@
     "release": "node build/release.js",
     "download": "node build/download.js",
     "premake": "npm i -D electron",
-    "make": "env PATH=\"$(pwd)/build/wine_proxy:$PATH\" electron-forge make",
+    "make": "env PATH=\"$(pwd)/build/wine-proxy:$PATH\" electron-forge make",
     "postmake": "npm i -P electron",
     "predocs": "rm -f -r docs/_site/",
     "docs": "cd docs && bundle exec jekyll serve --incremental --host=`ipconfig getifaddr en0`",
