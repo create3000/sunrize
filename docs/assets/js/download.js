@@ -24,7 +24,7 @@
 
          const progress = received / total;
 
-         element .css ("color", "black");
+         element .attr ("style", "color: black !important");
          element .css ("border-color", "var(--system-green)");
          element .css ("background", `linear-gradient(90deg, var(--system-green) ${progress * 100}%, var(--download-bg) ${progress * 100}%)`);
       }

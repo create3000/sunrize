@@ -6,7 +6,7 @@ const
    Editor           = require ("../../Undo/Editor"),
    ActionKeys       = require ("../../Application/ActionKeys");
 
-console .info ("Double-click on the handles of the arrow, sphere and box axes to cycle through the translation, rotation and scaling tools.");
+console .info ("Double-click on one of the axes handles to cycle through the translation, rotation and scaling tools.");
 
 class X3DTransformNodeTool extends X3DChildNodeTool
 {
