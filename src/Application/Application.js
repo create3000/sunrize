@@ -90,8 +90,8 @@ module .exports = class Application
       await this .createWindow ();
 
       this .openFiles (process .argv .slice (electron .app .isPackaged ? 1 : 2)
-         .map (filePath => url .pathToFileURL (filePath) .href))
-         .filter (fileURL => !fileURL .includes ("/AppData/"));
+         .filter (filePath => fs .existsSync (filePath) && fs .lstatSync (filePath) .isFile ())
+         .map (filePath => url .pathToFileURL (filePath) .href));
 
       this .openFiles (this .receivedFiles);
 
