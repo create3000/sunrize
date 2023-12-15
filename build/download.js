@@ -7,9 +7,13 @@ const
 
 function main ()
 {
-   systemSync (`npm run make`);
-   systemSync (`mkdir -p downloads`);
-   systemSync (`cp`, `out/make/zip/darwin/x64/${pkg .productName}-darwin-x64-${pkg .version}.zip`, `downloads/Sunrize-macos.zip`);
+   systemSync (`rm -r -f out/make/`);
+
+   systemSync (`npm run make -- --platform darwin`);
+   systemSync (`cp`, `out/make/${pkg .productName}-${pkg .version}-x64.dmg`, `downloads/${pkg .productName}.dmg`);
+
+   systemSync (`npm run make -- --platform win32`);
+   systemSync (`cp`, `out/make/squirrel.windows/x64/${pkg .productName}-${pkg .version} Setup.exe`, `downloads/${pkg .productName} Setup.exe`);
 }
 
 main ();
