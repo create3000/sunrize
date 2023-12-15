@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 "use strict";
 
-const { sh, systemSync } = require ("shell-tools");
+const
+	fs                 = require ("fs"),
+	{ sh, systemSync } = require ("shell-tools");
 
 function main ()
 {
@@ -30,6 +32,9 @@ function main ()
 
 	systemSync (`npm i x_ite@latest`);
 
+	// docs
+	docs ();
+
 	// commit
 	systemSync (`git add -A`);
 	systemSync (`git commit -am 'Published version ${version}'`);
@@ -49,6 +54,22 @@ function main ()
 
 	// package
 	systemSync (`npm run download`);
+}
+
+function docs ()
+{
+	const
+		version = sh (`npm pkg get version | sed 's/"//g'`) .trim (),
+		dmg     = fs .statSync ("downloads/Sunrize X3D Editor.dmg") .size,
+		exe     = fs .statSync ("downloads/Sunrize X3D Editor Setup.exe") .size;
+
+	let config = sh (`cat 'docs/_config.yml'`);
+
+	config = config .replace (/\bversion:\s*[\d\.]+/sg, `version: ${version}`);
+	config = config .replace (/\download_dmg:\s*\d+/sg, `download_dmg: ${dmg}`);
+	config = config .replace (/\download_exe:\s*\d+/sg, `download_exe: ${exe}`);
+
+	fs .writeFileSync ("docs/_config.yml", config);
 }
 
 main ();

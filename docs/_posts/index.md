@@ -25,9 +25,11 @@ $ npx sunrize [files]
 >**Note:** The first time, it may take a while for Sunrize to start.
 {: .prompt-info }
 
-<!--
-## Download
 
-* [Windows Installer](https://www.googleapis.com/drive/v3/files/1-BT2Zy4u89Eq0NLN4PhTxqkHTsxMLFpn?alt=media&key=AIzaSyBS1kY_jt2w1Ozw72iVPEjJ9wbPfrFU1f8)
-* [macOS dmg](https://www.googleapis.com/drive/v3/files/1-AOnFonany3D0Inrwp2JlX8yXr-ILy2V?alt=media&key=AIzaSyBS1kY_jt2w1Ozw72iVPEjJ9wbPfrFU1f8)
- -->
+## Download Sunrize v{{ site.version }}
+
+[Windows Installer](https://www.googleapis.com/drive/v3/files/1-BT2Zy4u89Eq0NLN4PhTxqkHTsxMLFpn?alt=media&key=AIzaSyBS1kY_jt2w1Ozw72iVPEjJ9wbPfrFU1f8){: .left .download download="Sunrize X3D Editor {{ site.version }} Setup.exe" content-length="{{ site.download_exe }}" }
+
+[macOS dmg](https://www.googleapis.com/drive/v3/files/1-AOnFonany3D0Inrwp2JlX8yXr-ILy2V?alt=media&key=AIzaSyBS1kY_jt2w1Ozw72iVPEjJ9wbPfrFU1f8){: .left .download download="Sunrize X3D Editor {{ site.version }}.dmg" content-length="{{ site.download_dmg }}" }
+
+<script type="module" src="/sunrize/assets/js/download.js"></script>

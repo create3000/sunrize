@@ -19,6 +19,7 @@
   --system-yellow: rgb(255, 214, 10);
   --system-blue: rgb(10, 132, 255);
   --system-green: rgb(48, 209, 88);
+  --download-bg: rgba(255, 255, 255, 0.2);
   --playground-toolbar-color: rgba(38, 38, 38, 0.7);
   --playground-editor-background: rgba(0, 0, 0, 0.2);
 }
@@ -35,6 +36,7 @@
   --system-yellow: rgb(255, 204, 0);
   --system-blue: rgb(0, 122, 255);
   --system-green: rgb(52, 199, 89);
+  --download-bg: rgba(0, 0, 0, 0.2);
   --playground-toolbar-color: rgba(237, 239, 240, 0.7);
   --playground-editor-background: rgba(227, 229, 230, 0.7);
 }
@@ -66,6 +68,22 @@
 }
 
 /* append your custom style below */
+
+.red {
+  color: var(--system-red) !important;
+}
+
+.green {
+  color: var(--system-green) !important;
+}
+
+.blue {
+  color: var(--system-blue) !important;
+}
+
+.yellow {
+  color: var(--system-yellow) !important;
+}
 
 header a.rounded-circle {
   border-radius: 0% !important;
@@ -118,22 +136,6 @@ small, .small {
 
 .content h5 {
   font-weight: bold;
-}
-
-.red {
-  color: var(--system-red) !important;
-}
-
-.green {
-  color: var(--system-green) !important;
-}
-
-.blue {
-  color: var(--system-blue) !important;
-}
-
-.yellow {
-  color: var(--system-yellow) !important;
 }
 
 .table-wrapper > table tbody tr td,
@@ -196,4 +198,14 @@ small, .small {
 
 .content x3d-canvas.teaser {
   aspect-ratio: 16 / 5;
+}
+
+.content .download {
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  border: 1px solid var(--link-underline-color)
+}
+
+.content .download:hover {
+  border-color: #d2603a;
 }
