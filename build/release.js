@@ -1,9 +1,7 @@
 #!/usr/bin/env node
 "use strict";
 
-const
-	fs                 = require ("fs"),
-	{ sh, systemSync } = require ("shell-tools");
+const { sh, systemSync } = require ("shell-tools");
 
 function main ()
 {

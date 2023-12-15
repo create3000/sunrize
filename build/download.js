@@ -3,6 +3,7 @@
 
 const
    pkg                = require ("../package.json"),
+	fs                 = require ("fs"),
    { systemSync, sh } = require ("shell-tools");
 
 function main ()
