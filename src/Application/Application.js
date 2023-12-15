@@ -90,8 +90,8 @@ module .exports = class Application
       await this .createWindow ();
 
       this .openFiles (process .argv .slice (electron .app .isPackaged ? 1 : 2)
-         .filter (filePath => !filePath .startsWith ("--squirrel-"))
-         .map (filePath => url .pathToFileURL (filePath) .href));
+         .map (filePath => url .pathToFileURL (filePath) .href))
+         .filter (fileURL => !fileURL .includes ("/AppData/"));
 
       this .openFiles (this .receivedFiles);
 
