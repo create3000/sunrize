@@ -30,8 +30,8 @@ function docs ()
 {
 	const
 		version = sh (`npm pkg get version | sed 's/"//g'`) .trim (),
-		dmg     = fs .statSync ("downloads/Sunrize X3D Editor.dmg") .size,
-		exe     = fs .statSync ("downloads/Sunrize X3D Editor Setup.exe") .size;
+		dmg     = fs .statSync (`downloads/windows/${pkg .productName}.dmg`) .size,
+		exe     = fs .statSync (`downloads/macos/${pkg .productName} Setup.exe`) .size;
 
    // config
 	let config = sh (`cat 'docs/_config.yml'`);
