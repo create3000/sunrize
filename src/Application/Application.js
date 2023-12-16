@@ -13,7 +13,8 @@ const
    DataStorage  = require ("../Application/DataStorage"),
    _            = require ("../Application/GetText");
 
-// Use electron@15.3
+if (require ("electron-squirrel-startup"))
+   return;
 
 const localStorage = new LocalStorage (path .join (electron .app .getPath ("userData"), "Global Storage"));
 
