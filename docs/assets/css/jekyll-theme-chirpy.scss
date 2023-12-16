@@ -27,7 +27,7 @@
   --h4-color: rgb(60, 107, 184);
   --h4-color-strong: rgb(175, 206, 255);
   --downloading-left: var(--system-orange);
-  --downloading-right: rgba(255, 255, 255, 0.3);
+  --downloading-right: rgba(255, 255, 255, 0.757);
 }
 
 @mixin x_ite-light-scheme {
@@ -50,7 +50,7 @@
   --h4-color: rgb(29, 80, 163);
   --h4-color-strong: rgb(10, 80, 144);
   --downloading-left: var(--system-orange);
-  --downloading-right: rgba(0, 0, 0, 0.2);
+  --downloading-right: rgba(0, 0, 0, 0.069);
 }
 
 @media (prefers-color-scheme: dark) {

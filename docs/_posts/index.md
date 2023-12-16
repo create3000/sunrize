@@ -24,7 +24,7 @@ $ npx sunrize [files]
 
 >**Note:** The first time, it may take a while for Sunrize to start. You can also enter »sunrize@latest« as an argument to get the latest version.
 {: .prompt-info }
-<!--
+
 ## Download Sunrize v{{ site.version }}
 
 [Windows Installer](https://www.googleapis.com/drive/v3/files/1-BT2Zy4u89Eq0NLN4PhTxqkHTsxMLFpn?alt=media&key=AIzaSyBS1kY_jt2w1Ozw72iVPEjJ9wbPfrFU1f8){: .left .download download="Sunrize X3D Editor {{ site.version }} Setup.exe" content-length="{{ site.download_exe }}" }
@@ -41,4 +41,4 @@ Thank you for choosing our software!
 3. Follow the on-screen instructions to complete the installation.
    * On Windows click »More Information > Execute Anyway« to start the installer,
    * On macOS open the »System Setting > Security & Privacy« and scroll to bottom to allow the application to run.
-4. Right-click the icon in the taskbar/dock to pin it. -->
+4. Right-click the icon in the taskbar/dock to pin it.
