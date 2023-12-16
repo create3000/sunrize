@@ -1,9 +1,7 @@
-(function ()
-{
-   "use strict";
+"use strict";
 
-   const Application = require ("./Application/Application");
+require ("update-electron-app") .updateElectronApp ();
 
-   Application .run ();
-})
-();
+const Application = require ("./Application/Application");
+
+Application .run ();
