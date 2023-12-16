@@ -29,7 +29,7 @@
   --h4-color-strong: rgb(175, 206, 255);
 
   --downloading-left: var(--system-orange);
-  --downloading-right: rgba(255, 255, 255, 0.757);
+  --downloading-right: rgba(255, 255, 255, 0.942);
 }
 
 @mixin x_ite-light-scheme {
@@ -179,11 +179,15 @@ small, .small {
 .content a.download {
   padding: 1rem 2rem;
   border-radius: 1rem;
-  border: 1px solid var(--link-underline-color)
+  border-style: solid;
+  border-color: var(--link-underline-color);
+  border-width: 8px;
+  font-weight: bold;
 }
 
 .content a.download:hover {
   border-color: #d2603a;
+  border-width: 8px;
 }
 
 .content a.download.downloading {

@@ -9,7 +9,8 @@ const
 function main ()
 {
    make ();
-   docs();
+   docs ();
+	commit ();
 }
 
 function make ()
@@ -38,10 +39,13 @@ function docs ()
 	config = config .replace (/\bdownload_exe:\s*\d+/sg, `download_exe: ${exe}`);
 
 	fs .writeFileSync ("docs/_config.yml", config);
+}
 
+function commit ()
+{
 	// commit
 	systemSync (`git add -A`);
-	systemSync (`git commit -am 'Updated documentation.'`);
+	systemSync (`git commit -am 'Updated downloads.'`);
 	systemSync (`git push origin`);
 
 	// // release
