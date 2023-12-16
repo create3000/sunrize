@@ -27,9 +27,9 @@ $ npx sunrize@latest [files]
 
 ## Download Sunrize v{{ site.version }}
 
-[Windows Installer](https://www.googleapis.com/drive/v3/files/1-BT2Zy4u89Eq0NLN4PhTxqkHTsxMLFpn?alt=media&key=AIzaSyBS1kY_jt2w1Ozw72iVPEjJ9wbPfrFU1f8){: .left .download download="Sunrize X3D Editor {{ site.version }} Setup.exe" content-length="{{ site.download_exe }}" }
+[Windows Installer](https://www.googleapis.com/drive/v3/files/1-MCK41fotLWtxzdGD_Ae5HkrC5SW9jzB?alt=media&key=AIzaSyBS1kY_jt2w1Ozw72iVPEjJ9wbPfrFU1f8){: .left .download download="Sunrize X3D Editor {{ site.version }} Setup.exe" content-length="{{ site.download_exe }}" }
 
-[macOS dmg](https://www.googleapis.com/drive/v3/files/1-AOnFonany3D0Inrwp2JlX8yXr-ILy2V?alt=media&key=AIzaSyBS1kY_jt2w1Ozw72iVPEjJ9wbPfrFU1f8){: .left .download download="Sunrize X3D Editor {{ site.version }}.dmg" content-length="{{ site.download_dmg }}" }
+[macOS dmg](https://www.googleapis.com/drive/v3/files/1-IixDflCk8euaCHjy1Ov6ln40bUt3a23?alt=media&key=AIzaSyBS1kY_jt2w1Ozw72iVPEjJ9wbPfrFU1f8){: .left .download download="Sunrize X3D Editor {{ site.version }}.dmg" content-length="{{ site.download_dmg }}" }
 
 <script type="module" src="/sunrize/assets/js/download.js"></script>
 

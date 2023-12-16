@@ -18,10 +18,12 @@ function make ()
    systemSync (`rm -r -f out/make/`);
 
    systemSync (`npm run make -- --platform darwin`);
-   systemSync (`cp`, `out/make/${pkg .productName}-${pkg .version}-x64.dmg`, `downloads/${pkg .productName}.dmg`);
+	systemSync (`mkdir -p 'downloads/windows/'`);
+   systemSync (`cp`, `out/make/${pkg .productName}-${pkg .version}-x64.dmg`, `downloads/windows/${pkg .productName}.dmg`);
 
    systemSync (`npm run make -- --platform win32`);
-   systemSync (`cp`, `out/make/squirrel.windows/x64/${pkg .productName}-${pkg .version} Setup.exe`, `downloads/${pkg .productName} Setup.exe`);
+	systemSync (`mkdir -p 'downloads/macos/'`);
+   systemSync (`cp`, `out/make/squirrel.windows/x64/${pkg .productName}-${pkg .version} Setup.exe`, `downloads/macos/${pkg .productName} Setup.exe`);
 }
 
 function docs ()
