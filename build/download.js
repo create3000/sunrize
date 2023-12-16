@@ -44,11 +44,11 @@ function docs ()
 	systemSync (`git commit -am 'Updated documentation.'`);
 	systemSync (`git push origin`);
 
-	// release
-	systemSync (`git checkout main`);
-	systemSync (`git merge development`);
-	systemSync (`git push origin`);
-	systemSync (`git checkout development`);
+	// // release
+	// systemSync (`git checkout main`);
+	// systemSync (`git merge development`);
+	// systemSync (`git push origin`);
+	// systemSync (`git checkout development`);
 }
 
 main ();
