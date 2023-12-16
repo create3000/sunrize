@@ -4,6 +4,7 @@ downloads/
 x_ite/
 package-lock.json
 certificate.pfx
+certificate-creation.ps1
 
 **/.DS_Store
 
