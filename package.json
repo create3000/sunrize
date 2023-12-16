@@ -105,7 +105,11 @@
       },
       "makers": [
         {
-          "name": "@electron-forge/maker-squirrel"
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "certificateFile": "./build/certificate.pfx",
+            "certificatePassword": "CREATE3000"
+          }
         },
         {
           "name": "@electron-forge/maker-dmg"

@@ -3,6 +3,7 @@ out/
 downloads/
 x_ite/
 package-lock.json
+certificate.pfx
 
 **/.DS_Store
 
