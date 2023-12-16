@@ -39,4 +39,6 @@ Thank you for choosing our software!
 1. Click the download button.
 2. Once the file is downloaded, double-click on the installer file to begin the installation process.
 3. Follow the on-screen instructions to complete the installation.
+   * On Windows click »More Information > Execute Anyway« to start the installer,
+   * On macOS open the »System Setting > Security & Privacy« and scroll to bottom to allow the application to run.
 4. Right-click the icon in the taskbar/dock to pin it.
