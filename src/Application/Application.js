@@ -13,9 +13,6 @@ const
    DataStorage  = require ("../Application/DataStorage"),
    _            = require ("../Application/GetText");
 
-if (require ("electron-squirrel-startup"))
-   return;
-
 const localStorage = new LocalStorage (path .join (electron .app .getPath ("userData"), "Global Storage"));
 
 module .exports = class Application
@@ -28,6 +25,9 @@ module .exports = class Application
 
    static run ()
    {
+      if (require ("electron-squirrel-startup"))
+         return;
+
       if (electron .app .requestSingleInstanceLock ())
          new this ();
       else
