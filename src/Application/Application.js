@@ -31,10 +31,13 @@ module .exports = class Application
          return;
       }
 
-      if (electron .app .requestSingleInstanceLock ())
-         new this ();
-      else
+      if (!electron .app .requestSingleInstanceLock ())
+      {
          electron .app .quit ();
+         return;
+      }
+
+      new Application ();
    }
 
    constructor ()
