@@ -18,20 +18,18 @@ function make ()
    systemSync (`rm -r -f out/make/`);
 
    systemSync (`npm run make -- --platform darwin`);
-	systemSync (`mkdir -p 'downloads/windows/'`);
-   systemSync (`cp`, `out/make/${pkg .productName}-${pkg .version}-x64.dmg`, `downloads/windows/${pkg .productName}.dmg`);
+   systemSync (`cp`, `out/make/${pkg .productName}-${pkg .version}-x64.dmg`, `downloads/${pkg .productName}.dmg`);
 
    systemSync (`npm run make -- --platform win32`);
-	systemSync (`mkdir -p 'downloads/macos/'`);
-   systemSync (`cp`, `out/make/squirrel.windows/x64/${pkg .productName}-${pkg .version} Setup.exe`, `downloads/macos/${pkg .productName} Setup.exe`);
+   systemSync (`cp`, `out/make/squirrel.windows/x64/${pkg .productName}-${pkg .version} Setup.exe`, `downloads/${pkg .productName} Setup.exe`);
 }
 
 function docs ()
 {
 	const
 		version = sh (`npm pkg get version | sed 's/"//g'`) .trim (),
-		dmg     = fs .statSync (`downloads/windows/${pkg .productName}.dmg`) .size,
-		exe     = fs .statSync (`downloads/macos/${pkg .productName} Setup.exe`) .size;
+		dmg     = fs .statSync (`downloads/${pkg .productName}.dmg`) .size,
+		exe     = fs .statSync (`downloads/${pkg .productName} Setup.exe`) .size;
 
    // config
 	let config = sh (`cat 'docs/_config.yml'`);
