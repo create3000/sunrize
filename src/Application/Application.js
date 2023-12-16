@@ -26,7 +26,10 @@ module .exports = class Application
    static run ()
    {
       if (require ("electron-squirrel-startup"))
+      {
+         electron .app .quit ();
          return;
+      }
 
       if (electron .app .requestSingleInstanceLock ())
          new this ();
