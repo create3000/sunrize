@@ -19,6 +19,9 @@
     "premake": "npm i -D electron",
     "make": "env PATH=\"$(pwd)/build/wine-proxy:$PATH\" electron-forge make",
     "postmake": "npm i -P electron",
+    "pregithub": "npm i -D electron",
+    "github": "env PATH=\"$(pwd)/build/wine-proxy:$PATH\" electron-forge publish",
+    "postgithub": "npm i -P electron",
     "predocs": "rm -f -r docs/_site/",
     "docs": "cd docs && bundle exec jekyll serve --incremental --host=`ipconfig getifaddr en0`",
     "docs-install": "cd docs && bundle install",
@@ -71,6 +74,7 @@
     "@electron-forge/maker-rpm": "^7.2.0",
     "@electron-forge/maker-squirrel": "^7.2.0",
     "@electron-forge/maker-zip": "^7.2.0",
+    "@electron-forge/publisher-github": "^7.2.0",
     "shell-tools": "^1.1.7"
   },
   "dependencies": {
@@ -118,6 +122,19 @@
         },
         {
           "name": "@electron-forge/maker-rpm"
+        }
+      ],
+      "publishers": [
+        {
+          "name": "@electron-forge/publisher-github",
+          "config": {
+            "repository": {
+              "owner": "create3000",
+              "name": "sunrize"
+            },
+            "prerelease": false,
+            "draft": false
+          }
         }
       ]
     }

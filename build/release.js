@@ -30,25 +30,36 @@ function main ()
 
 	systemSync (`npm i x_ite@latest`);
 
+	// docs
+	docs (version);
+
 	// commit
 	systemSync (`git add -A`);
 	systemSync (`git commit -am 'Published version ${version}'`);
 	systemSync (`git push origin`);
 
-	// tag
-	systemSync (`git tag ${version}`);
-	systemSync (`git push origin --tags`);
+	// tags are created with github-publisher
 
 	// npm
 	systemSync (`npm publish`);
 
-	// development
+	// merge development into main
 	systemSync (`git checkout development`);
 	systemSync (`git merge main`);
 	systemSync (`git push origin`);
 
 	// // package
 	// systemSync (`npm run download`);
+}
+
+function docs (version)
+{
+   // config
+	let config = sh (`cat 'docs/_config.yml'`);
+
+	config = config .replace (/\bversion:\s*[\d\.]+/sg, `version: ${version}`);
+
+	fs .writeFileSync ("docs/_config.yml", config);
 }
 
 main ();
