@@ -642,9 +642,9 @@ module .exports = class Application
             submenu: [
                {
                   label: "Learn More",
-                  click: async () =>
+                  click: () =>
                   {
-                     await electron .shell .openExternal ("https://create3000.github.io/x_ite/");
+                     electron .shell .openExternal ("https://create3000.github.io/x_ite/");
                   },
                },
             ],
