@@ -30,9 +30,6 @@ function main ()
 
 	systemSync (`npm i x_ite@latest`);
 
-	// docs
-	docs (version);
-
 	// commit
 	systemSync (`git add -A`);
 	systemSync (`git commit -am 'Published version ${version}'`);
@@ -50,16 +47,6 @@ function main ()
 
 	// // package
 	// systemSync (`npm run download`);
-}
-
-function docs (version)
-{
-   // config
-	let config = sh (`cat 'docs/_config.yml'`);
-
-	config = config .replace (/\bversion:\s*[\d\.]+/sg, `version: ${version}`);
-
-	fs .writeFileSync ("docs/_config.yml", config);
 }
 
 main ();
