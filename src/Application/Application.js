@@ -37,6 +37,8 @@ module .exports = class Application
          return;
       }
 
+      require ("update-electron-app") .updateElectronApp ();
+
       new Application ();
    }
 
