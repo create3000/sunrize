@@ -27,9 +27,6 @@
   --h3-color-strong: rgb(232, 201, 133);
   --h4-color: rgb(60, 107, 184);
   --h4-color-strong: rgb(175, 206, 255);
-
-  --downloading-left: var(--system-orange);
-  --downloading-right: rgba(255, 255, 255, 0.942);
 }
 
 @mixin x_ite-light-scheme {
@@ -51,9 +48,6 @@
   --h3-color-strong: rgb(173, 81, 0);
   --h4-color: rgb(29, 80, 163);
   --h4-color-strong: rgb(10, 80, 144);
-
-  --downloading-left: var(--system-orange);
-  --downloading-right: rgba(0, 0, 0, 0.069);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -188,9 +182,4 @@ small, .small {
 .content a.download:hover {
   border-color: #d2603a;
   border-width: 8px;
-}
-
-.content a.download.downloading {
-  color: black !important;
-  border-color: var(--downloading-left);
 }
