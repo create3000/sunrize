@@ -37,7 +37,8 @@ module .exports = class Application
          return;
       }
 
-      // require ("update-electron-app") .updateElectronApp ();
+      if (process .platform === "win32")
+         require ("update-electron-app") .updateElectronApp ();
 
       new Application ();
    }
