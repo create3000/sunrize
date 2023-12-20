@@ -337,13 +337,27 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                label: "Remove Exported Node",
                visible: exportedNode .getExecutionContext () === this .executionContext,
                enabled: exportedNode .getExecutionContext () === this .executionContext,
-               args: ["removeExportedNode", element .attr ("id"), executionContext .getId ()],
+               args: ["removeExportedNode", element .attr ("id")],
             },
             {
                label: "Import Node...",
-               visible: exportedNode .getExecutionContext () .getExecutionContext () === this .executionContext,
-               enabled: exportedNode .getExecutionContext () .getExecutionContext () === this .executionContext,
-               args: ["addImportedNode", element .attr ("id"), executionContext .getId ()],
+               visible: executionContext .getScene () === this .executionContext,
+               enabled: executionContext .getScene () === this .executionContext,
+               args: ["addImportedNode", element .attr ("id")],
+            },
+         ]
+      }
+
+      else if (element .is (".imported-node"))
+      {
+         const importedNode = this .objects .get (parseInt (element .attr ("imported-node-id")));
+
+         var menu = [
+            {
+               label: "Remove Imported Node",
+               visible: importedNode .getExecutionContext () === this .executionContext,
+               enabled: importedNode .getExecutionContext () === this .executionContext,
+               args: ["removeImportedNode", element .attr ("id")],
             },
          ]
       }
@@ -543,17 +557,16 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       element .find ("> .item") .exportNodePopover (node);
    }
 
-   removeExportedNode (id, executionContextId)
+   removeExportedNode (id)
    {
       const
-         element          = $(`#${id}`),
-         executionContext = this .objects .get (executionContextId),
-         exportedNode     = this .objects .get (parseInt (element .attr ("exported-node-id")));
+         element      = $(`#${id}`),
+         exportedNode = this .objects .get (parseInt (element .attr ("exported-node-id")));
 
-      Editor .removeExportedNode (executionContext, exportedNode .getExportedName ());
+      Editor .removeExportedNode (exportedNode .getExecutionContext (), exportedNode .getExportedName ());
    }
 
-   addImportedNode (id, executionContextId)
+   addImportedNode (id)
    {
       require ("../Controls/ImportNodePopover");
 
@@ -563,6 +576,15 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          inlineNode   = this .getNode (element .closest (".node", this .sceneGraph));
 
       element .find ("> .item") .importNodePopover (inlineNode, exportedNode .getExportedName ());
+   }
+
+   removeImportedNode (id)
+   {
+      const
+         element      = $(`#${id}`),
+         importedNode = this .objects .get (parseInt (element .attr ("imported-node-id")));
+
+      Editor .removeImportedNode (importedNode .getExecutionContext (), importedNode .getImportedName ());
    }
 
    cutNodes ()
