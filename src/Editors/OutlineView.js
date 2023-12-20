@@ -270,9 +270,6 @@ module .exports = class OutlineView extends Interface
             .on ("dragstart", this .onDragStartNode .bind (this))
       }
 
-      child .find (".exported-node > .item .boolean-button")
-         .on ("click", event => this .toggleImportedNode (event, parent))
-
       child .find (".visibility")
          .on ("click", this .toggleVisibility .bind (this))
 
@@ -288,8 +285,6 @@ module .exports = class OutlineView extends Interface
       child .show ()
       this .expandSceneSubtreeComplete (specialElements, elements)
    }
-
-   toggleImportedNode (event, parent) { }
 
    expandSceneSubtreeComplete (specialElements, elements)
    {
@@ -1182,20 +1177,6 @@ module .exports = class OutlineView extends Interface
             .append ($("<span></span>") .addClass ("as") .text ("AS"))
             .append (document .createTextNode (" "))
             .append ($("<span></span>") .addClass ("as-name") .text (exportedNode .getExportedName ()));
-      }
-
-      const exportedExecutionContext = exportedNode .getLocalNode () .getExecutionContext ();
-
-      if (exportedExecutionContext !== this .executionContext && exportedExecutionContext .getExecutionContext () === this .executionContext)
-      {
-         const imported = this .executionContext .importedNodes
-            .some (importedNode => importedNode .getExportedNode () === exportedNode .getLocalNode () && importedNode .getImportedName () === exportedNode .getExportedName ());
-
-         $("<img></img>")
-            .addClass (["boolean-button", "pointer"])
-            .attr ("src", `../images/OutlineEditor/Values/${imported ? "TRUE" : "FALSE"}.svg`)
-            .attr ("title", _ ("Toggle value."))
-            .appendTo (child);
       }
 
       // Append empty tree to enable expander.

@@ -47,7 +47,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const element = $(document .elementFromPoint (event .pageX, event .pageY))
          .closest ("li, #outline-editor", this .outlineEditor);
 
-      if (!this .isEditable (element))
+      if (!(this .isEditable (element) || element .is (".exported-node, .imported-node")))
          return;
 
       if (!element .is (".manually.selected"))
@@ -176,6 +176,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             {
                label: "Rename Node...",
                args: ["renameNode", element .attr ("id"), executionContext .getId (), node .getId ()],
+            },
+            {
+               label: "Export Node...",
+               enabled: executionContext instanceof X3D .X3DScene,
+               args: ["addExportedNode", element .attr ("id"), executionContext .getId (), node .getId ()],
             },
             {
                label: "Add Node...",
@@ -323,6 +328,26 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          ];
       }
 
+      else if (element .is (".exported-node"))
+      {
+         const exportedNode = this .objects .get (parseInt (element .attr ("exported-node-id")));
+
+         var menu = [
+            {
+               label: "Remove Exported Node",
+               visible: exportedNode .getExecutionContext () === this .executionContext,
+               enabled: exportedNode .getExecutionContext () === this .executionContext,
+               args: ["removeExportedNode", element .attr ("id"), executionContext .getId ()],
+            },
+            {
+               label: "Import Node...",
+               visible: exportedNode .getExecutionContext () .getExecutionContext () === this .executionContext,
+               enabled: exportedNode .getExecutionContext () .getExecutionContext () === this .executionContext,
+               args: ["addImportedNode", element .attr ("id"), executionContext .getId ()],
+            },
+         ]
+      }
+
       else if (element .is (".externproto, .proto"))
       {
          const
@@ -376,6 +401,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             },
          ]
       }
+
       else if (element .is ("#outline-editor, .proto-scene, .description.externprotos, .description.protos, .description.root-nodes, .description.empty-scene"))
       {
          var menu = [
@@ -504,6 +530,39 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          field            = this .objects .get (fieldId);
 
       require ("./Library") .open (executionContext, node, field);
+   }
+
+   addExportedNode (id, executionContextId, nodeId)
+   {
+      require ("../Controls/ExportNodePopover");
+
+      const
+         element = $(`#${id}`),
+         node    = this .objects .get (nodeId);
+
+      element .find ("> .item") .exportNodePopover (node);
+   }
+
+   removeExportedNode (id, executionContextId)
+   {
+      const
+         element          = $(`#${id}`),
+         executionContext = this .objects .get (executionContextId),
+         exportedNode     = this .objects .get (parseInt (element .attr ("exported-node-id")));
+
+      Editor .removeExportedNode (executionContext, exportedNode .getExportedName ());
+   }
+
+   addImportedNode (id, executionContextId)
+   {
+      require ("../Controls/ImportNodePopover");
+
+      const
+         element      = $(`#${id}`),
+         exportedNode = this .objects .get (parseInt (element .attr ("exported-node-id"))),
+         inlineNode   = this .getNode (element .closest (".node", this .sceneGraph));
+
+      element .find ("> .item") .importNodePopover (inlineNode, exportedNode .getExportedName ());
    }
 
    cutNodes ()
@@ -947,31 +1006,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          externproto      = this .objects .get (protoNodeId);
 
       await Editor .turnIntoPrototype (executionContext, externproto);
-   }
-
-   toggleImportedNode (event, parent)
-   {
-      const
-         img          = $(event .target),
-         exportedNode = this .getExportedNode (img .closest (".exported-node", this .sceneGraph)),
-         inlineNode   = this .getNode (parent .closest (".node", this .sceneGraph)),
-         importedNode = this .executionContext .importedNodes .get (exportedNode .getExportedName ());
-
-      if (importedNode)
-      {
-         if (importedNode .getInlineNode () !== inlineNode)
-            return;
-
-         Editor .removeImportedNode (this .executionContext, exportedNode .getExportedName ());
-
-         img .attr ("src", `../images/OutlineEditor/Values/FALSE.svg`)
-      }
-      else
-      {
-         Editor .updateImportedNode (this .executionContext, inlineNode, exportedNode .getExportedName ());
-
-         img .attr ("src", `../images/OutlineEditor/Values/TRUE.svg`)
-      }
    }
 
    addInstance (id, executionContextId, protoNodeId)
