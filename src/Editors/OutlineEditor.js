@@ -341,8 +341,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             },
             {
                label: "Import Node...",
-               visible: executionContext .getScene () === this .executionContext,
-               enabled: executionContext .getScene () === this .executionContext,
+               visible: executionContext .getScene () === this .executionContext && executionContext !== this .executionContext,
+               enabled: executionContext .getScene () === this .executionContext && executionContext !== this .executionContext,
                args: ["addImportedNode", element .attr ("id")],
             },
          ]
@@ -355,8 +355,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          var menu = [
             {
                label: "Remove Imported Node",
-               visible: importedNode .getExecutionContext () === this .executionContext,
-               enabled: importedNode .getExecutionContext () === this .executionContext,
+               visible: importedNode .getScene () === this .executionContext && this .isEditable (element),
+               enabled: importedNode .getScene () === this .executionContext && this .isEditable (element),
                args: ["removeImportedNode", element .attr ("id")],
             },
          ]
