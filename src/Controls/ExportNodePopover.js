@@ -38,7 +38,7 @@ $.fn.exportNodePopover = function (node)
                if (!exportedName)
                   return;
 
-               Editor .updateExportedNode (scene, exportedName, node);
+               Editor .updateExportedNode (scene, scene .getUniqueExportName (exportedName), node);
             });
 
             setTimeout (() => nameInput .trigger ("select"), 1);

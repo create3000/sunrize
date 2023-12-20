@@ -38,7 +38,7 @@ $.fn.importNodePopover = function (inlineNode, exportedName)
                if (!importedName)
                   return;
 
-               Editor .updateImportedNode (executionContext, inlineNode, exportedName, importedName);
+               Editor .updateImportedNode (executionContext, inlineNode, exportedName, executionContext .getUniqueImportName (importedName));
             });
 
             setTimeout (() => nameInput .trigger ("select"), 1);
