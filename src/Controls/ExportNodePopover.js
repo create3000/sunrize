@@ -16,7 +16,7 @@ $.fn.exportNodePopover = function (node, oldExportedName)
    const scene = node .getExecutionContext ();
 
    const nameInput = $("<input></input>")
-      .attr ("placeholder", _ ("Enter export name"))
+      .attr ("placeholder", _ ("Enter exported name"))
       .val (oldExportedName ?? scene .getUniqueExportName (node .getName ()));
 
    // Create tooltip.
