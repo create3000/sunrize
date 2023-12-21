@@ -113,53 +113,53 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
          var menu = [
             {
-               label: "Add Node...",
+               label: _("Add Node..."),
                visible: field .getType () === X3D .X3DConstants .SFNode || field .getType () === X3D .X3DConstants .MFNode,
                args: ["openLibrary", element .attr ("id"), executionContext .getId (), node .getId (), field .getId ()],
             },
             { type: "separator" },
             {
-               label: "Paste",
+               label: _("Paste"),
                visible: field .getType () === X3D .X3DConstants .SFNode || field .getType () === X3D .X3DConstants .MFNode,
                args: ["pasteNodes", element .attr ("id"), executionContext .getId (), node .getId (), field .getId ()],
             },
             { type: "separator" },
             {
-               label: "Add Field...",
+               label: _("Add Field..."),
                visible: node .canUserDefinedFields (),
                args: ["addUserDefinedField", element .attr ("id"), executionContext .getId (), node .getId (), field .getId ()],
             },
             {
-               label: "Edit Field...",
+               label: _("Edit Field..."),
                visible: node .canUserDefinedFields (),
                enabled: userDefined,
                args: ["editUserDefinedField", element .attr ("id"), executionContext .getId (), node .getId (), field .getId ()],
             },
             {
-               label: "Delete Field",
+               label: _("Delete Field"),
                visible: node .canUserDefinedFields (),
                enabled: userDefined,
                args: ["deleteUserDefinedField", element .attr ("id"), executionContext .getId (), node .getId (), field .getId ()],
             },
             { type: "separator" },
             {
-               label: "Add Reference To",
+               label: _("Add Reference To"),
                submenu: addReferences,
                visible: !! addReferences .length,
             },
             {
-               label: "Remove Reference To",
+               label: _("Remove Reference To"),
                submenu: removeReferences,
                visible: !! removeReferences .length,
             },
             { type: "separator" },
             {
-               label: "Reset to Default Value",
+               label: _("Reset to Default Value"),
                visible: field .getAccessType () !== X3D .X3DConstants .outputOnly,
                args: ["resetToDefaultValue", element .attr ("id"), executionContext .getId (), node .getId (), field .getId ()],
             },
             {
-               label: "Trigger Event",
+               label: _("Trigger Event"),
                visible: field .getAccessType () !== X3D .X3DConstants .outputOnly,
                args: ["triggerEvent", element .attr ("id"), node .getId (), field .getId ()],
             },
@@ -174,49 +174,49 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
          var menu = [
             {
-               label: "Rename Node...",
+               label: _("Rename Node..."),
                args: ["renameNode", element .attr ("id"), executionContext .getId (), node .getId ()],
             },
             {
-               label: "Export Node...",
+               label: _("Export Node..."),
                enabled: executionContext === this .executionContext,
                args: ["addExportedNode", element .attr ("id"), executionContext .getId (), node .getId ()],
             },
             {
-               label: "Add Node...",
+               label: _("Add Node..."),
                args: ["openLibrary", element .attr ("id"), executionContext .getId (), node .getId ()],
             },
             { type: "separator" },
             {
-               label: "Cut",
+               label: _("Cut"),
                args: ["cutNodes"],
             },
             {
-               label: "Copy",
+               label: _("Copy"),
                args: ["copyNodes"],
             },
             {
-               label: "Paste",
+               label: _("Paste"),
                args: ["pasteNodes", element .attr ("id"), executionContext .getId (), node .getId ()],
             },
             {
-               label: "Delete",
+               label: _("Delete"),
                args: ["deleteNodes"],
             },
             {
-               label: "Unlink Clone",
+               label: _("Unlink Clone"),
                enabled: node .getCloneCount () > 1,
                args: ["unlinkClone", element .attr ("id"), executionContext .getId (), node .getId ()],
             },
             { type: "separator" },
             {
-               label: "Add Field...",
+               label: _("Add Field..."),
                visible: node .canUserDefinedFields (),
                args: ["addUserDefinedField", element .attr ("id"), executionContext .getId (), node .getId ()],
             },
             { type: "separator" },
             {
-               label: "Add Parent Group",
+               label: _("Add Parent Group"),
                submenu: [
                   {
                      label: "Transform",
@@ -321,7 +321,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                ],
             },
             {
-               label: "Remove Parent",
+               label: _("Remove Parent"),
                enabled: parentNodeElement .hasClass ("node"),
                args: ["removeParent", element .attr ("id"), executionContext .getId (), node .getId ()],
             },
@@ -334,17 +334,17 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
          var menu = [
             {
-               label: "Rename Exported Node...",
+               label: _("Rename Exported Node..."),
                visible: exportedNode .getExecutionContext () === this .executionContext,
                args: ["renameExportedNode", element .attr ("id")],
             },
             {
-               label: "Remove Exported Node",
+               label: _("Remove Exported Node"),
                visible: exportedNode .getExecutionContext () === this .executionContext,
                args: ["removeExportedNode", element .attr ("id")],
             },
             {
-               label: "Import Node...",
+               label: _("Import Node..."),
                visible: executionContext !== this .executionContext && !element .closest (".instance-scene") .length,
                args: ["addImportedNode", element .attr ("id")],
             },
@@ -357,12 +357,12 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
          var menu = [
             {
-               label: "Rename Imported Node...",
+               label: _("Rename Imported Node..."),
                visible: importedNode .getScene () === this .executionContext,
                args: ["renameImportedNode", element .attr ("id")],
             },
             {
-               label: "Remove Imported Node",
+               label: _("Remove Imported Node"),
                visible: importedNode .getScene () === this .executionContext,
                args: ["removeImportedNode", element .attr ("id")],
             },
@@ -379,44 +379,44 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
          var menu = [
             {
-               label: "Add Prototype...",
+               label: _("Add Prototype..."),
                args: ["addPrototype", element .attr ("id"), executionContext .getId ()],
             },
             {
-               label: "Rename Prototype...",
+               label: _("Rename Prototype..."),
                args: ["renamePrototype", element .attr ("id"), executionContext .getId (), protoNode .getId ()],
             },
             {
-               label: "Delete Prototype",
+               label: _("Delete Prototype"),
                enabled: !used || !!available,
                args: ["deletePrototype", element .attr ("id"), executionContext .getId (), protoNode .getId (), used, available ? available .getId () : undefined],
             },
             { type: "separator" },
             {
-               label: "Add Field...",
+               label: _("Add Field..."),
                visible: element .is (".proto"),
                args: ["addUserDefinedField", element .attr ("id"), executionContext .getId (), protoNode .getId ()],
             },
             { type: "separator" },
             {
-               label: "Load Now",
+               label: _("Load Now"),
                visible: element .is (".externproto"),
                args: ["loadNow", element .attr ("id"), protoNode .getId ()],
             },
             {
-               label: "Turn Into Extern Prototype...",
+               label: _("Turn Into Extern Prototype..."),
                visible: element .is (".proto"),
                args: ["turnIntoExternPrototype", element .attr ("id"), executionContext .getId (), protoNode .getId ()],
             },
             {
-               label: "Turn Into Prototype",
+               label: _("Turn Into Prototype"),
                visible: element .is (".externproto"),
                enabled: element .is (".externproto") && protoNode .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE,
                args: ["turnIntoPrototype", element .attr ("id"), executionContext .getId (), protoNode .getId ()],
             },
             { type: "separator" },
             {
-               label: "Add Instance",
+               label: _("Add Instance"),
                enabled: !proto,
                args: ["addInstance", element .attr ("id"), executionContext .getId (), protoNode .getId ()],
             },
@@ -427,15 +427,15 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       {
          var menu = [
             {
-               label: "Add Node...",
+               label: _("Add Node..."),
                args: ["openLibrary", element .attr ("id"), executionContext .getId ()],
             },
             {
-               label: "Add Prototype...",
+               label: _("Add Prototype..."),
                args: ["addPrototype", element .attr ("id"), executionContext .getId ()],
             },
             {
-               label: "Paste",
+               label: _("Paste"),
                args: ["pasteNodes", element .attr ("id"), executionContext .getId ()],
             },
          ];
