@@ -6,6 +6,7 @@ const
    _      = require ("../Application/GetText");
 
 require ("./Popover");
+require ("../Bits/Validate");
 
 $.fn.exportNodePopover = function (node)
 {
@@ -24,7 +25,12 @@ $.fn.exportNodePopover = function (node)
       events: {
          show: (event, api) =>
          {
-            nameInput .on ("keydown.exportNodePopover", event =>
+            nameInput .validate (Editor .Id, () =>
+            {
+               $ .beep ();
+               nameInput .highlight ();
+            })
+            .on ("keydown.exportNodePopover", event =>
             {
                if (event .key !== "Enter")
                   return;

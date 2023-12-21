@@ -1,94 +1,94 @@
-"use strict"
+"use strict";
 
 const
    $           = require ("jquery"),
    X3D         = require ("../X3D"),
    Editor      = require ("../Undo/Editor"),
    UndoManager = require ("../Undo/UndoManager"),
-   _           = require ("../Application/GetText")
+   _           = require ("../Application/GetText");
 
-require ("../Bits/Validate")
+require ("../Bits/Validate");
 
 $.fn.renameNodeInput = function (node)
 {
-   this .off ("keydown.renameNodeInput")
-
-   this .val (node ? node .getName () : "")
+   this
+      .off ("keydown.renameNodeInput")
+      .val (node ? node .getName () : "");
 
    this .validate (Editor .Id, () =>
    {
-      $ .beep ()
-      this .highlight ()
+      $ .beep ();
+      this .highlight ();
    })
    .on ("keydown.renameNodeInput", (event) =>
    {
       if (!node)
-         return
+         return;
 
       if (event .key !== "Enter")
-         return
+         return;
 
-      event .preventDefault ()
+      event .preventDefault ();
 
-      let name = this .val ()
+      let name = this .val ();
 
       if (name === node .getName ())
-         return
+         return;
 
-      const executionContext = node .getExecutionContext ()
+      const executionContext = node .getExecutionContext ();
 
       if (node instanceof X3D .X3DProtoDeclarationNode)
       {
          if (!name)
-            return
+            return;
 
          if (node .isExternProto)
          {
-            name = executionContext .getUniqueExternProtoName (name)
+            name = executionContext .getUniqueExternProtoName (name);
 
-            const externproto = node
+            const externproto = node;
 
-            UndoManager .shared .beginUndo (_ ("Update Extern Proto Declaration »%s«"), name)
+            UndoManager .shared .beginUndo (_ ("Update Extern Proto Declaration »%s«"), name);
 
-            Editor .updateExternProtoDeclaration (executionContext, name, externproto)
+            Editor .updateExternProtoDeclaration (executionContext, name, externproto);
 
             if (!executionContext .protos .get (name))
             {
-               const available = Editor .getNextAvailableProtoNode (executionContext, externproto)
+               const available = Editor .getNextAvailableProtoNode (executionContext, externproto);
 
                if (available)
-                  Editor .replaceProtoNodes (executionContext, available, externproto)
+                  Editor .replaceProtoNodes (executionContext, available, externproto);
             }
 
-            UndoManager .shared .endUndo ()
+            UndoManager .shared .endUndo ();
          }
          else
          {
-            name = executionContext .getUniqueProtoName (name)
+            name = executionContext .getUniqueProtoName (name);
 
-            const proto = node
+            const proto = node;
 
-            UndoManager .shared .beginUndo (_ ("Update Proto Declaration »%s«"), name)
+            UndoManager .shared .beginUndo (_ ("Update Proto Declaration »%s«"), name);
 
-            Editor .updateProtoDeclaration (executionContext, name, proto)
+            Editor .updateProtoDeclaration (executionContext, name, proto);
 
-            const available = Editor .getNextAvailableProtoNode (executionContext, proto)
+            const available = Editor .getNextAvailableProtoNode (executionContext, proto);
 
             if (available)
-               Editor .replaceProtoNodes (executionContext, available, proto)
+               Editor .replaceProtoNodes (executionContext, available, proto);
 
-            UndoManager .shared .endUndo ()
+            UndoManager .shared .endUndo ();
          }
       }
       else
       {
          if (name)
-            Editor .updateNamedNode (executionContext, executionContext .getUniqueName (name), node)
+            Editor .updateNamedNode (executionContext, executionContext .getUniqueName (name), node);
          else
-            Editor .removeNamedNode (executionContext, node)
+            Editor .removeNamedNode (executionContext, node);
       }
    })
 
-   return this
-}
+   return this;
+};
 

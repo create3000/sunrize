@@ -6,6 +6,7 @@ const
    _      = require ("../Application/GetText");
 
 require ("./Popover");
+require ("../Bits/Validate");
 
 $.fn.importNodePopover = function (inlineNode, exportedName)
 {
@@ -24,7 +25,12 @@ $.fn.importNodePopover = function (inlineNode, exportedName)
       events: {
          show: (event, api) =>
          {
-            nameInput .on ("keydown.importNodePopover", event =>
+            nameInput .validate (Editor .Id, () =>
+            {
+               $ .beep ();
+               nameInput .highlight ();
+            })
+            .on ("keydown.importNodePopover", event =>
             {
                if (event .key !== "Enter")
                   return;
