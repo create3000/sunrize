@@ -855,18 +855,18 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static updateImportedNode (executionContext, inlineNode, exportedName, importedName = exportedName, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_ ("Update Imported Node »%s«"), importedName)
+      undoManager .beginUndo (_ ("Update Imported Node »%s«"), importedName);
 
-      executionContext .updateImportedNode (inlineNode .valueOf (), exportedName, importedName)
+      executionContext .updateImportedNode (inlineNode .valueOf (), exportedName, importedName);
 
       undoManager .registerUndo (() =>
       {
-         this .removeImportedNode (executionContext, importedName, undoManager)
+         this .removeImportedNode (executionContext, importedName, undoManager);
       })
 
-      this .requestUpdateInstances (executionContext, undoManager)
+      this .requestUpdateInstances (executionContext, undoManager);
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -912,18 +912,18 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static updateExportedNode (scene, exportedName, node, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_ ("Update Exported Node »%s«"), exportedName)
+      undoManager .beginUndo (_ ("Update Exported Node »%s«"), exportedName);
 
-      scene .updateExportedNode (exportedName, node .valueOf ())
+      scene .updateExportedNode (exportedName, node .valueOf ());
 
       undoManager .registerUndo (() =>
       {
-         this .removeExportedNode (scene, exportedName, undoManager)
+         this .removeExportedNode (scene, exportedName, undoManager);
       })
 
-      this .requestUpdateInstances (scene, undoManager)
+      this .requestUpdateInstances (scene, undoManager);
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**

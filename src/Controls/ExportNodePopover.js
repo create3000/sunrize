@@ -1,14 +1,15 @@
 "use strict";
 
 const
-   $      = require ("jquery"),
-   Editor = require ("../Undo/Editor"),
-   _      = require ("../Application/GetText");
+   $           = require ("jquery"),
+   Editor      = require ("../Undo/Editor"),
+   UndoManager = require ("../Undo/UndoManager"),
+   _           = require ("../Application/GetText");
 
 require ("./Popover");
 require ("../Bits/Validate");
 
-$.fn.exportNodePopover = function (node)
+$.fn.exportNodePopover = function (node, oldExportedName)
 {
    // Create content.
 
@@ -16,7 +17,7 @@ $.fn.exportNodePopover = function (node)
 
    const nameInput = $("<input></input>")
       .attr ("placeholder", _ ("Enter export name"))
-      .val (scene .getUniqueExportName (node .getName ()));
+      .val (oldExportedName ?? scene .getUniqueExportName (node .getName ()));
 
    // Create tooltip.
 
@@ -39,12 +40,22 @@ $.fn.exportNodePopover = function (node)
 
                api .toggle (false);
 
-               const exportedName = nameInput .val ();
-
-               if (!exportedName)
+               if (!nameInput .val ())
                   return;
 
-               Editor .updateExportedNode (scene, scene .getUniqueExportName (exportedName), node);
+               if (oldExportedName && oldExportedName === nameInput .val ())
+                  return;
+
+               const exportedName = scene .getUniqueExportName (nameInput .val ());
+
+               UndoManager .shared .beginUndo (_ ("Update Exported Node »%s«"), exportedName);
+
+               Editor .updateExportedNode (scene, exportedName, node);
+
+               if (oldExportedName && oldExportedName !== exportedName)
+                  Editor .removeExportedNode (scene, oldExportedName);
+
+               UndoManager .shared .endUndo ();
             });
 
             setTimeout (() => nameInput .trigger ("select"), 1);

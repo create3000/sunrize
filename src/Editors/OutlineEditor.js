@@ -334,6 +334,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
          var menu = [
             {
+               label: "Update Exported Node...",
+               visible: exportedNode .getExecutionContext () === this .executionContext,
+               args: ["updateExportedNode", element .attr ("id")],
+            },
+            {
                label: "Remove Exported Node",
                visible: exportedNode .getExecutionContext () === this .executionContext,
                args: ["removeExportedNode", element .attr ("id")],
@@ -351,6 +356,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          const importedNode = this .objects .get (parseInt (element .attr ("imported-node-id")));
 
          var menu = [
+            {
+               label: "Update Imported Node...",
+               visible: importedNode .getScene () === this .executionContext,
+               args: ["updateImportedNode", element .attr ("id")],
+            },
             {
                label: "Remove Imported Node",
                visible: importedNode .getScene () === this .executionContext,
@@ -554,6 +564,17 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       element .find ("> .item") .exportNodePopover (node);
    }
 
+   updateExportedNode (id)
+   {
+      require ("../Controls/ExportNodePopover");
+
+      const
+         element      = $(`#${id}`),
+         exportedNode = this .objects .get (parseInt (element .attr ("exported-node-id")));
+
+      element .find ("> .item") .exportNodePopover (exportedNode .getLocalNode (), exportedNode .getExportedName ());
+   }
+
    removeExportedNode (id)
    {
       const
@@ -573,6 +594,17 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          inlineNode   = this .getNode (element .closest (".node", this .sceneGraph));
 
       element .find ("> .item") .importNodePopover (inlineNode, exportedNode .getExportedName ());
+   }
+
+   updateImportedNode (id)
+   {
+      require ("../Controls/ImportNodePopover");
+
+      const
+         element      = $(`#${id}`),
+         importedNode = this .objects .get (parseInt (element .attr ("imported-node-id")));
+
+      element .find ("> .item") .importNodePopover (importedNode .getInlineNode (), importedNode .getExportedName (), importedNode .getImportedName ());
    }
 
    removeImportedNode (id)

@@ -1,14 +1,15 @@
 "use strict";
 
 const
-   $      = require ("jquery"),
-   Editor = require ("../Undo/Editor"),
-   _      = require ("../Application/GetText");
+   $           = require ("jquery"),
+   Editor      = require ("../Undo/Editor"),
+   UndoManager = require ("../Undo/UndoManager"),
+   _           = require ("../Application/GetText");
 
 require ("./Popover");
 require ("../Bits/Validate");
 
-$.fn.importNodePopover = function (inlineNode, exportedName)
+$.fn.importNodePopover = function (inlineNode, exportedName, oldImportedName)
 {
    // Create content.
 
@@ -16,7 +17,7 @@ $.fn.importNodePopover = function (inlineNode, exportedName)
 
    const nameInput = $("<input></input>")
       .attr ("placeholder", _ ("Enter import name"))
-      .val (executionContext .getUniqueImportName (exportedName));
+      .val (oldImportedName ?? executionContext .getUniqueImportName (exportedName));
 
    // Create tooltip.
 
@@ -39,12 +40,22 @@ $.fn.importNodePopover = function (inlineNode, exportedName)
 
                api .toggle (false);
 
-               const importedName = nameInput .val ();
-
-               if (!importedName)
+               if (!nameInput .val ())
                   return;
 
-               Editor .updateImportedNode (executionContext, inlineNode, exportedName, executionContext .getUniqueImportName (importedName));
+               if (oldImportedName && oldImportedName === nameInput .val ())
+                  return;
+
+               const importedName = executionContext .getUniqueImportName (nameInput .val ());
+
+               UndoManager .shared .beginUndo (_ ("Update Imported Node »%s«"), importedName);
+
+               Editor .updateImportedNode (executionContext, inlineNode, exportedName, importedName);
+
+               if (oldImportedName && oldImportedName !== importedName)
+                  Editor .removeImportedNode (executionContext, oldImportedName);
+
+               UndoManager .shared .endUndo ();
             });
 
             setTimeout (() => nameInput .trigger ("select"), 1);
