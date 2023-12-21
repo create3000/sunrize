@@ -47,7 +47,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const element = $(document .elementFromPoint (event .pageX, event .pageY))
          .closest ("li, #outline-editor", this .outlineEditor);
 
-      if (!(this .isEditable (element) || element .is (".exported-node, .imported-node")))
+      if (!(this .isEditable (element) || element .is (".exported-node")))
          return;
 
       if (!element .is (".manually.selected"))
@@ -179,7 +179,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             },
             {
                label: "Export Node...",
-               enabled: executionContext instanceof X3D .X3DScene,
+               enabled: executionContext === this .executionContext,
                args: ["addExportedNode", element .attr ("id"), executionContext .getId (), node .getId ()],
             },
             {
@@ -336,13 +336,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             {
                label: "Remove Exported Node",
                visible: exportedNode .getExecutionContext () === this .executionContext,
-               enabled: exportedNode .getExecutionContext () === this .executionContext,
                args: ["removeExportedNode", element .attr ("id")],
             },
             {
                label: "Import Node...",
                visible: executionContext .getScene () === this .executionContext && executionContext !== this .executionContext,
-               enabled: executionContext .getScene () === this .executionContext && executionContext !== this .executionContext,
                args: ["addImportedNode", element .attr ("id")],
             },
          ]
@@ -355,8 +353,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          var menu = [
             {
                label: "Remove Imported Node",
-               visible: importedNode .getScene () === this .executionContext && this .isEditable (element),
-               enabled: importedNode .getScene () === this .executionContext && this .isEditable (element),
+               visible: importedNode .getScene () === this .executionContext,
                args: ["removeImportedNode", element .attr ("id")],
             },
          ]
