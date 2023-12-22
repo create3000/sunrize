@@ -167,12 +167,9 @@ module .exports = class UndoManager
     * @param {function} undoFunction
     * @param {boolean} after
     */
-   registerUndo (undoFunction, after = false)
+   registerUndo (undoFunction)
    {
-      if (after)
-         this .undoFunctions .push (undoFunction);
-      else
-         this .undoFunctions .unshift (undoFunction);
+      this .undoFunctions .unshift (undoFunction);
    }
 
    /**

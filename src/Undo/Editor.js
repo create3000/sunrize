@@ -1009,7 +1009,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       undoManager .registerUndo (() =>
       {
-          this .setProtoDeclarations (executionContext, oldProtos, undoManager)
+         this .setProtoDeclarations (executionContext, oldProtos, undoManager)
       });
 
       this .requestUpdateInstances (executionContext, undoManager)
@@ -1179,7 +1179,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       undoManager .registerUndo (() =>
       {
-          this .setExternProtoDeclarations (executionContext, oldExternprotos, undoManager)
+         this .setExternProtoDeclarations (executionContext, oldExternprotos, undoManager)
       });
 
       this .requestUpdateInstances (executionContext, undoManager)
@@ -1534,7 +1534,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       undoManager .registerUndo (() =>
       {
-        this .requestUpdateInstances (proto, undoManager);
+         this .requestUpdateInstances (proto, undoManager);
       });
    }
 
@@ -1967,7 +1967,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                         undoManager .registerUndo (() =>
                         {
                            this .setFieldValue (node .getExecutionContext (), node, name, oldValue, undoManager);
-                        })
+                        });
                      }
 
                      for (const route of field .getInputRoutes ())
@@ -2032,7 +2032,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       undoManager .registerUndo (() =>
       {
          this .setUserDefinedFields (executionContext, node, oldFields, undoManager);
-      })
+      });
 
       this .requestUpdateInstances (node, undoManager);
 
