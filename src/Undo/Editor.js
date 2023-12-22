@@ -384,7 +384,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          this .setFieldValue (executionContext, node, node ._url, newUrl, undoManager)
       })
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -492,7 +492,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                      undoManager .registerUndo (() =>
                      {
                         this .setFieldValue (executionContext, node, node ._set_bind, true, undoManager);
-                     })
+                     });
                   }
                }
 
@@ -524,7 +524,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          }
 
          this .nodesToRemove .clear ();
-      })
+      });
    }
 
    /**
@@ -644,7 +644,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       undoManager .registerUndo (() =>
       {
          this .setProfile (scene, oldProfile, undoManager);
-      })
+      });
 
       undoManager .endUndo ();
    }
@@ -674,7 +674,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       undoManager .registerUndo (() =>
       {
          this .setComponents (scene, oldComponents, undoManager);
-      })
+      });
 
       undoManager .endUndo ();
    }
@@ -703,7 +703,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       undoManager .registerUndo (() =>
       {
          this .removeComponent (scene, name, undoManager);
-      })
+      });
 
       undoManager .endUndo ();
    }
@@ -729,7 +729,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       undoManager .registerUndo (() =>
       {
          this .addComponent (scene, name, undoManager);
-      })
+      });
 
       undoManager .endUndo ();
    }
@@ -756,9 +756,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       undoManager .registerUndo (() =>
       {
          this .updateUnit (scene, category, oldName, oldConversionFactor, undoManager)
-      })
+      });
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -788,9 +788,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       undoManager .registerUndo (() =>
       {
          this .setMetaData (scene, oldEntries, undoManager)
-      })
+      });
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -802,23 +802,23 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static updateNamedNode (executionContext, name, node, undoManager = UndoManager .shared)
    {
-      const oldName = node .getName ()
+      const oldName = node .getName ();
 
-      undoManager .beginUndo (_ ("Rename Node to »%s«"), name)
+      undoManager .beginUndo (_ ("Rename Node to »%s«"), name);
 
-      executionContext .updateNamedNode (name, node .valueOf ())
+      executionContext .updateNamedNode (name, node .valueOf ());
 
       undoManager .registerUndo (() =>
       {
          if (oldName)
-            this .updateNamedNode (executionContext, oldName, node, undoManager)
+            this .updateNamedNode (executionContext, oldName, node, undoManager);
          else
-            this .removeNamedNode (executionContext, node, undoManager)
-      })
+            this .removeNamedNode (executionContext, node, undoManager);
+      });
 
-      this .requestUpdateInstances (executionContext, undoManager)
+      this .requestUpdateInstances (executionContext, undoManager);
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -829,20 +829,20 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static removeNamedNode (executionContext, node, undoManager = UndoManager .shared)
    {
-      const oldName = node .getName ()
+      const oldName = node .getName ();
 
-      undoManager .beginUndo (_ ("Remove Node Name »%s«"), oldName)
+      undoManager .beginUndo (_ ("Remove Node Name »%s«"), oldName);
 
-      executionContext .removeNamedNode (oldName)
+      executionContext .removeNamedNode (oldName);
 
       undoManager .registerUndo (() =>
       {
-         this .updateNamedNode (executionContext, oldName, node, undoManager)
-      })
+         this .updateNamedNode (executionContext, oldName, node, undoManager);
+      });
 
-      this .requestUpdateInstances (executionContext, undoManager)
+      this .requestUpdateInstances (executionContext, undoManager);
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -886,7 +886,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             this .updateImportedNode (executionContext, inlineNode, exportedName, oldImportedName, importedName, undoManager);
          else
             this .removeImportedNode (executionContext, importedName, undoManager);
-      })
+      });
 
       this .requestUpdateInstances (executionContext, undoManager);
 
@@ -1010,11 +1010,11 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       undoManager .registerUndo (() =>
       {
           this .setProtoDeclarations (executionContext, oldProtos, undoManager)
-      })
+      });
 
       this .requestUpdateInstances (executionContext, undoManager)
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
 
       return proto
    }
@@ -1040,11 +1040,11 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             this .updateProtoDeclaration (executionContext, oldName, proto, undoManager)
          else
             this .removeProtoDeclaration (executionContext, name, undoManager)
-      })
+      });
 
       this .requestUpdateInstances (executionContext, undoManager)
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -1064,11 +1064,11 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       undoManager .registerUndo (() =>
       {
          this .setProtoDeclarations (executionContext, oldProtos, undoManager)
-      })
+      });
 
       this .requestUpdateInstances (executionContext, undoManager)
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -1100,11 +1100,11 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       undoManager .registerUndo (() =>
       {
          this .setProtoDeclarations (executionContext, oldProtos, undoManager)
-      })
+      });
 
       this .requestUpdateInstances (executionContext, undoManager)
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -1141,7 +1141,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       this .replaceProtoNodes (executionContext, proto, externproto, undoManager)
       this .removeProtoDeclaration (executionContext, proto .getName (), undoManager)
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -1156,7 +1156,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       {
          if (node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance))
             return node .getProtoNode () !== proto
-      })
+      });
    }
 
    /**
@@ -1180,11 +1180,11 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       undoManager .registerUndo (() =>
       {
           this .setExternProtoDeclarations (executionContext, oldExternprotos, undoManager)
-      })
+      });
 
       this .requestUpdateInstances (executionContext, undoManager)
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
 
       return externproto
    }
@@ -1210,11 +1210,11 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             this .updateExternProtoDeclaration (executionContext, oldName, externproto, undoManager)
          else
             this .removeExternProtoDeclaration (executionContext, name, undoManager)
-      })
+      });
 
       this .requestUpdateInstances (executionContext, undoManager)
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -1234,11 +1234,11 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       undoManager .registerUndo (() =>
       {
          this .setExternProtoDeclarations (executionContext, oldExternProtos, undoManager)
-      })
+      });
 
       this .requestUpdateInstances (executionContext, undoManager)
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -1270,11 +1270,11 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       undoManager .registerUndo (() =>
       {
          this .setExternProtoDeclarations (executionContext, oldExternProtos, undoManager)
-      })
+      });
 
       this .requestUpdateInstances (executionContext, undoManager)
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -1310,7 +1310,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       this .replaceProtoNodes (executionContext, externproto, proto, undoManager)
       this .removeExternProtoDeclaration (executionContext, externproto .getName (), undoManager)
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -1325,7 +1325,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
        {
           if (node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance))
              return node .getProtoNode () !== protoNode
-       })
+       });
     }
 
    /**
@@ -1380,26 +1380,26 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static setProtoNode (executionContext, instance, protoNode, undoManager = UndoManager .shared)
    {
-      const oldProtoNode = instance .getProtoNode ()
+      const oldProtoNode = instance .getProtoNode ();
 
-      undoManager .beginUndo (_ ("Set Proto Node of Instance to %s"), protoNode .getName ())
+      undoManager .beginUndo (_ ("Set Proto Node of Instance to %s"), protoNode .getName ());
 
-      const outerNode = executionContext .getOuterNode ()
+      const outerNode = executionContext .getOuterNode ();
 
       // Remove references from instance.
 
-      const references = new Map ()
+      const references = new Map ();
 
       if (outerNode && outerNode instanceof X3D .X3DProtoDeclaration)
       {
-         const proto = outerNode
+         const proto = outerNode;
 
          for (const field of instance .getPredefinedFields ())
          {
-            references .set (field .getName (), new Set (field .getReferences ()))
+            references .set (field .getName (), new Set (field .getReferences ()));
 
             for (const reference of field .getReferences ())
-               this .removeReference (proto, reference, instance, field, undoManager)
+               this .removeReference (proto, reference, instance, field, undoManager);
          }
       }
 
@@ -1407,46 +1407,46 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       const
          inputRoutes  = new Map (),
-         outputRoutes = new Map ()
+         outputRoutes = new Map ();
 
       for (const field of instance .getPredefinedFields ())
       {
-         inputRoutes  .set (field .getName (), new Set (field .getInputRoutes ()))
-         outputRoutes .set (field .getName (), new Set (field .getOutputRoutes ()))
+         inputRoutes  .set (field .getName (), new Set (field .getInputRoutes ()));
+         outputRoutes .set (field .getName (), new Set (field .getOutputRoutes ()));
       }
 
-      this .deleteRoutes (executionContext, instance, undoManager)
+      this .deleteRoutes (executionContext, instance, undoManager);
 
       // Set proto node.
 
-      instance .setProtoNode (protoNode)
+      instance .setProtoNode (protoNode);
 
       // Restore references.
 
       if (outerNode && outerNode instanceof X3D .X3DProtoDeclaration)
       {
-         const proto = outerNode
+         const proto = outerNode;
 
          for (const field of instance .getPredefinedFields ())
          {
-            const oldReferences = references .get (field .getName ())
+            const oldReferences = references .get (field .getName ());
 
             if (oldReferences)
             {
                for (const oldReference of oldReferences)
                {
-                  const reference = proto .getUserDefinedFields () .get (oldReference .getName ())
+                  const reference = proto .getUserDefinedFields () .get (oldReference .getName ());
 
                   if (!reference)
-                     continue
+                     continue;
 
                   if (reference .getType () !== field .getType ())
-                     continue
+                     continue;
 
                   if (!reference .isReference (field .getAccessType ()))
-                     continue
+                     continue;
 
-                  this .addReference (proto, reference, instance, field, undoManager)
+                  this .addReference (proto, reference, instance, field, undoManager);
                }
             }
          }
@@ -1458,13 +1458,13 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       {
          const
             oldInputRoutes  = inputRoutes  .get (field .getName ()),
-            oldOutputRoutes = outputRoutes .get (field .getName ())
+            oldOutputRoutes = outputRoutes .get (field .getName ());
 
          if (oldInputRoutes)
          {
             for (const route of oldInputRoutes)
             {
-               this .addRoute (executionContext, route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager)
+               this .addRoute (executionContext, route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager);
             }
          }
 
@@ -1472,19 +1472,19 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          {
             for (const route of oldOutputRoutes)
             {
-               this .addRoute (executionContext, route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager)
+               this .addRoute (executionContext, route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager);
             }
          }
       }
 
       undoManager .registerUndo (() =>
       {
-         this .setProtoNode (executionContext, instance, oldProtoNode, undoManager)
-      })
+         this .setProtoNode (executionContext, instance, oldProtoNode, undoManager);
+      });
 
-      this .requestUpdateInstances (executionContext, undoManager)
+      this .requestUpdateInstances (executionContext, undoManager);
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -1495,20 +1495,20 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static replaceProtoNodes (executionContext, protoNode, by, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_ ("Replace Proto Node %s"), protoNode .getName ())
+      undoManager .beginUndo (_ ("Replace Proto Node %s"), protoNode .getName ());
 
       Traverse .traverse (executionContext, Traverse .ROOT_NODES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY, (node) =>
       {
          if (node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance))
          {
             if (node .getProtoNode () === protoNode)
-               this .setProtoNode (node .getExecutionContext (), node, by, undoManager)
+               this .setProtoNode (node .getExecutionContext (), node, by, undoManager);
          }
-      })
+      });
 
-      this .requestUpdateInstances (executionContext, undoManager)
+      this .requestUpdateInstances (executionContext, undoManager);
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -1519,23 +1519,23 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    static requestUpdateInstances (proto, undoManager = UndoManager .shared)
    {
       if (proto .getType () .includes (X3D .X3DConstants .X3DNode))
-         proto = proto .getExecutionContext ()
+         proto = proto .getExecutionContext ();
 
       if (proto .getType () .includes (X3D .X3DConstants .X3DExecutionContext))
-         proto = proto .getOuterNode ()
+         proto = proto .getOuterNode ();
 
       if (!proto)
-         return
+         return;
 
       if (!proto .getType () .includes (X3D .X3DConstants .X3DProtoDeclaration))
-         return
+         return;
 
-      proto .requestUpdateInstances ()
+      proto .requestUpdateInstances ();
 
       undoManager .registerUndo (() =>
       {
-        this .requestUpdateInstances (proto, undoManager)
-      })
+        this .requestUpdateInstances (proto, undoManager);
+      });
    }
 
    /**
@@ -1546,23 +1546,23 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    static updateInstances (proto, undoManager = UndoManager .shared)
    {
       if (proto .getType () .includes (X3D .X3DConstants .X3DNode))
-         proto = proto .getExecutionContext ()
+         proto = proto .getExecutionContext ();
 
       if (proto .getType () .includes (X3D .X3DConstants .X3DExecutionContext))
-         proto = proto .getOuterNode ()
+         proto = proto .getOuterNode ();
 
       if (!proto)
-         return
+         return;
 
       if (!proto .getType () .includes (X3D .X3DConstants .X3DProtoDeclaration))
-         return
+         return;
 
-      proto .updateInstances ()
+      proto .updateInstances ();
 
       undoManager .registerUndo (() =>
       {
-         this .updateInstances (proto, undoManager)
-      })
+         this .updateInstances (proto, undoManager);
+      });
    }
 
    /**
@@ -1576,25 +1576,25 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static addRoute (executionContext, sourceNode, sourceField, destinationNode, destinationField, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_ ("Add Route From %s »%s« TO %s »%s«"), sourceNode .getTypeName (), sourceField, destinationNode .getTypeName (), destinationField)
+      undoManager .beginUndo (_ ("Add Route From %s »%s« TO %s »%s«"), sourceNode .getTypeName (), sourceField, destinationNode .getTypeName (), destinationField);
 
       try
       {
-         executionContext .addRoute (sourceNode .valueOf (), sourceField, destinationNode .valueOf (), destinationField)
+         executionContext .addRoute (sourceNode .valueOf (), sourceField, destinationNode .valueOf (), destinationField);
       }
       catch (error)
       {
-         console .error (error)
+         console .error (error);
       }
 
       undoManager .registerUndo (() =>
       {
-         this .deleteRoute (executionContext, sourceNode, sourceField, destinationNode, destinationField, undoManager)
-      })
+         this .deleteRoute (executionContext, sourceNode, sourceField, destinationNode, destinationField, undoManager);
+      });
 
-      this .requestUpdateInstances (executionContext, undoManager)
+      this .requestUpdateInstances (executionContext, undoManager);
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -1611,7 +1611,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             if (route .getExecutionContext () !== executionContext)
                continue;
 
-            this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager)
+            this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager);
          }
 
          for (const route of field .getOutputRoutes ())
@@ -1619,7 +1619,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             if (route .getExecutionContext () !== executionContext)
                continue;
 
-            this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager)
+            this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager);
          }
       }
    }
@@ -1635,18 +1635,18 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static deleteRoute (executionContext, sourceNode, sourceField, destinationNode, destinationField, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_ ("Delete Route From %s »%s« TO %s »%s«"), sourceNode .getTypeName (), sourceField, destinationNode .getTypeName (), destinationField)
+      undoManager .beginUndo (_ ("Delete Route From %s »%s« TO %s »%s«"), sourceNode .getTypeName (), sourceField, destinationNode .getTypeName (), destinationField);
 
-      executionContext .deleteRoute (sourceNode .valueOf (), sourceField, destinationNode .valueOf (), destinationField)
+      executionContext .deleteRoute (sourceNode .valueOf (), sourceField, destinationNode .valueOf (), destinationField);
 
       undoManager .registerUndo (() =>
       {
-         this .addRoute (executionContext, sourceNode, sourceField, destinationNode, destinationField, undoManager)
-      })
+         this .addRoute (executionContext, sourceNode, sourceField, destinationNode, destinationField, undoManager);
+      });
 
-      this .requestUpdateInstances (executionContext, undoManager)
+      this .requestUpdateInstances (executionContext, undoManager);
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -1657,16 +1657,16 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static #addWorldInfo (executionContext, worldInfo, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_ ("Add World Info"))
+      undoManager .beginUndo (_ ("Add World Info"));
 
-      executionContext .addWorldInfo (worldInfo)
+      executionContext .addWorldInfo (worldInfo);
 
       undoManager .registerUndo (() =>
       {
-         this .#removeWorldInfo (executionContext, worldInfo, undoManager)
-      })
+         this .#removeWorldInfo (executionContext, worldInfo, undoManager);
+      });
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -1677,16 +1677,16 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
     static #removeWorldInfo (executionContext, worldInfo, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_ ("Remove World Info"))
+      undoManager .beginUndo (_ ("Remove World Info"));
 
-      executionContext .removeWorldInfo (worldInfo)
+      executionContext .removeWorldInfo (worldInfo);
 
       undoManager .registerUndo (() =>
       {
-         this .#addWorldInfo (executionContext, worldInfo, undoManager)
-      })
+         this .#addWorldInfo (executionContext, worldInfo, undoManager);
+      });
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -1697,12 +1697,12 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static removeWorldInfo (executionContext, worldInfo, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_ ("Remove World Info"))
+      undoManager .beginUndo (_ ("Remove World Info"));
 
-      this .removeNode (executionContext, worldInfo, undoManager)
-      this .#removeWorldInfo (executionContext, worldInfo, undoManager)
+      this .removeNode (executionContext, worldInfo, undoManager);
+      this .#removeWorldInfo (executionContext, worldInfo, undoManager);
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -1713,7 +1713,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static removeNode (executionContext, remove, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_ ("Remove Node"))
+      undoManager .beginUndo (_ ("Remove Node"));
 
       Traverse .traverse (executionContext, Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, (node) =>
       {
@@ -1722,7 +1722,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             for (let i = node .rootNodes .length - 1; i >= 0; -- i)
             {
                if (node .rootNodes [i] ?.getValue () .valueOf () === remove .valueOf ())
-                  this .removeValueFromArray (node, node, node .rootNodes, i, undoManager)
+                  this .removeValueFromArray (node, node, node .rootNodes, i, undoManager);
             }
          }
          else
@@ -1734,26 +1734,26 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   case X3D .X3DConstants .SFNode:
                   {
                      if (field .getValue () .valueOf () === remove .valueOf ())
-                        this .setFieldValue (node .getExecutionContext (), node, field, null, undoManager)
+                        this .setFieldValue (node .getExecutionContext (), node, field, null, undoManager);
 
-                     break
+                     break;
                   }
                   case X3D .X3DConstants .MFNode:
                   {
                      for (let i = field .length - 1; i >= 0; -- i)
                      {
                         if (field [i] ?.getValue () .valueOf () === remove .valueOf ())
-                           this .removeValueFromArray (node .getExecutionContext (), node, field, i, undoManager)
+                           this .removeValueFromArray (node .getExecutionContext (), node, field, i, undoManager);
                      }
 
-                     break
+                     break;
                   }
                }
             }
          }
-      })
+      });
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -2065,7 +2065,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       this .requestUpdateInstances (proto, undoManager)
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -2094,7 +2094,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       this .requestUpdateInstances (proto, undoManager)
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -2145,7 +2145,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       this .requestUpdateInstances (node, undoManager)
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -2211,7 +2211,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       this .requestUpdateInstances (node, undoManager)
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
