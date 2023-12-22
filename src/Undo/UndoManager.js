@@ -165,7 +165,6 @@ module .exports = class UndoManager
    /**
     *
     * @param {function} undoFunction
-    * @param {boolean} after
     */
    registerUndo (undoFunction)
    {
