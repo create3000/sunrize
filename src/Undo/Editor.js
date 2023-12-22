@@ -465,7 +465,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
                for (const importedNode of executionContext .getImportedNodes ())
                {
-                  if (importedNode .getInlineNode () === node)
+                  if (importedNode .getInlineNode () .valueOf () === node)
                      this .removeImportedNode (executionContext, importedNode .getImportedName (), undoManager);
                }
 
@@ -475,7 +475,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                {
                   for (const exportedNode of executionContext .getExportedNodes ())
                   {
-                     if (exportedNode .getLocalNode () === node)
+                     if (exportedNode .getLocalNode () .valueOf () === node)
                         this .removeExportedNode (executionContext, exportedNode .getExportedName (), undoManager);
                   }
                }
@@ -956,7 +956,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             this .updateExportedNode (scene, oldExportedName, exportedName, node, undoManager);
          else
             this .removeExportedNode (scene, exportedName, undoManager);
-      })
+      });
 
       this .requestUpdateInstances (scene, undoManager);
 
