@@ -1721,7 +1721,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          {
             for (let i = node .rootNodes .length - 1; i >= 0; -- i)
             {
-               if (node .rootNodes [i] ?.getValue () === remove)
+               if (node .rootNodes [i] ?.getValue () .valueOf () === remove .valueOf ())
                   this .removeValueFromArray (node, node, node .rootNodes, i, undoManager)
             }
          }
@@ -1733,7 +1733,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                {
                   case X3D .X3DConstants .SFNode:
                   {
-                     if (field .getValue () === remove)
+                     if (field .getValue () .valueOf () === remove .valueOf ())
                         this .setFieldValue (node .getExecutionContext (), node, field, null, undoManager)
 
                      break
@@ -1742,7 +1742,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   {
                      for (let i = field .length - 1; i >= 0; -- i)
                      {
-                        if (field [i] ?.getValue () === remove)
+                        if (field [i] ?.getValue () .valueOf () === remove .valueOf ())
                            this .removeValueFromArray (node .getExecutionContext (), node, field, i, undoManager)
                      }
 
