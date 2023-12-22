@@ -90,7 +90,7 @@ module .exports = class Editor
             for (const route of field .getOutputRoutes ())
                childRoutes .add (route);
          }
-      })
+      });
 
       const routes = [... childRoutes] .filter (route => children .has (route .getSourceNode () .valueOf ()) && children .has (route .getDestinationNode () .valueOf ()));
 
@@ -241,7 +241,7 @@ module .exports = class Editor
             this .setProtoNode (executionContext, node, available, undoManager);
             return;
          }
-      })
+      });
 
       for (const [name, externproto] of updatedExternProtos)
          this .updateExternProtoDeclaration (executionContext, name, externproto, undoManager);
@@ -382,7 +382,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          }
 
          this .setFieldValue (executionContext, node, node ._url, newUrl, undoManager)
-      })
+      });
 
       undoManager .endUndo ();
    }
@@ -2061,7 +2061,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       undoManager .registerUndo (() =>
       {
          this .removeReference (proto, protoField, node, instance ? name : field, undoManager)
-      })
+      });
 
       this .requestUpdateInstances (proto, undoManager)
 
@@ -2090,7 +2090,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       undoManager .registerUndo (() =>
       {
          this .addReference (proto, protoField, node, instance ? name : field, undoManager)
-      })
+      });
 
       this .requestUpdateInstances (proto, undoManager)
 
@@ -2141,7 +2141,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       undoManager .registerUndo (() =>
       {
          this .setMatrixWithCenter (node, oldMatrix, oldCenter, undoManager)
-      })
+      });
 
       this .requestUpdateInstances (node, undoManager)
 
@@ -2207,7 +2207,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       undoManager .registerUndo (() =>
       {
          this .setFieldValue (executionContext, node, instance ? name : field, oldValue, undoManager)
-      })
+      });
 
       this .requestUpdateInstances (node, undoManager)
 
@@ -2261,7 +2261,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       undoManager .registerUndo (() =>
       {
          this .setFieldValue (executionContext, node, instance ? name : field, oldValue, undoManager);
-      })
+      });
 
       this .requestUpdateInstances (node, undoManager);
 
@@ -2293,7 +2293,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       undoManager .registerUndo (() =>
       {
          this .setFieldValue (executionContext, node, instance ? name : field, oldValue, undoManager);
-      })
+      });
 
       this .requestUpdateInstances (node, undoManager);
 
@@ -2341,7 +2341,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       undoManager .registerUndo (() =>
       {
          this .setFieldValue (executionContext, node, instance ? name : field, oldValue, undoManager);
-      })
+      });
 
       this .requestUpdateInstances (node, undoManager);
 
@@ -2406,6 +2406,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             default:
                return true;
          }
-      })
+      });
    }
 }
