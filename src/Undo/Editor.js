@@ -853,15 +853,39 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     * @param {string} importedName
     * @param {UndoManager} undoManager
     */
-   static updateImportedNode (executionContext, inlineNode, exportedName, importedName = exportedName, undoManager = UndoManager .shared)
+   static updateImportedNode (executionContext, inlineNode, exportedName, importedName, oldImportedName, undoManager = UndoManager .shared)
    {
       undoManager .beginUndo (_ ("Update Imported Node »%s«"), importedName);
 
       executionContext .updateImportedNode (inlineNode .valueOf (), exportedName, importedName);
 
+      if (oldImportedName && oldImportedName !== importedName)
+      {
+         const
+            oldImportedNode = executionContext .getImportedNodes () .get (oldImportedName),
+            newImportedNode = executionContext .getImportedNodes () .get (importedName),
+            routes          = new Set (oldImportedNode .getRoutes ());
+
+         executionContext .removeImportedNode (oldImportedName);
+
+         for (let { sourceNode, sourceField, destinationNode, destinationField } of routes)
+         {
+            if (sourceNode === oldImportedNode)
+               sourceNode = newImportedNode;
+
+            if (destinationNode === oldImportedNode)
+               destinationNode = newImportedNode;
+
+            executionContext .addRoute (sourceNode, sourceField, destinationNode, destinationField);
+         }
+      }
+
       undoManager .registerUndo (() =>
       {
-         this .removeImportedNode (executionContext, importedName, undoManager);
+         if (oldImportedName)
+            this .updateImportedNode (executionContext, inlineNode, exportedName, oldImportedName, importedName, undoManager);
+         else
+            this .removeImportedNode (executionContext, importedName, undoManager);
       })
 
       this .requestUpdateInstances (executionContext, undoManager);
@@ -880,27 +904,34 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       const
          importedNode = executionContext .getImportedNodes () .get (importedName),
          inlineNode   = importedNode .getInlineNode (),
-         exportedName = importedNode .getExportedName ()
+         exportedName = importedNode .getExportedName (),
+         routes       = new Set (importedNode .getRoutes ());
 
-      undoManager .beginUndo (_ ("Remove Imported Node »%s«"), importedName)
+      undoManager .beginUndo (_ ("Remove Imported Node »%s«"), importedName);
 
-      try
-      {
-         this .deleteRoutes (executionContext, importedNode .getExportedNode (), undoManager);
-      }
-      catch
-      { }
-
-      executionContext .removeImportedNode (importedName)
+      executionContext .removeImportedNode (importedName);
 
       undoManager .registerUndo (() =>
       {
-         this .updateImportedNode (executionContext, inlineNode, exportedName, importedName, undoManager)
+         this .updateImportedNode (executionContext, inlineNode, exportedName, importedName, "", undoManager);
+
+         const newImportedNode = executionContext .getImportedNodes () .get (importedName);
+
+         for (let { sourceNode, sourceField, destinationNode, destinationField } of routes)
+         {
+            if (sourceNode === importedNode)
+               sourceNode = newImportedNode;
+
+            if (destinationNode === importedNode)
+               destinationNode = newImportedNode;
+
+            executionContext .addRoute (sourceNode, sourceField, destinationNode, destinationField);
+         }
       })
 
-      this .requestUpdateInstances (executionContext, undoManager)
+      this .requestUpdateInstances (executionContext, undoManager);
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**
@@ -1420,7 +1451,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       for (const field of instance .getPredefinedFields ())
       {
          const
-            oldInputRoutes = inputRoutes   .get (field .getName ()),
+            oldInputRoutes  = inputRoutes  .get (field .getName ()),
             oldOutputRoutes = outputRoutes .get (field .getName ())
 
          if (oldInputRoutes)

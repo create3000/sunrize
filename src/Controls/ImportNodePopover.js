@@ -48,14 +48,7 @@ $.fn.importNodePopover = function (inlineNode, exportedName, oldImportedName)
 
                const importedName = executionContext .getUniqueImportName (nameInput .val ());
 
-               UndoManager .shared .beginUndo (_ ("Update Imported Node »%s«"), importedName);
-
-               Editor .updateImportedNode (executionContext, inlineNode, exportedName, importedName);
-
-               if (oldImportedName && oldImportedName !== importedName)
-                  Editor .removeImportedNode (executionContext, oldImportedName);
-
-               UndoManager .shared .endUndo ();
+               Editor .updateImportedNode (executionContext, inlineNode, exportedName, importedName, oldImportedName);
             });
 
             setTimeout (() => nameInput .trigger ("select"), 1);
