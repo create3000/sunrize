@@ -927,7 +927,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
             executionContext .addRoute (sourceNode, sourceField, destinationNode, destinationField);
          }
-      })
+      });
 
       this .requestUpdateInstances (executionContext, undoManager);
 
