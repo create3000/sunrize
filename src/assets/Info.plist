@@ -28,7 +28,7 @@
 			<array>
 				<string>io.github.create3000.x3d</string>
 				<string>io.castleengine.view3dscene.x3d</string>
-				<string>public.plain-text</string>
+				<string>public.data</string>
 			</array>
     </dict>
     <dict>
@@ -85,7 +85,7 @@
 			<array>
 				<string>io.github.create3000.x3dv</string>
 				<string>io.castleengine.view3dscene.x3dv</string>
-				<string>public.plain-text</string>
+				<string>public.data</string>
 			</array>
     </dict>
     <dict>
@@ -121,15 +121,15 @@
     <dict>
       <key>CFBundleTypeExtensions</key>
       <array>
-        <string>x3dv</string>
-        <string>X3DV</string>
+        <string>x3dj</string>
+        <string>X3DJ</string>
       </array>
       <key>CFBundleTypeMIMETypes</key>
       <array>
-        <string>model/x3d+vrml</string>
+        <string>model/x3d+json</string>
       </array>
       <key>CFBundleTypeName</key>
-			<string>X3D Model (Classic VRML Encoding)</string>
+			<string>X3D Model (JSON Encoding)</string>
       <key>CFBundleTypeIconFile</key>
       <string>electron.icns</string>
       <key>CFBundleTypeRole</key>
@@ -140,26 +140,26 @@
       <true/>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>io.github.create3000.x3dv</string>
-				<string>io.castleengine.view3dscene.x3dv</string>
-				<string>public.plain-text</string>
+				<string>io.github.create3000.x3dj</string>
+				<string>io.castleengine.view3dscene.x3dj</string>
+				<string>public.data</string>
 			</array>
     </dict>
     <dict>
       <key>CFBundleTypeExtensions</key>
       <array>
-        <string>x3dvz</string>
-        <string>X3DVZ</string>
-        <string>x3dv.gz</string>
-        <string>X3DV.GZ</string>
+        <string>x3djz</string>
+        <string>X3DJZ</string>
+        <string>x3dj.gz</string>
+        <string>X3DJ.GZ</string>
       </array>
       <key>CFBundleTypeMIMETypes</key>
       <array>
-        <string>model/x3d+vrml</string>
+        <string>model/x3d+json</string>
         <string>application/gzip</string>
       </array>
       <key>CFBundleTypeName</key>
-			<string>X3D Model (Classic VRML Encoding)</string>
+			<string>X3D Model (Classic JSON Encoding)</string>
       <key>CFBundleTypeIconFile</key>
       <string>electron.icns</string>
       <key>CFBundleTypeRole</key>
@@ -170,8 +170,8 @@
       <true/>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>io.github.create3000.x3dv</string>
-				<string>io.castleengine.view3dscene.x3dv</string>
+				<string>io.github.create3000.x3dj</string>
+				<string>io.castleengine.view3dscene.x3dj</string>
 				<string>public.data</string>
 			</array>
     </dict>
@@ -202,7 +202,7 @@
 			<array>
 				<string>io.github.create3000.vrml</string>
 				<string>io.castleengine.view3dscene.vrml</string>
-				<string>public.plain-text</string>
+				<string>public.data</string>
 			</array>
     </dict>
     <dict>
