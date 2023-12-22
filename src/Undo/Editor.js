@@ -941,15 +941,21 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     * @param {X3DNode} node
     * @param {UndoManager} undoManager
     */
-   static updateExportedNode (scene, exportedName, node, undoManager = UndoManager .shared)
+   static updateExportedNode (scene, exportedName, oldExportedName, node, undoManager = UndoManager .shared)
    {
       undoManager .beginUndo (_ ("Update Exported Node »%s«"), exportedName);
+
+      if (oldExportedName)
+         scene .removeExportedNode (oldExportedName);
 
       scene .updateExportedNode (exportedName, node .valueOf ());
 
       undoManager .registerUndo (() =>
       {
-         this .removeExportedNode (scene, exportedName, undoManager);
+         if (oldExportedName)
+            this .updateExportedNode (scene, oldExportedName, exportedName, node, undoManager);
+         else
+            this .removeExportedNode (scene, exportedName, undoManager);
       })
 
       this .requestUpdateInstances (scene, undoManager);
@@ -967,20 +973,20 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       const
          exportedNode = scene .getExportedNodes () .get (exportedName),
-         node         = exportedNode .getLocalNode ()
+         node         = exportedNode .getLocalNode ();
 
-      undoManager .beginUndo (_ ("Remove Exported Node »%s«"), exportedName)
+      undoManager .beginUndo (_ ("Remove Exported Node »%s«"), exportedName);
 
-      scene .removeExportedNode (exportedName)
+      scene .removeExportedNode (exportedName);
 
       undoManager .registerUndo (() =>
       {
-         this .updateExportedNode (scene, exportedName, node, undoManager)
-      })
+         this .updateExportedNode (scene, exportedName, "", node, undoManager);
+      });
 
-      this .requestUpdateInstances (scene, undoManager)
+      this .requestUpdateInstances (scene, undoManager);
 
-      undoManager .endUndo ()
+      undoManager .endUndo ();
    }
 
    /**

@@ -48,14 +48,7 @@ $.fn.exportNodePopover = function (node, oldExportedName)
 
                const exportedName = scene .getUniqueExportName (nameInput .val ());
 
-               UndoManager .shared .beginUndo (_ ("Update Exported Node »%s«"), exportedName);
-
-               Editor .updateExportedNode (scene, exportedName, node);
-
-               if (oldExportedName && oldExportedName !== exportedName)
-                  Editor .removeExportedNode (scene, oldExportedName);
-
-               UndoManager .shared .endUndo ();
+               Editor .updateExportedNode (scene, exportedName, oldExportedName, node);
             });
 
             setTimeout (() => nameInput .trigger ("select"), 1);
