@@ -159,7 +159,7 @@
         <string>application/gzip</string>
       </array>
       <key>CFBundleTypeName</key>
-			<string>X3D Model (Classic JSON Encoding)</string>
+			<string>X3D Model (JSON Encoding)</string>
       <key>CFBundleTypeIconFile</key>
       <string>electron.icns</string>
       <key>CFBundleTypeRole</key>
