@@ -864,7 +864,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          const
             oldImportedNode = executionContext .getImportedNodes () .get (oldImportedName),
             newImportedNode = executionContext .getImportedNodes () .get (importedName),
-            routes          = new Set (oldImportedNode .getRoutes ());
+            routes          = Array .from (oldImportedNode .getRoutes ());
 
          executionContext .removeImportedNode (oldImportedName);
 
@@ -905,7 +905,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          importedNode = executionContext .getImportedNodes () .get (importedName),
          inlineNode   = importedNode .getInlineNode (),
          exportedName = importedNode .getExportedName (),
-         routes       = new Set (importedNode .getRoutes ());
+         routes       = Array .from (importedNode .getRoutes ());
 
       undoManager .beginUndo (_ ("Remove Imported Node »%s«"), importedName);
 
