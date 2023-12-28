@@ -158,22 +158,17 @@ module .exports = class OutlineView extends Interface
 
    updateSceneGraph ()
    {
-      this .updateScene (this .sceneGraph, this .executionContext)
+      this .updateScene (this .sceneGraph, this .executionContext);
    }
 
    updateScene (parent, scene)
    {
-      this .saveScrollPositions ()
-      this .saveExpanded ()
-      this .removeSubtree (parent)
-      this .expandScene (parent, scene)
-      this .restoreExpanded ()
-      this .restoreScrollPositions ()
-   }
-
-   addEventField (self)
-   {
-      self .executionContext .getBrowser () .add
+      this .saveScrollPositions ();
+      this .saveExpanded ();
+      this .removeSubtree (parent);
+      this .expandScene (parent, scene);
+      this .restoreExpanded ();
+      this .restoreScrollPositions ();
    }
 
    expandScene (parent, scene)
@@ -1066,51 +1061,55 @@ module .exports = class OutlineView extends Interface
 
    isInParents (parent, node)
    {
-      return parent .closest (".node[node-id=" + node .getId () + "]", this .sceneGraph) .length
+      return parent .closest (".node[node-id=" + node .getId () + "]", this .sceneGraph) .length;
    }
 
    #importedNodeSymbol = Symbol ();
 
    createImportedNodeElement (type, parent, scene, importedNode)
    {
-      importedNode .getInlineNode () .getLoadState () .addFieldCallback (this .#importedNodeSymbol, this .updateScene .bind (this, parent, scene))
+      importedNode .getInlineNode () .getLoadState () .addFieldCallback (this .#importedNodeSymbol, () =>
+      {
+         // Must be done later, otherwise connections will be lost.
+         setTimeout (() => this .updateScene (parent, scene));
+      });
 
       try
       {
-         this .objects .set (importedNode .getId (), importedNode)
-         this .objects .set (importedNode .getExportedNode () .getId (), importedNode .getExportedNode ())
+         this .objects .set (importedNode .getId (), importedNode);
+         this .objects .set (importedNode .getExportedNode () .getId (), importedNode .getExportedNode ());
 
          // Node
 
          const child = $("<li></li>")
             .addClass (type)
             .attr ("imported-node-id", importedNode .getId ())
-            .attr ("node-id", importedNode .getExportedNode () .getId ())
+            .attr ("node-id", importedNode .getExportedNode () .getId ());
 
          // Icon
 
          const icon = $("<img></img>")
             .addClass ("icon")
             .attr ("src", `../images/OutlineEditor/Node/${this .nodeIcons [type]}.svg`)
-            .appendTo (child)
+            .appendTo (child);
 
          // Name
 
          const name = $("<div></div>")
             .addClass ("name")
-            .appendTo (child)
+            .appendTo (child);
 
          $("<span></span>")
             .addClass ("node-type-name")
             .text (importedNode .getExportedNode () .getTypeName ())
-            .appendTo (name)
+            .appendTo (name);
 
-         name .append (document .createTextNode (" "))
+         name .append (document .createTextNode (" "));
 
          $("<span></span>")
             .addClass ("node-name")
             .text (importedNode .getExportedName ())
-            .appendTo (name)
+            .appendTo (name);
 
          if (importedNode .getExportedName () !== importedNode .getImportedName ())
          {
@@ -1118,42 +1117,42 @@ module .exports = class OutlineView extends Interface
                .append (document .createTextNode (" "))
                .append ($("<span></span>") .addClass ("as") .text ("AS"))
                .append (document .createTextNode (" "))
-               .append ($("<span></span>") .addClass ("as-name") .text (importedNode .getImportedName ()))
+               .append ($("<span></span>") .addClass ("as-name") .text (importedNode .getImportedName ()));
          }
 
          // Append empty tree to enable expander.
 
-         $("<ul><li></li></ul>") .appendTo (child)
+         $("<ul><li></li></ul>") .appendTo (child);
 
-         return child
+         return child;
       }
       catch
       {
-         this .objects .set (importedNode .getId (), importedNode)
+         this .objects .set (importedNode .getId (), importedNode);
 
          // Node
 
          const child = $("<li></li>")
             .addClass ([type, "no-expand"])
-            .attr ("imported-node-id", importedNode .getId ())
+            .attr ("imported-node-id", importedNode .getId ());
 
          // Icon
 
          const icon = $("<img></img>")
             .addClass ("icon")
             .attr ("src", `../images/OutlineEditor/Node/${this .nodeIcons [type]}.svg`)
-            .appendTo (child)
+            .appendTo (child);
 
          // Name
 
          const name = $("<div></div>")
             .addClass ("name")
-            .appendTo (child)
+            .appendTo (child);
 
          $("<span></span>")
             .addClass ("node-name")
             .text (importedNode .getExportedName ())
-            .appendTo (name)
+            .appendTo (name);
 
          if (importedNode .getExportedName () !== importedNode .getImportedName ())
          {
@@ -1161,10 +1160,10 @@ module .exports = class OutlineView extends Interface
                .append (document .createTextNode (" "))
                .append ($("<span></span>") .addClass ("as") .text ("AS"))
                .append (document .createTextNode (" "))
-               .append ($("<span></span>") .addClass ("as-name") .text (importedNode .getImportedName ()))
+               .append ($("<span></span>") .addClass ("as-name") .text (importedNode .getImportedName ()));
          }
 
-         return child
+         return child;
       }
    }
 
@@ -2071,10 +2070,10 @@ module .exports = class OutlineView extends Interface
             input .val (field .getValue ())
          else
             input .val (field .toString ({ scene: node .getExecutionContext () }))
-      })
+      });
 
       if (assign)
-         this .onFieldEdited (input, node, field)
+         this .onFieldEdited (input, node, field);
    }
 
    onFieldEdited (input, node, field) { }
