@@ -176,20 +176,6 @@ module .exports = class OutlineView extends Interface
       parent .data ("expanded",      true)
       parent .data ("full-expanded", false)
 
-      if (scene .getOuterNode () instanceof X3D .X3DProtoDeclaration)
-      {
-         Traverse .traverse (scene, Traverse .ROOT_NODES, node =>
-         {
-            if (node .isInitialized ())
-               return
-
-            if (node .getType () .includes (X3D .X3DConstants .X3DUrlObject))
-               node .requestImmediateLoad = () => Promise .resolve ()
-
-            node .setup ()
-         })
-      }
-
       if (scene instanceof X3D .X3DScene)
          scene .units .addInterest ("updateScene", this, parent, scene)
 
@@ -275,6 +261,9 @@ module .exports = class OutlineView extends Interface
 
       child .find (".tool")
          .on ("click", this .toggleTool .bind (this))
+
+      child .find (".reload")
+         .on ("click", this .reloadNode .bind (this))
 
       // Expand children.
 
@@ -687,7 +676,7 @@ module .exports = class OutlineView extends Interface
          }
          else
          {
-            node .getLoadState () .addFieldCallback (this, this .updateFieldLoadState .bind (this , node));
+            node .getLoadState () .addFieldCallback (this, this .updateFieldLoadState .bind (this, node));
          }
 
          if (node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE && this .expandInlineNodes && node .getType () .includes (X3D .X3DConstants .Inline))
@@ -984,13 +973,15 @@ module .exports = class OutlineView extends Interface
 
          if (node .valueOf () .getType () .includes (X3D .X3DConstants .X3DUrlObject))
          {
-            const [className, description] = this .getLoadState (node .checkLoadState (), node .getTypeName ());
+            const [className] = this .getLoadState (node .checkLoadState (), node .getTypeName ());
+
+            node .getLoadState () .addFieldCallback (this .updateNodeLoadState, this .updateNodeLoadState .bind (this, node));
 
             name .append (document .createTextNode (" "));
 
             $("<span></span>")
-               .addClass (["tool", "button", "material-symbols-outlined", className])
-               .attr ("title", description)
+               .addClass (["reload", "button", "material-symbols-outlined", className])
+               .attr ("title", "Load now.")
                .text ("autorenew")
                .appendTo (name);
          }
@@ -1035,6 +1026,17 @@ module .exports = class OutlineView extends Interface
          .find (`.node[node-id=${node .getId ()}]`)
          .find ("> .item .clone-count")
          .text (cloneCount > 1 ? `[${cloneCount}]` : "")
+   }
+
+   updateNodeLoadState (node)
+   {
+      const [className] = this .getLoadState (node .checkLoadState (), node .getTypeName ());
+
+      this .sceneGraph
+         .find (`.node[node-id=${node .getId ()}]`)
+         .find ("> .item .reload")
+         .removeClass (["not-started-state", "in-progress-state", "complete-state", "failed-state"])
+         .addClass (className);
    }
 
    isInParents (parent, node)
@@ -1760,6 +1762,9 @@ module .exports = class OutlineView extends Interface
       child .find (".tool")
          .on ("click", this .toggleTool .bind (this))
 
+      child .find (".reload")
+         .on ("click", this .reloadNode .bind (this))
+
       child .find ("area.input-selector")
          .on ("mouseenter", this .hoverInSingleConnector .bind (this, "input"))
          .on ("mouseleave", this .hoverOutSingleConnector .bind (this, "input"))
@@ -1864,6 +1869,9 @@ module .exports = class OutlineView extends Interface
 
       child .find (".tool")
          .on ("click", this .toggleTool .bind (this))
+
+      child .find (".reload")
+         .on ("click", this .reloadNode .bind (this))
 
       child .find ("area.input-selector")
          .on ("mouseenter", this .hoverInSingleConnector .bind (this, "input"))
@@ -2534,29 +2542,29 @@ module .exports = class OutlineView extends Interface
       {
          const
             element = $(e),
-            scene   = this .getNode (element)
+            scene   = this .getNode (element);
 
-         scene .externprotos  .removeInterest ("updateSceneSubtree", this)
-         scene .protos        .removeInterest ("updateSceneSubtree", this)
-         scene .importedNodes .removeInterest ("updateSceneSubtree", this)
+         scene .externprotos  .removeInterest ("updateSceneSubtree", this);
+         scene .protos        .removeInterest ("updateSceneSubtree", this);
+         scene .importedNodes .removeInterest ("updateSceneSubtree", this);
 
-         scene .rootNodes .removeFieldCallback (this)
+         scene .rootNodes .removeFieldCallback (this);
 
          if (scene instanceof X3D .X3DScene)
          {
-            scene .units         .removeInterest ("updateScene",        this)
-            scene .exportedNodes .removeInterest ("updateSceneSubtree", this)
+            scene .units         .removeInterest ("updateScene",        this);
+            scene .exportedNodes .removeInterest ("updateSceneSubtree", this);
          }
-      })
+      });
 
       element .find (".externproto") .addBack (".externproto") .each ((i, e) =>
       {
          const
             element = $(e),
-            node    = this .getNode (element)
+            node    = this .getNode (element);
 
-         node .getLoadState () .removeFieldCallback (this)
-      })
+         node .getLoadState () .removeFieldCallback (this);
+      });
 
       element .find (".node") .addBack (".node") .each ((i, e) =>
       {
@@ -2568,24 +2576,27 @@ module .exports = class OutlineView extends Interface
             return
 
          if (node .getType () .includes (X3D .X3DConstants .X3DUrlObject))
-            node .getLoadState () .removeFieldCallback (this)
+         {
+            node .getLoadState () .removeFieldCallback (this);
+            node .getLoadState () .removeFieldCallback (this .updateNodeLoadState);
+         }
 
-         node .getPredefinedFields ()  .removeInterest ("updateNode", this)
-         node .getUserDefinedFields () .removeInterest ("updateNode", this)
-      })
+         node .getPredefinedFields ()  .removeInterest ("updateNode", this);
+         node .getUserDefinedFields () .removeInterest ("updateNode", this);
+      });
 
       element .find (".field, .special") .each ((i, e) =>
       {
          const
             element = $(e),
-            field   = this .getField (element)
+            field   = this .getField (element);
 
-         field .removeReferencesCallback (this)
-         field .removeRouteCallback (this)
-         field .removeFieldCallback (this)
-         field .removeFieldCallback (this .fieldButtonSymbol)
-         field .removeFieldCallback (this .fieldValueSymbol)
-      })
+         field .removeReferencesCallback (this);
+         field .removeRouteCallback (this);
+         field .removeFieldCallback (this);
+         field .removeFieldCallback (this .fieldButtonSymbol);
+         field .removeFieldCallback (this .fieldValueSymbol);
+      });
 
       // Field is collapsed.
 
@@ -2595,16 +2606,16 @@ module .exports = class OutlineView extends Interface
          {
             const
                element = $(e),
-               field   = this .getField (element)
+               field   = this .getField (element);
 
-            field .removeRouteCallback (this .routesFullSymbol)
-            field .removeFieldCallback (this .fieldValueSymbol)
-         })
+            field .removeRouteCallback (this .routesFullSymbol);
+            field .removeFieldCallback (this .fieldValueSymbol);
+         });
       }
 
       // Color fields.
 
-      this .removeFieldButtons (element .find (".color-button"))
+      this .removeFieldButtons (element .find (".color-button"));
    }
 
    selectAll ()
@@ -2676,6 +2687,22 @@ module .exports = class OutlineView extends Interface
          .find ("> .item .tool")
          .removeClass ("off")
          .addClass (tool ? "off" : "");
+   }
+
+   reloadNode (event)
+   {
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
+
+      const
+         target  = $(event .target),
+         element = target .closest (".node", this .sceneGraph),
+         node    = this .getNode (element);
+
+      if (!node .isInitialized ())
+         node .setup ();
+
+      node .loadNow ();
    }
 
    hideUnselectedObjects ()
