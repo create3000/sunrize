@@ -188,8 +188,12 @@ module .exports = class OutlineView extends Interface
             if (node .isInitialized ())
                return;
 
-            node .getFields () .forEach (field => field .setTainted (false));
+            node .typeName_changed .setTainted (false);
+            node .name_changed     .setTainted (false);
+            node .parents_changed  .setTainted (false);
+
             node .getLoadState ?.() .setTainted (false);
+            node .getFields () .forEach (field => field .setTainted (false));
          });
       }
 
