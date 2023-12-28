@@ -163,6 +163,9 @@ module .exports = class OutlineView extends Interface
 
    updateScene (parent, scene)
    {
+      if (!parent .prop ("isConnected"))
+         return;
+
       this .saveScrollPositions ();
       this .saveExpanded ();
       this .removeSubtree (parent);
@@ -584,6 +587,9 @@ module .exports = class OutlineView extends Interface
 
    updateNode (parent, node, full)
    {
+      if (!parent .prop ("isConnected"))
+         return;
+
       this .saveScrollPositions ();
 
       this .removeSubtree (parent);
@@ -1600,6 +1606,9 @@ module .exports = class OutlineView extends Interface
 
    updateField (parent, node, field, type, full)
    {
+      if (!parent .prop ("isConnected"))
+         return;
+
       switch (field .getType ())
       {
          case X3D .X3DConstants .SFNode:
@@ -2547,9 +2556,6 @@ module .exports = class OutlineView extends Interface
 
    removeSubtree (element)
    {
-      if (!element .prop ("isConnected"))
-         return;
-
       this .disconnectSubtree (element);
 
       // Remove subtree.
