@@ -687,7 +687,7 @@ module .exports = class OutlineView extends Interface
          }
          else
          {
-            node .getLoadState () .addFieldCallback (this, this .updateLoadState .bind (this , node));
+            node .getLoadState () .addFieldCallback (this, this .updateFieldLoadState .bind (this , node));
          }
 
          if (node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE && this .expandInlineNodes && node .getType () .includes (X3D .X3DConstants .Inline))
@@ -850,7 +850,7 @@ module .exports = class OutlineView extends Interface
       }
    }
 
-   updateLoadState (node)
+   updateFieldLoadState (node)
    {
       const [className, description] = this .getLoadState (node .checkLoadState (), node .getTypeName ());
 
@@ -875,13 +875,13 @@ module .exports = class OutlineView extends Interface
       switch (loadState)
       {
          case X3D .X3DConstants .NOT_STARTED_STATE:
-            return ["not-started-state", util .format (_ ("Loading %s not started"), typeName)];
+            return ["not-started-state", util .format (_ ("Loading %s not started."), typeName)];
          case X3D .X3DConstants .IN_PROGRESS_STATE:
-            return ["in-progress-state", util .format (_ ("Loading %s in progress"), typeName)];
+            return ["in-progress-state", util .format (_ ("Loading %s in progress."), typeName)];
          case X3D .X3DConstants .COMPLETE_STATE:
-            return ["complete-state", util .format (_ ("Loading %s completed"), typeName)];
+            return ["complete-state", util .format (_ ("Loading %s completed."), typeName)];
          case X3D .X3DConstants .FAILED_STATE:
-            return ["failed-state", util .format (_ ("Loading %s failed"), typeName)];
+            return ["failed-state", util .format (_ ("Loading %s failed."), typeName)];
       }
    }
 
@@ -889,13 +889,13 @@ module .exports = class OutlineView extends Interface
    {
       if (node)
       {
-         this .objects .set (node .getId (), node .valueOf ())
+         this .objects .set (node .getId (), node .valueOf ());
 
          // These fields are observed and must never be disconnected, because clones would also lose connection.
 
-         node .typeName_changed .addFieldCallback (this, this .updateNodeTypeName .bind (this, node))
-         node .name_changed     .addFieldCallback (this, this .updateNodeName     .bind (this, node))
-         node .parents_changed  .addFieldCallback (this, this .updateCloneCount   .bind (this, node))
+         node .typeName_changed .addFieldCallback (this, this .updateNodeTypeName .bind (this, node));
+         node .name_changed     .addFieldCallback (this, this .updateNodeName     .bind (this, node));
+         node .parents_changed  .addFieldCallback (this, this .updateCloneCount   .bind (this, node));
       }
 
       // Classes
@@ -905,14 +905,14 @@ module .exports = class OutlineView extends Interface
       if (node)
       {
          if (node .getUserData (_selected))
-            classes .push ("selected")
+            classes .push ("selected");
 
          if (this .isInParents (parent, node))
-            classes .push ("circular-reference", "no-expand")
+            classes .push ("circular-reference", "no-expand");
       }
       else
       {
-         classes .push ("no-expand")
+         classes .push ("no-expand");
       }
 
       // Node
@@ -920,14 +920,14 @@ module .exports = class OutlineView extends Interface
       const child = $("<li></li>")
          .addClass (classes)
          .attr ("node-id", node ? node .getId () : "NULL")
-         .attr ("index", index)
+         .attr ("index", index);
 
       // Icon
 
       const icon = $("<img></img>")
          .addClass ("icon")
          .attr ("src", `../images/OutlineEditor/Node/${this .nodeIcons [type]}.svg`)
-         .appendTo (child)
+         .appendTo (child);
 
       if (node)
       {
@@ -935,65 +935,80 @@ module .exports = class OutlineView extends Interface
 
          const name = $("<div></div>")
             .addClass ("name")
-            .appendTo (child)
+            .appendTo (child);
 
          $("<span></span>")
             .addClass ("node-type-name")
             .text (this .typeNames [node .getTypeName ()] || node .getTypeName ())
-            .appendTo (name)
+            .appendTo (name);
 
-         name .append (document .createTextNode (" "))
+         name .append (document .createTextNode (" "));
 
          $("<span></span>")
             .addClass ("node-name")
             .text (node .getDisplayName ())
-            .appendTo (name)
+            .appendTo (name);
 
-         name .append (document .createTextNode (" "))
+         name .append (document .createTextNode (" "));
 
          const cloneCount = node .getCloneCount ?.() ?? 0
 
          $("<span></span>")
             .addClass ("clone-count")
             .text (cloneCount > 1 ? `[${cloneCount}]` : "")
-            .appendTo (name)
+            .appendTo (name);
 
          if (node .setHidden && !(node .getExecutionContext () .getOuterNode () instanceof X3D .X3DProtoDeclaration))
          {
-            name .append (document .createTextNode (" "))
+            name .append (document .createTextNode (" "));
 
             $("<span></span>")
                .addClass (["visibility", "button", "material-symbols-outlined"])
                .addClass (node .isHidden () ? "off" : "")
+               .attr ("title", "Toggle visibility.")
                .text (node .isHidden () ? "visibility_off" : "visibility")
-               .appendTo (name)
+               .appendTo (name);
          }
 
-         if (node .valueOf () .getType () .some (t => this .onDemandToolNodes .has (t)))
+         if (node .valueOf () .getType () .some (type => this .onDemandToolNodes .has (type)))
          {
-            name .append (document .createTextNode (" "))
+            name .append (document .createTextNode (" "));
 
             $("<span></span>")
                .addClass (["tool", "button", "material-symbols-outlined"])
                .addClass (node .valueOf () === node ? "off" : "" )
+               .attr ("title", "Toggle tool.")
                .text ("build_circle")
-               .appendTo (name)
+               .appendTo (name);
+         }
+
+         if (node .valueOf () .getType () .includes (X3D .X3DConstants .X3DUrlObject))
+         {
+            const [className, description] = this .getLoadState (node .checkLoadState (), node .getTypeName ());
+
+            name .append (document .createTextNode (" "));
+
+            $("<span></span>")
+               .addClass (["tool", "button", "material-symbols-outlined", className])
+               .attr ("title", description)
+               .text ("autorenew")
+               .appendTo (name);
          }
 
          // Append empty tree to enable expander.
 
          if (!this .isInParents (parent, node))
-            $("<ul><li></li></ul>") .appendTo (child)
+            $("<ul><li></li></ul>") .appendTo (child);
       }
       else
       {
          $("<div></div>")
             .addClass ("name")
             .append ($("<span></span>") .addClass ("node-type-name") .text ("NULL"))
-            .appendTo (child)
+            .appendTo (child);
       }
 
-      return child
+      return child;
    }
 
    updateNodeTypeName (node)
