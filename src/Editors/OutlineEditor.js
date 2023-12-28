@@ -1083,8 +1083,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       if (field .getAccessType () === X3D .X3DConstants .outputOnly)
          return;
 
-      boolean .addClass ("pointer") .on ("click", () =>
+      boolean .addClass ("pointer") .on ("click", event =>
       {
+         event .preventDefault ();
+         event .stopImmediatePropagation ();
+
          Editor .setFieldValue (node .getExecutionContext (), node, field, !field .getValue ());
       });
    }
@@ -1158,8 +1161,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       if (field .getAccessType () === X3D .X3DConstants .outputOnly)
          return;
 
-      time .addClass ("pointer") .on ("click", () =>
+      time .addClass ("pointer") .on ("click", event =>
       {
+         event .preventDefault ();
+         event .stopImmediatePropagation ();
+
          Editor .setFieldValue (node .getExecutionContext (), node, field, Date .now () / 1000);
       });
    }
@@ -1454,7 +1460,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          node    = this .getNode (element),
          field   = this .getField (element)
 
-      // Block default href.
       event .preventDefault ()
       event .stopImmediatePropagation ()
 
@@ -1611,19 +1616,18 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       const
          element = $(event .currentTarget) .closest (".route", this .sceneGraph),
-         field   = this .getField (element)
+         field   = this .getField (element);
 
-      // Block default href.
-      event .preventDefault ()
-      event .stopImmediatePropagation ()
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
 
       if (!this .isEditable (element .parent ()))
-         return
+         return;
 
       if (!(event .ctrlKey || event .metaKey))
-         return
+         return;
 
-      element .hide ()
+      element .hide ();
 
       switch (type)
       {
@@ -1631,15 +1635,15 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          {
             const route = this .getRoute (element, field .getInputRoutes ())
 
-            Editor .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField)
-            break
+            Editor .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField);
+            break;
          }
          case "output":
          {
-            const route = this .getRoute (element, field .getOutputRoutes ())
+            const route = this .getRoute (element, field .getOutputRoutes ());
 
-            Editor .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField)
-            break
+            Editor .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField);
+            break;
          }
       }
    }
@@ -1654,11 +1658,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          element   = $(event .target) .closest (".externproto", this .sceneGraph),
          selected  = this .sceneGraph .find (".externproto.selected"),
          selection = selected .filter (element) .length ? selected : element,
-         ids       = selection .map (function () { return this .id }) .get ()
+         ids       = selection .map (function () { return this .id }) .get ();
 
-      this .selectPrimaryElement (element)
+      this .selectPrimaryElement (element);
 
-      event .originalEvent .dataTransfer .setData ("sunrize/externproto", ids .join (","))
+      event .originalEvent .dataTransfer .setData ("sunrize/externproto", ids .join (","));
    }
 
    onDragStartProto (event)
@@ -1667,11 +1671,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          element   = $(event .target) .closest (".proto", this .sceneGraph),
          selected  = this .sceneGraph .find (".proto.selected"),
          selection = selected .filter (element) .length ? selected : element,
-         ids       = selection .map (function () { return this .id }) .get ()
+         ids       = selection .map (function () { return this .id }) .get ();
 
-      this .selectPrimaryElement (element)
+      this .selectPrimaryElement (element);
 
-      event .originalEvent .dataTransfer .setData ("sunrize/proto", ids .join (","))
+      event .originalEvent .dataTransfer .setData ("sunrize/proto", ids .join (","));
    }
 
    onDragStartNode (event)
@@ -1680,11 +1684,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          element   = $(event .target) .closest (".node", this .sceneGraph),
          selected  = this .sceneGraph .find (".node.manually.selected"),
          selection = selected .filter (element) .length ? selected : element,
-         ids       = selection .map (function () { return this .id }) .get ()
+         ids       = selection .map (function () { return this .id }) .get ();
 
-      this .selectPrimaryElement (element)
+      this .selectPrimaryElement (element);
 
-      event .originalEvent .dataTransfer .setData ("sunrize/nodes", ids .join (","))
+      event .originalEvent .dataTransfer .setData ("sunrize/nodes", ids .join (","));
    }
 
    onDragStartField (event)
@@ -1933,16 +1937,16 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
    onDragLeave (event)
    {
-      event .preventDefault ()
-      event .stopPropagation ()
+      event .preventDefault ();
+      event .stopPropagation ();
 
       // Hide drop indicator.
 
       const element = $(event .target)
-         .closest ("li, .scene-graph", this .sceneGraph)
+         .closest ("li, .scene-graph", this .sceneGraph);
 
       element .find ("> .item") .addBack ()
-         .removeClass (["drag-before", "drag-into", "drag-after"])
+         .removeClass (["drag-before", "drag-into", "drag-after"]);
    }
 
    async onDrop (event)

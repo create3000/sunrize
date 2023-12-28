@@ -26,7 +26,6 @@ module .exports = class OutlineRouteGraph extends OutlineView
 			element = $(event .currentTarget) .closest (".field", this .sceneGraph),
 			field   = this .getField (element);
 
-		// Block default href.
 		event .preventDefault ();
 		event .stopImmediatePropagation ();
 
@@ -67,7 +66,6 @@ module .exports = class OutlineRouteGraph extends OutlineView
 			element = $(event .currentTarget) .closest (".route", this .sceneGraph),
 			field   = this .getField (element);
 
-		// Block default href.
 		event .preventDefault ();
 		event .stopImmediatePropagation ();
 
