@@ -2704,7 +2704,7 @@ module .exports = class OutlineView extends Interface
       if (!node .isInitialized ())
          node .setup ();
 
-      node .loadNow ();
+      node .loadNow () .catch (Function .prototype);
    }
 
    hideUnselectedObjects ()
