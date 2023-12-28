@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const
    $            = require ("jquery"),
@@ -10,13 +10,13 @@ const
    Interface    = require ("../Application/Interface"),
    ActionKeys   = require ("../Application/ActionKeys"),
    Traverse     = require ("../Application/Traverse"),
-   _            = require ("../Application/GetText")
+   _            = require ("../Application/GetText");
 
 const
    _expanded     = Symbol (),
    _fullExpanded = Symbol (),
    _selected     = Symbol (),
-   _changing     = Symbol .for ("Sunrize.changing")
+   _changing     = Symbol .for ("Sunrize.changing");
 
 module .exports = class OutlineView extends Interface
 {
@@ -874,6 +874,8 @@ module .exports = class OutlineView extends Interface
       }
    }
 
+   #updateNodeLoadStateSymbol = Symbol;
+
    createNodeElement (type, parent, node, index)
    {
       if (node)
@@ -975,7 +977,7 @@ module .exports = class OutlineView extends Interface
          {
             const [className] = this .getLoadState (node .checkLoadState (), node .getTypeName ());
 
-            node .getLoadState () .addFieldCallback (this .updateNodeLoadState, this .updateNodeLoadState .bind (this, node));
+            node .getLoadState () .addFieldCallback (this .#updateNodeLoadStateSymbol, this .updateNodeLoadState .bind (this, node));
 
             name .append (document .createTextNode (" "));
 
@@ -1044,11 +1046,11 @@ module .exports = class OutlineView extends Interface
       return parent .closest (".node[node-id=" + node .getId () + "]", this .sceneGraph) .length
    }
 
-   importedNodeSymbol = Symbol ()
+   #importedNodeSymbol = Symbol ();
 
    createImportedNodeElement (type, parent, scene, importedNode)
    {
-      importedNode .getInlineNode () .getLoadState () .addFieldCallback (this .importedNodeSymbol, this .updateScene .bind (this, parent, scene))
+      importedNode .getInlineNode () .getLoadState () .addFieldCallback (this .#importedNodeSymbol, this .updateScene .bind (this, parent, scene))
 
       try
       {
@@ -1143,7 +1145,7 @@ module .exports = class OutlineView extends Interface
       }
    }
 
-   exportedNodeSymbol = Symbol ()
+   #exportedNodeSymbol = Symbol ();
 
    createExportedNodeElement (type, parent, exportedNode)
    {
@@ -1152,8 +1154,8 @@ module .exports = class OutlineView extends Interface
       this .objects .set (exportedNode .getId (), exportedNode);
       this .objects .set (node .getId (), node .valueOf ());
 
-      node .typeName_changed .addFieldCallback (this .exportedNodeSymbol, this .updateNodeTypeName .bind (this, node));
-      node .name_changed     .addFieldCallback (this .exportedNodeSymbol, this .updateNodeName     .bind (this, node));
+      node .typeName_changed .addFieldCallback (this .#exportedNodeSymbol, this .updateNodeTypeName .bind (this, node));
+      node .name_changed     .addFieldCallback (this .#exportedNodeSymbol, this .updateNodeName     .bind (this, node));
 
       // Node
 
@@ -1203,9 +1205,9 @@ module .exports = class OutlineView extends Interface
       return child;
    }
 
-   static connectorId = 0
+   static connectorId = 0;
 
-   fieldButtonSymbol = Symbol ()
+   #fieldButtonSymbol = Symbol ();
 
    createFieldElement (parent, node, field, type = "field")
    {
@@ -1262,7 +1264,7 @@ module .exports = class OutlineView extends Interface
                .attr ("title", _ ("Toggle value."))
                .appendTo (child)
 
-            field .addFieldCallback (this .fieldButtonSymbol, this .updateBoolean .bind (this, parent, node, field))
+            field .addFieldCallback (this .#fieldButtonSymbol, this .updateBoolean .bind (this, parent, node, field))
             break
          }
          case X3D .X3DConstants .SFColor:
@@ -1274,7 +1276,7 @@ module .exports = class OutlineView extends Interface
                .css ("background-color", this .getColorFromField (field))
                .appendTo (child)
 
-            field .addFieldCallback (this .fieldButtonSymbol, this .updateColor .bind (this, parent, node, field))
+            field .addFieldCallback (this .#fieldButtonSymbol, this .updateColor .bind (this, parent, node, field))
             break
          }
          case X3D .X3DConstants .SFTime:
@@ -1615,7 +1617,7 @@ module .exports = class OutlineView extends Interface
       this .restoreScrollPositions ()
    }
 
-   routesFullSymbol = Symbol ()
+   #routesFullSymbol = Symbol ();
 
    expandField (parent, node, field, type, full)
    {
@@ -1698,7 +1700,7 @@ module .exports = class OutlineView extends Interface
       }
 
       if (full)
-         field .addRouteCallback (this .routesFullSymbol, this .updateField .bind (this, parent, node, field, type, full))
+         field .addRouteCallback (this .#routesFullSymbol, this .updateField .bind (this, parent, node, field, type, full))
    }
 
    expandMFNode (parent, node, field, type, full)
@@ -2036,11 +2038,11 @@ module .exports = class OutlineView extends Interface
       field .removeFieldCallback (this)
    }
 
-   fieldValueSymbol = Symbol ()
+   #fieldValueSymbol = Symbol ();
 
    connectField (input, node, field, assign)
    {
-      field .addFieldCallback (this .fieldValueSymbol, () =>
+      field .addFieldCallback (this .#fieldValueSymbol, () =>
       {
          if (field .getType () === X3D .X3DConstants .SFString)
             input .val (field .getValue ())
@@ -2154,7 +2156,7 @@ module .exports = class OutlineView extends Interface
 
    connectArrayField (textarea, node, field, assign)
    {
-      field .addFieldCallback (this .fieldValueSymbol, this .setTextArea .bind (this, textarea, node, field))
+      field .addFieldCallback (this .#fieldValueSymbol, this .setTextArea .bind (this, textarea, node, field))
 
       if (assign)
          this .onArrayFieldEdited (textarea, node, field)
@@ -2578,7 +2580,7 @@ module .exports = class OutlineView extends Interface
          if (node .getType () .includes (X3D .X3DConstants .X3DUrlObject))
          {
             node .getLoadState () .removeFieldCallback (this);
-            node .getLoadState () .removeFieldCallback (this .updateNodeLoadState);
+            node .getLoadState () .removeFieldCallback (this .#updateNodeLoadStateSymbol);
          }
 
          node .getPredefinedFields ()  .removeInterest ("updateNode", this);
@@ -2594,8 +2596,8 @@ module .exports = class OutlineView extends Interface
          field .removeReferencesCallback (this);
          field .removeRouteCallback (this);
          field .removeFieldCallback (this);
-         field .removeFieldCallback (this .fieldButtonSymbol);
-         field .removeFieldCallback (this .fieldValueSymbol);
+         field .removeFieldCallback (this .#fieldButtonSymbol);
+         field .removeFieldCallback (this .#fieldValueSymbol);
       });
 
       // Field is collapsed.
@@ -2608,8 +2610,8 @@ module .exports = class OutlineView extends Interface
                element = $(e),
                field   = this .getField (element);
 
-            field .removeRouteCallback (this .routesFullSymbol);
-            field .removeFieldCallback (this .fieldValueSymbol);
+            field .removeRouteCallback (this .#routesFullSymbol);
+            field .removeFieldCallback (this .#fieldValueSymbol);
          });
       }
 
