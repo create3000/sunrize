@@ -1068,11 +1068,7 @@ module .exports = class OutlineView extends Interface
 
    createImportedNodeElement (type, parent, scene, importedNode)
    {
-      importedNode .getInlineNode () .getLoadState () .addFieldCallback (this .#importedNodeSymbol, () =>
-      {
-         // Must be done later, otherwise connections will be lost.
-         setTimeout (() => this .updateScene (parent, scene));
-      });
+      importedNode .getInlineNode () .getLoadState () .addFieldCallback (this .#importedNodeSymbol, this .updateScene .bind (this, parent, scene));
 
       try
       {
@@ -2551,11 +2547,14 @@ module .exports = class OutlineView extends Interface
 
    removeSubtree (element)
    {
-      this .disconnectSubtree (element)
+      if (!element .prop ("isConnected"))
+         return;
+
+      this .disconnectSubtree (element);
 
       // Remove subtree.
 
-      element .find ("> .subtree") .remove ()
+      element .find ("> .subtree") .remove ();
    }
 
    disconnectSubtree (element)
