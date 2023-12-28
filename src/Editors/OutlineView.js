@@ -2572,6 +2572,9 @@ module .exports = class OutlineView extends Interface
          scene .protos        .removeInterest ("updateSceneSubtree", this);
          scene .importedNodes .removeInterest ("updateSceneSubtree", this);
 
+         for (const importedNode of scene .importedNodes)
+            importedNode .getInlineNode () .getLoadState () .removeFieldCallback (this .#importedNodeSymbol);
+
          scene .rootNodes .removeFieldCallback (this);
 
          if (scene instanceof X3D .X3DScene)
