@@ -990,7 +990,9 @@ module .exports = class OutlineView extends Interface
                .appendTo (name);
          }
 
-         if (node .valueOf () .getType () .includes (X3D .X3DConstants .X3DUrlObject))
+         if (node .getExecutionContext () .getOuterNode () instanceof X3D .X3DProtoDeclaration
+             ? node .valueOf () .getType () .includes (X3D .X3DConstants .Inline)
+             : node .valueOf () .getType () .includes (X3D .X3DConstants .X3DUrlObject))
          {
             const [className] = this .getLoadState (node .checkLoadState (), node .getTypeName ());
 
