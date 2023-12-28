@@ -2724,9 +2724,6 @@ module .exports = class OutlineView extends Interface
          element = target .closest (".node", this .sceneGraph),
          node    = this .getNode (element);
 
-      if (!node .isInitialized ())
-         node .setup ();
-
       node .loadNow () .catch (Function .prototype);
    }
 
