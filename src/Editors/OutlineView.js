@@ -171,10 +171,27 @@ module .exports = class OutlineView extends Interface
       this .restoreScrollPositions ()
    }
 
+   addEventField (self)
+   {
+      self .executionContext .getBrowser () .add
+   }
+
    expandScene (parent, scene)
    {
       parent .data ("expanded",      true)
       parent .data ("full-expanded", false)
+
+      if (scene .getOuterNode () instanceof X3D .X3DProtoDeclaration)
+      {
+         Traverse .traverse (scene, Traverse .ROOT_NODES, node =>
+         {
+            if (node .isInitialized ())
+               return;
+
+            node .getFields () .forEach (field => field .setTainted (false));
+            node ._loadState ?.setTainted (false);
+         });
+      }
 
       if (scene instanceof X3D .X3DScene)
          scene .units .addInterest ("updateScene", this, parent, scene)
