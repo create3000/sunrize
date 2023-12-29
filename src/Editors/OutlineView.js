@@ -1811,6 +1811,9 @@ module .exports = class OutlineView extends Interface
             .on ("dragstart", this .onDragStartNode .bind (this))
       }
 
+      child .find (".node .name")
+         .on ("mouseenter", this .updateNodeTitle .bind (this));
+
       child .find (".visibility")
          .on ("click", this .toggleVisibility .bind (this))
 
@@ -1918,6 +1921,9 @@ module .exports = class OutlineView extends Interface
             .attr ("draggable", "true")
             .on ("dragstart", this .onDragStartNode .bind (this))
       }
+
+      child .find (".node .name")
+         .on ("mouseenter", this .updateNodeTitle .bind (this));
 
       child .find (".visibility")
          .on ("click", this .toggleVisibility .bind (this))
