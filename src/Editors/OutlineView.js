@@ -1532,7 +1532,7 @@ module .exports = class OutlineView extends Interface
          title += `Description:\n\n${description}\n\n`;
 
       if (field instanceof X3D .X3DArrayField)
-         title += `Number of values of this particular field are: ${field .length .toLocaleString (_.locale)}`;
+         title += `Number of values of this particular field are: ${field .length}`;
       else
          title += `Current value of this particular field is: ${field .toString ({ scene: node .getExecutionContext () })}`;
 
