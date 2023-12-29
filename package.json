@@ -15,6 +15,7 @@
     "start": "electron .",
     "development": "SUNRISE_ENVIRONMENT=DEVELOPMENT electron .",
     "release": "node build/release.js",
+    "x3duom": "sh build/x3duom.sh",
     "download": "node build/download.js",
     "premake": "npm i -D electron",
     "make": "env PATH=\"$(pwd)/build/wine-proxy:$PATH\" electron-forge make",

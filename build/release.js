@@ -30,6 +30,9 @@ function main ()
 
 	systemSync (`npm i x_ite@latest`);
 
+	// x3duom
+	systemSync (`npm run x3duom`);
+
 	// commit
 	systemSync (`git add -A`);
 	systemSync (`git commit -am 'Published version ${version}'`);
