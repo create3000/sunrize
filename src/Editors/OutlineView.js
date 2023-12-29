@@ -3,6 +3,8 @@
 const
    $            = require ("jquery"),
    electron     = require ("electron"),
+   fs           = require ("fs"),
+   path         = require ("path"),
    url          = require ("url"),
    util         = require ("util"),
    jstree       = require ("jstree"),
@@ -30,6 +32,7 @@ module .exports = class OutlineView extends Interface
       this .objects           = new Map () // <id, node>
       this .actionKeys        = new ActionKeys ("OutlineView")
       this .onDemandToolNodes = new Set ()
+      this .x3duom            = $($.parseXML (fs .readFileSync (path .join (__dirname, "..", "assets", "x3duom.xml"), "utf-8")));
 
       this .globalConfig .setDefaultValues ({
          expandExternProtoDeclarations: true,
@@ -274,6 +277,9 @@ module .exports = class OutlineView extends Interface
             .attr ("draggable", "true")
             .on ("dragstart", this .onDragStartNode .bind (this))
       }
+
+      child .find (".node .name")
+         .on ("mouseenter", this .updateNodeTitle .bind (this));
 
       child .find (".visibility")
          .on ("click", this .toggleVisibility .bind (this))
@@ -742,7 +748,7 @@ module .exports = class OutlineView extends Interface
          .find (".item") .append ("<div class=\"route-curves\"><canvas></canvas></div>");
 
       child .find (".field .name, .special .name")
-         .on ("mouseenter", this .updateTitle .bind (this));
+         .on ("mouseenter", this .updateFieldTitle .bind (this));
 
       child .find ("area.input-selector")
          .on ("mouseenter", this .hoverInConnector .bind (this, "input"))
@@ -1495,22 +1501,42 @@ module .exports = class OutlineView extends Interface
       return child
    }
 
-   updateTitle (event)
+   updateNodeTitle (event)
    {
       const
-         name    = $(event .currentTarget),
-         element = $(event .currentTarget) .closest (".field, .special", this .sceneGraph),
-         node    = this .objects .get (parseInt (element .attr ("node-id"))),
-         field   = this .objects .get (parseInt (element .attr ("field-id")))
+         name        = $(event .currentTarget),
+         element     = $(event .currentTarget) .closest (".node, .special", this .sceneGraph),
+         node        = this .objects .get (parseInt (element .attr ("node-id"))),
+         description = this .x3duom .find (`ConcreteNode[name="${node .getTypeName ()}"] InterfaceDefinition`) .attr ("appinfo");
+
+      let title = "";
+
+      if (description)
+         title += `Description:\n\n${description}`;
+
+      name .attr ("title", title);
+   }
+
+   updateFieldTitle (event)
+   {
+      const
+         name        = $(event .currentTarget),
+         element     = $(event .currentTarget) .closest (".field, .special", this .sceneGraph),
+         node        = this .objects .get (parseInt (element .attr ("node-id"))),
+         field       = this .objects .get (parseInt (element .attr ("field-id"))),
+         description = this .x3duom .find (`ConcreteNode[name="${node .getTypeName ()}"] field[name="${field .getName ()}"]`) .attr ("description");
+
+      let title = "";
+
+      if (description)
+         title += `Description:\n\n${description}\n\n`;
 
       if (field instanceof X3D .X3DArrayField)
-      {
-         name .attr ("title", util .format (field .length === 1 ? _ ("%s value") : _ ("%s values"), field .length .toLocaleString (_.locale)))
-      }
+         title += `Number of values of this particular field are: ${field .length .toLocaleString (_.locale)}`;
       else
-      {
-         name .attr ("title", field .toString ({ scene: node .getExecutionContext () }))
-      }
+         title += `Current value of this particular field is: ${field .toString ({ scene: node .getExecutionContext () })}`;
+
+      name .attr ("title", title);
    }
 
    updateReferences (parent, node, field)
@@ -2030,6 +2056,8 @@ module .exports = class OutlineView extends Interface
 
       const input = child .find ("input")
 
+      input .on ("mouseenter", this .updateFieldTitle .bind (this))
+
       if (field .getType () === X3D .X3DConstants .SFString)
          input .val (field .getValue ())
       else
@@ -2154,7 +2182,7 @@ module .exports = class OutlineView extends Interface
       this .setTextAreaTabs (textarea)
       this .setTextArea (textarea, node, field)
 
-      textarea .on ("mouseenter", this .updateTitle .bind (this))
+      textarea .on ("mouseenter", this .updateFieldTitle .bind (this))
 
       if ((field .isInput () || field .isInitializable ()) && this .isEditable (parent))
       {
