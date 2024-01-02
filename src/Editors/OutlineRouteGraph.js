@@ -98,7 +98,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 	{
 		const canvases = this .sceneGraph .find (".route-curves canvas");
 
-		// Determine visible routes.
+		// Determine visible routes, those routes have a value of 2.
 
 		const fields = new Map ();
 
