@@ -302,7 +302,7 @@ module .exports = class OutlineView extends Interface
 
    expandSceneSubtreeComplete (specialElements, elements)
    {
-      this .updateRouteGraph ()
+      this .updateRouteGraph ();
 
       // Reopen externprotos, protos, imported, exported nodes.
 
@@ -310,11 +310,11 @@ module .exports = class OutlineView extends Interface
       {
          const
             element = $(e),
-            node    = this .getNode (element)
+            node    = this .getNode (element);
 
          if (node && node .getUserData (_expanded) && element .jstree ("is_closed", element))
          {
-            element .jstree ("open_node", element)
+            element .jstree ("open_node", element);
          }
       }
 
@@ -324,12 +324,12 @@ module .exports = class OutlineView extends Interface
       {
          const
             element = $(e),
-            node    = this .getNode (element)
+            node    = this .getNode (element);
 
          if (node .getUserData (_expanded) && element .jstree ("is_closed", element))
          {
-            element .data ("auto-expand", true)
-            element .jstree ("open_node", element)
+            element .data ("auto-expand", true);
+            element .jstree ("open_node", element);
          }
       }
    }
@@ -467,47 +467,38 @@ module .exports = class OutlineView extends Interface
 
    expandSceneImportedNodes (parent, scene)
    {
-      scene .importedNodes .addInterest ("updateSceneSubtree", this, parent, scene, "imported-nodes", "expandSceneImportedNodes")
+      scene .importedNodes .addInterest ("updateSceneSubtree", this, parent, scene, "imported-nodes", "expandSceneImportedNodes");
 
       const child = $("<div></div>")
-         .addClass (["imported-nodes", "subtree"])
+         .addClass (["imported-nodes", "subtree"]);
 
       if (!scene .importedNodes .length)
-         return child .appendTo (parent)
+         return child .appendTo (parent);
 
       const importedNodes = Array .from (scene .importedNodes) .sort ((a, b) =>
       {
-         return this .naturalCompare (a .getImportedName (), b .getImportedName ())
-      })
+         return this .naturalCompare (a .getImportedName (), b .getImportedName ());
+      });
 
       const ul = $("<ul></ul>")
-         .appendTo (child)
+         .appendTo (child);
 
       $("<li></li>")
          .addClass (["imported-nodes", "description", "no-select"])
          .text ("Imported Nodes")
-         .appendTo (ul)
+         .appendTo (ul);
 
       for (const importedNode of importedNodes)
-      {
-         try
-         {
-            ul .append (this .createImportedNodeElement ("imported-node", parent, scene, importedNode))
-         }
-         catch
-         {
-            // Exported node not found.
-         }
-      }
+         ul .append (this .createImportedNodeElement ("imported-node", parent, scene, importedNode));
 
       // Added to prevent bug, that last route is not drawn right.
       $("<li></li>")
          .addClass (["last", "no-select"])
-         .appendTo (ul)
+         .appendTo (ul);
 
-      this .connectSceneSubtree (parent, child)
+      this .connectSceneSubtree (parent, child);
 
-      return child
+      return child;
    }
 
    expandSceneExportedNodes (parent, scene)
@@ -1258,8 +1249,9 @@ module .exports = class OutlineView extends Interface
       const child = $("<li></li>")
          .addClass (classes)
          .attr ("node-id", node .getId ())
+         .attr ("imported-node-id", parent .attr ("imported-node-id"))
          .attr ("field-id", field .getId ())
-         .attr ("type-name", field .getTypeName ())
+         .attr ("type-name", field .getTypeName ());
 
       // Icon
 
