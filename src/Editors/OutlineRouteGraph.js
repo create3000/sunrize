@@ -112,7 +112,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 			const
 				field       = this .getField (element),
-				nodeElement = element .closest ("li.imported-node,li.node", this .sceneGraph),
+				nodeElement = element .closest ("li.node,li.externproto,li.proto,li.imported-node", this .sceneGraph),
 				nodeId      = nodeElement .attr ("imported-node-id") || nodeElement .attr ("node-id");
 
 			fields .add (`${nodeId}.${field .getName ()}`);
