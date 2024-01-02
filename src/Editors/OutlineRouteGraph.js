@@ -98,9 +98,9 @@ module .exports = class OutlineRouteGraph extends OutlineView
 	{
 		const canvases = this .sceneGraph .find (".route-curves canvas");
 
-		// Determine visible fields.
+		// Determine visible routes.
 
-		const fields = new Set ();
+		const fields = new Map ();
 
 		canvases .each ((i, canvas) =>
 		{
@@ -110,17 +110,13 @@ module .exports = class OutlineRouteGraph extends OutlineView
 			if (!element .length)
 				return;
 
-			const
-				field  = this .getField (element),
-				nodeId = element .attr ("imported-node-id") || element .attr ("node-id");
+			const field = this .getField (element);
 
-			fields .add (`${nodeId}.${field .getName ()}`);
+			for (const route of field .getInputRoutes ())
+				fields .set (route, (fields .get (route) ?? 0) + 1);
 
-			if (field .getAccessType () !== X3D .X3DConstants .inputOutput)
-				return;
-
-			fields .add (`${nodeId}.set_${field .getName ()}`);
-			fields .add (`${nodeId}.${field .getName ()}_changed`);
+			for (const route of field .getOutputRoutes ())
+				fields .set (route, (fields .get (route) ?? 0) + 1);
 		});
 
 		this .sceneGraph
@@ -242,7 +238,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 				if (!route)
 					break;
 
-				if (!fields .has (`${route .getSourceNode () .getId ()}.${route .getSourceField ()}`))
+				if (fields .get (route) !== 2)
 					break;
 
 				context .strokeStyle = this .selectedRoutes .has (route .getId ()) ? routeSelectedColor : routeColor;
@@ -262,7 +258,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 				if (!route)
 					break;
 
-				if (!fields .has (`${route .getDestinationNode () .getId ()}.${route .getDestinationField ()}`))
+				if (fields .get (route) !== 2)
 					break;
 
 				context .strokeStyle = this .selectedRoutes .has (route .getId ()) ? routeSelectedColor : routeColor;
@@ -331,7 +327,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 					if (routeId !== undefined && route .getId () !== routeId)
 						return;
 
-					if (!fields .has (`${route .getSourceNode () .getId ()}.${route .getSourceField ()}`))
+					if (fields .get (route) !== 2)
 						return;
 
 					if (routes .has (route))
@@ -356,7 +352,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 					if (routeId !== undefined && route .getId () !== routeId)
 						return;
 
-					if (!fields .has (`${route .getDestinationNode () .getId ()}.${route .getDestinationField ()}`))
+					if (fields .get (route) !== 2)
 						return;
 
 					if (routes .has (route))
@@ -485,7 +481,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 	{
 		for (const route of field .getInputRoutes ())
 		{
-			if (fields .has (`${route .getSourceNode () .getId ()}.${route .getSourceField ()}`))
+			if (fields .get (route) === 2)
 				return true;
 		}
 
@@ -496,7 +492,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 	{
 		for (const route of field .getOutputRoutes ())
 		{
-			if (fields .has (`${route .getDestinationNode () .getId ()}.${route .getDestinationField ()}`))
+			if (fields .get (route) === 2)
 				return true;
 		}
 

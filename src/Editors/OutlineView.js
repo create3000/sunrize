@@ -1249,7 +1249,6 @@ module .exports = class OutlineView extends Interface
       const child = $("<li></li>")
          .addClass (classes)
          .attr ("node-id", node .getId ())
-         .attr ("imported-node-id", parent .attr ("imported-node-id"))
          .attr ("field-id", field .getId ())
          .attr ("type-name", field .getTypeName ());
 
