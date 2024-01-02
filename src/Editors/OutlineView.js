@@ -2765,7 +2765,10 @@ module .exports = class OutlineView extends Interface
          element = target .closest (".node", this .sceneGraph),
          node    = this .getNode (element);
 
-      node .loadNow () .catch (Function .prototype);
+      if (node ._load .getValue ())
+         node .loadNow () .catch (Function .prototype);
+      else
+         node .unloadNow ();
    }
 
    hideUnselectedObjects ()
