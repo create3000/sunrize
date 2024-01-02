@@ -110,8 +110,19 @@ module .exports = class OutlineRouteGraph extends OutlineView
 			if (!element .length)
 				return;
 
-			fields .add (this .getField (element));
-		})
+			const
+				field       = this .getField (element),
+				nodeElement = element .closest ("li.imported-node,li.node", this .sceneGraph),
+				nodeId      = nodeElement .attr ("imported-node-id") || nodeElement .attr ("node-id");
+
+			fields .add (`${nodeId}.${field .getName ()}`);
+
+			if (field .getAccessType () !== X3D .X3DConstants .inputOutput)
+				return;
+
+			fields .add (`${nodeId}.set_${field .getName ()}`);
+			fields .add (`${nodeId}.${field .getName ()}_changed`);
+		});
 
 		this .sceneGraph
 			.find ("canvas.field-routes")
@@ -150,64 +161,52 @@ module .exports = class OutlineRouteGraph extends OutlineView
 			}
 			case X3D .X3DConstants .inputOnly:
 			{
-				if (field .getInputRoutes () .size)
+				if (this .hasInputRoutes (field, fields))
 				{
-					if (this .hasSourceField (fields, field))
-					{
-						context .strokeStyle = this .haveSelectedRoute (field .getInputRoutes ()) ? routeSelectedColor : routeColor;
+					context .strokeStyle = this .haveSelectedRoute (field .getInputRoutes ()) ? routeSelectedColor : routeColor;
 
-						context .beginPath ();
-						context .moveTo (26, 3.5);
-						context .lineTo (canvas .width + 1, 3.5);
-						context .stroke ();
-					}
+					context .beginPath ();
+					context .moveTo (26, 3.5);
+					context .lineTo (canvas .width + 1, 3.5);
+					context .stroke ();
 				}
 
 				break
 			}
 			case X3D .X3DConstants .outputOnly:
 			{
-				if (field .getOutputRoutes () .size)
+				if (this .hasOutputRoutes (field, fields))
 				{
-					if (this .hasDestinationField (fields, field))
-					{
-						context .strokeStyle = this .haveSelectedRoute (field .getOutputRoutes ()) ? routeSelectedColor : routeColor;
+					context .strokeStyle = this .haveSelectedRoute (field .getOutputRoutes ()) ? routeSelectedColor : routeColor;
 
-						context .beginPath ();
-						context .moveTo (26, 8.5);
-						context .lineTo (canvas .width + 1, 8.5);
-						context .stroke ();
-					}
+					context .beginPath ();
+					context .moveTo (26, 8.5);
+					context .lineTo (canvas .width + 1, 8.5);
+					context .stroke ();
 				}
 
 				break
 			}
 			case X3D .X3DConstants .inputOutput:
 			{
-				if (field .getInputRoutes () .size)
+				if (this .hasInputRoutes (field, fields))
 				{
-					if (this .hasSourceField (fields, field))
-					{
-						context .strokeStyle = this .haveSelectedRoute (field .getInputRoutes ()) ? routeSelectedColor : routeColor;
+					context .strokeStyle = this .haveSelectedRoute (field .getInputRoutes ()) ? routeSelectedColor : routeColor;
 
-						context .beginPath ();
-						context .moveTo (40, 3.5);
-						context .lineTo (canvas .width + 1, 3.5);
-						context .stroke ();
-					}
+					context .beginPath ();
+					context .moveTo (40, 3.5);
+					context .lineTo (canvas .width + 1, 3.5);
+					context .stroke ();
 				}
 
-				if (field .getOutputRoutes () .size)
+				if (this .hasOutputRoutes (field, fields))
 				{
-					if (this .hasDestinationField (fields, field))
-					{
-						context .strokeStyle = this .haveSelectedRoute (field .getOutputRoutes ()) ? routeSelectedColor : routeColor;
+					context .strokeStyle = this .haveSelectedRoute (field .getOutputRoutes ()) ? routeSelectedColor : routeColor;
 
-						context .beginPath ();
-						context .moveTo (field .getInputRoutes () .size ? 54 : 40, 8.5);
-						context .lineTo (canvas .width + 1, 8.5);
-						context .stroke ();
-					}
+					context .beginPath ();
+					context .moveTo (field .getInputRoutes () .size ? 54 : 40, 8.5);
+					context .lineTo (canvas .width + 1, 8.5);
+					context .stroke ();
 				}
 
 				break;
@@ -244,7 +243,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 				if (!route)
 					break;
 
-				if (!fields .has (route .getSourceNode () .getField (route .sourceField)))
+				if (!fields .has (`${route .getSourceNode () .getId ()}.${route .getSourceField ()}`))
 					break;
 
 				context .strokeStyle = this .selectedRoutes .has (route .getId ()) ? routeSelectedColor : routeColor;
@@ -264,7 +263,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 				if (!route)
 					break;
 
-				if (!fields .has (route .getDestinationNode () .getField (route .destinationField)))
+				if (!fields .has (`${route .getDestinationNode () .getId ()}.${route .getDestinationField ()}`))
 					break;
 
 				context .strokeStyle = this .selectedRoutes .has (route .getId ()) ? routeSelectedColor : routeColor;
@@ -333,7 +332,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 					if (routeId !== undefined && route .getId () !== routeId)
 						return;
 
-					if (!fields .has (route .getSourceNode () .getField (route .sourceField)))
+					if (!fields .has (`${route .getSourceNode () .getId ()}.${route .getSourceField ()}`))
 						return;
 
 					if (routes .has (route))
@@ -358,7 +357,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 					if (routeId !== undefined && route .getId () !== routeId)
 						return;
 
-					if (!fields .has (route .getDestinationNode () .getField (route .destinationField)))
+					if (!fields .has (`${route .getDestinationNode () .getId ()}.${route .getDestinationField ()}`))
 						return;
 
 					if (routes .has (route))
@@ -483,22 +482,22 @@ module .exports = class OutlineRouteGraph extends OutlineView
 		})
 	}
 
-	hasSourceField (fields, field)
+	hasInputRoutes (field, fields)
 	{
 		for (const route of field .getInputRoutes ())
 		{
-			if (fields .has (route .getSourceNode () .getField (route .sourceField)))
+			if (fields .has (`${route .getSourceNode () .getId ()}.${route .getSourceField ()}`))
 				return true;
 		}
 
 		return false;
 	}
 
-	hasDestinationField (fields, field)
+	hasOutputRoutes (field, fields)
 	{
 		for (const route of field .getOutputRoutes ())
 		{
-			if (fields .has (route .getDestinationNode () .getField (route .destinationField)))
+			if (fields .has (`${route .getDestinationNode () .getId ()}.${route .getDestinationField ()}`))
 				return true;
 		}
 
