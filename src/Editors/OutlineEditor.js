@@ -1458,13 +1458,13 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const
          element = $(event .currentTarget) .closest (".field", this .sceneGraph),
          node    = this .getNode (element),
-         field   = this .getField (element)
+         field   = this .getField (element);
 
-      event .preventDefault ()
-      event .stopImmediatePropagation ()
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
 
       if (!this .isEditable (element .parent ()))
-         return
+         return;
 
       if (event .ctrlKey || event .metaKey)
       {
@@ -1472,7 +1472,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          {
             case "input":
             {
-            	const routes = field .getInputRoutes ()
+            	const routes = field .getInputRoutes ();
 
             	switch (routes .size)
             	{
@@ -1486,16 +1486,16 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             			{
             				// Delete route.
 
-            				Editor .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField)
+            				Editor .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField);
             			}
 
-            			break
+            			break;
             		}
             		default:
             		{
-            			element .data ("full-expanded", true)
-            			element .jstree ("open_node", element)
-            			break
+            			element .data ("full-expanded", true);
+            			element .jstree ("open_node", element);
+            			break;
             		}
             	}
 
@@ -1503,7 +1503,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             }
             case "output":
             {
-            	const routes = field .getOutputRoutes ()
+            	const routes = field .getOutputRoutes ();
 
             	switch (routes .size)
             	{
@@ -1517,20 +1517,20 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             			{
             				// Delete route.
 
-            				Editor .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField)
+            				Editor .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField);
             			}
 
-            			break
+            			break;
             		}
             		default:
             		{
-            			element .data ("full-expanded", true)
-            			element .jstree ("open_node", element)
-            			break
+            			element .data ("full-expanded", true);
+            			element .jstree ("open_node", element);
+            			break;
             		}
             	}
 
-            	break
+            	break;
             }
          }
       }
@@ -1538,7 +1538,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       {
          const
             sceneElement     = element .closest (".scene", this .sceneGraph),
-            executionContext = this .getNode (sceneElement)
+            executionContext = this .getNode (sceneElement);
 
          switch (type)
          {
@@ -1547,29 +1547,32 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             	if (this .connector)
             	{
             		if (this .connector .type === type)
-            			break
+            			break;
 
             		if (this .connector .executionContext !== executionContext)
-            			break
+            			break;
 
             		if (this .connector .field .getType () !== field .getType ())
-            			break
+            			break;
+
+                  if (this .connector .node .getField (this .connector .field .getName ()) .getFieldInterests () .has (node .getField (field .getName ())))
+                     break;
 
             		// Add route.
 
-            		Editor .addRoute (executionContext, this .connector .node, this .connector .field .getName (), node, field .getName ())
+            		Editor .addRoute (executionContext, this .connector .node, this .connector .field .getName (), node, field .getName ());
 
             		if (event .shiftKey)
-            			break
+            			break;
 
             		this .connector .element .find (".access-type img.active.output.activated")
-            			.removeClass ("activated")
+            			.removeClass ("activated");
 
-            		delete this .connector
+            		delete this .connector;
             	}
             	else
             	{
-            		this .connector = { type: type, executionContext: executionContext, node: node, field: field, element: element }
+            		this .connector = { type, executionContext, node, field, element };
             	}
 
             	break
@@ -1579,32 +1582,35 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             	if (this .connector)
             	{
             		if (this .connector .type === type)
-            			break
+            			break;
 
             		if (this .connector .executionContext !== executionContext)
-            			break
+            			break;
 
             		if (this .connector .field .getType () !== field .getType ())
-            			break
+            			break;
+
+                  if (node .getField (field .getName ()) .getFieldInterests () .has (this .connector .node .getField (this .connector .field .getName ())))
+                     break;
 
             		// Add route.
 
-            		Editor .addRoute (executionContext, node, field .getName (), this .connector .node, this .connector .field .getName ())
+            		Editor .addRoute (executionContext, node, field .getName (), this .connector .node, this .connector .field .getName ());
 
             		if (event .shiftKey)
-            			break
+            			break;
 
             		this .connector .element .find (".access-type img.active.input.activated")
-            			.removeClass ("activated")
+            			.removeClass ("activated");
 
-            		delete this .connector
+            		delete this .connector;
             	}
             	else
             	{
-            		this .connector = { type: type, executionContext: executionContext, node: node, field: field, element: element }
+            		this .connector = { type, executionContext, node, field, element };
             	}
 
-            	break
+            	break;
             }
          }
       }
