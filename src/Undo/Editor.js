@@ -863,8 +863,18 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       {
          const
             oldImportedNode = executionContext .getImportedNodes () .get (oldImportedName),
-            newImportedNode = executionContext .getImportedNodes () .get (importedName),
-            routes          = Array .from (oldImportedNode .getRoutes ());
+            newImportedNode = executionContext .getImportedNodes () .get (importedName);
+
+         const routes = executionContext .getRoutes () .filter (route =>
+         {
+            if (route .sourceNode === oldImportedNode)
+               return true;
+
+            if (route .destinationNode === oldImportedNode)
+               return true;
+
+            return false;
+         });
 
          executionContext .removeImportedNode (oldImportedName);
 
@@ -904,8 +914,18 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       const
          importedNode = executionContext .getImportedNodes () .get (importedName),
          inlineNode   = importedNode .getInlineNode (),
-         exportedName = importedNode .getExportedName (),
-         routes       = Array .from (importedNode .getRoutes ());
+         exportedName = importedNode .getExportedName ();
+
+      const routes = executionContext .getRoutes () .filter (route =>
+      {
+         if (route .sourceNode === importedNode)
+            return true;
+
+         if (route .destinationNode === importedNode)
+            return true;
+
+         return false;
+      });
 
       undoManager .beginUndo (_ ("Remove Imported Node »%s«"), importedName);
 
