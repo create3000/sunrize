@@ -2242,83 +2242,77 @@ module .exports = class OutlineView extends Interface
          .attr ("node-id", node .getId ())
          .attr ("field-id", field .getId ())
          .attr ("route-id", route .getId ())
-         .attr ("route-type", type)
+         .attr ("route-type", type);
 
       // Icon
 
       $("<img></img>")
          .addClass ("icon")
          .attr ("src", "../images/OutlineEditor/Node/Route.svg")
-         .appendTo (child)
+         .appendTo (child);
 
       // Name
 
       const name = $("<div></div>")
          .addClass ("name")
-         .appendTo (child)
+         .appendTo (child);
 
       const connectorDescription = $("<span></span>")
          .addClass ("connector-description")
-         .appendTo (name)
+         .appendTo (name);
 
       switch (type)
       {
          case "input":
          {
-            if (route .getSourceNode () instanceof X3D .X3DNode)
-            {
-               connectorDescription .text (util .format (_ ("Route from %s<%s>.%s"), route .getSourceNode () .getTypeName (), route .getSourceNode () .getName () || _ ("unnamed"), route .sourceField))
-            }
-            else
-            {
-               connectorDescription .text (util .format (_ ("Route from %s<%s>.%s"), route .getSourceNode () .getTypeName (), route .getSourceNode () .getImportedName () || _ ("unnamed"), route .sourceField))
-            }
+            const sourceNodeName = route .getSourceNode () instanceof X3D .X3DNode
+               ? route .getSourceNode () .getName ()
+               : route .getSourceNode () .getImportedName ();
 
-            break
+            connectorDescription .text (util .format (_ ("Route from %s<%s>.%s"), route .getSourceNode () .getTypeName (), sourceNodeName || _ ("unnamed"), route .sourceField));
+
+            break;
          }
          case "output":
          {
-            if (route .getDestinationNode () instanceof X3D .X3DNode)
-            {
-               connectorDescription .text (util .format (_ ("Route to %s<%s>.%s"), route .getDestinationNode () .getTypeName (), route .getDestinationNode () .getName () || _ ("unnamed"), route .destinationField));
-            }
-            else
-            {
-               connectorDescription .text (util .format (_ ("Route to %s<%s>.%s"), route .getDestinationNode () .getTypeName (), route .getDestinationNode () .getImportedName () || _ ("unnamed"), route .destinationField));
-            }
+            const destinationNodeName = route .getDestinationNode () instanceof X3D .X3DNode
+               ? route .getDestinationNode () .getName ()
+               : route .getDestinationNode () .getImportedName ();
 
-            break
+            connectorDescription .text (util .format (_ ("Route to %s<%s>.%s"), route .getDestinationNode () .getTypeName (), destinationNodeName || _ ("unnamed"), route .destinationField));#
+
+            break;
          }
       }
 
       const accessType = $("<div></div>")
          .addClass (["access-type", type])
-         .appendTo (child)
+         .appendTo (child);
 
       const singleRoute = $("<canvas></canvas>")
          .addClass ("single-route")
-         .appendTo (accessType)
+         .appendTo (accessType);
 
-      const mapId = ++ OutlineView .connectorId
+      const mapId = ++ OutlineView .connectorId;
 
       switch (type)
       {
          case "input":
          {
-            $("<img/>") .addClass ("image") .attr ("src", "../images/OutlineEditor/AccessTypes/inputOnly.1.png") .attr ("usemap", "#connector-id-" + mapId) .appendTo (accessType)
-            break
+            $("<img/>") .addClass ("image") .attr ("src", "../images/OutlineEditor/AccessTypes/inputOnly.1.png") .attr ("usemap", "#connector-id-" + mapId) .appendTo (accessType);
+            break;
          }
          case "output":
          {
-            $("<img/>") .addClass ("image") .attr ("src", "../images/OutlineEditor/AccessTypes/outputOnly.1.png") .attr ("usemap", "#connector-id-" + mapId) .appendTo (accessType)
-            break
+            $("<img/>") .addClass ("image") .attr ("src", "../images/OutlineEditor/AccessTypes/outputOnly.1.png") .attr ("usemap", "#connector-id-" + mapId) .appendTo (accessType);
+            break;
          }
       }
 
       const map = $("<map></map>")
          .attr ("id", "connector-id-" + mapId)
          .attr ("name", "connector-id-" + mapId)
-         .appendTo (accessType)
+         .appendTo (accessType);
 
       switch (type)
       {
@@ -2330,7 +2324,7 @@ module .exports = class OutlineView extends Interface
                .attr ("shape", "rect")
                .attr ("coords", "0,0,13,12")
                .addClass ("input-selector")
-               .appendTo (map)
+               .appendTo (map);
 
             $("<area></area>")
                .attr ("title", _ ("Select route."))
@@ -2338,9 +2332,9 @@ module .exports = class OutlineView extends Interface
                .attr ("shape", "rect")
                .attr ("coords", "20,0,28,7")
                .addClass ("input-routes-selector")
-               .appendTo (map)
+               .appendTo (map);
 
-            break
+            break;
          }
          case "output":
          {
@@ -2350,7 +2344,7 @@ module .exports = class OutlineView extends Interface
                .attr ("shape", "rect")
                .attr ("coords", "0,0,14,12")
                .addClass ("output-selector")
-               .appendTo (map)
+               .appendTo (map);
 
             $("<area></area>")
                .attr ("title", _ ("Select route."))
@@ -2358,9 +2352,9 @@ module .exports = class OutlineView extends Interface
                .attr ("shape", "rect")
                .attr ("coords", "20,5,28,12")
                .addClass ("output-routes-selector")
-               .appendTo (map)
+               .appendTo (map);
 
-            break
+            break;
          }
       }
 
@@ -2368,17 +2362,17 @@ module .exports = class OutlineView extends Interface
       {
          case "input":
          {
-            $("<img/>") .addClass (["active", "input"]) .attr ("src", this .getAccessTypeImage (field, "input")) .appendTo (accessType)
-            break
+            $("<img/>") .addClass (["active", "input"]) .attr ("src", this .getAccessTypeImage (field, "input")) .appendTo (accessType);
+            break;
          }
          case "output":
          {
-            $("<img/>") .addClass (["active", "output"]) .attr ("src", this .getAccessTypeImage (field, "output")) .appendTo (accessType)
-            break
+            $("<img/>") .addClass (["active", "output"]) .attr ("src", this .getAccessTypeImage (field, "output")) .appendTo (accessType);
+            break;
          }
       }
 
-      return child
+      return child;
    }
 
    setTextAreaTabs (textarea)
