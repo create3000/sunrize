@@ -2279,7 +2279,7 @@ module .exports = class OutlineView extends Interface
                ? route .getDestinationNode () .getName ()
                : route .getDestinationNode () .getImportedName ();
 
-            connectorDescription .text (util .format (_ ("Route to %s<%s>.%s"), route .getDestinationNode () .getTypeName (), destinationNodeName || _ ("unnamed"), route .destinationField));#
+            connectorDescription .text (util .format (_ ("Route to %s<%s>.%s"), route .getDestinationNode () .getTypeName (), destinationNodeName || _ ("unnamed"), route .destinationField));
 
             break;
          }
