@@ -2265,12 +2265,28 @@ module .exports = class OutlineView extends Interface
       {
          case "input":
          {
-            connectorDescription .text (util .format (_ ("Route from %s<%s>.%s"), route .getSourceNode () .getTypeName (), route .getSourceNode () .getName () || _ ("unnamed"), route .sourceField))
+            if (route .getSourceNode () instanceof X3D .X3DNode)
+            {
+               connectorDescription .text (util .format (_ ("Route from %s<%s>.%s"), route .getSourceNode () .getTypeName (), route .getSourceNode () .getName () || _ ("unnamed"), route .sourceField))
+            }
+            else
+            {
+               connectorDescription .text (util .format (_ ("Route from %s<%s>.%s"), route .getSourceNode () .getTypeName (), route .getSourceNode () .getImportedName () || _ ("unnamed"), route .sourceField))
+            }
+
             break
          }
          case "output":
          {
-            connectorDescription .text (util .format (_ ("Route to %s<%s>.%s"), route .getDestinationNode () .getTypeName (), route .getDestinationNode () .getName () || _ ("unnamed"), route .destinationField))
+            if (route .getDestinationNode () instanceof X3D .X3DNode)
+            {
+               connectorDescription .text (util .format (_ ("Route to %s<%s>.%s"), route .getDestinationNode () .getTypeName (), route .getDestinationNode () .getName () || _ ("unnamed"), route .destinationField));
+            }
+            else
+            {
+               connectorDescription .text (util .format (_ ("Route to %s<%s>.%s"), route .getDestinationNode () .getTypeName (), route .getDestinationNode () .getImportedName () || _ ("unnamed"), route .destinationField));
+            }
+
             break
          }
       }
