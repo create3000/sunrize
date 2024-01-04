@@ -1846,19 +1846,19 @@ module .exports = class OutlineView extends Interface
       {
          const
             element = $(e),
-            node    = this .getNode (element)
+            node    = this .getNode (element);
 
          if (!node)
-            continue
+            continue;
 
          if (node .getUserData (_expanded) === field .getId ())
          {
-            element .data ("auto-expand", true)
-            element .jstree ("open_node", element)
+            element .data ("auto-expand", true);
+            element .jstree ("open_node", element);
          }
       }
 
-      this .requestUpdateRouteGraph ()
+      this .requestUpdateRouteGraph ();
    }
 
    expandSFNode (parent, node, field, type, full)
@@ -1866,15 +1866,15 @@ module .exports = class OutlineView extends Interface
       // Generate tree.
 
       const child = $("<div></div>")
-         .addClass ("subtree")
+         .addClass ("subtree");
 
       const ul = $("<ul></ul>")
-         .appendTo (child)
+         .appendTo (child);
 
       if (full)
-         ul .append (this .createRouteElements (node, field))
+         ul .append (this .createRouteElements (node, field));
 
-      ul .append (this .createNodeElement ("node", parent, field .getValue ()))
+      ul .append (this .createNodeElement ("node", parent, field .getValue ()));
 
       // Make jsTree.
 
@@ -1885,68 +1885,68 @@ module .exports = class OutlineView extends Interface
          .on ("close_node.jstree",  this .nodeCloseNode .bind (this))
          .on ("select_node.jstree", this .selectNode .bind (this))
          .appendTo (parent)
-         .hide ()
+         .hide ();
 
       child
          .removeAttr ("tabindex")
          .find (".jstree-anchor")
             .removeAttr ("href")
-            .removeAttr ("tabindex")
+            .removeAttr ("tabindex");
 
       child .find (".node")
-         .on ("dblclick", this .activateNode .bind (this))
+         .on ("dblclick", this .activateNode .bind (this));
 
       child .find (".jstree-ocl")
          .addClass ("material-icons")
          .text ("arrow_right")
          .on ("click", this .selectExpander .bind (this))
-         .on ("dblclick", this .activateExpander .bind (this))
+         .on ("dblclick", this .activateExpander .bind (this));
 
       child .find (".jstree-node")
          .wrapInner ("<div class=\"item no-select\"/>")
-         .find (".item") .append ("<div class=\"route-curves\"><canvas></canvas></div>")
+         .find (".item") .append ("<div class=\"route-curves\"><canvas></canvas></div>");
 
       if (this .isEditable (parent))
       {
          child .find (".node:not([node-id=NULL]) > .item")
             .attr ("draggable", "true")
-            .on ("dragstart", this .onDragStartNode .bind (this))
+            .on ("dragstart", this .onDragStartNode .bind (this));
       }
 
       child .find (".node .name")
-         .on ("mouseenter", this .updateNodeTitle .bind (this));
+         .on ("mouseenter", this .updateNodeTitle .bind (this));;
 
       child .find (".visibility")
-         .on ("click", this .toggleVisibility .bind (this))
+         .on ("click", this .toggleVisibility .bind (this));
 
       child .find (".tool")
-         .on ("click", this .toggleTool .bind (this))
+         .on ("click", this .toggleTool .bind (this));
 
       child .find (".reload")
-         .on ("click", this .reloadNode .bind (this))
+         .on ("click", this .reloadNode .bind (this));
 
       child .find ("area.input-selector")
          .on ("mouseenter", this .hoverInSingleConnector .bind (this, "input"))
          .on ("mouseleave", this .hoverOutSingleConnector .bind (this, "input"))
-         .on ("click", this .selectSingleConnector .bind (this, "input"))
+         .on ("click", this .selectSingleConnector .bind (this, "input"));
 
       child .find ("area.output-selector")
          .on ("mouseenter", this .hoverInSingleConnector .bind (this, "output"))
          .on ("mouseleave", this .hoverOutSingleConnector .bind (this, "output"))
-         .on ("click", this .selectSingleConnector .bind (this, "output"))
+         .on ("click", this .selectSingleConnector .bind (this, "output"));
 
       child .find ("area.input-routes-selector")
-         .on ("click", this .selectSingleRoute .bind (this, "input"))
+         .on ("click", this .selectSingleRoute .bind (this, "input"));
 
       child .find ("area.output-routes-selector")
-         .on ("click", this .selectSingleRoute .bind (this, "output"))
+         .on ("click", this .selectSingleRoute .bind (this, "output"));
 
       // Expand children.
 
-      const elements = child .find (".node")
+      const elements = child .find (".node");
 
-      child .show ()
-      this .expandSFNodeComplete (elements, field)
+      child .show ();
+      this .expandSFNodeComplete (elements, field);
    }
 
    expandSFNodeComplete (elements, field)
@@ -1957,19 +1957,19 @@ module .exports = class OutlineView extends Interface
       {
          const
             element = $(e),
-            node    = this .getNode (element)
+            node    = this .getNode (element);
 
          if (!node)
-            continue
+            continue;
 
          if (node .getUserData (_expanded) === field .getId ())
          {
-            element .data ("auto-expand", true)
-            element .jstree ("open_node", element)
+            element .data ("auto-expand", true);
+            element .jstree ("open_node", element);
          }
       }
 
-      this .requestUpdateRouteGraph ()
+      this .requestUpdateRouteGraph ();
    }
 
    nodeIcons = {
@@ -1978,36 +1978,36 @@ module .exports = class OutlineView extends Interface
       "node": "X3DBaseNode",
       "imported-node": "ImportedNode",
       "exported-node": "ExportedNode",
-   }
+   };
 
    typeNames = {
       "X3DExternProtoDeclaration": "EXTERNPROTO",
       "X3DProtoDeclaration": "PROTO",
-   }
+   };
 
    expandSingleField (parent, node, field, type, full)
    {
       // Generate tree.
 
       const child = $("<div></div>")
-         .addClass ("subtree")
+         .addClass ("subtree");
 
       const ul = $("<ul></ul>")
-         .appendTo (child)
+         .appendTo (child);
 
       if (full)
-         ul .append (this .createRouteElements (node, field))
+         ul .append (this .createRouteElements (node, field));
 
       const li = $("<li></li>")
          .addClass (type + "-value no-expand")
          .attr ("node-id", node .getId ())
          .attr ("field-id", field .getId ())
-         .appendTo (ul)
+         .appendTo (ul);
 
       $("<div></div>")
          .addClass (type + "-value-container")
          .append ($("<input></input>") .attr ("type", "text"))
-         .appendTo (li)
+         .appendTo (li);
 
       // Make jsTree.
 
@@ -2016,67 +2016,67 @@ module .exports = class OutlineView extends Interface
          .off ("keypress.jstree dblclick.jstree")
          .on ("select_node.jstree", this .selectField .bind (this))
          .appendTo (parent)
-         .hide ()
+         .hide ();
 
       child
          .removeAttr ("tabindex")
          .find (".jstree-anchor > *")
-            .unwrap ()
+            .unwrap ();
 
       child .find (".jstree-ocl")
          .addClass ("material-icons")
          .text ("arrow_right")
          .on ("click", this .selectExpander .bind (this))
-         .on ("dblclick", this .activateExpander .bind (this))
+         .on ("dblclick", this .activateExpander .bind (this));
 
       child .find (".jstree-node")
          .wrapInner ("<div class=\"item no-select\"/>")
-         .find (".item") .append ("<div class=\"route-curves\"><canvas></canvas></div>")
+         .find (".item") .append ("<div class=\"route-curves\"><canvas></canvas></div>");
 
       child .find ("area.input-selector")
          .on ("mouseenter", this .hoverInSingleConnector .bind (this, "input"))
          .on ("mouseleave", this .hoverOutSingleConnector .bind (this, "input"))
-         .on ("click", this .selectSingleConnector .bind (this, "input"))
+         .on ("click", this .selectSingleConnector .bind (this, "input"));
 
       child .find ("area.output-selector")
          .on ("mouseenter", this .hoverInSingleConnector .bind (this, "output"))
          .on ("mouseleave", this .hoverOutSingleConnector .bind (this, "output"))
-         .on ("click", this .selectSingleConnector .bind (this, "output"))
+         .on ("click", this .selectSingleConnector .bind (this, "output"));
 
       child .find ("area.input-routes-selector")
-         .on ("click", this .selectSingleRoute .bind (this, "input"))
+         .on ("click", this .selectSingleRoute .bind (this, "input"));
 
       child .find ("area.output-routes-selector")
-         .on ("click", this .selectSingleRoute .bind (this, "output"))
+         .on ("click", this .selectSingleRoute .bind (this, "output"));
 
       // Input
 
-      const input = child .find ("input")
+      const input = child .find ("input");
 
-      input .on ("mouseenter", this .updateFieldTitle .bind (this))
+      input .on ("mouseenter", this .updateFieldTitle .bind (this));
 
       if (field .getType () === X3D .X3DConstants .SFString)
-         input .val (field .getValue ())
+         input .val (field .getValue ());
       else
-         input .val (field .toString ({ scene: node .getExecutionContext () }))
+         input .val (field .toString ({ scene: node .getExecutionContext () }));
 
       if ((field .isInput () || field .isInitializable ()) && this .isEditable (parent))
       {
-         input .on ("keydown",  this .onkeydownField .bind (this, input))
-         input .on ("focusin",  this .disconnectField .bind (this, field))
-         input .on ("focusout", this .connectField .bind (this, input, node, field, true))
+         input .on ("keydown",  this .onkeydownField .bind (this, input));
+         input .on ("focusin",  this .disconnectField .bind (this, field));
+         input .on ("focusout", this .connectField .bind (this, input, node, field, true));
       }
       else
       {
-         input .attr ("disabled", "disabled")
+         input .attr ("disabled", "disabled");
       }
 
-      this .connectField (input, node, field, false)
+      this .connectField (input, node, field, false);
 
       // Expand children.
 
-      child .show ()
-      this .requestUpdateRouteGraph ()
+      child .show ();
+      this .requestUpdateRouteGraph ();
    }
 
    onkeydownField (input, event)
