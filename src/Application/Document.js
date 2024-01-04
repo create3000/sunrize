@@ -171,7 +171,7 @@ module .exports = class Document extends Interface
       }
       catch (error)
       {
-         console .log (error);
+         // console .error (error);
       }
    }
 
