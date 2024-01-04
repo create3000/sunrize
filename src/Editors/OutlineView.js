@@ -1523,9 +1523,9 @@ module .exports = class OutlineView extends Interface
          title += `Description:\n\n${description}\n\n`;
 
       if (field instanceof X3D .X3DArrayField)
-         title += `Current number of values of this particular field is: ${field .length}`;
+         title += `Number of values: ${field .length}`;
       else
-         title += `Current value of this particular field is: ${field .toString ({ scene: node .getExecutionContext () })}`;
+         title += `Current value: ${field .toString ({ scene: node .getExecutionContext () })}`;
 
       name .attr ("title", title);
    }
