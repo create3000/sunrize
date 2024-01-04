@@ -37,7 +37,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 			{
 				for (const route of field .getInputRoutes ())
 				{
-					this .selectedRoutes .add (route .getId ());
+					this .selectedRoutes .add (route);
 					this .expandTo (route .getSourceNode ());
 				}
 
@@ -47,7 +47,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 			{
 				for (const route of field .getOutputRoutes ())
 				{
-					this .selectedRoutes .add (route .getId ());
+					this .selectedRoutes .add (route);
 					this .expandTo (route .getDestinationNode ());
 				}
 
@@ -77,7 +77,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 			{
 				const route = this .getRoute (element, field .getInputRoutes ());
 
-				this .selectedRoutes .add (route .getId ());
+				this .selectedRoutes .add (route);
 				this .expandTo (route .getSourceNode ());
 				break;
 			}
@@ -85,7 +85,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 			{
 				const route = this .getRoute (element, field .getOutputRoutes ());
 
-				this .selectedRoutes .add (route .getId ());
+				this .selectedRoutes .add (route);
 				this .expandTo (route .getDestinationNode ());
 				break;
 			}
@@ -102,15 +102,11 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 		const fields = new Map ();
 
-		canvases .each ((i, canvas) =>
+		this .sceneGraph .find (".field") .each ((i, e) =>
 		{
-			const element = $(canvas)
-				.closest ("li[node-id][field-id]", this .sceneGraph);
-
-			if (!element .length)
-				return;
-
-			const field = this .getField (element);
+			const
+				element = $(e),
+				field   = this .getField (element);
 
 			for (const route of field .getInputRoutes ())
 				fields .set (route, (fields .get (route) ?? 0) + 1);
@@ -241,7 +237,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 				if (fields .get (route) !== 2)
 					break;
 
-				context .strokeStyle = this .selectedRoutes .has (route .getId ()) ? routeSelectedColor : routeColor;
+				context .strokeStyle = this .selectedRoutes .has (route) ? routeSelectedColor : routeColor;
 
 				context .beginPath ();
 				context .moveTo (26, 3.5);
@@ -261,7 +257,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 				if (fields .get (route) !== 2)
 					break;
 
-				context .strokeStyle = this .selectedRoutes .has (route .getId ()) ? routeSelectedColor : routeColor;
+				context .strokeStyle = this .selectedRoutes .has (route) ? routeSelectedColor : routeColor;
 
 				context .beginPath ();
 				context .moveTo (26, 8.5);
@@ -333,7 +329,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 					if (routes .has (route))
 					{
 						numInputRoutesUp         += 1;
-						numSelectedInputRoutesUp += this .selectedRoutes .has (route .getId ());
+						numSelectedInputRoutesUp += this .selectedRoutes .has (route);
 
 						routes         .delete (route);
 						selectedRoutes .delete (route);
@@ -341,7 +337,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 					else
 					{
 						numInputRoutesDown         += 1;
-						numSelectedInputRoutesDown += this .selectedRoutes .has (route .getId ());
+						numSelectedInputRoutesDown += this .selectedRoutes .has (route);
 
 						routes .add (route);
 					}
@@ -358,7 +354,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 					if (routes .has (route))
 					{
 						numOutputRoutesUp         += 1;
-						numSelectedOutputRoutesUp += this .selectedRoutes .has (route .getId ());
+						numSelectedOutputRoutesUp += this .selectedRoutes .has (route);
 
 						routes         .delete (route);
 						selectedRoutes .delete (route);
@@ -366,7 +362,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 					else
 					{
 						numOutputRoutesDown         += 1;
-						numSelectedOutputRoutesDown += this .selectedRoutes .has (route .getId ());
+						numSelectedOutputRoutesDown += this .selectedRoutes .has (route);
 
 						routes .add (route);
 					}
@@ -503,7 +499,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 	{
 		for (const route of routes)
 		{
-			if (this .selectedRoutes .has (route .getId ()))
+			if (this .selectedRoutes .has (route))
 				return true;
 		}
 
