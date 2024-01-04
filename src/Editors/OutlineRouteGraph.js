@@ -96,14 +96,14 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 	#updateRouteGraphId = undefined;
 
-	updateRouteGraph ()
+	requestUpdateRouteGraph ()
 	{
 		clearTimeout (this .#updateRouteGraphId);
 
-		this .#updateRouteGraphId = setTimeout (() => this .#updateRouteGraph ());
+		this .#updateRouteGraphId = setTimeout (() => this .updateRouteGraph ());
 	}
 
-	#updateRouteGraph ()
+	updateRouteGraph ()
 	{
 		const canvases = this .sceneGraph .find (".route-curves canvas");
 

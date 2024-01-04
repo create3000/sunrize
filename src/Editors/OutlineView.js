@@ -302,7 +302,7 @@ module .exports = class OutlineView extends Interface
 
    expandSceneSubtreeComplete (specialElements, elements)
    {
-      this .updateRouteGraph ();
+      this .requestUpdateRouteGraph ();
 
       // Reopen externprotos, protos, imported, exported nodes.
 
@@ -781,7 +781,7 @@ module .exports = class OutlineView extends Interface
 
    expandNodeComplete (protos, scenes, elements)
    {
-      this .updateRouteGraph ()
+      this .requestUpdateRouteGraph ()
 
       // Auto expand SFNodes
 
@@ -1858,7 +1858,7 @@ module .exports = class OutlineView extends Interface
          }
       }
 
-      this .updateRouteGraph ()
+      this .requestUpdateRouteGraph ()
    }
 
    expandSFNode (parent, node, field, type, full)
@@ -1969,7 +1969,7 @@ module .exports = class OutlineView extends Interface
          }
       }
 
-      this .updateRouteGraph ()
+      this .requestUpdateRouteGraph ()
    }
 
    nodeIcons = {
@@ -2076,7 +2076,7 @@ module .exports = class OutlineView extends Interface
       // Expand children.
 
       child .show ()
-      this .updateRouteGraph ()
+      this .requestUpdateRouteGraph ()
    }
 
    onkeydownField (input, event)
@@ -2197,7 +2197,7 @@ module .exports = class OutlineView extends Interface
       // Expand children.
 
       child .show ()
-      this .updateRouteGraph ()
+      this .requestUpdateRouteGraph ()
    }
 
    onkeydownArrayField (textarea, event)
@@ -2586,7 +2586,7 @@ module .exports = class OutlineView extends Interface
       if (this .actionKeys .value === ActionKeys .Shift)
          element .jstree ("open_node", element)
 
-      this .updateRouteGraph ()
+      this .requestUpdateRouteGraph ()
    }
 
    removeSubtree (element)
@@ -3035,7 +3035,7 @@ module .exports = class OutlineView extends Interface
 
       // Update route graph.
 
-      this .updateRouteGraph ();
+      this .requestUpdateRouteGraph ();
    }
 
    isEditable (parent)
@@ -3081,7 +3081,7 @@ module .exports = class OutlineView extends Interface
 
    onresize ()
    {
-      this .updateRouteGraph ();
+      this .requestUpdateRouteGraph ();
    }
 
    addFieldButtons (parent, child, node)
@@ -3163,7 +3163,7 @@ module .exports = class OutlineView extends Interface
       // Select single route.
    }
 
-   updateRouteGraph ()
+   requestUpdateRouteGraph ()
    {
       // Update route graph.
    }
