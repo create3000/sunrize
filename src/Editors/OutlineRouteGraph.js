@@ -94,8 +94,19 @@ module .exports = class OutlineRouteGraph extends OutlineView
 		this .updateRouteGraph ();
 	}
 
+	#updateRouteGraphId = undefined;
+
 	updateRouteGraph ()
 	{
+		clearTimeout (this .#updateRouteGraphId);
+
+		this .#updateRouteGraphId = setTimeout (() => this .#updateRouteGraph ());
+	}
+
+	#updateRouteGraph ()
+	{
+		console .log ("updateRouteGraph")
+
 		const canvases = this .sceneGraph .find (".route-curves canvas");
 
 		// Determine visible routes, those routes have a value of 2.
