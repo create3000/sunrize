@@ -309,7 +309,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 			const selectedRoutes = new Set (routes);
 
-			if (element .length && (element .hasClass ("field") && !element .data ("full-expanded")) || element .hasClass ("route"))
+			if ((element .hasClass ("field") && !element .data ("full-expanded")) || element .hasClass ("route"))
 			{
 				const
 					field   = this .getField (element),
