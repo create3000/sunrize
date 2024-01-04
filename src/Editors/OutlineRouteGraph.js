@@ -348,7 +348,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 						routes .add (route);
 					}
-				})
+				});
 
 				field .getOutputRoutes () .forEach (route =>
 				{
