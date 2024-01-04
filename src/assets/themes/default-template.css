@@ -1199,12 +1199,12 @@ body.dark .ui-widget .library-list .component {
   pointer-events: none;
 }
 
-.scene-graph .route-curves {
+.scene-graph .route-curves-wrapper {
   position: relative;
   width: 20px;
 }
 
-.scene-graph .route-curves canvas {
+.scene-graph .route-curves {
   position: absolute;
   top: -2px;
   width: 20px;

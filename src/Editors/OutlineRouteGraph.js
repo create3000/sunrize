@@ -105,7 +105,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 	updateRouteGraph ()
 	{
-		const canvases = this .sceneGraph .find (".route-curves canvas");
+		const canvases = this .sceneGraph .find (".route-curves");
 
 		// Determine visible routes, those routes have a value of 2.
 
@@ -123,11 +123,11 @@ module .exports = class OutlineRouteGraph extends OutlineView
 		});
 
 		this .sceneGraph
-			.find ("canvas.field-routes")
+			.find (".field-routes")
 			.each ((i, canvas) => this .updateFieldRoutes ($(canvas), fields));
 
 		this .sceneGraph
-			.find ("canvas.single-route")
+			.find (".single-route")
 			.each ((i, canvas) => this .updateSingleRoute ($(canvas), fields));
 
 		this .updateRouteCurves (canvases, fields);
