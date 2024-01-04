@@ -313,7 +313,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 			{
 				const
 					field   = this .getField (element),
-					routeId = element .attr ("route-id") !== undefined ? parseInt (element .attr ("route-id")) : undefined;
+					routeId = parseInt (element .attr ("route-id") ?? -1);
 
 				let
 					numInputRoutesDown          = 0,
@@ -327,7 +327,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 				field .getInputRoutes () .forEach (route =>
 				{
-					if (routeId !== undefined && route .getId () !== routeId)
+					if (routeId >= 0 && route .getId () !== routeId)
 						return;
 
 					if (fields .get (route) !== 2)
@@ -352,7 +352,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 				field .getOutputRoutes () .forEach (route =>
 				{
-					if (routeId !== undefined && route .getId () !== routeId)
+					if (routeId >= 0 && route .getId () !== routeId)
 						return;
 
 					if (fields .get (route) !== 2)
