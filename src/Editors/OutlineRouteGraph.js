@@ -102,11 +102,9 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 		const fields = new Map ();
 
-		this .sceneGraph .find (".field") .each ((i, e) =>
+		this .sceneGraph .find (".field") .each ((i, element) =>
 		{
-			const
-				element = $(e),
-				field   = this .getField (element);
+			const field = this .getField ($(element));
 
 			for (const route of field .getInputRoutes ())
 				fields .set (route, (fields .get (route) ?? 0) + 1);
