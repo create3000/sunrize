@@ -55,7 +55,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 			}
 		}
 
-		this .updateRouteGraph ();
+		this .requestUpdateRouteGraph ();
 	}
 
 	selectSingleRoute (type, event)
@@ -91,7 +91,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 			}
 		}
 
-		this .updateRouteGraph ();
+		this .requestUpdateRouteGraph ();
 	}
 
 	#updateRouteGraphId = undefined;
