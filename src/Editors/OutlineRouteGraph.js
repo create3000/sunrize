@@ -111,7 +111,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 		const fields = new Map ();
 
-		this .sceneGraph .find (".field") .each ((i, element) =>
+		for (const element of this .sceneGraph .find (".field"))
 		{
 			const field = this .getField ($(element));
 
@@ -120,7 +120,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 			for (const route of field .getOutputRoutes ())
 				fields .set (route, (fields .get (route) ?? 0) + 1);
-		});
+		}
 
 		this .sceneGraph
 			.find (".field-routes")
@@ -138,18 +138,17 @@ module .exports = class OutlineRouteGraph extends OutlineView
 		// Draw horizontal lines.
 
 		const
-			element  = canvas .closest (".field", this .sceneGraph),
-			field    = this .getField (element),
-			parent   = canvas .parent (),
-			canvas2d = canvas .get (0),
-			context  = canvas2d .getContext ("2d");
+			element = canvas .closest (".field", this .sceneGraph),
+			field   = this .getField (element),
+			parent  = canvas .parent (),
+			context = canvas .get (0) .getContext ("2d");
 
 		canvas .height (Math .ceil (parent .height ()));
 
-		canvas2d .width  = canvas .width ();
-		canvas2d .height = canvas .height ();
+		canvas .prop ("width",  canvas .width ());
+		canvas .prop ("height", canvas .height ());
 
-		context .clearRect (0, 0, canvas2d .width, canvas2d .height);
+		context .clearRect (0, 0, canvas .prop ("width"), canvas .prop ("height"));
 
 		switch (field .getAccessType ())
 		{
@@ -165,7 +164,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 					context .beginPath ();
 					context .moveTo (26, 3.5);
-					context .lineTo (canvas2d .width + 1, 3.5);
+					context .lineTo (canvas .prop ("width") + 1, 3.5);
 					context .stroke ();
 				}
 
@@ -179,7 +178,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 					context .beginPath ();
 					context .moveTo (26, 8.5);
-					context .lineTo (canvas2d .width + 1, 8.5);
+					context .lineTo (canvas .prop ("width") + 1, 8.5);
 					context .stroke ();
 				}
 
@@ -193,7 +192,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 					context .beginPath ();
 					context .moveTo (40, 3.5);
-					context .lineTo (canvas2d .width + 1, 3.5);
+					context .lineTo (canvas .prop ("width") + 1, 3.5);
 					context .stroke ();
 				}
 
@@ -203,7 +202,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 					context .beginPath ();
 					context .moveTo (field .getInputRoutes () .size ? 54 : 40, 8.5);
-					context .lineTo (canvas2d .width + 1, 8.5);
+					context .lineTo (canvas .prop ("width") + 1, 8.5);
 					context .stroke ();
 				}
 
@@ -217,18 +216,17 @@ module .exports = class OutlineRouteGraph extends OutlineView
 		// Draw horizontal line.
 
 		const
-			element  = canvas .closest (".route", this .sceneGraph),
-			type     = element .attr ("route-type"),
-			parent   = canvas .parent (),
-			canvas2d = canvas .get (0),
-			context  = canvas2d .getContext ("2d");
+			element = canvas .closest (".route", this .sceneGraph),
+			type    = element .attr ("route-type"),
+			parent  = canvas .parent (),
+			context = canvas .get (0) .getContext ("2d");
 
 		canvas .height (Math .ceil (parent .height ()));
 
-		canvas2d .width  = canvas .width ();
-		canvas2d .height = canvas .height ();
+		canvas .prop ("width",  canvas .width ());
+		canvas .prop ("height", canvas .height ());
 
-		context .clearRect (0, 0, canvas2d .width, canvas2d .height);
+		context .clearRect (0, 0, canvas .prop ("width"), canvas .prop ("height"));
 
 		switch (type)
 		{
@@ -248,7 +246,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 				context .beginPath ();
 				context .moveTo (26, 3.5);
-				context .lineTo (canvas2d .width + 1, 3.5);
+				context .lineTo (canvas .prop ("width") + 1, 3.5);
 				context .stroke ();
 				break;
 			}
@@ -268,7 +266,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 				context .beginPath ();
 				context .moveTo (26, 8.5);
-				context .lineTo (canvas2d .width + 1, 8.5);
+				context .lineTo (canvas .prop ("width") + 1, 8.5);
 				context .stroke ();
 				break;
 			}
@@ -284,28 +282,29 @@ module .exports = class OutlineRouteGraph extends OutlineView
 			const
 				canvas1 = $(canvases [i]),
 				canvas2 = $(canvases [i + 1]),
-				rect1   = canvas1 [0] .getBoundingClientRect (),
-				rect2   = canvas2 [0] .getBoundingClientRect ();
+				rect1   = canvas1 .get (0) .getBoundingClientRect (),
+				rect2   = canvas2 .get (0) .getBoundingClientRect ();
 
 			canvas1 .height (Math .ceil (rect2 .y - rect1 .y));
 
-			canvas1 [0] .width  = canvas1 .width ();
-			canvas1 [0] .height = canvas1 .height ();
+			canvas1 .prop ("width",  canvas1 .width ());
+			canvas1 .prop ("height", canvas1 .height ());
 		}
 
 		// Draw arcs or vertical lines.
 
 		const routes = new Set ();
 
-		canvases .each ((i, canvas2d) =>
+		for (const canvas2d of canvases)
 		{
 			const
-				element = $(canvas2d) .closest ("li", this .sceneGraph),
-				context = canvas2d .getContext ("2d");
+				canvas  = $(canvas2d),
+				element = canvas .closest ("li", this .sceneGraph),
+				context = canvas .get (0) .getContext ("2d");
 
 			// Clear canvases.
 
-			context .clearRect (0, 0, canvas2d .width, canvas2d .height);
+			context .clearRect (0, 0, canvas .prop ("width"), canvas .prop ("height"));
 
 			const selectedRoutes = new Set (routes);
 
@@ -325,13 +324,13 @@ module .exports = class OutlineRouteGraph extends OutlineView
 					numSelectedOutputRoutesUp   = 0,
 					numSelectedOutputRoutesDown = 0;
 
-				field .getInputRoutes () .forEach (route =>
+				for (const route of field .getInputRoutes ())
 				{
 					if (routeId !== undefined && route .getId () !== routeId)
-						return;
+						continue;
 
 					if (fields .get (route) !== 2)
-						return;
+						continue;
 
 					if (routes .has (route))
 					{
@@ -348,15 +347,15 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 						routes .add (route);
 					}
-				});
+				}
 
-				field .getOutputRoutes () .forEach (route =>
+				for (const route of field .getOutputRoutes ())
 				{
 					if (routeId !== undefined && route .getId () !== routeId)
-						return;
+						continue;
 
 					if (fields .get (route) !== 2)
-						return;
+						continue;
 
 					if (routes .has (route))
 					{
@@ -373,7 +372,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 						routes .add (route);
 					}
-				});
+				}
 
 				// Determine vertical selected lines.
 
@@ -381,7 +380,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 					hasVerticalSelectedRoutes = this .haveSelectedRoute (selectedRoutes),
 					draw = (state, selected) => (state === "normal" && !selected) || (state === "selected" && selected);
 
-				["normal", "selected"] .forEach (state =>
+				for (const state of ["normal", "selected"])
 				{
 					// Draw curve up.
 
@@ -427,7 +426,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 							context .beginPath ();
 							context .arc (0, 19, 9.5, 3/2 * Math .PI, 2 * Math .PI);
-							context .lineTo (9.5, canvas2d .height + 1);
+							context .lineTo (9.5, canvas .prop ("height") + 1);
 							context .stroke ();
 						}
 					}
@@ -442,7 +441,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 							context .beginPath ();
 							context .arc (0, 24, 9.5, 3/2 * Math .PI, 2 * Math .PI);
-							context .lineTo (9.5, canvas2d .height + 1);
+							context .lineTo (9.5, canvas .prop ("height") + 1);
 							context .stroke ();
 						}
 					}
@@ -457,11 +456,11 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 							context .beginPath ();
 							context .moveTo (9.5, 0);
-							context .lineTo (9.5, canvas2d .height + 1);
+							context .lineTo (9.5, canvas .prop ("height") + 1);
 							context .stroke ();
 						}
 					}
-				})
+				}
 			}
 			else
 			{
@@ -473,11 +472,11 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 					context .beginPath ();
 					context .moveTo (9.5, 0);
-					context .lineTo (9.5, canvas2d .height + 1);
+					context .lineTo (9.5, canvas .prop ("height") + 1);
 					context .stroke ();
 				}
 			}
-		})
+		}
 	}
 
 	hasInputRoutes (field, fields)
