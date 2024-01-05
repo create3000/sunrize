@@ -124,32 +124,32 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 		this .sceneGraph
 			.find (".field-routes")
-			.each ((i, canvas) => this .updateFieldRoutes ($(canvas), fields));
+			.each ((i, canvas2d) => this .updateFieldRoutes ($(canvas2d), fields));
 
 		this .sceneGraph
 			.find (".single-route")
-			.each ((i, canvas) => this .updateSingleRoute ($(canvas), fields));
+			.each ((i, canvas2d) => this .updateSingleRoute ($(canvas2d), fields));
 
 		this .updateRouteCurves (canvases, fields);
 	}
 
-	updateFieldRoutes ($canvas, fields)
+	updateFieldRoutes (canvas, fields)
 	{
 		// Draw horizontal lines.
 
 		const
-			element = $canvas .closest (".field", this .sceneGraph),
-			field   = this .getField (element),
-			parent  = $canvas .parent (),
-			canvas  = $canvas .get (0),
-			context = canvas .getContext ("2d");
+			element  = canvas .closest (".field", this .sceneGraph),
+			field    = this .getField (element),
+			parent   = canvas .parent (),
+			canvas2d = canvas .get (0),
+			context  = canvas2d .getContext ("2d");
 
-		$canvas .height (Math .ceil (parent .height ()));
+		canvas .height (Math .ceil (parent .height ()));
 
-		canvas .width  = $canvas .width ();
-		canvas .height = $canvas .height ();
+		canvas2d .width  = canvas .width ();
+		canvas2d .height = canvas .height ();
 
-		context .clearRect (0, 0, canvas .width, canvas .height);
+		context .clearRect (0, 0, canvas2d .width, canvas2d .height);
 
 		switch (field .getAccessType ())
 		{
@@ -165,7 +165,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 					context .beginPath ();
 					context .moveTo (26, 3.5);
-					context .lineTo (canvas .width + 1, 3.5);
+					context .lineTo (canvas2d .width + 1, 3.5);
 					context .stroke ();
 				}
 
@@ -179,7 +179,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 					context .beginPath ();
 					context .moveTo (26, 8.5);
-					context .lineTo (canvas .width + 1, 8.5);
+					context .lineTo (canvas2d .width + 1, 8.5);
 					context .stroke ();
 				}
 
@@ -193,7 +193,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 					context .beginPath ();
 					context .moveTo (40, 3.5);
-					context .lineTo (canvas .width + 1, 3.5);
+					context .lineTo (canvas2d .width + 1, 3.5);
 					context .stroke ();
 				}
 
@@ -203,7 +203,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 					context .beginPath ();
 					context .moveTo (field .getInputRoutes () .size ? 54 : 40, 8.5);
-					context .lineTo (canvas .width + 1, 8.5);
+					context .lineTo (canvas2d .width + 1, 8.5);
 					context .stroke ();
 				}
 
@@ -212,23 +212,23 @@ module .exports = class OutlineRouteGraph extends OutlineView
 		}
 	}
 
-	updateSingleRoute ($canvas, fields)
+	updateSingleRoute (canvas, fields)
 	{
 		// Draw horizontal line.
 
 		const
-			element = $canvas .closest (".route", this .sceneGraph),
-			type    = element .attr ("route-type"),
-			parent  = $canvas .parent (),
-			canvas  = $canvas .get (0),
-			context = canvas .getContext ("2d");
+			element  = canvas .closest (".route", this .sceneGraph),
+			type     = element .attr ("route-type"),
+			parent   = canvas .parent (),
+			canvas2d = canvas .get (0),
+			context  = canvas2d .getContext ("2d");
 
-		$canvas .height (Math .ceil (parent .height ()));
+		canvas .height (Math .ceil (parent .height ()));
 
-		canvas .width  = $canvas .width ();
-		canvas .height = $canvas .height ();
+		canvas2d .width  = canvas .width ();
+		canvas2d .height = canvas .height ();
 
-		context .clearRect (0, 0, canvas .width, canvas .height);
+		context .clearRect (0, 0, canvas2d .width, canvas2d .height);
 
 		switch (type)
 		{
@@ -248,7 +248,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 				context .beginPath ();
 				context .moveTo (26, 3.5);
-				context .lineTo (canvas .width + 1, 3.5);
+				context .lineTo (canvas2d .width + 1, 3.5);
 				context .stroke ();
 				break;
 			}
@@ -268,7 +268,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 				context .beginPath ();
 				context .moveTo (26, 8.5);
-				context .lineTo (canvas .width + 1, 8.5);
+				context .lineTo (canvas2d .width + 1, 8.5);
 				context .stroke ();
 				break;
 			}
@@ -297,15 +297,15 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 		const routes = new Set ();
 
-		canvases .each ((i, canvas) =>
+		canvases .each ((i, canvas2d) =>
 		{
 			const
-				element = $(canvas) .closest ("li", this .sceneGraph),
-				context = canvas .getContext ("2d");
+				element = $(canvas2d) .closest ("li", this .sceneGraph),
+				context = canvas2d .getContext ("2d");
 
 			// Clear canvases.
 
-			context .clearRect (0, 0, canvas .width, canvas .height);
+			context .clearRect (0, 0, canvas2d .width, canvas2d .height);
 
 			const selectedRoutes = new Set (routes);
 
@@ -427,7 +427,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 							context .beginPath ();
 							context .arc (0, 19, 9.5, 3/2 * Math .PI, 2 * Math .PI);
-							context .lineTo (9.5, canvas .height + 1);
+							context .lineTo (9.5, canvas2d .height + 1);
 							context .stroke ();
 						}
 					}
@@ -442,7 +442,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 							context .beginPath ();
 							context .arc (0, 24, 9.5, 3/2 * Math .PI, 2 * Math .PI);
-							context .lineTo (9.5, canvas .height + 1);
+							context .lineTo (9.5, canvas2d .height + 1);
 							context .stroke ();
 						}
 					}
@@ -457,7 +457,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 							context .beginPath ();
 							context .moveTo (9.5, 0);
-							context .lineTo (9.5, canvas .height + 1);
+							context .lineTo (9.5, canvas2d .height + 1);
 							context .stroke ();
 						}
 					}
@@ -473,7 +473,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
 					context .beginPath ();
 					context .moveTo (9.5, 0);
-					context .lineTo (9.5, canvas .height + 1);
+					context .lineTo (9.5, canvas2d .height + 1);
 					context .stroke ();
 				}
 			}
