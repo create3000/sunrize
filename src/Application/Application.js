@@ -40,6 +40,8 @@ module .exports = class Application
       if (process .platform === "win32")
          require ("update-electron-app") .updateElectronApp ();
 
+      electron .app .commandLine .appendSwitch ("--enable-features", "OverlayScrollbar");
+
       new Application ();
    }
 
