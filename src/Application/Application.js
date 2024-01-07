@@ -678,8 +678,7 @@ module .exports = class Application
             preload: path .join (__dirname, "../assets/html/application.js"),
             nodeIntegration: true,
             contextIsolation: false,
-            webviewTag: true,
-            blinkFeatures: "OverlayScrollbars",
+            webviewTag: true,,
          },
       });
 
