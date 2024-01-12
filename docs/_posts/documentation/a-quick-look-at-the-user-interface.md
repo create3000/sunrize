@@ -69,29 +69,25 @@ The user interface consists of four main parts: Menubar, Dashboard, Sidebar, and
 
 ## Dashboard
 
-![hand](/assets/img/documentation/hand.png)**Browser:** navigate in the scene as if in browser mode.
+>**Tip:** X3D authors can control the visibility of the dashboard.
+{: .prompt-tip }
 
-![arrow](/assets/img/documentation/arrow.png)**Select:** manipulate and edit objects.
+![hand](/assets/img/documentation/hand.png){: .normal }
+<br>**Browser:** navigate in the scene as if in browser mode.
 
-![media play](/assets/img/documentation/media-play.png)**Toggle live mode:** enables/disables active objects; these includes objects like TimeSensor, Script nodes and key device sensor nodes.
+![arrow](/assets/img/documentation/arrow.png){: .normal }
+<br>**Select:** manipulate and edit objects.
 
-![hierarchy up](/assets/img/documentation/hierarchy-up.png)**Select parent:** Selects the immediate parent of the current selection.
+![play](/assets/img/documentation/play.png){: .normal }
+<br>**Toggle live mode:** enables/disables active objects; these includes objects like TimeSensor, Script nodes and key device sensor nodes.
 
-![hierarchy down](/assets/img/documentation/hierarchy-down.png)**Select child:** selects the next lower child objects within the group in the hierarchy.
+![look at selection](/assets/img/documentation/look-at-selection.png){: .normal }
+<br>**Look at selected objects:** click to move the camera to a position where all selected objects are visible. If there is no selection, all objects in active layer are displayed.
 
-![navigation button](/assets/img/documentation/navigation-button.png)**Viewer type menu:** select available viewers here.
+![straighten](/assets/img/documentation/straighten.png){: .normal }
+<br>**Straighten camera:** click to place your view upright and level in the world.
 
-![straighten](/assets/img/documentation/straighten.png)**Straighten camera:** click to place your view upright and level in the world.
-
-![look at selection](/assets/img/documentation/look-at-selection.png)**Look at selected objects:** click to move the camera to a position where all selected objects are visible.
-
-![look at all](/assets/img/documentation/look-at-all.png)**View all:** click to move the camera to a position where all objects are visible.
-
-![look at](/assets/img/documentation/look-at.png)**Look At:** click and then click an object in the scene to go directly to it.
-
-**Note:** X3D authors can control the visibility of the dashboard.
-
-## Sidebar Pane
+## Sidebar Panel
 
 ### Outline Editor
 

@@ -45,7 +45,7 @@ module .exports = class Dashboard extends Interface
 
       this .viewAllButton = $("<span></span>")
          .addClass (["material-symbols-outlined"])
-         .attr ("title", _ ("View all objects in active layer."))
+         .attr ("title", _ ("Look at selected objects."))
          .text ("center_focus_strong")
          .appendTo (this .toolbar)
          .on ("click", () => this .viewAll ());
