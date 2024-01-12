@@ -26,5 +26,9 @@ To *click-middle* means to click the middle mouse button.
 
 To *click-right* means to click the right mouse button.
 
+## Where to go
+
+- [Using the Outline Editor](using-the-outline-editor)
+
 ![smarty-bubbles](/assets/img/documentation/smarty-bubbles.jpg)
-<small>Editing »Smarty Bubbles« example in Sunrize</small>
+<small><br>Editing »Smarty Bubbles« example in Sunrize</small>
