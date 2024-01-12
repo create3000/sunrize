@@ -4,6 +4,7 @@ date: 2024-01-08
 icon: fas fa-graduation-cap
 order: 1
 layout: post
+nav: documentation
 ---
 
 ## About Sunrize
@@ -11,6 +12,11 @@ layout: post
 Use Sunrize to create standards-compliant X3D/VRML worlds for publishing on the World Wide Web and for building stand-alone applications. Sunrize fully supports the [X3D Specification](/x_ite/supported-nodes/), including the Moving Worlds specification for VRML 2.0.
 
 Sunrize aims to provide you with powerful tools to compose complex objects and create exciting, animated and interactive worlds. Use existing 3D modelling programs such as Blender or Maya to create polygonal or NURBS objects that can be easily imported into Sunrize and then arranged and made interactive. Use X_ITE to publish your content on the web.
+
+## Where to go
+
+- [A Quick Look at the User Interface](a-quick-look-at-the-user-interface)
+- [Using the Outline Editor](using-the-outline-editor)
 
 ## Conventions Used
 
@@ -25,11 +31,6 @@ To *drag* means to press and hold down the indicated mouse button (the left butt
 To *click-middle* means to click the middle mouse button.
 
 To *click-right* means to click the right mouse button.
-
-## Where to go
-
-- [A Quick Look at the User Interface](a-quick-look-at-the-user-interface)
-- [Using the Outline Editor](using-the-outline-editor)
 
 ![smarty-bubbles](/assets/img/documentation/smarty-bubbles.jpg)
 <small><br>Editing »Smarty Bubbles« example in Sunrize</small>
