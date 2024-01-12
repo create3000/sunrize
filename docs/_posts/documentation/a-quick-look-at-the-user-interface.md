@@ -73,11 +73,11 @@ The user interface consists of four main parts: Menubar, Dashboard, Sidebar, and
 
 ![arrow](/assets/img/documentation/arrow.png)**Select:** manipulate and edit objects.
 
-![media play](/assets/img/documentation/media-play.png) **Toggle live mode:** enables/disables active objects; these includes objects like TimeSensor, Script nodes and key device sensor nodes.
+![media play](/assets/img/documentation/media-play.png)**Toggle live mode:** enables/disables active objects; these includes objects like TimeSensor, Script nodes and key device sensor nodes.
 
 ![hierarchy up](/assets/img/documentation/hierarchy-up.png)**Select parent:** Selects the immediate parent of the current selection.
 
-![hierarchy down](/assets/img/documentation/hierarchy-down.png)**Select child:** selects the next lower child objects within the selected &lt;link 67 - internal-link "Opens internal link in current window"&gt;group in the hierarchy.&lt;/link&gt;
+![hierarchy down](/assets/img/documentation/hierarchy-down.png)**Select child:** selects the next lower child objects within the group in the hierarchy.
 
 ![navigation button](/assets/img/documentation/navigation-button.png)**Viewer type menu:** select available viewers here.
 
