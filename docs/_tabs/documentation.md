@@ -28,6 +28,7 @@ To *click-right* means to click the right mouse button.
 
 ## Where to go
 
+- [A Quick Look at the User Interface](a-quick-look-at-the-user-interface)
 - [Using the Outline Editor](using-the-outline-editor)
 
 ![smarty-bubbles](/assets/img/documentation/smarty-bubbles.jpg)

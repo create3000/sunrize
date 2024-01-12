@@ -27,4 +27,4 @@ Each node shows a context menu while hovering the mouse over the node or a field
 
 ## See Also
 
-- [Keyboard Shortcuts and Tricks](A-Quick-Look-at-the-User-Interface#keyboard-shortcuts-and-tricks)
+- [Keyboard Shortcuts and Tricks](../a-quick-look-at-the-user-interface/#keyboard-shortcuts-and-tricks)

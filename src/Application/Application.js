@@ -193,7 +193,7 @@ module .exports = class Application
                   },
                },
                {
-                  label: _ ("Open URL..."),
+                  label: _ ("Open Location..."),
                   accelerator: "Shift+CmdOrCtrl+O",
                   click: async () =>
                   {
@@ -262,7 +262,7 @@ module .exports = class Application
                   },
                },
                {
-                  label: _ ("Save Copy As..."),
+                  label: _ ("Save A Copy..."),
                   click: async () =>
                   {
                      const response = await this .showSaveDialog (this .currentFile);
