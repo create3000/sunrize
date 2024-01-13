@@ -23,7 +23,8 @@ Each node or field has a small expander arrow to its left. When the arrow is cli
 Each node shows a context menu while hovering the mouse over the node or a field of the node. The node must not be selected just move the mouse over the node and right click. There are various operations what you can do depending on the type of the node (extern proto, proto, node).
 
 ![Context menu of a node](/assets/img/documentation/outliner-node-context-menu.png){: .w-50 .normal }
-<small><br>Context menu of a node</small>
+<br>Context menu of a node
+{: .small }
 
 ## See Also
 

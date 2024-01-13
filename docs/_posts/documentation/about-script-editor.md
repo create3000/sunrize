@@ -13,7 +13,8 @@ The Script Editor allows you create scripts that run within your scene.
 A script is written in JavaScript, a lightweight, platform-independent programming language. JavaScript provides functions that are called when events come into the script, access to fields within the script, logic to operate on the fields, and the ability to send events from the script.
 
 ![Script Editor](/assets/img/documentation/script-editor-javascript.png)
-<small><br>Script Editor</small>
+<br>Script Editor
+{: .small }
 
 ## Description of the Scripting Language
 
@@ -69,7 +70,8 @@ ROUTE INTERP.value_changed TO XFORM.translation
 Here's a quick guide to the Context Menu of a Script node or shader:
 
 ![add new field](/assets/img/documentation/add-new-field.png){: .normal .w-50 }
-<small><br>Add/Edit Field popup editor</small>
+<br>Add/Edit Field popup editor
+{: .small }
 
 - **Context Menu of a Field or Node:**
   - **Add Field:** when you add a field, you can specify its access type, data type and field name.
