@@ -105,7 +105,6 @@ Displays the X3D console. In the console are errors or warnings shown when encou
 ![Console](/assets/img/documentation/console.png)
 <small><br>Console</small>
 
-
 ### Script Editor
 
 The Script Editor allows you to create and edit scripts that run within your scene. With the Script Editor you can easily edit Script and shader source code. **Tip:** Add, remove and edit Script and shader fields in the Node Properties Editor.
