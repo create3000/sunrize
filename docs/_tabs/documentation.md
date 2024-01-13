@@ -15,8 +15,9 @@ Sunrize aims to provide you with powerful tools to compose complex objects and c
 
 ## Where to go
 
-- [A Quick Look at the User Interface](a-quick-look-at-the-user-interface)
-- [Using the Outline Editor](using-the-outline-editor)
+- [A Quick Look at the User Interface](a-quick-look-at-the-user-interface/)
+- [Using the Outline Editor](using-the-outline-editor/)
+- [About Script Editor](about-script-editor/)
 
 ## Conventions Used
 
