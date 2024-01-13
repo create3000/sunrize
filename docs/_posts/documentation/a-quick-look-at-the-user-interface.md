@@ -103,12 +103,15 @@ The [Outline Editor](../using-the-outline-editor/) is a very powerful editor, it
 Displays the X3D console. In the console are errors or warnings shown when encountered in the world. The console also shows JavaScript debugging output from the »print« command.
 
 ![Console](/assets/img/documentation/console.png)
+<small><br>Console</small>
+
 
 ### Script Editor
 
 The Script Editor allows you to create and edit scripts that run within your scene. With the Script Editor you can easily edit Script and shader source code. **Tip:** Add, remove and edit Script and shader fields in the Node Properties Editor.
 
 ![Script Editor](/assets/img/documentation/script-editor-glsl.png)
+<small><br>Script Editor</small>
 
 Scripts are written in ECMAScript, a lightweight, platform-independent programming language that is very similar to JavaScript. ECMAScript provides functions that are called when events come into the script, access to fields within the script, logic to operate on the fields, and the ability to send events from the script.
 
