@@ -11,7 +11,7 @@ When you create routes between events, things begin to happen in your scene. You
 
 ## Removing a Route
 
-To remove a route, hold down the *Ctrl* key and click the input/output connector rectangle (with triangle).
+To remove a route, hold down the *Ctrl* key and click the input/output connector (containing a triangle).
 
 ### A Few Terms
 
