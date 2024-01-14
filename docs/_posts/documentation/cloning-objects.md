@@ -21,7 +21,7 @@ The OutlineEditor might display something like this:
 
 ![Cloning Objects 1](/assets/img/documentation/cloning-objects-1.png){: .normal .w-50 }
 
-If you want to clone the ImageTexture node now you just select the first node. Then drag the node and hold down Ctrl-key and drop the node to the second texture field.
+If you want to clone the ImageTexture node now you just select the first node. Then drag the node and hold down *Ctrl-key* and drop the node to the second texture field.
 
 Now the OutlineEditor will display this:
 
