@@ -58,3 +58,5 @@ An output can be connected to multiple inputs (this is sometimes referred to as 
 
 If you *Shift*-click the expander arrow before the field type image, the routes composing the fan are displayed individually so that you can choose which one to follow.
 
+![Transform Detailed Routes](/assets/img/documentation/transform-detailed-routes.png){: .normal .w-50 }
+
