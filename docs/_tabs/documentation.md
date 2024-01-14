@@ -17,8 +17,8 @@ Sunrize aims to provide you with powerful tools to compose complex objects and c
 
 - [A Quick Look at the User Interface](a-quick-look-at-the-user-interface/)
 - [Using the Outline Editor](using-the-outline-editor/)
-- [Creating Routes Between Fields](creating-routes-between-fields/)
-- [Cloning Objects](cloning-objects/)
+   - [Creating Routes Between Fields](creating-routes-between-fields/)
+   - [Cloning Objects](cloning-objects/)
 - [Using the Script Editor](using-the-script-editor/)
 
 ## Conventions Used
