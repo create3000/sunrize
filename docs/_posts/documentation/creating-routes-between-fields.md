@@ -9,10 +9,6 @@ Some fields can be routed to other fields. When two fields are routed, changing 
 
 When you create routes between events, things begin to happen in your scene. You can connect a touch sensor to a lamp to turn on a light, for example. You can also create routes between objects so that when the position, material, or texture of the first object changes, the attributes of the connected object change as well. Routes are created in the Outline Editor.
 
-## Removing a Route
-
-To remove a route, hold down the *Ctrl* key and click the input/output connector (containing a triangle).
-
 ### A Few Terms
 
 Fields are of two types: **outputs** send values, and **inputs** receive values. Many fields have both an output (called an **outputOnly**) and an input (called an **inputOnly**) associated with them. The Outline Editor uses a graphical shorthand to show these events:
@@ -60,3 +56,6 @@ If you *Shift*-click the expander arrow before the field type image, the routes 
 
 ![Transform Detailed Routes](/assets/img/documentation/transform-detailed-routes.png){: .normal .w-50 }
 
+## Removing a Route
+
+To remove a route, hold down the *Ctrl* key and click the input/output connector (containing a triangle).
