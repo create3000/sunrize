@@ -5,6 +5,8 @@ nav: documentation
 categories: [documentation]
 tags: [Routes, Outline Editor]
 ---
+## Dynamic Routes Transform Scenes Instantly
+
 Some fields can be routed to other fields. When two fields are routed, changing the value of one event automatically changes the values of the fields that it is routed to.
 
 When you create routes between events, things begin to happen in your scene. You can connect a touch sensor to a lamp to turn on a light, for example. You can also create routes between objects so that when the position, material, or texture of the first object changes, the attributes of the connected object change as well. Routes are created in the Outline Editor.
