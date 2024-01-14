@@ -1,10 +1,12 @@
 ---
-title: About Script Editor
-date: 2024-01-12
+title: Using the Script Editor
+date: 2024-01-13
 nav: documentation
 categories: [documentation]
 tags: [Script Editor]
 ---
+## About Script Editor
+
 The Script Editor allows you create scripts that run within your scene.
 
 >**Tip:** Use the context menu in the Outline Editor to add, remove edit, and rearrange Script and shader fields.

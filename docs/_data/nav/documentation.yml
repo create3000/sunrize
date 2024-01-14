@@ -6,5 +6,7 @@
       url: /documentation/a-quick-look-at-the-user-interface/
     - title: "Using the Outline Editor"
       url: /documentation/using-the-outline-editor/
-    - title: "About Script Editor"
-      url: /documentation/about-script-editor/
+    - title: "Cloning Objects"
+      url: /documentation/cloning-objects/
+    - title: "Using the Script Editor"
+      url: /documentation/using-the-script-editor/

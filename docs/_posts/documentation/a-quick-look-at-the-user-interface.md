@@ -109,7 +109,7 @@ Displays the X3D console. In the console are errors or warnings shown when encou
 
 ### Script Editor
 
-The Script Editor allows you to create and edit scripts that run within your scene. With the Script Editor you can easily edit Script and shader source code. **Tip:** Add, remove and edit Script and shader fields in the Node Properties Editor.
+The [Script Editor](../using-the-script-editor/) allows you to create and edit scripts that run within your scene. With the Script Editor you can easily edit Script and shader source code. **Tip:** Add, remove and edit Script and shader fields in the Node Properties Editor.
 
 ![Script Editor](/assets/img/documentation/script-editor-glsl.png)
 <br>Script Editor
@@ -118,8 +118,6 @@ The Script Editor allows you to create and edit scripts that run within your sce
 Scripts are written in ECMAScript, a lightweight, platform-independent programming language that is very similar to JavaScript. ECMAScript provides functions that are called when events come into the script, access to fields within the script, logic to operate on the fields, and the ability to send events from the script.
 
 Shaders are written in OpenGL Shading Language (GLSL), a high-level shading language based on the syntax of the C programming language. With GLSL you can code (right up to) short programs, called shaders, which are executed on the GPU. With Shaders you are able for instance to write your own lighting model. But that's only one feature of shaders. There are thousands of other really nice possibilities: Shadows, Environment Mapping, Per-Pixel Lighting, Bump Mapping, Parallax Bump Mapping, HDR, and much more!
-
-Have a look at [using the Script Editor](../script-editor/) for more information.
 
 ## Keyboard Shortcuts and Tricks
 
