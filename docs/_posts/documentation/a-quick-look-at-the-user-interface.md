@@ -3,7 +3,7 @@ title: A Quick Look at the User Interface
 date: 2024-01-12
 nav: documentation
 categories: [documentation]
-tags: [Outline Editor]
+tags: [User Interface, Outline Editor, Script Editor]
 ---
 The user interface consists of four main parts: Menubar, Dashboard, Sidebar, and Footer. These all have special task which will be explained here.
 

@@ -6,6 +6,8 @@
       url: /documentation/a-quick-look-at-the-user-interface/
     - title: "Using the Outline Editor"
       url: /documentation/using-the-outline-editor/
+    - title: "Creating Routes Between Fields"
+      url: /documentation/creating-routes-between-fields/
     - title: "Cloning Objects"
       url: /documentation/cloning-objects/
     - title: "Using the Script Editor"

@@ -150,10 +150,10 @@ These are the general steps required to create a script. The Try It! section off
 
 ## Field Semantics
 
-Fields define the persistent state of nodes, and values which nodes may send or receive in the form of events. X3D supports four types of access to a node''s fields
+Fields define the persistent state of nodes, and values which nodes may send or receive in the form of events. X3D supports four types of access to a node's fields
 
 - *initializeOnly* access, which allows content to supply an initial value for the field but does not allow subsequent changes to its value, except within the script that defines the field;
-- *inputOnly* access, which means that the node may receive an event to change the value of its field, but does not allow the field''s value to be read;
+- *inputOnly* access, which means that the node may receive an event to change the value of its field, but does not allow the field's value to be read;
 - *outputOnly* access, which means that the node may send an event when its value changes, but does not allow the field's value to be written, except within the script node that defines the field; and
 - *inputOutput* access, which allows full access to the field: content may supply an initial value for the field, the node may receive an event to change the value of its field, and the node may send an event when its value changes.
 
