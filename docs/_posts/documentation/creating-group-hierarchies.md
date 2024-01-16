@@ -33,8 +33,8 @@ And you also want the thigh movement to include the shin and the foot:
 
 You'll need to group the foot and shin together, then add the thigh as a separate group containing both the foot and shin. The steps for this operation follow:
 
-1. Select shin and thigh
-2. Choose *Context Menu > Add Parent Group > Transform*
+1. Select foot and shin.
+2. Choose *Context Menu > Add Parent Group > Transform.*
 
 The outcome produces a group hierarchy that looks like this:
 
@@ -51,7 +51,7 @@ This type of grouping lets you easily articulate the robot leg. For instance if 
 Suppose that you want to add a knee to the robot leg described in the previous section. For this, you'll add the knee to the existing foot and shin group so that all three of these objects move together.
 
 1. Choose the knee.
-2. Drag & drop the knee into the parent group alongside with the foot.
+2. Drag & drop the knee into the parent group alongside with the foot and shin.
 
 The outcome produces a group hierarchy that looks like this:
 
