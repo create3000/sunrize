@@ -3,7 +3,7 @@ title: Creating Group Hierarchies
 date: 2024-01-16
 nav: documentation
 categories: [documentation]
-tags: [Cloning, Outline Editor]
+tags: [Grouping, Outline Editor]
 ---
 A group hierarchy specifies parent and child relationships within the group. The simplest group hierarchy occurs when you select objects and use *Context Menu > Add Parent Group*. This groups all the objects at the same level under a new parent, making the objects the children of the new parent. This grouping treats the separate objects as a single object with its own manipulator, so you can move and resize the objects as a whole. To create a multi-level group hierarchy, create multiple groupings using *Context Menu > Add Parent Group*. Also use drag & drop for nodes. Drag & Drop and *Add Parent Group* are described in detail below.
 
