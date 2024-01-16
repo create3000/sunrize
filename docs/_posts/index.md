@@ -3,7 +3,7 @@ title: Sunrize — A Multi-Platform X3D Editor
 date: 2023-04-20
 nav: main
 categories: []
-tags: [Getting, Started]
+tags: [Getting Started]
 permalink: /
 ---
 ## Introduction
