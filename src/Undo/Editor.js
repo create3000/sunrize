@@ -160,6 +160,7 @@ module .exports = class Editor
          const parser = new X3D .GoldenGate (tempScene);
 
          parser .pushExecutionContext (executionContext);
+
          await new Promise ((resolve, reject) => parser .parseIntoScene (x3dSyntax, resolve, reject));
       }
       catch (error)
@@ -373,11 +374,16 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             }
             else
             {
-               const
-                  filePath     = path .resolve (path .dirname (url .fileURLToPath (oldWorldURL)), URL),
-                  relativePath = path .relative (path .dirname (url .fileURLToPath (newWorldURL)), filePath)
+               try
+               {
+                  const
+                     filePath     = path .resolve (path .dirname (url .fileURLToPath (oldWorldURL)), URL),
+                     relativePath = path .relative (path .dirname (url .fileURLToPath (newWorldURL)), filePath)
 
-               newUrl .push (relativePath)
+                  newUrl .push (relativePath)
+               }
+               catch
+               { }
             }
          }
 
