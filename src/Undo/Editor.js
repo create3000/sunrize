@@ -359,35 +359,46 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       {
          const
             urlObject     = node .getType () .includes (X3D .X3DConstants .X3DUrlObject),
-            fontStyleNode = node .getType () .includes (X3D .X3DConstants .X3DFontStyleNode)
+            fontStyleNode = node .getType () .includes (X3D .X3DConstants .X3DFontStyleNode);
 
          if (!(urlObject || fontStyleNode))
-            return
+            return;
 
-         const newUrl = new X3D .MFString ()
+         const newUrl = new X3D .MFString ();
 
-         for (const URL of node ._url)
+         for (const fileURL of node ._url)
          {
-            if (this .absoluteURL .test (URL) || (fontStyleNode && this .fontFamilies .has (URL)))
+            if (this .absoluteURL .test (fileURL) || (fontStyleNode && this .fontFamilies .has (fileURL)))
             {
-               newUrl .push (URL)
+               newUrl .push (fileURL);
             }
             else
             {
                try
                {
                   const
-                     filePath     = path .resolve (path .dirname (url .fileURLToPath (oldWorldURL)), URL),
-                     relativePath = path .relative (path .dirname (url .fileURLToPath (newWorldURL)), filePath)
+                     filePath     = path .resolve (path .dirname (url .fileURLToPath (oldWorldURL)), fileURL),
+                     relativePath = path .relative (path .dirname (url .fileURLToPath (newWorldURL)), filePath);
 
-                  newUrl .push (relativePath)
+                  // Add relative file URL.
+                  newUrl .push (relativePath);
+                  continue;
+               }
+               catch
+               { }
+
+               try
+               {
+                  // Add absolute URL.
+                  newUrl .push (new URL (fileURL, oldWorldURL));
+                  continue;
                }
                catch
                { }
             }
          }
 
-         this .setFieldValue (executionContext, node, node ._url, newUrl, undoManager)
+         this .setFieldValue (executionContext, node, node ._url, newUrl, undoManager);
       });
 
       undoManager .endUndo ();
