@@ -61,7 +61,7 @@ The Outline Editor might display this grouping as:
 
 ![foot-shin-thigh-outline-editor-3](/assets/img/documentation/foot-shin-thigh-outline-editor-3.png){: .normal .w-50 }
 
-## Add Parent Group
+## Animating Objects with Parent Groups
 
 In some cases you'll want to create a parent group. For example, suppose you are creating an animation of the Earth's rotation. The Earth spins around its own axis and it also orbits the Sun. You can create a parent group to specify the Sun's rotation that includes the rotating Earth:
 
