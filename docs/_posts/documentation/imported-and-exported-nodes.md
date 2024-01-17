@@ -77,6 +77,6 @@ If you have a scene with an exported node included in your scene with an Inline 
 
 ![Import Node in Outline Editor](/assets/img/documentation/import-node.png){: .normal .w-50 }
 
-The imported node will then appear at the bottom of your scene. It is always possible to rename imported nodes, as well as to remove them.
+The imported node will then appear at the bottom of your scene. It is always possible to rename imported nodes, as well as to remove them. As the node has now been imported, it is now possible to create routes to and from this node.
 
 ![Imported Node in Outline Editor](/assets/img/documentation/imported-node.png){: .normal .w-50 }
