@@ -70,7 +70,7 @@ You can always remove a previously exported node from the scene graph. Make sure
 
 ### Imported Nodes
 
-If you have a scene with an exported node include in your scene with an Inline node, you can expand the Inline node's scene to get access to the exported node.
+If you have a scene with an exported node included in your scene with an Inline node, you can expand the Inline node's scene to get access to the exported node.
 
 1. Choose *Context Menu > Import Node.*
 2. Give your imported node a new name to identify this node within your scene.
