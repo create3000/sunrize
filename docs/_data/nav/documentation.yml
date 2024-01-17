@@ -6,6 +6,8 @@
       url: /documentation/a-quick-look-at-the-user-interface/
     - title: "Using the Outline Editor"
       url: /documentation/using-the-outline-editor/
+    - title: "Selecting and Grouping Objects"
+      url: /documentation/selecting-and-grouping-objects/
     - title: "Creating Group Hierarchies"
       url: /documentation/creating-group-hierarchies/
     - title: "Creating Routes Between Fields"
