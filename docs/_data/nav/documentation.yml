@@ -14,5 +14,7 @@
       url: /documentation/cloning-objects/
     - title: "Editing Prototypes"
       url: /documentation/editing-prototypes/
+    - title: "Imported and Exported Nodes"
+      url: /documentation/imported-and-exported-nodes/
     - title: "Using the Script Editor"
       url: /documentation/using-the-script-editor/
