@@ -380,7 +380,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                      filePath     = path .resolve (path .dirname (url .fileURLToPath (oldWorldURL)), fileURL),
                      relativePath = path .relative (path .dirname (url .fileURLToPath (newWorldURL)), filePath);
 
-                  // Add relative file URL.
+                  // Add new relative file URL.
                   newUrl .push (relativePath);
                   continue;
                }
@@ -395,6 +395,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                }
                catch
                { }
+
+               // Fallback, use original url.
+               newUrl .push (fileURL);
             }
          }
 
