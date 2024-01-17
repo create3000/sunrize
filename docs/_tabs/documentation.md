@@ -29,7 +29,7 @@ It might also be of interest for you [How to Navigate in a Scene](/x_ite/tutoria
 
 ## Conventions Used
 
-Choose *File &gt; Save* means to choose Save from the File pull-down menu.
+Choose *File > Save* means to choose Save from the File pull-down menu.
 
 *Ctrl-u* means to press the *Ctrl* key and the *u* key at the same time.
 
@@ -42,4 +42,5 @@ To *click-middle* means to click the middle mouse button.
 To *click-right* means to click the right mouse button.
 
 ![smarty-bubbles](/assets/img/documentation/smarty-bubbles.jpg)
-<small><br>Editing »Smarty Bubbles« example in Sunrize</small>
+<br>Editing »Smarty Bubbles« example in Sunrize
+{: .small }
