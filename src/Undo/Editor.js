@@ -364,24 +364,24 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          if (!(urlObject || fontStyleNode))
             return;
 
-         const newUrl = new X3D .MFString ();
+         const newURL = new X3D .MFString ();
 
          for (const fileURL of node ._url)
          {
             if (this .absoluteURL .test (fileURL) || (fontStyleNode && this .fontFamilies .has (fileURL)))
             {
-               newUrl .push (fileURL);
+               newURL .push (fileURL);
             }
             else
             {
                try
                {
                   const
-                     filePath     = path .resolve (path .dirname (url .fileURLToPath (oldWorldURL)), fileURL),
+                     filePath     = path .resolve  (path .dirname (url .fileURLToPath (oldWorldURL)), fileURL),
                      relativePath = path .relative (path .dirname (url .fileURLToPath (newWorldURL)), filePath);
 
                   // Add new relative file URL.
-                  newUrl .push (relativePath);
+                  newURL .push (relativePath);
                   continue;
                }
                catch
@@ -390,18 +390,18 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                try
                {
                   // Add absolute URL.
-                  newUrl .push (new URL (fileURL, oldWorldURL));
+                  newURL .push (new URL (fileURL, oldWorldURL));
                   continue;
                }
                catch
                { }
 
                // Fallback, use original url.
-               newUrl .push (fileURL);
+               newURL .push (fileURL);
             }
          }
 
-         this .setFieldValue (executionContext, node, node ._url, newUrl, undoManager);
+         this .setFieldValue (executionContext, node, node ._url, newURL, undoManager);
       });
 
       undoManager .endUndo ();
