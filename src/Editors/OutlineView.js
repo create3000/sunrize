@@ -1056,7 +1056,7 @@ module .exports = class OutlineView extends Interface
       const [className] = this .getLoadState (node .checkLoadState (), node .getTypeName ());
 
       this .sceneGraph
-         .find (`.node[node-id=${node .getId ()}]`)
+         .find (`.node[node-id=${node .getId ()}],.externproto[node-id=${node .getId ()}]`)
          .find ("> .item .reload")
          .removeClass (["not-started-state", "in-progress-state", "complete-state", "failed-state"])
          .addClass (className);

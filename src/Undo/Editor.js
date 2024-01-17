@@ -1210,23 +1210,23 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       const
          oldExternprotos = new Map (Array .from (executionContext .externprotos, p => [p .getName (), p])),
-         externproto     = new X3D .X3DExternProtoDeclaration (executionContext, new X3D .MFString ())
+         externproto     = new X3D .X3DExternProtoDeclaration (executionContext, new X3D .MFString ());
 
-      undoManager .beginUndo (_ ("Add Extern Prototype Declaration »%s«"), name)
+      undoManager .beginUndo (_ ("Add Extern Prototype Declaration »%s«"), name);
 
-      externproto .setup ()
-      executionContext .updateExternProtoDeclaration (name, externproto)
+      externproto .setup ();
+      executionContext .updateExternProtoDeclaration (name, externproto);
 
       undoManager .registerUndo (() =>
       {
-         this .setExternProtoDeclarations (executionContext, oldExternprotos, undoManager)
+         this .setExternProtoDeclarations (executionContext, oldExternprotos, undoManager);
       });
 
-      this .requestUpdateInstances (executionContext, undoManager)
+      this .requestUpdateInstances (executionContext, undoManager);
 
       undoManager .endUndo ();
 
-      return externproto
+      return externproto;
    }
 
    /**
