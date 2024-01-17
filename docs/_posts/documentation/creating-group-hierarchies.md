@@ -13,23 +13,23 @@ Group hierarchies are especially important when setting up animations for object
 
 In an example using a robot leg made up of a foot, shin, and thigh, a simple group looks like this:
 
-![foot-shin-thigh-1](/assets/img/documentation/foot-shin-thigh-1.png){: .normal }
+![foot, shin, thigh in group schema](/assets/img/documentation/foot-shin-thigh-1.png){: .normal }
 
 The orange area represents a parent Transform node which holds the children (three Transform nodes containing information for the Foot, Shin, and Thigh).
 
 The Outline Editor might display this grouping as:
 
-![foot-shin-thigh-outline-editor-1](/assets/img/documentation/foot-shin-thigh-outline-editor-1.png){: .normal .w-50 }
+![foot, shin, thigh in group in Outline Editor](/assets/img/documentation/foot-shin-thigh-outline-editor-1.png){: .normal .w-50 }
 
 This type of group will allow you to move the foot, shin, and thigh as a single unit.
 
 But you want to do something more complex: Suppose you want to move just the foot, then the shin with the foot:
 
-![foot1](/assets/img/documentation/foot1.png){: .normal .w-50 }
+![foot rotated](/assets/img/documentation/foot1.png){: .normal .w-50 }
 
 And you also want the thigh movement to include the shin and the foot:
 
-![foot2](/assets/img/documentation/foot2.png){: .normal .w-50 }
+![foot rotated](/assets/img/documentation/foot2.png){: .normal .w-50 }
 
 You'll need to group the foot and shin together, then add the thigh as a separate group containing both the foot and shin. The steps for this operation follow:
 
@@ -38,11 +38,11 @@ You'll need to group the foot and shin together, then add the thigh as a separat
 
 The outcome produces a group hierarchy that looks like this:
 
-![foot-shin-thigh](/assets/img/documentation/foot-shin-thigh-2.png){: .normal }
+![foot, shin, thigh in group schema](/assets/img/documentation/foot-shin-thigh-2.png){: .normal }
 
 The Outline Editor might display this grouping as:
 
-![foot-shin-thigh-outline-editor-2](/assets/img/documentation/foot-shin-thigh-outline-editor-2.png){: .normal .w-50 }
+![foot, shin, thigh in group in Outline Editor](/assets/img/documentation/foot-shin-thigh-outline-editor-2.png){: .normal .w-50 }
 
 This type of grouping lets you easily articulate the robot leg. For instance if you want to animate this group hierarchy.
 
@@ -55,11 +55,11 @@ Suppose that you want to add a knee to the robot leg described in the previous s
 
 The outcome produces a group hierarchy that looks like this:
 
-![foot-shin-thigh](/assets/img/documentation/foot-shin-thigh-3.png){: .normal }
+![knee, foot, shin, thigh in group schema](/assets/img/documentation/foot-shin-thigh-3.png){: .normal }
 
 The Outline Editor might display this grouping as:
 
-![foot-shin-thigh-outline-editor-3](/assets/img/documentation/foot-shin-thigh-outline-editor-3.png){: .normal .w-50 }
+![knee, foot, shin, thigh in group in Outline Editor](/assets/img/documentation/foot-shin-thigh-outline-editor-3.png){: .normal .w-50 }
 
 ## Animating Objects with Parent Groups
 
@@ -72,11 +72,11 @@ The parent group has its own manipulator with its own center of rotation (the ye
 
 When you create an animation, use the *Select Parent* and *Select Child* buttons (not yet implemented) to toggle between the Earth's local rotation (the child selection) and its rotation around the Sun (the parent selection) or use the Outline Editor.
 
-![earth-1](/assets/img/documentation/earth-1.png){: .normal .w-50 }
+![earth selected](/assets/img/documentation/earth-1.png){: .normal .w-50 }
 
 *Select Child* to set the Earth's local rotation.
 
-![earth-2](/assets/img/documentation/earth-2.png){: .normal }
+![earth parent selected](/assets/img/documentation/earth-2.png){: .normal }
 
 *Select Parent* to set the Earth's rotation around the Sun. Select the center, to move the center of rotation away from the parent's manipulator. You can select the center to pin it to it's current location. The center point is then colored blue. You can then move the object but the center stays at its current location. Click the center again to release.
 
