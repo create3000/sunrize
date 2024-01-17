@@ -396,7 +396,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                catch
                { }
 
-               // Fallback, use original url.
+               // Fallback, use original URL.
                newURL .push (fileURL);
             }
          }
