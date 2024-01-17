@@ -11,7 +11,9 @@ X3D comes with a fixed set of objects, called nodes, which will cover most of yo
 
 With Sunrize you can display, edit and use extern prototypes and prototypes within the Outline Editor:
 
-![prototypes](https://create3000.github.io/titania/images/prototypes.png){: .normal .w-50 }
+![Extern Prototype »Rotor« with instance](https://create3000.github.io/titania/images/prototypes.png){: .normal .w-50 }
+<br>Extern Prototype »Rotor« with instance
+{: .small }
 
 To display the contents of extern prototypes, choose from menu *View > Outline Editor > Expand ExternProto Declarations.*
 
@@ -19,7 +21,7 @@ To display the contents of extern prototypes, choose from menu *View > Outline E
 
 Use the Prototype Editor to create a Prototype or Externproto, find the button in the toolbar.
 
-![prototypes](https://create3000.github.io/titania/images/prototype-editor.png){: .normal .w-50 }
+![Prototype Editor](https://create3000.github.io/titania/images/prototype-editor.png){: .normal .w-50 }
 <br>Prototype Editor
 {: .small }
 
