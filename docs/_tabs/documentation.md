@@ -25,7 +25,7 @@ Sunrize aims to provide you with powerful tools to compose complex objects and c
    - [Imported and Exported Nodes](imported-and-exported-nodes/)
 - [Using the Script Editor](using-the-script-editor/)
 
-It might also be of interest for you [How to Navigate in a Scene](/x_ite/tutorials/how-to-navigate-in-a-scene/).
+It also might be of interest for you [How to Navigate in a Scene](/x_ite/tutorials/how-to-navigate-in-a-scene/).
 
 ## Conventions Used
 
