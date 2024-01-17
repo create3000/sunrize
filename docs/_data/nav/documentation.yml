@@ -12,5 +12,7 @@
       url: /documentation/creating-routes-between-fields/
     - title: "Cloning Objects"
       url: /documentation/cloning-objects/
+    - title: "Editing Prototypes"
+      url: /documentation/editing-prototypes/
     - title: "Using the Script Editor"
       url: /documentation/using-the-script-editor/

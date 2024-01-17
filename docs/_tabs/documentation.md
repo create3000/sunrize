@@ -20,6 +20,7 @@ Sunrize aims to provide you with powerful tools to compose complex objects and c
    - [Creating Group Hierarchies](creating-group-hierarchies/)
    - [Creating Routes Between Fields](creating-routes-between-fields/)
    - [Cloning Objects](cloning-objects/)
+   - [Editing Prototypes](editing-prototypes/)
 - [Using the Script Editor](using-the-script-editor/)
 
 ## Conventions Used
