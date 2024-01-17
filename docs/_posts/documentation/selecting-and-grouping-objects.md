@@ -13,7 +13,7 @@ Click an object to select it; *Shift*-click to extend the selection to include a
 
 Use the grouping functions in the Outline Editor to group, ungroup, add to the existing group, and create a new parent group. The grouping functions are explained in more detail below.
 
-Use group hierarchies to specify spatial relationships between objects in a group. For example, a robot leg that articulates at the knee and foot joints should be grouped so that moving the upper leg also moves the knee, lower leg, and foot. (This is where *Create Parent Group* and *Add To Group* become useful.)
+Use group hierarchies to specify spatial relationships between objects in a group. For example, a robot leg that articulates at the knee and foot joints should be grouped so that moving the upper leg also moves the knee, lower leg, and foot. (This is where *Create Parent Group* and *Drag & Drop* become useful.)
 
 ## To Select all or Part
 
