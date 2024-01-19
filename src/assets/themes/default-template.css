@@ -1002,6 +1002,12 @@ body.dark .ui-widget .library-list .component {
 .outline-editor {
 }
 
+.scene-graph .material-symbols-outlined {
+  font-size: var(--font-size);
+  position: relative;
+  top: 2.5px;
+}
+
 .scene-graph .hidden {
   display: none;
 }
@@ -1139,6 +1145,14 @@ body.dark .ui-widget .library-list .component {
   width: 12px;
   height: 12px;
   top: 4px;
+}
+
+.scene-graph .url-button {
+  position: relative;
+  top: 4px;
+  margin-left: 10px;
+  color: black;
+  font-variation-settings: 'GRAD' 200;
 }
 
 .scene-graph .pointer {
@@ -1287,12 +1301,6 @@ body.dark .ui-widget .library-list .component {
 
 .scene-graph .primary.drag-after:last-child {
   box-shadow: 0 2px 0 var(--system-green);
-}
-
-.scene-graph .material-symbols-outlined {
-  font-size: var(--font-size);
-  position: relative;
-  top: 2.5px;
 }
 
 .scene-graph .button {

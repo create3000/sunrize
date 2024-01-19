@@ -3,6 +3,8 @@
 const
    $                 = require ("jquery"),
    electron          = require ("electron"),
+   path              = require ("path"),
+   url               = require ("url"),
    X3D               = require ("../X3D"),
    OutlineRouteGraph = require ("./OutlineRouteGraph"),
    Editor            = require ("../Undo/Editor"),
@@ -1042,7 +1044,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const
          executionContext = this .objects .get (executionContextId),
          proto            = this .objects .get (protoNodeId),
-         response         = await electron .ipcRenderer .invoke ("file-path", proto .getName ());
+         response         = await electron .ipcRenderer .invoke ("file-path", "save", proto .getName ());
 
       if (response .canceled)
          return;
@@ -1167,6 +1169,43 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          event .stopImmediatePropagation ();
 
          Editor .setFieldValue (node .getExecutionContext (), node, field, Date .now () / 1000);
+      });
+   }
+
+   addUrlField (button)
+   {
+      const
+         element  = button .closest (".field, .special"),
+         node     = this .getNode (element),
+         field    = this .getField (element);
+
+      button .addClass (["pointer", "material-symbols-outlined"]) .on ("click", async event =>
+      {
+         event .preventDefault ();
+         event .stopImmediatePropagation ();
+
+         const response = await electron .ipcRenderer .invoke ("file-path", "open");
+
+         if (response .canceled)
+            return;
+
+         const
+            worldURL = node .getExecutionContext () .getWorldURL (),
+            value    = field .copy ();
+
+         for (const filePath of response .filePaths)
+         {
+            try
+            {
+               value .push (path .relative (path .dirname (url .fileURLToPath (worldURL)), filePath));
+            }
+            catch
+            {
+               value .push (url .pathToFileURL (filePath));
+            }
+         }
+
+         Editor .setFieldValue (node .getExecutionContext (), node, field, value);
       });
    }
 

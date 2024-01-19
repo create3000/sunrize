@@ -987,7 +987,7 @@ module .exports = class OutlineView extends Interface
             $("<span></span>")
                .addClass (["tool", "button", "material-symbols-outlined"])
                .addClass (node .valueOf () === node ? "off" : "" )
-               .attr ("title", "Toggle tool.")
+               .attr ("title", _ ("Toggle tool."))
                .text ("build_circle")
                .appendTo (name);
          }
@@ -1227,22 +1227,23 @@ module .exports = class OutlineView extends Interface
    }
 
    static connectorId = 0;
+   static urlFields   = new Set (["url", "frontUrl", "backUrl", "leftUrl", "rightUrl", "topUrl", "bottomUrl"]);
 
    #fieldButtonSymbol = Symbol ();
 
    createFieldElement (parent, node, field, type = "field")
    {
-      this .objects .set (field .getId (), field)
+      this .objects .set (field .getId (), field);
 
       // Classes
 
-      const classes = [type]
+      const classes = [type];
 
       if (field .hasReferences ())
-         classes .push ("references")
+         classes .push ("references");
 
       if (node .getUserDefinedFields () .get (field .getName ()) === field)
-         classes .push ("user-defined")
+         classes .push ("user-defined");
 
       // Node
 
@@ -1258,20 +1259,20 @@ module .exports = class OutlineView extends Interface
          .addClass ("icon")
          .attr ("title", field .getTypeName ())
          .attr ("src", `../images/OutlineEditor/Fields/${field .getTypeName ()}.svg`)
-         .appendTo (child)
+         .appendTo (child);
 
       // Name
 
       const name = $("<div></div>")
          .addClass ("name")
-         .appendTo (child)
+         .appendTo (child);
 
       $("<span></span>")
          .addClass ("field-name")
          .text (field .getName ())
-         .appendTo (name)
+         .appendTo (name);
 
-      field .addReferencesCallback (this, this .updateReferences .bind (this, parent, node, field))
+      field .addReferencesCallback (this, this .updateReferences .bind (this, parent, node, field));
 
       // Color
 
@@ -1283,10 +1284,10 @@ module .exports = class OutlineView extends Interface
                .addClass ("boolean-button")
                .attr ("src", `../images/OutlineEditor/Values/${field .getValue () ? "TRUE" : "FALSE"}.svg`)
                .attr ("title", _ ("Toggle value."))
-               .appendTo (child)
+               .appendTo (child);
 
-            field .addFieldCallback (this .#fieldButtonSymbol, this .updateBoolean .bind (this, parent, node, field))
-            break
+            field .addFieldCallback (this .#fieldButtonSymbol, this .updateBoolean .bind (this, parent, node, field));
+            break;
          }
          case X3D .X3DConstants .SFColor:
          case X3D .X3DConstants .SFColorRGBA:
@@ -1295,10 +1296,10 @@ module .exports = class OutlineView extends Interface
                .addClass ("color-button")
                .attr ("title", _ ("Open color picker."))
                .css ("background-color", this .getColorFromField (field))
-               .appendTo (child)
+               .appendTo (child);
 
-            field .addFieldCallback (this .#fieldButtonSymbol, this .updateColor .bind (this, parent, node, field))
-            break
+            field .addFieldCallback (this .#fieldButtonSymbol, this .updateColor .bind (this, parent, node, field));
+            break;
          }
          case X3D .X3DConstants .SFTime:
          {
@@ -1306,43 +1307,56 @@ module .exports = class OutlineView extends Interface
                .addClass ("time-button")
                .attr ("src", `../images/OutlineEditor/Values/Bell.svg`)
                .attr ("title", _ ("Set current time."))
-               .appendTo (child)
+               .appendTo (child);
 
-            break
+            break;
+         }
+         case X3D .X3DConstants .MFString:
+         {
+            if (OutlineView .urlFields .has (field .getName ()) && field .isInitializable ())
+            {
+               $("<span></span>")
+                  .addClass (["url-button"])
+                  .attr ("title", _ ("Add URL."))
+                  .text ("add_circle")
+                  .appendTo (child);
+            }
+
+            break;
          }
          default:
-            break
+            break;
       }
 
       // Access type
 
       const accessType = $("<div></div>")
          .addClass (["access-type", this .accessTypes [field .getAccessType ()]])
-         .appendTo (child)
+         .appendTo (child);
 
-      const mapId = ++ OutlineView .connectorId
+      const mapId = ++ OutlineView .connectorId;
 
       $("<img/>")
          .addClass ("image")
          .attr ("src", this .getAccessTypeImage (field))
          .attr ("usemap", "#connector-id-" + mapId)
-         .appendTo (accessType)
+         .appendTo (accessType);
 
       if (parent .is (".node, .imported-node, .exported-node"))
       {
          if (type !== "special")
-            $("<canvas></canvas>") .addClass ("field-routes") .appendTo (accessType)
+            $("<canvas></canvas>") .addClass ("field-routes") .appendTo (accessType);
 
          const map = $("<map></map>")
             .attr ("id", "connector-id-" + mapId)
             .attr ("name", "connector-id-" + mapId)
-            .appendTo (accessType)
+            .appendTo (accessType);
 
          switch (field .getAccessType ())
          {
             case X3D .X3DConstants .initializeOnly:
             {
-            	break
+            	break;
             }
             case X3D .X3DConstants .inputOnly:
             {
@@ -1351,18 +1365,18 @@ module .exports = class OutlineView extends Interface
                   .attr ("href", "#")
                   .attr ("shape", "rect")
                   .attr ("coords", "0,0,13,12")
-                  .addClass ("input-selector") .appendTo (map)
+                  .addClass ("input-selector") .appendTo (map);
 
                const inputRoutesSelector = $("<area></area>")
                   .attr ("title", _ ("Select routes."))
                   .attr ("shape", "rect")
                   .attr ("coords", "20,0,28,7")
-                  .addClass ("input-routes-selector") .appendTo (map)
+                  .addClass ("input-routes-selector") .appendTo (map);
 
                if (field .getInputRoutes () .size)
-                  inputRoutesSelector .attr ("href", "#")
+                  inputRoutesSelector .attr ("href", "#");
 
-               break
+               break;
             }
             case X3D .X3DConstants .outputOnly:
             {
@@ -1371,19 +1385,19 @@ module .exports = class OutlineView extends Interface
                   .attr ("href", "#")
                   .attr ("shape", "rect")
                   .attr ("coords", "0,0,14,12")
-                  .addClass ("output-selector") .appendTo (map)
+                  .addClass ("output-selector") .appendTo (map);
 
                const outputRoutesSelector = $("<area></area>")
                   .attr ("title", _ ("Select routes."))
                   .attr ("shape", "rect")
                   .attr ("coords", "20,5,28,12")
                   .addClass ("output-routes-selector")
-                  .appendTo (map)
+                  .appendTo (map);
 
                if (field .getOutputRoutes () .size)
-                  outputRoutesSelector .attr ("href", "#")
+                  outputRoutesSelector .attr ("href", "#");
 
-               break
+               break;
             }
             case X3D .X3DConstants .inputOutput:
             {
@@ -1392,7 +1406,7 @@ module .exports = class OutlineView extends Interface
                   .attr ("href", "#")
                   .attr ("shape", "rect")
                   .attr ("coords", "0,0,13,12")
-                  .addClass ("input-selector") .appendTo (map)
+                  .addClass ("input-selector") .appendTo (map);
 
                $("<area></area>")
                   .attr ("title", _ ("Select output."))
@@ -1400,96 +1414,96 @@ module .exports = class OutlineView extends Interface
                   .attr ("shape", "rect")
                   .attr ("coords", "14,0,28,12")
                   .addClass ("output-selector")
-                  .appendTo (map)
+                  .appendTo (map);
 
                const inputRoutesSelector = $("<area></area>")
                   .attr ("title", _ ("Select routes."))
                   .attr ("shape", "rect")
                   .attr ("coords", "34,0,42,7")
                   .addClass ("input-routes-selector")
-                  .appendTo (map)
+                  .appendTo (map);
 
                if (field .getInputRoutes () .size)
-                  inputRoutesSelector .attr ("href", "#")
+                  inputRoutesSelector .attr ("href", "#");
 
                const outputRoutesSelector = $("<area></area>")
                   .attr ("title", _ ("Select routes."))
                   .attr ("shape", "rect")
                   .addClass ("output-routes-selector")
-                  .appendTo (map)
+                  .appendTo (map);
 
                if (field .getInputRoutes () .size)
-                  outputRoutesSelector .attr ("coords", "48,5,56,12")
+                  outputRoutesSelector .attr ("coords", "48,5,56,12");
                else
-                  outputRoutesSelector .attr ("coords", "34,5,42,12")
+                  outputRoutesSelector .attr ("coords", "34,5,42,12");
 
                if (field .getOutputRoutes () .size)
-                  outputRoutesSelector .attr ("href", "#")
+                  outputRoutesSelector .attr ("href", "#");
 
-            	break
+            	break;
             }
          }
 
          if (this .connector && this .connector .type === "input" && this .connector .field === field)
-            var inputActivated = "activated"
+            var inputActivated = "activated";
          else
-            var inputActivated = ""
+            var inputActivated = "";
 
          if (this .connector && this .connector .type === "output" && this .connector .field === field)
-            var outputActivated = "activated"
+            var outputActivated = "activated";
          else
-            var outputActivated = ""
+            var outputActivated = "";
 
          switch (field .getAccessType ())
          {
             case X3D .X3DConstants .initializeOnly:
             {
-            	break
+            	break;
             }
             case X3D .X3DConstants .inputOnly:
             {
                $("<img/>")
                   .addClass (["active", "input", inputActivated])
                   .attr ("src", this .getAccessTypeImage (field, "input"))
-                  .appendTo (accessType)
+                  .appendTo (accessType);
 
-            	break
+            	break;
             }
             case X3D .X3DConstants .outputOnly:
             {
                $("<img/>")
                   .addClass (["active", "output", outputActivated])
                   .attr ("src", this .getAccessTypeImage (field, "output"))
-                  .appendTo (accessType)
+                  .appendTo (accessType);
 
-            	break
+            	break;
             }
             case X3D .X3DConstants .inputOutput:
             {
                $("<img/>")
                   .addClass (["active", "input", inputActivated])
                   .attr ("src", this .getAccessTypeImage (field, "input"))
-                  .appendTo (accessType)
+                  .appendTo (accessType);
 
                $("<img/>")
                   .addClass (["active", "output", outputActivated])
                   .attr ("src", this .getAccessTypeImage (field, "output"))
-                  .appendTo (accessType)
+                  .appendTo (accessType);
 
-               break
+               break;
             }
          }
 
          // Route callback.
 
-         field .addRouteCallback (this, this .updateFieldAccessType .bind (this, node, field))
+         field .addRouteCallback (this, this .updateFieldAccessType .bind (this, node, field));
       }
 
       // Append empty tree to enable expander.
 
-      $("<ul><li></li></ul>") .appendTo (child)
+      $("<ul><li></li></ul>") .appendTo (child);
 
-      return child
+      return child;
    }
 
    updateNodeTitle (event)
@@ -3090,10 +3104,16 @@ module .exports = class OutlineView extends Interface
          return;
 
       if (node instanceof X3D .X3DExternProtoDeclaration)
+      {
+         child
+            .find (".special .url-button")
+            .each ((i, e) => this .addUrlField ($(e)));
+
          return;
+      }
 
       child
-         .find (".boolean-button, .color-button, .time-button")
+         .find (".boolean-button, .color-button, .time-button, .url-button")
          .each ((i, e) =>
          {
             const element = $(e);
@@ -3106,6 +3126,8 @@ module .exports = class OutlineView extends Interface
                   return this .addColorField (element);
                case "time-button":
                   return this .addTimeField (element);
+               case "url-button":
+                  return this .addUrlField (element);
             }
          });
    }
@@ -3115,6 +3137,8 @@ module .exports = class OutlineView extends Interface
    addColorField (element) { }
 
    addTimeField (element) { }
+
+   addUrlField (element) { }
 
 	removeFieldButtons (elements)
    {

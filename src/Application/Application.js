@@ -94,7 +94,7 @@ module .exports = class Application
       electron .ipcMain .on ("change-menu",         (event, object)      => this .updateMenu (object));
       electron .ipcMain .on ("context-menu",        (event, id, menu)    => this .contextMenu (id, menu));
 
-      electron .ipcMain .handle ("file-path", async (event, basename) => await this .showSaveDialog (basename));
+      electron .ipcMain .handle ("file-path", async (event, type, basename) => await this .showDialog (type, basename));
       electron .ipcMain .handle ("fullname", async () => await (await import ("fullname")) .default ());
 
       await electron .app .whenReady ();
@@ -758,6 +758,17 @@ module .exports = class Application
          filtered .pop ();
 
       return filtered;
+   }
+
+   showDialog (type, defaultPath)
+   {
+      switch (type)
+      {
+         case "open":
+            return this .showOpenDialog (defaultPath);
+         case "save":
+            return this .showSaveDialog (defaultPath);
+      }
    }
 
    /**
