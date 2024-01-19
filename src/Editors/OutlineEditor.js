@@ -1044,7 +1044,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const
          executionContext = this .objects .get (executionContextId),
          proto            = this .objects .get (protoNodeId),
-         response         = await electron .ipcRenderer .invoke ("file-path", "save", proto .getName ());
+         response         = await electron .ipcRenderer .invoke ("file-path", { type: "save", defaultPath: proto .getName () });
 
       if (response .canceled)
          return;
@@ -1184,7 +1184,13 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          event .preventDefault ();
          event .stopImmediatePropagation ();
 
-         const response = await electron .ipcRenderer .invoke ("file-path", "open");
+         const response = await electron .ipcRenderer .invoke ("file-path",
+         {
+            type: "open",
+            filters: [
+               { name: "All Files", extensions: ["*"] },
+            ],
+         });
 
          if (response .canceled)
             return;
