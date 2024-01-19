@@ -1184,12 +1184,28 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          event .preventDefault ();
          event .stopImmediatePropagation ();
 
+         switch (node .getTypeName ())
+         {
+            case "X3DExternProtoDeclaration":
+            case "Inline":
+            {
+               var filters = undefined;
+               break;
+            }
+            default:
+            {
+               var filters = [
+                  { name: "All Files", extensions: ["*"] },
+               ];
+
+               break;
+            }
+         }
+
          const response = await electron .ipcRenderer .invoke ("file-path",
          {
             type: "open",
-            filters: [
-               { name: "All Files", extensions: ["*"] },
-            ],
+            filters: filters,
          });
 
          if (response .canceled)
