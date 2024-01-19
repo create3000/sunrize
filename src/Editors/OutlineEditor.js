@@ -1199,15 +1199,15 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             worldURL = node .getExecutionContext () .getWorldURL (),
             value    = field .copy ();
 
-         for (const filePath of response .filePaths)
+         for (const filePath of response .filePaths .reverse ())
          {
             try
             {
-               value .push (path .relative (path .dirname (url .fileURLToPath (worldURL)), filePath));
+               value .unshift (path .relative (path .dirname (url .fileURLToPath (worldURL)), filePath));
             }
             catch
             {
-               value .push (url .pathToFileURL (filePath));
+               value .unshift (url .pathToFileURL (filePath));
             }
          }
 
