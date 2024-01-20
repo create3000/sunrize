@@ -3123,20 +3123,20 @@ module .exports = class OutlineView extends Interface
          .each ((i, e) => this .addUrlField ($(e)));
    }
 
-   addBooleanField (element) { }
+   addBooleanField (button) { }
 
-   addColorField (element) { }
+   addColorField (button) { }
 
-   addTimeField (element) { }
+   addTimeField (button) { }
 
-   addUrlField (element) { }
+   addUrlField (button) { }
 
-	removeFieldButtons (elements)
+	removeFieldButtons (buttons)
    {
-      elements .each ((i, e) => this .removeColorField ($(e)));
+      buttons .each ((i, e) => this .removeColorField ($(e)));
    }
 
-   removeColorField (element) { }
+   removeColorField (button) { }
 
    hoverInConnector (type, event)
    {
