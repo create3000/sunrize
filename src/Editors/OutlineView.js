@@ -3062,6 +3062,9 @@ module .exports = class OutlineView extends Interface
          return false;
       }
 
+      if (parent .is (".imported-node"))
+         return false;
+
       return true;
    }
 
@@ -3103,7 +3106,7 @@ module .exports = class OutlineView extends Interface
       if (!this .isEditable (parent))
          return;
 
-      if (!(node instanceof X3D .X3DExternProtoDeclaration))
+      if (node instanceof X3D .X3DNode)
       {
          child
             .find (".boolean-button")
