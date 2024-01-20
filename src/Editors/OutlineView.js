@@ -3103,26 +3103,20 @@ module .exports = class OutlineView extends Interface
       if (!this .isEditable (parent))
          return;
 
-      if (node instanceof X3D .X3DExternProtoDeclaration)
+      if (!(node instanceof X3D .X3DExternProtoDeclaration))
       {
          child
-            .find (".special .url-button")
-            .each ((i, e) => this .addUrlField ($(e)));
+            .find (".boolean-button")
+            .each ((i, e) => this .addBooleanField ($(e)));
 
-         return;
+         child
+            .find (".color-button")
+            .each ((i, e) => this .addColorField ($(e)));
+
+         child
+            .find (".time-button")
+            .each ((i, e) => this .addTimeField ($(e)));
       }
-
-      child
-         .find (".boolean-button")
-         .each ((i, e) => this .addBooleanField ($(e)));
-
-      child
-         .find (".color-button")
-         .each ((i, e) => this .addColorField ($(e)));
-
-      child
-         .find (".time-button")
-         .each ((i, e) => this .addTimeField ($(e)));
 
       child
          .find (".url-button")
