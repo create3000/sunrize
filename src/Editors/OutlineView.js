@@ -3055,7 +3055,7 @@ module .exports = class OutlineView extends Interface
    isEditable (parent)
    {
       if (parent .is (".externproto, .special"))
-         parent = parent .closest (".scene");
+         parent = parent .closest (".scene", this .sceneGraph);
 
       if (parent .closest (".externproto, .instance-scene, .internal-scene, .imported-node .node, .imported-node .field", this .sceneGraph) .length)
       {
@@ -3106,8 +3106,10 @@ module .exports = class OutlineView extends Interface
       if (!this .isEditable (parent))
          return;
 
-      if (node instanceof X3D .X3DNode)
+      if (!(node instanceof X3D .X3DExternProtoDeclaration))
       {
+         // X3DNode, X3DProtoDeclaration
+         
          child
             .find (".boolean-button")
             .each ((i, e) => this .addBooleanField ($(e)));
