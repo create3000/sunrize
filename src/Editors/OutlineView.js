@@ -1316,7 +1316,7 @@ module .exports = class OutlineView extends Interface
             if (OutlineView .urlFields .has (field .getName ()) && field .isInitializable ())
             {
                $("<span></span>")
-                  .addClass (["url-button"])
+                  .addClass (["url-button", "material-symbols-outlined"])
                   .attr ("title", _ ("Add URL."))
                   .text ("add_circle")
                   .appendTo (child);
@@ -3113,23 +3113,20 @@ module .exports = class OutlineView extends Interface
       }
 
       child
-         .find (".boolean-button, .color-button, .time-button, .url-button")
-         .each ((i, e) =>
-         {
-            const element = $(e);
+         .find (".boolean-button")
+         .each ((i, e) => this .addBooleanField ($(e)));
 
-            switch (element .attr ("class"))
-            {
-               case "boolean-button":
-                  return this .addBooleanField (element);
-               case "color-button":
-                  return this .addColorField (element);
-               case "time-button":
-                  return this .addTimeField (element);
-               case "url-button":
-                  return this .addUrlField (element);
-            }
-         });
+      child
+         .find (".color-button")
+         .each ((i, e) => this .addColorField ($(e)));
+
+      child
+         .find (".time-button")
+         .each ((i, e) => this .addTimeField ($(e)));
+
+      child
+         .find (".url-button")
+         .each ((i, e) => this .addUrlField ($(e)));
    }
 
    addBooleanField (element) { }

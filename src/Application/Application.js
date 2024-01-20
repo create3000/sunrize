@@ -811,7 +811,7 @@ module .exports = class Application
          properties: ["openFile", "multiSelections"],
          filters: filters ?? [
             {
-               name: "X3D Document",
+               name: _ ("X3D Document"),
                extensions: ["x3d", "x3dz", "x3dj", "x3djz", "x3dv", "x3dvz", "wrl", "wrz", "wrl.gz", "vrml", "gltf", "glb", "obj", "stl", "ply", "svg"],
             },
          ],
@@ -841,12 +841,12 @@ module .exports = class Application
          defaultPath: defaultPath,
          properties: ["createDirectory", "showOverwriteConfirmation"],
          filters : [
-            { name: "X3D XML Document", extensions: ["x3d"] },
-            { name: "X3D XML Document GZipped", extensions: ["x3dz"] },
-            { name: "X3D JSON Document", extensions: ["x3dj"] },
-            { name: "X3D JSON Document GZipped", extensions: ["x3djz"] },
-            { name: "X3D VRML Classic Document", extensions: ["x3dv"] },
-            { name: "X3D VRML Classic Document GZipped", extensions: ["x3dvz"] },
+            { name: _ ("X3D XML Document"), extensions: ["x3d"] },
+            { name: _ ("X3D XML Document GZipped"), extensions: ["x3dz"] },
+            { name: _ ("X3D JSON Document"), extensions: ["x3dj"] },
+            { name: _ ("X3D JSON Document GZipped"), extensions: ["x3djz"] },
+            { name: _ ("X3D VRML Classic Document"), extensions: ["x3dv"] },
+            { name: _ ("X3D VRML Classic Document GZipped"), extensions: ["x3dvz"] },
          ],
       });
 

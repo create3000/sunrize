@@ -1075,17 +1075,17 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       UndoManager .shared .endUndo ();
    }
 
-   addBooleanField (boolean)
+   addBooleanField (button)
    {
       const
-         element = boolean .closest (".field"),
+         element = button .closest (".field"),
          node    = this .getNode (element),
          field   = this .getField (element);
 
       if (field .getAccessType () === X3D .X3DConstants .outputOnly)
          return;
 
-      boolean .addClass ("pointer") .on ("click", event =>
+      button .addClass ("pointer") .on ("click", event =>
       {
          event .preventDefault ();
          event .stopImmediatePropagation ();
@@ -1094,20 +1094,20 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       });
    }
 
-   addColorField (color)
+   addColorField (button)
    {
       //https://seballot.github.io/spectrum/#skinning-nonInput
       require ("spectrum-colorpicker2");
 
       const
-         element = color .closest (".field"),
+         element = button .closest (".field"),
          node    = this .getNode (element),
          field   = this .getField (element);
 
       if (field .getAccessType () === X3D .X3DConstants .outputOnly)
          return;
 
-      color .addClass ("pointer") .spectrum ({
+      button .addClass ("pointer") .spectrum ({
          type: "color",
          showAlpha: field .getType () === X3D .X3DConstants .SFColorRGBA,
          showInitial: true,
@@ -1118,7 +1118,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       })
       .on ("beforeShow.spectrum", (event) =>
       {
-         color .spectrum ("set", color .css ("background-color"));
+         button .spectrum ("set", button .css ("background-color"));
       })
       .on("move.spectrum", (event, tinyColor) =>
       {
@@ -1148,22 +1148,22 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       });
    }
 
-	removeColorField (element)
+	removeColorField (button)
 	{
-		element .spectrum ?.("destroy");
+		button .spectrum ?.("destroy");
 	}
 
-   addTimeField (time)
+   addTimeField (button)
    {
       const
-         element  = time .closest (".field"),
+         element  = button .closest (".field"),
          node     = this .getNode (element),
          field    = this .getField (element);
 
       if (field .getAccessType () === X3D .X3DConstants .outputOnly)
          return;
 
-      time .addClass ("pointer") .on ("click", event =>
+      button .addClass ("pointer") .on ("click", event =>
       {
          event .preventDefault ();
          event .stopImmediatePropagation ();
@@ -1179,7 +1179,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          node     = this .getNode (element),
          field    = this .getField (element);
 
-      button .addClass (["pointer", "material-symbols-outlined"]) .on ("click", async event =>
+      button .addClass ("pointer") .on ("click", async event =>
       {
          event .preventDefault ();
          event .stopImmediatePropagation ();
@@ -1195,7 +1195,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             default:
             {
                var filters = [
-                  { name: "All Files", extensions: ["*"] },
+                  { name: _ ("All Files"), extensions: ["*"] },
                ];
 
                break;
