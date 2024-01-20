@@ -2777,7 +2777,7 @@ module .exports = class OutlineView extends Interface
 
       const
          target  = $(event .target),
-         element = target .closest (".node", this .sceneGraph),
+         element = target .closest (".node, .externproto", this .sceneGraph),
          node    = this .getNode (element);
 
       if (node ._load .getValue ())
