@@ -1281,7 +1281,7 @@ module .exports = class OutlineView extends Interface
          case X3D .X3DConstants .SFBool:
          {
             $("<img></img>")
-               .addClass ("boolean-button")
+               .addClass (["boolean-button", "field-button"])
                .attr ("src", `../images/OutlineEditor/Values/${field .getValue () ? "TRUE" : "FALSE"}.svg`)
                .attr ("title", _ ("Toggle value."))
                .appendTo (child);
@@ -1293,7 +1293,7 @@ module .exports = class OutlineView extends Interface
          case X3D .X3DConstants .SFColorRGBA:
          {
             $("<div></div>")
-               .addClass ("color-button")
+               .addClass (["color-button", "field-button"])
                .attr ("title", _ ("Open color picker."))
                .css ("background-color", this .getColorFromField (field))
                .appendTo (child);
@@ -1304,7 +1304,7 @@ module .exports = class OutlineView extends Interface
          case X3D .X3DConstants .SFTime:
          {
             $("<img></img>")
-               .addClass ("time-button")
+               .addClass (["time-button", "field-button"])
                .attr ("src", `../images/OutlineEditor/Values/Bell.svg`)
                .attr ("title", _ ("Set current time."))
                .appendTo (child);
@@ -1316,7 +1316,7 @@ module .exports = class OutlineView extends Interface
             if (OutlineView .urlFields .has (field .getName ()) && field .isInitializable ())
             {
                $("<span></span>")
-                  .addClass (["url-button", "material-symbols-outlined"])
+                  .addClass (["url-button", "field-button", "material-symbols-outlined"])
                   .attr ("title", _ ("Add URL."))
                   .text ("add_circle")
                   .appendTo (child);
@@ -3106,26 +3106,40 @@ module .exports = class OutlineView extends Interface
       if (!this .isEditable (parent))
          return;
 
-      if (!(node instanceof X3D .X3DExternProtoDeclaration))
+      if (node instanceof X3D .X3DExternProtoDeclaration)
       {
-         // X3DNode, X3DProtoDeclaration
-         
          child
-            .find (".boolean-button")
-            .each ((i, e) => this .addBooleanField ($(e)));
+            .find (".special .url-button")
+            .each ((i, button) => this .addUrlField ($(button)));
 
-         child
-            .find (".color-button")
-            .each ((i, e) => this .addColorField ($(e)));
-
-         child
-            .find (".time-button")
-            .each ((i, e) => this .addTimeField ($(e)));
+         return;
       }
 
-      child
-         .find (".url-button")
-         .each ((i, e) => this .addUrlField ($(e)));
+      for (const button of child .find (".field-button"))
+      {
+         for (const className of button .classList)
+         {
+            switch (className)
+            {
+               case "boolean-button":
+                  this .addBooleanField ($(button));
+                  break;
+               case "color-button":
+                  this .addColorField ($(button));
+                  break;
+               case "time-button":
+                  this .addTimeField ($(button));
+                  break;
+               case "url-button":
+                  this .addUrlField ($(button));
+                  break;
+               default:
+                  continue;
+            }
+
+            break;
+         }
+      }
    }
 
    addBooleanField (button) { }
