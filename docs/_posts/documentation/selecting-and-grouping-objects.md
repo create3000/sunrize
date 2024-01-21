@@ -24,7 +24,7 @@ Use pick (arrow button found on Dashboard toolbar) to choose an object. When you
 >**Tip:** Double click a selected object's axis manipulators to switch between the move, rotate and scale tool.
 {: .prompt-tip }
 
-Choose *Selection > Select All or Deselect All* to quickly select and deselect all the objects in your scene. Shortcuts: *Ctrl-A* and *Ctrl-D*
+Choose *Selection > Select All or Deselect All* to quickly select and deselect all the objects in your scene. Shortcuts: *Ctrl/Command-A* and *Ctrl/Command-D*
 
 Clicking on the background deselects all objects.
 

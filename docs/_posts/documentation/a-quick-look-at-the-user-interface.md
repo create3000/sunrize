@@ -123,10 +123,10 @@ Shaders are written in OpenGL Shading Language (GLSL), a high-level shading lang
 
 ### Open, Import, Save
 
-- New = ***Ctrl+n***
-- Open = ***Ctrl+o***
-- Save = ***Ctrl+s***
-- Save As = ***Ctrl+Shift+s***
+- New = ***Ctrl/Command+n***
+- Open = ***Ctrl/Command+o***
+- Save = ***Ctrl/Command+s***
+- Save As = ***Ctrl/Command+Shift+s***
 - Quit = ***Ctrl+q***
 
 ### Examiner Viewer
@@ -138,7 +138,7 @@ Shaders are written in OpenGL Shading Language (GLSL), a high-level shading lang
 ### Walk Viewer
 
 - Move forward or back, turn left or right = ***Click-drag***
-- Look around = ***Ctrl-drag***
+- Look around = ***Ctrl/Command-drag***
 - Pan to slide camera left, right, up, down = ***Click-middle-drag***
 - Tilt up or down = ***Scroll***
 - Move faster = ***Shift-click-drag***
@@ -150,17 +150,17 @@ Shaders are written in OpenGL Shading Language (GLSL), a high-level shading lang
 
 ### Edit
 
-- Undo = ***Ctrl+z***
-- Redo = ***Ctrl+Shift+z***
-- Cut = ***Ctrl+x***
-- Copy = ***Ctrl+c***
-- Paste = ***Ctrl+v***
+- Undo = ***Ctrl/Command+z***
+- Redo = ***Ctrl/Command+Shift+z***
+- Cut = ***Ctrl/Command+x***
+- Copy = ***Ctrl/Command+c***
+- Paste = ***Ctrl/Command+v***
 - Delete = ***Delete***
 
 ### Select &amp; Group
 
-- Select all = ***Ctrl+a***
-- Deselect all = ***Ctrl+Shift+a***
+- Select all = ***Ctrl/Command+a***
+- Deselect all = ***Ctrl/Command+Shift+a***
 - Select multiple = ***Shift-click***
 
 ### Transform Tool
@@ -198,7 +198,7 @@ Shaders are written in OpenGL Shading Language (GLSL), a high-level shading lang
 
 ## Abbreviations
 
-- ***Ctrl+Shift+u*** means to press at the same time the Ctrl, Shift, and u keys on your keyboard. Keys
+- ***Ctrl/Command+Shift+u*** means to press at the same time the Ctrl/Command, Shift, and u keys on your keyboard. Keys
   always appear in italics.
 - ***Click*** means to quickly press and release the left mouse button.
 - ***Click-middle*** means to quickly press and release the middle mouse button.
