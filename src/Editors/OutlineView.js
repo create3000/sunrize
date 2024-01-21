@@ -1317,7 +1317,7 @@ module .exports = class OutlineView extends Interface
             {
                $("<span></span>")
                   .addClass (["url-button", "field-button", "material-symbols-outlined"])
-                  .attr ("title", _ ("Add URL."))
+                  .attr ("title", _ ("Add URLs."))
                   .text ("add_circle")
                   .appendTo (child);
             }
