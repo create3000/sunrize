@@ -219,6 +219,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             { type: "separator" },
             {
                label: _("Add Parent Group"),
+               visible: node .getType () .includes (X3D .X3DConstants .X3DChildNode),
                submenu: [
                   {
                      label: "Transform",
@@ -324,6 +325,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             },
             {
                label: _("Remove Parent"),
+               visible: node .getType () .includes (X3D .X3DConstants .X3DChildNode),
                enabled: parentNodeElement .hasClass ("node"),
                args: ["removeParent", element .attr ("id"), executionContext .getId (), node .getId ()],
             },
