@@ -2146,23 +2146,23 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static setMatrixWithCenter (node, matrix, center = undefined, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_("Set Transformation Matrix of %s"), node .getTypeName ())
+      undoManager .beginUndo (_("Set Transformation Matrix of %s"), node .getTypeName ());
 
       const
          oldMatrix = node .getMatrix () .copy (),
-         oldCenter = node ._center .getValue () .copy ()
+         oldCenter = node ._center .getValue () .copy ();
 
       const
          translation      = new X3D .Vector3 (0, 0, 0),
          rotation         = new X3D .Rotation4 (),
          scale            = new X3D .Vector3 (1, 1, 1),
-         scaleOrientation = new X3D .Rotation4 ()
+         scaleOrientation = new X3D .Rotation4 ();
 
       matrix .get (translation,
                    rotation,
                    scale,
                    scaleOrientation,
-                   center ?? node ._center .getValue ())
+                   center ?? node ._center .getValue ());
 
       this .roundToIntegerIfAlmostEqual (translation);
       this .roundToIntegerIfAlmostEqual (rotation);
@@ -2172,18 +2172,18 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       if (this .almostEqual (scale .x, scale .y) && this .almostEqual (scale .x, scale .z))
          scaleOrientation .set (0, 0, 1, 0);
 
-      node ._translation      = translation
-      node ._rotation         = rotation
-      node ._scale            = scale
-      node ._scaleOrientation = scaleOrientation
-      node ._center           = center ?? node ._center .getValue ()
+      node ._translation      = translation;
+      node ._rotation         = rotation;
+      node ._scale            = scale;
+      node ._scaleOrientation = scaleOrientation;
+      node ._center           = center ?? node ._center .getValue ();
 
       undoManager .registerUndo (() =>
       {
-         this .setMatrixWithCenter (node, oldMatrix, oldCenter, undoManager)
+         this .setMatrixWithCenter (node, oldMatrix, oldCenter, undoManager);
       });
 
-      this .requestUpdateInstances (node, undoManager)
+      this .requestUpdateInstances (node, undoManager);
 
       undoManager .endUndo ();
    }
@@ -2209,6 +2209,46 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    static almostEqual (target, value, epsilon = 1e-8)
    {
       return Math .abs (target - value) < epsilon;
+   }
+
+   static moveViewpoint (viewpointNode, position, orientation, centerOfRotation, fieldOfView, undoManager = UndoManager .shared)
+   {
+      UndoManager .shared .beginUndo (_("Move Viewpoint to Camera"));
+
+      const
+         oldPosition         = viewpointNode .getPosition ()         .copy (),
+         oldOrientation      = viewpointNode .getOrientation ()      .copy (),
+         oldCenterOfRotation = viewpointNode .getCenterOfRotation () .copy ();
+
+      if (viewpointNode .getType () .includes (X3D .X3DConstants .OrthoViewpoint))
+         var oldFieldOfView = Array .from (viewpointNode .getFieldOfView ());
+      else
+         var oldFieldOfView = viewpointNode .getFieldOfView ();
+
+      viewpointNode .resetUserOffsets ();
+      viewpointNode .setPosition (position);
+      viewpointNode .setOrientation (orientation);
+      viewpointNode .setCenterOfRotation (centerOfRotation);
+
+      if (viewpointNode .getType () .includes (X3D .X3DConstants .OrthoViewpoint))
+      {
+         if (Array .isArray (fieldOfView))
+            viewpointNode ._fieldOfView = fieldOfView;
+      }
+      else
+      {
+         if (typeof fieldOfView === "number")
+            viewpointNode ._fieldOfView = fieldOfView;
+      }
+
+      undoManager .registerUndo (() =>
+      {
+         this .moveViewpoint (viewpointNode, oldPosition, oldOrientation, oldCenterOfRotation, oldFieldOfView, undoManager);
+      });
+
+      this .requestUpdateInstances (viewpointNode, undoManager);
+
+      UndoManager .shared .endUndo ();
    }
 
    /**

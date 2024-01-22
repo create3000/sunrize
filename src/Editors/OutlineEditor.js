@@ -337,7 +337,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                case X3D .X3DConstants .Inline:
                {
                   menu .push ({
-                     label: _("Fold Back Into Scene"),
+                     label: _("Fold Back into Scene"),
                      args: ["foldBackIntoScene", element .attr ("id"), executionContext .getId (), node .getId ()],
                   });
 
@@ -346,7 +346,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                case X3D .X3DConstants .X3DViewpointNode:
                {
                   menu .push ({
-                     label: _("Move To Camera"),
+                     label: _("Move to Camera"),
                      args: ["moveToCamera", element .attr ("id"), executionContext .getId (), node .getId ()],
                   });
 
@@ -355,7 +355,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                case X3D .X3DConstants .X3DBoundedObject:
                {
                   menu .push ({
-                     label: _("Determine Bounding Box From Scratch"),
+                     label: _("Determine Bounding Box from Scratch"),
                      args: ["determineBoundingBoxFromScratch", element .attr ("id"), executionContext .getId (), node .getId ()],
                   });
 
@@ -364,7 +364,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                case X3D .X3DConstants .X3DChildNode:
                {
                   menu .push ({
-                     label: _("Convert To Inline File..."),
+                     label: _("Convert to Inline File..."),
                      args: ["convertToInlineFile", element .attr ("id"), executionContext .getId (), node .getId ()],
                   });
 
@@ -564,18 +564,18 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       this .beginUndoSetFieldValue (node, field);
 
       if (node .canUserDefinedFields () && node .getUserDefinedFields () .has (field .getName ()))
-         Editor .setFieldValue (executionContext, node, field, field .create ())
+         Editor .setFieldValue (executionContext, node, field, field .create ());
       else
-         Editor .setFieldValue (executionContext, node, field, fieldDefinition .value)
+         Editor .setFieldValue (executionContext, node, field, fieldDefinition .value);
 
       this .endUndoSetFieldValue (node, field);
    }
 
    triggerEvent (id, nodeId, fieldId)
    {
-      const field = this .objects .get (fieldId)
+      const field = this .objects .get (fieldId);
 
-      field .addEvent ()
+      field .addEvent ();
    }
 
    renameNode (id, executionContextId, nodeId)
@@ -1031,16 +1031,39 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
    moveToCamera (id, executionContextId, nodeId)
    {
+      let
+         layerElement    = $(`#${id}`),
+         activeViewpoint = this .browser .getActiveViewpoint ();
+
+      for (;;)
+      {
+         layerElement = layerElement .parent () .closest (".node, .scene", this .sceneGraph);
+
+         if (layerElement .hasClass ("scene"))
+            break;
+
+         const layerNode = this .getNode (layerElement);
+
+         if (layerNode .getType () .includes (X3D .X3DConstants .X3DLayerNode))
+         {
+            activeViewpoint = layerNode .getViewpoint ();
+            break;
+         }
+      }
+
       const
-         element          = $(`#${id}`),
-         executionContext = this .objects .get (executionContextId),
-         node             = this .objects .get (nodeId);
+         viewpointNode    = this .objects .get (nodeId),
+         position         = activeViewpoint .getUserPosition (),
+         orientation      = activeViewpoint .getUserOrientation (),
+         centerOfRotation = activeViewpoint .getUserCenterOfRotation (),
+         fieldOfView      = activeViewpoint .getUserFieldOfView ();
+
+      Editor .moveViewpoint (viewpointNode, position, orientation, centerOfRotation, fieldOfView);
    }
 
    determineBoundingBoxFromScratch (id, executionContextId, nodeId)
    {
       const
-         element          = $(`#${id}`),
          executionContext = this .objects .get (executionContextId),
          node             = this .objects .get (nodeId);
    }
