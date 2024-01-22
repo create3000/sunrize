@@ -92,11 +92,11 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
       .appendTo (content);
 
    const nameInput = $("<input></input>")
-      .attr ("placeholder", _ ("Enter name"))
+      .attr ("placeholder", _("Enter name"))
       .appendTo (content);
 
    const okButton = $("<button></button>")
-      .text (_ ("Apply"))
+      .text (_("Apply"))
       .on ("click", confirm)
       .appendTo (content);
 
@@ -189,7 +189,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
 
             if (type === field .getType ())
             {
-               UndoManager .shared .beginUndo (_ ("Edit Field »%s«"), field .getName ());
+               UndoManager .shared .beginUndo (_("Edit Field »%s«"), field .getName ());
                Editor .updateUserDefinedField (executionContext, node, field, accessType, name);
                UndoManager .shared .endUndo ();
             }
@@ -199,7 +199,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
                   index    = fields .indexOf (field),
                   newField = new X3D [typeName] ();
 
-               UndoManager .shared .beginUndo (_ ("Change Type of Field »%s«"), field .getName ());
+               UndoManager .shared .beginUndo (_("Change Type of Field »%s«"), field .getName ());
 
                newField .setAccessType (accessType);
                newField .setName (name);

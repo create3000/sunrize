@@ -30,7 +30,7 @@ module .exports = new class BrowserSize extends Dialog
       $("<tr></tr>")
          .append ($("<th></th>")
             .attr ("colspan", "2")
-            .text (_ ("Browser Size")))
+            .text (_("Browser Size")))
          .appendTo (this .table .header)
 
       this .enabled = $("<input></input>")
@@ -44,7 +44,7 @@ module .exports = new class BrowserSize extends Dialog
             .append (this .enabled)
             .append ($("<label></label>")
                .attr ("for", "browser-size-enabled")
-               .text (_ ("Enabled"))))
+               .text (_("Enabled"))))
          .appendTo (this .table .body)
 
       this .numerator = $("<input></input>")
@@ -65,7 +65,7 @@ module .exports = new class BrowserSize extends Dialog
 
       $("<tr></tr>")
          .append ($("<th></th>")
-            .text (_ ("Aspect Ratio")))
+            .text (_("Aspect Ratio")))
          .append ($("<td></td>")
             .append (this .numerator)
             .append (slash)

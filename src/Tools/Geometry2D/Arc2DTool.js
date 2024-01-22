@@ -96,9 +96,9 @@ class Arc2DTool extends X3DLineGeometryNodeTool
    getUndoDescription (activeTool, name)
    {
       if (name)
-         return _ ("Resize Node %s »%s«");
+         return _("Resize Node %s »%s«");
 
-      return _ ("Resize Node %s");
+      return _("Resize Node %s");
    }
 }
 

@@ -239,9 +239,9 @@ module .exports = new class Tabs
    {
       tab .url = fileURL;
 
-      tab .setTitle ((fileURL .startsWith ("id:") ? _ ("New Scene") : path .basename (decodeURIComponent (new URL (fileURL) .pathname))) + (saved ? "" : "*"));
+      tab .setTitle ((fileURL .startsWith ("id:") ? _("New Scene") : path .basename (decodeURIComponent (new URL (fileURL) .pathname))) + (saved ? "" : "*"));
 
-      $(tab .element) .find (".tab-title") .attr ("title", fileURL .startsWith ("id:") ? _ ("Currently still unsaved.") : decodeURI (fileURL));
+      $(tab .element) .find (".tab-title") .attr ("title", fileURL .startsWith ("id:") ? _("Currently still unsaved.") : decodeURI (fileURL));
 
       electron .ipcRenderer .send ("title", tab .getTitle ());
 

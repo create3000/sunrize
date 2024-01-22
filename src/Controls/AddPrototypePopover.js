@@ -35,7 +35,7 @@ $.fn.addPrototypePopover = function (executionContext, type)
       .appendTo (content)
 
    const nameInput = $("<input></input>")
-      .attr ("placeholder", _ ("Enter name"))
+      .attr ("placeholder", _("Enter name"))
       .appendTo (content)
 
    // Create tooltip.
@@ -67,7 +67,7 @@ $.fn.addPrototypePopover = function (executionContext, type)
                   {
                      const name = executionContext .getUniqueExternProtoName (nameInput .val ())
 
-                     UndoManager .shared .beginUndo (_ ("Add Extern Proto Declaration »%s«"), name)
+                     UndoManager .shared .beginUndo (_("Add Extern Proto Declaration »%s«"), name)
 
                      const externproto = Editor .addExternProtoDeclaration (executionContext, name)
 
@@ -86,7 +86,7 @@ $.fn.addPrototypePopover = function (executionContext, type)
                   {
                      const name = executionContext .getUniqueProtoName (nameInput .val ())
 
-                     UndoManager .shared .beginUndo (_ ("Add Proto Declaration »%s«"), name)
+                     UndoManager .shared .beginUndo (_("Add Proto Declaration »%s«"), name)
 
                      const
                         proto     = Editor .addProtoDeclaration (executionContext, name),

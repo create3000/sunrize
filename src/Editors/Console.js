@@ -39,14 +39,14 @@ module .exports = class Console extends Interface
 
       this .suspendButton = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _ ("Suspend console output."))
+         .attr ("title", _("Suspend console output."))
          .text ("cancel")
          .appendTo (this .toolbar)
          .on ("click", () => this .setSuspendConsole (!this .suspendConsole));
 
       this .clearButton = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _ ("Clear console."))
+         .attr ("title", _("Clear console."))
          .text ("delete_forever")
          .appendTo (this .toolbar)
          .on ("click", () => this .clearConsole ());
@@ -54,7 +54,7 @@ module .exports = class Console extends Interface
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
       this .textarea = $("<textarea></textarea>")
-         .attr ("placeholder", _ ("Evaluate JavaScript code here."))
+         .attr ("placeholder", _("Evaluate JavaScript code here."))
          .attr ("tabindex", 0)
          .appendTo (this .input)
          .on ("keydown", event => this .onkeydown (event))

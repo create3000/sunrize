@@ -35,10 +35,10 @@ module .exports = new class SceneProperties extends Dialog
 
       this .tabs = new Tabs ($("<div></div>") .attr ("id", "scene-properties-tabs"), "top")
 
-      this .tabs .addTextTab ("profile-and-components", _ ("Profile & Components"))
-      this .tabs .addTextTab ("units",                  _ ("Units"))
-      this .tabs .addTextTab ("meta-data",              _ ("Meta Data"))
-      this .tabs .addTextTab ("world-info",             _ ("World Info"))
+      this .tabs .addTextTab ("profile-and-components", _("Profile & Components"))
+      this .tabs .addTextTab ("units",                  _("Units"))
+      this .tabs .addTextTab ("meta-data",              _("Meta Data"))
+      this .tabs .addTextTab ("world-info",             _("World Info"))
 
       this .tabs .setup ()
       this .tabs .element .appendTo (this .element)
@@ -101,12 +101,12 @@ module .exports = new class SceneProperties extends Dialog
          .appendTo (this .profileAndComponents .table .body)
 
       $("<tr></tr>")
-         .append ($("<th></th>") .text (_ ("Profile")))
+         .append ($("<th></th>") .text (_("Profile")))
          .append ($("<td></td>") .append (this .profileAndComponents .inputs .profile))
          .appendTo (this .profileAndComponents .table .body)
 
       $("<tr></tr>")
-         .append ($("<th></th>") .text (_ ("Components")))
+         .append ($("<th></th>") .text (_("Components")))
          .append ($("<td></td>") .append (this .profileAndComponents .components))
          .appendTo (this .profileAndComponents .table .body)
 
@@ -124,8 +124,8 @@ module .exports = new class SceneProperties extends Dialog
 
       $("<tr></tr>")
          .append ($("<th></th>"))
-         .append ($("<th></th>") .text (_ ("Name")))
-         .append ($("<th></th>") .text (_ ("Conversion Factor")))
+         .append ($("<th></th>") .text (_("Name")))
+         .append ($("<th></th>") .text (_("Conversion Factor")))
          .appendTo (this .units .table .head)
 
       for (const units of Units)
@@ -171,8 +171,8 @@ module .exports = new class SceneProperties extends Dialog
       this .metaData .table .body = $("<tbody></tbody>") .appendTo (this .metaData .table)
 
       $("<tr></tr>")
-         .append ($("<th></th>") .css ("width", "30%") .text (_ ("Key")))
-         .append ($("<th></th>") .css ("width", "70%") .text (_ ("Value")))
+         .append ($("<th></th>") .css ("width", "30%") .text (_("Key")))
+         .append ($("<th></th>") .css ("width", "70%") .text (_("Value")))
          .appendTo (this .metaData .table .head)
 
       // World Info
@@ -197,12 +197,12 @@ module .exports = new class SceneProperties extends Dialog
          .appendTo (this .worldInfo .table .body)
 
       $("<tr></tr>")
-         .append ($("<th></th>") .text (_ ("Title")))
+         .append ($("<th></th>") .text (_("Title")))
          .append ($("<td></td>") .append (this .worldInfo .inputs .title))
          .appendTo (this .worldInfo .table .body)
 
       $("<tr></tr>")
-         .append ($("<th></th>") .text (_ ("Info")))
+         .append ($("<th></th>") .text (_("Info")))
          .append ($("<td></td>") .append (this .worldInfo .inputs .info))
          .appendTo (this .worldInfo .table .body)
    }
@@ -382,12 +382,12 @@ module .exports = new class SceneProperties extends Dialog
                .append ($("<td></td>")
                   .css ("width", "unset")
                   .append ($("<input></input>")
-                  .attr ("placeholder", _ ("Insert meta key here."))
+                  .attr ("placeholder", _("Insert meta key here."))
                   .val (key) .on ("change", (event) => this .changeMetaData (event, key))))
                .append ($("<td></td>")
                   .css ("width", "unset")
                   .append ($("<input></input>")
-                  .attr ("placeholder", _ ("Insert meta value here."))
+                  .attr ("placeholder", _("Insert meta value here."))
                   .val (value) .on ("change", (event) => this .changeMetaData (event, key))))
                .appendTo (this .metaData .table)
          }
@@ -397,12 +397,12 @@ module .exports = new class SceneProperties extends Dialog
          .append ($("<td></td>")
             .css ("width", "unset")
             .append ($("<input></input>")
-            .attr ("placeholder", _ ("Add new meta key."))
+            .attr ("placeholder", _("Add new meta key."))
             .on ("change", event => this .changeMetaData (event, ""))))
          .append ($("<td></td>")
             .css ("width", "unset")
             .append ($("<input></input>")
-            .attr ("placeholder", _ ("Add new meta value."))
+            .attr ("placeholder", _("Add new meta value."))
             .on ("change", event => this .changeMetaData (event, ""))))
          .appendTo (this .metaData .table)
 
@@ -417,9 +417,9 @@ module .exports = new class SceneProperties extends Dialog
          key    = $(inputs .get (0))
 
       if (key .val ())
-         UndoManager .shared .beginUndo (_ ("Change Meta Data »%s«"), key .val ())
+         UndoManager .shared .beginUndo (_("Change Meta Data »%s«"), key .val ())
       else
-         UndoManager .shared .beginUndo (_ ("Remove Meta Data »%s«"), oldKey)
+         UndoManager .shared .beginUndo (_("Remove Meta Data »%s«"), oldKey)
 
       const metaData = Array .from (this .metaData .table .find ("tr")) .map (element =>
       {

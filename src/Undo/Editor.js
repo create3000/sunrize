@@ -180,7 +180,7 @@ module .exports = class Editor
 
       // Undo.
 
-      undoManager .beginUndo (_ ("Import X3D"));
+      undoManager .beginUndo (_("Import X3D"));
 
       undoManager .registerUndo (() =>
       {
@@ -353,7 +353,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static rewriteURLs (executionContext, objects, oldWorldURL, newWorldURL, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_ ("Rewrite URLs"))
+      undoManager .beginUndo (_("Rewrite URLs"))
 
       Traverse .traverse (objects, Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, (node) =>
       {
@@ -472,7 +472,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             if (children .size === 0)
                continue;
 
-            undoManager .beginUndo (_ ("Remove %s Nodes from Execution Context"), children .size);
+            undoManager .beginUndo (_("Remove %s Nodes from Execution Context"), children .size);
 
             for (const node of children)
             {
@@ -556,7 +556,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       const oldValue = node .isLive ();
 
-      undoManager .beginUndo (_ ("Set live state to »%s«"), value);
+      undoManager .beginUndo (_("Set live state to »%s«"), value);
 
       node .setLive (value);
 
@@ -580,7 +580,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          usedComponents       = this .getUsedComponents (scene),
          profileAndComponents = this .getProfileAndComponentsFromUsedComponents (browser, usedComponents);
 
-      undoManager .beginUndo (_ ("Infer Profile and Components from Source"));
+      undoManager .beginUndo (_("Infer Profile and Components from Source"));
 
       this .setProfile    (scene, profileAndComponents .profile,    undoManager);
       this .setComponents (scene, profileAndComponents .components, undoManager);
@@ -656,7 +656,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       const browser = scene .getBrowser ();
 
-      undoManager .beginUndo (_ ("Set Profile to »%s«"), profile ? profile .title : "Full");
+      undoManager .beginUndo (_("Set Profile to »%s«"), profile ? profile .title : "Full");
 
       browser .loadComponents (profile);
       scene .setProfile (profile);
@@ -681,7 +681,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          browser       = scene .getBrowser (),
          oldComponents = Array .from (scene .getComponents ());
 
-      undoManager .beginUndo (_ ("Set Components of Scene"));
+      undoManager .beginUndo (_("Set Components of Scene"));
 
       browser .loadComponents (... components .map (component => component .name));
 
@@ -715,7 +715,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       const browser = scene .getBrowser ();
 
-      undoManager .beginUndo (_ ("Add Component %s"), name);
+      undoManager .beginUndo (_("Add Component %s"), name);
 
       await browser .loadComponents (name);
       scene .addComponent (browser .getComponent (name));
@@ -742,7 +742,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       if (!scene .hasComponent (name))
          return;
 
-      undoManager .beginUndo (_ ("Remove Component %s"), name);
+      undoManager .beginUndo (_("Remove Component %s"), name);
 
       scene .removeComponent (name);
 
@@ -769,7 +769,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          oldName             = unit .name,
          oldConversionFactor = unit .conversionFactor
 
-      undoManager .beginUndo (_ ("Update Unit Category »%s«"), category)
+      undoManager .beginUndo (_("Update Unit Category »%s«"), category)
 
       scene .updateUnit (category, name, conversionFactor)
 
@@ -797,7 +797,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             oldEntries .push (key, value)
       }
 
-      undoManager .beginUndo (_ ("Change Meta Data"))
+      undoManager .beginUndo (_("Change Meta Data"))
 
       for (const key of [... scene .getMetaDatas () .keys ()])
          scene .removeMetaData (key)
@@ -824,7 +824,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       const oldName = node .getName ();
 
-      undoManager .beginUndo (_ ("Rename Node to »%s«"), name);
+      undoManager .beginUndo (_("Rename Node to »%s«"), name);
 
       executionContext .updateNamedNode (name, node .valueOf ());
 
@@ -851,7 +851,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       const oldName = node .getName ();
 
-      undoManager .beginUndo (_ ("Remove Node Name »%s«"), oldName);
+      undoManager .beginUndo (_("Remove Node Name »%s«"), oldName);
 
       executionContext .removeNamedNode (oldName);
 
@@ -875,7 +875,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static updateImportedNode (executionContext, inlineNode, exportedName, importedName, oldImportedName, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_ ("Update Imported Node »%s«"), importedName);
+      undoManager .beginUndo (_("Update Imported Node »%s«"), importedName);
 
       executionContext .updateImportedNode (inlineNode .valueOf (), exportedName, importedName);
 
@@ -947,7 +947,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          return false;
       });
 
-      undoManager .beginUndo (_ ("Remove Imported Node »%s«"), importedName);
+      undoManager .beginUndo (_("Remove Imported Node »%s«"), importedName);
 
       executionContext .removeImportedNode (importedName);
 
@@ -983,7 +983,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static updateExportedNode (scene, exportedName, oldExportedName, node, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_ ("Update Exported Node »%s«"), exportedName);
+      undoManager .beginUndo (_("Update Exported Node »%s«"), exportedName);
 
       if (oldExportedName)
          scene .removeExportedNode (oldExportedName);
@@ -1015,7 +1015,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          exportedNode = scene .getExportedNodes () .get (exportedName),
          node         = exportedNode .getLocalNode ();
 
-      undoManager .beginUndo (_ ("Remove Exported Node »%s«"), exportedName);
+      undoManager .beginUndo (_("Remove Exported Node »%s«"), exportedName);
 
       scene .removeExportedNode (exportedName);
 
@@ -1042,7 +1042,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          oldProtos = new Map (Array .from (executionContext .protos, p => [p .getName (), p])),
          proto     = new X3D .X3DProtoDeclaration (executionContext)
 
-      undoManager .beginUndo (_ ("Add Proto Declaration »%s«"), name)
+      undoManager .beginUndo (_("Add Proto Declaration »%s«"), name)
 
       proto .setup ()
       executionContext .updateProtoDeclaration (name, proto)
@@ -1070,7 +1070,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       const oldName = proto .getName ()
 
-      undoManager .beginUndo (_ ("Update Proto Declaration »%s«"), name)
+      undoManager .beginUndo (_("Update Proto Declaration »%s«"), name)
 
       executionContext .updateProtoDeclaration (name, proto)
 
@@ -1097,7 +1097,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       const oldProtos = new Map (Array .from (executionContext .protos, p => [p .getName (), p]))
 
-      undoManager .beginUndo (_ ("Remove Proto Declaration »%s«"), name)
+      undoManager .beginUndo (_("Remove Proto Declaration »%s«"), name)
 
       executionContext .removeProtoDeclaration (name)
 
@@ -1121,7 +1121,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       const oldProtos = new Map (Array .from (executionContext .protos, p => [p .getName (), p]))
 
-      undoManager .beginUndo (_ ("Update Proto Declarations"))
+      undoManager .beginUndo (_("Update Proto Declarations"))
 
       for (const name of oldProtos .keys ())
          executionContext .removeProtoDeclaration (name)
@@ -1162,7 +1162,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          scene     = browser .createScene (),
          x3dSyntax = this .exportVRML (executionContext, [proto])
 
-      undoManager .beginUndo (_ ("Turn Prototype »%s« into Extern Prototype"), proto .getName ())
+      undoManager .beginUndo (_("Turn Prototype »%s« into Extern Prototype"), proto .getName ())
 
       await this .importX3D (scene, x3dSyntax, new UndoManager ())
       this .rewriteURLs (scene, scene, executionContext .worldURL, url .pathToFileURL (filePath) .href, new UndoManager ())
@@ -1212,7 +1212,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          oldExternprotos = new Map (Array .from (executionContext .externprotos, p => [p .getName (), p])),
          externproto     = new X3D .X3DExternProtoDeclaration (executionContext, new X3D .MFString ());
 
-      undoManager .beginUndo (_ ("Add Extern Prototype Declaration »%s«"), name);
+      undoManager .beginUndo (_("Add Extern Prototype Declaration »%s«"), name);
 
       externproto .setup ();
       executionContext .updateExternProtoDeclaration (name, externproto);
@@ -1240,7 +1240,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       const oldName = externproto .getName ()
 
-      undoManager .beginUndo (_ ("Update Extern Prototype Declaration »%s«"), name)
+      undoManager .beginUndo (_("Update Extern Prototype Declaration »%s«"), name)
 
       executionContext .updateExternProtoDeclaration (name, externproto)
 
@@ -1267,7 +1267,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       const oldExternProtos = new Map (Array .from (executionContext .externprotos, p => [p .getName (), p]))
 
-      undoManager .beginUndo (_ ("Remove Extern Prototype Declaration »%s«"), name)
+      undoManager .beginUndo (_("Remove Extern Prototype Declaration »%s«"), name)
 
       executionContext .removeExternProtoDeclaration (name)
 
@@ -1291,7 +1291,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       const oldExternProtos = new Map (Array .from (executionContext .externprotos, p => [p .getName (), p]))
 
-      undoManager .beginUndo (_ ("Update Extern Prototype Declarations"))
+      undoManager .beginUndo (_("Update Extern Prototype Declarations"))
 
       for (const name of oldExternProtos .keys ())
          executionContext .removeExternProtoDeclaration (name)
@@ -1331,7 +1331,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          numProtos = executionContext .protos .length,
          x3dSyntax = this .exportVRML (externproto .getInternalScene (), [externproto .getProtoDeclaration ()])
 
-      undoManager .beginUndo (_ ("Turn Extern Prototype »%s« into Prototype"), externproto .getName ())
+      undoManager .beginUndo (_("Turn Extern Prototype »%s« into Prototype"), externproto .getName ())
 
       await this .importX3D (executionContext, x3dSyntax, undoManager)
 
@@ -1422,7 +1422,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       const oldProtoNode = instance .getProtoNode ();
 
-      undoManager .beginUndo (_ ("Set Proto Node of Instance to %s"), protoNode .getName ());
+      undoManager .beginUndo (_("Set Proto Node of Instance to %s"), protoNode .getName ());
 
       const outerNode = executionContext .getOuterNode ();
 
@@ -1535,7 +1535,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static replaceProtoNodes (executionContext, protoNode, by, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_ ("Replace Proto Node %s"), protoNode .getName ());
+      undoManager .beginUndo (_("Replace Proto Node %s"), protoNode .getName ());
 
       Traverse .traverse (executionContext, Traverse .ROOT_NODES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY, (node) =>
       {
@@ -1616,7 +1616,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static addRoute (executionContext, sourceNode, sourceField, destinationNode, destinationField, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_ ("Add Route From %s »%s« TO %s »%s«"), sourceNode .getTypeName (), sourceField, destinationNode .getTypeName (), destinationField);
+      undoManager .beginUndo (_("Add Route From %s »%s« TO %s »%s«"), sourceNode .getTypeName (), sourceField, destinationNode .getTypeName (), destinationField);
 
       try
       {
@@ -1675,7 +1675,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static deleteRoute (executionContext, sourceNode, sourceField, destinationNode, destinationField, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_ ("Delete Route From %s »%s« TO %s »%s«"), sourceNode .getTypeName (), sourceField, destinationNode .getTypeName (), destinationField);
+      undoManager .beginUndo (_("Delete Route From %s »%s« TO %s »%s«"), sourceNode .getTypeName (), sourceField, destinationNode .getTypeName (), destinationField);
 
       executionContext .deleteRoute (sourceNode .valueOf (), sourceField, destinationNode .valueOf (), destinationField);
 
@@ -1697,7 +1697,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static #addWorldInfo (executionContext, worldInfo, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_ ("Add World Info"));
+      undoManager .beginUndo (_("Add World Info"));
 
       executionContext .addWorldInfo (worldInfo);
 
@@ -1717,7 +1717,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
     static #removeWorldInfo (executionContext, worldInfo, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_ ("Remove World Info"));
+      undoManager .beginUndo (_("Remove World Info"));
 
       executionContext .removeWorldInfo (worldInfo);
 
@@ -1737,7 +1737,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static removeWorldInfo (executionContext, worldInfo, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_ ("Remove World Info"));
+      undoManager .beginUndo (_("Remove World Info"));
 
       this .removeNode (executionContext, worldInfo, undoManager);
       this .#removeWorldInfo (executionContext, worldInfo, undoManager);
@@ -1753,7 +1753,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static removeNode (executionContext, remove, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_ ("Remove Node"));
+      undoManager .beginUndo (_("Remove Node"));
 
       Traverse .traverse (executionContext, Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, (node) =>
       {
@@ -1808,7 +1808,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       index = Math .min (index < 0 ? fields .length : index, fields .length);
 
-      undoManager .beginUndo (_ ("Add Field »%s«"), field .getName ());
+      undoManager .beginUndo (_("Add Field »%s«"), field .getName ());
 
       fields .splice (index, 0, field);
 
@@ -1830,7 +1830,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          oldName       = field .getName (),
          fields        = Array .from (node .getUserDefinedFields ());
 
-      undoManager .beginUndo (_ ("Update Fields of Node %s"), node .getTypeName ());
+      undoManager .beginUndo (_("Update Fields of Node %s"), node .getTypeName ());
 
       for (const field of fields)
          node .removeUserDefinedField (field .getName ());
@@ -1941,7 +1941,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       const fields = [... node .getUserDefinedFields ()] .filter (f => f !== field);
 
-      undoManager .beginUndo (_ ("Remove Field »%s«"), field .getName ());
+      undoManager .beginUndo (_("Remove Field »%s«"), field .getName ());
 
       this .setUserDefinedFields (executionContext, node, fields, undoManager);
 
@@ -1960,7 +1960,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          oldFields     = Array .from (node .getUserDefinedFields ()),
          removedFields = oldFields .filter (f => !fields .includes (f));
 
-      undoManager .beginUndo (_ ("Update Fields of Node %s"), node .getTypeName ());
+      undoManager .beginUndo (_("Update Fields of Node %s"), node .getTypeName ());
 
       if (removedFields .length)
       {
@@ -2094,7 +2094,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          instance = node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance),
          name     = field .getName ()
 
-      undoManager .beginUndo (_ ("Add Reference from »%s« to »%s«"), protoField .getName (), field .getName ())
+      undoManager .beginUndo (_("Add Reference from »%s« to »%s«"), protoField .getName (), field .getName ())
 
       field .addReference (protoField)
 
@@ -2123,7 +2123,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          instance = node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance),
          name     = field .getName ()
 
-      undoManager .beginUndo (_ ("Remove Reference from »%s« to »%s«"), protoField .getName (), field .getName ())
+      undoManager .beginUndo (_("Remove Reference from »%s« to »%s«"), protoField .getName (), field .getName ())
 
       field .removeReference (protoField)
 
@@ -2146,7 +2146,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static setMatrixWithCenter (node, matrix, center = undefined, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_ ("Set Transformation Matrix of %s"), node .getTypeName ())
+      undoManager .beginUndo (_("Set Transformation Matrix of %s"), node .getTypeName ())
 
       const
          oldMatrix = node .getMatrix () .copy (),
@@ -2238,9 +2238,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       const oldValue = field .copy ()
 
       if (node .getDisplayName ())
-         undoManager .beginUndo (_ ("Change Field »%s« of Node %s »%s«"), field .getName (), node .getTypeName (), node .getDisplayName ());
+         undoManager .beginUndo (_("Change Field »%s« of Node %s »%s«"), field .getName (), node .getTypeName (), node .getDisplayName ());
       else
-         undoManager .beginUndo (_ ("Change Field »%s« of Node %s"), field .getName (), node .getTypeName ())
+         undoManager .beginUndo (_("Change Field »%s« of Node %s"), field .getName (), node .getTypeName ())
 
       field .assign (auxillary)
 
@@ -2282,9 +2282,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       const oldValue = field .copy ();
 
       if (node .getDisplayName ())
-         undoManager .beginUndo (_ ("Change Field »%s« of Node %s »%s«"), field .getName (), node .getTypeName (), node .getDisplayName ());
+         undoManager .beginUndo (_("Change Field »%s« of Node %s »%s«"), field .getName (), node .getTypeName (), node .getDisplayName ());
       else
-         undoManager .beginUndo (_ ("Change Field »%s« of Node %s"), field .getName (), node .getTypeName ());
+         undoManager .beginUndo (_("Change Field »%s« of Node %s"), field .getName (), node .getTypeName ());
 
       field .assign (auxillary);
 
@@ -2326,7 +2326,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          name     = field .getName (),
          oldValue = field .copy ();
 
-      undoManager .beginUndo (_ ("Insert Value into %s »%s«"), node .getTypeName (), field .getName ());
+      undoManager .beginUndo (_("Insert Value into %s »%s«"), node .getTypeName (), field .getName ());
 
       field .splice (index, 0, value);
 
@@ -2350,7 +2350,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static appendValueToArray (executionContext, node, field, value, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_ ("Append Value to %s »%s«"), node .getTypeName (), field .getName ());
+      undoManager .beginUndo (_("Append Value to %s »%s«"), node .getTypeName (), field .getName ());
 
       this .insertValueIntoArray (executionContext, node, field, field .length, value, undoManager);
 
@@ -2374,7 +2374,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          name     = field .getName (),
          oldValue = field .copy ();
 
-      undoManager .beginUndo (_ ("Remove Value from %s »%s«"), node .getTypeName (), field .getName ());
+      undoManager .beginUndo (_("Remove Value from %s »%s«"), node .getTypeName (), field .getName ());
 
       this .removeNodesFromExecutionContextIfNecessary (executionContext, field .splice (index, 1), undoManager);
 
@@ -2396,7 +2396,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static removeEmptyGroups (executionContext, nodes, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_ ("Remove Empty Groups"));
+      undoManager .beginUndo (_("Remove Empty Groups"));
 
       if (nodes instanceof X3D .MFNode)
       {

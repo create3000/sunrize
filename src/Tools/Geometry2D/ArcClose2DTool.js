@@ -96,9 +96,9 @@ class ArcClose2DTool extends X3DGeometryNodeTool
    getUndoDescription (activeTool, name)
    {
       if (name)
-         return _ ("Resize Node %s »%s«");
+         return _("Resize Node %s »%s«");
 
-      return _ ("Resize Node %s");
+      return _("Resize Node %s");
    }
 }
 

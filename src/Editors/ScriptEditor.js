@@ -54,7 +54,7 @@ module .exports = class ScriptEditor extends Interface
 
       this .toggleSidebarButton = $("<span></span>")
          .addClass (["material-symbols-outlined"])
-         .attr ("title", _ ("Toggle sidebar."))
+         .attr ("title", _("Toggle sidebar."))
          .text ("dock_to_right")
          .appendTo (this .toolbar)
          .on ("click", () => this .toggleSidebar ());
@@ -63,14 +63,14 @@ module .exports = class ScriptEditor extends Interface
 
       this .createButton = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _ ("Create new Script node or shader."))
+         .attr ("title", _("Create new Script node or shader."))
          .text ("add")
          .appendTo (this .toolbar)
          .on ("click", () => this .create ());
 
       this .applyButton = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _ ("Apply script source to node."))
+         .attr ("title", _("Apply script source to node."))
          .text ("check_circle")
          .appendTo (this .toolbar)
          .on ("click", () => this .apply ());
@@ -79,21 +79,21 @@ module .exports = class ScriptEditor extends Interface
 
       this .directOutputButton = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _ ("Toggle direct output."))
+         .attr ("title", _("Toggle direct output."))
          .text ("radio_button_checked")
          .appendTo (this .toolbar)
          .on ("click", () => this .toggleDirectOutput ());
 
       this .mustEvaluateButton = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _ ("Toggle must evaluate."))
+         .attr ("title", _("Toggle must evaluate."))
          .text ("priority_high")
          .appendTo (this .toolbar)
          .on ("click", () => this .toggleMustEvaluate ());
 
       this .shaderTypeButton = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _ ("Change shader type."))
+         .attr ("title", _("Change shader type."))
          .text ("auto_awesome")
          .appendTo (this .toolbar)
          .on ("click", () => this .changeShaderType ());
@@ -116,7 +116,7 @@ module .exports = class ScriptEditor extends Interface
 
       this .nodeName = $("<input></input>")
          .addClass ("node-name")
-         .attr ("placeholder", _ ("Enter node name."))
+         .attr ("placeholder", _("Enter node name."))
          .appendTo (this .horizontalSplitterTop)
          .renameNodeInput (null, null);
 
@@ -331,59 +331,59 @@ main ()
    {
       const menu = [
          {
-            label: _ ("Go to Definition"),
+            label: _("Go to Definition"),
             args: ["runAction", "editor.action.revealDefinition"],
          },
          {
-            label: _ ("Go to References"),
+            label: _("Go to References"),
             args: ["runAction", "editor.action.goToReferences"],
          },
          {
-            label: _ ("Go to Symbol..."),
+            label: _("Go to Symbol..."),
             args: ["runAction", "editor.action.quickOutline"],
          },
          {
-            label: _ ("Peek"),
+            label: _("Peek"),
             submenu: [
                {
-                  label: _ ("Peek Definition"),
+                  label: _("Peek Definition"),
                   args: ["runAction", "editor.action.peekDefinition"],
                },
                {
-                  label: _ ("Peek References"),
+                  label: _("Peek References"),
                   args: ["runAction", "editor.action.referenceSearch.trigger"],
                },
             ],
          },
          { type: "separator" },
          {
-            label: _ ("Rename Symbol"),
+            label: _("Rename Symbol"),
             args: ["runAction", "editor.action.rename"],
          },
          {
-            label: _ ("Change All Occurrences"),
+            label: _("Change All Occurrences"),
             args: ["runAction", "editor.action.changeAll"],
          },
          {
-            label: _ ("Format Document"),
+            label: _("Format Document"),
             args: ["runAction", "editor.action.formatDocument"],
          },
          { type: "separator" },
          {
-            label: _ ("Cut"),
+            label: _("Cut"),
             args: ["execCommand", "cut"],
          },
          {
-            label: _ ("Copy"),
+            label: _("Copy"),
             args: ["execCommand", "copy"],
          },
          {
-            label: _ ("Paste"),
+            label: _("Paste"),
             args: ["execCommand", "paste"],
          },
          { type: "separator" },
          {
-            label: _ ("Command Palette"),
+            label: _("Command Palette"),
             args: ["runAction", "editor.action.quickCommand"],
          },
       ];
@@ -405,11 +405,11 @@ main ()
    {
       const menu = [
          {
-            label: _ ("Create New Script"),
+            label: _("Create New Script"),
             args: ["createScript"],
          },
          {
-            label: _ ("Create New Shader"),
+            label: _("Create New Shader"),
             args: ["createShader"],
          },
       ];
@@ -419,7 +419,7 @@ main ()
 
    async createScript ()
    {
-      UndoManager .shared .beginUndo (_ ("Create New Script"));
+      UndoManager .shared .beginUndo (_("Create New Script"));
 
       await Editor .addComponent (this .browser .currentScene, "Scripting");
 
@@ -447,7 +447,7 @@ function set_field (value, time)
 
    async createShader ()
    {
-      UndoManager .shared .beginUndo (_ ("Create New Shader"));
+      UndoManager .shared .beginUndo (_("Create New Shader"));
 
       await Editor .addComponent (this .browser .currentScene, "Shaders");
 

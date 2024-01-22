@@ -34,30 +34,30 @@ class SoundTool extends X3DChildNodeTool
          case "MIN_BACK":
          {
             if (name)
-               return _ ("Translate field »minBack« of Node %s »%s«");
+               return _("Translate field »minBack« of Node %s »%s«");
 
-            return _ ("Translate »minBack« of Node %s");
+            return _("Translate »minBack« of Node %s");
          }
          case "MIN_FRONT":
          {
             if (name)
-               return _ ("Translate field »minFront of Node %s »%s«");
+               return _("Translate field »minFront of Node %s »%s«");
 
-            return _ ("Translate »minFront« of Node %s");
+            return _("Translate »minFront« of Node %s");
          }
          case "MAX_BACK":
          {
             if (name)
-               return _ ("Translate field »maxBack« of Node %s »%s«");
+               return _("Translate field »maxBack« of Node %s »%s«");
 
-            return _ ("Translate »maxBack« of Node %s");
+            return _("Translate »maxBack« of Node %s");
          }
          case "MAX_FRONT":
          {
             if (name)
-               return _ ("Translate field »maxFront« of Node %s »%s«");
+               return _("Translate field »maxFront« of Node %s »%s«");
 
-            return _ ("Translate »maxFront of Node %s");
+            return _("Translate »maxFront of Node %s");
          }
          default:
          {

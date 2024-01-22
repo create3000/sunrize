@@ -306,30 +306,30 @@ class X3DNodeTool extends X3DBaseTool
          case "TRANSLATE":
          {
             if (name)
-               return _ ("Translate %s »%s«");
+               return _("Translate %s »%s«");
 
-            return _ ("Translate %s");
+            return _("Translate %s");
          }
          case "ROTATE":
          {
             if (name)
-               return _ ("Rotate %s »%s«");
+               return _("Rotate %s »%s«");
 
-            return _ ("Rotate %s");
+            return _("Rotate %s");
          }
          case "SCALE":
          {
             if (name)
-               return _ ("Scale %s »%s«");
+               return _("Scale %s »%s«");
 
-            return _ ("Scale %s");
+            return _("Scale %s");
          }
          case "CENTER":
          {
             if (name)
-               return _ ("Translate Center of Node %s »%s«");
+               return _("Translate Center of Node %s »%s«");
 
-            return _ ("Translate Center of Node %s");
+            return _("Translate Center of Node %s");
          }
          default:
          {

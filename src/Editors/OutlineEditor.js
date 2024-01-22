@@ -620,7 +620,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
    cutNodes ()
    {
-      UndoManager .shared .beginUndo (_ ("Cut Nodes"));
+      UndoManager .shared .beginUndo (_("Cut Nodes"));
 
       this .copyNodes (false);
       this .deleteNodes ();
@@ -679,7 +679,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             x3dSyntax               = await navigator .clipboard .readText (),
             destinationModelMatrix  = nodeId !== undefined ? this .getModelMatrix ($(`.node[node-id=${nodeId}]`)) : new X3D .Matrix4 ();
 
-         UndoManager .shared .beginUndo (_ ("Paste Nodes"));
+         UndoManager .shared .beginUndo (_("Paste Nodes"));
 
          const nodes = await Editor .importX3D (executionContext, x3dSyntax);
 
@@ -743,9 +743,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          ids       = selection .map (function () { return this .id }) .get ();
 
       if (ids .length > 1)
-         UndoManager .shared .beginUndo (_ ("Delete %s Nodes"), ids .length);
+         UndoManager .shared .beginUndo (_("Delete %s Nodes"), ids .length);
       else if (ids .length === 1)
-         UndoManager .shared .beginUndo (_ ("Delete Node %s"), this .getNode ($(`#${ids [0]}`)) .getTypeName ());
+         UndoManager .shared .beginUndo (_("Delete Node %s"), this .getNode ($(`#${ids [0]}`)) .getTypeName ());
       else
          return;
 
@@ -795,7 +795,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          copy               = X3D .X3DBaseNode .prototype .copy .call (node, executionContext),
          index              = parseInt (element .attr ("index"));
 
-      UndoManager .shared .beginUndo (_ ("Unlink Clone"));
+      UndoManager .shared .beginUndo (_("Unlink Clone"));
 
       if (node .getName ())
          Editor .updateNamedNode (executionContext, executionContext .getUniqueName (node .getName ()), copy);
@@ -830,7 +830,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          parentNode             = this .getNode (parentNodeElement),
          parentField            = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement);
 
-      UndoManager .shared .beginUndo (_ ("Add Parent %s to Node %s"), typeName, childNode .getTypeName ());
+      UndoManager .shared .beginUndo (_("Add Parent %s to Node %s"), typeName, childNode .getTypeName ());
 
       await Editor .addComponent (executionContext, component);
 
@@ -945,7 +945,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          parent2Node         = this .getNode (parent2NodeElement),
          parent2Field        = parent2FieldElement .hasClass ("scene") ? parent2Node .rootNodes : this .getField (parent2FieldElement);
 
-      UndoManager .shared .beginUndo (_ ("Remove Parent of %s"), childNode .getTypeName ());
+      UndoManager .shared .beginUndo (_("Remove Parent of %s"), childNode .getTypeName ());
 
       if (parent2Field instanceof X3D .X3DArrayField)
       {
@@ -1017,12 +1017,12 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       if (protoNode .isExternProto)
       {
-         UndoManager .shared .beginUndo (_ ("Remove Extern Prototype Declaration »%s«"), protoNode .getName ());
+         UndoManager .shared .beginUndo (_("Remove Extern Prototype Declaration »%s«"), protoNode .getName ());
          Editor .removeExternProtoDeclaration (executionContext, protoNode .getName ());
       }
       else
       {
-         UndoManager .shared .beginUndo (_ ("Remove Prototype Declaration »%s«"), protoNode .getName ());
+         UndoManager .shared .beginUndo (_("Remove Prototype Declaration »%s«"), protoNode .getName ());
          Editor .removeProtoDeclaration (executionContext, protoNode .getName ());
       }
 
@@ -1068,7 +1068,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          protoNode        = this .objects .get (protoNodeId),
          instance         = executionContext .createProto (protoNode .getName ());
 
-      UndoManager .shared .beginUndo (_ ("Add Instance of Type »%s«"), protoNode .getName ());
+      UndoManager .shared .beginUndo (_("Add Instance of Type »%s«"), protoNode .getName ());
 
       Editor .appendValueToArray (executionContext, executionContext, executionContext .rootNodes, instance);
 
@@ -1138,9 +1138,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       .on ("dragstart.spectrum", (event, tinyColor) =>
       {
          if (node .getDisplayName ())
-            UndoManager .shared .beginUndo (_ ("Change Field »%s« of Node %s »%s«"), field .getName (), node .getTypeName (), node .getDisplayName ());
+            UndoManager .shared .beginUndo (_("Change Field »%s« of Node %s »%s«"), field .getName (), node .getTypeName (), node .getDisplayName ());
          else
-            UndoManager .shared .beginUndo (_ ("Change Field »%s« of Node %s"), field .getName (), node .getTypeName ());
+            UndoManager .shared .beginUndo (_("Change Field »%s« of Node %s"), field .getName (), node .getTypeName ());
       })
       .on ("dragstop.spectrum", (event, tinyColor) =>
       {
@@ -1195,7 +1195,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             default:
             {
                var filters = [
-                  { name: _ ("All Files"), extensions: ["*"] },
+                  { name: _("All Files"), extensions: ["*"] },
                ];
 
                break;
@@ -1265,9 +1265,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          return;
 
       if (node .getDisplayName ())
-         UndoManager .shared .beginUndo (_ ("Change Field »%s« of Node %s »%s«"), field .getName (), node .getTypeName (), node .getDisplayName ());
+         UndoManager .shared .beginUndo (_("Change Field »%s« of Node %s »%s«"), field .getName (), node .getTypeName (), node .getDisplayName ());
       else
-         UndoManager .shared .beginUndo (_ ("Change Field »%s« of Node %s"), field .getName (), node .getTypeName ());
+         UndoManager .shared .beginUndo (_("Change Field »%s« of Node %s"), field .getName (), node .getTypeName ());
 
       switch (node .getTypeName ())
       {
@@ -2048,7 +2048,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          {
             case "copy":
             {
-               UndoManager .shared .beginUndo (_ ("Copy Extern Proto »%s«"), sourceExternProto .getName ());
+               UndoManager .shared .beginUndo (_("Copy Extern Proto »%s«"), sourceExternProto .getName ());
 
                await Editor .importX3D (destinationExecutionContext, Editor .exportVRML (sourceExecutionContext, [sourceExternProto]));
 
@@ -2081,7 +2081,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                if (sourceIndex === destinationIndex || sourceIndex + 1 === destinationIndex)
                   break;
 
-               UndoManager .shared .beginUndo (_ ("Move Extern Proto »%s«"), sourceExternProto .getName ());
+               UndoManager .shared .beginUndo (_("Move Extern Proto »%s«"), sourceExternProto .getName ());
 
                const externprotos = Array .from (destinationExecutionContext .externprotos);
 
@@ -2122,7 +2122,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          {
             case "copy":
             {
-               UndoManager .shared .beginUndo (_ ("Copy Prototype »%s«"), sourceProto .getName ());
+               UndoManager .shared .beginUndo (_("Copy Prototype »%s«"), sourceProto .getName ());
                await Editor .importX3D (destinationExecutionContext, Editor .exportVRML (sourceExecutionContext, [sourceProto]));
 
                const
@@ -2151,7 +2151,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                if (sourceIndex === destinationIndex || sourceIndex + 1 === destinationIndex)
                   break;
 
-               UndoManager .shared .beginUndo (_ ("Move Prototype »%s«"), sourceProto .getName ());
+               UndoManager .shared .beginUndo (_("Move Prototype »%s«"), sourceProto .getName ());
 
                const protos = Array .from (destinationExecutionContext .protos);
 
@@ -2400,7 +2400,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          sourceFields .splice (sourceIndex, 1);
          sourceFields .splice (sourceIndex < destinationIndex ? destinationIndex - 1 : destinationIndex, 0, sourceField);
 
-         UndoManager .shared .beginUndo (_ ("Move Field »%s«"), sourceField .getName ());
+         UndoManager .shared .beginUndo (_("Move Field »%s«"), sourceField .getName ());
          Editor .setUserDefinedFields (sourceExecutionContext, sourceNode, sourceFields);
          UndoManager .shared .endUndo ();
       }
@@ -2417,9 +2417,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       {
          switch (dropEffect)
          {
-            case "copy": return _ ("Copy %s Nodes", node .length);
-            case "link": return _ ("Link %s Nodes", node .length);
-            case "move": return _ ("Move %s Nodes", node .length);
+            case "copy": return _("Copy %s Nodes", node .length);
+            case "link": return _("Link %s Nodes", node .length);
+            case "move": return _("Move %s Nodes", node .length);
          }
       }
       else
@@ -2428,18 +2428,18 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          {
             switch (dropEffect)
             {
-               case "copy": return _ ("Copy Node %s »%s«");
-               case "link": return _ ("Link Node %s »%s«");
-               case "move": return _ ("Move Node %s »%s«");
+               case "copy": return _("Copy Node %s »%s«");
+               case "link": return _("Link Node %s »%s«");
+               case "move": return _("Move Node %s »%s«");
             }
          }
          else
          {
             switch (dropEffect)
             {
-               case "copy": return _ ("Copy Node %s");
-               case "link": return _ ("Link Node %s");
-               case "move": return _ ("Move Node %s");
+               case "copy": return _("Copy Node %s");
+               case "link": return _("Link Node %s");
+               case "move": return _("Move Node %s");
             }
          }
       }

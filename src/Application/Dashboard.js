@@ -21,7 +21,7 @@ module .exports = class Dashboard extends Interface
    {
       this .handButton = $("<span></span>")
          .addClass (["image-icon", "hand"])
-         .attr ("title", _ ("Switch to browser mode."))
+         .attr ("title", _("Switch to browser mode."))
          .appendTo (this .toolbar)
          .on ("click", () => this .hand ());
 
@@ -29,13 +29,13 @@ module .exports = class Dashboard extends Interface
 
       this .arrowButton = $("<span></span>")
          .addClass (["image-icon", "arrow"])
-         .attr ("title", _ ("Switch to edit mode."))
+         .attr ("title", _("Switch to edit mode."))
          .appendTo (this .toolbar)
          .on ("click", () => this .arrow ());
 
       this .playButton = $("<span></span>")
          .addClass (["material-icons"])
-         .attr ("title", _ ("Toggle browser update."))
+         .attr ("title", _("Toggle browser update."))
          .css ({ position: "relative", left: "-1px", "font-weight": "bold" })
          .text ("play_arrow")
          .appendTo (this .toolbar)
@@ -45,14 +45,14 @@ module .exports = class Dashboard extends Interface
 
       this .viewAllButton = $("<span></span>")
          .addClass (["material-symbols-outlined"])
-         .attr ("title", _ ("Look at selected objects."))
+         .attr ("title", _("Look at selected objects."))
          .text ("center_focus_strong")
          .appendTo (this .toolbar)
          .on ("click", () => this .viewAll ());
 
       this .straightenButton = $("<span></span>")
          .addClass (["material-symbols-outlined", "active"])
-         .attr ("title", _ ("Straighten horizon."))
+         .attr ("title", _("Straighten horizon."))
          .text ("wb_twilight")
          .appendTo (this .toolbar)
          .on ("click", () => this .straighten (!this .browser .getBrowserOption ("StraightenHorizon")));

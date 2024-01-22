@@ -14,8 +14,8 @@ module .exports = class UndoManager
    deferFunctions = new Map ();
    undoList       = [ ];
    undoIndex      = -1;
-   undoLabel      = _ ("Undo");
-   redoLabel      = _ ("Redo");
+   undoLabel      = _("Undo");
+   redoLabel      = _("Redo");
 
    undo ()
    {
@@ -51,11 +51,11 @@ module .exports = class UndoManager
       // Make labels.
 
       if (this .undoIndex < 0)
-         this .undoLabel = _ ("Undo");
+         this .undoLabel = _("Undo");
       else
-         this .undoLabel = util .format (_ ("Undo %s"), this .undoList [this .undoIndex] .description)
+         this .undoLabel = util .format (_("Undo %s"), this .undoList [this .undoIndex] .description)
 
-      this .redoLabel = util .format (_ ("Redo %s"), undoItem .description);
+      this .redoLabel = util .format (_("Redo %s"), undoItem .description);
 
       // Propagate change.
 
@@ -96,12 +96,12 @@ module .exports = class UndoManager
 
       // Make labels.
 
-      this .undoLabel = util .format (_ ("Undo %s"), undoItem .description);
+      this .undoLabel = util .format (_("Undo %s"), undoItem .description);
 
       if (this .undoIndex + 1 >= this .undoList .length)
-         this .redoLabel = _ ("Redo");
+         this .redoLabel = _("Redo");
       else
-         this .redoLabel = util .format (_ ("Redo %s"), this .undoList [this .undoIndex + 1] .description);
+         this .redoLabel = util .format (_("Redo %s"), this .undoList [this .undoIndex + 1] .description);
 
       // Propagate change.
 
@@ -154,8 +154,8 @@ module .exports = class UndoManager
 
       // Make labels.
 
-      this .undoLabel = util .format (_ ("Undo %s"), description);
-      this .redoLabel = _ ("Redo");
+      this .undoLabel = util .format (_("Undo %s"), description);
+      this .redoLabel = _("Redo");
 
       // Propagate change.
 

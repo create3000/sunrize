@@ -38,7 +38,7 @@ module .exports = new class Library extends Dialog
       this .input = $("<input></input>")
          .appendTo (this .element)
          .addClass ("library-input")
-         .attr ("placeholder", _ ("Search a node"))
+         .attr ("placeholder", _("Search a node"))
          .on ("keydown", event => this .enter (event))
          .on ("keyup", () => this .update ());
 
@@ -52,14 +52,14 @@ module .exports = new class Library extends Dialog
          .appendTo (this .buttons)
          .addClass ("library-button")
          .data ("type", "NODES")
-         .text (_ ("Nodes"))
+         .text (_("Nodes"))
          .on ("click", () => this .button (this .nodesButton));
 
       this .primitivesButton = $("<span></span>")
          .appendTo (this .buttons)
          .addClass ("library-button")
          .data ("type", "PRIMITIVES")
-         .text (_ ("Primitives"))
+         .text (_("Primitives"))
          .on ("click", () => this .button (this .primitivesButton));
 
       // Output
@@ -263,7 +263,7 @@ module .exports = new class Library extends Dialog
 
    async createNode (typeName, componentName)
    {
-      UndoManager .shared .beginUndo (_ ("Create Node %s"), typeName);
+      UndoManager .shared .beginUndo (_("Create Node %s"), typeName);
 
       await Editor .addComponent (this .executionContext, componentName);
 
@@ -276,7 +276,7 @@ module .exports = new class Library extends Dialog
 
    async createProto (proto)
    {
-      UndoManager .shared .beginUndo (_ ("Create Proto Instance %s"), proto .name);
+      UndoManager .shared .beginUndo (_("Create Proto Instance %s"), proto .name);
 
       const node  = proto .createInstance (this .executionContext);
 
@@ -363,7 +363,7 @@ module .exports = new class Library extends Dialog
 
    async importX3D (typeName, x3dSyntax)
    {
-      UndoManager .shared .beginUndo (_ ("Import %s"), typeName);
+      UndoManager .shared .beginUndo (_("Import %s"), typeName);
 
       const
          node  = (await Editor .importX3D (this .executionContext, x3dSyntax)) .pop (),

@@ -883,13 +883,13 @@ module .exports = class OutlineView extends Interface
       switch (loadState)
       {
          case X3D .X3DConstants .NOT_STARTED_STATE:
-            return ["not-started-state", util .format (_ ("Loading %s not started."), typeName)];
+            return ["not-started-state", util .format (_("Loading %s not started."), typeName)];
          case X3D .X3DConstants .IN_PROGRESS_STATE:
-            return ["in-progress-state", util .format (_ ("Loading %s in progress."), typeName)];
+            return ["in-progress-state", util .format (_("Loading %s in progress."), typeName)];
          case X3D .X3DConstants .COMPLETE_STATE:
-            return ["complete-state", util .format (_ ("Loading %s completed."), typeName)];
+            return ["complete-state", util .format (_("Loading %s completed."), typeName)];
          case X3D .X3DConstants .FAILED_STATE:
-            return ["failed-state", util .format (_ ("Loading %s failed."), typeName)];
+            return ["failed-state", util .format (_("Loading %s failed."), typeName)];
       }
    }
 
@@ -987,7 +987,7 @@ module .exports = class OutlineView extends Interface
             $("<span></span>")
                .addClass (["tool", "button", "material-symbols-outlined"])
                .addClass (node .valueOf () === node ? "off" : "" )
-               .attr ("title", _ ("Toggle tool."))
+               .attr ("title", _("Toggle tool."))
                .text ("build_circle")
                .appendTo (name);
          }
@@ -1283,7 +1283,7 @@ module .exports = class OutlineView extends Interface
             $("<img></img>")
                .addClass (["boolean-button", "field-button"])
                .attr ("src", `../images/OutlineEditor/Values/${field .getValue () ? "TRUE" : "FALSE"}.svg`)
-               .attr ("title", _ ("Toggle value."))
+               .attr ("title", _("Toggle value."))
                .appendTo (child);
 
             field .addFieldCallback (this .#fieldButtonSymbol, this .updateBoolean .bind (this, parent, node, field));
@@ -1294,7 +1294,7 @@ module .exports = class OutlineView extends Interface
          {
             $("<div></div>")
                .addClass (["color-button", "field-button"])
-               .attr ("title", _ ("Open color picker."))
+               .attr ("title", _("Open color picker."))
                .css ("background-color", this .getColorFromField (field))
                .appendTo (child);
 
@@ -1306,7 +1306,7 @@ module .exports = class OutlineView extends Interface
             $("<img></img>")
                .addClass (["time-button", "field-button"])
                .attr ("src", `../images/OutlineEditor/Values/Bell.svg`)
-               .attr ("title", _ ("Set current time."))
+               .attr ("title", _("Set current time."))
                .appendTo (child);
 
             break;
@@ -1317,7 +1317,7 @@ module .exports = class OutlineView extends Interface
             {
                $("<span></span>")
                   .addClass (["url-button", "field-button", "material-symbols-outlined"])
-                  .attr ("title", _ ("Add URLs."))
+                  .attr ("title", _("Add URLs."))
                   .text ("add_circle")
                   .appendTo (child);
             }
@@ -1361,14 +1361,14 @@ module .exports = class OutlineView extends Interface
             case X3D .X3DConstants .inputOnly:
             {
                $("<area></area>")
-                  .attr ("title", _ ("Select input."))
+                  .attr ("title", _("Select input."))
                   .attr ("href", "#")
                   .attr ("shape", "rect")
                   .attr ("coords", "0,0,13,12")
                   .addClass ("input-selector") .appendTo (map);
 
                const inputRoutesSelector = $("<area></area>")
-                  .attr ("title", _ ("Select routes."))
+                  .attr ("title", _("Select routes."))
                   .attr ("shape", "rect")
                   .attr ("coords", "20,0,28,7")
                   .addClass ("input-routes-selector") .appendTo (map);
@@ -1381,14 +1381,14 @@ module .exports = class OutlineView extends Interface
             case X3D .X3DConstants .outputOnly:
             {
                $("<area></area>")
-                  .attr ("title", _ ("Select output."))
+                  .attr ("title", _("Select output."))
                   .attr ("href", "#")
                   .attr ("shape", "rect")
                   .attr ("coords", "0,0,14,12")
                   .addClass ("output-selector") .appendTo (map);
 
                const outputRoutesSelector = $("<area></area>")
-                  .attr ("title", _ ("Select routes."))
+                  .attr ("title", _("Select routes."))
                   .attr ("shape", "rect")
                   .attr ("coords", "20,5,28,12")
                   .addClass ("output-routes-selector")
@@ -1402,14 +1402,14 @@ module .exports = class OutlineView extends Interface
             case X3D .X3DConstants .inputOutput:
             {
                $("<area></area>")
-                  .attr ("title", _ ("Select input."))
+                  .attr ("title", _("Select input."))
                   .attr ("href", "#")
                   .attr ("shape", "rect")
                   .attr ("coords", "0,0,13,12")
                   .addClass ("input-selector") .appendTo (map);
 
                $("<area></area>")
-                  .attr ("title", _ ("Select output."))
+                  .attr ("title", _("Select output."))
                   .attr ("href", "#")
                   .attr ("shape", "rect")
                   .attr ("coords", "14,0,28,12")
@@ -1417,7 +1417,7 @@ module .exports = class OutlineView extends Interface
                   .appendTo (map);
 
                const inputRoutesSelector = $("<area></area>")
-                  .attr ("title", _ ("Select routes."))
+                  .attr ("title", _("Select routes."))
                   .attr ("shape", "rect")
                   .attr ("coords", "34,0,42,7")
                   .addClass ("input-routes-selector")
@@ -1427,7 +1427,7 @@ module .exports = class OutlineView extends Interface
                   inputRoutesSelector .attr ("href", "#");
 
                const outputRoutesSelector = $("<area></area>")
-                  .attr ("title", _ ("Select routes."))
+                  .attr ("title", _("Select routes."))
                   .attr ("shape", "rect")
                   .addClass ("output-routes-selector")
                   .appendTo (map);
@@ -2283,7 +2283,7 @@ module .exports = class OutlineView extends Interface
                ? route .getSourceNode () .getName ()
                : route .getSourceNode () .getImportedName ();
 
-            connectorDescription .text (util .format (_ ("Route from %s<%s>.%s"), route .getSourceNode () .getTypeName (), sourceNodeName || _ ("unnamed"), route .sourceField));
+            connectorDescription .text (util .format (_("Route from %s<%s>.%s"), route .getSourceNode () .getTypeName (), sourceNodeName || _("unnamed"), route .sourceField));
 
             break;
          }
@@ -2293,7 +2293,7 @@ module .exports = class OutlineView extends Interface
                ? route .getDestinationNode () .getName ()
                : route .getDestinationNode () .getImportedName ();
 
-            connectorDescription .text (util .format (_ ("Route to %s<%s>.%s"), route .getDestinationNode () .getTypeName (), destinationNodeName || _ ("unnamed"), route .destinationField));
+            connectorDescription .text (util .format (_("Route to %s<%s>.%s"), route .getDestinationNode () .getTypeName (), destinationNodeName || _("unnamed"), route .destinationField));
 
             break;
          }
@@ -2333,7 +2333,7 @@ module .exports = class OutlineView extends Interface
          case "input":
          {
             $("<area></area>")
-               .attr ("title", process .platform === "darwin" ? _ ("Remove route (Cmd+Click).") : _ ("Remove route (Ctrl+Click)."))
+               .attr ("title", process .platform === "darwin" ? _("Remove route (Cmd+Click).") : _("Remove route (Ctrl+Click)."))
                .attr ("href", "#")
                .attr ("shape", "rect")
                .attr ("coords", "0,0,13,12")
@@ -2341,7 +2341,7 @@ module .exports = class OutlineView extends Interface
                .appendTo (map);
 
             $("<area></area>")
-               .attr ("title", _ ("Select route."))
+               .attr ("title", _("Select route."))
                .attr ("href", "#")
                .attr ("shape", "rect")
                .attr ("coords", "20,0,28,7")
@@ -2353,7 +2353,7 @@ module .exports = class OutlineView extends Interface
          case "output":
          {
             $("<area></area>")
-               .attr ("title", process .platform === "darwin" ? _ ("Remove route (Cmd+Click).") : _ ("Remove route (Ctrl+Click)."))
+               .attr ("title", process .platform === "darwin" ? _("Remove route (Cmd+Click).") : _("Remove route (Ctrl+Click)."))
                .attr ("href", "#")
                .attr ("shape", "rect")
                .attr ("coords", "0,0,14,12")
@@ -2361,7 +2361,7 @@ module .exports = class OutlineView extends Interface
                .appendTo (map);
 
             $("<area></area>")
-               .attr ("title", _ ("Select route."))
+               .attr ("title", _("Select route."))
                .attr ("href", "#")
                .attr ("shape", "rect")
                .attr ("coords", "20,5,28,12")

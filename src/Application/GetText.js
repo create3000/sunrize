@@ -1,6 +1,6 @@
 "use strict"
 
-function _ (string)
+function _(string)
 {
    return string
 }

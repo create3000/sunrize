@@ -48,7 +48,7 @@ $.fn.renameNodeInput = function (node)
 
             const externproto = node;
 
-            UndoManager .shared .beginUndo (_ ("Update Extern Proto Declaration »%s«"), name);
+            UndoManager .shared .beginUndo (_("Update Extern Proto Declaration »%s«"), name);
 
             Editor .updateExternProtoDeclaration (executionContext, name, externproto);
 
@@ -68,7 +68,7 @@ $.fn.renameNodeInput = function (node)
 
             const proto = node;
 
-            UndoManager .shared .beginUndo (_ ("Update Proto Declaration »%s«"), name);
+            UndoManager .shared .beginUndo (_("Update Proto Declaration »%s«"), name);
 
             Editor .updateProtoDeclaration (executionContext, name, proto);
 

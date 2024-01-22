@@ -17,12 +17,12 @@ module .exports = class Sidebar extends Tabs
    addTabs ()
    {
       if (process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT")
-         this .addIconTab ("file-manager", "description", _ ("File Manager"))
+         this .addIconTab ("file-manager", "description", _("File Manager"))
 
-      this .addIconTab ("outline-editor", "list", _ ("Outline Editor"))
+      this .addIconTab ("outline-editor", "list", _("Outline Editor"))
 
       if (process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT")
-         this .addIconTab ("node-inspector", "visibility", _ ("Node Inspector"))
+         this .addIconTab ("node-inspector", "visibility", _("Node Inspector"))
 
       this .outlineEditor = new OutlineEditor (this .getPanel ("outline-editor"))
    }
