@@ -3348,6 +3348,24 @@ module .exports = class OutlineView extends Interface
       }
    }
 
+   getLayer (element)
+   {
+      for (;;)
+      {
+         if (element .hasClass ("scene"))
+            break;
+
+         const layerNode = this .getNode (element);
+
+         if (layerNode ?.getType () .includes (X3D .X3DConstants .X3DLayerNode))
+            return layerNode;
+
+         element = element .parent () .closest (".node, .scene", this .sceneGraph);
+      }
+
+      return this .browser .getActiveLayer ();
+   }
+
    scrollPositions = [ ];
    scrollTimeoutId = 0;
 

@@ -1031,27 +1031,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
    moveToCamera (id, executionContextId, nodeId)
    {
-      let
-         layerElement    = $(`#${id}`),
-         activeViewpoint = this .browser .getActiveViewpoint ();
-
-      for (;;)
-      {
-         layerElement = layerElement .parent () .closest (".node, .scene", this .sceneGraph);
-
-         if (layerElement .hasClass ("scene"))
-            break;
-
-         const layerNode = this .getNode (layerElement);
-
-         if (layerNode .getType () .includes (X3D .X3DConstants .X3DLayerNode))
-         {
-            activeViewpoint = layerNode .getViewpoint ();
-            break;
-         }
-      }
-
       const
+         layerNode        = this .getLayer ($(`#${id}`)),
+         activeViewpoint  = layerNode .getViewpoint (),
          viewpointNode    = this .objects .get (nodeId),
          position         = activeViewpoint .getUserPosition (),
          orientation      = activeViewpoint .getUserOrientation (),
