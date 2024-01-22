@@ -1045,9 +1045,19 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
    determineBoundingBoxFromScratch (id, executionContextId, nodeId)
    {
-      const
-         executionContext = this .objects .get (executionContextId),
-         node             = this .objects .get (nodeId);
+      const node = this .objects .get (nodeId);
+
+      UndoManager .shared .beginUndo (_("Determine Bounding Box From Scratch"));
+
+      Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxSize,   new X3D .Vector3 (-1, -1, -1));
+      Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxCenter, new X3D .Vector3 (0, 0, 0));
+
+      const bbox = node .getBBox (new X3D .Box3 ());
+
+      Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxSize,   bbox .size);
+      Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxCenter, bbox .center);
+
+      UndoManager .shared .endUndo ();
    }
 
    convertToInlineFile (id, executionContextId, nodeId)
