@@ -327,7 +327,51 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                enabled: parentNodeElement .hasClass ("node"),
                args: ["removeParent", element .attr ("id"), executionContext .getId (), node .getId ()],
             },
+            { type: "separator" },
          ];
+
+         for (const type of node .getType () .toReversed ())
+         {
+            switch (type)
+            {
+               case X3D .X3DConstants .Inline:
+               {
+                  menu .push ({
+                     label: _("Fold Back Into Scene"),
+                     args: ["foldBackIntoScene", element .attr ("id"), executionContext .getId (), node .getId ()],
+                  });
+
+                  continue;
+               }
+               case X3D .X3DConstants .X3DViewpointNode:
+               {
+                  menu .push ({
+                     label: _("Move To Camera"),
+                     args: ["moveToCamera", element .attr ("id"), executionContext .getId (), node .getId ()],
+                  });
+
+                  continue;
+               }
+               case X3D .X3DConstants .X3DBoundedObject:
+               {
+                  menu .push ({
+                     label: _("Determine Bounding Box From Scratch"),
+                     args: ["determineBoundingBoxFromScratch", element .attr ("id"), executionContext .getId (), node .getId ()],
+                  });
+
+                  continue;
+               }
+               case X3D .X3DConstants .X3DChildNode:
+               {
+                  menu .push ({
+                     label: _("Convert To Inline File..."),
+                     args: ["convertToInlineFile", element .attr ("id"), executionContext .getId (), node .getId ()],
+                  });
+
+                  continue;
+               }
+            }
+         }
       }
 
       else if (element .is (".exported-node"))
@@ -975,6 +1019,38 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          Editor .setFieldValue (executionContext, parentNode, parentField, null);
 
       UndoManager .shared .endUndo ();
+   }
+
+   foldBackIntoScene (id, executionContextId, nodeId)
+   {
+      const
+         element          = $(`#${id}`),
+         executionContext = this .objects .get (executionContextId),
+         node             = this .objects .get (nodeId);
+   }
+
+   moveToCamera (id, executionContextId, nodeId)
+   {
+      const
+         element          = $(`#${id}`),
+         executionContext = this .objects .get (executionContextId),
+         node             = this .objects .get (nodeId);
+   }
+
+   determineBoundingBoxFromScratch (id, executionContextId, nodeId)
+   {
+      const
+         element          = $(`#${id}`),
+         executionContext = this .objects .get (executionContextId),
+         node             = this .objects .get (nodeId);
+   }
+
+   convertToInlineFile (id, executionContextId, nodeId)
+   {
+      const
+         element          = $(`#${id}`),
+         executionContext = this .objects .get (executionContextId),
+         node             = this .objects .get (nodeId);
    }
 
    addPrototype (id, executionContextId)
