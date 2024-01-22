@@ -1006,7 +1006,7 @@ module .exports = class OutlineView extends Interface
                .addClass (["bind", "button", "material-symbols-outlined"])
                .addClass (node ._isBound .getValue () ? "" : "off")
                .attr ("title", _("Bind node."))
-               .text (node ._isBound .getValue () ? "radio_button_checked" : "brightness_1")
+               .text (node ._isBound .getValue () ? "radio_button_checked" : "radio_button_unchecked")
                .appendTo (name);
          }
 
@@ -1076,7 +1076,7 @@ module .exports = class OutlineView extends Interface
          .find ("> .item .bind")
          .removeClass ("off")
          .addClass (node ._isBound .getValue () ? "" : "off")
-         .text (node ._isBound .getValue () ? "radio_button_checked" : "brightness_1");
+         .text (node ._isBound .getValue () ? "radio_button_checked" : "radio_button_unchecked");
    }
 
    updateNodeLoadState (node)
