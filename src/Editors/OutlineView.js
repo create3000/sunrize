@@ -896,7 +896,8 @@ module .exports = class OutlineView extends Interface
       }
    }
 
-   #updateNodeLoadStateSymbol = Symbol;
+   #isBoundSymbol             = Symbol ();
+   #updateNodeLoadStateSymbol = Symbol ();
 
    createNodeElement (type, parent, node, index)
    {
@@ -997,7 +998,7 @@ module .exports = class OutlineView extends Interface
 
          if (node .getType () .includes (X3D .X3DConstants .X3DBindableNode))
          {
-            node ._isBound .addFieldCallback (this, this .updateNodeBound .bind (this, node));
+            node ._isBound .addFieldCallback (this .#isBoundSymbol, this .updateNodeBound .bind (this, node));
 
             name .append (document .createTextNode (" "));
 
@@ -2690,7 +2691,7 @@ module .exports = class OutlineView extends Interface
             return;
 
          if (node .getType () .includes (X3D .X3DConstants .X3DBindableNode))
-            node ._isBound .removeFieldCallback (this);
+            node ._isBound .removeFieldCallback (this .#isBoundSymbol);
 
          if (node .getType () .includes (X3D .X3DConstants .X3DUrlObject))
          {
