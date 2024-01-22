@@ -54,8 +54,8 @@ module .exports = class Application
 
       this .menuOptions = {
          defaultEditMenu: false,
-         undoLabel: _ ("Undo"),
-         redoLabel: _ ("Redo"),
+         undoLabel: _("Undo"),
+         redoLabel: _("Redo"),
       };
 
       this .config .setDefaultValues ({
@@ -171,7 +171,7 @@ module .exports = class Application
             role: "fileMenu",
             submenu: [
                {
-                  label: _ ("New File"),
+                  label: _("New File"),
                   accelerator: "CmdOrCtrl+N",
                   click: () =>
                   {
@@ -180,7 +180,7 @@ module .exports = class Application
                },
                { type: "separator" },
                {
-                  label: _ ("Open..."),
+                  label: _("Open..."),
                   accelerator: "CmdOrCtrl+O",
                   click: async () =>
                   {
@@ -193,7 +193,7 @@ module .exports = class Application
                   },
                },
                {
-                  label: _ ("Open Location..."),
+                  label: _("Open Location..."),
                   accelerator: "Shift+CmdOrCtrl+O",
                   click: async () =>
                   {
@@ -239,7 +239,7 @@ module .exports = class Application
                },
                { type: "separator" },
                {
-                  label: _ ("Save"),
+                  label: _("Save"),
                   accelerator: "CmdOrCtrl+S",
                   click: () =>
                   {
@@ -247,7 +247,7 @@ module .exports = class Application
                   },
                },
                {
-                  label: _ ("Save As..."),
+                  label: _("Save As..."),
                   accelerator: "Shift+CmdOrCtrl+S",
                   click: async () =>
                   {
@@ -262,7 +262,7 @@ module .exports = class Application
                   },
                },
                {
-                  label: _ ("Save A Copy..."),
+                  label: _("Save A Copy..."),
                   click: async () =>
                   {
                      const response = await this .showSaveDialog (this .currentFile);
@@ -276,7 +276,7 @@ module .exports = class Application
                   },
                },
                {
-                  label: _ ("Save All"),
+                  label: _("Save All"),
                   accelerator: "Alt+CmdOrCtrl+S",
                   click: () =>
                   {
@@ -285,7 +285,7 @@ module .exports = class Application
                },
                { type: "separator" },
                {
-                  label: _ ("Auto Save"),
+                  label: _("Auto Save"),
                   type: "checkbox",
                   checked: this .config .autoSave,
                   click: () =>
@@ -299,7 +299,7 @@ module .exports = class Application
                ... exportPath ?
                [
                   {
-                     label: util .format (_ ("Export As %s"), path .basename (exportPath)),
+                     label: util .format (_("Export As %s"), path .basename (exportPath)),
                      accelerator: "CmdOrCtrl+E",
                      click: async () =>
                      {
@@ -310,7 +310,7 @@ module .exports = class Application
                   }
                ] : [ ],
                {
-                  label: _ ("Export As..."),
+                  label: _("Export As..."),
                   accelerator: "Shift+CmdOrCtrl+E",
                   click: async () =>
                   {
@@ -330,7 +330,7 @@ module .exports = class Application
                },
                { type: "separator" },
                {
-                  label: _ ("Scene Properties..."),
+                  label: _("Scene Properties..."),
                   accelerator: "CmdOrCtrl+I",
                   click: () =>
                   {
@@ -350,7 +350,7 @@ module .exports = class Application
                {
                   label: this .menuOptions .undoLabel,
                   accelerator: "CmdOrCtrl+Z",
-                  enabled: this .menuOptions .undoLabel !== _ ("Undo"),
+                  enabled: this .menuOptions .undoLabel !== _("Undo"),
                   click: () =>
                   {
                      this .mainWindow .webContents .send ("undo");
@@ -359,7 +359,7 @@ module .exports = class Application
                {
                   label: this .menuOptions .redoLabel,
                   accelerator: "Shift+CmdOrCtrl+Z",
-                  enabled: this .menuOptions .redoLabel !== _ ("Redo"),
+                  enabled: this .menuOptions .redoLabel !== _("Redo"),
                   click: () =>
                   {
                      this .mainWindow .webContents .send ("redo");
@@ -367,7 +367,7 @@ module .exports = class Application
                },
                { type: "separator" },
                {
-                  label: _ ("Cut"),
+                  label: _("Cut"),
                   accelerator: "CmdOrCtrl+X",
                   click: () =>
                   {
@@ -375,7 +375,7 @@ module .exports = class Application
                   },
                },
                {
-                  label: _ ("Copy"),
+                  label: _("Copy"),
                   accelerator: "CmdOrCtrl+C",
                   click: () =>
                   {
@@ -383,7 +383,7 @@ module .exports = class Application
                   },
                },
                {
-                  label: _ ("Paste"),
+                  label: _("Paste"),
                   accelerator: "CmdOrCtrl+V",
                   click: () =>
                   {
@@ -391,7 +391,7 @@ module .exports = class Application
                   },
                },
                {
-                  label: _ ("Delete"),
+                  label: _("Delete"),
                   accelerator: "CmdOrCtrl+Backspace",
                   click: () =>
                   {
@@ -401,10 +401,10 @@ module .exports = class Application
             ],
          },
          {
-            label: _ ("Selection"),
+            label: _("Selection"),
             submenu: [
                {
-                  label: _ ("Select All"),
+                  label: _("Select All"),
                   accelerator: "CmdOrCtrl+A",
                   click: () =>
                   {
@@ -412,7 +412,7 @@ module .exports = class Application
                   },
                },
                {
-                  label: _ ("Deselect All"),
+                  label: _("Deselect All"),
                   accelerator: "Shift+CmdOrCtrl+A",
                   click: () =>
                   {
@@ -421,21 +421,21 @@ module .exports = class Application
                },
                { type: "separator" },
                {
-                  label: _ ("Hide Unselected Objects"),
+                  label: _("Hide Unselected Objects"),
                   click: () =>
                   {
                      this .mainWindow .webContents .send ("hide-unselected-objects");
                   },
                },
                {
-                  label: _ ("Show Selected Objects"),
+                  label: _("Show Selected Objects"),
                   click: () =>
                   {
                      this .mainWindow .webContents .send ("show-selected-objects");
                   },
                },
                {
-                  label: _ ("Show All Objects"),
+                  label: _("Show All Objects"),
                   click: () =>
                   {
                      this .mainWindow .webContents .send ("show-all-objects");
@@ -443,7 +443,7 @@ module .exports = class Application
                },
                { type: "separator" },
                {
-                  label: _ ("Remove Empty Groups"),
+                  label: _("Remove Empty Groups"),
                   click: () =>
                   {
                      this .mainWindow .webContents .send ("remove-empty-groups");
@@ -452,7 +452,7 @@ module .exports = class Application
             ],
          },
          {
-            label: _ ("View"),
+            label: _("View"),
             submenu: [
                {
                   role: "reload",
@@ -484,10 +484,10 @@ module .exports = class Application
                },
                { type: "separator" },
                {
-                  label: _ ("Outline Editor"),
+                  label: _("Outline Editor"),
                   submenu: [
                      {
-                        label: _ ("Expand ExternProto Declarations"),
+                        label: _("Expand ExternProto Declarations"),
                         type: "checkbox",
                         checked: this .config .expandExternProtoDeclarations,
                         click: () =>
@@ -497,7 +497,7 @@ module .exports = class Application
                         },
                      },
                      {
-                        label: _ ("Expand Prototype Instances"),
+                        label: _("Expand Prototype Instances"),
                         type: "checkbox",
                         checked: this .config .expandPrototypeInstances,
                         click: () =>
@@ -507,7 +507,7 @@ module .exports = class Application
                         },
                      },
                      {
-                        label: _ ("Expand Inline Nodes"),
+                        label: _("Expand Inline Nodes"),
                         type: "checkbox",
                         checked: this .config .expandInlineNodes,
                         click: () =>
@@ -520,10 +520,10 @@ module .exports = class Application
                },
                { type: "separator" },
                {
-                  label: _ ("Primitive Quality"),
+                  label: _("Primitive Quality"),
                   submenu: [
                      {
-                        label: _ ("High"),
+                        label: _("High"),
                         type: "radio",
                         checked: this .config .primitiveQuality === "HIGH",
                         click: () =>
@@ -533,7 +533,7 @@ module .exports = class Application
                         },
                      },
                      {
-                        label: _ ("Medium"),
+                        label: _("Medium"),
                         type: "radio",
                         checked: this .config .primitiveQuality === "MEDIUM" || this .config .primitiveQuality === undefined,
                         click: () =>
@@ -543,7 +543,7 @@ module .exports = class Application
                         },
                      },
                      {
-                        label: _ ("Low"),
+                        label: _("Low"),
                         type: "radio",
                         checked: this .config .primitiveQuality === "LOW",
                         click: () =>
@@ -555,10 +555,10 @@ module .exports = class Application
                   ],
                },
                {
-                  label: _ ("Texture Quality"),
+                  label: _("Texture Quality"),
                   submenu: [
                      {
-                        label: _ ("High"),
+                        label: _("High"),
                         type: "radio",
                         checked: this .config .textureQuality === "HIGH",
                         click: () =>
@@ -568,7 +568,7 @@ module .exports = class Application
                         },
                      },
                      {
-                        label: _ ("Medium"),
+                        label: _("Medium"),
                         type: "radio",
                         checked: this .config .textureQuality === "MEDIUM" || this .config .textureQuality === undefined,
                         click: () =>
@@ -578,7 +578,7 @@ module .exports = class Application
                         },
                      },
                      {
-                        label: _ ("Low"),
+                        label: _("Low"),
                         type: "radio",
                         checked: this .config .textureQuality === "LOW",
                         click: () =>
@@ -590,7 +590,7 @@ module .exports = class Application
                   ],
                },
                {
-                  label: _ ("Display Rubberband"),
+                  label: _("Display Rubberband"),
                   type: "checkbox",
                   checked: this .config .rubberband,
                   click: () =>
@@ -600,7 +600,7 @@ module .exports = class Application
                   },
                },
                {
-                  label: _ ("Display Timings"),
+                  label: _("Display Timings"),
                   type: "checkbox",
                   checked: this .config .timings,
                   click: () =>
@@ -611,7 +611,7 @@ module .exports = class Application
                },
                { type: "separator" },
                {
-                  label: _ ("Show Library..."),
+                  label: _("Show Library..."),
                   accelerator: "Shift+CmdOrCtrl+L",
                   click: () =>
                   {
@@ -628,7 +628,7 @@ module .exports = class Application
             label: "Layout",
             submenu: [
                {
-                  label: _ ("Browser Size..."),
+                  label: _("Browser Size..."),
                   click: () =>
                   {
                      this .mainWindow .webContents .send ("browser-size");
@@ -811,7 +811,7 @@ module .exports = class Application
          properties: ["openFile", "multiSelections"],
          filters: filters ?? [
             {
-               name: _ ("X3D Document"),
+               name: _("X3D Document"),
                extensions: ["x3d", "x3dz", "x3dj", "x3djz", "x3dv", "x3dvz", "wrl", "wrz", "wrl.gz", "vrml", "gltf", "glb", "obj", "stl", "ply", "svg"],
             },
          ],
@@ -841,12 +841,12 @@ module .exports = class Application
          defaultPath: defaultPath,
          properties: ["createDirectory", "showOverwriteConfirmation"],
          filters : [
-            { name: _ ("X3D XML Document"), extensions: ["x3d"] },
-            { name: _ ("X3D XML Document GZipped"), extensions: ["x3dz"] },
-            { name: _ ("X3D JSON Document"), extensions: ["x3dj"] },
-            { name: _ ("X3D JSON Document GZipped"), extensions: ["x3djz"] },
-            { name: _ ("X3D VRML Classic Document"), extensions: ["x3dv"] },
-            { name: _ ("X3D VRML Classic Document GZipped"), extensions: ["x3dvz"] },
+            { name: _("X3D XML Document"), extensions: ["x3d"] },
+            { name: _("X3D XML Document GZipped"), extensions: ["x3dz"] },
+            { name: _("X3D JSON Document"), extensions: ["x3dj"] },
+            { name: _("X3D JSON Document GZipped"), extensions: ["x3djz"] },
+            { name: _("X3D VRML Classic Document"), extensions: ["x3dv"] },
+            { name: _("X3D VRML Classic Document GZipped"), extensions: ["x3dvz"] },
          ],
       });
 
