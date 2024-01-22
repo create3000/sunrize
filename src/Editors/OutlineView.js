@@ -287,6 +287,9 @@ module .exports = class OutlineView extends Interface
       child .find (".tool")
          .on ("click", this .toggleTool .bind (this))
 
+      child .find (".bind")
+         .on ("click", this .bindNode .bind (this))
+
       child .find (".reload")
          .on ("click", this .reloadNode .bind (this))
 
@@ -980,21 +983,35 @@ module .exports = class OutlineView extends Interface
                .appendTo (name);
          }
 
-         if (node .valueOf () .getType () .some (type => this .onDemandToolNodes .has (type)))
+         if (node .getType () .some (type => this .onDemandToolNodes .has (type)))
          {
             name .append (document .createTextNode (" "));
 
             $("<span></span>")
                .addClass (["tool", "button", "material-symbols-outlined"])
-               .addClass (node .valueOf () === node ? "off" : "" )
+               .addClass (node .valueOf () === node ? "off" : "")
                .attr ("title", _("Toggle tool."))
                .text ("build_circle")
                .appendTo (name);
          }
 
+         if (node .getType () .includes (X3D .X3DConstants .X3DBindableNode))
+         {
+            node ._isBound .addFieldCallback (this, this .updateNodeBound .bind (this, node));
+
+            name .append (document .createTextNode (" "));
+
+            $("<span></span>")
+               .addClass (["bind", "button", "material-symbols-outlined"])
+               .addClass (node ._isBound .getValue () ? "" : "off")
+               .attr ("title", _("Bind node."))
+               .text (node ._isBound .getValue () ? "radio_button_checked" : "brightness_1")
+               .appendTo (name);
+         }
+
          if (node .getExecutionContext () .getOuterNode () instanceof X3D .X3DProtoDeclaration
-             ? node .valueOf () .getType () .includes (X3D .X3DConstants .Inline)
-             : node .valueOf () .getType () .includes (X3D .X3DConstants .X3DUrlObject))
+             ? node .getType () .includes (X3D .X3DConstants .Inline)
+             : node .getType () .includes (X3D .X3DConstants .X3DUrlObject))
          {
             const [className] = this .getLoadState (node .checkLoadState (), node .getTypeName ());
 
@@ -1049,6 +1066,16 @@ module .exports = class OutlineView extends Interface
          .find (`.node[node-id=${node .getId ()}]`)
          .find ("> .item .clone-count")
          .text (cloneCount > 1 ? `[${cloneCount}]` : "")
+   }
+
+   updateNodeBound (node)
+   {
+      this .sceneGraph
+         .find (`.node[node-id=${node .getId ()}]`)
+         .find ("> .item .bind")
+         .removeClass ("off")
+         .addClass (node ._isBound .getValue () ? "" : "off")
+         .text (node ._isBound .getValue () ? "radio_button_checked" : "brightness_1");
    }
 
    updateNodeLoadState (node)
@@ -1825,6 +1852,9 @@ module .exports = class OutlineView extends Interface
       child .find (".tool")
          .on ("click", this .toggleTool .bind (this))
 
+      child .find (".bind")
+         .on ("click", this .bindNode .bind (this))
+
       child .find (".reload")
          .on ("click", this .reloadNode .bind (this))
 
@@ -1935,6 +1965,9 @@ module .exports = class OutlineView extends Interface
 
       child .find (".tool")
          .on ("click", this .toggleTool .bind (this));
+
+      child .find (".bind")
+         .on ("click", this .bindNode .bind (this))
 
       child .find (".reload")
          .on ("click", this .reloadNode .bind (this));
@@ -2651,10 +2684,13 @@ module .exports = class OutlineView extends Interface
       {
          const
             element = $(e),
-            node    = this .getNode (element)
+            node    = this .getNode (element);
 
          if (!node)
-            return
+            return;
+
+         if (node .getType () .includes (X3D .X3DConstants .X3DBindableNode))
+            node ._isBound .removeFieldCallback (this);
 
          if (node .getType () .includes (X3D .X3DConstants .X3DUrlObject))
          {
@@ -2768,6 +2804,19 @@ module .exports = class OutlineView extends Interface
          .find ("> .item .tool")
          .removeClass ("off")
          .addClass (tool ? "off" : "");
+   }
+
+   bindNode (event)
+   {
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
+
+      const
+         target  = $(event .target),
+         element = target .closest (".node", this .sceneGraph),
+         node    = this .getNode (element);
+
+      node ._set_bind = true;
    }
 
    reloadNode (event)
