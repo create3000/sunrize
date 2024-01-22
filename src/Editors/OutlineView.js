@@ -991,7 +991,7 @@ module .exports = class OutlineView extends Interface
             $("<span></span>")
                .addClass (["tool", "button", "material-symbols-outlined"])
                .addClass (node .valueOf () === node ? "off" : "")
-               .attr ("title", _("Toggle tool."))
+               .attr ("title", _("Toggle display tool."))
                .text ("build_circle")
                .appendTo (name);
          }
