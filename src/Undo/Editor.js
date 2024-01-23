@@ -1752,7 +1752,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     * @param {UndoManager} undoManager
     * @returns {Promise<void>}
     */
-   static async convertToInlineFile (executionContext, node, filePath, undoManager = UndoManager .shared)
+   static async convertNodeToInlineFile (executionContext, node, filePath, undoManager = UndoManager .shared)
    {
       const
          browser   = executionContext .getBrowser (),
