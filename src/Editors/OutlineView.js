@@ -3140,6 +3140,24 @@ module .exports = class OutlineView extends Interface
       return true;
    }
 
+   getLayer (element)
+   {
+      for (;;)
+      {
+         if (element .hasClass ("scene"))
+            break;
+
+         const layerNode = this .getNode (element);
+
+         if (layerNode ?.getType () .includes (X3D .X3DConstants .X3DLayerNode))
+            return layerNode;
+
+         element = element .parent () .closest (".node, .scene", this .sceneGraph);
+      }
+
+      return this .browser .getActiveLayer ();
+   }
+
    getNode (element)
    {
       return this .objects .get (parseInt (element .attr ("node-id")));
@@ -3368,24 +3386,6 @@ module .exports = class OutlineView extends Interface
 
          this .expandHierarchy (hierarchy, element);
       }
-   }
-
-   getLayer (element)
-   {
-      for (;;)
-      {
-         if (element .hasClass ("scene"))
-            break;
-
-         const layerNode = this .getNode (element);
-
-         if (layerNode ?.getType () .includes (X3D .X3DConstants .X3DLayerNode))
-            return layerNode;
-
-         element = element .parent () .closest (".node, .scene", this .sceneGraph);
-      }
-
-      return this .browser .getActiveLayer ();
    }
 
    scrollPositions = [ ];
