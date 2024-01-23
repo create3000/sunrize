@@ -1060,12 +1060,53 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       UndoManager .shared .endUndo ();
    }
 
-   convertToInlineFile (id, executionContextId, nodeId)
+   async convertToInlineFile (id, executionContextId, nodeId)
    {
+
       const
-         element          = $(`#${id}`),
-         executionContext = this .objects .get (executionContextId),
-         node             = this .objects .get (nodeId);
+         element                = $(`#${id}`),
+         executionContext       = this .objects .get (executionContextId),
+         childNode              = this .objects .get (nodeId),
+         childIndex             = parseInt (element .attr ("index")),
+         parentFieldElement     = element .closest (".field, .scene", this .sceneGraph),
+         parentNodeElement      = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
+         parentNode             = this .getNode (parentNodeElement),
+         parentField            = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement),
+         response               = await electron .ipcRenderer .invoke ("file-path", { type: "save", defaultPath: childNode .getName () });
+
+      if (response .canceled)
+         return;
+
+      UndoManager .shared .beginUndo (_("Convert Node to Inline File"));
+
+      await Editor .convertToInlineFile (executionContext, childNode, response .filePath);
+      await Editor .addComponent (executionContext, "Networking");
+
+      // Create Inline node.
+
+      const inlineNode = executionContext .createNode ("Inline") .getValue ();
+
+      inlineNode ._url = [
+         $.try (() => path .relative (path .dirname (url .fileURLToPath (executionContext .getWorldURL ())), response .filePath))
+            ?? url .pathToFileURL (response .filePath)
+      ];
+
+      // Insert Inline node.
+
+      switch (parentField .getType ())
+      {
+         case X3D .X3DConstants .SFNode:
+            Editor .setFieldValue (executionContext, parentNode, parentField, inlineNode);
+            break;
+         case X3D .X3DConstants .MFNode:
+            Editor .insertValueIntoArray (executionContext, parentNode, parentField, childIndex, inlineNode);
+            Editor .removeValueFromArray (executionContext, parentNode, parentField, childIndex + 1);
+            break;
+      }
+
+      UndoManager .shared .endUndo ();
+
+      requestAnimationFrame (() => this .expandTo (inlineNode));
    }
 
    addPrototype (id, executionContextId)

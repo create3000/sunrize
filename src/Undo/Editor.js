@@ -1150,7 +1150,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    /**
     *
     * @param {X3DExecutionContext} executionContext
-    * @param {Array<X3DProtoDeclaration} protos
+    * @param {X3DProtoDeclaration} proto
     * @param {string} filePath
     * @param {UndoManager} undoManager
     * @returns {Promise<void>}
@@ -1160,26 +1160,26 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       const
          browser   = executionContext .getBrowser (),
          scene     = browser .createScene (),
-         x3dSyntax = this .exportVRML (executionContext, [proto])
+         x3dSyntax = this .exportVRML (executionContext, [proto]);
 
-      undoManager .beginUndo (_("Turn Prototype »%s« into Extern Prototype"), proto .getName ())
+      undoManager .beginUndo (_("Turn Prototype »%s« into Extern Prototype"), proto .getName ());
 
-      await this .importX3D (scene, x3dSyntax, new UndoManager ())
-      this .rewriteURLs (scene, scene, executionContext .worldURL, url .pathToFileURL (filePath) .href, new UndoManager ())
+      await this .importX3D (scene, x3dSyntax, new UndoManager ());
+      this .rewriteURLs (scene, scene, executionContext .worldURL, url .pathToFileURL (filePath) .href, new UndoManager ());
 
-      fs .writeFileSync (filePath, this .getContents (scene, path .extname (filePath)))
+      fs .writeFileSync (filePath, this .getContents (scene, path .extname (filePath)));
 
       const
          name         = executionContext .getUniqueExternProtoName (proto .getName ()),
          externproto  = this .addExternProtoDeclaration (executionContext, name, undoManager),
          relativePath = path .relative (path .dirname (url .fileURLToPath (executionContext .worldURL)), filePath),
          absolutePath = url .pathToFileURL (filePath) .href,
-         hash         = "#" + proto .getName ()
+         hash         = "#" + proto .getName ();
 
-      externproto ._url = new X3D .MFString (relativePath + hash, absolutePath + hash)
+      externproto ._url = new X3D .MFString (relativePath + hash, absolutePath + hash);
 
-      this .replaceProtoNodes (executionContext, proto, externproto, undoManager)
-      this .removeProtoDeclaration (executionContext, proto .getName (), undoManager)
+      this .replaceProtoNodes (executionContext, proto, externproto, undoManager);
+      this .removeProtoDeclaration (executionContext, proto .getName (), undoManager);
 
       undoManager .endUndo ();
    }
@@ -1741,6 +1741,31 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       this .removeNode (executionContext, worldInfo, undoManager);
       this .#removeWorldInfo (executionContext, worldInfo, undoManager);
+
+      undoManager .endUndo ();
+   }
+
+   /**
+    *
+    * @param {X3DExecutionContext} executionContext
+    * @param {X3DNode} node
+    * @param {string} filePath
+    * @param {UndoManager} undoManager
+    * @returns {Promise<void>}
+    */
+   static async convertToInlineFile (executionContext, node, filePath, undoManager = UndoManager .shared)
+   {
+      const
+         browser   = executionContext .getBrowser (),
+         scene     = browser .createScene (),
+         x3dSyntax = this .exportVRML (executionContext, [node]);
+
+      undoManager .beginUndo (_("Convert Node to Inline File"));
+
+      await this .importX3D (scene, x3dSyntax, new UndoManager ());
+      this .rewriteURLs (scene, scene, executionContext .worldURL, url .pathToFileURL (filePath) .href, new UndoManager ());
+
+      fs .writeFileSync (filePath, this .getContents (scene, path .extname (filePath)));
 
       undoManager .endUndo ();
    }
