@@ -996,35 +996,48 @@ module .exports = class OutlineView extends Interface
                .appendTo (name);
          }
 
-         if (node .getType () .includes (X3D .X3DConstants .X3DBindableNode))
+         for (const type of node .getType ())
          {
-            node ._isBound .addFieldCallback (this .#isBoundSymbol, this .updateNodeBound .bind (this, node));
+            switch (type)
+            {
+               case X3D .X3DConstants .X3DBindableNode:
+               {
+                  node ._isBound .addFieldCallback (this .#isBoundSymbol, this .updateNodeBound .bind (this, node));
 
-            name .append (document .createTextNode (" "));
+                  name .append (document .createTextNode (" "));
 
-            $("<span></span>")
-               .addClass (["bind", "button", "material-symbols-outlined"])
-               .addClass (node ._isBound .getValue () ? "" : "off")
-               .attr ("title", _("Bind node."))
-               .text (node ._isBound .getValue () ? "radio_button_checked" : "radio_button_unchecked")
-               .appendTo (name);
-         }
+                  $("<span></span>")
+                     .addClass (["bind", "button", "material-symbols-outlined"])
+                     .addClass (node ._isBound .getValue () ? "" : "off")
+                     .attr ("title", _("Bind node."))
+                     .text (node ._isBound .getValue () ? "radio_button_checked" : "radio_button_unchecked")
+                     .appendTo (name);
 
-         if (node .getExecutionContext () .getOuterNode () instanceof X3D .X3DProtoDeclaration
-             ? node .getType () .includes (X3D .X3DConstants .Inline)
-             : node .getType () .includes (X3D .X3DConstants .X3DUrlObject))
-         {
-            const [className] = this .getLoadState (node .checkLoadState (), node .getTypeName ());
+                  continue;
+               }
+               case X3D .X3DConstants .X3DUrlObject:
+               {
+                  if (node .getExecutionContext () .getOuterNode () instanceof X3D .X3DProtoDeclaration)
+                  {
+                     if (node .getType () .at (-1) !== X3D .X3DConstants .Inline)
+                        continue;
+                  }
 
-            node .getLoadState () .addFieldCallback (this .#updateNodeLoadStateSymbol, this .updateNodeLoadState .bind (this, node));
+                  const [className] = this .getLoadState (node .checkLoadState (), node .getTypeName ());
 
-            name .append (document .createTextNode (" "));
+                  node .getLoadState () .addFieldCallback (this .#updateNodeLoadStateSymbol, this .updateNodeLoadState .bind (this, node));
 
-            $("<span></span>")
-               .addClass (["reload", "button", "material-symbols-outlined", className])
-               .attr ("title", "Load now.")
-               .text ("autorenew")
-               .appendTo (name);
+                  name .append (document .createTextNode (" "));
+
+                  $("<span></span>")
+                     .addClass (["reload", "button", "material-symbols-outlined", className])
+                     .attr ("title", "Load now.")
+                     .text ("autorenew")
+                     .appendTo (name);
+
+                  continue;
+               }
+            }
          }
 
          // Append empty tree to enable expander.
@@ -2690,13 +2703,22 @@ module .exports = class OutlineView extends Interface
          if (!node)
             return;
 
-         if (node .getType () .includes (X3D .X3DConstants .X3DBindableNode))
-            node ._isBound .removeFieldCallback (this .#isBoundSymbol);
-
-         if (node .getType () .includes (X3D .X3DConstants .X3DUrlObject))
+         for (const type of node .getType ())
          {
-            node .getLoadState () .removeFieldCallback (this);
-            node .getLoadState () .removeFieldCallback (this .#updateNodeLoadStateSymbol);
+            switch (type)
+            {
+               case X3D .X3DConstants .X3DBindableNode:
+               {
+                  node ._isBound .removeFieldCallback (this .#isBoundSymbol);
+                  continue;
+               }
+               case X3D .X3DConstants .X3DUrlObject:
+               {
+                  node .getLoadState () .removeFieldCallback (this);
+                  node .getLoadState () .removeFieldCallback (this .#updateNodeLoadStateSymbol);
+                  continue;
+               }
+            }
          }
 
          node .getPredefinedFields ()  .removeInterest ("updateNode", this);
