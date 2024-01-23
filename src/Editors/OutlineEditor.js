@@ -347,7 +347,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                {
                   menu .push ({
                      label: _("Move Viewpoint to Camera"),
-                     args: ["moveToCamera", element .attr ("id"), executionContext .getId (), node .getId ()],
+                     args: ["moveViewpointToCamera", element .attr ("id"), executionContext .getId (), node .getId ()],
                   });
 
                   continue;
@@ -1090,7 +1090,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       requestAnimationFrame (() => this .expandTo (childNode));
    }
 
-   moveToCamera (id, executionContextId, nodeId)
+   moveViewpointToCamera (id, executionContextId, nodeId)
    {
       const
          layerNode        = this .getLayer ($(`#${id}`)),
@@ -1142,7 +1142,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       // Create inline file.
 
       await Editor .convertNodesToInlineFile (executionContext, [childNode], response .filePath);
-      
+
       // Create Inline node.
 
       await Editor .addComponent (executionContext, "Networking");
