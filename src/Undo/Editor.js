@@ -203,7 +203,7 @@ module .exports = class Editor
 
       const
          nodes               = [... executionContext .rootNodes] .slice (rootNodes .length) .map (n => n .getValue ()),
-         newProtos           = [... executionContext .protos] .slice (protos .length),
+         newProtos           = [... executionContext .protos] .slice (protos .size),
          updatedExternProtos = new Map (),
          updatedProtos       = new Map (),
          removedProtoNodes   = new Set ();
