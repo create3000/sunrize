@@ -338,6 +338,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                {
                   menu .push ({
                      label: _("Fold Inline Back into Scene"),
+                     enabled: node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE,
                      args: ["foldInlineBackIntoScene", element .attr ("id"), executionContext .getId (), node .getId ()],
                   });
 
