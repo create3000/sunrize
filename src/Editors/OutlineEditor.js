@@ -337,8 +337,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                case X3D .X3DConstants .Inline:
                {
                   menu .push ({
-                     label: _("Fold Back into Scene"),
-                     args: ["foldBackIntoScene", element .attr ("id"), executionContext .getId (), node .getId ()],
+                     label: _("Fold Inline Back into Scene"),
+                     args: ["foldInlineBackIntoScene", element .attr ("id"), executionContext .getId (), node .getId ()],
                   });
 
                   continue;
@@ -346,7 +346,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                case X3D .X3DConstants .X3DViewpointNode:
                {
                   menu .push ({
-                     label: _("Move to Camera"),
+                     label: _("Move Viewpoint to Camera"),
                      args: ["moveToCamera", element .attr ("id"), executionContext .getId (), node .getId ()],
                   });
 
@@ -364,8 +364,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                case X3D .X3DConstants .X3DChildNode:
                {
                   menu .push ({
-                     label: _("Convert to Inline File..."),
-                     args: ["convertToInlineFile", element .attr ("id"), executionContext .getId (), node .getId ()],
+                     label: _("Convert Node to Inline File..."),
+                     args: ["convertNodeToInlineFile", element .attr ("id"), executionContext .getId (), node .getId ()],
                   });
 
                   continue;
@@ -1021,12 +1021,75 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       UndoManager .shared .endUndo ();
    }
 
-   foldBackIntoScene (id, executionContextId, nodeId)
+   async foldInlineBackIntoScene (id, executionContextId, nodeId)
    {
       const
-         element          = $(`#${id}`),
-         executionContext = this .objects .get (executionContextId),
-         node             = this .objects .get (nodeId);
+         element                = $(`#${id}`),
+         executionContext       = this .objects .get (executionContextId),
+         inlineNode             = this .objects .get (nodeId),
+         childIndex             = parseInt (element .attr ("index")),
+         parentFieldElement     = element .closest (".field, .scene", this .sceneGraph),
+         parentNodeElement      = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
+         parentNode             = this .getNode (parentNodeElement),
+         parentField            = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement);
+
+      if (inlineNode .getInternalScene () .rootNodes .length === 0)
+         return;
+
+      UndoManager .shared .beginUndo (_("Fold Inline Back into Scene"));
+
+      const
+         rootNodes     = executionContext .rootNodes .copy (),
+         nodesToImport = [... inlineNode .getInternalScene () .rootNodes] .map (node => node .getValue ()),
+         x3dSyntax     = Editor .exportVRML (inlineNode .getInternalScene (), nodesToImport),
+         nodes         = await Editor .importX3D (executionContext, x3dSyntax);
+
+      Editor .rewriteURLs (executionContext, nodes, inlineNode .getInternalScene () .worldURL, executionContext .worldURL, new UndoManager ());
+
+      // Create Inline node.
+
+      switch (nodes .length)
+      {
+         case 1:
+         {
+            var childNode = nodes [0];
+            break;
+         }
+         default:
+         {
+            await Editor .addComponent (executionContext, "Grouping");
+
+            var childNode = executionContext .createNode ("Group") .getValue ();
+
+            childNode ._children = nodes;
+
+            if (inlineNode .getName ())
+               Editor .updateNamedNode (executionContext, inlineNode .getName (), childNode);
+
+            break;
+         }
+      }
+
+      // Insert Inline node.
+
+      switch (parentField .getType ())
+      {
+         case X3D .X3DConstants .SFNode:
+            Editor .setFieldValue (executionContext, parentNode, parentField, childNode);
+            break;
+         case X3D .X3DConstants .MFNode:
+            Editor .insertValueIntoArray (executionContext, parentNode, parentField, childIndex, childNode);
+            Editor .removeValueFromArray (executionContext, parentNode, parentField, childIndex + 1);
+            break;
+      }
+
+      // Remove imported nodes from root nodes.
+
+      Editor .setFieldValue (executionContext, executionContext, executionContext .rootNodes, rootNodes);
+
+      UndoManager .shared .endUndo ();
+
+      requestAnimationFrame (() => this .expandTo (childNode));
    }
 
    moveToCamera (id, executionContextId, nodeId)
@@ -1060,9 +1123,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       UndoManager .shared .endUndo ();
    }
 
-   async convertToInlineFile (id, executionContextId, nodeId)
+   async convertNodeToInlineFile (id, executionContextId, nodeId)
    {
-
       const
          element                = $(`#${id}`),
          executionContext       = this .objects .get (executionContextId),
@@ -1081,7 +1143,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       // Create inline file.
 
-      await Editor .convertToInlineFile (executionContext, childNode, response .filePath);
+      await Editor .convertNodeToInlineFile (executionContext, childNode, response .filePath);
       await Editor .addComponent (executionContext, "Networking");
 
       // Create Inline node.

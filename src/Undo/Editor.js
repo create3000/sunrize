@@ -1327,7 +1327,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    static async turnIntoPrototype (executionContext, externproto, undoManager = UndoManager .shared)
    {
       const
-         browser   = executionContext .getBrowser (),
          numProtos = executionContext .protos .length,
          x3dSyntax = this .exportVRML (externproto .getInternalScene (), [externproto .getProtoDeclaration ()])
 
