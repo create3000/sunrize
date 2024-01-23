@@ -1019,7 +1019,7 @@ module .exports = class OutlineView extends Interface
                {
                   if (node .getExecutionContext () .getOuterNode () instanceof X3D .X3DProtoDeclaration)
                   {
-                     if (node .getType () .at (-1) !== X3D .X3DConstants .Inline)
+                     if (!node .getType () .includes (X3D .X3DConstants .Inline))
                         continue;
                   }
 
