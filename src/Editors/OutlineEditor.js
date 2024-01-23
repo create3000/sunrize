@@ -145,12 +145,12 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             },
             { type: "separator" },
             {
-               label: _("Add Reference To"),
+               label: _("Add Reference to"),
                submenu: addReferences,
                visible: !! addReferences .length,
             },
             {
-               label: _("Remove Reference To"),
+               label: _("Remove Reference to"),
                submenu: removeReferences,
                visible: !! removeReferences .length,
             },
