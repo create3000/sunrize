@@ -1079,6 +1079,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       UndoManager .shared .beginUndo (_("Convert Node to Inline File"));
 
+      // Create inline file.
+
       await Editor .convertToInlineFile (executionContext, childNode, response .filePath);
       await Editor .addComponent (executionContext, "Networking");
 
