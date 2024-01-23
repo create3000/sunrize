@@ -1,6 +1,7 @@
 "use strict"
 
 const
+   $           = require ("jquery"),
    path        = require ("path"),
    url         = require ("url"),
    fs          = require ("fs"),
@@ -143,15 +144,17 @@ module .exports = class Editor
       // Parse string.
 
       const
-         browser      = executionContext .getBrowser (),
-         scene        = this .getScene (executionContext),
-         profile      = scene .getProfile (),
-         x_ite        = scene .hasComponent ("X_ITE"),
-         externprotos = new Map (Array .from (executionContext .externprotos, p => [p .getName (), p])),
-         protos       = new Map (Array .from (executionContext .protos,       p => [p .getName (), p])),
-         rootNodes    = executionContext .rootNodes .copy (),
-         tempScene    = browser .createScene (browser .getProfile ("Core"));
+         browser        = executionContext .getBrowser (),
+         scene          = this .getScene (executionContext),
+         profile        = scene .getProfile (),
+         x_ite          = scene .hasComponent ("X_ITE"),
+         externprotos   = new Map (Array .from (executionContext .externprotos, p => [p .getName (), p])),
+         protos         = new Map (Array .from (executionContext .protos,       p => [p .getName (), p])),
+         rootNodes      = executionContext .rootNodes .copy (),
+         tempScene      = browser .createScene (browser .getProfile ("Core")),
+         loadUrlObjects = browser .getBrowserOption ("LoadUrlObjects");
 
+      browser .setBrowserOption ("LoadUrlObjects", false);
       scene .setProfile (browser .getProfile ("Full"));
       scene .updateComponent (browser .getComponent ("X_ITE"));
 
@@ -262,8 +265,10 @@ module .exports = class Editor
 
       if (oldWorldURL)
       {
-         this .rewriteURLs (executionContext, [... newProtos, ... nodes], oldWorldURL [0], executionContext .worldURL, undoManager);
+         this .rewriteURLs (executionContext, [... newProtos, ... nodes], oldWorldURL [0], executionContext .worldURL, new UndoManager ());
       }
+
+      browser .setBrowserOption ("LoadUrlObjects", loadUrlObjects);
 
       // TODO: add exported nodes.
 
@@ -822,7 +827,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static updateNamedNode (executionContext, name, node, undoManager = UndoManager .shared)
    {
-      const oldName = node .getName ();
+      const
+         oldNode = $.try (() => executionContext .getNamedNode (name)),
+         oldName = node .getName ();
 
       undoManager .beginUndo (_("Rename Node to »%s«"), name);
 
@@ -830,6 +837,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       undoManager .registerUndo (() =>
       {
+         if (oldNode)
+            this .updateNamedNode (executionContext, name, oldNode, undoManager);
+
          if (oldName)
             this .updateNamedNode (executionContext, oldName, node, undoManager);
          else
@@ -857,7 +867,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       undoManager .registerUndo (() =>
       {
-         this .updateNamedNode (executionContext, oldName, node, undoManager);
+         if (oldName)
+            this .updateNamedNode (executionContext, oldName, node, undoManager);
       });
 
       this .requestUpdateInstances (executionContext, undoManager);
@@ -1755,17 +1766,23 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    static async convertNodeToInlineFile (executionContext, node, filePath, undoManager = UndoManager .shared)
    {
       const
-         browser   = executionContext .getBrowser (),
-         scene     = browser .createScene (),
-         x3dSyntax = this .exportVRML (executionContext, [node]);
+         browser        = executionContext .getBrowser (),
+         scene          = browser .createScene (),
+         x3dSyntax      = this .exportVRML (executionContext, [node]),
+         loadUrlObjects = browser .getBrowserOption ("LoadUrlObjects");
 
       undoManager .beginUndo (_("Convert Node to Inline File"));
+      browser .setBrowserOption ("LoadUrlObjects", false);
+
+      scene .setWorldURL (url .pathToFileURL (filePath));
 
       await this .importX3D (scene, x3dSyntax, new UndoManager ());
-      this .rewriteURLs (scene, scene, executionContext .worldURL, url .pathToFileURL (filePath) .href, new UndoManager ());
 
       fs .writeFileSync (filePath, this .getContents (scene, path .extname (filePath)));
 
+      Traverse .traverse (scene, Traverse .ROOT_NODES, node => node .dispose ());
+
+      browser .setBrowserOption ("LoadUrlObjects", loadUrlObjects);
       undoManager .endUndo ();
    }
 

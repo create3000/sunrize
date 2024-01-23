@@ -1039,14 +1039,10 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       UndoManager .shared .beginUndo (_("Fold Inline Back into Scene"));
 
       const
-         protos        = executionContext .protos .copy (),
          rootNodes     = executionContext .rootNodes .copy (),
          nodesToImport = [... inlineNode .getInternalScene () .rootNodes] .map (node => node .getValue ()),
          x3dSyntax     = Editor .exportVRML (inlineNode .getInternalScene (), nodesToImport),
-         nodes         = await Editor .importX3D (executionContext, x3dSyntax),
-         newProtos     = [... executionContext .protos] .slice (protos .length);
-
-      Editor .rewriteURLs (executionContext, [... newProtos, ... nodes], inlineNode .getInternalScene () .worldURL, executionContext .worldURL, new UndoManager ());
+         nodes         = await Editor .importX3D (executionContext, x3dSyntax);
 
       // Create Inline node.
 
