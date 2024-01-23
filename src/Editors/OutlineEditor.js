@@ -1091,6 +1091,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             ?? url .pathToFileURL (response .filePath)
       ];
 
+      if (childNode .getName ())
+         Editor .updateNamedNode (executionContext, childNode .getName (), inlineNode);
+
       // Insert Inline node.
 
       switch (parentField .getType ())
