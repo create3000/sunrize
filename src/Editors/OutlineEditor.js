@@ -450,12 +450,12 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                args: ["loadNow", element .attr ("id"), protoNode .getId ()],
             },
             {
-               label: _("Turn Into Extern Prototype..."),
+               label: _("Turn into Extern Prototype..."),
                visible: element .is (".proto"),
                args: ["turnIntoExternPrototype", element .attr ("id"), executionContext .getId (), protoNode .getId ()],
             },
             {
-               label: _("Turn Into Prototype"),
+               label: _("Turn into Prototype"),
                visible: element .is (".externproto"),
                enabled: element .is (".externproto") && protoNode .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE,
                args: ["turnIntoPrototype", element .attr ("id"), executionContext .getId (), protoNode .getId ()],
