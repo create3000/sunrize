@@ -1141,7 +1141,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       // Create inline file.
 
-      await Editor .convertNodeToInlineFile (executionContext, childNode, response .filePath);
+      await Editor .convertNodesToInlineFile (executionContext, [childNode], response .filePath);
       await Editor .addComponent (executionContext, "Networking");
 
       // Create Inline node.

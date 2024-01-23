@@ -30,6 +30,37 @@ module .exports = class Editor
 
    /**
     *
+    * @param {X3DExecutionContext} executionContext
+    * @param {Array<X3DNode>} nodes
+    * @param {string} filePath
+    * @param {UndoManager} undoManager
+    * @returns {Promise<void>}
+    */
+   static async convertNodesToInlineFile (executionContext, nodes, filePath, undoManager = UndoManager .shared)
+   {
+      const
+         browser        = executionContext .getBrowser (),
+         scene          = browser .createScene (),
+         x3dSyntax      = this .exportVRML (executionContext, nodes),
+         loadUrlObjects = browser .getBrowserOption ("LoadUrlObjects");
+
+      undoManager .beginUndo (_("Convert Node to Inline File"));
+      browser .setBrowserOption ("LoadUrlObjects", false);
+
+      scene .setWorldURL (url .pathToFileURL (filePath));
+
+      await this .importX3D (scene, x3dSyntax, new UndoManager ());
+
+      fs .writeFileSync (filePath, this .getContents (scene, path .extname (filePath)));
+
+      Traverse .traverse (scene, Traverse .ROOT_NODES, node => node .dispose ());
+
+      browser .setBrowserOption ("LoadUrlObjects", loadUrlObjects);
+      undoManager .endUndo ();
+   }
+
+   /**
+    *
     * @param {X3DExecutionContext} executionContext source execution context
     * @param {Array<X3DNode|X3DExternProtoDeclaration|X3DProtoDeclaration>} objects objects to export
     * @returns {string} x3dSyntax
@@ -1752,37 +1783,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       this .removeNode (executionContext, worldInfo, undoManager);
       this .#removeWorldInfo (executionContext, worldInfo, undoManager);
 
-      undoManager .endUndo ();
-   }
-
-   /**
-    *
-    * @param {X3DExecutionContext} executionContext
-    * @param {X3DNode} node
-    * @param {string} filePath
-    * @param {UndoManager} undoManager
-    * @returns {Promise<void>}
-    */
-   static async convertNodeToInlineFile (executionContext, node, filePath, undoManager = UndoManager .shared)
-   {
-      const
-         browser        = executionContext .getBrowser (),
-         scene          = browser .createScene (),
-         x3dSyntax      = this .exportVRML (executionContext, [node]),
-         loadUrlObjects = browser .getBrowserOption ("LoadUrlObjects");
-
-      undoManager .beginUndo (_("Convert Node to Inline File"));
-      browser .setBrowserOption ("LoadUrlObjects", false);
-
-      scene .setWorldURL (url .pathToFileURL (filePath));
-
-      await this .importX3D (scene, x3dSyntax, new UndoManager ());
-
-      fs .writeFileSync (filePath, this .getContents (scene, path .extname (filePath)));
-
-      Traverse .traverse (scene, Traverse .ROOT_NODES, node => node .dispose ());
-
-      browser .setBrowserOption ("LoadUrlObjects", loadUrlObjects);
       undoManager .endUndo ();
    }
 
