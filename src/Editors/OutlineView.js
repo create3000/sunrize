@@ -2721,9 +2721,6 @@ module .exports = class OutlineView extends Interface
             element = $(e),
             node    = this .getNode (element);
 
-         if (!node)
-            return;
-
          node .getPredefinedFields ()  .removeInterest ("updateNode", this);
          node .getUserDefinedFields () .removeInterest ("updateNode", this);
 
@@ -2745,9 +2742,6 @@ module .exports = class OutlineView extends Interface
          const
             element = $(e),
             node    = this .getNode (element);
-
-         if (!node)
-            return;
 
          node .typeName_changed .removeFieldCallback (this .#nodeSymbol);
          node .name_changed     .removeFieldCallback (this .#nodeSymbol);
