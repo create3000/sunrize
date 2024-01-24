@@ -1052,6 +1052,10 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          x3dSyntax     = Editor .exportVRML (inlineNode .getInternalScene (), nodesToImport),
          nodes         = await Editor .importX3D (executionContext, x3dSyntax);
 
+      // Remove imported nodes from root nodes.
+
+      Editor .setFieldValue (executionContext, executionContext, executionContext .rootNodes, rootNodes);
+
       // Create Inline node.
 
       switch (nodes .length)
@@ -1088,10 +1092,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             Editor .removeValueFromArray (executionContext, parentNode, parentField, childIndex + 1);
             break;
       }
-
-      // Remove imported nodes from root nodes.
-
-      Editor .setFieldValue (executionContext, executionContext, executionContext .rootNodes, rootNodes);
 
       UndoManager .shared .endUndo ();
 
