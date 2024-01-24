@@ -1077,6 +1077,24 @@ module .exports = class OutlineView extends Interface
          .text (node .getDisplayName ())
    }
 
+   updateExportedNodeName (exportedNode)
+   {
+      const
+         node = exportedNode .getLocalNode (),
+         name = this .sceneGraph .find (`.exported-node[node-id=${node .getId ()}]`) .find ("> .item .name");
+
+      name .find (".node-name") .text (node .getName ()) .nextAll () .remove ();
+
+      if (exportedNode .getExportedName () !== exportedNode .getLocalNode () .getName ())
+      {
+         name
+            .append (document .createTextNode (" "))
+            .append ($("<span></span>") .addClass ("as") .text ("AS"))
+            .append (document .createTextNode (" "))
+            .append ($("<span></span>") .addClass ("as-name") .text (exportedNode .getExportedName ()));
+      }
+   }
+
    updateCloneCount (node)
    {
       const cloneCount = node .getCloneCount ?.() ?? 0
@@ -1221,8 +1239,8 @@ module .exports = class OutlineView extends Interface
       this .objects .set (exportedNode .getId (), exportedNode);
       this .objects .set (node .getId (), node .valueOf ());
 
-      node .typeName_changed .addFieldCallback (this .#exportedNodeSymbol, this .updateNodeTypeName .bind (this, node));
-      node .name_changed     .addFieldCallback (this .#exportedNodeSymbol, this .updateNodeName     .bind (this, node));
+      node .typeName_changed .addFieldCallback (this .#exportedNodeSymbol, this .updateNodeTypeName     .bind (this, node));
+      node .name_changed     .addFieldCallback (this .#exportedNodeSymbol, this .updateExportedNodeName .bind (this, exportedNode));
 
       // Node
 
