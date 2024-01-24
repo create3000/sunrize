@@ -2720,15 +2720,12 @@ module .exports = class OutlineView extends Interface
          node .getLoadState () .removeFieldCallback (this .#updateNodeSymbol);
       });
 
-      element .find (".node, .exported-node") .addBack (".node, .exported-node") .each ((i, e) =>
+      element .find (".node:not([node-id=NULL]), .exported-node")
+         .addBack (".node:not([node-id=NULL]), .exported-node") .each ((i, e) =>
       {
          const
             element = $(e),
             node    = this .getNode (element);
-
-         // Handle NULL node element.
-         if (!node)
-            return;
 
          node .getPredefinedFields ()  .removeInterest ("updateNode", this);
          node .getUserDefinedFields () .removeInterest ("updateNode", this);
@@ -2746,15 +2743,11 @@ module .exports = class OutlineView extends Interface
          }
       });
 
-      element .find (".node") .each ((i, e) =>
+      element .find (".node:not([node-id=NULL])") .each ((i, e) =>
       {
          const
             element = $(e),
             node    = this .getNode (element);
-
-         // Handle NULL node element.
-         if (!node)
-            return;
 
          node .typeName_changed .removeFieldCallback (this .#nodeSymbol);
          node .name_changed     .removeFieldCallback (this .#nodeSymbol);
