@@ -337,6 +337,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                case X3D .X3DConstants .Inline:
                {
                   menu .push ({
+                     label: _("Open Inline Scene in New Tab"),
+                     enabled: node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE,
+                     args: ["openFileInNewTab", node .getInternalScene () ?.worldURL],
+                  },
+                  {
                      label: _("Fold Inline Back into Scene"),
                      enabled: node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE,
                      args: ["foldInlineBackIntoScene", element .attr ("id"), executionContext .getId (), node .getId ()],
@@ -453,9 +458,10 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             },
             { type: "separator" },
             {
-               label: _("Load Now"),
+               label: _("Open Extern Prototype Scene in New Tab"),
                visible: element .is (".externproto"),
-               args: ["loadNow", element .attr ("id"), protoNode .getId ()],
+               enabled: element .is (".externproto") && protoNode .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE,
+               args: ["openFileInNewTab", protoNode .getInternalScene ?.() ?.worldURL],
             },
             {
                label: _("Turn into Extern Prototype..."),
@@ -1029,6 +1035,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       UndoManager .shared .endUndo ();
    }
 
+   openFileInNewTab (fileURL)
+   {
+      electron .ipcRenderer .invoke ("open-files", [fileURL]);
+   }
+
    async foldInlineBackIntoScene (id, executionContextId, nodeId)
    {
       const
@@ -1236,13 +1247,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          Editor .replaceProtoNodes (executionContext, protoNode, this .objects .get (availableId));
 
       UndoManager .shared .endUndo ();
-   }
-
-   loadNow (id, protoNodeId)
-   {
-      const externproto = this .objects .get (protoNodeId);
-
-      externproto .loadNow () .catch (Function .prototype);
    }
 
    async turnIntoExternPrototype (id, executionContextId, protoNodeId)

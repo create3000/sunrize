@@ -94,8 +94,9 @@ module .exports = class Application
       electron .ipcMain .on ("change-menu",         (event, object)      => this .updateMenu (object));
       electron .ipcMain .on ("context-menu",        (event, id, menu)    => this .contextMenu (id, menu));
 
-      electron .ipcMain .handle ("file-path", async (event, options) => await this .showDialog (options));
-      electron .ipcMain .handle ("fullname", async () => await (await import ("fullname")) .default ());
+      electron .ipcMain .handle ("open-files", async (event, urls) => this .openFiles (urls));
+      electron .ipcMain .handle ("file-path",  async (event, options) => await this .showDialog (options));
+      electron .ipcMain .handle ("fullname",  async () => await (await import ("fullname")) .default ());
 
       await electron .app .whenReady ();
       await this .updateMenu ();
