@@ -1571,10 +1571,15 @@ module .exports = class OutlineView extends Interface
    updateNodeTitle (event)
    {
       const
-         name        = $(event .currentTarget),
-         element     = $(event .currentTarget) .closest (".node, .special", this .sceneGraph),
-         node        = this .objects .get (parseInt (element .attr ("node-id"))),
-         description = this .x3duom .find (`ConcreteNode[name="${node .getTypeName ()}"] InterfaceDefinition`) .attr ("appinfo");
+         name    = $(event .currentTarget),
+         element = $(event .currentTarget) .closest (".node, .special", this .sceneGraph),
+         node    = this .objects .get (parseInt (element .attr ("node-id")));
+
+      // Handle NULL node element.
+      if (!node)
+         return;
+
+      const description = this .x3duom .find (`ConcreteNode[name="${node .getTypeName ()}"] InterfaceDefinition`) .attr ("appinfo");
 
       let title = "";
 
