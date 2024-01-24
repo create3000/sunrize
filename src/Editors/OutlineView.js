@@ -1085,7 +1085,7 @@ module .exports = class OutlineView extends Interface
 
       name .find (".node-name") .text (node .getName ()) .nextAll () .remove ();
 
-      if (exportedNode .getExportedName () !== exportedNode .getLocalNode () .getName ())
+      if (exportedNode .getExportedName () !== node .getName ())
       {
          name
             .append (document .createTextNode (" "))
