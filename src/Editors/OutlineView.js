@@ -21,32 +21,32 @@ const
 
 module .exports = class OutlineView extends Interface
 {
-   naturalCompare = new Intl .Collator (undefined, { numeric: true, sensitivity: "base" }) .compare
+   naturalCompare = new Intl .Collator (undefined, { numeric: true, sensitivity: "base" }) .compare;
 
    constructor (element)
    {
-      super (`Sunrize.OutlineEditor.${element .attr ("id")}.`)
+      super (`Sunrize.OutlineEditor.${element .attr ("id")}.`);
 
-      this .outlineEditor     = element
-      this .objects           = new Map () // <id, node>
-      this .actionKeys        = new ActionKeys ("OutlineView")
-      this .onDemandToolNodes = new Set ()
+      this .outlineEditor     = element;
+      this .objects           = new Map (); // <id, node>
+      this .actionKeys        = new ActionKeys ("OutlineView");
+      this .onDemandToolNodes = new Set ();
       this .x3duom            = $($.parseXML (fs .readFileSync (path .join (__dirname, "..", "assets", "x3duom.xml"), "utf-8")));
 
       this .globalConfig .setDefaultValues ({
          expandExternProtoDeclarations: true,
          expandPrototypeInstances: true,
          expandInlineNodes: true,
-      })
+      });
 
       this .treeView = $("<div><div/>")
          .attr ("tabindex", "0")
          .addClass ("tree-view")
-         .appendTo (this .outlineEditor)
+         .appendTo (this .outlineEditor);
 
-      this .resizeObserver = new ResizeObserver (this .onresize .bind (this))
+      this .resizeObserver = new ResizeObserver (this .onresize .bind (this));
 
-      this .resizeObserver .observe (this .treeView [0])
+      this .resizeObserver .observe (this .treeView [0]);
 
       this .sceneGraph = $("<div><div/>")
          .addClass (["tree", "scene-graph", "scene"])
@@ -54,57 +54,57 @@ module .exports = class OutlineView extends Interface
          .on ("dragleave dragend drop", this .onDragLeave .bind (this))
          .on ("drop", this .onDrop .bind (this))
          .on ("dragend", this .onDragEnd .bind (this))
-      .appendTo (this .treeView)
+      .appendTo (this .treeView);
 
-      electron .ipcRenderer .on ("select-all",              () => this .selectAll ())
-      electron .ipcRenderer .on ("deselect-all",            () => this .deselectAll ())
-      electron .ipcRenderer .on ("hide-unselected-objects", () => this .hideUnselectedObjects ())
-      electron .ipcRenderer .on ("show-selected-objects",   () => this .showSelectedObjects ())
-      electron .ipcRenderer .on ("show-all-objects",        () => this .showAllObjects ())
+      electron .ipcRenderer .on ("select-all",              () => this .selectAll ());
+      electron .ipcRenderer .on ("deselect-all",            () => this .deselectAll ());
+      electron .ipcRenderer .on ("hide-unselected-objects", () => this .hideUnselectedObjects ());
+      electron .ipcRenderer .on ("show-selected-objects",   () => this .showSelectedObjects ());
+      electron .ipcRenderer .on ("show-all-objects",        () => this .showAllObjects ());
 
-      electron .ipcRenderer .on ("expand-extern-proto-declarations", (event, value) => this .expandExternProtoDeclarations = value)
-      electron .ipcRenderer .on ("expand-prototype-instances",       (event, value) => this .expandPrototypeInstances      = value)
-      electron .ipcRenderer .on ("expand-inline-nodes",              (event, value) => this .expandInlineNodes             = value)
+      electron .ipcRenderer .on ("expand-extern-proto-declarations", (event, value) => this .expandExternProtoDeclarations = value);
+      electron .ipcRenderer .on ("expand-prototype-instances",       (event, value) => this .expandPrototypeInstances      = value);
+      electron .ipcRenderer .on ("expand-inline-nodes",              (event, value) => this .expandInlineNodes             = value);
 
-      electron .ipcRenderer .on ("close", (event) => this .saveExpanded ())
+      electron .ipcRenderer .on ("close", (event) => this .saveExpanded ());
    }
 
    get expandExternProtoDeclarations ()
    {
-      return this .globalConfig .expandExternProtoDeclarations
+      return this .globalConfig .expandExternProtoDeclarations;
    }
 
    set expandExternProtoDeclarations (value)
    {
-      this .globalConfig .expandExternProtoDeclarations = value
-      this .updateSceneGraph ()
+      this .globalConfig .expandExternProtoDeclarations = value;
+      this .updateSceneGraph ();
    }
 
    get expandPrototypeInstances ()
    {
-      return this .globalConfig .expandPrototypeInstances
+      return this .globalConfig .expandPrototypeInstances;
    }
 
    set expandPrototypeInstances (value)
    {
-      this .globalConfig .expandPrototypeInstances = value
-      this .updateSceneGraph ()
+      this .globalConfig .expandPrototypeInstances = value;
+      this .updateSceneGraph ();
    }
 
    get expandInlineNodes ()
    {
-      return this .globalConfig .expandInlineNodes
+      return this .globalConfig .expandInlineNodes;
    }
 
    set expandInlineNodes (value)
    {
-      this .globalConfig .expandInlineNodes = value
-      this .updateSceneGraph ()
+      this .globalConfig .expandInlineNodes = value;
+      this .updateSceneGraph ();
    }
 
    get autoExpandMaxChildren ()
    {
-      return 30
+      return 30;
    }
 
    accessTypes = {
@@ -112,37 +112,37 @@ module .exports = class OutlineView extends Interface
       [X3D .X3DConstants .inputOnly]:      "inputOnly",
       [X3D .X3DConstants .outputOnly]:     "outputOnly",
       [X3D .X3DConstants .inputOutput]:    "inputOutput",
-   }
+   };
 
    configure ()
    {
       if (this .executionContext)
       {
-         this .saveExpanded ()
-         this .removeSubtree (this .sceneGraph)
+         this .saveExpanded ();
+         this .removeSubtree (this .sceneGraph);
 
-         this .executionContext .profile_changed .removeInterest ("updateComponents", this)
-         this .executionContext .components      .removeInterest ("updateComponents", this)
+         this .executionContext .profile_changed .removeInterest ("updateComponents", this);
+         this .executionContext .components      .removeInterest ("updateComponents", this);
       }
 
-      this .executionContext = this .browser .currentScene
+      this .executionContext = this .browser .currentScene;
 
-      this .executionContext .profile_changed .addInterest ("updateComponents", this)
-      this .executionContext .components      .addInterest ("updateComponents", this)
+      this .executionContext .profile_changed .addInterest ("updateComponents", this);
+      this .executionContext .components      .addInterest ("updateComponents", this);
 
-      this .updateComponents ()
+      this .updateComponents ();
 
       // Clear tree.
 
-      this .objects .clear ()
-      this .objects .set (this .executionContext .getId (), this .executionContext)
-      this .sceneGraph .empty ()
-      this .sceneGraph .attr ("node-id", this .executionContext .getId ())
+      this .objects .clear ();
+      this .objects .set (this .executionContext .getId (), this .executionContext);
+      this .sceneGraph .empty ();
+      this .sceneGraph .attr ("node-id", this .executionContext .getId ());
 
       // Expand scene.
 
-      this .expandScene (this .sceneGraph, this .executionContext)
-      this .restoreExpanded ()
+      this .expandScene (this .sceneGraph, this .executionContext);
+      this .restoreExpanded ();
    }
 
    updateComponents ()
@@ -155,7 +155,7 @@ module .exports = class OutlineView extends Interface
          X3D .X3DConstants .X3DEnvironmentalSensorNode,
          X3D .X3DConstants .X3DTextureProjectorNode,
          X3D .X3DConstants .X3DViewpointNode,
-      ])
+      ]);
    }
 
    updateSceneGraph ()
@@ -178,8 +178,8 @@ module .exports = class OutlineView extends Interface
 
    expandScene (parent, scene)
    {
-      parent .data ("expanded",      true)
-      parent .data ("full-expanded", false)
+      parent .data ("expanded",      true);
+      parent .data ("full-expanded", false);
 
       if (scene .getOuterNode () instanceof X3D .X3DProtoDeclaration)
       {
@@ -198,7 +198,7 @@ module .exports = class OutlineView extends Interface
       }
 
       if (scene instanceof X3D .X3DScene)
-         scene .units .addInterest ("updateScene", this, parent, scene)
+         scene .units .addInterest ("updateScene", this, parent, scene);
 
       // Generate subtrees.
 
@@ -207,27 +207,27 @@ module .exports = class OutlineView extends Interface
          protos        = this .expandSceneProtoDeclarations       (parent, scene),
          rootNodes     = this .expandSceneRootNodes               (parent, scene),
          importedNodes = this .expandSceneImportedNodes           (parent, scene),
-         exportedNodes = this .expandSceneExportedNodes           (parent, scene)
+         exportedNodes = this .expandSceneExportedNodes           (parent, scene);
 
       if (!externprotos .is (":empty") || !protos .is (":empty") || !rootNodes .is (":empty") || !importedNodes .is (":empty") || !exportedNodes .is (":empty"))
       {
-         return
+         return;
       }
 
       // Add empty scene.
 
       const child = $("<div></div>")
-         .addClass (["empty-scene", "subtree"])
+         .addClass (["empty-scene", "subtree"]);
 
       const ul = $("<ul></ul>")
-         .appendTo (child)
+         .appendTo (child);
 
       $("<li></li>")
          .addClass (["empty-scene", "description", "no-select"])
          .text ("Empty Scene")
-         .appendTo (ul)
+         .appendTo (ul);
 
-      this .connectSceneSubtree (parent, child)
+      this .connectSceneSubtree (parent, child);
    }
 
    connectSceneSubtree (parent, child)
@@ -241,65 +241,65 @@ module .exports = class OutlineView extends Interface
          .on ("close_node.jstree",  this .nodeCloseNode .bind (this))
          .on ("select_node.jstree", this .selectNode .bind (this))
          .appendTo (parent)
-         .hide ()
+         .hide ();
 
       child
          .removeAttr ("tabindex")
          .find (".jstree-anchor")
             .removeAttr ("href")
-            .removeAttr ("tabindex")
+            .removeAttr ("tabindex");
 
       child .find (".externproto, .proto, .node, .imported-node, .exported-node")
-         .on ("dblclick", this .activateNode .bind (this))
+         .on ("dblclick", this .activateNode .bind (this));
 
       child .find (".jstree-ocl")
          .addClass ("material-icons")
          .text ("arrow_right")
          .on ("click", this .selectExpander .bind (this))
-         .on ("dblclick", this .activateExpander .bind (this))
+         .on ("dblclick", this .activateExpander .bind (this));
 
       child .find (".jstree-node")
          .wrapInner ("<div class=\"item no-select\"/>")
-         .find (".item") .append ("<div class=\"route-curves-wrapper\"><canvas class=\"route-curves\"></canvas></div>")
+         .find (".item") .append ("<div class=\"route-curves-wrapper\"><canvas class=\"route-curves\"></canvas></div>");
 
       if (this .isEditable (parent))
       {
          child .find (".externproto > .item")
             .attr ("draggable", "true")
-            .on ("dragstart", this .onDragStartExternProto .bind (this))
+            .on ("dragstart", this .onDragStartExternProto .bind (this));
 
          child .find (".proto > .item")
             .attr ("draggable", "true")
-            .on ("dragstart", this .onDragStartProto .bind (this))
+            .on ("dragstart", this .onDragStartProto .bind (this));
 
          child .find (".node:not([node-id=NULL]) > .item")
             .attr ("draggable", "true")
-            .on ("dragstart", this .onDragStartNode .bind (this))
+            .on ("dragstart", this .onDragStartNode .bind (this));
       }
 
       child .find (".node .name")
          .on ("mouseenter", this .updateNodeTitle .bind (this));
 
       child .find (".visibility")
-         .on ("click", this .toggleVisibility .bind (this))
+         .on ("click", this .toggleVisibility .bind (this));
 
       child .find (".tool")
-         .on ("click", this .toggleTool .bind (this))
+         .on ("click", this .toggleTool .bind (this));
 
       child .find (".bind")
-         .on ("click", this .bindNode .bind (this))
+         .on ("click", this .bindNode .bind (this));
 
       child .find (".reload")
-         .on ("click", this .reloadNode .bind (this))
+         .on ("click", this .reloadNode .bind (this));
 
       // Expand children.
 
       const
          specialElements = child .find (".externproto, .proto, .imported-node, .exported-node"),
-         elements        = child .find (".node")
+         elements        = child .find (".node");
 
-      child .show ()
-      this .expandSceneSubtreeComplete (specialElements, elements)
+      child .show ();
+      this .expandSceneSubtreeComplete (specialElements, elements);
    }
 
    expandSceneSubtreeComplete (specialElements, elements)
@@ -340,117 +340,117 @@ module .exports = class OutlineView extends Interface
    {
       if (scene .externprotos .length || scene .protos .length || scene .rootNodes .length)
       {
-         this .saveScrollPositions ()
+         this .saveScrollPositions ();
 
-         const oldSubtree = parent .find (`> .${type}.subtree`)
+         const oldSubtree = parent .find (`> .${type}.subtree`);
 
-         this .disconnectSubtree (oldSubtree)
+         this .disconnectSubtree (oldSubtree);
 
-         const newSubtree = this [func] (parent, scene)
+         const newSubtree = this [func] (parent, scene);
 
-         oldSubtree .replaceWith (newSubtree .detach ())
+         oldSubtree .replaceWith (newSubtree .detach ());
 
-         parent .find ("> .empty-scene.subtree") .detach ()
+         parent .find ("> .empty-scene.subtree") .detach ();
 
-         this .restoreScrollPositions ()
+         this .restoreScrollPositions ();
       }
       else
       {
-         this .updateScene (parent, scene)
+         this .updateScene (parent, scene);
       }
    }
 
    expandSceneExternProtoDeclarations (parent, scene)
    {
-      scene .externprotos .addInterest ("updateSceneSubtree", this, parent, scene, "externprotos", "expandSceneExternProtoDeclarations")
+      scene .externprotos .addInterest ("updateSceneSubtree", this, parent, scene, "externprotos", "expandSceneExternProtoDeclarations");
 
       const child = $("<div></div>")
-         .addClass (["externprotos", "subtree"])
+         .addClass (["externprotos", "subtree"]);
 
       if (!scene .externprotos .length)
-         return child .appendTo (parent)
+         return child .appendTo (parent);
 
       const ul = $("<ul></ul>")
-         .appendTo (child)
+         .appendTo (child);
 
       $("<li></li>")
          .addClass (["externprotos", "description", "no-select"])
          .text ("Extern Prototypes")
-         .appendTo (ul)
+         .appendTo (ul);
 
-      let index = 0
+      let index = 0;
 
       for (const externproto of scene .externprotos)
-         ul .append (this .createNodeElement ("externproto", parent, externproto, index ++))
+         ul .append (this .createNodeElement ("externproto", parent, externproto, index ++));
 
-      this .connectSceneSubtree (parent, child)
+      this .connectSceneSubtree (parent, child);
 
-      return child
+      return child;
    }
 
    expandSceneProtoDeclarations (parent, scene)
    {
-      scene .protos .addInterest ("updateSceneSubtree", this, parent, scene, "protos", "expandSceneProtoDeclarations")
+      scene .protos .addInterest ("updateSceneSubtree", this, parent, scene, "protos", "expandSceneProtoDeclarations");
 
       const child = $("<div></div>")
-         .addClass (["protos", "subtree"])
+         .addClass (["protos", "subtree"]);
 
       if (!scene .protos .length)
-         return child .appendTo (parent)
+         return child .appendTo (parent);
 
       const ul = $("<ul></ul>")
-         .appendTo (child)
+         .appendTo (child);
 
       $("<li></li>")
          .addClass (["protos", "description", "no-select"])
          .text ("Prototypes")
-         .appendTo (ul)
+         .appendTo (ul);
 
-      let index = 0
+      let index = 0;
 
       for (const proto of scene .protos)
-         ul .append (this .createNodeElement ("proto", parent, proto, index ++))
+         ul .append (this .createNodeElement ("proto", parent, proto, index ++));
 
-      this .connectSceneSubtree (parent, child)
+      this .connectSceneSubtree (parent, child);
 
-      return child
+      return child;
    }
 
    #updateSceneRootNodesSymbol = Symbol ();
 
    expandSceneRootNodes (parent, scene)
    {
-      scene .rootNodes .addFieldCallback (this .#updateSceneRootNodesSymbol, this .updateSceneRootNodes .bind (this, parent, scene, "root-nodes", "expandSceneRootNodes"))
+      scene .rootNodes .addFieldCallback (this .#updateSceneRootNodesSymbol, this .updateSceneRootNodes .bind (this, parent, scene, "root-nodes", "expandSceneRootNodes"));
 
-      parent .attr ("index", scene .rootNodes .length)
+      parent .attr ("index", scene .rootNodes .length);
 
       const child = $("<div></div>")
-         .addClass (["root-nodes", "subtree"])
+         .addClass (["root-nodes", "subtree"]);
 
       if (!scene .rootNodes .length)
-         return child .appendTo (parent)
+         return child .appendTo (parent);
 
       const ul = $("<ul></ul>")
-         .appendTo (child)
+         .appendTo (child);
 
       $("<li></li>")
          .addClass (["root-nodes", "description", "no-select"])
          .text ("Root Nodes")
-         .appendTo (ul)
+         .appendTo (ul);
 
-      let index = 0
+      let index = 0;
 
       for (const rootNode of scene .rootNodes)
-         ul .append (this .createNodeElement ("node", parent, rootNode ? rootNode .getValue () : null, index ++))
+         ul .append (this .createNodeElement ("node", parent, rootNode ? rootNode .getValue () : null, index ++));
 
       // Added to prevent bug, that last route is not drawn right.
       $("<li></li>")
          .addClass (["last", "no-select"])
-         .appendTo (ul)
+         .appendTo (ul);
 
-      this .connectSceneSubtree (parent, child)
+      this .connectSceneSubtree (parent, child);
 
-      return child
+      return child;
    }
 
    updateSceneRootNodes (parent, scene, type, func)
@@ -458,15 +458,15 @@ module .exports = class OutlineView extends Interface
       for (const node of scene .rootNodes)
       {
          if (!node ?.getNodeUserData (_changing))
-            continue
+            continue;
 
-         const nodes = Array .from (scene .rootNodes)
+         const nodes = Array .from (scene .rootNodes);
 
-         setTimeout (() => nodes .forEach (n => n .setNodeUserData (_changing, false)))
-         return
+         setTimeout (() => nodes .forEach (n => n .setNodeUserData (_changing, false)));
+         return;
       }
 
-      this .updateSceneSubtree (parent, scene, type, func)
+      this .updateSceneSubtree (parent, scene, type, func);
    }
 
    expandSceneImportedNodes (parent, scene)
