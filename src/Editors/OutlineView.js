@@ -2673,13 +2673,11 @@ module .exports = class OutlineView extends Interface
 
    removeSubtree (element)
    {
-      const subtree = element .find ("> .subtree");
-
-      this .disconnectSubtree (subtree);
+      this .disconnectSubtree (element);
 
       // Remove subtree.
 
-      subtree .remove ();
+      element .find ("> .subtree") .remove ();
    }
 
    disconnectSubtree (element)
@@ -2726,6 +2724,31 @@ module .exports = class OutlineView extends Interface
          if (!node)
             return;
 
+         node .getPredefinedFields ()  .removeInterest ("updateNode", this);
+         node .getUserDefinedFields () .removeInterest ("updateNode", this);
+
+         for (const type of node .getType ())
+         {
+            switch (type)
+            {
+               case X3D .X3DConstants .X3DUrlObject:
+               {
+                  node .getLoadState () .removeFieldCallback (this .#updateNodeSymbol);
+                  continue;
+               }
+            }
+         }
+      });
+
+      element .find (".node, .exported-node") .each ((i, e) =>
+      {
+         const
+            element = $(e),
+            node    = this .getNode (element);
+
+         if (!node)
+            return;
+
          node .typeName_changed .removeFieldCallback (this .#nodeSymbol);
          node .name_changed     .removeFieldCallback (this .#nodeSymbol);
          node .parents_changed  .removeFieldCallback (this .#nodeSymbol);
@@ -2741,15 +2764,11 @@ module .exports = class OutlineView extends Interface
                }
                case X3D .X3DConstants .X3DUrlObject:
                {
-                  node .getLoadState () .removeFieldCallback (this .#updateNodeSymbol);
                   node .getLoadState () .removeFieldCallback (this .#updateNodeLoadStateSymbol);
                   continue;
                }
             }
          }
-
-         node .getPredefinedFields ()  .removeInterest ("updateNode", this);
-         node .getUserDefinedFields () .removeInterest ("updateNode", this);
       });
 
       element .find (".field, .special") .each ((i, e) =>
