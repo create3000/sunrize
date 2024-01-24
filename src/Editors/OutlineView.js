@@ -1083,16 +1083,13 @@ module .exports = class OutlineView extends Interface
          node = exportedNode .getLocalNode (),
          name = this .sceneGraph .find (`.exported-node[node-id=${node .getId ()}]`) .find ("> .item .name");
 
-      name .find (".node-name") .text (node .getName ()) .nextAll () .remove ();
+      name .find (".node-name") .text (node .getName ());
+      name .find (".as-name") .text (exportedNode .getExportedName ());
 
-      if (exportedNode .getExportedName () !== node .getName ())
-      {
-         name
-            .append (document .createTextNode (" "))
-            .append ($("<span></span>") .addClass ("as") .text ("AS"))
-            .append (document .createTextNode (" "))
-            .append ($("<span></span>") .addClass ("as-name") .text (exportedNode .getExportedName ()));
-      }
+      if (exportedNode .getExportedName () === node .getName ())
+         name .find (".node-name") .nextAll () .hide ();
+      else
+         name .find (".node-name") .nextAll () .show ();
    }
 
    updateCloneCount (node)
@@ -1274,14 +1271,14 @@ module .exports = class OutlineView extends Interface
          .text (node .getName ())
          .appendTo (name);
 
-      if (exportedNode .getExportedName () !== node .getName ())
-      {
-         name
-            .append (document .createTextNode (" "))
-            .append ($("<span></span>") .addClass ("as") .text ("AS"))
-            .append (document .createTextNode (" "))
-            .append ($("<span></span>") .addClass ("as-name") .text (exportedNode .getExportedName ()));
-      }
+      name
+         .append (document .createTextNode (" "))
+         .append ($("<span></span>") .addClass ("as") .text ("AS"))
+         .append (document .createTextNode (" "))
+         .append ($("<span></span>") .addClass ("as-name") .text (exportedNode .getExportedName ()));
+
+      if (exportedNode .getExportedName () === node .getName ())
+         name .find (".node-name") .nextAll () .hide ();
 
       // Append empty tree to enable expander.
 
