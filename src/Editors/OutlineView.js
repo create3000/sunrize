@@ -5,7 +5,6 @@ const
    electron     = require ("electron"),
    fs           = require ("fs"),
    path         = require ("path"),
-   url          = require ("url"),
    util         = require ("util"),
    jstree       = require ("jstree"),
    X3D          = require ("../X3D"),
