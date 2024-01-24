@@ -2746,7 +2746,7 @@ module .exports = class OutlineView extends Interface
          }
       });
 
-      element .find (".node, .exported-node") .each ((i, e) =>
+      element .find (".node") .each ((i, e) =>
       {
          const
             element = $(e),
@@ -2776,6 +2776,16 @@ module .exports = class OutlineView extends Interface
                }
             }
          }
+      });
+
+      element .find (".exported-node") .each ((i, e) =>
+      {
+         const
+            element = $(e),
+            node    = this .getNode (element);
+
+         node .typeName_changed .removeFieldCallback (this .#exportedNodeSymbol);
+         node .name_changed     .removeFieldCallback (this .#exportedNodeSymbol);
       });
 
       element .find (".field, .special") .each ((i, e) =>
