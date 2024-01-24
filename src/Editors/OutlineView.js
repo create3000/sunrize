@@ -2723,9 +2723,12 @@ module .exports = class OutlineView extends Interface
       element .find (".node:not([node-id=NULL]), .exported-node")
          .addBack (".node:not([node-id=NULL]), .exported-node") .each ((i, e) =>
       {
-         const
-            element = $(e),
-            node    = this .getNode (element);
+         const element = $(e);
+
+         if (!element .jstree ("is_open", element))
+            return;
+
+         const node = this .getNode (element);
 
          node .getPredefinedFields ()  .removeInterest ("updateNode", this);
          node .getUserDefinedFields () .removeInterest ("updateNode", this);
