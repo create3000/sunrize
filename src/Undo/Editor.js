@@ -304,7 +304,7 @@ module .exports = class Editor
 
       fs .writeFileSync (filePath, this .getContents (scene, path .extname (filePath)));
 
-      Traverse .traverse (scene, Traverse .ROOT_NODES, node => node .dispose ());
+      Traverse .traverse (scene, Traverse .ROOT_NODES | Traverse .PROTOTYPE_INSTANCES, node => node .dispose ());
 
       browser .setBrowserOption ("LoadUrlObjects", loadUrlObjects);
       undoManager .endUndo ();
