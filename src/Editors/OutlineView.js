@@ -417,9 +417,11 @@ module .exports = class OutlineView extends Interface
       return child
    }
 
+   #updateSceneRootNodesSymbol = Symbol ();
+
    expandSceneRootNodes (parent, scene)
    {
-      scene .rootNodes .addFieldCallback (this, this .updateSceneRootNodes .bind (this, parent, scene, "root-nodes", "expandSceneRootNodes"))
+      scene .rootNodes .addFieldCallback (this .#updateSceneRootNodesSymbol, this .updateSceneRootNodes .bind (this, parent, scene, "root-nodes", "expandSceneRootNodes"))
 
       parent .attr ("index", scene .rootNodes .length)
 
@@ -598,6 +600,8 @@ module .exports = class OutlineView extends Interface
       this .restoreScrollPositions ();
    }
 
+   #updateNodeSymbol = Symbol ();
+
    expandNode (parent, node, full)
    {
       parent .data ("expanded",      true);
@@ -664,7 +668,7 @@ module .exports = class OutlineView extends Interface
 
          // Proto
 
-         node .getLoadState () .addFieldCallback (this, this .updateNode .bind (this, parent, node, full));
+         node .getLoadState () .addFieldCallback (this .#updateNodeSymbol, this .updateNode .bind (this, parent, node, full));
 
          if (this .expandExternProtoDeclarations && node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE)
             ul .append (this .createNodeElement ("proto", parent, node .getProtoDeclaration ()));
@@ -694,11 +698,11 @@ module .exports = class OutlineView extends Interface
 
          if (node .getType () .includes (X3D .X3DConstants .Inline))
          {
-            node .getLoadState () .addFieldCallback (this, this .updateNode .bind (this, parent, node, full));
+            node .getLoadState () .addFieldCallback (this .#updateNodeSymbol, this .updateNode .bind (this, parent, node, full));
          }
          else
          {
-            node .getLoadState () .addFieldCallback (this, this .updateFieldLoadState .bind (this, node));
+            node .getLoadState () .addFieldCallback (this .#updateNodeSymbol, this .updateFieldLoadState .bind (this, node));
          }
 
          if (node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE && this .expandInlineNodes && node .getType () .includes (X3D .X3DConstants .Inline))
@@ -896,7 +900,8 @@ module .exports = class OutlineView extends Interface
       }
    }
 
-   #isBoundSymbol             = Symbol ();
+   #nodeSymbol                = Symbol ();
+   #updateNodeBoundSymbol     = Symbol ();
    #updateNodeLoadStateSymbol = Symbol ();
 
    createNodeElement (type, parent, node, index)
@@ -907,9 +912,9 @@ module .exports = class OutlineView extends Interface
 
          // These fields are observed and must never be disconnected, because clones would also lose connection.
 
-         node .typeName_changed .addFieldCallback (this, this .updateNodeTypeName .bind (this, node));
-         node .name_changed     .addFieldCallback (this, this .updateNodeName     .bind (this, node));
-         node .parents_changed  .addFieldCallback (this, this .updateCloneCount   .bind (this, node));
+         node .typeName_changed .addFieldCallback (this .#nodeSymbol, this .updateNodeTypeName .bind (this, node));
+         node .name_changed     .addFieldCallback (this .#nodeSymbol, this .updateNodeName     .bind (this, node));
+         node .parents_changed  .addFieldCallback (this .#nodeSymbol, this .updateCloneCount   .bind (this, node));
       }
 
       // Classes
@@ -1002,7 +1007,7 @@ module .exports = class OutlineView extends Interface
             {
                case X3D .X3DConstants .X3DBindableNode:
                {
-                  node ._isBound .addFieldCallback (this .#isBoundSymbol, this .updateNodeBound .bind (this, node));
+                  node ._isBound .addFieldCallback (this .#updateNodeBoundSymbol, this .updateNodeBound .bind (this, node));
 
                   name .append (document .createTextNode (" "));
 
@@ -1270,6 +1275,7 @@ module .exports = class OutlineView extends Interface
    static connectorId = 0;
    static urlFields   = new Set (["url", "frontUrl", "backUrl", "leftUrl", "rightUrl", "topUrl", "bottomUrl", "family"]);
 
+   #fieldSymbol       = Symbol ();
    #fieldButtonSymbol = Symbol ();
 
    createFieldElement (parent, node, field, type = "field")
@@ -1313,7 +1319,7 @@ module .exports = class OutlineView extends Interface
          .text (field .getName ())
          .appendTo (name);
 
-      field .addReferencesCallback (this, this .updateReferences .bind (this, parent, node, field));
+      field .addReferencesCallback (this .#fieldSymbol, this .updateReferences .bind (this, parent, node, field));
 
       // Color
 
@@ -1537,7 +1543,7 @@ module .exports = class OutlineView extends Interface
 
          // Route callback.
 
-         field .addRouteCallback (this, this .updateFieldAccessType .bind (this, node, field));
+         field .addRouteCallback (this .#fieldSymbol, this .updateFieldAccessType .bind (this, node, field));
       }
 
       // Append empty tree to enable expander.
@@ -1732,14 +1738,14 @@ module .exports = class OutlineView extends Interface
       {
          case X3D .X3DConstants .SFNode:
          {
-            field .addFieldCallback (this, this .updateField .bind (this, parent, node, field, type, full))
+            field .addFieldCallback (this .#fieldSymbol, this .updateField .bind (this, parent, node, field, type, full))
 
             this .expandSFNode (parent, node, field, type, full)
             break
          }
          case X3D .X3DConstants .MFNode:
          {
-            field .addFieldCallback (this, this .updateField .bind (this, parent, node, field, type, full))
+            field .addFieldCallback (this .#fieldSymbol, this .updateField .bind (this, parent, node, field, type, full))
 
             this .expandMFNode (parent, node, field, type, full)
             break
@@ -2148,7 +2154,7 @@ module .exports = class OutlineView extends Interface
 
    disconnectField (field)
    {
-      field .removeFieldCallback (this)
+      field .removeFieldCallback (this .#fieldSymbol)
    }
 
    #fieldValueSymbol = Symbol ();
@@ -2652,11 +2658,13 @@ module .exports = class OutlineView extends Interface
 
    removeSubtree (element)
    {
-      this .disconnectSubtree (element);
+      const subtree = element .find ("> .subtree");
+
+      this .disconnectSubtree (subtree);
 
       // Remove subtree.
 
-      element .find ("> .subtree") .remove ();
+      subtree .remove ();
    }
 
    disconnectSubtree (element)
@@ -2676,7 +2684,7 @@ module .exports = class OutlineView extends Interface
          for (const importedNode of scene .importedNodes)
             importedNode .getInlineNode () .getLoadState () .removeFieldCallback (this .#importedNodeSymbol);
 
-         scene .rootNodes .removeFieldCallback (this);
+         scene .rootNodes .removeFieldCallback (this .#updateSceneRootNodesSymbol);
 
          if (scene instanceof X3D .X3DScene)
          {
@@ -2691,10 +2699,10 @@ module .exports = class OutlineView extends Interface
             element = $(e),
             node    = this .getNode (element);
 
-         node .getLoadState () .removeFieldCallback (this);
+         node .getLoadState () .removeFieldCallback (this .#updateNodeSymbol);
       });
 
-      element .find (".node") .addBack (".node") .each ((i, e) =>
+      element .find (".node, .exported-node") .addBack (".node, .exported-node") .each ((i, e) =>
       {
          const
             element = $(e),
@@ -2703,18 +2711,22 @@ module .exports = class OutlineView extends Interface
          if (!node)
             return;
 
+         node .typeName_changed .removeFieldCallback (this .#nodeSymbol);
+         node .name_changed     .removeFieldCallback (this .#nodeSymbol);
+         node .parents_changed  .removeFieldCallback (this .#nodeSymbol);
+
          for (const type of node .getType ())
          {
             switch (type)
             {
                case X3D .X3DConstants .X3DBindableNode:
                {
-                  node ._isBound .removeFieldCallback (this .#isBoundSymbol);
+                  node ._isBound .removeFieldCallback (this .#updateNodeBoundSymbol);
                   continue;
                }
                case X3D .X3DConstants .X3DUrlObject:
                {
-                  node .getLoadState () .removeFieldCallback (this);
+                  node .getLoadState () .removeFieldCallback (this .#updateNodeSymbol);
                   node .getLoadState () .removeFieldCallback (this .#updateNodeLoadStateSymbol);
                   continue;
                }
@@ -2731,9 +2743,9 @@ module .exports = class OutlineView extends Interface
             element = $(e),
             field   = this .getField (element);
 
-         field .removeReferencesCallback (this);
-         field .removeRouteCallback (this);
-         field .removeFieldCallback (this);
+         field .removeReferencesCallback (this .#fieldSymbol);
+         field .removeRouteCallback (this .#fieldSymbol);
+         field .removeFieldCallback (this .#fieldSymbol);
          field .removeFieldCallback (this .#fieldButtonSymbol);
          field .removeFieldCallback (this .#fieldValueSymbol);
       });
