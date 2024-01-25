@@ -34,7 +34,7 @@ module .exports = class Editor
     * @param {Array<X3DNode|X3DExternProtoDeclaration|X3DProtoDeclaration>} objects objects to export
     * @returns {string} x3dSyntax
     */
-   static exportX3D (executionContext, objects = [ ], type = "x3d")
+   static exportX3D (executionContext, objects = [ ], { type = "x3d", importedNodes = true, exportedNodes = true } = { })
    {
       const
          externprotos = new Set (objects .filter (o => o instanceof X3D .X3DExternProtoDeclaration)),
@@ -99,24 +99,32 @@ module .exports = class Editor
 
       // Add exported nodes.
 
-      for (const exportedNode of executionContext .exportedNodes)
+      if (exportedNodes)
       {
-         if (!children .has (exportedNode .getLocalNode () .valueOf ()))
-            continue;
+         for (const exportedNode of executionContext .exportedNodes)
+         {
+            if (!children .has (exportedNode .getLocalNode () .valueOf ()))
+               continue;
 
-         scene .exportedNodes .add (exportedNode .getExportedName (), exportedNode);
+            scene .exportedNodes .add (exportedNode .getExportedName (), exportedNode);
+         }
       }
 
       // Add imported nodes.
 
-      for (const importedNode of executionContext .importedNodes)
+      if (importedNodes)
       {
-         if (!inlineNodes .has (importedNode .getInlineNode () .valueOf ()))
-            continue;
+         for (const importedNode of executionContext .importedNodes)
+         {
+            if (!inlineNodes .has (importedNode .getInlineNode () .valueOf ()))
+               continue;
 
-         children .add (importedNode);
-         scene .importedNodes .add (importedNode .getImportedName (), importedNode);
+            children .add (importedNode);
+            scene .importedNodes .add (importedNode .getImportedName (), importedNode);
+         }
       }
+
+      // Filter out routes.
 
       const routes = [... childRoutes] .filter (route => children .has (route .getSourceNode () .valueOf ()) && children .has (route .getDestinationNode () .valueOf ()));
 

@@ -711,7 +711,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       undoManager .endUndo ();
 
-      const x3dSyntax = Editor .exportX3D (this .executionContext, nodes);
+      const x3dSyntax = Editor .exportX3D (this .executionContext, nodes, { importedNodes: false, exportedNodes: false });
 
       //console .log (x3dSyntax)
 
