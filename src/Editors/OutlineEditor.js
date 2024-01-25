@@ -711,7 +711,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       undoManager .endUndo ();
 
-      const x3dSyntax = Editor .exportVRML (this .executionContext, nodes);
+      const x3dSyntax = Editor .exportX3D (this .executionContext, nodes);
 
       //console .log (x3dSyntax)
 
@@ -1060,7 +1060,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const
          rootNodes     = [... executionContext .rootNodes],
          nodesToImport = [... inlineNode .getInternalScene () .rootNodes] .map (node => node .getValue ()),
-         x3dSyntax     = Editor .exportVRML (inlineNode .getInternalScene (), nodesToImport),
+         x3dSyntax     = Editor .exportX3D (inlineNode .getInternalScene (), nodesToImport),
          nodes         = await Editor .importX3D (executionContext, x3dSyntax);
 
       // Remove imported nodes from root nodes.
@@ -2260,7 +2260,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             {
                UndoManager .shared .beginUndo (_("Copy Extern Proto »%s«"), sourceExternProto .getName ());
 
-               await Editor .importX3D (destinationExecutionContext, Editor .exportVRML (sourceExecutionContext, [sourceExternProto]));
+               await Editor .importX3D (destinationExecutionContext, Editor .exportX3D (sourceExecutionContext, [sourceExternProto]));
 
                const
                   externprotos = Array .from (destinationExecutionContext .externprotos),
@@ -2333,7 +2333,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             case "copy":
             {
                UndoManager .shared .beginUndo (_("Copy Prototype »%s«"), sourceProto .getName ());
-               await Editor .importX3D (destinationExecutionContext, Editor .exportVRML (sourceExecutionContext, [sourceProto]));
+               await Editor .importX3D (destinationExecutionContext, Editor .exportX3D (sourceExecutionContext, [sourceProto]));
 
                const
                   protos = Array .from (destinationExecutionContext .protos),
@@ -2438,7 +2438,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          }
 
          const copiedNodes = sourceNodes .length
-            ? await Editor .importX3D (destinationExecutionContext, Editor .exportVRML (this .executionContext, sourceNodes))
+            ? await Editor .importX3D (destinationExecutionContext, Editor .exportX3D (this .executionContext, sourceNodes))
             : [ ];
 
          if (copiedNodes .length)

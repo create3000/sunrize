@@ -34,7 +34,7 @@ module .exports = class Editor
     * @param {Array<X3DNode|X3DExternProtoDeclaration|X3DProtoDeclaration>} objects objects to export
     * @returns {string} x3dSyntax
     */
-   static exportVRML (executionContext, objects = [ ])
+   static exportX3D (executionContext, objects = [ ])
    {
       const
          externprotos = new Set (objects .filter (o => o instanceof X3D .X3DExternProtoDeclaration)),
@@ -97,6 +97,8 @@ module .exports = class Editor
             inlineNodes .add (node .valueOf ());
       });
 
+      // Add imported nodes.
+
       for (const importedNode of executionContext .importedNodes)
       {
          if (inlineNodes .has (importedNode .getInlineNode () .valueOf ()))
@@ -128,16 +130,18 @@ module .exports = class Editor
       for (const name of componentNames)
          scene .addComponent (browser .getComponent (name));
 
-      // Set nodes.
+      // Add nodes.
 
       scene .rootNodes = nodes;
+
+      // Add routes.
 
       for (const route of routes)
          scene .routes .add (route .getRouteId (), route);
 
-      // Return VRML string.
+      // Return XML string.
 
-      const x3dSyntax = scene .toVRMLString ();
+      const x3dSyntax = scene .toXMLString ();
 
       scene .dispose ();
       nodes .dispose ();
@@ -305,7 +309,7 @@ module .exports = class Editor
       const
          browser        = executionContext .getBrowser (),
          scene          = browser .createScene (),
-         x3dSyntax      = this .exportVRML (executionContext, nodes),
+         x3dSyntax      = this .exportX3D (executionContext, nodes),
          loadUrlObjects = browser .getBrowserOption ("LoadUrlObjects");
 
       undoManager .beginUndo (_("Convert Node to Inline File"));
@@ -1215,7 +1219,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       const
          browser   = executionContext .getBrowser (),
          scene     = browser .createScene (),
-         x3dSyntax = this .exportVRML (executionContext, [proto]);
+         x3dSyntax = this .exportX3D (executionContext, [proto]);
 
       undoManager .beginUndo (_("Turn Prototype »%s« into Extern Prototype"), proto .getName ());
 
@@ -1383,7 +1387,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       const
          numProtos = executionContext .protos .length,
-         x3dSyntax = this .exportVRML (externproto .getInternalScene (), [externproto .getProtoDeclaration ()])
+         x3dSyntax = this .exportX3D (externproto .getInternalScene (), [externproto .getProtoDeclaration ()])
 
       undoManager .beginUndo (_("Turn Extern Prototype »%s« into Prototype"), externproto .getName ())
 
