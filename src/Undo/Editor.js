@@ -189,7 +189,6 @@ module .exports = class Editor
          externprotos   = new Map (Array .from (executionContext .externprotos, p => [p .getName (), p])),
          protos         = new Map (Array .from (executionContext .protos,       p => [p .getName (), p])),
          rootNodes      = executionContext .rootNodes .copy (),
-         importedNodes  = executionContext .importedNodes .copy (),
          tempScene      = browser .createScene (browser .getProfile ("Core")),
          loadUrlObjects = browser .getBrowserOption ("LoadUrlObjects");
 
@@ -1772,6 +1771,12 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       undoManager .registerUndo (() =>
       {
+         if (sourceNode instanceof X3D .X3DImportedNode)
+            sourceNode = executionContext .importedNodes .get (sourceNode .getImportedName ());
+
+         if (destinationNode instanceof X3D .X3DImportedNode)
+            destinationNode = executionContext .importedNodes .get (destinationNode .getImportedName ());
+
          this .addRoute (executionContext, sourceNode, sourceField, destinationNode, destinationField, undoManager);
       });
 
