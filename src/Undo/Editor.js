@@ -71,12 +71,13 @@ module .exports = class Editor
             protos .add (protoNode);
       }
 
-      // Determine components and routes.
+      // Determine components, imported nodes and routes.
 
       const
          componentNames = new Set (),
          children       = new Set (),
-         childRoutes    = new Set ();
+         childRoutes    = new Set (),
+         inlineNodes    = new Set ();
 
       Traverse .traverse (nodes, Traverse .ROOT_NODES, node =>
       {
@@ -91,7 +92,19 @@ module .exports = class Editor
             for (const route of field .getOutputRoutes ())
                childRoutes .add (route);
          }
+
+         if (node .getType () .includes (X3D .X3DConstants .Inline))
+            inlineNodes .add (node .valueOf ());
       });
+
+      for (const importedNode of executionContext .importedNodes)
+      {
+         if (inlineNodes .has (importedNode .getInlineNode () .valueOf ()))
+         {
+            children .add (importedNode);
+            scene .importedNodes .add (importedNode .getImportedName (), importedNode);
+         }
+      }
 
       const routes = [... childRoutes] .filter (route => children .has (route .getSourceNode () .valueOf ()) && children .has (route .getDestinationNode () .valueOf ()));
 
