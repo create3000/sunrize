@@ -3194,9 +3194,6 @@ module .exports = class OutlineView extends Interface
          return false;
       }
 
-      if (parent .is (".imported-node"))
-         return false;
-
       return true;
    }
 

@@ -1058,7 +1058,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       UndoManager .shared .beginUndo (_("Fold Inline Back into Scene"));
 
       const
-         rootNodes     = [... executionContext .rootNodes],
+         rootNodes     = executionContext .rootNodes .copy (),
          nodesToImport = [... inlineNode .getInternalScene () .rootNodes] .map (node => node .getValue ()),
          x3dSyntax     = Editor .exportX3D (inlineNode .getInternalScene (), nodesToImport),
          nodes         = await Editor .importX3D (executionContext, x3dSyntax);

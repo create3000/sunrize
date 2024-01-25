@@ -153,6 +153,17 @@ module .exports = class Editor
 
       const x3dSyntax = this .getContents (scene, type);
 
+      // Dispose scene.
+
+      for (const importedNode of scene .importedNodes)
+         scene .importedNodes .remove (importedNode .getImportedName ());
+
+      for (const exportedNode of scene .exportedNodes)
+         scene .exportedNodes .remove (exportedNode .getExportedName ());
+
+      for (const route of routes)
+         scene .routes .remove (route .getRouteId ());
+
       scene .dispose ();
       nodes .dispose ();
 
@@ -178,6 +189,7 @@ module .exports = class Editor
          externprotos   = new Map (Array .from (executionContext .externprotos, p => [p .getName (), p])),
          protos         = new Map (Array .from (executionContext .protos,       p => [p .getName (), p])),
          rootNodes      = executionContext .rootNodes .copy (),
+         importedNodes  = executionContext .importedNodes .copy (),
          tempScene      = browser .createScene (browser .getProfile ("Core")),
          loadUrlObjects = browser .getBrowserOption ("LoadUrlObjects");
 
@@ -297,7 +309,17 @@ module .exports = class Editor
 
       browser .setBrowserOption ("LoadUrlObjects", loadUrlObjects);
 
-      // TODO: add exported nodes.
+      // Add imported nodes.
+
+      // Add exported nodes.
+
+      if (executionContext instanceof X3D .X3DScene)
+      {
+         for (const exportedNode of tempScene .exportedNodes)
+         {
+            this .updateExportedNode (executionContext, executionContext .getUniqueExportName (exportedNode .getExportedName ()), "", exportedNode .getLocalNode (), undoManager);
+         }
+      }
 
       this .requestUpdateInstances (executionContext, undoManager);
 
@@ -314,7 +336,7 @@ module .exports = class Editor
     * @param {UndoManager} undoManager
     * @returns {Promise<void>}
     */
-   static async convertNodesToInlineFile (executionContext, nodes, filePath, undoManager = UndoManager .shared)
+   static async convertNodesToInlineFile (executionContext, nodes, filePath)
    {
       const
          browser        = executionContext .getBrowser (),
@@ -322,19 +344,19 @@ module .exports = class Editor
          x3dSyntax      = this .exportX3D (executionContext, nodes),
          loadUrlObjects = browser .getBrowserOption ("LoadUrlObjects");
 
-      undoManager .beginUndo (_("Convert Node to Inline File"));
       browser .setBrowserOption ("LoadUrlObjects", false);
 
       scene .setWorldURL (url .pathToFileURL (filePath));
 
       await this .importX3D (scene, x3dSyntax, new UndoManager ());
 
+      this .inferProfileAndComponents (scene, new UndoManager ());
+
       fs .writeFileSync (filePath, this .getContents (scene, path .extname (filePath)));
 
       Traverse .traverse (scene, Traverse .ROOT_NODES | Traverse .PROTOTYPE_INSTANCES, node => node .dispose ());
 
       browser .setBrowserOption ("LoadUrlObjects", loadUrlObjects);
-      undoManager .endUndo ();
    }
 
    /**
@@ -539,10 +561,27 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
             for (const node of children)
             {
+               // Rebind X3DBindableNode nodes.
+
+               if (node .getType () .includes (X3D .X3DConstants .X3DBindableNode))
+               {
+                  if (node ._isBound .getValue ())
+                  {
+                     undoManager .registerUndo (() =>
+                     {
+                        this .setFieldValue (executionContext, node, node ._set_bind, true, undoManager);
+                     });
+                  }
+               }
+
                // Remove named nodes.
 
                if (node .getName ())
                   this .removeNamedNode (executionContext, node, undoManager);
+
+               // Remove routes.
+
+               this .deleteRoutes (executionContext, node, undoManager);
 
                // Remove imported nodes if node is an Inline node.
 
@@ -560,22 +599,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   {
                      if (exportedNode .getLocalNode () .valueOf () === node)
                         this .removeExportedNode (executionContext, exportedNode .getExportedName (), undoManager);
-                  }
-               }
-
-               // Remove routes.
-
-               this .deleteRoutes (executionContext, node, undoManager);
-
-               if (node .getType () .includes (X3D .X3DConstants .X3DBindableNode))
-               {
-                  if (node ._isBound .getValue ())
-                  {
-                     // Rebind X3DBindableNode nodes.
-                     undoManager .registerUndo (() =>
-                     {
-                        this .setFieldValue (executionContext, node, node ._set_bind, true, undoManager);
-                     });
                   }
                }
 
