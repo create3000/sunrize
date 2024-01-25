@@ -32,9 +32,10 @@ module .exports = class Editor
     *
     * @param {X3DExecutionContext} executionContext source execution context
     * @param {Array<X3DNode|X3DExternProtoDeclaration|X3DProtoDeclaration>} objects objects to export
+    * @param {Object} options
     * @returns {string} x3dSyntax
     */
-   static exportX3D (executionContext, objects = [ ], { type = "x3d", importedNodes = true, exportedNodes = true } = { })
+   static exportX3D (executionContext, objects = [ ], { type = "x3d", importedNodes = false, exportedNodes = false } = { })
    {
       const
          externprotos = new Set (objects .filter (o => o instanceof X3D .X3DExternProtoDeclaration)),
@@ -345,7 +346,7 @@ module .exports = class Editor
       const
          browser        = executionContext .getBrowser (),
          scene          = browser .createScene (),
-         x3dSyntax      = this .exportX3D (executionContext, nodes),
+         x3dSyntax      = this .exportX3D (executionContext, nodes, { importedNodes: true, exportedNodes: true }),
          loadUrlObjects = browser .getBrowserOption ("LoadUrlObjects");
 
       browser .setBrowserOption ("LoadUrlObjects", false);
