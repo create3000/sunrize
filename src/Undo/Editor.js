@@ -163,14 +163,11 @@ module .exports = class Editor
 
       // Dispose scene.
 
-      for (const importedNode of scene .importedNodes)
-         scene .importedNodes .remove (importedNode .getImportedName ());
-
-      for (const exportedNode of scene .exportedNodes)
-         scene .exportedNodes .remove (exportedNode .getExportedName ());
-
-      for (const route of routes)
-         scene .routes .remove (route .getRouteId ());
+      scene .externprotos  .clear ();
+      scene .protos        .clear ();
+      scene .importedNodes .clear ();
+      scene .exportedNodes .clear ();
+      scene .routes        .clear ();
 
       scene .dispose ();
       nodes .dispose ();
