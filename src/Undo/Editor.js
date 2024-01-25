@@ -1785,6 +1785,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          if (destinationNode instanceof X3D .X3DImportedNode)
             destinationNode = executionContext .importedNodes .get (destinationNode .getImportedName ());
 
+         if (!(sourceNode && destinationNode))
+            return; // Imported nodes were manually removed.
+
          this .addRoute (executionContext, sourceNode, sourceField, destinationNode, destinationField, undoManager);
       });
 
