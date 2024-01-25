@@ -34,7 +34,7 @@ module .exports = class Editor
     * @param {Array<X3DNode|X3DExternProtoDeclaration|X3DProtoDeclaration>} objects objects to export
     * @returns {string} x3dSyntax
     */
-   static exportX3D (executionContext, objects = [ ])
+   static exportX3D (executionContext, objects = [ ], type = "x3d")
    {
       const
          externprotos = new Set (objects .filter (o => o instanceof X3D .X3DExternProtoDeclaration)),
@@ -97,15 +97,25 @@ module .exports = class Editor
             inlineNodes .add (node .valueOf ());
       });
 
+      // Add exported nodes.
+
+      for (const exportedNode of executionContext .exportedNodes)
+      {
+         if (!children .has (exportedNode .getLocalNode () .valueOf ()))
+            continue;
+
+         scene .exportedNodes .add (exportedNode .getExportedName (), exportedNode);
+      }
+
       // Add imported nodes.
 
       for (const importedNode of executionContext .importedNodes)
       {
-         if (inlineNodes .has (importedNode .getInlineNode () .valueOf ()))
-         {
-            children .add (importedNode);
-            scene .importedNodes .add (importedNode .getImportedName (), importedNode);
-         }
+         if (!inlineNodes .has (importedNode .getInlineNode () .valueOf ()))
+            continue;
+
+         children .add (importedNode);
+         scene .importedNodes .add (importedNode .getImportedName (), importedNode);
       }
 
       const routes = [... childRoutes] .filter (route => children .has (route .getSourceNode () .valueOf ()) && children .has (route .getDestinationNode () .valueOf ()));
@@ -141,7 +151,7 @@ module .exports = class Editor
 
       // Return XML string.
 
-      const x3dSyntax = scene .toXMLString ();
+      const x3dSyntax = this .getContents (scene, type);
 
       scene .dispose ();
       nodes .dispose ();
