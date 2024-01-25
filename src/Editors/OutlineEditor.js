@@ -2333,6 +2333,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             case "copy":
             {
                UndoManager .shared .beginUndo (_("Copy Prototype »%s«"), sourceProto .getName ());
+
                await Editor .importX3D (destinationExecutionContext, Editor .exportX3D (sourceExecutionContext, [sourceProto]));
 
                const
