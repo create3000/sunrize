@@ -711,7 +711,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       undoManager .endUndo ();
 
-      const x3dSyntax = Editor .exportX3D (this .executionContext, nodes);
+      const x3dSyntax = Editor .exportX3D (this .executionContext, nodes, { importedNodes: true });
 
       //console .log (x3dSyntax)
 
@@ -1060,7 +1060,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const
          rootNodes     = executionContext .rootNodes .copy (),
          nodesToImport = [... inlineNode .getInternalScene () .rootNodes] .map (node => node .getValue ()),
-         x3dSyntax     = Editor .exportX3D (inlineNode .getInternalScene (), nodesToImport),
+         x3dSyntax     = Editor .exportX3D (inlineNode .getInternalScene (), nodesToImport, { importedNodes: true }),
          nodes         = await Editor .importX3D (executionContext, x3dSyntax);
 
       // Remove imported nodes from root nodes.
@@ -2439,7 +2439,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          }
 
          const copiedNodes = sourceNodes .length
-            ? await Editor .importX3D (destinationExecutionContext, Editor .exportX3D (this .executionContext, sourceNodes))
+            ? await Editor .importX3D (destinationExecutionContext, Editor .exportX3D (this .executionContext, sourceNodes, { importedNodes: true }))
             : [ ];
 
          if (copiedNodes .length)
