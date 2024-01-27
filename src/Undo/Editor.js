@@ -250,6 +250,7 @@ module .exports = class Editor
 
       const
          nodes               = [... executionContext .rootNodes] .slice (rootNodes .length) .map (n => n .getValue ()),
+         newExternProtos     = [... executionContext .externprotos] .slice (externprotos .size),
          newProtos           = [... executionContext .protos] .slice (protos .size),
          updatedExternProtos = new Map (),
          updatedProtos       = new Map (),
@@ -309,7 +310,9 @@ module .exports = class Editor
 
       if (oldWorldURL)
       {
-         this .rewriteURLs (executionContext, [... newProtos, ... nodes], oldWorldURL [0], executionContext .worldURL, new UndoManager ());
+         this .rewriteURLs (executionContext, newExternProtos, oldWorldURL [0], executionContext .worldURL, new UndoManager ());
+         this .rewriteURLs (executionContext, newProtos,       oldWorldURL [0], executionContext .worldURL, new UndoManager ());
+         this .rewriteURLs (executionContext, nodes,           oldWorldURL [0], executionContext .worldURL, new UndoManager ());
       }
 
       browser .setBrowserOption ("LoadUrlObjects", loadUrlObjects);
