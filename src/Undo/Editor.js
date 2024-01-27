@@ -310,9 +310,8 @@ module .exports = class Editor
 
       if (oldWorldURL)
       {
-         this .rewriteURLs (executionContext, newExternProtos, oldWorldURL [0], executionContext .worldURL, new UndoManager ());
-         this .rewriteURLs (executionContext, newProtos,       oldWorldURL [0], executionContext .worldURL, new UndoManager ());
-         this .rewriteURLs (executionContext, nodes,           oldWorldURL [0], executionContext .worldURL, new UndoManager ());
+         for (const objects of [newExternProtos, newProtos, nodes])
+            this .rewriteURLs (executionContext, objects, oldWorldURL [0], executionContext .worldURL, new UndoManager ());
       }
 
       browser .setBrowserOption ("LoadUrlObjects", loadUrlObjects);
