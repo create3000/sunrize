@@ -316,8 +316,6 @@ module .exports = class Editor
 
       browser .setBrowserOption ("LoadUrlObjects", loadUrlObjects);
 
-      // Add imported nodes.
-
       // Add exported nodes.
 
       if (executionContext instanceof X3D .X3DScene)
