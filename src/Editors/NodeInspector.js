@@ -1,18 +1,18 @@
-"use strict"
+"use strict";
 
 const
-   Interface = require ("../Application/Interface")
+   Interface = require ("../Application/Interface");
 
 module .exports = class NodeInspector extends Interface
 {
    constructor (element)
    {
-      super (`Sunrize.NodeInspector.${element .attr ("id")}.`)
+      super (`Sunrize.NodeInspector.${element .attr ("id")}.`);
 
-      this .nodeInspector = element
+      this .nodeInspector = element;
 
-      this .nodeInspector .text ("Node Inspector")
+      this .nodeInspector .text ("Node Inspector");
 
-      this .setup ()
+      this .setup ();
    }
-}
+};
