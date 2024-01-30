@@ -1,7 +1,7 @@
 {
   "name": "sunrize",
   "productName": "Sunrize X3D Editor",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "A Multi-Platform X3D Editor",
   "main": "src/main.js",
   "bin": {
@@ -100,7 +100,7 @@
     "spectrum-colorpicker2": "^2.0.10",
     "string-similarity": "^4.0.4",
     "update-electron-app": "^3.0.0",
-    "x_ite": "^9.2.2"
+    "x_ite": "^9.2.3"
   },
   "config": {
     "forge": {
