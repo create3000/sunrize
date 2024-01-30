@@ -20,6 +20,8 @@ module .exports = new class Panel extends Interface
          "z-index": "1000",
       });
 
+      this .container .on ("mousedown", () => this .onmousedown ())
+
       this .pane .on ("fold", () => this .onfold ());
 
       const parameter = {
@@ -63,5 +65,19 @@ module .exports = new class Panel extends Interface
    onfold ()
    {
       this .fileConfig .expanded = this .pane .expanded;
+   }
+
+   onmousedown ()
+   {
+      $(document) .on ("mouseup.Panel", () => this .onmouseup ());
+
+      this .mousedown = true;
+   }
+
+   onmouseup ()
+   {
+      $(document) .off ("mouseup.Panel");
+
+      this .mousedown = false;
    }
 };
