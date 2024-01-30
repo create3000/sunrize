@@ -9,6 +9,7 @@ const
    DataStorage = require ("./DataStorage")
 
 require ("../Tools")
+require ("../Panes")
 require ("../Bits/Highlight")
 require ("../Bits/Beep")
 
