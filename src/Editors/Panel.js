@@ -11,6 +11,7 @@ module .exports = new class Panel extends Interface
 
       this .pane      = new TweakPane .Pane ({ title: "Transform" });
       this .container = $(this .pane .element) .parent ();
+      this .selection = require ("../Application/Selection");
 
       this .container .hide () .appendTo ($("#browser-frame"));
 
@@ -24,6 +25,9 @@ module .exports = new class Panel extends Interface
 
       this .pane .on ("fold", () => this .onfold ());
 
+      this .selection .addInterest (this, () => this .onselection ());
+
+
       const parameter = {
          translation: { x: 0, y: 0, z: 0 },
          rotation: { x: 0, y: 0, z: 1, w: 0 },
@@ -34,6 +38,7 @@ module .exports = new class Panel extends Interface
          .on ("change", ({ value }) => console .log (value .x, value .y, value .z));
       this .pane .addInput (parameter, "rotation");
       this .pane .addInput (parameter, "scale");
+
 
       this .setup ();
    }
@@ -79,5 +84,10 @@ module .exports = new class Panel extends Interface
       $(document) .off ("mouseup.Panel");
 
       this .mousedown = false;
+   }
+
+   onselection ()
+   {
+      console .log (this .selection .nodes .length, this .selection .nodes .at (-1) ?.getTypeName ());
    }
 };

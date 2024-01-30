@@ -2,44 +2,81 @@ module .exports = new class Selection
 {
    constructor ()
    {
-      this .nodes = new Map ();
+      this .nodes = [ ];
    }
 
    has (node)
    {
-      return this .nodes .has (node .valueOf ());
+      return this .nodes .includes (node .valueOf ());
    }
 
-   clear (exclude /* private option */)
+   clear ()
    {
-      for (const node of this .nodes .keys ())
+      this .#clear ();
+      this .processInterests ();
+   }
+
+   set (node)
+   {
+      this .#clear (node);
+      this .#add (node);
+      this .processInterests ();
+   }
+
+   add (node)
+   {
+      this .#add (node);
+      this .processInterests ();
+   }
+
+   remove (node)
+   {
+      this .#remove (node);
+      this .processInterests ();
+   }
+
+   #clear (exclude)
+   {
+      for (const node of this .nodes)
       {
-         if (node === exclude ?.valueOf ())
+         if (node === exclude)
             continue;
 
          node .getTool () ?.setSelected (false);
          node .removeTool ("createOnSelection");
       }
 
-      this .nodes .clear ();
+      this .nodes = exclude ? [exclude] : [ ];
    }
 
-   set (node)
+   #add (node)
    {
-      this .clear (node);
-      this .add (node);
-   }
+      node = node .addTool ("createOnSelection");
 
-   add (node)
-   {
-      this .nodes .set (node .valueOf (), node .addTool ("createOnSelection"));
+      this .nodes = this .nodes .filter (n => n .valueOf () !== node .valueOf ());
+
+      this .nodes .push (node);
       node .getTool () ?.setSelected (true);
    }
 
-   remove (node)
+   #remove (node)
    {
       node .getTool () ?.setSelected (false);
       node .removeTool ("createOnSelection");
-      this .nodes .delete (node .valueOf ());
+
+      this .nodes = this .nodes .filter (n => n .valueOf () !== node .valueOf ());
+   }
+
+   interests = new Map ();
+
+   addInterest (key, callback)
+   {
+      this .interests .set (key, callback);
+   }
+
+   processInterests ()
+   {
+      for (const callback of this .interests .values ())
+         callback ();
    }
 }

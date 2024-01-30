@@ -2829,14 +2829,14 @@ module .exports = class OutlineView extends Interface
    {
       const
          selection = require ("../Application/Selection"),
-         nodes     = this .sceneGraph .find (".primary, .selected")
+         nodes     = this .sceneGraph .find (".primary, .selected");
 
-      nodes .removeClass (["primary", "manually", "selected"])
+      nodes .removeClass (["primary", "manually", "selected"]);
 
       for (const element of nodes)
-         this .getNode ($(element)) .setUserData (_selected, false)
+         this .getNode ($(element)) .setUserData (_selected, false);
 
-      selection .clear ()
+      selection .clear ();
    }
 
    toggleVisibility (event)
@@ -2940,7 +2940,7 @@ module .exports = class OutlineView extends Interface
 
       const selection = require ("../Application/Selection");
 
-      Traverse .traverse ([... selection .nodes .values ()], Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, node =>
+      Traverse .traverse (selection .nodes, Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, node =>
       {
          if (!node .setHidden)
             return
@@ -2961,7 +2961,7 @@ module .exports = class OutlineView extends Interface
    {
       const selection = require ("../Application/Selection")
 
-      Traverse .traverse (selection .nodes .size ? [... selection .nodes .values ()] : this .executionContext, Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, node =>
+      Traverse .traverse (selection .nodes .length ? selection .nodes : this .executionContext, Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, node =>
       {
          if (!node .setHidden)
             return
