@@ -187,7 +187,7 @@ module .exports = class Dashboard extends Interface
          this .showPanelsButton .addClass ("active");
       }
 
-      this .fileConfig .panel = this .panel .visible;
+      this .fileConfig .panel = !visible;
    }
 };
 

@@ -11,7 +11,6 @@ module .exports = new class Panel extends Interface
 
       this .pane      = new TweakPane .Pane ({ title: "Transform" });
       this .container = $(this .pane .element) .parent ();
-      this .visible   = false;
 
       this .container .hide () .appendTo ($("#browser-frame"));
 
@@ -46,17 +45,18 @@ module .exports = new class Panel extends Interface
       this .pane .expanded = this .fileConfig .expanded;
    }
 
+   get visible ()
+   {
+      return this .container .is (":visible");
+   }
+
    show ()
    {
-      this .visible = true;
-
       this .container .fadeIn (300);
    }
 
    hide ()
    {
-      this .visible = false;
-
       this .container .fadeOut (300);
    }
 
