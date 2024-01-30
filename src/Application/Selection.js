@@ -7,7 +7,7 @@ module .exports = new class Selection
 
    has (node)
    {
-      return this .nodes .includes (node .valueOf ());
+      return this .nodes .includes (node .getTool () ?? node);
    }
 
    clear ()
