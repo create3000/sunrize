@@ -2,11 +2,17 @@ const
    $         = require ("jquery"),
    TweakPane = require ("tweakpane");
 
-const pane = new TweakPane .Pane ({
-   title: "Transform",
-});
+const
+   pane      = new TweakPane .Pane ({ title: "Transform" }),
+   container = $(pane .element) .parent ();
 
-$("#browser-frame") .append ($(pane .element) .parent ());
+container .appendTo ($("#browser-frame"));
+
+container .css ({
+   "bottom": container .css ("top"),
+   "top": "unset",
+   "z-index": "1000",
+});
 
 const parameter = {
    translation: { x: 0, y: 0, z: 0 },
