@@ -52,12 +52,12 @@ module .exports = new class Panel extends Interface
 
    show ()
    {
-      this .container .fadeIn (300);
+      this .container .show (300);
    }
 
    hide ()
    {
-      this .container .fadeOut (300);
+      this .container .hide (300);
    }
 
    onfold ()
