@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const
    $           = require ("jquery"),
@@ -6,12 +6,11 @@ const
    md5         = require ("md5"),
    X3D         = require ("../X3D"),
    CSS         = require ("../Application/CSS"),
-   DataStorage = require ("./DataStorage")
+   DataStorage = require ("./DataStorage");
 
-require ("../Tools")
-require ("../Panes")
-require ("../Bits/Highlight")
-require ("../Bits/Beep")
+require ("../Tools");
+require ("../Bits/Highlight");
+require ("../Bits/Beep");
 
 Object .assign ($,
 {

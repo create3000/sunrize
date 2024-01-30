@@ -56,6 +56,35 @@ module .exports = class Dashboard extends Interface
          .text ("wb_twilight")
          .appendTo (this .toolbar)
          .on ("click", () => this .straighten (!this .browser .getBrowserOption ("StraightenHorizon")));
+
+      $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
+
+      this .showPanelsButton = $("<span></span>")
+         .addClass (["material-symbols-outlined"])
+         .attr ("title", _("Toggle visibility of node panel."))
+         .text ("edit_note")
+         .appendTo (this .toolbar)
+         .on ("click", () => this .togglePanel ());
+   }
+
+   togglePanel (visible)
+   {
+      this .panel = require ("../Editors/Panel");
+
+      visible ??= this .panel .visible;
+
+      if (visible)
+      {
+         this .panel .hide ();
+         this .showPanelsButton .removeClass ("active");
+      }
+      else
+      {
+         this .panel .show ();
+         this .showPanelsButton .addClass ("active");
+      }
+
+      this .fileConfig .panel = this .panel .visible;
    }
 
    configure ()
@@ -63,11 +92,15 @@ module .exports = class Dashboard extends Interface
       this .fileConfig .setDefaultValues ({
          pointer: "hand",
          play: false,
+         panel: false,
       });
 
       this [this .fileConfig .pointer] ();
       this .play (this .fileConfig .play);
       this .straighten (this .browser .getBrowserOption ("StraightenHorizon"));
+
+      if (this .panel || this .fileConfig .panel)
+         this .togglePanel (!this .fileConfig .panel);
    }
 
    hand ()
