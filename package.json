@@ -89,6 +89,7 @@
     "jquery": "^3.7.1",
     "jquery-ui-dist": "^1.13.2",
     "jstree": "^3.3.16",
+    "lil-gui": "^0.19.1",
     "material-icons": "^1.13.12",
     "material-symbols": "^0.14.6",
     "md5": "^2.3.0",
