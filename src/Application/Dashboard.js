@@ -67,26 +67,6 @@ module .exports = class Dashboard extends Interface
          .on ("click", () => this .togglePanel ());
    }
 
-   togglePanel (visible)
-   {
-      this .panel = require ("../Editors/Panel");
-
-      visible ??= this .panel .visible;
-
-      if (visible)
-      {
-         this .panel .hide ();
-         this .showPanelsButton .removeClass ("active");
-      }
-      else
-      {
-         this .panel .show ();
-         this .showPanelsButton .addClass ("active");
-      }
-
-      this .fileConfig .panel = this .panel .visible;
-   }
-
    configure ()
    {
       this .fileConfig .setDefaultValues ({
@@ -188,6 +168,26 @@ module .exports = class Dashboard extends Interface
          this .straightenButton .addClass ("active");
       else
          this .straightenButton .removeClass ("active");
+   }
+
+   togglePanel (visible)
+   {
+      this .panel = require ("../Editors/Panel");
+
+      visible ??= this .panel .visible;
+
+      if (visible)
+      {
+         this .panel .hide ();
+         this .showPanelsButton .removeClass ("active");
+      }
+      else
+      {
+         this .panel .show ();
+         this .showPanelsButton .addClass ("active");
+      }
+
+      this .fileConfig .panel = this .panel .visible;
    }
 };
 
