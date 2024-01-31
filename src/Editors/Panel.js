@@ -207,11 +207,11 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .SFVec3d:
          case X3D .X3DConstants .SFVec3f:
          {
-            parameter [field .getName ()] ??= { };
+            const p = parameter [field .getName ()] ??= { };
 
-            parameter [field .getName ()] .x = field .x;
-            parameter [field .getName ()] .y = field .y;
-            parameter [field .getName ()] .z = field .z;
+            p .x = field .x;
+            p .y = field .y;
+            p .z = field .z;
             break;
          }
       }
