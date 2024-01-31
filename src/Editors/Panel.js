@@ -95,10 +95,22 @@ module .exports = new class Panel extends Interface
 
    addBlades (node)
    {
-      for (const type of node .getType () .toReversed ())
+      for (const type of node .getType ())
       {
          switch (type)
          {
+            case X3D .X3DConstants .Inline:
+            {
+               this .addFolder ({
+                  title: node .getTypeName (),
+                  node: node,
+                  fields: [
+                     "global",
+                  ],
+               });
+
+               break;
+            }
             case X3D .X3DConstants .Material:
             {
                this .addFolder ({
@@ -110,7 +122,6 @@ module .exports = new class Panel extends Interface
                      "specularColor",
                      "shininess",
                      "occlusionStrength",
-                     "transparency",
                   ],
                });
 
@@ -126,7 +137,18 @@ module .exports = new class Panel extends Interface
                      "metallic",
                      "roughness",
                      "occlusionStrength",
-                     "transparency",
+                  ],
+               });
+
+               break;
+            }
+            case X3D .X3DConstants .Switch:
+            {
+               this .addFolder ({
+                  title: node .getTypeName (),
+                  node: node,
+                  fields: [
+                     "whichChoice",
                   ],
                });
 
@@ -144,18 +166,6 @@ module .exports = new class Panel extends Interface
                      "---",
                      "scaleOrientation",
                      "center",
-                  ],
-               });
-
-               break;
-            }
-            case X3D .X3DConstants .UnlitMaterial:
-            {
-               this .addFolder ({
-                  title: node .getTypeName (),
-                  node: node,
-                  fields: [
-                     "transparency",
                   ],
                });
 
@@ -184,7 +194,18 @@ module .exports = new class Panel extends Interface
                   fields: [
                      "emissiveColor",
                      "normalScale",
+                     "transparency",
                   ],
+               });
+
+               break;
+            }
+            case X3D .X3DConstants .X3DPrototypeInstance:
+            {
+               this .addFolder ({
+                  title: node .getTypeName (),
+                  node: node,
+                  fields: Array .from (node .getFields (), field => field .getName ()),
                });
 
                break;
@@ -201,15 +222,35 @@ module .exports = new class Panel extends Interface
 
                break;
             }
+            case X3D .X3DConstants .X3DUrlObject:
+            {
+               this .addFolder ({
+                  title: "X3DUrlObject",
+                  node: node,
+                  fields: [
+                     "description",
+                     "load",
+                     "url",
+                     "autoRefresh",
+                     "autoRefreshTimeLimit",
+                     ],
+               });
+
+               break;
+            }
          }
       }
+
+      if (this .pane .children .length)
+         this .pane .children [0] .expanded = this .fileConfig [`${this .pane .children [0] .title}.expanded`] ?? true;
    }
 
    addFolder ({ title, node, fields })
    {
       const folder = this .pane .addFolder ({
          title: title,
-         expanded: this .fileConfig [`${title}.expanded`] ?? !this .pane .children .length,
+         expanded: this .fileConfig [`${title}.expanded`] ?? false,
+         index: 0,
       });
 
       // Update expanded state of folder.
@@ -233,22 +274,42 @@ module .exports = new class Panel extends Interface
 
    addInput (folder, parameter, node, field)
    {
+      if (!field .isInitializable ())
+         return;
+
+      switch (field .getType ())
+      {
+         case X3D .X3DConstants .SFColor:
+         case X3D .X3DConstants .SFColorRGBA:
+         {
+            var options = { color: { type: "float" }};
+            break;
+         }
+         case X3D .X3DConstants .SFInt32:
+         {
+            var options = { step: 1 };
+            break;
+         }
+      }
+
       switch (field .getType ())
       {
          case X3D .X3DConstants .SFBool:
          case X3D .X3DConstants .SFColor:
          case X3D .X3DConstants .SFColorRGBA:
+         case X3D .X3DConstants .SFDouble:
+         case X3D .X3DConstants .SFFloat:
+         case X3D .X3DConstants .SFInt32:
          case X3D .X3DConstants .SFRotation:
+         case X3D .X3DConstants .SFTime:
          case X3D .X3DConstants .SFVec3d:
          case X3D .X3DConstants .SFVec3f:
          {
             this .refresh (parameter, node, field);
 
-            const input = folder .addInput (parameter, field .getName (),
-            {
-               color: { type: "float" },
-            })
-            .on ("change", ({ value }) => this .onchange (node, field, value));
+            const input = folder .addInput (parameter, field .getName (), options);
+
+            input .on ("change", ({ value }) => this .onchange (node, field, value));
 
             field .addFieldCallback (this, () =>
             {
@@ -285,6 +346,14 @@ module .exports = new class Panel extends Interface
             p .g = field .g;
             p .b = field .b;
             p .a = field .a;
+            break;
+         }
+         case X3D .X3DConstants .SFDouble:
+         case X3D .X3DConstants .SFFloat:
+         case X3D .X3DConstants .SFInt32:
+         case X3D .X3DConstants .SFTime:
+         {
+            parameter [field .getName ()] = field .getValue ();
             break;
          }
          case X3D .X3DConstants .SFRotation:
@@ -332,6 +401,14 @@ module .exports = new class Panel extends Interface
          {
             value = new X3D .Color4 (value .r, value .g, value .b, value .a);
 
+            this .assign (executionContext, node, field, value);
+            break;
+         }
+         case X3D .X3DConstants .SFDouble:
+         case X3D .X3DConstants .SFFloat:
+         case X3D .X3DConstants .SFInt32:
+         case X3D .X3DConstants .SFTime:
+         {
             this .assign (executionContext, node, field, value);
             break;
          }
