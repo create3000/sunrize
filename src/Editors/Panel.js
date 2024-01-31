@@ -105,24 +105,37 @@ module .exports = new class Panel extends Interface
 
       for (const type of node .getType ())
       {
-         const typeName = types .get (type);
+         if (type === X3D .X3DConstants .X3DPrototypeInstance)
+         {
+            this .addFolder ({
+               title: node .getTypeName (),
+               node: node,
+               fields: Array .from (node .getFields ())
+                  .filter (field => !fieldsIndex .has (field .getName ()))
+                  .map (field => field .getName ()),
+            });
+         }
+         else
+         {
+            const typeName = types .get (type);
 
-         if (!typeName)
-            continue;
+            if (!typeName)
+               continue;
 
-         const fields = X3DUOM .find (`ConcreteNode[name="${typeName}"],AbstractNodeType[name="${typeName}"],AbstractObjectType[name="${typeName}"]`) .find ("field") .map (function () { return $(this) .attr ("name"); }) .get ();
+            const fields = new Set (X3DUOM .find (`ConcreteNode[name="${typeName}"],AbstractNodeType[name="${typeName}"],AbstractObjectType[name="${typeName}"]`) .find ("field") .map (function () { return $(this) .attr ("name"); }) .get ());
 
-         this .addFolder ({
-            title: typeName,
-            node: node,
-            fields: Array .from (node .getFields ())
-               .filter (field => !fieldsIndex .has (field .getName ()))
-               .filter (field => fields .includes (field .getName ()))
-               .map (field => field .getName ()),
-         });
+            this .addFolder ({
+               title: typeName,
+               node: node,
+               fields: Array .from (node .getFields ())
+                  .filter (field => !fieldsIndex .has (field .getName ()))
+                  .filter (field => fields .has (field .getName ()))
+                  .map (field => field .getName ()),
+            });
 
-         for (const name of fields)
-            fieldsIndex .add (name);
+            for (const name of fields)
+               fieldsIndex .add (name);
+         }
       }
 
       if (this .pane .children .length)
