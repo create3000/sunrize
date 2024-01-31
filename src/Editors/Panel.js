@@ -138,6 +138,8 @@ module .exports = new class Panel extends Interface
          }
       }
 
+      // Expand first folder, if not otherwise specified.
+
       if (this .pane .children .length)
          this .pane .children [0] .expanded = this .fileConfig [`${this .pane .children [0] .title}.expanded`] ?? true;
    }
@@ -199,6 +201,7 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .SFFloat:
          case X3D .X3DConstants .SFInt32:
          case X3D .X3DConstants .SFRotation:
+         case X3D .X3DConstants .SFString:
          case X3D .X3DConstants .SFTime:
          case X3D .X3DConstants .SFVec3d:
          case X3D .X3DConstants .SFVec3f:
@@ -249,6 +252,7 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .SFDouble:
          case X3D .X3DConstants .SFFloat:
          case X3D .X3DConstants .SFInt32:
+         case X3D .X3DConstants .SFString:
          case X3D .X3DConstants .SFTime:
          {
             parameter [field .getName ()] = field .getValue ();
@@ -284,6 +288,7 @@ module .exports = new class Panel extends Interface
       switch (field .getType ())
       {
          case X3D .X3DConstants .SFBool:
+         case X3D .X3DConstants .SFString:
          {
             Editor .setFieldValue (executionContext, node, field, value);
             break;
