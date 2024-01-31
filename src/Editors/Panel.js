@@ -98,6 +98,21 @@ module .exports = new class Panel extends Interface
       {
          switch (type)
          {
+            case X3D .X3DConstants .Shape:
+            {
+               const folder = this .pane .addFolder ({
+                  title: "Shape",
+                  expanded: this .fileConfig [`Shape.expanded`] ?? true,
+               });
+
+               const parameter = {
+                  castShadow: node ._castShadow .getValue (),
+               };
+
+               folder .addInput (parameter, "castShadow");
+
+               break;
+            }
             case X3D .X3DConstants .Transform:
             {
                const folder = this .pane .addFolder ({
@@ -126,12 +141,18 @@ module .exports = new class Panel extends Interface
                });
 
                const parameter = {
+                  visible: node ._visible .getValue (),
+                  bboxDisplay: node ._bboxDisplay .getValue (),
                   bboxSize: { x: node ._bboxSize .x, y: node ._bboxSize .y, z: node ._bboxSize .z },
                   bboxCenter: { x: node ._bboxCenter .x, y: node ._bboxCenter .y, z: node ._bboxCenter .z },
                };
 
+               folder .addInput (parameter, "visible");
+               folder .addInput (parameter, "bboxDisplay");
                folder .addInput (parameter, "bboxSize");
                folder .addInput (parameter, "bboxCenter");
+
+               break;
             }
          }
       }
