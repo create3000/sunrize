@@ -110,7 +110,7 @@ module .exports = new class Panel extends Interface
          if (!typeName)
             continue;
 
-         const fields = X3DUOM .find (`ConcreteNode[name="${typeName}"],AbstractNodeType[name="${typeName}"],AbstractObjectType[name="${typeName}"]`) .find ("field") .map (function () { return $(this) .attr ("name")}) .get ();
+         const fields = X3DUOM .find (`ConcreteNode[name="${typeName}"],AbstractNodeType[name="${typeName}"],AbstractObjectType[name="${typeName}"]`) .find ("field") .map (function () { return $(this) .attr ("name"); }) .get ();
 
          this .addFolder ({
             title: typeName,
