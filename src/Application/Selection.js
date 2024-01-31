@@ -50,14 +50,14 @@ module .exports = new class Selection extends Interface
    {
       for (const node of this .nodes)
       {
-         if (node === exclude)
+         if (node .valueOf () === exclude .valueOf ())
             continue;
 
          node .getTool () ?.setSelected (false);
          node .removeTool ("createOnSelection");
       }
 
-      this .nodes = exclude ? [exclude] : [ ];
+      this .nodes = this .node .filter (n => n .valueOf () === exclude .valueOf ());
    }
 
    #add (node)
