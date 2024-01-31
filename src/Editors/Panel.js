@@ -99,6 +99,39 @@ module .exports = new class Panel extends Interface
       {
          switch (type)
          {
+            case X3D .X3DConstants .Material:
+            {
+               this .addFolder ({
+                  title: node .getTypeName (),
+                  node: node,
+                  fields: [
+                     "ambientIntensity",
+                     "diffuseColor",
+                     "specularColor",
+                     "shininess",
+                     "occlusionStrength",
+                     "transparency",
+                  ],
+               });
+
+               break;
+            }
+            case X3D .X3DConstants .PhysicalMaterial:
+            {
+               this .addFolder ({
+                  title: node .getTypeName (),
+                  node: node,
+                  fields: [
+                     "baseColor",
+                     "metallic",
+                     "roughness",
+                     "occlusionStrength",
+                     "transparency",
+                  ],
+               });
+
+               break;
+            }
             case X3D .X3DConstants .Transform:
             {
                this .addFolder ({
@@ -116,6 +149,18 @@ module .exports = new class Panel extends Interface
 
                break;
             }
+            case X3D .X3DConstants .UnlitMaterial:
+            {
+               this .addFolder ({
+                  title: node .getTypeName (),
+                  node: node,
+                  fields: [
+                     "transparency",
+                  ],
+               });
+
+               break;
+            }
             case X3D .X3DConstants .X3DBoundedObject:
             {
                this .addFolder ({
@@ -126,6 +171,19 @@ module .exports = new class Panel extends Interface
                      "bboxDisplay",
                      "bboxSize",
                      "bboxCenter",
+                  ],
+               });
+
+               break;
+            }
+            case X3D .X3DConstants .X3DOneSidedMaterialNode:
+            {
+               this .addFolder ({
+                  title: "X3DOneSidedMaterialNode",
+                  node: node,
+                  fields: [
+                     "emissiveColor",
+                     "normalScale",
                   ],
                });
 
@@ -178,13 +236,19 @@ module .exports = new class Panel extends Interface
       switch (field .getType ())
       {
          case X3D .X3DConstants .SFBool:
+         case X3D .X3DConstants .SFColor:
+         case X3D .X3DConstants .SFColorRGBA:
+         case X3D .X3DConstants .SFRotation:
          case X3D .X3DConstants .SFVec3d:
          case X3D .X3DConstants .SFVec3f:
          {
             this .refresh (parameter, node, field);
 
-            const input = folder .addInput (parameter, field .getName ())
-               .on ("change", ({ value }) => this .onchange (node, field, value));
+            const input = folder .addInput (parameter, field .getName (),
+            {
+               color: { type: "float" },
+            })
+            .on ("change", ({ value }) => this .onchange (node, field, value));
 
             field .addFieldCallback (this, () =>
             {
@@ -202,6 +266,35 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .SFBool:
          {
             parameter [field .getName ()] = field .getValue ();
+            break;
+         }
+         case X3D .X3DConstants .SFColor:
+         {
+            const p = parameter [field .getName ()] ??= { };
+
+            p .r = field .r;
+            p .g = field .g;
+            p .b = field .b;
+            break;
+         }
+         case X3D .X3DConstants .SFColorRGBA:
+         {
+            const p = parameter [field .getName ()] ??= { };
+
+            p .r = field .r;
+            p .g = field .g;
+            p .b = field .b;
+            p .a = field .a;
+            break;
+         }
+         case X3D .X3DConstants .SFRotation:
+         {
+            const p = parameter [field .getName ()] ??= { };
+
+            p .x = field .x;
+            p .y = field .y;
+            p .z = field .z;
+            p .w = field .angle;
             break;
          }
          case X3D .X3DConstants .SFVec3d:
@@ -228,12 +321,54 @@ module .exports = new class Panel extends Interface
             Editor .setFieldValue (executionContext, node, field, value);
             break;
          }
+         case X3D .X3DConstants .SFColor:
+         {
+            value = new X3D .Color3 (value .r, value .g, value .b);
+
+            this .assign (executionContext, node, field, value);
+            break;
+         }
+         case X3D .X3DConstants .SFColorRGBA:
+         {
+            value = new X3D .Color4 (value .r, value .g, value .b, value .a);
+
+            this .assign (executionContext, node, field, value);
+            break;
+         }
+         case X3D .X3DConstants .SFRotation:
+         {
+            value = new X3D .Rotation4 (value .x, value .y, value .z, value .w);
+
+            this .assign (executionContext, node, field, value);
+            break;
+         }
          case X3D .X3DConstants .SFVec3d:
          case X3D .X3DConstants .SFVec3f:
          {
-            Editor .setFieldValue (executionContext, node, field, new X3D .Vector3 (value .x, value .y, value .z));
+            value = new X3D .Vector3 (value .x, value .y, value .z);
+
+            this .assign (executionContext, node, field, value);
             break;
          }
+      }
+   }
+
+   assign (executionContext, node, field, value)
+   {
+      if (this .mousedown)
+      {
+         this .field ??= field .copy ();
+
+         field .setValue (value);
+      }
+      else
+      {
+         if (this .field)
+            field .assign (this .field);
+
+         Editor .setFieldValue (executionContext, node, field, value);
+
+         this .field = null;
       }
    }
 };
