@@ -18,6 +18,7 @@ class ArcClose2DTool extends X3DGeometryNodeTool
       // Transform Tool
 
       const
+         groupNode     = this .getToolScene () .createNode ("Group"),
          transformNode = this .getToolScene () .createNode ("Transform"),
          transformTool = await transformNode .getValue () .addTool () .getToolInstance ();
 
@@ -26,7 +27,8 @@ class ArcClose2DTool extends X3DGeometryNodeTool
       transformNode .scale .addInterest ("set_scale", this);
       transformTool .getField ("isActive") .addInterest ("handleUndo", this);
 
-      transformNode .bboxSize      = new X3D .Vector3 (2, 2, 0);
+      groupNode     .bboxSize      = new X3D .Vector3 (2, 2, 0);
+      transformNode .children      = [groupNode];
       transformTool .group         = this .getTypeName ();
       transformTool .undo          = false;
       transformTool .tools         = ["SCALE"];
