@@ -18,7 +18,7 @@ module .exports = new class Selection extends Interface
 
    has (node)
    {
-      return this .nodes .includes (node .getTool () ?? node);
+      return this .nodes .includes (node .valueOf ());
    }
 
    clear ()
@@ -48,34 +48,40 @@ module .exports = new class Selection extends Interface
 
    #clear (exclude)
    {
+      exclude = exclude ?.valueOf ();
+
       for (const node of this .nodes)
       {
-         if (node .valueOf () === exclude ?.valueOf ())
+         if (node === exclude)
             continue;
 
          node .getTool () ?.setSelected (false);
          node .removeTool ("createOnSelection");
       }
 
-      this .nodes = this .nodes .filter (n => n .valueOf () === exclude ?.valueOf ());
+      this .nodes = this .nodes .filter (n => n === exclude);
    }
 
    #add (node)
    {
-      node = node .addTool ("createOnSelection");
+      node = node .valueOf ();
 
-      this .nodes = this .nodes .filter (n => n .valueOf () !== node .valueOf ());
+      node .addTool ("createOnSelection");
+      node .getTool () ?.setSelected (true);
+
+      this .nodes = this .nodes .filter (n => n !== node);
 
       this .nodes .push (node);
-      node .getTool () ?.setSelected (true);
    }
 
    #remove (node)
    {
+      node = node .valueOf ();
+
       node .getTool () ?.setSelected (false);
       node .removeTool ("createOnSelection");
 
-      this .nodes = this .nodes .filter (n => n .valueOf () !== node .valueOf ());
+      this .nodes = this .nodes .filter (n => n !== node);
    }
 
    interests = new Map ();
