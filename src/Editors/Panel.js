@@ -101,7 +101,7 @@ module .exports = new class Panel extends Interface
       for (const element of X3DUOM .find (`ConcreteNode,AbstractNodeType,AbstractObjectType`))
          types .set (X3D .X3DConstants [$(element) .attr ("name")], $(element) .attr ("name"));
 
-      const fieldsIndex = new Set (["IS", "DEF", "USE", "class", "id", "style"]);
+      const seen = new Set (["IS", "DEF", "USE", "class", "id", "style"]);
 
       for (const type of node .getType ())
       {
@@ -111,7 +111,7 @@ module .exports = new class Panel extends Interface
                title: node .getTypeName (),
                node: node,
                fields: Array .from (node .getFields ())
-                  .filter (field => !fieldsIndex .has (field .getName ()))
+                  .filter (field => !seen .has (field .getName ()))
                   .map (field => field .getName ()),
             });
          }
@@ -128,13 +128,13 @@ module .exports = new class Panel extends Interface
                title: typeName,
                node: node,
                fields: Array .from (node .getFields ())
-                  .filter (field => !fieldsIndex .has (field .getName ()))
+                  .filter (field => !seen .has (field .getName ()))
                   .filter (field => fields .has (field .getName ()))
                   .map (field => field .getName ()),
             });
 
             for (const name of fields)
-               fieldsIndex .add (name);
+               seen .add (name);
          }
       }
 
