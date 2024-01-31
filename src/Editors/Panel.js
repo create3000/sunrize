@@ -190,6 +190,12 @@ module .exports = new class Panel extends Interface
             var options = { step: 1 };
             break;
          }
+         case X3D .X3DConstants .SFVec2d:
+         case X3D .X3DConstants .SFVec2f:
+         {
+            var options = { y: { inverted: true } };
+            break;
+         }
       }
 
       switch (field .getType ())
@@ -203,8 +209,12 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .SFRotation:
          case X3D .X3DConstants .SFString:
          case X3D .X3DConstants .SFTime:
+         case X3D .X3DConstants .SFVec2d:
+         case X3D .X3DConstants .SFVec2f:
          case X3D .X3DConstants .SFVec3d:
          case X3D .X3DConstants .SFVec3f:
+         case X3D .X3DConstants .SFVec4d:
+         case X3D .X3DConstants .SFVec4f:
          {
             this .refresh (parameter, node, field);
 
@@ -268,14 +278,18 @@ module .exports = new class Panel extends Interface
             p .w = field .angle;
             break;
          }
+         case X3D .X3DConstants .SFVec2d:
+         case X3D .X3DConstants .SFVec2f:
          case X3D .X3DConstants .SFVec3d:
          case X3D .X3DConstants .SFVec3f:
+         case X3D .X3DConstants .SFVec4d:
+         case X3D .X3DConstants .SFVec4f:
          {
             const p = parameter [field .getName ()] ??= { };
 
-            p .x = field .x;
-            p .y = field .y;
-            p .z = field .z;
+            for (const key in field)
+               p [key] = field [key];
+
             break;
          }
       }
@@ -322,10 +336,26 @@ module .exports = new class Panel extends Interface
             this .assign (executionContext, node, field, value);
             break;
          }
+         case X3D .X3DConstants .SFVec2d:
+         case X3D .X3DConstants .SFVec2f:
+         {
+            value = new X3D .Vector2 (value .x, value .y);
+
+            this .assign (executionContext, node, field, value);
+            break;
+         }
          case X3D .X3DConstants .SFVec3d:
          case X3D .X3DConstants .SFVec3f:
          {
             value = new X3D .Vector3 (value .x, value .y, value .z);
+
+            this .assign (executionContext, node, field, value);
+            break;
+         }
+         case X3D .X3DConstants .SFVec4d:
+         case X3D .X3DConstants .SFVec4f:
+         {
+            value = new X3D .Vector4 (value .x, value .y, value .z, value .w);
 
             this .assign (executionContext, node, field, value);
             break;
