@@ -192,6 +192,11 @@ module .exports = class UndoManager
       this .interests .set (key, callback);
    }
 
+   removeInterest (key)
+   {
+      this .interests .delete (key);
+   }
+
    processInterests ()
    {
       for (const callback of this .interests .values ())

@@ -24,23 +24,10 @@ module .exports = new class Panel extends Interface
 
       this .container .on ("mousedown", () => this .onmousedown ())
 
-      this .pane .on ("fold", () => this .onfold ());
-
-      this .selection .addInterest (this, () => this .onselection ());
-
       this .setup ();
    }
 
-   configure ()
-   {
-      this .fileConfig .setDefaultValues ({
-         expanded: true,
-      });
-
-      this .pane .expanded = this .fileConfig .expanded;
-
-      this .onselection ();
-   }
+   configure () { }
 
    get visible ()
    {
@@ -49,17 +36,18 @@ module .exports = new class Panel extends Interface
 
    show ()
    {
+      this .selection .addInterest (this, () => this .onselection ());
+
+      this .onselection ();
+
       this .container .show (300);
    }
 
    hide ()
    {
-      this .container .hide (300);
-   }
+      this .selection .removeInterest (this);
 
-   onfold ()
-   {
-      this .fileConfig .expanded = this .pane .expanded;
+      this .container .hide (300);
    }
 
    onmousedown ()
