@@ -1,7 +1,8 @@
 const
    $         = require ("jquery"),
    TweakPane = require ("tweakpane"),
-   Interface = require ("../Application/Interface");
+   Interface = require ("../Application/Interface"),
+   X3D       = require ("../X3D");
 
 module .exports = new class Panel extends Interface
 {
@@ -9,7 +10,7 @@ module .exports = new class Panel extends Interface
    {
       super ("Sunrize.Panel.");
 
-      this .pane      = new TweakPane .Pane ({ title: "Transform" });
+      this .pane      = new TweakPane .Pane ();
       this .container = $(this .pane .element) .parent ();
       this .selection = require ("../Application/Selection");
 
@@ -77,29 +78,69 @@ module .exports = new class Panel extends Interface
 
    onselection ()
    {
-      const
-         node     = this .selection .nodes .at (-1),
-         typeName = node ?.getTypeName ();
+      const node = this .selection .nodes .at (-1);
 
-      this .pane .hidden = !node;
-      this .pane .title  = typeName;
 
       // Remove all blades.
 
-      for (const blade of [... this .pane .children])
-         this .pane .remove (blade);
+      for (const folder of [... this .pane .children])
+         folder .dispose ();
+
+      if (!node)
+      {
+         this .pane .hidden = true;
+         return;
+      }
 
       // Add new blades.
 
-      const parameter = {
-         translation: { x: 0, y: 0, z: 0 },
-         rotation: { x: 0, y: 0, z: 1, w: 0 },
-         scale: { x: 0, y: 0, z: 0 },
-      };
+      for (const type of node .getType () .toReversed ())
+      {
+         switch (type)
+         {
+            case X3D .X3DConstants .Transform:
+            {
+               const folder = this .pane .addFolder ({
+                  title: node .getTypeName (),
+                  expanded: this .fileConfig [`${node .getTypeName ()}.expanded`] ?? true,
+               });
 
-      this .pane .addInput (parameter, "translation")
-         .on ("change", ({ value }) => console .log (value .x, value .y, value .z));
-      this .pane .addInput (parameter, "rotation");
-      this .pane .addInput (parameter, "scale");
+               const parameter = {
+                  translation: { x: node ._translation .x, y: node ._translation .y, z: node ._translation .z },
+                  rotation: { x: node ._rotation .x, y: node ._rotation .y, z: node ._rotation .z, w: node ._rotation .angle },
+                  scale: { x: node ._scale .x, y: node ._scale .y, z: node ._scale .z },
+               };
+
+               folder .addInput (parameter, "translation")
+                  .on ("change", ({ value }) => console .log (value .x, value .y, value .z));
+               folder .addInput (parameter, "rotation");
+               folder .addInput (parameter, "scale");
+
+               break;
+            }
+            case X3D .X3DConstants .X3DBoundedObject:
+            {
+               const folder = this .pane .addFolder ({
+                  title: "X3DBoundedObject",
+                  expanded: this .fileConfig [`X3DBoundedObject.expanded`] ?? false,
+               });
+
+               const parameter = {
+                  bboxSize: { x: node ._bboxSize .x, y: node ._bboxSize .y, z: node ._bboxSize .z },
+                  bboxCenter: { x: node ._bboxCenter .x, y: node ._bboxCenter .y, z: node ._bboxCenter .z },
+               };
+
+               folder .addInput (parameter, "bboxSize");
+               folder .addInput (parameter, "bboxCenter");
+            }
+         }
+      }
+
+      this .pane .hidden = !this .pane .children .length;
+
+      // Update expanded state of folder.
+
+      for (const folder of this .pane .children)
+         folder .on ("fold", () => this .fileConfig [`${folder .title}.expanded`] = folder .expanded)
    }
 };
