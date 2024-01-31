@@ -3,7 +3,8 @@ const
    TweakPane = require ("tweakpane"),
    Interface = require ("../Application/Interface"),
    X3D       = require ("../X3D"),
-   Editor    = require ("../Undo/Editor");
+   Editor    = require ("../Undo/Editor"),
+   X3DUOM    = require ("../Bits/X3DUOM");
 
 module .exports = new class Panel extends Interface
 {
@@ -95,150 +96,33 @@ module .exports = new class Panel extends Interface
 
    addBlades (node)
    {
+      const types = new Map ();
+
+      for (const element of X3DUOM .find (`ConcreteNode,AbstractNodeType,AbstractObjectType`))
+         types .set (X3D .X3DConstants [$(element) .attr ("name")], $(element) .attr ("name"));
+
+      const fieldsIndex = new Set (["IS", "DEF", "USE", "class", "id", "style"]);
+
       for (const type of node .getType ())
       {
-         switch (type)
-         {
-            case X3D .X3DConstants .Inline:
-            {
-               this .addFolder ({
-                  title: node .getTypeName (),
-                  node: node,
-                  fields: [
-                     "global",
-                  ],
-               });
+         const typeName = types .get (type);
 
-               break;
-            }
-            case X3D .X3DConstants .Material:
-            {
-               this .addFolder ({
-                  title: node .getTypeName (),
-                  node: node,
-                  fields: [
-                     "ambientIntensity",
-                     "diffuseColor",
-                     "specularColor",
-                     "shininess",
-                     "occlusionStrength",
-                  ],
-               });
+         if (!typeName)
+            continue;
 
-               break;
-            }
-            case X3D .X3DConstants .PhysicalMaterial:
-            {
-               this .addFolder ({
-                  title: node .getTypeName (),
-                  node: node,
-                  fields: [
-                     "baseColor",
-                     "metallic",
-                     "roughness",
-                     "occlusionStrength",
-                  ],
-               });
+         const fields = X3DUOM .find (`ConcreteNode[name="${typeName}"],AbstractNodeType[name="${typeName}"],AbstractObjectType[name="${typeName}"]`) .find ("field") .map (function () { return $(this) .attr ("name")}) .get ();
 
-               break;
-            }
-            case X3D .X3DConstants .Switch:
-            {
-               this .addFolder ({
-                  title: node .getTypeName (),
-                  node: node,
-                  fields: [
-                     "whichChoice",
-                  ],
-               });
+         this .addFolder ({
+            title: typeName,
+            node: node,
+            fields: Array .from (node .getFields ())
+               .filter (field => !fieldsIndex .has (field .getName ()))
+               .filter (field => fields .includes (field .getName ()))
+               .map (field => field .getName ()),
+         });
 
-               break;
-            }
-            case X3D .X3DConstants .Transform:
-            {
-               this .addFolder ({
-                  title: node .getTypeName (),
-                  node: node,
-                  fields: [
-                     "translation",
-                     "rotation",
-                     "scale",
-                     "---",
-                     "scaleOrientation",
-                     "center",
-                  ],
-               });
-
-               break;
-            }
-            case X3D .X3DConstants .X3DBoundedObject:
-            {
-               this .addFolder ({
-                  title: "X3DBoundedObject",
-                  node: node,
-                  fields: [
-                     "visible",
-                     "bboxDisplay",
-                     "bboxSize",
-                     "bboxCenter",
-                  ],
-               });
-
-               break;
-            }
-            case X3D .X3DConstants .X3DOneSidedMaterialNode:
-            {
-               this .addFolder ({
-                  title: "X3DOneSidedMaterialNode",
-                  node: node,
-                  fields: [
-                     "emissiveColor",
-                     "normalScale",
-                     "transparency",
-                  ],
-               });
-
-               break;
-            }
-            case X3D .X3DConstants .X3DPrototypeInstance:
-            {
-               this .addFolder ({
-                  title: node .getTypeName (),
-                  node: node,
-                  fields: Array .from (node .getFields (), field => field .getName ()),
-               });
-
-               break;
-            }
-            case X3D .X3DConstants .X3DShapeNode:
-            {
-               this .addFolder ({
-                  title: "X3DShapeNode",
-                  node: node,
-                  fields: [
-                     "castShadow",
-                  ],
-               });
-
-               break;
-            }
-            case X3D .X3DConstants .X3DUrlObject:
-            {
-               this .addFolder ({
-                  title: "X3DUrlObject",
-                  node: node,
-                  fields: [
-                     "description",
-                     "load",
-                     "url",
-                     "autoRefresh",
-                     "autoRefreshTimeLimit",
-                     ],
-               });
-
-               break;
-            }
-         }
+         for (const name of fields)
+            fieldsIndex .add (name);
       }
 
       if (this .pane .children .length)
@@ -269,7 +153,8 @@ module .exports = new class Panel extends Interface
             this .addInput (folder, parameter, node, node .getField (name));
       }
 
-      return folder;
+      if (!folder .children .length)
+         folder .dispose ();
    }
 
    addInput (folder, parameter, node, field)

@@ -31,7 +31,7 @@ module .exports = class OutlineView extends Interface
       this .objects           = new Map (); // <id, node>
       this .actionKeys        = new ActionKeys ("OutlineView");
       this .onDemandToolNodes = new Set ();
-      this .x3duom            = $($.parseXML (fs .readFileSync (path .join (__dirname, "..", "assets", "x3duom.xml"), "utf-8")));
+      this .x3duom            = require ("../Bits/X3DUOM");
 
       this .globalConfig .setDefaultValues ({
          expandExternProtoDeclarations: true,
