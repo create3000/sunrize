@@ -88,6 +88,16 @@ module .exports = new class Panel extends Interface
 
    onselection ()
    {
-      console .log (this .selection .nodes .length, this .selection .nodes .at (-1) ?.getTypeName ());
+      const
+         node     = this .selection .nodes .at (-1),
+         typeName = node ?.getTypeName ();
+
+      this .pane .hidden = !node;
+      this .pane .title  = typeName;
+
+      // Remove all blades.
+
+      for (const blade of [... this .pane .children])
+         this .pane .remove (blade);
    }
 };
