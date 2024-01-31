@@ -7,7 +7,7 @@ module .exports = new class Panel extends Interface
 {
    constructor ()
    {
-      super ();
+      super ("Sunrize.Panel.");
 
       this .pane      = new TweakPane .Pane ({ title: "Transform" });
       this .container = $(this .pane .element) .parent ();
@@ -27,19 +27,6 @@ module .exports = new class Panel extends Interface
 
       this .selection .addInterest (this, () => this .onselection ());
 
-
-      const parameter = {
-         translation: { x: 0, y: 0, z: 0 },
-         rotation: { x: 0, y: 0, z: 1, w: 0 },
-         scale: { x: 0, y: 0, z: 0 },
-      };
-
-      this .pane .addInput (parameter, "translation")
-         .on ("change", ({ value }) => console .log (value .x, value .y, value .z));
-      this .pane .addInput (parameter, "rotation");
-      this .pane .addInput (parameter, "scale");
-
-
       this .setup ();
    }
 
@@ -50,6 +37,8 @@ module .exports = new class Panel extends Interface
       });
 
       this .pane .expanded = this .fileConfig .expanded;
+
+      this .onselection ();
    }
 
    get visible ()
@@ -99,5 +88,18 @@ module .exports = new class Panel extends Interface
 
       for (const blade of [... this .pane .children])
          this .pane .remove (blade);
+
+      // Add new blades.
+
+      const parameter = {
+         translation: { x: 0, y: 0, z: 0 },
+         rotation: { x: 0, y: 0, z: 1, w: 0 },
+         scale: { x: 0, y: 0, z: 0 },
+      };
+
+      this .pane .addInput (parameter, "translation")
+         .on ("change", ({ value }) => console .log (value .x, value .y, value .z));
+      this .pane .addInput (parameter, "rotation");
+      this .pane .addInput (parameter, "scale");
    }
 };

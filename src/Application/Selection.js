@@ -1,8 +1,19 @@
-module .exports = new class Selection
+const Interface = require ("./Interface");
+
+module .exports = new class Selection extends Interface
 {
    constructor ()
    {
+      super ("Sunrize.Selection.");
+
       this .nodes = [ ];
+
+      this .setup ();
+   }
+
+   configure ()
+   {
+      this .clear ();
    }
 
    has (node)
