@@ -238,18 +238,6 @@ module .exports = new class Panel extends Interface
          }
       }
 
-      const
-         executionContext = node .getExecutionContext (),
-         category         = field .getUnit (),
-         min              = element .attr ("minInclusive") ?? element .attr ("minExclusive"),
-         max              = element .attr ("maxInclusive") ?? element .attr ("maxExclusive");
-
-      if (min !== undefined)
-         options .min = executionContext .toUnit (category, parseFloat (min));
-
-      if (max !== undefined)
-         options .max = executionContext .toUnit (category, parseFloat (max));
-
       switch (field .getType ())
       {
          case X3D .X3DConstants .SFBool:
@@ -268,6 +256,18 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .SFVec4d:
          case X3D .X3DConstants .SFVec4f:
          {
+            const
+               executionContext = node .getExecutionContext (),
+               category         = field .getUnit (),
+               min              = element .attr ("minInclusive") ?? element .attr ("minExclusive"),
+               max              = element .attr ("maxInclusive") ?? element .attr ("maxExclusive");
+
+            if (min !== undefined)
+               options .min = executionContext .toUnit (category, parseFloat (min));
+
+            if (max !== undefined)
+               options .max = executionContext .toUnit (category, parseFloat (max));
+
             this .refresh (parameter, node, field);
 
             const input = folder .addInput (parameter, field .getName (), options);
