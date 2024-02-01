@@ -103,7 +103,9 @@ module .exports = new class Panel extends Interface
    {
       const types = new Map (X3DUOM .find (`ConcreteNode,AbstractNodeType,AbstractObjectType`) .map (function () { return this .getAttribute ("name"); }) .get () .map (typeName => [X3D .X3DConstants [typeName], typeName]));
 
-      const seen = new Set (["IS", "DEF", "USE", "class", "id", "style"]);
+      const
+         seen              = new Set (["IS", "DEF", "USE", "class", "id", "style"]),
+         userDefinedFields = node .getUserDefinedFields ();
 
       for (const type of node .getType ())
       {
@@ -134,11 +136,12 @@ module .exports = new class Panel extends Interface
                   seen .delete ("style");
                   break;
                }
+               case X3D .X3DConstants .Script:
                case X3D .X3DConstants .ComposedShader:
                case X3D .X3DConstants .PackagedShader:
                case X3D .X3DConstants .ShaderProgram:
                {
-                  for (const field of node .getUserDefinedFields ())
+                  for (const field of userDefinedFields)
                      fields .add (field .getName ());
 
                   break;
@@ -151,6 +154,7 @@ module .exports = new class Panel extends Interface
                fields: Array .from (node .getFields ())
                   .filter (field => !seen .has (field .getName ()))
                   .filter (field => fields .has (field .getName ()))
+                  .sort ((a, b) => userDefinedFields .has (b .getName ()) - userDefinedFields .has (a .getName ()))
                   .map (field => field .getName ()),
             });
 

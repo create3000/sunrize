@@ -76,6 +76,7 @@ class X3DNodeTool extends X3DBaseTool
    #externalNodes = new Map ();
    #groupedTools  = new Set ();
    #initialValues = new Map ();
+   #disposed      = false;
 
    constructor (node)
    {
@@ -143,15 +144,22 @@ class X3DNodeTool extends X3DBaseTool
 
    async setupTool ()
    {
-      await this .initializeTool ();
+      try
+      {
+         await this .initializeTool ();
 
-      // X3DLayerNodeTool and X3DPrototypeInstanceTool have no own tool.
+         // X3DLayerNodeTool and X3DPrototypeInstanceTool have no own tool.
 
-      if (!this .tool)
-         return;
+         if (!this .tool)
+            return;
 
-      this .#innerNode     = this .tool .getValue () .getInnerNode ();
-      this .tool .selected = this .#selected;
+         this .#innerNode     = this .tool .getValue () .getInnerNode ();
+         this .tool .selected = this .#selected;
+      }
+      catch (error)
+      {
+         console .error (error);
+      }
    }
 
    async initializeTool () { }
@@ -164,7 +172,7 @@ class X3DNodeTool extends X3DBaseTool
 
       if (promise)
       {
-         return this .#promise = promise .then (scene => this .createTool (scene));
+         this .#promise = promise .then (scene => this .createTool (scene));
       }
       else
       {
@@ -191,8 +199,13 @@ class X3DNodeTool extends X3DBaseTool
 
          X3DNodeTool .#scenes .set (protoURL .href, promise);
 
-         return this .#promise = promise;
+         this .#promise = promise;
       }
+
+      if (this .#disposed)
+         return Promise .reject (new Error ("Tool is already disposed."));
+      else
+         return this .#promise;
    }
 
    createTool (scene)
@@ -240,7 +253,10 @@ class X3DNodeTool extends X3DBaseTool
       return this .node;
    }
 
-   disposeTool () { }
+   disposeTool ()
+   {
+      this .#disposed = true;
+   }
 
    // Undo/Redo Handling
 
