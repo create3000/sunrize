@@ -199,26 +199,30 @@ module .exports = new class Panel extends Interface
       if (!field .isInitializable ())
          return;
 
+      const
+         element = X3DUOM .find (`ConcreteNode[name="${node .getTypeName ()}"] field[name=${field .getName ()}]`),
+         options = { };
+
       switch (field .getType ())
       {
          case X3D .X3DConstants .SFColor:
          case X3D .X3DConstants .SFColorRGBA:
          {
-            var options = { color: { type: "float" }};
+            options .color = { type: "float" };
             break;
          }
          case X3D .X3DConstants .SFInt32:
          {
-            var options = { step: 1 };
+            options .step = 1;
             break;
          }
          case X3D .X3DConstants .SFString:
          {
-            const enumerations = X3DUOM .find (`ConcreteNode[name="${node .getTypeName ()}"] field[name=${field .getName ()}] enumeration`) .map (function () { return this .getAttribute ("value"); }) .get ();
+            const enumerations = element .find ("enumeration") .map (function () { return this .getAttribute ("value"); }) .get ();
 
             if (enumerations .length)
             {
-               var options = { options: { } };
+               options .options = { };
 
                for (const value of enumerations)
                   options .options [value] = value;
@@ -229,10 +233,22 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .SFVec2d:
          case X3D .X3DConstants .SFVec2f:
          {
-            var options = { y: { inverted: true } };
+            options .y = { inverted: true };
             break;
          }
       }
+
+      const
+         executionContext = node .getExecutionContext (),
+         category         = field .getUnit (),
+         min              = element .attr ("minInclusive") ?? element .attr ("minExclusive"),
+         max              = element .attr ("maxInclusive") ?? element .attr ("maxExclusive");
+
+      if (min !== undefined)
+         options .min = executionContext .toUnit (category, parseFloat (min));
+
+      if (max !== undefined)
+         options .max = executionContext .toUnit (category, parseFloat (max));
 
       switch (field .getType ())
       {
