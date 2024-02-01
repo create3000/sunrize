@@ -1,18 +1,16 @@
 "use strict";
 
 const
-   $            = require ("jquery"),
-   electron     = require ("electron"),
-   fs           = require ("fs"),
-   path         = require ("path"),
-   util         = require ("util"),
-   jstree       = require ("jstree"),
-   X3D          = require ("../X3D"),
-   Interface    = require ("../Application/Interface"),
-   ActionKeys   = require ("../Application/ActionKeys"),
-   Traverse     = require ("../Application/Traverse"),
-   X3DUOM       = require ("../Bits/X3DUOM"),
-   _            = require ("../Application/GetText");
+   $          = require ("jquery"),
+   electron   = require ("electron"),
+   util       = require ("util"),
+   jstree     = require ("jstree"),
+   X3D        = require ("../X3D"),
+   Interface  = require ("../Application/Interface"),
+   ActionKeys = require ("../Application/ActionKeys"),
+   Traverse   = require ("../Application/Traverse"),
+   X3DUOM     = require ("../Bits/X3DUOM"),
+   _          = require ("../Application/GetText");
 
 const
    _expanded     = Symbol (),
