@@ -100,10 +100,7 @@ module .exports = new class Panel extends Interface
 
    addBlades (node)
    {
-      const types = new Map ();
-
-      for (const element of X3DUOM .find (`ConcreteNode,AbstractNodeType,AbstractObjectType`))
-         types .set (X3D .X3DConstants [$(element) .attr ("name")], $(element) .attr ("name"));
+      const types = new Map (X3DUOM .find (`ConcreteNode,AbstractNodeType,AbstractObjectType`) .map (function () { return $(this) .attr ("name"); }) .get () .map (typeName => [X3D .X3DConstants [typeName], typeName]));
 
       const seen = new Set (["IS", "DEF", "USE", "class", "id", "style"]);
 
