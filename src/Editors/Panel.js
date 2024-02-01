@@ -132,19 +132,9 @@ module .exports = new class Panel extends Interface
                   seen .delete ("style");
                   break;
                }
-               case X3D .X3DConstants .X3DOneSidedMaterialNode:
-               {
-                  for (const field of node .getFields ())
-                  {
-                     if (field .getName () .match (/Mapping$/))
-                        seen .add (field .getName ());
-                  }
-
-                  break;
-               }
             }
 
-            const fields = new Set (X3DUOM .find (`ConcreteNode[name="${typeName}"],AbstractNodeType[name="${typeName}"],AbstractObjectType[name="${typeName}"]`) .find ("field") .map (function () { return this .getAttribute ("name"); }) .get ());
+            const fields = new Set (X3DUOM .find (`ConcreteNode[name="${typeName}"],AbstractNodeType[name=${typeName}],AbstractObjectType[name=${typeName}]`) .find ("field") .map (function () { return this .getAttribute ("name"); }) .get ());
 
             this .addFolder ({
                title: typeName,
@@ -200,7 +190,7 @@ module .exports = new class Panel extends Interface
          return;
 
       const
-         element = X3DUOM .find (`ConcreteNode[name="${node .getTypeName ()}"] field[name=${field .getName ()}]`),
+         element = X3DUOM .find (`ConcreteNode[name=${node .getTypeName ()}] field[name=${field .getName ()}]`),
          options = { };
 
       switch (field .getType ())
