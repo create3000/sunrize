@@ -126,8 +126,6 @@ module .exports = new class Panel extends Interface
             if (!typeName)
                continue;
 
-            const fields = new Set (X3DUOM .find (`ConcreteNode[name="${typeName}"],AbstractNodeType[name="${typeName}"],AbstractObjectType[name="${typeName}"]`) .find ("field") .map (function () { return $(this) .attr ("name"); }) .get ());
-
             switch (type)
             {
                case X3D .X3DConstants .FontStyle:
@@ -137,6 +135,8 @@ module .exports = new class Panel extends Interface
                   break;
                }
             }
+
+            const fields = new Set (X3DUOM .find (`ConcreteNode[name="${typeName}"],AbstractNodeType[name="${typeName}"],AbstractObjectType[name="${typeName}"]`) .find ("field") .map (function () { return $(this) .attr ("name"); }) .get ());
 
             this .addFolder ({
                title: typeName,
