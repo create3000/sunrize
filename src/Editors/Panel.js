@@ -154,7 +154,7 @@ module .exports = new class Panel extends Interface
                fields: Array .from (node .getFields ())
                   .filter (field => !seen .has (field .getName ()))
                   .filter (field => fields .has (field .getName ()))
-                  .sort ((a, b) => userDefinedFields .has (b .getName ()) - userDefinedFields .has (a .getName ()))
+                  .sort ((a, b) => userDefinedFields .includes (b) - userDefinedFields .includes (a))
                   .map (field => field .getName ()),
             });
 
