@@ -50,35 +50,6 @@ body {
   --tp-monitor-background-color: hsla(0, 0%, 0%, 0.3);
   --tp-monitor-foreground-color: hsl(230, 7%, 10%);
 }
-/*
---font-family: var(--tp-font-family, Roboto Mono, Source Code Pro, Menlo, Courier, monospace);
---bs-br: var(--tp-base-border-radius, 6px);
---cnt-h-p: var(--tp-container-horizontal-padding, 4px);
---cnt-v-p: var(--tp-container-vertical-padding, 4px);
---elm-br: var(--tp-element-border-radius, 2px);
---bld-s: var(--tp-blade-spacing, 4px);
---bld-us: var(--tp-blade-unit-size, 20px);
---bs-bg: var(--tp-base-background-color, hsl(230, 7%, 17%));
---bs-sh: var(--tp-base-shadow-color, rgba(0, 0, 0, 0.2));
---btn-bg: var(--tp-button-background-color, hsl(230, 7%, 70%));
---btn-bg-a: var(--tp-button-background-color-active, #d6d7db);
---btn-bg-f: var(--tp-button-background-color-focus, #c8cad0);
---btn-bg-h: var(--tp-button-background-color-hover, #bbbcc4);
---btn-fg: var(--tp-button-foreground-color, hsl(230, 7%, 17%));
---cnt-bg: var(--tp-container-background-color, rgba(187, 188, 196, 0.1));
---cnt-bg-a: var(--tp-container-background-color-active, rgba(187, 188, 196, 0.25));
---cnt-bg-f: var(--tp-container-background-color-focus, rgba(187, 188, 196, 0.2));
---cnt-bg-h: var(--tp-container-background-color-hover, rgba(187, 188, 196, 0.15));
---cnt-fg: var(--tp-container-foreground-color, hsl(230, 7%, 75%));
---in-bg: var(--tp-input-background-color, rgba(187, 188, 196, 0.1));
---in-bg-a: var(--tp-input-background-color-active, rgba(187, 188, 196, 0.25));
---in-bg-f: var(--tp-input-background-color-focus, rgba(187, 188, 196, 0.2));
---in-bg-h: var(--tp-input-background-color-hover, rgba(187, 188, 196, 0.15));
---in-fg: var(--tp-input-foreground-color, hsl(230, 7%, 75%));
---lbl-fg: var(--tp-label-foreground-color, rgba(187, 188, 196, 0.7));
---mo-bg: var(--tp-monitor-background-color, rgba(0, 0, 0, 0.2));
---mo-fg: var(--tp-monitor-foreground-color, rgba(187, 188, 196, 0.7));
---grv-fg: var(--tp-groove-foreground-color, rgba(187, 188, 196, 0.1)); */
 
 @media (prefers-color-scheme: dark) {
   body {
