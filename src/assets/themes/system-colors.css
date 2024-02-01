@@ -27,6 +27,7 @@ body {
   --system-gray8: rgb(255, 255, 255);
 }
 
+/* TweakPanel colors */
 :root {
   --tp-base-background-color: hsl(230, 7%, 85%);
   --tp-base-shadow-color: hsla(0, 0%, 0%, 0.2);
@@ -79,6 +80,7 @@ body {
     --system-gray8: rgb(14, 14, 16);
   }
 
+  /* TweakPanel colors */
   :root {
     --tp-button-background-color: rgba(187, 188, 196, 0.1);
     --tp-button-background-color-active: rgba(187, 188, 196, 0.25);
