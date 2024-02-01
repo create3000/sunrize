@@ -128,6 +128,16 @@ module .exports = new class Panel extends Interface
 
             const fields = new Set (X3DUOM .find (`ConcreteNode[name="${typeName}"],AbstractNodeType[name="${typeName}"],AbstractObjectType[name="${typeName}"]`) .find ("field") .map (function () { return $(this) .attr ("name"); }) .get ());
 
+            switch (type)
+            {
+               case X3D .X3DConstants .FontStyle:
+               case X3D .X3DConstants .ScreenFontStyle:
+               {
+                  seen .delete ("style");
+                  break;
+               }
+            }
+
             this .addFolder ({
                title: typeName,
                node: node,
@@ -192,6 +202,20 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .SFInt32:
          {
             var options = { step: 1 };
+            break;
+         }
+         case X3D .X3DConstants .SFString:
+         {
+            const enumerations = X3DUOM .find (`ConcreteNode[name="${node .getTypeName ()}"] field[name=${field .getName ()}] enumeration`) .map (function () { return $(this) .attr ("value"); }) .get ();
+
+            if (enumerations .length)
+            {
+               var options = { options: { } };
+
+               for (const value of enumerations)
+                  options .options [value] = value;
+            }
+
             break;
          }
          case X3D .X3DConstants .SFVec2d:
