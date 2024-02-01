@@ -11,6 +11,7 @@ const
    Interface    = require ("../Application/Interface"),
    ActionKeys   = require ("../Application/ActionKeys"),
    Traverse     = require ("../Application/Traverse"),
+   X3DUOM       = require ("../Bits/X3DUOM"),
    _            = require ("../Application/GetText");
 
 const
@@ -31,7 +32,6 @@ module .exports = class OutlineView extends Interface
       this .objects           = new Map (); // <id, node>
       this .actionKeys        = new ActionKeys ("OutlineView");
       this .onDemandToolNodes = new Set ();
-      this .x3duom            = require ("../Bits/X3DUOM");
 
       this .globalConfig .setDefaultValues ({
          expandExternProtoDeclarations: true,
@@ -1577,7 +1577,7 @@ module .exports = class OutlineView extends Interface
       if (!node)
          return;
 
-      const description = this .x3duom .find (`ConcreteNode[name="${node .getTypeName ()}"] InterfaceDefinition`) .attr ("appinfo");
+      const description = X3DUOM .find (`ConcreteNode[name="${node .getTypeName ()}"] InterfaceDefinition`) .attr ("appinfo");
 
       let title = "";
 
@@ -1594,7 +1594,7 @@ module .exports = class OutlineView extends Interface
          element     = $(event .currentTarget) .closest (".field, .special", this .sceneGraph),
          node        = this .objects .get (parseInt (element .attr ("node-id"))),
          field       = this .objects .get (parseInt (element .attr ("field-id"))),
-         description = this .x3duom .find (`ConcreteNode[name="${node .getTypeName ()}"] field[name="${field .getName ()}"]`) .attr ("description");
+         description = X3DUOM .find (`ConcreteNode[name="${node .getTypeName ()}"] field[name="${field .getName ()}"]`) .attr ("description");
 
       let title = "";
 
