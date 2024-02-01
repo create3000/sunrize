@@ -283,9 +283,9 @@ module .exports = new class SceneProperties extends Dialog
       for (const component of this .executionContext .getComponents ())
       {
          this .profileAndComponents .components
-            .find (`input[type=checkbox][component="${component .name}"]`) .prop ("checked", true)
+            .find (`input[type=checkbox][component=${component .name}]`) .prop ("checked", true)
          this .profileAndComponents .components
-            .find (`input[level][component="${component .name}"]`) .val (component .level)
+            .find (`input[level][component=${component .name}]`) .val (component .level)
       }
    }
 
