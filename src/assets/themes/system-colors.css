@@ -27,29 +27,31 @@ body {
   --system-gray8: rgb(255, 255, 255);
 }
 
-/* TweakPanel colors */
-:root {
-  --tp-base-background-color: hsl(230, 7%, 85%);
-  --tp-base-shadow-color: hsla(0, 0%, 0%, 0.2);
-  --tp-container-background-color: hsl(230, 7%, 90%);
-  --tp-container-background-color-active: hsl(230, 7%, 90%);
-  --tp-container-background-color-focus: hsl(230, 7%, 90%);
-  --tp-container-background-color-hover: hsl(230, 7%, 95%);
-  --tp-container-foreground-color: hsl(230, 7%, 17%);
-  --tp-groove-foreground-color: hsl(230, 7%, 17%);
-  --tp-input-background-color: hsl(230, 7%, 92%);
-  --tp-input-background-color-active: hsl(230, 7%, 96%);
-  --tp-input-background-color-focus: hsl(230, 7%, 96%);
-  --tp-input-background-color-hover: hsl(230, 7%, 96%);
-  --tp-input-foreground-color: hsl(230, 7%, 17%);
-  --tp-button-background-color: var(--tp-input-background-color);
-  --tp-button-background-color-active: var(--tp-input-background-color-active);
-  --tp-button-background-color-focus: var(--tp-input-background-color-focus);
-  --tp-button-background-color-hover: var(--tp-input-background-color-hover);
-  --tp-button-foreground-color: var();
-  --tp-label-foreground-color: hsl(230, 7%, 17%);
-  --tp-monitor-background-color: hsla(0, 0%, 0%, 0.3);
-  --tp-monitor-foreground-color: hsl(230, 7%, 10%);
+@media (prefers-color-scheme: light) {
+  /* TweakPanel colors */
+  :root {
+    --tp-base-background-color: hsl(230, 7%, 85%);
+    --tp-base-shadow-color: hsla(0, 0%, 0%, 0.2);
+    --tp-container-background-color: hsl(230, 7%, 90%);
+    --tp-container-background-color-active: hsl(230, 7%, 90%);
+    --tp-container-background-color-focus: hsl(230, 7%, 90%);
+    --tp-container-background-color-hover: hsl(230, 7%, 95%);
+    --tp-container-foreground-color: hsl(230, 7%, 17%);
+    --tp-groove-foreground-color: hsl(230, 7%, 17%);
+    --tp-input-background-color: hsl(230, 7%, 92%);
+    --tp-input-background-color-active: hsl(230, 7%, 96%);
+    --tp-input-background-color-focus: hsl(230, 7%, 96%);
+    --tp-input-background-color-hover: hsl(230, 7%, 96%);
+    --tp-input-foreground-color: hsl(230, 7%, 17%);
+    --tp-button-background-color: var(--tp-input-background-color);
+    --tp-button-background-color-active: var(--tp-input-background-color-active);
+    --tp-button-background-color-focus: var(--tp-input-background-color-focus);
+    --tp-button-background-color-hover: var(--tp-input-background-color-hover);
+    --tp-button-foreground-color: var();
+    --tp-label-foreground-color: hsl(230, 7%, 17%);
+    --tp-monitor-background-color: hsla(0, 0%, 0%, 0.3);
+    --tp-monitor-foreground-color: hsl(230, 7%, 10%);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
