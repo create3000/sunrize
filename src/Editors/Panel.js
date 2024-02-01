@@ -19,9 +19,10 @@ module .exports = new class Panel extends Interface
       this .container .hide () .appendTo ($("#browser-frame"));
 
       this .container .css ({
+         "z-index": "1",
          "bottom": this .container .css ("top"),
          "top": "unset",
-         "z-index": "1",
+         "width": "unset",
       });
 
       this .container .on ("mousedown", () => this .onmousedown ())
@@ -129,6 +130,16 @@ module .exports = new class Panel extends Interface
                case X3D .X3DConstants .ScreenFontStyle:
                {
                   seen .delete ("style");
+                  break;
+               }
+               case X3D .X3DConstants .X3DOneSidedMaterialNode:
+               {
+                  for (const field of node .getFields ())
+                  {
+                     if (field .getName () .match (/Mapping$/))
+                        seen .add (field .getName ());
+                  }
+
                   break;
                }
             }

@@ -54,6 +54,14 @@ body {
     --system-gray7: rgb(21, 21, 23);
     --system-gray8: rgb(14, 14, 16);
   }
+
+  :root {
+    --tp-button-background-color: rgba(187, 188, 196, 0.1);
+    --tp-button-background-color-active: rgba(187, 188, 196, 0.25);
+    --tp-button-background-color-focus: rgba(187, 188, 196, 0.2);
+    --tp-button-background-color-hover: rgba(187, 188, 196, 0.15);
+    --tp-button-foreground-color: hsl(230, 7%, 75%);
+  }
 }
 
 body {
