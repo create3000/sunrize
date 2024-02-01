@@ -100,7 +100,7 @@ module .exports = new class Panel extends Interface
 
    addBlades (node)
    {
-      const types = new Map (X3DUOM .find (`ConcreteNode,AbstractNodeType,AbstractObjectType`) .map (function () { return $(this) .attr ("name"); }) .get () .map (typeName => [X3D .X3DConstants [typeName], typeName]));
+      const types = new Map (X3DUOM .find (`ConcreteNode,AbstractNodeType,AbstractObjectType`) .map (function () { return this .getAttribute ("name"); }) .get () .map (typeName => [X3D .X3DConstants [typeName], typeName]));
 
       const seen = new Set (["IS", "DEF", "USE", "class", "id", "style"]);
 
@@ -133,7 +133,7 @@ module .exports = new class Panel extends Interface
                }
             }
 
-            const fields = new Set (X3DUOM .find (`ConcreteNode[name="${typeName}"],AbstractNodeType[name="${typeName}"],AbstractObjectType[name="${typeName}"]`) .find ("field") .map (function () { return $(this) .attr ("name"); }) .get ());
+            const fields = new Set (X3DUOM .find (`ConcreteNode[name="${typeName}"],AbstractNodeType[name="${typeName}"],AbstractObjectType[name="${typeName}"]`) .find ("field") .map (function () { return this .getAttribute ("name"); }) .get ());
 
             this .addFolder ({
                title: typeName,
@@ -203,7 +203,7 @@ module .exports = new class Panel extends Interface
          }
          case X3D .X3DConstants .SFString:
          {
-            const enumerations = X3DUOM .find (`ConcreteNode[name="${node .getTypeName ()}"] field[name=${field .getName ()}] enumeration`) .map (function () { return $(this) .attr ("value"); }) .get ();
+            const enumerations = X3DUOM .find (`ConcreteNode[name="${node .getTypeName ()}"] field[name=${field .getName ()}] enumeration`) .map (function () { return this .getAttribute ("value"); }) .get ();
 
             if (enumerations .length)
             {
