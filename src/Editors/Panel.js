@@ -134,7 +134,7 @@ module .exports = new class Panel extends Interface
                }
             }
 
-            const fields = new Set (X3DUOM .find (`ConcreteNode[name="${typeName}"],AbstractNodeType[name=${typeName}],AbstractObjectType[name=${typeName}]`) .find ("field") .map (function () { return this .getAttribute ("name"); }) .get ());
+            const fields = new Set (X3DUOM .find (`ConcreteNode[name=${typeName}],AbstractNodeType[name=${typeName}],AbstractObjectType[name=${typeName}]`) .find ("field") .map (function () { return this .getAttribute ("name"); }) .get ());
 
             this .addFolder ({
                title: typeName,
