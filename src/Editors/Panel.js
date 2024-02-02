@@ -19,7 +19,7 @@ module .exports = new class Panel extends Interface
       this .container .hide () .appendTo ($("#browser-frame"));
 
       this .container .css ({
-         "z-index": "1",
+         "z-index": "100",
          "bottom": this .container .css ("top"),
          "top": "unset",
          "width": "unset",
