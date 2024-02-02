@@ -48,6 +48,8 @@ module .exports = new class Panel extends Interface
 
    hide ()
    {
+      this .removeNode (this .node);
+
       this .selection .removeInterest (this);
 
       this .container .hide (300);
@@ -79,24 +81,16 @@ module .exports = new class Panel extends Interface
 
    onselection ()
    {
-      // Remove all blades.
-
-      for (const folder of [... this .pane .children])
-         folder .dispose ();
-
-      if (this .node)
-      {
-         this .node .getScene () .units .removeInterest ("onselection", this);
-
-         for (const field of this .node .getFields ())
-            field .removeFieldCallback (this);
-      }
-
-      // Get new node.
+      this .removeNode (this .node);
 
       this .node = this .selection .nodes .at (-1);
 
-      if (!this .node)
+      this .setNode (this .node);
+   }
+
+   setNode (node)
+   {
+      if (!node)
       {
          this .pane .hidden = true;
          return;
@@ -104,15 +98,15 @@ module .exports = new class Panel extends Interface
 
       // Create folders.
 
-      this .node .getScene () .units .addInterest ("onselection", this);
+      node .getScene () .units .addInterest ("onselection", this);
 
-      this .addBlades (this .node);
+      this .addBlades (node);
 
       this .pane .hidden = !this .pane .children .length;
 
       // Set title.
 
-      const element = X3DUOM .find (`ConcreteNode[name=${this .node .getTypeName ()}] InterfaceDefinition`);
+      const element = X3DUOM .find (`ConcreteNode[name=${node .getTypeName ()}] InterfaceDefinition`);
 
       if (element .attr ("appinfo"))
          this .container .attr ("title", `Description:\n\n${element .attr ("appinfo")}`);
@@ -127,6 +121,22 @@ module .exports = new class Panel extends Interface
       {
          event .stopPropagation ();
       });
+   }
+
+   removeNode (node)
+   {
+      // Remove all blades.
+
+      for (const folder of [... this .pane .children])
+         folder .dispose ();
+
+      if (node)
+      {
+         node .getScene () .units .removeInterest ("onselection", this);
+
+         for (const field of node .getFields ())
+            field .removeFieldCallback (this);
+      }
    }
 
    addBlades (node)
