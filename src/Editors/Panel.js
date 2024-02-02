@@ -96,18 +96,20 @@ module .exports = new class Panel extends Interface
 
       // Create folders.
 
+      const concreteNode = X3DUOM .find (`ConcreteNode[name=${node .getTypeName ()}]`);
+
       node .getScene () .units .addInterest ("onselection", this);
 
-      this .addBlades (node);
+      this .addBlades (node, concreteNode);
 
       this .pane .hidden = !this .pane .children .length;
 
       // Set title.
 
-      const element = X3DUOM .find (`ConcreteNode[name=${node .getTypeName ()}] InterfaceDefinition`);
+      const interfaceDefinition = concreteNode .find (`InterfaceDefinition`);
 
-      if (element .attr ("appinfo"))
-         this .container .attr ("title", `Description:\n\n${element .attr ("appinfo")}`);
+      if (interfaceDefinition .attr ("appinfo"))
+         this .container .attr ("title", `Description:\n\n${interfaceDefinition .attr ("appinfo")}`);
 
       // Make first folder title draggable.
 
@@ -139,10 +141,8 @@ module .exports = new class Panel extends Interface
          field .removeFieldCallback (this);
    }
 
-   addBlades (node)
+   addBlades (node, concreteNode)
    {
-      const types = new Map (X3DUOM .find (`ConcreteNode,AbstractNodeType,AbstractObjectType`) .map (function () { return this .getAttribute ("name"); }) .get () .map (typeName => [X3D .X3DConstants [typeName], typeName]));
-
       const
          seen              = new Set (["IS", "DEF", "USE", "class", "id", "style"]),
          userDefinedFields = node .getUserDefinedFields ();
@@ -152,6 +152,7 @@ module .exports = new class Panel extends Interface
          if (type === X3D .X3DConstants .X3DPrototypeInstance)
          {
             this .addFolder ({
+               concreteNode: concreteNode,
                title: node .getTypeName (),
                node: node,
                fields: Array .from (node .getFields ())
@@ -161,12 +162,9 @@ module .exports = new class Panel extends Interface
          }
          else
          {
-            const typeName = types .get (type);
-
-            if (!typeName)
-               continue;
-
-            const fields = new Set (X3DUOM .find (`ConcreteNode[name=${typeName}],AbstractNodeType[name=${typeName}],AbstractObjectType[name=${typeName}]`) .find ("field") .map (function () { return this .getAttribute ("name"); }) .get ());
+            const
+               typeName = X3D .X3DConstants [type],
+               fields   = new Set (X3DUOM .find (`ConcreteNode[name=${typeName}],AbstractNodeType[name=${typeName}],AbstractObjectType[name=${typeName}]`) .find ("field") .map (function () { return this .getAttribute ("name"); }) .get ());
 
             switch (type)
             {
@@ -189,6 +187,7 @@ module .exports = new class Panel extends Interface
             }
 
             this .addFolder ({
+               concreteNode: concreteNode,
                title: typeName,
                node: node,
                fields: Array .from (node .getFields ())
@@ -204,7 +203,7 @@ module .exports = new class Panel extends Interface
       }
    }
 
-   addFolder ({ title, node, fields })
+   addFolder ({ concreteNode, title, node, fields })
    {
       const folder = this .pane .addFolder ({
          title: title,
@@ -225,20 +224,20 @@ module .exports = new class Panel extends Interface
          if (name .match (/^-+$/))
             folder .addSeparator ();
          else
-            this .addInput (folder, parameter, node, node .getField (name));
+            this .addInput (folder, parameter, node, node .getField (name), concreteNode);
       }
 
       if (!folder .children .length)
          folder .dispose ();
    }
 
-   addInput (folder, parameter, node, field)
+   addInput (folder, parameter, node, field, concreteNode)
    {
       if (!field .isInitializable ())
          return;
 
       const
-         element = X3DUOM .find (`ConcreteNode[name=${node .getTypeName ()}] field[name=${field .getName ()}]`),
+         element = concreteNode .find (`field[name=${field .getName ()}]`),
          options = { };
 
       switch (field .getType ())
