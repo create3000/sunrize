@@ -25,7 +25,7 @@ module .exports = new class Panel extends Interface
          "width": "unset",
       });
 
-      this .container .on ("mousedown", () => this .onmousedown ())
+      this .container .on ("mousedown", event => this .onmousedown (event));
 
       this .setup ();
    }
@@ -53,18 +53,28 @@ module .exports = new class Panel extends Interface
       this .container .hide (300);
    }
 
-   onmousedown ()
+   onmousedown (event)
    {
       $(document) .on ("mouseup.Panel", () => this .onmouseup ());
 
       this .mousedown = true;
+      this .startX    = event .pageX + parseFloat (this .container .css ("right"));
+      this .startY    = event .pageY + parseFloat (this .container .css ("bottom"));
    }
 
    onmouseup ()
    {
-      $(document) .off ("mouseup.Panel");
+      $(document) .off (".Panel");
 
       this .mousedown = false;
+   }
+
+   onmousemove (event)
+   {
+      this .container .css ({
+         "right":  this .startX - event .pageX,
+         "bottom": this .startY - event .pageY,
+      });
    }
 
    onselection ()
@@ -97,6 +107,10 @@ module .exports = new class Panel extends Interface
       this .addBlades (this .node);
 
       this .pane .hidden = !this .pane .children .length;
+
+      this .container .find (".tp-lblv_l")
+         .css ("cursor", "move")
+         .on ("mousedown", () => $(document) .on ("mousemove.Panel", event => this .onmousemove (event)));
    }
 
    addBlades (node)
