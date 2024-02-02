@@ -298,6 +298,9 @@ module .exports = new class Panel extends Interface
 
             input .on ("change", ({ value }) => this .onchange (node, field, value));
 
+            if (element .attr ("description"))
+               $(input .element) .attr ("title", `Description:\n\n${element .attr ("description")}`);
+
             field .addFieldCallback (this, () =>
             {
                this .refresh (parameter, node, field);
