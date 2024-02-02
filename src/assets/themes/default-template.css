@@ -1339,3 +1339,9 @@ body.dark .ui-widget .library-list .component {
 .sp-dragger {
   border-radius: 50%;
 }
+
+/* Tweakpane */
+
+.tp-lblv_v {
+  width: 185px !important;
+}
