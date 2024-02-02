@@ -204,8 +204,8 @@ class X3DNodeTool extends X3DBaseTool
 
       if (this .#disposed)
          return Promise .reject (new Error ("Tool is already disposed."));
-      else
-         return this .#promise;
+
+      return this .#promise;
    }
 
    createTool (scene)
