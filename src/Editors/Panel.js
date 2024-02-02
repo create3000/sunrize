@@ -202,18 +202,13 @@ module .exports = new class Panel extends Interface
                seen .add (name);
          }
       }
-
-      // Expand first folder, if not otherwise specified.
-
-      if (this .pane .children .length)
-         this .pane .children [0] .expanded = this .fileConfig [`${this .pane .children [0] .title}.expanded`] ?? true;
    }
 
    addFolder ({ title, node, fields })
    {
       const folder = this .pane .addFolder ({
          title: title,
-         expanded: this .fileConfig [`${title}.expanded`] ?? false,
+         expanded: this .fileConfig [`${title}.expanded`] ?? true,
          index: 0,
       });
 
