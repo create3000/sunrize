@@ -48,11 +48,9 @@ module .exports = new class Panel extends Interface
 
    hide ()
    {
-      this .removeNode (this .node);
-
       this .selection .removeInterest (this);
 
-      this .container .hide (300);
+      this .container .hide (300, () => this .removeNode (this .node));
    }
 
    onmousedown (event)
@@ -85,10 +83,10 @@ module .exports = new class Panel extends Interface
 
       this .node = this .selection .nodes .at (-1);
 
-      this .setNode (this .node);
+      this .addNode (this .node);
    }
 
-   setNode (node)
+   addNode (node)
    {
       if (!node)
       {
@@ -125,7 +123,7 @@ module .exports = new class Panel extends Interface
 
    removeNode (node)
    {
-      // Remove all blades.
+      // Remove all folders.
 
       for (const folder of [... this .pane .children])
          folder .dispose ();
