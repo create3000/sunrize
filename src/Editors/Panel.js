@@ -108,7 +108,9 @@ module .exports = new class Panel extends Interface
 
       this .pane .hidden = !this .pane .children .length;
 
-      this .container .find (".tp-fldv_t") .first () .css ("cursor", "move") .on ("mousedown", event =>
+      // Make first folder title draggable.
+
+      this .container .find (".tp-fldv_t") .first () .css ("cursor", "move") .on ("mousedown", () =>
       {
          $(document) .on ("mousemove.Panel", event => this .onmousemove (event));
       })
