@@ -102,7 +102,7 @@ module .exports = new class Panel extends Interface
          return;
       }
 
-      // Create folder.
+      // Create folders.
 
       this .node .getScene () .units .addInterest ("onselection", this);
 
