@@ -343,6 +343,7 @@ module .exports = new class Panel extends Interface
             break;
          }
          case X3D .X3DConstants .SFColor:
+         case X3D .X3DConstants .SFColorRGBA:
          {
             const p = parameter [field .getName ()] ??= { };
 

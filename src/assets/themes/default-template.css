@@ -1342,6 +1342,12 @@ body.dark .ui-widget .library-list .component {
 
 /* Tweakpane */
 
+@media (prefers-color-scheme: dark) {
+  .tp-dfwv ::selection {
+    background-color: var(--system-gray5);
+  }
+}
+
 .tp-lblv_v {
   width: 185px !important;
 }

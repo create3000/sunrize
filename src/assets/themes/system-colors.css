@@ -47,7 +47,7 @@ body {
     --tp-button-background-color-active: var(--tp-input-background-color-active);
     --tp-button-background-color-focus: var(--tp-input-background-color-focus);
     --tp-button-background-color-hover: var(--tp-input-background-color-hover);
-    --tp-button-foreground-color: var();
+    --tp-button-foreground-color: var(--tp-input-foreground-color);
     --tp-label-foreground-color: hsl(230, 7%, 17%);
     --tp-monitor-background-color: hsla(0, 0%, 0%, 0.3);
     --tp-monitor-foreground-color: hsl(230, 7%, 10%);
