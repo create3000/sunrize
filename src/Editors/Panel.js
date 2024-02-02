@@ -108,6 +108,13 @@ module .exports = new class Panel extends Interface
 
       this .pane .hidden = !this .pane .children .length;
 
+      // Set title.
+
+      const element = X3DUOM .find (`ConcreteNode[name=${this .node .getTypeName ()}] InterfaceDefinition`);
+
+      if (element .attr ("appinfo"))
+         this .container .attr ("title", `Description:\n\n${element .attr ("appinfo")}`);
+
       // Make first folder title draggable.
 
       this .container .find (".tp-fldv_t") .first () .css ("cursor", "move") .on ("mousedown", () =>
