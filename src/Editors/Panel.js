@@ -338,20 +338,6 @@ module .exports = new class Panel extends Interface
       switch (field .getType ())
       {
          case X3D .X3DConstants .SFBool:
-         {
-            parameter [field .getName ()] = field .getValue ();
-            break;
-         }
-         case X3D .X3DConstants .SFColor:
-         case X3D .X3DConstants .SFColorRGBA:
-         {
-            const p = parameter [field .getName ()] ??= { };
-
-            for (const key in field)
-               p [key] = field [key];
-
-            break;
-         }
          case X3D .X3DConstants .SFDouble:
          case X3D .X3DConstants .SFFloat:
          case X3D .X3DConstants .SFInt32:
@@ -371,6 +357,8 @@ module .exports = new class Panel extends Interface
             p .w = executionContext .toUnit ("angle", field .angle);
             break;
          }
+         case X3D .X3DConstants .SFColor:
+         case X3D .X3DConstants .SFColorRGBA:
          case X3D .X3DConstants .SFVec2d:
          case X3D .X3DConstants .SFVec2f:
          case X3D .X3DConstants .SFVec3d:
