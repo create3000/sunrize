@@ -108,9 +108,14 @@ module .exports = new class Panel extends Interface
 
       this .pane .hidden = !this .pane .children .length;
 
-      this .container .find (".tp-lblv_l")
-         .css ("cursor", "move")
-         .on ("mousedown", () => $(document) .on ("mousemove.Panel", event => this .onmousemove (event)));
+      this .container .find (".tp-fldv_t") .first () .css ("cursor", "move") .on ("mousedown", event =>
+      {
+         $(document) .on ("mousemove.Panel", event => this .onmousemove (event));
+      })
+      .on ("click", event =>
+      {
+         event .stopPropagation ();
+      });
    }
 
    addBlades (node)
