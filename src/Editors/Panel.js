@@ -131,6 +131,8 @@ module .exports = new class Panel extends Interface
       if (!node)
          return;
 
+      // Disconnect interests.
+
       node .getScene () .units .removeInterest ("onselection", this);
 
       for (const field of node .getFields ())
