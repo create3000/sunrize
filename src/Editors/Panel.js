@@ -102,6 +102,8 @@ module .exports = new class Panel extends Interface
          return;
       }
 
+      // Create folder.
+
       this .node .getScene () .units .addInterest ("onselection", this);
 
       this .addBlades (this .node);
