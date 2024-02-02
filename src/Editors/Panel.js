@@ -128,13 +128,13 @@ module .exports = new class Panel extends Interface
       for (const folder of [... this .pane .children])
          folder .dispose ();
 
-      if (node)
-      {
-         node .getScene () .units .removeInterest ("onselection", this);
+      if (!node)
+         return;
 
-         for (const field of node .getFields ())
-            field .removeFieldCallback (this);
-      }
+      node .getScene () .units .removeInterest ("onselection", this);
+
+      for (const field of node .getFields ())
+         field .removeFieldCallback (this);
    }
 
    addBlades (node)
