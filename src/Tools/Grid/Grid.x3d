@@ -1,271 +1,144 @@
-#X3D V3.3 utf8 Titania V4.4.0
-
-PROFILE Immersive
-
-COMPONENT Shape : 4
-
-META "comment" "World of Titania"
-META "created" "Tue, 05 Aug 2014 20:06:52 GMT"
-META "creator" "Holger Seelig"
-META "generator" "Titania V4.4.0, http://titania.create3000.de"
-META "identifier" "file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/library/Grid.x3dv"
-META "modified" "Sat, 02 Feb 2019 19:28:28 GMT"
-
-EXTERNPROTO ToolShader [ ]
-"ToolShader.x3dv"
-
-PROTO Grid [
-  inputOutput    SFVec3f    translation 0 0 0
-  inputOutput    SFRotation rotation 0 0 1 0
-  inputOutput    SFVec3f    scale 1 1 1
-  inputOutput    MFInt32    dimension [
-    10,
-    10,
-    10
-  ]
-  inputOutput    MFInt32    majorLineEvery [
-    5,
-    5,
-    5
-  ]
-  inputOutput    MFInt32    majorLineOffset [
-    0,
-    0,
-    0
-  ]
-  inputOutput    SFColor    color 0.5 0.5 0.5
-  inputOutput    SFFloat    transparency 0.61803
-  inputOutput    SFColor    lineColor 1 0.7 0.7
-  inputOutput    SFFloat    lineTransparency 0.8
-  inputOutput    SFColor    majorLineColor 1 0.7 0.7
-  inputOutput    SFFloat    majorLineTransparency 0.6
-  initializeOnly SFBool     solid TRUE
-]
-{
-  Transform {
-    rotation IS rotation
-    children Transform {
-      translation IS translation
-      scale IS scale
-      children [
-        DEF Plane Transform {
-          rotation -3.09087122910219e-08 0.70710528118436 0.707108281185553 3.14159
-          scale 10 10 1
-          children Shape {
-            appearance Appearance {
-              material DEF Material2 Material {
-                diffuseColor 0 0 0
-                emissiveColor IS color
-                transparency IS transparency
-              }
-              shaders DEF _1 ToolShader { }
-            }
-            geometry Rectangle2D {
-              size 1 1
-              solid IS solid
-            }
-          }
-        }
-        DEF MajorGrid Shape {
-          appearance Appearance {
-            material DEF MajorMaterial Material {
-              emissiveColor IS majorLineColor
-              transparency IS majorLineTransparency
-            }
-            shaders USE _1
-          }
-          geometry DEF MajorGrid_2 IndexedLineSet {
-            coordIndex [
-              0,
-              1,
-              -1,
-              2,
-              3,
-              -1,
-              4,
-              5,
-              -1,
-              6,
-              7,
-              -1,
-              8,
-              9,
-              -1,
-              10,
-              11,
-              -1
-            ]
-            coord Coordinate {
-              point [
-                -5 0 -5.25,
-                -5 0 5.25,
-                0 0 -5.25,
-                0 0 5.25,
-                5 0 -5.25,
-                5 0 5.25,
-                -5.25 0 -5,
-                5.25 0 -5,
-                -5.25 0 0,
-                5.25 0 0,
-                -5.25 0 5,
-                5.25 0 5
-              ]
-            }
-          }
-        }
-        DEF MinorGrid Shape {
-          appearance Appearance {
-            material DEF MinorMaterial Material {
-              emissiveColor IS lineColor
-              transparency IS lineTransparency
-            }
-            shaders USE _1
-          }
-          geometry DEF MinorGrid_3 IndexedLineSet {
-            coordIndex [
-              0,
-              1,
-              -1,
-              2,
-              3,
-              -1,
-              4,
-              5,
-              -1,
-              6,
-              7,
-              -1,
-              8,
-              9,
-              -1,
-              10,
-              11,
-              -1,
-              12,
-              13,
-              -1,
-              14,
-              15,
-              -1,
-              16,
-              17,
-              -1,
-              18,
-              19,
-              -1,
-              20,
-              21,
-              -1,
-              22,
-              23,
-              -1,
-              24,
-              25,
-              -1,
-              26,
-              27,
-              -1,
-              28,
-              29,
-              -1,
-              30,
-              31,
-              -1
-            ]
-            coord Coordinate {
-              point [
-                -4 0 -5,
-                -4 0 5,
-                -3 0 -5,
-                -3 0 5,
-                -2 0 -5,
-                -2 0 5,
-                -1 0 -5,
-                -1 0 5,
-                1 0 -5,
-                1 0 5,
-                2 0 -5,
-                2 0 5,
-                3 0 -5,
-                3 0 5,
-                4 0 -5,
-                4 0 5,
-                -5 0 -4,
-                5 0 -4,
-                -5 0 -3,
-                5 0 -3,
-                -5 0 -2,
-                5 0 -2,
-                -5 0 -1,
-                5 0 -1,
-                -5 0 1,
-                5 0 1,
-                -5 0 2,
-                5 0 2,
-                -5 0 3,
-                5 0 3,
-                -5 0 4,
-                5 0 4
-              ]
-            }
-          }
-        }
-        DEF MajorPoints Shape {
-          appearance Appearance {
-            lineProperties LineProperties {
-              linewidthScaleFactor 6
-            }
-            material USE MajorMaterial
-            shaders USE _1
-          }
-          geometry DEF MajorPoints_4 PointSet {
-            coord Coordinate {
-              point [
-                0 -5 0,
-                0 0 0,
-                0 5 0
-              ]
-            }
-          }
-        }
-        DEF MinorPoints Shape {
-          appearance Appearance {
-            lineProperties LineProperties {
-              linewidthScaleFactor 4
-            }
-            material USE MinorMaterial
-            shaders USE _1
-          }
-          geometry DEF MinorPoints_5 PointSet {
-            coord Coordinate {
-              point [
-                0 -4 0,
-                0 -3 0,
-                0 -2 0,
-                0 -1 0,
-                0 1 0,
-                0 2 0,
-                0 3 0,
-                0 4 0
-              ]
-            }
-          }
-        }
-      ]
-    }
-  }
-
-  DEF GridScript Script {
-    inputOutput    MFInt32 dimension IS dimension
-    inputOutput    MFInt32 majorLineEvery IS majorLineEvery
-    inputOutput    MFInt32 majorLineOffset IS majorLineOffset
-    initializeOnly SFNode  plane USE Plane
-    initializeOnly SFNode  majorGrid USE MajorGrid_2
-    initializeOnly SFNode  minorGrid USE MinorGrid_3
-    initializeOnly SFNode  majorPoints USE MajorPoints_4
-    initializeOnly SFNode  minorPoints USE MinorPoints_5
-
-    url "ecmascript:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Geometry2D' level='2'/>
+    <component name='Scripting' level='1'/>
+    <meta name='comment' content='Rise and Shine'/>
+    <meta name='created' content='Tue, 05 Aug 2014 20:06:52 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
+    <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/library/Grid.x3dv'/>
+    <meta name='modified' content='Tue, 06 Feb 2024 18:04:46 GMT'/>
+  </head>
+  <Scene>
+    <ProtoDeclare name='Grid'>
+      <ProtoInterface>
+        <field accessType='inputOutput' type='SFVec3f' name='translation'/>
+        <field accessType='inputOutput' type='SFRotation' name='rotation'/>
+        <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
+        <field accessType='inputOutput' type='MFInt32' name='dimension' value='10, 10, 10'/>
+        <field accessType='inputOutput' type='MFInt32' name='majorLineEvery' value='5, 5, 5'/>
+        <field accessType='inputOutput' type='MFInt32' name='majorLineOffset' value='0, 0, 0'/>
+        <field accessType='inputOutput' type='SFColor' name='color' value='0.5 0.5 0.5'/>
+        <field accessType='inputOutput' type='SFFloat' name='transparency' value='0.61803'/>
+        <field accessType='inputOutput' type='SFColor' name='lineColor' value='1 0.7 0.7'/>
+        <field accessType='inputOutput' type='SFFloat' name='lineTransparency' value='0.8'/>
+        <field accessType='inputOutput' type='SFColor' name='majorLineColor' value='1 0.7 0.7'/>
+        <field accessType='inputOutput' type='SFFloat' name='majorLineTransparency' value='0.6'/>
+        <field accessType='initializeOnly' type='SFBool' name='solid' value='true'/>
+      </ProtoInterface>
+      <ProtoBody>
+        <Transform>
+          <IS>
+            <connect nodeField='rotation' protoField='rotation'/>
+          </IS>
+          <Transform>
+            <IS>
+              <connect nodeField='translation' protoField='translation'/>
+              <connect nodeField='scale' protoField='scale'/>
+            </IS>
+            <Transform DEF='Plane'
+                rotation='-3.09087122910219e-8 0.70710528118436 0.707108281185553 3.14159'
+                scale='10 10 1'>
+              <Shape>
+                <Appearance>
+                  <UnlitMaterial DEF='Material2'>
+                    <IS>
+                      <connect nodeField='emissiveColor' protoField='color'/>
+                      <connect nodeField='transparency' protoField='transparency'/>
+                    </IS>
+                  </UnlitMaterial>
+                </Appearance>
+                <Rectangle2D
+                    size='1 1'>
+                  <IS>
+                    <connect nodeField='solid' protoField='solid'/>
+                  </IS>
+                </Rectangle2D>
+              </Shape>
+            </Transform>
+            <Shape DEF='MajorGrid'>
+              <Appearance>
+                <UnlitMaterial DEF='MajorMaterial'>
+                  <IS>
+                    <connect nodeField='emissiveColor' protoField='majorLineColor'/>
+                    <connect nodeField='transparency' protoField='majorLineTransparency'/>
+                  </IS>
+                </UnlitMaterial>
+              </Appearance>
+              <IndexedLineSet DEF='MajorGrid_2'
+                  coordIndex='0, 1, -1, 2, 3, -1, 4, 5, -1, 6, 7, -1, 8, 9, -1, 10, 11, -1'>
+                <Coordinate
+                    point='-5 0 -5.25, -5 0 5.25, 0 0 -5.25, 0 0 5.25, 5 0 -5.25, 5 0 5.25, -5.25 0 -5, 5.25 0 -5, -5.25 0 0, 5.25 0 0, -5.25 0 5, 5.25 0 5'/>
+              </IndexedLineSet>
+            </Shape>
+            <Shape DEF='MinorGrid'>
+              <Appearance>
+                <UnlitMaterial DEF='MinorMaterial'>
+                  <IS>
+                    <connect nodeField='emissiveColor' protoField='lineColor'/>
+                    <connect nodeField='transparency' protoField='lineTransparency'/>
+                  </IS>
+                </UnlitMaterial>
+              </Appearance>
+              <IndexedLineSet DEF='MinorGrid_3'
+                  coordIndex='0, 1, -1, 2, 3, -1, 4, 5, -1, 6, 7, -1, 8, 9, -1, 10, 11, -1, 12, 13, -1, 14, 15, -1, 16, 17, -1, 18, 19, -1, 20, 21, -1, 22, 23, -1, 24, 25, -1, 26, 27, -1, 28, 29, -1, 30, 31, -1'>
+                <Coordinate
+                    point='-4 0 -5, -4 0 5, -3 0 -5, -3 0 5, -2 0 -5, -2 0 5, -1 0 -5, -1 0 5, 1 0 -5, 1 0 5, 2 0 -5, 2 0 5, 3 0 -5, 3 0 5, 4 0 -5, 4 0 5, -5 0 -4, 5 0 -4, -5 0 -3, 5 0 -3, -5 0 -2, 5 0 -2, -5 0 -1, 5 0 -1, -5 0 1, 5 0 1, -5 0 2, 5 0 2, -5 0 3, 5 0 3, -5 0 4, 5 0 4'/>
+              </IndexedLineSet>
+            </Shape>
+            <Shape DEF='MajorPoints'>
+              <Appearance>
+                <LineProperties
+                    linewidthScaleFactor='6'/>
+                <UnlitMaterial USE='MajorMaterial'/>
+              </Appearance>
+              <PointSet DEF='MajorPoints_4'>
+                <Coordinate
+                    point='0 -5 0, 0 0 0, 0 5 0'/>
+              </PointSet>
+            </Shape>
+            <Shape DEF='MinorPoints'>
+              <Appearance>
+                <LineProperties
+                    linewidthScaleFactor='4'/>
+                <UnlitMaterial USE='MinorMaterial'/>
+              </Appearance>
+              <PointSet DEF='MinorPoints_5'>
+                <Coordinate
+                    point='0 -4 0, 0 -3 0, 0 -2 0, 0 -1 0, 0 1 0, 0 2 0, 0 3 0, 0 4 0'/>
+              </PointSet>
+            </Shape>
+          </Transform>
+        </Transform>
+        <Script DEF='GridScript'
+            directOutput='true'
+            mustEvaluate='true'>
+          <field accessType='inputOutput' type='MFInt32' name='dimension'/>
+          <field accessType='inputOutput' type='MFInt32' name='majorLineEvery'/>
+          <field accessType='inputOutput' type='MFInt32' name='majorLineOffset'/>
+          <field accessType='initializeOnly' type='SFNode' name='plane'>
+            <Transform USE='Plane'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='majorGrid'>
+            <IndexedLineSet USE='MajorGrid_2'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='minorGrid'>
+            <IndexedLineSet USE='MinorGrid_3'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='majorPoints'>
+            <PointSet USE='MajorPoints_4'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='minorPoints'>
+            <PointSet USE='MinorPoints_5'/>
+          </field>
+          <IS>
+            <connect nodeField='dimension' protoField='dimension'/>
+            <connect nodeField='majorLineEvery' protoField='majorLineEvery'/>
+            <connect nodeField='majorLineOffset' protoField='majorLineOffset'/>
+          </IS>
+<![CDATA[ecmascript:
 
 function initialize ()
 {
@@ -310,7 +183,7 @@ function generateGrid (major, grid)
 		coordIndex [coordIndex .length] = p;
 		coordIndex [coordIndex .length] = p + 1;
 		coordIndex [coordIndex .length] = -1;
-			
+
 		p += 2;
 	}
 
@@ -326,7 +199,7 @@ function generateGrid (major, grid)
 		coordIndex [coordIndex .length] = p;
 		coordIndex [coordIndex .length] = p + 1;
 		coordIndex [coordIndex .length] = -1;
-		
+
 		p += 2;
 	}
 
@@ -374,96 +247,12 @@ function isMajor (i, dimension, majorLineEvery, majorLineOffset)
 
 	return false;
 }
-"
-    directOutput TRUE
-    mustEvaluate TRUE
-  }
-}
-
-WorldInfo {
-  metadata DEF Titania MetadataSet {
-    name "Titania"
-    reference "http://titania.create3000.de"
-    value [
-      DEF Selection MetadataSet {
-        name "Selection"
-        reference "http://titania.create3000.de"
-        value [
-          DEF previous MetadataSet {
-            name "previous"
-            reference "http://titania.create3000.de"
-          }
-          DEF children MetadataSet {
-            name "children"
-            reference "http://titania.create3000.de"
-          }
-          DEF selectGeometry MetadataBoolean {
-            name "selectGeometry"
-            reference "http://titania.create3000.de"
-            value FALSE
-          }
-        ]
-      }
-      DEF NavigationInfo MetadataSet {
-        name "NavigationInfo"
-        reference "http://titania.create3000.de"
-        value DEF type MetadataString {
-          name "type"
-          reference "http://titania.create3000.de"
-          value "EXAMINE"
-        }
-      }
-      DEF Viewpoint MetadataSet {
-        name "Viewpoint"
-        reference "http://titania.create3000.de"
-        value [
-          DEF position MetadataDouble {
-            name "position"
-            reference "http://titania.create3000.de"
-            value [
-              0.195047289133072,
-              4.12723350524902,
-              9.10649490356445
-            ]
-          }
-          DEF orientation MetadataDouble {
-            name "orientation"
-            reference "http://titania.create3000.de"
-            value [
-              -0.998934301163994,
-              0.04484227921785,
-              -0.010928492693443,
-              0.425972342491147
-            ]
-          }
-          DEF centerOfRotation MetadataDouble {
-            name "centerOfRotation"
-            reference "http://titania.create3000.de"
-            value [
-              0,
-              0,
-              0
-            ]
-          }
-        ]
-      }
-      DEF Page MetadataSet {
-        name "Page"
-        reference "http://titania.create3000.de"
-        value [
-          DEF activeView MetadataInteger {
-            name "activeView"
-            reference "http://titania.create3000.de"
-            value 1
-          }
-          DEF multiView MetadataInteger {
-            name "multiView"
-            reference "http://titania.create3000.de"
-            value 0
-          }
-        ]
-      }
-    ]
-  }
-  title "Grid"
-}
+]]>
+        </Script>
+      </ProtoBody>
+    </ProtoDeclare>
+    <ProtoInstance name='Grid'>
+      <fieldValue name='transparency' value='0.8'/>
+    </ProtoInstance>
+  </Scene>
+</X3D>
