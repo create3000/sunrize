@@ -9,7 +9,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/library/AxonometricGrid.x3dv'/>
-    <meta name='modified' content='Tue, 06 Feb 2024 18:24:37 GMT'/>
+    <meta name='modified' content='Tue, 06 Feb 2024 19:16:12 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='AxonometricGrid'>
@@ -39,7 +39,8 @@
               <connect nodeField='translation' protoField='translation'/>
               <connect nodeField='scale' protoField='scale'/>
             </IS>
-            <Shape DEF='HexagonPlane'>
+            <Shape DEF='HexagonPlane'
+                castShadow='false'>
               <Appearance>
                 <UnlitMaterial DEF='Material2'>
                   <IS>
@@ -57,7 +58,8 @@
                     point='5 0 0, 2.5 0 -4.33013, -2.5 0 -4.33013, -5 -0 -0, -2.5 -0 4.33013, 2.5 -0 4.33013'/>
               </IndexedFaceSet>
             </Shape>
-            <Shape DEF='MajorGrid'>
+            <Shape DEF='MajorGrid'
+                castShadow='false'>
               <Appearance>
                 <UnlitMaterial DEF='MajorMaterial'>
                   <IS>
@@ -72,7 +74,8 @@
                     point='-5.125 0 0.216507, -2.375 0 -4.54663, -2.625 0 4.54663, 2.625 0 -4.54663, 2.375 0 4.54663, 5.125 0 -0.216507, -2.75 0 -4.33013, 2.75 0 -4.33013, -5.25 0 0, 5.25 0 0, -2.75 0 4.33013, 2.75 0 4.33013, 2.375 0 -4.54663, 5.125 0 0.216507, -2.625 0 -4.54663, 2.625 0 4.54663, -5.125 0 -0.216507, -2.375 0 4.54663'/>
               </IndexedLineSet>
             </Shape>
-            <Shape DEF='MinorGrid'>
+            <Shape DEF='MinorGrid'
+                castShadow='false'>
               <Appearance>
                 <UnlitMaterial DEF='MinorMaterial'>
                   <IS>
@@ -87,7 +90,8 @@
                     point='-4.5 0 0.866026, -1.5 0 -4.33013, -4 0 1.73205, -0.5 0 -4.33013, -3.5 0 2.59808, 0.5 0 -4.33013, -3 0 3.4641, 1.5 0 -4.33013, -1.5 0 4.33013, 3 0 -3.4641, -0.5 0 4.33013, 3.5 0 -2.59808, 0.5 0 4.33013, 4 0 -1.73205, 1.5 0 4.33013, 4.5 0 -0.866026, -3 0 -3.4641, 3 0 -3.4641, -3.5 0 -2.59808, 3.5 0 -2.59808, -4 0 -1.73205, 4 0 -1.73205, -4.5 0 -0.866025, 4.5 0 -0.866025, -4.5 0 0.866025, 4.5 0 0.866025, -4 0 1.73205, 4 0 1.73205, -3.5 0 2.59808, 3.5 0 2.59808, -3 0 3.4641, 3 0 3.4641, 1.5 0 -4.33013, 4.5 0 0.866026, 0.5 0 -4.33013, 4 0 1.73205, -0.5 0 -4.33013, 3.5 0 2.59808, -1.5 0 -4.33013, 3 0 3.4641, -3 0 -3.4641, 1.5 0 4.33013, -3.5 0 -2.59808, 0.5 0 4.33013, -4 0 -1.73205, -0.5 0 4.33013, -4.5 0 -0.866026, -1.5 0 4.33013'/>
               </IndexedLineSet>
             </Shape>
-            <Shape DEF='MajorPoints'>
+            <Shape DEF='MajorPoints'
+                castShadow='false'>
               <Appearance>
                 <LineProperties
                     linewidthScaleFactor='6'/>
@@ -98,7 +102,8 @@
                     point='0 -5 0, 0 0 0, 0 5 0'/>
               </PointSet>
             </Shape>
-            <Shape DEF='MinorPoints'>
+            <Shape DEF='MinorPoints'
+                castShadow='false'>
               <Appearance>
                 <LineProperties
                     linewidthScaleFactor='4'/>

@@ -1,118 +1,108 @@
-#X3D V3.3 utf8 Titania V4.4.0
-
-PROFILE Immersive
-
-COMPONENT Grouping : 3
-COMPONENT Layout : 2
-COMPONENT Shape : 4
-
-META "comment" "World of Titania"
-META "created" "Tue, 05 Aug 2014 20:06:52 GMT"
-META "creator" "Holger Seelig"
-META "generator" "Titania V4.4.0, http://titania.create3000.de"
-META "identifier" "file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/AxonometricGridTool.x3dv"
-META "modified" "Sat, 02 Feb 2019 19:36:32 GMT"
-
-EXTERNPROTO ToolShader [ ]
-"library/ToolShader.x3dv"
-
-EXTERNPROTO AxonometricGrid [
-  inputOutput    SFVec3f    translation
-  inputOutput    SFRotation rotation
-  inputOutput    SFVec3f    scale
-  inputOutput    MFInt32    dimension
-  inputOutput    SFVec2d    angle
-  inputOutput    MFInt32    majorLineEvery
-  inputOutput    MFInt32    majorLineOffset
-  inputOutput    SFColor    color
-  inputOutput    SFFloat    transparency
-  inputOutput    SFColor    lineColor
-  inputOutput    SFFloat    lineTransparency
-  inputOutput    SFColor    majorLineColor
-  inputOutput    SFFloat    majorLineTransparency
-  initializeOnly SFBool     solid
-]
-[
-  "library/AxonometricGrid.x3dv#AxonometricGrid",
-  "file:///usr/share/titania/tools/library/AxonometricGrid.x3dv#AxonometricGrid",
-  "file:///app/share/titania/tools/library/AxonometricGrid.x3dv#AxonometricGrid"
-]
-
-EXTERNPROTO BooleanSwitch [
-  inputOutput    SFBool  whichChoice
-  initializeOnly SFVec3f bboxSize
-  initializeOnly SFVec3f bboxCenter
-  inputOnly      MFNode  addChildren
-  inputOnly      MFNode  removeChildren
-  inputOutput    MFNode  children
-]
-"library/BooleanSwitch.x3dv#BooleanSwitch"
-
-WorldInfo {
-  metadata DEF Titania MetadataSet {
-    name "Titania"
-    reference "http://titania.create3000.de"
-    value [
-      DEF NavigationInfo MetadataSet {
-        name "NavigationInfo"
-        reference "http://titania.create3000.de"
-        value DEF type MetadataString {
-          name "type"
-          reference "http://titania.create3000.de"
-          value "EXAMINE"
-        }
-      }
-      DEF Viewpoint MetadataSet {
-        name "Viewpoint"
-        reference "http://titania.create3000.de"
-        value [
-          DEF position MetadataDouble {
-            name "position"
-            reference "http://titania.create3000.de"
-            value [
-              4.56780354600261,
-              11.2217822253956,
-              18.7082921323744
-            ]
-          }
-          DEF orientation MetadataDouble {
-            name "orientation"
-            reference "http://titania.create3000.de"
-            value [
-              0.929070358799226,
-              -0.368711826530999,
-              0.0296623899383048,
-              5.7082264393033
-            ]
-          }
-          DEF centerOfRotation MetadataDouble {
-            name "centerOfRotation"
-            reference "http://titania.create3000.de"
-            value [
-              0,
-              0,
-              0
-            ]
-          }
-        ]
-      }
-      DEF Selection MetadataSet {
-        name "Selection"
-        reference "http://titania.create3000.de"
-        value [
-          DEF nodes MetadataSet {
-            name "nodes"
-            reference "http://titania.create3000.de"
-            value DEF ScaleScript Script {
-              inputOnly   SFVec3f set_translation
-              inputOutput SFVec3f scale 1 1 1
-              inputOutput MFInt32 dimension [
-                5,
-                10
-              ]
-              outputOnly  SFVec3f translation_changed
-
-              url "ecmascript:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Layout' level='2'/>
+    <component name='PointingDeviceSensor' level='1'/>
+    <component name='Scripting' level='1'/>
+    <meta name='comment' content='Rise and Shine'/>
+    <meta name='created' content='Tue, 05 Aug 2014 20:06:52 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
+    <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/AxonometricGridTool.x3dv'/>
+    <meta name='modified' content='Tue, 06 Feb 2024 19:10:18 GMT'/>
+  </head>
+  <Scene>
+    <ExternProtoDeclare name='AxonometricGrid' url='"AxonometricGrid.x3d"'>
+      <field accessType='inputOutput' type='SFVec3f' name='translation'/>
+      <field accessType='inputOutput' type='SFRotation' name='rotation'/>
+      <field accessType='inputOutput' type='SFVec3f' name='scale'/>
+      <field accessType='inputOutput' type='MFInt32' name='dimension'/>
+      <field accessType='inputOutput' type='SFVec2d' name='angle'/>
+      <field accessType='inputOutput' type='MFInt32' name='majorLineEvery'/>
+      <field accessType='inputOutput' type='MFInt32' name='majorLineOffset'/>
+      <field accessType='inputOutput' type='SFColor' name='color'/>
+      <field accessType='inputOutput' type='SFFloat' name='transparency'/>
+      <field accessType='inputOutput' type='SFColor' name='lineColor'/>
+      <field accessType='inputOutput' type='SFFloat' name='lineTransparency'/>
+      <field accessType='inputOutput' type='SFColor' name='majorLineColor'/>
+      <field accessType='inputOutput' type='SFFloat' name='majorLineTransparency'/>
+      <field accessType='initializeOnly' type='SFBool' name='solid'/>
+    </ExternProtoDeclare>
+    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
+    </ExternProtoDeclare>
+    <ExternProtoDeclare name='BooleanSwitch' url='"../Grouping/BooleanSwitch.x3d"'>
+      <field accessType='inputOutput' type='SFBool' name='whichChoice'/>
+      <field accessType='inputOutput' type='SFBool' name='visible'/>
+      <field accessType='inputOutput' type='SFBool' name='bboxDisplay'/>
+      <field accessType='initializeOnly' type='SFVec3f' name='bboxSize'/>
+      <field accessType='initializeOnly' type='SFVec3f' name='bboxCenter'/>
+      <field accessType='inputOnly' type='MFNode' name='addChildren'/>
+      <field accessType='inputOnly' type='MFNode' name='removeChildren'/>
+      <field accessType='inputOutput' type='MFNode' name='children'/>
+    </ExternProtoDeclare>
+    <ProtoDeclare name='TouchGroup'>
+      <ProtoInterface>
+        <field accessType='inputOutput' type='SFBool' name='enabled' value='true'/>
+        <field accessType='initializeOnly' type='SFVec3f' name='bboxSize' value='-1 -1 -1'/>
+        <field accessType='initializeOnly' type='SFVec3f' name='bboxCenter'/>
+        <field accessType='inputOnly' type='MFNode' name='addChildren'/>
+        <field accessType='inputOnly' type='MFNode' name='removeChildren'/>
+        <field accessType='inputOutput' type='MFNode' name='children'/>
+      </ProtoInterface>
+      <ProtoBody>
+        <Group>
+          <IS>
+            <connect nodeField='bboxSize' protoField='bboxSize'/>
+            <connect nodeField='bboxCenter' protoField='bboxCenter'/>
+            <connect nodeField='addChildren' protoField='addChildren'/>
+            <connect nodeField='removeChildren' protoField='removeChildren'/>
+            <connect nodeField='children' protoField='children'/>
+          </IS>
+        </Group>
+      </ProtoBody>
+    </ProtoDeclare>
+    <WorldInfo
+        title='AxonometricGridTool'>
+      <MetadataSet DEF='Titania' containerField='metadata'
+          name='Titania'
+          reference='http://titania.create3000.de'>
+        <MetadataSet DEF='NavigationInfo'
+            name='NavigationInfo'
+            reference='http://titania.create3000.de'>
+          <MetadataString DEF='type'
+              name='type'
+              reference='http://titania.create3000.de'
+              value='"EXAMINE"'/>
+        </MetadataSet>
+        <MetadataSet DEF='Viewpoint'
+            name='Viewpoint'
+            reference='http://titania.create3000.de'>
+          <MetadataDouble DEF='position'
+              name='position'
+              reference='http://titania.create3000.de'
+              value='4.56780354600261, 11.2217822253956, 18.7082921323744'/>
+          <MetadataDouble DEF='orientation'
+              name='orientation'
+              reference='http://titania.create3000.de'
+              value='0.929070358799226, -0.368711826530999, 0.0296623899383048, 5.7082264393033'/>
+          <MetadataDouble DEF='centerOfRotation'
+              name='centerOfRotation'
+              reference='http://titania.create3000.de'
+              value='0, 0, 0'/>
+        </MetadataSet>
+        <MetadataSet DEF='Selection'
+            name='Selection'
+            reference='http://titania.create3000.de'>
+          <MetadataSet DEF='nodes'
+              name='nodes'
+              reference='http://titania.create3000.de'>
+            <Script DEF='ScaleScript' containerField='value'>
+              <field accessType='inputOnly' type='SFVec3f' name='set_translation'/>
+              <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
+              <field accessType='inputOutput' type='MFInt32' name='dimension' value='5, 10'/>
+              <field accessType='outputOnly' type='SFVec3f' name='translation_changed'/>
+<![CDATA[ecmascript:
 
 function initialize ()
 {
@@ -132,206 +122,158 @@ function set_translation (value)
 function eventsProcessed ()
 {
 	translation_changed = new SFVec3f (-scale .x * dimension [0], 0, 0);
-}"
-            }
-          }
-          DEF selectGeometry MetadataBoolean {
-            name "selectGeometry"
-            reference "http://titania.create3000.de"
-            value FALSE
-          }
-        ]
-      }
-      DEF AngleGrid MetadataSet {
-        name "AngleGrid"
-        reference "http://titania.create3000.de"
-        value [
-          DEF enabled MetadataBoolean {
-            name "enabled"
-            reference "http://titania.create3000.de"
-            value FALSE
-          }
-          DEF dimension MetadataInteger {
-            name "dimension"
-            reference "http://titania.create3000.de"
-            value [
-              7,
-              13,
-              10
-            ]
-          }
-          DEF translation MetadataFloat {
-            name "translation"
-            reference "http://titania.create3000.de"
-            value [
-              0.348847,
-              -7.10543e-15,
-              -0.00572806
-            ]
-          }
-        ]
-      }
-      DEF Grid MetadataSet {
-        name "Grid"
-        reference "http://titania.create3000.de"
-        value [
-          DEF enabled_1 MetadataBoolean {
-            name "enabled"
-            reference "http://titania.create3000.de"
-            value FALSE
-          }
-          DEF scale MetadataFloat {
-            name "scale"
-            reference "http://titania.create3000.de"
-            value [
-              0.808302,
-              0.808302,
-              0.808302
-            ]
-          }
-        ]
-      }
-      DEF AxonometricGrid MetadataSet {
-        name "AxonometricGrid"
-        reference "http://titania.create3000.de"
-        value DEF enabled_2 MetadataBoolean {
-          name "enabled"
-          reference "http://titania.create3000.de"
-          value FALSE
-        }
-      }
-      DEF Page MetadataSet {
-        name "Page"
-        reference "http://titania.create3000.de"
-        value [
-          DEF activeView MetadataInteger {
-            name "activeView"
-            reference "http://titania.create3000.de"
-            value 1
-          }
-          DEF multiView MetadataInteger {
-            name "multiView"
-            reference "http://titania.create3000.de"
-            value 0
-          }
-        ]
-      }
-      DEF Prototype MetadataSet {
-        name "Prototype"
-        reference "http://titania.create3000.de"
-        value DEF path MetadataString {
-          name "path"
-          reference "http://titania.create3000.de"
-          value "BooleanSwitch"
-        }
-      }
-    ]
-  }
-  title "AxonometricGridTool"
-}
-
-DEF AxonometricGrid_3 Collision {
-  enabled FALSE
-  children DEF _4 TouchGroup {
-    enabled FALSE
-    children DEF _5 AxonometricGrid {
-      transparency 0.8
-    }
-  }
-}
-
-DEF Handles Collision {
-  enabled FALSE
-  children DEF _6 TouchGroup {
-    children DEF _7 BooleanSwitch {
-      whichChoice TRUE
-      children [
-        DEF _8 Group { }
-        DEF _9 Transform {
-          children [
-            DEF Center Transform {
-              children [
-                DEF _10 PlaneSensor {
-                  axisRotation 1 0 0 1.5708
-                  autoOffset FALSE
-                }
-                DEF _11 Transform {
-                  children ScreenGroup {
-                    children DEF Sphere Transform {
-                      scale 4 4 4
-                      children Shape {
-                        appearance DEF _12 Appearance {
-                          material Material {
-                            diffuseColor 1 0.7 0
-                          }
-                          shaders ToolShader { }
-                        }
-                        geometry Sphere { }
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-            DEF DimensionHandle Transform {
-              children [
-                DEF _13 PlaneSensor {
-                  autoOffset FALSE
-                  offset 5 0 0
-                  maxPosition -1 0
-                }
-                DEF _14 Transform {
-                  translation 5 0 0
-                  children ScreenGroup {
-                    children DEF Edge Transform {
-                      scale 6 6 6
-                      children Shape {
-                        appearance USE _12
-                        geometry Sphere { }
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-            DEF ScaleHandle Transform {
-              children [
-                DEF _15 PlaneSensor {
-                  autoOffset FALSE
-                  offset -5 0 0
-                  maxPosition -1 0
-                }
-                DEF _16 Transform {
-                  translation -5 0 0
-                  children ScreenGroup {
-                    children DEF Box Transform {
-                      scale 3 3 3
-                      children Shape {
-                        appearance USE _12
-                        geometry Box { }
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  }
-}
-
-DEF DimensionScript Script {
-  inputOutput SFVec3f scale 1 1 1
-  inputOutput MFInt32 dimension [
-    5,
-    10
-  ]
-  inputOnly   SFVec3f set_translation
-  outputOnly  SFVec3f translation_changed
-
-  url "ecmascript:
+}]]>
+            </Script>
+          </MetadataSet>
+          <MetadataBoolean DEF='selectGeometry'
+              name='selectGeometry'
+              reference='http://titania.create3000.de'
+              value='false'/>
+        </MetadataSet>
+        <MetadataSet DEF='AngleGrid'
+            name='AngleGrid'
+            reference='http://titania.create3000.de'>
+          <MetadataBoolean DEF='enabled'
+              name='enabled'
+              reference='http://titania.create3000.de'
+              value='false'/>
+          <MetadataInteger DEF='dimension'
+              name='dimension'
+              reference='http://titania.create3000.de'
+              value='7, 13, 10'/>
+          <MetadataFloat DEF='translation'
+              name='translation'
+              reference='http://titania.create3000.de'
+              value='0.348847, -7.10543e-15, -0.00572806'/>
+        </MetadataSet>
+        <MetadataSet DEF='Grid'
+            name='Grid'
+            reference='http://titania.create3000.de'>
+          <MetadataBoolean DEF='enabled_1'
+              name='enabled'
+              reference='http://titania.create3000.de'
+              value='false'/>
+          <MetadataFloat DEF='scale'
+              name='scale'
+              reference='http://titania.create3000.de'
+              value='0.808302, 0.808302, 0.808302'/>
+        </MetadataSet>
+        <MetadataSet DEF='AxonometricGrid'
+            name='AxonometricGrid'
+            reference='http://titania.create3000.de'>
+          <MetadataBoolean DEF='enabled_2'
+              name='enabled'
+              reference='http://titania.create3000.de'
+              value='false'/>
+        </MetadataSet>
+        <MetadataSet DEF='Page'
+            name='Page'
+            reference='http://titania.create3000.de'>
+          <MetadataInteger DEF='activeView'
+              name='activeView'
+              reference='http://titania.create3000.de'
+              value='1'/>
+          <MetadataInteger DEF='multiView'
+              name='multiView'
+              reference='http://titania.create3000.de'
+              value='0'/>
+        </MetadataSet>
+        <MetadataSet DEF='Prototype'
+            name='Prototype'
+            reference='http://titania.create3000.de'>
+          <MetadataString DEF='path'
+              name='path'
+              reference='http://titania.create3000.de'
+              value='"BooleanSwitch"'/>
+        </MetadataSet>
+      </MetadataSet>
+    </WorldInfo>
+    <Collision DEF='AxonometricGrid_3'
+        enabled='false'>
+      <ProtoInstance name='TouchGroup' DEF='_4'>
+        <fieldValue name='enabled' value='false'/>
+        <fieldValue name='children'>
+          <ProtoInstance name='AxonometricGrid' DEF='_5'/>
+        </fieldValue>
+      </ProtoInstance>
+    </Collision>
+    <Collision DEF='Handles'
+        enabled='false'>
+      <ProtoInstance name='TouchGroup' DEF='_6'>
+        <fieldValue name='children'>
+          <ProtoInstance name='BooleanSwitch' DEF='_7'>
+            <fieldValue name='whichChoice' value='true'/>
+            <fieldValue name='children'>
+              <Group DEF='_8'/>
+              <Transform DEF='_9'>
+                <Transform DEF='Center'>
+                  <PlaneSensor DEF='_10'
+                      axisRotation='1 0 0 1.5708'
+                      autoOffset='false'/>
+                  <Transform DEF='_11'>
+                    <ScreenGroup>
+                      <Transform DEF='Sphere'
+                          scale='4 4 4'>
+                        <Shape>
+                          <Appearance DEF='_12'>
+                            <Material
+                                diffuseColor='1 0.7 0'/>
+                            <ProtoInstance name='ToolShader' containerField='shaders'/>
+                          </Appearance>
+                          <Sphere/>
+                        </Shape>
+                      </Transform>
+                    </ScreenGroup>
+                  </Transform>
+                </Transform>
+                <Transform DEF='DimensionHandle'>
+                  <PlaneSensor DEF='_13'
+                      autoOffset='false'
+                      offset='5 0 0'
+                      maxPosition='-1 0'/>
+                  <Transform DEF='_14'
+                      translation='5 0 0'>
+                    <ScreenGroup>
+                      <Transform DEF='Edge'
+                          scale='6 6 6'>
+                        <Shape>
+                          <Appearance USE='_12'/>
+                          <Sphere/>
+                        </Shape>
+                      </Transform>
+                    </ScreenGroup>
+                  </Transform>
+                </Transform>
+                <Transform DEF='ScaleHandle'>
+                  <PlaneSensor DEF='_15'
+                      autoOffset='false'
+                      offset='-5 0 0'
+                      maxPosition='-1 0'/>
+                  <Transform DEF='_16'
+                      translation='-5 0 0'>
+                    <ScreenGroup>
+                      <Transform DEF='Box'
+                          scale='3 3 3'>
+                        <Shape>
+                          <Appearance USE='_12'/>
+                          <Box/>
+                        </Shape>
+                      </Transform>
+                    </ScreenGroup>
+                  </Transform>
+                </Transform>
+              </Transform>
+            </fieldValue>
+          </ProtoInstance>
+        </fieldValue>
+      </ProtoInstance>
+    </Collision>
+    <Script DEF='DimensionScript'>
+      <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
+      <field accessType='inputOutput' type='MFInt32' name='dimension' value='5, 10'/>
+      <field accessType='inputOnly' type='SFVec3f' name='set_translation'/>
+      <field accessType='outputOnly' type='SFVec3f' name='translation_changed'/>
+<![CDATA[ecmascript:
 
 function initialize ()
 {
@@ -348,104 +290,86 @@ function eventsProcessed ()
 {
 	translation_changed = new SFVec3f (dimension [0], 0, 0);
 }
-"
-}
-
-DEF MoveScript Script {
-  inputOutput SFVec3f    scale 1 1 1
-  inputOnly   SFVec3f    set_translation
-  inputOutput SFRotation rotation 0 0 1 0
-  outputOnly  SFVec3f    translation_changed
-
-  url "ecmascript:
+]]>
+    </Script>
+    <Script DEF='MoveScript'>
+      <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
+      <field accessType='inputOnly' type='SFVec3f' name='set_translation'/>
+      <field accessType='inputOutput' type='SFRotation' name='rotation'/>
+      <field accessType='outputOnly' type='SFVec3f' name='translation_changed'/>
+<![CDATA[ecmascript:
 
 function set_translation (value)
 {
-	var translation = rotation .inverse () .multVec (value); 
+	var translation = rotation .inverse () .multVec (value);
 
 	translation_changed = rotation .multVec (translation);
 }
-"
-}
-
-USE ScaleScript
-
-DEF Tool Script {
-  inputOutput SFVec3f    translation 0 0 0
-  inputOutput SFRotation rotation 0 0 1 0
-  inputOutput SFVec3f    scale 1 1 1
-  inputOutput MFInt32    dimension [
-    5,
-    10
-  ]
-  inputOutput SFVec2d    angle 1.0471975511966 1.0471975511966
-  inputOutput MFInt32    majorLineEvery [
-    5,
-    5,
-    5,
-    5
-  ]
-  inputOutput MFInt32    majorLineOffset [
-    0,
-    0,
-    0,
-    0
-  ]
-  inputOutput SFColor    color 0.5 0.5 0.5
-  inputOutput SFFloat    transparency 0.8
-  inputOutput SFColor    lineColor 1 0.7 0.7
-  inputOutput SFFloat    lineTransparency 0.8
-  inputOutput SFColor    majorLineColor 1 0.7 0.7
-  inputOutput SFFloat    majorLineTransparency 0.6
-  inputOutput SFBool     collision FALSE
-  inputOutput SFBool     handles TRUE
-  inputOutput SFBool     isActive FALSE
-
-  url "ecmascript:
-// Empty body"
-}
-
-ROUTE DimensionScript.translation_changed TO _14.set_translation
-ROUTE _13.translation_changed TO DimensionScript.set_translation
-ROUTE DimensionScript.translation_changed TO _13.set_offset
-ROUTE _10.translation_changed TO MoveScript.set_translation
-ROUTE Tool.translation_changed TO _10.set_offset
-ROUTE MoveScript.translation_changed TO Tool.set_translation
-ROUTE Tool.transparency_changed TO _5.set_transparency
-ROUTE Tool.color_changed TO _5.set_color
-ROUTE Tool.translation_changed TO DimensionHandle.set_translation
-ROUTE Tool.translation_changed TO _11.set_translation
-ROUTE Tool.rotation_changed TO MoveScript.set_rotation
-ROUTE Tool.dimension_changed TO DimensionScript.set_dimension
-ROUTE DimensionScript.dimension_changed TO Tool.set_dimension
-ROUTE Tool.dimension_changed TO _5.set_dimension
-ROUTE Tool.majorLineEvery_changed TO _5.set_majorLineEvery
-ROUTE Tool.lineColor_changed TO _5.set_lineColor
-ROUTE Tool.lineTransparency_changed TO _5.set_lineTransparency
-ROUTE Tool.majorLineColor_changed TO _5.set_majorLineColor
-ROUTE Tool.majorLineTransparency_changed TO _5.set_majorLineTransparency
-ROUTE Tool.majorLineOffset_changed TO _5.set_majorLineOffset
-ROUTE Tool.scale_changed TO DimensionScript.set_scale
-ROUTE Tool.scale_changed TO MoveScript.set_scale
-ROUTE Tool.translation_changed TO _5.set_translation
-ROUTE Tool.rotation_changed TO _5.set_rotation
-ROUTE Tool.scale_changed TO _5.set_scale
-ROUTE Tool.scale_changed TO DimensionHandle.set_scale
-ROUTE ScaleScript.translation_changed TO _16.set_translation
-ROUTE _15.translation_changed TO ScaleScript.set_translation
-ROUTE Tool.scale_changed TO ScaleScript.set_scale
-ROUTE ScaleScript.scale_changed TO Tool.set_scale
-ROUTE Tool.dimension_changed TO ScaleScript.set_dimension
-ROUTE ScaleScript.translation_changed TO _15.set_offset
-ROUTE Tool.translation_changed TO ScaleHandle.set_translation
-ROUTE _10.isActive TO Tool.set_isActive
-ROUTE _13.isActive TO Tool.set_isActive
-ROUTE _15.isActive TO Tool.set_isActive
-ROUTE Tool.angle_changed TO _5.set_angle
-ROUTE Tool.rotation_changed TO _9.set_rotation
-ROUTE Tool.collision_changed TO AxonometricGrid_3.set_enabled
-ROUTE Tool.handles_changed TO _7.set_whichChoice
-
-EXPORT _4 AS GridTouchGroup
-EXPORT _6 AS HandlesTouchGroup
-EXPORT Tool
+]]>
+    </Script>
+    <Script USE='ScaleScript'/>
+    <Script DEF='Tool'>
+      <field accessType='inputOutput' type='SFVec3f' name='translation'/>
+      <field accessType='inputOutput' type='SFRotation' name='rotation'/>
+      <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
+      <field accessType='inputOutput' type='MFInt32' name='dimension' value='5, 10'/>
+      <field accessType='inputOutput' type='SFVec2d' name='angle' value='1.0471975511966 1.0471975511966'/>
+      <field accessType='inputOutput' type='MFInt32' name='majorLineEvery' value='5, 5, 5, 5'/>
+      <field accessType='inputOutput' type='MFInt32' name='majorLineOffset' value='0, 0, 0, 0'/>
+      <field accessType='inputOutput' type='SFColor' name='color' value='0.5 0.5 0.5'/>
+      <field accessType='inputOutput' type='SFFloat' name='transparency' value='0.8'/>
+      <field accessType='inputOutput' type='SFColor' name='lineColor' value='1 0.7 0.7'/>
+      <field accessType='inputOutput' type='SFFloat' name='lineTransparency' value='0.8'/>
+      <field accessType='inputOutput' type='SFColor' name='majorLineColor' value='1 0.7 0.7'/>
+      <field accessType='inputOutput' type='SFFloat' name='majorLineTransparency' value='0.6'/>
+      <field accessType='inputOutput' type='SFBool' name='collision'/>
+      <field accessType='inputOutput' type='SFBool' name='handles' value='true'/>
+      <field accessType='inputOutput' type='SFBool' name='isActive'/>
+<![CDATA[ecmascript:
+// Empty body]]>
+    </Script>
+    <ROUTE fromNode='DimensionScript' fromField='translation_changed' toNode='_14' toField='set_translation'/>
+    <ROUTE fromNode='_13' fromField='translation_changed' toNode='DimensionScript' toField='set_translation'/>
+    <ROUTE fromNode='DimensionScript' fromField='translation_changed' toNode='_13' toField='set_offset'/>
+    <ROUTE fromNode='_10' fromField='translation_changed' toNode='MoveScript' toField='set_translation'/>
+    <ROUTE fromNode='Tool' fromField='translation_changed' toNode='_10' toField='set_offset'/>
+    <ROUTE fromNode='MoveScript' fromField='translation_changed' toNode='Tool' toField='set_translation'/>
+    <ROUTE fromNode='Tool' fromField='transparency_changed' toNode='_5' toField='set_transparency'/>
+    <ROUTE fromNode='Tool' fromField='color_changed' toNode='_5' toField='set_color'/>
+    <ROUTE fromNode='Tool' fromField='translation_changed' toNode='DimensionHandle' toField='set_translation'/>
+    <ROUTE fromNode='Tool' fromField='translation_changed' toNode='_11' toField='set_translation'/>
+    <ROUTE fromNode='Tool' fromField='rotation_changed' toNode='MoveScript' toField='set_rotation'/>
+    <ROUTE fromNode='Tool' fromField='dimension_changed' toNode='DimensionScript' toField='set_dimension'/>
+    <ROUTE fromNode='DimensionScript' fromField='dimension_changed' toNode='Tool' toField='set_dimension'/>
+    <ROUTE fromNode='Tool' fromField='dimension_changed' toNode='_5' toField='set_dimension'/>
+    <ROUTE fromNode='Tool' fromField='majorLineEvery_changed' toNode='_5' toField='set_majorLineEvery'/>
+    <ROUTE fromNode='Tool' fromField='lineColor_changed' toNode='_5' toField='set_lineColor'/>
+    <ROUTE fromNode='Tool' fromField='lineTransparency_changed' toNode='_5' toField='set_lineTransparency'/>
+    <ROUTE fromNode='Tool' fromField='majorLineColor_changed' toNode='_5' toField='set_majorLineColor'/>
+    <ROUTE fromNode='Tool' fromField='majorLineTransparency_changed' toNode='_5' toField='set_majorLineTransparency'/>
+    <ROUTE fromNode='Tool' fromField='majorLineOffset_changed' toNode='_5' toField='set_majorLineOffset'/>
+    <ROUTE fromNode='Tool' fromField='scale_changed' toNode='DimensionScript' toField='set_scale'/>
+    <ROUTE fromNode='Tool' fromField='scale_changed' toNode='MoveScript' toField='set_scale'/>
+    <ROUTE fromNode='Tool' fromField='translation_changed' toNode='_5' toField='set_translation'/>
+    <ROUTE fromNode='Tool' fromField='rotation_changed' toNode='_5' toField='set_rotation'/>
+    <ROUTE fromNode='Tool' fromField='scale_changed' toNode='_5' toField='set_scale'/>
+    <ROUTE fromNode='Tool' fromField='scale_changed' toNode='DimensionHandle' toField='set_scale'/>
+    <ROUTE fromNode='ScaleScript' fromField='translation_changed' toNode='_16' toField='set_translation'/>
+    <ROUTE fromNode='_15' fromField='translation_changed' toNode='ScaleScript' toField='set_translation'/>
+    <ROUTE fromNode='Tool' fromField='scale_changed' toNode='ScaleScript' toField='set_scale'/>
+    <ROUTE fromNode='ScaleScript' fromField='scale_changed' toNode='Tool' toField='set_scale'/>
+    <ROUTE fromNode='Tool' fromField='dimension_changed' toNode='ScaleScript' toField='set_dimension'/>
+    <ROUTE fromNode='ScaleScript' fromField='translation_changed' toNode='_15' toField='set_offset'/>
+    <ROUTE fromNode='Tool' fromField='translation_changed' toNode='ScaleHandle' toField='set_translation'/>
+    <ROUTE fromNode='_10' fromField='isActive' toNode='Tool' toField='set_isActive'/>
+    <ROUTE fromNode='_13' fromField='isActive' toNode='Tool' toField='set_isActive'/>
+    <ROUTE fromNode='_15' fromField='isActive' toNode='Tool' toField='set_isActive'/>
+    <ROUTE fromNode='Tool' fromField='angle_changed' toNode='_5' toField='set_angle'/>
+    <ROUTE fromNode='Tool' fromField='rotation_changed' toNode='_9' toField='set_rotation'/>
+    <ROUTE fromNode='Tool' fromField='collision_changed' toNode='AxonometricGrid_3' toField='set_enabled'/>
+    <ROUTE fromNode='Tool' fromField='handles_changed' toNode='_7' toField='set_whichChoice'/>
+    <EXPORT localDEF='_4' AS='GridTouchGroup'/>
+    <EXPORT localDEF='_6' AS='HandlesTouchGroup'/>
+    <EXPORT localDEF='Tool'/>
+  </Scene>
+</X3D>

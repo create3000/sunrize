@@ -9,7 +9,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/library/AngleGrid.x3dv'/>
-    <meta name='modified' content='Tue, 06 Feb 2024 18:22:46 GMT'/>
+    <meta name='modified' content='Tue, 06 Feb 2024 19:16:13 GMT'/>
     <meta name='titania-add-world-info' content='true'/>
   </head>
   <Scene>
@@ -42,7 +42,8 @@
             <Transform DEF='Disk'
                 rotation='-5.2594820914624e-13 0.70710528118436 0.707108281185553 3.14159'
                 scale='5 5 1'>
-              <Shape>
+              <Shape
+                  castShadow='false'>
                 <Appearance>
                   <UnlitMaterial DEF='Material2'>
                     <IS>
@@ -61,7 +62,8 @@
             <Transform DEF='Rings'
                 rotation='0 0.70710528118436 0.707108281185553 3.14159'>
               <Transform>
-                <Shape>
+                <Shape
+                    castShadow='false'>
                   <Appearance DEF='MinorAppearance'>
                     <UnlitMaterial DEF='_2'>
                       <IS>
@@ -75,28 +77,32 @@
               </Transform>
               <Transform
                   scale='2 2 2'>
-                <Shape>
+                <Shape
+                    castShadow='false'>
                   <Appearance USE='MinorAppearance'/>
                   <Circle2D/>
                 </Shape>
               </Transform>
               <Transform
                   scale='3 3 3'>
-                <Shape>
+                <Shape
+                    castShadow='false'>
                   <Appearance USE='MinorAppearance'/>
                   <Circle2D/>
                 </Shape>
               </Transform>
               <Transform
                   scale='4 4 4'>
-                <Shape>
+                <Shape
+                    castShadow='false'>
                   <Appearance USE='MinorAppearance'/>
                   <Circle2D/>
                 </Shape>
               </Transform>
               <Transform
                   scale='5 5 5'>
-                <Shape>
+                <Shape
+                    castShadow='false'>
                   <Appearance DEF='MajorAppearance'>
                     <UnlitMaterial DEF='MajorMaterial'>
                       <IS>
@@ -109,7 +115,8 @@
                 </Shape>
               </Transform>
             </Transform>
-            <Shape DEF='MinorLines'>
+            <Shape DEF='MinorLines'
+                castShadow='false'>
               <Appearance USE='MinorAppearance'/>
               <IndexedLineSet DEF='MinorLines_3'
                   coordIndex='0, 1, -1, 0, 2, -1, 0, 3, -1, 0, 4, -1, 0, 5, -1, 0, 6, -1, 0, 7, -1, 0, 8, -1'>
@@ -117,7 +124,8 @@
                     point='0 0 0, 1.91342 0 4.6194, 4.6194 0 1.91342, 4.6194 0 -1.91342, 1.91342 0 -4.6194, -1.91342 0 -4.6194, -4.6194 0 -1.91342, -4.6194 0 1.91342, -1.91342 0 4.6194'/>
               </IndexedLineSet>
             </Shape>
-            <Shape DEF='MajorLines'>
+            <Shape DEF='MajorLines'
+                castShadow='false'>
               <Appearance USE='MajorAppearance'/>
               <IndexedLineSet DEF='MajorLines_4'
                   coordIndex='0, 1, -1, 0, 2, -1, 0, 3, -1, 0, 4, -1, 0, 5, -1, 0, 6, -1, 0, 7, -1, 0, 8, -1'>
@@ -125,7 +133,8 @@
                     point='0 0 0, 0 0 5, 3.53553 0 3.53553, 5 0 3.06162e-16, 3.53553 0 -3.53553, 6.12323e-16 0 -5, -3.53553 0 -3.53553, -5 0 -9.18485e-16, -3.53553 0 3.53553'/>
               </IndexedLineSet>
             </Shape>
-            <Shape DEF='MinorPoints'>
+            <Shape DEF='MinorPoints'
+                castShadow='false'>
               <Appearance>
                 <LineProperties
                     linewidthScaleFactor='4'/>
@@ -136,7 +145,8 @@
                     point='0 -4 0, 0 -3 0, 0 -2 0, 0 -1 0, 0 1 0, 0 2 0, 0 3 0, 0 4 0'/>
               </PointSet>
             </Shape>
-            <Shape DEF='MajorPoints'>
+            <Shape DEF='MajorPoints'
+                castShadow='false'>
               <Appearance>
                 <LineProperties
                     linewidthScaleFactor='6'/>
