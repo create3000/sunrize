@@ -9,7 +9,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/library/AxonometricGrid.x3dv'/>
-    <meta name='modified' content='Tue, 06 Feb 2024 18:05:00 GMT'/>
+    <meta name='modified' content='Tue, 06 Feb 2024 18:24:37 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='AxonometricGrid'>
@@ -22,10 +22,10 @@
         <field accessType='inputOutput' type='MFInt32' name='majorLineEvery' value='5, 5, 5, 5'/>
         <field accessType='inputOutput' type='MFInt32' name='majorLineOffset' value='0, 0, 0, 0'/>
         <field accessType='inputOutput' type='SFColor' name='color' value='0.5 0.5 0.5'/>
-        <field accessType='inputOutput' type='SFFloat' name='transparency' value='0.61803'/>
-        <field accessType='inputOutput' type='SFColor' name='lineColor' value='1 0.7 0.7'/>
+        <field accessType='inputOutput' type='SFFloat' name='transparency' value='0.8'/>
+        <field accessType='inputOutput' type='SFColor' name='lineColor' value='0.9647059 0.6980392 0.4196078'/>
         <field accessType='inputOutput' type='SFFloat' name='lineTransparency' value='0.8'/>
-        <field accessType='inputOutput' type='SFColor' name='majorLineColor' value='1 0.7 0.7'/>
+        <field accessType='inputOutput' type='SFColor' name='majorLineColor' value='0.9647059 0.6980392 0.4196078'/>
         <field accessType='inputOutput' type='SFFloat' name='majorLineTransparency' value='0.6'/>
         <field accessType='initializeOnly' type='SFBool' name='solid' value='true'/>
       </ProtoInterface>
@@ -295,8 +295,6 @@ function isMajor (i, dimension, majorLineEvery, majorLineOffset)
         </Script>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='AxonometricGrid'>
-      <fieldValue name='transparency' value='0.8'/>
-    </ProtoInstance>
+    <ProtoInstance name='AxonometricGrid'/>
   </Scene>
 </X3D>
