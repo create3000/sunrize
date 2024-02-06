@@ -1,0 +1,462 @@
+#X3D V3.3 utf8 Titania V4.4.0
+
+PROFILE Immersive
+
+COMPONENT Grouping : 3
+COMPONENT Layout : 2
+COMPONENT Shape : 4
+
+META "comment" "World of Titania"
+META "created" "Tue, 05 Aug 2014 20:06:52 GMT"
+META "creator" "Holger Seelig"
+META "generator" "Titania V4.4.0, http://titania.create3000.de"
+META "identifier" "file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/AngleGridTool.x3dv"
+META "modified" "Sat, 02 Feb 2019 19:36:09 GMT"
+
+EXTERNPROTO ToolShader [ ]
+"library/ToolShader.x3dv"
+
+EXTERNPROTO AngleGrid [
+  inputOutput    SFVec3f    translation
+  inputOutput    SFRotation rotation
+  inputOutput    SFVec3f    scale
+  inputOutput    MFInt32    dimension
+  inputOutput    MFInt32    majorLineEvery
+  inputOutput    MFInt32    majorLineOffset
+  inputOutput    SFColor    color
+  inputOutput    SFFloat    transparency
+  inputOutput    SFColor    lineColor
+  inputOutput    SFFloat    lineTransparency
+  inputOutput    SFColor    majorLineColor
+  inputOutput    SFFloat    majorLineTransparency
+  initializeOnly SFBool     solid
+]
+"library/AngleGrid.x3dv#AngleGrid"
+
+EXTERNPROTO BooleanSwitch [
+  inputOutput    SFBool  whichChoice
+  initializeOnly SFVec3f bboxSize
+  initializeOnly SFVec3f bboxCenter
+  inputOnly      MFNode  addChildren
+  inputOnly      MFNode  removeChildren
+  inputOutput    MFNode  children
+]
+"library/BooleanSwitch.x3dv#BooleanSwitch"
+
+WorldInfo {
+  metadata DEF Titania MetadataSet {
+    name "Titania"
+    reference "http://titania.create3000.de"
+    value [
+      DEF NavigationInfo MetadataSet {
+        name "NavigationInfo"
+        reference "http://titania.create3000.de"
+        value DEF type MetadataString {
+          name "type"
+          reference "http://titania.create3000.de"
+          value "EXAMINE"
+        }
+      }
+      DEF Viewpoint MetadataSet {
+        name "Viewpoint"
+        reference "http://titania.create3000.de"
+        value [
+          DEF position MetadataDouble {
+            name "position"
+            reference "http://titania.create3000.de"
+            value [
+              2.70062458728663,
+              4.55688810733126,
+              8.48182749269322
+            ]
+          }
+          DEF orientation MetadataDouble {
+            name "orientation"
+            reference "http://titania.create3000.de"
+            value [
+              -0.862931552791345,
+              0.504948038820294,
+              -0.0194065269602071,
+              0.558359179429521
+            ]
+          }
+          DEF centerOfRotation MetadataDouble {
+            name "centerOfRotation"
+            reference "http://titania.create3000.de"
+            value [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      }
+      DEF Grid MetadataSet {
+        name "Grid"
+        reference "http://titania.create3000.de"
+        value DEF enabled MetadataBoolean {
+          name "enabled"
+          reference "http://titania.create3000.de"
+          value FALSE
+        }
+      }
+      DEF AngleGrid MetadataSet {
+        name "AngleGrid"
+        reference "http://titania.create3000.de"
+        value DEF enabled_1 MetadataBoolean {
+          name "enabled"
+          reference "http://titania.create3000.de"
+          value TRUE
+        }
+      }
+      DEF Selection MetadataSet {
+        name "Selection"
+        reference "http://titania.create3000.de"
+        value [
+          DEF selectGeometry MetadataBoolean {
+            name "selectGeometry"
+            reference "http://titania.create3000.de"
+            value FALSE
+          }
+          DEF nodes MetadataSet {
+            name "nodes"
+            reference "http://titania.create3000.de"
+            value DEF AngleScript Script {
+              inputOnly   SFRotation set_rotation
+              inputOutput MFInt32    dimension [
+                5,
+                16,
+                10
+              ]
+              outputOnly  SFFloat    angle_changed
+              outputOnly  SFRotation rotation_changed
+
+              url "ecmascript:
+
+var yAxis = new SFVec3f (0, 1, 0);
+
+function initialize ()
+{
+	set_dimension ();
+}
+
+function set_rotation (value)
+{
+	var angle = value .angle;
+	var sign  = value .getAxis () .dot (yAxis) < 0;
+
+	if (sign)
+		angle = 2 * Math .PI - angle;
+
+	dimension [1] = Math .round (2 * Math .PI / angle); 
+}
+
+function set_dimension ()
+{
+	angle_changed    = 2 * Math .PI / dimension [1];
+	rotation_changed = new SFRotation (yAxis, angle_changed);
+}
+"
+            }
+          }
+        ]
+      }
+      DEF Page MetadataSet {
+        name "Page"
+        reference "http://titania.create3000.de"
+        value [
+          DEF activeView MetadataInteger {
+            name "activeView"
+            reference "http://titania.create3000.de"
+            value 1
+          }
+          DEF multiView MetadataInteger {
+            name "multiView"
+            reference "http://titania.create3000.de"
+            value 0
+          }
+        ]
+      }
+      DEF Prototype MetadataSet {
+        name "Prototype"
+        reference "http://titania.create3000.de"
+        value DEF path MetadataString {
+          name "path"
+          reference "http://titania.create3000.de"
+          value "BooleanSwitch"
+        }
+      }
+    ]
+  }
+  title "AngleGridTool"
+}
+
+DEF AngleGrid_2 Collision {
+  enabled FALSE
+  children DEF _3 TouchGroup {
+    enabled FALSE
+    children DEF _4 AngleGrid { }
+  }
+}
+
+DEF Handles Collision {
+  enabled FALSE
+  children DEF _5 TouchGroup {
+    children DEF _6 BooleanSwitch {
+      whichChoice TRUE
+      children [
+        DEF _7 Group { }
+        DEF _8 Transform {
+          children [
+            DEF Center Transform {
+              children [
+                DEF _9 PlaneSensor {
+                  axisRotation 1 0 0 1.5708
+                  autoOffset FALSE
+                }
+                DEF _10 Transform {
+                  children ScreenGroup {
+                    children DEF Sphere Transform {
+                      scale 4 4 4
+                      children Shape {
+                        appearance DEF _11 Appearance {
+                          material Material {
+                            diffuseColor 1 0.7 0
+                          }
+                          shaders ToolShader { }
+                        }
+                        geometry Sphere { }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+            DEF Handles_12 Transform {
+              children [
+                DEF AngleHandle Group {
+                  children [
+                    DEF _13 CylinderSensor {
+                      diskAngle 1.2
+                      offset 0.392699
+                    }
+                    DEF Handle Transform {
+                      rotation 0 1 0 0.392699092626572
+                      children DEF _14 Transform {
+                        translation 0 0 4
+                        children ScreenGroup {
+                          children Transform {
+                            scale 6 6 6
+                            children Shape {
+                              appearance USE _11
+                              geometry Sphere { }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+                DEF DimensionHandle Group {
+                  children [
+                    DEF _15 PlaneSensor {
+                      axisRotation 1 0 0 1.5708
+                      autoOffset FALSE
+                      offset 0 0 5
+                      maxPosition 0 -1
+                    }
+                    DEF _16 Transform {
+                      translation 0 0 5
+                      children ScreenGroup {
+                        children DEF Sphere_17 Transform {
+                          scale 6 3 3
+                          children Shape {
+                            appearance USE _11
+                            geometry Box { }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+            DEF ScaleHandle Transform {
+              children [
+                DEF _18 PlaneSensor {
+                  axisRotation 1 0 0 1.5708
+                  autoOffset FALSE
+                  offset 3.53553 0 -3.53553
+                }
+                DEF _19 Transform {
+                  translation 3.53553 0 -3.53553
+                  children ScreenGroup {
+                    children DEF Box Transform {
+                      scale 3 3 3
+                      children Shape {
+                        appearance USE _11
+                        geometry Box { }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+
+USE AngleScript
+
+DEF DimensionScript Script {
+  inputOnly   SFVec3f set_translation
+  inputOutput MFInt32 dimension [
+    5,
+    16,
+    10
+  ]
+  outputOnly  SFVec3f dimensionTranslation_changed
+  outputOnly  SFVec3f angleTranslation_changed
+
+  url "ecmascript:
+
+function initialize ()
+{
+	eventsProcessed ();
+}
+
+function set_translation (value)
+{
+	dimension [0] = Math .round (value .z);
+	dimension [0] = Math .max (dimension [0], 1);
+}
+
+function eventsProcessed ()
+{
+	dimensionTranslation_changed = new SFVec3f (0, 0, dimension [0]);
+	angleTranslation_changed     = new SFVec3f (0, 0, dimension [0] - (dimension [0] > 1 ? 1 : 0));
+}
+"
+}
+
+DEF ScaleScript Script {
+  inputOnly   SFVec3f set_translation
+  inputOutput SFVec3f scale 1 1 1
+  inputOutput MFInt32 dimension [
+    5,
+    16,
+    10
+  ]
+  outputOnly  SFVec3f translation_changed
+
+  url "ecmascript:
+
+function initialize ()
+{
+	eventsProcessed ();
+}
+
+function set_translation (value)
+{
+	var length = new SFVec2f ( value .x / (dimension [0] * Math .cos (Math .PI / 4)),
+	                          -value .z / (dimension [0] * Math .sin (Math .PI / 4))) .length ();
+
+	var factor = length / new SFVec2f (scale .x, scale .z) .length ();
+
+	scale .x *= factor;
+	scale .y *= factor;
+	scale .z *= factor;
+}
+
+function eventsProcessed ()
+{
+	//translation_changed = new SFVec3f (scale .x * dimension [0], 0, -scale .z * dimension [0]);
+	translation_changed = new SFVec3f (scale .x * dimension [0] * Math .cos (Math .PI / 4),
+	                                   0,
+	                                   -scale .z * dimension [0] * Math .sin (Math .PI / 4));
+}"
+}
+
+DEF Tool Script {
+  inputOutput SFVec3f    translation 0 0 0
+  inputOutput SFRotation rotation 0 0 1 0
+  inputOutput SFVec3f    scale 1 1 1
+  inputOutput MFInt32    dimension [
+    5,
+    16,
+    10
+  ]
+  inputOutput MFInt32    majorLineEvery [
+    5,
+    2,
+    5
+  ]
+  inputOutput MFInt32    majorLineOffset [
+    0,
+    0,
+    0
+  ]
+  inputOutput SFColor    color 0.5 0.5 0.5
+  inputOutput SFFloat    transparency 0.8
+  inputOutput SFColor    lineColor 1 0.7 0.7
+  inputOutput SFFloat    lineTransparency 0.8
+  inputOutput SFColor    majorLineColor 1 0.7 0.7
+  inputOutput SFFloat    majorLineTransparency 0.6
+  inputOutput SFBool     collision FALSE
+  inputOutput SFBool     handles TRUE
+  inputOutput SFBool     isActive FALSE
+
+  url "ecmascript:
+// Empty body"
+}
+
+ROUTE AngleScript.rotation_changed TO Handle.set_rotation
+ROUTE _13.rotation_changed TO AngleScript.set_rotation
+ROUTE Tool.translation_changed TO _10.set_translation
+ROUTE _9.translation_changed TO Tool.set_translation
+ROUTE Tool.translation_changed TO _9.set_offset
+ROUTE Tool.transparency_changed TO _4.set_transparency
+ROUTE Tool.color_changed TO _4.set_color
+ROUTE Tool.lineColor_changed TO _4.set_lineColor
+ROUTE Tool.lineTransparency_changed TO _4.set_lineTransparency
+ROUTE Tool.majorLineColor_changed TO _4.set_majorLineColor
+ROUTE Tool.majorLineTransparency_changed TO _4.set_majorLineTransparency
+ROUTE Tool.majorLineEvery_changed TO _4.set_majorLineEvery
+ROUTE DimensionScript.angleTranslation_changed TO _14.set_translation
+ROUTE _15.translation_changed TO DimensionScript.set_translation
+ROUTE DimensionScript.dimensionTranslation_changed TO _16.set_translation
+ROUTE DimensionScript.dimensionTranslation_changed TO _15.set_offset
+ROUTE Tool.translation_changed TO _4.set_translation
+ROUTE Tool.rotation_changed TO _4.set_rotation
+ROUTE Tool.scale_changed TO _4.set_scale
+ROUTE Tool.scale_changed TO Handles_12.set_scale
+ROUTE AngleScript.angle_changed TO _13.set_offset
+ROUTE Tool.dimension_changed TO DimensionScript.set_dimension
+ROUTE DimensionScript.dimension_changed TO Tool.set_dimension
+ROUTE Tool.dimension_changed TO AngleScript.set_dimension
+ROUTE AngleScript.dimension_changed TO Tool.set_dimension
+ROUTE Tool.dimension_changed TO _4.set_dimension
+ROUTE Tool.majorLineOffset_changed TO _4.set_majorLineOffset
+ROUTE Tool.scale_changed TO ScaleScript.set_scale
+ROUTE ScaleScript.scale_changed TO Tool.set_scale
+ROUTE _18.translation_changed TO ScaleScript.set_translation
+ROUTE Tool.dimension_changed TO ScaleScript.set_dimension
+ROUTE ScaleScript.translation_changed TO _19.set_translation
+ROUTE ScaleScript.translation_changed TO _18.set_offset
+ROUTE _9.isActive TO Tool.set_isActive
+ROUTE _13.isActive TO Tool.set_isActive
+ROUTE _15.isActive TO Tool.set_isActive
+ROUTE _18.isActive TO Tool.set_isActive
+ROUTE Tool.rotation_changed TO _8.set_rotation
+ROUTE Tool.translation_changed TO Handles_12.set_translation
+ROUTE Tool.translation_changed TO ScaleHandle.set_translation
+ROUTE Tool.collision_changed TO AngleGrid_2.set_enabled
+ROUTE Tool.handles_changed TO _6.set_whichChoice
+
+EXPORT _4 AS GridInstance
+EXPORT _3 AS GridTouchGroup
+EXPORT _5 AS HandlesTouchGroup
+EXPORT Tool
