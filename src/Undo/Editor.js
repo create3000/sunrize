@@ -2433,6 +2433,13 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       field .assign (auxillary);
 
+      // Dirty hack for resetToDefaultValue.
+      if (node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance))
+      {
+         if (node .isDefaultValue (field))
+            field .setModificationTime (0);
+      }
+
       switch (field .getType ())
       {
          case X3D .X3DConstants .SFNode:
