@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/GridTool.x3dv'/>
-    <meta name='modified' content='Wed, 07 Feb 2024 13:28:55 GMT'/>
+    <meta name='modified' content='Wed, 07 Feb 2024 15:44:07 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='Grid' url='"Grid.x3d"'>
@@ -61,121 +61,6 @@
         </Group>
       </ProtoBody>
     </ProtoDeclare>
-    <WorldInfo
-        title='GridTool'>
-      <MetadataSet DEF='Titania' containerField='metadata'
-          name='Titania'
-          reference='http://titania.create3000.de'>
-        <MetadataSet DEF='NavigationInfo'
-            name='NavigationInfo'
-            reference='http://titania.create3000.de'>
-          <MetadataString DEF='type'
-              name='type'
-              reference='http://titania.create3000.de'
-              value='"EXAMINE"'/>
-        </MetadataSet>
-        <MetadataSet DEF='Viewpoint'
-            name='Viewpoint'
-            reference='http://titania.create3000.de'>
-          <MetadataDouble DEF='position'
-              name='position'
-              reference='http://titania.create3000.de'
-              value='0.195047289133072, 4.12723350524902, 9.10649490356445'/>
-          <MetadataDouble DEF='orientation'
-              name='orientation'
-              reference='http://titania.create3000.de'
-              value='-0.998934301163994, 0.04484227921785, -0.010928492693443, 0.425972342491147'/>
-          <MetadataDouble DEF='centerOfRotation'
-              name='centerOfRotation'
-              reference='http://titania.create3000.de'
-              value='0, 0, 0'/>
-        </MetadataSet>
-        <MetadataSet DEF='Selection'
-            name='Selection'
-            reference='http://titania.create3000.de'>
-          <MetadataBoolean DEF='selectGeometry'
-              name='selectGeometry'
-              reference='http://titania.create3000.de'
-              value='false'/>
-          <MetadataSet DEF='nodes'
-              name='nodes'
-              reference='http://titania.create3000.de'>
-            <Script DEF='DimensionScript' containerField='value'>
-              <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
-              <field accessType='inputOutput' type='MFInt32' name='dimension' value='10, 10, 10'/>
-              <field accessType='inputOnly' type='SFVec3f' name='set_translation'/>
-              <field accessType='outputOnly' type='SFVec3f' name='translation_changed'/>
-<![CDATA[ecmascript:
-
-function initialize ()
-{
-	eventsProcessed ();
-}
-
-function set_translation (value)
-{
-	var oddX = dimension [0] % 2;
-	var oddZ = dimension [2] % 2;
-
-	dimension [0] = Math .round (value .x);
-	dimension [2] = Math .round (value .z);
-
-	dimension [0] = Math .max (dimension [0], 1);
-	dimension [2] = Math .max (dimension [2], 1);
-
-	dimension [0] *= 2;
-	dimension [2] *= 2;
-
-	dimension [0] -= oddX;
-	dimension [2] -= oddZ;
-}
-
-function eventsProcessed ()
-{
-	translation_changed = new SFVec3f (dimension [0] / 2 , 0, dimension [2] / 2);
-}
-]]>
-            </Script>
-          </MetadataSet>
-        </MetadataSet>
-        <MetadataSet DEF='AngleGrid'
-            name='AngleGrid'
-            reference='http://titania.create3000.de'>
-          <MetadataBoolean DEF='enabled'
-              name='enabled'
-              reference='http://titania.create3000.de'
-              value='false'/>
-        </MetadataSet>
-        <MetadataSet DEF='Grid'
-            name='Grid'
-            reference='http://titania.create3000.de'>
-          <MetadataBoolean DEF='enabled_1'
-              name='enabled'
-              reference='http://titania.create3000.de'
-              value='false'/>
-        </MetadataSet>
-        <MetadataSet DEF='Page'
-            name='Page'
-            reference='http://titania.create3000.de'>
-          <MetadataInteger DEF='activeView'
-              name='activeView'
-              reference='http://titania.create3000.de'
-              value='1'/>
-          <MetadataInteger DEF='multiView'
-              name='multiView'
-              reference='http://titania.create3000.de'
-              value='0'/>
-        </MetadataSet>
-        <MetadataSet DEF='Prototype'
-            name='Prototype'
-            reference='http://titania.create3000.de'>
-          <MetadataString DEF='path'
-              name='path'
-              reference='http://titania.create3000.de'
-              value='"BooleanSwitch"'/>
-        </MetadataSet>
-      </MetadataSet>
-    </WorldInfo>
     <Collision DEF='Grid_2'
         enabled='false'>
       <ProtoInstance name='TouchGroup' DEF='_3'>
@@ -262,7 +147,42 @@ function eventsProcessed ()
         </fieldValue>
       </ProtoInstance>
     </Collision>
-    <Script USE='DimensionScript'/>
+    <Script DEF='DimensionScript'>
+      <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
+      <field accessType='inputOutput' type='MFInt32' name='dimension' value='10, 10, 10'/>
+      <field accessType='inputOnly' type='SFVec3f' name='set_translation'/>
+      <field accessType='outputOnly' type='SFVec3f' name='translation_changed'/>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+	eventsProcessed ();
+}
+
+function set_translation (value)
+{
+	var oddX = dimension [0] % 2;
+	var oddZ = dimension [2] % 2;
+
+	dimension [0] = Math .round (value .x);
+	dimension [2] = Math .round (value .z);
+
+	dimension [0] = Math .max (dimension [0], 1);
+	dimension [2] = Math .max (dimension [2], 1);
+
+	dimension [0] *= 2;
+	dimension [2] *= 2;
+
+	dimension [0] -= oddX;
+	dimension [2] -= oddZ;
+}
+
+function eventsProcessed ()
+{
+	translation_changed = new SFVec3f (dimension [0] / 2 , 0, dimension [2] / 2);
+}
+]]>
+    </Script>
     <Script DEF='MoveScript'>
       <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
       <field accessType='inputOnly' type='SFVec3f' name='set_translation'/>

@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/AngleGridTool.x3dv'/>
-    <meta name='modified' content='Wed, 07 Feb 2024 13:28:51 GMT'/>
+    <meta name='modified' content='Wed, 07 Feb 2024 15:44:12 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='AngleGrid' url='"AngleGrid.x3d"'>
@@ -61,117 +61,6 @@
         </Group>
       </ProtoBody>
     </ProtoDeclare>
-    <WorldInfo
-        title='AngleGridTool'>
-      <MetadataSet DEF='Titania' containerField='metadata'
-          name='Titania'
-          reference='http://titania.create3000.de'>
-        <MetadataSet DEF='NavigationInfo'
-            name='NavigationInfo'
-            reference='http://titania.create3000.de'>
-          <MetadataString DEF='type'
-              name='type'
-              reference='http://titania.create3000.de'
-              value='"EXAMINE"'/>
-        </MetadataSet>
-        <MetadataSet DEF='Viewpoint'
-            name='Viewpoint'
-            reference='http://titania.create3000.de'>
-          <MetadataDouble DEF='position'
-              name='position'
-              reference='http://titania.create3000.de'
-              value='2.70062458728663, 4.55688810733126, 8.48182749269322'/>
-          <MetadataDouble DEF='orientation'
-              name='orientation'
-              reference='http://titania.create3000.de'
-              value='-0.862931552791345, 0.504948038820294, -0.0194065269602071, 0.558359179429521'/>
-          <MetadataDouble DEF='centerOfRotation'
-              name='centerOfRotation'
-              reference='http://titania.create3000.de'
-              value='0, 0, 0'/>
-        </MetadataSet>
-        <MetadataSet DEF='Grid'
-            name='Grid'
-            reference='http://titania.create3000.de'>
-          <MetadataBoolean DEF='enabled'
-              name='enabled'
-              reference='http://titania.create3000.de'
-              value='false'/>
-        </MetadataSet>
-        <MetadataSet DEF='AngleGrid'
-            name='AngleGrid'
-            reference='http://titania.create3000.de'>
-          <MetadataBoolean DEF='enabled_1'
-              name='enabled'
-              reference='http://titania.create3000.de'
-              value='true'/>
-        </MetadataSet>
-        <MetadataSet DEF='Selection'
-            name='Selection'
-            reference='http://titania.create3000.de'>
-          <MetadataBoolean DEF='selectGeometry'
-              name='selectGeometry'
-              reference='http://titania.create3000.de'
-              value='false'/>
-          <MetadataSet DEF='nodes'
-              name='nodes'
-              reference='http://titania.create3000.de'>
-            <Script DEF='AngleScript' containerField='value'>
-              <field accessType='inputOnly' type='SFRotation' name='set_rotation'/>
-              <field accessType='inputOutput' type='MFInt32' name='dimension' value='5, 16, 10'/>
-              <field accessType='outputOnly' type='SFFloat' name='angle_changed'/>
-              <field accessType='outputOnly' type='SFRotation' name='rotation_changed'/>
-<![CDATA[ecmascript:
-
-var yAxis = new SFVec3f (0, 1, 0);
-
-function initialize ()
-{
-	set_dimension ();
-}
-
-function set_rotation (value)
-{
-	var angle = value .angle;
-	var sign  = value .getAxis () .dot (yAxis) < 0;
-
-	if (sign)
-		angle = 2 * Math .PI - angle;
-
-	dimension [1] = Math .round (2 * Math .PI / angle);
-}
-
-function set_dimension ()
-{
-	angle_changed    = 2 * Math .PI / dimension [1];
-	rotation_changed = new SFRotation (yAxis, angle_changed);
-}
-]]>
-            </Script>
-          </MetadataSet>
-        </MetadataSet>
-        <MetadataSet DEF='Page'
-            name='Page'
-            reference='http://titania.create3000.de'>
-          <MetadataInteger DEF='activeView'
-              name='activeView'
-              reference='http://titania.create3000.de'
-              value='1'/>
-          <MetadataInteger DEF='multiView'
-              name='multiView'
-              reference='http://titania.create3000.de'
-              value='0'/>
-        </MetadataSet>
-        <MetadataSet DEF='Prototype'
-            name='Prototype'
-            reference='http://titania.create3000.de'>
-          <MetadataString DEF='path'
-              name='path'
-              reference='http://titania.create3000.de'
-              value='"BooleanSwitch"'/>
-        </MetadataSet>
-      </MetadataSet>
-    </WorldInfo>
     <Collision DEF='AngleGrid_2'
         enabled='false'>
       <ProtoInstance name='TouchGroup' DEF='_3'>
@@ -279,7 +168,38 @@ function set_dimension ()
         </fieldValue>
       </ProtoInstance>
     </Collision>
-    <Script USE='AngleScript'/>
+    <Script DEF='AngleScript'>
+      <field accessType='inputOnly' type='SFRotation' name='set_rotation'/>
+      <field accessType='inputOutput' type='MFInt32' name='dimension' value='5, 16, 10'/>
+      <field accessType='outputOnly' type='SFFloat' name='angle_changed'/>
+      <field accessType='outputOnly' type='SFRotation' name='rotation_changed'/>
+<![CDATA[ecmascript:
+
+var yAxis = new SFVec3f (0, 1, 0);
+
+function initialize ()
+{
+	set_dimension ();
+}
+
+function set_rotation (value)
+{
+	var angle = value .angle;
+	var sign  = value .getAxis () .dot (yAxis) < 0;
+
+	if (sign)
+		angle = 2 * Math .PI - angle;
+
+	dimension [1] = Math .round (2 * Math .PI / angle);
+}
+
+function set_dimension ()
+{
+	angle_changed    = 2 * Math .PI / dimension [1];
+	rotation_changed = new SFRotation (yAxis, angle_changed);
+}
+]]>
+    </Script>
     <Script DEF='DimensionScript'>
       <field accessType='inputOnly' type='SFVec3f' name='set_translation'/>
       <field accessType='inputOutput' type='MFInt32' name='dimension' value='5, 16, 10'/>

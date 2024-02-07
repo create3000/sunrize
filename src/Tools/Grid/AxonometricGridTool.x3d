@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/AxonometricGridTool.x3dv'/>
-    <meta name='modified' content='Wed, 07 Feb 2024 13:28:49 GMT'/>
+    <meta name='modified' content='Wed, 07 Feb 2024 15:44:14 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='AxonometricGrid' url='"AxonometricGrid.x3d"'>
@@ -62,132 +62,6 @@
         </Group>
       </ProtoBody>
     </ProtoDeclare>
-    <WorldInfo
-        title='AxonometricGridTool'>
-      <MetadataSet DEF='Titania' containerField='metadata'
-          name='Titania'
-          reference='http://titania.create3000.de'>
-        <MetadataSet DEF='NavigationInfo'
-            name='NavigationInfo'
-            reference='http://titania.create3000.de'>
-          <MetadataString DEF='type'
-              name='type'
-              reference='http://titania.create3000.de'
-              value='"EXAMINE"'/>
-        </MetadataSet>
-        <MetadataSet DEF='Viewpoint'
-            name='Viewpoint'
-            reference='http://titania.create3000.de'>
-          <MetadataDouble DEF='position'
-              name='position'
-              reference='http://titania.create3000.de'
-              value='4.56780354600261, 11.2217822253956, 18.7082921323744'/>
-          <MetadataDouble DEF='orientation'
-              name='orientation'
-              reference='http://titania.create3000.de'
-              value='0.929070358799226, -0.368711826530999, 0.0296623899383048, 5.7082264393033'/>
-          <MetadataDouble DEF='centerOfRotation'
-              name='centerOfRotation'
-              reference='http://titania.create3000.de'
-              value='0, 0, 0'/>
-        </MetadataSet>
-        <MetadataSet DEF='Selection'
-            name='Selection'
-            reference='http://titania.create3000.de'>
-          <MetadataSet DEF='nodes'
-              name='nodes'
-              reference='http://titania.create3000.de'>
-            <Script DEF='ScaleScript' containerField='value'>
-              <field accessType='inputOnly' type='SFVec3f' name='set_translation'/>
-              <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
-              <field accessType='inputOutput' type='MFInt32' name='dimension' value='5, 10'/>
-              <field accessType='outputOnly' type='SFVec3f' name='translation_changed'/>
-<![CDATA[ecmascript:
-
-function initialize ()
-{
-	eventsProcessed ();
-}
-
-function set_translation (value)
-{
-	var length = Math .abs (value .x) / dimension [0];
-	var factor = length / scale .x;
-
-	scale .x *= factor;
-	scale .y *= factor;
-	scale .z *= factor;
-}
-
-function eventsProcessed ()
-{
-	translation_changed = new SFVec3f (-scale .x * dimension [0], 0, 0);
-}]]>
-            </Script>
-          </MetadataSet>
-          <MetadataBoolean DEF='selectGeometry'
-              name='selectGeometry'
-              reference='http://titania.create3000.de'
-              value='false'/>
-        </MetadataSet>
-        <MetadataSet DEF='AngleGrid'
-            name='AngleGrid'
-            reference='http://titania.create3000.de'>
-          <MetadataBoolean DEF='enabled'
-              name='enabled'
-              reference='http://titania.create3000.de'
-              value='false'/>
-          <MetadataInteger DEF='dimension'
-              name='dimension'
-              reference='http://titania.create3000.de'
-              value='7, 13, 10'/>
-          <MetadataFloat DEF='translation'
-              name='translation'
-              reference='http://titania.create3000.de'
-              value='0.348847, -7.10543e-15, -0.00572806'/>
-        </MetadataSet>
-        <MetadataSet DEF='Grid'
-            name='Grid'
-            reference='http://titania.create3000.de'>
-          <MetadataBoolean DEF='enabled_1'
-              name='enabled'
-              reference='http://titania.create3000.de'
-              value='false'/>
-          <MetadataFloat DEF='scale'
-              name='scale'
-              reference='http://titania.create3000.de'
-              value='0.808302, 0.808302, 0.808302'/>
-        </MetadataSet>
-        <MetadataSet DEF='AxonometricGrid'
-            name='AxonometricGrid'
-            reference='http://titania.create3000.de'>
-          <MetadataBoolean DEF='enabled_2'
-              name='enabled'
-              reference='http://titania.create3000.de'
-              value='false'/>
-        </MetadataSet>
-        <MetadataSet DEF='Page'
-            name='Page'
-            reference='http://titania.create3000.de'>
-          <MetadataInteger DEF='activeView'
-              name='activeView'
-              reference='http://titania.create3000.de'
-              value='1'/>
-          <MetadataInteger DEF='multiView'
-              name='multiView'
-              reference='http://titania.create3000.de'
-              value='0'/>
-        </MetadataSet>
-        <MetadataSet DEF='Prototype'
-            name='Prototype'
-            reference='http://titania.create3000.de'>
-          <MetadataString DEF='path'
-              name='path'
-              reference='http://titania.create3000.de'
-              value='"BooleanSwitch"'/>
-        </MetadataSet>
-      </MetadataSet>
-    </WorldInfo>
     <Collision DEF='AxonometricGrid_3'
         enabled='false'>
       <ProtoInstance name='TouchGroup' DEF='_4'>
@@ -310,7 +184,33 @@ function set_translation (value)
 }
 ]]>
     </Script>
-    <Script USE='ScaleScript'/>
+    <Script DEF='ScaleScript'>
+      <field accessType='inputOnly' type='SFVec3f' name='set_translation'/>
+      <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
+      <field accessType='inputOutput' type='MFInt32' name='dimension' value='5, 10'/>
+      <field accessType='outputOnly' type='SFVec3f' name='translation_changed'/>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+	eventsProcessed ();
+}
+
+function set_translation (value)
+{
+	var length = Math .abs (value .x) / dimension [0];
+	var factor = length / scale .x;
+
+	scale .x *= factor;
+	scale .y *= factor;
+	scale .z *= factor;
+}
+
+function eventsProcessed ()
+{
+	translation_changed = new SFVec3f (-scale .x * dimension [0], 0, 0);
+}]]>
+    </Script>
     <Script DEF='Tool'>
       <field accessType='inputOutput' type='SFVec3f' name='translation'/>
       <field accessType='inputOutput' type='SFRotation' name='rotation'/>
