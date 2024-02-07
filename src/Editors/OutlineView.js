@@ -682,7 +682,7 @@ module .exports = class OutlineView extends Interface
       {
          if (node .getBody ())
             ul .append (this .createSceneElement (node .getBody (), "Body", "instance-scene"));
-         else
+         else if (node .getProtoNode () .isExternProto)
             ul .append (this .createLoadStateElement (node .getProtoNode () .checkLoadState (), node .getTypeName ()));
       }
 
