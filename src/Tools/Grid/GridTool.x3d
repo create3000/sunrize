@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/GridTool.x3dv'/>
-    <meta name='modified' content='Wed, 07 Feb 2024 19:54:26 GMT'/>
+    <meta name='modified' content='Wed, 07 Feb 2024 19:55:27 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='Grid' url='"Grid.x3d"'>
@@ -29,16 +29,6 @@
       <field accessType='initializeOnly' type='SFBool' name='solid'/>
     </ExternProtoDeclare>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
-    </ExternProtoDeclare>
-    <ExternProtoDeclare name='BooleanSwitch' url='"../Grouping/BooleanSwitch.x3d"'>
-      <field accessType='inputOutput' type='SFBool' name='whichChoice'/>
-      <field accessType='inputOutput' type='SFBool' name='visible'/>
-      <field accessType='inputOutput' type='SFBool' name='bboxDisplay'/>
-      <field accessType='initializeOnly' type='SFVec3f' name='bboxSize'/>
-      <field accessType='initializeOnly' type='SFVec3f' name='bboxCenter'/>
-      <field accessType='inputOnly' type='MFNode' name='addChildren'/>
-      <field accessType='inputOnly' type='MFNode' name='removeChildren'/>
-      <field accessType='inputOutput' type='MFNode' name='children'/>
     </ExternProtoDeclare>
     <ProtoDeclare name='TouchGroup'>
       <ProtoInterface>
