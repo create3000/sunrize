@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/AxonometricGridTool.x3dv'/>
-    <meta name='modified' content='Tue, 06 Feb 2024 19:10:18 GMT'/>
+    <meta name='modified' content='Wed, 07 Feb 2024 13:28:49 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='AxonometricGrid' url='"AxonometricGrid.x3d"'>
@@ -214,7 +214,8 @@ function eventsProcessed ()
                     <ScreenGroup>
                       <Transform DEF='Sphere'
                           scale='4 4 4'>
-                        <Shape>
+                        <Shape
+                            castShadow='false'>
                           <Appearance DEF='_12'>
                             <Material
                                 diffuseColor='1 0.7 0'/>
@@ -236,7 +237,8 @@ function eventsProcessed ()
                     <ScreenGroup>
                       <Transform DEF='Edge'
                           scale='6 6 6'>
-                        <Shape>
+                        <Shape
+                            castShadow='false'>
                           <Appearance USE='_12'/>
                           <Sphere/>
                         </Shape>
@@ -254,7 +256,8 @@ function eventsProcessed ()
                     <ScreenGroup>
                       <Transform DEF='Box'
                           scale='3 3 3'>
-                        <Shape>
+                        <Shape
+                            castShadow='false'>
                           <Appearance USE='_12'/>
                           <Box/>
                         </Shape>

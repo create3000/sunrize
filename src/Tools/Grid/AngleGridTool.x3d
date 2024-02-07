@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/AngleGridTool.x3dv'/>
-    <meta name='modified' content='Tue, 06 Feb 2024 19:08:58 GMT'/>
+    <meta name='modified' content='Wed, 07 Feb 2024 13:28:51 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='AngleGrid' url='"AngleGrid.x3d"'>
@@ -198,7 +198,8 @@ function set_dimension ()
                     <ScreenGroup>
                       <Transform DEF='Sphere'
                           scale='4 4 4'>
-                        <Shape>
+                        <Shape
+                            castShadow='false'>
                           <Appearance DEF='_11'>
                             <Material
                                 diffuseColor='1 0.7 0'/>
@@ -222,7 +223,8 @@ function set_dimension ()
                         <ScreenGroup>
                           <Transform
                               scale='6 6 6'>
-                            <Shape>
+                            <Shape
+                                castShadow='false'>
                               <Appearance USE='_11'/>
                               <Sphere/>
                             </Shape>
@@ -242,7 +244,8 @@ function set_dimension ()
                       <ScreenGroup>
                         <Transform DEF='Sphere_17'
                             scale='6 3 3'>
-                          <Shape>
+                          <Shape
+                              castShadow='false'>
                             <Appearance USE='_11'/>
                             <Box/>
                           </Shape>
@@ -261,7 +264,8 @@ function set_dimension ()
                     <ScreenGroup>
                       <Transform DEF='Box'
                           scale='3 3 3'>
-                        <Shape>
+                        <Shape
+                            castShadow='false'>
                           <Appearance USE='_11'/>
                           <Box/>
                         </Shape>
