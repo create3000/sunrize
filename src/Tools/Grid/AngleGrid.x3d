@@ -9,7 +9,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/library/AngleGrid.x3dv'/>
-    <meta name='modified' content='Tue, 06 Feb 2024 19:16:13 GMT'/>
+    <meta name='modified' content='Wed, 07 Feb 2024 13:25:47 GMT'/>
     <meta name='titania-add-world-info' content='true'/>
   </head>
   <Scene>
@@ -60,101 +60,59 @@
               </Shape>
             </Transform>
             <Transform DEF='Rings'
-                rotation='0 0.70710528118436 0.707108281185553 3.14159'>
-              <Transform>
-                <Shape
-                    castShadow='false'>
-                  <Appearance DEF='MinorAppearance'>
-                    <UnlitMaterial DEF='_2'>
-                      <IS>
-                        <connect nodeField='emissiveColor' protoField='lineColor'/>
-                        <connect nodeField='transparency' protoField='lineTransparency'/>
-                      </IS>
-                    </UnlitMaterial>
-                  </Appearance>
-                  <Circle2D/>
-                </Shape>
-              </Transform>
-              <Transform
-                  scale='2 2 2'>
-                <Shape
-                    castShadow='false'>
-                  <Appearance USE='MinorAppearance'/>
-                  <Circle2D/>
-                </Shape>
-              </Transform>
-              <Transform
-                  scale='3 3 3'>
-                <Shape
-                    castShadow='false'>
-                  <Appearance USE='MinorAppearance'/>
-                  <Circle2D/>
-                </Shape>
-              </Transform>
-              <Transform
-                  scale='4 4 4'>
-                <Shape
-                    castShadow='false'>
-                  <Appearance USE='MinorAppearance'/>
-                  <Circle2D/>
-                </Shape>
-              </Transform>
-              <Transform
-                  scale='5 5 5'>
-                <Shape
-                    castShadow='false'>
-                  <Appearance DEF='MajorAppearance'>
-                    <UnlitMaterial DEF='MajorMaterial'>
-                      <IS>
-                        <connect nodeField='emissiveColor' protoField='majorLineColor'/>
-                        <connect nodeField='transparency' protoField='majorLineTransparency'/>
-                      </IS>
-                    </UnlitMaterial>
-                  </Appearance>
-                  <Circle2D/>
-                </Shape>
-              </Transform>
-            </Transform>
+                rotation='0 0.70710528118436 0.707108281185553 3.14159'/>
             <Shape DEF='MinorLines'
                 castShadow='false'>
-              <Appearance USE='MinorAppearance'/>
-              <IndexedLineSet DEF='MinorLines_3'
-                  coordIndex='0, 1, -1, 0, 2, -1, 0, 3, -1, 0, 4, -1, 0, 5, -1, 0, 6, -1, 0, 7, -1, 0, 8, -1'>
-                <Coordinate
-                    point='0 0 0, 1.91342 0 4.6194, 4.6194 0 1.91342, 4.6194 0 -1.91342, 1.91342 0 -4.6194, -1.91342 0 -4.6194, -4.6194 0 -1.91342, -4.6194 0 1.91342, -1.91342 0 4.6194'/>
+              <Appearance DEF='MinorAppearance'>
+                <UnlitMaterial DEF='_2'>
+                  <IS>
+                    <connect nodeField='emissiveColor' protoField='lineColor'/>
+                    <connect nodeField='transparency' protoField='lineTransparency'/>
+                  </IS>
+                </UnlitMaterial>
+              </Appearance>
+              <IndexedLineSet DEF='MinorLines_3'>
+                <Coordinate/>
               </IndexedLineSet>
             </Shape>
             <Shape DEF='MajorLines'
                 castShadow='false'>
-              <Appearance USE='MajorAppearance'/>
-              <IndexedLineSet DEF='MajorLines_4'
-                  coordIndex='0, 1, -1, 0, 2, -1, 0, 3, -1, 0, 4, -1, 0, 5, -1, 0, 6, -1, 0, 7, -1, 0, 8, -1'>
-                <Coordinate
-                    point='0 0 0, 0 0 5, 3.53553 0 3.53553, 5 0 3.06162e-16, 3.53553 0 -3.53553, 6.12323e-16 0 -5, -3.53553 0 -3.53553, -5 0 -9.18485e-16, -3.53553 0 3.53553'/>
+              <Appearance DEF='MajorAppearance'>
+                <UnlitMaterial DEF='MajorMaterial'>
+                  <IS>
+                    <connect nodeField='emissiveColor' protoField='majorLineColor'/>
+                    <connect nodeField='transparency' protoField='majorLineTransparency'/>
+                  </IS>
+                </UnlitMaterial>
+              </Appearance>
+              <IndexedLineSet DEF='MajorLines_4'>
+                <Coordinate/>
               </IndexedLineSet>
             </Shape>
             <Shape DEF='MinorPoints'
                 castShadow='false'>
               <Appearance>
-                <LineProperties
-                    linewidthScaleFactor='4'/>
+                <PointProperties
+                    pointSizeScaleFactor='4'
+                    pointSizeMinValue='4'
+                    pointSizeMaxValue='4'/>
                 <UnlitMaterial USE='_2'/>
               </Appearance>
               <PointSet DEF='MinorPoints_5'>
-                <Coordinate
-                    point='0 -4 0, 0 -3 0, 0 -2 0, 0 -1 0, 0 1 0, 0 2 0, 0 3 0, 0 4 0'/>
+                <Coordinate/>
               </PointSet>
             </Shape>
             <Shape DEF='MajorPoints'
                 castShadow='false'>
               <Appearance>
-                <LineProperties
-                    linewidthScaleFactor='6'/>
+                <PointProperties
+                    pointSizeScaleFactor='6'
+                    pointSizeMinValue='6'
+                    pointSizeMaxValue='6'/>
                 <UnlitMaterial USE='MajorMaterial'/>
               </Appearance>
               <PointSet DEF='MajorPoints_6'>
-                <Coordinate
-                    point='0 -5 0, 0 0 0, 0 5 0'/>
+                <Coordinate/>
               </PointSet>
             </Shape>
           </Transform>

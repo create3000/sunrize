@@ -9,7 +9,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/library/AxonometricGrid.x3dv'/>
-    <meta name='modified' content='Tue, 06 Feb 2024 19:16:12 GMT'/>
+    <meta name='modified' content='Wed, 07 Feb 2024 13:26:26 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='AxonometricGrid'>
@@ -93,8 +93,10 @@
             <Shape DEF='MajorPoints'
                 castShadow='false'>
               <Appearance>
-                <LineProperties
-                    linewidthScaleFactor='6'/>
+                <PointProperties
+                    pointSizeScaleFactor='6'
+                    pointSizeMinValue='6'
+                    pointSizeMaxValue='6'/>
                 <UnlitMaterial USE='MajorMaterial'/>
               </Appearance>
               <PointSet DEF='MajorPoints_4'>
@@ -105,8 +107,10 @@
             <Shape DEF='MinorPoints'
                 castShadow='false'>
               <Appearance>
-                <LineProperties
-                    linewidthScaleFactor='4'/>
+                <PointProperties
+                    pointSizeScaleFactor='4'
+                    pointSizeMinValue='4'
+                    pointSizeMaxValue='4'/>
                 <UnlitMaterial USE='MinorMaterial'/>
               </Appearance>
               <PointSet DEF='MinorPoints_5'>
