@@ -889,8 +889,20 @@ module .exports = class OutlineView extends Interface
    {
       if (!node .isInitialized ())
       {
-         if (node .getType () .includes (X3D .X3DConstants .Script))
-            node .initialize__ = Function .prototype;
+         // Setup nodes in protos, disable some init functions.
+
+         for (const type of node .getType ())
+         {
+            switch (type)
+            {
+               case X3D .X3DConstants .Script:
+                  node .initialize__ = Function .prototype;
+                  break;
+               case X3D .X3DConstants .X3DTimeDependentNode:
+                  node .set_start = Function .prototype;
+                  break;
+            }
+         }
 
          node .setup ();
       }
