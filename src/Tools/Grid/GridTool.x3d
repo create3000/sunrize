@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/GridTool.x3dv'/>
-    <meta name='modified' content='Wed, 07 Feb 2024 19:55:27 GMT'/>
+    <meta name='modified' content='Thu, 08 Feb 2024 09:57:48 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='Grid' url='"Grid.x3d"'>
@@ -72,18 +72,7 @@
           <ProtoInstance name='TouchGroup'>
             <fieldValue name='enabled' value='false'/>
             <fieldValue name='children'>
-              <ProtoInstance name='Grid' DEF='_4'>
-                <fieldValue name='scale' value='1 1 1'/>
-                <fieldValue name='dimension' value='10, 10, 10'/>
-                <fieldValue name='majorLineEvery' value='5, 5, 5'/>
-                <fieldValue name='majorLineOffset' value='0, 0, 0'/>
-                <fieldValue name='color' value='0.5 0.5 0.5'/>
-                <fieldValue name='transparency' value='0.8'/>
-                <fieldValue name='lineColor' value='0.9647059 0.6980392 0.4196078'/>
-                <fieldValue name='lineTransparency' value='0.8'/>
-                <fieldValue name='majorLineColor' value='0.9647059 0.6980392 0.4196078'/>
-                <fieldValue name='majorLineTransparency' value='0.6'/>
-              </ProtoInstance>
+              <ProtoInstance name='Grid' DEF='_4'/>
             </fieldValue>
           </ProtoInstance>
           <Transform DEF='_8'>

@@ -9,7 +9,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/library/Grid.x3dv'/>
-    <meta name='modified' content='Wed, 07 Feb 2024 13:25:00 GMT'/>
+    <meta name='modified' content='Thu, 08 Feb 2024 10:24:11 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='Grid'>
@@ -69,10 +69,8 @@
                   </IS>
                 </UnlitMaterial>
               </Appearance>
-              <IndexedLineSet DEF='MajorGrid_2'
-                  coordIndex='0, 1, -1, 2, 3, -1, 4, 5, -1, 6, 7, -1, 8, 9, -1, 10, 11, -1'>
-                <Coordinate
-                    point='-5 0 -5.25, -5 0 5.25, 0 0 -5.25, 0 0 5.25, 5 0 -5.25, 5 0 5.25, -5.25 0 -5, 5.25 0 -5, -5.25 0 0, 5.25 0 0, -5.25 0 5, 5.25 0 5'/>
+              <IndexedLineSet DEF='MajorGrid_2'>
+                <Coordinate/>
               </IndexedLineSet>
             </Shape>
             <Shape DEF='MinorGrid'
@@ -85,10 +83,8 @@
                   </IS>
                 </UnlitMaterial>
               </Appearance>
-              <IndexedLineSet DEF='MinorGrid_3'
-                  coordIndex='0, 1, -1, 2, 3, -1, 4, 5, -1, 6, 7, -1, 8, 9, -1, 10, 11, -1, 12, 13, -1, 14, 15, -1, 16, 17, -1, 18, 19, -1, 20, 21, -1, 22, 23, -1, 24, 25, -1, 26, 27, -1, 28, 29, -1, 30, 31, -1'>
-                <Coordinate
-                    point='-4 0 -5, -4 0 5, -3 0 -5, -3 0 5, -2 0 -5, -2 0 5, -1 0 -5, -1 0 5, 1 0 -5, 1 0 5, 2 0 -5, 2 0 5, 3 0 -5, 3 0 5, 4 0 -5, 4 0 5, -5 0 -4, 5 0 -4, -5 0 -3, 5 0 -3, -5 0 -2, 5 0 -2, -5 0 -1, 5 0 -1, -5 0 1, 5 0 1, -5 0 2, 5 0 2, -5 0 3, 5 0 3, -5 0 4, 5 0 4'/>
+              <IndexedLineSet DEF='MinorGrid_3'>
+                <Coordinate/>
               </IndexedLineSet>
             </Shape>
             <Shape DEF='MajorPoints'
@@ -101,8 +97,7 @@
                 <UnlitMaterial USE='MajorMaterial'/>
               </Appearance>
               <PointSet DEF='MajorPoints_4'>
-                <Coordinate
-                    point='0 -5 0, 0 0 0, 0 5 0'/>
+                <Coordinate/>
               </PointSet>
             </Shape>
             <Shape DEF='MinorPoints'
@@ -115,8 +110,7 @@
                 <UnlitMaterial USE='MinorMaterial'/>
               </Appearance>
               <PointSet DEF='MinorPoints_5'>
-                <Coordinate
-                    point='0 -4 0, 0 -3 0, 0 -2 0, 0 -1 0, 0 1 0, 0 2 0, 0 3 0, 0 4 0'/>
+                <Coordinate/>
               </PointSet>
             </Shape>
           </Transform>

@@ -179,21 +179,6 @@ module .exports = class OutlineView extends Interface
       parent .data ("expanded",      true);
       parent .data ("full-expanded", false);
 
-      if (scene .getOuterNode () instanceof X3D .X3DProtoDeclaration)
-      {
-         Traverse .traverse (scene, Traverse .ROOT_NODES, node =>
-         {
-            if (node .isInitialized ())
-               return;
-
-            node .typeName_changed .setTainted (false);
-            node .name_changed     .setTainted (false);
-            node .parents_changed  .setTainted (false);
-
-            node .getFields () .forEach (field => field .setTainted (false));
-         });
-      }
-
       if (scene instanceof X3D .X3DScene)
          scene .units .addInterest ("updateScene", this, parent, scene);
 
@@ -644,11 +629,6 @@ module .exports = class OutlineView extends Interface
             return mb - ma;
          });
 
-         // If node is in a proto, make these object live.
-         
-         node .getPredefinedFields ()  .addParent (node);
-         node .getUserDefinedFields () .addParent (node);
-
          // Proto fields, user-defined fields.
          // Instances are updated, because they completely change.
 
@@ -907,6 +887,14 @@ module .exports = class OutlineView extends Interface
 
    createNodeElement (type, parent, node, index)
    {
+      if (!node .isInitialized ())
+      {
+         if (node .getType () .includes (X3D .X3DConstants .Script))
+            node .initialize__ = Function .prototype;
+         
+         node .setup ();
+      }
+
       if (node)
       {
          this .objects .set (node .getId (), node .valueOf ());
@@ -2911,9 +2899,6 @@ module .exports = class OutlineView extends Interface
          target  = $(event .target),
          element = target .closest (".node, .externproto", this .sceneGraph),
          node    = this .getNode (element);
-
-      if (!node .isInitialized ())
-         node .setup ();
 
       if (node ._load .getValue ())
          node .loadNow () .catch (Function .prototype);
