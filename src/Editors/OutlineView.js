@@ -891,7 +891,7 @@ module .exports = class OutlineView extends Interface
       {
          if (node .getType () .includes (X3D .X3DConstants .Script))
             node .initialize__ = Function .prototype;
-         
+
          node .setup ();
       }
 

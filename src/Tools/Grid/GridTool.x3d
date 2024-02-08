@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/GridTool.x3dv'/>
-    <meta name='modified' content='Thu, 08 Feb 2024 09:57:48 GMT'/>
+    <meta name='modified' content='Thu, 08 Feb 2024 10:26:19 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='Grid' url='"Grid.x3d"'>
