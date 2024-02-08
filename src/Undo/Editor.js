@@ -2389,11 +2389,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       field .assign (auxillary);
 
-      if (node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance))
-      {
-         if (node .isDefaultValue (field))
-            field .setModificationTime (0);
-      }
+      if (node .isDefaultValue (field))
+         field .setModificationTime (0);
 
       undoManager .registerUndo (() =>
       {
@@ -2439,11 +2436,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       field .assign (auxillary);
 
-      if (node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance))
-      {
-         if (node .isDefaultValue (field))
-            field .setModificationTime (0);
-      }
+      if (node .isDefaultValue (field))
+         field .setModificationTime (0);
 
       switch (field .getType ())
       {
@@ -2487,11 +2481,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       field .splice (index, 0, value);
 
-      if (node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance))
-      {
-         if (node .isDefaultValue (field))
-            field .setModificationTime (0);
-      }
+      if (node .isDefaultValue (field))
+         field .setModificationTime (0);
 
       undoManager .registerUndo (() =>
       {
@@ -2541,11 +2532,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       this .removeNodesFromExecutionContextIfNecessary (executionContext, field .splice (index, 1), undoManager);
 
-      if (node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance))
-      {
-         if (node .isDefaultValue (field))
-            field .setModificationTime (0);
-      }
+      if (node .isDefaultValue (field))
+         field .setModificationTime (0);
 
       undoManager .registerUndo (() =>
       {
