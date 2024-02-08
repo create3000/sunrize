@@ -631,18 +631,23 @@ module .exports = class OutlineView extends Interface
                ub = userDefinedFields .get (b .getName ()) === b;
 
             return ub - ua;
-         })
+         });
 
          // Move metadata field on top.
 
          fields .sort ((a, b) =>
          {
             const
-               ma = a .getName () === "metadata",
-               mb = b .getName () === "metadata";
+               ma = a === node ._metadata,
+               mb = b === node ._metadata;
 
             return mb - ma;
-         })
+         });
+
+         // If node is in a proto, make these object live.
+         
+         node .getPredefinedFields ()  .addParent (node);
+         node .getUserDefinedFields () .addParent (node);
 
          // Proto fields, user-defined fields.
          // Instances are updated, because they completely change.
