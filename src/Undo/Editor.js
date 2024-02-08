@@ -2369,15 +2369,15 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 		const
          instance  = node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance),
          name      = field .getName (),
-         auxillary = field .create ()
+         auxillary = field .create ();
 
-      auxillary .setUnit (field .getUnit ())
-      auxillary .fromString (string, executionContext)
+      auxillary .setUnit (field .getUnit ());
+      auxillary .fromString (string, executionContext);
 
 		if (auxillary .equals (field))
       {
-         field .addEvent ()
-         return
+         field .addEvent ();
+         return;
       }
 
       const oldValue = field .copy ()
@@ -2385,16 +2385,22 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       if (node .getDisplayName ())
          undoManager .beginUndo (_("Change Field »%s« of Node %s »%s«"), field .getName (), node .getTypeName (), node .getDisplayName ());
       else
-         undoManager .beginUndo (_("Change Field »%s« of Node %s"), field .getName (), node .getTypeName ())
+         undoManager .beginUndo (_("Change Field »%s« of Node %s"), field .getName (), node .getTypeName ());
 
-      field .assign (auxillary)
+      field .assign (auxillary);
+
+      if (node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance))
+      {
+         if (node .isDefaultValue (field))
+            field .setModificationTime (0);
+      }
 
       undoManager .registerUndo (() =>
       {
-         this .setFieldValue (executionContext, node, instance ? name : field, oldValue, undoManager)
+         this .setFieldValue (executionContext, node, instance ? name : field, oldValue, undoManager);
       });
 
-      this .requestUpdateInstances (node, undoManager)
+      this .requestUpdateInstances (node, undoManager);
 
       undoManager .endUndo ();
    }
@@ -2433,7 +2439,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       field .assign (auxillary);
 
-      // Dirty hack for resetToDefaultValue.
       if (node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance))
       {
          if (node .isDefaultValue (field))
@@ -2482,6 +2487,12 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       field .splice (index, 0, value);
 
+      if (node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance))
+      {
+         if (node .isDefaultValue (field))
+            field .setModificationTime (0);
+      }
+
       undoManager .registerUndo (() =>
       {
          this .setFieldValue (executionContext, node, instance ? name : field, oldValue, undoManager);
@@ -2529,6 +2540,12 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       undoManager .beginUndo (_("Remove Value from %s »%s«"), node .getTypeName (), field .getName ());
 
       this .removeNodesFromExecutionContextIfNecessary (executionContext, field .splice (index, 1), undoManager);
+
+      if (node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance))
+      {
+         if (node .isDefaultValue (field))
+            field .setModificationTime (0);
+      }
 
       undoManager .registerUndo (() =>
       {
