@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/AxonometricGridTool.x3dv'/>
-    <meta name='modified' content='Wed, 07 Feb 2024 15:44:14 GMT'/>
+    <meta name='modified' content='Thu, 08 Feb 2024 12:43:54 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='AxonometricGrid' url='"AxonometricGrid.x3d"'>
@@ -62,94 +62,145 @@
         </Group>
       </ProtoBody>
     </ProtoDeclare>
-    <Collision DEF='AxonometricGrid_3'
-        enabled='false'>
-      <ProtoInstance name='TouchGroup' DEF='_4'>
-        <fieldValue name='enabled' value='false'/>
-        <fieldValue name='children'>
-          <ProtoInstance name='AxonometricGrid' DEF='_5'/>
-        </fieldValue>
-      </ProtoInstance>
-    </Collision>
-    <Collision DEF='Handles'
-        enabled='false'>
-      <ProtoInstance name='TouchGroup' DEF='_6'>
-        <fieldValue name='children'>
-          <ProtoInstance name='BooleanSwitch' DEF='_7'>
-            <fieldValue name='whichChoice' value='true'/>
+    <ProtoDeclare name='Tool'>
+      <ProtoInterface>
+        <field accessType='inputOutput' type='SFVec3f' name='translation'/>
+        <field accessType='inputOutput' type='SFRotation' name='rotation'/>
+        <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
+        <field accessType='inputOutput' type='MFInt32' name='dimension' value='5, 10'/>
+        <field accessType='inputOutput' type='SFVec2d' name='angle' value='1.0471975511966 1.0471975511966'/>
+        <field accessType='inputOutput' type='MFInt32' name='majorLineEvery' value='5, 5, 5, 5'/>
+        <field accessType='inputOutput' type='MFInt32' name='majorLineOffset' value='0, 0, 0, 0'/>
+        <field accessType='inputOutput' type='SFColor' name='color' value='0.5 0.5 0.5'/>
+        <field accessType='inputOutput' type='SFFloat' name='transparency' value='0.8'/>
+        <field accessType='inputOutput' type='SFColor' name='lineColor' value='0.9647059 0.6980392 0.4196078'/>
+        <field accessType='inputOutput' type='SFFloat' name='lineTransparency' value='0.8'/>
+        <field accessType='inputOutput' type='SFColor' name='majorLineColor' value='0.9647059 0.6980392 0.4196078'/>
+        <field accessType='inputOutput' type='SFFloat' name='majorLineTransparency' value='0.6'/>
+        <field accessType='outputOnly' type='SFBool' name='isActive' value='true'/>
+      </ProtoInterface>
+      <ProtoBody>
+        <Collision DEF='AxonometricGrid_3'
+            enabled='false'>
+          <ProtoInstance name='TouchGroup'>
+            <fieldValue name='enabled' value='false'/>
             <fieldValue name='children'>
-              <Group DEF='_8'/>
-              <Transform DEF='_9'>
-                <Transform DEF='Center'>
-                  <PlaneSensor DEF='_10'
-                      axisRotation='1 0 0 1.5708'
-                      autoOffset='false'/>
-                  <Transform DEF='_11'>
-                    <ScreenGroup>
-                      <Transform DEF='Sphere'
-                          scale='4 4 4'>
-                        <Shape
-                            castShadow='false'>
-                          <Appearance DEF='_12'>
-                            <Material
-                                diffuseColor='1 0.7 0'/>
-                            <ProtoInstance name='ToolShader' containerField='shaders'/>
-                          </Appearance>
-                          <Sphere/>
-                        </Shape>
-                      </Transform>
-                    </ScreenGroup>
-                  </Transform>
-                </Transform>
-                <Transform DEF='DimensionHandle'>
-                  <PlaneSensor DEF='_13'
-                      autoOffset='false'
-                      offset='5 0 0'
-                      maxPosition='-1 0'/>
-                  <Transform DEF='_14'
-                      translation='5 0 0'>
-                    <ScreenGroup>
-                      <Transform DEF='Edge'
-                          scale='6 6 6'>
-                        <Shape
-                            castShadow='false'>
-                          <Appearance USE='_12'/>
-                          <Sphere/>
-                        </Shape>
-                      </Transform>
-                    </ScreenGroup>
-                  </Transform>
-                </Transform>
-                <Transform DEF='ScaleHandle'>
-                  <PlaneSensor DEF='_15'
-                      autoOffset='false'
-                      offset='-5 0 0'
-                      maxPosition='-1 0'/>
-                  <Transform DEF='_16'
-                      translation='-5 0 0'>
-                    <ScreenGroup>
-                      <Transform DEF='Box'
-                          scale='3 3 3'>
-                        <Shape
-                            castShadow='false'>
-                          <Appearance USE='_12'/>
-                          <Box/>
-                        </Shape>
-                      </Transform>
-                    </ScreenGroup>
-                  </Transform>
-                </Transform>
-              </Transform>
+              <ProtoInstance name='AxonometricGrid' DEF='_5'>
+                <IS>
+                  <connect nodeField='translation' protoField='translation'/>
+                  <connect nodeField='rotation' protoField='rotation'/>
+                  <connect nodeField='scale' protoField='scale'/>
+                  <connect nodeField='dimension' protoField='dimension'/>
+                  <connect nodeField='angle' protoField='angle'/>
+                  <connect nodeField='majorLineEvery' protoField='majorLineEvery'/>
+                  <connect nodeField='majorLineOffset' protoField='majorLineOffset'/>
+                  <connect nodeField='color' protoField='color'/>
+                  <connect nodeField='transparency' protoField='transparency'/>
+                  <connect nodeField='lineColor' protoField='lineColor'/>
+                  <connect nodeField='lineTransparency' protoField='lineTransparency'/>
+                  <connect nodeField='majorLineColor' protoField='majorLineColor'/>
+                  <connect nodeField='majorLineTransparency' protoField='majorLineTransparency'/>
+                </IS>
+              </ProtoInstance>
             </fieldValue>
           </ProtoInstance>
-        </fieldValue>
-      </ProtoInstance>
-    </Collision>
-    <Script DEF='DimensionScript'>
-      <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
-      <field accessType='inputOutput' type='MFInt32' name='dimension' value='5, 10'/>
-      <field accessType='inputOnly' type='SFVec3f' name='set_translation'/>
-      <field accessType='outputOnly' type='SFVec3f' name='translation_changed'/>
+          <Transform DEF='Handles'>
+            <IS>
+              <connect nodeField='rotation' protoField='rotation'/>
+            </IS>
+            <Transform DEF='Center'>
+              <PlaneSensor DEF='_10'
+                  axisRotation='1 0 0 1.5708'
+                  autoOffset='false'>
+                <IS>
+                  <connect nodeField='offset' protoField='translation'/>
+                  <connect nodeField='isActive' protoField='isActive'/>
+                </IS>
+              </PlaneSensor>
+              <Transform>
+                <IS>
+                  <connect nodeField='translation' protoField='translation'/>
+                </IS>
+                <ScreenGroup>
+                  <Transform DEF='Sphere'
+                      scale='4 4 4'>
+                    <Shape
+                        castShadow='false'>
+                      <Appearance DEF='_12'>
+                        <Material
+                            diffuseColor='1 0.7 0'/>
+                        <ProtoInstance name='ToolShader' containerField='shaders'/>
+                      </Appearance>
+                      <Sphere/>
+                    </Shape>
+                  </Transform>
+                </ScreenGroup>
+              </Transform>
+            </Transform>
+            <Transform DEF='DimensionHandle'>
+              <IS>
+                <connect nodeField='translation' protoField='translation'/>
+                <connect nodeField='scale' protoField='scale'/>
+              </IS>
+              <PlaneSensor DEF='_13'
+                  autoOffset='false'
+                  offset='5 0 0'
+                  maxPosition='-1 0'>
+                <IS>
+                  <connect nodeField='isActive' protoField='isActive'/>
+                </IS>
+              </PlaneSensor>
+              <Transform DEF='_14'
+                  translation='5 0 0'>
+                <ScreenGroup>
+                  <Transform DEF='Edge'
+                      scale='6 6 6'>
+                    <Shape
+                        castShadow='false'>
+                      <Appearance USE='_12'/>
+                      <Sphere/>
+                    </Shape>
+                  </Transform>
+                </ScreenGroup>
+              </Transform>
+            </Transform>
+            <Transform DEF='ScaleHandle'>
+              <IS>
+                <connect nodeField='translation' protoField='translation'/>
+              </IS>
+              <PlaneSensor DEF='_15'
+                  autoOffset='false'
+                  offset='-5 0 0'
+                  maxPosition='-1 0'>
+                <IS>
+                  <connect nodeField='isActive' protoField='isActive'/>
+                </IS>
+              </PlaneSensor>
+              <Transform DEF='_16'
+                  translation='-5 0 0'>
+                <ScreenGroup>
+                  <Transform DEF='Box'
+                      scale='3 3 3'>
+                    <Shape
+                        castShadow='false'>
+                      <Appearance USE='_12'/>
+                      <Box/>
+                    </Shape>
+                  </Transform>
+                </ScreenGroup>
+              </Transform>
+            </Transform>
+          </Transform>
+        </Collision>
+        <Script DEF='DimensionScript'>
+          <field accessType='inputOutput' type='SFVec3f' name='scale'/>
+          <field accessType='inputOutput' type='MFInt32' name='dimension'/>
+          <field accessType='inputOnly' type='SFVec3f' name='set_translation'/>
+          <field accessType='outputOnly' type='SFVec3f' name='translation_changed'/>
+          <IS>
+            <connect nodeField='scale' protoField='scale'/>
+            <connect nodeField='dimension' protoField='dimension'/>
+          </IS>
 <![CDATA[ecmascript:
 
 function initialize ()
@@ -168,12 +219,16 @@ function eventsProcessed ()
 	translation_changed = new SFVec3f (dimension [0], 0, 0);
 }
 ]]>
-    </Script>
-    <Script DEF='MoveScript'>
-      <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
-      <field accessType='inputOnly' type='SFVec3f' name='set_translation'/>
-      <field accessType='inputOutput' type='SFRotation' name='rotation'/>
-      <field accessType='outputOnly' type='SFVec3f' name='translation_changed'/>
+        </Script>
+        <Script DEF='MoveScript'>
+          <field accessType='inputOutput' type='SFVec3f' name='scale'/>
+          <field accessType='inputOnly' type='SFVec3f' name='set_translation'/>
+          <field accessType='inputOutput' type='SFRotation' name='rotation'/>
+          <field accessType='outputOnly' type='SFVec3f' name='translation_changed'/>
+          <IS>
+            <connect nodeField='scale' protoField='scale'/>
+            <connect nodeField='rotation' protoField='rotation'/>
+          </IS>
 <![CDATA[ecmascript:
 
 function set_translation (value)
@@ -183,12 +238,16 @@ function set_translation (value)
 	translation_changed = rotation .multVec (translation);
 }
 ]]>
-    </Script>
-    <Script DEF='ScaleScript'>
-      <field accessType='inputOnly' type='SFVec3f' name='set_translation'/>
-      <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
-      <field accessType='inputOutput' type='MFInt32' name='dimension' value='5, 10'/>
-      <field accessType='outputOnly' type='SFVec3f' name='translation_changed'/>
+        </Script>
+        <Script DEF='ScaleScript'>
+          <field accessType='inputOnly' type='SFVec3f' name='set_translation'/>
+          <field accessType='inputOutput' type='SFVec3f' name='scale'/>
+          <field accessType='inputOutput' type='MFInt32' name='dimension'/>
+          <field accessType='outputOnly' type='SFVec3f' name='translation_changed'/>
+          <IS>
+            <connect nodeField='scale' protoField='scale'/>
+            <connect nodeField='dimension' protoField='dimension'/>
+          </IS>
 <![CDATA[ecmascript:
 
 function initialize ()
@@ -210,69 +269,17 @@ function eventsProcessed ()
 {
 	translation_changed = new SFVec3f (-scale .x * dimension [0], 0, 0);
 }]]>
-    </Script>
-    <Script DEF='Tool'>
-      <field accessType='inputOutput' type='SFVec3f' name='translation'/>
-      <field accessType='inputOutput' type='SFRotation' name='rotation'/>
-      <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
-      <field accessType='inputOutput' type='MFInt32' name='dimension' value='5, 10'/>
-      <field accessType='inputOutput' type='SFVec2d' name='angle' value='1.0471975511966 1.0471975511966'/>
-      <field accessType='inputOutput' type='MFInt32' name='majorLineEvery' value='5, 5, 5, 5'/>
-      <field accessType='inputOutput' type='MFInt32' name='majorLineOffset' value='0, 0, 0, 0'/>
-      <field accessType='inputOutput' type='SFColor' name='color' value='0.5 0.5 0.5'/>
-      <field accessType='inputOutput' type='SFFloat' name='transparency' value='0.8'/>
-      <field accessType='inputOutput' type='SFColor' name='lineColor' value='1 0.7 0.7'/>
-      <field accessType='inputOutput' type='SFFloat' name='lineTransparency' value='0.8'/>
-      <field accessType='inputOutput' type='SFColor' name='majorLineColor' value='1 0.7 0.7'/>
-      <field accessType='inputOutput' type='SFFloat' name='majorLineTransparency' value='0.6'/>
-      <field accessType='inputOutput' type='SFBool' name='collision'/>
-      <field accessType='inputOutput' type='SFBool' name='handles' value='true'/>
-      <field accessType='inputOutput' type='SFBool' name='isActive'/>
-<![CDATA[ecmascript:
-// Empty body]]>
-    </Script>
-    <ROUTE fromNode='DimensionScript' fromField='translation_changed' toNode='_14' toField='set_translation'/>
-    <ROUTE fromNode='_13' fromField='translation_changed' toNode='DimensionScript' toField='set_translation'/>
-    <ROUTE fromNode='DimensionScript' fromField='translation_changed' toNode='_13' toField='set_offset'/>
-    <ROUTE fromNode='_10' fromField='translation_changed' toNode='MoveScript' toField='set_translation'/>
-    <ROUTE fromNode='Tool' fromField='translation_changed' toNode='_10' toField='set_offset'/>
-    <ROUTE fromNode='MoveScript' fromField='translation_changed' toNode='Tool' toField='set_translation'/>
-    <ROUTE fromNode='Tool' fromField='transparency_changed' toNode='_5' toField='set_transparency'/>
-    <ROUTE fromNode='Tool' fromField='color_changed' toNode='_5' toField='set_color'/>
-    <ROUTE fromNode='Tool' fromField='translation_changed' toNode='DimensionHandle' toField='set_translation'/>
-    <ROUTE fromNode='Tool' fromField='translation_changed' toNode='_11' toField='set_translation'/>
-    <ROUTE fromNode='Tool' fromField='rotation_changed' toNode='MoveScript' toField='set_rotation'/>
-    <ROUTE fromNode='Tool' fromField='dimension_changed' toNode='DimensionScript' toField='set_dimension'/>
-    <ROUTE fromNode='DimensionScript' fromField='dimension_changed' toNode='Tool' toField='set_dimension'/>
-    <ROUTE fromNode='Tool' fromField='dimension_changed' toNode='_5' toField='set_dimension'/>
-    <ROUTE fromNode='Tool' fromField='majorLineEvery_changed' toNode='_5' toField='set_majorLineEvery'/>
-    <ROUTE fromNode='Tool' fromField='lineColor_changed' toNode='_5' toField='set_lineColor'/>
-    <ROUTE fromNode='Tool' fromField='lineTransparency_changed' toNode='_5' toField='set_lineTransparency'/>
-    <ROUTE fromNode='Tool' fromField='majorLineColor_changed' toNode='_5' toField='set_majorLineColor'/>
-    <ROUTE fromNode='Tool' fromField='majorLineTransparency_changed' toNode='_5' toField='set_majorLineTransparency'/>
-    <ROUTE fromNode='Tool' fromField='majorLineOffset_changed' toNode='_5' toField='set_majorLineOffset'/>
-    <ROUTE fromNode='Tool' fromField='scale_changed' toNode='DimensionScript' toField='set_scale'/>
-    <ROUTE fromNode='Tool' fromField='scale_changed' toNode='MoveScript' toField='set_scale'/>
-    <ROUTE fromNode='Tool' fromField='translation_changed' toNode='_5' toField='set_translation'/>
-    <ROUTE fromNode='Tool' fromField='rotation_changed' toNode='_5' toField='set_rotation'/>
-    <ROUTE fromNode='Tool' fromField='scale_changed' toNode='_5' toField='set_scale'/>
-    <ROUTE fromNode='Tool' fromField='scale_changed' toNode='DimensionHandle' toField='set_scale'/>
-    <ROUTE fromNode='ScaleScript' fromField='translation_changed' toNode='_16' toField='set_translation'/>
-    <ROUTE fromNode='_15' fromField='translation_changed' toNode='ScaleScript' toField='set_translation'/>
-    <ROUTE fromNode='Tool' fromField='scale_changed' toNode='ScaleScript' toField='set_scale'/>
-    <ROUTE fromNode='ScaleScript' fromField='scale_changed' toNode='Tool' toField='set_scale'/>
-    <ROUTE fromNode='Tool' fromField='dimension_changed' toNode='ScaleScript' toField='set_dimension'/>
-    <ROUTE fromNode='ScaleScript' fromField='translation_changed' toNode='_15' toField='set_offset'/>
-    <ROUTE fromNode='Tool' fromField='translation_changed' toNode='ScaleHandle' toField='set_translation'/>
-    <ROUTE fromNode='_10' fromField='isActive' toNode='Tool' toField='set_isActive'/>
-    <ROUTE fromNode='_13' fromField='isActive' toNode='Tool' toField='set_isActive'/>
-    <ROUTE fromNode='_15' fromField='isActive' toNode='Tool' toField='set_isActive'/>
-    <ROUTE fromNode='Tool' fromField='angle_changed' toNode='_5' toField='set_angle'/>
-    <ROUTE fromNode='Tool' fromField='rotation_changed' toNode='_9' toField='set_rotation'/>
-    <ROUTE fromNode='Tool' fromField='collision_changed' toNode='AxonometricGrid_3' toField='set_enabled'/>
-    <ROUTE fromNode='Tool' fromField='handles_changed' toNode='_7' toField='set_whichChoice'/>
-    <EXPORT localDEF='_4' AS='GridTouchGroup'/>
-    <EXPORT localDEF='_6' AS='HandlesTouchGroup'/>
-    <EXPORT localDEF='Tool'/>
+        </Script>
+        <ROUTE fromNode='_10' fromField='translation_changed' toNode='MoveScript' toField='set_translation'/>
+        <ROUTE fromNode='DimensionScript' fromField='translation_changed' toNode='_13' toField='set_offset'/>
+        <ROUTE fromNode='_13' fromField='translation_changed' toNode='DimensionScript' toField='set_translation'/>
+        <ROUTE fromNode='DimensionScript' fromField='translation_changed' toNode='_14' toField='set_translation'/>
+        <ROUTE fromNode='ScaleScript' fromField='translation_changed' toNode='_15' toField='set_offset'/>
+        <ROUTE fromNode='_15' fromField='translation_changed' toNode='ScaleScript' toField='set_translation'/>
+        <ROUTE fromNode='ScaleScript' fromField='translation_changed' toNode='_16' toField='set_translation'/>
+        <ROUTE fromNode='MoveScript' fromField='translation_changed' toNode='_5' toField='set_translation'/>
+      </ProtoBody>
+    </ProtoDeclare>
+    <ProtoInstance name='Tool'/>
   </Scene>
 </X3D>
