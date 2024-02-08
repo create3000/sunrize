@@ -9,7 +9,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/library/AxonometricGrid.x3dv'/>
-    <meta name='modified' content='Thu, 08 Feb 2024 13:02:52 GMT'/>
+    <meta name='modified' content='Thu, 08 Feb 2024 14:58:16 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='AxonometricGrid'>
@@ -18,7 +18,7 @@
         <field accessType='inputOutput' type='SFRotation' name='rotation'/>
         <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
         <field accessType='inputOutput' type='MFInt32' name='dimension' value='5, 10'/>
-        <field accessType='inputOutput' type='SFVec2d' name='angle' value='1.0471975511966 1.0471975511966'/>
+        <field accessType='inputOutput' type='SFVec2d' name='angle' value='1.0471975511965976 1.0471975511965976'/>
         <field accessType='inputOutput' type='MFInt32' name='majorLineEvery' value='5, 5, 5, 5'/>
         <field accessType='inputOutput' type='MFInt32' name='majorLineOffset' value='0, 0, 0, 0'/>
         <field accessType='inputOutput' type='SFColor' name='color' value='0.5 0.5 0.5'/>
