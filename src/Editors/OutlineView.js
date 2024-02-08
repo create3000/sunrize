@@ -908,7 +908,7 @@ module .exports = class OutlineView extends Interface
 
       // Classes
 
-      const classes = [type]
+      const classes = [type];
 
       if (node)
       {
