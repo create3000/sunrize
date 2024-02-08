@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/GridTool.x3dv'/>
-    <meta name='modified' content='Thu, 08 Feb 2024 10:26:19 GMT'/>
+    <meta name='modified' content='Thu, 08 Feb 2024 10:36:49 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='Grid' url='"Grid.x3d"'>
@@ -141,9 +141,9 @@
           </Transform>
         </Collision>
         <Script DEF='DimensionScript'>
+          <field accessType='inputOnly' type='SFVec3f' name='set_translation'/>
           <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
           <field accessType='inputOutput' type='MFInt32' name='dimension' value='10, 10, 10'/>
-          <field accessType='inputOnly' type='SFVec3f' name='set_translation'/>
           <field accessType='outputOnly' type='SFVec3f' name='translation_changed'/>
 <![CDATA[ecmascript:
 
@@ -177,9 +177,9 @@ function eventsProcessed ()
 ]]>
         </Script>
         <Script DEF='MoveScript'>
-          <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
           <field accessType='inputOnly' type='SFVec3f' name='set_translation'/>
           <field accessType='inputOutput' type='SFRotation' name='rotation'/>
+          <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
           <field accessType='outputOnly' type='SFVec3f' name='translation_changed'/>
 <![CDATA[ecmascript:
 
