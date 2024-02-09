@@ -65,7 +65,7 @@ module .exports = class Document extends Interface
       electron .ipcRenderer .on ("show-library",       (event)        => require ("../Editors/Library") .open (this .browser .currentScene));
 
       electron .ipcRenderer .on ("browser-size", () => this .browserSize .open ());
-      electron .ipcRenderer .on ("grid", (event, value) => this .showGrid (value));
+      electron .ipcRenderer .on ("grid", (event, typeName, active) => this .toggleGrid (typeName, active));
 
       $(window)
          .on ("focusin",  () => this .onfocus ())
@@ -449,8 +449,12 @@ module .exports = class Document extends Interface
       }
    }
 
-   showGrid (type)
+   toggleGrid (typeName, active)
    {
-      console .log (type);
+      const GridTool = require (`../Tools/Grid/${typeName}`);
+
+      this .gridTool ?.removeTool ();
+
+      this .gridTool = new GridTool (this .browser);
    }
 };

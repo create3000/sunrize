@@ -642,7 +642,7 @@ module .exports = class Application
                   checked: this .menuOptions .grid,
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("grid", "grid");
+                     this .mainWindow .webContents .send ("grid", "GridTool");
                   },
                },
                {
@@ -651,7 +651,7 @@ module .exports = class Application
                   checked: this .menuOptions .angleGrid,
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("grid", "angle-grid");
+                     this .mainWindow .webContents .send ("grid", "AngleGridTool");
                   },
                },
                {
@@ -660,7 +660,7 @@ module .exports = class Application
                   checked: this .menuOptions .axonometricGrid,
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("grid", "axonometric-grid");
+                     this .mainWindow .webContents .send ("grid", "AxonometricGridTool");
                   },
                },
             ],

@@ -111,7 +111,8 @@ class X3DNodeTool extends X3DBaseTool
       if (!this .tool)
          return;
 
-      this .tool .selected = value;
+      if (this .tool .selected !== undefined)
+         this .tool .selected = value;
    }
 
    // Tool Loading
@@ -153,8 +154,10 @@ class X3DNodeTool extends X3DBaseTool
          if (!this .tool)
             return;
 
-         this .#innerNode     = this .tool .getValue () .getInnerNode ();
-         this .tool .selected = this .#selected;
+         this .#innerNode = this .tool .getValue () .getInnerNode ();
+
+         if (this .tool .selected !== undefined)
+            this .tool .selected = this .#selected;
       }
       catch (error)
       {
