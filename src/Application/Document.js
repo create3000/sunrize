@@ -65,6 +65,7 @@ module .exports = class Document extends Interface
       electron .ipcRenderer .on ("show-library",       (event)        => require ("../Editors/Library") .open (this .browser .currentScene));
 
       electron .ipcRenderer .on ("browser-size", () => this .browserSize .open ());
+      electron .ipcRenderer .on ("grid", (event, value) => this .showGrid (value));
 
       $(window)
          .on ("focusin",  () => this .onfocus ())
@@ -446,5 +447,10 @@ module .exports = class Document extends Interface
       {
          element .css ({ "aspect-ratio": "unset", "width": "100%", "height": "100%" });
       }
+   }
+
+   showGrid (value)
+   {
+      console .log (value);
    }
 };

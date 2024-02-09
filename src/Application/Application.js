@@ -635,6 +635,34 @@ module .exports = class Application
                      this .mainWindow .webContents .send ("browser-size");
                   },
                },
+               { type: "separator" },
+               {
+                  label: _("Grid Layout Tool"),
+                  type: "radio",
+                  checked: this .menuOptions .grid,
+                  click: () =>
+                  {
+                     this .mainWindow .webContents .send ("grid", "grid");
+                  },
+               },
+               {
+                  label: _("Angle Grid Layout Tool"),
+                  type: "radio",
+                  checked: this .menuOptions .angleGrid,
+                  click: () =>
+                  {
+                     this .mainWindow .webContents .send ("grid", "angle-grid");
+                  },
+               },
+               {
+                  label: _("Axonometric Grid Layout Tool"),
+                  type: "radio",
+                  checked: this .menuOptions .axonometricGrid,
+                  click: () =>
+                  {
+                     this .mainWindow .webContents .send ("grid", "axonometric-grid");
+                  },
+               },
             ],
          },
          {
