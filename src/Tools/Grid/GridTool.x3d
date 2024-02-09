@@ -197,30 +197,30 @@
 
 function initialize ()
 {
-	eventsProcessed ();
+   eventsProcessed ();
 }
 
 function set_translation (value)
 {
-	var oddX = dimension [0] % 2;
-	var oddZ = dimension [2] % 2;
+   var oddX = dimension [0] % 2;
+   var oddZ = dimension [2] % 2;
 
-	dimension [0] = Math .round (value .x);
-	dimension [2] = Math .round (value .z);
+   dimension [0] = Math .round (value .x);
+   dimension [2] = Math .round (value .z);
 
-	dimension [0] = Math .max (dimension [0], 1);
-	dimension [2] = Math .max (dimension [2], 1);
+   dimension [0] = Math .max (dimension [0], 1);
+   dimension [2] = Math .max (dimension [2], 1);
 
-	dimension [0] *= 2;
-	dimension [2] *= 2;
+   dimension [0] *= 2;
+   dimension [2] *= 2;
 
-	dimension [0] -= oddX;
-	dimension [2] -= oddZ;
+   dimension [0] -= oddX;
+   dimension [2] -= oddZ;
 }
 
 function eventsProcessed ()
 {
-	translation_changed = new SFVec3f (dimension [0] / 2 , 0, dimension [2] / 2);
+   translation_changed = new SFVec3f (dimension [0] / 2 , 0, dimension [2] / 2);
 }
 ]]>
         </Script>
@@ -237,18 +237,18 @@ function eventsProcessed ()
 
 function set_translation (value)
 {
-	var translation = rotation .inverse () .multVec (value);
+   var translation = rotation .inverse () .multVec (value);
 
-	if (scale .x)
-		translation .x = Math .round (translation .x / scale .x) * scale .x;
+   if (scale .x)
+      translation .x = Math .round (translation .x / scale .x) * scale .x;
 
-	if (scale .y)
-		translation .y = Math .round (translation .y / scale .y) * scale .y;
+   if (scale .y)
+      translation .y = Math .round (translation .y / scale .y) * scale .y;
 
-	if (scale .z)
-		translation .z = Math .round (translation .z / scale .z) * scale .z;
+   if (scale .z)
+      translation .z = Math .round (translation .z / scale .z) * scale .z;
 
-	translation_changed = rotation .multVec (translation);
+   translation_changed = rotation .multVec (translation);
 }
 ]]>
         </Script>
@@ -265,22 +265,22 @@ function set_translation (value)
 
 function initialize ()
 {
-	eventsProcessed ();
+   eventsProcessed ();
 }
 
 function set_translation (value)
 {
-	var length = new SFVec2f (2 * value .x / dimension [0], -2 * value .z / dimension [2]) .length ();
-	var factor = length / new SFVec2f (scale .x, scale .z) .length ();
+   var length = new SFVec2f (2 * value .x / dimension [0], -2 * value .z / dimension [2]) .length ();
+   var factor = length / new SFVec2f (scale .x, scale .z) .length ();
 
-	scale .x *= factor;
-	scale .y *= factor;
-	scale .z *= factor;
+   scale .x *= factor;
+   scale .y *= factor;
+   scale .z *= factor;
 }
 
 function eventsProcessed ()
 {
-	translation_changed = new SFVec3f (scale .x * dimension [0] / 2, 0, -scale .z * dimension [2] / 2);
+   translation_changed = new SFVec3f (scale .x * dimension [0] / 2, 0, -scale .z * dimension [2] / 2);
 }]]>
         </Script>
         <ROUTE fromNode='_9' fromField='translation_changed' toNode='MoveScript' toField='set_translation'/>

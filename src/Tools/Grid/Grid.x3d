@@ -145,110 +145,110 @@
 
 function initialize ()
 {
-	eventsProcessed ();
+   eventsProcessed ();
 }
 
 function eventsProcessed ()
 {
-	// Plane
+   // Plane
 
-	plane .scale = new SFVec3f (dimension [0], dimension [2], 1);
+   plane .scale = new SFVec3f (dimension [0], dimension [2], 1);
 
-	// Grid
+   // Grid
 
-	generateGrid (true, majorGrid);
-	generateGrid (false, minorGrid);
+   generateGrid (true, majorGrid);
+   generateGrid (false, minorGrid);
 
-	// Points
+   // Points
 
-	generatePoints (true,  majorPoints .coord .point);
-	generatePoints (false, minorPoints .coord .point);
+   generatePoints (true,  majorPoints .coord .point);
+   generatePoints (false, minorPoints .coord .point);
 }
 
 function generateGrid (major, grid)
 {
-	var point       = grid .coord .point;
-	var coordIndex  = new MFInt32 ();
-	var scaleX1_2   = dimension [0] / 2;
-	var scaleZ1_2   = dimension [2] / 2;
-	var majorAdd    = major / 4;
-	var p           = 0;
+   var point       = grid .coord .point;
+   var coordIndex  = new MFInt32 ();
+   var scaleX1_2   = dimension [0] / 2;
+   var scaleZ1_2   = dimension [2] / 2;
+   var majorAdd    = major / 4;
+   var p           = 0;
 
-	for (var i = 0, size = dimension [0] + 1; i < size; ++ i)
-	{
-		if (major - isMajorLine (i, 0))
-			continue;
+   for (var i = 0, size = dimension [0] + 1; i < size; ++ i)
+   {
+      if (major - isMajorLine (i, 0))
+         continue;
 
-		var x = -scaleX1_2 + i;
+      var x = -scaleX1_2 + i;
 
-		point [p]     = new SFVec3f (x, 0, -scaleZ1_2 - majorAdd);
-		point [p + 1] = new SFVec3f (x, 0,  scaleZ1_2 + majorAdd);
-		coordIndex [coordIndex .length] = p;
-		coordIndex [coordIndex .length] = p + 1;
-		coordIndex [coordIndex .length] = -1;
+      point [p]     = new SFVec3f (x, 0, -scaleZ1_2 - majorAdd);
+      point [p + 1] = new SFVec3f (x, 0,  scaleZ1_2 + majorAdd);
+      coordIndex [coordIndex .length] = p;
+      coordIndex [coordIndex .length] = p + 1;
+      coordIndex [coordIndex .length] = -1;
 
-		p += 2;
-	}
+      p += 2;
+   }
 
-	for (var i = 0, size = dimension [2] + 1; i < size; ++ i)
-	{
-		if (major - isMajorLine (i, 2))
-			continue;
+   for (var i = 0, size = dimension [2] + 1; i < size; ++ i)
+   {
+      if (major - isMajorLine (i, 2))
+         continue;
 
-		var z = -scaleZ1_2 + i;
+      var z = -scaleZ1_2 + i;
 
-		point [p]     = new SFVec3f (-scaleX1_2 - majorAdd, 0, z);
-		point [p + 1] = new SFVec3f ( scaleX1_2 + majorAdd, 0, z);
-		coordIndex [coordIndex .length] = p;
-		coordIndex [coordIndex .length] = p + 1;
-		coordIndex [coordIndex .length] = -1;
+      point [p]     = new SFVec3f (-scaleX1_2 - majorAdd, 0, z);
+      point [p + 1] = new SFVec3f ( scaleX1_2 + majorAdd, 0, z);
+      coordIndex [coordIndex .length] = p;
+      coordIndex [coordIndex .length] = p + 1;
+      coordIndex [coordIndex .length] = -1;
 
-		p += 2;
-	}
+      p += 2;
+   }
 
-	point .length = p;
+   point .length = p;
 
-	grid .set_coordIndex = coordIndex;
+   grid .set_coordIndex = coordIndex;
 }
 
 function generatePoints (major, point)
 {
-	var scaleY1_2 = -dimension [1] / 2;
-	var p         = 0;
+   var scaleY1_2 = -dimension [1] / 2;
+   var p         = 0;
 
-	for (var i = 0, size = dimension [1] + 1; i < size; ++ i)
-	{
-		if (major - isMajorLine (i, 1))
-			continue;
+   for (var i = 0, size = dimension [1] + 1; i < size; ++ i)
+   {
+      if (major - isMajorLine (i, 1))
+         continue;
 
-		point [p] = new SFVec3f (0, scaleY1_2 + i, 0);
-		++ p;
-	}
+      point [p] = new SFVec3f (0, scaleY1_2 + i, 0);
+      ++ p;
+   }
 
-	point .length = p;
+   point .length = p;
 }
 
 function isMajorLine (i, index)
 {
-	for (var d = index; d < majorLineEvery .length; d += 3)
-	{
-		if (isMajor (i, dimension [index], majorLineEvery [d], majorLineOffset [d]))
-			return true;
-	}
+   for (var d = index; d < majorLineEvery .length; d += 3)
+   {
+      if (isMajor (i, dimension [index], majorLineEvery [d], majorLineOffset [d]))
+         return true;
+   }
 
-	return false;
+   return false;
 }
 
 function isMajor (i, dimension, majorLineEvery, majorLineOffset)
 {
-	if (majorLineEvery)
-	{
-		var index = Math .floor (i - dimension / 2 - majorLineOffset);
+   if (majorLineEvery)
+   {
+      var index = Math .floor (i - dimension / 2 - majorLineOffset);
 
-		return !(index % majorLineEvery);
-	}
+      return !(index % majorLineEvery);
+   }
 
-	return false;
+   return false;
 }
 ]]>
         </Script>

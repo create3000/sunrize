@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/AxonometricGridTool.x3dv'/>
-    <meta name='modified' content='Thu, 08 Feb 2024 15:07:47 GMT'/>
+    <meta name='modified' content='Thu, 08 Feb 2024 15:13:12 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='AxonometricGrid' url='"AxonometricGrid.x3d"'>
@@ -207,18 +207,18 @@
 
 function initialize ()
 {
-	eventsProcessed ();
+   eventsProcessed ();
 }
 
 function set_translation (value)
 {
-	dimension [0] = Math .round (value .x);
-	dimension [0] = Math .max (dimension [0], 1);
+   dimension [0] = Math .round (value .x);
+   dimension [0] = Math .max (dimension [0], 1);
 }
 
 function eventsProcessed ()
 {
-	translation_changed = new SFVec3f (dimension [0], 0, 0);
+   translation_changed = new SFVec3f (dimension [0], 0, 0);
 }
 ]]>
         </Script>
@@ -235,9 +235,9 @@ function eventsProcessed ()
 
 function set_translation (value)
 {
-	var translation = rotation .inverse () .multVec (value);
+   var translation = rotation .inverse () .multVec (value);
 
-	translation_changed = rotation .multVec (translation);
+   translation_changed = rotation .multVec (translation);
 }
 ]]>
         </Script>
@@ -254,22 +254,22 @@ function set_translation (value)
 
 function initialize ()
 {
-	eventsProcessed ();
+   eventsProcessed ();
 }
 
 function set_translation (value)
 {
-	var length = Math .abs (value .x) / dimension [0];
-	var factor = length / scale .x;
+   var length = Math .abs (value .x) / dimension [0];
+   var factor = length / scale .x;
 
-	scale .x *= factor;
-	scale .y *= factor;
-	scale .z *= factor;
+   scale .x *= factor;
+   scale .y *= factor;
+   scale .z *= factor;
 }
 
 function eventsProcessed ()
 {
-	translation_changed = new SFVec3f (-scale .x * dimension [0], 0, 0);
+   translation_changed = new SFVec3f (-scale .x * dimension [0], 0, 0);
 }]]>
         </Script>
         <Script DEF='AngleScript'>

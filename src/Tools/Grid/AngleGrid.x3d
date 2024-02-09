@@ -156,156 +156,156 @@
 
 function initialize ()
 {
-	eventsProcessed ();
+   eventsProcessed ();
 }
 
 function eventsProcessed ()
 {
-	var radius = dimension [0];
+   var radius = dimension [0];
 
-	// Plane
+   // Plane
 
-	disk .scale = new SFVec3f (radius, radius, 1);
+   disk .scale = new SFVec3f (radius, radius, 1);
 
-	// Radiuses
+   // Radiuses
 
-	generateRadiuses (true,  radius, majorLines);
-	generateRadiuses (false, radius, minorLines);
+   generateRadiuses (true,  radius, majorLines);
+   generateRadiuses (false, radius, minorLines);
 
-	// Rings
+   // Rings
 
-	generateRings ();
+   generateRings ();
 
-	// Points
+   // Points
 
-	generatePoints (true,  majorPoints .coord .point);
-	generatePoints (false, minorPoints .coord .point);
+   generatePoints (true,  majorPoints .coord .point);
+   generatePoints (false, minorPoints .coord .point);
 }
 
 function generateRadiuses (major, radius, grid)
 {
-	var angle      = 2 * Math .PI / dimension [1];
-	var coordIndex = new MFInt32 ();
-	var point      = grid .coord .point;
-	var p          = 0;
+   var angle      = 2 * Math .PI / dimension [1];
+   var coordIndex = new MFInt32 ();
+   var point      = grid .coord .point;
+   var p          = 0;
 
-	point [p ++] = new SFVec3f ();
+   point [p ++] = new SFVec3f ();
 
-	for (var i = 0, c = 0; i < dimension [1]; ++ i)
-	{
-		if (major - isMajorLine (i, 1))
-			continue;
+   for (var i = 0, c = 0; i < dimension [1]; ++ i)
+   {
+      if (major - isMajorLine (i, 1))
+         continue;
 
-		var a = angle * i;
+      var a = angle * i;
 
-		point [p] = new SFVec3f (radius * Math .sin (a), 0, radius * Math .cos (a));
+      point [p] = new SFVec3f (radius * Math .sin (a), 0, radius * Math .cos (a));
 
-		coordIndex [c ++] = 0;
-		coordIndex [c ++] = p;
-		coordIndex [c ++] = -1;
+      coordIndex [c ++] = 0;
+      coordIndex [c ++] = p;
+      coordIndex [c ++] = -1;
 
-		++ p;
-	}
+      ++ p;
+   }
 
-	point .length = p;
+   point .length = p;
 
-	grid .set_coordIndex = coordIndex;
+   grid .set_coordIndex = coordIndex;
 }
 
 function generateRings ()
 {
-	var scene = Browser .currentScene;
-	var size  = Math .min (dimension [0], rings .children .length);
+   var scene = Browser .currentScene;
+   var size  = Math .min (dimension [0], rings .children .length);
 
-	for (var i = 0; i < size; ++ i)
-	{
-		var s         = i + 1;
-		var transform = rings .children [i];
-		var major     = isMajorLine (s, 0);
+   for (var i = 0; i < size; ++ i)
+   {
+      var s         = i + 1;
+      var transform = rings .children [i];
+      var major     = isMajorLine (s, 0);
 
-		transform .children [0] .appearance = major ? majorAppearance : minorAppearance;
-		transform .scale                    = new SFVec3f (s, s, s);
-	}
+      transform .children [0] .appearance = major ? majorAppearance : minorAppearance;
+      transform .scale                    = new SFVec3f (s, s, s);
+   }
 
-	for (var i = size; i < dimension [0]; ++ i)
-	{
-		var s         = i + 1;
-		var circle    = scene .createNode ("Circle2D");
-		var shape     = scene .createNode ("Shape");
-		var transform = scene .createNode ("Transform");
-		var major     = isMajorLine (s, 0);
+   for (var i = size; i < dimension [0]; ++ i)
+   {
+      var s         = i + 1;
+      var circle    = scene .createNode ("Circle2D");
+      var shape     = scene .createNode ("Shape");
+      var transform = scene .createNode ("Transform");
+      var major     = isMajorLine (s, 0);
 
-		shape .appearance       = major ? majorAppearance : minorAppearance;
-		shape .geometry         = circle;
-		transform .children [0] = shape;
-		transform .scale        = new SFVec3f (s, s, s);
-		rings .children [i]     = transform;
-	}
+      shape .appearance       = major ? majorAppearance : minorAppearance;
+      shape .geometry         = circle;
+      transform .children [0] = shape;
+      transform .scale        = new SFVec3f (s, s, s);
+      rings .children [i]     = transform;
+   }
 
-	rings .children .length = dimension [0];
+   rings .children .length = dimension [0];
 }
 
 function generatePoints (major, point)
 {
-	var scaleY1_2 = -dimension [2] / 2;
-	var p         = 0;
+   var scaleY1_2 = -dimension [2] / 2;
+   var p         = 0;
 
-	for (var i = 0, size = dimension [2] + 1; i < size; ++ i)
-	{
-		if (major - isMajorLineXYZ (i, 2))
-			continue;
+   for (var i = 0, size = dimension [2] + 1; i < size; ++ i)
+   {
+      if (major - isMajorLineXYZ (i, 2))
+         continue;
 
-		point [p] = new SFVec3f (0, scaleY1_2 + i, 0);
-		++ p;
-	}
+      point [p] = new SFVec3f (0, scaleY1_2 + i, 0);
+      ++ p;
+   }
 
-	point .length = p;
+   point .length = p;
 }
 
 function isMajorLine (i, index)
 {
-	for (var d = index; d < majorLineEvery .length; d += 3)
-	{
-		if (isMajor (i, dimension [index], majorLineEvery [d], majorLineOffset [d]))
-			return true;
-	}
+   for (var d = index; d < majorLineEvery .length; d += 3)
+   {
+      if (isMajor (i, dimension [index], majorLineEvery [d], majorLineOffset [d]))
+         return true;
+   }
 
-	return false;
+   return false;
 }
 
 function isMajor (i, dimension, majorLineEvery, majorLineOffset)
 {
-	if (majorLineEvery)
-	{
-		var index = Math .floor (i - majorLineOffset);
+   if (majorLineEvery)
+   {
+      var index = Math .floor (i - majorLineOffset);
 
-		return !(index % majorLineEvery);
-	}
+      return !(index % majorLineEvery);
+   }
 
-	return false;
+   return false;
 }
 
 function isMajorLineXYZ (i, index)
 {
-	for (var d = index; d < majorLineEvery .length; d += 3)
-	{
-		if (isMajorXYZ (i, dimension [index], majorLineEvery [d], majorLineOffset [d]))
-			return true;
-	}
+   for (var d = index; d < majorLineEvery .length; d += 3)
+   {
+      if (isMajorXYZ (i, dimension [index], majorLineEvery [d], majorLineOffset [d]))
+         return true;
+   }
 
-	return false;
+   return false;
 }
 
 function isMajorXYZ (i, dimension, majorLineEvery, majorLineOffset)
 {
-	if (majorLineEvery)
-	{
-		var index = Math .floor (i - dimension / 2 - majorLineOffset);
+   if (majorLineEvery)
+   {
+      var index = Math .floor (i - dimension / 2 - majorLineOffset);
 
-		return !(index % majorLineEvery);
-	}
+      return !(index % majorLineEvery);
+   }
 
-	return false;
+   return false;
 }
 ]]>
         </Script>

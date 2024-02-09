@@ -233,24 +233,24 @@ var yAxis = new SFVec3f (0, 1, 0);
 
 function initialize ()
 {
-	set_dimension ();
+   set_dimension ();
 }
 
 function set_rotation (value)
 {
-	var angle = value .angle;
-	var sign  = value .getAxis () .dot (yAxis) < 0;
+   var angle = value .angle;
+   var sign  = value .getAxis () .dot (yAxis) < 0;
 
-	if (sign)
-		angle = 2 * Math .PI - angle;
+   if (sign)
+      angle = 2 * Math .PI - angle;
 
-	dimension [1] = Math .round (2 * Math .PI / angle);
+   dimension [1] = Math .round (2 * Math .PI / angle);
 }
 
 function set_dimension ()
 {
-	angle_changed    = 2 * Math .PI / dimension [1];
-	rotation_changed = new SFRotation (yAxis, angle_changed);
+   angle_changed    = 2 * Math .PI / dimension [1];
+   rotation_changed = new SFRotation (yAxis, angle_changed);
 }
 ]]>
         </Script>
@@ -266,19 +266,19 @@ function set_dimension ()
 
 function initialize ()
 {
-	eventsProcessed ();
+   eventsProcessed ();
 }
 
 function set_translation (value)
 {
-	dimension [0] = Math .round (value .z);
-	dimension [0] = Math .max (dimension [0], 1);
+   dimension [0] = Math .round (value .z);
+   dimension [0] = Math .max (dimension [0], 1);
 }
 
 function eventsProcessed ()
 {
-	dimensionTranslation_changed = new SFVec3f (0, 0, dimension [0]);
-	angleTranslation_changed     = new SFVec3f (0, 0, dimension [0] - (dimension [0] > 1 ? 1 : 0));
+   dimensionTranslation_changed = new SFVec3f (0, 0, dimension [0]);
+   angleTranslation_changed     = new SFVec3f (0, 0, dimension [0] - (dimension [0] > 1 ? 1 : 0));
 }
 ]]>
         </Script>
@@ -295,27 +295,27 @@ function eventsProcessed ()
 
 function initialize ()
 {
-	eventsProcessed ();
+   eventsProcessed ();
 }
 
 function set_translation (value)
 {
-	var length = new SFVec2f ( value .x / (dimension [0] * Math .cos (Math .PI / 4)),
-	                          -value .z / (dimension [0] * Math .sin (Math .PI / 4))) .length ();
+   var length = new SFVec2f ( value .x / (dimension [0] * Math .cos (Math .PI / 4)),
+                             -value .z / (dimension [0] * Math .sin (Math .PI / 4))) .length ();
 
-	var factor = length / new SFVec2f (scale .x, scale .z) .length ();
+   var factor = length / new SFVec2f (scale .x, scale .z) .length ();
 
-	scale .x *= factor;
-	scale .y *= factor;
-	scale .z *= factor;
+   scale .x *= factor;
+   scale .y *= factor;
+   scale .z *= factor;
 }
 
 function eventsProcessed ()
 {
-	//translation_changed = new SFVec3f (scale .x * dimension [0], 0, -scale .z * dimension [0]);
-	translation_changed = new SFVec3f (scale .x * dimension [0] * Math .cos (Math .PI / 4),
-	                                   0,
-	                                   -scale .z * dimension [0] * Math .sin (Math .PI / 4));
+   //translation_changed = new SFVec3f (scale .x * dimension [0], 0, -scale .z * dimension [0]);
+   translation_changed = new SFVec3f (scale .x * dimension [0] * Math .cos (Math .PI / 4),
+                                      0,
+                                      -scale .z * dimension [0] * Math .sin (Math .PI / 4));
 }]]>
         </Script>
         <ROUTE fromNode='AngleScript' fromField='angle_changed' toNode='_13' toField='set_offset'/>

@@ -9,7 +9,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/library/AxonometricGrid.x3dv'/>
-    <meta name='modified' content='Thu, 08 Feb 2024 14:58:16 GMT'/>
+    <meta name='modified' content='Fri, 09 Feb 2024 11:58:34 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='AxonometricGrid'>
@@ -145,157 +145,136 @@
 
 function initialize ()
 {
-	eventsProcessed ();
+   eventsProcessed ();
 }
 
 function eventsProcessed ()
 {
-	var angles     = new SFVec3f (angle [0], angle [1], Math .PI - angle [0] - angle [1])
-	var u          = Math .sin (angles [1]) / Math .sin (angles [2]);
-	var v          = 1;
-	var t          = Math .sin (angles [0]) / Math .sin (angles [2]);
-	var sides      = new SFVec3f (u, 1, t);
-	var heightU    = v * Math .sin (angles [0]);
-	var heightV    = t * Math .sin (angles [1]);
-	var heightT    = u * Math .sin (angles [2]);
-	var heights    = new SFVec3f (heightU, heightV, heightT);
+   var angles = new SFVec3f (angle [0], angle [1], Math .PI - angle [0] - angle [1])
+   var u      = Math .sin (angles [1]) / Math .sin (angles [2]);
+   var v      = 1;
+   var t      = Math .sin (angles [0]) / Math .sin (angles [2]);
 
-	// Axonometric grid
+   // Hexagon plane
 
-	generateGrid (true,  majorGrid, angles, sides, heights);
-	generateGrid (false, minorGrid, angles, sides, heights);
+   hexagon .point [0] = new SFVec3f (v, 0, 0) .multiply (dimension [0]);
+   hexagon .point [1] = new SFRotation (0, 1, 0, angles [0])              .multVec (new SFVec3f (u * dimension [0], 0, 0));
+   hexagon .point [2] = new SFRotation (0, 1, 0, angles [0] + angles [2]) .multVec (new SFVec3f (t * dimension [0], 0, 0));
+   hexagon .point [3] = hexagon .point [0] .negate ();
+   hexagon .point [4] = hexagon .point [1] .negate ();
+   hexagon .point [5] = hexagon .point [2] .negate ();
 
-	// Points
+   // Axonometric grid
 
-	generatePoints (true,  majorPoints .coord .point);
-	generatePoints (false, minorPoints .coord .point);
+   generateGrid (true,  majorGrid, hexagon .point);
+   generateGrid (false, minorGrid, hexagon .point);
 
-	// Hexagon plane
+   // Points
 
-	hexagon .point [0] = new SFVec3f (v, 0, 0) .multiply (dimension [0]);
-	hexagon .point [1] = new SFRotation (0, 1, 0, angles [0])              .multVec (new SFVec3f (u * dimension [0], 0, 0));
-	hexagon .point [2] = new SFRotation (0, 1, 0, angles [0] + angles [2]) .multVec (new SFVec3f (t * dimension [0], 0, 0));
-	hexagon .point [3] = hexagon .point [0] .negate ();
-	hexagon .point [4] = hexagon .point [1] .negate ();
-	hexagon .point [5] = hexagon .point [2] .negate ();
+   generatePoints (true,  majorPoints .coord .point);
+   generatePoints (false, minorPoints .coord .point);
 }
 
-function generateGrid (major, grid, angles, sides, heights)
+function generateGrid (major, grid, hexagon)
 {
-	var coordIndex = new MFInt32 ();
-	var p          = 0;
+   var coordIndex = new MFInt32 ();
+   var p          = 0;
 
-	p = generateGridAxis (0,  angle [0], angles, sides, heights, major, grid, coordIndex, p);
-	p = generateGridAxis (1,  0,         angles, sides, heights, major, grid, coordIndex, p);
-	p = generateGridAxis (2, -angle [1], angles, sides, heights, major, grid, coordIndex, p);
+   p = generateGridAxis (0, hexagon, major, grid, coordIndex, p);
+   p = generateGridAxis (1, hexagon, major, grid, coordIndex, p);
+   p = generateGridAxis (2, hexagon, major, grid, coordIndex, p);
 
-	grid .coord .point .length = p;
-	grid .set_coordIndex = coordIndex;
+   grid .coord .point .length = p;
+   grid .set_coordIndex       = coordIndex;
 }
 
-function generateGridAxis (axis, angle, angles, sides, heights, major, grid, coordIndex, p)
+function generateGridAxis (axis, hexagon, major, grid, coordIndex, p)
 {
-	var point     = grid .coord .point;
-	var majorAdd  = major / 4;
-	var scale_2   = dimension [0];
-	var rotation  = new SFRotation (0, 1, 0, angle);
-	var height    = heights [axis];
-	var side      = sides [axis];
-	var dMap      = [ 1, 1, 0, 0, 1, 1 ];
-	var eMap      = [ 0, 1, 0 ];
-	var lMap      = [ 2, 0, 1 ];
-	var rMap      = [ 1, 2, 0 ];
-	var left      = Math .sqrt (Math .pow (sides [lMap [axis]], 2) - Math .pow (heights [axis], 2));
-	var right     = Math .sqrt (Math .pow (sides [rMap [axis]], 2) - Math .pow (heights [axis], 2));
+   const point = grid .coord .point;
 
-	for (var n = 0, size = dimension [0] * 2 + 1; n < size; ++ n)
-	{
-		if (major - isMajorLine (n, axis, 0, 2))
-			continue;
+   const pn = [
+      hexagon [(axis + 0) % 6],
+      hexagon [(axis + 1) % 6],
+      hexagon [(axis + 2) % 6],
+      hexagon [(axis + 3) % 6],
+      hexagon [(axis + 4) % 6],
+      hexagon [(axis + 5) % 6],
+   ];
 
-		var i = n - scale_2;
-		var x = scale_2 * side + majorAdd;
-		var l = i > 0 ? right * i : left  * -i;
-		var r = i > 0 ? left  * i : right * -i;
-		var z = i * height;
-		var e = eMap [axis] ? i < 0 : i > 0;
+   for (let n = 0, size = dimension [0] * 2 + 1; n < size; ++ n)
+   {
+      if (major - isMajorLine (n, axis, 0, 2))
+         continue;
 
-		if (e)
-		{
-			if (dMap [axis] && angles [0] > Math .PI / 2)
-				l = -l;
-		}
-		else
-		{
-			if (dMap [axis] && angles [0] > Math .PI / 2)
-				r = -r;
-		}
+      const 
+         s = n - dimension [0],
+         a = pn [s < 0 ? 0 : 5],
+         b = pn [s < 0 ? 5 : 4],
+         c = pn [s < 0 ? 1 : 2],
+         d = pn [s < 0 ? 2 : 3],
+         t = n / (size - 1) * 2 - (s < 0 ? 0 : 1);
 
-		if (e)
-		{
-			if (dMap [axis + 3] && angles [1] > Math .PI / 2)
-				r = -r;
-		}
-		else
-		{
-			if (dMap [axis + 3] && angles [1] > Math .PI / 2)
-				l = -l;
-		}
+      const
+         p1  = a .lerp (b, t),
+         p2  = c .lerp (d, t)
+         add = major / (4 * p1 .distance (p2));
 
-		point [p]     = rotation .multVec (new SFVec3f (-x + l, 0, z));
-		point [p + 1] = rotation .multVec (new SFVec3f ( x - r, 0, z));
-		coordIndex [coordIndex .length] = p;
+		point [p]     = p1 .lerp (p2, 0 - add);
+		point [p + 1] = p1 .lerp (p2, 1 + add);
+
+      coordIndex [coordIndex .length] = p;
 		coordIndex [coordIndex .length] = p + 1;
 		coordIndex [coordIndex .length] = -1;
-
+			
 		p += 2;
-	}
+   }
 
-	return p;
+   return p;
 }
 
 function generatePoints (major, point)
 {
-	var scaleY_2 = -dimension [1] / 2;
-	var p         = 0;
+   var scaleY_2 = -dimension [1] / 2;
+   var p         = 0;
 
-	for (var i = 0, size = dimension [1] + 1; i < size; ++ i)
-	{
-		if (major - isMajorLine (i, 3, 1, 1))
-			continue;
+   for (var i = 0, size = dimension [1] + 1; i < size; ++ i)
+   {
+      if (major - isMajorLine (i, 3, 1, 1))
+         continue;
 
-		point [p] = new SFVec3f (0, scaleY_2 + i, 0);
-		++ p;
-	}
+      point [p] = new SFVec3f (0, scaleY_2 + i, 0);
+      ++ p;
+   }
 
-	point .length = p;
+   point .length = p;
 }
 
 function isMajorLine (i, index, di, f)
 {
-	for (var d = index; d < majorLineEvery .length; d += 4)
-	{
-		if (isMajor (i, dimension [di] * f, majorLineEvery [d], majorLineOffset [d]))
-			return true;
-	}
+   for (var d = index; d < majorLineEvery .length; d += 4)
+   {
+      if (isMajor (i, dimension [di] * f, majorLineEvery [d], majorLineOffset [d]))
+         return true;
+   }
 
-	return false;
+   return false;
 }
 
 function isMajor (i, dimension, majorLineEvery, majorLineOffset)
 {
-	if (majorLineEvery)
-	{
-		var index = Math .floor (i - dimension / 2 - majorLineOffset);
+   if (majorLineEvery)
+   {
+      var index = Math .floor (i - dimension / 2 - majorLineOffset);
 
-		return !(index % majorLineEvery);
-	}
+      return !(index % majorLineEvery);
+   }
 
-	return false;
+   return false;
 }
 ]]>
         </Script>
       </ProtoBody>
     </ProtoDeclare>
+    <ProtoInstance name='AxonometricGrid'/>
   </Scene>
 </X3D>
