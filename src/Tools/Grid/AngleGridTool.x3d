@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/AngleGridTool.x3dv'/>
-    <meta name='modified' content='Thu, 08 Feb 2024 15:07:41 GMT'/>
+    <meta name='modified' content='Fri, 09 Feb 2024 16:20:48 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='AngleGrid' url='"AngleGrid.x3d"'>
@@ -61,7 +61,7 @@
         </Group>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoDeclare name='Tool'>
+    <ProtoDeclare name='AngleGridTool'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFVec3f' name='translation'/>
         <field accessType='inputOutput' type='SFRotation' name='rotation'/>
@@ -331,6 +331,6 @@ function eventsProcessed ()
         <ROUTE fromNode='_9' fromField='translation_changed' toNode='_4' toField='set_translation'/>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='Tool'/>
+    <ProtoInstance name='AngleGridTool'/>
   </Scene>
 </X3D>

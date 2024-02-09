@@ -25,7 +25,7 @@
       <field accessType='inputOnly' type='MFNode' name='removeChildren'/>
       <field accessType='inputOutput' type='MFNode' name='children'/>
     </ExternProtoDeclare>
-    <ProtoDeclare name='Tool'>
+    <ProtoDeclare name='X3DTextureProjectorNodeTool'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
         <field accessType='inputOutput' type='SFString' name='group' value='Transform'/>
@@ -451,7 +451,7 @@ function set_perspective ()
         <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='ToolScript' toField='set_rotation'/>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='Tool'>
+    <ProtoInstance name='X3DTextureProjectorNodeTool'>
       <fieldValue name='selected' value='true'/>
       <fieldValue name='on' value='true'/>
       <fieldValue name='perspectiveFieldOfView' value='0.78'/>

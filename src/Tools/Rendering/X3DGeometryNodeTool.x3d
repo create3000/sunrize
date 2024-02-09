@@ -10,7 +10,7 @@
     <meta name='modified' content='Thu, 30 Nov 2023 19:46:02 GMT'/>
   </head>
   <Scene>
-    <ProtoDeclare name='Tool'>
+    <ProtoDeclare name='X3DGeometryNodeTool'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
         <field accessType='inputOutput' type='SFString' name='group' value='NONE'/>
@@ -63,7 +63,7 @@
         </Group>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='Tool'>
+    <ProtoInstance name='X3DGeometryNodeTool'>
       <fieldValue name='group' value=''/>
     </ProtoInstance>
   </Scene>

@@ -27,7 +27,7 @@
       <field accessType='inputOnly' type='MFNode' name='removeChildren'/>
       <field accessType='inputOutput' type='MFNode' name='children'/>
     </ExternProtoDeclare>
-    <ProtoDeclare name='Tool'>
+    <ProtoDeclare name='X3DTransformNodeTool'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
         <field accessType='inputOutput' type='SFString' name='group' value='Transform'/>
@@ -1782,7 +1782,7 @@ function set_bboxCenter ()
         <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='CenterTool' toField='set_visible'/>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='Tool'>
+    <ProtoInstance name='X3DTransformNodeTool'>
       <fieldValue name='group' value=''/>
       <fieldValue name='undo' value='false'/>
       <fieldValue name='translation' value='-0.8999743 0 0'/>

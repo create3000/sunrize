@@ -13,7 +13,7 @@
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
     </ExternProtoDeclare>
-    <ProtoDeclare name='Tool'>
+    <ProtoDeclare name='X3DEnvironmentalSensorNodeTool'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
         <field accessType='inputOutput' type='SFString' name='group' value='Transform'/>
@@ -109,7 +109,7 @@ function set_color ()
         </Script>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='Tool'>
+    <ProtoInstance name='X3DEnvironmentalSensorNodeTool'>
       <fieldValue name='selected' value='true'/>
       <fieldValue name='group' value=''/>
       <fieldValue name='size' value='3 3 3'/>

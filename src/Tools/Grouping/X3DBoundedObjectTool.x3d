@@ -15,7 +15,7 @@
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
     </ExternProtoDeclare>
-    <ProtoDeclare name='Tool'>
+    <ProtoDeclare name='X3DBoundedObjectTool'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
         <field accessType='inputOutput' type='SFVec3f' name='center'/>
@@ -424,7 +424,7 @@ function eventsProcessed ()
         </Script>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='Tool'>
+    <ProtoInstance name='X3DBoundedObjectTool'>
       <fieldValue name='bboxDisplay' value='true'/>
       <fieldValue name='bboxSize' value='2 3 4'/>
     </ProtoInstance>

@@ -10,7 +10,7 @@
     <meta name='modified' content='Thu, 30 Nov 2023 09:48:53 GMT'/>
   </head>
   <Scene>
-    <ProtoDeclare name='Tool'>
+    <ProtoDeclare name='X3DPointGeometryNodeTool'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
         <field accessType='inputOutput' type='SFBool' name='pointsDisplay' value='true'/>
@@ -47,6 +47,6 @@
         </Shape>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='Tool'/>
+    <ProtoInstance name='X3DPointGeometryNodeTool'/>
   </Scene>
 </X3D>

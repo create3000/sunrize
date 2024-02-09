@@ -167,12 +167,14 @@ class X3DNodeTool extends X3DBaseTool
    loadTool (... args)
    {
       const
-         protoURL = url .pathToFileURL (path .resolve (... args)),
-         promise  = X3DNodeTool .#scenes .get (protoURL .href);
+         filePath  = path .resolve (... args),
+         protoName = path .parse (filePath) .name,
+         protoURL  = url .pathToFileURL (filePath),
+         promise   = X3DNodeTool .#scenes .get (protoURL .href);
 
       if (promise)
       {
-         this .#promise = promise .then (scene => this .createTool (scene));
+         this .#promise = promise .then (scene => this .createTool (scene, protoName));
       }
       else
       {
@@ -187,7 +189,7 @@ class X3DNodeTool extends X3DBaseTool
                for (const externproto of scene .externprotos)
                   await externproto .requestImmediateLoad ();
 
-               this .createTool (scene);
+               this .createTool (scene, protoName);
 
                resolve (scene);
             }
@@ -208,9 +210,9 @@ class X3DNodeTool extends X3DBaseTool
       return this .#promise;
    }
 
-   createTool (scene)
+   createTool (scene, protoName)
    {
-      this .tool = scene .createProto ("Tool");
+      this .tool = scene .createProto (protoName);
 
       this .tool .getValue () .setPrivate (true);
 
