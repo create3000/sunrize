@@ -111,7 +111,7 @@ class X3DNodeTool extends X3DBaseTool
       if (!this .tool)
          return;
 
-      if (this .tool .selected !== undefined)
+      if (this .tool .hasOwnProperty ("selected"))
          this .tool .selected = value;
    }
 
@@ -156,7 +156,7 @@ class X3DNodeTool extends X3DBaseTool
 
          this .#innerNode = this .tool .getValue () .getInnerNode ();
 
-         if (this .tool .selected !== undefined)
+         if (this .tool .hasOwnProperty ("selected"))
             this .tool .selected = this .#selected;
       }
       catch (error)

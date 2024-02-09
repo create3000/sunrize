@@ -29,14 +29,12 @@ class X3DActiveLayerNodeTool extends X3DChildNodeTool
       this .getBrowser () .getActiveLayer () .removeInterest ("set_activeLayer", this);
 
       this .removeFromLayer (this .#activeLayerNode);
-      
+
       super .disposeTool ();
    }
 
    set_activeLayer ()
    {
-      console .log (this .tool .getNodeTypeName ());
-
       this .removeFromLayer (this .#activeLayerNode);
 
       this .#activeLayerNode = this .getBrowser () .getActiveLayer ();
