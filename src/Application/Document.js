@@ -461,7 +461,7 @@ module .exports = class Document extends Interface
       this .#grids .forEach (grid => grid .setEnabled (false));
       this .#grids .set (typeName, grid);
 
-      grid ?.setEnabled (active);
+      grid .setEnabled (active);
 
       this .updateGridMenus ();
    }
