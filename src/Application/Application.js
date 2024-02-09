@@ -639,28 +639,28 @@ module .exports = class Application
                {
                   label: _("Grid Layout Tool"),
                   type: "radio",
-                  checked: this .menuOptions .grid,
+                  checked: this .menuOptions .GridTool,
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("grid", "GridTool");
+                     this .mainWindow .webContents .send ("grid", "GridTool", !this .menuOptions .GridTool);
                   },
                },
                {
                   label: _("Angle Grid Layout Tool"),
                   type: "radio",
-                  checked: this .menuOptions .angleGrid,
+                  checked: this .menuOptions .AngleGridTool,
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("grid", "AngleGridTool");
+                     this .mainWindow .webContents .send ("grid", "AngleGridTool", !this .menuOptions .AngleGridTool);
                   },
                },
                {
                   label: _("Axonometric Grid Layout Tool"),
                   type: "radio",
-                  checked: this .menuOptions .axonometricGrid,
+                  checked: this .menuOptions .AxonometricGridTool,
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("grid", "AxonometricGridTool");
+                     this .mainWindow .webContents .send ("grid", "AxonometricGridTool", !this .menuOptions .AxonometricGridTool);
                   },
                },
             ],

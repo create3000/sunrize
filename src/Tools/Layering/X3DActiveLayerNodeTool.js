@@ -16,6 +16,11 @@ class X3DActiveLayerNodeTool extends X3DChildNodeTool
       super (node);
    }
 
+   getEnabled ()
+   {
+      return this .#enabled;
+   }
+
    setEnabled (value)
    {
       if (this .#enabled === value)

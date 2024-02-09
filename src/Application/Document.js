@@ -95,6 +95,7 @@ module .exports = class Document extends Interface
    {
       // When tab is activated/selected.
       this .undoManager ();
+      this .updateGridMenus ();
    }
 
    activeElement = null
@@ -460,6 +461,21 @@ module .exports = class Document extends Interface
       this .#grids .forEach (grid => grid .setEnabled (false));
       this .#grids .set (typeName, grid);
 
-      grid ?.setEnabled (true);
+      grid ?.setEnabled (active);
+
+      this .updateGridMenus ();
+   }
+
+   updateGridMenus ()
+   {
+      const menu = {
+         GridTool: false,
+         AngleGridTool: false,
+         AxonometricGridTool: false,
+      };
+
+      this .#grids .forEach ((grid, typeName) => menu [typeName] = grid .getEnabled ());
+
+      electron .ipcRenderer .send ("change-menu", menu);
    }
 };
