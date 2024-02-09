@@ -449,12 +449,17 @@ module .exports = class Document extends Interface
       }
    }
 
+   #grids = new Map ();
+
    toggleGrid (typeName, active)
    {
-      const GridTool = require (`../Tools/Grid/${typeName}`);
+      const
+         GridTool = require (`../Tools/Grid/${typeName}`),
+         grid     = this .#grids .get (typeName) ?? new GridTool (this .browser);
 
-      this .gridTool ?.removeTool ();
+      this .#grids .forEach (grid => grid .setEnabled (false));
+      this .#grids .set (typeName, grid);
 
-      this .gridTool = new GridTool (this .browser);
+      grid ?.setEnabled (true);
    }
 };

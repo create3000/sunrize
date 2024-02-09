@@ -4,6 +4,7 @@ const X3DChildNodeTool = require ("../Core/X3DChildNodeTool");
 
 class X3DActiveLayerNodeTool extends X3DChildNodeTool
 {
+   #enabled         = true;
    #activeLayerNode = null;
 
    constructor (browser)
@@ -13,6 +14,16 @@ class X3DActiveLayerNodeTool extends X3DChildNodeTool
       node .setup ();
 
       super (node);
+   }
+
+   setEnabled (value)
+   {
+      if (this .#enabled === value)
+         return;
+
+      this .#enabled = value;
+
+      this .set_activeLayer ();
    }
 
    async initializeTool (... args)
@@ -39,24 +50,27 @@ class X3DActiveLayerNodeTool extends X3DChildNodeTool
 
       this .#activeLayerNode = this .getBrowser () .getActiveLayer ();
 
-      this .addToLayer (this .#activeLayerNode)
+      if (this .#enabled)
+         this .addToLayer (this .#activeLayerNode)
    }
 
    addToLayer (layerNode)
    {
-      if (layerNode)
-         layerNode .getGroups () ._children .push (this);
+      if (!layerNode)
+         return;
+
+      layerNode .getGroups () ._children .push (this);
    }
 
    removeFromLayer (layerNode)
    {
-      if (layerNode)
-      {
-         const index = layerNode .getGroups () ._children .indexOf (this);
+      if (!layerNode)
+         return;
 
-         if (index > -1)
-            layerNode .getGroups () ._children .splice (index, 1);
-      }
+      const index = layerNode .getGroups () ._children .findIndex (node => node .getValue () === this);
+
+      if (index > -1)
+         layerNode .getGroups () ._children .splice (index, 1);
    }
 }
 
