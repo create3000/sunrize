@@ -9,7 +9,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/library/AxonometricGrid.x3dv'/>
-    <meta name='modified' content='Fri, 09 Feb 2024 11:58:34 GMT'/>
+    <meta name='modified' content='Fri, 09 Feb 2024 15:52:26 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='AxonometricGrid'>
@@ -18,7 +18,7 @@
         <field accessType='inputOutput' type='SFRotation' name='rotation'/>
         <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
         <field accessType='inputOutput' type='MFInt32' name='dimension' value='5, 10'/>
-        <field accessType='inputOutput' type='SFVec2d' name='angle' value='1.0471975511965976 1.0471975511965976'/>
+        <field accessType='inputOutput' type='SFVec2d' name='angles' value='1.0471975511965976 1.0471975511965976'/>
         <field accessType='inputOutput' type='MFInt32' name='majorLineEvery' value='5, 5, 5, 5'/>
         <field accessType='inputOutput' type='MFInt32' name='majorLineOffset' value='0, 0, 0, 0'/>
         <field accessType='inputOutput' type='SFColor' name='color' value='0.5 0.5 0.5'/>
@@ -117,7 +117,7 @@
             directOutput='true'
             mustEvaluate='true'>
           <field accessType='inputOutput' type='MFInt32' name='dimension'/>
-          <field accessType='inputOutput' type='SFVec2d' name='angle'/>
+          <field accessType='inputOutput' type='SFVec2d' name='angles'/>
           <field accessType='inputOutput' type='MFInt32' name='majorLineEvery'/>
           <field accessType='inputOutput' type='MFInt32' name='majorLineOffset'/>
           <field accessType='initializeOnly' type='SFNode' name='hexagon'>
@@ -137,7 +137,7 @@
           </field>
           <IS>
             <connect nodeField='dimension' protoField='dimension'/>
-            <connect nodeField='angle' protoField='angle'/>
+            <connect nodeField='angles' protoField='angles'/>
             <connect nodeField='majorLineEvery' protoField='majorLineEvery'/>
             <connect nodeField='majorLineOffset' protoField='majorLineOffset'/>
           </IS>
@@ -150,16 +150,19 @@ function initialize ()
 
 function eventsProcessed ()
 {
-   var angles = new SFVec3f (angle [0], angle [1], Math .PI - angle [0] - angle [1])
-   var u      = Math .sin (angles [1]) / Math .sin (angles [2]);
-   var v      = 1;
-   var t      = Math .sin (angles [0]) / Math .sin (angles [2]);
+   const
+      a = angles [0],
+      b = angles [1],
+      c = Math .PI - a - b,
+      u = Math .sin (b) / Math .sin (c),
+      v = 1,
+      t = Math .sin (a) / Math .sin (c);
 
    // Hexagon plane
 
    hexagon .point [0] = new SFVec3f (v, 0, 0) .multiply (dimension [0]);
-   hexagon .point [1] = new SFRotation (0, 1, 0, angles [0])              .multVec (new SFVec3f (u * dimension [0], 0, 0));
-   hexagon .point [2] = new SFRotation (0, 1, 0, angles [0] + angles [2]) .multVec (new SFVec3f (t * dimension [0], 0, 0));
+   hexagon .point [1] = new SFRotation (0, 1, 0, a) .multVec (new SFVec3f (u * dimension [0], 0, 0));
+   hexagon .point [2] = new SFRotation (0, 1, 0, Math .PI - b) .multVec (new SFVec3f (t * dimension [0], 0, 0));
    hexagon .point [3] = hexagon .point [0] .negate ();
    hexagon .point [4] = hexagon .point [1] .negate ();
    hexagon .point [5] = hexagon .point [2] .negate ();
@@ -206,7 +209,7 @@ function generateGridAxis (axis, hexagon, major, grid, coordIndex, p)
       if (major - isMajorLine (n, axis, 0, 2))
          continue;
 
-      const 
+      const
          s = n - dimension [0],
          a = pn [s < 0 ? 0 : 5],
          b = pn [s < 0 ? 5 : 4],
@@ -225,7 +228,7 @@ function generateGridAxis (axis, hexagon, major, grid, coordIndex, p)
       coordIndex [coordIndex .length] = p;
 		coordIndex [coordIndex .length] = p + 1;
 		coordIndex [coordIndex .length] = -1;
-			
+
 		p += 2;
    }
 
@@ -275,6 +278,5 @@ function isMajor (i, dimension, majorLineEvery, majorLineOffset)
         </Script>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='AxonometricGrid'/>
   </Scene>
 </X3D>

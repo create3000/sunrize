@@ -5,12 +5,13 @@
     <component name='Layout' level='2'/>
     <component name='PointingDeviceSensor' level='1'/>
     <component name='Scripting' level='1'/>
+    <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Tue, 05 Aug 2014 20:06:52 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/AxonometricGridTool.x3dv'/>
-    <meta name='modified' content='Thu, 08 Feb 2024 15:13:12 GMT'/>
+    <meta name='modified' content='Fri, 09 Feb 2024 16:12:41 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='AxonometricGrid' url='"AxonometricGrid.x3d"'>
@@ -18,7 +19,7 @@
       <field accessType='inputOutput' type='SFRotation' name='rotation'/>
       <field accessType='inputOutput' type='SFVec3f' name='scale'/>
       <field accessType='inputOutput' type='MFInt32' name='dimension'/>
-      <field accessType='inputOutput' type='SFVec2d' name='angle'/>
+      <field accessType='inputOutput' type='SFVec2d' name='angles'/>
       <field accessType='inputOutput' type='MFInt32' name='majorLineEvery'/>
       <field accessType='inputOutput' type='MFInt32' name='majorLineOffset'/>
       <field accessType='inputOutput' type='SFColor' name='color'/>
@@ -68,7 +69,7 @@
         <field accessType='inputOutput' type='SFRotation' name='rotation'/>
         <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
         <field accessType='inputOutput' type='MFInt32' name='dimension' value='5, 10'/>
-        <field accessType='inputOutput' type='SFVec2d' name='angle' value='1.0471975511965976 1.0471975511965976'/>
+        <field accessType='inputOutput' type='SFVec2d' name='angles' value='1.0471975511965976 1.0471975511965976'/>
         <field accessType='inputOutput' type='MFInt32' name='majorLineEvery' value='5, 5, 5, 5'/>
         <field accessType='inputOutput' type='MFInt32' name='majorLineOffset' value='0, 0, 0, 0'/>
         <field accessType='inputOutput' type='SFColor' name='color' value='0.5 0.5 0.5'/>
@@ -92,7 +93,7 @@
                   <connect nodeField='rotation' protoField='rotation'/>
                   <connect nodeField='scale' protoField='scale'/>
                   <connect nodeField='dimension' protoField='dimension'/>
-                  <connect nodeField='angle' protoField='angle'/>
+                  <connect nodeField='angles' protoField='angles'/>
                   <connect nodeField='majorLineEvery' protoField='majorLineEvery'/>
                   <connect nodeField='majorLineOffset' protoField='majorLineOffset'/>
                   <connect nodeField='color' protoField='color'/>
@@ -112,7 +113,7 @@
             </IS>
             <Transform DEF='Center'>
               <PlaneSensor DEF='_10'
-                  axisRotation='1 0 0 1.5708'
+                  axisRotation='1 0 0 90.00021045914971'
                   autoOffset='false'>
                 <IS>
                   <connect nodeField='offset' protoField='translation'/>
@@ -271,40 +272,6 @@ function eventsProcessed ()
 {
    translation_changed = new SFVec3f (-scale .x * dimension [0], 0, 0);
 }]]>
-        </Script>
-        <Script DEF='AngleScript'>
-          <field accessType='inputOnly' type='SFFloat' name='set_alpha'/>
-          <field accessType='inputOnly' type='SFFloat' name='set_beta'/>
-          <field accessType='inputOutput' type='SFVec2d' name='angle'/>
-          <field accessType='outputOnly' type='SFFloat' name='alpha_changed'/>
-          <field accessType='outputOnly' type='SFFloat' name='beta_changed'/>
-          <IS>
-            <connect nodeField='angle' protoField='angle'/>
-          </IS>
-<![CDATA[ecmascript:
-
-function initialize ()
-{
-   eventsProcessed ();
-}
-
-function set_alpha (value)
-{
-   // change angle field
-}
-
-function set_beta (value)
-{
-   // change angle field
-}
-
-function eventsProcessed ()
-{
-   // change alpha/beta_changed fields
-
-   print (angle .x / Math .PI * 180, angle .y / Math .PI * 180);
-}
-]]>
         </Script>
         <ROUTE fromNode='_10' fromField='translation_changed' toNode='MoveScript' toField='set_translation'/>
         <ROUTE fromNode='DimensionScript' fromField='translation_changed' toNode='_13' toField='set_offset'/>
