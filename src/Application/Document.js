@@ -449,8 +449,8 @@ module .exports = class Document extends Interface
       }
    }
 
-   showGrid (value)
+   showGrid (type)
    {
-      console .log (value);
+      console .log (type);
    }
 };
