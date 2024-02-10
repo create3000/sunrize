@@ -658,6 +658,7 @@ module .exports = class Application
                { type: "separator" },
                {
                   label: _("Show Grid Tool in Panel..."),
+                  accelerator: "CmdOrCtrl+G",
                   click: () =>
                   {
                      this .mainWindow .webContents .send ("grid-options");
