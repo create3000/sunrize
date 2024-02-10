@@ -81,14 +81,30 @@ module .exports = class Document extends Interface
 
       UndoManager .shared .addInterest (this, () => this .undoManager ());
 
+      this .browser .getBrowserOptions () .getField ("PrimitiveQuality") .addInterest ("set_primitiveQuality", this);
+      this .browser .getBrowserOptions () .getField ("TextureQuality")   .addInterest ("set_textureQuality",   this);
+      this .browser .getBrowserOptions () .getField ("Rubberband")       .addInterest ("set_rubberband",       this);
+      this .browser .getBrowserOptions () .getField ("Timings")          .addInterest ("set_timings",          this);
+
       this .activate ();
    }
 
    configure ()
    {
-      this .fileConfig .setDefaultValues ({ inferProfileAndComponents: true });
+      this .fileConfig .setDefaultValues ({
+         inferProfileAndComponents: true,
+         primitiveQuality: "MEDIUM",
+         textureQuality: "MEDIUM",
+         rubberband: true,
+         timings: false,
+      });
 
       this .fileSaveFileTypeWarning = false;
+
+      setTimeout (() => this .setPrimitiveQuality (this .fileConfig .primitiveQuality));
+      this .setTextureQuality (this .fileConfig .textureQuality);
+      this .setDisplayRubberband (this .fileConfig .rubberband);
+      this .setDisplayTimings (this .fileConfig .timings);
    }
 
    activate ()
@@ -102,6 +118,10 @@ module .exports = class Document extends Interface
       const menu = { };
 
       this .updateUndoMenus (menu);
+      this .updatePrimitiveQualityMenu (menu);
+      this .updateTextureQualityMenu (menu);
+      this .updateTimingsMenu (menu);
+      this .updateRubberbandMenu (menu);
       this .updateGridMenus (menu);
 
       electron .ipcRenderer .send ("change-menu", menu);
@@ -403,8 +423,23 @@ module .exports = class Document extends Interface
          {
             this .browser .finishedEvents () .removeFieldCallback (this);
             this .browser .endUpdate ();
-         })
+         });
       }
+   }
+
+   updatePrimitiveQualityMenu (menu)
+   {
+      Object .assign (menu,
+      {
+         primitiveQuality: this .fileConfig .primitiveQuality,
+      });
+   }
+
+   set_primitiveQuality ()
+   {
+      this .fileConfig .primitiveQuality = this .browser .getBrowserOption ("PrimitiveQuality");
+
+      this .updateMenu ();
    }
 
    /**
@@ -417,6 +452,21 @@ module .exports = class Document extends Interface
       this .browser .setDescription (`Texture Quality: ${value .toLowerCase ()}`);
    }
 
+   updateTextureQualityMenu (menu)
+   {
+      Object .assign (menu,
+      {
+         textureQuality: this .fileConfig .textureQuality,
+      });
+   }
+
+   set_textureQuality ()
+   {
+      this .fileConfig .textureQuality = this .browser .getBrowserOption ("TextureQuality");
+
+      this .updateMenu ();
+   }
+
    /**
     *
     * @param {boolean} value
@@ -427,6 +477,21 @@ module .exports = class Document extends Interface
       this .browser .setDescription (`Rubberband: ${value ? "on" : "off"}`);
    }
 
+   updateRubberbandMenu (menu)
+   {
+      Object .assign (menu,
+      {
+         rubberband: this .fileConfig .rubberband,
+      });
+   }
+
+   set_rubberband ()
+   {
+      this .fileConfig .rubberband = this .browser .getBrowserOption ("Rubberband");
+
+      this .updateMenu ();
+   }
+
    /**
     *
     * @param {boolean} value
@@ -434,6 +499,21 @@ module .exports = class Document extends Interface
    setDisplayTimings (value)
    {
       this .browser .setBrowserOption ("Timings", value);
+   }
+
+   updateTimingsMenu (menu)
+   {
+      Object .assign (menu,
+      {
+         timings: this .fileConfig .timings,
+      });
+   }
+
+   set_timings ()
+   {
+      this .fileConfig .timings = this .browser .getBrowserOption ("Timings");
+
+      this .updateMenu ();
    }
 
    /**

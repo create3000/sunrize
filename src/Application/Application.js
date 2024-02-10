@@ -526,31 +526,28 @@ module .exports = class Application
                      {
                         label: _("High"),
                         type: "radio",
-                        checked: this .config .primitiveQuality === "HIGH",
+                        checked: this .menuOptions .primitiveQuality === "HIGH",
                         click: () =>
                         {
-                           this .config .primitiveQuality = "HIGH";
-                           this .mainWindow .webContents .send ("primitive-quality", this .config .primitiveQuality);
+                           this .mainWindow .webContents .send ("primitive-quality", "HIGH");
                         },
                      },
                      {
                         label: _("Medium"),
                         type: "radio",
-                        checked: this .config .primitiveQuality === "MEDIUM" || this .config .primitiveQuality === undefined,
+                        checked: this .menuOptions .primitiveQuality === "MEDIUM",
                         click: () =>
                         {
-                           this .config .primitiveQuality = "MEDIUM";
-                           this .mainWindow .webContents .send ("primitive-quality", this .config .primitiveQuality);
+                           this .mainWindow .webContents .send ("primitive-quality", "MEDIUM");
                         },
                      },
                      {
                         label: _("Low"),
                         type: "radio",
-                        checked: this .config .primitiveQuality === "LOW",
+                        checked: this .menuOptions .primitiveQuality === "LOW",
                         click: () =>
                         {
-                           this .config .primitiveQuality = "LOW";
-                           this .mainWindow .webContents .send ("primitive-quality", this .config .primitiveQuality);
+                           this .mainWindow .webContents .send ("primitive-quality", "LOW");
                         },
                      }
                   ],
@@ -561,31 +558,28 @@ module .exports = class Application
                      {
                         label: _("High"),
                         type: "radio",
-                        checked: this .config .textureQuality === "HIGH",
+                        checked: this .menuOptions .textureQuality === "HIGH",
                         click: () =>
                         {
-                           this .config .textureQuality = "HIGH";
-                           this .mainWindow .webContents .send ("texture-quality", this .config .textureQuality);
+                           this .mainWindow .webContents .send ("texture-quality", "HIGH");
                         },
                      },
                      {
                         label: _("Medium"),
                         type: "radio",
-                        checked: this .config .textureQuality === "MEDIUM" || this .config .textureQuality === undefined,
+                        checked: this .menuOptions .textureQuality === "MEDIUM",
                         click: () =>
                         {
-                           this .config .textureQuality = "MEDIUM";
-                           this .mainWindow .webContents .send ("texture-quality",this .config .textureQuality);
+                           this .mainWindow .webContents .send ("texture-quality", "MEDIUM");
                         },
                      },
                      {
                         label: _("Low"),
                         type: "radio",
-                        checked: this .config .textureQuality === "LOW",
+                        checked: this .menuOptions .textureQuality === "LOW",
                         click: () =>
                         {
-                           this .config .textureQuality = "LOW";
-                           this .mainWindow .webContents .send ("texture-quality", this .config .textureQuality);
+                           this .mainWindow .webContents .send ("texture-quality", "LOW");
                         },
                      }
                   ],
@@ -593,21 +587,19 @@ module .exports = class Application
                {
                   label: _("Display Rubberband"),
                   type: "checkbox",
-                  checked: this .config .rubberband,
+                  checked: this .menuOptions .rubberband,
                   click: () =>
                   {
-                     this .config .rubberband = !this .config .rubberband;
-                     this .mainWindow .webContents .send ("display-rubberband", this .config .rubberband);
+                     this .mainWindow .webContents .send ("display-rubberband", !this .menuOptions .rubberband);
                   },
                },
                {
                   label: _("Display Timings"),
                   type: "checkbox",
-                  checked: this .config .timings,
+                  checked: this .menuOptions .timings,
                   click: () =>
                   {
-                     this .config .timings = !this .config .timings;
-                     this .mainWindow .webContents .send ("display-timings", this .config .timings);
+                     this .mainWindow .webContents .send ("display-timings", !this .menuOptions .timings);
                   },
                },
                { type: "separator" },

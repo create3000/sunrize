@@ -88,10 +88,10 @@ module .exports = new class Tabs
       this .forwardToAllTabs ("expand-prototype-instances");
       this .forwardToAllTabs ("expand-inline-nodes");
 
-      this .forwardToAllTabs ("primitive-quality");
-      this .forwardToAllTabs ("texture-quality");
-      this .forwardToAllTabs ("display-rubberband");
-      this .forwardToAllTabs ("display-timings");
+      this .forwardToActiveTab ("primitive-quality");
+      this .forwardToActiveTab ("texture-quality");
+      this .forwardToActiveTab ("display-rubberband");
+      this .forwardToActiveTab ("display-timings");
 
       this .forwardToActiveTab ("show-library");
       this .forwardToActiveTab ("browser-size");
