@@ -95,7 +95,7 @@ module .exports = new class Tabs
 
       this .forwardToActiveTab ("show-library");
       this .forwardToActiveTab ("browser-size");
-      this .forwardToActiveTab ("grid");
+      this .forwardToActiveTab ("grid-tool");
       this .forwardToActiveTab ("script-editor-menu");
       this .forwardToActiveTab ("outline-editor-menu");
 

@@ -65,7 +65,7 @@ module .exports = class Document extends Interface
       electron .ipcRenderer .on ("show-library",       (event)        => require ("../Editors/Library") .open (this .browser .currentScene));
 
       electron .ipcRenderer .on ("browser-size", () => this .browserSize .open ());
-      electron .ipcRenderer .on ("grid", (event, typeName, visible) => this .setGridTool (typeName, visible));
+      electron .ipcRenderer .on ("grid-tool", (event, typeName, visible) => this .setGridTool (typeName, visible));
 
       $(window)
          .on ("focusin",  () => this .onfocus ())
@@ -564,13 +564,13 @@ module .exports = class Document extends Interface
    {
       const
          GridTool   = require (`../Tools/Grid/${typeName}`),
-         grid       = this .#grids .get (typeName) ?? new GridTool (this .browser),
+         gridTool   = this .#grids .get (typeName) ?? new GridTool (this .browser),
          gridConfig = this .fileConfig .addNameSpace (`${typeName}.`);
 
-      this .#grids .forEach (grid => grid .setEnabled (false));
-      this .#grids .set (typeName, grid);
+      this .#grids .forEach (gridTool => gridTool .setEnabled (false));
+      this .#grids .set (typeName, gridTool);
 
-      grid .setEnabled (visible);
+      gridTool .setEnabled (visible);
 
       gridConfig .visible = visible;
 
@@ -586,7 +586,7 @@ module .exports = class Document extends Interface
          AxonometricGridTool: false,
       });
 
-      this .#grids .forEach ((grid, typeName) => menu [typeName] = grid .getEnabled ());
+      this .#grids .forEach ((gridTool, typeName) => menu [typeName] = gridTool .getEnabled ());
 
       electron .ipcRenderer .send ("change-menu", menu);
    }
