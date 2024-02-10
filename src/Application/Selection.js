@@ -39,6 +39,8 @@ module .exports = new class Selection extends Interface
          node .setUserData (_changing, false);
       }
 
+      // this .nodes = this .nodes .map (n => n .isLive ()); // Leave tool working.
+
       if (length !== this .nodes .length)
          this .processInterests ();
    }
