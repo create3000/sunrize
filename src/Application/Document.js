@@ -94,8 +94,17 @@ module .exports = class Document extends Interface
    activate ()
    {
       // When tab is activated/selected.
-      this .undoManager ();
-      this .updateGridMenus ();
+      this .updateMenu ();
+   }
+
+   updateMenu ()
+   {
+      const menu = { };
+
+      this .updateUndoMenus (menu);
+      this .updateGridMenus (menu);
+
+      electron .ipcRenderer .send ("change-menu", menu);
    }
 
    activeElement = null
@@ -339,16 +348,21 @@ module .exports = class Document extends Interface
 
    undoManager ()
    {
-      electron .ipcRenderer .send ("change-menu",
-      {
-         undoLabel: UndoManager .shared .undoLabel,
-         redoLabel: UndoManager .shared .redoLabel,
-      });
+      this .updateMenu ();
 
       electron .ipcRenderer .sendToHost ("saved", !UndoManager .shared .saveNeeded);
 
       if (UndoManager .shared .saveNeeded)
          this .registerAutoSave ();
+   }
+
+   updateUndoMenus (menu)
+   {
+      Object .assign (menu,
+      {
+         undoLabel: UndoManager .shared .undoLabel,
+         redoLabel: UndoManager .shared .redoLabel,
+      });
    }
 
    cut ()
@@ -463,16 +477,17 @@ module .exports = class Document extends Interface
 
       grid .setEnabled (active);
 
-      this .updateGridMenus ();
+      this .updateMenu ();
    }
 
-   updateGridMenus ()
+   updateGridMenus (menu)
    {
-      const menu = {
+      Object .assign (menu,
+      {
          GridTool: false,
          AngleGridTool: false,
          AxonometricGridTool: false,
-      };
+      });
 
       this .#grids .forEach ((grid, typeName) => menu [typeName] = grid .getEnabled ());
 
