@@ -560,12 +560,13 @@ module .exports = class Document extends Interface
 
    #grids = new Map ();
 
-   setGridTool (typeName, visible)
+   async setGridTool (typeName, visible)
    {
       const
          GridTool   = require (`../Tools/Grid/${typeName}`),
          gridTool   = this .#grids .get (typeName) ?? new GridTool (this .browser),
-         gridConfig = this .fileConfig .addNameSpace (`${typeName}.`);
+         gridConfig = this .fileConfig .addNameSpace (`${typeName}.`),
+         tool       = await gridTool .getToolInstance ();
 
       this .#grids .forEach (gridTool => gridTool .setVisible (false));
       this .#grids .set (typeName, gridTool);
@@ -574,7 +575,48 @@ module .exports = class Document extends Interface
 
       gridConfig .visible = visible;
 
+      this .restoreGridTool (typeName);
       this .updateMenu ();
+
+      tool .getField ("isActive") .addInterest ("set_gridToolActive", this, typeName);
+   }
+
+   set_gridToolActive (typeName, active)
+   {
+      if (active .getValue ())
+         return;
+
+      this .saveGridTool (typeName);
+   }
+
+   async restoreGridTool (typeName)
+   {
+      const
+         gridTool   = this .#grids .get (typeName),
+         gridConfig = this .fileConfig .addNameSpace (`${typeName}.`),
+         tool       = await gridTool .getToolInstance (),
+         scene      = tool .getValue () .getScene ();
+
+      if (gridConfig .translation !== undefined)
+         tool .getField ("translation") .fromString (gridConfig .translation ?? "", scene);
+
+      if (gridConfig .scale !== undefined)
+         tool .getField ("scale") .fromString (gridConfig .scale, scene);
+
+      if (gridConfig .dimension !== undefined)
+         tool .getField ("dimension") .fromString (gridConfig .dimension, scene);
+   }
+
+   async saveGridTool (typeName)
+   {
+      const
+         gridTool   = this .#grids .get (typeName),
+         gridConfig = this .fileConfig .addNameSpace (`${typeName}.`),
+         tool       = await gridTool .getToolInstance ();
+
+      gridConfig .translation = tool .getField ("translation") .toString ();
+      gridConfig .scale       = tool .getField ("scale")       .toString ();
+      gridConfig .dimension   = tool .getField ("dimension")   .toString ();
    }
 
    updateGridMenus (menu)
