@@ -1,6 +1,8 @@
 const Interface = require ("./Interface");
 
-const _changing = Symbol .for ("Sunrize.changing");
+const
+   _selected = Symbol .for ("Sunrize.selected"),
+   _changing = Symbol .for ("Sunrize.changing");
 
 module .exports = new class Selection extends Interface
 {
@@ -26,14 +28,19 @@ module .exports = new class Selection extends Interface
 
    update ()
    {
+      const length = this .nodes .length;
+
       for (const node of [... this .nodes])
       {
          if (node .isLive ())
             continue;
 
-         this .remove (node);
+         this .#remove (node);
          node .setUserData (_changing, false);
       }
+
+      if (length !== this .nodes .length)
+         this .processInterests ();
    }
 
    has (node)
@@ -88,6 +95,7 @@ module .exports = new class Selection extends Interface
 
       node .addTool ("createOnSelection");
       node .getTool () ?.setSelected (true);
+      node .setUserData (_selected, true);
 
       this .nodes = this .nodes .filter (n => n !== node);
 
@@ -100,6 +108,7 @@ module .exports = new class Selection extends Interface
 
       node .getTool () ?.setSelected (false);
       node .removeTool ("createOnSelection");
+      node .setUserData (_selected, false);
 
       this .nodes = this .nodes .filter (n => n !== node);
    }

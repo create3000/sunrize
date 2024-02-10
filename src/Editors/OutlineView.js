@@ -15,7 +15,7 @@ const
 const
    _expanded     = Symbol (),
    _fullExpanded = Symbol (),
-   _selected     = Symbol (),
+   _selected     = Symbol .for ("Sunrize.selected"),
    _changing     = Symbol .for ("Sunrize.changing");
 
 module .exports = class OutlineView extends Interface
@@ -887,28 +887,28 @@ module .exports = class OutlineView extends Interface
 
    createNodeElement (type, parent, node, index)
    {
-      if (!node .isInitialized ())
-      {
-         // Setup nodes in protos, disable some init functions.
-
-         for (const type of node .getType ())
-         {
-            switch (type)
-            {
-               case X3D .X3DConstants .Script:
-                  node .initialize__ = Function .prototype;
-                  break;
-               case X3D .X3DConstants .X3DTimeDependentNode:
-                  node .set_start = Function .prototype;
-                  break;
-            }
-         }
-
-         node .setup ();
-      }
-
       if (node)
       {
+         if (!node .isInitialized ())
+         {
+            // Setup nodes in protos, disable some init functions.
+
+            for (const type of node .getType ())
+            {
+               switch (type)
+               {
+                  case X3D .X3DConstants .Script:
+                     node .initialize__ = Function .prototype;
+                     break;
+                  case X3D .X3DConstants .X3DTimeDependentNode:
+                     node .set_start = Function .prototype;
+                     break;
+               }
+            }
+
+            node .setup ();
+         }
+
          this .objects .set (node .getId (), node .valueOf ());
 
          // These fields are observed and must never be disconnected, because clones would also lose connection.
@@ -2836,9 +2836,6 @@ module .exports = class OutlineView extends Interface
 
       nodes .removeClass (["primary", "manually", "selected"]);
 
-      for (const element of nodes)
-         this .getNode ($(element)) .setUserData (_selected, false);
-
       selection .clear ();
    }
 
@@ -3049,23 +3046,12 @@ module .exports = class OutlineView extends Interface
          }
 
          if (elements .filter (".manually") .length)
-         {
-            node .setUserData (_selected, true);
             selection .add (node);
-         }
          else
-         {
-            node .setUserData (_selected, false);
             selection .remove (node);
-         }
       }
       else
       {
-         for (const element of selectedElements)
-            this .getNode ($(element)) .setUserData (_selected, false);
-
-         node .setUserData (_selected, true);
-
          selectedElements .removeClass (["manually", "selected"]);
          element .addClass (["primary", "manually"]);
          elements .addClass ("selected");
