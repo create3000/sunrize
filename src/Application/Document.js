@@ -89,14 +89,14 @@ module .exports = class Document extends Interface
       this .activate ();
    }
 
+   static #Grids = [
+      "GridTool",
+      "AngleGridTool",
+      "AxonometricGridTool",
+   ];
+
    configure ()
    {
-      const grids = [
-         "GridTool",
-         "AngleGridTool",
-         "AxonometricGridTool",
-      ];
-
       this .fileConfig .setDefaultValues ({
          inferProfileAndComponents: true,
          primitiveQuality: "MEDIUM",
@@ -112,12 +112,12 @@ module .exports = class Document extends Interface
       this .setDisplayRubberband (this .fileConfig .rubberband);
       this .setDisplayTimings (this .fileConfig .timings);
 
-      for (const typeName of grids)
+      for (const typeName of Document .#Grids)
       {
-         const gridConfig = this .fileConfig .addNameSpace (`${typeName}.`);
+         const config = this .fileConfig .addNameSpace (`${typeName}.`);
 
-         if (gridConfig .visible)
-            this .setGridTool (typeName, gridConfig .visible);
+         if (config .visible)
+            this .setGridTool (typeName, config .visible);
       }
    }
 
@@ -563,22 +563,22 @@ module .exports = class Document extends Interface
    async setGridTool (typeName, visible)
    {
       const
-         GridTool   = require (`../Tools/Grid/${typeName}`),
-         gridTool   = this .#grids .get (typeName) ?? new GridTool (this .browser),
-         gridConfig = this .fileConfig .addNameSpace (`${typeName}.`),
-         tool       = await gridTool .getToolInstance ();
+         Tool   = require (`../Tools/Grid/${typeName}`),
+         grid   = this .#grids .get (typeName) ?? new Tool (this .browser),
+         config = this .fileConfig .addNameSpace (`${typeName}.`),
+         instance   = await grid .getToolInstance ();
 
-      this .#grids .forEach (gridTool => gridTool .setVisible (false));
-      this .#grids .set (typeName, gridTool);
+      this .#grids .forEach (grid => grid .setVisible (false));
+      this .#grids .set (typeName, grid);
 
-      gridTool .setVisible (visible);
+      grid .setVisible (visible);
 
-      gridConfig .visible = visible;
+      config .visible = visible;
 
       this .restoreGridTool (typeName);
       this .updateMenu ();
 
-      tool .getField ("isActive") .addInterest ("set_gridToolActive", this, typeName);
+      instance .getField ("isActive") .addInterest ("set_gridToolActive", this, typeName);
    }
 
    set_gridToolActive (typeName, active)
@@ -592,42 +592,42 @@ module .exports = class Document extends Interface
    async restoreGridTool (typeName)
    {
       const
-         gridTool   = this .#grids .get (typeName),
-         gridConfig = this .fileConfig .addNameSpace (`${typeName}.`),
-         tool       = await gridTool .getToolInstance ();
+         grid     = this .#grids .get (typeName),
+         config   = this .fileConfig .addNameSpace (`${typeName}.`),
+         instance = await grid .getToolInstance ();
 
-      if (gridConfig .translation !== undefined)
-         tool .getField ("translation") .fromString (gridConfig .translation);
+      if (config .translation !== undefined)
+         instance .getField ("translation") .fromString (config .translation);
 
-      if (gridConfig .scale !== undefined)
-         tool .getField ("scale") .fromString (gridConfig .scale);
+      if (config .scale !== undefined)
+         instance .getField ("scale") .fromString (config .scale);
 
-      if (gridConfig .dimension !== undefined)
-         tool .getField ("dimension") .fromString (gridConfig .dimension);
+      if (config .dimension !== undefined)
+         instance .getField ("dimension") .fromString (config .dimension);
    }
 
    async saveGridTool (typeName)
    {
       const
-         gridTool   = this .#grids .get (typeName),
-         gridConfig = this .fileConfig .addNameSpace (`${typeName}.`),
-         tool       = await gridTool .getToolInstance ();
+         grid     = this .#grids .get (typeName),
+         config   = this .fileConfig .addNameSpace (`${typeName}.`),
+         instance = await grid .getToolInstance ();
 
-      gridConfig .translation = tool .getField ("translation") .toString ();
-      gridConfig .scale       = tool .getField ("scale")       .toString ();
-      gridConfig .dimension   = tool .getField ("dimension")   .toString ();
+      config .translation = instance .getField ("translation") .toString ();
+      config .scale       = instance .getField ("scale")       .toString ();
+      config .dimension   = instance .getField ("dimension")   .toString ();
    }
 
    updateGridMenus (menu)
    {
       Object .assign (menu,
       {
-         GridTool: false,
+         Grid: false,
          AngleGridTool: false,
          AxonometricGridTool: false,
       });
 
-      this .#grids .forEach ((gridTool, typeName) => menu [typeName] = gridTool .getVisible ());
+      this .#grids .forEach ((grid, typeName) => menu [typeName] = grid .getVisible ());
 
       electron .ipcRenderer .send ("change-menu", menu);
    }
