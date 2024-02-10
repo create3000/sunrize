@@ -32,10 +32,10 @@ module .exports = class NodeList extends Interface
 
       this .executionContext = this .browser .currentScene;
 
+      this .executionContext .sceneGraph_changed .addInterest ("update", this);
+
       this .update ();
       this .setNode (this .nodes [this .fileConfig .index] ?? null, false);
-
-      this .executionContext .sceneGraph_changed .addInterest ("update", this);
    }
 
    update ()

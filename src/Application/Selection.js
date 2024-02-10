@@ -1,5 +1,7 @@
 const Interface = require ("./Interface");
 
+const _changing = Symbol .for ("Sunrize.changing");
+
 module .exports = new class Selection extends Interface
 {
    constructor ()
@@ -13,7 +15,25 @@ module .exports = new class Selection extends Interface
 
    configure ()
    {
+      this .executionContext ?.sceneGraph_changed .removeInterest ("update", this);
+
+      this .executionContext = this .browser .currentScene;
+
+      this .executionContext .sceneGraph_changed .addInterest ("update", this);
+
       this .clear ();
+   }
+
+   update ()
+   {
+      for (const node of [... this .nodes])
+      {
+         if (node .isLive ())
+            continue;
+
+         this .remove (node);
+         node .setUserData (_changing, false);
+      }
    }
 
    has (node)
