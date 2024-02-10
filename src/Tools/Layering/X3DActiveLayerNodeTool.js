@@ -4,7 +4,7 @@ const X3DChildNodeTool = require ("../Core/X3DChildNodeTool");
 
 class X3DActiveLayerNodeTool extends X3DChildNodeTool
 {
-   #enabled         = true;
+   #visible         = true;
    #activeLayerNode = null;
 
    constructor (browser)
@@ -16,17 +16,17 @@ class X3DActiveLayerNodeTool extends X3DChildNodeTool
       super (node);
    }
 
-   getEnabled ()
+   getVisible ()
    {
-      return this .#enabled;
+      return this .#visible;
    }
 
-   setEnabled (value)
+   setVisible (value)
    {
-      if (this .#enabled === value)
+      if (this .#visible === value)
          return;
 
-      this .#enabled = value;
+      this .#visible = value;
 
       this .set_activeLayer ();
    }
@@ -55,7 +55,7 @@ class X3DActiveLayerNodeTool extends X3DChildNodeTool
 
       this .#activeLayerNode = this .getBrowser () .getActiveLayer ();
 
-      if (this .#enabled)
+      if (this .#visible)
          this .addToLayer (this .#activeLayerNode)
    }
 

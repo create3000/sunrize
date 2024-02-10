@@ -567,10 +567,10 @@ module .exports = class Document extends Interface
          gridTool   = this .#grids .get (typeName) ?? new GridTool (this .browser),
          gridConfig = this .fileConfig .addNameSpace (`${typeName}.`);
 
-      this .#grids .forEach (gridTool => gridTool .setEnabled (false));
+      this .#grids .forEach (gridTool => gridTool .setVisible (false));
       this .#grids .set (typeName, gridTool);
 
-      gridTool .setEnabled (visible);
+      gridTool .setVisible (visible);
 
       gridConfig .visible = visible;
 
@@ -586,7 +586,7 @@ module .exports = class Document extends Interface
          AxonometricGridTool: false,
       });
 
-      this .#grids .forEach ((gridTool, typeName) => menu [typeName] = gridTool .getEnabled ());
+      this .#grids .forEach ((gridTool, typeName) => menu [typeName] = gridTool .getVisible ());
 
       electron .ipcRenderer .send ("change-menu", menu);
    }
