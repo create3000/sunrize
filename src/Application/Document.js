@@ -65,7 +65,7 @@ module .exports = class Document extends Interface
       electron .ipcRenderer .on ("show-library",       (event)        => require ("../Editors/Library") .open (this .browser .currentScene));
 
       electron .ipcRenderer .on ("browser-size", () => this .browserSize .open ());
-      electron .ipcRenderer .on ("grid", (event, typeName, active) => this .toggleGrid (typeName, active));
+      electron .ipcRenderer .on ("grid", (event, typeName, visible) => this .setGridTool (typeName, visible));
 
       $(window)
          .on ("focusin",  () => this .onfocus ())
@@ -91,17 +91,18 @@ module .exports = class Document extends Interface
 
    configure ()
    {
+      const grids = [
+         "GridTool",
+         "AngleGridTool",
+         "AxonometricGridTool",
+      ];
+
       this .fileConfig .setDefaultValues ({
          inferProfileAndComponents: true,
          primitiveQuality: "MEDIUM",
          textureQuality: "MEDIUM",
          rubberband: true,
          timings: false,
-         grids: {
-            GridTool: false,
-            AngleGridTool: false,
-            AxonometricGridTool: false,
-         },
       });
 
       this .fileSaveFileTypeWarning = false;
@@ -111,10 +112,12 @@ module .exports = class Document extends Interface
       this .setDisplayRubberband (this .fileConfig .rubberband);
       this .setDisplayTimings (this .fileConfig .timings);
 
-      for (const [typeName, active] of Object .entries (this .fileConfig .grids))
+      for (const typeName of grids)
       {
-         if (active)
-            this .toggleGrid (typeName, active);
+         const gridConfig = this .fileConfig .addNameSpace (`${typeName}.`);
+
+         if (gridConfig .visible)
+            this .setGridTool (typeName, gridConfig .visible);
       }
    }
 
@@ -557,18 +560,19 @@ module .exports = class Document extends Interface
 
    #grids = new Map ();
 
-   toggleGrid (typeName, active)
+   setGridTool (typeName, visible)
    {
       const
-         GridTool = require (`../Tools/Grid/${typeName}`),
-         grid     = this .#grids .get (typeName) ?? new GridTool (this .browser);
+         GridTool   = require (`../Tools/Grid/${typeName}`),
+         grid       = this .#grids .get (typeName) ?? new GridTool (this .browser),
+         gridConfig = this .fileConfig .addNameSpace (`${typeName}.`);
 
       this .#grids .forEach (grid => grid .setEnabled (false));
       this .#grids .set (typeName, grid);
 
-      grid .setEnabled (active);
+      grid .setEnabled (visible);
 
-      this .fileConfig .grids = Object .assign (this .fileConfig .grids, { [typeName]: active });
+      gridConfig .visible = visible;
 
       this .updateMenu ();
    }
