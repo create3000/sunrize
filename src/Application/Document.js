@@ -66,6 +66,7 @@ module .exports = class Document extends Interface
 
       electron .ipcRenderer .on ("browser-size", () => this .browserSize .open ());
       electron .ipcRenderer .on ("grid-tool", (event, typeName, visible) => this .setGridTool (typeName, visible));
+      electron .ipcRenderer .on ("grid-options", () => this .showGridOptions ());
 
       $(window)
          .on ("focusin",  () => this .onfocus ())
@@ -563,16 +564,19 @@ module .exports = class Document extends Interface
    async setGridTool (typeName, visible)
    {
       const
-         Tool   = require (`../Tools/Grid/${typeName}`),
-         grid   = this .#grids .get (typeName) ?? new Tool (this .browser),
-         config = this .fileConfig .addNameSpace (`${typeName}.`),
-         instance   = await grid .getToolInstance ();
+         Tool     = require (`../Tools/Grid/${typeName}`),
+         grid     = this .#grids .get (typeName) ?? new Tool (this .browser),
+         config   = this .fileConfig .addNameSpace (`${typeName}.`),
+         instance = await grid .getToolInstance ();
 
-      this .#grids .forEach (grid => grid .setVisible (false));
+      for (const [typeName, grid] of this .#grids)
+      {
+         grid .setVisible (false);
+         this .fileConfig .addNameSpace (`${typeName}.`) .visible = false;
+      }
+
       this .#grids .set (typeName, grid);
-
       grid .setVisible (visible);
-
       config .visible = visible;
 
       this .restoreGridTool (typeName);
@@ -627,8 +631,22 @@ module .exports = class Document extends Interface
          AxonometricGridTool: false,
       });
 
-      this .#grids .forEach ((grid, typeName) => menu [typeName] = grid .getVisible ());
+      this .#grids .forEach ((grid, typeName) => menu [typeName] = grid .isVisible ());
 
       electron .ipcRenderer .send ("change-menu", menu);
+   }
+
+   async showGridOptions ()
+   {
+      for (const grid of this .#grids .values ())
+      {
+         if (!grid .isVisible ())
+            continue;
+
+         const instance = await grid .getToolInstance ();
+
+         this .secondaryToolbar .togglePanel (true);
+         this .secondaryToolbar .panel .setNode (instance .getValue ());
+      }
    }
 };

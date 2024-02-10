@@ -16,7 +16,7 @@ class X3DActiveLayerNodeTool extends X3DChildNodeTool
       super (node);
    }
 
-   getVisible ()
+   isVisible ()
    {
       return this .#visible;
    }

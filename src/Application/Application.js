@@ -655,6 +655,14 @@ module .exports = class Application
                      this .mainWindow .webContents .send ("grid-tool", "AxonometricGridTool", !this .menuOptions .AxonometricGridTool);
                   },
                },
+               { type: "separator" },
+               {
+                  label: _("Show Grid Tool in Panel..."),
+                  click: () =>
+                  {
+                     this .mainWindow .webContents .send ("grid-options");
+                  },
+               },
             ],
          },
          {

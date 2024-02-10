@@ -79,9 +79,14 @@ module .exports = new class Panel extends Interface
 
    onselection ()
    {
+      this .setNode (this .selection .nodes .at (-1));
+   }
+
+   setNode (node)
+   {
       this .removeNode (this .node);
 
-      this .node = this .selection .nodes .at (-1);
+      this .node = node;
 
       this .addNode (this .node);
    }

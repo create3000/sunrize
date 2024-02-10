@@ -12,6 +12,8 @@ class AxonometricGridTool extends X3DGridNodeTool
    async initializeTool ()
    {
       await super .initializeTool (__dirname, "AxonometricGridTool.x3d");
+
+      this .tool .getField ("angles") .setUnit ("angle");
    }
 
    disposeTool ()
