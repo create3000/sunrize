@@ -30,7 +30,7 @@ module .exports = new class Selection extends Interface
    {
       const length = this .nodes .length;
 
-      for (const node of [... this .nodes])
+      for (const node of Array .from (this .nodes))
       {
          if (node .isLive ())
             continue;
