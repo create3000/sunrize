@@ -97,6 +97,11 @@ module .exports = class Document extends Interface
          textureQuality: "MEDIUM",
          rubberband: true,
          timings: false,
+         grids: {
+            GridTool: false,
+            AngleGridTool: false,
+            AxonometricGridTool: false,
+         },
       });
 
       this .fileSaveFileTypeWarning = false;
@@ -105,6 +110,12 @@ module .exports = class Document extends Interface
       this .setTextureQuality (this .fileConfig .textureQuality);
       this .setDisplayRubberband (this .fileConfig .rubberband);
       this .setDisplayTimings (this .fileConfig .timings);
+
+      for (const [typeName, active] of Object .entries (this .fileConfig .grids))
+      {
+         if (active)
+            this .toggleGrid (typeName, active);
+      }
    }
 
    activate ()
@@ -556,6 +567,8 @@ module .exports = class Document extends Interface
       this .#grids .set (typeName, grid);
 
       grid .setEnabled (active);
+
+      this .fileConfig .grids = Object .assign (this .fileConfig .grids, { [typeName]: active });
 
       this .updateMenu ();
    }
