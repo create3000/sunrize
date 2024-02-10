@@ -594,17 +594,16 @@ module .exports = class Document extends Interface
       const
          gridTool   = this .#grids .get (typeName),
          gridConfig = this .fileConfig .addNameSpace (`${typeName}.`),
-         tool       = await gridTool .getToolInstance (),
-         scene      = tool .getValue () .getScene ();
+         tool       = await gridTool .getToolInstance ();
 
       if (gridConfig .translation !== undefined)
-         tool .getField ("translation") .fromString (gridConfig .translation ?? "", scene);
+         tool .getField ("translation") .fromString (gridConfig .translation);
 
       if (gridConfig .scale !== undefined)
-         tool .getField ("scale") .fromString (gridConfig .scale, scene);
+         tool .getField ("scale") .fromString (gridConfig .scale);
 
       if (gridConfig .dimension !== undefined)
-         tool .getField ("dimension") .fromString (gridConfig .dimension, scene);
+         tool .getField ("dimension") .fromString (gridConfig .dimension);
    }
 
    async saveGridTool (typeName)
