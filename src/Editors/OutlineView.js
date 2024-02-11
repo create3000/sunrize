@@ -2880,6 +2880,8 @@ module .exports = class OutlineView extends Interface
          node .getTool () .setSelected (element .hasClass ("selected"));
       }
 
+      node .setUserData (_changing, true);
+
       this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
          .find ("> .item .tool")
          .removeClass ("off")
