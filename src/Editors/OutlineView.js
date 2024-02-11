@@ -442,6 +442,9 @@ module .exports = class OutlineView extends Interface
          if (!node ?.getNodeUserData (_changing))
             continue;
 
+         const nodes = Array .from (scene .rootNodes);
+
+         setTimeout (() => nodes .forEach (n => n .setNodeUserData (_changing, false)));
          return;
       }
 
@@ -907,6 +910,8 @@ module .exports = class OutlineView extends Interface
          }
 
          this .objects .set (node .getId (), node .valueOf ());
+
+         node .setUserData (_changing, false);
 
          // These fields are observed and must never be disconnected, because clones would also lose connection.
 
@@ -1712,6 +1717,7 @@ module .exports = class OutlineView extends Interface
             if (!field .getValue () || !field ?.getNodeUserData (_changing))
                break;
 
+            setTimeout (() => field .setNodeUserData (_changing, false));
             return;
          }
          case X3D .X3DConstants .MFNode:
@@ -1721,6 +1727,9 @@ module .exports = class OutlineView extends Interface
                if (!node ?.getNodeUserData (_changing))
                   continue;
 
+               const nodes = Array .from (field);
+
+               setTimeout (() => nodes .forEach (n => n .setNodeUserData (_changing, false)));
                return;
             }
 
@@ -2874,7 +2883,6 @@ module .exports = class OutlineView extends Interface
       }
 
       node .setUserData (_changing, true);
-      setTimeout (() => node .setUserData (_changing, false));
 
       this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
          .find ("> .item .tool")
@@ -3059,11 +3067,8 @@ module .exports = class OutlineView extends Interface
 
       for (const [node, tool] of changed)
       {
-         if (node .getTool () === tool)
-            continue;
-
-         node .setUserData (_changing, true);
-         setTimeout (() => node .setUserData (_changing, false));
+         if (node .getTool () !== tool)
+            node .setUserData (_changing, true);
       }
    }
 
