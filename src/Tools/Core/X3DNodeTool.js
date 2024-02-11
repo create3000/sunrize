@@ -14,51 +14,6 @@ const
    _tool     = Symbol .for ("Sunrize.tool"),
    _changing = Symbol .for ("Sunrize.changing");
 
-const handler =
-{
-   get (target, key)
-   {
-      if (key in target)
-         return target [key];
-
-      const property = target .node [key];
-
-      if (typeof property === "function")
-         return property .bind (target .node);
-
-      else
-         return property;
-   },
-   set (target, key, value)
-   {
-      if (key in target)
-      {
-         target [key] = value;
-         return true;
-      }
-
-      target .node [key] = value;
-
-      return true;
-   },
-   has (target, key)
-   {
-      return key in target .node;
-   },
-   ownKeys (target)
-   {
-      return Object .keys (target .node);
-   },
-   getOwnPropertyDescriptor (target, key)
-   {
-      return Object .getOwnPropertyDescriptor (target .node, key);
-   },
-   getPrototypeOf (target)
-   {
-      return Object .getPrototypeOf (target .node);
-   },
-}
-
 class X3DNodeTool extends X3DBaseTool
 {
    static createOnSelection = true;
