@@ -659,6 +659,7 @@ module .exports = class Application
                {
                   label: _("Show Grid Tool in Panel..."),
                   accelerator: "CmdOrCtrl+G",
+                  enabled: this .menuOptions .GridTool || this .menuOptions .AngleGridTool || this .menuOptions .AxonometricGridTool,
                   click: () =>
                   {
                      this .mainWindow .webContents .send ("grid-options");

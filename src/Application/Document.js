@@ -600,14 +600,13 @@ module .exports = class Document extends Interface
          config   = this .fileConfig .addNameSpace (`${typeName}.`),
          instance = await grid .getToolInstance ();
 
-      if (config .translation !== undefined)
-         instance .getField ("translation") .fromString (config .translation);
+      for (const field of instance .getValue () .getFields ())
+      {
+         const value = config [field .getName ()];
 
-      if (config .scale !== undefined)
-         instance .getField ("scale") .fromString (config .scale);
-
-      if (config .dimension !== undefined)
-         instance .getField ("dimension") .fromString (config .dimension);
+         if (value !== undefined)
+            field .fromString (value);
+      }
    }
 
    async saveGridTool (typeName)
@@ -617,9 +616,8 @@ module .exports = class Document extends Interface
          config   = this .fileConfig .addNameSpace (`${typeName}.`),
          instance = await grid .getToolInstance ();
 
-      config .translation = instance .getField ("translation") .toString ();
-      config .scale       = instance .getField ("scale")       .toString ();
-      config .dimension   = instance .getField ("dimension")   .toString ();
+      for (const field of instance .getValue () .getFields ())
+         config [field .getName ()] = field .toString ();
    }
 
    updateGridMenus (menu)
