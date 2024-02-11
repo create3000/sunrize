@@ -16,7 +16,7 @@ const
    _expanded     = Symbol (),
    _fullExpanded = Symbol (),
    _selected     = Symbol .for ("Sunrize.selected"),
-   _changing     = Symbol .for ("Sunrize.changing");
+   _changing     = Symbol ();
 
 module .exports = class OutlineView extends Interface
 {
@@ -3022,6 +3022,10 @@ module .exports = class OutlineView extends Interface
       if (!node)
          return; // NULL node
 
+      const changed = new Map (selection .nodes .map (node => [node, node .getTool ()]));
+
+      changed .set (node .valueOf (), node .getTool ());
+
       selectedElements .removeClass ("primary");
 
       if (add)
@@ -3056,6 +3060,12 @@ module .exports = class OutlineView extends Interface
          element .addClass (["primary", "manually"]);
          elements .addClass ("selected");
          selection .set (node);
+      }
+
+      for (const [node, tool] of changed)
+      {
+         if (node .getTool () !== tool)
+            node .setUserData (_changing, true);
       }
    }
 

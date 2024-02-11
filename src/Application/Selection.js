@@ -1,8 +1,6 @@
 const Interface = require ("./Interface");
 
-const
-   _selected = Symbol .for ("Sunrize.selected"),
-   _changing = Symbol .for ("Sunrize.changing");
+const _selected = Symbol .for ("Sunrize.selected");
 
 module .exports = new class Selection extends Interface
 {
@@ -36,7 +34,6 @@ module .exports = new class Selection extends Interface
             continue;
 
          this .#remove (node);
-         node .setUserData (_changing, false);
       }
 
       // this .nodes = this .nodes .map (n => n .isLive ()); // Leave tool working.

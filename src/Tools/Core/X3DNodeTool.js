@@ -10,9 +10,7 @@ const
    url         = require ("url"),
    _           = require ("../../Application/GetText");
 
-const
-   _tool     = Symbol .for ("Sunrize.tool"),
-   _changing = Symbol .for ("Sunrize.changing");
+const _tool = Symbol .for ("Sunrize.tool");
 
 class X3DNodeTool extends X3DBaseTool
 {
@@ -40,7 +38,6 @@ class X3DNodeTool extends X3DBaseTool
       this .#proxy = proxy;
 
       node .setUserData (_tool, proxy);
-      node .setUserData (_changing, true);
 
       X3D .SFNodeCache .add (proxy, X3D .SFNodeCache .get (node));
 
@@ -192,7 +189,6 @@ class X3DNodeTool extends X3DBaseTool
       this .disposeTool ();
 
       this .node .removeUserData (_tool);
-      this .node .setUserData (_changing, true);
 
       X3D .SFNodeCache .delete (this .#proxy);
 
