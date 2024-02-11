@@ -3017,12 +3017,11 @@ module .exports = class OutlineView extends Interface
          selected         = element .hasClass ("manually"),
          selectedElements = this .sceneGraph .find (".primary, .selected"),
          node             = this .getNode (element),
-         elements         = $(`.node[node-id=${node ?.getId ()}]`);
+         elements         = $(`.node[node-id=${node ?.getId ()}]`),
+         changed          = new Map (selection .nodes .map (node => [node, node .getTool ()]));
 
       if (!node)
          return; // NULL node
-
-      const changed = new Map (selection .nodes .map (node => [node, node .getTool ()]));
 
       changed .set (node .valueOf (), node .getTool ());
 
