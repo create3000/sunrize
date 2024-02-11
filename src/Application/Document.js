@@ -559,7 +559,8 @@ module .exports = class Document extends Interface
       }
    }
 
-   #grids = new Map ();
+   #grids      = new Map ();
+   #gridFields = new Map ();
 
    async setGridTool (typeName, visible)
    {
@@ -582,8 +583,44 @@ module .exports = class Document extends Interface
       this .restoreGridTool (typeName);
       this .updateMenu ();
 
-      instance .getValue ()           .addInterest ("set_gridTool", this, typeName);
-      instance .getField ("isActive") .addInterest ("set_gridTool", this, typeName);
+      instance .getValue ()           .addInterest ("set_gridTool",        this, typeName);
+      instance .getField ("isActive") .addInterest ("set_gridTool",        this, typeName);
+      instance .getField ("isActive") .addInterest ("set_gridTool_active", this, typeName);
+   }
+
+   async set_gridTool_active (typeName)
+   {
+      const
+         grid     = this .#grids .get (typeName),
+         instance = await grid .getToolInstance (),
+         saved    = this .#gridFields .get (typeName);
+
+      if (instance .isActive)
+      {
+         this .#gridFields .set (typeName, new Map ([... instance .getValue () .getFields ()]
+            .filter (field => field .isInitializable ())
+            .map (field => [field .getName (), field .copy ()])));
+      }
+      else
+      {
+         const executionContext = instance .getValue () .getExecutionContext ();
+
+         UndoManager .shared .beginUndo (_("Change Properties of %s"), typeName);
+
+         for (const field of instance .getValue () .getFields ())
+         {
+            if (!field .isInitializable ())
+               continue;
+
+            const value = field .copy ();
+
+            field .assign (saved .get (field .getName ()));
+
+            Editor .setFieldValue (executionContext, instance .getValue (), field, value);
+         }
+
+         UndoManager .shared .endUndo ();
+      }
    }
 
    async set_gridTool (typeName)
@@ -607,6 +644,9 @@ module .exports = class Document extends Interface
 
       for (const field of instance .getValue () .getFields ())
       {
+         if (!field .isInitializable ())
+            continue;
+
          const value = config [field .getName ()];
 
          if (value !== undefined)
@@ -622,7 +662,12 @@ module .exports = class Document extends Interface
          instance = await grid .getToolInstance ();
 
       for (const field of instance .getValue () .getFields ())
+      {
+         if (!field .isInitializable ())
+            continue;
+
          config [field .getName ()] = field .toString ();
+      }
    }
 
    updateGridMenus (menu)
