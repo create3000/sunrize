@@ -592,8 +592,7 @@ module .exports = class Document extends Interface
    {
       const
          grid     = this .#grids .get (typeName),
-         instance = await grid .getToolInstance (),
-         saved    = this .#gridFields .get (typeName);
+         instance = await grid .getToolInstance ();
 
       if (instance .isActive)
       {
@@ -603,7 +602,9 @@ module .exports = class Document extends Interface
       }
       else
       {
-         const executionContext = instance .getValue () .getExecutionContext ();
+         const
+            executionContext = instance .getValue () .getExecutionContext (),
+            saved            = this .#gridFields .get (typeName);
 
          UndoManager .shared .beginUndo (_("Change Properties of %s"), typeName);
 
