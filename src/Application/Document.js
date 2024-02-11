@@ -582,12 +582,17 @@ module .exports = class Document extends Interface
       this .restoreGridTool (typeName);
       this .updateMenu ();
 
-      instance .getField ("isActive") .addInterest ("set_gridToolActive", this, typeName);
+      instance .getValue ()           .addInterest ("set_gridTool", this, typeName);
+      instance .getField ("isActive") .addInterest ("set_gridTool", this, typeName);
    }
 
-   set_gridToolActive (typeName, active)
+   async set_gridTool (typeName)
    {
-      if (active .getValue ())
+      const
+         grid     = this .#grids .get (typeName),
+         instance = await grid .getToolInstance ();
+
+      if (instance .isActive)
          return;
 
       this .saveGridTool (typeName);
