@@ -86,6 +86,7 @@ module .exports = new class Selection extends Interface
 
          node .getTool () ?.setSelected (false);
          node .removeTool ("createOnSelection");
+         node .setUserData (_selected, false);
       }
 
       this .nodes = this .nodes .filter (n => n === exclude);
