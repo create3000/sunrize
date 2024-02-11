@@ -442,9 +442,6 @@ module .exports = class OutlineView extends Interface
          if (!node ?.getNodeUserData (_changing))
             continue;
 
-         const nodes = Array .from (scene .rootNodes);
-
-         setTimeout (() => nodes .forEach (n => n .setNodeUserData (_changing, false)));
          return;
       }
 
@@ -1713,34 +1710,30 @@ module .exports = class OutlineView extends Interface
          case X3D .X3DConstants .SFNode:
          {
             if (!field .getValue () || !field ?.getNodeUserData (_changing))
-               break
+               break;
 
-            setTimeout (() => field .setNodeUserData (_changing, false))
-            return
+            return;
          }
          case X3D .X3DConstants .MFNode:
          {
             for (const node of field)
             {
                if (!node ?.getNodeUserData (_changing))
-                  continue
+                  continue;
 
-               const nodes = Array .from (field)
-
-               setTimeout (() => nodes .forEach (n => n .setNodeUserData (_changing, false)))
-               return
+               return;
             }
 
-            break
+            break;
          }
       }
 
-      this .saveScrollPositions ()
+      this .saveScrollPositions ();
 
-      this .removeSubtree (parent)
-      this .expandField (parent, node, field, type, full && (field .getInputRoutes () .size || field .getOutputRoutes () .size))
+      this .removeSubtree (parent);
+      this .expandField (parent, node, field, type, full && (field .getInputRoutes () .size || field .getOutputRoutes () .size));
 
-      this .restoreScrollPositions ()
+      this .restoreScrollPositions ();
    }
 
    #routesFullSymbol = Symbol ();
@@ -2881,6 +2874,7 @@ module .exports = class OutlineView extends Interface
       }
 
       node .setUserData (_changing, true);
+      setTimeout (() => node .setUserData (_changing, false));
 
       this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
          .find ("> .item .tool")
@@ -3065,8 +3059,11 @@ module .exports = class OutlineView extends Interface
 
       for (const [node, tool] of changed)
       {
-         if (node .getTool () !== tool)
-            node .setUserData (_changing, true);
+         if (node .getTool () === tool)
+            continue;
+
+         node .setUserData (_changing, true);
+         setTimeout (() => node .setUserData (_changing, false));
       }
    }
 
