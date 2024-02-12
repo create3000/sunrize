@@ -15,7 +15,6 @@ const
 const
    _expanded     = Symbol (),
    _fullExpanded = Symbol (),
-   _selected     = Symbol .for ("Sunrize.selected"),
    _changing     = Symbol ();
 
 module .exports = class OutlineView extends Interface
@@ -926,7 +925,9 @@ module .exports = class OutlineView extends Interface
 
       if (node)
       {
-         if (node .getUserData (_selected))
+         const selection = require ("../Application/Selection");
+
+         if (selection .has (node))
             classes .push ("selected");
 
          if (this .isInParents (parent, node))

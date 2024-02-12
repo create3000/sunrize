@@ -1,7 +1,5 @@
 const Interface = require ("./Interface");
 
-const _selected = Symbol .for ("Sunrize.selected");
-
 module .exports = new class Selection extends Interface
 {
    constructor ()
@@ -83,7 +81,6 @@ module .exports = new class Selection extends Interface
 
          node .getTool () ?.setSelected (false);
          node .removeTool ("createOnSelection");
-         node .setUserData (_selected, false);
       }
 
       this .nodes = this .nodes .filter (n => n === exclude);
@@ -95,7 +92,6 @@ module .exports = new class Selection extends Interface
 
       node .addTool ("createOnSelection");
       node .getTool () ?.setSelected (true);
-      node .setUserData (_selected, true);
 
       this .nodes = this .nodes .filter (n => n !== node);
 
@@ -108,7 +104,6 @@ module .exports = new class Selection extends Interface
 
       node .getTool () ?.setSelected (false);
       node .removeTool ("createOnSelection");
-      node .setUserData (_selected, false);
 
       this .nodes = this .nodes .filter (n => n !== node);
    }
