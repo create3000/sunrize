@@ -632,6 +632,7 @@ module .exports = class Application
                   label: _("Grid Layout Tool"),
                   type: "radio",
                   checked: this .menuOptions .GridTool,
+                  visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
                   click: () =>
                   {
                      this .mainWindow .webContents .send ("grid-tool", "GridTool", !this .menuOptions .GridTool);
@@ -641,6 +642,7 @@ module .exports = class Application
                   label: _("Angle Grid Layout Tool"),
                   type: "radio",
                   checked: this .menuOptions .AngleGridTool,
+                  visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
                   click: () =>
                   {
                      this .mainWindow .webContents .send ("grid-tool", "AngleGridTool", !this .menuOptions .AngleGridTool);
@@ -650,6 +652,7 @@ module .exports = class Application
                   label: _("Axonometric Grid Layout Tool"),
                   type: "radio",
                   checked: this .menuOptions .AxonometricGridTool,
+                  visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
                   click: () =>
                   {
                      this .mainWindow .webContents .send ("grid-tool", "AxonometricGridTool", !this .menuOptions .AxonometricGridTool);
@@ -660,6 +663,7 @@ module .exports = class Application
                   label: _("Show Grid Tool in Panel..."),
                   accelerator: "CmdOrCtrl+G",
                   enabled: this .menuOptions .GridTool || this .menuOptions .AngleGridTool || this .menuOptions .AxonometricGridTool,
+                  visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
                   click: () =>
                   {
                      this .mainWindow .webContents .send ("grid-options");
