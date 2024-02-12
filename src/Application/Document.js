@@ -583,6 +583,9 @@ module .exports = class Document extends Interface
       this .restoreGridTool (typeName);
       this .updateMenu ();
 
+      if (this .secondaryToolbar .fileConfig .panel)
+         this .showGridOptions ();
+
       instance .getValue ()           .addInterest ("set_gridTool",        this, typeName);
       instance .getField ("isActive") .addInterest ("set_gridTool",        this, typeName);
       instance .getField ("isActive") .addInterest ("set_gridTool_active", this, typeName);
