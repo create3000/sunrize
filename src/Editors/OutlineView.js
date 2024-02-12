@@ -124,7 +124,6 @@ module .exports = class OutlineView extends Interface
       }
 
       this .executionContext = this .browser .currentScene;
-      this .fileConfig       = this .config .file;
 
       this .executionContext .profile_changed .addInterest ("updateComponents", this);
       this .executionContext .components      .addInterest ("updateComponents", this);
@@ -3471,7 +3470,7 @@ module .exports = class OutlineView extends Interface
          return;
 
       const
-         config   = this .fileConfig,
+         config   = this .config .last,
          expanded = this .saveExpandedNodes (this .sceneGraph .find ("> div > ul > li"), [ ], [ ]);
 
       config .expanded   = expanded;
