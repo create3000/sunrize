@@ -98,7 +98,7 @@ module .exports = class Document extends Interface
 
    configure ()
    {
-      this .fileConfig .setDefaultValues ({
+      this .config .file .setDefaultValues ({
          inferProfileAndComponents: true,
          primitiveQuality: "MEDIUM",
          textureQuality: "MEDIUM",
@@ -108,14 +108,14 @@ module .exports = class Document extends Interface
 
       this .fileSaveFileTypeWarning = false;
 
-      setTimeout (() => this .setPrimitiveQuality (this .fileConfig .primitiveQuality));
-      this .setTextureQuality (this .fileConfig .textureQuality);
-      this .setDisplayRubberband (this .fileConfig .rubberband);
-      this .setDisplayTimings (this .fileConfig .timings);
+      setTimeout (() => this .setPrimitiveQuality (this .config .file .primitiveQuality));
+      this .setTextureQuality (this .config .file .textureQuality);
+      this .setDisplayRubberband (this .config .file .rubberband);
+      this .setDisplayTimings (this .config .file .timings);
 
       for (const typeName of Document .#Grids)
       {
-         const config = this .fileConfig .addNameSpace (`${typeName}.`);
+         const config = this .config .file .addNameSpace (`${typeName}.`);
 
          if (config .visible)
             this .setGridTool (typeName, config .visible);
@@ -182,7 +182,7 @@ module .exports = class Document extends Interface
 
       if (this .fileId)
       {
-         const contents = this .globalConfig .addNameSpace ("unsaved.") [this .fileId];
+         const contents = this .config .global .addNameSpace ("unsaved.") [this .fileId];
 
          if (contents)
             await this .loadURL (encodeURI (`data:model/x3d,${contents}`));
@@ -236,7 +236,7 @@ module .exports = class Document extends Interface
 
       // Infer profile and components.
 
-      if (this .fileConfig .inferProfileAndComponents ?? true)
+      if (this .config .file .inferProfileAndComponents ?? true)
          Editor .inferProfileAndComponents (scene, new UndoManager ());
 
       // Add default meta data.
@@ -281,7 +281,7 @@ module .exports = class Document extends Interface
             return;
          }
 
-         this .globalConfig .addNameSpace ("unsaved.") [id] = Editor .getContents (scene);
+         this .config .global .addNameSpace ("unsaved.") [id] = Editor .getContents (scene);
       }
 
       UndoManager .shared .saveNeeded = false;
@@ -333,12 +333,12 @@ module .exports = class Document extends Interface
 
    get autoSave ()
    {
-      return this .globalConfig .autoSave;
+      return this .config .global .autoSave;
    }
 
    set autoSave (value)
    {
-      this .globalConfig .autoSave = value;
+      this .config .global .autoSave = value;
 
       if (value)
          this .registerAutoSave ();
@@ -446,13 +446,13 @@ module .exports = class Document extends Interface
    {
       Object .assign (menu,
       {
-         primitiveQuality: this .fileConfig .primitiveQuality,
+         primitiveQuality: this .config .file .primitiveQuality,
       });
    }
 
    set_primitiveQuality ()
    {
-      this .fileConfig .primitiveQuality = this .browser .getBrowserOption ("PrimitiveQuality");
+      this .config .file .primitiveQuality = this .browser .getBrowserOption ("PrimitiveQuality");
 
       this .updateMenu ();
    }
@@ -471,13 +471,13 @@ module .exports = class Document extends Interface
    {
       Object .assign (menu,
       {
-         textureQuality: this .fileConfig .textureQuality,
+         textureQuality: this .config .file .textureQuality,
       });
    }
 
    set_textureQuality ()
    {
-      this .fileConfig .textureQuality = this .browser .getBrowserOption ("TextureQuality");
+      this .config .file .textureQuality = this .browser .getBrowserOption ("TextureQuality");
 
       this .updateMenu ();
    }
@@ -496,13 +496,13 @@ module .exports = class Document extends Interface
    {
       Object .assign (menu,
       {
-         rubberband: this .fileConfig .rubberband,
+         rubberband: this .config .file .rubberband,
       });
    }
 
    set_rubberband ()
    {
-      this .fileConfig .rubberband = this .browser .getBrowserOption ("Rubberband");
+      this .config .file .rubberband = this .browser .getBrowserOption ("Rubberband");
 
       this .updateMenu ();
    }
@@ -520,13 +520,13 @@ module .exports = class Document extends Interface
    {
       Object .assign (menu,
       {
-         timings: this .fileConfig .timings,
+         timings: this .config .file .timings,
       });
    }
 
    set_timings ()
    {
-      this .fileConfig .timings = this .browser .getBrowserOption ("Timings");
+      this .config .file .timings = this .browser .getBrowserOption ("Timings");
 
       this .updateMenu ();
    }
@@ -537,9 +537,9 @@ module .exports = class Document extends Interface
    onresize ()
    {
       const
-         enabled          = this .browserSize .fileConfig .enabled,
-         numerator        = this .browserSize .fileConfig .numerator,
-         denominator      = this .browserSize .fileConfig .denominator,
+         enabled          = this .browserSize .config .file .enabled,
+         numerator        = this .browserSize .config .file .numerator,
+         denominator      = this .browserSize .config .file .denominator,
          aspectRatio      = numerator / denominator,
          frameAspectRatio = $("#browser-frame") .width () / $("#browser-frame") .height (),
          element          = this .browser .getElement ();
@@ -567,13 +567,13 @@ module .exports = class Document extends Interface
       const
          Tool     = require (`../Tools/Grid/${typeName}`),
          grid     = this .#grids .get (typeName) ?? new Tool (this .browser),
-         config   = this .fileConfig .addNameSpace (`${typeName}.`),
+         config   = this .config .file .addNameSpace (`${typeName}.`),
          instance = await grid .getToolInstance ();
 
       for (const [typeName, grid] of this .#grids)
       {
          grid .setVisible (false);
-         this .fileConfig .addNameSpace (`${typeName}.`) .visible = false;
+         this .config .file .addNameSpace (`${typeName}.`) .visible = false;
       }
 
       this .#grids .set (typeName, grid);
@@ -583,7 +583,7 @@ module .exports = class Document extends Interface
       this .restoreGridTool (typeName);
       this .updateMenu ();
 
-      if (this .secondaryToolbar .fileConfig .panel)
+      if (this .secondaryToolbar .config .file .panel)
          this .showGridOptions ();
 
       instance .getValue ()           .addInterest ("set_gridTool",        this, typeName);
@@ -643,7 +643,7 @@ module .exports = class Document extends Interface
    {
       const
          grid     = this .#grids .get (typeName),
-         config   = this .fileConfig .addNameSpace (`${typeName}.`),
+         config   = this .config .file .addNameSpace (`${typeName}.`),
          instance = await grid .getToolInstance ();
 
       for (const field of instance .getValue () .getFields ())
@@ -662,7 +662,7 @@ module .exports = class Document extends Interface
    {
       const
          grid     = this .#grids .get (typeName),
-         config   = this .fileConfig .addNameSpace (`${typeName}.`),
+         config   = this .config .file .addNameSpace (`${typeName}.`),
          instance = await grid .getToolInstance ();
 
       for (const field of instance .getValue () .getFields ())

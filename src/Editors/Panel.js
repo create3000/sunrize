@@ -212,13 +212,13 @@ module .exports = new class Panel extends Interface
    {
       const folder = this .pane .addFolder ({
          title: title,
-         expanded: this .globalConfig [`${title}.expanded`] ?? true,
+         expanded: this .config .global [`${title}.expanded`] ?? true,
          index: 0,
       });
 
       // Update expanded state of folder.
 
-      folder .on ("fold", () => this .globalConfig [`${title}.expanded`] = folder .expanded)
+      folder .on ("fold", () => this .config .global [`${title}.expanded`] = folder .expanded)
 
       // Add fields.
 

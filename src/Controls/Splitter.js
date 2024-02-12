@@ -49,8 +49,8 @@ module .exports = class Splitter extends Interface
 
    configure ()
    {
-      if (this .fileConfig .position !== undefined)
-         this .position = this .fileConfig .position
+      if (this .config .file .position !== undefined)
+         this .position = this .config .file .position
       else
          this .splitter .trigger ("position")
    }
@@ -81,7 +81,7 @@ module .exports = class Splitter extends Interface
    {
       position = Algorithm .clamp (position, 0, 1)
 
-      this .fileConfig .position = position
+      this .config .file .position = position
 
       switch (this .orientation)
       {

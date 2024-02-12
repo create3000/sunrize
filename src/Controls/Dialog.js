@@ -35,10 +35,10 @@ module .exports = class Dialog extends Interface
 
       this .element .dialog ("widget")
          .draggable ({
-            drag: (event, ui) => this .fileConfig .position = { my: `left+${ui .position .left} top+${ui .position .top}`, at: "left top" },
+            drag: (event, ui) => this .config .file .position = { my: `left+${ui .position .left} top+${ui .position .top}`, at: "left top" },
           })
          .resizable({
-            resize: (event, ui) => this .fileConfig .size = [ui .size .width, ui .size .height],
+            resize: (event, ui) => this .config .file .size = [ui .size .width, ui .size .height],
           })
          .find (".ui-dialog-titlebar") .remove ()
    }
@@ -47,7 +47,7 @@ module .exports = class Dialog extends Interface
    {
       // Set default config values.
 
-      this .fileConfig .setDefaultValues (Object .assign ({
+      this .config .file .setDefaultValues (Object .assign ({
          position: undefined,
          size: [400, 250],
       },
@@ -57,9 +57,9 @@ module .exports = class Dialog extends Interface
    open ()
    {
       this .element .dialog ({
-         position: { ...this .fileConfig .position, of: $("body") },
-         width: this .fileConfig .size [0],
-         height: this .fileConfig .size [1],
+         position: { ...this .config .file .position, of: $("body") },
+         width: this .config .file .size [0],
+         height: this .config .file .size [1],
       })
       .dialog ("open")
    }

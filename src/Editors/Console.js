@@ -79,9 +79,9 @@ module .exports = class Console extends Interface
    {
       super .configure ();
 
-      this .fileConfig .setDefaultValues ({ history: [ ] });
+      this .config .file .setDefaultValues ({ history: [ ] });
 
-      this .history      = this .fileConfig .history .slice (-this .HISTORY_MAX);
+      this .history      = this .config .file .history .slice (-this .HISTORY_MAX);
       this .historyIndex = this .history .length;
    }
 
@@ -181,7 +181,7 @@ module .exports = class Console extends Interface
                   this .history .push (text);
             }
 
-            this .fileConfig .history = this .history;
+            this .config .file .history = this .history;
 
             this .historyIndex = Math .max (this .historyIndex - 1, 0);
 
@@ -238,7 +238,7 @@ module .exports = class Console extends Interface
       if (text !== this .history .at (-1))
          this .history .push (text);
 
-      this .fileConfig .history = this .history;
+      this .config .file .history = this .history;
 
       this .historyIndex = this .history .length;
 

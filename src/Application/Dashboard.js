@@ -39,7 +39,7 @@ module .exports = class Dashboard extends Interface
          .css ({ position: "relative", left: "-1px", "font-weight": "bold" })
          .text ("play_arrow")
          .appendTo (this .toolbar)
-         .on ("click", () => this .play (!this .fileConfig .play));
+         .on ("click", () => this .play (!this .config .file .play));
 
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
@@ -64,28 +64,28 @@ module .exports = class Dashboard extends Interface
          .attr ("title", _("Toggle visibility of Panel."))
          .text ("edit_note")
          .appendTo (this .toolbar)
-         .on ("click", () => this .togglePanel (!this .fileConfig .panel));
+         .on ("click", () => this .togglePanel (!this .config .file .panel));
    }
 
    configure ()
    {
-      this .fileConfig .setDefaultValues ({
+      this .config .file .setDefaultValues ({
          pointer: "hand",
          play: false,
          panel: false,
       });
 
-      this [this .fileConfig .pointer] ();
-      this .play (this .fileConfig .play);
+      this [this .config .file .pointer] ();
+      this .play (this .config .file .play);
       this .straighten (this .browser .getBrowserOption ("StraightenHorizon"));
 
-      if (this .fileConfig .panel)
-         this .togglePanel (this .fileConfig .panel);
+      if (this .config .file .panel)
+         this .togglePanel (this .config .file .panel);
    }
 
    hand ()
    {
-      this .fileConfig .pointer = "hand";
+      this .config .file .pointer = "hand";
 
       if (this .handButton .hasClass ("active"))
          return;
@@ -96,7 +96,7 @@ module .exports = class Dashboard extends Interface
 
    arrow ()
    {
-      this .fileConfig .pointer = "arrow";
+      this .config .file .pointer = "arrow";
 
       if (this .arrowButton .hasClass ("active"))
          return;
@@ -107,7 +107,7 @@ module .exports = class Dashboard extends Interface
 
    play (value)
    {
-      this .fileConfig .play = value;
+      this .config .file .play = value;
 
       if (value)
       {
@@ -185,7 +185,7 @@ module .exports = class Dashboard extends Interface
          this .showPanelsButton .removeClass ("active");
       }
 
-      this .fileConfig .panel = visible;
+      this .config .file .panel = visible;
    }
 };
 

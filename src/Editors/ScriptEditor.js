@@ -664,12 +664,12 @@ main ()
    {
       if (this .vSplitter .position)
       {
-         this .fileConfig .vSplitterPosition = this .vSplitter .position;
+         this .config .file .vSplitterPosition = this .vSplitter .position;
          this .vSplitter .position           = 0;
       }
       else
       {
-         this .vSplitter .position = this .fileConfig .vSplitterPosition;
+         this .vSplitter .position = this .config .file .vSplitterPosition;
       }
    }
 };

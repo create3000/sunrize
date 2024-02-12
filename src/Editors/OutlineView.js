@@ -31,7 +31,7 @@ module .exports = class OutlineView extends Interface
       this .actionKeys        = new ActionKeys ("OutlineView");
       this .onDemandToolNodes = new Set ();
 
-      this .globalConfig .setDefaultValues ({
+      this .config .global .setDefaultValues ({
          expandExternProtoDeclarations: true,
          expandPrototypeInstances: true,
          expandInlineNodes: true,
@@ -69,34 +69,34 @@ module .exports = class OutlineView extends Interface
 
    get expandExternProtoDeclarations ()
    {
-      return this .globalConfig .expandExternProtoDeclarations;
+      return this .config .global .expandExternProtoDeclarations;
    }
 
    set expandExternProtoDeclarations (value)
    {
-      this .globalConfig .expandExternProtoDeclarations = value;
+      this .config .global .expandExternProtoDeclarations = value;
       this .updateSceneGraph ();
    }
 
    get expandPrototypeInstances ()
    {
-      return this .globalConfig .expandPrototypeInstances;
+      return this .config .global .expandPrototypeInstances;
    }
 
    set expandPrototypeInstances (value)
    {
-      this .globalConfig .expandPrototypeInstances = value;
+      this .config .global .expandPrototypeInstances = value;
       this .updateSceneGraph ();
    }
 
    get expandInlineNodes ()
    {
-      return this .globalConfig .expandInlineNodes;
+      return this .config .global .expandInlineNodes;
    }
 
    set expandInlineNodes (value)
    {
-      this .globalConfig .expandInlineNodes = value;
+      this .config .global .expandInlineNodes = value;
       this .updateSceneGraph ();
    }
 
@@ -124,6 +124,7 @@ module .exports = class OutlineView extends Interface
       }
 
       this .executionContext = this .browser .currentScene;
+      this .fileConfig       = this .config .file;
 
       this .executionContext .profile_changed .addInterest ("updateComponents", this);
       this .executionContext .components      .addInterest ("updateComponents", this);
@@ -3460,7 +3461,7 @@ module .exports = class OutlineView extends Interface
    {
       const scrollPositions = this .scrollPositions [0];
 
-      this .treeView .scrollTop (scrollPositions [0]);
+      this .treeView .scrollTop  (scrollPositions [0]);
       this .treeView .scrollLeft (scrollPositions [1]);
    }
 
@@ -3470,7 +3471,7 @@ module .exports = class OutlineView extends Interface
          return;
 
       const
-         config   = this .getFileConfig (this .executionContext),
+         config   = this .fileConfig,
          expanded = this .saveExpandedNodes (this .sceneGraph .find ("> div > ul > li"), [ ], [ ]);
 
       config .expanded   = expanded;
@@ -3506,19 +3507,19 @@ module .exports = class OutlineView extends Interface
    {
       const expanded = new Map ();
 
-      this .fileConfig .setDefaultValues ({
+      this .config .file .setDefaultValues ({
          expanded: [ ],
          scrollTop: 0,
          scrollLeft: 0,
       });
 
-      for (const row of this .fileConfig .expanded)
+      for (const row of this .config .file .expanded)
          expanded .set (row .path, row);
 
       this .restoreExpandedNodes (this .sceneGraph .find ("> div > ul > li"), [ ], expanded);
 
-      this .treeView .scrollTop (this .fileConfig .scrollTop);
-      this .treeView .scrollLeft (this .fileConfig .scrollLeft);
+      this .treeView .scrollTop (this .config .file .scrollTop);
+      this .treeView .scrollLeft (this .config .file .scrollLeft);
    }
 
    restoreExpandedNodes (elements, path, expanded)

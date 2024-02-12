@@ -37,9 +37,10 @@ module .exports = class Interface
    {
       Interface .#interfaces .add (this);
 
-      this .namespace    = namespace;
-      this .globalConfig = this .#createGlobalConfig ();
-      this .fileConfig   = this .#createFileConfig ("");
+      this .namespace      = namespace;
+      this .config         = { };
+      this .config .global = this .#createGlobalConfig ();
+      this .config .file   = this .#createFileConfig ("");
 
       this .browser .addBrowserCallback (this, X3D .X3DConstants .INITIALIZED_EVENT, this .browserInitialized .bind (this));
       CSS .colorScheme .addEventListener ("change", event => this .colorScheme (!! event .matches));
@@ -121,9 +122,7 @@ module .exports = class Interface
     */
    browserInitialized (event)
    {
-      this .fileConfig = this .#createFileConfig ();
-
-      this .browser .currentScene .setUserData (this .globalConfig, this .fileConfig);
+      this .config .file = this .#createFileConfig ();
 
       this .configure ();
       this .colorScheme (!! CSS .colorScheme .matches);
@@ -149,24 +148,14 @@ module .exports = class Interface
     * @param {string} filePath path|URL
     * @returns {DataStorage}
     */
-   #createFileConfig (filePath, global = this .globalConfig)
+   #createFileConfig (filePath, global = this .config .global)
    {
       if (!filePath && this .browser .currentScene === Interface .#initialScene)
-         return this .globalConfig .addNameSpace ("default.");
+         return this .config .global .addNameSpace ("default.");
 
       filePath ??= this .filePath ?? this .fileId ?? this .browser .getWorldURL ();
 
       return global .addNameSpace (md5 (filePath) + ".");
-   }
-
-   /**
-    *
-    * @param {X3DExecutionContext} executionContext
-    * @returns {DataStorage}
-    */
-   getFileConfig (executionContext)
-   {
-      return executionContext .getUserData (this .globalConfig);
    }
 
    /**
@@ -197,14 +186,14 @@ module .exports = class Interface
       for (const other of Interface .#interfaces)
       {
          const
-            oldFileConfig = other .fileConfig,
+            oldFileConfig = other .config .file,
             newFileConfig = other .#createFileConfig (to);
 
          newFileConfig .setDefaultValues (oldFileConfig .getDefaultValues ());
 
-         other .fileConfig = newFileConfig;
+         other .config .file = newFileConfig;
 
-         this .browser .currentScene .setUserData (other .globalConfig, newFileConfig);
+         this .browser .currentScene .setUserData (other .config .global, newFileConfig);
       }
    }
 

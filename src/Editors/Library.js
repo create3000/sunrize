@@ -25,7 +25,7 @@ module .exports = new class Library extends Dialog
 
       // Set default config values.
 
-      this .fileConfig .setDefaultValues ({
+      this .config .file .setDefaultValues ({
          type: "NODES",
       });
 
@@ -74,7 +74,7 @@ module .exports = new class Library extends Dialog
 
       // Configure list type.
 
-      switch (this .fileConfig .type)
+      switch (this .config .file .type)
       {
          case "NODES":
             this .button (this .nodesButton);
@@ -101,7 +101,7 @@ module .exports = new class Library extends Dialog
 
    button (button)
    {
-      this .fileConfig .type = button .data ("type");
+      this .config .file .type = button .data ("type");
 
       this .buttons .find (".library-button") .removeClass ("active");
 
@@ -123,7 +123,7 @@ module .exports = new class Library extends Dialog
       try
       {
          const
-            input        = this .fileConfig .type === "NODES" ? this .input .val () .toUpperCase () .trim () : "",
+            input        = this .config .file .type === "NODES" ? this .input .val () .toUpperCase () .trim () : "",
             ConcreteNode = this .browser .getConcreteNode (X3D .HTMLSupport .getNodeTypeName (input));
 
          this .createNode (ConcreteNode .typeName, ConcreteNode .componentInfo .name);
@@ -138,7 +138,7 @@ module .exports = new class Library extends Dialog
 
    update ()
    {
-      switch (this .fileConfig .type)
+      switch (this .config .file .type)
       {
          case "NODES":
             this .updateNodes ();
