@@ -63,7 +63,7 @@ module .exports = class OutlineView extends Interface
       electron .ipcRenderer .on ("expand-prototype-instances",       (event, value) => this .expandPrototypeInstances      = value);
       electron .ipcRenderer .on ("expand-inline-nodes",              (event, value) => this .expandInlineNodes             = value);
 
-      electron .ipcRenderer .on ("close", (event) => this .saveExpanded ());
+      electron .ipcRenderer .on ("close", () => this .saveExpanded (this .config .file));
    }
 
    get expandExternProtoDeclarations ()
@@ -115,7 +115,7 @@ module .exports = class OutlineView extends Interface
    {
       if (this .executionContext)
       {
-         this .saveExpanded ();
+         this .saveExpanded (this .config .last);
          this .removeSubtree (this .sceneGraph);
 
          this .executionContext .profile_changed .removeInterest ("updateComponents", this);
@@ -166,7 +166,7 @@ module .exports = class OutlineView extends Interface
          return;
 
       this .saveScrollPositions ();
-      this .saveExpanded ();
+      this .saveExpanded (this .config .file);
       this .removeSubtree (parent);
       this .expandScene (parent, scene);
       this .restoreExpanded ();
@@ -3465,14 +3465,12 @@ module .exports = class OutlineView extends Interface
       this .treeView .scrollLeft (scrollPositions [1]);
    }
 
-   saveExpanded ()
+   saveExpanded (config)
    {
       if (!this .executionContext)
          return;
 
-      const
-         config   = this .config .last,
-         expanded = this .saveExpandedNodes (this .sceneGraph .find ("> div > ul > li"), [ ], [ ]);
+      const expanded = this .saveExpandedNodes (this .sceneGraph .find ("> div > ul > li"), [ ], [ ]);
 
       config .expanded   = expanded;
       config .scrollTop  = this .treeView .scrollTop ();
