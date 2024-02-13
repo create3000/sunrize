@@ -61,7 +61,7 @@ th, td,
   color: var(--text-color);
 }
 
-label {
+.ui-widget label {
   position: relative;
   top: -2px;
   margin-left: 0.5em;
