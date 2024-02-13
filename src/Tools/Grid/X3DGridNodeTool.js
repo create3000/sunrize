@@ -4,9 +4,9 @@ const X3DActiveLayerNodeTool = require ("../Layering/X3DActiveLayerNodeTool");
 
 class X3DGridNodeTool extends X3DActiveLayerNodeTool
 {
-   constructor (browser)
+   constructor (executionContext)
    {
-      super (browser);
+      super (executionContext);
    }
 }
 

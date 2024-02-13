@@ -113,6 +113,11 @@ module .exports = class Document extends Interface
       this .setDisplayRubberband (this .config .file .rubberband);
       this .setDisplayTimings (this .config .file .timings);
 
+      // Grids
+
+      this .#grids      .clear ();
+      this .#gridFields .clear ();
+
       for (const typeName of Document .#Grids)
       {
          const config = this .config .file .addNameSpace (`${typeName}.`);
@@ -566,7 +571,7 @@ module .exports = class Document extends Interface
    {
       const
          Tool     = require (`../Tools/Grid/${typeName}`),
-         grid     = this .#grids .get (typeName) ?? new Tool (this .browser),
+         grid     = this .#grids .get (typeName) ?? new Tool (this .browser .currentScene),
          config   = this .config .file .addNameSpace (`${typeName}.`),
          instance = await grid .getToolInstance ();
 
