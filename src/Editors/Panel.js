@@ -332,20 +332,6 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .SFMatrix3f:
          case X3D .X3DConstants .SFMatrix4d:
          case X3D .X3DConstants .SFMatrix4f:
-         {
-            if (process .env .SUNRISE_ENVIRONMENT !== "DEVELOPMENT")
-               break;
-
-            this .refresh (parameter, node, field);
-
-            folder .addMonitor (parameter, field .getName (),
-            {
-               multiline: true,
-               lineCount: 2,
-            });
-
-            break;
-         }
          case X3D .X3DConstants .MFBool:
          case X3D .X3DConstants .MFColor:
          case X3D .X3DConstants .MFColorRGBA:
@@ -370,7 +356,7 @@ module .exports = new class Panel extends Interface
             if (process .env .SUNRISE_ENVIRONMENT !== "DEVELOPMENT")
                break;
 
-            if (field .length >= 10)
+            if ((field instanceof X3D .X3DArrayField) && field .length >= 10)
                break;
 
             this .refresh (parameter, node, field);
