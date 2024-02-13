@@ -356,8 +356,8 @@ module .exports = new class Panel extends Interface
             if (process .env .SUNRISE_ENVIRONMENT !== "DEVELOPMENT")
                break;
 
-            // if ((field instanceof X3D .X3DArrayField) && field .length >= 10)
-            //    break;
+            if ((field instanceof X3D .X3DArrayField) && field .length >= 10_000)
+               break;
 
             this .refresh (parameter, node, field);
 
