@@ -439,6 +439,8 @@ module .exports = new class Panel extends Interface
             break;
          }
          case X3D .X3DConstants .MFBool:
+         case X3D .X3DConstants .MFDouble:
+         case X3D .X3DConstants .MFFloat:
          case X3D .X3DConstants .MFImage:
          case X3D .X3DConstants .MFInt32:
          case X3D .X3DConstants .MFMatrix3d:
@@ -446,25 +448,11 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .MFMatrix4d:
          case X3D .X3DConstants .MFMatrix4f:
          case X3D .X3DConstants .MFString:
-         {
-            const single = new (field .getSingleType ()) ();
-
-            const value = Array .from (field, value =>
-            {
-               single .setValue (value);
-
-               return single .toString ();
-            })
-            .join (",\n");
-
-            parameter [field .getName ()] = value;
-            break;
-         }
-         case X3D .X3DConstants .MFDouble:
-         case X3D .X3DConstants .MFFloat:
          case X3D .X3DConstants .MFTime:
          {
             const single = new (field .getSingleType ()) ();
+
+            single .setUnit (field .getUnit ());
 
             const value = Array .from (field, value =>
             {
@@ -489,6 +477,8 @@ module .exports = new class Panel extends Interface
          {
             const value = Array .from (field, value =>
             {
+               value .setUnit (field .getUnit ());
+
                return value .toString ({ scene: node .getExecutionContext () });
             })
             .join (",\n");

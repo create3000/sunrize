@@ -2499,31 +2499,39 @@ module .exports = class OutlineView extends Interface
          case X3D .X3DConstants .MFFloat:
          case X3D .X3DConstants .MFTime:
          {
-            const single = new (field .getSingleType ()) ()
+            const single = new (field .getSingleType ()) ();
+
+            single .setUnit (field .getUnit ());
 
             textarea .val (Array .from (field, value =>
             {
-               single .setValue (value)
+               single .setValue (value);
 
-               return single .toString ({ scene: node .getExecutionContext () })
+               return single .toString ({ scene: node .getExecutionContext () });
             })
-            .join (",\n"))
-            break
+            .join (",\n"));
+            break;
          }
          case X3D .X3DConstants .MFInt32:
          {
-            textarea .val (field .join (",\n"))
-            break
+            textarea .val (field .join (",\n"));
+            break;
          }
          case X3D .X3DConstants .MFString:
          {
-            textarea .val (field .getValue () .map (value => value .toString ()) .join (",\n"))
+            textarea .val (field .getValue () .map (value => value .toString ()) .join (",\n"));
             break
          }
          default:
          {
-            textarea .val (Array .from (field, value => value .toString ({ scene: node .getExecutionContext () })) .join (",\n"))
-            break
+            textarea .val (Array .from (field, value =>
+            {
+               value .setUnit (field .getUnit ());
+
+               return value .toString ({ scene: node .getExecutionContext () })
+            })
+            .join (",\n"));
+            break;
          }
       }
    }
