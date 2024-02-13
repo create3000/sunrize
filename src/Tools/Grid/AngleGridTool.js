@@ -4,9 +4,9 @@ const X3DGridNodeTool = require ("./X3DGridNodeTool");
 
 class AngleGridTool extends X3DGridNodeTool
 {
-   constructor (browser)
+   constructor (executionContext)
    {
-      super (browser);
+      super (executionContext);
    }
 
    async initializeTool ()

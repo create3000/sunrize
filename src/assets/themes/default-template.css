@@ -1351,3 +1351,15 @@ body.dark .ui-widget .library-list .component {
 .tp-lblv_v {
   width: 185px !important;
 }
+
+.tp-mllv_i:active {
+  background-color: var(--tp-monitor-background-color-active);
+}
+
+.tp-mllv_i:hover {
+  background-color: var(--tp-monitor-background-color-hover);
+}
+
+.tp-mllv_i:active {
+  background-color: var(--tp-monitor-background-color-focus);
+}

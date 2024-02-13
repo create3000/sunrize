@@ -7,9 +7,9 @@ class X3DActiveLayerNodeTool extends X3DChildNodeTool
    #visible         = true;
    #activeLayerNode = null;
 
-   constructor (browser)
+   constructor (executionContext)
    {
-      const node = browser .getPrivateScene () .createNode ("Group", false);
+      const node = executionContext .createNode ("Group", false);
 
       node .setup ();
 

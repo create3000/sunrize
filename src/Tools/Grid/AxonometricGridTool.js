@@ -4,9 +4,9 @@ const X3DGridNodeTool = require ("./X3DGridNodeTool");
 
 class AxonometricGridTool extends X3DGridNodeTool
 {
-   constructor (browser)
+   constructor (executionContext)
    {
-      super (browser);
+      super (executionContext);
    }
 
    async initializeTool ()

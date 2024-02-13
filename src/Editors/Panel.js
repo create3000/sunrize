@@ -324,6 +324,63 @@ module .exports = new class Panel extends Interface
                this .refresh (parameter, node, field);
                input .refresh ();
             });
+
+            break;
+         }
+         case X3D .X3DConstants .SFImage:
+         case X3D .X3DConstants .SFMatrix3d:
+         case X3D .X3DConstants .SFMatrix3f:
+         case X3D .X3DConstants .SFMatrix4d:
+         case X3D .X3DConstants .SFMatrix4f:
+         case X3D .X3DConstants .MFBool:
+         case X3D .X3DConstants .MFColor:
+         case X3D .X3DConstants .MFColorRGBA:
+         case X3D .X3DConstants .MFDouble:
+         case X3D .X3DConstants .MFFloat:
+         case X3D .X3DConstants .MFImage:
+         case X3D .X3DConstants .MFInt32:
+         case X3D .X3DConstants .MFMatrix3d:
+         case X3D .X3DConstants .MFMatrix3f:
+         case X3D .X3DConstants .MFMatrix4d:
+         case X3D .X3DConstants .MFMatrix4f:
+         case X3D .X3DConstants .MFRotation:
+         case X3D .X3DConstants .MFString:
+         case X3D .X3DConstants .MFTime:
+         case X3D .X3DConstants .MFVec2d:
+         case X3D .X3DConstants .MFVec2f:
+         case X3D .X3DConstants .MFVec3d:
+         case X3D .X3DConstants .MFVec3f:
+         case X3D .X3DConstants .MFVec4d:
+         case X3D .X3DConstants .MFVec4f:
+         {
+            if (process .env .SUNRISE_ENVIRONMENT !== "DEVELOPMENT")
+               break;
+
+            if ((field instanceof X3D .X3DArrayField) && field .length >= 10_000)
+               break;
+
+            this .refresh (parameter, node, field);
+
+            const input = folder .addMonitor (parameter, field .getName (),
+            {
+               multiline: true,
+               lineCount: 2,
+            });
+
+            const textarea = $(input .element) .find ("textarea") .removeAttr ("readonly");
+
+            textarea .on ("focusout", () => this .onchange (node, field, textarea .val ()));
+
+            if (element .attr ("description"))
+               $(input .element) .attr ("title", `Description:\n\n${element .attr ("description")}`);
+
+            field .addFieldCallback (this, () =>
+            {
+               this .refresh (parameter, node, field);
+               textarea .val (parameter [field .getName ()]);
+            });
+
+            break;
          }
       }
    }
@@ -344,6 +401,15 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .SFTime:
          {
             parameter [field .getName ()] = executionContext .toUnit (category, field .getValue ());
+            break;
+         }
+         case X3D .X3DConstants .SFImage:
+         case X3D .X3DConstants .SFMatrix3d:
+         case X3D .X3DConstants .SFMatrix3f:
+         case X3D .X3DConstants .SFMatrix4d:
+         case X3D .X3DConstants .SFMatrix4f:
+         {
+            parameter [field .getName ()] = field .toString ();
             break;
          }
          case X3D .X3DConstants .SFRotation:
@@ -370,6 +436,58 @@ module .exports = new class Panel extends Interface
             for (const key in field)
                p [key] = executionContext .toUnit (category, field [key]);
 
+            break;
+         }
+         case X3D .X3DConstants .MFBool:
+         case X3D .X3DConstants .MFDouble:
+         case X3D .X3DConstants .MFFloat:
+         case X3D .X3DConstants .MFImage:
+         case X3D .X3DConstants .MFInt32:
+         case X3D .X3DConstants .MFMatrix3d:
+         case X3D .X3DConstants .MFMatrix3f:
+         case X3D .X3DConstants .MFMatrix4d:
+         case X3D .X3DConstants .MFMatrix4f:
+         case X3D .X3DConstants .MFString:
+         case X3D .X3DConstants .MFTime:
+         {
+            const single = new (field .getSingleType ()) ();
+
+            single .setUnit (field .getUnit ());
+
+            const value = Array .from (field, value =>
+            {
+               single .setValue (value);
+
+               return single .toString ({ scene: node .getExecutionContext () });
+            })
+            .join (",\n");
+
+            parameter [field .getName ()] = value;
+            break;
+         }
+         case X3D .X3DConstants .MFColor:
+         case X3D .X3DConstants .MFColorRGBA:
+         case X3D .X3DConstants .MFRotation:
+         case X3D .X3DConstants .MFVec2d:
+         case X3D .X3DConstants .MFVec2f:
+         case X3D .X3DConstants .MFVec3d:
+         case X3D .X3DConstants .MFVec3f:
+         case X3D .X3DConstants .MFVec4d:
+         case X3D .X3DConstants .MFVec4f:
+         {
+            const single = new (field .getSingleType ()) ();
+
+            single .setUnit (field .getUnit ());
+
+            const value = Array .from (field, value =>
+            {
+               single .assign (value);
+
+               return single .toString ({ scene: node .getExecutionContext () });
+            })
+            .join (",\n");
+
+            parameter [field .getName ()] = value;
             break;
          }
       }
@@ -449,6 +567,55 @@ module .exports = new class Panel extends Interface
                                       executionContext .fromUnit (category, value .w));
 
             this .assign (executionContext, node, field, value);
+            break;
+         }
+         case X3D .X3DConstants .SFImage:
+         case X3D .X3DConstants .SFMatrix3d:
+         case X3D .X3DConstants .SFMatrix3f:
+         case X3D .X3DConstants .SFMatrix4d:
+         case X3D .X3DConstants .SFMatrix4f:
+         {
+            try
+            {
+               Editor .setFieldFromString (node .getExecutionContext (), node, field, value);
+            }
+            catch
+            {
+               $ .beep ();
+            }
+
+            break;
+         }
+         case X3D .X3DConstants .MFBool:
+         case X3D .X3DConstants .MFColor:
+         case X3D .X3DConstants .MFColorRGBA:
+         case X3D .X3DConstants .MFDouble:
+         case X3D .X3DConstants .MFFloat:
+         case X3D .X3DConstants .MFImage:
+         case X3D .X3DConstants .MFInt32:
+         case X3D .X3DConstants .MFMatrix3d:
+         case X3D .X3DConstants .MFMatrix3f:
+         case X3D .X3DConstants .MFMatrix4d:
+         case X3D .X3DConstants .MFMatrix4f:
+         case X3D .X3DConstants .MFRotation:
+         case X3D .X3DConstants .MFString:
+         case X3D .X3DConstants .MFTime:
+         case X3D .X3DConstants .MFVec2d:
+         case X3D .X3DConstants .MFVec2f:
+         case X3D .X3DConstants .MFVec3d:
+         case X3D .X3DConstants .MFVec3f:
+         case X3D .X3DConstants .MFVec4d:
+         case X3D .X3DConstants .MFVec4f:
+         {
+            try
+            {
+               Editor .setFieldFromString (node .getExecutionContext (), node, field, `[${value}]`);
+            }
+            catch
+            {
+               $ .beep ();
+            }
+
             break;
          }
       }
