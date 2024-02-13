@@ -356,15 +356,28 @@ module .exports = new class Panel extends Interface
             if (process .env .SUNRISE_ENVIRONMENT !== "DEVELOPMENT")
                break;
 
-            if ((field instanceof X3D .X3DArrayField) && field .length >= 10)
-               break;
+            // if ((field instanceof X3D .X3DArrayField) && field .length >= 10)
+            //    break;
 
             this .refresh (parameter, node, field);
 
-            folder .addMonitor (parameter, field .getName (),
+            const input = folder .addMonitor (parameter, field .getName (),
             {
                multiline: true,
                lineCount: 2,
+            });
+
+            const textarea = $(input .element) .find ("textarea") .removeAttr ("readonly");
+
+            textarea .on ("focusout", () => this .onchange (node, field, textarea .val ()));
+
+            if (element .attr ("description"))
+               $(input .element) .attr ("title", `Description:\n\n${element .attr ("description")}`);
+
+            field .addFieldCallback (this, () =>
+            {
+               this .refresh (parameter, node, field);
+               textarea .val (parameter [field .getName ()]);
             });
 
             break;
@@ -560,6 +573,19 @@ module .exports = new class Panel extends Interface
                                       executionContext .fromUnit (category, value .w));
 
             this .assign (executionContext, node, field, value);
+            break;
+         }
+         default:
+         {
+            try
+            {
+               Editor .setFieldFromString (node .getExecutionContext (), node, field, `[${value}]`);
+            }
+            catch
+            {
+               $ .beep ();
+            }
+
             break;
          }
       }
