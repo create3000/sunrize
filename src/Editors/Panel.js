@@ -575,7 +575,43 @@ module .exports = new class Panel extends Interface
             this .assign (executionContext, node, field, value);
             break;
          }
-         default:
+         case X3D .X3DConstants .SFImage:
+         case X3D .X3DConstants .SFMatrix3d:
+         case X3D .X3DConstants .SFMatrix3f:
+         case X3D .X3DConstants .SFMatrix4d:
+         case X3D .X3DConstants .SFMatrix4f:
+         {
+            try
+            {
+               Editor .setFieldFromString (node .getExecutionContext (), node, field, value);
+            }
+            catch
+            {
+               $ .beep ();
+            }
+
+            break;
+         }
+         case X3D .X3DConstants .MFBool:
+         case X3D .X3DConstants .MFColor:
+         case X3D .X3DConstants .MFColorRGBA:
+         case X3D .X3DConstants .MFDouble:
+         case X3D .X3DConstants .MFFloat:
+         case X3D .X3DConstants .MFImage:
+         case X3D .X3DConstants .MFInt32:
+         case X3D .X3DConstants .MFMatrix3d:
+         case X3D .X3DConstants .MFMatrix3f:
+         case X3D .X3DConstants .MFMatrix4d:
+         case X3D .X3DConstants .MFMatrix4f:
+         case X3D .X3DConstants .MFRotation:
+         case X3D .X3DConstants .MFString:
+         case X3D .X3DConstants .MFTime:
+         case X3D .X3DConstants .MFVec2d:
+         case X3D .X3DConstants .MFVec2f:
+         case X3D .X3DConstants .MFVec3d:
+         case X3D .X3DConstants .MFVec3f:
+         case X3D .X3DConstants .MFVec4d:
+         case X3D .X3DConstants .MFVec4f:
          {
             try
             {
