@@ -105,18 +105,6 @@ body {
   }
 }
 
-.tp-mllv_i:active {
-  background-color: var(--tp-monitor-background-color-active);
-}
-
-.tp-mllv_i:active {
-  background-color: var(--tp-monitor-background-color-focus);
-}
-
-.tp-mllv_i:hover {
-  background-color: var(--tp-monitor-background-color-hover);
-}
-
 body {
   /* Filter Colors */
 
