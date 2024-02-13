@@ -2524,11 +2524,15 @@ module .exports = class OutlineView extends Interface
          }
          default:
          {
+            const single = new (field .getSingleType ()) ();
+
+            single .setUnit (field .getUnit ());
+
             textarea .val (Array .from (field, value =>
             {
-               value .setUnit (field .getUnit ());
+               single .assign (value);
 
-               return value .toString ({ scene: node .getExecutionContext () })
+               return single .toString ({ scene: node .getExecutionContext () })
             })
             .join (",\n"));
             break;

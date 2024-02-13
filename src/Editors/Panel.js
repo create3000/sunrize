@@ -475,11 +475,15 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .MFVec4d:
          case X3D .X3DConstants .MFVec4f:
          {
+            const single = new (field .getSingleType ()) ();
+
+            single .setUnit (field .getUnit ());
+
             const value = Array .from (field, value =>
             {
-               value .setUnit (field .getUnit ());
+               single .assign (value);
 
-               return value .toString ({ scene: node .getExecutionContext () });
+               return single .toString ({ scene: node .getExecutionContext () });
             })
             .join (",\n");
 
