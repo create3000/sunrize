@@ -1363,3 +1363,7 @@ body.dark .ui-widget .library-list .component {
 .tp-mllv_i:active {
   background-color: var(--tp-monitor-background-color-focus);
 }
+
+.tp-mllv_i:read-only {
+  background-color: var(--tp-monitor-background-color-readonly);
+}
