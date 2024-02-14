@@ -136,8 +136,8 @@ module .exports = new class Panel extends Interface
          body   = $("body");
 
       let
-         bottom = parseInt (this .container .css ("bottom")),
-         right  = parseInt (this .container .css ("right"));
+         bottom = parseFloat (this .container .css ("bottom")) || 0,
+         right  = parseFloat (this .container .css ("right"))  || 0;
 
       if (offset .top + height > body .height ())
          bottom += (offset .top + height) - body .height () + 8;
