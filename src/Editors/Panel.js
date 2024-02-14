@@ -73,8 +73,8 @@ module .exports = new class Panel extends Interface
    onmousemove (event)
    {
       this .container .css ({
-         "right":  this .startX - event .pageX,
-         "bottom": this .startY - event .pageY,
+         "right":  `${this .startX - event .pageX}px`,
+         "bottom": `${this .startY - event .pageY}px`,
       });
    }
 
@@ -136,14 +136,8 @@ module .exports = new class Panel extends Interface
          body   = $("body");
 
       let
-         bottom = parseFloat (this .container .css ("bottom")) || 0,
-         right  = parseFloat (this .container .css ("right"))  || 0;
-
-      if (offset .top + height > body .height ())
-         bottom += (offset .top + height) - body .height () + 8;
-
-      if (offset .top < 0)
-         bottom += offset .top - 8;
+         right  = parseFloat (this .container .css ("right"))  || 0,
+         bottom = parseFloat (this .container .css ("bottom")) || 0;
 
       if (offset .left + width > body .width ())
          right += (offset .left + width) - body .width () + 8;
@@ -151,9 +145,15 @@ module .exports = new class Panel extends Interface
       if (offset .left < 0)
          right += offset .left - 8;
 
+      if (offset .top + height > body .height ())
+         bottom += (offset .top + height) - body .height () + 8;
+
+      if (offset .top < 0)
+         bottom += offset .top - 8;
+
       this .container .css ({
-         bottom: bottom,
-         right: right,
+         "right":  `${right}px`,
+         "bottom": `${bottom}px`,
       });
    }
 
