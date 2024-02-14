@@ -359,9 +359,6 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .MFVec4d:
          case X3D .X3DConstants .MFVec4f:
          {
-            if (process .env .SUNRISE_ENVIRONMENT !== "DEVELOPMENT")
-               break;
-
             const tooMuchValues = (field instanceof X3D .X3DArrayField) && field .length > MAX_ARRAY_VALUES;
 
             if (tooMuchValues)
