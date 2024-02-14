@@ -129,8 +129,14 @@ module .exports = new class Panel extends Interface
 
       // Move panel in view if top or left is outside.
 
+      if (this .container .offset () .top + this .container .height () > $("body") .height ())
+         this .container .css ("bottom", parseInt (this .container .css ("bottom")) + (this .container .offset () .top + this .container .height ()) - $("body") .height ());
+
       if (this .container .offset () .top < 0)
          this .container .css ("bottom", parseInt (this .container .css ("bottom")) + this .container .offset () .top);
+
+      if (this .container .offset () .left + this .container .width () > $("body") .width ())
+         this .container .css ("right", parseInt (this .container .css ("right")) + (this .container .offset () .left + this .container .width ()) - $("body") .width ());
 
       if (this .container .offset () .left < 0)
          this .container .css ("right", parseInt (this .container .css ("right")) + this .container .offset () .left);
