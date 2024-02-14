@@ -1583,24 +1583,38 @@ module .exports = class OutlineView extends Interface
       if (!node)
          return;
 
-      const description = X3DUOM .find (`ConcreteNode[name=${node .getTypeName ()}] InterfaceDefinition`) .attr ("appinfo");
+      const interfaceDefinitionElement = X3DUOM .find (`ConcreteNode[name=${node .getTypeName ()}] InterfaceDefinition`);
+
+      name .attr ("title", this .getNodeTitle (interfaceDefinitionElement));
+   }
+
+   updateFieldTitle (event)
+   {
+      const
+         name         = $(event .currentTarget),
+         element      = $(event .currentTarget) .closest (".field, .special", this .sceneGraph),
+         node         = this .objects .get (parseInt (element .attr ("node-id"))),
+         field        = this .objects .get (parseInt (element .attr ("field-id"))),
+         fieldElement = X3DUOM .find (`ConcreteNode[name=${node .getTypeName ()}] field[name=${field .getName ()}]`);
+
+      name .attr ("title", this .getFieldTitle (node, field, fieldElement));
+   }
+
+   getNodeTitle (interfaceDefinitionElement)
+   {
+      const description = interfaceDefinitionElement .attr ("appinfo");
 
       let title = "";
 
       if (description)
          title += `Description:\n\n${description}`;
 
-      name .attr ("title", title);
+      return title;
    }
 
-   updateFieldTitle (event)
+   getFieldTitle (node, field, fieldElement)
    {
-      const
-         name        = $(event .currentTarget),
-         element     = $(event .currentTarget) .closest (".field, .special", this .sceneGraph),
-         node        = this .objects .get (parseInt (element .attr ("node-id"))),
-         field       = this .objects .get (parseInt (element .attr ("field-id"))),
-         description = X3DUOM .find (`ConcreteNode[name=${node .getTypeName ()}] field[name=${field .getName ()}]`) .attr ("description");
+      const description = fieldElement .attr ("description");
 
       let title = "";
 
@@ -1612,7 +1626,7 @@ module .exports = class OutlineView extends Interface
       else
          title += `Current value: ${field .toString ({ scene: node .getExecutionContext () })}`;
 
-      name .attr ("title", title);
+      return title;
    }
 
    updateReferences (parent, node, field)

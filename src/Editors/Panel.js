@@ -111,10 +111,9 @@ module .exports = new class Panel extends Interface
 
       // Set title.
 
-      const interfaceDefinition = concreteNode .find (`InterfaceDefinition`);
+      const interfaceDefinitionElement = concreteNode .find (`InterfaceDefinition`);
 
-      if (interfaceDefinition .attr ("appinfo"))
-         this .container .attr ("title", `Description:\n\n${interfaceDefinition .attr ("appinfo")}`);
+      this .container .attr ("title", this .getNodeTitle (interfaceDefinitionElement));
 
       // Make first folder title draggable.
 
@@ -242,7 +241,7 @@ module .exports = new class Panel extends Interface
          return;
 
       const
-         element = concreteNode .find (`field[name=${field .getName ()}]`),
+         fieldElement = concreteNode .find (`field[name=${field .getName ()}]`),
          options = { };
 
       switch (field .getType ())
@@ -260,7 +259,7 @@ module .exports = new class Panel extends Interface
          }
          case X3D .X3DConstants .SFString:
          {
-            const enumerations = element .find ("enumeration") .map (function () { return this .getAttribute ("value"); }) .get ();
+            const enumerations = fieldElement .find ("enumeration") .map (function () { return this .getAttribute ("value"); }) .get ();
 
             if (enumerations .length)
             {
@@ -301,8 +300,8 @@ module .exports = new class Panel extends Interface
             const
                executionContext = node .getExecutionContext (),
                category         = field .getUnit (),
-               min              = element .attr ("minInclusive") ?? element .attr ("minExclusive"),
-               max              = element .attr ("maxInclusive") ?? element .attr ("maxExclusive");
+               min              = fieldElement .attr ("minInclusive") ?? fieldElement .attr ("minExclusive"),
+               max              = fieldElement .attr ("maxInclusive") ?? fieldElement .attr ("maxExclusive");
 
             if (min !== undefined)
                options .min = executionContext .toUnit (category, parseFloat (min));
@@ -316,8 +315,7 @@ module .exports = new class Panel extends Interface
 
             input .on ("change", ({ value }) => this .onchange (node, field, value));
 
-            if (element .attr ("description"))
-               $(input .element) .attr ("title", `Description:\n\n${element .attr ("description")}`);
+            $(input .element) .attr ("title", this .getFieldTitle (node, field, fieldElement));
 
             field .addFieldCallback (this, () =>
             {
@@ -371,8 +369,7 @@ module .exports = new class Panel extends Interface
 
             textarea .on ("focusout", () => this .onchange (node, field, textarea .val ()));
 
-            if (element .attr ("description"))
-               $(input .element) .attr ("title", `Description:\n\n${element .attr ("description")}`);
+            $(input .element) .attr ("title", this .getFieldTitle (node, field, fieldElement));
 
             field .addFieldCallback (this, () =>
             {
@@ -638,5 +635,34 @@ module .exports = new class Panel extends Interface
 
          this .field = null;
       }
+   }
+
+   getNodeTitle (interfaceDefinitionElement)
+   {
+      const description = interfaceDefinitionElement .attr ("appinfo");
+
+      let title = "";
+
+      if (description)
+         title += `Description:\n\n${description}`;
+
+      return title;
+   }
+
+   getFieldTitle (node, field, fieldElement)
+   {
+      const description = fieldElement .attr ("description");
+
+      let title = "";
+
+      if (description)
+         title += `Description:\n\n${description}\n\n`;
+
+      if (field instanceof X3D .X3DArrayField)
+         title += `Number of values: ${field .length}`;
+      else
+         title += `Current value: ${field .toString ({ scene: node .getExecutionContext () })}`;
+
+      return title;
    }
 };
