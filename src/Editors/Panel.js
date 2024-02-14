@@ -103,7 +103,7 @@ module .exports = new class Panel extends Interface
 
       const concreteNode = X3DUOM .find (`ConcreteNode[name=${node .getTypeName ()}]`);
 
-      node .getScene () .units .addInterest ("onselection", this);
+      this .browser .currentScene .units .addInterest ("updateNode", this);
 
       this .addBlades (node, concreteNode);
 
@@ -139,10 +139,15 @@ module .exports = new class Panel extends Interface
 
       // Disconnect interests.
 
-      node .getScene () .units .removeInterest ("onselection", this);
+      this .browser .currentScene .units .removeInterest ("updateNode", this);
 
       for (const field of node .getFields ())
          field .removeFieldCallback (this);
+   }
+
+   updateNode ()
+   {
+      this .setNode (this .node);
    }
 
    addBlades (node, concreteNode)
@@ -298,7 +303,7 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .SFVec4f:
          {
             const
-               executionContext = node .getExecutionContext (),
+               executionContext = this .browser .currentScene,
                category         = field .getUnit (),
                min              = fieldElement .attr ("minInclusive") ?? fieldElement .attr ("minExclusive"),
                max              = fieldElement .attr ("maxInclusive") ?? fieldElement .attr ("maxExclusive");
@@ -385,7 +390,7 @@ module .exports = new class Panel extends Interface
    refresh (parameter, node, field)
    {
       const
-         executionContext = node .getExecutionContext (),
+         executionContext = this .browser .currentScene,
          category         = field .getUnit ();
 
       switch (field .getType ())
@@ -455,7 +460,7 @@ module .exports = new class Panel extends Interface
             {
                single .setValue (value);
 
-               return single .toString ({ scene: node .getExecutionContext () });
+               return single .toString ({ scene: this .browser .currentScene });
             })
             .join (",\n");
 
@@ -480,7 +485,7 @@ module .exports = new class Panel extends Interface
             {
                single .assign (value);
 
-               return single .toString ({ scene: node .getExecutionContext () });
+               return single .toString ({ scene: this .browser .currentScene });
             })
             .join (",\n");
 
@@ -493,7 +498,7 @@ module .exports = new class Panel extends Interface
    onchange (node, field, value)
    {
       const
-         executionContext = node .getExecutionContext (),
+         executionContext = this .browser .currentScene,
          category         = field .getUnit ();
 
       switch (field .getType ())
@@ -574,7 +579,7 @@ module .exports = new class Panel extends Interface
          {
             try
             {
-               Editor .setFieldFromString (node .getExecutionContext (), node, field, value);
+               Editor .setFieldFromString (this .browser .currentScene, node, field, value);
             }
             catch
             {
@@ -606,7 +611,7 @@ module .exports = new class Panel extends Interface
          {
             try
             {
-               Editor .setFieldFromString (node .getExecutionContext (), node, field, `[${value}]`);
+               Editor .setFieldFromString (this .browser .currentScene, node, field, `[${value}]`);
             }
             catch
             {
@@ -661,7 +666,7 @@ module .exports = new class Panel extends Interface
       if (field instanceof X3D .X3DArrayField)
          title += `Number of values: ${field .length}`;
       else
-         title += `Current value: ${field .toString ({ scene: node .getExecutionContext () })}`;
+         title += `Current value: ${field .toString ({ scene: this .browser .currentScene })}`;
 
       return title;
    }
