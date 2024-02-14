@@ -131,7 +131,7 @@ module .exports = new class Panel extends Interface
    {
       // Remove all folders.
 
-      for (const folder of [... this .pane .children])
+      for (const folder of Array .from (this .pane .children))
          folder .dispose ();
 
       if (!node)
@@ -452,7 +452,9 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .MFString:
          case X3D .X3DConstants .MFTime:
          {
-            const single = new (field .getSingleType ()) ();
+            const
+               single  = new (field .getSingleType ()) (),
+               options = { scene: executionContext };
 
             single .setUnit (field .getUnit ());
 
@@ -460,7 +462,7 @@ module .exports = new class Panel extends Interface
             {
                single .setValue (value);
 
-               return single .toString ({ scene: this .browser .currentScene });
+               return single .toString (options);
             })
             .join (",\n");
 
@@ -477,7 +479,9 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .MFVec4d:
          case X3D .X3DConstants .MFVec4f:
          {
-            const single = new (field .getSingleType ()) ();
+            const
+               single  = new (field .getSingleType ()) (),
+               options = { scene: executionContext };
 
             single .setUnit (field .getUnit ());
 
@@ -485,7 +489,7 @@ module .exports = new class Panel extends Interface
             {
                single .assign (value);
 
-               return single .toString ({ scene: this .browser .currentScene });
+               return single .toString (options);
             })
             .join (",\n");
 
@@ -579,7 +583,7 @@ module .exports = new class Panel extends Interface
          {
             try
             {
-               Editor .setFieldFromString (this .browser .currentScene, node, field, value);
+               Editor .setFieldFromString (executionContext, node, field, value);
             }
             catch
             {
@@ -611,7 +615,7 @@ module .exports = new class Panel extends Interface
          {
             try
             {
-               Editor .setFieldFromString (this .browser .currentScene, node, field, `[${value}]`);
+               Editor .setFieldFromString (executionContext, node, field, `[${value}]`);
             }
             catch
             {

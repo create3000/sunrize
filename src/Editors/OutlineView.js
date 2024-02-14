@@ -2513,7 +2513,9 @@ module .exports = class OutlineView extends Interface
          case X3D .X3DConstants .MFFloat:
          case X3D .X3DConstants .MFTime:
          {
-            const single = new (field .getSingleType ()) ();
+            const
+               single  = new (field .getSingleType ()) (),
+               options = { scene: node .getExecutionContext () };
 
             single .setUnit (field .getUnit ());
 
@@ -2521,7 +2523,7 @@ module .exports = class OutlineView extends Interface
             {
                single .setValue (value);
 
-               return single .toString ({ scene: node .getExecutionContext () });
+               return single .toString (options);
             })
             .join (",\n"));
             break;
@@ -2538,7 +2540,9 @@ module .exports = class OutlineView extends Interface
          }
          default:
          {
-            const single = new (field .getSingleType ()) ();
+            const
+               single  = new (field .getSingleType ()) (),
+               options = { scene: node .getExecutionContext () };
 
             single .setUnit (field .getUnit ());
 
@@ -2546,7 +2550,7 @@ module .exports = class OutlineView extends Interface
             {
                single .assign (value);
 
-               return single .toString ({ scene: node .getExecutionContext () })
+               return single .toString (options)
             })
             .join (",\n"));
             break;
