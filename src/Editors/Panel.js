@@ -4,7 +4,8 @@ const
    Interface = require ("../Application/Interface"),
    X3D       = require ("../X3D"),
    Editor    = require ("../Undo/Editor"),
-   X3DUOM    = require ("../Bits/X3DUOM");
+   X3DUOM    = require ("../Bits/X3DUOM"),
+   _         = require ("../Application/GetText");
 
 module .exports = new class Panel extends Interface
 {
@@ -318,9 +319,9 @@ module .exports = new class Panel extends Interface
 
             const input = folder .addInput (parameter, field .getName (), options);
 
-            input .on ("change", ({ value }) => this .onchange (node, field, value));
-
             $(input .element) .attr ("title", this .getFieldTitle (node, field, fieldElement));
+
+            input .on ("change", ({ value }) => this .onchange (node, field, value));
 
             field .addFieldCallback (this, () =>
             {
@@ -359,22 +360,27 @@ module .exports = new class Panel extends Interface
             if (process .env .SUNRISE_ENVIRONMENT !== "DEVELOPMENT")
                break;
 
-            if ((field instanceof X3D .X3DArrayField) && field .length >= 10_000)
-               break;
+            const tooMuchValues = (field instanceof X3D .X3DArrayField) && field .length >= 10_000;
 
-            this .refresh (parameter, node, field);
+            if (tooMuchValues)
+               parameter [field .getName ()] = _("Too much values.");
+            else
+               this .refresh (parameter, node, field);
 
             const input = folder .addMonitor (parameter, field .getName (),
             {
                multiline: true,
-               lineCount: 2,
+               lineCount: tooMuchValues ? 1 : 2,
             });
+
+            $(input .element) .attr ("title", this .getFieldTitle (node, field, fieldElement));
+
+            if (tooMuchValues)
+               break;
 
             const textarea = $(input .element) .find ("textarea") .removeAttr ("readonly");
 
             textarea .on ("focusout", () => this .onchange (node, field, textarea .val ()));
-
-            $(input .element) .attr ("title", this .getFieldTitle (node, field, fieldElement));
 
             field .addFieldCallback (this, () =>
             {
