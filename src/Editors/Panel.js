@@ -126,6 +126,14 @@ module .exports = new class Panel extends Interface
       {
          event .stopPropagation ();
       });
+
+      // Move panel in view if top or left is outside.
+
+      if (this .container .offset () .top < 0)
+         this .container .css ("bottom", parseInt (this .container .css ("bottom")) + this .container .offset () .top);
+
+      if (this .container .offset () .left < 0)
+         this .container .css ("right", parseInt (this .container .css ("right")) + this .container .offset () .left);
    }
 
    removeNode (node)
