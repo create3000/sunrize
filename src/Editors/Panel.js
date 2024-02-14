@@ -130,16 +130,16 @@ module .exports = new class Panel extends Interface
       // Move panel in view if top or left is outside.
 
       if (this .container .offset () .top + this .container .height () > $("body") .height ())
-         this .container .css ("bottom", parseInt (this .container .css ("bottom")) + (this .container .offset () .top + this .container .height ()) - $("body") .height ());
+         this .container .css ("bottom", parseInt (this .container .css ("bottom")) + (this .container .offset () .top + this .container .height ()) - $("body") .height () + 8);
 
       if (this .container .offset () .top < 0)
-         this .container .css ("bottom", parseInt (this .container .css ("bottom")) + this .container .offset () .top);
+         this .container .css ("bottom", parseInt (this .container .css ("bottom")) + this .container .offset () .top - 8);
 
       if (this .container .offset () .left + this .container .width () > $("body") .width ())
-         this .container .css ("right", parseInt (this .container .css ("right")) + (this .container .offset () .left + this .container .width ()) - $("body") .width ());
+         this .container .css ("right", parseInt (this .container .css ("right")) + (this .container .offset () .left + this .container .width ()) - $("body") .width () + 8);
 
       if (this .container .offset () .left < 0)
-         this .container .css ("right", parseInt (this .container .css ("right")) + this .container .offset () .left);
+         this .container .css ("right", parseInt (this .container .css ("right")) + this .container .offset () .left - 8);
    }
 
    removeNode (node)
