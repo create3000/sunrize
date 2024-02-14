@@ -62,6 +62,7 @@ module .exports = new class Tabs
 
       // Forward Actions
 
+      this .forwardToActiveTab ("reload");
       this .forwardToAllTabs ("auto-save");
       this .forwardToActiveTab ("export-as");
 

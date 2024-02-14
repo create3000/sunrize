@@ -240,6 +240,15 @@ module .exports = class Application
                },
                { type: "separator" },
                {
+                  label: _("Reload"),
+                  accelerator: "F5",
+                  click: () =>
+                  {
+                     this .mainWindow .webContents .send ("reload");
+                  },
+               },
+               { type: "separator" },
+               {
                   label: _("Save"),
                   accelerator: "CmdOrCtrl+S",
                   click: () =>
