@@ -1621,6 +1621,8 @@ module .exports = class OutlineView extends Interface
       if (description)
          title += `Description:\n\n${description}\n\n`;
 
+      title += `Type: ${field .getTypeName ()}\n`;
+
       if (field instanceof X3D .X3DArrayField)
          title += `Number of values: ${field .length}`;
       else
