@@ -7,8 +7,6 @@ const
    X3DUOM    = require ("../Bits/X3DUOM"),
    _         = require ("../Application/GetText");
 
-const MAX_ARRAY_VALUES = 10_000;
-
 module .exports = new class Panel extends Interface
 {
    constructor ()
@@ -359,7 +357,10 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .MFVec4d:
          case X3D .X3DConstants .MFVec4f:
          {
-            const tooMuchValues = (field instanceof X3D .X3DArrayField) && field .length > MAX_ARRAY_VALUES;
+            if (process .env .SUNRISE_ENVIRONMENT !== "DEVELOPMENT")
+               break;
+
+            const tooMuchValues = (field instanceof X3D .X3DArrayField) && field .length >= 10_000;
 
             if (tooMuchValues)
                parameter [field .getName ()] = _("Too much values.");
