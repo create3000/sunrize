@@ -2550,7 +2550,7 @@ module .exports = class OutlineView extends Interface
             {
                single .assign (value);
 
-               return single .toString (options)
+               return single .toString (options);
             })
             .join (",\n"));
             break;
@@ -2563,151 +2563,151 @@ module .exports = class OutlineView extends Interface
       const
          element = $("#" + leaf .node .id),
          node    = this .getNode (element),
-         field   = this .getField (element .closest (".field, .scene", this .sceneGraph))
+         field   = this .getField (element .closest (".field, .scene", this .sceneGraph));
 
-      let full = node .getUserData (_fullExpanded) || element .data ("full-expanded")
+      let full = node .getUserData (_fullExpanded) || element .data ("full-expanded");
 
       if (!element .data ("auto-expand"))
       {
          if (this .actionKeys .value === ActionKeys .Shift)
-            full = !full
+            full = !full;
       }
 
-      element .data ("auto-expand", false)
+      element .data ("auto-expand", false);
 
-      this .nodeCloseClones (element)
-      this .beforeOpen (element)
-      this .expandNode (element, node, full)
+      this .nodeCloseClones (element);
+      this .beforeOpen (element);
+      this .expandNode (element, node, full);
 
-      node .setUserData (_expanded,     field ?.getId () ?? true)
-      node .setUserData (_fullExpanded, full)
+      node .setUserData (_expanded,     field ?.getId () ?? true);
+      node .setUserData (_fullExpanded, full);
    }
 
    nodeCloseClones (element)
    {
-      const opened = this .sceneGraph .find (`.node[node-id=${element .attr ("node-id")}], .imported-node[node-id=${element .attr ("node-id")}], .exported-node[node-id=${element .attr ("node-id")}]`)
+      const opened = this .sceneGraph .find (`.node[node-id=${element .attr ("node-id")}], .imported-node[node-id=${element .attr ("node-id")}], .exported-node[node-id=${element .attr ("node-id")}]`);
 
       opened .each (function (key, value)
       {
          if (value !== element .get (0))
-            $(value) .jstree ("close_node", value)
+            $(value) .jstree ("close_node", value);
       })
    }
 
    fieldBeforeOpen (event, leaf)
    {
-      const element = $("#" + leaf .node .id)
+      const element = $("#" + leaf .node .id);
 
       if (element .hasClass ("proto"))
       {
-         this .nodeBeforeOpen (event, leaf)
+         this .nodeBeforeOpen (event, leaf);
       }
 
       if (element .hasClass ("scene"))
       {
-         const scene = this .getNode (element)
+         const scene = this .getNode (element);
 
-         this .beforeOpen (element)
-         this .expandScene (element, scene)
+         this .beforeOpen (element);
+         this .expandScene (element, scene);
 
-         scene .setUserData (_expanded, true)
+         scene .setUserData (_expanded, true);
       }
 
       if (element .is (".field, .special"))
       {
          const
             node  = this .getNode (element),
-            field = this .getField (element)
+            field = this .getField (element);
 
-         let full = field .getUserData (_fullExpanded) || element .data ("full-expanded")
+         let full = field .getUserData (_fullExpanded) || element .data ("full-expanded");
 
          if (!element .data ("auto-expand"))
          {
             if (this .actionKeys .value === ActionKeys .Shift)
-               full = !full
+               full = !full;
          }
 
-         element .data ("auto-expand", false)
+         element .data ("auto-expand", false);
 
-         this .beforeOpen (element)
-         this .expandField (element, node, field, "field", full)
+         this .beforeOpen (element);
+         this .expandField (element, node, field, "field", full);
 
-         field .setUserData (_expanded,     true)
-         field .setUserData (_fullExpanded, full)
+         field .setUserData (_expanded,     true);
+         field .setUserData (_fullExpanded, full);
       }
    }
 
    beforeOpen (element)
    {
-      element .find (".jstree-ocl") .text ("arrow_drop_down")
-      element .find ("ul") .remove ()
+      element .find (".jstree-ocl") .text ("arrow_drop_down");
+      element .find ("ul") .remove ();
    }
 
    nodeCloseNode (event, leaf)
    {
       const
          element = $("#" + leaf .node .id),
-         node    = this .getNode (element)
+         node    = this .getNode (element);
 
-      node .setUserData (_expanded, false)
+      node .setUserData (_expanded, false);
 
-      this .closeNode (element)
+      this .closeNode (element);
    }
 
    fieldCloseNode (event, leaf)
    {
-      const element = $("#" + leaf .node .id)
+      const element = $("#" + leaf .node .id);
 
       if (element .hasClass ("proto"))
       {
-         this .nodeCloseNode (event, leaf)
+         this .nodeCloseNode (event, leaf);
       }
 
       if (element .hasClass ("scene"))
       {
-         const scene = this .getNode (element)
+         const scene = this .getNode (element);
 
-         element .find (".access-type") .removeClass ("hidden")
+         element .find (".access-type") .removeClass ("hidden");
 
-         scene .setUserData (_expanded, false)
+         scene .setUserData (_expanded, false);
 
-         this .closeNode (element)
+         this .closeNode (element);
       }
 
       if (element .is (".field, .special"))
       {
-         const field = this .getField (element)
+         const field = this .getField (element);
 
-         element .find (".access-type") .removeClass ("hidden")
+         element .find (".access-type") .removeClass ("hidden");
 
-         field .setUserData (_expanded, false)
+         field .setUserData (_expanded, false);
 
-         this .closeNode (element)
+         this .closeNode (element);
       }
    }
 
    closeNode (element)
    {
-      element .find (".jstree-ocl") .text ("arrow_right")
-      element .data ("expanded",      false)
-      element .data ("full-expanded", false)
+      element .find (".jstree-ocl") .text ("arrow_right");
+      element .data ("expanded",      false);
+      element .data ("full-expanded", false);
 
       // Collapse children.
 
-      const child = element .find ("> .subtree")
+      const child = element .find ("> .subtree");
 
-      child .hide ()
-      this .afterClose (element)
+      child .hide ();
+      this .afterClose (element);
    }
 
    afterClose (element)
    {
-      this .removeSubtree (element)
+      this .removeSubtree (element);
 
       if (this .actionKeys .value === ActionKeys .Shift)
-         element .jstree ("open_node", element)
+         element .jstree ("open_node", element);
 
-      this .requestUpdateRouteGraph ()
+      this .requestUpdateRouteGraph ();
    }
 
    removeSubtree (element)
@@ -2853,12 +2853,12 @@ module .exports = class OutlineView extends Interface
 
    selectAll ()
    {
-      this .deselectAll ()
+      this .deselectAll ();
 
-      const elements = this .sceneGraph .find ("> .root-nodes > ul > li[node-id]")
+      const elements = this .sceneGraph .find ("> .root-nodes > ul > li[node-id]");
 
       for (const element of elements)
-         this .selectNodeElement ($(element), true)
+         this .selectNodeElement ($(element), true);
    }
 
    deselectAll ()
@@ -2874,22 +2874,22 @@ module .exports = class OutlineView extends Interface
 
    toggleVisibility (event)
    {
-      event .preventDefault ()
-      event .stopImmediatePropagation ()
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
 
       const
          target  = $(event .target),
          element = target .closest (".node", this .sceneGraph),
          node    = this .getNode (element),
-         hidden  = !node .isHidden ()
+         hidden  = !node .isHidden ();
 
-      node .setHidden (hidden)
+      node .setHidden (hidden);
 
       this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
          .find ("> .item .visibility")
          .removeClass ("off")
          .addClass (hidden ? "off" : "")
-         .text (hidden ? "visibility_off" : "visibility")
+         .text (hidden ? "visibility_off" : "visibility");
    }
 
    toggleTool (event)
