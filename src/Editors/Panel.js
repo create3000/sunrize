@@ -356,6 +356,7 @@ module .exports = new class Panel extends Interface
             {
                this .refresh (parameter, node, field);
                input .refresh ();
+               $(input .element) .attr ("title", this .getFieldTitle (node, field, fieldElement));
             });
 
             break;
@@ -415,6 +416,7 @@ module .exports = new class Panel extends Interface
             {
                this .refresh (parameter, node, field);
                textarea .val (parameter [field .getName ()]);
+               $(input .element) .attr ("title", this .getFieldTitle (node, field, fieldElement));
             });
 
             break;
@@ -695,6 +697,11 @@ module .exports = new class Panel extends Interface
 
    getFieldTitle (node, field, fieldElement)
    {
+      function truncate (string, n)
+      {
+         return string .length > n ? string .slice (0, n - 1) + "..." : string;
+      };
+
       const description = fieldElement .attr ("description");
 
       let title = "";
@@ -706,6 +713,10 @@ module .exports = new class Panel extends Interface
 
       if (field instanceof X3D .X3DArrayField)
          title += `Number of values: ${field .length}`;
+      else if (field .getType () === X3D .X3DConstants .SFImage)
+         title += `Current value: ${field .width} ${field .height} ${field .comp} ...`;
+      else if (field .getType () === X3D .X3DConstants .SFString)
+         title += `Current value: ${truncate (field .toString (), 20)}`;
       else
          title += `Current value: ${field .toString ({ scene: this .browser .currentScene })}`;
 
