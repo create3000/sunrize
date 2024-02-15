@@ -1348,6 +1348,11 @@ body.dark .ui-widget .library-list .component {
   }
 }
 
+.tp-dfwv {
+  max-height: 98vh;
+  overflow: scroll;
+}
+
 .tp-lblv_v {
   width: 185px !important;
 }
