@@ -348,7 +348,7 @@ module .exports = new class Panel extends Interface
 
             const input = folder .addInput (parameter, field .getName (), options);
 
-            $(input .element) .attr ("title", this .getFieldTitle (node, field, fieldElement));
+            $(input .element) .on ("mouseenter", () => this .updateFieldTitle (input, node, field, fieldElement));
 
             input .on ("change", ({ value }) => this .onchange (node, field, value));
 
@@ -356,7 +356,6 @@ module .exports = new class Panel extends Interface
             {
                this .refresh (parameter, node, field);
                input .refresh ();
-               $(input .element) .attr ("title", this .getFieldTitle (node, field, fieldElement));
             });
 
             break;
@@ -403,7 +402,7 @@ module .exports = new class Panel extends Interface
                lineCount: tooMuchValues ? 1 : 2,
             });
 
-            $(input .element) .attr ("title", this .getFieldTitle (node, field, fieldElement));
+            $(input .element) .on ("mouseenter", () => this .updateFieldTitle (input, node, field, fieldElement));
 
             if (tooMuchValues)
                break;
@@ -416,7 +415,6 @@ module .exports = new class Panel extends Interface
             {
                this .refresh (parameter, node, field);
                textarea .val (parameter [field .getName ()]);
-               $(input .element) .attr ("title", this .getFieldTitle (node, field, fieldElement));
             });
 
             break;
@@ -721,5 +719,10 @@ module .exports = new class Panel extends Interface
          title += `Current value: ${field .toString ({ scene: this .browser .currentScene })}`;
 
       return title;
+   }
+
+   updateFieldTitle (input, node, field, fieldElement)
+   {
+      $(input .element) .attr ("title", this .getFieldTitle (node, field, fieldElement));
    }
 };
