@@ -1349,7 +1349,7 @@ body.dark .ui-widget .library-list .component {
 }
 
 .tp-dfwv {
-  max-height: 98vh;
+  max-height: calc(100vh - 16px);
   overflow: auto;
 }
 
