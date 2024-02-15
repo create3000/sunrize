@@ -1350,7 +1350,7 @@ body.dark .ui-widget .library-list .component {
 
 .tp-dfwv {
   max-height: 98vh;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .tp-lblv_v {
