@@ -43,7 +43,8 @@ module .exports = class Interface
       this .config .file   = this .#createFileConfig ("");
       this .config .last   = this .config .file;
 
-      this .browser .addBrowserCallback (this, X3D .X3DConstants .INITIALIZED_EVENT, this .browserInitialized .bind (this));
+      $(window) .on ("unload", () => this .set_browser_initialized ());
+      this .browser .addBrowserCallback (this, X3D .X3DConstants .INITIALIZED_EVENT, this .set_browser_initialized .bind (this));
       CSS .colorScheme .addEventListener ("change", event => this .colorScheme (!! event .matches));
    }
 
@@ -53,7 +54,7 @@ module .exports = class Interface
 
       // Configure
 
-      this .browserInitialized (X3D .X3DConstants .INITIALIZED_EVENT);
+      this .set_browser_initialized ();
    }
 
    initialize () { }
@@ -121,7 +122,7 @@ module .exports = class Interface
     *
     * @param {string} event
     */
-   browserInitialized (event)
+   set_browser_initialized ()
    {
       this .config .last = this .config .file;
       this .config .file = this .#createFileConfig ();

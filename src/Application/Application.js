@@ -67,10 +67,6 @@ module .exports = class Application
          expandExternProtoDeclarations: true,
          expandPrototypeInstances: true,
          expandInlineNodes: true,
-         primitiveQuality: "MEDIUM",
-         textureQuality: "MEDIUM",
-         rubberband: true,
-         timings: false,
       });
 
       Template .create (path .join (__dirname, "../assets/html/application-template.html"));
@@ -237,6 +233,15 @@ module .exports = class Application
                         role: "clearRecentDocuments",
                      },
                   ],
+               },
+               { type: "separator" },
+               {
+                  label: _("Reload"),
+                  accelerator: "F5",
+                  click: () =>
+                  {
+                     this .mainWindow .webContents .send ("reload");
+                  },
                },
                { type: "separator" },
                {

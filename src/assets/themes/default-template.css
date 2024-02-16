@@ -61,7 +61,7 @@ th, td,
   color: var(--text-color);
 }
 
-label {
+.ui-widget label {
   position: relative;
   top: -2px;
   margin-left: 0.5em;
@@ -1348,6 +1348,11 @@ body.dark .ui-widget .library-list .component {
   }
 }
 
+.tp-dfwv {
+  max-height: calc(100vh - 16px);
+  overflow: auto;
+}
+
 .tp-lblv_v {
   width: 185px !important;
 }
@@ -1362,4 +1367,8 @@ body.dark .ui-widget .library-list .component {
 
 .tp-mllv_i:active {
   background-color: var(--tp-monitor-background-color-focus);
+}
+
+.tp-mllv_i:read-only {
+  background-color: var(--tp-monitor-background-color-readonly);
 }

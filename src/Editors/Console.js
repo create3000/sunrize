@@ -85,9 +85,9 @@ module .exports = class Console extends Interface
       this .historyIndex = this .history .length;
    }
 
-   async browserInitialized (event)
+   async set_browser_initialized ()
    {
-      super .browserInitialized (event);
+      super .set_browser_initialized ();
 
       await this .browser .loadComponents (this .browser .getComponent ("Scripting"));
 

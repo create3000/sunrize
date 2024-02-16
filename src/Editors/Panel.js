@@ -4,7 +4,8 @@ const
    Interface = require ("../Application/Interface"),
    X3D       = require ("../X3D"),
    Editor    = require ("../Undo/Editor"),
-   X3DUOM    = require ("../Bits/X3DUOM");
+   X3DUOM    = require ("../Bits/X3DUOM"),
+   _         = require ("../Application/GetText");
 
 module .exports = new class Panel extends Interface
 {
@@ -72,8 +73,8 @@ module .exports = new class Panel extends Interface
    onmousemove (event)
    {
       this .container .css ({
-         "right":  this .startX - event .pageX,
-         "bottom": this .startY - event .pageY,
+         "right":  `${this .startX - event .pageX}px`,
+         "bottom": `${this .startY - event .pageY}px`,
       });
    }
 
@@ -103,7 +104,7 @@ module .exports = new class Panel extends Interface
 
       const concreteNode = X3DUOM .find (`ConcreteNode[name=${node .getTypeName ()}]`);
 
-      node .getScene () .units .addInterest ("onselection", this);
+      this .browser .currentScene .units .addInterest ("updateNode", this);
 
       this .addBlades (node, concreteNode);
 
@@ -111,10 +112,9 @@ module .exports = new class Panel extends Interface
 
       // Set title.
 
-      const interfaceDefinition = concreteNode .find (`InterfaceDefinition`);
+      const interfaceDefinitionElement = concreteNode .find (`InterfaceDefinition`);
 
-      if (interfaceDefinition .attr ("appinfo"))
-         this .container .attr ("title", `Description:\n\n${interfaceDefinition .attr ("appinfo")}`);
+      this .container .attr ("title", this .getNodeTitle (interfaceDefinitionElement));
 
       // Make first folder title draggable.
 
@@ -126,13 +126,42 @@ module .exports = new class Panel extends Interface
       {
          event .stopPropagation ();
       });
+
+      // Move panel in view if top, left, bottom or right is outside of window.
+
+      const
+         offset = this .container .offset (),
+         width  = this .container .width (),
+         height = this .container .height (),
+         body   = $("body");
+
+      let
+         right  = parseFloat (this .container .css ("right"))  || 0,
+         bottom = parseFloat (this .container .css ("bottom")) || 0;
+
+      if (offset .left + width > body .width ())
+         right += (offset .left + width) - body .width () + 8;
+
+      if (offset .left < 0)
+         right += offset .left - 8;
+
+      if (offset .top + height > body .height ())
+         bottom += (offset .top + height) - body .height () + 8;
+
+      if (offset .top < 0)
+         bottom += offset .top - 8;
+
+      this .container .css ({
+         "right":  `${right}px`,
+         "bottom": `${bottom}px`,
+      });
    }
 
    removeNode (node)
    {
       // Remove all folders.
 
-      for (const folder of [... this .pane .children])
+      for (const folder of Array .from (this .pane .children))
          folder .dispose ();
 
       if (!node)
@@ -140,10 +169,15 @@ module .exports = new class Panel extends Interface
 
       // Disconnect interests.
 
-      node .getScene () .units .removeInterest ("onselection", this);
+      this .browser .currentScene .units .removeInterest ("updateNode", this);
 
       for (const field of node .getFields ())
          field .removeFieldCallback (this);
+   }
+
+   updateNode ()
+   {
+      this .setNode (this .node);
    }
 
    addBlades (node, concreteNode)
@@ -242,7 +276,7 @@ module .exports = new class Panel extends Interface
          return;
 
       const
-         element = concreteNode .find (`field[name=${field .getName ()}]`),
+         fieldElement = concreteNode .find (`field[name=${field .getName ()}]`),
          options = { };
 
       switch (field .getType ())
@@ -260,7 +294,7 @@ module .exports = new class Panel extends Interface
          }
          case X3D .X3DConstants .SFString:
          {
-            const enumerations = element .find ("enumeration") .map (function () { return this .getAttribute ("value"); }) .get ();
+            const enumerations = fieldElement .find ("enumeration") .map (function () { return this .getAttribute ("value"); }) .get ();
 
             if (enumerations .length)
             {
@@ -299,10 +333,10 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .SFVec4f:
          {
             const
-               executionContext = node .getExecutionContext (),
+               executionContext = this .browser .currentScene,
                category         = field .getUnit (),
-               min              = element .attr ("minInclusive") ?? element .attr ("minExclusive"),
-               max              = element .attr ("maxInclusive") ?? element .attr ("maxExclusive");
+               min              = fieldElement .attr ("minInclusive") ?? fieldElement .attr ("minExclusive"),
+               max              = fieldElement .attr ("maxInclusive") ?? fieldElement .attr ("maxExclusive");
 
             if (min !== undefined)
                options .min = executionContext .toUnit (category, parseFloat (min));
@@ -314,10 +348,12 @@ module .exports = new class Panel extends Interface
 
             const input = folder .addInput (parameter, field .getName (), options);
 
-            input .on ("change", ({ value }) => this .onchange (node, field, value));
+            $(input .element) .on ("mouseenter", () =>
+            {
+               $(input .element) .attr ("title", this .getFieldTitle (node, field, fieldElement));
+            });
 
-            if (element .attr ("description"))
-               $(input .element) .attr ("title", `Description:\n\n${element .attr ("description")}`);
+            input .on ("change", ({ value }) => this .onchange (node, field, value));
 
             field .addFieldCallback (this, () =>
             {
@@ -353,26 +389,30 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .MFVec4d:
          case X3D .X3DConstants .MFVec4f:
          {
-            if (process .env .SUNRISE_ENVIRONMENT !== "DEVELOPMENT")
-               break;
+            const tooMuchValues = (field instanceof X3D .X3DArrayField) && field .length >= 10_000;
 
-            if ((field instanceof X3D .X3DArrayField) && field .length >= 10_000)
-               break;
-
-            this .refresh (parameter, node, field);
+            if (tooMuchValues)
+               parameter [field .getName ()] = _("Too much values.");
+            else
+               this .refresh (parameter, node, field);
 
             const input = folder .addMonitor (parameter, field .getName (),
             {
                multiline: true,
-               lineCount: 2,
+               lineCount: tooMuchValues ? 1 : 2,
             });
+
+            $(input .element) .on ("mouseenter", () =>
+            {
+               $(input .element) .attr ("title", this .getFieldTitle (node, field, fieldElement));
+            });
+
+            if (tooMuchValues)
+               break;
 
             const textarea = $(input .element) .find ("textarea") .removeAttr ("readonly");
 
             textarea .on ("focusout", () => this .onchange (node, field, textarea .val ()));
-
-            if (element .attr ("description"))
-               $(input .element) .attr ("title", `Description:\n\n${element .attr ("description")}`);
 
             field .addFieldCallback (this, () =>
             {
@@ -388,7 +428,7 @@ module .exports = new class Panel extends Interface
    refresh (parameter, node, field)
    {
       const
-         executionContext = node .getExecutionContext (),
+         executionContext = this .browser .currentScene,
          category         = field .getUnit ();
 
       switch (field .getType ())
@@ -450,7 +490,9 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .MFString:
          case X3D .X3DConstants .MFTime:
          {
-            const single = new (field .getSingleType ()) ();
+            const
+               single  = new (field .getSingleType ()) (),
+               options = { scene: executionContext };
 
             single .setUnit (field .getUnit ());
 
@@ -458,7 +500,7 @@ module .exports = new class Panel extends Interface
             {
                single .setValue (value);
 
-               return single .toString ({ scene: node .getExecutionContext () });
+               return single .toString (options);
             })
             .join (",\n");
 
@@ -475,7 +517,9 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .MFVec4d:
          case X3D .X3DConstants .MFVec4f:
          {
-            const single = new (field .getSingleType ()) ();
+            const
+               single  = new (field .getSingleType ()) (),
+               options = { scene: executionContext };
 
             single .setUnit (field .getUnit ());
 
@@ -483,7 +527,7 @@ module .exports = new class Panel extends Interface
             {
                single .assign (value);
 
-               return single .toString ({ scene: node .getExecutionContext () });
+               return single .toString (options);
             })
             .join (",\n");
 
@@ -496,7 +540,7 @@ module .exports = new class Panel extends Interface
    onchange (node, field, value)
    {
       const
-         executionContext = node .getExecutionContext (),
+         executionContext = this .browser .currentScene,
          category         = field .getUnit ();
 
       switch (field .getType ())
@@ -577,7 +621,7 @@ module .exports = new class Panel extends Interface
          {
             try
             {
-               Editor .setFieldFromString (node .getExecutionContext (), node, field, value);
+               Editor .setFieldFromString (executionContext, node, field, value);
             }
             catch
             {
@@ -609,7 +653,7 @@ module .exports = new class Panel extends Interface
          {
             try
             {
-               Editor .setFieldFromString (node .getExecutionContext (), node, field, `[${value}]`);
+               Editor .setFieldFromString (executionContext, node, field, `[${value}]`);
             }
             catch
             {
@@ -638,5 +682,45 @@ module .exports = new class Panel extends Interface
 
          this .field = null;
       }
+   }
+
+   getNodeTitle (interfaceDefinitionElement)
+   {
+      const description = interfaceDefinitionElement .attr ("appinfo");
+
+      let title = "";
+
+      if (description)
+         title += `Description:\n\n${description}`;
+
+      return title;
+   }
+
+   getFieldTitle (node, field, fieldElement)
+   {
+      function truncate (string, n)
+      {
+         return string .length > n ? string .slice (0, n - 1) + "..." : string;
+      };
+
+      const description = fieldElement .attr ("description");
+
+      let title = "";
+
+      if (description)
+         title += `Description:\n\n${description}\n\n`;
+
+      title += `Type: ${field .getTypeName ()}\n`;
+
+      if (field instanceof X3D .X3DArrayField)
+         title += `Number of values: ${field .length}`;
+      else if (field .getType () === X3D .X3DConstants .SFImage)
+         title += `Current value: ${field .width} ${field .height} ${field .comp} ...`;
+      else if (field .getType () === X3D .X3DConstants .SFString)
+         title += `Current value: ${truncate (field .toString (), 20)}`;
+      else
+         title += `Current value: ${field .toString ({ scene: this .browser .currentScene })}`;
+
+      return title;
    }
 };
