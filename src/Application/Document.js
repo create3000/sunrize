@@ -124,7 +124,7 @@ module .exports = class Document extends Interface
          const config = this .config .file .addNameSpace (`${typeName}.`);
 
          if (config .visible)
-            this .setGridTool (typeName, config .visible, false);
+            this .setGridTool (typeName, config .visible);
       }
    }
 
@@ -573,7 +573,7 @@ module .exports = class Document extends Interface
    #grids      = new Map ();
    #gridFields = new Map ();
 
-   async setGridTool (typeName, visible, panel = true)
+   async setGridTool (typeName, visible)
    {
       const
          Tool     = require (`../Tools/Grid/${typeName}`),
@@ -594,8 +594,8 @@ module .exports = class Document extends Interface
       this .restoreGridTool (typeName);
       this .updateMenu ();
 
-      if (panel && this .secondaryToolbar .config .file .panel)
-         this .showGridOptions ();
+      // if (this .secondaryToolbar .config .file .panel)
+      //    this .showGridOptions ();
 
       instance .getValue ()           .addInterest ("set_gridTool",        this, typeName);
       instance .getField ("isActive") .addInterest ("set_gridTool",        this, typeName);
