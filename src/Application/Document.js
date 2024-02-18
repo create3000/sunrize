@@ -43,7 +43,6 @@ module .exports = class Document extends Interface
       electron .ipcRenderer .on ("activate", () => this .activate ());
 
       electron .ipcRenderer .on ("open-files",       (event, urls)     => this .loadURL (urls [0])); // DEBUG
-      electron .ipcRenderer .on ("reload",           (event)           => this .reload ());
       electron .ipcRenderer .on ("save-file",        (event, force)    => this .saveFile (force));
       electron .ipcRenderer .on ("save-file-as",     (event, filePath) => this .saveFileAs (filePath));
       electron .ipcRenderer .on ("save-copy-as",     (event, filePath) => this .saveCopyAs (filePath));
@@ -226,12 +225,7 @@ module .exports = class Document extends Interface
          // console .error (error);
       }
    }
-
-   reload ()
-   {
-      location .reload ();
-   }
-
+   
    /**
     *
     * @param {boolean} force force save

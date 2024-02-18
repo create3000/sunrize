@@ -50,10 +50,10 @@ module .exports = new class Tabs
       // Actions
 
       electron .ipcRenderer .on ("open-files",     (event, urls)     => this .openTabs (urls));
+      electron .ipcRenderer .on ("reload"        , (event)           => this .reloadTab ());
       electron .ipcRenderer .on ("save-file",      (event)           => this .saveFile ());
       electron .ipcRenderer .on ("save-file-as",   (event, filePath) => this .saveFileAs (filePath));
       electron .ipcRenderer .on ("save-all-files", (event)           => this .saveAllFiles ());
-      electron .ipcRenderer .on ("reload"        , (event)           => this .reloadTab ());
       electron .ipcRenderer .on ("quit",           (event)           => this .quit ());
 
       electron .ipcRenderer .on ("toggle-developer-tools", (event) => this .tabs .getActiveTab () .webview .openDevTools ());
@@ -62,7 +62,6 @@ module .exports = new class Tabs
 
       // Forward Actions
 
-      this .forwardToActiveTab ("reload");
       this .forwardToAllTabs ("auto-save");
       this .forwardToActiveTab ("export-as");
 
