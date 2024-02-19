@@ -11,7 +11,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/AxonometricGridTool.x3dv'/>
-    <meta name='modified' content='Fri, 09 Feb 2024 16:30:39 GMT'/>
+    <meta name='modified' content='Mon, 19 Feb 2024 12:55:49 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='AxonometricGrid' url='"AxonometricGrid.x3d"'>
@@ -69,7 +69,7 @@
         <field accessType='inputOutput' type='SFRotation' name='rotation'/>
         <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
         <field accessType='inputOutput' type='MFInt32' name='dimension' value='5, 10'/>
-        <field accessType='inputOutput' type='SFVec2d' name='angles' value='1.0471975511965976 1.0471975511965976'/>
+        <field accessType='inputOutput' type='SFVec2d' name='angles' value='1.0471975511966 1.0471975511966'/>
         <field accessType='inputOutput' type='MFInt32' name='majorLineEvery' value='5, 5, 5, 5'/>
         <field accessType='inputOutput' type='MFInt32' name='majorLineOffset' value='0, 0, 0, 0'/>
         <field accessType='inputOutput' type='SFColor' name='color' value='0.5 0.5 0.5'/>
@@ -78,12 +78,16 @@
         <field accessType='inputOutput' type='SFFloat' name='lineTransparency' value='0.8'/>
         <field accessType='inputOutput' type='SFColor' name='majorLineColor' value='0.9647059 0.6980392 0.4196078'/>
         <field accessType='inputOutput' type='SFFloat' name='majorLineTransparency' value='0.6'/>
+        <field accessType='inputOutput' type='SFBool' name='visible' value='true'/>
         <field accessType='initializeOnly' type='SFBool' name='solid' value='true'/>
         <field accessType='outputOnly' type='SFBool' name='isActive'/>
       </ProtoInterface>
       <ProtoBody>
         <Collision DEF='AxonometricGrid_3'
             enabled='false'>
+          <IS>
+            <connect nodeField='visible' protoField='visible'/>
+          </IS>
           <ProtoInstance name='TouchGroup'>
             <fieldValue name='enabled' value='false'/>
             <fieldValue name='children'>
@@ -113,7 +117,7 @@
             </IS>
             <Transform DEF='Center'>
               <PlaneSensor DEF='_10'
-                  axisRotation='1 0 0 90.00021045914971'
+                  axisRotation='1 0 0 90.0002104591497'
                   autoOffset='false'>
                 <IS>
                   <connect nodeField='offset' protoField='translation'/>

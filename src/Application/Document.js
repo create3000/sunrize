@@ -583,13 +583,13 @@ module .exports = class Document extends Interface
 
       for (const [typeName, grid] of this .#grids)
       {
-         grid .setVisible (false);
+         grid .tool .visible = false;
          this .config .file .addNameSpace (`${typeName}.`) .visible = false;
       }
 
       this .#grids .set (typeName, grid);
-      grid .setVisible (visible);
-      config .visible = visible;
+      grid .tool .visible = visible;
+      config .visible     = visible;
 
       this .restoreGridTool (typeName);
       this .updateMenu ();
@@ -694,7 +694,7 @@ module .exports = class Document extends Interface
          AxonometricGridTool: false,
       });
 
-      this .#grids .forEach ((grid, typeName) => menu [typeName] = grid .isVisible ());
+      this .#grids .forEach ((grid, typeName) => menu [typeName] = grid .tool .visible);
 
       electron .ipcRenderer .send ("change-menu", menu);
    }
@@ -703,7 +703,7 @@ module .exports = class Document extends Interface
    {
       for (const grid of this .#grids .values ())
       {
-         if (!grid .isVisible ())
+         if (!grid .tool .visible)
             continue;
 
          const instance = await grid .getToolInstance ();

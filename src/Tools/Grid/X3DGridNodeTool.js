@@ -56,6 +56,12 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 
    set_translation (transformTool)
    {
+      if (!this .tool .visible)
+         return;
+
+      if (transformTool .tool .activeTool !== "TRANSLATE")
+         return;
+
       console .log (transformTool ._translation .toString ())
    }
 
