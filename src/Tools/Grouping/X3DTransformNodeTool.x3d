@@ -1553,17 +1553,19 @@ function scaleTransform (value, centerOffset)
 
    const
       scaledMatrix = initialMatrix .multLeft (scaleMatrix),
+      t            = new SFVec3f (),
       r            = new SFRotation (),
       s            = new SFVec3f (),
       so           = new SFRotation ();
 
-   scaledMatrix .getTransform (null, r, s, so, center);
+   scaledMatrix .getTransform (t, r, s, so, center);
 
    if (s .x && s .y && s .z)
    {
+      translation      = t;
       rotation         = r;
-      scale            = s;
       scaleOrientation = so;
+      scale            = s;
 
       if (keepCenter)
          translateKeepCenter (scaledMatrix, distanceFromCenter .add (centerOffset));
