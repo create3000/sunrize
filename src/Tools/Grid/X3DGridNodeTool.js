@@ -6,6 +6,9 @@ const
 
 class X3DGridNodeTool extends X3DActiveLayerNodeTool
 {
+   #transformTools = [ ];
+   #changing       = false;
+
    constructor (executionContext)
    {
       super (executionContext);
@@ -26,9 +29,6 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
    {
       X3DGridNodeTool .removeToolInterest (this);
    }
-
-   #transformTools = [ ];
-   #changing       = true;
 
    set_transform_tools ()
    {
