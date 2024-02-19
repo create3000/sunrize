@@ -1,6 +1,8 @@
 "use strict";
 
-const X3DActiveLayerNodeTool = require ("../Layering/X3DActiveLayerNodeTool");
+const
+   X3DActiveLayerNodeTool = require ("../Layering/X3DActiveLayerNodeTool"),
+   X3D                    = require ("../../X3D");
 
 class X3DGridNodeTool extends X3DActiveLayerNodeTool
 {
@@ -23,9 +25,48 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
       X3DGridNodeTool .removeToolInterest (this);
    }
 
+   #transformTools = [ ];
+
    set_transform_tools ()
    {
-      console .log (X3DGridNodeTool .tools .size);
+      for (const transformTool of this .#transformTools)
+      {
+         transformTool ._translation .removeInterest ("set_translation", this);
+         transformTool ._rotation    .removeInterest ("set_rotation",    this);
+         transformTool ._scale       .removeInterest ("set_scale",       this);
+      }
+
+      this .#transformTools .length = 0;
+
+      for (const transformTool of X3DGridNodeTool .tools)
+      {
+         if (!(transformTool instanceof X3D .X3DTransformNode))
+            continue;
+
+         this .#transformTools .push (transformTool);
+      }
+
+      for (const transformTool of this .#transformTools)
+      {
+         transformTool ._translation .addInterest ("set_translation", this, transformTool);
+         transformTool ._rotation    .addInterest ("set_rotation",    this, transformTool);
+         transformTool ._scale       .addInterest ("set_scale",       this, transformTool);
+      }
+   }
+
+   set_translation (transformTool)
+   {
+      console .log (transformTool ._translation .toString ())
+   }
+
+   set_rotation (transformTool)
+   {
+
+   }
+
+   set_scale (transformTool)
+   {
+
    }
 
    /**
