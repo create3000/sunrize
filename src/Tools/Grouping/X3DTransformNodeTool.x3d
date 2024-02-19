@@ -1135,8 +1135,8 @@ function translate (value)
 
    if (keepCenter)
    {
-      translation = initialTranslation .add (value);
       center      = initialCenter .subtract (value);
+      translation = initialTranslation .add (value);
    }
    else
    {
@@ -1570,10 +1570,11 @@ function scaleTransform (value, centerOffset)
 
    if (s .x && s .y && s .z)
    {
+      // Order is important!
       translation      = t;
       rotation         = r;
-      scale            = s;
       scaleOrientation = so;
+      scale            = s;
 
       if (keepCenter)
          translateKeepCenter (scaledMatrix, distanceFromCenter .add (centerOffset));

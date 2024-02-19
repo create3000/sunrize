@@ -34,7 +34,9 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
    {
       for (const transformTool of this .#transformTools)
       {
-         transformTool .removeInterest ("set_transform", this);
+         transformTool ._translation .removeInterest ("set_translation", this);
+         transformTool ._rotation    .removeInterest ("set_rotation",    this);
+         transformTool ._scale       .removeInterest ("set_scale",       this);
       }
 
       this .#transformTools .length = 0;
@@ -49,16 +51,21 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 
       for (const transformTool of this .#transformTools)
       {
-         transformTool .addInterest ("set_transform", this, transformTool);
+         transformTool ._translation .addInterest ("set_translation", this, transformTool);
+         transformTool ._rotation    .addInterest ("set_rotation",    this, transformTool);
+         transformTool ._scale       .addInterest ("set_scale",       this, transformTool);
       }
    }
 
-   set_transform (transformTool)
+   set_translation (transformTool)
    {
       if (!this ._visible .getValue ())
          return;
 
       if (!transformTool .tool .isActive)
+         return;
+
+      if (transformTool .tool .activeTool !== "TRANSLATE")
          return;
 
       if (this .#changing)
@@ -67,24 +74,6 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
          return;
       }
 
-      this .#changing = true;
-
-      switch (transformTool .tool .activeTool)
-      {
-         case "TRANSLATE":
-            this .set_translation (transformTool);
-            return;
-         case "ROTATE":
-            this .set_rotation (transformTool);
-            return;
-         case "SCALE":
-            this .set_scale (transformTool);
-            return;
-      }
-   }
-
-   set_translation (transformTool)
-   {
 		// The position is transformed to an absolute position and then transformed into the coordinate system of the grid
 		// for easier snapping position calculation.
 
@@ -102,11 +91,13 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 			var position = absoluteMatrix .multVecMatrix (transformTool ._center .getValue () .copy ());
 		}
 
-		// Calculate snapping position and apply absolute translation.
+		// Calculate snapping position and apply absolute relative translation.
 
 		const
          snapMatrix    = new X3D .Matrix4 () .set (this .getSnapPosition (position) .subtract (position)),
 		   currentMatrix = absoluteMatrix .multRight (snapMatrix) .multRight (transformTool .getModelMatrix () .copy () .inverse ());
+
+      this .#changing = true;
 
 		if (transformTool .tool .keepCenter)
          transformTool .setMatrixKeepCenter (currentMatrix);
