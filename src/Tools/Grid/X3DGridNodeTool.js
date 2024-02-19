@@ -67,6 +67,8 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
          return;
       }
 
+      this .#changing = true;
+
       switch (transformTool .tool .activeTool)
       {
          case "TRANSLATE":
@@ -105,8 +107,6 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 		const
          snapMatrix    = new X3D .Matrix4 () .set (this .getSnapPosition (position) .subtract (position)),
 		   currentMatrix = absoluteMatrix .multRight (snapMatrix) .multRight (transformTool .getModelMatrix () .copy () .inverse ());
-
-      this .#changing = true;
 
 		if (transformTool .tool .keepCenter)
          transformTool .setMatrixKeepCenter (currentMatrix);
