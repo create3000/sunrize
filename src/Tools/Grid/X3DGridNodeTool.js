@@ -73,13 +73,13 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 
    set_translation (transformTool)
    {
-      if (transformTool [this .#changing])
+      if (transformTool .getUserData (this .#changing))
       {
-         transformTool [this .#changing] = false;
+         transformTool .setUserData (this .#changing, false);
          return;
       }
 
-      transformTool [this .#changing] = true;
+      transformTool .setUserData (this .#changing, true);
 
 		// The position is transformed to an absolute position and then transformed into the coordinate system of the grid
 		// for easier snapping position calculation.
@@ -112,13 +112,13 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 
    set_rotation (transformTool)
    {
-      if (transformTool [this .#changing])
+      if (transformTool .getUserData (this .#changing))
       {
-         transformTool [this .#changing] = false;
+         transformTool .setUserData (this .#changing, false);
          return;
       }
 
-      transformTool [this .#changing] = true;
+      transformTool .setUserData (this .#changing, true);
    }
 
    set_scale (transformTool)
