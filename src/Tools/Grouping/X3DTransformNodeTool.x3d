@@ -11,8 +11,8 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.2.7, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 01 Dec 2023 22:12:19 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Mon, 19 Feb 2024 18:45:41 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -502,6 +502,7 @@
                 <Group USE='Empty'/>
                 <Group>
                   <Transform DEF='ScaleHandle1'>
+                    <TouchSensor USE='ModeTouch'/>
                     <PlaneSensor DEF='ScaleSensor1_1'
                         enabled='false'
                         autoOffset='false'
@@ -524,6 +525,7 @@
                     </ScreenGroup>
                   </Transform>
                   <Transform DEF='ScaleHandle2'>
+                    <TouchSensor USE='ModeTouch'/>
                     <PlaneSensor DEF='ScaleSensor2'
                         enabled='false'
                         autoOffset='false'
@@ -535,6 +537,7 @@
                     <ScreenGroup USE='_12'/>
                   </Transform>
                   <Transform DEF='ScaleHandle3'>
+                    <TouchSensor USE='ModeTouch'/>
                     <PlaneSensor DEF='ScaleSensor3'
                         enabled='false'
                         autoOffset='false'
@@ -546,6 +549,7 @@
                     <ScreenGroup USE='_12'/>
                   </Transform>
                   <Transform DEF='ScaleHandle4'>
+                    <TouchSensor USE='ModeTouch'/>
                     <PlaneSensor DEF='ScaleSensor4'
                         enabled='false'
                         autoOffset='false'
@@ -557,6 +561,7 @@
                     <ScreenGroup USE='_12'/>
                   </Transform>
                   <Transform DEF='ScaleHandle5'>
+                    <TouchSensor USE='ModeTouch'/>
                     <PlaneSensor DEF='ScaleSensor5'
                         enabled='false'
                         autoOffset='false'
@@ -564,10 +569,12 @@
                       <IS>
                         <connect nodeField='isActive' protoField='isActive'/>
                       </IS>
+                      <TouchSensor USE='ModeTouch' containerField='metadata'/>
                     </PlaneSensor>
                     <ScreenGroup USE='_12'/>
                   </Transform>
                   <Transform DEF='ScaleHandle6'>
+                    <TouchSensor USE='ModeTouch'/>
                     <PlaneSensor DEF='ScaleSensor6'
                         autoOffset='false'
                         maxPosition='-1 0'>
@@ -578,6 +585,7 @@
                     <ScreenGroup USE='_12'/>
                   </Transform>
                   <Transform DEF='ScaleHandle7'>
+                    <TouchSensor USE='ModeTouch'/>
                     <PlaneSensor DEF='ScaleSensor7'
                         autoOffset='false'
                         maxPosition='-1 0'>
@@ -588,6 +596,7 @@
                     <ScreenGroup USE='_12'/>
                   </Transform>
                   <Transform DEF='ScaleHandle8'>
+                    <TouchSensor USE='ModeTouch'/>
                     <PlaneSensor DEF='ScaleSensor8'
                         enabled='false'
                         autoOffset='false'
@@ -638,7 +647,7 @@
               </IS>
               <ProtoInstance name='BooleanSwitch' DEF='CenterLine'>
                 <fieldValue name='children'>
-                  <Shape DEF='_15'
+                  <Shape
                       castShadow='false'>
                     <Appearance DEF='CenterLineStyle'>
                       <LineProperties
@@ -1126,7 +1135,6 @@ function translate (value)
 
    if (keepCenter)
    {
-      // Order is important!
       center      = initialCenter .subtract (value);
       translation = initialTranslation .add (value);
    }
@@ -1564,8 +1572,8 @@ function scaleTransform (value, centerOffset)
    {
       translation      = t;
       rotation         = r;
-      scaleOrientation = so;
       scale            = s;
+      scaleOrientation = so;
 
       if (keepCenter)
          translateKeepCenter (scaledMatrix, distanceFromCenter .add (centerOffset));
