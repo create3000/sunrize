@@ -18,7 +18,7 @@ class X3DNodeTool extends X3DBaseTool
    static createOnDemand    = true;
 
    static #scenes  = new Map (); // Loaded tool proto scenes.
-   static #tools   = new Set (); // Set of all this tools.
+   static tools    = new Set (); // Set of all this tools.
    static #sensors = [ ];        // Always empty
 
    tool           = null;
@@ -129,7 +129,7 @@ class X3DNodeTool extends X3DBaseTool
 
       if (promise)
       {
-         this .#promise = promise .then (scene => this .createTool (scene, protoName));
+         this .#promise = promise;
       }
       else
       {
@@ -143,8 +143,6 @@ class X3DNodeTool extends X3DBaseTool
 
                for (const externproto of scene .externprotos)
                   await externproto .requestImmediateLoad ();
-
-               this .createTool (scene, protoName);
 
                resolve (scene);
             }
@@ -162,6 +160,8 @@ class X3DNodeTool extends X3DBaseTool
       if (this .#disposed)
          return Promise .reject (new Error ("Tool is already disposed."));
 
+      this .#promise .then (scene => this .createTool (scene, protoName));
+
       return this .#promise;
    }
 
@@ -171,7 +171,8 @@ class X3DNodeTool extends X3DBaseTool
 
       this .tool .getValue () .setPrivate (true);
 
-      X3DNodeTool .#tools .add (this);
+      X3DNodeTool .tools .add (this);
+      X3DNodeTool .processToolInterests ();
    }
 
    addExternalNode (field)
@@ -192,7 +193,8 @@ class X3DNodeTool extends X3DBaseTool
 
       X3D .SFNodeCache .delete (this .#proxy);
 
-      X3DNodeTool .#tools .delete (this);
+      X3DNodeTool .tools .delete (this);
+      X3DNodeTool .processToolInterests ();
 
       const nodesToDispose = [ ]
 
@@ -212,6 +214,24 @@ class X3DNodeTool extends X3DBaseTool
    disposeTool ()
    {
       this .#disposed = true;
+   }
+
+   static #interests = new Map ();
+
+   static addToolInterest (key, callback)
+   {
+      X3DNodeTool .#interests .set (key, callback);
+   }
+
+   static removeToolInterest (key)
+   {
+      X3DNodeTool .#interests .delete (key);
+   }
+
+   static processToolInterests ()
+   {
+      for (const callback of X3DNodeTool .#interests .values ())
+         callback ();
    }
 
    // Undo/Redo Handling
@@ -250,13 +270,13 @@ class X3DNodeTool extends X3DBaseTool
 
       // Prepare grouping.
 
-      for (const other of X3DNodeTool .#tools)
+      for (const other of X3DNodeTool .tools)
       {
          if (other .tool .group === `${this .tool .activeTool}_TOOL`)
             other .tool .grouping = true;
       }
 
-      for (const other of X3DNodeTool .#tools)
+      for (const other of X3DNodeTool .tools)
       {
          if (other === this)
             continue;
@@ -312,7 +332,7 @@ class X3DNodeTool extends X3DBaseTool
 
    finishUndo ()
    {
-      for (const other of X3DNodeTool .#tools)
+      for (const other of X3DNodeTool .tools)
       {
          if (other .tool .grouping)
             other .tool .grouping = false;
