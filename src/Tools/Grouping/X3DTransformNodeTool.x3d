@@ -12,7 +12,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Mon, 19 Feb 2024 18:45:41 GMT'/>
+    <meta name='modified' content='Mon, 19 Feb 2024 21:14:28 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -1673,7 +1673,7 @@ async function set_toggleCenterTool ()
 
    const tool = await centerTool .getValue () .addTool () .getToolInstance ();
 
-   Browser .addRoute (tool, "grouping",  this, "grouping");
+   Browser .addRoute (tool, "grouping", this, "grouping");
    Browser .addRoute (tool, "isActive", this, "active");
 
    tool .group         = "CENTER_TOOL";
