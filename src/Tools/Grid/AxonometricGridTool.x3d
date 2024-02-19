@@ -11,7 +11,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/AxonometricGridTool.x3dv'/>
-    <meta name='modified' content='Mon, 19 Feb 2024 12:55:49 GMT'/>
+    <meta name='modified' content='Mon, 19 Feb 2024 14:04:28 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='AxonometricGrid' url='"AxonometricGrid.x3d"'>
@@ -78,16 +78,12 @@
         <field accessType='inputOutput' type='SFFloat' name='lineTransparency' value='0.8'/>
         <field accessType='inputOutput' type='SFColor' name='majorLineColor' value='0.9647059 0.6980392 0.4196078'/>
         <field accessType='inputOutput' type='SFFloat' name='majorLineTransparency' value='0.6'/>
-        <field accessType='inputOutput' type='SFBool' name='visible' value='true'/>
         <field accessType='initializeOnly' type='SFBool' name='solid' value='true'/>
         <field accessType='outputOnly' type='SFBool' name='isActive'/>
       </ProtoInterface>
       <ProtoBody>
         <Collision DEF='AxonometricGrid_3'
             enabled='false'>
-          <IS>
-            <connect nodeField='visible' protoField='visible'/>
-          </IS>
           <ProtoInstance name='TouchGroup'>
             <fieldValue name='enabled' value='false'/>
             <fieldValue name='children'>

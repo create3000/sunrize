@@ -18,6 +18,8 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
       this .tool .getField ("translation") .setUnit ("length");
 
       X3DGridNodeTool .addToolInterest (this, () => this .set_transform_tools ());
+
+      this .set_transform_tools ();
    }
 
    disposeTool ()
@@ -56,7 +58,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 
    set_translation (transformTool)
    {
-      if (!this .tool .visible)
+      if (!this ._visible .getValue ())
          return;
 
       if (transformTool .tool .activeTool !== "TRANSLATE")
