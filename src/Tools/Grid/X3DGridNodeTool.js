@@ -125,7 +125,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
     */
    getGridMatrix ()
    {
-      const tool = this .tool,;
+      const tool = this .tool;
 
       return new X3D .Matrix4 ()
          .set (tool .translation .getValue (), tool .rotation .getValue (), tool .scale .getValue ())
