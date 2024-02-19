@@ -7,7 +7,7 @@ const
 class X3DGridNodeTool extends X3DActiveLayerNodeTool
 {
    #transformTools = [ ];
-   #changing       = false;
+   #changing       = Symbol ();
 
    constructor (executionContext)
    {
@@ -73,13 +73,13 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 
    set_translation (transformTool)
    {
-      if (this .#changing)
+      if (transformTool [this .#changing])
       {
-         this .#changing = false;
+         transformTool [this .#changing] = false;
          return;
       }
 
-      this .#changing = true;
+      transformTool [this .#changing] = true;
 
 		// The position is transformed to an absolute position and then transformed into the coordinate system of the grid
 		// for easier snapping position calculation.
