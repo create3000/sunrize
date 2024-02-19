@@ -102,7 +102,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 			var position = absoluteMatrix .multVecMatrix (transformTool ._center .getValue () .copy ());
 		}
 
-		// Calculate snapping position and apply absolute relative translation.
+		// Calculate snapping position and apply absolute translation.
 
 		const
          snapMatrix    = new X3D .Matrix4 () .set (this .getSnapPosition (position) .subtract (position)),
