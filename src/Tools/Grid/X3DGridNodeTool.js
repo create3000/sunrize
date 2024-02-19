@@ -74,6 +74,8 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
          return;
       }
 
+      this .#changing = true;
+
 		// The position is transformed to an absolute position and then transformed into the coordinate system of the grid
 		// for easier snapping position calculation.
 
@@ -96,8 +98,6 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 		const
          snapMatrix    = new X3D .Matrix4 () .set (this .getSnapPosition (position) .subtract (position)),
 		   currentMatrix = absoluteMatrix .multRight (snapMatrix) .multRight (transformTool .getModelMatrix () .copy () .inverse ());
-
-      this .#changing = true;
 
 		if (transformTool .tool .keepCenter)
          transformTool .setMatrixKeepCenter (currentMatrix);
