@@ -120,6 +120,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       Editor .roundToIntegerIfAlmostEqual (rotation);
       Editor .roundToIntegerIfAlmostEqual (scale);
       Editor .roundToIntegerIfAlmostEqual (scaleOrientation);
+      Editor .roundToIntegerIfAlmostEqual (center);
 
       if (Editor .almostEqual (scale .x, scale .y) && Editor .almostEqual (scale .x, scale .z))
          scaleOrientation .assign (new X3D .SFRotation ());

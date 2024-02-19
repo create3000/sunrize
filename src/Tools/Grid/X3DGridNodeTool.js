@@ -112,7 +112,13 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 
    set_rotation (transformTool)
    {
+      if (transformTool [this .#changing])
+      {
+         transformTool [this .#changing] = false;
+         return;
+      }
 
+      transformTool [this .#changing] = true;
    }
 
    set_scale (transformTool)
