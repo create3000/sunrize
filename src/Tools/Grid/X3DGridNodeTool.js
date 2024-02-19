@@ -28,6 +28,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
    }
 
    #transformTools = [ ];
+   #changing       = true;
 
    set_transform_tools ()
    {
@@ -58,13 +59,53 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 
    set_translation (transformTool)
    {
+      if (this .#changing)
+      {
+         this .#changing = false;
+         return;
+      }
+
       if (!this ._visible .getValue ())
+         return;
+
+      if (!transformTool .tool .isActive)
          return;
 
       if (transformTool .tool .activeTool !== "TRANSLATE")
          return;
 
-      console .log (transformTool ._translation .toString ())
+		// The position is transformed to an absolute position and then transformed into the coordinate systwm of the grid
+		// for easier snapping position calculation.
+
+		// Get absolute position.
+
+		const absoluteMatrix = transformTool .getMatrixFromFields () .multRight (transformTool .getModelMatrix ());
+
+		if (transformTool .tool .keepCenter)
+		{
+			// snapping to bbox center.
+			var position = transformTool .getSubBBox (new X3D .Box3 ()) .multRight (absoluteMatrix) .center;
+		}
+		else
+		{
+			var position = absoluteMatrix .multVecMatrix (transformTool ._center .getValue () .copy ());
+		}
+
+		// Calculate snapping position and apply absolute relative translation.
+
+		const
+         snapMatrix    = new X3D .Matrix4 () .set (this .getSnapPosition (position) .subtract (position)),
+		   currentMatrix = absoluteMatrix .multRight (snapMatrix) .multRight (transformTool .getModelMatrix () .copy () .inverse ());
+
+      this .#changing = true;
+
+		if (transformTool .tool .keepCenter)
+         transformTool .setMatrixKeepCenter (currentMatrix);
+		else
+         transformTool .setMatrixWithCenter (currentMatrix);
+
+      console .log (currentMatrix .toString ())
+      console .log (transformTool ._translation .toString (), transformTool ._center .toString ())
    }
 
    set_rotation (transformTool)
@@ -78,6 +119,21 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
    }
 
    /**
+    * @returns Grid matrix in world space.
+    */
+   getGridMatrix ()
+   {
+      const
+         tool       = this .tool,
+         gridMatrix = new X3D .Matrix4 ();
+
+      gridMatrix
+         .set (tool .translation .getValue (), tool .rotation .getValue (), tool .scale .getValue ())
+         .multRight (this .getModelMatrix ());
+
+      return gridMatrix;
+   }
+   /**
     * @param {X3D .Vector3} position
     * @returns Snap position from position in world space.
     */
@@ -86,15 +142,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
       position = position .copy ();
 
       const
-         tool       = this .tool,
-         gridMatrix = new X3D .Matrix4d ();
-
-      gridMatrix
-         .set (tool .translation, tool .rotation, tool .scale)
-         .multRight (this .getModelMatrix ())
-         .inverse ();
-
-      const
+         gridMatrix    = this .getGridMatrix (),
          invGridMatrix = gridMatrix .copy () .inverse (),
          snapPosition  = gridMatrix .multVecMatrix (this .getGridSnapPosition (invGridMatrix .multVecMatrix (position)));
 

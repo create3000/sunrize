@@ -1,6 +1,8 @@
 "use strict";
 
-const X3DChildNodeTool = require ("../Core/X3DChildNodeTool");
+const
+   X3DChildNodeTool = require ("../Core/X3DChildNodeTool"),
+   X3D              = require ("../../X3D");
 
 class X3DActiveLayerNodeTool extends X3DChildNodeTool
 {
@@ -59,6 +61,11 @@ class X3DActiveLayerNodeTool extends X3DChildNodeTool
 
       if (index > -1)
          layerNode .getGroups () ._children .splice (index, 1);
+   }
+
+   getModelMatrix ()
+   {
+      return new X3D .Matrix4 ();
    }
 }
 
