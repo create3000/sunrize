@@ -1126,8 +1126,9 @@ function translate (value)
 
    if (keepCenter)
    {
-      translation = initialTranslation .add (value);
+      // Order is important!
       center      = initialCenter .subtract (value);
+      translation = initialTranslation .add (value);
    }
    else
    {

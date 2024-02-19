@@ -74,7 +74,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
       if (transformTool .tool .activeTool !== "TRANSLATE")
          return;
 
-		// The position is transformed to an absolute position and then transformed into the coordinate systwm of the grid
+		// The position is transformed to an absolute position and then transformed into the coordinate system of the grid
 		// for easier snapping position calculation.
 
 		// Get absolute position.
@@ -103,9 +103,6 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
          transformTool .setMatrixKeepCenter (currentMatrix);
 		else
          transformTool .setMatrixWithCenter (currentMatrix);
-
-      console .log (currentMatrix .toString ())
-      console .log (transformTool ._translation .toString (), transformTool ._center .toString ())
    }
 
    set_rotation (transformTool)
