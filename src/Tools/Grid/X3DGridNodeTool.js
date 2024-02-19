@@ -125,15 +125,11 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
     */
    getGridMatrix ()
    {
-      const
-         tool       = this .tool,
-         gridMatrix = new X3D .Matrix4 ();
+      const tool = this .tool,;
 
-      gridMatrix
+      return new X3D .Matrix4 ()
          .set (tool .translation .getValue (), tool .rotation .getValue (), tool .scale .getValue ())
          .multRight (this .getModelMatrix ());
-
-      return gridMatrix;
    }
    /**
     * @param {X3D .Vector3} position
