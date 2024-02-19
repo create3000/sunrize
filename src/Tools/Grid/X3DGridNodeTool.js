@@ -34,9 +34,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
    {
       for (const transformTool of this .#transformTools)
       {
-         transformTool ._translation .removeInterest ("set_translation", this);
-         transformTool ._rotation    .removeInterest ("set_rotation",    this);
-         transformTool ._scale       .removeInterest ("set_scale",       this);
+         transformTool .removeInterest ("set_transform_tool", this);
       }
 
       this .#transformTools .length = 0;
@@ -51,29 +49,40 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 
       for (const transformTool of this .#transformTools)
       {
-         transformTool ._translation .addInterest ("set_translation", this, transformTool);
-         transformTool ._rotation    .addInterest ("set_rotation",    this, transformTool);
-         transformTool ._scale       .addInterest ("set_scale",       this, transformTool);
+         transformTool .addInterest ("set_transform_tool", this, transformTool);
       }
    }
 
-   set_translation (transformTool)
+   set_transform_tool (transformTool)
    {
-      if (this .#changing)
-      {
-         this .#changing = false;
-         return;
-      }
-
       if (!this ._visible .getValue ())
          return;
 
       if (!transformTool .tool .isActive)
          return;
 
-      if (transformTool .tool .activeTool !== "TRANSLATE")
+      if (this .#changing)
+      {
+         this .#changing = false;
          return;
+      }
 
+      switch (transformTool .tool .activeTool)
+      {
+         case "TRANSLATE":
+            this .set_translation (transformTool);
+            return;
+         case "ROTATE":
+            this .set_rotation (transformTool);
+            return;
+         case "SCALE":
+            this .set_scale (transformTool);
+            return;
+      }
+   }
+
+   set_translation (transformTool)
+   {
 		// The position is transformed to an absolute position and then transformed into the coordinate system of the grid
 		// for easier snapping position calculation.
 
