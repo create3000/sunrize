@@ -88,7 +88,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 
 		const absoluteMatrix = transformTool .getMatrixFromFields () .multRight (transformTool .getModelMatrix ());
 
-		if (transformTool .tool .keepCenter)
+		if (transformTool .tool .keepCenter || !this .tool .snapToCenter)
 		{
 			// snapping to bbox center.
 			var position = transformTool .getSubBBox (new X3D .Box3 ()) .multRight (absoluteMatrix) .center;
