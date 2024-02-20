@@ -12,7 +12,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Mon, 19 Feb 2024 21:14:28 GMT'/>
+    <meta name='modified' content='Tue, 20 Feb 2024 07:55:08 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -56,6 +56,7 @@
         <field accessType='inputOutput' type='SFVec3f' name='bboxSize' value='1 1 1'/>
         <field accessType='inputOutput' type='SFVec3f' name='bboxCenter'/>
         <field accessType='outputOnly' type='SFBool' name='keepCenter'/>
+        <field accessType='outputOnly' type='SFString' name='activeHandle'/>
         <field accessType='outputOnly' type='SFString' name='activeTool'/>
         <field accessType='outputOnly' type='SFBool' name='isActive'/>
       </ProtoInterface>
@@ -1041,6 +1042,9 @@ function set_tool (value)
         <Script DEF='TranslateScript'
             directOutput='true'>
           <field accessType='inputOutput' type='SFBool' name='active'/>
+          <field accessType='inputOnly' type='SFBool' name='set_xActive'/>
+          <field accessType='inputOnly' type='SFBool' name='set_yActive'/>
+          <field accessType='inputOnly' type='SFBool' name='set_zActive'/>
           <field accessType='inputOnly' type='SFVec3f' name='set_xTranslation'/>
           <field accessType='inputOnly' type='SFVec3f' name='set_yTranslation'/>
           <field accessType='inputOnly' type='SFVec3f' name='set_zTranslation'/>
@@ -1064,7 +1068,7 @@ function set_tool (value)
           </IS>
 <![CDATA[ecmascript:
 
-let lastTranslateFunction, lastValue;
+let lastActive, lastTranslateFunction, lastValue;
 
 function set_active (value)
 {
@@ -1077,11 +1081,66 @@ function set_active (value)
    events = 4;
 }
 
+function set_xActive (value)
+{
+   if (!value)
+      return;
+
+   lastActive = set_xActive;
+
+   switch (translateMode)
+   {
+      case "TRANSLATE_ALONG_AXIS":
+         activeHandle = "X_AXIS";
+         return;
+      case "TRANSLATE_ALONG_PLANE":
+         activeHandle = "X_PLANE";
+         return;
+   }
+}
+
+function set_yActive (value)
+{
+   if (!value)
+      return;
+
+   lastActive = set_yActive;
+
+   switch (translateMode)
+   {
+      case "TRANSLATE_ALONG_AXIS":
+         activeHandle = "Y_AXIS";
+         return;
+      case "TRANSLATE_ALONG_PLANE":
+         activeHandle = "Y_PLANE";
+         return;
+   }
+}
+
+function set_zActive (value)
+{
+   if (!value)
+      return;
+
+   lastActive = set_zActive;
+
+   switch (translateMode)
+   {
+      case "TRANSLATE_ALONG_AXIS":
+         activeHandle = "Z_AXIS";
+         return;
+      case "TRANSLATE_ALONG_PLANE":
+         activeHandle = "Z_PLANE";
+         return;
+   }
+}
+
 function set_translateMode (value)
 {
    if (!active)
       return;
 
+   lastActive            ?.call (this, active);
    lastTranslateFunction ?.call (this, lastValue);
 }
 
@@ -1158,6 +1217,9 @@ function translate (value)
         <Script DEF='RotateScript'
             directOutput='true'>
           <field accessType='inputOnly' type='SFBool' name='set_active'/>
+          <field accessType='inputOnly' type='SFBool' name='set_xActive'/>
+          <field accessType='inputOnly' type='SFBool' name='set_yActive'/>
+          <field accessType='inputOnly' type='SFBool' name='set_zActive'/>
           <field accessType='inputOnly' type='SFRotation' name='set_xRotation'/>
           <field accessType='inputOnly' type='SFRotation' name='set_yRotation'/>
           <field accessType='inputOnly' type='SFRotation' name='set_zRotation'/>
@@ -1165,6 +1227,7 @@ function translate (value)
           <field accessType='inputOutput' type='SFVec3f' name='scale'/>
           <field accessType='inputOutput' type='SFRotation' name='scaleOrientation'/>
           <field accessType='inputOutput' type='SFBool' name='snap'/>
+          <field accessType='outputOnly' type='SFString' name='activeHandle'/>
           <field accessType='initializeOnly' type='SFRotation' name='initialRotation'/>
           <field accessType='initializeOnly' type='SFVec3f' name='initialScale' value='1 1 1'/>
           <field accessType='initializeOnly' type='SFRotation' name='initialScaleOrientation'/>
@@ -1174,6 +1237,7 @@ function translate (value)
             <connect nodeField='scale' protoField='scale'/>
             <connect nodeField='scaleOrientation' protoField='scaleOrientation'/>
             <connect nodeField='snap' protoField='snapRotation'/>
+            <connect nodeField='activeHandle' protoField='activeHandle'/>
           </IS>
 <![CDATA[ecmascript:
 
@@ -1194,6 +1258,24 @@ function set_active (value)
    scaleOrientation = initialScaleOrientation;
 
    events = 4;
+}
+
+function set_xActive (value)
+{
+   if (value)
+      activeHandle = "X_AXIS";
+}
+
+function set_yActive (value)
+{
+   if (value)
+      activeHandle = "Y_AXIS";
+}
+
+function set_zActive (value)
+{
+   if (value)
+      activeHandle = "Z_AXIS";
 }
 
 function set_xRotation (value)
@@ -1789,6 +1871,12 @@ function set_bboxCenter ()
         <ROUTE fromNode='ModeScript' fromField='rotate' toNode='YRotationSensor_1' toField='set_enabled'/>
         <ROUTE fromNode='ModeScript' fromField='rotate' toNode='ZRotationSensor' toField='set_enabled'/>
         <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='CenterTool' toField='set_visible'/>
+        <ROUTE fromNode='XRotationSensor_1' fromField='isActive' toNode='RotateScript' toField='set_xActive'/>
+        <ROUTE fromNode='YRotationSensor_1' fromField='isActive' toNode='RotateScript' toField='set_yActive'/>
+        <ROUTE fromNode='ZRotationSensor' fromField='isActive' toNode='RotateScript' toField='set_zActive'/>
+        <ROUTE fromNode='XTranslationSensor' fromField='isActive' toNode='TranslateScript' toField='set_xActive'/>
+        <ROUTE fromNode='YTranslationSensor' fromField='isActive' toNode='TranslateScript' toField='set_yActive'/>
+        <ROUTE fromNode='ZTranslationSensor' fromField='isActive' toNode='TranslateScript' toField='set_zActive'/>
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='X3DTransformNodeTool'>

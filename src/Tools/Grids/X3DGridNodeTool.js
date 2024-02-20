@@ -79,8 +79,6 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
          return;
       }
 
-      transformTool .setUserData (this .#changing, true);
-
 		// The position is transformed to an absolute position and then transformed into the coordinate system of the grid
 		// for easier snapping position calculation.
 
@@ -104,11 +102,19 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
          snapMatrix    = new X3D .Matrix4 () .set (this .getSnapPosition (position) .subtract (position)),
 		   currentMatrix = absoluteMatrix .multRight (snapMatrix) .multRight (transformTool .getModelMatrix () .copy () .inverse ());
 
+      transformTool .setUserData (this .#changing, true);
+
 		if (transformTool .tool .keepCenter)
          transformTool .setMatrixKeepCenter (currentMatrix);
 		else
          transformTool .setMatrixWithCenter (currentMatrix);
    }
+
+   static rotationAxes = {
+      X_AXIS: 0,
+      Y_AXIS: 1,
+      Z_AXIS: 2,
+   };
 
    set_rotation (transformTool)
    {
@@ -118,35 +124,25 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
          return;
       }
 
-      transformTool .setUserData (this .#changing, true);
-
       // Snap rotation to axes.
 
-		const
-         matrixBefore = transformTool .getLastMatrix () .copy () .multRight (transformTool .getModelMatrix ()), // Matrix before transformation
-         matrixAfter  = transformTool .getCurrentMatrix () .copy () .multRight (transformTool .getModelMatrix ()); // Matrix after transformation
-
-		const distances = [
-         matrixAfter .xAxis .copy () .normalize () .dot (matrixBefore .xAxis .copy () .normalize ()),
-		   matrixAfter .yAxis .copy () .normalize () .dot (matrixBefore .yAxis .copy () .normalize ()),
-		   matrixAfter .zAxis .copy () .normalize () .dot (matrixBefore .zAxis .copy () .normalize ()),
-      ];
+		const absoluteMatrix = transformTool .getCurrentMatrix () .copy () .multRight (transformTool .getModelMatrix ()); // Matrix after transformation
 
       const
-         index0 = distances .reduce ((max, v, i, a) => v > a [max] ? i : max, 0), // Index of rotation axis
-         index1 = (index0 + 1) % distances .length,
-         index2 = (index0 + 2) % distances .length;
+         index0 = X3DGridNodeTool .rotationAxes [transformTool .tool .activeHandle], // Index of rotation axis
+         index1 = (index0 + 1) % 3,
+         index2 = (index0 + 2) % 3;
 
 		const y = [
-         matrixAfter .xAxis .copy (),
-         matrixAfter .yAxis .copy (),
-         matrixAfter .zAxis .copy ()
+         absoluteMatrix .xAxis .copy (),
+         absoluteMatrix .yAxis .copy (),
+         absoluteMatrix .zAxis .copy ()
       ]; // Rotation axis, equates to grid normal
 
       const z = [
-         matrixAfter .yAxis .copy (),
-         matrixAfter .zAxis .copy (),
-         matrixAfter .yAxis .copy (),
+         absoluteMatrix .yAxis .copy (),
+         absoluteMatrix .zAxis .copy (),
+         absoluteMatrix .yAxis .copy (),
       ]; // Axis which snaps, later transformed to grid space
 
 		const gridMatrix = this .getGridMatrix ();
@@ -185,6 +181,8 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 		         transformTool ._scale            .getValue (),
 		         transformTool ._scaleOrientation .getValue (),
 		         transformTool ._center           .getValue ());
+
+      transformTool .setUserData (this .#changing, true);
 
 		if (transformTool .tool .keepCenter)
 			transformTool .setMatrixKeepCenter (currentMatrix);

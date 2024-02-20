@@ -33,8 +33,6 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       this .tool .getField ("isActive") .addInterest ("handleUndo", this);
 
       this .tool .bboxColor = this .toolBBoxColor;
-
-      this .eventsProcessed ();
    }
 
    disposeTool ()
@@ -48,15 +46,6 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       this .node .removeInterest ("transformGroups", this);
 
       super .disposeTool ();
-   }
-
-   #lastMatrix = new X3D .Matrix4 ();
-   #matrix     = new X3D .Matrix4 ();
-
-   eventsProcessed ()
-   {
-      this .#lastMatrix = this .#matrix;
-      this .#matrix     = this .getMatrix () .copy ();
    }
 
    set_keys (keys)
@@ -263,11 +252,6 @@ class X3DTransformNodeTool extends X3DChildNodeTool
                    this ._center .getValue ());
 
       return matrix;
-   }
-
-   getLastMatrix ()
-   {
-      return this .#lastMatrix;
    }
 
    getModelMatrix ()
