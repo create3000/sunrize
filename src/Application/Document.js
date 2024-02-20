@@ -86,8 +86,6 @@ module .exports = class Document extends Interface
       this .browser .getBrowserOptions () .getField ("TextureQuality")   .addInterest ("set_textureQuality",   this);
       this .browser .getBrowserOptions () .getField ("Rubberband")       .addInterest ("set_rubberband",       this);
       this .browser .getBrowserOptions () .getField ("Timings")          .addInterest ("set_timings",          this);
-
-      this .activate ();
    }
 
    static #Grids = [
@@ -125,6 +123,8 @@ module .exports = class Document extends Interface
          if (config .visible)
             this .setGridTool (typeName, config .visible);
       }
+
+      this .activate ();
    }
 
    activate ()
@@ -570,19 +570,19 @@ module .exports = class Document extends Interface
    async setGridTool (typeName, visible)
    {
       const
-         Tool     = require (`../Tools/Grid/${typeName}`),
+         Tool     = require (`../Tools/Grids/${typeName}`),
          grid     = this .#grids .get (typeName) ?? new Tool (this .browser .currentScene),
          config   = this .config .file .addNameSpace (`${typeName}.`),
          instance = await grid .getToolInstance ();
 
       for (const [typeName, grid] of this .#grids)
       {
-         grid .setVisible (false);
+         grid ._visible = false;
          this .config .file .addNameSpace (`${typeName}.`) .visible = false;
       }
 
       this .#grids .set (typeName, grid);
-      grid .setVisible (visible);
+      grid ._visible   = visible;
       config .visible = visible;
 
       this .restoreGridTool (typeName);
@@ -681,14 +681,9 @@ module .exports = class Document extends Interface
 
    updateGridMenus (menu)
    {
-      Object .assign (menu,
-      {
-         Grid: false,
-         AngleGridTool: false,
-         AxonometricGridTool: false,
-      });
+      Document .#Grids .forEach (typeName => menu [typeName] = false);
 
-      this .#grids .forEach ((grid, typeName) => menu [typeName] = grid .isVisible ());
+      this .#grids .forEach ((grid, typeName) => menu [typeName] = grid ._visible .getValue ());
 
       electron .ipcRenderer .send ("change-menu", menu);
    }
@@ -697,7 +692,7 @@ module .exports = class Document extends Interface
    {
       for (const grid of this .#grids .values ())
       {
-         if (!grid .isVisible ())
+         if (!grid ._visible .getValue ())
             continue;
 
          const instance = await grid .getToolInstance ();

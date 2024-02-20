@@ -1,10 +1,11 @@
 "use strict";
 
-const X3DChildNodeTool = require ("../Core/X3DChildNodeTool");
+const
+   X3DChildNodeTool = require ("../Core/X3DChildNodeTool"),
+   X3D              = require ("../../X3D");
 
 class X3DActiveLayerNodeTool extends X3DChildNodeTool
 {
-   #visible         = true;
    #activeLayerNode = null;
 
    constructor (executionContext)
@@ -14,21 +15,6 @@ class X3DActiveLayerNodeTool extends X3DChildNodeTool
       node .setup ();
 
       super (node);
-   }
-
-   isVisible ()
-   {
-      return this .#visible;
-   }
-
-   setVisible (value)
-   {
-      if (this .#visible === value)
-         return;
-
-      this .#visible = value;
-
-      this .set_activeLayer ();
    }
 
    async initializeTool (... args)
@@ -55,8 +41,7 @@ class X3DActiveLayerNodeTool extends X3DChildNodeTool
 
       this .#activeLayerNode = this .getBrowser () .getActiveLayer ();
 
-      if (this .#visible)
-         this .addToLayer (this .#activeLayerNode)
+      this .addToLayer (this .#activeLayerNode)
    }
 
    addToLayer (layerNode)
@@ -76,6 +61,11 @@ class X3DActiveLayerNodeTool extends X3DChildNodeTool
 
       if (index > -1)
          layerNode .getGroups () ._children .splice (index, 1);
+   }
+
+   getModelMatrix ()
+   {
+      return new X3D .Matrix4 ();
    }
 }
 

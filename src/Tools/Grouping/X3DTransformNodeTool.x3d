@@ -11,8 +11,8 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.2.7, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 01 Dec 2023 22:12:19 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Tue, 20 Feb 2024 13:24:38 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -56,6 +56,7 @@
         <field accessType='inputOutput' type='SFVec3f' name='bboxSize' value='1 1 1'/>
         <field accessType='inputOutput' type='SFVec3f' name='bboxCenter'/>
         <field accessType='outputOnly' type='SFBool' name='keepCenter'/>
+        <field accessType='outputOnly' type='SFString' name='activeHandle'/>
         <field accessType='outputOnly' type='SFString' name='activeTool'/>
         <field accessType='outputOnly' type='SFBool' name='isActive'/>
       </ProtoInterface>
@@ -502,6 +503,7 @@
                 <Group USE='Empty'/>
                 <Group>
                   <Transform DEF='ScaleHandle1'>
+                    <TouchSensor USE='ModeTouch'/>
                     <PlaneSensor DEF='ScaleSensor1_1'
                         enabled='false'
                         autoOffset='false'
@@ -524,6 +526,7 @@
                     </ScreenGroup>
                   </Transform>
                   <Transform DEF='ScaleHandle2'>
+                    <TouchSensor USE='ModeTouch'/>
                     <PlaneSensor DEF='ScaleSensor2'
                         enabled='false'
                         autoOffset='false'
@@ -535,6 +538,7 @@
                     <ScreenGroup USE='_12'/>
                   </Transform>
                   <Transform DEF='ScaleHandle3'>
+                    <TouchSensor USE='ModeTouch'/>
                     <PlaneSensor DEF='ScaleSensor3'
                         enabled='false'
                         autoOffset='false'
@@ -546,6 +550,7 @@
                     <ScreenGroup USE='_12'/>
                   </Transform>
                   <Transform DEF='ScaleHandle4'>
+                    <TouchSensor USE='ModeTouch'/>
                     <PlaneSensor DEF='ScaleSensor4'
                         enabled='false'
                         autoOffset='false'
@@ -557,6 +562,7 @@
                     <ScreenGroup USE='_12'/>
                   </Transform>
                   <Transform DEF='ScaleHandle5'>
+                    <TouchSensor USE='ModeTouch'/>
                     <PlaneSensor DEF='ScaleSensor5'
                         enabled='false'
                         autoOffset='false'
@@ -568,6 +574,7 @@
                     <ScreenGroup USE='_12'/>
                   </Transform>
                   <Transform DEF='ScaleHandle6'>
+                    <TouchSensor USE='ModeTouch'/>
                     <PlaneSensor DEF='ScaleSensor6'
                         autoOffset='false'
                         maxPosition='-1 0'>
@@ -578,6 +585,7 @@
                     <ScreenGroup USE='_12'/>
                   </Transform>
                   <Transform DEF='ScaleHandle7'>
+                    <TouchSensor USE='ModeTouch'/>
                     <PlaneSensor DEF='ScaleSensor7'
                         autoOffset='false'
                         maxPosition='-1 0'>
@@ -588,6 +596,7 @@
                     <ScreenGroup USE='_12'/>
                   </Transform>
                   <Transform DEF='ScaleHandle8'>
+                    <TouchSensor USE='ModeTouch'/>
                     <PlaneSensor DEF='ScaleSensor8'
                         enabled='false'
                         autoOffset='false'
@@ -638,7 +647,7 @@
               </IS>
               <ProtoInstance name='BooleanSwitch' DEF='CenterLine'>
                 <fieldValue name='children'>
-                  <Shape DEF='_15'
+                  <Shape
                       castShadow='false'>
                     <Appearance DEF='CenterLineStyle'>
                       <LineProperties
@@ -1032,6 +1041,9 @@ function set_tool (value)
         <Script DEF='TranslateScript'
             directOutput='true'>
           <field accessType='inputOutput' type='SFBool' name='active'/>
+          <field accessType='inputOnly' type='SFBool' name='set_xActive'/>
+          <field accessType='inputOnly' type='SFBool' name='set_yActive'/>
+          <field accessType='inputOnly' type='SFBool' name='set_zActive'/>
           <field accessType='inputOnly' type='SFVec3f' name='set_xTranslation'/>
           <field accessType='inputOnly' type='SFVec3f' name='set_yTranslation'/>
           <field accessType='inputOnly' type='SFVec3f' name='set_zTranslation'/>
@@ -1055,7 +1067,7 @@ function set_tool (value)
           </IS>
 <![CDATA[ecmascript:
 
-let lastTranslateFunction, lastValue;
+let lastActive, lastTranslateFunction, lastValue;
 
 function set_active (value)
 {
@@ -1068,11 +1080,66 @@ function set_active (value)
    events = 4;
 }
 
+function set_xActive (value)
+{
+   if (!value)
+      return;
+
+   lastActive = set_xActive;
+
+   switch (translateMode)
+   {
+      case "TRANSLATE_ALONG_AXIS":
+         activeHandle = "X_AXIS";
+         return;
+      case "TRANSLATE_ALONG_PLANE":
+         activeHandle = "X_PLANE";
+         return;
+   }
+}
+
+function set_yActive (value)
+{
+   if (!value)
+      return;
+
+   lastActive = set_yActive;
+
+   switch (translateMode)
+   {
+      case "TRANSLATE_ALONG_AXIS":
+         activeHandle = "Y_AXIS";
+         return;
+      case "TRANSLATE_ALONG_PLANE":
+         activeHandle = "Y_PLANE";
+         return;
+   }
+}
+
+function set_zActive (value)
+{
+   if (!value)
+      return;
+
+   lastActive = set_zActive;
+
+   switch (translateMode)
+   {
+      case "TRANSLATE_ALONG_AXIS":
+         activeHandle = "Z_AXIS";
+         return;
+      case "TRANSLATE_ALONG_PLANE":
+         activeHandle = "Z_PLANE";
+         return;
+   }
+}
+
 function set_translateMode (value)
 {
    if (!active)
       return;
 
+   lastActive            ?.call (this, active);
    lastTranslateFunction ?.call (this, lastValue);
 }
 
@@ -1149,6 +1216,9 @@ function translate (value)
         <Script DEF='RotateScript'
             directOutput='true'>
           <field accessType='inputOnly' type='SFBool' name='set_active'/>
+          <field accessType='inputOnly' type='SFBool' name='set_xActive'/>
+          <field accessType='inputOnly' type='SFBool' name='set_yActive'/>
+          <field accessType='inputOnly' type='SFBool' name='set_zActive'/>
           <field accessType='inputOnly' type='SFRotation' name='set_xRotation'/>
           <field accessType='inputOnly' type='SFRotation' name='set_yRotation'/>
           <field accessType='inputOnly' type='SFRotation' name='set_zRotation'/>
@@ -1156,6 +1226,7 @@ function translate (value)
           <field accessType='inputOutput' type='SFVec3f' name='scale'/>
           <field accessType='inputOutput' type='SFRotation' name='scaleOrientation'/>
           <field accessType='inputOutput' type='SFBool' name='snap'/>
+          <field accessType='outputOnly' type='SFString' name='activeHandle'/>
           <field accessType='initializeOnly' type='SFRotation' name='initialRotation'/>
           <field accessType='initializeOnly' type='SFVec3f' name='initialScale' value='1 1 1'/>
           <field accessType='initializeOnly' type='SFRotation' name='initialScaleOrientation'/>
@@ -1165,6 +1236,7 @@ function translate (value)
             <connect nodeField='scale' protoField='scale'/>
             <connect nodeField='scaleOrientation' protoField='scaleOrientation'/>
             <connect nodeField='snap' protoField='snapRotation'/>
+            <connect nodeField='activeHandle' protoField='activeHandle'/>
           </IS>
 <![CDATA[ecmascript:
 
@@ -1185,6 +1257,30 @@ function set_active (value)
    scaleOrientation = initialScaleOrientation;
 
    events = 4;
+}
+
+function set_xActive (value)
+{
+   if (!value)
+      return;
+
+   activeHandle = "X_AXIS";
+}
+
+function set_yActive (value)
+{
+   if (!value)
+      return;
+
+   activeHandle = "Y_AXIS";
+}
+
+function set_zActive (value)
+{
+   if (!value)
+      return;
+
+   activeHandle = "Z_AXIS";
 }
 
 function set_xRotation (value)
@@ -1250,6 +1346,7 @@ function rotate (value)
           <field accessType='inputOutput' type='SFString' name='scaleMode'/>
           <field accessType='inputOutput' type='SFBool' name='scaleUniform'/>
           <field accessType='inputOutput' type='MFString' name='connectedAxes'/>
+          <field accessType='outputOnly' type='SFString' name='activeHandle'/>
           <field accessType='inputOutput' type='SFBool' name='keepCenter'/>
           <field accessType='initializeOnly' type='SFVec3f' name='initialTranslation'/>
           <field accessType='initializeOnly' type='SFVec3f' name='initialScale'/>
@@ -1259,6 +1356,22 @@ function rotate (value)
           <field accessType='initializeOnly' type='SFInt32' name='events'/>
           <field accessType='initializeOnly' type='SFNode' name='lineProperties'>
             <LineProperties USE='_2'/>
+          </field>
+          <field accessType='initializeOnly' type='MFNode' name='sensors'>
+            <PlaneSensor USE='XScaleFrontSensor'/>
+            <PlaneSensor USE='YScaleFrontSensor'/>
+            <PlaneSensor USE='ZScaleFrontSensor'/>
+            <PlaneSensor USE='XScaleBackSensor'/>
+            <PlaneSensor USE='YScaleBackSensor'/>
+            <PlaneSensor USE='ZScaleBackSensor'/>
+            <PlaneSensor USE='ScaleSensor1_1'/>
+            <PlaneSensor USE='ScaleSensor2'/>
+            <PlaneSensor USE='ScaleSensor3'/>
+            <PlaneSensor USE='ScaleSensor4'/>
+            <PlaneSensor USE='ScaleSensor5'/>
+            <PlaneSensor USE='ScaleSensor6'/>
+            <PlaneSensor USE='ScaleSensor7'/>
+            <PlaneSensor USE='ScaleSensor8'/>
           </field>
           <IS>
             <connect nodeField='translation' protoField='translation'/>
@@ -1271,8 +1384,26 @@ function rotate (value)
             <connect nodeField='scaleMode' protoField='scaleMode'/>
             <connect nodeField='scaleUniform' protoField='scaleUniform'/>
             <connect nodeField='connectedAxes' protoField='connectedAxes'/>
+            <connect nodeField='activeHandle' protoField='activeHandle'/>
           </IS>
 <![CDATA[ecmascript:
+
+const handles = [
+   "X_FRONT",
+   "Y_FRONT",
+   "Z_FRONT",
+   "X_BACK",
+   "Y_BACK",
+   "Z_BACK",
+   "SCALE_1",
+   "SCALE_2",
+   "SCALE_3",
+   "SCALE_4",
+   "SCALE_5",
+   "SCALE_6",
+   "SCALE_7",
+   "SCALE_8",
+];
 
 let lastScaleFunction, lastValue;
 
@@ -1280,6 +1411,8 @@ function set_active (value)
 {
    if (!value)
       return;
+
+   activeHandle = handles [sensors .findIndex (sensor => sensor .isActive)];
 
    initialTranslation = translation;
    initialScale       = scale;
@@ -1663,7 +1796,7 @@ async function set_toggleCenterTool ()
 
    const tool = await centerTool .getValue () .addTool () .getToolInstance ();
 
-   Browser .addRoute (tool, "grouping",  this, "grouping");
+   Browser .addRoute (tool, "grouping", this, "grouping");
    Browser .addRoute (tool, "isActive", this, "active");
 
    tool .group         = "CENTER_TOOL";
@@ -1780,6 +1913,12 @@ function set_bboxCenter ()
         <ROUTE fromNode='ModeScript' fromField='rotate' toNode='YRotationSensor_1' toField='set_enabled'/>
         <ROUTE fromNode='ModeScript' fromField='rotate' toNode='ZRotationSensor' toField='set_enabled'/>
         <ROUTE fromNode='CenterScript' fromField='keepCenter' toNode='CenterTool' toField='set_visible'/>
+        <ROUTE fromNode='XRotationSensor_1' fromField='isActive' toNode='RotateScript' toField='set_xActive'/>
+        <ROUTE fromNode='YRotationSensor_1' fromField='isActive' toNode='RotateScript' toField='set_yActive'/>
+        <ROUTE fromNode='ZRotationSensor' fromField='isActive' toNode='RotateScript' toField='set_zActive'/>
+        <ROUTE fromNode='XTranslationSensor' fromField='isActive' toNode='TranslateScript' toField='set_xActive'/>
+        <ROUTE fromNode='YTranslationSensor' fromField='isActive' toNode='TranslateScript' toField='set_yActive'/>
+        <ROUTE fromNode='ZTranslationSensor' fromField='isActive' toNode='TranslateScript' toField='set_zActive'/>
       </ProtoBody>
     </ProtoDeclare>
     <ProtoInstance name='X3DTransformNodeTool'>

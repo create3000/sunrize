@@ -6,7 +6,7 @@ const
    Editor           = require ("../../Undo/Editor"),
    ActionKeys       = require ("../../Application/ActionKeys");
 
-console .info ("Double-click on one of the axes handles to cycle through the translation, rotation and scaling tools.");
+console .info ("Double-click on one of the axes handles to cycle through translation, rotation and scaling tools.");
 
 class X3DTransformNodeTool extends X3DChildNodeTool
 {
@@ -92,7 +92,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       if (!this ._visible .getValue ())
          return false;
 
-      this .#initialMatrix .assign (this .getMatrixFromFields ());
+      this .#initialMatrix .assign (this .getCurrentMatrix ());
 
       this .#initialTranslation      = this ._translation      .copy ();
       this .#initialRotation         = this ._rotation         .copy ();
@@ -120,6 +120,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       Editor .roundToIntegerIfAlmostEqual (rotation);
       Editor .roundToIntegerIfAlmostEqual (scale);
       Editor .roundToIntegerIfAlmostEqual (scaleOrientation);
+      Editor .roundToIntegerIfAlmostEqual (center);
 
       if (Editor .almostEqual (scale .x, scale .y) && Editor .almostEqual (scale .x, scale .z))
          scaleOrientation .assign (new X3D .SFRotation ());
@@ -154,7 +155,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       const differenceMatrix = this .#initialMatrix .copy ()
          .multRight (this .#modelMatrix)
          .inverse ()
-         .multRight (this .getMatrixFromFields ())
+         .multRight (this .getCurrentMatrix ())
          .multRight (this .#modelMatrix);
 
       for (const other of X3DTransformNodeTool .#transformTools)
@@ -209,7 +210,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       if (keepCenter)
          this .setMatrixKeepCenter (matrix);
       else
-         this .setMatrixWithCenter (matrix, this ._center .getValue ());
+         this .setMatrixWithCenter (matrix);
    }
 
    setMatrixKeepCenter (matrix)
@@ -223,7 +224,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 		this .setMatrixWithCenter (matrix, center);
    }
 
-   setMatrixWithCenter (matrix, center)
+   setMatrixWithCenter (matrix, center = this ._center .getValue ())
    {
       const
          translation      = new X3D .Vector3 (0, 0, 0),
@@ -240,7 +241,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       this ._center           = center;
    }
 
-   getMatrixFromFields ()
+   getCurrentMatrix ()
    {
       const matrix = new X3D .Matrix4 ();
 
@@ -251,6 +252,11 @@ class X3DTransformNodeTool extends X3DChildNodeTool
                    this ._center .getValue ());
 
       return matrix;
+   }
+
+   getModelMatrix ()
+   {
+      return this .#modelMatrix;
    }
 
    static #box = new X3D .Box3 ();
