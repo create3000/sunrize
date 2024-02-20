@@ -209,7 +209,55 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 			transformTool .setMatrixWithCenter (currentMatrix);
    }
 
+   static scaleHandles = {
+      X_FRONT: 0,
+      Y_FRONT: 1,
+      Z_FRONT: 2,
+      X_BACK: 3,
+      Y_BACK: 4,
+      Z_BACK: 5,
+      SCALE_1: 6,
+      SCALE_2: 7,
+      SCALE_3: 8,
+      SCALE_4: 9,
+      SCALE_5: 10,
+      SCALE_6: 11,
+      SCALE_7: 12,
+      SCALE_8: 13,
+   };
+
    set_scale (transformTool)
+   {
+      transformTool .setUserData (this .#events, true);
+
+      if (transformTool .getUserData (this .#changing))
+      {
+         transformTool .setUserData (this .#changing, false);
+         return;
+      }
+
+		const handle = X3DGridNodeTool .scaleHandles [transformTool .tool .activeHandle];
+
+		// All points are first transformed to grid space, then a snapping position is calculated, and then transformed back to absolute space.
+
+		const currentMatrix = handle < 6
+         ? this .getScaleMatrix (transformTool, handle)
+         : this .getUniformScaleMatrix (transformTool, handle - 6);
+
+      transformTool .setUserData (this .#changing, true);
+
+		if (transformTool .tool .keepCenter)
+			transformTool .setMatrixKeepCenter (currentMatrix);
+		else
+			transformTool .setMatrixWithCenter (currentMatrix);
+   }
+
+   getScaleMatrix (transformTool, handle)
+   {
+
+   }
+
+   getUniformScaleMatrix (transformTool, handle)
    {
 
    }

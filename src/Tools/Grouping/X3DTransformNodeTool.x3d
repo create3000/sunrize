@@ -12,7 +12,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Tue, 20 Feb 2024 08:35:18 GMT'/>
+    <meta name='modified' content='Tue, 20 Feb 2024 13:24:38 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -570,7 +570,6 @@
                       <IS>
                         <connect nodeField='isActive' protoField='isActive'/>
                       </IS>
-                      <TouchSensor USE='ModeTouch' containerField='metadata'/>
                     </PlaneSensor>
                     <ScreenGroup USE='_12'/>
                   </Transform>
@@ -1347,6 +1346,7 @@ function rotate (value)
           <field accessType='inputOutput' type='SFString' name='scaleMode'/>
           <field accessType='inputOutput' type='SFBool' name='scaleUniform'/>
           <field accessType='inputOutput' type='MFString' name='connectedAxes'/>
+          <field accessType='outputOnly' type='SFString' name='activeHandle'/>
           <field accessType='inputOutput' type='SFBool' name='keepCenter'/>
           <field accessType='initializeOnly' type='SFVec3f' name='initialTranslation'/>
           <field accessType='initializeOnly' type='SFVec3f' name='initialScale'/>
@@ -1356,6 +1356,22 @@ function rotate (value)
           <field accessType='initializeOnly' type='SFInt32' name='events'/>
           <field accessType='initializeOnly' type='SFNode' name='lineProperties'>
             <LineProperties USE='_2'/>
+          </field>
+          <field accessType='initializeOnly' type='MFNode' name='sensors'>
+            <PlaneSensor USE='XScaleFrontSensor'/>
+            <PlaneSensor USE='YScaleFrontSensor'/>
+            <PlaneSensor USE='ZScaleFrontSensor'/>
+            <PlaneSensor USE='XScaleBackSensor'/>
+            <PlaneSensor USE='YScaleBackSensor'/>
+            <PlaneSensor USE='ZScaleBackSensor'/>
+            <PlaneSensor USE='ScaleSensor1_1'/>
+            <PlaneSensor USE='ScaleSensor2'/>
+            <PlaneSensor USE='ScaleSensor3'/>
+            <PlaneSensor USE='ScaleSensor4'/>
+            <PlaneSensor USE='ScaleSensor5'/>
+            <PlaneSensor USE='ScaleSensor6'/>
+            <PlaneSensor USE='ScaleSensor7'/>
+            <PlaneSensor USE='ScaleSensor8'/>
           </field>
           <IS>
             <connect nodeField='translation' protoField='translation'/>
@@ -1368,8 +1384,26 @@ function rotate (value)
             <connect nodeField='scaleMode' protoField='scaleMode'/>
             <connect nodeField='scaleUniform' protoField='scaleUniform'/>
             <connect nodeField='connectedAxes' protoField='connectedAxes'/>
+            <connect nodeField='activeHandle' protoField='activeHandle'/>
           </IS>
 <![CDATA[ecmascript:
+
+const handles = [
+   "X_FRONT",
+   "Y_FRONT",
+   "Z_FRONT",
+   "X_BACK",
+   "Y_BACK",
+   "Z_BACK",
+   "SCALE_1",
+   "SCALE_2",
+   "SCALE_3",
+   "SCALE_4",
+   "SCALE_5",
+   "SCALE_6",
+   "SCALE_7",
+   "SCALE_8",
+];
 
 let lastScaleFunction, lastValue;
 
@@ -1377,6 +1411,8 @@ function set_active (value)
 {
    if (!value)
       return;
+
+   activeHandle = handles [sensors .findIndex (sensor => sensor .isActive)];
 
    initialTranslation = translation;
    initialScale       = scale;
