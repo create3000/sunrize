@@ -7,6 +7,7 @@ const
 class X3DGridNodeTool extends X3DActiveLayerNodeTool
 {
    #transformTools = [ ];
+   #events         = Symbol ();
    #changing       = Symbol ();
 
    constructor (executionContext)
@@ -58,9 +59,9 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
    set_active (transformTool, active)
    {
       if (active .getValue ())
-         return;
-
-      this .set_transform (transformTool, true);
+         transformTool .setUserData (this .#events, false);
+      else
+         this .set_transform (transformTool, transformTool .getUserData (this .#events));
    }
 
    set_transform (transformTool, active)
@@ -87,6 +88,8 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 
    set_translation (transformTool)
    {
+      transformTool .setUserData (this .#events, true);
+
       if (transformTool .getUserData (this .#changing))
       {
          transformTool .setUserData (this .#changing, false);
@@ -132,6 +135,8 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 
    set_rotation (transformTool)
    {
+      transformTool .setUserData (this .#events, true);
+
       if (transformTool .getUserData (this .#changing))
       {
          transformTool .setUserData (this .#changing, false);
