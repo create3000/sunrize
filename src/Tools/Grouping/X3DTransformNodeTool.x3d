@@ -12,7 +12,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Tue, 20 Feb 2024 07:55:08 GMT'/>
+    <meta name='modified' content='Tue, 20 Feb 2024 08:09:51 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -1262,20 +1262,26 @@ function set_active (value)
 
 function set_xActive (value)
 {
-   if (value)
-      activeHandle = "X_AXIS";
+   if (!value)
+      return;
+
+   activeHandle = "X_AXIS";
 }
 
 function set_yActive (value)
 {
-   if (value)
-      activeHandle = "Y_AXIS";
+   if (!value)
+      return;
+
+   activeHandle = "Y_AXIS";
 }
 
 function set_zActive (value)
 {
-   if (value)
-      activeHandle = "Z_AXIS";
+   if (!value)
+      return;
+
+   activeHandle = "Z_AXIS";
 }
 
 function set_xRotation (value)
