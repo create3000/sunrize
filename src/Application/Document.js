@@ -594,8 +594,8 @@ module .exports = class Document extends Interface
       this .restoreGridTool (typeName);
       this .updateMenu ();
 
-      if (this .secondaryToolbar .config .file .panel)
-         this .showGridOptions ();
+      // if (this .secondaryToolbar .config .file .panel)
+      //    this .showGridOptions ();
 
       instance .getValue ()           .addInterest ("set_gridTool",        this, typeName);
       instance .getField ("isActive") .addInterest ("set_gridTool",        this, typeName);
@@ -687,12 +687,7 @@ module .exports = class Document extends Interface
 
    updateGridMenus (menu)
    {
-      Object .assign (menu,
-      {
-         GridTool: false,
-         AngleGridTool: false,
-         AxonometricGridTool: false,
-      });
+      Document .#Grids .forEach (typeName => menu [typeName] = false);
 
       this .#grids .forEach ((grid, typeName) => menu [typeName] = grid ._visible .getValue ());
 
