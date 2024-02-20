@@ -86,7 +86,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 
 		// Get absolute position.
 
-		const absoluteMatrix = transformTool .getMatrixFromFields () .multRight (transformTool .getModelMatrix ());
+		const absoluteMatrix = transformTool .getCurrentMatrix () .multRight (transformTool .getModelMatrix ());
 
 		if (transformTool .tool .keepCenter || !this .tool .snapToCenter)
 		{
@@ -124,7 +124,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 
 		const
          matrixBefore = transformTool .getLastMatrix () .copy () .multRight (transformTool .getModelMatrix ()), // Matrix before transformation
-         matrixAfter  = transformTool .getMatrixFromFields () .copy () .multRight (transformTool .getModelMatrix ()); // Matrix after transformation
+         matrixAfter  = transformTool .getCurrentMatrix () .copy () .multRight (transformTool .getModelMatrix ()); // Matrix after transformation
 
 		const distances = [
          matrixAfter .xAxis .copy () .normalize () .dot (matrixBefore .xAxis .copy () .normalize ()),

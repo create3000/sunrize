@@ -103,7 +103,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       if (!this ._visible .getValue ())
          return false;
 
-      this .#initialMatrix .assign (this .getMatrixFromFields ());
+      this .#initialMatrix .assign (this .getCurrentMatrix ());
 
       this .#initialTranslation      = this ._translation      .copy ();
       this .#initialRotation         = this ._rotation         .copy ();
@@ -166,7 +166,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       const differenceMatrix = this .#initialMatrix .copy ()
          .multRight (this .#modelMatrix)
          .inverse ()
-         .multRight (this .getMatrixFromFields ())
+         .multRight (this .getCurrentMatrix ())
          .multRight (this .#modelMatrix);
 
       for (const other of X3DTransformNodeTool .#transformTools)
@@ -252,7 +252,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       this ._center           = center;
    }
 
-   getMatrixFromFields ()
+   getCurrentMatrix ()
    {
       const matrix = new X3D .Matrix4 ();
 
