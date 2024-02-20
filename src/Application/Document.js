@@ -194,19 +194,16 @@ module .exports = class Document extends Interface
 
          if (contents)
          {
-            await this .loadURL (encodeURI (`data:model/x3d,${contents}`));
+            await this .loadURL (encodeURI (`data:model/x3d+xml,${contents}`));
          }
          else
          {
-            await this .loadURL ();
-
-            const viewpoint = this .browser .currentScene .createNode ("Viewpoint");
-
-            viewpoint .set_bind    = true;
-            viewpoint .position    = new X3D .SFVec3f (2.869677, 3.854335, 8.769781);
-            viewpoint .orientation = new X3D .SFRotation (-0.7765887, 0.6177187, 0.1238285, 0.5052317);
-
-            this .browser .currentScene .rootNodes .push (viewpoint);
+            await this .loadURL (`data:model/x3d+vrml,
+Viewpoint {
+   position 2.869677 3.854335 8.769781
+   orientation -0.7765887 0.6177187 0.1238285 0.5052317
+}
+            `);
          }
       }
       else
