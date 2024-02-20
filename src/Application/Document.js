@@ -120,6 +120,9 @@ module .exports = class Document extends Interface
       {
          const config = this .config .file .addNameSpace (`${typeName}.`);
 
+         if (typeName === "GridTool")
+            config .setDefaultValues ({ visible: true });
+
          if (config .visible)
             this .setGridTool (typeName, config .visible);
       }
@@ -190,9 +193,21 @@ module .exports = class Document extends Interface
          const contents = this .config .global .addNameSpace ("unsaved.") [this .fileId];
 
          if (contents)
+         {
             await this .loadURL (encodeURI (`data:model/x3d,${contents}`));
+         }
          else
+         {
             await this .loadURL ();
+
+            const viewpoint = this .browser .currentScene .createNode ("Viewpoint");
+
+            viewpoint .set_bind    = true;
+            viewpoint .position    = new X3D .SFVec3f (2.869677, 3.854335, 8.769781);
+            viewpoint .orientation = new X3D .SFRotation (-0.7765887, 0.6177187, 0.1238285, 0.5052317);
+
+            this .browser .currentScene .rootNodes .push (viewpoint);
+         }
       }
       else
       {
@@ -225,7 +240,7 @@ module .exports = class Document extends Interface
          // console .error (error);
       }
    }
-   
+
    /**
     *
     * @param {boolean} force force save

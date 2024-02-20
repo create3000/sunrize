@@ -8,9 +8,9 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Tue, 05 Aug 2014 20:06:52 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.5.5, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/AngleGridTool.x3dv'/>
-    <meta name='modified' content='Tue, 20 Feb 2024 05:21:27 GMT'/>
+    <meta name='modified' content='Tue, 20 Feb 2024 18:24:12 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='AngleGrid' url='"AngleGrid.x3d"'>
@@ -75,6 +75,7 @@
         <field accessType='inputOutput' type='SFFloat' name='lineTransparency' value='0.8'/>
         <field accessType='inputOutput' type='SFColor' name='majorLineColor' value='0.9647059 0.6980392 0.4196078'/>
         <field accessType='inputOutput' type='SFFloat' name='majorLineTransparency' value='0.6'/>
+        <field accessType='inputOutput' type='SFBool' name='snapping' value='true'/>
         <field accessType='inputOutput' type='SFDouble' name='snapDistance' value='0.25'/>
         <field accessType='inputOutput' type='SFBool' name='snapToCenter'/>
         <field accessType='initializeOnly' type='SFBool' name='solid' value='true'/>

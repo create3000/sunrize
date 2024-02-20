@@ -69,6 +69,9 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
       if (!this ._visible .getValue ())
          return;
 
+      if (!this .tool .snapping)
+         return;
+
       if (!(active || transformTool .tool .isActive))
          return;
 
