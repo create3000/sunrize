@@ -131,7 +131,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
          transformTool .setMatrixWithCenter (currentMatrix);
    }
 
-   static rotationAxes = {
+   static #rotationAxes = {
       X_AXIS: 0,
       Y_AXIS: 1,
       Z_AXIS: 2,
@@ -152,7 +152,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 		const absoluteMatrix = transformTool .getCurrentMatrix () .copy () .multRight (transformTool .getModelMatrix ()); // Matrix after transformation
 
       const
-         index0 = X3DGridNodeTool .rotationAxes [transformTool .tool .activeHandle], // Index of rotation axis
+         index0 = X3DGridNodeTool .#rotationAxes [transformTool .tool .activeHandle], // Index of rotation axis
          index1 = (index0 + 1) % 3,
          index2 = (index0 + 2) % 3;
 
@@ -213,7 +213,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 			transformTool .setMatrixWithCenter (currentMatrix);
    }
 
-   static scaleHandles = {
+   static #scaleHandles = {
       X_FRONT: 0,
       Y_FRONT: 1,
       Z_FRONT: 2,
@@ -240,7 +240,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
          return;
       }
 
-		const handle = X3DGridNodeTool .scaleHandles [transformTool .tool .activeHandle];
+		const handle = X3DGridNodeTool .#scaleHandles [transformTool .tool .activeHandle];
 
 		// All points are first transformed to grid space, then a snapping position is calculated, and then transformed back to absolute space.
 
