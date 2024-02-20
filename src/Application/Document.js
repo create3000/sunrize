@@ -200,6 +200,7 @@ module .exports = class Document extends Interface
          {
             await this .loadURL (`data:model/x3d+vrml,
 Viewpoint {
+   description "Initial View"
    position 2.869677 3.854335 8.769781
    orientation -0.7765887 0.6177187 0.1238285 0.5052317
 }
