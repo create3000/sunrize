@@ -244,7 +244,7 @@ class X3DNodeTool extends X3DBaseTool
       if (active .getValue ())
          this .prepareUndo ();
       else
-         this .finishUndo ()
+         setTimeout (() => this .finishUndo ());
    }
 
    prepareUndo ()
