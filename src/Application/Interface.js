@@ -118,6 +118,11 @@ module .exports = class Interface
       return id .pathname;
    }
 
+   get initialScene ()
+   {
+      return Interface .#initialScene;
+   }
+
    /**
     *
     * @param {string} event

@@ -121,7 +121,7 @@ module .exports = class Document extends Interface
          const config = this .config .file .addNameSpace (`${typeName}.`);
 
          if (typeName === "GridTool")
-            config .setDefaultValues ({ visible: !!this .browser .currentScene .rootNodes .length });
+            config .setDefaultValues ({ visible: this .browser .currentScene !== this .initialScene });
 
          if (config .visible)
             this .setGridTool (typeName, config .visible);
