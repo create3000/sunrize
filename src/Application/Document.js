@@ -87,8 +87,6 @@ module .exports = class Document extends Interface
       this .browser .getBrowserOptions () .getField ("TextureQuality")   .addInterest ("set_textureQuality",   this);
       this .browser .getBrowserOptions () .getField ("Rubberband")       .addInterest ("set_rubberband",       this);
       this .browser .getBrowserOptions () .getField ("Timings")          .addInterest ("set_timings",          this);
-
-      this .activate ();
    }
 
    static #Grids = [
@@ -126,6 +124,8 @@ module .exports = class Document extends Interface
          if (config .visible)
             this .setGridTool (typeName, config .visible);
       }
+
+      this .activate ();
    }
 
    activate ()
@@ -576,7 +576,7 @@ module .exports = class Document extends Interface
    async setGridTool (typeName, visible)
    {
       const
-         Tool     = require (`../Tools/Grid/${typeName}`),
+         Tool     = require (`../Tools/Grids/${typeName}`),
          grid     = this .#grids .get (typeName) ?? new Tool (this .browser .currentScene),
          config   = this .config .file .addNameSpace (`${typeName}.`),
          instance = await grid .getToolInstance ();
@@ -689,7 +689,7 @@ module .exports = class Document extends Interface
    {
       Object .assign (menu,
       {
-         Grid: false,
+         GridTool: false,
          AngleGridTool: false,
          AxonometricGridTool: false,
       });
