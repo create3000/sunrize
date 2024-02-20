@@ -2,6 +2,7 @@
 
 const
    X3DGridNodeTool = require ("./X3DGridNodeTool"),
+   Barycentric     = require ("./Barycentric"),
    X3D             = require ("../../X3D");
 
 class AxonometricGridTool extends X3DGridNodeTool
@@ -42,10 +43,10 @@ class AxonometricGridTool extends X3DGridNodeTool
       // Construct triangle.
 
       const
-         triangle = BarycentricTriangle (ToBarycentric (position, As, Bs, Cs)),
-         A        = FromBarycentric (triangle [0], As, Bs, Cs),
-         B        = FromBarycentric (triangle [1], As, Bs, Cs),
-         C        = FromBarycentric (triangle [2], As, Bs, Cs);
+         triangle = Barycentric .triangle (Barycentric .to (position, As, Bs, Cs)),
+         A        = Barycentric .from (triangle [0], As, Bs, Cs),
+         B        = Barycentric .from (triangle [1], As, Bs, Cs),
+         C        = Barycentric .from (triangle [2], As, Bs, Cs);
 
       // Find closest point.
 
@@ -106,89 +107,6 @@ class AxonometricGridTool extends X3DGridNodeTool
    {
       return position;
    }
-}
-
-/**
- * @returns Barycentric coordinates (u, v, w) for @a point with respect to triangle (a, b, c).
- * @param point  in cartesian coordinate system.
- * @param a      first point of triangle.
- * @param b      second point of triangle.
- * @param c      third point of triangle.
- * Type is any type supporting copy constructions.
- */
-function ToBarycentric (point, a, b, c)
-{
-	const
-      v0 = b .copy () .subtract (a),
-	   v1 = c .copy () .subtract (a),
-	   v2 = point .copy () .subtract (a);
-
-	const
-      d00   = v0 .dot (v0),
-	   d01   = v0 .dot (v1),
-	   d11   = v1 .dot (v1),
-	   d20   = v2 .dot (v0),
-	   d21   = v2 .dot (v1),
-	   denom = d00 * d11 - d01 * d01;
-
-	const
-      v = (d11 * d20 - d01 * d21) / denom,
-	   t = (d00 * d21 - d01 * d20) / denom,
-	   u = 1 - v - t;
-
-	return [u, v, t];
-}
-
-/**
- * @returns Computes coordinates on triangle defined @a point0, @a point1, @a point2 by from @a barycentric coordinates.
- * @param  point0  first point of triangle.
- * @param  point1  second point of triangle.
- * @param  point2  third point of triangle.
- * @param  barycentric  barycentric vector of triangle.
- */
-function FromBarycentric (barycentric, point0, point1, point2)
-{
-	return point0 .copy () .multiply (barycentric [0])
-      .add (point1 .copy () .multiply (barycentric [1]))
-      .add (point2 .copy () .multiply (barycentric [2]));
-}
-
-/**
- * @param barycentric  barycentric vector within triangle.
- * @returns Returns the vertices of the triangle of an arbitrary barycentric point.
- */
-function BarycentricTriangle (barycentric)
-{
-   const
-	   min    = new X3D .Vector3 (... barycentric .map (v => Math .floor (v))),
-	   max    = new X3D .Vector3 (... barycentric .map (v => Math .ceil (v))),
-	   even   = min .x + min .y + min .z === 0,
-	   A      = even ? new X3D .Vector3 (max .x, min .y, min .z) : new X3D .Vector3 (min .x, max .y, max .z),
-	   B      = even ? new X3D .Vector3 (min .x, max .y, min .z) : new X3D .Vector3 (max .x, min .y, max .z),
-	   C      = even ? new X3D .Vector3 (min .x, min .y, max .z) : new X3D .Vector3 (max .x, max .y, min .z);
-
-	if (min .x === max .x)
-	{
-		A .x = 1 - A .y - A .z;
-		B .x = 1 - B .y - B .z;
-		C .x = 1 - C .y - C .z;
-	}
-
-	if (min .y === max .y)
-	{
-		A .y = 1 - A .z - A .x;
-		B .y = 1 - B .z - B .x;
-		C .y = 1 - C .z - C .x;
-	}
-
-	if (min .z === max .z)
-	{
-		A .z = 1 - A .x - A .y;
-		B .z = 1 - B .x - B .y;
-		C .z = 1 - C .x - C .y;
-	}
-
-	return [A, B, C];
 }
 
 module .exports = AxonometricGridTool;
