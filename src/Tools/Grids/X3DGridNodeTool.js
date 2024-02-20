@@ -119,6 +119,77 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
       }
 
       transformTool .setUserData (this .#changing, true);
+
+      // Snap rotation to axes.
+
+		const
+         matrixBefore = transformTool .getLastMatrix () .copy () .multRight (transformTool .getModelMatrix ()), // Matrix before transformation
+         matrixAfter  = transformTool .getMatrixFromFields () .copy () .multRight (transformTool .getModelMatrix ()); // Matrix after transformation
+
+		const distances = [
+         matrixAfter .xAxis .copy () .normalize () .dot (matrixBefore .xAxis .copy () .normalize ()),
+		   matrixAfter .yAxis .copy () .normalize () .dot (matrixBefore .yAxis .copy () .normalize ()),
+		   matrixAfter .zAxis .copy () .normalize () .dot (matrixBefore .zAxis .copy () .normalize ()),
+      ];
+
+      const
+         index0 = distances .reduce ((max, v, i, a) => v > a [max] ? i : max, 0), // Index of rotation axis
+         index1 = (index0 + 1) % distances .length,
+         index2 = (index0 + 2) % distances .length;
+
+		const y = [
+         matrixAfter .xAxis .copy (),
+         matrixAfter .yAxis .copy (),
+         matrixAfter .zAxis .copy ()
+      ]; // Rotation axis, equates to grid normal
+
+      const z = [
+         matrixAfter .yAxis .copy (),
+         matrixAfter .zAxis .copy (),
+         matrixAfter .yAxis .copy (),
+      ]; // Axis which snaps, later transformed to grid space
+
+		const gridMatrix = this .getGridMatrix ();
+
+      const
+		   Y         = y [index1] .copy () .cross (y [index2]) .normalize (), // Normal of rotation plane
+		   X         = gridMatrix .yAxis .copy () .cross (Y), // Intersection between both planes
+		   Z         = X .copy () .cross (Y), // Front vector
+		   gridPlane = gridMatrix .submatrix .copy ();
+
+      let
+		   rotationPlane = new X3D .Matrix3 (X [0], X [1], X [2], Y [0], Y [1], Y [2], Z [0], Z [1], Z [2]),
+		   gridRotation  = this .tool .rotation .getValue () .getMatrix ();
+
+		// If X or Z are near 0 then Y is collinear to the y-axis.
+
+		if (1 - Math .abs (gridMatrix .yAxis .normalize () .dot (Y)) < 1e-6)
+		{
+			rotationPlane = new X3D .Matrix3 ();
+			gridRotation  = new X3D .Matrix3 ();
+		}
+
+		const
+         vectorToSnap   = z [index0],
+         vectorOnGrid   = rotationPlane .copy () .inverse () .multRight (gridRotation) .multRight (gridPlane .copy () .inverse ()) .multVecMatrix (vectorToSnap .copy ()) .normalize (), // Vector inside grid space.
+         snapVector     = gridPlane .multRight (gridRotation .copy () .inverse ()) .multRight (rotationPlane) .multVecMatrix (this .getSnapPosition (vectorOnGrid)),
+         invModelMatrix = transformTool .getModelMatrix () .copy () .inverse (),
+         snapRotation   = new X3D .Rotation4 (
+            invModelMatrix .multDirMatrix (vectorToSnap .copy ()),
+            invModelMatrix .multDirMatrix (snapVector .copy ())
+         );
+
+		const currentMatrix = new X3D .Matrix4 ()
+         .set (transformTool ._translation      .getValue (),
+		         transformTool ._rotation         .getValue () .copy () .multRight (snapRotation),
+		         transformTool ._scale            .getValue (),
+		         transformTool ._scaleOrientation .getValue (),
+		         transformTool ._center           .getValue ());
+
+		if (transformTool .tool .keepCenter)
+			transformTool .setMatrixKeepCenter (currentMatrix);
+		else
+			transformTool .setMatrixWithCenter (currentMatrix);
    }
 
    set_scale (transformTool)
