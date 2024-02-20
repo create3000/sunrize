@@ -292,11 +292,13 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
          sgn          = handle < 3 ? 1 : -1,
          direction    = bbox .getAxes (X3DGridNodeTool .axes) [axis] .copy () .multiply (sgn),
          point        = direction .copy () .add (position),
-         snapPosition = gridMatrix .multVecMatrix (this .getSnapPositionWithNormal (invGridMatrix .multVecMatrix (point .copy ()), invGridMatrix .multDirMatrix (direction .copy ()) .normalize ())),
-         after        = invAbsoluteMatrix .multVecMatrix (snapPosition .copy ()) .subtract (aabb .center ()) [axis],
-         before       = aabb .getAxes (X3DGridNodeTool .axes) [axis] [axis] * sgn;
+         snapPosition = gridMatrix .multVecMatrix (this .getSnapPositionWithNormal (invGridMatrix .multVecMatrix (point .copy ()), invGridMatrix .multDirMatrix (direction .copy ()) .normalize ()));
 
-      if (this .getScaleFromEdge (transformTool))
+      let
+         after  = invAbsoluteMatrix .multVecMatrix (snapPosition .copy ()) .subtract (aabb .center) [axis],
+         before = aabb .getAxes (X3DGridNodeTool .axes) [axis] [axis] * sgn;
+
+      if (transformTool .tool .scaleMode === "SCALE_FROM_OPPOSITE_HANDLE")
       {
          // Scale from corner.
          after  += before;
@@ -309,7 +311,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 
       // We must procced with the original current matrix and a snapping scale of [1 1 1], for correct grouped event handling.
 
-      if (Math .abs (delta) < MIN_DELTA || MAth .abs (ratio) < MIN_RATIO || isNaN (ratio) || Math .abs (ratio) == Infinity)
+      if (Math .abs (delta) < MIN_DELTA || Math .abs (ratio) < MIN_RATIO || isNaN (ratio) || Math .abs (ratio) === Infinity)
          return currentMatrix;
 
       let snapScale = new X3D .Vector3 (1, 1, 1);
@@ -336,9 +338,9 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 
       // Get absolute position.
 
-      const auto currentMatrix  = master -> getCurrentMatrix ();
-      const auto absoluteMatrix = currentMatrix * master -> getModelMatrix ();
-      const auto bbox           = master -> getSubBBox () .aabb () * absoluteMatrix; // Absolute BBox
+      const auto currentMatrix  = transformTool .getCurrentMatrix ();
+      const auto absoluteMatrix = currentMatrix * transformTool .getModelMatrix ();
+      const auto bbox           = transformTool .getSubBBox () .aabb () * absoluteMatrix; // Absolute BBox
       const auto position       = bbox .center (); // Absolute position
 
       // Calculate snapping scale and apply absolute relative translation.
@@ -347,7 +349,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
       const auto points     = bbox .points ();
       double     min        = infinity;
 
-      if (getScaleFromEdge (master))
+      if (transformTool .tool .scaleMode === "SCALE_FROM_OPPOSITE_HANDLE")
       {
          // Uniform scale from corner.
 
@@ -365,7 +367,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
          {
             const auto r = std::abs (ratio [i] - 1);
 
-            if (delta [i] and r < std::abs (min - 1))
+            if (delta [i] && r < std::abs (min - 1))
                min = ratio [i];
          }
       }
@@ -384,7 +386,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
             {
                const auto r = std::abs (ratio [i] - 1);
 
-               if (delta [i] and r < std::abs (min - 1))
+               if (delta [i] && r < std::abs (min - 1))
                   min = ratio [i];
             }
          }
@@ -392,33 +394,54 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 
       // We must proceed with the original current matrix and a snapping scale of [1 1 1], for correct grouped event handling.
 
-      if (min == 0 or min == infinity)
+      if (min === 0 || min === infinity)
          return currentMatrix;
 
       auto snapMatrix = Matrix4d ();
 
       snapMatrix .scale (Vector3d (min, min, min));
 
-      snapMatrix *= getOffset (master, bbox, snapMatrix, points [handle] - bbox .center ());
-      snapMatrix  = absoluteMatrix * snapMatrix * inverse (master -> getModelMatrix ());
+      snapMatrix *= getOffset (transformTool, bbox, snapMatrix, points [handle] - bbox .center ());
+      snapMatrix  = absoluteMatrix * snapMatrix * inverse (transformTool .getModelMatrix ());
 
       return snapMatrix;
       */
    }
 
-   getScaleFromEdge (transformTool)
+   getConnectedAxes (transformTool, axis, scale)
    {
+      const axes = {
+         X: 0,
+         Y: 1,
+         Z: 2,
+      };
 
+      for (const connectedAxis of transformTool .tool .connectedAxes)
+      {
+         const
+            lhs = axes [connectedAxis [0]],
+            rhs = axes [connectedAxis [1]];
+
+         if (rhs === axis)
+            scale [lhs] = scale [rhs];
+      }
+
+      return scale;
    }
 
-   getConnectedAxes (transformTool, axis, snapScale)
+   getOffset (transformTool, bbox, scaleMatrix, offset)
    {
+      // To keep the bbox center at its point we must compute a translation offset.
 
-   }
+      let distanceFromCenter = bbox .center .copy ();
 
-   getOffset (transformTool, aabb, snapMatrix, axis)
-   {
+      if (transformTool .tool .scaleMode === "SCALE_FROM_OPPOSITE_HANDLE")
+         distanceFromCenter .subtract (offset);
 
+      const translation = new X3D .Matrix4 ()
+         .set (distanceFromCenter .subtract (scaleMatrix .multDirMatrix (distanceFromCenter .copy ())));
+
+      return translation;
    }
 
    /**
