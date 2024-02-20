@@ -105,6 +105,8 @@ module .exports = new class Panel extends Interface
       const concreteNode = X3DUOM .find (`ConcreteNode[name=${node .getTypeName ()}]`);
 
       this .browser .currentScene .units .addInterest ("updateNode", this);
+      node .getPredefinedFields ()       .addInterest ("updateNode", this);
+      node .getUserDefinedFields ()      .addInterest ("updateNode", this);
 
       this .addBlades (node, concreteNode);
 
@@ -170,6 +172,8 @@ module .exports = new class Panel extends Interface
       // Disconnect interests.
 
       this .browser .currentScene .units .removeInterest ("updateNode", this);
+      node .getPredefinedFields ()       .removeInterest ("updateNode", this);
+      node .getUserDefinedFields ()      .removeInterest ("updateNode", this);
 
       for (const field of node .getFields ())
          field .removeFieldCallback (this);
