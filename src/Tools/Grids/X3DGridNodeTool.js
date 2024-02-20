@@ -323,7 +323,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 
       snapMatrix .scale (snapScale);
 
-      snapMatrix .multRight (this .getOffset (transformTool, aabb, snapMatrix, aabb .getAxes (X3DGridNodeTool .axes) [axis] .copy () .multiply (sgn)));
+      snapMatrix .multRight (this .getOffset (transformTool, aabb, snapMatrix, aabb .getAxes (X3DGridNodeTool .#axes) [axis] .copy () .multiply (sgn)));
       snapMatrix .multRight (currentMatrix);
 
       return snapMatrix;
