@@ -21,13 +21,13 @@ class GridTool extends X3DGridNodeTool
       super .disposeTool ();
    }
 
-   getGridSnapPosition (position)
+   getSnapPosition (position)
    {
       const translation = position .copy ();
 
       for (let i = 0; i < 3; ++ i)
       {
-         const value = this .getGridSnapPositionForAxis (i, position);
+         const value = this .getSnapPositionForAxis (i, position);
 
          if (Math .abs (value - translation [i]) < Math .abs (this .tool .snapDistance))
             translation [i] = value;
@@ -36,7 +36,7 @@ class GridTool extends X3DGridNodeTool
       return translation;
    }
 
-   getGridSnapPositionForAxis (axis, position)
+   getSnapPositionForAxis (axis, position)
    {
       const
          o  = this .tool .dimension [axis] % 2 * 0.5, // Add a half scale if dimension is odd.
@@ -45,6 +45,11 @@ class GridTool extends X3DGridNodeTool
          p2 = p + o;
 
       return Math .abs (p1 - position [axis]) < Math .abs (p2 - position [axis]) ? p1 : p2;
+   }
+
+   getSnapPositionWithNormal (position, normal)
+   {
+
    }
 }
 
