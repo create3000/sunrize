@@ -116,16 +116,21 @@ module .exports = class Document extends Interface
       this .#grids      .clear ();
       this .#gridFields .clear ();
 
-      for (const typeName of Document .#Grids)
+      if (this .browser .currentScene !== this .initialScene)
       {
-         const config = this .config .file .addNameSpace (`${typeName}.`);
+         for (const typeName of Document .#Grids)
+         {
+            const config = this .config .file .addNameSpace (`${typeName}.`);
 
-         if (typeName === "GridTool")
-            config .setDefaultValues ({ visible: this .browser .currentScene !== this .initialScene });
+            if (typeName === "GridTool")
+               config .setDefaultValues ({ visible: true });
 
-         if (config .visible)
-            this .setGridTool (typeName, config .visible);
+            if (config .visible)
+               this .setGridTool (typeName, config .visible);
+         }
       }
+
+      // Activate
 
       this .activate ();
    }
@@ -450,14 +455,14 @@ Viewpoint {
       this .browser .setBrowserOption ("PrimitiveQuality", value);
       this .browser .setDescription (`Primitive Quality: ${value .toLowerCase ()}`);
 
-      if (!live)
+      if (live)
+         return;
+
+      this .browser .finishedEvents () .addFieldCallback (this, () =>
       {
-         this .browser .finishedEvents () .addFieldCallback (this, () =>
-         {
-            this .browser .finishedEvents () .removeFieldCallback (this);
-            this .browser .endUpdate ();
-         });
-      }
+         this .browser .finishedEvents () .removeFieldCallback (this);
+         this .browser .endUpdate ();
+      });
    }
 
    updatePrimitiveQualityMenu (menu)
