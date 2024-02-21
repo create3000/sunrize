@@ -2,7 +2,7 @@
 
 const X3DSnapNodeTool = require ("./X3DSnapNodeTool");
 
-class SnapTarget extends X3DSnapNodeTool
+class SnapTargetTool extends X3DSnapNodeTool
 {
    constructor (executionContext)
    {
@@ -17,4 +17,4 @@ class SnapTarget extends X3DSnapNodeTool
    }
 }
 
-module .exports = SnapTarget;
+module .exports = SnapTargetTool;
