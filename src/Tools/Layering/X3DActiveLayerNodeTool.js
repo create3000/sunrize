@@ -23,13 +23,17 @@ class X3DActiveLayerNodeTool extends X3DChildNodeTool
 
       this .getBrowser () .getActiveLayer () .addInterest ("set_activeLayer", this);
 
+      this ._visible .addInterest ("set_visible", this);
+
       this .set_activeLayer ();
+      this .set_visible ();
    }
 
    disposeTool ()
    {
       this .getBrowser () .getActiveLayer () .removeInterest ("set_activeLayer", this);
 
+      this .disconnectTool ();
       this .removeFromLayer (this .#activeLayerNode);
 
       super .disposeTool ();
@@ -62,6 +66,18 @@ class X3DActiveLayerNodeTool extends X3DChildNodeTool
       if (index > -1)
          layerNode .getGroups () ._children .splice (index, 1);
    }
+
+   set_visible ()
+   {
+      if (this ._visible .getValue ())
+         this .connectTool ();
+      else
+         this .disconnectTool ();
+   }
+
+   connectTool () { }
+
+   disconnectTool () { }
 
    getModelMatrix ()
    {

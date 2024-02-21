@@ -23,19 +23,29 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
       await super .initializeTool (... args);
 
       this .tool .getField ("translation") .setUnit ("length");
-
-      X3DGridNodeTool .addToolInterest (this, () => this .set_transform_tools ());
-
-      this .set_transform_tools ();
    }
 
    disposeTool ()
    {
       this .keys .dispose ();
 
-      X3DGridNodeTool .removeToolInterest (this);
-
       super .disposeTool ();
+   }
+
+   connectTool ()
+   {
+      super .connectTool ();
+
+      X3DGridNodeTool .addToolInterest (this, () => this .set_transform_tools ());
+
+      this .set_transform_tools ();
+   }
+
+   disconnectTool ()
+   {
+      X3DGridNodeTool .removeToolInterest (this);
+      
+      super .disconnectTool ();
    }
 
    set_transform_tools ()
