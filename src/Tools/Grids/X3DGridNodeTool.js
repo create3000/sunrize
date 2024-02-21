@@ -34,6 +34,8 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
       this .keys .dispose ();
 
       X3DGridNodeTool .removeToolInterest (this);
+
+      super .disposeTool ();
    }
 
    set_transform_tools ()

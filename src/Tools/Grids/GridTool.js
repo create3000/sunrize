@@ -16,11 +16,6 @@ class GridTool extends X3DGridNodeTool
       await super .initializeTool (__dirname, "GridTool.x3d");
    }
 
-   disposeTool ()
-   {
-      super .disposeTool ();
-   }
-
    getSnapPosition (position)
    {
       const translation = position .copy ();

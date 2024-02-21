@@ -19,11 +19,6 @@ class AxonometricGridTool extends X3DGridNodeTool
       this .tool .getField ("angles") .setUnit ("angle");
    }
 
-   disposeTool ()
-   {
-      super .disposeTool ();
-   }
-
    getSnapPosition (position)
    {
       let p = position .copy ();

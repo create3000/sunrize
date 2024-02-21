@@ -135,6 +135,14 @@ module .exports = class Document extends Interface
          }
       }
 
+      // Snap Tools
+
+      this .#snapTarget ?.dispose ();
+      this .#snapSource ?.dispose ();
+
+      this .#snapTarget = null;
+      this .#snapSource = null;
+
       // Activate
 
       this .activate ();
@@ -156,6 +164,7 @@ module .exports = class Document extends Interface
       this .updateTimingsMenu (menu);
       this .updateRubberbandMenu (menu);
       this .updateGridMenus (menu);
+      this .updateSnapToolMenus (menu);
 
       electron .ipcRenderer .send ("change-menu", menu);
    }
@@ -709,8 +718,6 @@ Viewpoint {
       Document .#Grids .forEach (typeName => menu [typeName] = false);
 
       this .#grids .forEach ((grid, typeName) => menu [typeName] = grid ._visible .getValue ());
-
-      electron .ipcRenderer .send ("change-menu", menu);
    }
 
    async showGridOptions ()
@@ -727,14 +734,33 @@ Viewpoint {
       }
    }
 
+   #snapTarget = null;
+   #snapSource = null;
+
    activateSnapTarget ()
    {
+      const
+         SnapTarget = require ("../Tools/SnapTool/SnapTarget"),
+         visible    = this .#snapTarget ?._visible .getValue () ?? false;
 
+      this .#snapTarget ??= new SnapTarget (this .browser .currentScene);
+
+      this .#snapTarget ._visible = !visible;
+
+      this .updateMenu ();
    }
 
    activateSnapSource ()
    {
+      const
+         SnapSource = require ("../Tools/SnapTool/SnapSource"),
+         visible    = this .#snapSource ?._visible .getValue () ?? false;
 
+      this .#snapSource ??= new SnapSource (this .browser .currentScene);
+
+      this .#snapSource ._visible = !visible;
+
+      this .updateMenu ();
    }
 
    centerSnapTargetInSelection ()
@@ -750,5 +776,11 @@ Viewpoint {
    moveSelectionCenterToSnapTarget ()
    {
 
+   }
+
+   updateSnapToolMenus (menu)
+   {
+      menu .SnapTarget = this .#snapTarget ?._visible .getValue ();
+      menu .SnapSource = this .#snapSource ?._visible .getValue ();
    }
 };

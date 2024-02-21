@@ -16,11 +16,6 @@ class AngleGridTool extends X3DGridNodeTool
       await super .initializeTool (__dirname, "AngleGridTool.x3d");
    }
 
-   disposeTool ()
-   {
-      super .disposeTool ();
-   }
-
    getSnapPosition (position, snapY)
    {
       const

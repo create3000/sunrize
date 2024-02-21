@@ -673,6 +673,8 @@ module .exports = class Application
                { type: "separator" },
                {
                   label: _("Activate Snap Target"),
+                  type: "checkbox",
+                  checked: this .menuOptions .SnapTarget,
                   visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
                   click: () =>
                   {
@@ -681,6 +683,8 @@ module .exports = class Application
                },
                {
                   label: _("Activate Snap Source"),
+                  type: "checkbox",
+                  checked: this .menuOptions .SnapSource,
                   visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
                   click: () =>
                   {
