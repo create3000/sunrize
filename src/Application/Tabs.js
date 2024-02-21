@@ -92,11 +92,17 @@ module .exports = new class Tabs
       this .forwardToActiveTab ("texture-quality");
       this .forwardToActiveTab ("display-rubberband");
       this .forwardToActiveTab ("display-timings");
-
       this .forwardToActiveTab ("show-library");
+
       this .forwardToActiveTab ("browser-size");
       this .forwardToActiveTab ("grid-tool");
       this .forwardToActiveTab ("grid-options");
+      this .forwardToActiveTab ("activate-snap-target");
+      this .forwardToActiveTab ("activate-snap-source");
+      this .forwardToActiveTab ("center-snap-target-in-selection");
+      this .forwardToActiveTab ("move-selection-to-snap-target");
+      this .forwardToActiveTab ("move-selection-center-to-snap-target");
+
       this .forwardToActiveTab ("script-editor-menu");
       this .forwardToActiveTab ("outline-editor-menu");
 

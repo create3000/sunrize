@@ -62,6 +62,10 @@ The user interface consists of four main parts: Menubar, Dashboard, Sidebar, and
 ### Layout
 
 - **Browser Size:** set aspect ratio of browser size.
+- **Grid Layout Tool:** display construction aid.
+- **Angle Grid Layout Tool:** display construction aid.
+- **Axonometric Grid Layout Tool:** display construction aid.
+- **Show Grid Tool Options in Panel:** opens Panel for currently active Grid Tool.
 
 ### Help
 

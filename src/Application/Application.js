@@ -662,12 +662,55 @@ module .exports = class Application
                },
                { type: "separator" },
                {
-                  label: _("Show Grid Tool in Panel..."),
+                  label: _("Show Grid Tool Options in Panel..."),
                   accelerator: "CmdOrCtrl+G",
                   enabled: this .menuOptions .GridTool || this .menuOptions .AngleGridTool || this .menuOptions .AxonometricGridTool,
                   click: () =>
                   {
                      this .mainWindow .webContents .send ("grid-options");
+                  },
+               },
+               { type: "separator" },
+               {
+                  label: _("Activate Snap Target"),
+                  visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
+                  click: () =>
+                  {
+                     this .mainWindow .webContents .send ("activate-snap-target");
+                  },
+               },
+               {
+                  label: _("Activate Snap Source"),
+                  visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
+                  click: () =>
+                  {
+                     this .mainWindow .webContents .send ("activate-snap-source");
+                  },
+               },
+               {
+                  label: _("Center Snap Target in Selection"),
+                  visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
+                  click: () =>
+                  {
+                     this .mainWindow .webContents .send ("center-snap-target-in-selection");
+                  },
+               },
+               {
+                  label: _("Move Selection to Snap Target"),
+                  accelerator: "CmdOrCtrl+M",
+                  visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
+                  click: () =>
+                  {
+                     this .mainWindow .webContents .send ("move-selection-to-snap-target");
+                  },
+               },
+               {
+                  label: _("Move Selection Center to Snap Target"),
+                  accelerator: "Shift+CmdOrCtrl+M",
+                  visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
+                  click: () =>
+                  {
+                     this .mainWindow .webContents .send ("move-selection-center-to-snap-target");
                   },
                },
             ],
