@@ -113,6 +113,8 @@ module .exports = class Document extends Interface
 
       // Grids
 
+      this .#grids .forEach (grid => grid .dispose ());
+
       this .#grids      .clear ();
       this .#gridFields .clear ();
 
