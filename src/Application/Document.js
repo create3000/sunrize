@@ -124,9 +124,6 @@ module .exports = class Document extends Interface
          {
             const config = this .config .file .addNameSpace (`${typeName}.`);
 
-            if (typeName === "GridTool")
-               config .setDefaultValues ({ visible: true });
-
             if (config .visible)
                this .setGridTool (typeName, config .visible);
          }
@@ -212,6 +209,8 @@ Viewpoint {
    orientation -0.7765887 0.6177187 0.1238285 0.5052317
 }
             `);
+
+            this .setGridTool ("GridTool", true);
          }
       }
       else
