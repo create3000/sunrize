@@ -2,7 +2,8 @@
 
 const
    X3DActiveLayerNodeTool = require ("../Layering/X3DActiveLayerNodeTool"),
-   X3D                    = require ("../../X3D");
+   X3D                    = require ("../../X3D"),
+   ActionKeys             = require ("../../Application/ActionKeys");
 
 class X3DGridNodeTool extends X3DActiveLayerNodeTool
 {
@@ -18,6 +19,8 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
    async initializeTool (... args)
    {
       await super .initializeTool (... args);
+
+      this .keys = new ActionKeys (`X3DGridNodeTool${this .getId ()}`);
 
       this .tool .getField ("translation") .setUnit ("length");
 
@@ -67,6 +70,9 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
    set_transform (transformTool, active)
    {
       if (!this ._visible .getValue ())
+         return;
+
+      if (this .keys .value === (ActionKeys .Shift | ActionKeys .Control))
          return;
 
       if (!this .tool .snapping)
