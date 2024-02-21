@@ -68,6 +68,12 @@ module .exports = class Document extends Interface
       electron .ipcRenderer .on ("grid-tool", (event, typeName, visible) => this .setGridTool (typeName, visible));
       electron .ipcRenderer .on ("grid-options", () => this .showGridOptions ());
 
+      electron .ipcRenderer .on ("activate-snap-target",                 () => this .activateSnapTarget ());
+      electron .ipcRenderer .on ("activate-snap-source",                 () => this .activateSnapSource ());
+      electron .ipcRenderer .on ("center-snap-target-in-selection",      () => this .centerSnapTargetInSelection ());
+      electron .ipcRenderer .on ("move-selection-to-snap-target",        () => this .moveSelectionToSnapTarget ());
+      electron .ipcRenderer .on ("move-selection-center-to-snap-target", () => this .moveSelectionCenterToSnapTarget ());
+
       $(window)
          .on ("focusin",  () => this .onfocus ())
          .on ("focusout", () => this .onfocus ());
@@ -719,5 +725,30 @@ Viewpoint {
          this .secondaryToolbar .togglePanel (true);
          this .secondaryToolbar .panel .setNode (instance .getValue ());
       }
+   }
+
+   activateSnapTarget ()
+   {
+
+   }
+
+   activateSnapSource ()
+   {
+
+   }
+
+   centerSnapTargetInSelection ()
+   {
+
+   }
+
+   moveSelectionToSnapTarget ()
+   {
+
+   }
+
+   moveSelectionCenterToSnapTarget ()
+   {
+
    }
 };
