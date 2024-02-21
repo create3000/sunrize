@@ -14,13 +14,13 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
    constructor (executionContext)
    {
       super (executionContext);
+
+      this .keys = new ActionKeys (`X3DGridNodeTool${this .getId ()}`);
    }
 
    async initializeTool (... args)
    {
       await super .initializeTool (... args);
-
-      this .keys = new ActionKeys (`X3DGridNodeTool${this .getId ()}`);
 
       this .tool .getField ("translation") .setUnit ("length");
 
@@ -31,6 +31,8 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 
    disposeTool ()
    {
+      this .keys .dispose ();
+
       X3DGridNodeTool .removeToolInterest (this);
    }
 
