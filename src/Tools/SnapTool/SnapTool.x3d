@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Layout' level='2'/>
+    <component name='Scripting' level='1'/>
+    <meta name='comment' content='Rise and Shine'/>
+    <meta name='created' content='Mon, 12 Oct 2015 11:18:05 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.5.5, https://create3000.github.io/sunrize/'/>
+    <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/SnapTool.x3dv'/>
+    <meta name='modified' content='Wed, 21 Feb 2024 12:13:47 GMT'/>
+  </head>
+  <Scene>
+    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
+    </ExternProtoDeclare>
+    <ProtoDeclare name='SnapTool'>
+      <ProtoInterface>
+        <field accessType='inputOutput' type='SFString' name='type' value='SNAP_TARGET'/>
+        <field accessType='inputOutput' type='SFVec3f' name='position'/>
+        <field accessType='inputOutput' type='SFVec3f' name='normal' value='0 0 1'/>
+        <field accessType='inputOutput' type='SFBool' name='snapped'/>
+      </ProtoInterface>
+      <ProtoBody>
+        <Transform DEF='_1'>
+          <IS>
+            <connect nodeField='translation' protoField='position'/>
+          </IS>
+          <ScreenGroup DEF='Vector_2'>
+            <Transform
+                rotation='1 0 0 1.5708'>
+              <Transform DEF='Cone'
+                  translation='0 60 0'
+                  scale='6 9 6'>
+                <Shape>
+                  <Appearance DEF='_3'>
+                    <Material DEF='TargetMaterial'
+                        diffuseColor='0.8 0.8 0.16'/>
+                    <ProtoInstance name='ToolShader' containerField='shaders'/>
+                  </Appearance>
+                  <Cone/>
+                </Shape>
+              </Transform>
+              <Transform DEF='Cylinder'
+                  translation='0 30 0'
+                  scale='2 30 2'>
+                <Shape>
+                  <Appearance USE='_3'/>
+                  <Cylinder/>
+                </Shape>
+              </Transform>
+              <Transform DEF='Sphere'
+                  scale='6 6 6'>
+                <Shape>
+                  <Appearance USE='_3'/>
+                  <Sphere/>
+                </Shape>
+              </Transform>
+              <Transform DEF='Grid_4'
+                  translation='0 1 0'
+                  scale='12 1 12'>
+                <Shape>
+                  <IndexedLineSet
+                      colorPerVertex='false'
+                      colorIndex='0, 1, 2'
+                      coordIndex='0, 1, 2, 3, 0, -1, 4, 5, -1, 6, 7, -1, 8, 9, -1, 10, 11, -1, 12, 13, -1, 14, 15, -1'>
+                    <Color
+                        color='1 0.2 0.2, 1 0.2 0.2, 1 0.2 0.2, 1 0.2 0.2, 1 0.2 0.2, 1 0.2 0.2, 1 0.2 0.2'/>
+                    <Coordinate
+                        point='-2 0 2, 2 0 2, 2 0 -2, -2 0 -2, -1 0 2, -1 0 -2, 0 0 2.6, 0 0 -2.6, 1 0 2, 1 0 -2, -2 0 1, 2 0 1, -2.6 0 0, 2.6 0 0, -2 0 -1, 2 0 -1'/>
+                  </IndexedLineSet>
+                </Shape>
+              </Transform>
+            </Transform>
+          </ScreenGroup>
+        </Transform>
+        <Script DEF='SnapToolScript'
+            directOutput='true'>
+          <field accessType='inputOutput' type='SFString' name='type'/>
+          <field accessType='inputOutput' type='SFVec3f' name='normal'/>
+          <field accessType='inputOutput' type='SFBool' name='snapped'/>
+          <field accessType='initializeOnly' type='SFNode' name='tool'>
+            <Transform USE='_1'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='appearance'>
+            <Appearance USE='_3'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='sourceMaterial'>
+            <Material DEF='SourceMaterial'
+                diffuseColor='0.16 0.8 0.377278'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='targetMaterial'>
+            <Material USE='TargetMaterial'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='snapMaterial'>
+            <Material DEF='SnapMaterial'
+                diffuseColor='0.8 0.16 0.795555'/>
+          </field>
+          <IS>
+            <connect nodeField='type' protoField='type'/>
+            <connect nodeField='normal' protoField='normal'/>
+            <connect nodeField='snapped' protoField='snapped'/>
+          </IS>
+<![CDATA[ecmascript:
+
+var zAxis = new SFVec3f (0, 0, 1);
+
+function initialize ()
+{
+	set_type (type, 0);
+	set_normal (normal, 0);
+}
+
+function set_type (value, time)
+{
+	if (snapped)
+	{
+		appearance .material = snapMaterial;
+	}
+	else
+	{
+		switch (type)
+		{
+			case "SNAP_SOURCE":
+			{
+				appearance .material = sourceMaterial;
+				break;
+			}
+			default: // "SNAP_TARGET"
+			{
+				appearance .material = targetMaterial;
+				break;
+			}
+		}
+	}
+}
+
+function set_normal (value, time)
+{
+	tool .rotation = new SFRotation (zAxis, value);
+}
+
+function set_snapped (value, time)
+{
+	set_type (type);
+}
+]]>
+        </Script>
+      </ProtoBody>
+    </ProtoDeclare>
+    <ProtoInstance name='SnapTool' DEF='_6'>
+      <fieldValue name='normal' value='0 1 0'/>
+    </ProtoInstance>
+    <EXPORT localDEF='_6' AS='Tool'/>
+  </Scene>
+</X3D>
