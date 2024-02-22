@@ -2249,7 +2249,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     * @param {Vector3} center
     * @param {UndoManager} undoManager
     */
-   static setMatrixWithCenter (node, matrix, center = undefined, undoManager = UndoManager .shared)
+   static setMatrixWithCenter (node, matrix, center = node ._center .getValue (), undoManager = UndoManager .shared)
    {
       undoManager .beginUndo (_("Set Transformation Matrix of %s"), node .getTypeName ());
 
@@ -2267,12 +2267,13 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                    rotation,
                    scale,
                    scaleOrientation,
-                   center ?? node ._center .getValue ());
+                   center);
 
       this .roundToIntegerIfAlmostEqual (translation);
       this .roundToIntegerIfAlmostEqual (rotation);
       this .roundToIntegerIfAlmostEqual (scale);
       this .roundToIntegerIfAlmostEqual (scaleOrientation);
+      this .roundToIntegerIfAlmostEqual (center);
 
       if (this .almostEqual (scale .x, scale .y) && this .almostEqual (scale .x, scale .z))
          scaleOrientation .set (0, 0, 1, 0);
@@ -2281,7 +2282,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       node ._rotation         = rotation;
       node ._scale            = scale;
       node ._scaleOrientation = scaleOrientation;
-      node ._center           = center ?? node ._center .getValue ();
+      node ._center           = center;
 
       undoManager .registerUndo (() =>
       {
