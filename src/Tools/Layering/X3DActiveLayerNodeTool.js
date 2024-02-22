@@ -6,7 +6,7 @@ const
 
 class X3DActiveLayerNodeTool extends X3DChildNodeTool
 {
-   #activeLayerNode = null;
+   #layerNode = null;
 
    constructor (executionContext)
    {
@@ -34,18 +34,18 @@ class X3DActiveLayerNodeTool extends X3DChildNodeTool
       this .getBrowser () .getActiveLayer () .removeInterest ("set_activeLayer", this);
 
       this .disconnectTool ();
-      this .removeFromLayer (this .#activeLayerNode);
+      this .removeFromLayer (this .#layerNode);
 
       super .disposeTool ();
    }
 
    set_activeLayer ()
    {
-      this .removeFromLayer (this .#activeLayerNode);
+      this .removeFromLayer (this .#layerNode);
 
-      this .#activeLayerNode = this .getBrowser () .getActiveLayer ();
+      this .#layerNode = this .getBrowser () .getActiveLayer ();
 
-      this .addToLayer (this .#activeLayerNode)
+      this .addToLayer (this .#layerNode)
    }
 
    addToLayer (layerNode)
@@ -81,6 +81,11 @@ class X3DActiveLayerNodeTool extends X3DChildNodeTool
 
    getModelMatrix ()
    {
+      const layoutGroupNode = X3D .X3DCast (X3D .X3DConstants .LayoutGroup, this .#layerNode .getGroups () ._children [0]);
+
+      if (layoutGroupNode)
+         return layoutGroupNode .getMatrix ();
+
       return new X3D .Matrix4 ();
    }
 }
