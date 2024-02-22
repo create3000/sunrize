@@ -394,7 +394,8 @@ class X3DNodeTool extends X3DBaseTool
 
             if (!this .toolPointingEnabled)
                return;
-            // Proceed with next case:
+            
+            break;
          }
       }
 
