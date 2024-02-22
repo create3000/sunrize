@@ -768,7 +768,7 @@ Viewpoint {
 
       const
          tool          = await this .#snapTarget .getToolInstance (),
-         outlineEditor = require ("./Window") .sidebar .outlineEditor,
+         outlineEditor = this .sidebar .outlineEditor,
          selection     = outlineEditor .sceneGraph .find (".node.selected");
 
       if (!selection .length)
@@ -794,14 +794,55 @@ Viewpoint {
       tool .position = bbox .center;
    }
 
-   moveSelectionToSnapTarget ()
+   async moveSelectionToSnapTarget ()
    {
-
    }
 
-   moveSelectionCenterToSnapTarget ()
+   async moveSelectionCenterToSnapTarget ()
    {
+      this .activateSnapTarget (true);
 
+      const
+         tool          = await this .#snapTarget .getToolInstance (),
+         outlineEditor = this .sidebar .outlineEditor,
+         selection     = outlineEditor .sceneGraph .find (".node.selected"),
+         nodes         = new Map ();
+
+      if (!selection .length)
+         return;
+
+      const bbox = new X3D .Box3 ();
+
+      for (const element of selection)
+      {
+         const node = outlineEditor .getNode ($(element)) .getInnerNode ();
+
+         if (!node .getType () .includes (X3D .X3DConstants .X3DTransformNode))
+            continue;
+
+         const modelMatrix = outlineEditor .getModelMatrix ($(element), false);
+
+         nodes .set (node, modelMatrix);
+         bbox .add (node .getBBox (new X3D .Box3 ()) .copy () .multRight (modelMatrix));
+      }
+
+      if (!bbox .size .magnitude ())
+         return;
+
+      const offset = tool .position .getValue () .copy () .subtract (bbox .center);
+
+      UndoManager .shared .beginUndo (_("Move Selection Center to SnapTarget"));
+
+      for (const [node, modelMatrix] of nodes)
+      {
+         const translation = modelMatrix .inverse ()
+            .multVecMatrix (offset .copy ())
+            .add (node ._translation .getValue ());
+
+         Editor .setFieldValue (node .getExecutionContext (), node, node ._translation, translation);
+      }
+
+      UndoManager .shared .endUndo ();
    }
 
    updateSnapToolMenus (menu)
