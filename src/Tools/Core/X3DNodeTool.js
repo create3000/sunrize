@@ -378,15 +378,24 @@ class X3DNodeTool extends X3DBaseTool
 
    // Traverse
 
+   toolPointingEnabled = true;
+
    traverse (type, renderObject = this .node)
    {
       switch (type)
       {
          case X3D .TraverseType .POINTER:
-            break;
+         {
+            if (this .toolPointingEnabled)
+               break;
+            else
+               return;
+         }
          default:
+         {
             this .node .traverse (type, renderObject);
             break;
+         }
       }
 
       renderObject .getHumanoids () .push (null);

@@ -7,6 +7,8 @@ const
 
 class X3DSnapNodeTool extends X3DActiveLayerNodeTool
 {
+   toolPointingEnabled = false;
+
    constructor (executionContext)
    {
       super (executionContext);
@@ -23,7 +25,7 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
 
       X3DSnapNodeTool .addToolInterest (this, () => this .set_transform_tools ());
 
-      $("#browser")
+      this .getBrowser () .getCanvas ()
          .on (`mousedown.X3DSnapNodeTool${this .getId ()}`, event => this .onmousedown (event))
          .on (`mouseup.X3DSnapNodeTool${this .getId ()}`,   event => this .onmouseup   (event));
 
@@ -34,7 +36,7 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
    {
       X3DSnapNodeTool .removeToolInterest (this);
 
-      $("#browser") .off (`.X3DSnapNodeTool${this .getId ()}`);
+      this .getBrowser () .getCanvas () .off (`.X3DSnapNodeTool${this .getId ()}`);
 
       super .disconnectTool ();
    }
@@ -45,21 +47,43 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
 
    onmousedown (event)
    {
-      console .log ("onmousedown", event .button);
+      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
-      $("#browser") .on (`mousemove.X3DSnapNodeTool${this .getId ()}`, event => this .onmousemove (event));
+      if (!this .getBrowser () .touch (x, y))
+         return;
+
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
+
+      this .getBrowser () .getCanvas ()
+         .on (`mousemove.X3DSnapNodeTool${this .getId ()}`, event => this .onmousemove (event));
+
+      this .changePosition (this .getBrowser () .getHit ());
    }
 
    onmouseup (event)
    {
-      console .log ("onmouseup", event .button);
-
-      $("#browser") .off (`mousemove.X3DSnapNodeTool${this .getId ()}`);
+      this .getBrowser () .getCanvas ()
+         .off (`mousemove.X3DSnapNodeTool${this .getId ()}`);
    }
 
    onmousemove (event)
    {
-      console .log ("onmousemove", event .pageX, event .pageY);
+      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
+
+      if (!this .getBrowser () .touch (x, y))
+         return;
+
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
+
+      this .changePosition (this .getBrowser () .getHit ());
+   }
+
+   changePosition ({ viewMatrix, point, normal })
+   {
+      this .tool .position = viewMatrix .copy () .inverse () .multVecMatrix (point .copy ());
+      this .tool .normal   = viewMatrix .submatrix .transpose () .multVecMatrix (normal .copy ()) .normalize ();
    }
 }
 
