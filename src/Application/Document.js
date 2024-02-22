@@ -796,6 +796,71 @@ Viewpoint {
 
    async moveSelectionToSnapTarget ()
    {
+      this .activateSnapTarget (true);
+
+      const
+         tool          = await this .#snapTarget .getToolInstance (),
+         outlineEditor = this .sidebar .outlineEditor,
+         selection     = outlineEditor .sceneGraph .find (".node.selected"),
+         nodes         = new Map ();
+
+      if (!selection .length)
+         return;
+
+      const bbox = new X3D .Box3 ();
+
+      for (const element of selection)
+      {
+         const node = outlineEditor .getNode ($(element)) .getInnerNode ();
+
+         if (!node .getType () .includes (X3D .X3DConstants .X3DTransformNode))
+            continue;
+
+         const modelMatrix = outlineEditor .getModelMatrix ($(element), false);
+
+         nodes .set (node, modelMatrix);
+         bbox .add (node .getBBox (new X3D .Box3 ()) .copy () .multRight (modelMatrix));
+      }
+
+      if (!bbox .size .magnitude ())
+         return;
+
+      const
+         bboxSize   = bbox .size,
+         bboxCenter = bbox .center,
+         bboxMin    = bboxSize .copy () .divide (2) .negate () .add (bboxCenter),
+         bboxMax    = bboxSize .copy () .divide (2) .add (bboxCenter);
+
+      const centers = [
+         new X3D .Vector3 (bboxCenter .x, bboxMin .y, bboxCenter .z), // bottom
+         new X3D .Vector3 (bboxCenter .x, bboxMax .y, bboxCenter .z), // top
+         new X3D .Vector3 (bboxMin .x, bboxCenter .y, bboxCenter .z), // left
+         new X3D .Vector3 (bboxMax .x, bboxCenter .y, bboxCenter .z), // right
+         new X3D .Vector3 (bboxCenter .x, bboxCenter .y, bboxMin .z), // front
+         new X3D .Vector3 (bboxCenter .x, bboxCenter .y, bboxMax .z), // back
+      ];
+
+      const center = centers .reduce ((previous, current) =>
+      {
+         return previous .dot (tool .normal .getValue ()) < current .dot (tool .normal .getValue ())
+            ? previous
+            : current
+      });
+
+      const offset = tool .position .getValue () .copy () .subtract (center);
+
+      UndoManager .shared .beginUndo (_("Move Selection Center to SnapTarget"));
+
+      for (const [node, modelMatrix] of nodes)
+      {
+         const translation = modelMatrix .inverse ()
+            .multVecMatrix (offset .copy ())
+            .add (node ._translation .getValue ());
+
+         Editor .setFieldValue (node .getExecutionContext (), node, node ._translation, translation);
+      }
+
+      UndoManager .shared .endUndo ();
    }
 
    async moveSelectionCenterToSnapTarget ()
