@@ -3408,7 +3408,7 @@ module .exports = class OutlineView extends Interface
 
    expandTo (object)
    {
-      let flags = Traverse .ROOT_NODES;
+      let flags = Traverse .NONE;
 
       if (this .expandExternProtoDeclarations)
          flags |= Traverse .EXTERNPROTO_DECLARATIONS | Traverse .EXTERNPROTO_DECLARATION_SCENE;

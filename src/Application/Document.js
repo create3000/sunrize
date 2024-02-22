@@ -12,6 +12,7 @@ const
    Dashboard          = require ("./Dashboard"),
    Footer             = require ("./Footer"),
    Sidebar            = require ("./Sidebar"),
+   Traverse           = require ("./Traverse"),
    Editor             = require ("../Undo/Editor"),
    UndoManager        = require ("../Undo/UndoManager"),
    _                  = require ("./GetText");
@@ -604,10 +605,10 @@ Viewpoint {
    async setGridTool (typeName, visible)
    {
       const
-         Tool     = require (`../Tools/Grids/${typeName}`),
-         grid     = this .#grids .get (typeName) ?? new Tool (this .browser .currentScene),
-         config   = this .config .file .addNameSpace (`${typeName}.`),
-         instance = await grid .getToolInstance ();
+         Tool   = require (`../Tools/Grids/${typeName}`),
+         grid   = this .#grids .get (typeName) ?? new Tool (this .browser .currentScene),
+         config = this .config .file .addNameSpace (`${typeName}.`),
+         tool   = await grid .getToolInstance ();
 
       for (const [typeName, grid] of this .#grids)
       {
@@ -625,32 +626,32 @@ Viewpoint {
       // if (this .secondaryToolbar .config .file .panel)
       //    this .showGridOptions ();
 
-      instance .getValue ()           .addInterest ("set_gridTool",        this, typeName);
-      instance .getField ("isActive") .addInterest ("set_gridTool",        this, typeName);
-      instance .getField ("isActive") .addInterest ("set_gridTool_active", this, typeName);
+      tool .getValue ()           .addInterest ("set_gridTool",        this, typeName);
+      tool .getField ("isActive") .addInterest ("set_gridTool",        this, typeName);
+      tool .getField ("isActive") .addInterest ("set_gridTool_active", this, typeName);
    }
 
    async set_gridTool_active (typeName)
    {
       const
-         grid     = this .#grids .get (typeName),
-         instance = await grid .getToolInstance ();
+         grid = this .#grids .get (typeName),
+         tool = await grid .getToolInstance ();
 
-      if (instance .isActive)
+      if (tool .isActive)
       {
-         this .#gridFields .set (typeName, new Map ([... instance .getValue () .getFields ()]
+         this .#gridFields .set (typeName, new Map ([... tool .getValue () .getFields ()]
             .filter (field => field .isInitializable ())
             .map (field => [field .getName (), field .copy ()])));
       }
       else
       {
          const
-            executionContext = instance .getValue () .getExecutionContext (),
+            executionContext = tool .getValue () .getExecutionContext (),
             saved            = this .#gridFields .get (typeName);
 
          UndoManager .shared .beginUndo (_("Change Properties of %s"), typeName);
 
-         for (const field of instance .getValue () .getFields ())
+         for (const field of tool .getValue () .getFields ())
          {
             if (!field .isInitializable ())
                continue;
@@ -659,7 +660,7 @@ Viewpoint {
 
             field .assign (saved .get (field .getName ()));
 
-            Editor .setFieldValue (executionContext, instance .getValue (), field, value);
+            Editor .setFieldValue (executionContext, tool .getValue (), field, value);
          }
 
          UndoManager .shared .endUndo ();
@@ -669,10 +670,10 @@ Viewpoint {
    async set_gridTool (typeName)
    {
       const
-         grid     = this .#grids .get (typeName),
-         instance = await grid .getToolInstance ();
+         grid = this .#grids .get (typeName),
+         tool = await grid .getToolInstance ();
 
-      if (instance .isActive)
+      if (tool .isActive)
          return;
 
       this .saveGridTool (typeName);
@@ -681,11 +682,11 @@ Viewpoint {
    async restoreGridTool (typeName)
    {
       const
-         grid     = this .#grids .get (typeName),
-         config   = this .config .file .addNameSpace (`${typeName}.`),
-         instance = await grid .getToolInstance ();
+         grid   = this .#grids .get (typeName),
+         config = this .config .file .addNameSpace (`${typeName}.`),
+         tool   = await grid .getToolInstance ();
 
-      for (const field of instance .getValue () .getFields ())
+      for (const field of tool .getValue () .getFields ())
       {
          if (!field .isInitializable ())
             continue;
@@ -700,11 +701,11 @@ Viewpoint {
    async saveGridTool (typeName)
    {
       const
-         grid     = this .#grids .get (typeName),
-         config   = this .config .file .addNameSpace (`${typeName}.`),
-         instance = await grid .getToolInstance ();
+         grid   = this .#grids .get (typeName),
+         config = this .config .file .addNameSpace (`${typeName}.`),
+         tool   = await grid .getToolInstance ();
 
-      for (const field of instance .getValue () .getFields ())
+      for (const field of tool .getValue () .getFields ())
       {
          if (!field .isInitializable ())
             continue;
@@ -727,10 +728,10 @@ Viewpoint {
          if (!grid ._visible .getValue ())
             continue;
 
-         const instance = await grid .getToolInstance ();
+         const tool = await grid .getToolInstance ();
 
          this .secondaryToolbar .togglePanel (true);
-         this .secondaryToolbar .panel .setNode (instance .getValue ());
+         this .secondaryToolbar .panel .setNode (tool .getValue ());
       }
    }
 
@@ -759,11 +760,38 @@ Viewpoint {
       this .updateMenu ();
    }
 
-   centerSnapTargetInSelection ()
+   async centerSnapTargetInSelection ()
    {
-      const selection = require ("./Selection");
-
       this .activateSnapTarget (true);
+
+      const types = new Set ([X3D .X3DConstants .X3DBoundedObject, X3D .X3DConstants .X3DGeometryNode]);
+
+      const
+         tool          = await this .#snapTarget .getToolInstance (),
+         outlineEditor = require ("./Window") .sidebar .outlineEditor,
+         selection     = outlineEditor .sceneGraph .find (".node.selected");
+
+      if (!selection .length)
+         return;
+
+      const bbox = new X3D .Box3 ();
+
+      for (const element of selection)
+      {
+         const node = outlineEditor .getNode ($(element)) .getInnerNode ();
+
+         if (!node .getType () .some (type => types .has (type)))
+            continue;
+
+         const modelMatrix = outlineEditor .getModelMatrix ($(element), false);
+
+         bbox .add (node .getBBox (new X3D .Box3 ()) .copy () .multRight (modelMatrix));
+      }
+
+      if (!bbox .size .magnitude ())
+         return;
+
+      tool .position = bbox .center;
    }
 
    moveSelectionToSnapTarget ()

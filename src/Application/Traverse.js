@@ -6,6 +6,7 @@ let flags = 1;
 
 module .exports = class Traverse
 {
+   static NONE                          = 0;
    static EXTERNPROTO_DECLARATIONS      = flags <<= 1;
    static PROTO_DECLARATIONS            = flags <<= 1;
    static ROOT_NODES                    = flags <<= 1;
@@ -273,7 +274,7 @@ module .exports = class Traverse
       seen .add (node);
       hierarchy .push (node);
 
-      if (node === object)
+      if (node .valueOf () === object .valueOf ())
       {
          hierarchies .push (hierarchy .slice ());
       }
