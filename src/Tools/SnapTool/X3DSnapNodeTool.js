@@ -3,11 +3,12 @@
 const
    X3DActiveLayerNodeTool = require ("../Layering/X3DActiveLayerNodeTool"),
    ActionKeys             = require ("../../Application/ActionKeys"),
-   X3D                    = require ("../../X3D");
+   X3D                    = require ("../../X3D"),
+   $                      = require ("jquery");
 
 class X3DSnapNodeTool extends X3DActiveLayerNodeTool
 {
-   toolModifiers       = 0;
+   toolModifiers       = ActionKeys .None;
    toolPointingEnabled = false;
 
    constructor (executionContext)
@@ -61,6 +62,9 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
 
    onmousedown (event)
    {
+      if ($("#secondary-toolbar .hand") .hasClass ("active"))
+         return;
+
       if (this .keys .value !== this .toolModifiers)
          return;
 
@@ -100,8 +104,11 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
       this .changePosition (this .getBrowser () .getHit ());
    }
 
-   changePosition ({ viewMatrix, point, normal })
+   changePosition ({ layerNode, viewMatrix, point, normal })
    {
+      if (layerNode !== this .toolLayerNode)
+         return;
+
       this .tool .position = viewMatrix .copy () .inverse () .multVecMatrix (point .copy ());
       this .tool .normal   = viewMatrix .submatrix .transpose () .multVecMatrix (normal .copy ()) .normalize ();
    }

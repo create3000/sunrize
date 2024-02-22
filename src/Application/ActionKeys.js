@@ -4,6 +4,7 @@ const $ = require ("jquery");
 
 module .exports = class ActionKeys
 {
+   static None     = 0;
    static Shift    = 0b0001;
    static Control  = 0b0010;
    static Alt      = 0b0100;
