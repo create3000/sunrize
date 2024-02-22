@@ -19,19 +19,19 @@ module .exports = class Dashboard extends Interface
 
    async initialize ()
    {
-      this .handButton = $("<span></span>")
-         .addClass (["image-icon", "hand"])
-         .attr ("title", _("Switch to browser mode."))
-         .appendTo (this .toolbar)
-         .on ("click", () => this .hand ());
-
-      this .handButton .addClass ("active");
-
       this .arrowButton = $("<span></span>")
          .addClass (["image-icon", "arrow"])
          .attr ("title", _("Switch to edit mode."))
          .appendTo (this .toolbar)
          .on ("click", () => this .arrow ());
+
+      this .arrowButton .addClass ("active");
+
+      this .handButton = $("<span></span>")
+         .addClass (["image-icon", "hand"])
+         .attr ("title", _("Switch to browser mode."))
+         .appendTo (this .toolbar)
+         .on ("click", () => this .hand ());
 
       this .playButton = $("<span></span>")
          .addClass (["material-icons"])
@@ -83,19 +83,6 @@ module .exports = class Dashboard extends Interface
          this .togglePanel (this .config .file .panel);
    }
 
-   hand ()
-   {
-      this .config .file .pointer = "hand";
-
-      if (this .handButton .hasClass ("active"))
-         return;
-
-      this .arrowButton .removeClass ("active");
-      this .handButton .addClass ("active");
-
-      this .browser .addBrowserEvent ();
-   }
-
    arrow ()
    {
       this .config .file .pointer = "arrow";
@@ -105,6 +92,19 @@ module .exports = class Dashboard extends Interface
 
       this .handButton .removeClass ("active");
       this .arrowButton .addClass ("active");
+
+      this .browser .addBrowserEvent ();
+   }
+
+   hand ()
+   {
+      this .config .file .pointer = "hand";
+
+      if (this .handButton .hasClass ("active"))
+         return;
+
+      this .arrowButton .removeClass ("active");
+      this .handButton .addClass ("active");
 
       this .browser .addBrowserEvent ();
    }
