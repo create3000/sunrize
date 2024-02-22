@@ -828,36 +828,40 @@ Viewpoint {
       const
          bboxSize   = bbox .size,
          bboxCenter = bbox .center,
-         bboxMin    = bboxSize .copy () .divide (2) .negate () .add (bboxCenter),
-         bboxMax    = bboxSize .copy () .divide (2) .add (bboxCenter);
+         bboxMin    = bboxSize .copy () .divide (2) .negate (),
+         bboxMax    = bboxSize .copy () .divide (2);
 
-      const centers = [
-         new X3D .Vector3 (bboxCenter .x, bboxMin .y, bboxCenter .z), // bottom
-         new X3D .Vector3 (bboxCenter .x, bboxMax .y, bboxCenter .z), // top
-         new X3D .Vector3 (bboxMin .x, bboxCenter .y, bboxCenter .z), // left
-         new X3D .Vector3 (bboxMax .x, bboxCenter .y, bboxCenter .z), // right
-         new X3D .Vector3 (bboxCenter .x, bboxCenter .y, bboxMin .z), // front
-         new X3D .Vector3 (bboxCenter .x, bboxCenter .y, bboxMax .z), // back
+      const axes = [
+         new X3D .Vector3 (0, bboxMin .y, 0), // bottom
+         new X3D .Vector3 (0, bboxMax .y, 0), // top
+         new X3D .Vector3 (bboxMin .x, 0, 0), // left
+         new X3D .Vector3 (bboxMax .x, 0, 0), // right
+         new X3D .Vector3 (0, 0, bboxMin .z), // front
+         new X3D .Vector3 (0, 0, bboxMax .z), // back
       ];
 
-      const center = centers .reduce ((previous, current) =>
+      const axis = axes .reduce ((previous, current) =>
       {
          return previous .dot (tool .normal .getValue ()) < current .dot (tool .normal .getValue ())
             ? previous
             : current
       });
 
-      const offset = tool .position .getValue () .copy () .subtract (center);
+      const
+         point      = axis .copy () .add (bboxCenter),
+         offset     = tool .position .getValue () .copy () .subtract (point),
+         rotation   = new X3D .Rotation4 (axis .copy () .negate (), tool .normal .getValue ()),
+         snapMatrix = new X3D .Matrix4 () .set (offset, rotation, null, null, point);
 
       UndoManager .shared .beginUndo (_("Move Selection Center to SnapTarget"));
 
       for (const [node, modelMatrix] of nodes)
       {
-         const translation = modelMatrix .inverse ()
-            .multVecMatrix (offset .copy ())
-            .add (node ._translation .getValue ());
+         const matrix = node .getMatrix () .copy ()
+            .multRight (snapMatrix)
+            .multRight (modelMatrix .copy () .inverse ());
 
-         Editor .setFieldValue (node .getExecutionContext (), node, node ._translation, translation);
+         Editor .setMatrixWithCenter (node, matrix);
       }
 
       UndoManager .shared .endUndo ();
