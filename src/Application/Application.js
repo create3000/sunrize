@@ -672,7 +672,9 @@ module .exports = class Application
                },
                { type: "separator" },
                {
-                  label: _("Activate Snap Target"),
+                  label: this .menuOptions .SnapTarget
+                     ? _("Hide Snap Target")
+                     : _("Activate Snap Target"),
                   type: "checkbox",
                   checked: this .menuOptions .SnapTarget,
                   visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
@@ -682,7 +684,9 @@ module .exports = class Application
                   },
                },
                {
-                  label: _("Activate Snap Source"),
+                  label:this .menuOptions .SnapSource
+                     ? _("Hide Snap Source")
+                     : _("Activate Snap Source"),
                   type: "checkbox",
                   checked: this .menuOptions .SnapSource,
                   visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
