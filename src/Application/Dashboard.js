@@ -70,7 +70,7 @@ module .exports = class Dashboard extends Interface
    configure ()
    {
       this .config .file .setDefaultValues ({
-         pointer: "hand",
+         pointer: "arrow",
          play: false,
          panel: false,
       });
@@ -92,6 +92,8 @@ module .exports = class Dashboard extends Interface
 
       this .arrowButton .removeClass ("active");
       this .handButton .addClass ("active");
+
+      this .browser .addBrowserEvent ();
    }
 
    arrow ()
@@ -103,6 +105,8 @@ module .exports = class Dashboard extends Interface
 
       this .handButton .removeClass ("active");
       this .arrowButton .addClass ("active");
+
+      this .browser .addBrowserEvent ();
    }
 
    play (value)

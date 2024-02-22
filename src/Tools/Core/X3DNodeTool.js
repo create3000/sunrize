@@ -8,6 +8,7 @@ const
    Traverse    = require ("../../Application/Traverse"),
    path        = require ("path"),
    url         = require ("url"),
+   $           = require ("jquery"),
    _           = require ("../../Application/GetText");
 
 const _tool = Symbol .for ("Sunrize.tool");
@@ -382,18 +383,18 @@ class X3DNodeTool extends X3DBaseTool
 
    traverse (type, renderObject = this .node)
    {
+      this .node .traverse (type, renderObject);
+
       switch (type)
       {
          case X3D .TraverseType .POINTER:
          {
+            if ($(".hand") .hasClass ("active"))
+               return;
+
             if (!this .toolPointingEnabled)
                return;
             // Proceed with next case:
-         }
-         default:
-         {
-            this .node .traverse (type, renderObject);
-            break;
          }
       }
 
