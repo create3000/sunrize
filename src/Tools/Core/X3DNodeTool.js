@@ -389,12 +389,12 @@ class X3DNodeTool extends X3DBaseTool
       {
          case X3D .TraverseType .POINTER:
          {
-            if ($(".hand") .hasClass ("active"))
+            if ($("#secondary-toolbar .hand") .hasClass ("active"))
                return;
 
             if (!this .toolPointingEnabled)
                return;
-            
+
             break;
          }
       }
