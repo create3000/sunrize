@@ -68,8 +68,8 @@ module .exports = class Document extends Interface
       electron .ipcRenderer .on ("grid-tool", (event, typeName, visible) => this .setGridTool (typeName, visible));
       electron .ipcRenderer .on ("grid-options", () => this .showGridOptions ());
 
-      electron .ipcRenderer .on ("activate-snap-target",                 () => this .activateSnapTarget ());
-      electron .ipcRenderer .on ("activate-snap-source",                 () => this .activateSnapSource ());
+      electron .ipcRenderer .on ("activate-snap-target",                 visible => this .activateSnapTarget (visible));
+      electron .ipcRenderer .on ("activate-snap-source",                 visible => this .activateSnapSource (visible));
       electron .ipcRenderer .on ("center-snap-target-in-selection",      () => this .centerSnapTargetInSelection ());
       electron .ipcRenderer .on ("move-selection-to-snap-target",        () => this .moveSelectionToSnapTarget ());
       electron .ipcRenderer .on ("move-selection-center-to-snap-target", () => this .moveSelectionCenterToSnapTarget ());
@@ -737,35 +737,33 @@ Viewpoint {
    #snapTarget = null;
    #snapSource = null;
 
-   activateSnapTarget ()
+   activateSnapTarget (visible)
    {
-      const
-         SnapTarget = require ("../Tools/SnapTool/SnapTargetTool"),
-         visible    = this .#snapTarget ?._visible .getValue () ?? false;
+      const SnapTarget = require ("../Tools/SnapTool/SnapTargetTool");
 
       this .#snapTarget ??= new SnapTarget (this .browser .currentScene);
 
-      this .#snapTarget ._visible = !visible;
+      this .#snapTarget ._visible = visible;
 
       this .updateMenu ();
    }
 
-   activateSnapSource ()
+   activateSnapSource (visible)
    {
-      const
-         SnapSource = require ("../Tools/SnapTool/SnapSourceTool"),
-         visible    = this .#snapSource ?._visible .getValue () ?? false;
+      const SnapSource = require ("../Tools/SnapTool/SnapSourceTool");
 
       this .#snapSource ??= new SnapSource (this .browser .currentScene);
 
-      this .#snapSource ._visible = !visible;
+      this .#snapSource ._visible = visible;
 
       this .updateMenu ();
    }
 
    centerSnapTargetInSelection ()
    {
+      const selection = require ("./Selection");
 
+      this .activateSnapTarget (true);
    }
 
    moveSelectionToSnapTarget ()

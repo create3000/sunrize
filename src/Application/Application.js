@@ -672,27 +672,23 @@ module .exports = class Application
                },
                { type: "separator" },
                {
-                  label: this .menuOptions .SnapTarget
-                     ? _("Hide Snap Target")
-                     : _("Activate Snap Target"),
+                  label: _("Activate Snap Target"),
                   type: "checkbox",
                   checked: this .menuOptions .SnapTarget,
                   visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("activate-snap-target");
+                     this .mainWindow .webContents .send ("activate-snap-target", !this .menuOptions .SnapTarget);
                   },
                },
                {
-                  label:this .menuOptions .SnapSource
-                     ? _("Hide Snap Source")
-                     : _("Activate Snap Source"),
+                  label: _("Activate Snap Source"),
                   type: "checkbox",
                   checked: this .menuOptions .SnapSource,
                   visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("activate-snap-source");
+                     this .mainWindow .webContents .send ("activate-snap-source", !this .menuOptions .SnapSource);
                   },
                },
                {
