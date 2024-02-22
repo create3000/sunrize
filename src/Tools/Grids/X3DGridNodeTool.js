@@ -36,6 +36,8 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
    {
       super .connectTool ();
 
+      this .keys .connect ();
+
       X3DGridNodeTool .addToolInterest (this, () => this .set_transform_tools ());
 
       this .set_transform_tools ();
@@ -43,8 +45,10 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 
    disconnectTool ()
    {
+      this .keys .disconnect ();
+
       X3DGridNodeTool .removeToolInterest (this);
-      
+
       super .disconnectTool ();
    }
 

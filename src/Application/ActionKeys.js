@@ -17,12 +17,22 @@ module .exports = class ActionKeys
       this .callback = callback;
       this .value    = 0;
 
-      $(window)
-         .on (`keydown.${id}`, this .onkeydown .bind (this))
-         .on (`keyup.${id}`,   this .onkeyup   .bind (this));
+      this .connect ();
    }
 
    dispose ()
+   {
+      this .disconnect ();
+   }
+
+   connect ()
+   {
+      $(window)
+         .on (`keydown.${this .id}`, this .onkeydown .bind (this))
+         .on (`keyup.${this .id}`,   this .onkeyup   .bind (this));
+   }
+
+   disconnect ()
    {
       $(window) .off (`.${this .id}`);
    }

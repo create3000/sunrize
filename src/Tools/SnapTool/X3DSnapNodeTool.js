@@ -2,16 +2,19 @@
 
 const
    X3DActiveLayerNodeTool = require ("../Layering/X3DActiveLayerNodeTool"),
-   X3D                    = require ("../../X3D"),
-   $                      = require ("jquery");
+   ActionKeys             = require ("../../Application/ActionKeys"),
+   X3D                    = require ("../../X3D");
 
 class X3DSnapNodeTool extends X3DActiveLayerNodeTool
 {
+   toolModifiers       = 0;
    toolPointingEnabled = false;
 
    constructor (executionContext)
    {
       super (executionContext);
+
+      this .keys = new ActionKeys (`X3DGridNodeTool${this .getId ()}`);
    }
 
    async initializeTool ()
@@ -19,9 +22,18 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
       await super .initializeTool (__dirname, "SnapTool.x3d");
    }
 
+   disposeTool ()
+   {
+      this .keys .dispose ();
+
+      super .disposeTool ();
+   }
+
    connectTool ()
    {
       super .connectTool ();
+
+      this .keys .connect ();
 
       X3DSnapNodeTool .addToolInterest (this, () => this .set_transform_tools ());
 
@@ -34,6 +46,8 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
 
    disconnectTool ()
    {
+      this .keys .disconnect ();
+
       X3DSnapNodeTool .removeToolInterest (this);
 
       this .getBrowser () .getCanvas () .off (`.X3DSnapNodeTool${this .getId ()}`);
@@ -47,6 +61,12 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
 
    onmousedown (event)
    {
+      if (this .keys .value !== this .toolModifiers)
+         return;
+
+      if (event .button !== 2)
+         return;
+
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
       if (!this .getBrowser () .touch (x, y))

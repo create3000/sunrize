@@ -1,9 +1,13 @@
 "use strict";
 
-const X3DSnapNodeTool = require ("./X3DSnapNodeTool");
+const
+   X3DSnapNodeTool = require ("./X3DSnapNodeTool"),
+   ActionKeys      = require ("../../Application/ActionKeys");
 
 class SnapSourceTool extends X3DSnapNodeTool
 {
+   toolModifiers = ActionKeys .Option;
+   
    constructor (executionContext)
    {
       super (executionContext);
