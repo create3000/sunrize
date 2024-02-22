@@ -19,17 +19,17 @@ module .exports = class Dashboard extends Interface
 
    async initialize ()
    {
-      this .arrowButton = $("<span></span>")
-         .addClass (["image-icon", "arrow", "active"])
-         .attr ("title", _("Switch to edit mode."))
-         .appendTo (this .toolbar)
-         .on ("click", () => this .arrow ());
-
       this .handButton = $("<span></span>")
          .addClass (["image-icon", "hand"])
          .attr ("title", _("Switch to browser mode."))
          .appendTo (this .toolbar)
          .on ("click", () => this .hand ());
+
+      this .arrowButton = $("<span></span>")
+         .addClass (["image-icon", "arrow", "active"])
+         .attr ("title", _("Switch to edit mode."))
+         .appendTo (this .toolbar)
+         .on ("click", () => this .arrow ());
 
       this .playButton = $("<span></span>")
          .addClass (["material-icons"])
