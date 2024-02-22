@@ -780,7 +780,7 @@ Viewpoint {
 
    updateSnapToolMenus (menu)
    {
-      menu .SnapTarget = this .#snapTarget ?._visible .getValue ();
-      menu .SnapSource = this .#snapSource ?._visible .getValue ();
+      menu .SnapTarget = this .#snapTarget ?._visible .getValue () ?? false;
+      menu .SnapSource = this .#snapSource ?._visible .getValue () ?? false;
    }
 };

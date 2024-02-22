@@ -702,6 +702,7 @@ module .exports = class Application
                {
                   label: _("Move Selection to Snap Target"),
                   accelerator: "CmdOrCtrl+M",
+                  enabled: this .menuOptions .SnapTarget,
                   visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
                   click: () =>
                   {
@@ -711,6 +712,7 @@ module .exports = class Application
                {
                   label: _("Move Selection Center to Snap Target"),
                   accelerator: "Shift+CmdOrCtrl+M",
+                  enabled: this .menuOptions .SnapTarget,
                   visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
                   click: () =>
                   {
