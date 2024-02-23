@@ -2399,9 +2399,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       });
 
       const
-         center      = moveCenter ? bboxCenter .copy () : axis .copy () .add (bboxCenter),
+         center      = moveCenter ? bboxCenter .copy () : (sourcePosition ?? axis .copy () .add (bboxCenter)),
          translation = targetPosition .copy () .subtract (center),
-         rotation    = new X3D .Rotation4 (axis .copy () .negate (), targetNormal),
+         rotation    = new X3D .Rotation4 (sourceNormal ?? axis, targetNormal .copy () .negate ()),
          snapMatrix  = new X3D .Matrix4 () .set (translation, rotation, null, null, center);
 
       if (moveCenter)
@@ -2411,11 +2411,25 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       for (const [node, [modelMatrices, subBBoxes]] of values)
       {
-         const matrix = node .getMatrix () .copy ()
-            .multRight (snapMatrix)
-            .multRight (modelMatrices [0] .copy () .inverse ());
+         for (const type of node .getType ())
+         {
+            switch (type)
+            {
+               case X3D .X3DConstants .X3DTransformNode:
+               {
+                  const matrix = node .getMatrix () .copy ()
+                     .multRight (snapMatrix)
+                     .multRight (modelMatrices [0] .copy () .inverse ());
 
-         Editor .setMatrixWithCenter (node, matrix, undoManager);
+                  Editor .setMatrixWithCenter (node, matrix, undefined, undoManager);
+                  break;
+               }
+               default:
+                  continue;
+            }
+
+            break;
+         }
       }
 
       undoManager .endUndo ();
