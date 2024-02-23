@@ -2419,8 +2419,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                case X3D .X3DConstants .DirectionalLight:
                {
-                  const direction = localSnapNormalMatrix
-                     .multVecMatrix (node ._direction .getValue () .copy ())
+                  const direction = localSnapMatrix
+                     .multDirMatrix (node ._direction .getValue () .copy ())
                      .normalize ();
 
                   Editor .setFieldValue (executionContext, node, node ._direction, direction, undoManager);
@@ -2465,8 +2465,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   const location = localSnapMatrix
                      .multVecMatrix (node ._location .getValue () .copy ());
 
-                  const direction = localSnapNormalMatrix
-                     .multVecMatrix (node ._direction .getValue () .copy ())
+                  const direction = localSnapMatrix
+                     .multDirMatrix (node ._direction .getValue () .copy ())
                      .normalize ();
 
                   Editor .setFieldValue (executionContext, node, node ._location,  location,  undoManager);
