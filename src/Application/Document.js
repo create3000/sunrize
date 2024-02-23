@@ -764,40 +764,22 @@ Viewpoint {
    {
       this .activateSnapTarget (true);
 
-      const types = new Set ([X3D .X3DConstants .X3DBoundedObject, X3D .X3DConstants .X3DGeometryNode]);
-
       const
-         tool          = await this .#snapTarget .getToolInstance (),
-         outlineEditor = this .sidebar .outlineEditor,
-         selection     = outlineEditor .sceneGraph .find (".node.selected");
-
-      if (!selection .length)
-         return;
-
-      const bbox = new X3D .Box3 ();
-
-      for (const element of selection)
-      {
-         const node = outlineEditor .getNode ($(element)) .getInnerNode ();
-
-         if (!node .getType () .some (type => types .has (type)))
-            continue;
-
-         const modelMatrix = outlineEditor .getModelMatrix ($(element), false);
-
-         bbox .add (node .getBBox (new X3D .Box3 ()) .copy () .multRight (modelMatrix));
-      }
+         selection        = require ("./Selection"),
+         target           = await this .#snapTarget .getToolInstance (),
+         executionContext = this .browser .currentScene,
+         layerNode        = this .browser .getActiveLayer (),
+         nodes            = selection .nodes,
+         [values, bbox]   = Editor .getModelMatricesAndBBoxes (executionContext, layerNode, nodes);
 
       if (!bbox .size .magnitude ())
          return;
 
-      tool .position = bbox .center;
+      target .position = bbox .center;
    }
 
    async moveSelectionToSnapTarget ()
    {
-      this .activateSnapTarget (true);
-
       const
          selection        = require ("./Selection"),
          target           = await this .#snapTarget .getToolInstance (),
@@ -815,8 +797,6 @@ Viewpoint {
 
    async moveSelectionCenterToSnapTarget ()
    {
-      this .activateSnapTarget (true);
-
       const
          selection        = require ("./Selection"),
          target           = await this .#snapTarget .getToolInstance (),
