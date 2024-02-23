@@ -807,8 +807,8 @@ Viewpoint {
          nodes            = selection .nodes,
          targetPosition   = target .position .getValue (),
          targetNormal     = target .normal .getValue (),
-         sourcePosition   = source ?.position .getValue (),
-         sourceNormal     = source ?.normal .getValue ();
+         sourcePosition   = source ?._visible .getValue () ? source ?.position .getValue () : undefined,
+         sourceNormal     = source ?._visible .getValue () ? source ?.normal .getValue ()   : undefined;
 
       Editor .moveNodesToTarget (executionContext, layerNode, nodes, targetPosition, targetNormal, sourcePosition, sourceNormal, false);
    }
@@ -826,8 +826,8 @@ Viewpoint {
          nodes            = selection .nodes,
          targetPosition   = target .position .getValue (),
          targetNormal     = target .normal .getValue (),
-         sourcePosition   = source ?.position .getValue (),
-         sourceNormal     = source ?.normal .getValue ();
+         sourcePosition   = source ?._visible .getValue () ? source ?.position .getValue () : undefined,
+         sourceNormal     = source ?._visible .getValue () ? source ?.normal .getValue ()   : undefined;
 
       Editor .moveNodesToTarget (executionContext, layerNode, nodes, targetPosition, targetNormal, sourcePosition, sourceNormal, true);
    }
