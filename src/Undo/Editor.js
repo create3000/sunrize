@@ -2380,12 +2380,12 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          bboxMax    = bboxSize .copy () .divide (2);
 
       const axes = [
-         new X3D .Vector3 (0, bboxMin .y, 0), // bottom
-         new X3D .Vector3 (0, bboxMax .y, 0), // top
-         new X3D .Vector3 (bboxMin .x, 0, 0), // left
-         new X3D .Vector3 (bboxMax .x, 0, 0), // right
-         new X3D .Vector3 (0, 0, bboxMin .z), // front
-         new X3D .Vector3 (0, 0, bboxMax .z), // back
+         new X3D .Vector3 ( bboxMax .x, 0, 0), // right
+         new X3D .Vector3 (-bboxMin .x, 0, 0), // left
+         new X3D .Vector3 (0,  bboxMax .y, 0), // top
+         new X3D .Vector3 (0, -bboxMin .y, 0), // bottom
+         new X3D .Vector3 (0, 0,  bboxMin .z), // front
+         new X3D .Vector3 (0, 0, -bboxMax .z), // back
       ];
 
       const axis = axes .reduce ((previous, current) =>
