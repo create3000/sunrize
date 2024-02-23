@@ -2436,14 +2436,14 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                }
                case X3D .X3DConstants .NurbsSweptSurface:
                {
-                  const trajectoryCurve = node ._trajectoryCurve .getValue ();
+                  const trajectoryCurveNode = node ._trajectoryCurve .getValue ();
 
-                  if (trajectoryCurve)
+                  if (trajectoryCurveNode)
                   {
-                     const controlPoint = trajectoryCurve ._controlPoint .map (point => localSnapMatrix
+                     const controlPoint = trajectoryCurveNode ._controlPoint .map (point => localSnapMatrix
                         .multVecMatrix (point .getValue () .copy ()));
 
-                     Editor .setFieldValue (executionContext, trajectoryCurve, trajectoryCurve ._controlPoint, controlPoint, undoManager);
+                     Editor .setFieldValue (executionContext, trajectoryCurveNode, trajectoryCurveNode ._controlPoint, controlPoint, undoManager);
                   }
 
                   break;
@@ -2484,14 +2484,14 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                      Editor .setFieldValue (executionContext, normal, normal ._vector, vector, undoManager);
                   }
 
-                  const coord = node ._coord .getValue ();
+                  const coordNode = node ._coord .getValue ();
 
-                  if (coord)
+                  if (coordNode)
                   {
-                     const point = coord ._point .map (point => localSnapMatrix
+                     const point = coordNode ._point .map (point => localSnapMatrix
                         .multVecMatrix (point .getValue () .copy ()));
 
-                     Editor .setFieldValue (executionContext, coord, coord ._point, point, undoManager);
+                     Editor .setFieldValue (executionContext, coordNode, coordNode ._point, point, undoManager);
                   }
 
                   break;
@@ -2506,14 +2506,14 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                }
                case X3D .X3DConstants .X3DNurbsSurfaceGeometryNode:
                {
-                  const coord = node ._controlPoint .getValue ();
+                  const coordNode = node ._controlPoint .getValue ();
 
-                  if (coord)
+                  if (coordNode)
                   {
-                     const point = coord ._point .map (point => localSnapMatrix
+                     const point = coordNode ._point .map (point => localSnapMatrix
                         .multVecMatrix (point .getValue () .copy ()));
 
-                     Editor .setFieldValue (executionContext, coord, coord ._point, point, undoManager);
+                     Editor .setFieldValue (executionContext, coordNode, coordNode ._point, point, undoManager);
                   }
 
                   break;
