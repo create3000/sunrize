@@ -2459,6 +2459,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                }
                case X3D .X3DConstants .SpotLight:
                case X3D .X3DConstants .Sound:
+               case X3D .X3DConstants .X3DTextureProjectorNode:
                {
                   const location = localSnapMatrix
                      .multVecMatrix (node ._location .getValue () .copy ());
