@@ -2435,7 +2435,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   break;
                }
                case X3D .X3DConstants .NurbsSweptSurface:
-               case X3D .X3DConstants .NurbsSwungSurface:
                {
                   const trajectoryCurve = node ._trajectoryCurve .getValue ();
 
