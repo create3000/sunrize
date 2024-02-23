@@ -2408,7 +2408,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       for (const [node, [modelMatrices, subBBoxes]] of values)
       {
-         const invModelMatrix = modelMatrices [0] .copy () .inverse ();
+         const
+            invModelMatrix  = modelMatrices [0] .copy () .inverse (),
+            transformMatrix = snapMatrix .copy () .multRight (invModelMatrix);
 
          for (const type of node .getType ())
          {
@@ -2416,65 +2418,88 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                case X3D .X3DConstants .DirectionalLight:
                {
-                  const direction = snapMatrix .copy ()
-                     .multRight (invModelMatrix)
+                  const direction = transformMatrix
                      .multDirMatrix (node ._direction .getValue () .copy ())
                      .normalize ();
 
-                  Editor .setFieldValue (executionContext, node, node ._direction, direction, undoManager)
+                  Editor .setFieldValue (executionContext, node, node ._direction, direction, undoManager);
+                  break;
+               }
+               case X3D .X3DConstants .Extrusion:
+               {
+                  const spine = node ._spine .map (spine => transformMatrix
+                     .multVecMatrix (spine .getValue () .copy ()));
+
+                  Editor .setFieldValue (executionContext, node, node ._spine, spine, undoManager);
                   break;
                }
                case X3D .X3DConstants .PointLight:
                {
-                  const location = snapMatrix .copy ()
-                     .multRight (invModelMatrix)
+                  const location = transformMatrix
                      .multVecMatrix (node ._location .getValue () .copy ());
 
-                  Editor .setFieldValue (executionContext, node, node ._location, location, undoManager)
+                  Editor .setFieldValue (executionContext, node, node ._location, location, undoManager);
                   break;
                }
                case X3D .X3DConstants .SpotLight:
                case X3D .X3DConstants .Sound:
                {
-                  const location = snapMatrix .copy ()
-                     .multRight (invModelMatrix)
+                  const location = transformMatrix
                      .multVecMatrix (node ._location .getValue () .copy ());
 
-                  const direction = snapMatrix .copy ()
-                     .multRight (invModelMatrix)
+                  const direction = transformMatrix
                      .multDirMatrix (node ._direction .getValue () .copy ())
                      .normalize ();
 
-                  Editor .setFieldValue (executionContext, node, node ._location,  location,  undoManager)
-                  Editor .setFieldValue (executionContext, node, node ._direction, direction, undoManager)
+                  Editor .setFieldValue (executionContext, node, node ._location,  location,  undoManager);
+                  Editor .setFieldValue (executionContext, node, node ._direction, direction, undoManager);
+                  break;
+               }
+               case X3D .X3DConstants .X3DComposedGeometryNode:
+               {
+                  const coord = node ._coord .getValue ();
+
+                  if (!coord)
+                     break;
+
+                  const point = coord ._point .map (point => transformMatrix
+                     .multVecMatrix (point .getValue () .copy ()));
+
+                  Editor .setFieldValue (executionContext, coord, coord ._point, point, undoManager);
+
+                  const normal = node ._normal .getValue ();
+
+                  if (!normal)
+                     break;
+
+                  const vector = normal ._vector .map (vector => transformMatrix
+                     .multDirMatrix (vector .getValue () .copy ()) .normalize ());
+
+                  Editor .setFieldValue (executionContext, normal, normal ._vector, vector, undoManager);
                   break;
                }
                case X3D .X3DConstants .X3DEnvironmentalSensorNode:
                {
-                  const position = snapMatrix .copy ()
-                     .multRight (invModelMatrix)
+                  const position = transformMatrix
                      .multVecMatrix (node ._position .getValue () .copy ());
 
-                  Editor .setFieldValue (executionContext, node, node ._position, position, undoManager)
+                  Editor .setFieldValue (executionContext, node, node ._position, position, undoManager);
                   break;
                }
                case X3D .X3DConstants .X3DTransformNode:
                {
                   const matrix = node .getMatrix () .copy ()
-                     .multRight (snapMatrix)
-                     .multRight (invModelMatrix);
+                     .multRight (transformMatrix);
 
                   Editor .setMatrixWithCenter (node, matrix, undefined, undoManager);
                   break;
                }
                case X3D .X3DConstants .X3DViewpointNode:
                {
-                  const position = snapMatrix .copy ()
-                     .multRight (invModelMatrix)
+                  const position = transformMatrix
                      .multVecMatrix (node ._position .getValue () .copy ());
 
-                  const orientation = new X3D .Rotation4 () .setMatrix (snapMatrix .copy ()
-                     .multRight (invModelMatrix)
+                  const orientation = new X3D .Rotation4 () .setMatrix (transformMatrix
                      .submatrix .multLeft (node ._orientation .getValue () .getMatrix ()));
 
                   Editor .setFieldValue (executionContext, node, node ._position,    position,    undoManager);
