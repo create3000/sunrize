@@ -2360,6 +2360,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    /**
     *
     * @param {X3DExecutionContext} executionContext
+    * @param {X3DLayerNode} layerNode
     * @param {Array<X3DNode>} nodes
     * @param {Vector3} targetPosition
     * @param {Vector3} targetNormal
@@ -2414,12 +2415,19 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             .multRight (snapMatrix)
             .multRight (modelMatrices [0] .copy () .inverse ());
 
-         Editor .setMatrixWithCenter (node, matrix);
+         Editor .setMatrixWithCenter (node, matrix, undoManager);
       }
 
       undoManager .endUndo ();
    }
 
+   /**
+    *
+    * @param {X3DExecutionContext} executionContext
+    * @param {X3DLayerNode} layerNode
+    * @param {Array<X3DNode>} nodes
+    * @returns {Array<Map<X3DNode, Array<Box3>>, Box3>}
+    */
    static getModelMatricesAndBBoxes (executionContext, layerNode, nodes)
    {
       const
@@ -2447,6 +2455,14 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       return [values, bbox];
    }
 
+   /**
+    *
+    * @param {X3DExecutionContext} executionContext
+    * @param {X3DLayerNode} layerNode
+    * @param {X3DNode} node
+    * @param {boolean} addSelf
+    * @returns {Array<Matrix4>}
+    */
    static getModelMatrices (executionContext, layerNode, node, addSelf = false)
    {
       const
