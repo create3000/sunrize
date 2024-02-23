@@ -2426,7 +2426,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     * @param {X3DExecutionContext} executionContext
     * @param {X3DLayerNode} layerNode
     * @param {Array<X3DNode>} nodes
-    * @returns {Array<Map<X3DNode, Array<Box3>>, Box3>}
+    * @returns {[Map<X3DNode,Box3[]>,Box3]}
     */
    static getModelMatricesAndBBoxes (executionContext, layerNode, nodes)
    {
