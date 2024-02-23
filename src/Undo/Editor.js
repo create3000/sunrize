@@ -2433,6 +2433,22 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   Editor .setFieldValue (executionContext, node, node ._spine, spine, undoManager);
                   break;
                }
+               case X3D .X3DConstants .NurbsSweptSurface:
+               case X3D .X3DConstants .NurbsSwungSurface:
+               {
+                  const trajectoryCurve = node ._trajectoryCurve .getValue ();
+
+                  if (trajectoryCurve)
+                  {
+                     const controlPoint = trajectoryCurve ._controlPoint .map (point => transformMatrix
+                        .multVecMatrix (point .getValue () .copy ()));
+
+                     Editor .setFieldValue (executionContext, trajectoryCurve, trajectoryCurve ._controlPoint, controlPoint, undoManager);
+                  }
+
+                  break;
+
+               }
                case X3D .X3DConstants .PointLight:
                {
                   const location = transformMatrix
@@ -2486,6 +2502,21 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
                   Editor .setFieldValue (executionContext, node, node ._position, position, undoManager);
                   break;
+               }
+               case X3D .X3DConstants .X3DNurbsSurfaceGeometryNode:
+               {
+                  const coord = node ._controlPoint .getValue ();
+
+                  if (coord)
+                  {
+                     const point = coord ._point .map (point => transformMatrix
+                        .multVecMatrix (point .getValue () .copy ()));
+
+                     Editor .setFieldValue (executionContext, coord, coord ._point, point, undoManager);
+                  }
+
+                  break;
+
                }
                case X3D .X3DConstants .X3DTransformNode:
                {
