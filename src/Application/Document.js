@@ -69,8 +69,8 @@ module .exports = class Document extends Interface
       electron .ipcRenderer .on ("grid-tool", (event, typeName, visible) => this .setGridTool (typeName, visible));
       electron .ipcRenderer .on ("grid-options", () => this .showGridOptions ());
 
-      electron .ipcRenderer .on ("activate-snap-target",                 visible => this .activateSnapTarget (visible));
-      electron .ipcRenderer .on ("activate-snap-source",                 visible => this .activateSnapSource (visible));
+      electron .ipcRenderer .on ("activate-snap-target",                 (event, visible) => this .activateSnapTarget (visible));
+      electron .ipcRenderer .on ("activate-snap-source",                 (event, visible) => this .activateSnapSource (visible));
       electron .ipcRenderer .on ("center-snap-target-in-selection",      () => this .centerSnapTargetInSelection ());
       electron .ipcRenderer .on ("move-selection-to-snap-target",        () => this .moveSelectionToSnapTarget ());
       electron .ipcRenderer .on ("move-selection-center-to-snap-target", () => this .moveSelectionCenterToSnapTarget ());
@@ -775,7 +775,11 @@ Viewpoint {
       if (!bbox .size .magnitude ())
          return;
 
-      target .position = bbox .center;
+      UndoManager .shared .beginUndo (_("Center SnapTarget in Selection"));
+
+      Editor .setFieldValue (executionContext, target .getValue (), target .position, bbox .center);
+
+      UndoManager .shared .endUndo ();
    }
 
    async moveSelectionToSnapTarget ()
@@ -789,10 +793,20 @@ Viewpoint {
          nodes            = selection .nodes,
          targetPosition   = target .position .getValue (),
          targetNormal     = target .normal .getValue (),
-         sourcePosition   = source ?._visible .getValue () ? source ?.position .getValue () : undefined,
-         sourceNormal     = source ?._visible .getValue () ? source ?.normal   .getValue () : undefined;
+         sourcePosition   = this .#snapSource ?._visible .getValue () ? source ?.position .getValue () : undefined,
+         sourceNormal     = this .#snapSource ?._visible .getValue () ? source ?.normal   .getValue () : undefined;
+
+      UndoManager .shared .beginUndo (_("Move Selection to SnapTarget"));
 
       Editor .moveNodesToTarget (executionContext, layerNode, nodes, targetPosition, targetNormal, sourcePosition, sourceNormal, false);
+
+      if (this .#snapSource ?._visible .getValue ())
+      {
+         Editor .setFieldValue (executionContext, source .getValue (), source .position, target .position);
+         Editor .setFieldValue (executionContext, source .getValue (), source .normal,   target .normal .negate ());
+      }
+
+      UndoManager .shared .endUndo ();
    }
 
    async moveSelectionCenterToSnapTarget ()
@@ -806,10 +820,20 @@ Viewpoint {
          nodes            = selection .nodes,
          targetPosition   = target .position .getValue (),
          targetNormal     = target .normal .getValue (),
-         sourcePosition   = source ?._visible .getValue () ? source ?.position .getValue () : undefined,
-         sourceNormal     = source ?._visible .getValue () ? source ?.normal   .getValue () : undefined;
+         sourcePosition   = this .#snapSource ?._visible .getValue () ? source ?.position .getValue () : undefined,
+         sourceNormal     = this .#snapSource ?._visible .getValue () ? source ?.normal   .getValue () : undefined;
+
+      UndoManager .shared .beginUndo (_("Move Selection Center to SnapTarget"));
 
       Editor .moveNodesToTarget (executionContext, layerNode, nodes, targetPosition, targetNormal, sourcePosition, sourceNormal, true);
+
+      if (this .#snapSource ?._visible .getValue ())
+      {
+         Editor .setFieldValue (executionContext, source .getValue (), source .position, target .position);
+         Editor .setFieldValue (executionContext, source .getValue (), source .normal,   target .normal .negate ());
+      }
+
+      UndoManager .shared .endUndo ();
    }
 
    updateSnapToolMenus (menu)
