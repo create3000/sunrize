@@ -2406,7 +2406,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       else
          undoManager .beginUndo (_("Move Selection to SnapTarget"));
 
-      for (const [node, [modelMatrices, subBBoxes]] of values)
+      for (const [node, [modelMatrices]] of values)
       {
          const
             invModelMatrix  = modelMatrices [0] .copy () .inverse (),
@@ -2520,7 +2520,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                }
                case X3D .X3DConstants .X3DTransformNode:
                {
-                  const matrix = node .getMatrix () .copy () .multRight (localSnapMatrix);
+                  const matrix = node .getMatrix () .copy ()
+                     .multRight (localSnapMatrix);
 
                   Editor .setMatrixWithCenter (node, matrix, undefined, undoManager);
                   break;
