@@ -2410,7 +2410,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       {
          const
             invModelMatrix  = modelMatrices [0] .copy () .inverse (),
-            transformMatrix = snapMatrix .copy () .multRight (invModelMatrix);
+            localSnapMatrix = snapMatrix .copy () .multRight (invModelMatrix);
 
          for (const type of node .getType ())
          {
@@ -2418,7 +2418,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                case X3D .X3DConstants .DirectionalLight:
                {
-                  const direction = transformMatrix
+                  const direction = localSnapMatrix
                      .multDirMatrix (node ._direction .getValue () .copy ())
                      .normalize ();
 
@@ -2427,7 +2427,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                }
                case X3D .X3DConstants .Extrusion:
                {
-                  const spine = node ._spine .map (spine => transformMatrix
+                  const spine = node ._spine .map (spine => localSnapMatrix
                      .multVecMatrix (spine .getValue () .copy ()));
 
                   Editor .setFieldValue (executionContext, node, node ._spine, spine, undoManager);
@@ -2440,7 +2440,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
                   if (trajectoryCurve)
                   {
-                     const controlPoint = trajectoryCurve ._controlPoint .map (point => transformMatrix
+                     const controlPoint = trajectoryCurve ._controlPoint .map (point => localSnapMatrix
                         .multVecMatrix (point .getValue () .copy ()));
 
                      Editor .setFieldValue (executionContext, trajectoryCurve, trajectoryCurve ._controlPoint, controlPoint, undoManager);
@@ -2451,7 +2451,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                }
                case X3D .X3DConstants .PointLight:
                {
-                  const location = transformMatrix
+                  const location = localSnapMatrix
                      .multVecMatrix (node ._location .getValue () .copy ());
 
                   Editor .setFieldValue (executionContext, node, node ._location, location, undoManager);
@@ -2460,10 +2460,10 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                case X3D .X3DConstants .SpotLight:
                case X3D .X3DConstants .Sound:
                {
-                  const location = transformMatrix
+                  const location = localSnapMatrix
                      .multVecMatrix (node ._location .getValue () .copy ());
 
-                  const direction = transformMatrix
+                  const direction = localSnapMatrix
                      .multDirMatrix (node ._direction .getValue () .copy ())
                      .normalize ();
 
@@ -2477,7 +2477,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
                   if (normal)
                   {
-                     const vector = normal ._vector .map (vector => transformMatrix
+                     const vector = normal ._vector .map (vector => localSnapMatrix
                         .multDirMatrix (vector .getValue () .copy ()) .normalize ());
 
                      Editor .setFieldValue (executionContext, normal, normal ._vector, vector, undoManager);
@@ -2487,7 +2487,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
                   if (coord)
                   {
-                     const point = coord ._point .map (point => transformMatrix
+                     const point = coord ._point .map (point => localSnapMatrix
                         .multVecMatrix (point .getValue () .copy ()));
 
                      Editor .setFieldValue (executionContext, coord, coord ._point, point, undoManager);
@@ -2497,7 +2497,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                }
                case X3D .X3DConstants .X3DEnvironmentalSensorNode:
                {
-                  const position = transformMatrix
+                  const position = localSnapMatrix
                      .multVecMatrix (node ._position .getValue () .copy ());
 
                   Editor .setFieldValue (executionContext, node, node ._position, position, undoManager);
@@ -2509,7 +2509,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
                   if (coord)
                   {
-                     const point = coord ._point .map (point => transformMatrix
+                     const point = coord ._point .map (point => localSnapMatrix
                         .multVecMatrix (point .getValue () .copy ()));
 
                      Editor .setFieldValue (executionContext, coord, coord ._point, point, undoManager);
@@ -2520,18 +2520,17 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                }
                case X3D .X3DConstants .X3DTransformNode:
                {
-                  const matrix = node .getMatrix () .copy ()
-                     .multRight (transformMatrix);
+                  const matrix = node .getMatrix () .copy () .multRight (localSnapMatrix);
 
                   Editor .setMatrixWithCenter (node, matrix, undefined, undoManager);
                   break;
                }
                case X3D .X3DConstants .X3DViewpointNode:
                {
-                  const position = transformMatrix
+                  const position = localSnapMatrix
                      .multVecMatrix (node ._position .getValue () .copy ());
 
-                  const orientation = new X3D .Rotation4 () .setMatrix (transformMatrix
+                  const orientation = new X3D .Rotation4 () .setMatrix (localSnapMatrix
                      .submatrix .multLeft (node ._orientation .getValue () .getMatrix ()));
 
                   Editor .setFieldValue (executionContext, node, node ._position,    position,    undoManager);
