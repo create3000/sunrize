@@ -2409,8 +2409,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       for (const [node, [modelMatrices]] of values)
       {
          const
-            invModelMatrix  = modelMatrices [0] .copy () .inverse (),
-            localSnapMatrix = snapMatrix .copy () .multRight (invModelMatrix);
+            invModelMatrix        = modelMatrices [0] .copy () .inverse (),
+            localSnapMatrix       = snapMatrix .copy () .multRight (invModelMatrix),
+            localSnapNormalMatrix = localSnapMatrix .submatrix .copy () .inverse () .transpose ();
 
          for (const type of node .getType ())
          {
@@ -2418,8 +2419,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                case X3D .X3DConstants .DirectionalLight:
                {
-                  const direction = localSnapMatrix
-                     .multDirMatrix (node ._direction .getValue () .copy ())
+                  const direction = localSnapNormalMatrix
+                     .multVecMatrix (node ._direction .getValue () .copy ())
                      .normalize ();
 
                   Editor .setFieldValue (executionContext, node, node ._direction, direction, undoManager);
@@ -2464,8 +2465,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   const location = localSnapMatrix
                      .multVecMatrix (node ._location .getValue () .copy ());
 
-                  const direction = localSnapMatrix
-                     .multDirMatrix (node ._direction .getValue () .copy ())
+                  const direction = localSnapNormalMatrix
+                     .multVecMatrix (node ._direction .getValue () .copy ())
                      .normalize ();
 
                   Editor .setFieldValue (executionContext, node, node ._location,  location,  undoManager);
@@ -2478,8 +2479,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
                   if (normal)
                   {
-                     const vector = normal ._vector .map (vector => localSnapMatrix
-                        .multDirMatrix (vector .getValue () .copy ()) .normalize ());
+                     const vector = normal ._vector .map (vector => localSnapNormalMatrix
+                        .multVecMatrix (vector .getValue () .copy ()) .normalize ());
 
                      Editor .setFieldValue (executionContext, normal, normal ._vector, vector, undoManager);
                   }
