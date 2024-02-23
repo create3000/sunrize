@@ -2457,25 +2457,26 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                }
                case X3D .X3DConstants .X3DComposedGeometryNode:
                {
-                  const coord = node ._coord .getValue ();
-
-                  if (!coord)
-                     break;
-
-                  const point = coord ._point .map (point => transformMatrix
-                     .multVecMatrix (point .getValue () .copy ()));
-
-                  Editor .setFieldValue (executionContext, coord, coord ._point, point, undoManager);
-
                   const normal = node ._normal .getValue ();
 
-                  if (!normal)
-                     break;
+                  if (normal)
+                  {
+                     const vector = normal ._vector .map (vector => transformMatrix
+                        .multDirMatrix (vector .getValue () .copy ()) .normalize ());
 
-                  const vector = normal ._vector .map (vector => transformMatrix
-                     .multDirMatrix (vector .getValue () .copy ()) .normalize ());
+                     Editor .setFieldValue (executionContext, normal, normal ._vector, vector, undoManager);
+                  }
 
-                  Editor .setFieldValue (executionContext, normal, normal ._vector, vector, undoManager);
+                  const coord = node ._coord .getValue ();
+
+                  if (coord)
+                  {
+                     const point = coord ._point .map (point => transformMatrix
+                        .multVecMatrix (point .getValue () .copy ()));
+
+                     Editor .setFieldValue (executionContext, coord, coord ._point, point, undoManager);
+                  }
+
                   break;
                }
                case X3D .X3DConstants .X3DEnvironmentalSensorNode:
