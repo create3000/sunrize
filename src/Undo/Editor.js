@@ -2373,11 +2373,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       const [values, bbox] = this .getModelMatricesAndBBoxes (executionContext, layerNode, nodes);
 
-      if (!bbox .size .magnitude ())
-         return;
-
       const
-         bboxSize   = bbox .size,
+         bboxSize   = bbox .size .magnitude () ? bbox .size : new X3D .Vector3 (1, 1, 1),
          bboxCenter = bbox .center,
          bboxMin    = bboxSize .copy () .divide (2) .negate (),
          bboxMax    = bboxSize .copy () .divide (2);
@@ -2411,17 +2408,77 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       for (const [node, [modelMatrices, subBBoxes]] of values)
       {
+         const invModelMatrix = modelMatrices [0] .copy () .inverse ();
+
          for (const type of node .getType ())
          {
             switch (type)
             {
+               case X3D .X3DConstants .DirectionalLight:
+               {
+                  const direction = snapMatrix .copy ()
+                     .multRight (invModelMatrix)
+                     .multDirMatrix (node ._direction .getValue () .copy ())
+                     .normalize ();
+
+                  Editor .setFieldValue (executionContext, node, node ._direction, direction, undoManager)
+                  break;
+               }
+               case X3D .X3DConstants .PointLight:
+               {
+                  const location = snapMatrix .copy ()
+                     .multRight (invModelMatrix)
+                     .multVecMatrix (node ._location .getValue () .copy ());
+
+                  Editor .setFieldValue (executionContext, node, node ._location, location, undoManager)
+                  break;
+               }
+               case X3D .X3DConstants .SpotLight:
+               case X3D .X3DConstants .Sound:
+               {
+                  const location = snapMatrix .copy ()
+                     .multRight (invModelMatrix)
+                     .multVecMatrix (node ._location .getValue () .copy ());
+
+                  const direction = snapMatrix .copy ()
+                     .multRight (invModelMatrix)
+                     .multDirMatrix (node ._direction .getValue () .copy ())
+                     .normalize ();
+
+                  Editor .setFieldValue (executionContext, node, node ._location,  location,  undoManager)
+                  Editor .setFieldValue (executionContext, node, node ._direction, direction, undoManager)
+                  break;
+               }
+               case X3D .X3DConstants .X3DEnvironmentalSensorNode:
+               {
+                  const position = snapMatrix .copy ()
+                     .multRight (invModelMatrix)
+                     .multVecMatrix (node ._position .getValue () .copy ());
+
+                  Editor .setFieldValue (executionContext, node, node ._position, position, undoManager)
+                  break;
+               }
                case X3D .X3DConstants .X3DTransformNode:
                {
                   const matrix = node .getMatrix () .copy ()
                      .multRight (snapMatrix)
-                     .multRight (modelMatrices [0] .copy () .inverse ());
+                     .multRight (invModelMatrix);
 
                   Editor .setMatrixWithCenter (node, matrix, undefined, undoManager);
+                  break;
+               }
+               case X3D .X3DConstants .X3DViewpointNode:
+               {
+                  const position = snapMatrix .copy ()
+                     .multRight (invModelMatrix)
+                     .multVecMatrix (node ._position .getValue () .copy ());
+
+                  const orientation = new X3D .Rotation4 () .setMatrix (snapMatrix .copy ()
+                     .multRight (invModelMatrix)
+                     .submatrix .multLeft (node ._orientation .getValue () .getMatrix ()));
+
+                  Editor .setFieldValue (executionContext, node, node ._position,    position,    undoManager);
+                  Editor .setFieldValue (executionContext, node, node ._orientation, orientation, undoManager);
                   break;
                }
                default:
