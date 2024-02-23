@@ -2398,7 +2398,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       const
          center      = moveCenter ? bboxCenter .copy () : (sourcePosition ?? axis .copy () .add (bboxCenter)),
          translation = targetPosition .copy () .subtract (center),
-         rotation    = sourceNormal ? new X3D .Rotation4 (sourceNormal, targetNormal .copy () .negate ()) : new X3D .Rotation4 (),
+         rotation    = sourceNormal ? new X3D .Rotation4 (sourceNormal, targetNormal .copy () .negate ()) : null,
          snapMatrix  = new X3D .Matrix4 () .set (translation, rotation, null, null, center);
 
       if (moveCenter)
