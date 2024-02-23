@@ -2392,7 +2392,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       {
          return previous .dot (targetNormal) < current .dot (targetNormal)
             ? previous
-            : current
+            : current;
       });
 
       const
