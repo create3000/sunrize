@@ -2474,14 +2474,14 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                }
                case X3D .X3DConstants .X3DComposedGeometryNode:
                {
-                  const normal = node ._normal .getValue ();
+                  const normalNode = node ._normal .getValue ();
 
-                  if (normal)
+                  if (normalNode)
                   {
-                     const vector = normal ._vector .map (vector => localSnapNormalMatrix
+                     const vector = normalNode ._vector .map (vector => localSnapNormalMatrix
                         .multVecMatrix (vector .getValue () .copy ()) .normalize ());
 
-                     Editor .setFieldValue (executionContext, normal, normal ._vector, vector, undoManager);
+                     Editor .setFieldValue (executionContext, normalNode, normalNode ._vector, vector, undoManager);
                   }
 
                   const coordNode = node ._coord .getValue ();
