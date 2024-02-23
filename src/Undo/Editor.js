@@ -2462,14 +2462,14 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             if (!(object instanceof X3D .X3DNode))
                continue;
 
-            if (!object .getType () .includes (X3D .X3DConstants .X3DTransformMatrix3DNode))
-               continue;
-
             if (object .getType () .includes (X3D .X3DLayerNode))
             {
                if (object !== layerNode)
                   continue;
             }
+
+            if (!object .getType () .includes (X3D .X3DConstants .X3DTransformMatrix3DNode))
+               continue;
 
             if (object .valueOf () === node .valueOf () && !addSelf)
                continue;
