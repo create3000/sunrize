@@ -2571,6 +2571,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             innerNode     = node .getInnerNode (),
             modelMatrices = this .getModelMatrices (executionContext, layerNode, node, false);
 
+         if (!modelMatrices .length)
+            continue;
+
          const subBBoxes = modelMatrices .map (modelMatrix =>
          {
             return innerNode .getType () .some (type => types .has (type))
