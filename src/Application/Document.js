@@ -799,72 +799,18 @@ Viewpoint {
       this .activateSnapTarget (true);
 
       const
-         tool          = await this .#snapTarget .getToolInstance (),
-         outlineEditor = this .sidebar .outlineEditor,
-         selection     = outlineEditor .sceneGraph .find (".node.selected"),
-         nodes         = new Map ();
+         selection        = require ("./Selection"),
+         target           = await this .#snapTarget .getToolInstance (),
+         source           = this .#snapSource ?._visible .getValue () ? await this .#snapSource .getToolInstance () : null,
+         executionContext = this .browser .currentScene,
+         layerNode        = this .browser .getActiveLayer (),
+         nodes            = selection .nodes,
+         targetPosition   = target .position .getValue (),
+         targetNormal     = target .normal .getValue (),
+         sourcePosition   = source ?.position .getValue (),
+         sourceNormal     = source ?.normal .getValue ();
 
-      if (!selection .length)
-         return;
-
-      const bbox = new X3D .Box3 ();
-
-      for (const element of selection)
-      {
-         const node = outlineEditor .getNode ($(element)) .getInnerNode ();
-
-         if (!node .getType () .includes (X3D .X3DConstants .X3DTransformNode))
-            continue;
-
-         const modelMatrix = outlineEditor .getModelMatrix ($(element), false);
-
-         nodes .set (node, modelMatrix);
-         bbox .add (node .getBBox (new X3D .Box3 ()) .copy () .multRight (modelMatrix));
-      }
-
-      if (!bbox .size .magnitude ())
-         return;
-
-      const
-         bboxSize   = bbox .size,
-         bboxCenter = bbox .center,
-         bboxMin    = bboxSize .copy () .divide (2) .negate (),
-         bboxMax    = bboxSize .copy () .divide (2);
-
-      const axes = [
-         new X3D .Vector3 (0, bboxMin .y, 0), // bottom
-         new X3D .Vector3 (0, bboxMax .y, 0), // top
-         new X3D .Vector3 (bboxMin .x, 0, 0), // left
-         new X3D .Vector3 (bboxMax .x, 0, 0), // right
-         new X3D .Vector3 (0, 0, bboxMin .z), // front
-         new X3D .Vector3 (0, 0, bboxMax .z), // back
-      ];
-
-      const axis = axes .reduce ((previous, current) =>
-      {
-         return previous .dot (tool .normal .getValue ()) < current .dot (tool .normal .getValue ())
-            ? previous
-            : current
-      });
-
-      const
-         point      = axis .copy () .add (bboxCenter),
-         offset     = tool .position .getValue () .copy () .subtract (point),
-         rotation   = new X3D .Rotation4 (axis .copy () .negate (), tool .normal .getValue ()),
-         snapMatrix = new X3D .Matrix4 () .set (offset, rotation, null, null, point);
-
-      UndoManager .shared .beginUndo (_("Move Selection Center to SnapTarget"));
-
-      for (const [node, modelMatrix] of nodes)
-      {
-         const matrix = node .getMatrix () .copy ()
-            .multRight (snapMatrix)
-            .multRight (modelMatrix .copy () .inverse ());
-
-         Editor .setMatrixWithCenter (node, matrix);
-      }
-
-      UndoManager .shared .endUndo ();
+      Editor .moveNodesToTarget (executionContext, layerNode, nodes, targetPosition, targetNormal, sourcePosition, sourceNormal, false);
    }
 
    async moveSelectionCenterToSnapTarget ()
@@ -872,46 +818,18 @@ Viewpoint {
       this .activateSnapTarget (true);
 
       const
-         tool          = await this .#snapTarget .getToolInstance (),
-         outlineEditor = this .sidebar .outlineEditor,
-         selection     = outlineEditor .sceneGraph .find (".node.selected"),
-         nodes         = new Map ();
+         selection        = require ("./Selection"),
+         target           = await this .#snapTarget .getToolInstance (),
+         source           = this .#snapSource ?._visible .getValue () ? await this .#snapSource .getToolInstance () : null,
+         executionContext = this .browser .currentScene,
+         layerNode        = this .browser .getActiveLayer (),
+         nodes            = selection .nodes,
+         targetPosition   = target .position .getValue (),
+         targetNormal     = target .normal .getValue (),
+         sourcePosition   = source ?.position .getValue (),
+         sourceNormal     = source ?.normal .getValue ();
 
-      if (!selection .length)
-         return;
-
-      const bbox = new X3D .Box3 ();
-
-      for (const element of selection)
-      {
-         const node = outlineEditor .getNode ($(element)) .getInnerNode ();
-
-         if (!node .getType () .includes (X3D .X3DConstants .X3DTransformNode))
-            continue;
-
-         const modelMatrix = outlineEditor .getModelMatrix ($(element), false);
-
-         nodes .set (node, modelMatrix);
-         bbox .add (node .getBBox (new X3D .Box3 ()) .copy () .multRight (modelMatrix));
-      }
-
-      if (!bbox .size .magnitude ())
-         return;
-
-      const offset = tool .position .getValue () .copy () .subtract (bbox .center);
-
-      UndoManager .shared .beginUndo (_("Move Selection Center to SnapTarget"));
-
-      for (const [node, modelMatrix] of nodes)
-      {
-         const translation = modelMatrix .inverse ()
-            .multVecMatrix (offset .copy ())
-            .add (node ._translation .getValue ());
-
-         Editor .setFieldValue (node .getExecutionContext (), node, node ._translation, translation);
-      }
-
-      UndoManager .shared .endUndo ();
+      Editor .moveNodesToTarget (executionContext, layerNode, nodes, targetPosition, targetNormal, sourcePosition, sourceNormal, true);
    }
 
    updateSnapToolMenus (menu)

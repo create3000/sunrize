@@ -4,6 +4,7 @@ const
    $         = require ("jquery"),
    X3D       = require ("../X3D"),
    Interface = require ("./Interface"),
+   Editor    = require("../Undo/Editor"),
    _         = require ("./GetText");
 
 module .exports = class Dashboard extends Interface
@@ -125,31 +126,19 @@ module .exports = class Dashboard extends Interface
 
    viewAll ()
    {
-      const types = new Set ([X3D .X3DConstants .X3DBoundedObject, X3D .X3DConstants .X3DGeometryNode]);
-
       const
-         outlineEditor = require ("./Window") .sidebar .outlineEditor,
-         selection     = outlineEditor .sceneGraph .find (".node.selected");
+         selection = require ("./Selection"),
+         nodes     = selection .nodes;
 
-      if (selection .length)
+      if (nodes .length)
       {
          const
-            layerNode     = this .browser .getActiveLayer (),
-            viewpointNode = this .browser .getActiveViewpoint (),
-            bbox          = new X3D .Box3 (),
-            straighten    = this .browser .getBrowserOption ("StraightenHorizon");
+            executionContext = this .browser .currentScene,
+            layerNode        = this .browser .getActiveLayer (),
+            viewpointNode    = this .browser .getActiveViewpoint (),
+            straighten       = this .browser .getBrowserOption ("StraightenHorizon");
 
-         for (const element of selection)
-         {
-            const node = outlineEditor .getNode ($(element)) .getInnerNode ();
-
-            if (!node .getType () .some (type => types .has (type)))
-               continue;
-
-            const modelMatrix = outlineEditor .getModelMatrix ($(element), false);
-
-            bbox .add (node .getBBox (new X3D .Box3 ()) .copy () .multRight (modelMatrix));
-         }
+         const [values, bbox] = Editor .getModelMatricesAndBBoxes (executionContext, layerNode, nodes);
 
          if (!bbox .size .magnitude ())
             return;

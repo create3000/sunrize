@@ -2357,7 +2357,131 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       UndoManager .shared .endUndo ();
    }
 
-   // TODO moveCenterToTarget
+   /**
+    *
+    * @param {X3DExecutionContext} executionContext
+    * @param {Array<X3DNode>} nodes
+    * @param {Vector3} targetPosition
+    * @param {Vector3} targetNormal
+    * @param {Vector3} sourcePosition
+    * @param {Vector3} sourceNormal
+    * @param {boolean} moveCenter
+    * @param {UndoManager} undoManager
+    */
+   static moveNodesToTarget (executionContext, layerNode, nodes, targetPosition, targetNormal, sourcePosition, sourceNormal, moveCenter, undoManager = UndoManager .shared)
+   {
+      const [values, bbox] = this .getModelMatricesAndBBoxes (executionContext, layerNode, nodes);
+
+      if (!bbox .size .magnitude ())
+         return;
+
+      const
+         bboxSize   = bbox .size,
+         bboxCenter = bbox .center,
+         bboxMin    = bboxSize .copy () .divide (2) .negate (),
+         bboxMax    = bboxSize .copy () .divide (2);
+
+      const axes = [
+         new X3D .Vector3 (0, bboxMin .y, 0), // bottom
+         new X3D .Vector3 (0, bboxMax .y, 0), // top
+         new X3D .Vector3 (bboxMin .x, 0, 0), // left
+         new X3D .Vector3 (bboxMax .x, 0, 0), // right
+         new X3D .Vector3 (0, 0, bboxMin .z), // front
+         new X3D .Vector3 (0, 0, bboxMax .z), // back
+      ];
+
+      const axis = axes .reduce ((previous, current) =>
+      {
+         return previous .dot (targetNormal) < current .dot (targetNormal)
+            ? previous
+            : current
+      });
+
+      const
+         center      = moveCenter ? bboxCenter .copy () : axis .copy () .add (bboxCenter),
+         translation = targetPosition .copy () .subtract (center),
+         rotation    = new X3D .Rotation4 (axis .copy () .negate (), targetNormal),
+         snapMatrix  = new X3D .Matrix4 () .set (translation, rotation, null, null, center);
+
+      if (moveCenter)
+         undoManager .beginUndo (_("Move Selection Center to SnapTarget"));
+      else
+         undoManager .beginUndo (_("Move Selection to SnapTarget"));
+
+      for (const [node, [modelMatrices, subBBoxes]] of values)
+      {
+         const matrix = node .getMatrix () .copy ()
+            .multRight (snapMatrix)
+            .multRight (modelMatrices [0] .copy () .inverse ());
+
+         Editor .setMatrixWithCenter (node, matrix);
+      }
+
+      undoManager .endUndo ();
+   }
+
+   static getModelMatricesAndBBoxes (executionContext, layerNode, nodes)
+   {
+      const
+         types  = new Set ([X3D .X3DConstants .X3DBoundedObject, X3D .X3DConstants .X3DGeometryNode]),
+         values = new Map (),
+         bbox   = new X3D .Box3 ();
+
+      for (const node of nodes)
+      {
+         const
+            innerNode     = node .getInnerNode (),
+            modelMatrices = this .getModelMatrices (executionContext, layerNode, node, false);
+
+         const subBBoxes = modelMatrices .map (modelMatrix =>
+         {
+            return innerNode .getType () .some (type => types .has (type))
+               ? node .getBBox (new X3D .Box3 ()) .copy () .multRight (modelMatrix)
+               : new X3D .Box3 ();
+         });
+
+         values .set (node, [modelMatrices, subBBoxes]);
+         subBBoxes .forEach (subBBox => bbox .add (subBBox));
+      }
+
+      return [values, bbox];
+   }
+
+   static getModelMatrices (executionContext, layerNode, node, addSelf = false)
+   {
+      const
+         hierarchies   = Traverse .find (executionContext, node, Traverse .ROOT_NODES),
+         modelMatrices = [ ];
+
+      for (const hierarchy of hierarchies)
+      {
+         const modelMatrix = new X3D .Matrix4 ();
+
+         for (const object of hierarchy .reverse ())
+         {
+            if (!(object instanceof X3D .X3DNode))
+               continue;
+
+            if (!object .getType () .includes (X3D .X3DConstants .X3DTransformMatrix3DNode))
+               continue;
+
+            if (object .getType () .includes (X3D .X3DLayerNode))
+            {
+               if (object !== layerNode)
+                  continue;
+            }
+
+            if (object .valueOf () === node .valueOf () && !addSelf)
+               continue;
+
+            modelMatrix .multRight (object .getMatrix ());
+         }
+
+         modelMatrices .push (modelMatrix);
+      }
+
+      return modelMatrices;
+   }
 
    /**
     *
