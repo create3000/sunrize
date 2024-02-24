@@ -2383,9 +2383,10 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       for (const [node, [modelMatrices, subBBoxes]] of values)
       {
          const
-            bboxXAxes = subBBoxes [0] .matrix .xAxis .magnitude () ? subBBoxes [0] .matrix .xAxis : X3D .Vector3 .xAxis,
-            bboxYAxes = subBBoxes [0] .matrix .yAxis .magnitude () ? subBBoxes [0] .matrix .yAxis : X3D .Vector3 .yAxis,
-            bboxZAxes = subBBoxes [0] .matrix .zAxis .magnitude () ? subBBoxes [0] .matrix .zAxis : X3D .Vector3 .zAxis;
+            bboxMatrix = subBBoxes [0] .matrix,
+            bboxXAxes  = bboxMatrix .xAxis .magnitude () ? bboxMatrix .xAxis : X3D .Vector3 .xAxis,
+            bboxYAxes  = bboxMatrix .yAxis .magnitude () ? bboxMatrix .yAxis : X3D .Vector3 .yAxis,
+            bboxZAxes  = bboxMatrix .zAxis .magnitude () ? bboxMatrix .zAxis : X3D .Vector3 .zAxis;
 
          const axes = [
             bboxXAxes .copy (),            // right
