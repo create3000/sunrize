@@ -60,12 +60,12 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
    {
    }
 
-   onmousedown (event)
+   onmousedown (event, show = false)
    {
       if ($("#secondary-toolbar .hand") .hasClass ("active"))
          return;
 
-      if (this .keys .value !== this .toolModifiers)
+      if (this .keys .value !== this .toolModifiers && !show)
          return;
 
       if (event .button !== 2)
@@ -74,7 +74,10 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
       if (!this .getBrowser () .touch (x, y))
+      {
+         this ._visible = false;
          return;
+      }
 
       event .preventDefault ();
       event .stopImmediatePropagation ();

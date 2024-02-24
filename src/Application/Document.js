@@ -93,6 +93,9 @@ module .exports = class Document extends Interface
       this .browser .getBrowserOptions () .getField ("TextureQuality")   .addInterest ("set_textureQuality",   this);
       this .browser .getBrowserOptions () .getField ("Rubberband")       .addInterest ("set_rubberband",       this);
       this .browser .getBrowserOptions () .getField ("Timings")          .addInterest ("set_timings",          this);
+
+      this .browser .getCanvas () .on ("mousedown", event => this .onmousedown (event));
+      this .browser .getCanvas () .on ("mouseup",   event => this .onmouseup   (event));
    }
 
    static #Grids = [
@@ -738,15 +741,50 @@ Viewpoint {
    #snapTarget = null;
    #snapSource = null;
 
+   async onmousedown (event)
+   {
+      if (event .button !== 2)
+         return;
+
+      if (event .altKey)
+      {
+         this .activateSnapSource (true);
+
+         await this .#snapSource .getToolInstance ();
+
+         this .#snapSource .onmousedown (event, true);
+      }
+      else
+      {
+         this .activateSnapTarget (true);
+
+         await this .#snapTarget .getToolInstance ();
+
+         this .#snapTarget .onmousedown (event);
+      }
+   }
+
+   async onmouseup (event)
+   {
+      if (event .button !== 2)
+         return;
+
+      await this .#snapSource ?.getToolInstance ();
+      await this .#snapTarget ?.getToolInstance ();
+
+      this .#snapSource ?.onmouseup (event);
+      this .#snapTarget ?.onmouseup (event);
+   }
+
    activateSnapTarget (visible)
    {
       const SnapTarget = require ("../Tools/SnapTool/SnapTargetTool");
 
       this .#snapTarget ??= new SnapTarget (this .browser .currentScene);
 
-      this .#snapTarget ._visible = visible;
+      this .#snapTarget ._visible .addInterest ("updateMenu", this);
 
-      this .updateMenu ();
+      this .#snapTarget ._visible = visible;
    }
 
    activateSnapSource (visible)
@@ -755,9 +793,9 @@ Viewpoint {
 
       this .#snapSource ??= new SnapSource (this .browser .currentScene);
 
-      this .#snapSource ._visible = visible;
+      this .#snapSource ._visible .addInterest ("updateMenu", this);
 
-      this .updateMenu ();
+      this .#snapSource ._visible = visible;
    }
 
    async centerSnapTargetInSelection ()
