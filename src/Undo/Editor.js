@@ -2607,6 +2607,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   default:
                      continue;
                }
+
+               return new X3D .Box3 ();
             }
          });
 
