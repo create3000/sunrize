@@ -310,11 +310,13 @@ module .exports = new class Library extends Dialog
 
       node = node .getValue ();
 
-      const outlineEditor = require ("../Application/Window") .sidebar .outlineEditor;
+      setTimeout (() =>
+      {
+         const outlineEditor = require ("../Application/Window") .sidebar .outlineEditor;
 
-      outlineEditor .expandTo (node);
-
-      setTimeout (() => outlineEditor .selectNodeElement ($(`.node[node-id=${node .getId ()}]`)));
+         outlineEditor .expandTo (node);
+         outlineEditor .selectNodeElement ($(`.node[node-id=${node .getId ()}]`));
+      });
    }
 
    updatePrimitives ()
@@ -396,10 +398,12 @@ module .exports = new class Library extends Dialog
 
       UndoManager .shared .endUndo ();
 
-      const outlineEditor = require ("../Application/Window") .sidebar .outlineEditor;
+      setTimeout (() =>
+      {
+         const outlineEditor = require ("../Application/Window") .sidebar .outlineEditor;
 
-      outlineEditor .expandTo (node);
-
-      setTimeout (() => outlineEditor .selectNodeElement ($(`.node[node-id=${node .getId ()}]`)));
+         outlineEditor .expandTo (node);
+         outlineEditor .selectNodeElement ($(`.node[node-id=${node .getId ()}]`));
+      });
    }
 }
