@@ -201,9 +201,8 @@ module .exports = new class Tabs
          tab .webview .addEventListener ("dom-ready", () =>
          {
             // Workaround for focus issue with webview.
-            tab .webview .focus ();
             window .blur ();
-            window .focus ();
+            tab .webview .focus ();
 
             tab .domReady = true;
 
