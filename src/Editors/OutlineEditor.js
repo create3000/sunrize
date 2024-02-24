@@ -782,8 +782,20 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
          UndoManager .shared .endUndo ();
 
+         // Expand to nodes.
+
          for (const node of nodes)
             this .expandTo (node);
+
+         // Select pasted nodes.
+
+         setTimeout (() =>
+         {
+            this .deselectAll ();
+
+            for (const node of nodes)
+               this .selectNodeElement ($(`.node[node-id=${node .getId ()}]`), true);
+         });
       }
       catch (error)
       {

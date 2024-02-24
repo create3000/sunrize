@@ -3038,16 +3038,16 @@ module .exports = class OutlineView extends Interface
    {
       // Click on node.
 
-      selected .instance .deselect_node (selected .node)
+      selected .instance .deselect_node (selected .node);
 
-      this .clearConnectors ()
+      this .clearConnectors ();
 
-      const element = $("#" + selected .node .id)
+      const element = $("#" + selected .node .id);
 
       if (element .hasClass ("node"))
-         this .selectNodeElement (element, window .event .shiftKey || window .event .metaKey)
+         this .selectNodeElement (element, window .event .shiftKey || window .event .metaKey);
       else if (element .is (".externproto, .proto"))
-         this .selectPrimaryElement (element)
+         this .selectPrimaryElement (element);
    }
 
    selectNodeElement (element, add = false)
