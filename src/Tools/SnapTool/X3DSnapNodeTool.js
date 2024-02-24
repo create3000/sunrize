@@ -68,7 +68,10 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
       if (this .keys .value !== this .toolModifiers && !show)
          return;
 
-      if (event .button !== 2)
+      if (this .keys .value & ActionKeys .Control)
+         event .button = 2;
+
+      if (event .button !== 2 && !show)
          return;
 
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);

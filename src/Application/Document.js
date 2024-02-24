@@ -748,21 +748,26 @@ Viewpoint {
       if (process .env .SUNRISE_ENVIRONMENT !== "DEVELOPMENT")
          return;
 
+      if (this .keys .value & ActionKeys .Control)
+         event .button = 2;
+
       if (event .button !== 2)
          return;
 
       switch (this .keys .value)
       {
          case ActionKeys .None:
+         case ActionKeys .Control:
          {
             this .activateSnapTarget (true);
 
             await this .#snapTarget .getToolInstance ();
 
-            this .#snapTarget .onmousedown (event);
+            this .#snapTarget .onmousedown (event, true);
             break;
          }
          case ActionKeys .Option:
+         case ActionKeys .Option | ActionKeys .Control:
          {
             this .activateSnapSource (true);
 
@@ -776,6 +781,9 @@ Viewpoint {
 
    async onmouseup (event)
    {
+      if (this .keys .value & ActionKeys .Control)
+         event .button = 2;
+
       if (event .button !== 2)
          return;
 
