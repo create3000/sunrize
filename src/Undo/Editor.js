@@ -2383,9 +2383,25 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       for (const [node, [modelMatrices, subBBoxes]] of values)
       {
          const
-            bboxZAxis  = subBBoxes [0] .matrix .zAxis,
-            bboxZAxes  = bboxZAxis .magnitude () ? bboxZAxis : X3D .Vector3 .zAxis,
-            axis       = bboxZAxes .copy () .negate ();
+            bboxXAxes = subBBoxes [0] .matrix .xAxis .magnitude () ? subBBoxes [0] .matrix .xAxis : X3D .Vector3 .xAxis,
+            bboxYAxes = subBBoxes [0] .matrix .yAxis .magnitude () ? subBBoxes [0] .matrix .yAxis : X3D .Vector3 .yAxis,
+            bboxZAxes = subBBoxes [0] .matrix .zAxis .magnitude () ? subBBoxes [0] .matrix .zAxis : X3D .Vector3 .zAxis;
+
+         const axes = [
+            bboxXAxes .copy (),            // right
+            bboxXAxes .copy () .negate (), // left
+            bboxYAxes .copy (),            // top
+            bboxYAxes .copy () .negate (), // bottom
+            bboxZAxes .copy (),            // front
+            bboxZAxes .copy () .negate (), // back
+         ];
+
+         const axis = axes .reduce ((previous, current) =>
+         {
+            return previous .dot (targetNormal) < current .dot (targetNormal)
+               ? previous
+               : current;
+         });
 
          const
             center      = moveCenter ? bboxCenter .copy () : (sourcePosition ?? axis .copy () .add (bboxCenter)),
