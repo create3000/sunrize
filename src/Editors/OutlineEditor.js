@@ -2424,7 +2424,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          {
             const
                sourceElement = $("#" + sourceElementsIds [0]),
-               sourceNode    = this .getNode (sourceElement);
+               sourceNode    = this .getNode (sourceElement) .getTool () ?? this .getNode (sourceElement);
 
             UndoManager .shared .beginUndo (this .getUndoDescriptionForNode (destinationElement .data ("dropEffect"), sourceNode), sourceNode .getTypeName (), sourceNode .getDisplayName ());
          }
@@ -2441,7 +2441,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          {
             const
                sourceElement                 = $("#" + sourceElementId),
-               sourceNode                    = this .getNode (sourceElement),
+               sourceNode                    = this .getNode (sourceElement) .getTool () ?? this .getNode (sourceElement),
                sourceExecutionContextElement = sourceElement .closest (".scene", this .sceneGraph),
                sourceExecutionContext        = this .getNode (sourceExecutionContextElement);
 
@@ -2474,7 +2474,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                sourceExecutionContext        = this .getNode (sourceExecutionContextElement);
 
             let
-               sourceNode  = this .getNode (sourceElement),
+               sourceNode  = this .getNode (sourceElement) .getTool () ?? this .getNode (sourceElement),
                sourceIndex = parseInt (sourceElement .attr ("index"));
 
             if (destinationElement .attr ("node-id") !== "NULL")
