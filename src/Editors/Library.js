@@ -316,7 +316,8 @@ module .exports = new class Library extends Dialog
 
          outlineEditor .expandTo (node);
          outlineEditor .selectNodeElement ($(`.node[node-id=${node .getId ()}]`));
-      });
+      },
+      1);
    }
 
    updatePrimitives ()
@@ -404,6 +405,7 @@ module .exports = new class Library extends Dialog
 
          outlineEditor .expandTo (node);
          outlineEditor .selectNodeElement ($(`.node[node-id=${node .getId ()}]`));
-      });
+      },
+      1);
    }
 }

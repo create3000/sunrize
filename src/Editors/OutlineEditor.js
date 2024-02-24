@@ -781,7 +781,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          }
 
          UndoManager .shared .endUndo ();
-         
+
          setTimeout (() =>
          {
             // Expand to nodes.
@@ -795,7 +795,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             for (const node of nodes)
                this .selectNodeElement ($(`.node[node-id=${node .getId ()}]`), true);
-         });
+         },
+         1);
       }
       catch (error)
       {
