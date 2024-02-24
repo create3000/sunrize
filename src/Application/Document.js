@@ -161,6 +161,8 @@ module .exports = class Document extends Interface
    {
       // When tab is activated/selected.
       this .updateMenu ();
+      
+      electron .ipcRenderer .sendToHost ("focus");
    }
 
    updateMenu ()

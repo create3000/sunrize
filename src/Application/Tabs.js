@@ -192,16 +192,26 @@ module .exports = new class Tabs
 
          tab .webview .addEventListener ("ipc-message", (event, value) =>
          {
-            if (event .channel !== "saved")
-               return;
-
-            this .setTabURL (tab, tab .url, ...event .args);
+            switch (event .channel)
+            {
+               case "focus":
+               {
+                  document .activeElement ?.blur ();
+                  this .tabs .getActiveTab () ?.webview .focus ();
+                  break;
+               }
+               case "saved":
+               {
+                  this .setTabURL (tab, tab .url, ... event .args);
+                  break;
+               }
+            }
          });
 
          tab .webview .addEventListener ("dom-ready", () =>
          {
             // Workaround for focus issue with webview.
-            window .blur ();
+            document .activeElement ?.blur ();
             tab .webview .focus ();
 
             tab .domReady = true;
