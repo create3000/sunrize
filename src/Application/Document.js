@@ -96,8 +96,8 @@ module .exports = class Document extends Interface
       this .browser .getBrowserOptions () .getField ("Rubberband")       .addInterest ("set_rubberband",       this);
       this .browser .getBrowserOptions () .getField ("Timings")          .addInterest ("set_timings",          this);
 
-      $(this .browser .canvas) .on ("mousedown", event => this .onmousedown (event));
-      $(this .browser .canvas) .on ("mouseup",   event => this .onmouseup   (event));
+      $(this .browser .element .shadowRoot) .find ("canvas") .on ("mousedown", event => this .onmousedown (event));
+      $(this .browser .element .shadowRoot) .find ("canvas") .on ("mouseup",   event => this .onmouseup   (event));
    }
 
    static #Grids = [
@@ -161,7 +161,7 @@ module .exports = class Document extends Interface
    {
       // When tab is activated/selected.
       this .updateMenu ();
-      
+
       electron .ipcRenderer .sendToHost ("focus");
    }
 
