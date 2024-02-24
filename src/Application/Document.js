@@ -12,6 +12,7 @@ const
    Dashboard          = require ("./Dashboard"),
    Footer             = require ("./Footer"),
    Sidebar            = require ("./Sidebar"),
+   ActionKeys         = require("./ActionKeys"),
    Traverse           = require ("./Traverse"),
    Editor             = require ("../Undo/Editor"),
    UndoManager        = require ("../Undo/UndoManager"),
@@ -30,6 +31,7 @@ module .exports = class Document extends Interface
       this .secondaryToolbar   = new Dashboard ($("#secondary-toolbar"));
       this .footer             = new Footer ($("#footer"));
       this .sidebar            = new Sidebar ($("#sidebar"));
+      this .keys               = new ActionKeys ();
    }
 
    /**
@@ -746,7 +748,7 @@ Viewpoint {
       if (event .button !== 2)
          return;
 
-      if (event .altKey)
+      if (this .keys .value === ActionKeys .Option)
       {
          this .activateSnapSource (true);
 
@@ -754,7 +756,7 @@ Viewpoint {
 
          this .#snapSource .onmousedown (event, true);
       }
-      else
+      else if (this .keys .value === ActionKeys .None)
       {
          this .activateSnapTarget (true);
 
