@@ -2371,49 +2371,34 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static moveNodesToTarget (executionContext, layerNode, nodes, targetPosition, targetNormal, sourcePosition, sourceNormal, moveCenter, undoManager = UndoManager .shared)
    {
-      const [values, bbox] = this .getModelMatricesAndBBoxes (executionContext, layerNode, nodes);
-
       const
-         bboxSize   = bbox .size .magnitude () ? bbox .size : new X3D .Vector3 (1, 1, 1),
-         bboxCenter = bbox .center,
-         bboxMin    = bboxSize .copy () .divide (2) .negate (),
-         bboxMax    = bboxSize .copy () .divide (2);
-
-      const axes = [
-         new X3D .Vector3 ( bboxMax .x, 0, 0), // right
-         new X3D .Vector3 (-bboxMin .x, 0, 0), // left
-         new X3D .Vector3 (0,  bboxMax .y, 0), // top
-         new X3D .Vector3 (0, -bboxMin .y, 0), // bottom
-         new X3D .Vector3 (0, 0,  bboxMin .z), // front
-         new X3D .Vector3 (0, 0, -bboxMax .z), // back
-      ];
-
-      const axis = axes .reduce ((previous, current) =>
-      {
-         return previous .dot (targetNormal) < current .dot (targetNormal)
-            ? previous
-            : current;
-      });
-
-      const
-         center      = moveCenter ? bboxCenter .copy () : (sourcePosition ?? axis .copy () .add (bboxCenter)),
-         translation = targetPosition .copy () .subtract (center),
-         rotation    = new X3D .Rotation4 (sourceNormal ?? axis, targetNormal .copy () .negate ()),
-         snapMatrix  = new X3D .Matrix4 () .set (translation, rotation, null, null, center);
+         [values, bbox] = this .getModelMatricesAndBBoxes (executionContext, layerNode, nodes),
+         bboxCenter     = bbox .center;
 
       if (moveCenter)
          undoManager .beginUndo (_("Move Selection Center to SnapTarget"));
       else
          undoManager .beginUndo (_("Move Selection to SnapTarget"));
 
-      for (const [node, [modelMatrices]] of values)
+      for (const [node, [modelMatrices, subBBoxes]] of values)
       {
+         const
+            bboxZAxis  = subBBoxes [0] .matrix .zAxis,
+            bboxZAxes  = bboxZAxis .magnitude () ? bboxZAxis : X3D .Vector3 .zAxis,
+            axis       = bboxZAxes .copy () .negate ();
+
+         const
+            center      = moveCenter ? bboxCenter .copy () : (sourcePosition ?? axis .copy () .add (bboxCenter)),
+            translation = targetPosition .copy () .subtract (center),
+            rotation    = new X3D .Rotation4 (sourceNormal ?? axis, targetNormal .copy () .negate ()),
+            snapMatrix  = new X3D .Matrix4 () .set (translation, rotation, null, null, center);
+
          const
             invModelMatrix        = modelMatrices [0] .copy () .inverse (),
             localSnapMatrix       = snapMatrix .copy () .multRight (invModelMatrix),
             localSnapNormalMatrix = localSnapMatrix .submatrix .copy () .inverse () .transpose ();
 
-         for (const type of node .getType ())
+         for (const type of node .getType () .toReversed ())
          {
             switch (type)
             {
@@ -2560,7 +2545,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    static getModelMatricesAndBBoxes (executionContext, layerNode, nodes)
    {
       const
-         types  = new Set ([X3D .X3DConstants .X3DBoundedObject, X3D .X3DConstants .X3DGeometryNode]),
          values = new Map (),
          bbox   = new X3D .Box3 ();
 
@@ -2575,9 +2559,38 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
          const subBBoxes = modelMatrices .map (modelMatrix =>
          {
-            return innerNode .getType () .some (type => types .has (type))
-               ? node .getBBox (new X3D .Box3 ()) .copy () .multRight (modelMatrix)
-               : new X3D .Box3 ();
+            for (const type of innerNode .getType () .toReversed ())
+            {
+               switch (type)
+               {
+                  case X3D .X3DConstants .DirectionalLight:
+                     return new X3D .Box3 (new X3D .Vector3 (0.5, 0.5, 0.5), X3D .Vector3 .Zero)
+                        .multLeft (new X3D .Matrix4 () .setRotation (new X3D .Rotation4 (X3D .Vector3 .zAxis, innerNode ._direction .getValue ())))
+                        .multRight (modelMatrix);
+                  case X3D .X3DConstants .PointLight:
+                     return new X3D .Box3 (new X3D .Vector3 (0.5, 0.5, 0.5), innerNode ._location .getValue ())
+                        .multRight (modelMatrix);
+                  case X3D .X3DConstants .SpotLight:
+                  case X3D .X3DConstants .Sound:
+                  case X3D .X3DConstants .X3DTextureProjectorNode:
+                     return new X3D .Box3 (new X3D .Vector3 (0.5, 0.5, 0.5), innerNode ._location .getValue ())
+                        .multLeft (new X3D .Matrix4 () .setRotation (new X3D .Rotation4 (X3D .Vector3 .zAxis, innerNode ._direction .getValue ())))
+                        .multRight (modelMatrix);
+                  case X3D .X3DConstants .X3DBoundedObject:
+                     return innerNode .getBBox (new X3D .Box3 ()) .multRight (modelMatrix);
+                  case X3D .X3DConstants .X3DGeometryNode:
+                     return innerNode .getBBox () .copy () .multRight (modelMatrix);
+                  case X3D .X3DConstants .X3DEnvironmentalSensorNode:
+                     return new X3D .Box3 (innerNode ._size .getValue (), innerNode ._center .getValue ())
+                        .multRight (modelMatrix);
+                  case X3D .X3DConstants .X3DViewpointNode:
+                     return new X3D .Box3 (new X3D .Vector3 (0.5, 0.5, 0.5), innerNode ._position .getValue ())
+                        .multLeft (new X3D .Matrix4 () .setRotation (innerNode ._orientation .getValue ()))
+                        .multRight (modelMatrix);
+                  default:
+                     continue;
+               }
+            }
          });
 
          values .set (node, [modelMatrices, subBBoxes]);
