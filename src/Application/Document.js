@@ -94,8 +94,8 @@ module .exports = class Document extends Interface
       this .browser .getBrowserOptions () .getField ("Rubberband")       .addInterest ("set_rubberband",       this);
       this .browser .getBrowserOptions () .getField ("Timings")          .addInterest ("set_timings",          this);
 
-      this .browser .getCanvas () .on ("mousedown", event => this .onmousedown (event));
-      this .browser .getCanvas () .on ("mouseup",   event => this .onmouseup   (event));
+      $(this .browser .canvas) .on ("mousedown", event => this .onmousedown (event));
+      $(this .browser .canvas) .on ("mouseup",   event => this .onmouseup   (event));
    }
 
    static #Grids = [
@@ -585,7 +585,7 @@ Viewpoint {
          denominator      = this .browserSize .config .file .denominator,
          aspectRatio      = numerator / denominator,
          frameAspectRatio = $("#browser-frame") .width () / $("#browser-frame") .height (),
-         element          = this .browser .getElement ();
+         element          = $(this .browser .element);
 
       if (enabled && aspectRatio)
       {
