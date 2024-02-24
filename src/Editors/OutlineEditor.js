@@ -789,10 +789,10 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
          // Select pasted nodes.
 
+         this .deselectAll ();
+
          setTimeout (() =>
          {
-            this .deselectAll ();
-
             for (const node of nodes)
                this .selectNodeElement ($(`.node[node-id=${node .getId ()}]`), true);
          });

@@ -308,7 +308,14 @@ module .exports = new class Library extends Dialog
          }
       }
 
-      require ("../Application/Window") .sidebar .outlineEditor .expandTo (node .getValue ());
+      node = node .getValue ();
+
+      const outlineEditor = require ("../Application/Window") .sidebar .outlineEditor;
+
+      outlineEditor .expandTo (node);
+      outlineEditor .deselectAll ();
+
+      setTimeout (() => outlineEditor .selectNodeElement ($(`.node[node-id=${node .getId ()}]`), true));
    }
 
    updatePrimitives ()
@@ -390,6 +397,11 @@ module .exports = new class Library extends Dialog
 
       UndoManager .shared .endUndo ();
 
-      require ("../Application/Window") .sidebar .outlineEditor .expandTo (node);
+      const outlineEditor = require ("../Application/Window") .sidebar .outlineEditor;
+
+      outlineEditor .expandTo (node);
+      outlineEditor .deselectAll ();
+
+      setTimeout (() => outlineEditor .selectNodeElement ($(`.node[node-id=${node .getId ()}]`), true));
    }
 }
