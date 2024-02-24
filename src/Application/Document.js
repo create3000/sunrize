@@ -748,21 +748,26 @@ Viewpoint {
       if (event .button !== 2)
          return;
 
-      if (this .keys .value === ActionKeys .Option)
+      switch (this .keys .value)
       {
-         this .activateSnapSource (true);
+         case ActionKeys .None:
+         {
+            this .activateSnapTarget (true);
 
-         await this .#snapSource .getToolInstance ();
+            await this .#snapTarget .getToolInstance ();
 
-         this .#snapSource .onmousedown (event, true);
-      }
-      else if (this .keys .value === ActionKeys .None)
-      {
-         this .activateSnapTarget (true);
+            this .#snapTarget .onmousedown (event);
+            break;
+         }
+         case ActionKeys .Option:
+         {
+            this .activateSnapSource (true);
 
-         await this .#snapTarget .getToolInstance ();
+            await this .#snapSource .getToolInstance ();
 
-         this .#snapTarget .onmousedown (event);
+            this .#snapSource .onmousedown (event, true);
+            break;
+         }
       }
    }
 
