@@ -40,7 +40,7 @@ module .exports = class ActionKeys
 
    onkeydown (event)
    {
-      //console .log (event .key)
+      // console .log (event .key)
 
       const value = this .value;
 

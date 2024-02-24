@@ -37,10 +37,10 @@ module .exports = new class Tabs
          electron .ipcRenderer .send ("title", tab .getTitle ());
          electron .ipcRenderer .send ("current-file", tab .url);
 
+         tab .initialized = true;
+
          if (tab .domReady)
             tab .webview .send ("activate");
-
-         tab .initialized = true;
 
          this .saveTabs ();
       });
@@ -210,10 +210,6 @@ module .exports = new class Tabs
 
          tab .webview .addEventListener ("dom-ready", () =>
          {
-            // Workaround for focus issue with webview.
-            document .activeElement ?.blur ();
-            tab .webview .focus ();
-
             tab .domReady = true;
 
             if (this .tabs .getActiveTab () === tab)
