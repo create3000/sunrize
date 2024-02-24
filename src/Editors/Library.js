@@ -313,9 +313,8 @@ module .exports = new class Library extends Dialog
       const outlineEditor = require ("../Application/Window") .sidebar .outlineEditor;
 
       outlineEditor .expandTo (node);
-      outlineEditor .deselectAll ();
 
-      setTimeout (() => outlineEditor .selectNodeElement ($(`.node[node-id=${node .getId ()}]`), true));
+      setTimeout (() => outlineEditor .selectNodeElement ($(`.node[node-id=${node .getId ()}]`)));
    }
 
    updatePrimitives ()
@@ -400,8 +399,7 @@ module .exports = new class Library extends Dialog
       const outlineEditor = require ("../Application/Window") .sidebar .outlineEditor;
 
       outlineEditor .expandTo (node);
-      outlineEditor .deselectAll ();
 
-      setTimeout (() => outlineEditor .selectNodeElement ($(`.node[node-id=${node .getId ()}]`), true));
+      setTimeout (() => outlineEditor .selectNodeElement ($(`.node[node-id=${node .getId ()}]`)));
    }
 }
