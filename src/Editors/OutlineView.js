@@ -53,7 +53,6 @@ module .exports = class OutlineView extends Interface
          .on ("dragend", this .onDragEnd .bind (this))
       .appendTo (this .treeView);
 
-      electron .ipcRenderer .on ("select-all",              () => this .selectAll ());
       electron .ipcRenderer .on ("deselect-all",            () => this .deselectAll ());
       electron .ipcRenderer .on ("hide-unselected-objects", () => this .hideUnselectedObjects ());
       electron .ipcRenderer .on ("show-selected-objects",   () => this .showSelectedObjects ());

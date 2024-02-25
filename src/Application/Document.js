@@ -45,6 +45,12 @@ module .exports = class Document extends Interface
 
       electron .ipcRenderer .on ("activate", () => this .activate ());
 
+      $(window)
+         .on ("focusin",  () => this .onfocus ())
+         .on ("focusout", () => this .onfocus ());
+
+      // File Menu
+
       electron .ipcRenderer .on ("open-files",       (event, urls)     => this .loadURL (urls [0])); // DEBUG
       electron .ipcRenderer .on ("save-file",        (event, force)    => this .saveFile (force));
       electron .ipcRenderer .on ("save-file-as",     (event, filePath) => this .saveFileAs (filePath));
@@ -54,21 +60,31 @@ module .exports = class Document extends Interface
       electron .ipcRenderer .on ("scene-properties", (event)           => require ("../Editors/SceneProperties") .open ());
       electron .ipcRenderer .on ("close",            (event)           => this .close ());
 
+      // Edit Menu
+
       electron .ipcRenderer .on ("undo", () => this .undo ());
       electron .ipcRenderer .on ("redo", () => this .redo ());
 
-      $("body")
+      $(window)
          .on ("cut",   () => this .cut ())
          .on ("copy",  () => this .copy ())
          .on ("paste", () => this .paste ());
 
       electron .ipcRenderer .on ("delete", () => this .delete ());
 
+      // Selection Menu
+
+      $(window) .on ("keydown", event => this .selectAll (event));
+
+      // View Menu
+
       electron .ipcRenderer .on ("primitive-quality",  (event, value) => this .setPrimitiveQuality (value));
       electron .ipcRenderer .on ("texture-quality",    (event, value) => this .setTextureQuality (value));
       electron .ipcRenderer .on ("display-rubberband", (event, value) => this .setDisplayRubberband (value));
       electron .ipcRenderer .on ("display-timings",    (event, value) => this .setDisplayTimings (value));
       electron .ipcRenderer .on ("show-library",       (event)        => require ("../Editors/Library") .open (this .browser .currentScene));
+
+      // Layout Menu
 
       electron .ipcRenderer .on ("browser-size", () => this .browserSize .open ());
       electron .ipcRenderer .on ("grid-tool", (event, typeName, visible) => this .activateGridTool (typeName, visible));
@@ -80,9 +96,7 @@ module .exports = class Document extends Interface
       electron .ipcRenderer .on ("move-selection-to-snap-target",        () => this .moveSelectionToSnapTarget ());
       electron .ipcRenderer .on ("move-selection-center-to-snap-target", () => this .moveSelectionCenterToSnapTarget ());
 
-      $(window)
-         .on ("focusin",  () => this .onfocus ())
-         .on ("focusout", () => this .onfocus ());
+      // Browser Size
 
       this .fullname       = await electron .ipcRenderer .invoke ("fullname");
       this .browserSize    = require ("../Editors/BrowserSize");
@@ -492,6 +506,30 @@ Viewpoint {
    delete ()
    {
       this .sidebar .outlineEditor .deleteNodes ();
+   }
+
+   /*
+    * Selection Menu
+    */
+
+   selectAll (event)
+   {
+      switch (event .key)
+      {
+         case "a":
+         {
+            if (this .activeElementIsInputOrOutput ())
+               break;
+
+            if (this .keys .value === ActionKeys .Control || this .keys .value === ActionKeys .Command)
+            {
+               this .sidebar .outlineEditor .selectAll ();
+               return false;
+            }
+
+            break;
+         }
+      }
    }
 
    /*

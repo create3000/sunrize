@@ -72,13 +72,8 @@ module .exports = new class Tabs
 
       this .forwardToActiveTab ("undo");
       this .forwardToActiveTab ("redo");
-
-      this .forwardToActiveTab ("cut");
-      this .forwardToActiveTab ("copy");
-      this .forwardToActiveTab ("paste");
       this .forwardToActiveTab ("delete");
 
-      this .forwardToActiveTab ("select-all");
       this .forwardToActiveTab ("deselect-all");
       this .forwardToActiveTab ("hide-unselected-objects");
       this .forwardToActiveTab ("show-selected-objects");

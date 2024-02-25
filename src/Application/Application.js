@@ -404,7 +404,7 @@ module .exports = class Application
                   accelerator: "CmdOrCtrl+A",
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("select-all");
+                     //this .mainWindow .webContents .send ("select-all");
                   },
                },
                {
