@@ -214,6 +214,10 @@ module .exports = class Document extends Interface
       return false;
    }
 
+   /*
+    * File Menu
+    */
+
    async restoreFile ()
    {
       $("body") .addClass ("modal");
@@ -415,15 +419,16 @@ Viewpoint {
       this .saveCopyAs (filePath);
    }
 
-   /**
-    *
-    */
    close ()
    {
       this .saveFile ();
 
       electron .ipcRenderer .sendToHost ("closed");
    }
+
+   /*
+    * Edit Menu
+    */
 
    undo ()
    {
@@ -473,6 +478,10 @@ Viewpoint {
    {
       this .sidebar .outlineEditor .deleteNodes ();
    }
+
+   /*
+    * View Menu
+    */
 
    /**
     *
@@ -568,6 +577,10 @@ Viewpoint {
          timings: this .config .file .timings,
       });
    }
+
+   /*
+    * Layout Menu
+    */
 
    /**
     * Change browser size according to aspect-ratio.
