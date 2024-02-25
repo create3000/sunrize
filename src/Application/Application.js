@@ -635,7 +635,7 @@ module .exports = class Application
                { type: "separator" },
                {
                   label: _("Grid Layout Tool"),
-                  type: "radio",
+                  type: "checkbox",
                   checked: this .menuOptions .GridTool,
                   click: () =>
                   {
@@ -644,7 +644,7 @@ module .exports = class Application
                },
                {
                   label: _("Angle Grid Layout Tool"),
-                  type: "radio",
+                  type: "checkbox",
                   checked: this .menuOptions .AngleGridTool,
                   click: () =>
                   {
@@ -653,7 +653,7 @@ module .exports = class Application
                },
                {
                   label: _("Axonometric Grid Layout Tool"),
-                  type: "radio",
+                  type: "checkbox",
                   checked: this .menuOptions .AxonometricGridTool,
                   click: () =>
                   {
