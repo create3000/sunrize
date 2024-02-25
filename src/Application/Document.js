@@ -49,6 +49,8 @@ module .exports = class Document extends Interface
          .on ("focusin",  () => this .onfocus ())
          .on ("focusout", () => this .onfocus ());
 
+      $(window) .on ("keydown", event => this .onkeydown (event));
+
       // File Menu
 
       electron .ipcRenderer .on ("open-files",       (event, urls)     => this .loadURL (urls [0])); // DEBUG
@@ -62,19 +64,12 @@ module .exports = class Document extends Interface
 
       // Edit Menu
 
-      electron .ipcRenderer .on ("undo", () => this .undo ());
-      electron .ipcRenderer .on ("redo", () => this .redo ());
-
       $(window)
          .on ("cut",   () => this .cut ())
          .on ("copy",  () => this .copy ())
          .on ("paste", () => this .paste ());
 
       electron .ipcRenderer .on ("delete", () => this .delete ());
-
-      // Selection Menu
-
-      $(window) .on ("keydown", event => this .selectAll (event));
 
       // View Menu
 
@@ -229,6 +224,51 @@ module .exports = class Document extends Interface
          return true;
 
       return false;
+   }
+
+   onkeydown (event)
+   {
+
+      electron .ipcRenderer .on ("undo", () => this .undo ());
+      electron .ipcRenderer .on ("redo", () => this .redo ());
+
+      switch (event .key)
+      {
+         case "z":
+         {
+            if (this .activeElementIsInputOrOutput ())
+               break;
+
+            switch (this .keys .value)
+            {
+               case ActionKeys .CommandOrControl:
+               {
+                  this .undo ();
+                  return false;
+               }
+               case ActionKeys .CommandOrControl | ActionKeys .Shift:
+               {
+                  this .redo ();
+                  return false;
+               }
+            }
+
+            break;
+         }
+         case "a":
+         {
+            if (this .activeElementIsInputOrOutput ())
+               break;
+
+            if (this .keys .value === ActionKeys .CommandOrControl)
+            {
+               this .selectAll ();
+               return false;
+            }
+
+            break;
+         }
+      }
    }
 
    /*
@@ -512,24 +552,9 @@ Viewpoint {
     * Selection Menu
     */
 
-   selectAll (event)
+   selectAll ()
    {
-      switch (event .key)
-      {
-         case "a":
-         {
-            if (this .activeElementIsInputOrOutput ())
-               break;
-
-            if (this .keys .value === ActionKeys .Control || this .keys .value === ActionKeys .Command)
-            {
-               this .sidebar .outlineEditor .selectAll ();
-               return false;
-            }
-
-            break;
-         }
-      }
+      this .sidebar .outlineEditor .selectAll ();
    }
 
    /*

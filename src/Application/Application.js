@@ -362,19 +362,13 @@ module .exports = class Application
                   label: this .menuOptions .undoLabel,
                   accelerator: "CmdOrCtrl+Z",
                   enabled: this .menuOptions .undoLabel !== _("Undo"),
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("undo");
-                  },
+                  click: () => { },
                },
                {
                   label: this .menuOptions .redoLabel,
                   accelerator: "Shift+CmdOrCtrl+Z",
                   enabled: this .menuOptions .redoLabel !== _("Redo"),
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("redo");
-                  },
+                  click: () => { },
                },
                { type: "separator" },
                {

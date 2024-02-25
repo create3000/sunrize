@@ -12,6 +12,10 @@ module .exports = class ActionKeys
    static AltGraph = 0b1000;
    static Command  = 0b1000;
 
+   static CommandOrControl = process .platform === "darwin"
+      ? this .Command
+      : this .Control;
+
    constructor (id, callback)
    {
       this .id       = id;
