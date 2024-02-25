@@ -54,11 +54,14 @@ module .exports = class Document extends Interface
       electron .ipcRenderer .on ("scene-properties", (event)           => require ("../Editors/SceneProperties") .open ());
       electron .ipcRenderer .on ("close",            (event)           => this .close ());
 
-      electron .ipcRenderer .on ("undo",   () => this .undo ());
-      electron .ipcRenderer .on ("redo",   () => this .redo ());
-      electron .ipcRenderer .on ("cut",    () => this .cut ());
-      electron .ipcRenderer .on ("copy",   () => this .copy ());
-      electron .ipcRenderer .on ("paste",  () => this .paste ());
+      electron .ipcRenderer .on ("undo", () => this .undo ());
+      electron .ipcRenderer .on ("redo", () => this .redo ());
+
+      $("body")
+         .on ("cut",   () => this .cut ())
+         .on ("copy",  () => this .copy ())
+         .on ("paste", () => this .paste ());
+
       electron .ipcRenderer .on ("delete", () => this .delete ());
 
       electron .ipcRenderer .on ("primitive-quality",  (event, value) => this .setPrimitiveQuality (value));
@@ -461,17 +464,29 @@ Viewpoint {
 
    cut ()
    {
+      if (this .activeElementIsInputOrOutput ())
+         return;
+
       this .sidebar .outlineEditor .cutNodes ();
+      return false;
    }
 
    copy ()
    {
+      if (this .activeElementIsInputOrOutput ())
+         return;
+
       this .sidebar .outlineEditor .copyNodes ();
+      return false;
    }
 
    paste ()
    {
+      if (this .activeElementIsInputOrOutput ())
+         return;
+
       this .sidebar .outlineEditor .pasteNodes ();
+      return false;
    }
 
    delete ()

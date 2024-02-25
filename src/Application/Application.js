@@ -378,28 +378,13 @@ module .exports = class Application
                },
                { type: "separator" },
                {
-                  label: _("Cut"),
-                  accelerator: "CmdOrCtrl+X",
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("cut");
-                  },
+                  role: "cut",
                },
                {
-                  label: _("Copy"),
-                  accelerator: "CmdOrCtrl+C",
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("copy");
-                  },
+                  role: "copy",
                },
                {
-                  label: _("Paste"),
-                  accelerator: "CmdOrCtrl+V",
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("paste");
-                  },
+                  role: "paste",
                },
                {
                   label: _("Delete"),
