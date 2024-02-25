@@ -177,10 +177,7 @@ module .exports = class Document extends Interface
       const menu = { };
 
       this .updateUndoMenus (menu);
-      this .updatePrimitiveQualityMenu (menu);
-      this .updateTextureQualityMenu (menu);
-      this .updateTimingsMenu (menu);
-      this .updateRubberbandMenu (menu);
+      this .updateBrowserOptionsMenus (menu);
       this .updateGridMenus (menu);
       this .updateSnapToolMenus (menu);
 
@@ -504,14 +501,6 @@ Viewpoint {
       });
    }
 
-   updatePrimitiveQualityMenu (menu)
-   {
-      Object .assign (menu,
-      {
-         primitiveQuality: this .config .file .primitiveQuality,
-      });
-   }
-
    set_primitiveQuality ()
    {
       this .config .file .primitiveQuality = this .browser .getBrowserOption ("PrimitiveQuality");
@@ -527,14 +516,6 @@ Viewpoint {
    {
       this .browser .setBrowserOption ("TextureQuality", value);
       this .browser .setDescription (`Texture Quality: ${value .toLowerCase ()}`);
-   }
-
-   updateTextureQualityMenu (menu)
-   {
-      Object .assign (menu,
-      {
-         textureQuality: this .config .file .textureQuality,
-      });
    }
 
    set_textureQuality ()
@@ -554,14 +535,6 @@ Viewpoint {
       this .browser .setDescription (`Rubberband: ${value ? "on" : "off"}`);
    }
 
-   updateRubberbandMenu (menu)
-   {
-      Object .assign (menu,
-      {
-         rubberband: this .config .file .rubberband,
-      });
-   }
-
    set_rubberband ()
    {
       this .config .file .rubberband = this .browser .getBrowserOption ("Rubberband");
@@ -578,14 +551,6 @@ Viewpoint {
       this .browser .setBrowserOption ("Timings", value);
    }
 
-   updateTimingsMenu (menu)
-   {
-      Object .assign (menu,
-      {
-         timings: this .config .file .timings,
-      });
-   }
-
    set_timings ()
    {
       this .config .file .timings = this .browser .getBrowserOption ("Timings");
@@ -593,8 +558,19 @@ Viewpoint {
       this .updateMenu ();
    }
 
+   updateBrowserOptionsMenus (menu)
+   {
+      Object .assign (menu,
+      {
+         primitiveQuality: this .config .file .primitiveQuality,
+         textureQuality: this .config .file .textureQuality,
+         rubberband: this .config .file .rubberband,
+         timings: this .config .file .timings,
+      });
+   }
+
    /**
-    * Change browser size according to aspect-ratio
+    * Change browser size according to aspect-ratio.
     */
    onresize ()
    {
