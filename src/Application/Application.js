@@ -722,7 +722,7 @@ module .exports = class Application
                   label: "Learn More",
                   click: () =>
                   {
-                     electron .shell .openExternal ("https://create3000.github.io/x_ite/");
+                     electron .shell .openExternal ("https://create3000.github.io/sunrize/");
                   },
                },
             ],
