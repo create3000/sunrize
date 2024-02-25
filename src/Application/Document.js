@@ -195,6 +195,8 @@ module .exports = class Document extends Interface
       electron .ipcRenderer .send ("update-menu", menu);
    }
 
+   // Active (Focused) Element
+
    activeElement = null
 
    onfocus ()
@@ -225,6 +227,8 @@ module .exports = class Document extends Interface
 
       return false;
    }
+
+   // Menu Accelerators
 
    onkeydown (event)
    {
