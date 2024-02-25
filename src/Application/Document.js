@@ -123,12 +123,14 @@ module .exports = class Document extends Interface
 
       this .fileSaveFileTypeWarning = false;
 
-      setTimeout (() => this .setPrimitiveQuality (this .config .file .primitiveQuality));
-      this .setTextureQuality (this .config .file .textureQuality);
-      this .setDisplayRubberband (this .config .file .rubberband);
-      this .setDisplayTimings (this .config .file .timings);
+      // Configure browser options.
 
-      // Grids
+      this .setPrimitiveQuality  (this .config .file .primitiveQuality);
+      this .setTextureQuality    (this .config .file .textureQuality);
+      this .setDisplayRubberband (this .config .file .rubberband);
+      this .setDisplayTimings    (this .config .file .timings);
+
+      // Configure grids.
 
       this .#grids .forEach (grid => grid .dispose ());
 
@@ -149,7 +151,7 @@ module .exports = class Document extends Interface
          }
       }
 
-      // Snap Tools
+      // Remove Snap Target and Snap Source.
 
       this .#snapTarget ?.dispose ();
       this .#snapSource ?.dispose ();
@@ -157,7 +159,7 @@ module .exports = class Document extends Interface
       this .#snapTarget = null;
       this .#snapSource = null;
 
-      // Activate
+      // Run activate.
 
       this .activate ();
    }
@@ -481,19 +483,24 @@ Viewpoint {
     */
    setPrimitiveQuality (value)
    {
-      const live = this .browser .isLive ();
+      // Defer execution when Play button is configured.
 
-      this .browser .beginUpdate ();
-      this .browser .setBrowserOption ("PrimitiveQuality", value);
-      this .browser .setDescription (`Primitive Quality: ${value .toLowerCase ()}`);
-
-      if (live)
-         return;
-
-      this .browser .finishedEvents () .addFieldCallback (this, () =>
+      setTimeout (() =>
       {
-         this .browser .finishedEvents () .removeFieldCallback (this);
-         this .browser .endUpdate ();
+         const live = this .browser .isLive ();
+
+         this .browser .beginUpdate ();
+         this .browser .setBrowserOption ("PrimitiveQuality", value);
+         this .browser .setDescription (`Primitive Quality: ${value .toLowerCase ()}`);
+
+         if (live)
+            return;
+
+         this .browser .finishedEvents () .addFieldCallback (this, () =>
+         {
+            this .browser .finishedEvents () .removeFieldCallback (this);
+            this .browser .endUpdate ();
+         });
       });
    }
 
