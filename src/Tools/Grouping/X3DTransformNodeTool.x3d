@@ -1780,7 +1780,7 @@ function set_moveCenterToBBoxCenter (value)
 
       center = bboxCenter;
 
-      setTimeout (() => active = false, 1);
+      requestAnimationFrame (() => active = false);
    }
 }
 

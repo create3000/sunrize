@@ -442,7 +442,7 @@ module .exports = class OutlineView extends Interface
 
          const nodes = Array .from (scene .rootNodes);
 
-         setTimeout (() => nodes .forEach (n => n .setNodeUserData (_changing, false)));
+         requestAnimationFrame (() => nodes .forEach (n => n .setNodeUserData (_changing, false)));
          return;
       }
 
@@ -1742,7 +1742,7 @@ module .exports = class OutlineView extends Interface
             if (!field .getValue () || !field ?.getNodeUserData (_changing))
                break;
 
-            setTimeout (() => field .setNodeUserData (_changing, false));
+               requestAnimationFrame (() => field .setNodeUserData (_changing, false));
             return;
          }
          case X3D .X3DConstants .MFNode:
@@ -1754,7 +1754,7 @@ module .exports = class OutlineView extends Interface
 
                const nodes = Array .from (field);
 
-               setTimeout (() => nodes .forEach (n => n .setNodeUserData (_changing, false)));
+               requestAnimationFrame (() => nodes .forEach (n => n .setNodeUserData (_changing, false)));
                return;
             }
 
@@ -3405,7 +3405,7 @@ module .exports = class OutlineView extends Interface
 
    onDragEnd (event) { }
 
-   expandTo (object)
+   expandTo (object, expandObject = false)
    {
       let flags = Traverse .NONE;
 
@@ -3429,6 +3429,9 @@ module .exports = class OutlineView extends Interface
       for (const hierarchy of hierarchies)
       {
          hierarchy .shift (); // execution context
+
+         if (!expandObject)
+            hierarchy .pop ();
 
          this .expandHierarchy (hierarchy, this .sceneGraph);
          break;

@@ -782,7 +782,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
          UndoManager .shared .endUndo ();
 
-         setTimeout (() =>
+         requestAnimationFrame (() =>
          {
             // Expand to nodes.
 
@@ -795,8 +795,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             for (const node of nodes)
                this .selectNodeElement ($(`.node[node-id=${node .getId ()}]`), true);
-         },
-         1);
+         });
       }
       catch (error)
       {
@@ -997,7 +996,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       UndoManager .shared .endUndo ();
 
-      requestAnimationFrame (() => this .expandTo (node));
+      requestAnimationFrame (() => this .expandTo (node, true));
    }
 
    removeParent (id, executionContextId, nodeId)
@@ -1119,7 +1118,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       UndoManager .shared .endUndo ();
 
-      requestAnimationFrame (() => this .expandTo (childNode));
+      if (nodes .length > 1)
+         requestAnimationFrame (() => this .expandTo (childNode, true));
    }
 
    moveViewpointToCamera (id, executionContextId, nodeId)

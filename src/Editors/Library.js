@@ -310,14 +310,13 @@ module .exports = new class Library extends Dialog
 
       node = node .getValue ();
 
-      setTimeout (() =>
+      requestAnimationFrame (() =>
       {
          const outlineEditor = require ("../Application/Window") .sidebar .outlineEditor;
 
          outlineEditor .expandTo (node);
          outlineEditor .selectNodeElement ($(`.node[node-id=${node .getId ()}]`));
-      },
-      1);
+      });
    }
 
    updatePrimitives ()
@@ -399,13 +398,12 @@ module .exports = new class Library extends Dialog
 
       UndoManager .shared .endUndo ();
 
-      setTimeout (() =>
+      requestAnimationFrame (() =>
       {
          const outlineEditor = require ("../Application/Window") .sidebar .outlineEditor;
 
          outlineEditor .expandTo (node);
          outlineEditor .selectNodeElement ($(`.node[node-id=${node .getId ()}]`));
-      },
-      1);
+      });
    }
 }
