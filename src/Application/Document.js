@@ -83,7 +83,7 @@ module .exports = class Document extends Interface
 
       this .fullname       = await electron .ipcRenderer .invoke ("fullname");
       this .browserSize    = require ("../Editors/BrowserSize");
-      this .resizeObserver = new ResizeObserver (this .onresize .bind (this));
+      this .resizeObserver = new ResizeObserver (() => this .onresize ());
 
       this .resizeObserver .observe ($("#browser-frame") [0]);
 
@@ -91,10 +91,14 @@ module .exports = class Document extends Interface
 
       UndoManager .shared .addInterest (this, () => this .undoManager ());
 
+      // Connect browser options.
+
       this .browser .getBrowserOptions () .getField ("PrimitiveQuality") .addInterest ("set_primitiveQuality", this);
       this .browser .getBrowserOptions () .getField ("TextureQuality")   .addInterest ("set_textureQuality",   this);
       this .browser .getBrowserOptions () .getField ("Rubberband")       .addInterest ("set_rubberband",       this);
       this .browser .getBrowserOptions () .getField ("Timings")          .addInterest ("set_timings",          this);
+
+      // Connect for Snap Target and Snap Source.
 
       $(this .browser .element .shadowRoot) .find ("canvas")
          .on ("mousedown", event => this .onmousedown (event))
