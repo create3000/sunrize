@@ -68,7 +68,7 @@ module .exports = class Document extends Interface
       electron .ipcRenderer .on ("show-library",       (event)        => require ("../Editors/Library") .open (this .browser .currentScene));
 
       electron .ipcRenderer .on ("browser-size", () => this .browserSize .open ());
-      electron .ipcRenderer .on ("grid-tool", (event, typeName, visible) => this .setGridTool (typeName, visible));
+      electron .ipcRenderer .on ("grid-tool", (event, typeName, visible) => this .activateGridTool (typeName, visible));
       electron .ipcRenderer .on ("grid-options", () => this .showGridOptions ());
 
       electron .ipcRenderer .on ("activate-snap-target",                 (event, visible) => this .activateSnapTarget (visible));
@@ -147,7 +147,7 @@ module .exports = class Document extends Interface
                config .setDefaultValues ({ visible: true });
 
             if (config .visible)
-               this .setGridTool (typeName, true);
+               this .activateGridTool (typeName, true);
          }
       }
 
@@ -247,7 +247,7 @@ Viewpoint {
 }
             `);
 
-            this .setGridTool ("GridTool", true);
+            this .activateGridTool ("GridTool", true);
          }
       }
       else
@@ -616,7 +616,7 @@ Viewpoint {
    #grids      = new Map ();
    #gridFields = new Map ();
 
-   async setGridTool (typeName, visible)
+   async activateGridTool (typeName, visible)
    {
       const
          Tool   = require (`../Tools/Grids/${typeName}`),
