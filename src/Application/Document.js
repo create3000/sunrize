@@ -765,6 +765,9 @@ Viewpoint {
          case ActionKeys .None:
          case ActionKeys .Control:
          {
+            if (this .#snapTarget ?._visible .getValue ())
+               break;
+
             this .activateSnapTarget (true);
 
             await this .#snapTarget .getToolInstance ();
@@ -775,6 +778,9 @@ Viewpoint {
          case ActionKeys .Option:
          case ActionKeys .Option | ActionKeys .Control:
          {
+            if (this .#snapSource ?._visible .getValue ())
+               break;
+
             this .activateSnapSource (true);
 
             await this .#snapSource .getToolInstance ();
