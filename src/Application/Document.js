@@ -164,9 +164,11 @@ module .exports = class Document extends Interface
       this .activate ();
    }
 
+   /**
+    * Run actions when tab is activated/selected.
+    */
    activate ()
    {
-      // When tab is activated/selected.
       this .updateMenu ();
 
       electron .ipcRenderer .sendToHost ("focus");
@@ -181,7 +183,7 @@ module .exports = class Document extends Interface
       this .updateGridMenus (menu);
       this .updateSnapToolMenus (menu);
 
-      electron .ipcRenderer .send ("change-menu", menu);
+      electron .ipcRenderer .send ("update-menu", menu);
    }
 
    activeElement = null
@@ -190,7 +192,8 @@ module .exports = class Document extends Interface
    {
       this .activeElement = document .activeElement ? $(document .activeElement) : null;
 
-      electron .ipcRenderer .send ("change-menu", {
+      electron .ipcRenderer .send ("update-menu",
+      {
          defaultEditMenu: this .activeElementIsInputOrOutput (),
       });
    }

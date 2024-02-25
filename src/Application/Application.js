@@ -87,7 +87,7 @@ module .exports = class Application
       electron .ipcMain .on ("title",               (event, title)       => this .title = title);
       electron .ipcMain .on ("current-file",        (event, currentFile) => this .currentFile = currentFile);
       electron .ipcMain .on ("add-recent-document", (event, filePath)    => this .addRecentDocument (filePath));
-      electron .ipcMain .on ("change-menu",         (event, object)      => this .updateMenu (object));
+      electron .ipcMain .on ("update-menu",         (event, object)      => this .updateMenu (object));
       electron .ipcMain .on ("context-menu",        (event, id, menu)    => this .contextMenu (id, menu));
 
       electron .ipcMain .handle ("open-files", async (event, urls) => this .openFiles (urls));
