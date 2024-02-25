@@ -143,9 +143,6 @@ module .exports = class Document extends Interface
          {
             const config = this .config .file .addNameSpace (`${typeName}.`);
 
-            if (typeName === "GridTool")
-               config .setDefaultValues ({ visible: true });
-
             if (config .visible)
                this .activateGridTool (typeName, true);
          }
