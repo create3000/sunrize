@@ -439,10 +439,10 @@ Viewpoint {
    {
       this .updateMenu ();
 
-      electron .ipcRenderer .sendToHost ("saved", !UndoManager .shared .saveNeeded);
-
       if (UndoManager .shared .saveNeeded)
          this .registerAutoSave ();
+
+      electron .ipcRenderer .sendToHost ("saved", !UndoManager .shared .saveNeeded);
    }
 
    updateUndoMenus (menu)
