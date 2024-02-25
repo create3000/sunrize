@@ -84,7 +84,7 @@ module .exports = class Document extends Interface
       electron .ipcRenderer .on ("texture-quality",    (event, value) => this .setTextureQuality (value));
       electron .ipcRenderer .on ("display-rubberband", (event, value) => this .setDisplayRubberband (value));
       electron .ipcRenderer .on ("display-timings",    (event, value) => this .setDisplayTimings (value));
-      electron .ipcRenderer .on ("show-library",       (event)        => require ("../Editors/Library") .open (this .browser .currentScene));
+      electron .ipcRenderer .on ("show-library",       (event)        => this .showLibrary ());
 
       // Layout Menu
 
@@ -640,6 +640,11 @@ Viewpoint {
          rubberband: this .config .file .rubberband,
          timings: this .config .file .timings,
       });
+   }
+
+   showLibrary ()
+   {
+      require ("../Editors/Library") .open (this .browser .currentScene);
    }
 
    /*
