@@ -894,8 +894,6 @@ module .exports = class Application
          { role: "editMenu" },
       ]));
 
-      console .log (filters)
-
       const response = await electron .dialog .showOpenDialog ({
          defaultPath: defaultPath,
          properties: ["openFile", "multiSelections"],
