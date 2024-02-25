@@ -54,6 +54,7 @@ module .exports = new class Tabs
       electron .ipcRenderer .on ("save-file",      (event)           => this .saveFile ());
       electron .ipcRenderer .on ("save-file-as",   (event, filePath) => this .saveFileAs (filePath));
       electron .ipcRenderer .on ("save-all-files", (event)           => this .saveAllFiles ());
+      electron .ipcRenderer .on ("close",          (event)           => this .tabs .getActiveTab () ?.close (true));
       electron .ipcRenderer .on ("quit",           (event)           => this .quit ());
 
       electron .ipcRenderer .on ("toggle-developer-tools", (event) => this .tabs .getActiveTab () .webview .openDevTools ());

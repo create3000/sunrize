@@ -345,7 +345,12 @@ module .exports = class Application
                },
                { type: "separator" },
                {
-                  role: "close",
+                  label: _("Close"),
+                  accelerator: "CmdOrCtrl+W",
+                  click: () =>
+                  {
+                     this .mainWindow .webContents .send ("close");
+                  },
                },
             ],
          },
