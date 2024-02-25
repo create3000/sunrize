@@ -70,8 +70,11 @@ module .exports = new class Tabs
       this .forwardToActiveTab ("save-copy-as");
       this .forwardToActiveTab ("scene-properties");
 
+      this .forwardToActiveTab ("undo");
+      this .forwardToActiveTab ("redo");
       this .forwardToActiveTab ("delete");
 
+      this .forwardToActiveTab ("select-all");
       this .forwardToActiveTab ("deselect-all");
       this .forwardToActiveTab ("hide-unselected-objects");
       this .forwardToActiveTab ("show-selected-objects");

@@ -64,12 +64,19 @@ module .exports = class Document extends Interface
 
       // Edit Menu
 
+      electron .ipcRenderer .on ("undo", () => this .undo ());
+      electron .ipcRenderer .on ("redo", () => this .redo ());
+
       $(window)
          .on ("cut",   () => this .cut ())
          .on ("copy",  () => this .copy ())
          .on ("paste", () => this .paste ());
 
       electron .ipcRenderer .on ("delete", () => this .delete ());
+
+      // Selection Menu
+
+      electron .ipcRenderer .on ("select-all", () => this .selectAll ());
 
       // View Menu
 
@@ -232,33 +239,8 @@ module .exports = class Document extends Interface
 
    onkeydown (event)
    {
-
-      electron .ipcRenderer .on ("undo", () => this .undo ());
-      electron .ipcRenderer .on ("redo", () => this .redo ());
-
       switch (event .key)
       {
-         case "z":
-         {
-            if (this .activeElementIsInputOrOutput ())
-               break;
-
-            switch (this .keys .value)
-            {
-               case ActionKeys .CommandOrControl:
-               {
-                  this .undo ();
-                  return false;
-               }
-               case ActionKeys .CommandOrControl | ActionKeys .Shift:
-               {
-                  this .redo ();
-                  return false;
-               }
-            }
-
-            break;
-         }
          case "a":
          {
             if (this .activeElementIsInputOrOutput ())
