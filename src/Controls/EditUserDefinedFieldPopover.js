@@ -145,7 +145,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
                   return;
 
                confirm (event);
-            })
+            });
 
             setTimeout (() => nameInput .trigger ("select"), 1);
          },

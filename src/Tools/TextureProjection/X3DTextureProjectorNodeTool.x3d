@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.12, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/TextureProjector/X3DTextureProjectorNodeTool.x3d'/>
-    <meta name='modified' content='Mon, 26 Feb 2024 10:45:27 GMT'/>
+    <meta name='modified' content='Mon, 26 Feb 2024 12:40:45 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -141,7 +141,7 @@
                   </IS>
                   <UnlitMaterial
                       transparency='0.75'/>
-                  <ProtoInstance name='TextureShader' containerField='shaders'/>
+                  <ProtoInstance name='TextureShader' DEF='_1' containerField='shaders'/>
                 </Appearance>
                 <IndexedFaceSet
                     solid='false'
@@ -179,6 +179,7 @@
           <field accessType='inputOutput' type='SFFloat' name='perspectiveNearDistance'/>
           <field accessType='inputOutput' type='SFFloat' name='perspectiveFarDistance'/>
           <field accessType='inputOutput' type='SFFloat' name='perspectiveAspectRatio'/>
+          <field accessType='inputOutput' type='SFNode' name='texture'/>
           <field accessType='inputOutput' type='SFString' name='activeTool'/>
           <field accessType='inputOutput' type='SFBool' name='active'/>
           <field accessType='initializeOnly' type='SFNode' name='projector'>
@@ -192,6 +193,9 @@
           </field>
           <field accessType='initializeOnly' type='SFNode' name='textureAppearance'>
             <Appearance USE='_10'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='textureShader'>
+            <ProtoInstance name='TextureShader' USE='_1'/>
           </field>
           <field accessType='inputOutput' type='SFNode' name='transform'>
             <Transform USE='TransformTool'/>
@@ -208,6 +212,7 @@
             <connect nodeField='perspectiveNearDistance' protoField='perspectiveNearDistance'/>
             <connect nodeField='perspectiveFarDistance' protoField='perspectiveFarDistance'/>
             <connect nodeField='perspectiveAspectRatio' protoField='perspectiveAspectRatio'/>
+            <connect nodeField='texture' protoField='texture'/>
             <connect nodeField='activeTool' protoField='activeTool'/>
             <connect nodeField='active' protoField='isActive'/>
             <connect nodeField='transform' protoField='transformTool'/>
@@ -446,7 +451,13 @@ function set_perspective ()
    frustum .point [10] = new SFVec3f ( f * w, -f * h, farDistance);
    frustum .point [11] = new SFVec3f (-f * w, -f * h, farDistance);
 }
-]]>
+
+function set_texture (value)
+{
+   textureAppearance .shaders = value 
+      ? new MFNode (textureShader)
+      : new MFNode ();
+}]]>
         </Script>
         <ROUTE fromNode='TransformTool' fromField='translation_changed' toNode='Projector' toField='set_translation'/>
         <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='Projector' toField='set_rotation'/>
