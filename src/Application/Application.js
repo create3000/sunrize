@@ -159,7 +159,7 @@ module .exports = class Application
 
       const exportPath = this .exportPath .get (this .currentFile);
 
-      const menu = electron .Menu .buildFromTemplate ([
+      const menu = electron .Menu .buildFromTemplate (this .filterSeparators ([
          {
             role: "appMenu",
             label: electron .app .getName (),
@@ -730,7 +730,7 @@ module .exports = class Application
                },
             ],
          },
-      ]);
+      ]));
 
       this .mainMenu [0] = menu;
 
@@ -834,6 +834,12 @@ module .exports = class Application
 
       if (filtered .at (-1) ?.type === "separator")
          filtered .pop ();
+
+      for (const menuItem of filtered)
+      {
+         if (menuItem .submenu)
+            menuItem .submenu = this .filterSeparators (menuItem .submenu);
+      }
 
       return filtered;
    }
