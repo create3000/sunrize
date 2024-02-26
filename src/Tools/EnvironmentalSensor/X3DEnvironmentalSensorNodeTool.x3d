@@ -109,10 +109,5 @@ function set_color ()
         </Script>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='X3DEnvironmentalSensorNodeTool'>
-      <fieldValue name='selected' value='true'/>
-      <fieldValue name='group' value=''/>
-      <fieldValue name='size' value='3 3 3'/>
-    </ProtoInstance>
   </Scene>
 </X3D>

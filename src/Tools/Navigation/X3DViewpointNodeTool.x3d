@@ -199,8 +199,5 @@ function set_selected ()
         <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='_1' toField='set_rotation'/>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='X3DViewpointNodeTool'>
-      <fieldValue name='bound' value='true'/>
-    </ProtoInstance>
   </Scene>
 </X3D>

@@ -148,9 +148,5 @@ function set_snapped (value, time)
         </Script>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='SnapTool' DEF='_6'>
-      <fieldValue name='normal' value='0 1 0'/>
-    </ProtoInstance>
-    <EXPORT localDEF='_6' AS='Tool'/>
   </Scene>
 </X3D>

@@ -451,19 +451,5 @@ function set_perspective ()
         <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='ToolScript' toField='set_rotation'/>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='X3DTextureProjectorNodeTool'>
-      <fieldValue name='selected' value='true'/>
-      <fieldValue name='on' value='true'/>
-      <fieldValue name='perspectiveFieldOfView' value='0.78'/>
-      <fieldValue name='perspectiveNearDistance' value='1'/>
-      <fieldValue name='perspectiveFarDistance' value='10'/>
-      <fieldValue name='perspectiveAspectRatio' value='1'/>
-      <fieldValue name='texture'>
-        <PixelTexture
-            image='2 2 3
-              0xff0000 0xff00
-              0xff 0xff00ff'/>
-      </fieldValue>
-    </ProtoInstance>
   </Scene>
 </X3D>

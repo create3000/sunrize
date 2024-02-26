@@ -738,12 +738,5 @@ function getEllipsoidParams (back, front)
         <ROUTE fromNode='MinFrontTool' fromField='translation_changed' toNode='SoundScript' toField='set_minFrontTranslation'/>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='SoundTool'>
-      <fieldValue name='selected' value='true'/>
-      <fieldValue name='minBack' value='1'/>
-      <fieldValue name='minFront' value='1'/>
-      <fieldValue name='maxBack' value='10'/>
-      <fieldValue name='maxFront' value='10'/>
-    </ProtoInstance>
   </Scene>
 </X3D>

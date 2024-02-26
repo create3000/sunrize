@@ -63,8 +63,5 @@
         </Group>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='X3DGeometryNodeTool'>
-      <fieldValue name='group' value=''/>
-    </ProtoInstance>
   </Scene>
 </X3D>

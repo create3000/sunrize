@@ -424,9 +424,5 @@ function eventsProcessed ()
         </Script>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='X3DBoundedObjectTool'>
-      <fieldValue name='bboxDisplay' value='true'/>
-      <fieldValue name='bboxSize' value='2 3 4'/>
-    </ProtoInstance>
   </Scene>
 </X3D>

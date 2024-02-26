@@ -1921,12 +1921,5 @@ function set_bboxCenter ()
         <ROUTE fromNode='ZTranslationSensor' fromField='isActive' toNode='TranslateScript' toField='set_zActive'/>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='X3DTransformNodeTool'>
-      <fieldValue name='group' value=''/>
-      <fieldValue name='undo' value='false'/>
-      <fieldValue name='translation' value='-0.8999743 0 0'/>
-      <fieldValue name='scaleUniform' value='true'/>
-      <fieldValue name='bboxSize' value='2 3 4'/>
-    </ProtoInstance>
   </Scene>
 </X3D>

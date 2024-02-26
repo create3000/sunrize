@@ -57,6 +57,5 @@
         </Group>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='X3DLineGeometryNodeTool'/>
   </Scene>
 </X3D>

@@ -47,6 +47,5 @@
         </Shape>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='X3DPointGeometryNodeTool'/>
   </Scene>
 </X3D>

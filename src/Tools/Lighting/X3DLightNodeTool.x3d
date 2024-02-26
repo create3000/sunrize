@@ -407,8 +407,5 @@ function set_angle ()
         <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='Tool' toField='set_rotation'/>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='X3DLightNodeTool'>
-      <fieldValue name='type' value='2'/>
-    </ProtoInstance>
   </Scene>
 </X3D>
