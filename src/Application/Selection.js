@@ -108,21 +108,21 @@ module .exports = new class Selection extends Interface
       this .nodes = this .nodes .filter (n => n !== node);
    }
 
-   interests = new Map ();
+   #interest = new Map ();
 
    addInterest (key, callback)
    {
-      this .interests .set (key, callback);
+      this .#interest .set (key, callback);
    }
 
    removeInterest (key)
    {
-      this .interests .delete (key);
+      this .#interest .delete (key);
    }
 
    processInterests ()
    {
-      for (const callback of this .interests .values ())
-         callback ();
+      for (const callback of this .#interest .values ())
+         callback (this .nodes);
    }
 }

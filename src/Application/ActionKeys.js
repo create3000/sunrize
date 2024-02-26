@@ -19,7 +19,9 @@ module .exports = new class ActionKeys
          : this .Control;
    }
 
-   value = 0;
+   get value () { return this .#value; }
+
+   #value = this .None;
 
    constructor ()
    {
@@ -32,33 +34,33 @@ module .exports = new class ActionKeys
    {
       // console .log (event .key)
 
-      const value = this .value;
+      const value = this .#value;
 
       switch (event .key)
       {
          case "Shift":
          {
-            this .value |= this .Shift;
+            this .#value |= this .Shift;
             break;
          }
          case "Control":
          {
-            this .value |= this .Control;
+            this .#value |= this .Control;
             break;
          }
          case "Alt": // Alt/Option
          {
-            this .value |= this .Alt;
+            this .#value |= this .Alt;
             break;
          }
          case "Meta": // AltGr/Command
          {
-            this .value |= this .AltGraph;
+            this .#value |= this .AltGraph;
             break;
          }
       }
 
-      if (this .value === value)
+      if (this .#value === value)
          return;
 
       this .processInterests ();
@@ -68,33 +70,33 @@ module .exports = new class ActionKeys
    {
       //console .log (event .key)
 
-      const value = this .value;
+      const value = this .#value;
 
       switch (event .key)
       {
          case "Shift":
          {
-            this .value &= ~this .Shift;
+            this .#value &= ~this .Shift;
             break;
          }
          case "Control":
          {
-            this .value &= ~this .Control;
+            this .#value &= ~this .Control;
             break;
          }
          case "Alt": // Alt/Option
          {
-            this .value &= ~this .Alt;
+            this .#value &= ~this .Alt;
             break;
          }
          case "Meta": // AltGr/Command
          {
-            this .value &= ~this .AltGraph;
+            this .#value &= ~this .AltGraph;
             break;
          }
       }
 
-      if (this .value === value)
+      if (this .#value === value)
          return;
 
       this .processInterests ();
@@ -115,6 +117,6 @@ module .exports = new class ActionKeys
    processInterests ()
    {
       for (const callback of this .#interests .values ())
-         callback (this .value);
+         callback (this .#value);
    }
 }
