@@ -185,21 +185,21 @@ module .exports = class UndoManager
       this .deferFunctions .set (key, deferFunction);
    }
 
-   interests = new Map ();
+   #interest = new Map ();
 
    addInterest (key, callback)
    {
-      this .interests .set (key, callback);
+      this .#interest .set (key, callback);
    }
 
    removeInterest (key)
    {
-      this .interests .delete (key);
+      this .#interest .delete (key);
    }
 
    processInterests ()
    {
-      for (const callback of this .interests .values ())
+      for (const callback of this .#interest .values ())
          callback ();
    }
 };

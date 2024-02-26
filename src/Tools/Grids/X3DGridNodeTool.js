@@ -14,8 +14,6 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
    constructor (executionContext)
    {
       super (executionContext);
-
-      this .keys = new ActionKeys (`X3DGridNodeTool${this .getId ()}`);
    }
 
    async initializeTool (... args)
@@ -25,18 +23,9 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
       this .tool .getField ("translation") .setUnit ("length");
    }
 
-   disposeTool ()
-   {
-      this .keys .dispose ();
-
-      super .disposeTool ();
-   }
-
    connectTool ()
    {
       super .connectTool ();
-
-      this .keys .connect ();
 
       X3DGridNodeTool .addToolInterest (this, () => this .set_transform_tools ());
 
@@ -45,8 +34,6 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 
    disconnectTool ()
    {
-      this .keys .disconnect ();
-
       X3DGridNodeTool .removeToolInterest (this);
 
       super .disconnectTool ();
@@ -90,7 +77,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
       if (!this ._visible .getValue ())
          return;
 
-      if (this .keys .value === (ActionKeys .Shift | ActionKeys .Control))
+      if (ActionKeys .value === (ActionKeys .Shift | ActionKeys .Control))
          return;
 
       if (!this .tool .snapping)

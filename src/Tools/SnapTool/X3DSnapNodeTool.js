@@ -11,30 +11,14 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
    toolModifiers       = ActionKeys .None;
    toolPointingEnabled = false;
 
-   constructor (executionContext)
-   {
-      super (executionContext);
-
-      this .keys = new ActionKeys (`X3DGridNodeTool${this .getId ()}`);
-   }
-
    async initializeTool ()
    {
       await super .initializeTool (__dirname, "SnapTool.x3d");
    }
 
-   disposeTool ()
-   {
-      this .keys .dispose ();
-
-      super .disposeTool ();
-   }
-
    connectTool ()
    {
       super .connectTool ();
-
-      this .keys .connect ();
 
       X3DSnapNodeTool .addToolInterest (this, () => this .set_transform_tools ());
 
@@ -47,8 +31,6 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
 
    disconnectTool ()
    {
-      this .keys .disconnect ();
-
       X3DSnapNodeTool .removeToolInterest (this);
 
       $(this .getBrowser () .element .shadowRoot) .find ("canvas") .off (`.X3DSnapNodeTool${this .getId ()}`);
@@ -65,10 +47,10 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
       if ($("#secondary-toolbar .hand") .hasClass ("active"))
          return;
 
-      if (this .keys .value !== this .toolModifiers && !show)
+      if (ActionKeys .value !== this .toolModifiers && !show)
          return;
 
-      if (this .keys .value & ActionKeys .Control)
+      if (ActionKeys .value & ActionKeys .Control)
          event .button = 2;
 
       if (event .button !== 2 && !show)

@@ -18,9 +18,9 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
       X3DTransformNodeTool .#transformTools .add (this);
 
-      this .getBrowser () .displayEvents () .addInterest ("reshapeTool", this);
+      ActionKeys .addInterest (this, this .set_keys .bind (this));
 
-      this .keys = new ActionKeys (`X3DTransformNodeTool${this .getId ()}`, this .set_keys .bind (this));
+      this .getBrowser () .displayEvents () .addInterest ("reshapeTool", this);
 
       this .node .addInterest ("transformGroups", this);
 
@@ -39,9 +39,9 @@ class X3DTransformNodeTool extends X3DChildNodeTool
    {
       X3DTransformNodeTool .#transformTools .delete (this);
 
-      this .getBrowser () .displayEvents () .removeInterest ("reshapeTool", this);
+      ActionKeys .removeInterest (this);
 
-      this .keys ?.dispose ();
+      this .getBrowser () .displayEvents () .removeInterest ("reshapeTool", this);
 
       this .node .removeInterest ("transformGroups", this);
 

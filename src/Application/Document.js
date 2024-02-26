@@ -12,8 +12,7 @@ const
    Dashboard          = require ("./Dashboard"),
    Footer             = require ("./Footer"),
    Sidebar            = require ("./Sidebar"),
-   ActionKeys         = require("./ActionKeys"),
-   Traverse           = require ("./Traverse"),
+   ActionKeys         = require ("./ActionKeys"),
    Editor             = require ("../Undo/Editor"),
    UndoManager        = require ("../Undo/UndoManager"),
    _                  = require ("./GetText");
@@ -31,7 +30,6 @@ module .exports = class Document extends Interface
       this .secondaryToolbar   = new Dashboard ($("#secondary-toolbar"));
       this .footer             = new Footer ($("#footer"));
       this .sidebar            = new Sidebar ($("#sidebar"));
-      this .keys               = new ActionKeys ();
    }
 
    /**
@@ -246,7 +244,7 @@ module .exports = class Document extends Interface
             if (this .activeElementIsInputOrOutput ())
                break;
 
-            if (this .keys .value === ActionKeys .CommandOrControl)
+            if (ActionKeys .value === ActionKeys .CommandOrControl)
             {
                this .selectAll ();
                return false;
@@ -823,13 +821,13 @@ Viewpoint {
       if (process .env .SUNRISE_ENVIRONMENT !== "DEVELOPMENT")
          return;
 
-      if (this .keys .value & ActionKeys .Control)
+      if (ActionKeys .value & ActionKeys .Control)
          event .button = 2;
 
       if (event .button !== 2)
          return;
 
-      switch (this .keys .value)
+      switch (ActionKeys .value)
       {
          case ActionKeys .None:
          case ActionKeys .Control:
@@ -862,7 +860,7 @@ Viewpoint {
 
    async onmouseup (event)
    {
-      if (this .keys .value & ActionKeys .Control)
+      if (ActionKeys .value & ActionKeys .Control)
          event .button = 2;
 
       if (event .button !== 2)

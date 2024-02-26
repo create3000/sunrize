@@ -27,7 +27,6 @@ module .exports = class OutlineView extends Interface
 
       this .outlineEditor     = element;
       this .objects           = new Map (); // <id, node>
-      this .actionKeys        = new ActionKeys ("OutlineView");
       this .onDemandToolNodes = new Set ();
 
       this .config .global .setDefaultValues ({
@@ -2579,7 +2578,7 @@ module .exports = class OutlineView extends Interface
 
       if (!element .data ("auto-expand"))
       {
-         if (this .actionKeys .value === ActionKeys .Shift)
+         if (ActionKeys .value === ActionKeys .Shift)
             full = !full;
       }
 
@@ -2633,7 +2632,7 @@ module .exports = class OutlineView extends Interface
 
          if (!element .data ("auto-expand"))
          {
-            if (this .actionKeys .value === ActionKeys .Shift)
+            if (ActionKeys .value === ActionKeys .Shift)
                full = !full;
          }
 
@@ -2714,7 +2713,7 @@ module .exports = class OutlineView extends Interface
    {
       this .removeSubtree (element);
 
-      if (this .actionKeys .value === ActionKeys .Shift)
+      if (ActionKeys .value === ActionKeys .Shift)
          element .jstree ("open_node", element);
 
       this .requestUpdateRouteGraph ();

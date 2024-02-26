@@ -2,44 +2,27 @@
 
 const $ = require ("jquery");
 
-module .exports = class ActionKeys
+module .exports = new class ActionKeys
 {
-   static None     = 0;
-   static Shift    = 0b0001;
-   static Control  = 0b0010;
-   static Alt      = 0b0100;
-   static Option   = 0b0100;
-   static AltGraph = 0b1000;
-   static Command  = 0b1000;
+   None     = 0;
+   Shift    = 0b0001;
+   Control  = 0b0010;
+   Alt      = 0b0100;
+   Option   = 0b0100;
+   AltGraph = 0b1000;
+   Command  = 0b1000;
 
-   static CommandOrControl = process .platform === "darwin"
+   CommandOrControl = process .platform === "darwin"
       ? this .Command
       : this .Control;
 
-   constructor (id, callback)
-   {
-      this .id       = id;
-      this .callback = callback;
-      this .value    = 0;
+   value = 0;
 
-      this .connect ();
-   }
-
-   dispose ()
-   {
-      this .disconnect ();
-   }
-
-   connect ()
+   constructor ()
    {
       $(window)
-         .on (`keydown.${this .id}`, this .onkeydown .bind (this))
-         .on (`keyup.${this .id}`,   this .onkeyup   .bind (this));
-   }
-
-   disconnect ()
-   {
-      $(window) .off (`.${this .id}`);
+         .on ("keydown", this .onkeydown .bind (this))
+         .on ("keyup",   this .onkeyup   .bind (this));
    }
 
    onkeydown (event)
@@ -52,22 +35,22 @@ module .exports = class ActionKeys
       {
          case "Shift":
          {
-            this .value |= ActionKeys .Shift;
+            this .value |= this .Shift;
             break;
          }
          case "Control":
          {
-            this .value |= ActionKeys .Control;
+            this .value |= this .Control;
             break;
          }
          case "Alt": // Alt/Option
          {
-            this .value |= ActionKeys .Alt;
+            this .value |= this .Alt;
             break;
          }
          case "Meta": // AltGr/Command
          {
-            this .value |= ActionKeys .AltGraph;
+            this .value |= this .AltGraph;
             break;
          }
       }
@@ -75,7 +58,7 @@ module .exports = class ActionKeys
       if (this .value === value)
          return;
 
-      this .callback ?.(this .value);
+      this .processInterests ();
    }
 
    onkeyup (event)
@@ -88,22 +71,22 @@ module .exports = class ActionKeys
       {
          case "Shift":
          {
-            this .value &= ~ActionKeys .Shift;
+            this .value &= ~this .Shift;
             break;
          }
          case "Control":
          {
-            this .value &= ~ActionKeys .Control;
+            this .value &= ~this .Control;
             break;
          }
          case "Alt": // Alt/Option
          {
-            this .value &= ~ActionKeys .Alt;
+            this .value &= ~this .Alt;
             break;
          }
          case "Meta": // AltGr/Command
          {
-            this .value &= ~ActionKeys .AltGraph;
+            this .value &= ~this .AltGraph;
             break;
          }
       }
@@ -111,6 +94,24 @@ module .exports = class ActionKeys
       if (this .value === value)
          return;
 
-      this .callback ?.(this .value);
+      this .processInterests ();
+   }
+
+   #interests = new Map ();
+
+   addInterest (key, callback)
+   {
+      this .#interests .set (key, callback);
+   }
+
+   removeInterest (key)
+   {
+      this .#interests .delete (key);
+   }
+
+   processInterests ()
+   {
+      for (const callback of this .#interests .values ())
+         callback (this .value);
    }
 }
