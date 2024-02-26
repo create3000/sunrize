@@ -4,17 +4,20 @@ const $ = require ("jquery");
 
 module .exports = new class ActionKeys
 {
-   None     = 0;
-   Shift    = 0b0001;
-   Control  = 0b0010;
-   Alt      = 0b0100;
-   Option   = 0b0100;
-   AltGraph = 0b1000;
-   Command  = 0b1000;
+   get None     () { return 0; }
+   get Shift    () { return 0b0001; }
+   get Control  () { return 0b0010; }
+   get Alt      () { return 0b0100; }
+   get Option   () { return 0b0100; }
+   get AltGraph () { return 0b1000; }
+   get Command  () { return 0b1000; }
 
-   CommandOrControl = process .platform === "darwin"
-      ? this .Command
-      : this .Control;
+   get CommandOrControl ()
+   {
+      return process .platform === "darwin"
+         ? this .Command
+         : this .Control;
+   }
 
    value = 0;
 
