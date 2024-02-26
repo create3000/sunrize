@@ -711,17 +711,13 @@ module .exports = class Application
                },
             ],
          },
-         process .platform === "darwin" ?
-         {
+         ... process .platform === "darwin" ?
+         [{
             role: "window",
             submenu: [ ],
-         }
+         }]
          :
-         {
-            label: "Window",
-            enabled: false,
-            visible: false,
-         },
+         [],
          {
             role: "help",
             submenu: [
