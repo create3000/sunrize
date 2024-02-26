@@ -23,7 +23,6 @@ precision highp float;
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 uniform mat3 x3d_NormalMatrix;
-uniform mat4 x3d_TextureMatrix [x3d_MaxTextures];
 
 in vec4 x3d_Vertex;
 in vec3 x3d_Normal;

@@ -8,13 +8,13 @@
     <component name='Layering' level='1'/>
     <component name='Layout' level='2'/>
     <component name='Sound' level='3'/>
-    <component name='TextureProjector' level='2'/>
+    <component name='TextureProjection' level='2'/>
     <meta name='created' content='Fri, 11 Aug 2023 21:33:17 GMT'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.0.91, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.5.12, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/tests/Tools.x3d'/>
-    <meta name='modified' content='Wed, 16 Aug 2023 20:36:08 GMT'/>
+    <meta name='modified' content='Mon, 26 Feb 2024 10:47:51 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='Test'>
@@ -93,8 +93,6 @@
       </TextureProjector>
       <TextureProjectorParallel
           location='0 -1 0'
-          direction='1 1 1'
-          upVector='0 1 0'
           nearDistance='1'
           farDistance='10'>
         <PixelTexture USE='_1'/>

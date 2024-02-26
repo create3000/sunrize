@@ -14,7 +14,7 @@ class TextureProjectorParallelTool extends X3DTextureProjectorNodeTool
 
       this .node ._aspectRatio .addFieldInterest (this .tool .getField ("parallelAspectRatio"));
 
-      this .tool .perspectiveAspectRatio = this .node ._aspectRatio;
+      this .tool .parallelAspectRatio = this .node ._aspectRatio;
    }
 
    disposeTool ()

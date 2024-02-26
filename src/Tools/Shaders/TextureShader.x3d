@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Shaders' level='1'/>
+    <meta name='comment' content='Rise and Shine'/>
+    <meta name='created' content='Sun, 03 Aug 2014 14:00:40 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.0.11, https://create3000.github.io/sunrize/'/>
+    <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Shaders/TextureShader.x3d'/>
+    <meta name='modified' content='Thu, 16 Mar 2023 12:32:57 GMT'/>
+  </head>
+  <Scene>
+    <ProtoDeclare name='TextureShader'>
+      <ProtoBody>
+        <ComposedShader DEF='TextureShader'
+            language='GLSL'>
+          <ShaderPart DEF='TextureVertexShader'>
+<![CDATA[data:text/plain,#version 300 es
+
+precision highp float;
+
+uniform mat4 x3d_ProjectionMatrix;
+uniform mat4 x3d_ModelViewMatrix;
+uniform mat4 x3d_TextureMatrix [1];
+
+in vec4 x3d_Vertex;
+in vec4 x3d_TexCoord0;
+
+out vec4 texCoord;
+
+void
+main ()
+{
+   texCoord = x3d_TextureMatrix [0] * x3d_TexCoord0;
+
+   gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * x3d_Vertex;
+}
+]]>
+          </ShaderPart>
+          <ShaderPart DEF='TextureFragmentShader'
+              type='FRAGMENT'>
+<![CDATA[data:text/plain,#version 300 es
+
+precision highp float;
+
+uniform x3d_UnlitMaterialParameters x3d_Material;
+uniform sampler2D x3d_Texture2D [1];
+
+in vec4 texCoord;
+
+out vec4 x3d_FragColor;
+
+void
+main ()
+{
+   x3d_FragColor     = texture (x3d_Texture2D [0], texCoord .st / texCoord .q);
+   x3d_FragColor .a *= 1.0 - x3d_Material .transparency;
+}
+]]>
+          </ShaderPart>
+        </ComposedShader>
+      </ProtoBody>
+    </ProtoDeclare>
+  </Scene>
+</X3D>

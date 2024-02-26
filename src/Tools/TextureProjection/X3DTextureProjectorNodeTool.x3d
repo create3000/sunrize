@@ -8,12 +8,14 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 01 Aug 2014 17:41:58 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.1.9, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.5.12, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/TextureProjector/X3DTextureProjectorNodeTool.x3d'/>
-    <meta name='modified' content='Thu, 23 Nov 2023 02:13:42 GMT'/>
+    <meta name='modified' content='Mon, 26 Feb 2024 10:45:27 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
+    </ExternProtoDeclare>
+    <ExternProtoDeclare name='TextureShader' url='"../Shaders/TextureShader.x3d"'>
     </ExternProtoDeclare>
     <ExternProtoDeclare name='BooleanSwitch' url='"../Grouping/BooleanSwitch.x3d"'>
       <field accessType='inputOutput' type='SFBool' name='whichChoice'/>
@@ -60,7 +62,7 @@
                     rotation='1 0 0 90'>
                   <Shape
                       castShadow='false'>
-                    <Appearance DEF='_1'>
+                    <Appearance DEF='_9'>
                       <Material DEF='_2'
                           diffuseColor='0.2705882 0.2705882 0.2705882'
                           specularColor='0.8627451 0.8588235 0.8588235'/>
@@ -76,7 +78,7 @@
                 <Transform DEF='Box_1'>
                   <Shape
                       castShadow='false'>
-                    <Appearance USE='_1'/>
+                    <Appearance USE='_9'/>
                     <Box
                         size='40 20 30'/>
                   </Shape>
@@ -133,13 +135,13 @@
               </ProtoInstance>
               <Shape DEF='Image'
                   castShadow='false'>
-                <Appearance>
-                  <UnlitMaterial DEF='_8'
-                      transparency='0.75'>
-                    <IS>
-                      <connect nodeField='emissiveTexture' protoField='texture'/>
-                    </IS>
-                  </UnlitMaterial>
+                <Appearance DEF='_10'>
+                  <IS>
+                    <connect nodeField='texture' protoField='texture'/>
+                  </IS>
+                  <UnlitMaterial
+                      transparency='0.75'/>
+                  <ProtoInstance name='TextureShader' containerField='shaders'/>
                 </Appearance>
                 <IndexedFaceSet
                     solid='false'
@@ -188,8 +190,8 @@
           <field accessType='initializeOnly' type='SFNode' name='frustumMaterial'>
             <Material USE='_2'/>
           </field>
-          <field accessType='initializeOnly' type='SFNode' name='textureMaterial'>
-            <UnlitMaterial USE='_8'/>
+          <field accessType='initializeOnly' type='SFNode' name='textureAppearance'>
+            <Appearance USE='_10'/>
           </field>
           <field accessType='inputOutput' type='SFNode' name='transform'>
             <Transform USE='TransformTool'/>
@@ -214,7 +216,7 @@
 
 async function initialize ()
 {
-   textureMaterial .getValue () .collectCloneCount = () => 0;
+   textureAppearance .getValue () .collectCloneCount = () => 0;
 
    const tool = await transform .getValue () .addTool () .getToolInstance ();
 
@@ -318,7 +320,7 @@ function set_parallel ()
 {
   const
     nearDistance = parallelNearDistance === -1 ? 0.125 : parallelNearDistance,
-    farDistance  = parallelFarDistance === -1 ? 100_000 : parallelFarDistance;
+    farDistance  = parallelFarDistance  === -1 ? 100_000 : parallelFarDistance;
 
    const
       fov    = parallelFieldOfView,
