@@ -50,9 +50,6 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
       if (ActionKeys .value !== this .toolModifiers && !show)
          return;
 
-      if (ActionKeys .value & ActionKeys .Control)
-         event .button = 2;
-
       if (event .button !== 2 && !show)
          return;
 

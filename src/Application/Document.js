@@ -821,16 +821,12 @@ Viewpoint {
       if (process .env .SUNRISE_ENVIRONMENT !== "DEVELOPMENT")
          return;
 
-      if (ActionKeys .value & ActionKeys .Control)
-         event .button = 2;
-
       if (event .button !== 2)
          return;
 
       switch (ActionKeys .value)
       {
          case ActionKeys .None:
-         case ActionKeys .Control:
          {
             if (this .#snapTarget ?._visible .getValue ())
                break;
@@ -843,7 +839,6 @@ Viewpoint {
             break;
          }
          case ActionKeys .Option:
-         case ActionKeys .Option | ActionKeys .Control:
          {
             if (this .#snapSource ?._visible .getValue ())
                break;

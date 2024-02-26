@@ -4,24 +4,19 @@ const $ = require ("jquery");
 
 module .exports = new class ActionKeys
 {
-   get None     () { return 0; }
-   get Shift    () { return 0b0001; }
-   get Control  () { return 0b0010; }
-   get Alt      () { return 0b0100; }
-   get Option   () { return 0b0100; }
-   get AltGraph () { return 0b1000; }
-   get Command  () { return 0b1000; }
+   None     = 0;
+   Shift    = 0b0001;
+   Control  = 0b0010;
+   Alt      = 0b0100;
+   Option   = 0b0100;
+   AltGraph = 0b1000;
+   Command  = 0b1000;
 
-   get CommandOrControl ()
-   {
-      return process .platform === "darwin"
-         ? this .Command
-         : this .Control;
-   }
+   CommandOrControl = process .platform === "darwin"
+      ? this .Command
+      : this .Control;
 
-   get value () { return this .#value; }
-
-   #value = this .None;
+   value = 0;
 
    constructor ()
    {
@@ -34,33 +29,33 @@ module .exports = new class ActionKeys
    {
       // console .log (event .key)
 
-      const value = this .#value;
+      const value = this .value;
 
       switch (event .key)
       {
          case "Shift":
          {
-            this .#value |= this .Shift;
+            this .value |= this .Shift;
             break;
          }
          case "Control":
          {
-            this .#value |= this .Control;
+            this .value |= this .Control;
             break;
          }
          case "Alt": // Alt/Option
          {
-            this .#value |= this .Alt;
+            this .value |= this .Alt;
             break;
          }
          case "Meta": // AltGr/Command
          {
-            this .#value |= this .AltGraph;
+            this .value |= this .AltGraph;
             break;
          }
       }
 
-      if (this .#value === value)
+      if (this .value === value)
          return;
 
       this .processInterests ();
@@ -70,33 +65,33 @@ module .exports = new class ActionKeys
    {
       //console .log (event .key)
 
-      const value = this .#value;
+      const value = this .value;
 
       switch (event .key)
       {
          case "Shift":
          {
-            this .#value &= ~this .Shift;
+            this .value &= ~this .Shift;
             break;
          }
          case "Control":
          {
-            this .#value &= ~this .Control;
+            this .value &= ~this .Control;
             break;
          }
          case "Alt": // Alt/Option
          {
-            this .#value &= ~this .Alt;
+            this .value &= ~this .Alt;
             break;
          }
          case "Meta": // AltGr/Command
          {
-            this .#value &= ~this .AltGraph;
+            this .value &= ~this .AltGraph;
             break;
          }
       }
 
-      if (this .#value === value)
+      if (this .value === value)
          return;
 
       this .processInterests ();
@@ -117,6 +112,6 @@ module .exports = new class ActionKeys
    processInterests ()
    {
       for (const callback of this .#interests .values ())
-         callback (this .#value);
+         callback (this .value);
    }
 }
