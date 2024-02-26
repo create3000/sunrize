@@ -772,10 +772,10 @@ module .exports = class Application
       window .on ("blur", ()              => this .blur ());
       window .on ("close", (event)        => this .close (event));
 
-      if (this .config .maximized)
+      if (this .config .fullscreen)
+         window .setFullScreen (this .config .fullscreen);
+      else if (this .config .maximized)
          window .maximize ();
-
-      window .setFullScreen (this .config .fullscreen);
 
       await window .loadFile (path .join (__dirname, "../assets/html/application.html"));
 
