@@ -4,13 +4,12 @@
   <head>
     <component name='Layout' level='2'/>
     <component name='Scripting' level='1'/>
-    <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 01 Aug 2014 17:41:58 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.12, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/TextureProjector/X3DTextureProjectorNodeTool.x3d'/>
-    <meta name='modified' content='Mon, 26 Feb 2024 12:40:45 GMT'/>
+    <meta name='modified' content='Mon, 26 Feb 2024 14:04:08 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -59,7 +58,7 @@
                   translation='0 0 -15'>
                 <Transform DEF='Cylinder'
                     translation='0 0 15'
-                    rotation='1 0 0 90'>
+                    rotation='1 0 0 1.5707963267949'>
                   <Shape
                       castShadow='false'>
                     <Appearance DEF='_9'>

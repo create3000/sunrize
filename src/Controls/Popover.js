@@ -1,8 +1,8 @@
-"use strict"
+"use strict";
 
-const $ = require ("jquery")
+const $ = require ("jquery");
 
-require ("qtip2")
+require ("qtip2");
 
 $.fn.popover = function (options)
 {
@@ -22,12 +22,15 @@ $.fn.popover = function (options)
          solo: true,
          delay: 0,
       },
+      hide: {
+         event: "click",
+      },
       events: {
          hide (event, api)
          {
-            api .destroy (true)
+            api .destroy (true);
          },
       },
    },
-   options))
-}
+   options));
+};

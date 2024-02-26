@@ -132,7 +132,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
    const tooltip = this .popover ({
       content: content,
       events: {
-         show: (event, api) =>
+         show (event, api)
          {
             nameInput .validate (Editor .Id, () =>
             {

@@ -1,111 +1,111 @@
-"use strict"
+"use strict";
 
 const
    $           = require ("jquery"),
    DataStorage = require ("../Application/DataStorage"),
    Editor      = require ("../Undo/Editor"),
    UndoManager = require ("../Undo/UndoManager"),
-   _           = require ("../Application/GetText")
+   _           = require ("../Application/GetText");
 
-require ("./Popover")
-require ("../Bits/Validate")
+require ("./Popover");
+require ("../Bits/Validate");
 
 const types = {
    externproto: 0,
    proto: 1,
-}
+};
 
 $.fn.addPrototypePopover = function (executionContext, type)
 {
    // Create config.
 
-   const config = new DataStorage (localStorage, "Sunrize.")
+   const config = new DataStorage (localStorage, "Sunrize.");
 
-   config .setDefaultValues ({ selectedIndex: 1 })
+   config .setDefaultValues ({ selectedIndex: 1 });
 
    // Create content.
 
-   const content = $("<div></div>")
+   const content = $("<div></div>");
 
    const protoMenu = $("<select></select>")
       .append ($("<option></option>") .text ("EXTERNPROTO"))
       .append ($("<option></option>") .text ("PROTO"))
       .prop ("selectedIndex", config .selectedIndex = type ? types [type] : config .selectedIndex)
       .on ("change", () => config .selectedIndex = protoMenu .prop ("selectedIndex"))
-      .appendTo (content)
+      .appendTo (content);
 
    const nameInput = $("<input></input>")
       .attr ("placeholder", _("Enter name"))
-      .appendTo (content)
+      .appendTo (content);
 
    // Create tooltip.
 
    const tooltip = this .popover ({
       content: content,
       events: {
-         show: (event, api) =>
+         show (event, api)
          {
             nameInput .validate (Editor .Id, () =>
             {
-               $ .beep ()
-               nameInput .highlight ()
+               $ .beep ();
+               nameInput .highlight ();
             })
             .on ("keydown.addPrototypePopover", event =>
             {
                if (event .key !== "Enter")
-                  return
+                  return;
 
-               api .toggle (false)
-               event .preventDefault ()
+               api .toggle (false);
+               event .preventDefault ();
 
                if (!nameInput .val () .length)
-                  return
+                  return;
 
                switch (protoMenu .prop ("selectedIndex"))
                {
                   case 0:
                   {
-                     const name = executionContext .getUniqueExternProtoName (nameInput .val ())
+                     const name = executionContext .getUniqueExternProtoName (nameInput .val ());
 
-                     UndoManager .shared .beginUndo (_("Add Extern Proto Declaration »%s«"), name)
+                     UndoManager .shared .beginUndo (_("Add Extern Proto Declaration »%s«"), name);
 
-                     const externproto = Editor .addExternProtoDeclaration (executionContext, name)
+                     const externproto = Editor .addExternProtoDeclaration (executionContext, name);
 
                      if (!executionContext .protos .get (name))
                      {
-                        const available = Editor .getNextAvailableProtoNode (executionContext, externproto)
+                        const available = Editor .getNextAvailableProtoNode (executionContext, externproto);
 
                         if (available)
-                           Editor .replaceProtoNodes (executionContext, available, externproto)
+                           Editor .replaceProtoNodes (executionContext, available, externproto);
                      }
 
-                     UndoManager .shared .endUndo ()
-                     break
+                     UndoManager .shared .endUndo ();
+                     break;
                   }
                   case 1:
                   {
-                     const name = executionContext .getUniqueProtoName (nameInput .val ())
+                     const name = executionContext .getUniqueProtoName (nameInput .val ());
 
-                     UndoManager .shared .beginUndo (_("Add Proto Declaration »%s«"), name)
+                     UndoManager .shared .beginUndo (_("Add Proto Declaration »%s«"), name);
 
                      const
                         proto     = Editor .addProtoDeclaration (executionContext, name),
-                        available = Editor .getNextAvailableProtoNode (executionContext, proto)
+                        available = Editor .getNextAvailableProtoNode (executionContext, proto);
 
                      if (available)
-                        Editor .replaceProtoNodes (executionContext, available, proto)
+                        Editor .replaceProtoNodes (executionContext, available, proto);
 
-                     UndoManager .shared .endUndo ()
-                     break
+                     UndoManager .shared .endUndo ();
+                     break;
                   }
                }
-            })
+            });
 
-            setTimeout (() => nameInput .trigger ("select"), 1)
+            setTimeout (() => nameInput .trigger ("select"), 1);
          },
       },
-   })
+   });
 
-   return this
-}
+   return this;
+};
 
