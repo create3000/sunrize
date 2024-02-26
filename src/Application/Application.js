@@ -765,12 +765,12 @@ module .exports = class Application
       window .setVisibleOnAllWorkspaces (true);
       window .once ("ready-to-show", () => window .show ());
 
-      window .on ("maximize", ()          => this .maximize ());
-      window .on ("unmaximize", ()        => this .unmaximize ());
-      window .on ("enter-full-screen", () => this .enterFullscreen ());
-      window .on ("leave-full-screen", () => this .leaveFullscreen ());
-      window .on ("blur", ()              => this .blur ());
-      window .on ("close", (event)        => this .close (event));
+      window .on ("maximize",          () => this .onmaximize ());
+      window .on ("unmaximize",        () => this .onunmaximize ());
+      window .on ("enter-full-screen", () => this .onenterfullscreen ());
+      window .on ("leave-full-screen", () => this .onleavefullscreen ());
+      window .on ("blur",              () => this .onblur ());
+      window .on ("close",        (event) => this .onclose (event));
 
       if (this .config .fullscreen)
          window .setFullScreen (this .config .fullscreen);
@@ -954,32 +954,33 @@ module .exports = class Application
       return response;
    }
 
-   maximize ()
+   onmaximize ()
    {
       this .config .maximized = true;
    }
 
-   unmaximize ()
+   onunmaximize ()
    {
       this .config .maximized = false;
    }
 
-   enterFullscreen ()
+   onenterfullscreen ()
    {
       this .config .fullscreen = true;
    }
 
-   leaveFullscreen ()
+   onleavefullscreen ()
    {
       this .config .fullscreen = false;
+      this .config .maximized  = false;
    }
 
-   blur ()
+   onblur ()
    {
       this .mainWindow .webContents .send ("save-all-files");
    }
 
-   close (event)
+   onclose (event)
    {
       if (!this .mainWindow .closing)
       {
