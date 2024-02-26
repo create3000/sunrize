@@ -79,7 +79,7 @@ module .exports = class Application
 
    async setup ()
    {
-      electron .app .on ("activate",           (event)           => this .activate ());
+      electron .app .on ("activate",           (event)           => this .onactivate ());
       electron .app .on ("new-window-for-tab", (event)           => this .createWindow ());
       electron .app .on ("open-file",          (event, filePath) => this .openFiles ([url .pathToFileURL (filePath) .href]));
       electron .app .on ("window-all-closed",  (event)           => this .quit ());
@@ -92,7 +92,7 @@ module .exports = class Application
 
       electron .ipcMain .handle ("open-files", async (event, urls) => this .openFiles (urls));
       electron .ipcMain .handle ("file-path",  async (event, options) => await this .showDialog (options));
-      electron .ipcMain .handle ("fullname",  async () => await (await import ("fullname")) .default ());
+      electron .ipcMain .handle ("fullname",   async () => await (await import ("fullname")) .default ());
 
       await electron .app .whenReady ();
       await this .updateMenu ();
@@ -782,7 +782,7 @@ module .exports = class Application
       this .ready = true;
    }
 
-   activate ()
+   onactivate ()
    {
       if (electron .BrowserWindow .getAllWindows () .length)
          this .mainWindow .show ();
