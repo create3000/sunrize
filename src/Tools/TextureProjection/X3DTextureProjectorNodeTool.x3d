@@ -9,7 +9,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.13, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/TextureProjector/X3DTextureProjectorNodeTool.x3d'/>
-    <meta name='modified' content='Tue, 27 Feb 2024 11:50:04 GMT'/>
+    <meta name='modified' content='Tue, 27 Feb 2024 20:00:35 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -294,12 +294,18 @@ function straightenHorizon (orientation, upVector)
    if (Math .abs (localZAxis .dot (upVector)) >= 1)
       return orientation;
 
-   if (Math .abs (vector .dot (localXAxis)) >= 1)
-      return orientation;
+   if (vector .dot (localXAxis) <= -1)
+   {
+      const rotation = new SFRotation (new SFVec3 (0, 0, 1), Math .PI);
 
-   const rotation = new SFRotation (localXAxis, vector);
+      return rotation .multiply (orientation);
+   }
+   else
+   {
+      const rotation = new SFRotation (localXAxis, vector);
 
-   return orientation .multiply (rotation);
+      return orientation .multiply (rotation);
+   }
 }
 
 function set_parallelFieldOfView ()

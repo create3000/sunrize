@@ -240,7 +240,7 @@ class X3DNodeTool extends X3DBaseTool
    handleUndo (active)
    {
       // This function is also called in OutlineEditor beginUndoSetFieldValue and endUndoSetFieldValue.
-      
+
       if (!this .tool .undo)
          return;
 
