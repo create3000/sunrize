@@ -221,6 +221,7 @@
 
 async function initialize ()
 {
+   this .getValue () .collectCloneCount = () => 0;
    textureAppearance .getValue () .collectCloneCount = () => 0;
 
    const tool = await transform .getValue () .addTool () .getToolInstance ();
@@ -465,7 +466,7 @@ function set_texture (value)
          break;
    }
 
-   textureAppearance .shaders = value 
+   textureAppearance .shaders = value
       ? new MFNode (textureShader)
       : new MFNode ();
 }]]>

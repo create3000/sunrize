@@ -137,12 +137,6 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
    transformGroups ()
    {
-      if (!this .tool .isActive)
-         return;
-
-      if (!this .tool .activeTool .match (/^(?:TRANSLATE|ROTATE|SCALE)$/))
-         return;
-
       if (this .isHidden ())
          return;
 
@@ -150,6 +144,12 @@ class X3DTransformNodeTool extends X3DChildNodeTool
          return;
 
       if (this .tool .group === "NONE")
+         return;
+
+      if (!this .tool .activeTool .match (/^(?:TRANSLATE|ROTATE|SCALE)$/))
+         return;
+
+      if (!(this .tool .isActive || this .tool .active))
          return;
 
       const differenceMatrix = this .#initialMatrix .copy ()
