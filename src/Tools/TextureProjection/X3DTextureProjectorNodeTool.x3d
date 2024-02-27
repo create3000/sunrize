@@ -296,7 +296,7 @@ function straightenHorizon (orientation, upVector)
 
    if (vector .dot (localXAxis) <= -1)
    {
-      const rotation = new SFRotation (new SFVec3 (0, 0, 1), Math .PI);
+      const rotation = new SFRotation (new SFVec3f (0, 0, 1), Math .PI);
 
       return rotation .multiply (orientation);
    }
