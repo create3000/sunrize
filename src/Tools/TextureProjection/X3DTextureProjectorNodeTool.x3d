@@ -7,14 +7,15 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 01 Aug 2014 17:41:58 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.5.12, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.5.13, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/TextureProjector/X3DTextureProjectorNodeTool.x3d'/>
-    <meta name='modified' content='Mon, 26 Feb 2024 14:04:08 GMT'/>
+    <meta name='modified' content='Tue, 27 Feb 2024 11:50:04 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
     </ExternProtoDeclare>
     <ExternProtoDeclare name='TextureShader' url='"../Shaders/TextureShader.x3d"'>
+      <field accessType='inputOutput' type='SFBool' name='flipY'/>
     </ExternProtoDeclare>
     <ExternProtoDeclare name='BooleanSwitch' url='"../Grouping/BooleanSwitch.x3d"'>
       <field accessType='inputOutput' type='SFBool' name='whichChoice'/>
@@ -453,6 +454,17 @@ function set_perspective ()
 
 function set_texture (value)
 {
+   switch (value ?.getNodeType () .at (-1))
+   {
+      case X3DConstants .ImageTexture:
+      case X3DConstants .MovieTexture:
+         textureShader .flipY = true;
+         break;
+      case X3DConstants .PixelTexture:
+         textureShader .flipY = false;
+         break;
+   }
+
    textureAppearance .shaders = value 
       ? new MFNode (textureShader)
       : new MFNode ();

@@ -86,6 +86,9 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
       if (!(active || transformTool .tool .isActive))
          return;
 
+      if (!transformTool .tool .activeHandle)
+         return;
+
       switch (transformTool .tool .activeTool)
       {
          case "TRANSLATE":
@@ -173,7 +176,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 		const y = [
          absoluteMatrix .xAxis .copy (),
          absoluteMatrix .yAxis .copy (),
-         absoluteMatrix .zAxis .copy ()
+         absoluteMatrix .zAxis .copy (),
       ]; // Rotation axis, equates to grid normal
 
       const z = [

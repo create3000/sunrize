@@ -6,15 +6,22 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Sun, 03 Aug 2014 14:00:40 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.0.11, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.5.13, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Shaders/TextureShader.x3d'/>
-    <meta name='modified' content='Thu, 16 Mar 2023 12:32:57 GMT'/>
+    <meta name='modified' content='Tue, 27 Feb 2024 11:40:36 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='TextureShader'>
+      <ProtoInterface>
+        <field accessType='inputOutput' type='SFBool' name='flipY'/>
+      </ProtoInterface>
       <ProtoBody>
         <ComposedShader DEF='TextureShader'
             language='GLSL'>
+          <field accessType='inputOutput' type='SFBool' name='flipY'/>
+          <IS>
+            <connect nodeField='flipY' protoField='flipY'/>
+          </IS>
           <ShaderPart DEF='TextureVertexShader'>
 <![CDATA[data:text/plain,#version 300 es
 
@@ -46,6 +53,7 @@ precision highp float;
 
 uniform x3d_UnlitMaterialParameters x3d_Material;
 uniform sampler2D x3d_Texture2D [1];
+uniform bool flipY;
 
 in vec4 texCoord;
 
@@ -54,7 +62,12 @@ out vec4 x3d_FragColor;
 void
 main ()
 {
-   x3d_FragColor     = texture (x3d_Texture2D [0], texCoord .st / texCoord .q);
+   vec2 tc = texCoord .st / texCoord .q;
+
+   if (flipY)
+      tc .t = 1.0 - tc .t;
+
+   x3d_FragColor     = texture (x3d_Texture2D [0], tc);
    x3d_FragColor .a *= 1.0 - x3d_Material .transparency;
 }
 ]]>
