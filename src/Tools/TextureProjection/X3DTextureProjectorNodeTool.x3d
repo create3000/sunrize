@@ -288,7 +288,7 @@ function straightenHorizon (orientation, upVector)
    const
       localXAxis = orientation .multVec (new SFVec3f (-1, 0, 0)),
       localZAxis = orientation .multVec (new SFVec3f (0, 0, 1)),
-      vector     = localZAxis .cross (upVector);
+      vector     = localZAxis .cross (upVector) .normalize ();
 
    // If viewer looks along up vector.
    if (Math .abs (localZAxis .dot (upVector)) >= 1)
