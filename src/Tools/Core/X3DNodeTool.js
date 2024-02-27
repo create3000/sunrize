@@ -373,6 +373,19 @@ class X3DNodeTool extends X3DBaseTool
 
          this .getField (name) .assign (initialValue);
 
+         switch (value .getType ())
+         {
+            case X3D .X3DConstants .SFRotation:
+            case X3D .X3DConstants .SFVec2d:
+            case X3D .X3DConstants .SFVec2f:
+            case X3D .X3DConstants .SFVec3d:
+            case X3D .X3DConstants .SFVec3f:
+            case X3D .X3DConstants .SFVec4d:
+            case X3D .X3DConstants .SFVec4f:
+               Editor .roundToIntegerIfAlmostEqual (value);
+               break;
+         }
+
          Editor .setFieldValue (this .getExecutionContext (), this .node, this .getField (name), value);
       }
 
