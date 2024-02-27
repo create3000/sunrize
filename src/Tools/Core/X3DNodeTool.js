@@ -371,8 +371,6 @@ class X3DNodeTool extends X3DBaseTool
       {
          const value = this .getField (name) .copy ();
 
-         this .getField (name) .assign (initialValue);
-
          switch (value .getType ())
          {
             case X3D .X3DConstants .SFRotation:
@@ -385,6 +383,8 @@ class X3DNodeTool extends X3DBaseTool
                Editor .roundToIntegerIfAlmostEqual (value);
                break;
          }
+
+         this .getField (name) .assign (initialValue);
 
          Editor .setFieldValue (this .getExecutionContext (), this .node, this .getField (name), value);
       }
