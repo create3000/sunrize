@@ -82,19 +82,6 @@ module .exports = class Dashboard extends Interface
          this .togglePanel (this .config .file .panel);
    }
 
-   arrow ()
-   {
-      this .config .file .pointer = "arrow";
-
-      if (this .arrowButton .hasClass ("active"))
-         return;
-
-      this .handButton .removeClass ("active");
-      this .arrowButton .addClass ("active");
-
-      this .browser .addBrowserEvent ();
-   }
-
    hand ()
    {
       this .config .file .pointer = "hand";
@@ -104,6 +91,19 @@ module .exports = class Dashboard extends Interface
 
       this .arrowButton .removeClass ("active");
       this .handButton .addClass ("active");
+
+      this .browser .addBrowserEvent ();
+   }
+
+   arrow ()
+   {
+      this .config .file .pointer = "arrow";
+
+      if (this .arrowButton .hasClass ("active"))
+         return;
+
+      this .handButton .removeClass ("active");
+      this .arrowButton .addClass ("active");
 
       this .browser .addBrowserEvent ();
    }
