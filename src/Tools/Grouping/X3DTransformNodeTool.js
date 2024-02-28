@@ -79,11 +79,6 @@ class X3DTransformNodeTool extends X3DChildNodeTool
    #initialScaleOrientation;
    #initialCenter;
 
-   prepareUndo ()
-   {
-      super .prepareUndo ();
-   }
-
    beginUndo ()
    {
       if (this .isHidden ())
