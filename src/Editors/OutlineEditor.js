@@ -1561,9 +1561,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          case "Cylinder":
          case "Sphere":
          {
-            this .browser .finishedEvents () .addFieldCallback (this, () =>
+            this .browser .finishedEvents () .addFieldCallback (this .#endUndoSetFieldValueSymbol, () =>
             {
-               this .browser .finishedEvents () .removeFieldCallback (this);
+               this .browser .finishedEvents () .removeFieldCallback (this .#endUndoSetFieldValueSymbol);
 
                toolNode .getTransformTool () .transformGroups ();
                toolNode .handleUndo (new X3D .SFBool ());
@@ -1576,9 +1576,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          }
          case "Disk2D":
          {
-            this .browser .finishedEvents () .addFieldCallback (this, () =>
+            this .browser .finishedEvents () .addFieldCallback (this .#endUndoSetFieldValueSymbol, () =>
             {
-               this .browser .finishedEvents () .removeFieldCallback (this);
+               this .browser .finishedEvents () .removeFieldCallback (this .#endUndoSetFieldValueSymbol);
 
                if (field .getName () === "innerRadius")
                   toolNode .getInnerRadiusTransformTool () .transformGroups ();
