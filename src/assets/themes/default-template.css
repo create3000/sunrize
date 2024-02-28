@@ -500,6 +500,14 @@ tr.disabled ~ tr > td > div {
   filter: var(--filter-accent-color);
 }
 
+.image-icon.hand {
+  background-image: url(../images/icons/hand.svg);
+}
+
+.image-icon.arrow {
+  background-image: url(../images/icons/arrow.svg);
+}
+
 .image-icon.straighten {
   background-image: url(../images/icons/straighten.svg);
 }
