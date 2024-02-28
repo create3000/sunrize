@@ -404,10 +404,10 @@ class X3DNodeTool extends X3DBaseTool
       {
          case X3D .TraverseType .POINTER:
          {
-            if (!this .toolPointingEnabled)
-               return;
+            if (this .toolPointingEnabled)
+               break;
 
-            break;
+            return;
          }
       }
 
