@@ -20,6 +20,18 @@ module .exports = class Dashboard extends Interface
 
    async initialize ()
    {
+      this .handButton = $("<span></span>")
+         .addClass (["image-icon", "hand"])
+         .attr ("title", _("Switch to browser mode."))
+         .appendTo (this .toolbar)
+         .on ("click", () => this .hand ());
+
+      this .arrowButton = $("<span></span>")
+         .addClass (["image-icon", "arrow", "active"])
+         .attr ("title", _("Switch to edit mode."))
+         .appendTo (this .toolbar)
+         .on ("click", () => this .arrow ());
+
       this .playButton = $("<span></span>")
          .addClass (["material-icons"])
          .attr ("title", _("Toggle browser update."))
@@ -57,15 +69,43 @@ module .exports = class Dashboard extends Interface
    configure ()
    {
       this .config .file .setDefaultValues ({
+         pointer: "arrow",
          play: false,
          panel: false,
       });
 
+      this [this .config .file .pointer] ();
       this .play (this .config .file .play);
       this .straighten (this .browser .getBrowserOption ("StraightenHorizon"));
 
       if (this .config .file .panel)
          this .togglePanel (this .config .file .panel);
+   }
+
+   hand ()
+   {
+      this .config .file .pointer = "hand";
+
+      if (this .handButton .hasClass ("active"))
+         return;
+
+      this .arrowButton .removeClass ("active");
+      this .handButton .addClass ("active");
+
+      this .browser .addBrowserEvent ();
+   }
+
+   arrow ()
+   {
+      this .config .file .pointer = "arrow";
+
+      if (this .arrowButton .hasClass ("active"))
+         return;
+
+      this .handButton .removeClass ("active");
+      this .arrowButton .addClass ("active");
+
+      this .browser .addBrowserEvent ();
    }
 
    play (value)
