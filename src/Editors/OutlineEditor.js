@@ -1541,6 +1541,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       toolNode .handleUndo (new X3D .SFBool (true));
    }
 
+   #endUndoSetFieldValueSymbol = Symbol ();
+
    endUndoSetFieldValue (node, field)
    {
       const toolNode = node .getTool ?.();
@@ -1608,9 +1610,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             {
                // Sound, X3DEnvironmentalSensorNode, ...
 
-               this .browser .finishedEvents () .addFieldCallback (this, () =>
+               this .browser .finishedEvents () .addFieldCallback (this .#endUndoSetFieldValueSymbol, () =>
                {
-                  this .browser .finishedEvents () .removeFieldCallback (this);
+                  this .browser .finishedEvents () .removeFieldCallback (this .#endUndoSetFieldValueSymbol);
 
                   innerTool .transformGroups ();
                   toolNode .handleUndo (new X3D .SFBool ());
