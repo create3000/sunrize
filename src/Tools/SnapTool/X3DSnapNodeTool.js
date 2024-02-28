@@ -44,9 +44,6 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
 
    onmousedown (event, show = false)
    {
-      if ($("#secondary-toolbar .hand") .hasClass ("active"))
-         return;
-
       if (ActionKeys .value !== this .toolModifiers && !show)
          return;
 
