@@ -1187,7 +1187,7 @@ function set_zTranslation (value)
 
 function translate (value)
 {
-   // Prevent accidentially move.
+   // Prevent accidentally move.
    if (events)
    {
       -- events;
@@ -1305,7 +1305,7 @@ function rotate (value)
 {
    if (events)
    {
-      // Prevent accidentially move.
+      // Prevent accidentally move.
       -- events;
       return;
    }
@@ -1678,7 +1678,7 @@ function scaleTransform (value, centerOffset)
 {
    if (events)
    {
-      // Prevent accidentially move.
+      // Prevent accidentally move.
       -- events;
       return;
    }
