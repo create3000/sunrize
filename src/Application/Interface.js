@@ -14,6 +14,10 @@ require ("../Bits/Beep");
 
 Object .assign ($,
 {
+   sleep (ms)
+   {
+      return new Promise (resolve => setTimeout (resolve, ms));
+   },
    try (callback, logError = false)
    {
       try

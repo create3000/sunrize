@@ -134,28 +134,27 @@ class X3DNodeTool extends X3DBaseTool
       }
       else
       {
-         const promise = new Promise ((resolve, reject) =>
+         const promise = new Promise (async (resolve, reject) =>
          {
-            // Defer loading to use external browser, when tools loaded inside Script nodes.
-            setTimeout (async () =>
+            try
             {
-               try
-               {
-                  const scene = await this .getBrowser () .createX3DFromURL (new X3D .MFString (protoURL));
+               // Defer loading to use external browser, when tools loaded inside Script nodes.
+               await $.sleep (0);
 
-                  scene .setExecutionContext (scene);
-                  scene .setLive (true);
+               const scene = await this .getBrowser () .createX3DFromURL (new X3D .MFString (protoURL));
 
-                  for (const externproto of scene .externprotos)
-                     await externproto .requestImmediateLoad ();
+               scene .setExecutionContext (scene);
+               scene .setLive (true);
 
-                  resolve (scene);
-               }
-               catch (error)
-               {
-                  reject (error);
-               }
-            });
+               for (const externproto of scene .externprotos)
+                  await externproto .requestImmediateLoad ();
+
+               resolve (scene);
+            }
+            catch (error)
+            {
+               reject (error);
+            }
          });
 
          X3DNodeTool .#scenes .set (protoURL .href, promise);
