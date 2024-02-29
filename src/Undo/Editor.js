@@ -195,10 +195,8 @@ module .exports = class Editor
          externprotos   = new Map (Array .from (executionContext .externprotos, p => [p .getName (), p])),
          protos         = new Map (Array .from (executionContext .protos,       p => [p .getName (), p])),
          rootNodes      = executionContext .rootNodes .copy (),
-         tempScene      = browser .createScene (browser .getProfile ("Core")),
-         loadUrlObjects = browser .getBrowserOption ("LoadUrlObjects");
+         tempScene      = browser .createScene (browser .getProfile ("Core"));
 
-      browser .setBrowserOption ("LoadUrlObjects", false);
       scene .setProfile (browser .getProfile ("Full"));
       scene .updateComponent (browser .getComponent ("X_ITE"));
 
@@ -313,8 +311,6 @@ module .exports = class Editor
          for (const objects of [newExternProtos, newProtos, nodes])
             this .rewriteURLs (executionContext, objects, oldWorldURL [0], executionContext .worldURL, new UndoManager ());
       }
-
-      browser .setBrowserOption ("LoadUrlObjects", loadUrlObjects);
 
       // Add exported nodes.
 
