@@ -138,9 +138,6 @@ class X3DNodeTool extends X3DBaseTool
          {
             try
             {
-               // Defer loading to use external browser, when tools loaded inside Script nodes.
-               await $.sleep (0);
-
                const scene = await this .getBrowser () .createX3DFromURL (new X3D .MFString (protoURL));
 
                scene .setExecutionContext (scene);
