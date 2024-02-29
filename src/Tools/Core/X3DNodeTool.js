@@ -134,23 +134,28 @@ class X3DNodeTool extends X3DBaseTool
       }
       else
       {
-         const promise = new Promise (async (resolve, reject) =>
+         const promise = new Promise ((resolve, reject) =>
          {
-            try
+            // Defer loading to use external browser, when tools loaded inside Script nodes.
+            setTimeout (async () =>
             {
-               const scene = await this .getBrowser () .createX3DFromURL (new X3D .MFString (protoURL));
+               try
+               {
+                  const scene = await this .getBrowser () .createX3DFromURL (new X3D .MFString (protoURL));
 
-               scene .setLive (true);
+                  scene .setExecutionContext (scene);
+                  scene .setLive (true);
 
-               for (const externproto of scene .externprotos)
-                  await externproto .requestImmediateLoad ();
+                  for (const externproto of scene .externprotos)
+                     await externproto .requestImmediateLoad ();
 
-               resolve (scene);
-            }
-            catch (error)
-            {
-               reject (error);
-            }
+                  resolve (scene);
+               }
+               catch (error)
+               {
+                  reject (error);
+               }
+            });
          });
 
          X3DNodeTool .#scenes .set (protoURL .href, promise);
@@ -200,6 +205,12 @@ class X3DNodeTool extends X3DBaseTool
       const nodesToDispose = [ ]
 
       Traverse .traverse (this .tool, Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES, node => nodesToDispose .push (node));
+
+      for (const node of nodesToDispose .filter (node => !this .#externalNodes .has (node)))
+      {
+         if (node instanceof X3D .X3DExecutionContext)
+            console .log (node .getId ());
+      }
 
       for (const node of nodesToDispose .filter (node => !this .#externalNodes .has (node)))
          node .dispose ();
