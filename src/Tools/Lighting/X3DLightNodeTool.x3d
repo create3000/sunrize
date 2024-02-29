@@ -234,6 +234,7 @@
           <field accessType='inputOutput' type='SFFloat' name='emissiveStrength' value='0.67'/>
           <field accessType='inputOutput' type='SFFloat' name='intensity'/>
           <field accessType='inputOutput' type='SFVec3f' name='direction'/>
+          <field accessType='initializeOnly' type='SFVec3f' name='upVector' value='0 1 0'/>
           <field accessType='inputOnly' type='SFRotation' name='set_rotation'/>
           <field accessType='inputOutput' type='SFFloat' name='beamWidth'/>
           <field accessType='inputOutput' type='SFFloat' name='cutOffAngle'/>
@@ -338,7 +339,8 @@ function set_direction (value)
 
    changing = true;
 
-   transform .rotation = new SFRotation (new SFVec3f (0, 0, 1), value) .straighten ();
+   transform .rotation = new SFRotation (new SFVec3f (0, 0, 1), value)
+      .straighten (upVector);
 }
 
 function set_rotation (value)
@@ -352,6 +354,7 @@ function set_rotation (value)
    changing = true;
 
    direction = transform .rotation .multVec (new SFVec3f (0, 0, 1));
+   upVector  = transform .rotation .multVec (new SFVec3f (0, 1, 0));
 }
 
 function set_beamWidth ()
