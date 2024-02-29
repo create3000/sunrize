@@ -207,12 +207,6 @@ class X3DNodeTool extends X3DBaseTool
       Traverse .traverse (this .tool, Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES, node => nodesToDispose .push (node));
 
       for (const node of nodesToDispose .filter (node => !this .#externalNodes .has (node)))
-      {
-         if (node instanceof X3D .X3DExecutionContext)
-            console .log (node .getId ());
-      }
-
-      for (const node of nodesToDispose .filter (node => !this .#externalNodes .has (node)))
          node .dispose ();
 
       for (const field of this .#externalNodes .values ())
