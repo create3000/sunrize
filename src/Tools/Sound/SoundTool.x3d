@@ -277,6 +277,7 @@
           <field accessType='inputOutput' type='SFBool' name='selected'/>
           <field accessType='inputOutput' type='SFBool' name='active'/>
           <field accessType='inputOutput' type='SFVec3f' name='direction'/>
+          <field accessType='initializeOnly' type='SFVec3f' name='upVector' value='0 1 0'/>
           <field accessType='inputOnly' type='SFRotation' name='set_rotation'/>
           <field accessType='inputOnly' type='SFTime' name='set_minBackTime'/>
           <field accessType='inputOnly' type='SFBool' name='set_minBackActive'/>
@@ -371,8 +372,8 @@ function set_direction (value)
 
    changing = true;
 
-   transform .rotation = straightenHorizon (new SFRotation (new SFVec3f (0, 0, 1), value),
-                                            new SFVec3f (0, 1, 0));
+   transform .rotation = new SFRotation (new SFVec3f (0, 0, 1), value)
+      .straighten (upVector);
 }
 
 function set_rotation (value)
@@ -386,25 +387,7 @@ function set_rotation (value)
    changing = true;
 
    direction = transform .rotation .multVec (new SFVec3f (0, 0, 1));
-}
-
-function straightenHorizon (orientation, upVector)
-{
-   const
-      localXAxis = orientation .multVec (new SFVec3f (-1, 0, 0)),
-      localZAxis = orientation .multVec (new SFVec3f (0, 0, 1)),
-      vector     = localZAxis .cross (upVector);
-
-   // If viewer looks along the up vector.
-   if (Math .abs (localZAxis .dot (upVector)) >= 1)
-      return orientation;
-
-   if (Math .abs (vector .dot (localXAxis)) >= 1)
-      return orientation;
-
-   const rotation = new SFRotation (localXAxis, vector);
-
-   return orientation .multiply (rotation);
+   upVector  = transform .rotation .multVec (new SFVec3f (0, 1, 0));
 }
 
 // minBack
