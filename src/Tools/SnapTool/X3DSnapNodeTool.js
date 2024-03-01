@@ -33,7 +33,8 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
    {
       X3DSnapNodeTool .removeToolInterest (this);
 
-      $(this .getBrowser () .element .shadowRoot) .find ("canvas") .off (`.X3DSnapNodeTool${this .getId ()}`);
+      $(this .getBrowser () .element .shadowRoot) .find ("canvas")
+         .off (`.X3DSnapNodeTool${this .getId ()}`);
 
       super .disconnectTool ();
    }
