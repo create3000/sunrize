@@ -434,7 +434,7 @@ function initialize ()
 
 function set_field (value, time)
 {
-   console .log (time, value);
+   print (time, value);
 }
 "
 }
