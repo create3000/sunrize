@@ -19,8 +19,6 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
    {
       super .connectTool ();
 
-      console .log ("connect")
-
       $(this .getBrowser () .element .shadowRoot) .find ("canvas")
          .on (`mousedown.X3DSnapNodeTool${this .getId ()}`, event => this .onmousedown (event))
          .on (`mouseup.X3DSnapNodeTool${this .getId ()}`,   event => this .onmouseup   (event));
