@@ -10,11 +10,6 @@ class SnapTarget extends X3DSnapNodeTool
    #transformTools = [ ];
    #changing       = Symbol ();
 
-   constructor (executionContext)
-   {
-      super (executionContext);
-   }
-
    async initializeTool ()
    {
       await super .initializeTool ();

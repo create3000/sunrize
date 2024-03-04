@@ -8,11 +8,6 @@ class SnapSource extends X3DSnapNodeTool
 {
    toolModifiers = ActionKeys .Option;
 
-   constructor (executionContext)
-   {
-      super (executionContext);
-   }
-
    async initializeTool ()
    {
       await super .initializeTool ();
