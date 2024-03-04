@@ -81,13 +81,75 @@ class SnapTarget extends X3DSnapNodeTool
       }
    }
 
+   static #axes = [
+      new X3D .Vector3 (0, 0, 0),
+      new X3D .Vector3 (0, 0, 0),
+      new X3D .Vector3 (0, 0, 0),
+   ];
+
+   static #normals = [
+      new X3D .Vector3 (0, 0, 0),
+      new X3D .Vector3 (0, 0, 0),
+      new X3D .Vector3 (0, 0, 0),
+   ];
+
    set_translation (transformTool)
    {
-      // if (transformTool .getUserData (this .#changing))
-      // {
-      //    transformTool .setUserData (this .#changing, false);
-      //    return;
-      // }
+      if (transformTool .getUserData (this .#changing))
+      {
+         transformTool .setUserData (this .#changing, false);
+         return;
+      }
+
+		// Get absolute position.
+
+		const
+         dynamicSnapDistance = this .getDynamicSnapDistance (),
+		   absolutePosition    = this .getModelMatrix () .multVecMatrix (this .tool .position .getValue () .copy ()),
+		   absoluteMatrix      = transformTool .getCurrentMatrix () .multRight (transformTool .getModelMatrix ()),
+		   bbox                = transformTool .getSubBBox (new X3D .Box3 ()) .multRight (absoluteMatrix),
+		   center              = (this .tool .snapToCenter && !transformTool .tool .keepCenter) ? absoluteMatrix .multVecMatrix (transformTool ._center .getValue () .copy ()) : bbox .center .copy (),
+		   axes                = bbox .getAxes (SnapTarget .#axes),
+		   normals             = bbox .getNormals (SnapTarget .#normals);
+
+		// Determine snap translation.
+
+		const
+         xCenters = [center, bbox .center .copy () .add (axes [0]), bbox .center .copy () .subtract (axes [0])],
+		   xAxes    = [axes [0], axes [0], axes [0] .copy () .negate ()],
+		   xNormals = [normals [0], normals [0], normals [0] .copy () .negate ()];
+
+		const
+         yCenters = [center, bbox .center .copy () .add (axes [1]), bbox .center .copy () .subtract (axes [1])],
+		   yAxes    = [axes [1], axes [1], axes [1] .copy () .negate ()],
+		   yNormals = [normals [1], normals [1], normals [1] .copy () .negate ()];
+
+		const
+         zCenters = [center, bbox .center .copy () .add (axes [2]), bbox .center .copy () .subtract (axes [2])],
+		   zAxes    = [axes [2], axes [2], axes [2] .copy () .negate ()],
+		   zNormals = [normals [2], normals [2], normals [2] .copy () .negate ()];
+
+		const snapTranslation = this .getSnapTranslation (absolutePosition, xCenters, xAxes, xNormals, dynamicSnapDistance)
+		   .add (this .getSnapTranslation (absolutePosition, yCenters, yAxes, yNormals, dynamicSnapDistance))
+		   .add (this .getSnapTranslation (absolutePosition, zCenters, zAxes, zNormals, dynamicSnapDistance));
+
+		this .tool .snapped = snapTranslation .magnitude () > 0.0001;
+
+		if (snapTranslation .equals (X3D .Vector3 .Zero))
+			return;
+
+		// Snap.
+
+		const
+         snapMatrix    = new X3D .Matrix4 () .set (snapTranslation),
+		   currentMatrix = absoluteMatrix .multRight (snapMatrix) .multRight (transformTool .getModelMatrix () .copy () .inverse ());
+
+      transformTool .setUserData (this .#changing, true);
+
+		if (transformTool .tool .keepCenter)
+         transformTool .setMatrixKeepCenter (currentMatrix);
+		else
+         transformTool .setMatrixWithCenter (currentMatrix);
    }
 
    set_rotation (transformTool)
@@ -106,6 +168,47 @@ class SnapTarget extends X3DSnapNodeTool
       //    transformTool .setUserData (this .#changing, false);
       //    return;
       // }
+   }
+
+   getSnapTranslation (position, centers, axes, normals, snapDistance)
+   {
+      // Return first successful snap translation.
+
+      for (let i = 0; i < 3; ++ i)
+      {
+         const
+            center        = centers [i],
+            axis          = axes [i],
+            normal        = normals [i],
+            positionPlane = new X3D .Plane3 (position, normal),
+            axisLine      = new X3D .Line3 (center, axis .magnitude () > 0 ? axis .normalize () : normal),
+            intersection  = new X3D .Vector3 (0, 0, 0),
+            intersected   = positionPlane .intersectsLine (axisLine, intersection);
+
+         if (!intersected)
+            continue;
+
+         const translation = intersection .subtract (center);
+
+         if (translation .magnitude () > snapDistance)
+            continue;
+
+         return translation;
+      }
+
+      return new X3D .Vector3 (0, 0, 0);
+   }
+
+   getDynamicSnapDistance ()
+   {
+      const
+         executionContext    = this .tool .getValue () .getBody (),
+		   sphereNode          = executionContext .getNamedNode ("Sphere") .getValue (),
+		   vectorNode          = executionContext .getNamedNode ("Vector") .getValue (),
+		   bbox                = sphereNode .getBBox (new X3D .Box3 ()) .multRight (vectorNode .getMatrix ()) .multRight (this .getModelMatrix ()),
+		   dynamicSnapDistance = Math .max (... bbox .size) / 2;
+
+		return dynamicSnapDistance;
    }
 }
 

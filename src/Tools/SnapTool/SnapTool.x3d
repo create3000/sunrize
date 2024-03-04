@@ -7,9 +7,9 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Mon, 12 Oct 2015 11:18:05 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.5.5, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.5.14, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/SnapTool.x3dv'/>
-    <meta name='modified' content='Wed, 21 Feb 2024 12:13:47 GMT'/>
+    <meta name='modified' content='Mon, 04 Mar 2024 16:38:58 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -26,7 +26,7 @@
           <IS>
             <connect nodeField='translation' protoField='position'/>
           </IS>
-          <ScreenGroup DEF='Vector_2'>
+          <ScreenGroup DEF='Vector'>
             <Transform
                 rotation='1 0 0 1.5708'>
               <Transform DEF='Cone'

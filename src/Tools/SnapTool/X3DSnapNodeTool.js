@@ -61,6 +61,8 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
    {
       $(this .getBrowser () .element .shadowRoot) .find ("canvas")
          .off (`mousemove.X3DSnapNodeTool${this .getId ()}`);
+
+      this .tool .snapped = false;
    }
 
    onmousemove (event)
