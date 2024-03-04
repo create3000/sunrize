@@ -350,7 +350,8 @@ class SnapTarget extends X3DSnapNodeTool
          absolutePosition    = this .getModelMatrix () .multVecMatrix (this .tool .position .getValue () .copy ()),
          absoluteMatrix      = transformTool .getCurrentMatrix () .multRight (transformTool .getModelMatrix ()),
          subBBox             = transformTool .getSubBBox (new X3D .Box3 ()),
-         bbox                = subBBox .copy () .multRight (absoluteMatrix),
+         subAABBox           = new X3D .Box3 (subBBox .size, subBBox .center),
+         bbox                = subAABBox .copy () .multRight (absoluteMatrix),
          axes                = bbox .getAxes (SnapTarget .#axes),
          normals             = bbox .getNormals (SnapTarget .#normals);
 
@@ -389,7 +390,7 @@ class SnapTarget extends X3DSnapNodeTool
          snapScale        = this .getConnectedAxes (transformTool, axis, snapScale);
 
          const
-            center     = subBBox .center,
+            center     = subAABBox .center,
             snapMatrix = new X3D .Matrix4 () .set (null, null, snapScale, null, center);
 
          snapMatrix .multRight (transformTool .getCurrentMatrix ());
@@ -408,7 +409,7 @@ class SnapTarget extends X3DSnapNodeTool
             aNormals        = [normals [axis] .copy () .multiply (sgn)],
             snapTranslation = this .getSnapTranslation (absolutePosition, aCenters, aAxes, aNormals, dynamicSnapDistance);
 
-         this .tool .snapped = snapTranslation .magnitude () > 0;
+         this .tool .snapped = snapTranslation .magnitude () > 0.0001;
 
          if (snapTranslation .equals (X3D .Vector3 .Zero))
             return undefined;
@@ -430,8 +431,8 @@ class SnapTarget extends X3DSnapNodeTool
          snapScale        = this .getConnectedAxes (transformTool, axis, snapScale);
 
          const
-            subAxes    = subBBox .getAxes (SnapTarget .#axes),
-            center     = subAxes [axis] .multiply (-sgn) .add (subBBox .center),
+            subAxes    = subAABBox .getAxes (SnapTarget .#axes),
+            center     = subAxes [axis] .multiply (-sgn) .add (subAABBox .center),
             snapMatrix = new X3D .Matrix4 () .set (null, null, snapScale, null, center);
 
          snapMatrix .multRight (transformTool .getCurrentMatrix ());
