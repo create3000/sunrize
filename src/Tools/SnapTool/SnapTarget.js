@@ -431,9 +431,9 @@ class SnapTarget extends X3DSnapNodeTool
          snapScale        = this .getConnectedAxes (transformTool, axis, snapScale);
 
          const
-            subAxes    = subAABBox .getAxes (SnapTarget .#axes),
-            center     = subAxes [axis] .multiply (-sgn) .add (subAABBox .center),
-            snapMatrix = new X3D .Matrix4 () .set (null, null, snapScale, null, center);
+            subAABBoxAxes = subAABBox .getAxes (SnapTarget .#axes),
+            center        = subAABBoxAxes [axis] .multiply (-sgn) .add (subAABBox .center),
+            snapMatrix    = new X3D .Matrix4 () .set (null, null, snapScale, null, center);
 
          snapMatrix .multRight (transformTool .getCurrentMatrix ());
 
