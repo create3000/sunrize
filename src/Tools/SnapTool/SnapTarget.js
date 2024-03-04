@@ -275,6 +275,13 @@ class SnapTarget extends X3DSnapNodeTool
       //    transformTool .setUserData (this .#changing, false);
       //    return;
       // }
+
+      // transformTool .setUserData (this .#changing, true);
+
+      // if (transformTool .tool .keepCenter)
+      //    transformTool .setMatrixKeepCenter (currentMatrix);
+      // else
+      //    transformTool .setMatrixWithCenter (currentMatrix);
    }
 
    getSnapTranslation (position, centers, axes, normals, snapDistance)

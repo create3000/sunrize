@@ -9,7 +9,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.5.14, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/SnapTool.x3dv'/>
-    <meta name='modified' content='Mon, 04 Mar 2024 16:38:58 GMT'/>
+    <meta name='modified' content='Mon, 04 Mar 2024 18:31:11 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -17,6 +17,7 @@
     <ProtoDeclare name='SnapTool'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFString' name='type' value='SNAP_TARGET'/>
+        <field accessType='inputOutput' type='SFBool' name='snapToCenter' value='true'/>
         <field accessType='inputOutput' type='SFVec3f' name='position'/>
         <field accessType='inputOutput' type='SFVec3f' name='normal' value='0 0 1'/>
         <field accessType='inputOutput' type='SFBool' name='snapped'/>
