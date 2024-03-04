@@ -54,10 +54,10 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
       }
 
       for (const transformTool of this .#transformTools)
-         transformTool .addInterest ("set_transform", this, transformTool, false);
+         transformTool .addInterest ("set_transform", this, transformTool);
    }
 
-   set_transform (transformTool, active)
+   set_transform (transformTool)
    {
       if (!this ._visible .getValue ())
          return;
