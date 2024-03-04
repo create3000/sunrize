@@ -222,14 +222,14 @@ function generateGridAxis (axis, hexagon, major, grid, coordIndex, p)
          p2  = c .lerp (d, t)
          add = major / (4 * p1 .distance (p2));
 
-		point [p]     = p1 .lerp (p2, 0 - add);
-		point [p + 1] = p1 .lerp (p2, 1 + add);
+      point [p]     = p1 .lerp (p2, 0 - add);
+      point [p + 1] = p1 .lerp (p2, 1 + add);
 
       coordIndex [coordIndex .length] = p;
-		coordIndex [coordIndex .length] = p + 1;
-		coordIndex [coordIndex .length] = -1;
+      coordIndex [coordIndex .length] = p + 1;
+      coordIndex [coordIndex .length] = -1;
 
-		p += 2;
+      p += 2;
    }
 
    return p;
