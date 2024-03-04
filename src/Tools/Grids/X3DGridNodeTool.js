@@ -65,6 +65,9 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
       if (ActionKeys .value === (ActionKeys .Shift | ActionKeys .Control))
          return;
 
+      if (X3DGridNodeTool .snapTarget)
+         return;
+
       if (!this .tool .snapping)
          return;
 

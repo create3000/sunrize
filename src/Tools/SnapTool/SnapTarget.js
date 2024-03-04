@@ -21,6 +21,8 @@ class SnapTarget extends X3DSnapNodeTool
    {
       super .connectTool ();
 
+      X3DSnapNodeTool .snapTarget = true;
+
       X3DSnapNodeTool .addToolInterest (this, () => this .set_transform_tools ());
 
       this .set_transform_tools ();
@@ -28,6 +30,8 @@ class SnapTarget extends X3DSnapNodeTool
 
    disconnectTool ()
    {
+      X3DSnapNodeTool .snapTarget = false;
+
       X3DSnapNodeTool .removeToolInterest (this);
 
       super .disconnectTool ();
