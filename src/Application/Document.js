@@ -870,7 +870,7 @@ Viewpoint {
 
    activateSnapTarget (visible)
    {
-      const SnapTarget = require ("../Tools/SnapTool/SnapTargetTool");
+      const SnapTarget = require ("../Tools/SnapTool/SnapTarget");
 
       this .#snapTarget ??= new SnapTarget (this .browser .currentScene);
 
@@ -881,7 +881,7 @@ Viewpoint {
 
    activateSnapSource (visible)
    {
-      const SnapSource = require ("../Tools/SnapTool/SnapSourceTool");
+      const SnapSource = require ("../Tools/SnapTool/SnapSource");
 
       this .#snapSource ??= new SnapSource (this .browser .currentScene);
 

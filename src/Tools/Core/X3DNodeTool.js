@@ -17,7 +17,7 @@ class X3DNodeTool extends X3DBaseTool
 {
    static createOnSelection = true;
    static createOnDemand    = true;
-   static transformTools    = new Set (); // Set of all X3DNodeTool tools.
+   static tools             = new Set (); // Set of all X3DNodeTool tools.
 
    static #scenes  = new Map (); // Loaded tool proto scenes.
    static #sensors = [ ];        // Always empty
