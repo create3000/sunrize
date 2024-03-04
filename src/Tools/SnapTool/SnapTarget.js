@@ -399,7 +399,7 @@ class SnapTarget extends X3DSnapNodeTool
       }
       else
       {
-         // Scale from edge.
+         // Scale from opposite handle.
 
          const
             axis            = handle % 3,
