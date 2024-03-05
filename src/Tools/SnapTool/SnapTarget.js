@@ -462,7 +462,7 @@ class SnapTarget extends X3DSnapNodeTool
       [0, 3, 5],
    ];
 
-   static #oppositePoint = [6, 7, 4, 5, 2, 3, 0, 1];
+   static #oppositePoints = [6, 7, 4, 5, 2, 3, 0, 1];
 
    static #points = [
       new X3D .Vector3 (0, 0, 0),
@@ -603,7 +603,7 @@ class SnapTarget extends X3DSnapNodeTool
             const
                snapScale       = new X3D .Vector3 (aRatio, aRatio, aRatio),
                subAABBoxPoints = subAABBox .getPoints (SnapTarget .#points),
-               center          = subAABBoxPoints [SnapTarget .#oppositePoint [handle]],
+               center          = subAABBoxPoints [SnapTarget .#oppositePoints [handle]],
                snapMatrix      = new X3D .Matrix4 () .set (null, null, snapScale, null, center);
 
             snapMatrix .multRight (transformTool .getCurrentMatrix ());
