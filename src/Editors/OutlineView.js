@@ -1126,6 +1126,9 @@ module .exports = class OutlineView extends Interface
    {
       this .sceneGraph .find (".activate-layer") .removeClass ("green") .addClass ("off");
 
+      if (!this .browser .getActiveLayer ())
+         return;
+
       this .sceneGraph .find (`.node[node-id=${this .browser .getActiveLayer () .getId ()}]`)
          .find ("> .item .activate-layer")
          .removeClass ("off")

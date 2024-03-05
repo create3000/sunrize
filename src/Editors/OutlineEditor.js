@@ -1313,7 +1313,10 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       if (index < 0)
          return;
 
-      Editor .setFieldValue (this .browser .currentScene, layerSet, layerSet ._activeLayer, index + 1);
+      if (layerSet ._activeLayer .getValue () === index + 1)
+         Editor .setFieldValue (this .browser .currentScene, layerSet, layerSet ._activeLayer, -1);
+      else
+         Editor .setFieldValue (this .browser .currentScene, layerSet, layerSet ._activeLayer, index + 1);
    }
 
    addBooleanField (button)
