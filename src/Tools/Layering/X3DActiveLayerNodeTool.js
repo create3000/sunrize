@@ -78,16 +78,6 @@ class X3DActiveLayerNodeTool extends X3DChildNodeTool
    connectTool () { }
 
    disconnectTool () { }
-
-   getModelMatrix ()
-   {
-      const layoutGroupNode = X3D .X3DCast (X3D .X3DConstants .LayoutGroup, this .toolLayerNode .getGroups () ._children [0]);
-
-      if (layoutGroupNode)
-         return layoutGroupNode .getMatrix ();
-
-      return new X3D .Matrix4 ();
-   }
 }
 
 module .exports = X3DActiveLayerNodeTool;

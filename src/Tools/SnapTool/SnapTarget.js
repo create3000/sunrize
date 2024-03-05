@@ -105,7 +105,7 @@ class SnapTarget extends X3DSnapNodeTool
 
       const
          dynamicSnapDistance = this .getDynamicSnapDistance (),
-         absolutePosition    = this .getModelMatrix () .multVecMatrix (this .tool .position .getValue () .copy ()),
+         absolutePosition    = this .tool .position .getValue () .copy (),
          absoluteMatrix      = transformTool .getCurrentMatrix () .multRight (transformTool .getModelMatrix ()),
          bbox                = transformTool .getSubBBox (new X3D .Box3 ()) .multRight (absoluteMatrix),
          center              = (this .tool .snapToCenter && !transformTool .tool .keepCenter) ? absoluteMatrix .multVecMatrix (transformTool ._center .getValue () .copy ()) : bbox .center .copy (),
@@ -170,8 +170,8 @@ class SnapTarget extends X3DSnapNodeTool
       }
 
       const
-         absolutePosition = this .getModelMatrix () .multVecMatrix (this .tool .position .getValue () .copy ()),
-         absoluteNormal   = this .getModelMatrix () .multDirMatrix (this .tool .normal .getValue () .copy ()) .normalize (),
+         absolutePosition = this .tool .position .getValue () .copy (),
+         absoluteNormal   = this .tool .normal .getValue () .copy () .normalize (),
          absoluteMatrix   = transformTool .getCurrentMatrix () .multRight (transformTool .getModelMatrix ()),
          bbox             = transformTool .getSubBBox (new X3D .Box3 ()) .multRight (absoluteMatrix);
 
@@ -355,7 +355,7 @@ class SnapTarget extends X3DSnapNodeTool
 
       const
          dynamicSnapDistance = this .getDynamicSnapDistance (),
-         absolutePosition    = this .getModelMatrix () .multVecMatrix (this .tool .position .getValue () .copy ()),
+         absolutePosition    = this .tool .position .getValue () .copy (),
          absoluteMatrix      = transformTool .getCurrentMatrix () .multRight (transformTool .getModelMatrix ()),
          subBBox             = transformTool .getSubBBox (new X3D .Box3 ()),
          subAABBox           = new X3D .Box3 (subBBox .size, subBBox .center),
@@ -483,7 +483,7 @@ class SnapTarget extends X3DSnapNodeTool
 
       const
          dynamicSnapDistance = this .getDynamicSnapDistance (),
-         absolutePosition    = this .getModelMatrix () .multVecMatrix (this .tool .position .getValue () .copy ()),
+         absolutePosition    = this .tool .position .getValue () .copy (),
          absoluteMatrix      = transformTool .getCurrentMatrix () .multRight (transformTool .getModelMatrix ()),
          subBBox             = transformTool .getSubBBox (new X3D .Box3 ()),
          subAABBox           = new X3D .Box3 (subBBox .size, subBBox .center),
@@ -640,7 +640,7 @@ class SnapTarget extends X3DSnapNodeTool
          executionContext    = this .tool .getValue () .getBody (),
          sphereNode          = executionContext .getNamedNode ("Sphere") .getValue (),
          vectorNode          = executionContext .getNamedNode ("Vector") .getValue (),
-         bbox                = sphereNode .getBBox (new X3D .Box3 ()) .multRight (vectorNode .getMatrix ()) .multRight (this .getModelMatrix ()),
+         bbox                = sphereNode .getBBox (new X3D .Box3 ()) .multRight (vectorNode .getMatrix ()),
          dynamicSnapDistance = Math .max (... bbox .size) / 2;
 
       return dynamicSnapDistance;

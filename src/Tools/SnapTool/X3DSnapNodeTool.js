@@ -85,6 +85,15 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
 
       this .tool .position = viewMatrix .copy () .inverse () .multVecMatrix (point .copy ());
       this .tool .normal   = viewMatrix .submatrix .transpose () .multVecMatrix (normal .copy ()) .normalize ();
+
+      if (!X3DSnapNodeTool .gridNode ?._visible .getValue ())
+         return;
+      
+      const
+         gridMatrix    = X3DSnapNodeTool .gridNode .getGridMatrix (),
+         invGridMatrix = gridMatrix .copy () .inverse ();
+
+      this .tool .position = gridMatrix .multVecMatrix (X3DSnapNodeTool .gridNode .getSnapPosition (invGridMatrix .multVecMatrix (this .tool .position .getValue () .copy ()), true));
    }
 }
 

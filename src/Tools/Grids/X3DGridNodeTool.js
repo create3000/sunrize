@@ -26,6 +26,8 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
    {
       super .connectTool ();
 
+      X3DGridNodeTool .gridNode = this;
+
       X3DGridNodeTool .addToolInterest (this, () => this .set_transform_tools ());
 
       this .set_transform_tools ();
@@ -464,8 +466,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
       const tool = this .tool;
 
       return new X3D .Matrix4 ()
-         .set (tool .translation .getValue (), tool .rotation .getValue (), tool .scale .getValue ())
-         .multRight (this .getModelMatrix ());
+         .set (tool .translation .getValue (), tool .rotation .getValue (), tool .scale .getValue ());
    }
 }
 
