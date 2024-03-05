@@ -52,7 +52,7 @@ module .exports = class OutlineView extends Interface
          .on ("dragend", this .onDragEnd .bind (this))
       .appendTo (this .treeView);
 
-      this .browser ._activeLayer .addInterest ("set_activeLayer", this);
+      this .browser ._activeLayer .addInterest ("updateActiveLayer", this);
 
       electron .ipcRenderer .on ("deselect-all",            () => this .deselectAll ());
       electron .ipcRenderer .on ("hide-unselected-objects", () => this .hideUnselectedObjects ());
@@ -261,19 +261,19 @@ module .exports = class OutlineView extends Interface
       child .find (".node .name")
          .on ("mouseenter", this .updateNodeTitle .bind (this));
 
-      child .find (".visibility")
+      child .find (".toggle-visibility")
          .on ("click", this .toggleVisibility .bind (this));
 
-      child .find (".tool")
+      child .find (".toggle-tool")
          .on ("click", this .toggleTool .bind (this));
 
       child .find (".activate-layer")
          .on ("click", this .activateLayer .bind (this));
 
-      child .find (".bind")
+      child .find (".bind-node")
          .on ("click", this .bindNode .bind (this));
 
-      child .find (".reload")
+      child .find (".reload-node")
          .on ("click", this .reloadNode .bind (this));
 
       // Expand children.
@@ -989,7 +989,7 @@ module .exports = class OutlineView extends Interface
             name .append (document .createTextNode (" "));
 
             $("<span></span>")
-               .addClass (["visibility", "button", "material-symbols-outlined"])
+               .addClass (["toggle-visibility", "button", "material-symbols-outlined"])
                .addClass (node .isHidden () ? "off" : "")
                .attr ("title", "Toggle visibility.")
                .text (node .isHidden () ? "visibility_off" : "visibility")
@@ -1001,7 +1001,7 @@ module .exports = class OutlineView extends Interface
             name .append (document .createTextNode (" "));
 
             $("<span></span>")
-               .addClass (["tool", "button", "material-symbols-outlined"])
+               .addClass (["toggle-tool", "button", "material-symbols-outlined"])
                .addClass (node .valueOf () === node ? "off" : "")
                .attr ("title", _("Toggle display tool."))
                .text ("build_circle")
@@ -1032,7 +1032,7 @@ module .exports = class OutlineView extends Interface
                   name .append (document .createTextNode (" "));
 
                   $("<span></span>")
-                     .addClass (["bind", "button", "material-symbols-outlined"])
+                     .addClass (["bind-node", "button", "material-symbols-outlined"])
                      .addClass (node ._isBound .getValue () ? "" : "off")
                      .attr ("title", _("Bind node."))
                      .text (node ._isBound .getValue () ? "radio_button_checked" : "radio_button_unchecked")
@@ -1055,7 +1055,7 @@ module .exports = class OutlineView extends Interface
                   name .append (document .createTextNode (" "));
 
                   $("<span></span>")
-                     .addClass (["reload", "button", "material-symbols-outlined", className])
+                     .addClass (["reload-node", "button", "material-symbols-outlined", className])
                      .attr ("title", "Load now.")
                      .text ("autorenew")
                      .appendTo (name);
@@ -1122,11 +1122,21 @@ module .exports = class OutlineView extends Interface
          .text (cloneCount > 1 ? `[${cloneCount}]` : "")
    }
 
+   updateActiveLayer ()
+   {
+      this .sceneGraph .find (".activate-layer") .removeClass ("green") .addClass ("off");
+
+      this .sceneGraph .find (`.node[node-id=${this .browser .getActiveLayer () .getId ()}]`)
+         .find ("> .item .activate-layer")
+         .removeClass ("off")
+         .addClass ("green");
+   }
+
    updateNodeBound (node)
    {
       this .sceneGraph
          .find (`.node[node-id=${node .getId ()}]`)
-         .find ("> .item .bind")
+         .find ("> .item .bind-node")
          .removeClass ("off")
          .addClass (node ._isBound .getValue () ? "" : "off")
          .text (node ._isBound .getValue () ? "radio_button_checked" : "radio_button_unchecked");
@@ -1138,7 +1148,7 @@ module .exports = class OutlineView extends Interface
 
       this .sceneGraph
          .find (`.node[node-id=${node .getId ()}],.externproto[node-id=${node .getId ()}]`)
-         .find ("> .item .reload")
+         .find ("> .item .reload-node")
          .removeClass (["not-started-state", "in-progress-state", "complete-state", "failed-state"])
          .addClass (className);
    }
@@ -1931,19 +1941,19 @@ module .exports = class OutlineView extends Interface
       child .find (".node .name")
          .on ("mouseenter", this .updateNodeTitle .bind (this));
 
-      child .find (".visibility")
+      child .find (".toggle-visibility")
          .on ("click", this .toggleVisibility .bind (this))
 
-      child .find (".tool")
+      child .find (".toggle-tool")
          .on ("click", this .toggleTool .bind (this))
 
       child .find (".activate-layer")
          .on ("click", this .activateLayer .bind (this));
 
-      child .find (".bind")
+      child .find (".bind-node")
          .on ("click", this .bindNode .bind (this))
 
-      child .find (".reload")
+      child .find (".reload-node")
          .on ("click", this .reloadNode .bind (this))
 
       child .find ("area.input-selector")
@@ -2048,19 +2058,19 @@ module .exports = class OutlineView extends Interface
       child .find (".node .name")
          .on ("mouseenter", this .updateNodeTitle .bind (this));
 
-      child .find (".visibility")
+      child .find (".toggle-visibility")
          .on ("click", this .toggleVisibility .bind (this));
 
-      child .find (".tool")
+      child .find (".toggle-tool")
          .on ("click", this .toggleTool .bind (this));
 
       child .find (".activate-layer")
          .on ("click", this .activateLayer .bind (this));
 
-      child .find (".bind")
+      child .find (".bind-node")
          .on ("click", this .bindNode .bind (this))
 
-      child .find (".reload")
+      child .find (".reload-node")
          .on ("click", this .reloadNode .bind (this));
 
       child .find ("area.input-selector")
@@ -2919,7 +2929,7 @@ module .exports = class OutlineView extends Interface
       node .setHidden (hidden);
 
       this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
-         .find ("> .item .visibility")
+         .find ("> .item .toggle-visibility")
          .removeClass ("off")
          .addClass (hidden ? "off" : "")
          .text (hidden ? "visibility_off" : "visibility");
@@ -2948,19 +2958,9 @@ module .exports = class OutlineView extends Interface
 
       node .setUserData (_changing, true);
 
-      this .sceneGraph .find (`.node[node-id=${node .getId ()}] > .item .tool`)
+      this .sceneGraph .find (`.node[node-id=${node .getId ()}] > .item .toggle-tool`)
          .removeClass ("off")
          .addClass (tool ? "off" : "");
-   }
-
-   set_activeLayer ()
-   {
-      this .sceneGraph .find (".activate-layer") .removeClass ("green") .addClass ("off");
-
-      this .sceneGraph .find (`.node[node-id=${this .browser .getActiveLayer () .getId ()}]`)
-         .find ("> .item .activate-layer")
-         .removeClass ("off")
-         .addClass ("green");
    }
 
    activateLayer (event) { }
@@ -3006,7 +3006,7 @@ module .exports = class OutlineView extends Interface
          node .setHidden (node .getType () .includes (X3D .X3DConstants .X3DShapeNode))
 
          this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
-            .find ("> .item .visibility")
+            .find ("> .item .toggle-visibility")
             .removeClass ("off")
             .addClass (node .isHidden () ? "off" : "")
             .text (node .isHidden () ? "visibility_off" : "visibility")
@@ -3027,7 +3027,7 @@ module .exports = class OutlineView extends Interface
          node .setHidden (false)
 
          this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
-            .find ("> .item .visibility")
+            .find ("> .item .toggle-visibility")
             .removeClass ("off")
             .text ("visibility")
       })
@@ -3045,7 +3045,7 @@ module .exports = class OutlineView extends Interface
          node .setHidden (false)
 
          this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
-            .find ("> .item .visibility")
+            .find ("> .item .toggle-visibility")
             .removeClass ("off")
             .text ("visibility")
       })
@@ -3061,7 +3061,7 @@ module .exports = class OutlineView extends Interface
          node .setHidden (false)
 
          this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
-            .find ("> .item .visibility")
+            .find ("> .item .toggle-visibility")
             .removeClass ("off")
             .text ("visibility")
       })
