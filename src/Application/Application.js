@@ -665,7 +665,6 @@ module .exports = class Application
                   label: _("Activate Snap Target"),
                   type: "checkbox",
                   checked: this .menuOptions .SnapTarget,
-                  visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
                   click: () =>
                   {
                      this .mainWindow .webContents .send ("activate-snap-target", !this .menuOptions .SnapTarget);
@@ -675,7 +674,6 @@ module .exports = class Application
                   label: _("Activate Snap Source"),
                   type: "checkbox",
                   checked: this .menuOptions .SnapSource,
-                  visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
                   click: () =>
                   {
                      this .mainWindow .webContents .send ("activate-snap-source", !this .menuOptions .SnapSource);
@@ -683,7 +681,6 @@ module .exports = class Application
                },
                {
                   label: _("Center Snap Target in Selection"),
-                  visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
                   click: () =>
                   {
                      this .mainWindow .webContents .send ("center-snap-target-in-selection");
@@ -693,7 +690,6 @@ module .exports = class Application
                   label: _("Move Selection to Snap Target"),
                   accelerator: "CmdOrCtrl+M",
                   enabled: this .menuOptions .SnapTarget,
-                  visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
                   click: () =>
                   {
                      this .mainWindow .webContents .send ("move-selection-to-snap-target");
@@ -703,7 +699,6 @@ module .exports = class Application
                   label: _("Move Selection Center to Snap Target"),
                   accelerator: "Shift+CmdOrCtrl+M",
                   enabled: this .menuOptions .SnapTarget,
-                  visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
                   click: () =>
                   {
                      this .mainWindow .webContents .send ("move-selection-center-to-snap-target");

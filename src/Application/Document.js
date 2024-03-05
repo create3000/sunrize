@@ -818,9 +818,6 @@ Viewpoint {
 
    async onmousedown (event)
    {
-      if (process .env .SUNRISE_ENVIRONMENT !== "DEVELOPMENT")
-         return;
-
       if (event .button !== 2)
          return;
 
