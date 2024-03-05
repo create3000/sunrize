@@ -1018,7 +1018,7 @@ module .exports = class OutlineView extends Interface
 
                   $("<span></span>")
                      .addClass (["activate-layer", "button", "material-symbols-outlined"])
-                     .addClass (this .browser .getActiveLayer () === node ? "" : "off")
+                     .addClass (this .browser .getActiveLayer () === node ? "green" : "off")
                      .attr ("title", _("Activate layer."))
                      .text ("check_circle")
                      .appendTo (name);
@@ -2948,19 +2948,19 @@ module .exports = class OutlineView extends Interface
 
       node .setUserData (_changing, true);
 
-      this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
-         .find ("> .item .tool")
+      this .sceneGraph .find (`.node[node-id=${node .getId ()}] > .item .tool`)
          .removeClass ("off")
          .addClass (tool ? "off" : "");
    }
 
    set_activeLayer ()
    {
-      this .sceneGraph .find (`.activate-layer`) .addClass ("off");
+      this .sceneGraph .find (".activate-layer") .removeClass ("green") .addClass ("off");
 
       this .sceneGraph .find (`.node[node-id=${this .browser .getActiveLayer () .getId ()}]`)
          .find ("> .item .activate-layer")
-         .removeClass ("off");
+         .removeClass ("off")
+         .addClass ("green");
    }
 
    activateLayer (event) { }
