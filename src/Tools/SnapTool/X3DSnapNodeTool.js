@@ -88,7 +88,10 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
 
       if (!X3DSnapNodeTool .gridNode ?._visible .getValue ())
          return;
-      
+
+      if (!X3DSnapNodeTool .gridNode .tool .snapping)
+         return;
+
       const
          gridMatrix    = X3DSnapNodeTool .gridNode .getGridMatrix (),
          invGridMatrix = gridMatrix .copy () .inverse ();
