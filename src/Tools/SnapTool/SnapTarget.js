@@ -129,9 +129,12 @@ class SnapTarget extends X3DSnapNodeTool
          zAxes    = [axes [2], axes [2], axes [2] .copy () .negate ()],
          zNormals = [normals [2], normals [2], normals [2] .copy () .negate ()];
 
-      const snapTranslation = this .getSnapTranslation (absolutePosition, xCenters, xAxes, xNormals, dynamicSnapDistance)
-         .add (this .getSnapTranslation (absolutePosition, yCenters, yAxes, yNormals, dynamicSnapDistance))
-         .add (this .getSnapTranslation (absolutePosition, zCenters, zAxes, zNormals, dynamicSnapDistance));
+      const
+         [snapTranslationX] = this .getSnapTranslation (absolutePosition, xCenters, xAxes, xNormals, dynamicSnapDistance),
+         [snapTranslationY] = this .getSnapTranslation (absolutePosition, yCenters, yAxes, yNormals, dynamicSnapDistance),
+         [snapTranslationZ] = this .getSnapTranslation (absolutePosition, zCenters, zAxes, zNormals, dynamicSnapDistance);
+
+      const snapTranslation = snapTranslationX .add (snapTranslationY) .add (snapTranslationZ);
 
       this .tool .snapped = snapTranslation .magnitude () > 0.0001;
 
@@ -314,6 +317,8 @@ class SnapTarget extends X3DSnapNodeTool
    {
       // Return first successful snap translation.
 
+      const translations = [ ];
+
       for (let i = 0; i < centers .length; ++ i)
       {
          const
@@ -333,10 +338,13 @@ class SnapTarget extends X3DSnapNodeTool
          if (translation .magnitude () > snapDistance)
             continue;
 
-         return translation;
+         translations .push ([translation, i]);
       }
 
-      return new X3D .Vector3 (0, 0, 0);
+      if (translations .length)
+         return translations .reduce (([p, pi], [c, ci]) => p .magnitude () < c .magnitude () ? [p, pi] : [c, ci]);
+
+      return [new X3D .Vector3 (0, 0, 0), undefined];
    }
 
    getScaleMatrix (transformTool, handle)
@@ -355,95 +363,254 @@ class SnapTarget extends X3DSnapNodeTool
          axes                = bbox .getAxes (SnapTarget .#axes),
          normals             = bbox .getNormals (SnapTarget .#normals);
 
-      if (transformTool .tool .scaleMode === "SCALE_FROM_CENTER")
+      switch (transformTool .tool .scaleMode)
       {
-         // Scale one axis in both directions.
-
-         const
-            axis            = handle % 3,
-            aCenters        = [bbox .center .copy () .add (axes [axis]), bbox .center .copy () .subtract (axes [axis])],
-            aAxes           = [axes [axis], axes [axis] .copy () .negate ()],
-            aNormals        = [normals [axis], normals [axis] .copy () .negate ()],
-            snapTranslation = this .getSnapTranslation (absolutePosition, aCenters, aAxes, aNormals, dynamicSnapDistance);
-
-         this .tool .snapped = snapTranslation .magnitude () > 0.0001;
-
-         if (snapTranslation .equals (X3D .Vector3 .Zero))
-            return undefined;
-
-         const
-            aSnapCenter = [aCenters [0] .copy () .add (snapTranslation), aCenters [1] .copy () .add (snapTranslation)],
-            aAxis       = aSnapCenter [0] .distance (absolutePosition) < aSnapCenter [1] .distance (absolutePosition) ? 0 : 1,
-            aBefore     = aAxes [aAxis],
-            aAfter      = aAxes [aAxis] .copy () .add (snapTranslation),
-            aDelta      = aAfter .distance (aBefore),
-            aRatio      = aAfter .magnitude () / aBefore .magnitude ();
-
-         if (Math .abs (aDelta) < MIN_DELTA || Math .abs (aRatio) < MIN_RATIO || isNaN (aRatio) || Math .abs (aRatio) === Infinity)
+         case "SCALE_FROM_CENTER":
          {
-            return undefined;
+            // Scale one axis in both directions.
+
+            const
+               axis     = handle % 3,
+               aCenters = [bbox .center .copy () .add (axes [axis]), bbox .center .copy () .subtract (axes [axis])],
+               aAxes    = [axes [axis], axes [axis] .copy () .negate ()],
+               aNormals = [normals [axis], normals [axis] .copy () .negate ()];
+
+            const [snapTranslation, aAxis] = this .getSnapTranslation (absolutePosition, aCenters, aAxes, aNormals, dynamicSnapDistance);
+
+            this .tool .snapped = snapTranslation .magnitude () > 0.0001;
+
+            if (snapTranslation .equals (X3D .Vector3 .Zero))
+               return undefined;
+
+            const
+               aBefore = aAxes [aAxis],
+               aAfter  = aAxes [aAxis] .copy () .add (snapTranslation),
+               aDelta  = aAfter .distance (aBefore),
+               aRatio  = aAfter .magnitude () / aBefore .magnitude ();
+
+            if (Math .abs (aDelta) < MIN_DELTA || Math .abs (aRatio) < MIN_RATIO || isNaN (aRatio) || Math .abs (aRatio) === Infinity)
+            {
+               return undefined;
+            }
+
+            let snapScale = new X3D .Vector3 (1, 1, 1);
+
+            snapScale [axis] = aRatio;
+            snapScale        = this .getConnectedAxes (transformTool, axis, snapScale);
+
+            const
+               center     = subAABBox .center,
+               snapMatrix = new X3D .Matrix4 () .set (null, null, snapScale, null, center);
+
+            snapMatrix .multRight (transformTool .getCurrentMatrix ());
+
+            return snapMatrix;
          }
-
-         let snapScale = new X3D .Vector3 (1, 1, 1);
-
-         snapScale [axis] = aRatio;
-         snapScale        = this .getConnectedAxes (transformTool, axis, snapScale);
-
-         const
-            center     = subAABBox .center,
-            snapMatrix = new X3D .Matrix4 () .set (null, null, snapScale, null, center);
-
-         snapMatrix .multRight (transformTool .getCurrentMatrix ());
-
-         return snapMatrix;
-      }
-      else
-      {
-         // Scale from opposite handle.
-
-         const
-            axis            = handle % 3,
-            sgn             = handle < 3 ? 1 : -1,
-            aCenters        = [bbox .center .copy () .add (axes [axis] .copy () .multiply (sgn))],
-            aAxes           = [axes [axis] .copy () .multiply (sgn)],
-            aNormals        = [normals [axis] .copy () .multiply (sgn)],
-            snapTranslation = this .getSnapTranslation (absolutePosition, aCenters, aAxes, aNormals, dynamicSnapDistance);
-
-         this .tool .snapped = snapTranslation .magnitude () > 0.0001;
-
-         if (snapTranslation .equals (X3D .Vector3 .Zero))
-            return undefined;
-
-         const
-            aBefore = aAxes [0] .copy () .multiply (2),
-            aAfter  = aBefore .copy () .add (snapTranslation),
-            aDelta  = aAfter .distance (aBefore),
-            aRatio  = aAfter .magnitude () / aBefore .magnitude ();
-
-         if (Math .abs (aDelta) < MIN_DELTA || Math .abs (aRatio) < MIN_RATIO || isNaN (aRatio) || Math .abs (aRatio) === Infinity)
+         case "SCALE_FROM_OPPOSITE_HANDLE":
          {
-            return undefined;
+            const
+               axis     = handle % 3,
+               sgn      = handle < 3 ? 1 : -1,
+               aCenters = [bbox .center .copy () .add (axes [axis] .copy () .multiply (sgn))],
+               aAxes    = [axes [axis] .copy () .multiply (sgn)],
+               aNormals = [normals [axis] .copy () .multiply (sgn)];
+
+            const [snapTranslation, aAxis] = this .getSnapTranslation (absolutePosition, aCenters, aAxes, aNormals, dynamicSnapDistance);
+
+            this .tool .snapped = snapTranslation .magnitude () > 0.0001;
+
+            if (snapTranslation .equals (X3D .Vector3 .Zero))
+               return undefined;
+
+            const
+               aBefore = aAxes [aAxis] .copy () .multiply (2),
+               aAfter  = aBefore .copy () .add (snapTranslation),
+               aDelta  = aAfter .distance (aBefore),
+               aRatio  = aAfter .magnitude () / aBefore .magnitude ();
+
+            if (Math .abs (aDelta) < MIN_DELTA || Math .abs (aRatio) < MIN_RATIO || isNaN (aRatio) || Math .abs (aRatio) === Infinity)
+            {
+               return undefined;
+            }
+
+            let snapScale = new X3D .Vector3 (1, 1, 1);
+
+            snapScale [axis] = aRatio;
+            snapScale        = this .getConnectedAxes (transformTool, axis, snapScale);
+
+            const
+               subAABBoxAxes = subAABBox .getAxes (SnapTarget .#axes),
+               center        = subAABBoxAxes [axis] .multiply (-sgn) .add (subAABBox .center),
+               snapMatrix    = new X3D .Matrix4 () .set (null, null, snapScale, null, center);
+
+            snapMatrix .multRight (transformTool .getCurrentMatrix ());
+
+            return snapMatrix;
          }
-
-         let snapScale = new X3D .Vector3 (1, 1, 1);
-
-         snapScale [axis] = aRatio;
-         snapScale        = this .getConnectedAxes (transformTool, axis, snapScale);
-
-         const
-            subAABBoxAxes = subAABBox .getAxes (SnapTarget .#axes),
-            center        = subAABBoxAxes [axis] .multiply (-sgn) .add (subAABBox .center),
-            snapMatrix    = new X3D .Matrix4 () .set (null, null, snapScale, null, center);
-
-         snapMatrix .multRight (transformTool .getCurrentMatrix ());
-
-         return snapMatrix;
       }
    }
 
+   static #adjacentFaces =
+   [
+      [0, 2, 4],
+      [1, 2, 4],
+      [1, 3, 4],
+      [0, 3, 4],
+      [0, 2, 5],
+      [1, 2, 5],
+      [1, 3, 5],
+      [0, 3, 5],
+   ];
+
+   static #oppositePoint = [6, 7, 4, 5, 2, 3, 0, 1];
+
+   static #points = [
+      new X3D .Vector3 (0, 0, 0),
+      new X3D .Vector3 (0, 0, 0),
+      new X3D .Vector3 (0, 0, 0),
+      new X3D .Vector3 (0, 0, 0),
+      new X3D .Vector3 (0, 0, 0),
+      new X3D .Vector3 (0, 0, 0),
+      new X3D .Vector3 (0, 0, 0),
+      new X3D .Vector3 (0, 0, 0),
+   ];
+
    getUniformScaleMatrix (transformTool, handle)
    {
+      const
+         MIN_DELTA = 1e-6,
+         MIN_RATIO = 1e-3;
 
+      const
+         dynamicSnapDistance = this .getDynamicSnapDistance (),
+         absolutePosition    = this .getModelMatrix () .multVecMatrix (this .tool .position .getValue () .copy ()),
+         absoluteMatrix      = transformTool .getCurrentMatrix () .multRight (transformTool .getModelMatrix ()),
+         subBBox             = transformTool .getSubBBox (new X3D .Box3 ()),
+         subAABBox           = new X3D .Box3 (subBBox .size, subBBox .center),
+         bbox                = subAABBox .copy () .multRight (absoluteMatrix),
+         axes                = bbox .getAxes (SnapTarget .#axes),
+         normals             = bbox .getNormals (SnapTarget .#normals);
+
+      switch (transformTool .tool .scaleMode)
+      {
+         case "SCALE_FROM_CENTER":
+         {
+            // Scale one axis in both directions.
+
+            const
+               aCenters = [
+                  bbox .center .copy () .add (axes [0]),
+                  bbox .center .copy () .subtract (axes [0]),
+                  bbox .center .copy () .add (axes [1]),
+                  bbox .center .copy () .subtract (axes [1]),
+                  bbox .center .copy () .add (axes [2]),
+                  bbox .center .copy () .subtract (axes [2]),
+               ],
+               aAxes = [
+                  axes [0],
+                  axes [0] .copy () .negate (),
+                  axes [1],
+                  axes [1] .copy () .negate (),
+                  axes [2],
+                  axes [2] .copy () .negate (),
+               ],
+               aNormals = [
+                  normals [0],
+                  normals [0] .copy () .negate (),
+                  normals [1],
+                  normals [1] .copy () .negate (),
+                  normals [2],
+                  normals [2] .copy () .negate (),
+               ];
+
+            const [snapTranslation, aAxis] = this .getSnapTranslation (absolutePosition, aCenters, aAxes, aNormals, dynamicSnapDistance);
+
+            this .tool .snapped = snapTranslation .magnitude () > 0.0001;
+
+            if (snapTranslation .equals (X3D .Vector3 .Zero))
+               return undefined;
+
+            const
+               aBefore = aAxes [aAxis],
+               aAfter  = aAxes [aAxis] .copy () .add (snapTranslation),
+               aDelta  = aAfter .distance (aBefore),
+               aRatio  = aAfter .magnitude () / aBefore .magnitude ();
+
+            if (Math .abs (aDelta) < MIN_DELTA || Math .abs (aRatio) < MIN_RATIO || isNaN (aRatio) || Math .abs (aRatio) === Infinity)
+            {
+               return undefined;
+            }
+
+            const
+               snapScale  = new X3D .Vector3 (aRatio, aRatio, aRatio),
+               center     = subAABBox .center,
+               snapMatrix = new X3D .Matrix4 () .set (null, null, snapScale, null, center);
+
+            snapMatrix .multRight (transformTool .getCurrentMatrix ());
+
+            return snapMatrix;
+         }
+         case "SCALE_FROM_OPPOSITE_HANDLE":
+         {
+            const
+               aIndices = SnapTarget .#adjacentFaces [handle],
+               aCenters = [
+                  bbox .center .copy () .add (axes [0]),
+                  bbox .center .copy () .subtract (axes [0]),
+                  bbox .center .copy () .add (axes [1]),
+                  bbox .center .copy () .subtract (axes [1]),
+                  bbox .center .copy () .add (axes [2]),
+                  bbox .center .copy () .subtract (axes [2]),
+               ]
+               .filter ((v, i) => aIndices .includes (i)),
+               aAxes = [
+                  axes [0],
+                  axes [0] .copy () .negate (),
+                  axes [1],
+                  axes [1] .copy () .negate (),
+                  axes [2],
+                  axes [2] .copy () .negate (),
+               ]
+               .filter ((v, i) => aIndices .includes (i)),
+               aNormals = [
+                  normals [0],
+                  normals [0] .copy () .negate (),
+                  normals [1],
+                  normals [1] .copy () .negate (),
+                  normals [2],
+                  normals [2] .copy () .negate (),
+               ]
+               .filter ((v, i) => aIndices .includes (i));
+
+            const [snapTranslation, aAxis] = this .getSnapTranslation (absolutePosition, aCenters, aAxes, aNormals, dynamicSnapDistance);
+
+            this .tool .snapped = snapTranslation .magnitude () > 0.0001;
+
+            if (snapTranslation .equals (X3D .Vector3 .Zero))
+               return undefined;
+
+            const
+               aBefore = aAxes [aAxis] .copy () .multiply (2),
+               aAfter  = aBefore .copy () .add (snapTranslation),
+               aDelta  = aAfter .distance (aBefore),
+               aRatio  = aAfter .magnitude () / aBefore .magnitude ();
+
+            if (Math .abs (aDelta) < MIN_DELTA || Math .abs (aRatio) < MIN_RATIO || isNaN (aRatio) || Math .abs (aRatio) === Infinity)
+            {
+               return undefined;
+            }
+
+            const
+               snapScale       = new X3D .Vector3 (aRatio, aRatio, aRatio),
+               subAABBoxPoints = subAABBox .getPoints (SnapTarget .#points),
+               center          = subAABBoxPoints [SnapTarget .#oppositePoint [handle]],
+               snapMatrix      = new X3D .Matrix4 () .set (null, null, snapScale, null, center);
+
+            snapMatrix .multRight (transformTool .getCurrentMatrix ());
+
+            return snapMatrix;
+         }
+      }
    }
 
    static #connectedAxes = {
