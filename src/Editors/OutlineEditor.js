@@ -1298,6 +1298,24 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       UndoManager .shared .endUndo ();
    }
 
+   activateLayer (event)
+   {
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
+
+      const
+         target   = $(event .target),
+         element  = target .closest (".node", this .sceneGraph),
+         layer    = this .getNode (element),
+         layerSet = this .browser .getWorld () .getLayerSet (),
+         index    = layerSet ._layers .findIndex (node => node .getValue () === layer);
+
+      if (index < 0)
+         return;
+
+      Editor .setFieldValue (this .browser .currentScene, layerSet, layerSet ._activeLayer, index + 1);
+   }
+
    addBooleanField (button)
    {
       const

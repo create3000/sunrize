@@ -52,6 +52,8 @@ module .exports = class OutlineView extends Interface
          .on ("dragend", this .onDragEnd .bind (this))
       .appendTo (this .treeView);
 
+      this .browser ._activeLayer .addInterest ("set_activeLayer", this);
+
       electron .ipcRenderer .on ("deselect-all",            () => this .deselectAll ());
       electron .ipcRenderer .on ("hide-unselected-objects", () => this .hideUnselectedObjects ());
       electron .ipcRenderer .on ("show-selected-objects",   () => this .showSelectedObjects ());
@@ -264,6 +266,9 @@ module .exports = class OutlineView extends Interface
 
       child .find (".tool")
          .on ("click", this .toggleTool .bind (this));
+
+      child .find (".activate-layer")
+         .on ("click", this .activateLayer .bind (this));
 
       child .find (".bind")
          .on ("click", this .bindNode .bind (this));
@@ -1007,6 +1012,19 @@ module .exports = class OutlineView extends Interface
          {
             switch (type)
             {
+               case X3D .X3DConstants .X3DLayerNode:
+               {
+                  name .append (document .createTextNode (" "));
+
+                  $("<span></span>")
+                     .addClass (["activate-layer", "button", "material-symbols-outlined"])
+                     .addClass (this .browser .getActiveLayer () === node ? "" : "off")
+                     .attr ("title", _("Activate layer."))
+                     .text ("check_circle")
+                     .appendTo (name);
+
+                  continue;
+               }
                case X3D .X3DConstants .X3DBindableNode:
                {
                   node ._isBound .addFieldCallback (this .#updateNodeBoundSymbol, this .updateNodeBound .bind (this, node));
@@ -1919,6 +1937,9 @@ module .exports = class OutlineView extends Interface
       child .find (".tool")
          .on ("click", this .toggleTool .bind (this))
 
+      child .find (".activate-layer")
+         .on ("click", this .activateLayer .bind (this));
+
       child .find (".bind")
          .on ("click", this .bindNode .bind (this))
 
@@ -2025,13 +2046,16 @@ module .exports = class OutlineView extends Interface
       }
 
       child .find (".node .name")
-         .on ("mouseenter", this .updateNodeTitle .bind (this));;
+         .on ("mouseenter", this .updateNodeTitle .bind (this));
 
       child .find (".visibility")
          .on ("click", this .toggleVisibility .bind (this));
 
       child .find (".tool")
          .on ("click", this .toggleTool .bind (this));
+
+      child .find (".activate-layer")
+         .on ("click", this .activateLayer .bind (this));
 
       child .find (".bind")
          .on ("click", this .bindNode .bind (this))
@@ -2929,6 +2953,17 @@ module .exports = class OutlineView extends Interface
          .removeClass ("off")
          .addClass (tool ? "off" : "");
    }
+
+   set_activeLayer ()
+   {
+      this .sceneGraph .find (`.activate-layer`) .addClass ("off");
+
+      this .sceneGraph .find (`.node[node-id=${this .browser .getActiveLayer () .getId ()}]`)
+         .find ("> .item .activate-layer")
+         .removeClass ("off");
+   }
+
+   activateLayer (event) { }
 
    bindNode (event)
    {
