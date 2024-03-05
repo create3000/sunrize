@@ -21,7 +21,7 @@ class X3DActiveLayerNodeTool extends X3DChildNodeTool
    {
       await super .initializeTool (... args);
 
-      this .getBrowser () .getActiveLayer () .addInterest ("set_activeLayer", this);
+      this .getBrowser () ._activeLayer .addInterest ("set_activeLayer", this);
 
       this ._visible .addInterest ("set_visible", this);
 
@@ -31,7 +31,7 @@ class X3DActiveLayerNodeTool extends X3DChildNodeTool
 
    disposeTool ()
    {
-      this .getBrowser () .getActiveLayer () .removeInterest ("set_activeLayer", this);
+      this .getBrowser () ._activeLayer .removeInterest ("set_activeLayer", this);
 
       this .disconnectTool ();
       this .removeFromLayer (this .toolLayerNode);
