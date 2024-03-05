@@ -365,11 +365,11 @@ module .exports = new class Tabs
 
    forwardToActiveTab (channel)
    {
-      electron .ipcRenderer .on (channel, (event, ...args) => this .tabs .getActiveTab () .webview .send (channel, ...args));
+      electron .ipcRenderer .on (channel, (event, ... args) => this .tabs .getActiveTab () .webview .send (channel, ... args));
    }
 
    forwardToAllTabs (channel)
    {
-      electron .ipcRenderer .on (channel, (event, ...args) => this .tabs .getTabs () .forEach (tab => tab .webview .send (channel, ...args)));
+      electron .ipcRenderer .on (channel, (event, ... args) => this .tabs .getTabs () .forEach (tab => tab .webview .send (channel, ... args)));
    }
 };
