@@ -19,13 +19,13 @@ class X3DNodeTool extends X3DBaseTool
    static createOnDemand    = true;
    static tools             = new Set (); // Set of all X3DNodeTool tools.
 
-   static #snapTarget = false;
-   static get snapTarget () { return X3DNodeTool .#snapTarget; }
-   static set snapTarget (value) { X3DNodeTool .#snapTarget = value; }
-
    static #gridNode = null;
    static get gridNode () { return X3DNodeTool .#gridNode; }
    static set gridNode (value) { X3DNodeTool .#gridNode = value; }
+
+   static #snapTarget = false;
+   static get snapTarget () { return X3DNodeTool .#snapTarget; }
+   static set snapTarget (value) { X3DNodeTool .#snapTarget = value; }
 
    static #scenes  = new Map (); // Loaded tool proto scenes.
    static #sensors = [ ];        // Always empty
