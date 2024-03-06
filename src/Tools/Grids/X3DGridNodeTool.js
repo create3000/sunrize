@@ -40,6 +40,12 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
       super .disconnectTool ();
    }
 
+   configureTool ()
+   {
+      console .log (this .toolLayerNode ?.getTypeName ());
+      console .log (this .toolLayerNode === this .getBrowser () .getWorld () .getLayerSet () .getLayer0 ());
+   }
+
    set_transform_tools ()
    {
       for (const transformTool of this .#transformTools)
