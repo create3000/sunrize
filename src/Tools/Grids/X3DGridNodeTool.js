@@ -77,7 +77,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
                continue;
          }
 
-         field .assign (this .tool .getFieldDefinitions () .get (field .getName ()) .value);
+         field .assign (this .tool .getFieldDefinition (field .getName ()) .value);
 
          this .toolLayerNode .getMetaData (`Sunrize/${this .tool .getNodeTypeName ()}/${field .getName ()}`, field);
       }
@@ -88,7 +88,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
       if (!this .toolLayerNode)
          return;
 
-      if (field .equals (this .tool .getFieldDefinitions () .get (field .getName ()) .value))
+      if (field .equals (this .tool .getFieldDefinition (field .getName ()) .value))
          return;
 
       const node = this .toolLayerNode === this .toolLayer0Node
