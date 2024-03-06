@@ -704,14 +704,8 @@ Viewpoint {
       grid ._visible   = visible;
       config .visible = visible;
 
-      this .restoreGridTool (typeName);
       this .updateMenu ();
 
-      // if (this .secondaryToolbar .config .file .panel)
-      //    this .showGridOptions ();
-
-      tool .getValue ()           .addInterest ("set_gridTool",        this, typeName);
-      tool .getField ("isActive") .addInterest ("set_gridTool",        this, typeName);
       tool .getField ("isActive") .addInterest ("set_gridTool_active", this, typeName);
    }
 
@@ -731,7 +725,7 @@ Viewpoint {
       {
          const
             executionContext = tool .getValue () .getExecutionContext (),
-            saved            = this .#gridFields .get (typeName);
+            initialValues    = this .#gridFields .get (typeName);
 
          UndoManager .shared .beginUndo (_("Change Properties of %s"), typeName);
 
@@ -740,61 +734,19 @@ Viewpoint {
             if (!field .isInitializable ())
                continue;
 
+            const initialValue = initialValues .get (field .getName ());
+
+            if (field .equals (initialValue))
+               continue;
+
             const value = field .copy ();
 
-            field .assign (saved .get (field .getName ()));
+            field .assign (initialValue);
 
             Editor .setFieldValue (executionContext, tool .getValue (), field, value);
          }
 
          UndoManager .shared .endUndo ();
-      }
-   }
-
-   async set_gridTool (typeName)
-   {
-      const
-         grid = this .#grids .get (typeName),
-         tool = await grid .getToolInstance ();
-
-      if (tool .isActive)
-         return;
-
-      this .saveGridTool (typeName);
-   }
-
-   async restoreGridTool (typeName)
-   {
-      const
-         grid   = this .#grids .get (typeName),
-         config = this .config .file .addNameSpace (`${typeName}.`),
-         tool   = await grid .getToolInstance ();
-
-      for (const field of tool .getValue () .getFields ())
-      {
-         if (!field .isInitializable ())
-            continue;
-
-         const value = config [field .getName ()];
-
-         if (value !== undefined)
-            field .fromString (value);
-      }
-   }
-
-   async saveGridTool (typeName)
-   {
-      const
-         grid   = this .#grids .get (typeName),
-         config = this .config .file .addNameSpace (`${typeName}.`),
-         tool   = await grid .getToolInstance ();
-
-      for (const field of tool .getValue () .getFields ())
-      {
-         if (!field .isInitializable ())
-            continue;
-
-         config [field .getName ()] = field .toString ();
       }
    }
 

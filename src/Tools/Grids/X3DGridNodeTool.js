@@ -20,6 +20,21 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
       await super .initializeTool (... args);
 
       this .tool .getField ("translation") .setUnit ("length");
+
+      for (const field of this .tool .getValue () .getFields ())
+      {
+         if (!field .isInitializable ())
+            continue;
+
+         switch (field .getType ())
+         {
+            case X3D .X3DConstants .SFNode:
+            case X3D .X3DConstants .MFNode:
+               continue;
+         }
+
+         field .addInterest ("saveGrid", this);
+      }
    }
 
    connectTool ()
@@ -42,8 +57,45 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 
    configureTool ()
    {
-      console .log (this .toolLayerNode ?.getTypeName ());
-      console .log (this .toolLayerNode === this .getBrowser () .getWorld () .getLayerSet () .getLayer0 ());
+      this .restoreGrid ();
+   }
+
+   restoreGrid ()
+   {
+      if (!this .toolLayerNode)
+         return;
+
+      for (const field of this .tool .getValue () .getFields ())
+      {
+         if (!field .isInitializable ())
+            continue;
+
+         switch (field .getType ())
+         {
+            case X3D .X3DConstants .SFNode:
+            case X3D .X3DConstants .MFNode:
+               continue;
+         }
+
+         field .assign (this .tool .getFieldDefinitions () .get (field .getName ()) .value);
+
+         this .toolLayerNode .getMetaData (`Sunrize/${this .tool .getNodeTypeName ()}/${field .getName ()}`, field);
+      }
+   }
+
+   saveGrid (field)
+   {
+      if (!this .toolLayerNode)
+         return;
+
+      if (field .equals (this .tool .getFieldDefinitions () .get (field .getName ()) .value))
+         return;
+
+      const node = this .toolLayerNode === this .toolLayer0Node
+         ? this .worldInfoNode
+         : this .toolLayerNode;
+
+      this .toolLayerNode .setMetaData (`Sunrize/${this .tool .getNodeTypeName ()}/${field .getName ()}`, field);
    }
 
    set_transform_tools ()
