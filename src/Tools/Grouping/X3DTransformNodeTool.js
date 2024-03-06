@@ -87,6 +87,9 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       if (!this ._visible .getValue ())
          return false;
 
+      if (!this .tool .undo)
+         return false;
+
       this .#initialMatrix .assign (this .getCurrentMatrix ());
 
       this .#initialTranslation      = this ._translation      .copy ();
