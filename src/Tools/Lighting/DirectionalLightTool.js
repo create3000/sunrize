@@ -36,14 +36,15 @@ class DirectionalLightTool extends X3DLightNodeTool
       this .#changing = true;
 
       this .setMetaData ("DirectionalLight/location", this .tool .location);
-
-      this .#changing = false;
    }
 
    set_meta_location ()
    {
       if (this .#changing)
+      {
+         this .#changing = false;
          return;
+      }
 
       this .getMetaData ("DirectionalLight/location", this .tool .location);
    }
