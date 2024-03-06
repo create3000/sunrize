@@ -641,6 +641,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static #setLive (node, value, undoManager = UndoManager .shared)
    {
+      node = node .valueOf ();
+
       const oldValue = node .isLive ();
 
       undoManager .beginUndo (_("Set live state to »%s«"), value);
@@ -909,6 +911,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static updateNamedNode (executionContext, name, node, undoManager = UndoManager .shared)
    {
+      node = node .valueOf ();
+
       const
          oldNode = $.try (() => executionContext .getNamedNode (name)),
          oldName = node .getName ();
@@ -941,6 +945,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static removeNamedNode (executionContext, node, undoManager = UndoManager .shared)
    {
+      node = node .valueOf ();
+
       const oldName = node .getName ();
 
       undoManager .beginUndo (_("Remove Node Name »%s«"), oldName);
@@ -968,6 +974,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static updateImportedNode (executionContext, inlineNode, exportedName, importedName, oldImportedName, undoManager = UndoManager .shared)
    {
+      inlineNode = inlineNode .valueOf ();
+
       undoManager .beginUndo (_("Update Imported Node »%s«"), importedName);
 
       executionContext .updateImportedNode (inlineNode .valueOf (), exportedName, importedName);
@@ -1076,6 +1084,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static updateExportedNode (scene, exportedName, oldExportedName, node, undoManager = UndoManager .shared)
    {
+      node = node .valueOf ();
+
       undoManager .beginUndo (_("Update Exported Node »%s«"), exportedName);
 
       if (oldExportedName)
@@ -1512,6 +1522,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static setProtoNode (executionContext, instance, protoNode, undoManager = UndoManager .shared)
    {
+      instance = instance .valueOf ();
+
       const oldProtoNode = instance .getProtoNode ();
 
       undoManager .beginUndo (_("Set Proto Node of Instance to %s"), protoNode .getName ());
@@ -1708,6 +1720,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static addRoute (executionContext, sourceNode, sourceField, destinationNode, destinationField, undoManager = UndoManager .shared)
    {
+      sourceNode      = sourceNode .valueOf ();
+      destinationNode = destinationNode .valueOf ();
+
       undoManager .beginUndo (_("Add Route From %s »%s« TO %s »%s«"), sourceNode .getTypeName (), sourceField, destinationNode .getTypeName (), destinationField);
 
       try
@@ -1767,6 +1782,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static deleteRoute (executionContext, sourceNode, sourceField, destinationNode, destinationField, undoManager = UndoManager .shared)
    {
+      sourceNode      = sourceNode .valueOf ();
+      destinationNode = destinationNode .valueOf ();
+
       undoManager .beginUndo (_("Delete Route From %s »%s« TO %s »%s«"), sourceNode .getTypeName (), sourceField, destinationNode .getTypeName (), destinationField);
 
       executionContext .deleteRoute (sourceNode .valueOf (), sourceField, destinationNode .valueOf (), destinationField);
@@ -1854,6 +1872,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static removeNode (executionContext, remove, undoManager = UndoManager .shared)
    {
+      remove = remove .valueOf ();
+
       undoManager .beginUndo (_("Remove Node"));
 
       Traverse .traverse (executionContext, Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, (node) =>
@@ -1905,6 +1925,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static addUserDefinedField (executionContext, node, field, index, undoManager = UndoManager .shared)
    {
+      node = node .valueOf ();
+
       const fields = Array .from (node .getUserDefinedFields ());
 
       index = Math .min (index < 0 ? fields .length : index, fields .length);
@@ -1926,6 +1948,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static updateUserDefinedField (executionContext, node, field, accessType, name, undoManager = UndoManager .shared)
    {
+      node = node .valueOf ();
+
       const
          oldAccessType = field .getAccessType (),
          oldName       = field .getName (),
@@ -2040,6 +2064,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static removeUserDefinedField (executionContext, node, field, undoManager = UndoManager .shared)
    {
+      node = node .valueOf ();
+
       const fields = [... node .getUserDefinedFields ()] .filter (f => f !== field);
 
       undoManager .beginUndo (_("Remove Field »%s«"), field .getName ());
@@ -2057,6 +2083,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static setUserDefinedFields (executionContext, node, fields, undoManager = UndoManager .shared)
    {
+      node = node .valueOf ();
+
       const
          oldFields     = Array .from (node .getUserDefinedFields ()),
          removedFields = oldFields .filter (f => !fields .includes (f));
@@ -2189,6 +2217,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static addReference (proto, protoField, node, field, undoManager = UndoManager .shared)
    {
+      node  = node .valueOf ();
       field = typeof field === "string" ? node .getField (field) : field
 
       const
@@ -2218,6 +2247,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static removeReference (proto, protoField, node, field, undoManager = UndoManager .shared)
    {
+      node  = node .valueOf ();
       field = typeof field === "string" ? node .getField (field) : field
 
       const
@@ -2247,6 +2277,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static setMatrixWithCenter (node, matrix, center = node ._center .getValue (), undoManager = UndoManager .shared)
    {
+      node = node .valueOf ();
+
       undoManager .beginUndo (_("Set Transformation Matrix of %s"), node .getTypeName ());
 
       const
@@ -2315,6 +2347,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
    static moveViewpoint (viewpointNode, position, orientation, centerOfRotation, fieldOfView, undoManager = UndoManager .shared)
    {
+      viewpointNode = viewpointNode .valueOf ();
+
       UndoManager .shared .beginUndo (_("Move Viewpoint to Camera"));
 
       const
@@ -2663,12 +2697,80 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     *
     * @param {X3DExecutionContext} executionContext
     * @param {X3DNode} node
+    * @param {string} key
+    * @param {X3DField} value
+    * @param {UndoManager} undoManager
+    */
+   static setMetaData (node, key, value, undoManager = UndoManager .shared)
+   {
+      node = node .valueOf ();
+
+      const
+         hasValue = node .hasMetaData (key),
+         oldValue = node .getMetaData (key, value .create ());
+
+      undoManager .beginUndo (_("Change Metadata of Node %s"), node .getTypeName ());
+
+      node .setMetaData (key, value);
+
+      undoManager .registerUndo (() =>
+      {
+         if (hasValue)
+            this .setMetaData (node, key, oldValue, undoManager);
+         else
+            this .removeMetaData (node, key, oldValue, undoManager);
+      });
+
+      this .requestUpdateInstances (node, undoManager);
+
+      undoManager .endUndo ();
+   }
+
+   /**
+    *
+    * @param {X3DExecutionContext} executionContext
+    * @param {X3DNode} node
+    * @param {string} key
+    * @param {X3DField} type
+    * @param {UndoManager} undoManager
+    */
+   static removeMetaData (node, key, type, undoManager = UndoManager .shared)
+   {
+      node = node .valueOf ();
+
+      const hasValue = node .hasMetaData (key);
+
+      if (!hasValue)
+         return;
+
+      const oldValue = node .getMetaData (key, type .create ());
+
+      undoManager .beginUndo (_("Change Metadata of Node %s"), node .getTypeName ());
+
+      node .removeMetaData (key);
+
+      undoManager .registerUndo (() =>
+      {
+         this .setMetaData (node, key, oldValue, undoManager);
+      });
+
+      this .requestUpdateInstances (node, undoManager);
+
+      undoManager .endUndo ();
+   }
+
+   /**
+    *
+    * @param {X3DExecutionContext} executionContext
+    * @param {X3DNode} node
     * @param {X3DField} field
     * @param {string} string
     * @param {UndoManager} undoManager
     */
    static setFieldFromString (executionContext, node, field, string, undoManager = UndoManager .shared)
    {
+      node = node .valueOf ();
+
 		const
          instance  = node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance),
          name      = field .getName (),
@@ -2715,6 +2817,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static setFieldValue (executionContext, node, field, value, undoManager = UndoManager .shared)
    {
+      node  = node .valueOf ();
       field = typeof field === "string" ? node .getField (field) : field;
 
       const
@@ -2773,6 +2876,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static insertValueIntoArray (executionContext, node, field, index, value, undoManager = UndoManager .shared)
    {
+      node  = node .valueOf ();
       field = typeof field === "string" ? node .getField (field) : field;
 
       const
@@ -2807,6 +2911,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static appendValueToArray (executionContext, node, field, value, undoManager = UndoManager .shared)
    {
+      node = node .valueOf ();
+
       undoManager .beginUndo (_("Append Value to %s »%s«"), node .getTypeName (), field .getName ());
 
       this .insertValueIntoArray (executionContext, node, field, field .length, value, undoManager);
@@ -2824,6 +2930,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static removeValueFromArray (executionContext, node, field, index, undoManager = UndoManager .shared)
    {
+      node  = node .valueOf ();
       field = typeof field === "string" ? node .getField (field) : field;
 
       const
@@ -2873,6 +2980,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
    static #removeEmptyGroupsFromArray (node, field, undoManager = UndoManager .shared)
    {
+      node = node .valueOf ();
+
       for (let index = field .length - 1; index >= 0; -- index)
       {
          const value = field [index];
@@ -2890,6 +2999,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       if (!node)
          return true;
+
+      node = node .valueOf ();
 
       return node .getFields () .every (field =>
       {
