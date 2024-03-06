@@ -4,6 +4,8 @@ const X3DLightNodeTool = require ("./X3DLightNodeTool");
 
 class DirectionalLightTool extends X3DLightNodeTool
 {
+   #changing = false;
+
    async initializeTool ()
    {
       await super .initializeTool ();
@@ -28,8 +30,6 @@ class DirectionalLightTool extends X3DLightNodeTool
    {
       this .undoSaveInitialValues (["location", "direction"]);
    }
-
-   #changing = false;
 
    set_location ()
    {
