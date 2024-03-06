@@ -37,6 +37,8 @@ module .exports = class Document extends Interface
     */
    async initialize ()
    {
+      // Restore
+
       await this .restoreFile ();
 
       // Actions
@@ -107,6 +109,10 @@ module .exports = class Document extends Interface
       // Change undo menu items.
 
       UndoManager .shared .addInterest (this, () => this .undoManager ());
+
+      // Configure browser options.
+
+      this .browser .setBrowserOption ("MetadataReference", require ("../../package.json") .homepage);
 
       // Connect browser options.
 
