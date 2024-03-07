@@ -91,7 +91,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
       if (field .equals (this .tool .getFieldDefinition (field .getName ()) .value))
          return;
 
-      const node = this .toolLayerNode === this .toolLayer0Node
+      const configNode = this .toolLayerNode === this .toolLayer0Node
          ? this .worldInfoNode
          : this .toolLayerNode;
 
