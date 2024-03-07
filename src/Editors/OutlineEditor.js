@@ -1356,7 +1356,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          showAlpha: field .getType () === X3D .X3DConstants .SFColorRGBA,
          showInitial: true,
          showInput: false,
-			preferredFormat: "name",
+         preferredFormat: "name",
          showButtons: false,
          allowEmpty: false,
       })
@@ -1374,7 +1374,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          value .g = rgb .g / 255;
          value .b = rgb .b / 255;
 
-			if (value .getType () === X3D .X3DConstants .SFColorRGBA)
+         if (value .getType () === X3D .X3DConstants .SFColorRGBA)
             value .a = rgb .a;
 
          Editor .setFieldValue (node .getExecutionContext (), node, field, value);
@@ -1392,10 +1392,10 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       });
    }
 
-	removeColorField (button)
-	{
-		button .spectrum ?.("destroy");
-	}
+   removeColorField (button)
+   {
+      button .spectrum ?.("destroy");
+   }
 
    addTimeField (button)
    {
@@ -1731,7 +1731,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          if (this .connector .type === type)
          {
             if (this .connector .field === field)
-            	return
+               return
          }
       }
 
@@ -1782,65 +1782,65 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          {
             case "input":
             {
-            	const routes = field .getInputRoutes ();
+               const routes = field .getInputRoutes ();
 
-            	switch (routes .size)
-            	{
-            		case 0:
-            		{
-            			break
-            		}
-            		case 1:
-            		{
-            			for (const route of routes)
-            			{
-            				// Delete route.
+               switch (routes .size)
+               {
+                  case 0:
+                  {
+                     break
+                  }
+                  case 1:
+                  {
+                     for (const route of routes)
+                     {
+                        // Delete route.
 
-            				Editor .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField);
-            			}
+                        Editor .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField);
+                     }
 
-            			break;
-            		}
-            		default:
-            		{
-            			element .data ("full-expanded", true);
-            			element .jstree ("open_node", element);
-            			break;
-            		}
-            	}
+                     break;
+                  }
+                  default:
+                  {
+                     element .data ("full-expanded", true);
+                     element .jstree ("open_node", element);
+                     break;
+                  }
+               }
 
-            	break
+               break
             }
             case "output":
             {
-            	const routes = field .getOutputRoutes ();
+               const routes = field .getOutputRoutes ();
 
-            	switch (routes .size)
-            	{
-            		case 0:
-            		{
-            			break
-            		}
-            		case 1:
-            		{
-            			for (const route of routes)
-            			{
-            				// Delete route.
+               switch (routes .size)
+               {
+                  case 0:
+                  {
+                     break
+                  }
+                  case 1:
+                  {
+                     for (const route of routes)
+                     {
+                        // Delete route.
 
-            				Editor .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField);
-            			}
+                        Editor .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField);
+                     }
 
-            			break;
-            		}
-            		default:
-            		{
-            			element .data ("full-expanded", true);
-            			element .jstree ("open_node", element);
-            			break;
-            		}
-            	}
+                     break;
+                  }
+                  default:
+                  {
+                     element .data ("full-expanded", true);
+                     element .jstree ("open_node", element);
+                     break;
+                  }
+               }
 
-            	break;
+               break;
             }
          }
       }
@@ -1854,73 +1854,73 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          {
             case "input":
             {
-            	if (this .connector)
-            	{
-            		if (this .connector .type === type)
-            			break;
+               if (this .connector)
+               {
+                  if (this .connector .type === type)
+                     break;
 
-            		if (this .connector .executionContext !== executionContext)
-            			break;
+                  if (this .connector .executionContext !== executionContext)
+                     break;
 
-            		if (this .connector .field .getType () !== field .getType ())
-            			break;
+                  if (this .connector .field .getType () !== field .getType ())
+                     break;
 
                   if (this .connector .node .getField (this .connector .field .getName ()) .getFieldInterests () .has (node .getField (field .getName ())))
                      break;
 
-            		// Add route.
+                  // Add route.
 
-            		Editor .addRoute (executionContext, this .connector .node, this .connector .field .getName (), node, field .getName ());
+                  Editor .addRoute (executionContext, this .connector .node, this .connector .field .getName (), node, field .getName ());
 
-            		if (event .shiftKey)
-            			break;
+                  if (event .shiftKey)
+                     break;
 
-            		this .connector .element .find (".access-type img.active.output.activated")
-            			.removeClass ("activated");
+                  this .connector .element .find (".access-type img.active.output.activated")
+                     .removeClass ("activated");
 
-            		delete this .connector;
-            	}
-            	else
-            	{
-            		this .connector = { type, executionContext, node, field, element };
-            	}
+                  delete this .connector;
+               }
+               else
+               {
+                  this .connector = { type, executionContext, node, field, element };
+               }
 
-            	break
+               break
             }
             case "output":
             {
-            	if (this .connector)
-            	{
-            		if (this .connector .type === type)
-            			break;
+               if (this .connector)
+               {
+                  if (this .connector .type === type)
+                     break;
 
-            		if (this .connector .executionContext !== executionContext)
-            			break;
+                  if (this .connector .executionContext !== executionContext)
+                     break;
 
-            		if (this .connector .field .getType () !== field .getType ())
-            			break;
+                  if (this .connector .field .getType () !== field .getType ())
+                     break;
 
                   if (node .getField (field .getName ()) .getFieldInterests () .has (this .connector .node .getField (this .connector .field .getName ())))
                      break;
 
-            		// Add route.
+                  // Add route.
 
-            		Editor .addRoute (executionContext, node, field .getName (), this .connector .node, this .connector .field .getName ());
+                  Editor .addRoute (executionContext, node, field .getName (), this .connector .node, this .connector .field .getName ());
 
-            		if (event .shiftKey)
-            			break;
+                  if (event .shiftKey)
+                     break;
 
-            		this .connector .element .find (".access-type img.active.input.activated")
-            			.removeClass ("activated");
+                  this .connector .element .find (".access-type img.active.input.activated")
+                     .removeClass ("activated");
 
-            		delete this .connector;
-            	}
-            	else
-            	{
-            		this .connector = { type, executionContext, node, field, element };
-            	}
+                  delete this .connector;
+               }
+               else
+               {
+                  this .connector = { type, executionContext, node, field, element };
+               }
 
-            	break;
+               break;
             }
          }
       }

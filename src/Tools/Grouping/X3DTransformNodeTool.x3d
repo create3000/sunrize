@@ -1635,18 +1635,18 @@ function scaleTransformAxis (axis, value, sgn)
 
 function connectAxes (axis, vector, offset)
 {
-	for (const connectedAxis of connectedAxes)
-	{
-		const
-			lhs = connectedAxis [0] .toLowerCase (),
-			rhs = connectedAxis [1] .toLowerCase ();
+   for (const connectedAxis of connectedAxes)
+   {
+      const
+         lhs = connectedAxis [0] .toLowerCase (),
+         rhs = connectedAxis [1] .toLowerCase ();
 
-		if (rhs !== axis)
+      if (rhs !== axis)
          continue;
 
-		vector [lhs] = vector [rhs];
-		offset [lhs] = offset [rhs];
-	}
+      vector [lhs] = vector [rhs];
+      offset [lhs] = offset [rhs];
+   }
 }
 
 function scaleTransformUniform (value, sgn, centerOffset, axis)

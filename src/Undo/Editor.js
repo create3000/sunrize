@@ -2771,7 +2771,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       node = node .valueOf ();
 
-		const
+      const
          instance  = node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance),
          name      = field .getName (),
          auxillary = field .create ();
@@ -2779,7 +2779,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       auxillary .setUnit (field .getUnit ());
       auxillary .fromString (string, executionContext);
 
-		if (auxillary .equals (field))
+      if (auxillary .equals (field))
       {
          field .addEvent ();
          return;
@@ -2827,7 +2827,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       auxillary .setValue (value);
 
-		if (auxillary .equals (field))
+      if (auxillary .equals (field))
       {
          field .addEvent ();
          return;

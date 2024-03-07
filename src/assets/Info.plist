@@ -15,7 +15,7 @@
         <string>model/x3d+xml</string>
       </array>
       <key>CFBundleTypeName</key>
-			<string>X3D Model (XML Encoding)</string>
+      <string>X3D Model (XML Encoding)</string>
       <key>CFBundleTypeIconFile</key>
       <string>electron.icns</string>
       <key>CFBundleTypeRole</key>
@@ -24,12 +24,12 @@
       <string>Owner</string>
       <key>LSIsAppleDefaultForType</key>
       <true/>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>io.github.create3000.x3d</string>
-				<string>io.castleengine.view3dscene.x3d</string>
-				<string>public.data</string>
-			</array>
+      <key>LSItemContentTypes</key>
+      <array>
+        <string>io.github.create3000.x3d</string>
+        <string>io.castleengine.view3dscene.x3d</string>
+        <string>public.data</string>
+      </array>
     </dict>
     <dict>
       <key>CFBundleTypeExtensions</key>
@@ -45,7 +45,7 @@
         <string>application/gzip</string>
       </array>
       <key>CFBundleTypeName</key>
-			<string>X3D Model (XML Encoding)</string>
+      <string>X3D Model (XML Encoding)</string>
       <key>CFBundleTypeIconFile</key>
       <string>electron.icns</string>
       <key>CFBundleTypeRole</key>
@@ -54,12 +54,12 @@
       <string>Owner</string>
       <key>LSIsAppleDefaultForType</key>
       <true/>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>io.github.create3000.x3d</string>
-				<string>io.castleengine.view3dscene.x3d</string>
-				<string>public.data</string>
-			</array>
+      <key>LSItemContentTypes</key>
+      <array>
+        <string>io.github.create3000.x3d</string>
+        <string>io.castleengine.view3dscene.x3d</string>
+        <string>public.data</string>
+      </array>
     </dict>
     <dict>
       <key>CFBundleTypeExtensions</key>
@@ -72,7 +72,7 @@
         <string>model/x3d+vrml</string>
       </array>
       <key>CFBundleTypeName</key>
-			<string>X3D Model (Classic VRML Encoding)</string>
+      <string>X3D Model (Classic VRML Encoding)</string>
       <key>CFBundleTypeIconFile</key>
       <string>electron.icns</string>
       <key>CFBundleTypeRole</key>
@@ -81,12 +81,12 @@
       <string>Owner</string>
       <key>LSIsAppleDefaultForType</key>
       <true/>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>io.github.create3000.x3dv</string>
-				<string>io.castleengine.view3dscene.x3dv</string>
-				<string>public.data</string>
-			</array>
+      <key>LSItemContentTypes</key>
+      <array>
+        <string>io.github.create3000.x3dv</string>
+        <string>io.castleengine.view3dscene.x3dv</string>
+        <string>public.data</string>
+      </array>
     </dict>
     <dict>
       <key>CFBundleTypeExtensions</key>
@@ -102,7 +102,7 @@
         <string>application/gzip</string>
       </array>
       <key>CFBundleTypeName</key>
-			<string>X3D Model (Classic VRML Encoding)</string>
+      <string>X3D Model (Classic VRML Encoding)</string>
       <key>CFBundleTypeIconFile</key>
       <string>electron.icns</string>
       <key>CFBundleTypeRole</key>
@@ -111,12 +111,12 @@
       <string>Owner</string>
       <key>LSIsAppleDefaultForType</key>
       <true/>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>io.github.create3000.x3dv</string>
-				<string>io.castleengine.view3dscene.x3dv</string>
-				<string>public.data</string>
-			</array>
+      <key>LSItemContentTypes</key>
+      <array>
+        <string>io.github.create3000.x3dv</string>
+        <string>io.castleengine.view3dscene.x3dv</string>
+        <string>public.data</string>
+      </array>
     </dict>
     <dict>
       <key>CFBundleTypeExtensions</key>
@@ -129,7 +129,7 @@
         <string>model/x3d+json</string>
       </array>
       <key>CFBundleTypeName</key>
-			<string>X3D Model (JSON Encoding)</string>
+      <string>X3D Model (JSON Encoding)</string>
       <key>CFBundleTypeIconFile</key>
       <string>electron.icns</string>
       <key>CFBundleTypeRole</key>
@@ -138,12 +138,12 @@
       <string>Owner</string>
       <key>LSIsAppleDefaultForType</key>
       <true/>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>io.github.create3000.x3dj</string>
-				<string>io.castleengine.view3dscene.x3dj</string>
-				<string>public.data</string>
-			</array>
+      <key>LSItemContentTypes</key>
+      <array>
+        <string>io.github.create3000.x3dj</string>
+        <string>io.castleengine.view3dscene.x3dj</string>
+        <string>public.data</string>
+      </array>
     </dict>
     <dict>
       <key>CFBundleTypeExtensions</key>
@@ -159,7 +159,7 @@
         <string>application/gzip</string>
       </array>
       <key>CFBundleTypeName</key>
-			<string>X3D Model (JSON Encoding)</string>
+      <string>X3D Model (JSON Encoding)</string>
       <key>CFBundleTypeIconFile</key>
       <string>electron.icns</string>
       <key>CFBundleTypeRole</key>
@@ -168,12 +168,12 @@
       <string>Owner</string>
       <key>LSIsAppleDefaultForType</key>
       <true/>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>io.github.create3000.x3dj</string>
-				<string>io.castleengine.view3dscene.x3dj</string>
-				<string>public.data</string>
-			</array>
+      <key>LSItemContentTypes</key>
+      <array>
+        <string>io.github.create3000.x3dj</string>
+        <string>io.castleengine.view3dscene.x3dj</string>
+        <string>public.data</string>
+      </array>
     </dict>
     <dict>
       <key>CFBundleTypeExtensions</key>
@@ -189,7 +189,7 @@
         <string>x-world/x-vrml</string>
       </array>
       <key>CFBundleTypeName</key>
-			<string>VRML Document</string>
+      <string>VRML Document</string>
       <key>CFBundleTypeIconFile</key>
       <string>electron.icns</string>
       <key>CFBundleTypeRole</key>
@@ -198,12 +198,12 @@
       <string>Owner</string>
       <key>LSIsAppleDefaultForType</key>
       <true/>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>io.github.create3000.vrml</string>
-				<string>io.castleengine.view3dscene.vrml</string>
-				<string>public.data</string>
-			</array>
+      <key>LSItemContentTypes</key>
+      <array>
+        <string>io.github.create3000.vrml</string>
+        <string>io.castleengine.view3dscene.vrml</string>
+        <string>public.data</string>
+      </array>
     </dict>
     <dict>
       <key>CFBundleTypeExtensions</key>
@@ -220,7 +220,7 @@
         <string>application/gzip</string>
       </array>
       <key>CFBundleTypeName</key>
-			<string>VRML Document</string>
+      <string>VRML Document</string>
       <key>CFBundleTypeIconFile</key>
       <string>electron.icns</string>
       <key>CFBundleTypeRole</key>
@@ -229,12 +229,12 @@
       <string>Owner</string>
       <key>LSIsAppleDefaultForType</key>
       <true/>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>io.github.create3000.vrml</string>
-				<string>io.castleengine.view3dscene.vrml</string>
-				<string>public.data</string>
-			</array>
+      <key>LSItemContentTypes</key>
+      <array>
+        <string>io.github.create3000.vrml</string>
+        <string>io.castleengine.view3dscene.vrml</string>
+        <string>public.data</string>
+      </array>
     </dict>
     <dict>
       <key>CFBundleTypeExtensions</key>

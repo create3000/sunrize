@@ -1451,7 +1451,7 @@ module .exports = class OutlineView extends Interface
          {
             case X3D .X3DConstants .initializeOnly:
             {
-            	break;
+               break;
             }
             case X3D .X3DConstants .inputOnly:
             {
@@ -1535,7 +1535,7 @@ module .exports = class OutlineView extends Interface
                if (field .getOutputRoutes () .size)
                   outputRoutesSelector .attr ("href", "#");
 
-            	break;
+               break;
             }
          }
 
@@ -1553,7 +1553,7 @@ module .exports = class OutlineView extends Interface
          {
             case X3D .X3DConstants .initializeOnly:
             {
-            	break;
+               break;
             }
             case X3D .X3DConstants .inputOnly:
             {
@@ -1562,7 +1562,7 @@ module .exports = class OutlineView extends Interface
                   .attr ("src", this .getAccessTypeImage (field, "input"))
                   .appendTo (accessType);
 
-            	break;
+               break;
             }
             case X3D .X3DConstants .outputOnly:
             {
@@ -1571,7 +1571,7 @@ module .exports = class OutlineView extends Interface
                   .attr ("src", this .getAccessTypeImage (field, "output"))
                   .appendTo (accessType);
 
-            	break;
+               break;
             }
             case X3D .X3DConstants .inputOutput:
             {
@@ -1710,11 +1710,11 @@ module .exports = class OutlineView extends Interface
          {
             case "input":
             {
-            	return "../images/OutlineEditor/AccessTypes/inputOnly.active.png"
+               return "../images/OutlineEditor/AccessTypes/inputOnly.active.png"
             }
             case "output":
             {
-            	return "../images/OutlineEditor/AccessTypes/outputOnly.active.png"
+               return "../images/OutlineEditor/AccessTypes/outputOnly.active.png"
             }
          }
       }
@@ -1726,15 +1726,15 @@ module .exports = class OutlineView extends Interface
          {
             switch (field .getInputRoutes () .size)
             {
-            	case 0:
-            		accessTypeImage += ".0"
-            		break
-            	case 1:
-            		accessTypeImage += ".1"
-            		break
-            	default:
-            		accessTypeImage += ".2"
-            		break
+               case 0:
+                  accessTypeImage += ".0"
+                  break
+               case 1:
+                  accessTypeImage += ".1"
+                  break
+               default:
+                  accessTypeImage += ".2"
+                  break
             }
          }
 
@@ -1742,15 +1742,15 @@ module .exports = class OutlineView extends Interface
          {
             switch (field .getOutputRoutes () .size)
             {
-            	case 0:
-            		accessTypeImage += ".0"
-            		break
-            	case 1:
-            		accessTypeImage += ".1"
-            		break
-            	default:
-            		accessTypeImage += ".2"
-            		break
+               case 0:
+                  accessTypeImage += ".0"
+                  break
+               case 1:
+                  accessTypeImage += ".1"
+                  break
+               default:
+                  accessTypeImage += ".2"
+                  break
             }
          }
 
@@ -3307,18 +3307,18 @@ module .exports = class OutlineView extends Interface
       return this .objects .get (parseInt (element .attr ("field-id")));
    }
 
-	getRoute (element, routes)
-	{
-		const id = parseInt (element .attr ("route-id"));
+   getRoute (element, routes)
+   {
+      const id = parseInt (element .attr ("route-id"));
 
-		for (const route of routes)
-		{
-			if (route .getId () === id)
-				return route;
-		}
+      for (const route of routes)
+      {
+         if (route .getId () === id)
+            return route;
+      }
 
-		return null;
-	}
+      return null;
+   }
 
    onresize ()
    {
@@ -3374,7 +3374,7 @@ module .exports = class OutlineView extends Interface
 
    addUrlField (button) { }
 
-	removeFieldButtons (buttons)
+   removeFieldButtons (buttons)
    {
       buttons .each ((i, e) => this .removeColorField ($(e)));
    }
@@ -3568,8 +3568,8 @@ module .exports = class OutlineView extends Interface
          if (element .data ("expanded"))
          {
             expanded .push ({
-            	path: path .join (":"),
-            	fullExpanded: element .data ("full-expanded"),
+               path: path .join (":"),
+               fullExpanded: element .data ("full-expanded"),
             });
          }
 

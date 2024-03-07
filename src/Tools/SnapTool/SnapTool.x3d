@@ -108,42 +108,42 @@ var zAxis = new SFVec3f (0, 0, 1);
 
 function initialize ()
 {
-	set_type (type, 0);
-	set_normal (normal, 0);
+   set_type (type, 0);
+   set_normal (normal, 0);
 }
 
 function set_type (value, time)
 {
-	if (snapped)
-	{
-		appearance .material = snapMaterial;
-	}
-	else
-	{
-		switch (type)
-		{
-			case "SNAP_SOURCE":
-			{
-				appearance .material = sourceMaterial;
-				break;
-			}
-			default: // "SNAP_TARGET"
-			{
-				appearance .material = targetMaterial;
-				break;
-			}
-		}
-	}
+   if (snapped)
+   {
+      appearance .material = snapMaterial;
+   }
+   else
+   {
+      switch (type)
+      {
+         case "SNAP_SOURCE":
+         {
+            appearance .material = sourceMaterial;
+            break;
+         }
+         default: // "SNAP_TARGET"
+         {
+            appearance .material = targetMaterial;
+            break;
+         }
+      }
+   }
 }
 
 function set_normal (value, time)
 {
-	tool .rotation = new SFRotation (zAxis, value);
+   tool .rotation = new SFRotation (zAxis, value);
 }
 
 function set_snapped (value, time)
 {
-	set_type (type);
+   set_type (type);
 }
 ]]>
         </Script>

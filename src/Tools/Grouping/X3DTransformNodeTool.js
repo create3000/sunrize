@@ -189,21 +189,21 @@ class X3DTransformNodeTool extends X3DChildNodeTool
          scale            = new X3D .Vector3 (1, 1, 1),
          scaleOrientation = new X3D .Rotation4 ();
 
-		matrix .get (translation, rotation, scale, scaleOrientation);
+      matrix .get (translation, rotation, scale, scaleOrientation);
 
-		if (!this .tool .tools .includes ("TRANSLATE"))
-			translation .set (0, 0, 0);
+      if (!this .tool .tools .includes ("TRANSLATE"))
+         translation .set (0, 0, 0);
 
-		if (!this .tool .tools .includes ("ROTATE"))
-			rotation .set (0, 0, 1, 0);
+      if (!this .tool .tools .includes ("ROTATE"))
+         rotation .set (0, 0, 1, 0);
 
-		if (!this .tool .tools .includes ("SCALE"))
+      if (!this .tool .tools .includes ("SCALE"))
       {
-			scale .set (1, 1, 1);
-			scaleOrientation .set (0, 0, 1, 0);
+         scale .set (1, 1, 1);
+         scaleOrientation .set (0, 0, 1, 0);
       }
 
-		matrix .set (translation, rotation, scale, scaleOrientation);
+      matrix .set (translation, rotation, scale, scaleOrientation);
 
       if (keepCenter)
          this .setMatrixKeepCenter (matrix);
@@ -217,9 +217,9 @@ class X3DTransformNodeTool extends X3DChildNodeTool
          .add (this ._translation .getValue ())
          .subtract (matrix .origin);
 
-		matrix .copy () .inverse () .multDirMatrix (center);
+      matrix .copy () .inverse () .multDirMatrix (center);
 
-		this .setMatrixWithCenter (matrix, center);
+      this .setMatrixWithCenter (matrix, center);
    }
 
    setMatrixWithCenter (matrix, center = this ._center .getValue ())

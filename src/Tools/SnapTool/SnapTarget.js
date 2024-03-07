@@ -298,12 +298,12 @@ class SnapTarget extends X3DSnapNodeTool
 
       const handle = SnapTarget .#scaleHandles [transformTool .tool .activeHandle];
 
-		const currentMatrix = handle < 6
+      const currentMatrix = handle < 6
          ? this .getScaleMatrix (transformTool, handle)
          : this .getUniformScaleMatrix (transformTool, handle - 6);
 
-		if (!currentMatrix)
-			return;
+      if (!currentMatrix)
+         return;
 
       transformTool .setUserData (this .#changing, true);
 
