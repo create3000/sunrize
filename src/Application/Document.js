@@ -699,6 +699,7 @@ Viewpoint {
          grid = this .#grids .get (typeName) ?? new Tool (this .browser .currentScene),
          tool = await grid .getToolInstance ();
 
+      grid ._visible .addInterest ("updateMenu", this);
       tool .getField ("isActive") .addInterest ("set_gridTool_active", this, typeName);
 
       if (visible)
@@ -710,8 +711,6 @@ Viewpoint {
       this .#grids .set (typeName, grid);
 
       grid ._visible = visible;
-
-      this .updateMenu ();
 
       if (saveNeeded)
       {
