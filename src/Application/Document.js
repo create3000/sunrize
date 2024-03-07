@@ -702,10 +702,17 @@ Viewpoint {
       grid ._visible .addInterest ("updateMenu", this);
       tool .getField ("isActive") .addInterest ("handleUndoForGrid", this, typeName);
 
+      UndoManager .shared .beginUndo (_ ("Change Visibility of %s"), typeName);
+
       if (visible)
       {
          for (const [typeName, grid] of this .#grids)
-            grid ._visible = false;
+         {
+            if (undo)
+               Editor .setFieldValue (this .browser .currentScene, grid .tool .getValue (), grid ._visible, false);
+            else
+               grid ._visible = false;
+         }
       }
 
       this .#grids .set (typeName, grid);
@@ -714,6 +721,8 @@ Viewpoint {
          Editor .setFieldValue (this .browser .currentScene, grid .tool .getValue (), grid ._visible, visible);
       else
          grid ._visible = visible;
+
+      UndoManager .shared .endUndo ();
    }
 
    async handleUndoForGrid (typeName)
