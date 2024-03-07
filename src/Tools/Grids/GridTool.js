@@ -6,11 +6,6 @@ const
 
 class GridTool extends X3DGridNodeTool
 {
-   constructor (executionContext)
-   {
-      super (executionContext);
-   }
-
    async initializeTool ()
    {
       await super .initializeTool (__dirname, "GridTool.x3d");

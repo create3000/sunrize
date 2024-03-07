@@ -37,6 +37,8 @@ module .exports = class Document extends Interface
     */
    async initialize ()
    {
+      this .browser ._activeLayer .addInterest ("set_activeLayer", this);
+
       // Restore
 
       await this .restoreFile ();
@@ -128,12 +130,6 @@ module .exports = class Document extends Interface
          .on ("mouseup",   event => this .onmouseup   (event));
    }
 
-   static #Grids = [
-      "GridTool",
-      "AngleGridTool",
-      "AxonometricGridTool",
-   ];
-
    configure ()
    {
       this .config .file .setDefaultValues ({
@@ -159,17 +155,6 @@ module .exports = class Document extends Interface
 
       this .#grids      .clear ();
       this .#gridFields .clear ();
-
-      if (this .browser .currentScene !== this .initialScene)
-      {
-         for (const typeName of Document .#Grids)
-         {
-            const config = this .config .file .addNameSpace (`${typeName}.`);
-
-            if (config .visible)
-               this .activateGridTool (typeName, true);
-         }
-      }
 
       // Remove Snap Target and Snap Source.
 
@@ -458,7 +443,7 @@ Viewpoint {
 
       clearTimeout (this .#saveTimeoutId);
 
-      this .#saveTimeoutId = setTimeout (() => this .saveFile (), 1000);
+      this .#saveTimeoutId = setTimeout (() => this .saveFile (false), 1000);
    }
 
    exportAs (filePath)
@@ -468,7 +453,7 @@ Viewpoint {
 
    close ()
    {
-      this .saveFile ();
+      this .saveFile (false);
 
       electron .ipcRenderer .sendToHost ("closed");
    }
@@ -683,30 +668,56 @@ Viewpoint {
       }
    }
 
+   static #Grids = [
+      "GridTool",
+      "AngleGridTool",
+      "AxonometricGridTool",
+   ];
+
    #grids      = new Map ();
    #gridFields = new Map ();
 
-   async activateGridTool (typeName, visible)
+   set_activeLayer ()
+   {
+      const configNode = Editor .getConfigNode (this .browser);
+
+      for (const typeName of Document .#Grids)
+      {
+         const [visible = false] = configNode ?.getMetaData (`Sunrize/${typeName}/visible`) ?? [ ];
+
+         if (!this .#grids .has (typeName) && !visible)
+            continue;
+
+         this .activateGridTool (typeName, visible, false);
+      }
+   }
+
+   async activateGridTool (typeName, visible, saveNeeded = true)
    {
       const
-         Tool   = require (`../Tools/Grids/${typeName}`),
-         grid   = this .#grids .get (typeName) ?? new Tool (this .browser .currentScene),
-         config = this .config .file .addNameSpace (`${typeName}.`),
-         tool   = await grid .getToolInstance ();
+         Tool = require (`../Tools/Grids/${typeName}`),
+         grid = this .#grids .get (typeName) ?? new Tool (this .browser .currentScene),
+         tool = await grid .getToolInstance ();
 
-      for (const [typeName, grid] of this .#grids)
+      tool .getField ("isActive") .addInterest ("set_gridTool_active", this, typeName);
+
+      if (visible)
       {
-         grid ._visible = false;
-         this .config .file .addNameSpace (`${typeName}.`) .visible = false;
+         for (const [typeName, grid] of this .#grids)
+            grid ._visible = false;
       }
 
       this .#grids .set (typeName, grid);
-      grid ._visible   = visible;
-      config .visible = visible;
+
+      grid ._visible = visible;
 
       this .updateMenu ();
 
-      tool .getField ("isActive") .addInterest ("set_gridTool_active", this, typeName);
+      if (saveNeeded)
+      {
+         UndoManager .shared .saveNeeded = true;
+         UndoManager .shared .processInterests ();
+      }
    }
 
    async set_gridTool_active (typeName)

@@ -1304,11 +1304,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       event .stopImmediatePropagation ();
 
       const
-         target   = $(event .target),
-         element  = target .closest (".node", this .sceneGraph),
-         layer    = this .getNode (element),
-         layerSet = this .browser .getWorld () .getLayerSet (),
-         index    = layerSet ._layers .findIndex (node => node .getValue () === layer);
+         target    = $(event .target),
+         element   = target .closest (".node", this .sceneGraph),
+         layerNode = this .getNode (element),
+         layerSet  = this .browser .getWorld () .getLayerSet (),
+         index     = layerSet ._layers .findIndex (node => node ?.getValue () .valueOf () === layerNode);
 
       if (index < 0)
          return;

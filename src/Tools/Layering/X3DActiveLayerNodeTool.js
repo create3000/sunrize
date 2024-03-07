@@ -8,14 +8,11 @@ class X3DActiveLayerNodeTool extends X3DChildNodeTool
 {
    toolLayerNode = null;
 
-   get toolLayer0Node ()
-   {
-      return this .node .getBrowser () .getWorld () .getLayerSet () .getLayer0 ();
-   }
-
    constructor (executionContext)
    {
       const node = executionContext .createNode ("Group", false);
+
+      node ._visible = false;
 
       node .setup ();
 

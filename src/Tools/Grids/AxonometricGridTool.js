@@ -7,11 +7,6 @@ const
 
 class AxonometricGridTool extends X3DGridNodeTool
 {
-   constructor (executionContext)
-   {
-      super (executionContext);
-   }
-
    async initializeTool ()
    {
       await super .initializeTool (__dirname, "AxonometricGridTool.x3d");

@@ -1810,6 +1810,18 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
    /**
     *
+    * @param {X3DBrowser} browser
+    * @param {UndoManager} undoManager
+    */
+   static getConfigNode (browser, create = false, undoManager = UndoManager .shared)
+   {
+      return browser .getActiveLayer () === browser .getWorld () .getLayerSet () .getLayer0 ()
+         ? Editor .getWorldInfo (browser .currentScene, create, undoManager)
+         : browser .getActiveLayer ();
+   }
+
+   /**
+    *
     * @param {X3DExecutionContext} executionContext
     * @param {UndoManager} undoManager
     */

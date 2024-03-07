@@ -6,11 +6,6 @@ const
 
 class AngleGridTool extends X3DGridNodeTool
 {
-   constructor (executionContext)
-   {
-      super (executionContext);
-   }
-
    async initializeTool ()
    {
       await super .initializeTool (__dirname, "AngleGridTool.x3d");

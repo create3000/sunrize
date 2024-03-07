@@ -65,6 +65,7 @@
     </ProtoDeclare>
     <ProtoDeclare name='AxonometricGridTool'>
       <ProtoInterface>
+        <field accessType='inputOutput' type='SFBool' name='visible'/>
         <field accessType='inputOutput' type='SFVec3f' name='translation'/>
         <field accessType='inputOutput' type='SFRotation' name='rotation'/>
         <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>

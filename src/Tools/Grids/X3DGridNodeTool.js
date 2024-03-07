@@ -4,22 +4,19 @@ const
    X3DActiveLayerNodeTool = require ("../Layering/X3DActiveLayerNodeTool"),
    X3D                    = require ("../../X3D"),
    ActionKeys             = require ("../../Application/ActionKeys"),
-   Editor                 = require ("../../Undo/Editor.js");
+   Editor                 = require ("../../Undo/Editor.js"),
+   $                      = require ("jquery");
 
 class X3DGridNodeTool extends X3DActiveLayerNodeTool
 {
    #transformTools = [ ];
    #changing       = Symbol ();
 
-   constructor (executionContext)
-   {
-      super (executionContext);
-   }
-
    async initializeTool (... args)
    {
       await super .initializeTool (... args);
 
+      this .tool .getField ("visible") .addReference (this ._visible);
       this .tool .getField ("translation") .setUnit ("length");
 
       for (const field of this .tool .getValue () .getFields ())
@@ -97,17 +94,13 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 
       if (field .equals (this .tool .getFieldDefinition (field .getName ()) .value))
       {
-         const configNode = this .toolLayerNode === this .toolLayer0Node
-            ? Editor .getWorldInfo (this .getBrowser () .currentScene)
-            : this .toolLayerNode;
+         const configNode = Editor .getConfigNode (this .getBrowser ());
 
          configNode ?.removeMetaData (path);
       }
       else
       {
-         const configNode = this .toolLayerNode === this .toolLayer0Node
-            ? Editor .getWorldInfo (this .getBrowser () .currentScene, true)
-            : this .toolLayerNode;
+         const configNode = Editor .getConfigNode (this .getBrowser (), true);
 
          configNode .setMetaData (path, field);
       }
