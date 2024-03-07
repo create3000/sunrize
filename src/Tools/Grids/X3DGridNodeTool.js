@@ -63,9 +63,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
       if (!this .toolLayerNode)
          return;
 
-      const configNode = this .toolLayerNode === this .toolLayer0Node
-         ? Editor .getWorldInfo (this .getBrowser () .currentScene)
-         : this .toolLayerNode;
+      const configNode = Editor .getConfigNode (this .getBrowser ());
 
       for (const field of this .tool .getValue () .getFields ())
       {
