@@ -65,6 +65,10 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
       if (!this .toolLayerNode)
          return;
 
+      const configNode = this .toolLayerNode === this .toolLayer0Node
+         ? this .worldInfoNode
+         : this .toolLayerNode;
+
       for (const field of this .tool .getValue () .getFields ())
       {
          if (!field .isInitializable ())
@@ -79,7 +83,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 
          field .assign (this .tool .getFieldDefinition (field .getName ()) .value);
 
-         this .toolLayerNode .getMetaData (`Sunrize/${this .tool .getNodeTypeName ()}/${field .getName ()}`, field);
+         configNode ?.getMetaData (`Sunrize/${this .tool .getNodeTypeName ()}/${field .getName ()}`, field);
       }
    }
 
@@ -88,14 +92,16 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
       if (!this .toolLayerNode)
          return;
 
-      if (field .equals (this .tool .getFieldDefinition (field .getName ()) .value))
-         return;
-
       const configNode = this .toolLayerNode === this .toolLayer0Node
          ? this .worldInfoNode
          : this .toolLayerNode;
 
-      this .toolLayerNode .setMetaData (`Sunrize/${this .tool .getNodeTypeName ()}/${field .getName ()}`, field);
+      const path = `Sunrize/${this .tool .getNodeTypeName ()}/${field .getName ()}`;
+
+      if (field .equals (this .tool .getFieldDefinition (field .getName ()) .value))
+         configNode ?.removeMetaData (path);
+      else
+         configNode ?.setMetaData (path, field);
    }
 
    set_transform_tools ()
