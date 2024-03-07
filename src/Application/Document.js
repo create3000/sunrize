@@ -692,7 +692,7 @@ Viewpoint {
       }
    }
 
-   async activateGridTool (typeName, visible, saveNeeded = true)
+   async activateGridTool (typeName, visible, undo = true)
    {
       const
          Tool = require (`../Tools/Grids/${typeName}`),
@@ -700,7 +700,7 @@ Viewpoint {
          tool = await grid .getToolInstance ();
 
       grid ._visible .addInterest ("updateMenu", this);
-      tool .getField ("isActive") .addInterest ("set_gridTool_active", this, typeName);
+      tool .getField ("isActive") .addInterest ("handleUndoForGrid", this, typeName);
 
       if (visible)
       {
@@ -710,16 +710,13 @@ Viewpoint {
 
       this .#grids .set (typeName, grid);
 
-      grid ._visible = visible;
-
-      if (saveNeeded)
-      {
-         UndoManager .shared .saveNeeded = true;
-         UndoManager .shared .processInterests ();
-      }
+      if (undo)
+         Editor .setFieldValue (this .browser .currentScene, grid .tool .getValue (), grid ._visible, visible);
+      else
+         grid ._visible = visible;
    }
 
-   async set_gridTool_active (typeName)
+   async handleUndoForGrid (typeName)
    {
       const
          grid = this .#grids .get (typeName),
