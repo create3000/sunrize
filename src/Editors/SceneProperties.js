@@ -470,8 +470,8 @@ module .exports = new class SceneProperties extends Dialog
    toggleWorldInfo ()
    {
       if (this .worldInfo .inputs .checkbox .prop ("checked"))
-         Editor .insertValueIntoArray (this .executionContext, this .executionContext, this .executionContext .rootNodes, 0, this .executionContext .createNode ("WorldInfo"))
+         Editor .addWorldInfo (this .executionContext);
       else
-         Editor .removeWorldInfo (this .executionContext, this .worldInfoNode)
+         Editor .removeWorldInfo (this .executionContext, this .worldInfoNode);
    }
 }

@@ -3,7 +3,8 @@
 const
    X3DActiveLayerNodeTool = require ("../Layering/X3DActiveLayerNodeTool"),
    X3D                    = require ("../../X3D"),
-   ActionKeys             = require ("../../Application/ActionKeys");
+   ActionKeys             = require ("../../Application/ActionKeys"),
+   Editor                 = require ("../../Undo/Editor.js");
 
 class X3DGridNodeTool extends X3DActiveLayerNodeTool
 {
@@ -66,7 +67,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
          return;
 
       const configNode = this .toolLayerNode === this .toolLayer0Node
-         ? this .worldInfoNode
+         ? Editor .getWorldInfo (this .getBrowser () .currentScene)
          : this .toolLayerNode;
 
       for (const field of this .tool .getValue () .getFields ())
@@ -92,16 +93,24 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
       if (!this .toolLayerNode)
          return;
 
-      const configNode = this .toolLayerNode === this .toolLayer0Node
-         ? this .worldInfoNode
-         : this .toolLayerNode;
-
       const path = `Sunrize/${this .tool .getNodeTypeName ()}/${field .getName ()}`;
 
       if (field .equals (this .tool .getFieldDefinition (field .getName ()) .value))
+      {
+         const configNode = this .toolLayerNode === this .toolLayer0Node
+            ? Editor .getWorldInfo (this .getBrowser () .currentScene)
+            : this .toolLayerNode;
+
          configNode ?.removeMetaData (path);
+      }
       else
-         configNode ?.setMetaData (path, field);
+      {
+         const configNode = this .toolLayerNode === this .toolLayer0Node
+            ? Editor .getWorldInfo (this .getBrowser () .currentScene, true)
+            : this .toolLayerNode;
+
+         configNode .setMetaData (path, field);
+      }
    }
 
    set_transform_tools ()

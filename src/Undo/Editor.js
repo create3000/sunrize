@@ -1811,41 +1811,41 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    /**
     *
     * @param {X3DExecutionContext} executionContext
-    * @param {WorldInfo} worldInfo
-    * @param {UndoManger} undoManager
+    * @param {UndoManager} undoManager
     */
-   static #addWorldInfo (executionContext, worldInfo, undoManager = UndoManager .shared)
+   static getWorldInfo (executionContext, create = false, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_("Add World Info"));
+      if (executionContext .getWorldInfos () .length)
+         return executionContext .getWorldInfos () .at (-1) .getValue ();
 
-      executionContext .addWorldInfo (worldInfo);
+      if (create)
+         return this .addWorldInfo (executionContext, undoManager);
 
-      undoManager .registerUndo (() =>
-      {
-         this .#removeWorldInfo (executionContext, worldInfo, undoManager);
-      });
-
-      undoManager .endUndo ();
+      return null;
    }
 
    /**
     *
     * @param {X3DExecutionContext} executionContext
-    * @param {WorldInfo} worldInfo
-    * @param {UndoManger} undoManager
+    * @param {UndoManager} undoManager
+    * @returns {WorldInfo}
     */
-    static #removeWorldInfo (executionContext, worldInfo, undoManager = UndoManager .shared)
+   static addWorldInfo (executionContext, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_("Remove World Info"));
+      const
+         worldInfoNode = executionContext .createNode ("WorldInfo"),
+         fileURL       = new URL (executionContext .getWorldURL ());
 
-      executionContext .removeWorldInfo (worldInfo);
+      if (fileURL .protocol === "file:")
+         worldInfoNode .title = path .parse (url .fileURLToPath (fileURL)) .name;
 
-      undoManager .registerUndo (() =>
-      {
-         this .#addWorldInfo (executionContext, worldInfo, undoManager);
-      });
+      undoManager .beginUndo (_("Add WorldInfo Node"));
+
+      this .insertValueIntoArray (executionContext, executionContext, executionContext .rootNodes, 0, worldInfoNode, undoManager);
 
       undoManager .endUndo ();
+
+      return worldInfoNode .getValue ();
    }
 
    /**
@@ -1854,12 +1854,11 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     * @param {WorldInfo} worldInfo
     * @param {UndoManager} undoManager
     */
-   static removeWorldInfo (executionContext, worldInfo, undoManager = UndoManager .shared)
+   static removeWorldInfo (executionContext, worldInfoNode, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_("Remove World Info"));
+      undoManager .beginUndo (_("Remove WorldInfo Node"));
 
-      this .removeNode (executionContext, worldInfo, undoManager);
-      this .#removeWorldInfo (executionContext, worldInfo, undoManager);
+      this .removeNode (executionContext, worldInfoNode, undoManager);
 
       undoManager .endUndo ();
    }
@@ -1882,7 +1881,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          {
             for (let i = node .rootNodes .length - 1; i >= 0; -- i)
             {
-               if (node .rootNodes [i] ?.getValue () .valueOf () === remove .valueOf ())
+               if (node .rootNodes [i] ?.getValue () .valueOf () === remove)
                   this .removeValueFromArray (node, node, node .rootNodes, i, undoManager);
             }
          }
@@ -1894,7 +1893,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                {
                   case X3D .X3DConstants .SFNode:
                   {
-                     if (field .getValue () .valueOf () === remove .valueOf ())
+                     if (field .getValue () ?.valueOf () === remove)
                         this .setFieldValue (node .getExecutionContext (), node, field, null, undoManager);
 
                      break;
@@ -1903,7 +1902,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   {
                      for (let i = field .length - 1; i >= 0; -- i)
                      {
-                        if (field [i] ?.getValue () .valueOf () === remove .valueOf ())
+                        if (field [i] ?.getValue () .valueOf () === remove)
                            this .removeValueFromArray (node .getExecutionContext (), node, field, i, undoManager);
                      }
 
