@@ -37,7 +37,7 @@ module .exports = class Document extends Interface
     */
    async initialize ()
    {
-      this .browser ._activeLayer .addInterest ("set_activeLayer", this);
+      this .browser ._activeLayer .addInterest ("toggleGrids", this);
 
       // Restore
 
@@ -677,7 +677,7 @@ Viewpoint {
    #grids      = new Map ();
    #gridFields = new Map ();
 
-   set_activeLayer ()
+   toggleGrids ()
    {
       const configNode = Editor .getConfigNode (this .browser);
 
