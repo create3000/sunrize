@@ -919,7 +919,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       undoManager .beginUndo (_("Rename Node to »%s«"), name);
 
-      executionContext .updateNamedNode (name, node .valueOf ());
+      executionContext .updateNamedNode (name, node);
 
       undoManager .registerUndo (() =>
       {
@@ -1091,7 +1091,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       if (oldExportedName)
          scene .removeExportedNode (oldExportedName);
 
-      scene .updateExportedNode (exportedName, node .valueOf ());
+      scene .updateExportedNode (exportedName, node);
 
       undoManager .registerUndo (() =>
       {
@@ -2670,6 +2670,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static getModelMatrices (executionContext, layerNode, node, addSelf = false)
    {
+      node = node .valueOf ();
+
       const
          hierarchies   = Traverse .find (executionContext, node, Traverse .ROOT_NODES),
          modelMatrices = [ ];
@@ -2692,7 +2694,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             if (!object .getType () .includes (X3D .X3DConstants .X3DTransformMatrix3DNode))
                continue;
 
-            if (object .valueOf () === node .valueOf () && !addSelf)
+            if (object .valueOf () === node && !addSelf)
                continue;
 
             modelMatrix .multRight (object .getMatrix ());
@@ -3030,4 +3032,4 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          }
       });
    }
-}
+};
