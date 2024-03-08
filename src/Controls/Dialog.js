@@ -57,7 +57,9 @@ module .exports = class Dialog extends Interface
    open ()
    {
       this .element .dialog ({
-         position: { ...this .config .file .position, of: $("body") },
+         position: { ... this .config .file .position, of: $("body") },
+         minWidth: this .config .file .getDefaultValue ("size") [0],
+         minHeight: this .config .file .getDefaultValue ("size") [1],
          width: this .config .file .size [0],
          height: this .config .file .size [1],
       })
