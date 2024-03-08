@@ -75,6 +75,7 @@ module .exports = new class BrowserFrame extends Dialog
          .appendTo (this .table .body);
 
       this .backgroundColor = $("<input></input>")
+         .attr ("title", "A background color which is applied to the <x3d-canvas> element.")
          .attr ("placeholder", "Enter any CSS color here.")
          .on ("change", () => this .onchange ());
 
