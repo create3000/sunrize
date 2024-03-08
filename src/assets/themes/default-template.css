@@ -541,6 +541,7 @@ tr.disabled ~ tr > td > div {
   left: 50%;
   top: 50%;
   transform: translate(-50%,-50%);
+  background-color: var(--system-gray7);
 }
 
 #secondary-toolbar {
