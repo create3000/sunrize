@@ -616,10 +616,10 @@ module .exports = class Application
             label: "Layout",
             submenu: [
                {
-                  label: _("Browser Size..."),
+                  label: _("Browser Frame..."),
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("browser-size");
+                     this .mainWindow .webContents .send ("browser-frame");
                   },
                },
                { type: "separator" },

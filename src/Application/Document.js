@@ -90,7 +90,7 @@ module .exports = class Document extends Interface
 
       // Layout Menu
 
-      electron .ipcRenderer .on ("browser-size", () => this .browserSize .open ());
+      electron .ipcRenderer .on ("browser-frame", () => this .browserSize .open ());
       electron .ipcRenderer .on ("grid-tool", (event, typeName, visible) => this .activateGridTool (typeName, visible));
       electron .ipcRenderer .on ("grid-options", () => this .showGridOptions ());
 
@@ -103,7 +103,7 @@ module .exports = class Document extends Interface
       // Browser Size
 
       this .fullname       = await electron .ipcRenderer .invoke ("fullname");
-      this .browserSize    = require ("../Editors/BrowserSize");
+      this .browserSize    = require ("../Editors/BrowserFrame");
       this .resizeObserver = new ResizeObserver (() => this .onresize ());
 
       this .resizeObserver .observe ($("#browser-frame") [0]);
@@ -647,13 +647,14 @@ Viewpoint {
    {
       const
          worldInfoNode                    = Editor .getWorldInfo (this .browser .currentScene),
-         [enabled = false]                = worldInfoNode ?.getMetaData ("Sunrize/BrowserSize/enabled") ?? [ ],
-         [numerator = 1, denominator = 1] = worldInfoNode ?.getMetaData ("Sunrize/BrowserSize/aspectRatio") ?? [ ],
+         [fixedSize = false]              = worldInfoNode ?.getMetaData ("Sunrize/BrowserFrame/fixedSize") ?? [ ],
+         [numerator = 1, denominator = 1] = worldInfoNode ?.getMetaData ("Sunrize/BrowserFrame/aspectRatio") ?? [ ],
+         [backgroundColor = ""]           = worldInfoNode ?.getMetaData ("Sunrize/BrowserFrame/backgroundColor") ?? [ ],
          aspectRatio                      = numerator / denominator,
          frameAspectRatio                 = $("#browser-frame") .width () / $("#browser-frame") .height (),
          element                          = $(this .browser .element);
 
-      if (enabled && aspectRatio)
+      if (fixedSize && aspectRatio)
       {
          element .css ({ "aspect-ratio": `${numerator} / ${denominator}` });
 
@@ -666,6 +667,8 @@ Viewpoint {
       {
          element .css ({ "aspect-ratio": "unset", "width": "100%", "height": "100%" });
       }
+
+      element .css ("background-color", backgroundColor);
    }
 
    static #Grids = [

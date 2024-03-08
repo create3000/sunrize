@@ -91,7 +91,7 @@ module .exports = new class Tabs
       this .forwardToActiveTab ("display-timings");
       this .forwardToActiveTab ("show-library");
 
-      this .forwardToActiveTab ("browser-size");
+      this .forwardToActiveTab ("browser-frame");
       this .forwardToActiveTab ("grid-tool");
       this .forwardToActiveTab ("grid-options");
       this .forwardToActiveTab ("activate-snap-target");

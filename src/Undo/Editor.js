@@ -3032,4 +3032,23 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          }
       });
    }
+
+   /**
+    *
+    * @param {function} callback
+    * @param {UndoManager} undoManager
+    */
+   static deferFunction (callback, undoManager = UndoManager .shared)
+   {
+      undoManager .beginUndo (_("Defer Function"));
+
+      undoManager .defer (callback, callback);
+
+      undoManager .registerUndo (() =>
+      {
+         this .deferFunction (callback, undoManager);
+      });
+
+      undoManager .endUndo ();
+   }
 };
