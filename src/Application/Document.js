@@ -646,12 +646,12 @@ Viewpoint {
    onresize ()
    {
       const
-         enabled          = this .browserSize .config .file .enabled,
-         numerator        = this .browserSize .config .file .numerator,
-         denominator      = this .browserSize .config .file .denominator,
-         aspectRatio      = numerator / denominator,
-         frameAspectRatio = $("#browser-frame") .width () / $("#browser-frame") .height (),
-         element          = $(this .browser .element);
+         worldInfoNode                    = Editor .getWorldInfo (this .browser .currentScene),
+         [enabled = false]                = worldInfoNode ?.getMetaData ("Sunrize/BrowserSize/enabled") ?? [ ],
+         [numerator = 1, denominator = 1] = worldInfoNode ?.getMetaData ("Sunrize/BrowserSize/aspectRatio") ?? [ ],
+         aspectRatio                      = numerator / denominator,
+         frameAspectRatio                 = $("#browser-frame") .width () / $("#browser-frame") .height (),
+         element                          = $(this .browser .element);
 
       if (enabled && aspectRatio)
       {

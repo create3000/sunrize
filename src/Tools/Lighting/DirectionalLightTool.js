@@ -13,7 +13,7 @@ class DirectionalLightTool extends X3DLightNodeTool
       this .tool .getField ("location") .addInterest ("set_location", this);
       this .tool .getField ("direction") .addReference (this .node ._direction);
 
-      this .registerMetaDataCallback (this, "DirectionalLight/location", this .set_meta_location .bind (this));
+      this .addMetaDataCallback (this, "DirectionalLight/location", this .set_meta_location .bind (this));
       this .getMetaData ("DirectionalLight/location", this .tool .location);
 
       this .tool .type = 0;

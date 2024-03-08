@@ -427,7 +427,7 @@ class X3DNodeTool extends X3DBaseTool
 
             this .setMetaData (`${this .getTypeName ()}/${name}`, initialValue);
 
-            Editor .setMetaData (this .node, `${this .getTypeName ()}/${name}`, value);
+            Editor .setNodeMetaData (this .node, `${this .getTypeName ()}/${name}`, value);
          }
       }
 

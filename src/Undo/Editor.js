@@ -2714,7 +2714,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     * @param {X3DField} value
     * @param {UndoManager} undoManager
     */
-   static setMetaData (node, key, value, undoManager = UndoManager .shared)
+   static setNodeMetaData (node, key, value, undoManager = UndoManager .shared)
    {
       node = node .valueOf ();
 
@@ -2729,9 +2729,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       undoManager .registerUndo (() =>
       {
          if (hasValue)
-            this .setMetaData (node, key, oldValue, undoManager);
+            this .setNodeMetaData (node, key, oldValue, undoManager);
          else
-            this .removeMetaData (node, key, oldValue, undoManager);
+            this .removeNodeMetaData (node, key, oldValue, undoManager);
       });
 
       this .requestUpdateInstances (node, undoManager);
@@ -2747,7 +2747,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     * @param {X3DField} type
     * @param {UndoManager} undoManager
     */
-   static removeMetaData (node, key, type, undoManager = UndoManager .shared)
+   static removeNodeMetaData (node, key, type, undoManager = UndoManager .shared)
    {
       node = node .valueOf ();
 
@@ -2764,7 +2764,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       undoManager .registerUndo (() =>
       {
-         this .setMetaData (node, key, oldValue, undoManager);
+         this .setNodeMetaData (node, key, oldValue, undoManager);
       });
 
       this .requestUpdateInstances (node, undoManager);
