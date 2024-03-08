@@ -105,16 +105,15 @@ module .exports = new class BrowserSize extends Dialog
    {
       const
          worldInfoNode = Editor .getWorldInfo (this .browser .currentScene, true),
-         enabled       = this .enabled .prop ("checked"),
-         numerator     = parseFloat (this .numerator .val ()),
-         denominator   = parseFloat (this .denominator .val ());
+         enabled       = new X3D .SFBool (this .enabled .prop ("checked")),
+         aspectRatio   = new X3D .MFDouble (this .numerator .val (), this .denominator .val ());
 
       this .connect (worldInfoNode);
 
       UndoManager .shared .beginUndo (_("Change Browser Size"));
 
-      Editor .setNodeMetaData (worldInfoNode, "Sunrize/BrowserSize/enabled",     new X3D .SFBool (enabled));
-      Editor .setNodeMetaData (worldInfoNode, "Sunrize/BrowserSize/aspectRatio", new X3D .MFDouble (numerator, denominator));
+      Editor .setNodeMetaData (worldInfoNode, "Sunrize/BrowserSize/enabled",     enabled);
+      Editor .setNodeMetaData (worldInfoNode, "Sunrize/BrowserSize/aspectRatio", aspectRatio);
 
       UndoManager .shared .endUndo ();
 
