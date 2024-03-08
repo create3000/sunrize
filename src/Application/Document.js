@@ -90,7 +90,7 @@ module .exports = class Document extends Interface
 
       // Layout Menu
 
-      electron .ipcRenderer .on ("browser-frame", () => this .browserSize .open ());
+      electron .ipcRenderer .on ("browser-frame", () => this .browserFrame .open ());
       electron .ipcRenderer .on ("grid-tool", (event, typeName, visible) => this .activateGridTool (typeName, visible));
       electron .ipcRenderer .on ("grid-options", () => this .showGridOptions ());
 
@@ -102,11 +102,8 @@ module .exports = class Document extends Interface
 
       // Browser Size
 
-      this .fullname       = await electron .ipcRenderer .invoke ("fullname");
-      this .browserSize    = require ("../Editors/BrowserFrame");
-      this .resizeObserver = new ResizeObserver (() => this .onresize ());
-
-      this .resizeObserver .observe ($("#browser-frame") [0]);
+      this .fullname     = await electron .ipcRenderer .invoke ("fullname");
+      this .browserFrame = require ("../Editors/BrowserFrame");
 
       // Change undo menu items.
 
@@ -639,37 +636,6 @@ Viewpoint {
    /*
     * Layout Menu
     */
-
-   /**
-    * Change browser size according to aspect-ratio.
-    */
-   onresize ()
-   {
-      const
-         worldInfoNode                    = Editor .getWorldInfo (this .browser .currentScene),
-         [fixedSize = false]              = worldInfoNode ?.getMetaData ("Sunrize/BrowserFrame/fixedSize") ?? [ ],
-         [numerator = 1, denominator = 1] = worldInfoNode ?.getMetaData ("Sunrize/BrowserFrame/aspectRatio") ?? [ ],
-         [backgroundColor = ""]           = worldInfoNode ?.getMetaData ("Sunrize/BrowserFrame/backgroundColor") ?? [ ],
-         aspectRatio                      = numerator / denominator,
-         frameAspectRatio                 = $("#browser-frame") .width () / $("#browser-frame") .height (),
-         element                          = $(this .browser .element);
-
-      if (fixedSize && aspectRatio)
-      {
-         element .css ({ "aspect-ratio": `${numerator} / ${denominator}` });
-
-         if (aspectRatio > frameAspectRatio)
-            element .css ({ "width": "100%", "height": "auto" });
-         else
-            element .css ({ "width": "auto", "height": "100%" });
-      }
-      else
-      {
-         element .css ({ "aspect-ratio": "unset", "width": "100%", "height": "100%" });
-      }
-
-      element .css ("background-color", String (backgroundColor) .replace (/\b(?:transparent|unset|initial)\b/, ""));
-   }
 
    static #Grids = [
       "GridTool",

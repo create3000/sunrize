@@ -83,6 +83,10 @@ module .exports = new class BrowserFrame extends Dialog
          .append ($("<th></th>") .text (_("Background Color")))
          .append ($("<td></td>") .append (this .backgroundColor))
          .appendTo (this .table .body);
+
+      this .resizeObserver = new ResizeObserver (() => this .onresize ());
+
+      this .resizeObserver .observe ($("#browser-frame") [0]);
    }
 
    configure ()
@@ -129,8 +133,39 @@ module .exports = new class BrowserFrame extends Dialog
       Editor .setNodeMetaData (worldInfoNode, "Sunrize/BrowserFrame/fixedSize",       fixedSize);
       Editor .setNodeMetaData (worldInfoNode, "Sunrize/BrowserFrame/aspectRatio",     aspectRatio);
       Editor .setNodeMetaData (worldInfoNode, "Sunrize/BrowserFrame/backgroundColor", backgroundColor);
-      Editor .deferFunction (() => require ("../Application/Window") .onresize ());
+      Editor .deferFunction (() => this .onresize ());
 
       UndoManager .shared .endUndo ();
+   }
+
+   /**
+    * Change browser size according to aspect-ratio.
+    */
+   onresize ()
+   {
+      const
+         worldInfoNode                    = Editor .getWorldInfo (this .browser .currentScene),
+         [fixedSize = false]              = worldInfoNode ?.getMetaData ("Sunrize/BrowserFrame/fixedSize") ?? [ ],
+         [numerator = 1, denominator = 1] = worldInfoNode ?.getMetaData ("Sunrize/BrowserFrame/aspectRatio") ?? [ ],
+         [backgroundColor = ""]           = worldInfoNode ?.getMetaData ("Sunrize/BrowserFrame/backgroundColor") ?? [ ],
+         aspectRatio                      = numerator / denominator,
+         frameAspectRatio                 = $("#browser-frame") .width () / $("#browser-frame") .height (),
+         element                          = $(this .browser .element);
+
+      if (fixedSize && aspectRatio)
+      {
+         element .css ({ "aspect-ratio": `${numerator} / ${denominator}` });
+
+         if (aspectRatio > frameAspectRatio)
+            element .css ({ "width": "100%", "height": "auto" });
+         else
+            element .css ({ "width": "auto", "height": "100%" });
+      }
+      else
+      {
+         element .css ({ "aspect-ratio": "unset", "width": "100%", "height": "100%" });
+      }
+
+      element .css ("background-color", String (backgroundColor) .replace (/\b(?:transparent|unset|initial)\b/, ""));
    }
 };
