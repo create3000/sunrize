@@ -166,6 +166,6 @@ module .exports = new class BrowserFrame extends Dialog
          element .css ({ "aspect-ratio": "unset", "width": "100%", "height": "100%" });
       }
 
-      element .css ("background-color", `${backgroundColor}` .replace (/\b(?:transparent|unset|initial)\b/, ""));
+      element .css ("background-color", `${backgroundColor}` .replace (/\b(?:transparent|unset|initial)\b/g, ""));
    }
 };
