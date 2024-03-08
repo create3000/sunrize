@@ -334,7 +334,10 @@ Viewpoint {
          scene .setMetaData ("created", new Date () .toUTCString ());
 
       scene .setMetaData ("comment", `Rise and Shine`);
-      scene .setMetaData ("creator", this .fullname);
+
+      if (!scene .getMetaData ("creator") ?.some (value => value .includes (this .fullname)))
+         scene .addMetaData ("creator", this .fullname);
+
       scene .setMetaData ("generator", `${pkg .productName} V${pkg .version}, ${pkg .homepage}`);
       scene .setMetaData ("modified", new Date () .toUTCString ());
 
