@@ -333,12 +333,15 @@ Viewpoint {
       if (!scene .getMetaData ("created"))
          scene .setMetaData ("created", new Date () .toUTCString ());
 
-      scene .setMetaData ("comment", "Rise and Shine");
+      if (!scene .getMetaData ("comment") ?.some (value => value .includes ("Rise and Shine")))
+         scene .addMetaData ("comment", "Rise and Shine");
 
       if (!scene .getMetaData ("creator") ?.some (value => value .includes (this .fullname)))
          scene .addMetaData ("creator", this .fullname);
 
-      scene .setMetaData ("generator", `${pkg .productName} V${pkg .version}, ${pkg .homepage}`);
+      if (!scene .getMetaData ("generator") ?.some (value => value .includes (pkg .productName)))
+         scene .addMetaData ("generator", `${pkg .productName} V${pkg .version}, ${pkg .homepage}`);
+
       scene .setMetaData ("modified", new Date () .toUTCString ());
 
       // Save source code.
