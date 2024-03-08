@@ -337,9 +337,6 @@ Viewpoint {
       if (!scene .getMetaData ("created"))
          scene .setMetaData ("created", new Date () .toUTCString ());
 
-      if (!scene .getMetaData ("comment") ?.some (value => value .includes ("Rise and Shine")))
-         scene .addMetaData ("comment", "Rise and Shine");
-
       if (!scene .getMetaData ("creator") ?.some (value => value .includes (this .fullname)))
          scene .addMetaData ("creator", this .fullname);
 
