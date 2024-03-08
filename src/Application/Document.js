@@ -668,7 +668,7 @@ Viewpoint {
          element .css ({ "aspect-ratio": "unset", "width": "100%", "height": "100%" });
       }
 
-      element .css ("background-color", backgroundColor);
+      element .css ("background-color", String (backgroundColor) .replace (/\b(?:transparent|unset|initial)\b/, ""));
    }
 
    static #Grids = [
