@@ -328,7 +328,11 @@ Viewpoint {
 
       // Add default meta data.
 
-      const pkg = require ("../../package.json");
+      const
+         pkg       = require ("../../package.json"),
+         generator = scene .getMetaData ("generator") ?.filter (value => !value .startsWith (pkg .productName)) ?? [ ];
+
+      generator .push (`${pkg .productName} V${pkg .version}, ${pkg .homepage}`);
 
       if (!scene .getMetaData ("created"))
          scene .setMetaData ("created", new Date () .toUTCString ());
@@ -339,9 +343,7 @@ Viewpoint {
       if (!scene .getMetaData ("creator") ?.some (value => value .includes (this .fullname)))
          scene .addMetaData ("creator", this .fullname);
 
-      if (!scene .getMetaData ("generator") ?.some (value => value .includes (pkg .productName)))
-         scene .addMetaData ("generator", `${pkg .productName} V${pkg .version}, ${pkg .homepage}`);
-
+      scene .setMetaData ("generator", generator);
       scene .setMetaData ("modified", new Date () .toUTCString ());
 
       // Save source code.
