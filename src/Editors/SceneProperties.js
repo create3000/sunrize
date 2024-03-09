@@ -403,7 +403,7 @@ module .exports = new class SceneProperties extends Dialog
          .append ($("<td></td>")
             .css ("width", "unset")
             .append ($("<input></input>")
-            .attr ("placeholder", _("Add new meta value."))
+            .prop ("readonly", true)
             .on ("change", event => this .changeMetaData (event, ""))))
          .appendTo (this .metaData .table);
 

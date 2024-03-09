@@ -6,11 +6,11 @@
     <component name='Layering' level='1'/>
     <component name='Layout' level='2'/>
     <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
-    <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Tue, 05 Mar 2024 10:19:04 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
+    <meta name='foo' content='bah'/>
     <meta name='generator' content='Sunrize X3D Editor V1.6.0, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sat, 09 Mar 2024 00:08:03 GMT'/>
+    <meta name='modified' content='Sat, 09 Mar 2024 09:15:00 GMT'/>
   </head>
   <Scene>
     <WorldInfo
@@ -26,7 +26,7 @@
               value='true'/>
           <MetadataDouble
               name='aspectRatio'
-              value='16, 9'/>
+              value='16, 10'/>
           <MetadataString
               name='backgroundColor'
               value='"rgb(20,20,20)"'/>
