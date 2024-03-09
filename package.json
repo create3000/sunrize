@@ -81,7 +81,7 @@
   "dependencies": {
     "capitalize": "^2.0.4",
     "console": "^0.7.2",
-    "electron": "^29.1.0",
+    "electron": "^29.1.1",
     "electron-prompt": "^1.7.0",
     "electron-squirrel-startup": "^1.0.0",
     "electron-tabs": "^1.0.4",
@@ -92,7 +92,7 @@
     "material-icons": "^1.13.12",
     "material-symbols": "^0.16.0",
     "md5": "^2.3.0",
-    "monaco-editor": "^0.46.0",
+    "monaco-editor": "^0.47.0",
     "node-clipboardy": "^1.0.3",
     "node-localstorage": "^3.0.5",
     "qtip2": "^3.0.3",
