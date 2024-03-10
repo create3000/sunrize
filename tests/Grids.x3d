@@ -9,8 +9,8 @@
     <meta name='created' content='Tue, 05 Mar 2024 10:19:04 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='foo' content='bah'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.6.0, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 10 Mar 2024 10:12:46 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.6.2, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Sun, 10 Mar 2024 13:04:44 GMT'/>
   </head>
   <Scene>
     <WorldInfo
@@ -34,18 +34,12 @@
       </MetadataSet>
     </WorldInfo>
     <LayerSet
-        activeLayer='1'
-        order='1, 2'>
-      <Layer>
+        activeLayer='2'
+        order='1, 2, 3'>
+      <Layer DEF='AngleGrid'>
         <MetadataSet containerField='metadata'
             name='Sunrize'
             reference='https://create3000.github.io/sunrize/'>
-          <MetadataSet
-              name='GridTool'>
-            <MetadataInteger
-                name='dimension'
-                value='16, 10, 12'/>
-          </MetadataSet>
           <MetadataSet
               name='AngleGridTool'>
             <MetadataInteger
@@ -60,12 +54,41 @@
             description='Initial View'
             position='4.744818 6.372883 14.50024'
             orientation='-0.776588739330481 0.61771873128448 0.123828506271318 28.9476440862198'/>
-        <Transform DEF='Box'>
+        <Transform DEF='Box'
+            translation='-5 0 0'>
           <Shape>
             <Appearance>
               <Material/>
             </Appearance>
             <Box/>
+          </Shape>
+        </Transform>
+      </Layer>
+      <Layer DEF='AxonometricGrid'>
+        <MetadataSet containerField='metadata'
+            name='Sunrize'
+            reference='https://create3000.github.io/sunrize/'>
+          <MetadataSet
+              name='AxonometricGridTool'>
+            <MetadataBoolean
+                name='visible'
+                value='true'/>
+            <MetadataInteger
+                name='dimension'
+                value='9, 10'/>
+          </MetadataSet>
+        </MetadataSet>
+        <Viewpoint
+            description='Initial View'
+            position='4.744818 6.372883 14.50024'
+            orientation='-0.776588739330481 0.61771873128448 0.123828506271318 28.9476440862198'/>
+        <Transform DEF='Sphere'
+            translation='5 0 0'>
+          <Shape>
+            <Appearance>
+              <Material/>
+            </Appearance>
+            <Sphere/>
           </Shape>
         </Transform>
       </Layer>
