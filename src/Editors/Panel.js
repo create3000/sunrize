@@ -132,7 +132,7 @@ module .exports = new class Panel extends Interface
       // Move panel in view if top, left, bottom or right is outside of window.
 
       const
-         offset = this .container .offset (),
+         offset = this .container .parent () .offset (),
          width  = this .container .width (),
          height = this .container .height (),
          body   = $("body");
@@ -141,17 +141,21 @@ module .exports = new class Panel extends Interface
          right  = parseFloat (this .container .css ("right"))  || 0,
          bottom = parseFloat (this .container .css ("bottom")) || 0;
 
-      if (offset .left + width > body .width ())
-         right += (offset .left + width) - body .width () + 8;
+      const
+         left = this .container .parent () .width ()  - right  - width  + offset .left,
+         top  = this .container .parent () .height () - bottom - height + offset .top;
 
-      if (offset .left < 0)
-         right += offset .left - 8;
+      if (left + width > body .width ())
+         right += (left + width) - body .width () + 8;
 
-      if (offset .top + height > body .height ())
-         bottom += (offset .top + height) - body .height () + 8;
+      if (left < 0)
+         right += left - 8;
 
-      if (offset .top < 0)
-         bottom += offset .top - 8;
+      if (top + height > body .height ())
+         bottom += (top + height) - body .height () + 8;
+
+      if (top < 0)
+         bottom += top - 8;
 
       this .container .css ({
          "right":  `${right}px`,
