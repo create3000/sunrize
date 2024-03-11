@@ -77,7 +77,7 @@ module .exports = class Dashboard extends Interface
       });
 
       this [this .config .file .pointer] ();
-      this .play (this .config .file .play);
+      this .play (this .config .file .play && !this .isInitialScene);
       this .straighten (this .browser .getBrowserOption ("StraightenHorizon"));
 
       if (this .config .file .panel)

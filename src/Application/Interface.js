@@ -122,9 +122,9 @@ module .exports = class Interface
       return id .pathname;
    }
 
-   get initialScene ()
+   get isInitialScene ()
    {
-      return Interface .#initialScene;
+      this .browser .currentScene === Interface .#initialScene
    }
 
    /**
@@ -162,7 +162,7 @@ module .exports = class Interface
     */
    #createFileConfig (filePath, global = this .config .global)
    {
-      if (!filePath && this .browser .currentScene === Interface .#initialScene)
+      if (!filePath && this .isInitialScene)
          return this .config .global .addNameSpace ("default.");
 
       filePath ??= this .filePath ?? this .fileId ?? this .browser .getWorldURL ();
