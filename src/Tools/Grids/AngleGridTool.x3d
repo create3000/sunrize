@@ -8,9 +8,9 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Tue, 05 Aug 2014 20:06:52 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.5.5, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.6.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/AngleGridTool.x3dv'/>
-    <meta name='modified' content='Tue, 20 Feb 2024 18:24:12 GMT'/>
+    <meta name='modified' content='Mon, 11 Mar 2024 10:27:06 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='AngleGrid' url='"AngleGrid.x3d"'>
@@ -40,27 +40,6 @@
       <field accessType='inputOnly' type='MFNode' name='removeChildren'/>
       <field accessType='inputOutput' type='MFNode' name='children'/>
     </ExternProtoDeclare>
-    <ProtoDeclare name='TouchGroup'>
-      <ProtoInterface>
-        <field accessType='inputOutput' type='SFBool' name='enabled' value='true'/>
-        <field accessType='initializeOnly' type='SFVec3f' name='bboxSize' value='-1 -1 -1'/>
-        <field accessType='initializeOnly' type='SFVec3f' name='bboxCenter'/>
-        <field accessType='inputOnly' type='MFNode' name='addChildren'/>
-        <field accessType='inputOnly' type='MFNode' name='removeChildren'/>
-        <field accessType='inputOutput' type='MFNode' name='children'/>
-      </ProtoInterface>
-      <ProtoBody>
-        <Group>
-          <IS>
-            <connect nodeField='bboxSize' protoField='bboxSize'/>
-            <connect nodeField='bboxCenter' protoField='bboxCenter'/>
-            <connect nodeField='addChildren' protoField='addChildren'/>
-            <connect nodeField='removeChildren' protoField='removeChildren'/>
-            <connect nodeField='children' protoField='children'/>
-          </IS>
-        </Group>
-      </ProtoBody>
-    </ProtoDeclare>
     <ProtoDeclare name='AngleGridTool'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='visible'/>
@@ -85,27 +64,22 @@
       <ProtoBody>
         <Collision DEF='AngleGrid_2'
             enabled='false'>
-          <ProtoInstance name='TouchGroup'>
-            <fieldValue name='enabled' value='false'/>
-            <fieldValue name='children'>
-              <ProtoInstance name='AngleGrid' DEF='_4'>
-                <IS>
-                  <connect nodeField='translation' protoField='translation'/>
-                  <connect nodeField='rotation' protoField='rotation'/>
-                  <connect nodeField='scale' protoField='scale'/>
-                  <connect nodeField='dimension' protoField='dimension'/>
-                  <connect nodeField='majorLineEvery' protoField='majorLineEvery'/>
-                  <connect nodeField='majorLineOffset' protoField='majorLineOffset'/>
-                  <connect nodeField='color' protoField='color'/>
-                  <connect nodeField='transparency' protoField='transparency'/>
-                  <connect nodeField='lineColor' protoField='lineColor'/>
-                  <connect nodeField='lineTransparency' protoField='lineTransparency'/>
-                  <connect nodeField='majorLineColor' protoField='majorLineColor'/>
-                  <connect nodeField='majorLineTransparency' protoField='majorLineTransparency'/>
-                  <connect nodeField='solid' protoField='solid'/>
-                </IS>
-              </ProtoInstance>
-            </fieldValue>
+          <ProtoInstance name='AngleGrid' DEF='_4'>
+            <IS>
+              <connect nodeField='translation' protoField='translation'/>
+              <connect nodeField='rotation' protoField='rotation'/>
+              <connect nodeField='scale' protoField='scale'/>
+              <connect nodeField='dimension' protoField='dimension'/>
+              <connect nodeField='majorLineEvery' protoField='majorLineEvery'/>
+              <connect nodeField='majorLineOffset' protoField='majorLineOffset'/>
+              <connect nodeField='color' protoField='color'/>
+              <connect nodeField='transparency' protoField='transparency'/>
+              <connect nodeField='lineColor' protoField='lineColor'/>
+              <connect nodeField='lineTransparency' protoField='lineTransparency'/>
+              <connect nodeField='majorLineColor' protoField='majorLineColor'/>
+              <connect nodeField='majorLineTransparency' protoField='majorLineTransparency'/>
+              <connect nodeField='solid' protoField='solid'/>
+            </IS>
           </ProtoInstance>
           <Transform DEF='Handles'>
             <IS>
