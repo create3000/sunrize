@@ -37,6 +37,8 @@ module .exports = class Document extends Interface
     */
    async initialize ()
    {
+      // Browser
+      
       this .browser .setBrowserOption ("AlwaysUpdateGeometries", true);
 
       this .browser ._activeLayer .addInterest ("toggleGrids", this);
