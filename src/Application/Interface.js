@@ -124,7 +124,7 @@ module .exports = class Interface
 
    get isInitialScene ()
    {
-      this .browser .currentScene === Interface .#initialScene
+      this .browser .currentScene === Interface .#initialScene;
    }
 
    /**
