@@ -20,6 +20,8 @@ module .exports = class Dashboard extends Interface
 
    async initialize ()
    {
+      this .browser .getLive () .addInterest ("updatePlay", this);
+
       this .handButton = $("<span></span>")
          .addClass (["image-icon", "hand"])
          .attr ("title", _("Switch to browser mode."))
@@ -113,15 +115,17 @@ module .exports = class Dashboard extends Interface
       this .config .file .play = value;
 
       if (value)
-      {
-         this .playButton .addClass ("active");
          this .browser .beginUpdate ();
-      }
       else
-      {
-         this .playButton .removeClass ("active");
          this .browser .endUpdate ();
-      }
+   }
+
+   updatePlay ()
+   {
+      if (this .browser .isLive ())
+         this .playButton .addClass ("active");
+      else
+         this .playButton .removeClass ("active");
    }
 
    viewAll ()

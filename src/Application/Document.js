@@ -37,6 +37,8 @@ module .exports = class Document extends Interface
     */
    async initialize ()
    {
+      this .browser .setBrowserOption ("AlwaysUpdateGeometries", true);
+
       this .browser ._activeLayer .addInterest ("toggleGrids", this);
 
       // Restore
@@ -544,25 +546,8 @@ Viewpoint {
     */
    setPrimitiveQuality (value)
    {
-      // Defer execution when Play button is configured.
-
-      setTimeout (() =>
-      {
-         const live = this .browser .isLive ();
-
-         this .browser .beginUpdate ();
-         this .browser .setBrowserOption ("PrimitiveQuality", value);
-         this .browser .setDescription (`Primitive Quality: ${value .toLowerCase ()}`);
-
-         if (live)
-            return;
-
-         this .browser .finishedEvents () .addFieldCallback (this, () =>
-         {
-            this .browser .finishedEvents () .removeFieldCallback (this);
-            this .browser .endUpdate ();
-         });
-      });
+      this .browser .setBrowserOption ("PrimitiveQuality", value);
+      this .browser .setDescription (`Primitive Quality: ${value .toLowerCase ()}`);
    }
 
    set_primitiveQuality ()

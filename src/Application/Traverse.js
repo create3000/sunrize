@@ -7,7 +7,7 @@ let flags = 1;
 module .exports = class Traverse
 {
    static NONE                          = 0;
-   static EXTERNPROTO_DECLARATIONS      = flags <<= 1;
+   static EXTERNPROTO_DECLARATIONS      = flags;
    static PROTO_DECLARATIONS            = flags <<= 1;
    static ROOT_NODES                    = flags <<= 1;
    static IMPORTED_NODES                = flags <<= 1;
@@ -15,7 +15,8 @@ module .exports = class Traverse
    static PROTO_DECLARATION_BODY        = flags <<= 1;
    static PROTOTYPE_INSTANCES           = flags <<= 1;
    static INLINE_SCENE                  = flags <<= 1;
-
+   static ALL                           = (flags << 1) - 1;
+   
    /**
     *
     * @param {X3DScene|X3DExecutionContext|MFNode|Array<SFNode>|SFNode} object
