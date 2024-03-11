@@ -7,9 +7,9 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Tue, 05 Aug 2014 20:06:52 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.5.2, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.6.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/library/AxonometricGrid.x3dv'/>
-    <meta name='modified' content='Fri, 09 Feb 2024 15:52:26 GMT'/>
+    <meta name='modified' content='Mon, 11 Mar 2024 11:03:38 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='AxonometricGrid'>
@@ -18,7 +18,7 @@
         <field accessType='inputOutput' type='SFRotation' name='rotation'/>
         <field accessType='inputOutput' type='SFVec3f' name='scale' value='1 1 1'/>
         <field accessType='inputOutput' type='MFInt32' name='dimension' value='5, 10'/>
-        <field accessType='inputOutput' type='SFVec2d' name='angles' value='1.0471975511965976 1.0471975511965976'/>
+        <field accessType='inputOutput' type='SFVec2d' name='angles' value='1.0471975511966 1.0471975511966'/>
         <field accessType='inputOutput' type='MFInt32' name='majorLineEvery' value='5, 5, 5, 5'/>
         <field accessType='inputOutput' type='MFInt32' name='majorLineOffset' value='0, 0, 0, 0'/>
         <field accessType='inputOutput' type='SFColor' name='color' value='0.5 0.5 0.5'/>
@@ -57,8 +57,7 @@
                 <Coordinate DEF='HexagonCoord'/>
               </IndexedFaceSet>
             </Shape>
-            <Shape DEF='MajorGrid'
-                castShadow='false'>
+            <Shape DEF='MajorGrid'>
               <Appearance>
                 <UnlitMaterial DEF='MajorMaterial'>
                   <IS>
@@ -72,6 +71,7 @@
               </IndexedLineSet>
             </Shape>
             <Shape DEF='MinorGrid'
+                pointerEvents='false'
                 castShadow='false'>
               <Appearance>
                 <UnlitMaterial DEF='MinorMaterial'>
@@ -86,6 +86,7 @@
               </IndexedLineSet>
             </Shape>
             <Shape DEF='MajorPoints'
+                pointerEvents='false'
                 castShadow='false'>
               <Appearance>
                 <PointProperties
@@ -99,6 +100,7 @@
               </PointSet>
             </Shape>
             <Shape DEF='MinorPoints'
+                pointerEvents='false'
                 castShadow='false'>
               <Appearance>
                 <PointProperties
