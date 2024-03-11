@@ -38,8 +38,9 @@ module .exports = class Document extends Interface
    async initialize ()
    {
       // Browser
-      
+
       this .browser .setBrowserOption ("AlwaysUpdateGeometries", true);
+      this .browser .setBrowserOption ("MetadataReference", require ("../../package.json") .homepage);
 
       this .browser ._activeLayer .addInterest ("toggleGrids", this);
 
@@ -112,10 +113,6 @@ module .exports = class Document extends Interface
       // Change undo menu items.
 
       UndoManager .shared .addInterest (this, () => this .undoManager ());
-
-      // Configure browser options.
-
-      this .browser .setBrowserOption ("MetadataReference", require ("../../package.json") .homepage);
 
       // Connect browser options.
 
