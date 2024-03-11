@@ -37,16 +37,7 @@ module .exports = class Document extends Interface
     */
    async initialize ()
    {
-      // Browser
-
-      this .browser .setBrowserOption ("AlwaysUpdateGeometries", true);
-      this .browser .setBrowserOption ("MetadataReference", require ("../../package.json") .homepage);
-
-      this .browser ._activeLayer .addInterest ("toggleGrids", this);
-
-      // Restore
-
-      await this .restoreFile ();
+      $("body") .addClass ("modal");
 
       // Actions
 
@@ -121,11 +112,25 @@ module .exports = class Document extends Interface
       this .browser .getBrowserOptions () .getField ("Rubberband")       .addInterest ("set_rubberband",       this);
       this .browser .getBrowserOptions () .getField ("Timings")          .addInterest ("set_timings",          this);
 
+      this .browser .setBrowserOption ("AlwaysUpdateGeometries", true);
+      this .browser .setBrowserOption ("MetadataReference", require ("../../package.json") .homepage);
+
+      // Connect browser events.
+
+      this .browser ._activeLayer .addInterest ("toggleGrids", this);
+
       // Connect for Snap Target and Snap Source.
 
       $(this .browser .element .shadowRoot) .find ("canvas")
          .on ("mousedown", event => this .onmousedown (event))
          .on ("mouseup",   event => this .onmouseup   (event));
+
+      // Restore
+
+      await this .restoreFile ();
+
+      if (!this .isInitialScene)
+         $("body") .removeClass ("modal");
    }
 
    configure ()
@@ -250,8 +255,6 @@ module .exports = class Document extends Interface
 
    async restoreFile ()
    {
-      $("body") .addClass ("modal");
-
       await this .browser .loadComponents (this .browser .getComponent ("Grouping"));
 
       this .browser .updateConcreteNode (require ("../Components/Grouping/StaticGroup"));
@@ -285,8 +288,6 @@ Viewpoint {
 
          await this .loadURL (fileURL);
       }
-
-      $("body") .removeClass ("modal");
    }
 
    /**
