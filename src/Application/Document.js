@@ -206,7 +206,7 @@ module .exports = class Document extends Interface
       electron .ipcRenderer .send ("update-menu",
       {
          defaultEditMenu: this .activeElementIsInputOrOutput (),
-         monacoEditor: this .activeElement .attr ("role") === "textbox" && this .activeElement .closest (".monaco-editor") .length,
+         monacoEditor: this .activeElementIsMonaco (),
       });
    }
 
@@ -227,6 +227,20 @@ module .exports = class Document extends Interface
          return true;
 
       return false;
+   }
+
+   activeElementIsMonaco ()
+   {
+      if (!this .activeElement)
+         return false;
+
+      if (this .activeElement .attr ("role") !== "textbox")
+         return false;
+
+      if (!this .activeElement .closest (".monaco-editor") .length)
+         return false;
+
+      return true;
    }
 
    // Menu Accelerators
