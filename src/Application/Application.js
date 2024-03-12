@@ -356,7 +356,7 @@ module .exports = class Application
          },
          this .menuOptions .defaultEditMenu ?
          {
-            label: "Edit",
+            role: "editMenu",
             submenu: [
                { role: "undo" },
                { role: "redo" },

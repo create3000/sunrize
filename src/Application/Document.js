@@ -177,6 +177,7 @@ module .exports = class Document extends Interface
     */
    activate ()
    {
+      this .onfocus ();
       this .updateMenu ();
 
       electron .ipcRenderer .sendToHost ("focus");
