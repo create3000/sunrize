@@ -205,6 +205,7 @@ module .exports = class Document extends Interface
       electron .ipcRenderer .send ("update-menu",
       {
          defaultEditMenu: this .activeElementIsInputOrOutput (),
+         monacoEditor: this .activeElement .attr ("role") === "textbox" && this .activeElement .closest (".monaco-editor") .length,
       });
    }
 

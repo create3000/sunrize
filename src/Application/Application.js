@@ -387,6 +387,7 @@ module .exports = class Application
                {
                   label: _("Toggle Line Comment"),
                   accelerator: "CmdOrCtrl+Shift+7",
+                  enabled: this .menuOptions .monacoEditor,
                   click: () =>
                   {
                      this .mainWindow .webContents .send ("script-editor-menu", "runAction", "editor.action.commentLine");
@@ -395,6 +396,7 @@ module .exports = class Application
                {
                   label: _("Toggle Block Comment"),
                   accelerator: "Alt+Shift+A",
+                  enabled: this .menuOptions .monacoEditor,
                   click: () =>
                   {
                      this .mainWindow .webContents .send ("script-editor-menu", "runAction", "editor.action.blockComment");
