@@ -211,7 +211,7 @@ module .exports = class Document extends Interface
       return Object .assign (menu,
       {
          defaultEditMenu: this .activeElementIsInputOrOutput (),
-         monacoEditor: this .activeElementIsMonaco (),
+         monacoEditor: this .activeElementIsMonacoEditor (),
       });
    }
 
@@ -234,7 +234,7 @@ module .exports = class Document extends Interface
       return false;
    }
 
-   activeElementIsMonaco ()
+   activeElementIsMonacoEditor ()
    {
       if (!this .activeElement)
          return false;
