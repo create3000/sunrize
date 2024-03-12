@@ -129,7 +129,7 @@ module .exports = class ScriptEditor extends Interface
 
       this .console = new Console (this .consoleElement);
 
-      electron .ipcRenderer .on ("script-editor-menu", (event, key, ...args) => this [key] (...args));
+      electron .ipcRenderer .on ("script-editor", (event, key, ...args) => this [key] (...args));
 
       // Setup.
 
@@ -388,7 +388,7 @@ main ()
          },
       ];
 
-      electron .ipcRenderer .send ("context-menu", "script-editor-menu", menu);
+      electron .ipcRenderer .send ("context-menu", "script-editor", menu);
    }
 
    runAction (id)
@@ -463,7 +463,7 @@ main ()
          },
       ];
 
-      electron .ipcRenderer .send ("context-menu", "script-editor-menu", menu);
+      electron .ipcRenderer .send ("context-menu", "script-editor", menu);
    }
 
    async createScript ()
@@ -630,7 +630,7 @@ main ()
          },
       ];
 
-      electron .ipcRenderer .send ("context-menu", "script-editor-menu", menu);
+      electron .ipcRenderer .send ("context-menu", "script-editor", menu);
    }
 
    changeShaderTypeTo (type)

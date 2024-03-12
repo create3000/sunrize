@@ -19,7 +19,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       element .on ("contextmenu", (event) => this .showContextMenu (event));
 
-      electron .ipcRenderer .on ("outline-editor-menu", (event, key, ...args) => this [key] (...args));
+      electron .ipcRenderer .on ("outline-editor", (event, key, ...args) => this [key] (...args));
       electron .ipcRenderer .on ("remove-empty-groups", (event) => this .removeEmptyGroups ());
 
       this .setup ();
@@ -505,7 +505,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          return;
       }
 
-      electron .ipcRenderer .send ("context-menu", "outline-editor-menu", menu);
+      electron .ipcRenderer .send ("context-menu", "outline-editor", menu);
    }
 
    addUserDefinedField (id, executionContextId, nodeId, fieldId)

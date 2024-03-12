@@ -100,8 +100,8 @@ module .exports = new class Tabs
       this .forwardToActiveTab ("move-selection-to-snap-target");
       this .forwardToActiveTab ("move-selection-center-to-snap-target");
 
-      this .forwardToActiveTab ("script-editor-menu");
-      this .forwardToActiveTab ("outline-editor-menu");
+      this .forwardToActiveTab ("script-editor");
+      this .forwardToActiveTab ("outline-editor");
 
       // Restore tabs.
       this .restoreTabs (this .config .activeTab);

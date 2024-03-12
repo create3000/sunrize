@@ -390,7 +390,7 @@ module .exports = class Application
                   enabled: this .menuOptions .monacoEditor,
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("script-editor-menu", "runAction", "editor.action.commentLine");
+                     this .mainWindow .webContents .send ("script-editor", "runAction", "editor.action.commentLine");
                   },
                },
                {
@@ -399,7 +399,7 @@ module .exports = class Application
                   enabled: this .menuOptions .monacoEditor,
                   click: () =>
                   {
-                     this .mainWindow .webContents .send ("script-editor-menu", "runAction", "editor.action.blockComment");
+                     this .mainWindow .webContents .send ("script-editor", "runAction", "editor.action.blockComment");
                   },
                },
             ]
