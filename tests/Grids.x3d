@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='foo' content='bah'/>
     <meta name='generator' content='Sunrize X3D Editor V1.6.2, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 10 Mar 2024 14:07:58 GMT'/>
+    <meta name='modified' content='Tue, 12 Mar 2024 18:07:42 GMT'/>
   </head>
   <Scene>
     <WorldInfo
@@ -34,7 +34,7 @@
       </MetadataSet>
     </WorldInfo>
     <LayerSet
-        activeLayer='2'
+        activeLayer='1'
         order='1, 2, 3'>
       <Layer DEF='AngleGrid'>
         <MetadataSet containerField='metadata'

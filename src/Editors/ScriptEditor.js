@@ -396,6 +396,55 @@ main ()
       this .monaco .getAction (id) .run ();
    }
 
+   debugFindActions (editor = this .editor)
+   {
+      for (const action of editor .getSupportedActions ())
+      {
+         if (action .label .match (/comment/i))
+            console .log (action .label, action .id);
+
+         switch (action .label)
+         {
+            case "Go to Definition": // editor.action.revealDefinition
+               console .log (action .label, action .id);
+               break;
+            case "Go to References": // editor.action.goToReferences
+               console .log (action .label, action .id);
+               break;
+            case "Go to Symbol...": // editor.action.quickOutline
+               console .log (action .label, action .id);
+               break;
+            case "Peek Definition": // editor.action.peekDefinition
+               console .log (action .label, action .id);
+               break;
+            case "Peek References": // editor.action.referenceSearch.trigger
+               console .log (action .label, action .id);
+               break;
+            case "Rename Symbol": // editor.action.rename
+               console .log (action .label, action .id);
+               break;
+            case "Change All Occurrences": // editor.action.changeAll
+               console .log (action .label, action .id);
+               break;
+            case "Format Document": // editor.action.formatDocument
+               console .log (action .label, action .id);
+               break;
+            case "Cut": //
+               console .log (action .label, action .id);
+               break;
+            case "Copy": //
+               console .log (action .label, action .id);
+               break;
+            case "Paste": //
+               console .log (action .label, action .id);
+               break;
+            case "Command Palette": // editor.action.quickCommand
+               console .log (action .label, action .id);
+               break;
+         }
+      }
+   }
+
    execCommand (command)
    {
       document .execCommand (command);
@@ -539,52 +588,6 @@ main ()
          case X3D .X3DConstants .FAILED_STATE:
             this .applyButton .addClass ("red");
             break;
-      }
-   }
-
-   debugFindActions (editor)
-   {
-      for (const action of editor .getSupportedActions ())
-      {
-         switch (action .label)
-         {
-            case "Go to Definition": // editor.action.revealDefinition
-               console .log (action .label, action .id);
-               break;
-            case "Go to References": // editor.action.goToReferences
-               console .log (action .label, action .id);
-               break;
-            case "Go to Symbol...": // editor.action.quickOutline
-               console .log (action .label, action .id);
-               break;
-            case "Peek Definition": // editor.action.peekDefinition
-               console .log (action .label, action .id);
-               break;
-            case "Peek References": // editor.action.referenceSearch.trigger
-               console .log (action .label, action .id);
-               break;
-            case "Rename Symbol": // editor.action.rename
-               console .log (action .label, action .id);
-               break;
-            case "Change All Occurrences": // editor.action.changeAll
-               console .log (action .label, action .id);
-               break;
-            case "Format Document": // editor.action.formatDocument
-               console .log (action .label, action .id);
-               break;
-            case "Cut": //
-               console .log (action .label, action .id);
-               break;
-            case "Copy": //
-               console .log (action .label, action .id);
-               break;
-            case "Paste": //
-               console .log (action .label, action .id);
-               break;
-            case "Command Palette": // editor.action.quickCommand
-               console .log (action .label, action .id);
-               break;
-         }
       }
    }
 

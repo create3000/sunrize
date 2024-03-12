@@ -354,7 +354,54 @@ module .exports = class Application
                },
             ],
          },
-         this .menuOptions .defaultEditMenu ? { role: "editMenu" } :
+         this .menuOptions .defaultEditMenu ?
+         {
+            label: "Edit",
+            submenu: [
+               { role: "undo" },
+               { role: "redo" },
+               { type: "separator" },
+               { role: "cut" },
+               { role: "copy" },
+               { role: "paste" },
+               ... (process .platform === "darwin"
+               ? [
+                  { role: "pasteAndMatchStyle" },
+                  { role: "delete" },
+                  { role: "selectAll" },
+                  { type: "separator" },
+                  {
+                     label: "Speech",
+                     submenu: [
+                        { role: "startSpeaking" },
+                        { role: "stopSpeaking" },
+                     ]
+                  },
+               ]
+               : [
+                  { role: "delete" },
+                  { type: "separator" },
+                  { role: "selectAll" },
+               ]),
+               { type: "separator" },
+               {
+                  label: _("Toggle Line Comment"),
+                  accelerator: "CmdOrCtrl+Shift+7",
+                  click: () =>
+                  {
+                     this .mainWindow .webContents .send ("script-editor-menu", "runAction", "editor.action.commentLine");
+                  },
+               },
+               {
+                  label: _("Toggle Block Comment"),
+                  accelerator: "Alt+Shift+A",
+                  click: () =>
+                  {
+                     this .mainWindow .webContents .send ("script-editor-menu", "runAction", "editor.action.blockComment");
+                  },
+               },
+            ]
+         } :
          {
             role: "editMenu",
             submenu: [

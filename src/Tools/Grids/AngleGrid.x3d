@@ -239,7 +239,7 @@ function generateRings ()
       var transform = scene .createNode ("Transform");
       var major     = isMajorLine (s, 0);
 
-      shape .pointerEvent     = false; 
+      shape .pointerEvents    = false;
       shape .appearance       = major ? majorAppearance : minorAppearance;
       shape .geometry         = circle;
       transform .children [0] = shape;
