@@ -16,11 +16,11 @@ const localStorage = new LocalStorage (path .join (electron .app .getPath ("user
 
 module .exports = class Application
 {
-   config        = new DataStorage (localStorage, "Sunrize.Application.");
-   receivedFiles = [ ];
-   mainMenu      = [ ];
-   openURLValue  = "";
-   exportPath    = new Map ();
+   config            = new DataStorage (localStorage, "Sunrize.Application.");
+   receivedFiles     = [ ];
+   mainMenu          = [ ];
+   openLocationValue = "";
+   exportPath        = new Map ();
 
    static run ()
    {
@@ -207,7 +207,7 @@ module .exports = class Application
                         title: "Open URL...",
                         label: "Enter URL for opening in new tab:",
                         type: "input",
-                        value: clipboard .match (/^(?:https?|file|ftp|smb):\/\/.+/) ? clipboard : this .openURLValue,
+                        value: clipboard .match (/^(?:https?|file|ftp|smb):\/\/.+/) ? clipboard : this .openLocationValue,
                         inputAttrs: {
                            type: "url",
                            placeholder: "https://example.org",
@@ -222,7 +222,7 @@ module .exports = class Application
                      if (response === null)
                         return;
 
-                     this .openFiles ([this .openURLValue = response]);
+                     this .openFiles ([this .openLocationValue = response]);
                   },
                },
                {
