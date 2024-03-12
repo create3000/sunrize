@@ -177,7 +177,6 @@ module .exports = class Document extends Interface
     */
    activate ()
    {
-      this .onfocus ();
       this .updateMenu ();
 
       electron .ipcRenderer .sendToHost ("focus");
@@ -187,6 +186,7 @@ module .exports = class Document extends Interface
    {
       const menu = { };
 
+      this .updateEditMenu (menu);
       this .updateUndoMenus (menu);
       this .updateBrowserOptionsMenus (menu);
       this .updateGridMenus (menu);
@@ -203,7 +203,12 @@ module .exports = class Document extends Interface
    {
       this .activeElement = document .activeElement ? $(document .activeElement) : null;
 
-      electron .ipcRenderer .send ("update-menu",
+      electron .ipcRenderer .send ("update-menu", this .updateEditMenu ({ }));
+   }
+
+   updateEditMenu (menu)
+   {
+      return Object .assign (menu,
       {
          defaultEditMenu: this .activeElementIsInputOrOutput (),
          monacoEditor: this .activeElementIsMonaco (),
