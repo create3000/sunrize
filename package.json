@@ -93,7 +93,6 @@
     "material-symbols": "^0.16.0",
     "md5": "^2.3.0",
     "monaco-editor": "^0.47.0",
-    "node-clipboardy": "^1.0.3",
     "node-localstorage": "^3.0.5",
     "qtip2": "^3.0.3",
     "spectrum-colorpicker2": "^2.0.10",

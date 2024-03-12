@@ -3,7 +3,6 @@
 const
    electron     = require ("electron"),
    prompt       = require ("electron-prompt"),
-   clipboardy   = require ("node-clipboardy"),
    url          = require ("url"),
    path         = require ("path"),
    fs           = require ("fs"),
@@ -194,7 +193,7 @@ module .exports = class Application
                   accelerator: "Shift+CmdOrCtrl+O",
                   click: async () =>
                   {
-                     const clipboard = await this .clipboard ();
+                     const clipboard = electron .clipboard .readText ();
 
                      this .pushMenu (electron .Menu .buildFromTemplate ([
                         {
@@ -1043,18 +1042,6 @@ module .exports = class Application
 
          this .config .position = this .mainWindow .getPosition ();
          this .config .size     = this .mainWindow .getSize ();
-      }
-   }
-
-   async clipboard ()
-   {
-      try
-      {
-         return await clipboardy .read ();
-      }
-      catch
-      {
-         return "";
       }
    }
 
