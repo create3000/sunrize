@@ -784,8 +784,6 @@ module .exports = class Application
 
    async createWindow ()
    {
-      this .appIcon = new electron .Tray (path .join (__dirname, "../assets/images/icon.png"));
-
       const window = new electron .BrowserWindow ({
          icon: path .join (__dirname, "../assets/images/icon.png"),
          x: this .config .position [0],
