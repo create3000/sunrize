@@ -203,8 +203,8 @@ module .exports = class Application
                      this .pushMenu (this .createDialogMenu ());
 
                      const response = await prompt ({
-                        title: _("Open URL..."),
-                        label: _("Enter URL for opening in new tab:"),
+                        title: _("Open Location..."),
+                        label: _("Enter a URL to open in a new tab:"),
                         type: "input",
                         value: clipboard .match (/^(?:https?|file|ftp|smb):\/\/.+/) ? clipboard : this .openLocationValue,
                         inputAttrs: {
