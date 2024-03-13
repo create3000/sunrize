@@ -1,5 +1,6 @@
 const
    $         = require ("jquery"),
+   electron  = require ("electron"),
    TweakPane = require ("tweakpane"),
    Interface = require ("../Application/Interface"),
    X3D       = require ("../X3D"),
@@ -633,7 +634,7 @@ module .exports = new class Panel extends Interface
             }
             catch
             {
-               $ .beep ();
+               electron .shell .beep ();
             }
 
             break;
@@ -665,7 +666,7 @@ module .exports = new class Panel extends Interface
             }
             catch
             {
-               $ .beep ();
+               electron .shell .beep ();
             }
 
             break;

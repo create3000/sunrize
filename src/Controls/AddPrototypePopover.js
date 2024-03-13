@@ -2,6 +2,7 @@
 
 const
    $           = require ("jquery"),
+   electron    = require ("electron"),
    DataStorage = require ("../Application/DataStorage"),
    Editor      = require ("../Undo/Editor"),
    UndoManager = require ("../Undo/UndoManager"),
@@ -47,7 +48,7 @@ $.fn.addPrototypePopover = function (executionContext, type)
          {
             nameInput .validate (Editor .Id, () =>
             {
-               $ .beep ();
+               electron .shell .beep ();
                nameInput .highlight ();
             })
             .on ("keydown.addPrototypePopover", event =>

@@ -10,7 +10,6 @@ const
 
 require ("../Tools");
 require ("../Bits/Highlight");
-require ("../Bits/Beep");
 
 Object .assign ($,
 {

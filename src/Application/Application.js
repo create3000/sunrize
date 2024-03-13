@@ -160,10 +160,12 @@ module .exports = class Application
 
       const menu = electron .Menu .buildFromTemplate (this .filterSeparators ([
          ... process .platform === "darwin" ?
-         {
-            role: "appMenu",
-            label: electron .app .getName (),
-         }
+         [
+            {
+               role: "appMenu",
+               label: electron .app .getName (),
+            },
+         ]
          :
          [ ],
          {

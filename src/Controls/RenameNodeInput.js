@@ -2,6 +2,7 @@
 
 const
    $           = require ("jquery"),
+   electron    = require ("electron"),
    X3D         = require ("../X3D"),
    Editor      = require ("../Undo/Editor"),
    UndoManager = require ("../Undo/UndoManager"),
@@ -17,7 +18,7 @@ $.fn.renameNodeInput = function (node)
 
    this .validate (Editor .Id, () =>
    {
-      $ .beep ();
+      electron .shell .beep ();
       this .highlight ();
    })
    .on ("keydown.renameNodeInput", (event) =>

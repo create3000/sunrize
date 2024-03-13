@@ -1492,7 +1492,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       }
       catch
       {
-         $ .beep ();
+         electron .shell .beep ();
          input .highlight ();
       }
       finally
@@ -1666,7 +1666,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       }
       catch
       {
-         $ .beep ();
+         electron .shell .beep ();
          textarea .highlight ();
       }
    }

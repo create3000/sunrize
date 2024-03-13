@@ -2,6 +2,7 @@
 
 const
    $           = require ("jquery"),
+   electron    = require ("electron"),
    DataStorage = require ("../Application/DataStorage"),
    X3D         = require ("../X3D"),
    Editor      = require ("../Undo/Editor"),
@@ -136,7 +137,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
          {
             nameInput .validate (Editor .Id, () =>
             {
-               $ .beep ();
+               electron .shell .beep ();
                nameInput .highlight ();
             })
             .on ("keydown", event =>
@@ -168,7 +169,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
          if (node .getUserDefinedFields () .has (name) && node .getUserDefinedFields () .get (name) !== field)
          {
             // Error: field name exists.
-            $ .beep ();
+            electron .shell .beep ();
             nameInput .highlight ();
             event .preventDefault ();
          }
@@ -215,7 +216,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
          if (node .getUserDefinedFields () .has (name))
          {
             // Error: field name exists.
-            $ .beep ();
+            electron .shell .beep ();
             nameInput .highlight ();
             event .preventDefault ();
          }

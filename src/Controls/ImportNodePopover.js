@@ -1,10 +1,10 @@
 "use strict";
 
 const
-   $           = require ("jquery"),
-   Editor      = require ("../Undo/Editor"),
-   UndoManager = require ("../Undo/UndoManager"),
-   _           = require ("../Application/GetText");
+   $        = require ("jquery"),
+   electron = require ("electron"),
+   Editor   = require ("../Undo/Editor"),
+   _        = require ("../Application/GetText");
 
 require ("./Popover");
 require ("../Bits/Validate");
@@ -28,7 +28,7 @@ $.fn.importNodePopover = function (inlineNode, exportedName, oldImportedName)
          {
             nameInput .validate (Editor .Id, () =>
             {
-               $ .beep ();
+               electron .shell .beep ();
                nameInput .highlight ();
             })
             .on ("keydown.importNodePopover", event =>
