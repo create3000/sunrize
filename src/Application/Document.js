@@ -23,6 +23,12 @@ module .exports = class Document extends Interface
    {
       super ("Sunrize.Document.");
 
+      // Globals
+
+      this .config .global .setDefaultValues ({
+         autoSave: true,
+      });
+
       // Layout
 
       this .verticalSplitter   = new Splitter ($("#vertical-splitter"), "vertical");
@@ -455,8 +461,7 @@ Viewpoint {
    {
       this .config .global .autoSave = value;
 
-      if (value)
-         this .registerAutoSave ();
+      this .registerAutoSave ();
    }
 
    #saveTimeoutId = undefined;

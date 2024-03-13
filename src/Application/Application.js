@@ -62,7 +62,7 @@ module .exports = class Application
          size: [1100, 680],
          maximized: false,
          fullscreen: false,
-         autoSave: false,
+         autoSave: true,
          expandExternProtoDeclarations: true,
          expandPrototypeInstances: true,
          expandInlineNodes: true,
