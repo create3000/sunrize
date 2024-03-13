@@ -766,10 +766,12 @@ module .exports = class Application
             ],
          },
          ... process .platform === "darwin" ?
-         [{
-            role: "window",
-            submenu: [ ],
-         }]
+         [
+            {
+               role: "window",
+               submenu: [ ],
+            },
+         ]
          :
          [ ],
          {
