@@ -204,8 +204,8 @@ module .exports = class Application
                      ]));
 
                      const response = await prompt ({
-                        title: "Open URL...",
-                        label: "Enter URL for opening in new tab:",
+                        title: _("Open URL..."),
+                        label: _("Enter URL for opening in new tab:"),
                         type: "input",
                         value: clipboard .match (/^(?:https?|file|ftp|smb):\/\/.+/) ? clipboard : this .openLocationValue,
                         inputAttrs: {
@@ -370,7 +370,7 @@ module .exports = class Application
                   { role: "selectAll" },
                   { type: "separator" },
                   {
-                     label: "Speech",
+                     label: _("Speech"),
                      submenu: [
                         { role: "startSpeaking" },
                         { role: "stopSpeaking" },
@@ -512,7 +512,7 @@ module .exports = class Application
                   visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
                },
                {
-                  label: "Reload Tab",
+                  label: _("Reload Tab"),
                   visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
                   click: () =>
                   {
@@ -520,7 +520,7 @@ module .exports = class Application
                   },
                },
                {
-                  label: "Toggle Tab Developer Tools",
+                  label: _("Toggle Tab Developer Tools"),
                   visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
                   click: () =>
                   {
@@ -662,7 +662,7 @@ module .exports = class Application
             ],
          },
          {
-            label: "Layout",
+            label: _("Layout"),
             submenu: [
                {
                   label: _("Browser Frame..."),
@@ -766,10 +766,38 @@ module .exports = class Application
             role: "help",
             submenu: [
                {
-                  label: "Learn More",
+                  label: _("Learn More"),
                   click: () =>
                   {
                      electron .shell .openExternal ("https://create3000.github.io/sunrize/");
+                  },
+               },
+               {
+                  label: _("A Quick Look at the User Interface"),
+                  click: () =>
+                  {
+                     electron .shell .openExternal ("https://create3000.github.io/sunrize/documentation/a-quick-look-at-the-user-interface/");
+                  },
+               },
+               {
+                  label: _("How to Navigate in a Scene"),
+                  click: () =>
+                  {
+                     electron .shell .openExternal ("https://create3000.github.io/x_ite/tutorials/how-to-navigate-in-a-scene/");
+                  },
+               },
+               {
+                  label: _("Outline Editor"),
+                  click: () =>
+                  {
+                     electron .shell .openExternal ("https://create3000.github.io/sunrize/documentation/using-the-outline-editor/");
+                  },
+               },
+               {
+                  label: _("Script Editor"),
+                  click: () =>
+                  {
+                     electron .shell .openExternal ("https://create3000.github.io/sunrize/documentation/using-the-script-editor/");
                   },
                },
             ],
