@@ -874,16 +874,16 @@ module .exports = class Application
 
    contextMenu (id, menu)
    {
-      electron .Menu .buildFromTemplate (this .createMenuTemplate (id, this .filterSeparators (menu)))
+      electron .Menu .buildFromTemplate (this .addMenuItemHandlers (id, this .filterSeparators (menu)))
          .popup ({ window: this .mainWindow });
    }
 
-   createMenuTemplate (id, menu)
+   addMenuItemHandlers (id, menu)
    {
       for (const menuItem of menu)
       {
          if (menuItem .submenu)
-            this .createMenuTemplate (id, menuItem .submenu);
+            this .addMenuItemHandlers (id, menuItem .submenu);
          else
             menuItem .click = () => this .mainWindow .webContents .send (id, ... menuItem .args);
       }
