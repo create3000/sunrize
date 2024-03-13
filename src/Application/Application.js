@@ -316,7 +316,9 @@ module .exports = class Application
                         this .mainWindow .webContents .send ("export-as", exportPath);
                      },
                   }
-               ] : [ ],
+               ]
+               :
+               [ ],
                {
                   label: _("Export As..."),
                   accelerator: "Shift+CmdOrCtrl+E",
@@ -410,7 +412,8 @@ module .exports = class Application
                   },
                },
             ]
-         } :
+         }
+         :
          {
             role: "editMenu",
             submenu: [
@@ -768,7 +771,7 @@ module .exports = class Application
             submenu: [ ],
          }]
          :
-         [],
+         [ ],
          {
             role: "help",
             submenu: [
