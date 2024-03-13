@@ -386,7 +386,7 @@ module .exports = class Application
                { type: "separator" },
                {
                   label: _("Toggle Line Comment"),
-                  accelerator: "CmdOrCtrl+Shift+7",
+                  accelerator: process .platform === "darwin" ? "CmdOrCtrl+Shift+7" : "CmdOrCtrl+#",
                   enabled: this .menuOptions .monacoEditor,
                   click: () =>
                   {
