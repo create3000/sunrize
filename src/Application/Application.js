@@ -880,19 +880,15 @@ module .exports = class Application
 
    createMenuTemplate (id, menu)
    {
-      const template = [ ];
-
       for (const menuItem of menu)
       {
          if (menuItem .submenu)
-            menuItem .submenu = this .createMenuTemplate (id, menuItem .submenu);
+            this .createMenuTemplate (id, menuItem .submenu);
          else
             menuItem .click = () => this .mainWindow .webContents .send (id, ... menuItem .args);
-
-         template .push (menuItem);
       }
 
-      return template;
+      return menu;
    }
 
    filterSeparators (menu)
