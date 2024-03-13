@@ -787,14 +787,14 @@ module .exports = class Application
                   },
                },
                {
-                  label: _("Outline Editor"),
+                  label: _("Using the Outline Editor"),
                   click: () =>
                   {
                      electron .shell .openExternal ("https://create3000.github.io/sunrize/documentation/using-the-outline-editor/");
                   },
                },
                {
-                  label: _("Script Editor"),
+                  label: _("Using the Script Editor"),
                   click: () =>
                   {
                      electron .shell .openExternal ("https://create3000.github.io/sunrize/documentation/using-the-script-editor/");
