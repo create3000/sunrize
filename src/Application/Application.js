@@ -159,10 +159,13 @@ module .exports = class Application
       const exportPath = this .exportPath .get (this .currentFile);
 
       const menu = electron .Menu .buildFromTemplate (this .filterSeparators ([
+         ... process .platform === "darwin" ?
          {
             role: "appMenu",
             label: electron .app .getName (),
-         },
+         }
+         :
+         [ ],
          {
             role: "fileMenu",
             submenu: [
@@ -351,6 +354,10 @@ module .exports = class Application
                      this .mainWindow .webContents .send ("close");
                   },
                },
+               ... process .platform === "darwin" ?
+               [ ]
+               :
+               [{ role: "quit" }],
             ],
          },
          this .menuOptions .defaultEditMenu ?
@@ -862,7 +869,7 @@ module .exports = class Application
 
    contextMenu (id, menu)
    {
-      electron .Menu .buildFromTemplate (this .createMenuTemplate (id, menu))
+      electron .Menu .buildFromTemplate (this .createMenuTemplate (id, this .filterSeparators (menu)))
          .popup ({ window: this .mainWindow });
    }
 
@@ -870,7 +877,7 @@ module .exports = class Application
    {
       const template = [ ];
 
-      for (const menuItem of this .filterSeparators (menu))
+      for (const menuItem of menu)
       {
          if (menuItem .submenu)
             menuItem .submenu = this .createMenuTemplate (id, menuItem .submenu);
