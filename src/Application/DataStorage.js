@@ -1,80 +1,79 @@
-// Cannot use strict.
-//"use strict"
+"use strict";
 
 const
    storages   = new WeakMap (),
    namespaces = new WeakMap (),
-   defaults   = new WeakMap ()
+   defaults   = new WeakMap ();
 
 const handler =
 {
    get (target, key)
    {
-      const property = target [key]
+      const property = target [key];
 
       if (property !== undefined)
-         return property
+         return property;
 
       const
          storage   = target .getStorage (),
          namespace = target .getNameSpace (),
-         value     = storage [namespace + key]
+         value     = storage [namespace + key];
 
-      if (value === undefined || value === "undefined" || value === null)
-         return target .getDefaultValue (key)
+      if (String (value) .match (/^(?:undefined|null)$/))
+         return target .getDefaultValue (key);
 
       // Update timestamp.
-      storage [namespace + key + ".#timeStamp"] = JSON .stringify (Date .now ())
+      storage [namespace + key + ".#timeStamp"] = JSON .stringify (Date .now ());
 
-      return JSON .parse (value)
+      return JSON .parse (value);
    },
    set (target, key, value)
    {
       const
          storage   = target .getStorage (),
-         namespace = target .getNameSpace ()
+         namespace = target .getNameSpace ();
 
       if (value === undefined)
       {
-         storage .removeItem (namespace + key + ".#timeStamp")
-         storage .removeItem (namespace + key)
+         storage .removeItem (namespace + key + ".#timeStamp");
+         storage .removeItem (namespace + key);
       }
       else
       {
-         storage [namespace + key + ".#timeStamp"] = JSON .stringify (Date .now ())
-         storage [namespace + key]                 = JSON .stringify (value)
+         storage [namespace + key + ".#timeStamp"] = JSON .stringify (Date .now ());
+         storage [namespace + key]                 = JSON .stringify (value);
       }
 
-      return true
+      return true;
    },
    has (target, key)
    {
-      const value = target .getStorage () [target .getNameSpace () + key]
+      const value = target .getStorage () [target .getNameSpace () + key];
 
-      return !(value === undefined || value === "undefined" || value === null)
+      return !(value === undefined || value === "undefined" || value === null);
    },
    ownKeys (target)
    {
       const
          storage   = target .getStorage (),
          namespace = target .getNameSpace (),
-         ownKeys   = [ ]
+         ownKeys   = [ ];
 
       for (const key of Object .keys (storage))
       {
          if (key .startsWith (namespace) && !key .endsWith (".#timeStamp"))
-            ownKeys .push (key .substring (namespace .length))
+            ownKeys .push (key .substring (namespace .length));
       }
 
-      return ownKeys
+      return ownKeys;
    },
    getOwnPropertyDescriptor (target, key)
    {
       const
          storage   = target .getStorage (),
-         namespace = target .getNameSpace ()
+         namespace = target .getNameSpace ();
 
-      return Object .getOwnPropertyDescriptor (storage, namespace + key)
+      return Object .getOwnPropertyDescriptor (storage, namespace + key);
    },
 }
 
@@ -82,13 +81,13 @@ module .exports = class DataStorage
 {
    constructor (storage, namespace)
    {
-      this .target = this
+      this .target = this;
 
-      storages   .set (this, storage)
-      namespaces .set (this, namespace)
-      defaults   .set (this, { })
+      storages   .set (this, storage);
+      namespaces .set (this, namespace);
+      defaults   .set (this, { });
 
-      return new Proxy (this, handler)
+      return new Proxy (this, handler);
    }
 
    /**
@@ -97,7 +96,7 @@ module .exports = class DataStorage
     */
    getStorage ()
    {
-      return storages .get (this .target)
+      return storages .get (this .target);
    }
 
    /**
@@ -106,7 +105,7 @@ module .exports = class DataStorage
     */
    getNameSpace ()
    {
-      return namespaces .get (this .target)
+      return namespaces .get (this .target);
    }
 
    /**
@@ -116,7 +115,7 @@ module .exports = class DataStorage
     */
    addNameSpace (namespace)
    {
-      return new DataStorage (this .getStorage (), this .getNameSpace () + namespace)
+      return new DataStorage (this .getStorage (), this .getNameSpace () + namespace);
    }
 
    /**
@@ -125,7 +124,7 @@ module .exports = class DataStorage
     */
    setDefaultValues (object)
    {
-      Object .assign (defaults .get (this .target), object)
+      Object .assign (defaults .get (this .target), object);
    }
 
    /**
@@ -134,7 +133,7 @@ module .exports = class DataStorage
     */
    getDefaultValues ()
    {
-      return Object .assign ({ }, defaults .get (this .target))
+      return Object .assign ({ }, defaults .get (this .target));
    }
 
    /**
@@ -144,9 +143,9 @@ module .exports = class DataStorage
     */
    getDefaultValue (key)
    {
-      const value = defaults .get (this .target) [key]
+      const value = defaults .get (this .target) [key];
 
-      return value === undefined ? undefined : JSON .parse (JSON .stringify (value))
+      return value === undefined ? undefined : JSON .parse (JSON .stringify (value));
    }
 
    /**
@@ -157,18 +156,18 @@ module .exports = class DataStorage
    {
       const
          storage   = this .getStorage (),
-         namespace = this .getNameSpace ()
+         namespace = this .getNameSpace ();
 
       for (const key of Object .keys (storage))
       {
          if (key .startsWith (namespace) && !key .endsWith (".#timeStamp"))
          {
-            const timeStamp = JSON .parse (storage [key + ".#timeStamp"])
+            const timeStamp = JSON .parse (storage [key + ".#timeStamp"]);
 
             if (timeStamp < before)
             {
-               storage .removeItem (key + ".#timeStamp")
-               storage .removeItem (key)
+               storage .removeItem (key + ".#timeStamp");
+               storage .removeItem (key);
             }
          }
       }
@@ -178,12 +177,12 @@ module .exports = class DataStorage
    {
       const
          storage   = this .getStorage (),
-         namespace = this .getNameSpace ()
+         namespace = this .getNameSpace ();
 
       for (const key of Object .keys (storage))
       {
          if (key .startsWith (namespace))
-            storage .removeItem (key)
+            storage .removeItem (key);
       }
    }
-}
+};
