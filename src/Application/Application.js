@@ -363,8 +363,8 @@ module .exports = class Application
                { role: "cut" },
                { role: "copy" },
                { role: "paste" },
-               ... (process .platform === "darwin"
-               ? [
+               ... process .platform === "darwin" ?
+               [
                   { role: "pasteAndMatchStyle" },
                   { role: "delete" },
                   { role: "selectAll" },
@@ -377,11 +377,12 @@ module .exports = class Application
                      ]
                   },
                ]
-               : [
+               :
+               [
                   { role: "delete" },
                   { type: "separator" },
                   { role: "selectAll" },
-               ]),
+               ],
                { type: "separator" },
                {
                   label: _("Toggle Line Comment"),
