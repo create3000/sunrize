@@ -311,10 +311,8 @@ module .exports = class Application
                   {
                      label: util .format (_("Export As %s"), path .basename (exportPath)),
                      accelerator: "CmdOrCtrl+E",
-                     click: async () =>
+                     click: () =>
                      {
-                        const exportPath = this .exportPath .get (this .currentFile);
-
                         this .mainWindow .webContents .send ("export-as", exportPath);
                      },
                   }
