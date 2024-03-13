@@ -200,13 +200,7 @@ module .exports = class Application
                   {
                      const clipboard = electron .clipboard .readText ();
 
-                     this .pushMenu (electron .Menu .buildFromTemplate ([
-                        {
-                           role: "appMenu",
-                           label: electron .app .getName (),
-                        },
-                        { role: "editMenu" },
-                     ]));
+                     this .pushMenu (this .createDialogMenu ());
 
                      const response = await prompt ({
                         title: _("Open URL..."),
@@ -219,6 +213,7 @@ module .exports = class Application
                         },
                         width: 500,
                         customStylesheet: path .join (__dirname, "../assets/themes/prompt.css"),
+                        showWhenReady: true,
                      },
                      this .mainWindow);
 
@@ -822,6 +817,27 @@ module .exports = class Application
          electron .Menu .setApplicationMenu (menu);
    }
 
+   createDialogMenu ()
+   {
+      return electron .Menu .buildFromTemplate ([
+         ... process .platform === "darwin" ?
+         [
+            {
+               role: "appMenu",
+               label: electron .app .getName (),
+            },
+         ]
+         :
+         [
+            {
+               role: "fileMenu",
+               submenu: [{ role: "quit" }],
+            }
+         ],
+         { role: "editMenu" },
+      ]);
+   }
+
    async createWindow ()
    {
       const window = new electron .BrowserWindow ({
@@ -958,13 +974,7 @@ module .exports = class Application
 
    async showOpenDialog (defaultPath, filters)
    {
-      this .pushMenu (electron .Menu .buildFromTemplate ([
-         {
-            role: "appMenu",
-            label: electron .app .getName (),
-         },
-         { role: "editMenu" },
-      ]));
+      this .pushMenu (this .createDialogMenu ());
 
       const response = await electron .dialog .showOpenDialog ({
          defaultPath: defaultPath,
@@ -989,13 +999,7 @@ module .exports = class Application
 
    async showSaveDialog (defaultPath)
    {
-      this .pushMenu (electron .Menu .buildFromTemplate ([
-         {
-            role: "appMenu",
-            label: electron .app .getName (),
-         },
-         { role: "editMenu" },
-      ]));
+      this .pushMenu (this .createDialogMenu ());
 
       const response = await electron .dialog .showSaveDialog ({
          defaultPath: defaultPath,
@@ -1017,13 +1021,7 @@ module .exports = class Application
 
    async showExportDialog (defaultPath)
    {
-      this .pushMenu (electron .Menu .buildFromTemplate ([
-         {
-            role: "appMenu",
-            label: electron .app .getName (),
-         },
-         { role: "editMenu" },
-      ]));
+      this .pushMenu (this .createDialogMenu ());
 
       const response = await electron .dialog .showSaveDialog ({
          defaultPath: defaultPath,
