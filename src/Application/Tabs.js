@@ -234,6 +234,8 @@ module .exports = new class Tabs
       src .searchParams .set ("url", tab .url);
 
       tab .webview .src = src;
+
+      this .setTabURL (tab, tab .url, true);
    }
 
    getTabs ()
