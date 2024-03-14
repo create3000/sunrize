@@ -3155,7 +3155,7 @@ module .exports = class OutlineView extends Interface
       if (!this .isEditable (element))
          return;
 
-      this .sceneGraph .find (".primary") .removeClass (["primary", "manually"]);
+      this .sceneGraph .find (".primary") .removeClass (["primary"]);
 
       element .addClass (["primary", "manually"]);
    }
