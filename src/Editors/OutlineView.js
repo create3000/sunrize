@@ -64,6 +64,7 @@ module .exports = class OutlineView extends Interface
       electron .ipcRenderer .on ("expand-inline-nodes",              (event, value) => this .expandInlineNodes             = value);
 
       electron .ipcRenderer .on ("close", () => this .saveExpanded (this .config .file));
+      $(window)             .on ("close", () => this .saveExpanded (this .config .file));
    }
 
    get expandExternProtoDeclarations ()
