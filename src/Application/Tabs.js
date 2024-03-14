@@ -278,7 +278,7 @@ module .exports = new class Tabs
 
       if (tab !== this .tabs .getActiveTab ())
          return;
-;
+
       const numTabs = this .tabs .getTabs () .length;
 
       if (numTabs === 1)
