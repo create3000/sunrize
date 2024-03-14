@@ -51,9 +51,8 @@ module .exports = class Document extends Interface
 
       $(window)
          .on ("focusin",  () => this .onfocus ())
-         .on ("focusout", () => this .onfocus ());
-
-      $(window) .on ("keydown", event => this .onkeydown (event));
+         .on ("focusout", () => this .onfocus ())
+         .on ("keydown", event => this .onkeydown (event));
 
       // File Menu
 
