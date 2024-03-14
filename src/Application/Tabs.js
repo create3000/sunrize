@@ -227,9 +227,13 @@ module .exports = new class Tabs
 
    reloadTab ()
    {
-      const tab = this .tabs .getActiveTab ();
+      const
+         tab = this .tabs .getActiveTab (),
+         src = url .pathToFileURL (path .join (__dirname, "../assets/html/window.html"));
 
-      tab .webview .src = tab .webview .src;
+      src .searchParams .set ("url", tab .url);
+
+      tab .webview .src = src;
    }
 
    getTabs ()
