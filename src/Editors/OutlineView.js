@@ -1659,7 +1659,7 @@ module .exports = class OutlineView extends Interface
       title += `Type: ${field .getTypeName ()}\n`;
 
       if (field instanceof X3D .X3DArrayField)
-         title += `Number of values: ${field .length}`;
+         title += `Number of values: ${field .length .toLocaleString (_.locale)}`;
       else if (field .getType () === X3D .X3DConstants .SFImage)
          title += `Current value: ${field .width} ${field .height} ${field .comp} ...`;
       else if (field .getType () === X3D .X3DConstants .SFString)

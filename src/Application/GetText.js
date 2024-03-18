@@ -1,10 +1,10 @@
-"use strict"
+"use strict";
 
-function _(string)
+function gettext (string)
 {
-   return string
+   return string;
 }
 
-_.locale = "en"
+gettext .locale = "en";
 
-module .exports = _
+module .exports = gettext;

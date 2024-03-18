@@ -6,6 +6,7 @@ const
    X3D       = require ("../X3D"),
    Editor    = require ("../Undo/Editor"),
    X3DUOM    = require ("../Bits/X3DUOM"),
+   util      = require ("util"),
    _         = require ("../Application/GetText");
 
 module .exports = new class Panel extends Interface
@@ -401,7 +402,7 @@ module .exports = new class Panel extends Interface
             const tooMuchValues = (field instanceof X3D .X3DArrayField) && field .length >= 10_000;
 
             if (tooMuchValues)
-               parameter [field .getName ()] = _("Too much values.");
+               parameter [field .getName ()] = util .format (_("%s values."), field .length .toLocaleString (_.locale));
             else
                this .refresh (parameter, node, field);
 
