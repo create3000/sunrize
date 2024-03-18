@@ -452,6 +452,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             },
             { type: "separator" },
             {
+               label: _("Copy"),
+               args: ["copyNodes"],
+            },
+            { type: "separator" },
+            {
                label: _("Add Field..."),
                visible: element .is (".proto"),
                args: ["addUserDefinedField", element .attr ("id"), executionContext .getId (), protoNode .getId ()],
