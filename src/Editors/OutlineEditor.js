@@ -789,17 +789,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
          requestAnimationFrame (() =>
          {
-            // Expand to nodes.
-
             for (const node of nodes)
                this .expandTo (node);
-
-            // Select pasted nodes.
-
-            this .deselectAll ();
-
-            for (const node of nodes)
-               this .selectNodeElement ($(`.node[node-id=${node .getId ()}]`), true);
          });
       }
       catch (error)
