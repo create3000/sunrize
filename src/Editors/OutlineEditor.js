@@ -732,12 +732,14 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    {
       try
       {
+         // if there is a selected field or node, update nodeId and fieldId.
+
          const
-            primary                 = $(".node.primary"),
+            primary                 = $(".primary"),
             executionContextElement = primary .closest (".scene", this .sceneGraph),
             executionContext        = this .objects .get (executionContextId) ?? this .getNode (executionContextElement) ?? this .executionContext,
             targetNode              = this .objects .get (nodeId) ?? this .getNode (primary),
-            targetField             = this .objects .get (fieldId),
+            targetField             = this .objects .get (fieldId) ?? this .getField (primary),
             numRootNodes            = executionContext .rootNodes .length,
             x3dSyntax               = await navigator .clipboard .readText (),
             destinationModelMatrix  = nodeId !== undefined ? this .getModelMatrix ($(`.node[node-id=${nodeId}]`)) : new X3D .Matrix4 ();
