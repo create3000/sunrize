@@ -38,8 +38,8 @@ module .exports = class Editor
    static exportX3D (executionContext, objects = [ ], { type = "x3d", importedNodes = false, exportedNodes = false } = { })
    {
       const
-         externprotos = new Set (objects .filter (o => o instanceof X3D .X3DExternProtoDeclaration)),
-         protos       = new Set (objects .filter (o => o instanceof X3D .X3DProtoDeclaration)),
+         externprotos = new Set (),
+         protos       = new Set (),
          nodes        = new X3D .MFNode (... objects .filter (o => o .getType () .includes (X3D .X3DConstants .X3DNode)));
 
       const
@@ -71,6 +71,12 @@ module .exports = class Editor
          else
             protos .add (protoNode);
       }
+
+      for (const externProto of objects .filter (o => o instanceof X3D .X3DExternProtoDeclaration))
+         externprotos .add (externProto);
+
+      for (const proto of objects .filter (o => o instanceof X3D .X3DProtoDeclaration))
+         protos .add (proto);
 
       // Determine components, imported nodes and routes.
 
