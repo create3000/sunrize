@@ -72,12 +72,6 @@ module .exports = class Editor
             protos .add (protoNode);
       }
 
-      for (const externProto of objects .filter (o => o instanceof X3D .X3DExternProtoDeclaration))
-         externprotos .add (externProto);
-
-      for (const proto of objects .filter (o => o instanceof X3D .X3DProtoDeclaration))
-         protos .add (proto);
-
       // Determine components, imported nodes and routes.
 
       const
@@ -166,6 +160,8 @@ module .exports = class Editor
 
       // Return XML string.
 
+      this .inferProfileAndComponents (scene, new UndoManager ());
+
       const x3dSyntax = this .getContents (scene, type);
 
       // Dispose scene.
@@ -205,6 +201,8 @@ module .exports = class Editor
 
       scene .setProfile (browser .getProfile ("Full"));
       scene .updateComponent (browser .getComponent ("X_ITE"));
+
+      await browser .loadComponents (scene .getProfile (), scene .getComponents ());
 
       try
       {
