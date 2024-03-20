@@ -505,7 +505,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             }
          }
 
-         this .setFieldValue (executionContext, node, node ._url, newURL, undoManager);
+         const uniqueURL = new X3D .MFString (... new Set (newURL));
+
+         this .setFieldValue (executionContext, node, node ._url, uniqueURL, undoManager);
       });
 
       undoManager .endUndo ();
