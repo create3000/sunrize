@@ -455,6 +455,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             if (fontStyleNode && this .fontFamilies .has (fileURL))
             {
                newURL .push (fileURL);
+               continue;
             }
             else if (this .absoluteURL .test (fileURL))
             {
@@ -470,6 +471,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   // Add new relative file URL.
 
                   newURL .push (relativePath);
+                  continue;
                }
                catch
                { }
@@ -480,9 +482,12 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                try
                {
-                  const
-                     filePath     = path .resolve  (path .dirname (url .fileURLToPath (oldWorldURL)), fileURL),
-                     relativePath = path .relative (path .dirname (url .fileURLToPath (newWorldURL)), filePath);
+                  const filePath = path .resolve  (path .dirname (url .fileURLToPath (oldWorldURL)), fileURL);
+
+                  let relativePath = path .relative (path .dirname (url .fileURLToPath (newWorldURL)), filePath);
+
+                  relativePath += new URL (fileURL, oldWorldURL) .search;
+                  relativePath += new URL (fileURL, oldWorldURL) .hash;
 
                   // Add new relative file URL.
                   newURL .push (relativePath);
