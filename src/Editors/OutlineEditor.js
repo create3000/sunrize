@@ -455,6 +455,10 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                label: _("Copy"),
                args: ["copyNodes"],
             },
+            {
+               label: _("Copy Extern Prototype"),
+               args: ["copyExternPrototype"],
+            },
             { type: "separator" },
             {
                label: _("Add Field..."),
@@ -685,13 +689,13 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    {
       UndoManager .shared .beginUndo (_("Cut Nodes"));
 
-      this .copyNodes (false);
+      this .copyNodes ();
       this .deleteNodes ();
 
       UndoManager .shared .endUndo ();
    }
 
-   copyNodes (removePrimary = true)
+   copyNodes ()
    {
       const
          primary     = $(".node.primary, .proto.primary, .externproto.primary"),
@@ -699,14 +703,14 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          selection   = selected .filter (primary) .length ? selected : primary,
          ids         = selection .map (function () { return this .id }) .get (),
          elements    = ids .map (id => $(`#${id}`)),
-         nodes       = elements .map (element => this .getNode (element)),
+         nodes       = elements .map (element => this .getNode ($(element))),
          undoManager = new UndoManager ();
 
       undoManager .beginUndo ();
 
       for (const element of elements)
       {
-         const node = this .getNode (element);
+         const node = this .getNode ($(element));
 
          if (!node .getType () .includes (X3D .X3DConstants .X3DTransformNode))
             continue;
@@ -723,9 +727,32 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       navigator .clipboard .writeText (x3dSyntax);
 
       undoManager .undo ();
+   }
 
-      if (removePrimary)
-         primary .removeClass ("primary");
+   copyExternPrototype ()
+   {
+      const
+         elements = $(".proto.primary, .proto.manually.selected"),
+         protos   = [... elements] .map (element => this .getNode ($(element)));
+
+      const
+         browser = this .executionContext .getBrowser (),
+         scene   = browser .createScene ();
+
+      scene .setMetaData ("base", this .executionContext .worldURL);
+
+      for (const proto of protos)
+      {
+         const
+            url         = `${proto .getExecutionContext () .getWorldURL ()}#${proto .getName ()}`,
+            externproto = new X3D .X3DExternProtoDeclaration (scene, new X3D .MFString (url));
+
+         scene .addExternProtoDeclaration (proto .getName (), externproto);
+      }
+
+      console .log (scene .toXMLString ())
+
+      navigator .clipboard .writeText (scene .toXMLString ());
    }
 
    async pasteNodes (id, executionContextId, nodeId, fieldId)

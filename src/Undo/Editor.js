@@ -166,12 +166,6 @@ module .exports = class Editor
 
       // Dispose scene.
 
-      scene .externprotos  .clear ();
-      scene .protos        .clear ();
-      scene .importedNodes .clear ();
-      scene .exportedNodes .clear ();
-      scene .routes        .clear ();
-
       scene .dispose ();
       nodes .dispose ();
 
@@ -445,7 +439,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       undoManager .beginUndo (_("Rewrite URLs"))
 
-      Traverse .traverse (objects, Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, (node) =>
+      Traverse .traverse (objects, Traverse .EXTERNPROTO_DECLARATIONS | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, (node) =>
       {
          const
             urlObject     = node .getType () .includes (X3D .X3DConstants .X3DUrlObject),
@@ -458,8 +452,28 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
          for (const fileURL of node ._url)
          {
-            if (this .absoluteURL .test (fileURL) || (fontStyleNode && this .fontFamilies .has (fileURL)))
+            if (fontStyleNode && this .fontFamilies .has (fileURL))
             {
+               newURL .push (fileURL);
+            }
+            else if (this .absoluteURL .test (fileURL))
+            {
+               try
+               {
+                  const filePath = path .resolve  (path .dirname (url .fileURLToPath (oldWorldURL)), url .fileURLToPath (fileURL));
+
+                  let relativePath = path .relative (path .dirname (url .fileURLToPath (newWorldURL)), filePath);
+
+                  relativePath += new URL (fileURL) .search;
+                  relativePath += new URL (fileURL) .hash;
+
+                  // Add new relative file URL.
+
+                  newURL .push (relativePath);
+               }
+               catch
+               { }
+
                newURL .push (fileURL);
             }
             else
