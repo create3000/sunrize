@@ -461,7 +461,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                try
                {
-                  const filePath = path .resolve  (path .dirname (url .fileURLToPath (oldWorldURL)), url .fileURLToPath (fileURL));
+                  const filePath = path .resolve (path .dirname (url .fileURLToPath (oldWorldURL)), url .fileURLToPath (fileURL));
 
                   let relativePath = path .relative (path .dirname (url .fileURLToPath (newWorldURL)), filePath);
 

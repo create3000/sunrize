@@ -746,7 +746,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       for (const proto of protos)
       {
          const
-            url         = `${basename}#${proto .getName ()}`,
+            url         = `${this .executionContext .worldURL}#${proto .getName ()}`,
             externproto = new X3D .X3DExternProtoDeclaration (scene, new X3D .MFString (url));
 
          scene .addExternProtoDeclaration (proto .getName (), externproto);
