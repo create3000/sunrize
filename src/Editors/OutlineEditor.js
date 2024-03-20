@@ -55,7 +55,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       if (!element .is (".manually.selected"))
          this .sceneGraph .find (".manually.selected") .removeClass ("manually");
 
-      if (element .is (".externproto, .proto, .proto-scene, .node, .field"))
+      if (element .is (".externproto, .proto, .proto-scene, .node, .field") && !element .is (".manually"))
          this .selectPrimaryElement (element);
 
       const
@@ -699,7 +699,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    {
       const
          primary     = $(".node.primary, .proto.primary, .externproto.primary"),
-         selected    = this .sceneGraph .find (".node.manually.selected"),
+         selected    = this .sceneGraph .find (".node.manually, .proto.manually, .externproto.manually"),
          selection   = selected .filter (primary) .length ? selected : primary,
          ids         = selection .map (function () { return this .id }) .get (),
          elements    = ids .map (id => $(`#${id}`)),
@@ -732,7 +732,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    copyExternPrototype ()
    {
       const
-         elements = $(".proto.primary, .proto.manually.selected"),
+         elements = $(".proto.primary, .proto.manually"),
          protos   = [... elements] .map (element => this .getNode ($(element)));
 
       const
@@ -749,8 +749,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
          scene .addExternProtoDeclaration (proto .getName (), externproto);
       }
-
-      console .log (scene .toXMLString ())
 
       navigator .clipboard .writeText (scene .toXMLString ());
    }

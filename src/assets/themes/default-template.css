@@ -981,6 +981,11 @@ body.dark .ui-widget .library-list .component {
   outline: 1px dashed var(--system-blue);
 }
 
+.tree-view .jstree-node.manually.externproto,
+.tree-view .jstree-node.manually.proto {
+  outline: 1px dashed var(--system-indigo);
+}
+
 .tree-view .jstree-node.primary.externproto,
 .tree-view .jstree-node.primary.proto {
     outline: 1px solid var(--system-indigo);

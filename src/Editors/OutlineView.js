@@ -3079,12 +3079,14 @@ module .exports = class OutlineView extends Interface
 
       this .clearConnectors ();
 
-      const element = $("#" + selected .node .id);
+      const
+         element = $("#" + selected .node .id),
+         add     = window .event .shiftKey || window .event .metaKey;
 
       if (element .hasClass ("node"))
-         this .selectNodeElement (element, window .event .shiftKey || window .event .metaKey);
+         this .selectNodeElement (element, add);
       else if (element .is (".externproto, .proto"))
-         this .selectPrimaryElement (element);
+         this .selectPrimaryElement (element, add);
    }
 
    selectNodeElement (element, add = false)
@@ -3151,12 +3153,15 @@ module .exports = class OutlineView extends Interface
       }
    }
 
-   selectPrimaryElement (element)
+   selectPrimaryElement (element, add = false)
    {
       if (!this .isEditable (element))
          return;
 
-      this .sceneGraph .find (".primary") .removeClass (["primary"]);
+      if (!add)
+         this .sceneGraph .find (".manually") .removeClass ("manually");
+
+      this .sceneGraph .find (".primary") .removeClass ("primary");
 
       element .addClass (["primary", "manually"]);
    }
