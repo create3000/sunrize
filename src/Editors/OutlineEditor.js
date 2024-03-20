@@ -736,15 +736,17 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          protos   = [... elements] .map (element => this .getNode ($(element)));
 
       const
-         browser = this .executionContext .getBrowser (),
-         scene   = browser .createScene ();
+         browser  = this .executionContext .getBrowser (),
+         scene    = browser .createScene (),
+         worldURL = new URL (this .executionContext .worldURL),
+         basename = path .basename (worldURL .pathname);
 
       scene .setMetaData ("base", this .executionContext .worldURL);
 
       for (const proto of protos)
       {
          const
-            url         = `${proto .getExecutionContext () .getWorldURL ()}#${proto .getName ()}`,
+            url         = `${basename}#${proto .getName ()}`,
             externproto = new X3D .X3DExternProtoDeclaration (scene, new X3D .MFString (url));
 
          scene .addExternProtoDeclaration (proto .getName (), externproto);
