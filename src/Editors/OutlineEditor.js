@@ -448,7 +448,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             {
                label: _("Delete Prototype"),
                enabled: !used || !!available,
-               args: ["deletePrototype", element .attr ("id"), executionContext .getId (), protoNode .getId (), used, available ? available .getId () : undefined],
+               args: ["deletePrototype", element .attr ("id"), executionContext .getId (), protoNode .getId (), used, available ?.getId ()],
             },
             { type: "separator" },
             {
