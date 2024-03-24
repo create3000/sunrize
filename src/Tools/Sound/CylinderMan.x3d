@@ -9,7 +9,7 @@
     <meta name='generator' content='Titania V1.4.9, http://titania.create3000.de'/>
     <meta name='generator' content='Sunrize X3D Editor V1.6.4, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Library/Models/Robots/CylinderMan.x3d'/>
-    <meta name='modified' content='Sun, 24 Mar 2024 14:12:51 GMT'/>
+    <meta name='modified' content='Sun, 24 Mar 2024 14:14:20 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d#ToolShader"'>
@@ -35,6 +35,7 @@
     </WorldInfo>
     <Transform
         translation='-0 6.490559 -5.900146'
+        rotation='0 1 0 90'
         scale='0.01136608 0.01136608 0.01136608'
         center='0 -6.490559 5.900146'>
       <Transform
