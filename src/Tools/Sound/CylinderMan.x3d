@@ -8,9 +8,11 @@
     <meta name='generator' content='Titania V1.4.9, http://titania.create3000.de'/>
     <meta name='generator' content='Sunrize X3D Editor V1.6.4, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Library/Models/Robots/CylinderMan.x3d'/>
-    <meta name='modified' content='Sun, 24 Mar 2024 13:38:06 GMT'/>
+    <meta name='modified' content='Sun, 24 Mar 2024 13:49:23 GMT'/>
   </head>
   <Scene>
+    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d#ToolShader"'>
+    </ExternProtoDeclare>
     <WorldInfo
         title='CylinderMan'>
       <MetadataSet containerField='metadata'
@@ -28,9 +30,13 @@
         scale='0.0208 0.0208 0.0208'>
       <Transform
           scale='6.75 4.5 4.5'>
-        <Shape>
+        <Shape DEF='_1'>
           <Appearance>
-            <Material DEF='_DefMat'/>
+            <Material
+                diffuseColor='0.2666667 0.2666667 0.2666667'
+                specularColor='1 1 1'
+                shininess='0.3'/>
+            <ProtoInstance name='ToolShader' containerField='shaders'/>
           </Appearance>
           <Cylinder/>
         </Shape>
@@ -41,12 +47,7 @@
         <Transform
             translation='0 -12 0'
             scale='3.25 12 2.5'>
-          <Shape>
-            <Appearance>
-              <Material USE='_DefMat'/>
-            </Appearance>
-            <Cylinder/>
-          </Shape>
+          <Shape USE='_1'/>
         </Transform>
         <Transform
             translation='0 -24 0'
@@ -54,24 +55,14 @@
           <Transform
               translation='0 -10.5 0'
               scale='2.5 10.5 2'>
-            <Shape>
-              <Appearance>
-                <Material USE='_DefMat'/>
-              </Appearance>
-              <Cylinder/>
-            </Shape>
+            <Shape USE='_1'/>
           </Transform>
           <Transform
               translation='0 -21 0'>
             <Transform
                 translation='0 0 6'
                 scale='2.25 1.75 6'>
-              <Shape>
-                <Appearance>
-                  <Material USE='_DefMat'/>
-                </Appearance>
-                <Cylinder/>
-              </Shape>
+              <Shape USE='_1'/>
             </Transform>
           </Transform>
         </Transform>
@@ -82,12 +73,7 @@
         <Transform
             translation='0 -12 0'
             scale='3.25 12 2.5'>
-          <Shape>
-            <Appearance>
-              <Material USE='_DefMat'/>
-            </Appearance>
-            <Cylinder/>
-          </Shape>
+          <Shape USE='_1'/>
         </Transform>
         <Transform
             translation='0 -24 0'
@@ -95,24 +81,14 @@
           <Transform
               translation='0 -10.5 0'
               scale='2.5 10.5 2'>
-            <Shape>
-              <Appearance>
-                <Material USE='_DefMat'/>
-              </Appearance>
-              <Cylinder/>
-            </Shape>
+            <Shape USE='_1'/>
           </Transform>
           <Transform
               translation='0 -21 0'>
             <Transform
                 translation='0 0 6'
                 scale='2.25 1.75 6'>
-              <Shape>
-                <Appearance>
-                  <Material USE='_DefMat'/>
-                </Appearance>
-                <Cylinder/>
-              </Shape>
+              <Shape USE='_1'/>
             </Transform>
           </Transform>
         </Transform>
@@ -122,48 +98,28 @@
         <Transform
             translation='0 3.25 0'
             scale='5.5 3.25 3'>
-          <Shape>
-            <Appearance>
-              <Material USE='_DefMat'/>
-            </Appearance>
-            <Cylinder/>
-          </Shape>
+          <Shape USE='_1'/>
         </Transform>
         <Transform
             translation='0 6.5 0'>
           <Transform
               translation='0 6 0'
               scale='7 6 3.5'>
-            <Shape>
-              <Appearance>
-                <Material USE='_DefMat'/>
-              </Appearance>
-              <Cylinder/>
-            </Shape>
+            <Shape USE='_1'/>
           </Transform>
           <Transform
               translation='0 12 0'>
             <Transform
                 translation='0 2.25 0'
                 scale='2.25 2.25 2.25'>
-              <Shape>
-                <Appearance>
-                  <Material USE='_DefMat'/>
-                </Appearance>
-                <Cylinder/>
-              </Shape>
+              <Shape USE='_1'/>
             </Transform>
             <Transform
                 translation='0 4.5 0'>
               <Transform
                   translation='0 5 0'
                   scale='3 5 3.5'>
-                <Shape>
-                  <Appearance>
-                    <Material USE='_DefMat'/>
-                  </Appearance>
-                  <Cylinder/>
-                </Shape>
+                <Shape USE='_1'/>
               </Transform>
             </Transform>
           </Transform>
@@ -172,12 +128,7 @@
             <Transform
                 translation='-6 0 0'
                 scale='6 1 2.25'>
-              <Shape>
-                <Appearance>
-                  <Material USE='_DefMat'/>
-                </Appearance>
-                <Cylinder/>
-              </Shape>
+              <Shape USE='_1'/>
             </Transform>
             <Transform
                 translation='-9.75 0 0'
@@ -185,12 +136,7 @@
               <Transform
                   translation='0 -6.5 0'
                   scale='2.25 6.5 2.25'>
-                <Shape>
-                  <Appearance>
-                    <Material USE='_DefMat'/>
-                  </Appearance>
-                  <Cylinder/>
-                </Shape>
+                <Shape USE='_1'/>
               </Transform>
               <Transform
                   translation='0 -13 0'
@@ -198,24 +144,14 @@
                 <Transform
                     translation='0 -6 0'
                     scale='1.6 6 1.2'>
-                  <Shape>
-                    <Appearance>
-                      <Material USE='_DefMat'/>
-                    </Appearance>
-                    <Cylinder/>
-                  </Shape>
+                  <Shape USE='_1'/>
                 </Transform>
                 <Transform
                     translation='0 -12 0'>
                   <Transform
                       translation='0 -1.8 0'
                       scale='1.75 3.6 0.5'>
-                    <Shape>
-                      <Appearance>
-                        <Material USE='_DefMat'/>
-                      </Appearance>
-                      <Cylinder/>
-                    </Shape>
+                    <Shape USE='_1'/>
                   </Transform>
                 </Transform>
               </Transform>
@@ -226,12 +162,7 @@
             <Transform
                 translation='6 0 0'
                 scale='6 1 2.25'>
-              <Shape>
-                <Appearance>
-                  <Material USE='_DefMat'/>
-                </Appearance>
-                <Cylinder/>
-              </Shape>
+              <Shape USE='_1'/>
             </Transform>
             <Transform
                 translation='9.75 0 0'
@@ -239,12 +170,7 @@
               <Transform
                   translation='0 -6.5 0'
                   scale='2.25 6.5 2.25'>
-                <Shape>
-                  <Appearance>
-                    <Material USE='_DefMat'/>
-                  </Appearance>
-                  <Cylinder/>
-                </Shape>
+                <Shape USE='_1'/>
               </Transform>
               <Transform
                   translation='0 -13 0'
@@ -252,24 +178,14 @@
                 <Transform
                     translation='0 -6 0'
                     scale='1.6 6 1.2'>
-                  <Shape>
-                    <Appearance>
-                      <Material USE='_DefMat'/>
-                    </Appearance>
-                    <Cylinder/>
-                  </Shape>
+                  <Shape USE='_1'/>
                 </Transform>
                 <Transform
                     translation='0 -12 0'>
                   <Transform
                       translation='0 -1.8 0'
                       scale='1.75 3.6 0.5'>
-                    <Shape>
-                      <Appearance>
-                        <Material USE='_DefMat'/>
-                      </Appearance>
-                      <Cylinder/>
-                    </Shape>
+                    <Shape USE='_1'/>
                   </Transform>
                 </Transform>
               </Transform>
