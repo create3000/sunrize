@@ -11,6 +11,7 @@ Sunrize is based on [X_ITE](https://create3000.github.io/x_ite/) and is a basic 
 ## Quick Links
 
 * [Website](https://create3000.github.io/sunrize/)
+* [Documentation](https://create3000.github.io/sunrize/documentation/)
 
 ## Usage
 
