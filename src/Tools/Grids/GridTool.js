@@ -1,8 +1,6 @@
 "use strict";
 
-const
-   X3DGridNodeTool = require ("./X3DGridNodeTool"),
-   X3D             = require ("../../X3D");
+const X3DGridNodeTool = require ("./X3DGridNodeTool");
 
 class GridTool extends X3DGridNodeTool
 {

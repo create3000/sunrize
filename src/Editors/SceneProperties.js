@@ -3,7 +3,6 @@
 const
    $           = require ("jquery"),
    capitalize  = require ("capitalize"),
-   X3D         = require ("../X3D"),
    Dialog      = require ("../Controls/Dialog"),
    Tabs        = require ("../Controls/Tabs"),
    Algorithm   = require ("../Bits/Algorithm"),

@@ -1,8 +1,6 @@
 "use strict";
 
-const
-   X3DChildNodeTool = require ("../Core/X3DChildNodeTool"),
-   X3D              = require ("../../X3D");
+const X3DChildNodeTool = require ("../Core/X3DChildNodeTool");
 
 class X3DActiveLayerNodeTool extends X3DChildNodeTool
 {

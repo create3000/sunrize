@@ -4,8 +4,7 @@ const
    $         = require ("jquery"),
    X3D       = require ("../X3D"),
    Interface = require ("../Application/Interface"),
-   Traverse  = require ("../Application/Traverse"),
-   Algorithm = require ("../Bits/Algorithm");
+   Traverse  = require ("../Application/Traverse");
 
 module .exports = class NodeList extends Interface
 {

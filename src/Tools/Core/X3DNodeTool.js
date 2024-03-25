@@ -8,7 +8,6 @@ const
    Traverse    = require ("../../Application/Traverse"),
    path        = require ("path"),
    url         = require ("url"),
-   $           = require ("jquery"),
    _           = require ("../../Application/GetText");
 
 const _tool = Symbol .for ("Sunrize.tool");

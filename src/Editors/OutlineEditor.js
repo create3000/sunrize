@@ -2692,9 +2692,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       {
          switch (dropEffect)
          {
-            case "copy": return _("Copy %s Nodes", node .length);
-            case "link": return _("Link %s Nodes", node .length);
-            case "move": return _("Move %s Nodes", node .length);
+            case "copy": return _("Copy %s Nodes");
+            case "link": return _("Link %s Nodes");
+            case "move": return _("Move %s Nodes");
          }
       }
       else

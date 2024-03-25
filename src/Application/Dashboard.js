@@ -2,7 +2,6 @@
 
 const
    $         = require ("jquery"),
-   X3D       = require ("../X3D"),
    Interface = require ("./Interface"),
    Editor    = require("../Undo/Editor"),
    _         = require ("./GetText");

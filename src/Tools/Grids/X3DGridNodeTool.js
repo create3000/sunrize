@@ -4,8 +4,7 @@ const
    X3DActiveLayerNodeTool = require ("../Layering/X3DActiveLayerNodeTool"),
    X3D                    = require ("../../X3D"),
    ActionKeys             = require ("../../Application/ActionKeys"),
-   Editor                 = require ("../../Undo/Editor.js"),
-   $                      = require ("jquery");
+   Editor                 = require ("../../Undo/Editor.js");
 
 class X3DGridNodeTool extends X3DActiveLayerNodeTool
 {
