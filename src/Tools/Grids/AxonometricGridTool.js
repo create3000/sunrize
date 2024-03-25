@@ -26,7 +26,7 @@ class AxonometricGridTool extends X3DGridNodeTool
          angles = [this .tool .angles [0], this .tool .angles [1], Math .PI - this .tool .angles [0] - this .tool .angles [1]],
          u      = Math .sin (angles [1]) / Math .sin (angles [2]),
          v      = 1,
-         As     = new X3D .Vector3 (0, 0, 0),
+         As     = new X3D .Vector3 (),
          Bs     = new X3D .Vector3 (v, 0, 0),
          Cs     = new X3D .Rotation4 (0, 1, 0, angles [0]) .multVecRot (new X3D .Vector3 (u, 0, 0));
 

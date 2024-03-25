@@ -225,7 +225,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
    setMatrixWithCenter (matrix, center = this ._center .getValue ())
    {
       const
-         translation      = new X3D .Vector3 (0, 0, 0),
+         translation      = new X3D .Vector3 (),
          rotation         = new X3D .Rotation4 (),
          scale            = new X3D .Vector3 (1, 1, 1),
          scaleOrientation = new X3D .Rotation4 ();

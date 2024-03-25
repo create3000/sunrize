@@ -319,9 +319,9 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
    }
 
    static #axes = [
-      new X3D .Vector3 (0, 0, 0),
-      new X3D .Vector3 (0, 0, 0),
-      new X3D .Vector3 (0, 0, 0),
+      new X3D .Vector3 (),
+      new X3D .Vector3 (),
+      new X3D .Vector3 (),
    ];
 
    getScaleMatrix (transformTool, handle)
@@ -392,14 +392,14 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
    }
 
    static #points = [
-      new X3D .Vector3 (0, 0, 0),
-      new X3D .Vector3 (0, 0, 0),
-      new X3D .Vector3 (0, 0, 0),
-      new X3D .Vector3 (0, 0, 0),
-      new X3D .Vector3 (0, 0, 0),
-      new X3D .Vector3 (0, 0, 0),
-      new X3D .Vector3 (0, 0, 0),
-      new X3D .Vector3 (0, 0, 0),
+      new X3D .Vector3 (),
+      new X3D .Vector3 (),
+      new X3D .Vector3 (),
+      new X3D .Vector3 (),
+      new X3D .Vector3 (),
+      new X3D .Vector3 (),
+      new X3D .Vector3 (),
+      new X3D .Vector3 (),
    ];
 
    getUniformScaleMatrix (transformTool, handle)

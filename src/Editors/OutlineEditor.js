@@ -1168,7 +1168,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       UndoManager .shared .beginUndo (_("Determine Bounding Box From Scratch"));
 
       Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxSize,   new X3D .Vector3 (-1, -1, -1));
-      Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxCenter, new X3D .Vector3 (0, 0, 0));
+      Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxCenter, new X3D .Vector3 ());
 
       const bbox = node .getBBox (new X3D .Box3 ());
 

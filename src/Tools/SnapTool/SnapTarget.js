@@ -82,15 +82,15 @@ class SnapTarget extends X3DSnapNodeTool
    }
 
    static #axes = [
-      new X3D .Vector3 (0, 0, 0),
-      new X3D .Vector3 (0, 0, 0),
-      new X3D .Vector3 (0, 0, 0),
+      new X3D .Vector3 (),
+      new X3D .Vector3 (),
+      new X3D .Vector3 (),
    ];
 
    static #normals = [
-      new X3D .Vector3 (0, 0, 0),
-      new X3D .Vector3 (0, 0, 0),
-      new X3D .Vector3 (0, 0, 0),
+      new X3D .Vector3 (),
+      new X3D .Vector3 (),
+      new X3D .Vector3 (),
    ];
 
    set_translation (transformTool)
@@ -327,7 +327,7 @@ class SnapTarget extends X3DSnapNodeTool
             normal        = normals [i],
             positionPlane = new X3D .Plane3 (position, normal),
             axisLine      = new X3D .Line3 (center, axis .magnitude () > 0 ? axis .copy () .normalize () : normal),
-            intersection  = new X3D .Vector3 (0, 0, 0),
+            intersection  = new X3D .Vector3 (),
             intersected   = positionPlane .intersectsLine (axisLine, intersection);
 
          if (!intersected)
@@ -344,7 +344,7 @@ class SnapTarget extends X3DSnapNodeTool
       if (translations .length)
          return translations .reduce (([p, pi], [c, ci]) => p .magnitude () < c .magnitude () ? [p, pi] : [c, ci]);
 
-      return [new X3D .Vector3 (0, 0, 0), undefined];
+      return [new X3D .Vector3 (), undefined];
    }
 
    getScaleMatrix (transformTool, handle)
@@ -465,14 +465,14 @@ class SnapTarget extends X3DSnapNodeTool
    static #oppositePoints = [6, 7, 4, 5, 2, 3, 0, 1];
 
    static #points = [
-      new X3D .Vector3 (0, 0, 0),
-      new X3D .Vector3 (0, 0, 0),
-      new X3D .Vector3 (0, 0, 0),
-      new X3D .Vector3 (0, 0, 0),
-      new X3D .Vector3 (0, 0, 0),
-      new X3D .Vector3 (0, 0, 0),
-      new X3D .Vector3 (0, 0, 0),
-      new X3D .Vector3 (0, 0, 0),
+      new X3D .Vector3 (),
+      new X3D .Vector3 (),
+      new X3D .Vector3 (),
+      new X3D .Vector3 (),
+      new X3D .Vector3 (),
+      new X3D .Vector3 (),
+      new X3D .Vector3 (),
+      new X3D .Vector3 (),
    ];
 
    getUniformScaleMatrix (transformTool, handle)
