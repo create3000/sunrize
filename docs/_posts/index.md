@@ -8,7 +8,6 @@ permalink: /
 ---
 
 [![NPM Version](https://img.shields.io/npm/v/sunrize)](https://www.npmjs.com/package/sunrize)
-[![Build Size](https://badgen.net/bundlephobia/minzip/sunrize)](#)
 [![NPM Downloads](https://img.shields.io/npm/dw/sunrize)](https://npmtrends.com/sunrize)
 [![DeepScan grade](https://deepscan.io/api/teams/23540/projects/26817/branches/855450/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=23540&pid=26817&bid=855450)
 
