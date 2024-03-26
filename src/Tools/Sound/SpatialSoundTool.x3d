@@ -9,7 +9,7 @@
     <meta name='created' content='Thu, 18 Feb 2016 08:47:54 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.6.7, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Tue, 26 Mar 2024 12:15:05 GMT'/>
+    <meta name='modified' content='Tue, 26 Mar 2024 12:16:18 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'></ExternProtoDeclare>
@@ -100,7 +100,7 @@ function eventsProcessed ()
       }
    }
 
-   if (coneAngle < 6.283)
+   if (coneAngle > 6.283)
       return;
 
    for (let ud = 0; ud < uDimension; ++ ud)
