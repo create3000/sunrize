@@ -7,7 +7,7 @@
     <meta name='created' content='Tue, 26 Mar 2024 07:12:19 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.6.7, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Tue, 26 Mar 2024 07:39:57 GMT'/>
+    <meta name='modified' content='Tue, 26 Mar 2024 08:47:33 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='ListenerPointSourceTool'>
@@ -51,19 +51,13 @@
           </Transform>
         </Collision>
         <Script DEF='ListenerPointSourceScript'>
-          <field accessType='inputOutput' type='SFBool' name='selected'/>
           <field accessType='inputOutput' type='SFBool' name='active'/>
-          <field accessType='inputOutput' type='SFVec3f' name='position'/>
-          <field accessType='inputOutput' type='SFRotation' name='orientation'/>
           <field accessType='outputOnly' type='SFString' name='activeTool'/>
           <field accessType='inputOutput' type='SFNode' name='transform'>
             <Transform USE='TransformTool'/>
           </field>
           <IS>
-            <connect nodeField='selected' protoField='selected'/>
             <connect nodeField='active' protoField='isActive'/>
-            <connect nodeField='position' protoField='position'/>
-            <connect nodeField='orientation' protoField='orientation'/>
             <connect nodeField='activeTool' protoField='activeTool'/>
             <connect nodeField='transform' protoField='transformTool'/>
           </IS>
@@ -80,10 +74,6 @@ async function initialize ()
    tool .tools         = new MFString ("TRANSLATE", "ROTATE");
    tool .centerDisplay = false;
    tool .bboxDisplay   = false;
-}
-
-function set_selected ()
-{
 }
 ]]>
         </Script>
