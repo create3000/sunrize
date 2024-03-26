@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Layout' level='2'/>
+    <component name='Scripting' level='1'/>
+    <meta name='created' content='Tue, 26 Mar 2024 07:12:19 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.6.7, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Tue, 26 Mar 2024 07:39:57 GMT'/>
+  </head>
+  <Scene>
+    <ProtoDeclare name='ListenerPointSourceTool'>
+      <ProtoInterface>
+        <field accessType='inputOutput' type='SFBool' name='selected'/>
+        <field accessType='inputOutput' type='SFString' name='group' value='Transform'/>
+        <field accessType='inputOutput' type='SFBool' name='grouping'/>
+        <field accessType='inputOutput' type='SFBool' name='undo' value='true'/>
+        <field accessType='inputOutput' type='SFVec3f' name='position'/>
+        <field accessType='inputOutput' type='SFRotation' name='orientation'/>
+        <field accessType='outputOnly' type='SFNode' name='transformTool'/>
+        <field accessType='outputOnly' type='SFString' name='activeTool'/>
+        <field accessType='outputOnly' type='SFBool' name='isActive'/>
+      </ProtoInterface>
+      <ProtoBody>
+        <Collision
+            enabled='false'>
+          <Transform DEF='ListenerPointSource'>
+            <IS>
+              <connect nodeField='translation' protoField='position'/>
+              <connect nodeField='rotation' protoField='orientation'/>
+            </IS>
+            <ScreenGroup DEF='CylinderMan'>
+              <Transform
+                  scale='60 60 60'>
+                <Inline
+                    url='"CylinderMan.x3d"'/>
+              </Transform>
+            </ScreenGroup>
+          </Transform>
+          <Transform DEF='TransformTool'>
+            <IS>
+              <connect nodeField='translation' protoField='position'/>
+              <connect nodeField='rotation' protoField='orientation'/>
+              <connect nodeField='visible' protoField='selected'/>
+            </IS>
+            <ScreenGroup>
+              <Group
+                  bboxSize='60 60 60'/>
+            </ScreenGroup>
+          </Transform>
+        </Collision>
+        <Script DEF='ListenerPointSourceScript'>
+          <field accessType='inputOutput' type='SFBool' name='selected'/>
+          <field accessType='inputOutput' type='SFBool' name='active'/>
+          <field accessType='inputOutput' type='SFVec3f' name='position'/>
+          <field accessType='inputOutput' type='SFRotation' name='orientation'/>
+          <field accessType='outputOnly' type='SFString' name='activeTool'/>
+          <field accessType='inputOutput' type='SFNode' name='transform'>
+            <Transform USE='TransformTool'/>
+          </field>
+          <IS>
+            <connect nodeField='selected' protoField='selected'/>
+            <connect nodeField='active' protoField='isActive'/>
+            <connect nodeField='position' protoField='position'/>
+            <connect nodeField='orientation' protoField='orientation'/>
+            <connect nodeField='activeTool' protoField='activeTool'/>
+            <connect nodeField='transform' protoField='transformTool'/>
+          </IS>
+<![CDATA[ecmascript:
+
+async function initialize ()
+{
+   const tool = await transform .getValue () .addTool () .getToolInstance ();
+
+   Browser .addRoute (tool, "activeTool", this, "activeTool");
+   Browser .addRoute (tool, "isActive",   this, "active");
+
+   tool .undo          = false;
+   tool .tools         = new MFString ("TRANSLATE", "ROTATE");
+   tool .centerDisplay = false;
+   tool .bboxDisplay   = false;
+}
+
+function set_selected ()
+{
+}
+]]>
+        </Script>
+      </ProtoBody>
+    </ProtoDeclare>
+    <WorldInfo>
+      <MetadataSet containerField='metadata'
+          name='Sunrize'
+          reference='https://create3000.github.io/sunrize/'>
+        <MetadataSet
+            name='GridTool'>
+          <MetadataBoolean
+              name='visible'
+              value='true'/>
+        </MetadataSet>
+      </MetadataSet>
+    </WorldInfo>
+    <Viewpoint
+        description='Initial View'
+        position='2.869677 3.854335 8.769781'
+        orientation='-0.7765887 0.6177187 0.1238285 0.5052317'/>
+    <ProtoInstance name='ListenerPointSourceTool'/>
+  </Scene>
+</X3D>

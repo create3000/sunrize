@@ -52,6 +52,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       if (!(this .isEditable (element) || element .is (".exported-node")))
          return;
 
+      if (element .attr ("node-id") === "NULL")
+         return;
+
       if (!element .is (".manually"))
          this .sceneGraph .find (".manually") .removeClass ("manually");
 

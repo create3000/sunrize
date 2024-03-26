@@ -12,9 +12,9 @@
     <meta name='created' content='Fri, 11 Aug 2023 21:33:17 GMT'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.5.14, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.6.7, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/tests/Tools.x3d'/>
-    <meta name='modified' content='Sun, 03 Mar 2024 11:13:41 GMT'/>
+    <meta name='modified' content='Tue, 26 Mar 2024 07:34:49 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='Test'>
@@ -87,7 +87,7 @@
           location='0 1 0'
           nearDistance='1'
           farDistance='10'>
-        <PixelTexture DEF='_1'
+        <PixelTexture DEF='_2'
             image='3 2 3
               0xff0000 0xff00 0xff
               0xffff 0xff00ff 0xffff00'/>
@@ -96,11 +96,13 @@
           location='0 -1 0'
           nearDistance='1'
           farDistance='10'>
-        <PixelTexture USE='_1'/>
+        <PixelTexture USE='_2'/>
       </TextureProjectorParallel>
     </Group>
     <Sound
         location='0 2 0'
         direction='-1 0 -0'/>
+    <ListenerPointSource
+        trackCurrentView='true'/>
   </Scene>
 </X3D>
