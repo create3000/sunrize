@@ -9,10 +9,80 @@
     <meta name='created' content='Thu, 18 Feb 2016 08:47:54 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.6.7, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Tue, 26 Mar 2024 10:52:32 GMT'/>
+    <meta name='modified' content='Tue, 26 Mar 2024 11:31:26 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'></ExternProtoDeclare>
+    <ProtoDeclare name='SoundCone'>
+      <ProtoInterface>
+        <field accessType='inputOutput' type='SFInt32' name='dimension' value='10'/>
+        <field accessType='inputOutput' type='SFFloat' name='coneAngle' value='6.283185'/>
+        <field accessType='inputOutput' type='SFFloat' name='radius' value='1'/>
+        <field accessType='inputOutput' type='SFNode' name='material'/>
+      </ProtoInterface>
+      <ProtoBody>
+        <Shape>
+          <Appearance>
+            <IS>
+              <connect nodeField='material' protoField='material'/>
+            </IS>
+          </Appearance>
+          <LineSet DEF='_1'>
+            <Coordinate/>
+          </LineSet>
+        </Shape>
+        <Script DEF='SoundConeScript'>
+          <field accessType='inputOutput' type='SFInt32' name='dimension'/>
+          <field accessType='inputOutput' type='SFFloat' name='coneAngle'/>
+          <field accessType='inputOutput' type='SFFloat' name='radius'/>
+          <field accessType='initializeOnly' type='SFNode' name='geometry'>
+            <LineSet USE='_1'/>
+          </field>
+          <IS>
+            <connect nodeField='dimension' protoField='dimension'/>
+            <connect nodeField='coneAngle' protoField='coneAngle'/>
+            <connect nodeField='radius' protoField='radius'/>
+          </IS>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+   eventsProcessed ();
+}
+
+function eventsProcessed ()
+{
+   const 
+      uDimension  = dimension,
+      vDimension  = dimension / 2,
+      vertexCount = geometry .vertexCount,
+      point       = geometry .coord .point;
+
+   vertexCount .length = 0;
+   point       .length = 0;
+
+   for (let vd = 1; vd < vDimension - 1; ++ vd)
+   {
+      const v = vd / (vDimension - 1) * Math .PI;
+
+      vertexCount .push (uDimension);
+
+      for (let ud = 0; ud < uDimension; ++ ud)
+      {
+         const
+            u = ud / (uDimension - 1) * Math .PI * 2,
+            x = Math .sin (u) * Math .sin (v) * radius,
+            y = Math .cos (v) * radius,
+            z = Math .cos (u) * Math .sin (v) * radius;
+
+         point .push (new SFVec3f (x, y, z));
+      }
+   }
+}
+]]>
+        </Script>
+      </ProtoBody>
+    </ProtoDeclare>
     <ProtoDeclare name='SpatialSoundTool'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
@@ -143,5 +213,9 @@ function set_rotation (value)
         <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='SpatialSoundScript' toField='set_rotation'/>
       </ProtoBody>
     </ProtoDeclare>
+    <ProtoInstance name='SoundCone'>
+      <fieldValue name='dimension' value='50'/>
+      <fieldValue name='radius' value='3'/>
+    </ProtoInstance>
   </Scene>
 </X3D>
