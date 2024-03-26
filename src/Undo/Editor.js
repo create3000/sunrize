@@ -60,8 +60,13 @@ module .exports = class Editor
 
       for (const protoNode of protoNodes)
       {
-         if (protoNode .getExecutionContext () !== executionContext)
-            protoNodes .delete (protoNode);
+         if (protoNode .getExecutionContext () === executionContext)
+            continue;
+
+         if (objects .includes (protoNode))
+            continue;
+
+         protoNodes .delete (protoNode);
       }
 
       for (const protoNode of protoNodes)
