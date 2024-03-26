@@ -1,8 +1,6 @@
 "use strict";
 
-const
-   X3DChildNodeTool = require ("../Core/X3DChildNodeTool"),
-   _                = require ("../../Application/GetText");
+const X3DChildNodeTool = require ("../Core/X3DChildNodeTool");
 
 class SpatialSoundTool extends X3DChildNodeTool
 {
