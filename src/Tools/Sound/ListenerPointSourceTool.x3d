@@ -7,7 +7,7 @@
     <meta name='created' content='Tue, 26 Mar 2024 07:12:19 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.6.7, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Tue, 26 Mar 2024 08:47:33 GMT'/>
+    <meta name='modified' content='Tue, 26 Mar 2024 10:18:51 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='ListenerPointSourceTool'>
@@ -79,22 +79,5 @@ async function initialize ()
         </Script>
       </ProtoBody>
     </ProtoDeclare>
-    <WorldInfo>
-      <MetadataSet containerField='metadata'
-          name='Sunrize'
-          reference='https://create3000.github.io/sunrize/'>
-        <MetadataSet
-            name='GridTool'>
-          <MetadataBoolean
-              name='visible'
-              value='true'/>
-        </MetadataSet>
-      </MetadataSet>
-    </WorldInfo>
-    <Viewpoint
-        description='Initial View'
-        position='2.869677 3.854335 8.769781'
-        orientation='-0.7765887 0.6177187 0.1238285 0.5052317'/>
-    <ProtoInstance name='ListenerPointSourceTool'/>
   </Scene>
 </X3D>
