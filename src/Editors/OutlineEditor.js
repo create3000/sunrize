@@ -967,52 +967,54 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             break;
       }
 
-      const primaryParentField = parentField;
-
       if (field .getType () === X3D .X3DConstants .MFNode)
       {
          const
             selectedNodes          = Array .from (this .sceneGraph .find (".node.manually,.node.primary"), e => this .getNode ($(e))),
-            selectedElements       = Array .from (this .sceneGraph .find (".node.manually:not(.primary)"), e => $(e)),
+            selectedElements       = Array .from (this .sceneGraph .find (".node.manually"), e => $(e)),
             destinationModelMatrix = this .getModelMatrix (parentNodeElement);
 
          // Add other selected nodes.
 
-         for (const element of selectedElements .sort ((a, b) => b .attr ("index") - a .attr ("index")))
+         const otherElements = selectedElements
+            .filter (e => e [0] !== element [0])
+            .sort ((a, b) => b .attr ("index") - a .attr ("index"));
+
+         for (const otherElement of otherElements)
          {
             const
-               childNode          = this .getNode (element),
-               childIndex         = parseInt (element .attr ("index")),
-               parentFieldElement = element .closest (".field, .scene", this .sceneGraph),
-               parentNodeElement  = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
-               parentNode         = this .getNode (parentNodeElement),
-               parentField        = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement);
+               otherChildNode          = this .getNode (otherElement),
+               otherChildIndex         = parseInt (otherElement .attr ("index")),
+               otherParentFieldElement = otherElement .closest (".field, .scene", this .sceneGraph),
+               otherParentNodeElement  = otherParentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
+               otherParentNode         = this .getNode (otherParentNodeElement),
+               otherParentField        = otherParentFieldElement .hasClass ("scene") ? otherParentNode .rootNodes : this .getField (otherParentFieldElement);
 
             // Adjust matrix.
 
-            if (parentField !== primaryParentField)
+            if (otherParentField !== parentField)
             {
-               if (childNode .getType () .includes (X3D .X3DConstants .X3DTransformNode))
+               if (otherChildNode .getType () .includes (X3D .X3DConstants .X3DTransformNode))
                {
                   const
-                     sourceModelMatrix = this .getModelMatrix (element),
+                     sourceModelMatrix = this .getModelMatrix (otherElement),
                      matrix            = destinationModelMatrix .copy () .inverse () .multLeft (sourceModelMatrix);
 
-                  Editor .setMatrixWithCenter (childNode, matrix);
+                  Editor .setMatrixWithCenter (otherChildNode, matrix);
                }
             }
 
             // Move node.
 
-            Editor .insertValueIntoArray (executionContext, node, field, 1, childNode);
+            Editor .insertValueIntoArray (executionContext, node, field, 1, otherChildNode);
 
-            switch (parentField .getType ())
+            switch (otherParentField .getType ())
             {
                case X3D .X3DConstants .SFNode:
-                  Editor .setFieldValue (executionContext, parentNode, parentField, null);
+                  Editor .setFieldValue (executionContext, otherParentNode, otherParentField, null);
                   break;
                case X3D .X3DConstants .MFNode:
-                  Editor .removeValueFromArray (executionContext, parentNode, parentField, childIndex);
+                  Editor .removeValueFromArray (executionContext, otherParentNode, otherParentField, otherChildIndex);
                   break;
             }
          }
