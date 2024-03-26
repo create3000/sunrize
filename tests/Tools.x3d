@@ -14,7 +14,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.6.7, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/tests/Tools.x3d'/>
-    <meta name='modified' content='Tue, 26 Mar 2024 08:48:10 GMT'/>
+    <meta name='modified' content='Tue, 26 Mar 2024 09:02:11 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='Test'>
@@ -102,6 +102,7 @@
     <Sound
         location='0 2 0'
         direction='-1 0 -0'/>
+    <SpatialSound/>
     <ListenerPointSource
         trackCurrentView='true'/>
   </Scene>
