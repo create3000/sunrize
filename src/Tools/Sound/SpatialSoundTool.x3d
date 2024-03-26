@@ -9,28 +9,30 @@
     <meta name='created' content='Thu, 18 Feb 2016 08:47:54 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.6.7, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Tue, 26 Mar 2024 11:31:26 GMT'/>
+    <meta name='modified' content='Tue, 26 Mar 2024 12:15:05 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'></ExternProtoDeclare>
+    <ExternProtoDeclare name='BooleanSwitch' url='"../Grouping/BooleanSwitch.x3d"'>
+      <field accessType='inputOutput' type='SFBool' name='whichChoice'/>
+      <field accessType='inputOutput' type='SFBool' name='visible'/>
+      <field accessType='inputOutput' type='SFBool' name='bboxDisplay'/>
+      <field accessType='initializeOnly' type='SFVec3f' name='bboxSize'/>
+      <field accessType='initializeOnly' type='SFVec3f' name='bboxCenter'/>
+      <field accessType='inputOnly' type='MFNode' name='addChildren'/>
+      <field accessType='inputOnly' type='MFNode' name='removeChildren'/>
+      <field accessType='inputOutput' type='MFNode' name='children'/>
+    </ExternProtoDeclare>
     <ProtoDeclare name='SoundCone'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFInt32' name='dimension' value='10'/>
         <field accessType='inputOutput' type='SFFloat' name='coneAngle' value='6.283185'/>
         <field accessType='inputOutput' type='SFFloat' name='radius' value='1'/>
-        <field accessType='inputOutput' type='SFNode' name='material'/>
       </ProtoInterface>
       <ProtoBody>
-        <Shape>
-          <Appearance>
-            <IS>
-              <connect nodeField='material' protoField='material'/>
-            </IS>
-          </Appearance>
-          <LineSet DEF='_1'>
-            <Coordinate/>
-          </LineSet>
-        </Shape>
+        <LineSet DEF='_1'>
+          <Coordinate/>
+        </LineSet>
         <Script DEF='SoundConeScript'>
           <field accessType='inputOutput' type='SFInt32' name='dimension'/>
           <field accessType='inputOutput' type='SFFloat' name='coneAngle'/>
@@ -54,16 +56,17 @@ function eventsProcessed ()
 {
    const 
       uDimension  = dimension,
-      vDimension  = dimension / 2,
+      vDimension  = Math .ceil ((dimension * coneAngle) / (4 * Math .PI)),
+      angle       = coneAngle / 2,
       vertexCount = geometry .vertexCount,
       point       = geometry .coord .point;
 
    vertexCount .length = 0;
    point       .length = 0;
 
-   for (let vd = 1; vd < vDimension - 1; ++ vd)
+   for (let vd = 0; vd < vDimension; ++ vd)
    {
-      const v = vd / (vDimension - 1) * Math .PI;
+      const v = vd / (vDimension - 1) * angle;
 
       vertexCount .push (uDimension);
 
@@ -78,6 +81,42 @@ function eventsProcessed ()
          point .push (new SFVec3f (x, y, z));
       }
    }
+
+   for (let ud = 0; ud < uDimension; ++ ud)
+   {
+      const u = ud / (uDimension - 1) * Math .PI * 2;
+
+      vertexCount .push (vDimension);
+
+      for (let vd = 0; vd < vDimension; ++ vd)
+      {
+         const
+            v = vd / (vDimension - 1) * angle,
+            x = Math .sin (u) * Math .sin (v) * radius,
+            y = Math .cos (v) * radius,
+            z = Math .cos (u) * Math .sin (v) * radius;
+
+         point .push (new SFVec3f (x, y, z));
+      }
+   }
+
+   if (coneAngle < 6.283)
+      return;
+
+   for (let ud = 0; ud < uDimension; ++ ud)
+   {
+      const u = ud / (uDimension - 1) * Math .PI * 2;
+
+      vertexCount .push (2);
+
+      const
+         v = 1 * angle,
+         x = Math .sin (u) * Math .sin (v) * radius,
+         y = Math .cos (v) * radius,
+         z = Math .cos (u) * Math .sin (v) * radius;
+
+      point .push (new SFVec3f (), new SFVec3f (x, y, z));
+   }
 }
 ]]>
         </Script>
@@ -91,8 +130,9 @@ function eventsProcessed ()
         <field accessType='inputOutput' type='SFBool' name='undo' value='true'/>
         <field accessType='inputOutput' type='SFVec3f' name='location'/>
         <field accessType='inputOutput' type='SFVec3f' name='direction' value='0 0 1'/>
-        <field accessType='inputOutput' type='SFFloat' name='coneInnerAngle'/>
-        <field accessType='inputOutput' type='SFFloat' name='coneOuterAngle'/>
+        <field accessType='inputOutput' type='SFFloat' name='coneInnerAngle' value='6.283185'/>
+        <field accessType='inputOutput' type='SFFloat' name='coneOuterAngle' value='6.283185'/>
+        <field accessType='inputOutput' type='SFFloat' name='referenceDistance' value='1'/>
         <field accessType='outputOnly' type='SFNode' name='transformTool'/>
         <field accessType='outputOnly' type='SFString' name='activeTool'/>
         <field accessType='outputOnly' type='SFBool' name='isActive'/>
@@ -110,7 +150,7 @@ function eventsProcessed ()
                 <Transform DEF='Cone'>
                   <Shape
                       castShadow='false'>
-                    <Appearance DEF='_1'>
+                    <Appearance DEF='_2'>
                       <Material
                           diffuseColor='0.2705882 0.2705882 0.2705882'
                           specularColor='0.8627451 0.8588235 0.8588235'/>
@@ -127,7 +167,7 @@ function eventsProcessed ()
                     translation='0 5 0'>
                   <Shape
                       castShadow='false'>
-                    <Appearance USE='_1'/>
+                    <Appearance USE='_2'/>
                     <Cylinder
                         height='10'
                         radius='12'/>
@@ -135,6 +175,79 @@ function eventsProcessed ()
                 </Transform>
               </Transform>
             </ScreenGroup>
+            <Transform DEF='InnerCone'
+                rotation='1 0 0 90'>
+              <ProtoInstance name='BooleanSwitch'>
+                <fieldValue name='children'>
+                  <Shape DEF='_3'>
+                    <Appearance>
+                      <LineProperties DEF='_5'
+                          linewidthScaleFactor='1'/>
+                      <Material
+                          diffuseColor='0 0 0'
+                          emissiveColor='0.619608 0.184314 0.184314'/>
+                      <ProtoInstance name='ToolShader' DEF='_13' containerField='shaders'/>
+                    </Appearance>
+                    <ProtoInstance name='SoundCone' DEF='_7' containerField='geometry'>
+                      <fieldValue name='dimension' value='40'/>
+                      <IS>
+                        <connect nodeField='coneAngle' protoField='coneInnerAngle'/>
+                        <connect nodeField='radius' protoField='referenceDistance'/>
+                      </IS>
+                    </ProtoInstance>
+                  </Shape>
+                  <Shape DEF='_6'>
+                    <Appearance>
+                      <LineProperties USE='_5'/>
+                      <Material
+                          diffuseColor='0 0 0'
+                          emissiveColor='1 0.301961 0.301961'/>
+                      <ProtoInstance name='ToolShader' USE='_13' containerField='shaders'/>
+                    </Appearance>
+                    <ProtoInstance name='SoundCone' USE='_7' containerField='geometry'/>
+                  </Shape>
+                </fieldValue>
+                <IS>
+                  <connect nodeField='whichChoice' protoField='selected'/>
+                </IS>
+              </ProtoInstance>
+            </Transform>
+            <Transform DEF='OuterCone'
+                rotation='1 0 0 90'>
+              <ProtoInstance name='BooleanSwitch'>
+                <fieldValue name='children'>
+                  <Shape DEF='_12'>
+                    <Appearance>
+                      <LineProperties USE='_5'/>
+                      <Material
+                          diffuseColor='0 0 0'
+                          emissiveColor='0.184314 0.619608 0.258824'/>
+                      <ProtoInstance name='ToolShader' USE='_13' containerField='shaders'/>
+                    </Appearance>
+                    <ProtoInstance name='SoundCone' DEF='_15' containerField='geometry'>
+                      <fieldValue name='dimension' value='40'/>
+                      <IS>
+                        <connect nodeField='coneAngle' protoField='coneOuterAngle'/>
+                        <connect nodeField='radius' protoField='referenceDistance'/>
+                      </IS>
+                    </ProtoInstance>
+                  </Shape>
+                  <Shape DEF='_14'>
+                    <Appearance>
+                      <LineProperties USE='_5'/>
+                      <Material
+                          diffuseColor='0 0 0'
+                          emissiveColor='0.301961 1 0.415686'/>
+                      <ProtoInstance name='ToolShader' USE='_13' containerField='shaders'/>
+                    </Appearance>
+                    <ProtoInstance name='SoundCone' USE='_15' containerField='geometry'/>
+                  </Shape>
+                </fieldValue>
+                <IS>
+                  <connect nodeField='whichChoice' protoField='selected'/>
+                </IS>
+              </ProtoInstance>
+            </Transform>
           </Transform>
           <Transform DEF='TransformTool'>
             <IS>
@@ -213,9 +326,9 @@ function set_rotation (value)
         <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='SpatialSoundScript' toField='set_rotation'/>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='SoundCone'>
-      <fieldValue name='dimension' value='50'/>
-      <fieldValue name='radius' value='3'/>
+    <ProtoInstance name='SpatialSoundTool'>
+      <fieldValue name='coneInnerAngle' value='1'/>
+      <fieldValue name='coneOuterAngle' value='2'/>
     </ProtoInstance>
   </Scene>
 </X3D>

@@ -10,10 +10,11 @@ class SpatialSoundTool extends X3DChildNodeTool
    {
       await super .initializeTool (__dirname, "SpatialSoundTool.x3d");
 
-      this .tool .getField ("location")       .addReference (this .node ._location);
-      this .tool .getField ("direction")      .addReference (this .node ._direction);
-      this .tool .getField ("coneInnerAngle") .addReference (this .node ._coneInnerAngle);
-      this .tool .getField ("coneOuterAngle") .addReference (this .node ._coneOuterAngle);
+      this .tool .getField ("location")          .addReference (this .node ._location);
+      this .tool .getField ("direction")         .addReference (this .node ._direction);
+      this .tool .getField ("coneInnerAngle")    .addReference (this .node ._coneInnerAngle);
+      this .tool .getField ("coneOuterAngle")    .addReference (this .node ._coneOuterAngle);
+      this .tool .getField ("referenceDistance") .addReference (this .node ._referenceDistance);
 
       this .tool .getField ("isActive") .addInterest ("handleUndo", this);
    }

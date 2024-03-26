@@ -1535,7 +1535,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    {
       const toolNode = node .getTool ?.();
 
-      if (!toolNode ?.tool .undo)
+      if (!toolNode ?.tool ?.undo)
          return;
 
       if (node .getDisplayName ())
@@ -1598,7 +1598,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    {
       const toolNode = node .getTool ?.();
 
-      if (!toolNode ?.tool .undo)
+      if (!toolNode ?.tool ?.undo)
          return;
 
       switch (node .getTypeName ())
