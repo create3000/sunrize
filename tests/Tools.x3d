@@ -14,7 +14,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.6.7, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/tests/Tools.x3d'/>
-    <meta name='modified' content='Tue, 26 Mar 2024 09:30:17 GMT'/>
+    <meta name='modified' content='Tue, 26 Mar 2024 09:31:41 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='Test'>
@@ -99,11 +99,13 @@
         <PixelTexture USE='_2'/>
       </TextureProjectorParallel>
     </Group>
-    <Sound
-        location='0 2 0'
-        direction='-1 0 -0'/>
-    <SpatialSound/>
-    <ListenerPointSource
-        trackCurrentView='true'/>
+    <Group DEF='Sound_1'>
+      <Sound
+          location='0 2 0'
+          direction='-1 0 -0'/>
+      <SpatialSound/>
+      <ListenerPointSource
+          trackCurrentView='true'/>
+    </Group>
   </Scene>
 </X3D>
