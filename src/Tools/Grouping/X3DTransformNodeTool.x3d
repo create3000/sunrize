@@ -12,7 +12,7 @@
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.6.7, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Wed, 27 Mar 2024 19:15:04 GMT'/>
+    <meta name='modified' content='Wed, 27 Mar 2024 19:37:44 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'/>
@@ -647,7 +647,7 @@
               </IS>
               <ProtoInstance name='BooleanSwitch' DEF='CenterLine'>
                 <fieldValue name='children'>
-                  <Shape
+                  <Shape DEF='_1'
                       castShadow='false'>
                     <Appearance DEF='CenterLineStyle'>
                       <LineProperties
