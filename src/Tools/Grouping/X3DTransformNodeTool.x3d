@@ -11,12 +11,11 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.5.13, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Tue, 27 Feb 2024 17:59:07 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.6.7, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Wed, 27 Mar 2024 19:15:04 GMT'/>
   </head>
   <Scene>
-    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
-    </ExternProtoDeclare>
+    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'/>
     <ExternProtoDeclare name='BooleanSwitch' url='"BooleanSwitch.x3d#BooleanSwitch"'>
       <field accessType='inputOutput' type='SFBool' name='whichChoice'/>
       <field accessType='inputOutput' type='SFBool' name='visible'/>
@@ -648,7 +647,7 @@
               </IS>
               <ProtoInstance name='BooleanSwitch' DEF='CenterLine'>
                 <fieldValue name='children'>
-                  <Shape DEF='_1'
+                  <Shape
                       castShadow='false'>
                     <Appearance DEF='CenterLineStyle'>
                       <LineProperties
