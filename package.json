@@ -76,12 +76,12 @@
     "@electron-forge/maker-squirrel": "^7.3.1",
     "@electron-forge/maker-zip": "^7.3.1",
     "@electron-forge/publisher-github": "^7.3.1",
-    "shell-tools": "^1.1.7"
+    "shell-tools": "^1.1.9"
   },
   "dependencies": {
     "capitalize": "^2.0.4",
     "console": "^0.7.2",
-    "electron": "^29.1.5",
+    "electron": "^29.1.6",
     "electron-prompt": "^1.7.0",
     "electron-squirrel-startup": "^1.0.0",
     "electron-tabs": "^1.0.4",
