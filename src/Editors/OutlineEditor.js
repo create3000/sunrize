@@ -436,8 +436,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          const
             protoNode = node,
             used      = Editor .isProtoNodeUsed (executionContext, protoNode),
-            available = Editor .getNextAvailableProtoNode (executionContext, protoNode),
-            proto     = protoNode .isExternProto && executionContext .protos .get (protoNode .getName ());
+            available = Editor .getNextAvailableProtoNode (executionContext, protoNode);
 
          var menu = [
             {
@@ -491,7 +490,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             { type: "separator" },
             {
                label: _("Add Instance"),
-               enabled: !proto,
+               enabled: !(protoNode .isExternProto && executionContext .protos .get (protoNode .getName ())),
                args: ["addInstance", element .attr ("id"), executionContext .getId (), protoNode .getId ()],
             },
          ]
