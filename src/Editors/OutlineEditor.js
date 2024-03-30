@@ -460,8 +460,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             },
             {
                label: _("Copy Extern Prototype"),
-               enabled: executionContext instanceof X3D .X3DScene,
                visible: !protoNode .isExternProto,
+               enabled: executionContext instanceof X3D .X3DScene,
                args: ["copyExternPrototype"],
             },
             { type: "separator" },
