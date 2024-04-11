@@ -21,7 +21,7 @@ tagline: A Multi Platform X3D Editor # it will display as the sub-title
 description: >- # used by seo meta and the atom feed
   Sunrize — A Multi Platform X3D Editor
 
-version: 1.3.4
+version: 1.6.8
 download_dmg: 143777104
 download_exe: 158058496
 
