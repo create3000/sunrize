@@ -15,5 +15,5 @@ if (cmd .endsWith ("7z.exe"))
 else
 {
     // Cannot use "wine" loop!
-    spawn ("/usr/local/bin/wine64", [cmd, ... args], { cwd });
+    spawn ("/opt/homebrew/bin/wine64", [cmd, ... args], { cwd });
 }
