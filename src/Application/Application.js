@@ -1020,8 +1020,6 @@ module .exports = class Application
       return response;
    }
 
-   #recentDocumentsUpdated;
-
    addRecentDocument (filePath)
    {
       // Workaround for https://github.com/electron/electron/issues/40611
