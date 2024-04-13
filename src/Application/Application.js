@@ -235,7 +235,6 @@ module .exports = class Application
                      },
                   },
                   {
-                     // role: "recentDocuments",
                      label: _("Open Recent"),
                      submenu: [
                         ... this .config .recentDocuments .map (filePath =>
@@ -255,7 +254,6 @@ module .exports = class Application
                         }),
                         { type: "separator" },
                         {
-                           // role: "clearRecentDocuments",
                            label: _("Clear Menu"),
                            click: () =>
                            {
@@ -263,6 +261,8 @@ module .exports = class Application
                               this .config .recentLocations = [ ];
 
                               this .updateMenu ();
+
+                              electron .app .clearRecentDocuments ();
                            },
                         },
                      ],
