@@ -242,10 +242,7 @@ module .exports = class Application
                         {
                            return {
                               label: filePath,
-                              click: () =>
-                              {
-                                 this .openFiles ([url .pathToFileURL (filePath) .href]);
-                              },
+                              click: () => this .openFiles ([url .pathToFileURL (filePath) .href]),
                            };
                         }),
                         { type: "separator" },
@@ -253,10 +250,7 @@ module .exports = class Application
                         {
                            return {
                               label: fileURL,
-                              click: () =>
-                              {
-                                 this .openFiles ([fileURL]);
-                              },
+                              click: () => this .openFiles ([fileURL]),
                            };
                         }),
                         { type: "separator" },
