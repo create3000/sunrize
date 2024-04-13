@@ -183,10 +183,7 @@ module .exports = class Application
                   {
                      label: _("New File"),
                      accelerator: "CmdOrCtrl+N",
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("open-files");
-                     },
+                     click: () => this .mainWindow .webContents .send ("open-files"),
                   },
                   { type: "separator" },
                   {
@@ -271,19 +268,13 @@ module .exports = class Application
                   {
                      label: _("Reload"),
                      accelerator: "F5",
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("reload");
-                     },
+                     click: () => this .mainWindow .webContents .send ("reload"),
                   },
                   { type: "separator" },
                   {
                      label: _("Save"),
                      accelerator: "CmdOrCtrl+S",
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("save-file");
-                     },
+                     click: () => this .mainWindow .webContents .send ("save-file"),
                   },
                   {
                      label: _("Save As..."),
@@ -317,10 +308,7 @@ module .exports = class Application
                   {
                      label: _("Save All"),
                      accelerator: "Alt+CmdOrCtrl+S",
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("save-all-files");
-                     },
+                     click: () => this .mainWindow .webContents .send ("save-all-files"),
                   },
                   { type: "separator" },
                   {
@@ -340,10 +328,7 @@ module .exports = class Application
                      {
                         label: util .format (_("Export As %s"), path .basename (exportPath)),
                         accelerator: "CmdOrCtrl+E",
-                        click: () =>
-                        {
-                           this .mainWindow .webContents .send ("export-as", exportPath);
-                        },
+                        click: () => this .mainWindow .webContents .send ("export-as", exportPath),
                      }
                   ]
                   :
@@ -371,19 +356,13 @@ module .exports = class Application
                   {
                      label: _("Scene Properties..."),
                      accelerator: "CmdOrCtrl+I",
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("scene-properties");
-                     },
+                     click: () => this .mainWindow .webContents .send ("scene-properties"),
                   },
                   { type: "separator" },
                   {
                      label: _("Close"),
                      accelerator: "CmdOrCtrl+W",
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("close");
-                     },
+                     click: () => this .mainWindow .webContents .send ("close"),
                   },
                   ... process .platform === "darwin" ?
                   [ ]
@@ -426,19 +405,13 @@ module .exports = class Application
                      label: _("Toggle Line Comment"),
                      accelerator: process .platform === "darwin" ? "CmdOrCtrl+Shift+7" : "CmdOrCtrl+#",
                      enabled: this .menuOptions .monacoEditor,
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("script-editor", "runAction", "editor.action.commentLine");
-                     },
+                     click: () => this .mainWindow .webContents .send ("script-editor", "runAction", "editor.action.commentLine"),
                   },
                   {
                      label: _("Toggle Block Comment"),
                      accelerator: "Alt+Shift+A",
                      enabled: this .menuOptions .monacoEditor,
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("script-editor", "runAction", "editor.action.blockComment");
-                     },
+                     click: () => this .mainWindow .webContents .send ("script-editor", "runAction", "editor.action.blockComment"),
                   },
                ]
             }
@@ -450,19 +423,13 @@ module .exports = class Application
                      label: this .menuOptions .undoLabel,
                      accelerator: "CmdOrCtrl+Z",
                      enabled: this .menuOptions .undoLabel !== _("Undo"),
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("undo");
-                     },
+                     click: () => this .mainWindow .webContents .send ("undo"),
                   },
                   {
                      label: this .menuOptions .redoLabel,
                      accelerator: "Shift+CmdOrCtrl+Z",
                      enabled: this .menuOptions .redoLabel !== _("Redo"),
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("redo");
-                     },
+                     click: () => this .mainWindow .webContents .send ("redo"),
                   },
                   { type: "separator" },
                   {
@@ -477,10 +444,7 @@ module .exports = class Application
                   {
                      label: _("Delete"),
                      accelerator: "CmdOrCtrl+Backspace",
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("delete");
-                     },
+                     click: () => this .mainWindow .webContents .send ("delete"),
                   },
                ],
             },
@@ -490,48 +454,30 @@ module .exports = class Application
                   {
                      label: _("Select All"),
                      accelerator: "CmdOrCtrl+A",
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("select-all");
-                     },
+                     click: () => this .mainWindow .webContents .send ("select-all"),
                   },
                   {
                      label: _("Deselect All"),
                      accelerator: "Shift+CmdOrCtrl+A",
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("deselect-all");
-                     },
+                     click: () => this .mainWindow .webContents .send ("deselect-all"),
                   },
                   { type: "separator" },
                   {
                      label: _("Hide Unselected Objects"),
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("hide-unselected-objects");
-                     },
+                     click: () => this .mainWindow .webContents .send ("hide-unselected-objects"),
                   },
                   {
                      label: _("Show Selected Objects"),
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("show-selected-objects");
-                     },
+                     click: () => this .mainWindow .webContents .send ("show-selected-objects"),
                   },
                   {
                      label: _("Show All Objects"),
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("show-all-objects");
-                     },
+                     click: () => this .mainWindow .webContents .send ("show-all-objects"),
                   },
                   { type: "separator" },
                   {
                      label: _("Remove Empty Groups"),
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("remove-empty-groups");
-                     },
+                     click: () => this .mainWindow .webContents .send ("remove-empty-groups"),
                   },
                ],
             },
@@ -553,18 +499,12 @@ module .exports = class Application
                   {
                      label: _("Reload Tab"),
                      visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("reload");
-                     },
+                     click: () => this .mainWindow .webContents .send ("reload"),
                   },
                   {
                      label: _("Toggle Tab Developer Tools"),
                      visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("toggle-developer-tools");
-                     },
+                     click: () => this .mainWindow .webContents .send ("toggle-developer-tools"),
                   },
                   { type: "separator" },
                   {
@@ -610,28 +550,19 @@ module .exports = class Application
                            label: _("High"),
                            type: "radio",
                            checked: this .menuOptions .primitiveQuality === "HIGH",
-                           click: () =>
-                           {
-                              this .mainWindow .webContents .send ("primitive-quality", "HIGH");
-                           },
+                           click: () => this .mainWindow .webContents .send ("primitive-quality", "HIGH"),
                         },
                         {
                            label: _("Medium"),
                            type: "radio",
                            checked: this .menuOptions .primitiveQuality === "MEDIUM",
-                           click: () =>
-                           {
-                              this .mainWindow .webContents .send ("primitive-quality", "MEDIUM");
-                           },
+                           click: () => this .mainWindow .webContents .send ("primitive-quality", "MEDIUM"),
                         },
                         {
                            label: _("Low"),
                            type: "radio",
                            checked: this .menuOptions .primitiveQuality === "LOW",
-                           click: () =>
-                           {
-                              this .mainWindow .webContents .send ("primitive-quality", "LOW");
-                           },
+                           click: () => this .mainWindow .webContents .send ("primitive-quality", "LOW"),
                         }
                      ],
                   },
@@ -642,28 +573,19 @@ module .exports = class Application
                            label: _("High"),
                            type: "radio",
                            checked: this .menuOptions .textureQuality === "HIGH",
-                           click: () =>
-                           {
-                              this .mainWindow .webContents .send ("texture-quality", "HIGH");
-                           },
+                           click: () => this .mainWindow .webContents .send ("texture-quality", "HIGH"),
                         },
                         {
                            label: _("Medium"),
                            type: "radio",
                            checked: this .menuOptions .textureQuality === "MEDIUM",
-                           click: () =>
-                           {
-                              this .mainWindow .webContents .send ("texture-quality", "MEDIUM");
-                           },
+                           click: () => this .mainWindow .webContents .send ("texture-quality", "MEDIUM"),
                         },
                         {
                            label: _("Low"),
                            type: "radio",
                            checked: this .menuOptions .textureQuality === "LOW",
-                           click: () =>
-                           {
-                              this .mainWindow .webContents .send ("texture-quality", "LOW");
-                           },
+                           click: () => this .mainWindow .webContents .send ("texture-quality", "LOW"),
                         }
                      ],
                   },
@@ -671,28 +593,19 @@ module .exports = class Application
                      label: _("Display Rubberband"),
                      type: "checkbox",
                      checked: this .menuOptions .rubberband,
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("display-rubberband", !this .menuOptions .rubberband);
-                     },
+                     click: () => this .mainWindow .webContents .send ("display-rubberband", !this .menuOptions .rubberband),
                   },
                   {
                      label: _("Display Timings"),
                      type: "checkbox",
                      checked: this .menuOptions .timings,
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("display-timings", !this .menuOptions .timings);
-                     },
+                     click: () => this .mainWindow .webContents .send ("display-timings", !this .menuOptions .timings),
                   },
                   { type: "separator" },
                   {
                      label: _("Show Library..."),
                      accelerator: "Shift+CmdOrCtrl+L",
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("show-library");
-                     },
+                     click: () => this .mainWindow .webContents .send ("show-library"),
                   },
                   { type: "separator" },
                   {
@@ -705,92 +618,62 @@ module .exports = class Application
                submenu: [
                   {
                      label: _("Browser Frame..."),
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("browser-frame");
-                     },
+                     click: () => this .mainWindow .webContents .send ("browser-frame"),
                   },
                   { type: "separator" },
                   {
                      label: _("Grid Layout Tool"),
                      type: "checkbox",
                      checked: this .menuOptions .GridTool,
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("grid-tool", "GridTool", !this .menuOptions .GridTool);
-                     },
+                     click: () => this .mainWindow .webContents .send ("grid-tool", "GridTool", !this .menuOptions .GridTool),
                   },
                   {
                      label: _("Angle Grid Layout Tool"),
                      type: "checkbox",
                      checked: this .menuOptions .AngleGridTool,
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("grid-tool", "AngleGridTool", !this .menuOptions .AngleGridTool);
-                     },
+                     click: () => this .mainWindow .webContents .send ("grid-tool", "AngleGridTool", !this .menuOptions .AngleGridTool),
                   },
                   {
                      label: _("Axonometric Grid Layout Tool"),
                      type: "checkbox",
                      checked: this .menuOptions .AxonometricGridTool,
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("grid-tool", "AxonometricGridTool", !this .menuOptions .AxonometricGridTool);
-                     },
+                     click: () => this .mainWindow .webContents .send ("grid-tool", "AxonometricGridTool", !this .menuOptions .AxonometricGridTool),
                   },
                   { type: "separator" },
                   {
                      label: _("Show Grid Tool Options in Panel..."),
                      accelerator: "CmdOrCtrl+G",
                      enabled: this .menuOptions .GridTool || this .menuOptions .AngleGridTool || this .menuOptions .AxonometricGridTool,
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("grid-options");
-                     },
+                     click: () => this .mainWindow .webContents .send ("grid-options"),
                   },
                   { type: "separator" },
                   {
                      label: _("Activate Snap Target"),
                      type: "checkbox",
                      checked: this .menuOptions .SnapTarget,
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("activate-snap-target", !this .menuOptions .SnapTarget);
-                     },
+                     click: () => this .mainWindow .webContents .send ("activate-snap-target", !this .menuOptions .SnapTarget),
                   },
                   {
                      label: _("Activate Snap Source"),
                      type: "checkbox",
                      checked: this .menuOptions .SnapSource,
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("activate-snap-source", !this .menuOptions .SnapSource);
-                     },
+                     click: () => this .mainWindow .webContents .send ("activate-snap-source", !this .menuOptions .SnapSource),
                   },
                   {
                      label: _("Center Snap Target in Selection"),
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("center-snap-target-in-selection");
-                     },
+                     click: () => this .mainWindow .webContents .send ("center-snap-target-in-selection"),
                   },
                   {
                      label: _("Move Selection to Snap Target"),
                      accelerator: "CmdOrCtrl+M",
                      enabled: this .menuOptions .SnapTarget,
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("move-selection-to-snap-target");
-                     },
+                     click: () => this .mainWindow .webContents .send ("move-selection-to-snap-target"),
                   },
                   {
                      label: _("Move Selection Center to Snap Target"),
                      accelerator: "Shift+CmdOrCtrl+M",
                      enabled: this .menuOptions .SnapTarget,
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("move-selection-center-to-snap-target");
-                     },
+                     click: () => this .mainWindow .webContents .send ("move-selection-center-to-snap-target"),
                   },
                ],
             },
@@ -808,38 +691,23 @@ module .exports = class Application
                submenu: [
                   {
                      label: _("Learn More"),
-                     click: () =>
-                     {
-                        electron .shell .openExternal ("https://create3000.github.io/sunrize/");
-                     },
+                     click: () => electron .shell .openExternal ("https://create3000.github.io/sunrize/"),
                   },
                   {
                      label: _("A Quick Look at the User Interface"),
-                     click: () =>
-                     {
-                        electron .shell .openExternal ("https://create3000.github.io/sunrize/documentation/a-quick-look-at-the-user-interface/");
-                     },
+                     click: () => electron .shell .openExternal ("https://create3000.github.io/sunrize/documentation/a-quick-look-at-the-user-interface/"),
                   },
                   {
                      label: _("How to Navigate in a Scene"),
-                     click: () =>
-                     {
-                        electron .shell .openExternal ("https://create3000.github.io/x_ite/tutorials/how-to-navigate-in-a-scene/");
-                     },
+                     click: () => electron .shell .openExternal ("https://create3000.github.io/x_ite/tutorials/how-to-navigate-in-a-scene/"),
                   },
                   {
                      label: _("Using the Outline Editor"),
-                     click: () =>
-                     {
-                        electron .shell .openExternal ("https://create3000.github.io/sunrize/documentation/using-the-outline-editor/");
-                     },
+                     click: () => electron .shell .openExternal ("https://create3000.github.io/sunrize/documentation/using-the-outline-editor/"),
                   },
                   {
                      label: _("Using the Script Editor"),
-                     click: () =>
-                     {
-                        electron .shell .openExternal ("https://create3000.github.io/sunrize/documentation/using-the-script-editor/");
-                     },
+                     click: () => electron .shell .openExternal ("https://create3000.github.io/sunrize/documentation/using-the-script-editor/"),
                   },
                ],
             },
