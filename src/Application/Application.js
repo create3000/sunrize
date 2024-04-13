@@ -1020,6 +1020,8 @@ module .exports = class Application
       return response;
    }
 
+   recentDocumentsLength = 15;
+
    addRecentDocument (filePath)
    {
       // Workaround for https://github.com/electron/electron/issues/40611
@@ -1027,7 +1029,7 @@ module .exports = class Application
       this .config .recentDocuments = this .config .recentDocuments
          .filter (item => item !== filePath)
          .toSpliced (0, 0, filePath)
-         .toSpliced (10);
+         .toSpliced (this .recentDocumentsLength);
 
       this .updateMenu ();
 
