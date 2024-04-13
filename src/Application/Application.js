@@ -1035,7 +1035,7 @@ module .exports = class Application
       return response;
    }
 
-   recentDocumentsLength = 15;
+   recentDocumentsLength = 10;
    recentLocationsLength = 10;
 
    addRecentDocument (filePath)
