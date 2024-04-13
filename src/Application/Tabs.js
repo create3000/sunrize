@@ -131,7 +131,7 @@ module .exports = new class Tabs
          return false;
       })
 
-      for (const fileURL of openTabs)
+      for (const fileURL of openTabs .filter (fileURL => !fileURL .startsWith ("id:")))
       {
          if (fileURL .startsWith ("file:"))
             electron .ipcRenderer .send ("add-recent-document", url .fileURLToPath (fileURL));
