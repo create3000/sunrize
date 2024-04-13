@@ -66,6 +66,7 @@ module .exports = class Application
          expandExternProtoDeclarations: true,
          expandPrototypeInstances: true,
          expandInlineNodes: true,
+         recentDocuments: [ ],
       });
 
       Template .create (path .join (__dirname, "../assets/html/application-template.html"));
@@ -152,669 +153,696 @@ module .exports = class Application
       electron .Menu .setApplicationMenu (this .mainMenu .at (-1));
    }
 
+   #updateMenuTimeout;
+
    updateMenu (options = { })
    {
       Object .assign (this .menuOptions, options);
 
-      const exportPath = this .exportPath .get (this .currentFile);
+      clearTimeout (this .#updateMenuTimeout);
 
-      const menu = electron .Menu .buildFromTemplate (this .filterSeparators ([
-         ... process .platform === "darwin" ?
-         [
-            {
-               role: "appMenu",
-               label: electron .app .getName (),
-            },
-         ]
-         :
-         [ ],
-         {
-            role: "fileMenu",
-            submenu: [
+      this .#updateMenuTimeout = setTimeout (() =>
+      {
+         const exportPath = this .exportPath .get (this .currentFile);
+
+         const menu = electron .Menu .buildFromTemplate (this .filterSeparators ([
+            ... process .platform === "darwin" ?
+            [
                {
-                  label: _("New File"),
-                  accelerator: "CmdOrCtrl+N",
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("open-files");
-                  },
-               },
-               { type: "separator" },
-               {
-                  label: _("Open..."),
-                  accelerator: "CmdOrCtrl+O",
-                  click: async () =>
-                  {
-                     const response = await this .showOpenDialog (this .currentFile);
-
-                     if (response .canceled)
-                        return;
-
-                     this .openFiles (response .filePaths .map (filePath => url .pathToFileURL (filePath) .href));
-                  },
-               },
-               {
-                  label: _("Open Location..."),
-                  accelerator: "Shift+CmdOrCtrl+O",
-                  click: async () =>
-                  {
-                     const clipboard = electron .clipboard .readText ();
-
-                     this .pushMenu (this .createDialogMenu ());
-
-                     const response = await prompt ({
-                        title: _("Open Location..."),
-                        label: _("Enter a URL to open in a new tab:"),
-                        type: "input",
-                        value: clipboard .match (/^(?:https?|file|ftp|smb):\/\/.+/) ? clipboard : this .openLocationValue,
-                        inputAttrs: {
-                           type: "url",
-                           placeholder: "https://example.org",
-                        },
-                        width: 500,
-                        customStylesheet: path .join (__dirname, "../assets/themes/prompt.css"),
-                        showWhenReady: true,
-                     },
-                     this .mainWindow);
-
-                     this .popMenu ();
-
-                     if (response === null)
-                        return;
-
-                     this .openFiles ([this .openLocationValue = response]);
-                  },
-               },
-               {
-                  role: "recentDocuments",
-                  submenu: [
-                     {
-                        role: "clearRecentDocuments",
-                     },
-                  ],
-               },
-               { type: "separator" },
-               {
-                  label: _("Reload"),
-                  accelerator: "F5",
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("reload");
-                  },
-               },
-               { type: "separator" },
-               {
-                  label: _("Save"),
-                  accelerator: "CmdOrCtrl+S",
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("save-file");
-                  },
-               },
-               {
-                  label: _("Save As..."),
-                  accelerator: "Shift+CmdOrCtrl+S",
-                  click: async () =>
-                  {
-                     const response = await this .showSaveDialog (this .currentFile);
-
-                     if (response .canceled)
-                        return;
-
-                     this .addRecentDocument (response .filePath);
-
-                     this .mainWindow .webContents .send ("save-file-as", response .filePath);
-                  },
-               },
-               {
-                  label: _("Save A Copy..."),
-                  click: async () =>
-                  {
-                     const response = await this .showSaveDialog (this .currentFile);
-
-                     if (response .canceled)
-                        return;
-
-                     this .addRecentDocument (response .filePath);
-
-                     this .mainWindow .webContents .send ("save-copy-as", response .filePath);
-                  },
-               },
-               {
-                  label: _("Save All"),
-                  accelerator: "Alt+CmdOrCtrl+S",
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("save-all-files");
-                  },
-               },
-               { type: "separator" },
-               {
-                  label: _("Auto Save"),
-                  type: "checkbox",
-                  checked: this .config .autoSave,
-                  click: () =>
-                  {
-                     this .config .autoSave = !this .config .autoSave;
-                     this .mainWindow .webContents .send ("auto-save", this .config .autoSave);
-                  },
-
-               },
-               { type: "separator" },
-               ... exportPath ?
-               [
-                  {
-                     label: util .format (_("Export As %s"), path .basename (exportPath)),
-                     accelerator: "CmdOrCtrl+E",
-                     click: () =>
-                     {
-                        this .mainWindow .webContents .send ("export-as", exportPath);
-                     },
-                  }
-               ]
-               :
-               [ ],
-               {
-                  label: _("Export As..."),
-                  accelerator: "Shift+CmdOrCtrl+E",
-                  click: async () =>
-                  {
-                     const response = await this .showExportDialog (this .currentFile);
-
-                     if (response .canceled)
-                        return;
-
-                     this .addRecentDocument (response .filePath);
-
-                     this .exportPath .set (this .currentFile, response .filePath);
-
-                     this .mainWindow .webContents .send ("export-as", response .filePath);
-
-                     this .updateMenu ();
-                  },
-               },
-               { type: "separator" },
-               {
-                  label: _("Scene Properties..."),
-                  accelerator: "CmdOrCtrl+I",
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("scene-properties");
-                  },
-               },
-               { type: "separator" },
-               {
-                  label: _("Close"),
-                  accelerator: "CmdOrCtrl+W",
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("close");
-                  },
-               },
-               ... process .platform === "darwin" ?
-               [ ]
-               :
-               [{ role: "quit" }],
-            ],
-         },
-         this .menuOptions .defaultEditMenu ?
-         {
-            role: "editMenu",
-            submenu: [
-               { role: "undo" },
-               { role: "redo" },
-               { type: "separator" },
-               { role: "cut" },
-               { role: "copy" },
-               { role: "paste" },
-               ... process .platform === "darwin" ?
-               [
-                  { role: "pasteAndMatchStyle" },
-                  { role: "delete" },
-                  { role: "selectAll" },
-                  { type: "separator" },
-                  {
-                     label: _("Speech"),
-                     submenu: [
-                        { role: "startSpeaking" },
-                        { role: "stopSpeaking" },
-                     ]
-                  },
-               ]
-               :
-               [
-                  { role: "delete" },
-                  { type: "separator" },
-                  { role: "selectAll" },
-               ],
-               { type: "separator" },
-               {
-                  label: _("Toggle Line Comment"),
-                  accelerator: process .platform === "darwin" ? "CmdOrCtrl+Shift+7" : "CmdOrCtrl+#",
-                  enabled: this .menuOptions .monacoEditor,
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("script-editor", "runAction", "editor.action.commentLine");
-                  },
-               },
-               {
-                  label: _("Toggle Block Comment"),
-                  accelerator: "Alt+Shift+A",
-                  enabled: this .menuOptions .monacoEditor,
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("script-editor", "runAction", "editor.action.blockComment");
-                  },
+                  role: "appMenu",
+                  label: electron .app .getName (),
                },
             ]
-         }
-         :
-         {
-            role: "editMenu",
-            submenu: [
-               {
-                  label: this .menuOptions .undoLabel,
-                  accelerator: "CmdOrCtrl+Z",
-                  enabled: this .menuOptions .undoLabel !== _("Undo"),
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("undo");
-                  },
-               },
-               {
-                  label: this .menuOptions .redoLabel,
-                  accelerator: "Shift+CmdOrCtrl+Z",
-                  enabled: this .menuOptions .redoLabel !== _("Redo"),
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("redo");
-                  },
-               },
-               { type: "separator" },
-               {
-                  role: "cut",
-               },
-               {
-                  role: "copy",
-               },
-               {
-                  role: "paste",
-               },
-               {
-                  label: _("Delete"),
-                  accelerator: "CmdOrCtrl+Backspace",
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("delete");
-                  },
-               },
-            ],
-         },
-         {
-            label: _("Selection"),
-            submenu: [
-               {
-                  label: _("Select All"),
-                  accelerator: "CmdOrCtrl+A",
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("select-all");
-                  },
-               },
-               {
-                  label: _("Deselect All"),
-                  accelerator: "Shift+CmdOrCtrl+A",
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("deselect-all");
-                  },
-               },
-               { type: "separator" },
-               {
-                  label: _("Hide Unselected Objects"),
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("hide-unselected-objects");
-                  },
-               },
-               {
-                  label: _("Show Selected Objects"),
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("show-selected-objects");
-                  },
-               },
-               {
-                  label: _("Show All Objects"),
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("show-all-objects");
-                  },
-               },
-               { type: "separator" },
-               {
-                  label: _("Remove Empty Groups"),
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("remove-empty-groups");
-                  },
-               },
-            ],
-         },
-         {
-            label: _("View"),
-            submenu: [
-               {
-                  role: "reload",
-                  visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
-               },
-               {
-                  role: "forceReload",
-                  visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
-               },
-               {
-                  role: "toggleDevTools",
-                  visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
-               },
-               {
-                  label: _("Reload Tab"),
-                  visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("reload");
-                  },
-               },
-               {
-                  label: _("Toggle Tab Developer Tools"),
-                  visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("toggle-developer-tools");
-                  },
-               },
-               { type: "separator" },
-               {
-                  label: _("Outline Editor"),
-                  submenu: [
-                     {
-                        label: _("Expand ExternProto Declarations"),
-                        type: "checkbox",
-                        checked: this .config .expandExternProtoDeclarations,
-                        click: () =>
-                        {
-                           this .config .expandExternProtoDeclarations = !this .config .expandExternProtoDeclarations;
-                           this .mainWindow .webContents .send ("expand-extern-proto-declarations", this .config .expandExternProtoDeclarations);
-                        },
-                     },
-                     {
-                        label: _("Expand Prototype Instances"),
-                        type: "checkbox",
-                        checked: this .config .expandPrototypeInstances,
-                        click: () =>
-                        {
-                           this .config .expandPrototypeInstances = !this .config .expandPrototypeInstances;
-                           this .mainWindow .webContents .send ("expand-prototype-instances", this .config .expandPrototypeInstances);
-                        },
-                     },
-                     {
-                        label: _("Expand Inline Nodes"),
-                        type: "checkbox",
-                        checked: this .config .expandInlineNodes,
-                        click: () =>
-                        {
-                           this .config .expandInlineNodes = !this .config .expandInlineNodes;
-                           this .mainWindow .webContents .send ("expand-inline-nodes", this .config .expandInlineNodes);
-                        },
-                     },
-                  ],
-               },
-               { type: "separator" },
-               {
-                  label: _("Primitive Quality"),
-                  submenu: [
-                     {
-                        label: _("High"),
-                        type: "radio",
-                        checked: this .menuOptions .primitiveQuality === "HIGH",
-                        click: () =>
-                        {
-                           this .mainWindow .webContents .send ("primitive-quality", "HIGH");
-                        },
-                     },
-                     {
-                        label: _("Medium"),
-                        type: "radio",
-                        checked: this .menuOptions .primitiveQuality === "MEDIUM",
-                        click: () =>
-                        {
-                           this .mainWindow .webContents .send ("primitive-quality", "MEDIUM");
-                        },
-                     },
-                     {
-                        label: _("Low"),
-                        type: "radio",
-                        checked: this .menuOptions .primitiveQuality === "LOW",
-                        click: () =>
-                        {
-                           this .mainWindow .webContents .send ("primitive-quality", "LOW");
-                        },
-                     }
-                  ],
-               },
-               {
-                  label: _("Texture Quality"),
-                  submenu: [
-                     {
-                        label: _("High"),
-                        type: "radio",
-                        checked: this .menuOptions .textureQuality === "HIGH",
-                        click: () =>
-                        {
-                           this .mainWindow .webContents .send ("texture-quality", "HIGH");
-                        },
-                     },
-                     {
-                        label: _("Medium"),
-                        type: "radio",
-                        checked: this .menuOptions .textureQuality === "MEDIUM",
-                        click: () =>
-                        {
-                           this .mainWindow .webContents .send ("texture-quality", "MEDIUM");
-                        },
-                     },
-                     {
-                        label: _("Low"),
-                        type: "radio",
-                        checked: this .menuOptions .textureQuality === "LOW",
-                        click: () =>
-                        {
-                           this .mainWindow .webContents .send ("texture-quality", "LOW");
-                        },
-                     }
-                  ],
-               },
-               {
-                  label: _("Display Rubberband"),
-                  type: "checkbox",
-                  checked: this .menuOptions .rubberband,
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("display-rubberband", !this .menuOptions .rubberband);
-                  },
-               },
-               {
-                  label: _("Display Timings"),
-                  type: "checkbox",
-                  checked: this .menuOptions .timings,
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("display-timings", !this .menuOptions .timings);
-                  },
-               },
-               { type: "separator" },
-               {
-                  label: _("Show Library..."),
-                  accelerator: "Shift+CmdOrCtrl+L",
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("show-library");
-                  },
-               },
-               { type: "separator" },
-               {
-                  role: "togglefullscreen",
-               },
-            ],
-         },
-         {
-            label: _("Layout"),
-            submenu: [
-               {
-                  label: _("Browser Frame..."),
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("browser-frame");
-                  },
-               },
-               { type: "separator" },
-               {
-                  label: _("Grid Layout Tool"),
-                  type: "checkbox",
-                  checked: this .menuOptions .GridTool,
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("grid-tool", "GridTool", !this .menuOptions .GridTool);
-                  },
-               },
-               {
-                  label: _("Angle Grid Layout Tool"),
-                  type: "checkbox",
-                  checked: this .menuOptions .AngleGridTool,
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("grid-tool", "AngleGridTool", !this .menuOptions .AngleGridTool);
-                  },
-               },
-               {
-                  label: _("Axonometric Grid Layout Tool"),
-                  type: "checkbox",
-                  checked: this .menuOptions .AxonometricGridTool,
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("grid-tool", "AxonometricGridTool", !this .menuOptions .AxonometricGridTool);
-                  },
-               },
-               { type: "separator" },
-               {
-                  label: _("Show Grid Tool Options in Panel..."),
-                  accelerator: "CmdOrCtrl+G",
-                  enabled: this .menuOptions .GridTool || this .menuOptions .AngleGridTool || this .menuOptions .AxonometricGridTool,
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("grid-options");
-                  },
-               },
-               { type: "separator" },
-               {
-                  label: _("Activate Snap Target"),
-                  type: "checkbox",
-                  checked: this .menuOptions .SnapTarget,
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("activate-snap-target", !this .menuOptions .SnapTarget);
-                  },
-               },
-               {
-                  label: _("Activate Snap Source"),
-                  type: "checkbox",
-                  checked: this .menuOptions .SnapSource,
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("activate-snap-source", !this .menuOptions .SnapSource);
-                  },
-               },
-               {
-                  label: _("Center Snap Target in Selection"),
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("center-snap-target-in-selection");
-                  },
-               },
-               {
-                  label: _("Move Selection to Snap Target"),
-                  accelerator: "CmdOrCtrl+M",
-                  enabled: this .menuOptions .SnapTarget,
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("move-selection-to-snap-target");
-                  },
-               },
-               {
-                  label: _("Move Selection Center to Snap Target"),
-                  accelerator: "Shift+CmdOrCtrl+M",
-                  enabled: this .menuOptions .SnapTarget,
-                  click: () =>
-                  {
-                     this .mainWindow .webContents .send ("move-selection-center-to-snap-target");
-                  },
-               },
-            ],
-         },
-         ... process .platform === "darwin" ?
-         [
+            :
+            [ ],
             {
-               role: "window",
-               submenu: [ ],
+               role: "fileMenu",
+               submenu: [
+                  {
+                     label: _("New File"),
+                     accelerator: "CmdOrCtrl+N",
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("open-files");
+                     },
+                  },
+                  { type: "separator" },
+                  {
+                     label: _("Open..."),
+                     accelerator: "CmdOrCtrl+O",
+                     click: async () =>
+                     {
+                        const response = await this .showOpenDialog (this .currentFile);
+
+                        if (response .canceled)
+                           return;
+
+                        this .openFiles (response .filePaths .map (filePath => url .pathToFileURL (filePath) .href));
+                     },
+                  },
+                  {
+                     label: _("Open Location..."),
+                     accelerator: "Shift+CmdOrCtrl+O",
+                     click: async () =>
+                     {
+                        const clipboard = electron .clipboard .readText ();
+
+                        this .pushMenu (this .createDialogMenu ());
+
+                        const response = await prompt ({
+                           title: _("Open Location..."),
+                           label: _("Enter a URL to open in a new tab:"),
+                           type: "input",
+                           value: clipboard .match (/^(?:https?|file|ftp|smb):\/\/.+/) ? clipboard : this .openLocationValue,
+                           inputAttrs: {
+                              type: "url",
+                              placeholder: "https://example.org",
+                           },
+                           width: 500,
+                           customStylesheet: path .join (__dirname, "../assets/themes/prompt.css"),
+                           showWhenReady: true,
+                        },
+                        this .mainWindow);
+
+                        this .popMenu ();
+
+                        if (response === null)
+                           return;
+
+                        this .openFiles ([this .openLocationValue = response]);
+                     },
+                  },
+                  {
+                     // role: "recentDocuments",
+                     label: _("Open Recent"),
+                     submenu: [
+                        ... this .config .recentDocuments .map (filePath =>
+                        {
+                           return {
+                              label: filePath,
+                              click: () =>
+                              {
+                                 this .openFiles ([url .pathToFileURL (filePath) .href]);
+                              },
+                           };
+                        }),
+                        { type: "separator" },
+                        {
+                           // role: "clearRecentDocuments",
+                           label: _("Clear Menu"),
+                           click: () =>
+                           {
+                              this .config .recentDocuments = [ ];
+
+                              this .updateMenu ();
+                           },
+                        },
+                     ],
+                  },
+                  { type: "separator" },
+                  {
+                     label: _("Reload"),
+                     accelerator: "F5",
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("reload");
+                     },
+                  },
+                  { type: "separator" },
+                  {
+                     label: _("Save"),
+                     accelerator: "CmdOrCtrl+S",
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("save-file");
+                     },
+                  },
+                  {
+                     label: _("Save As..."),
+                     accelerator: "Shift+CmdOrCtrl+S",
+                     click: async () =>
+                     {
+                        const response = await this .showSaveDialog (this .currentFile);
+
+                        if (response .canceled)
+                           return;
+
+                        this .addRecentDocument (response .filePath);
+
+                        this .mainWindow .webContents .send ("save-file-as", response .filePath);
+                     },
+                  },
+                  {
+                     label: _("Save A Copy..."),
+                     click: async () =>
+                     {
+                        const response = await this .showSaveDialog (this .currentFile);
+
+                        if (response .canceled)
+                           return;
+
+                        this .addRecentDocument (response .filePath);
+
+                        this .mainWindow .webContents .send ("save-copy-as", response .filePath);
+                     },
+                  },
+                  {
+                     label: _("Save All"),
+                     accelerator: "Alt+CmdOrCtrl+S",
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("save-all-files");
+                     },
+                  },
+                  { type: "separator" },
+                  {
+                     label: _("Auto Save"),
+                     type: "checkbox",
+                     checked: this .config .autoSave,
+                     click: () =>
+                     {
+                        this .config .autoSave = !this .config .autoSave;
+                        this .mainWindow .webContents .send ("auto-save", this .config .autoSave);
+                     },
+
+                  },
+                  { type: "separator" },
+                  ... exportPath ?
+                  [
+                     {
+                        label: util .format (_("Export As %s"), path .basename (exportPath)),
+                        accelerator: "CmdOrCtrl+E",
+                        click: () =>
+                        {
+                           this .mainWindow .webContents .send ("export-as", exportPath);
+                        },
+                     }
+                  ]
+                  :
+                  [ ],
+                  {
+                     label: _("Export As..."),
+                     accelerator: "Shift+CmdOrCtrl+E",
+                     click: async () =>
+                     {
+                        const response = await this .showExportDialog (this .currentFile);
+
+                        if (response .canceled)
+                           return;
+
+                        this .addRecentDocument (response .filePath);
+
+                        this .exportPath .set (this .currentFile, response .filePath);
+
+                        this .mainWindow .webContents .send ("export-as", response .filePath);
+
+                        this .updateMenu ();
+                     },
+                  },
+                  { type: "separator" },
+                  {
+                     label: _("Scene Properties..."),
+                     accelerator: "CmdOrCtrl+I",
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("scene-properties");
+                     },
+                  },
+                  { type: "separator" },
+                  {
+                     label: _("Close"),
+                     accelerator: "CmdOrCtrl+W",
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("close");
+                     },
+                  },
+                  ... process .platform === "darwin" ?
+                  [ ]
+                  :
+                  [{ role: "quit" }],
+               ],
             },
-         ]
-         :
-         [ ],
-         {
-            role: "help",
-            submenu: [
-               {
-                  label: _("Learn More"),
-                  click: () =>
+            this .menuOptions .defaultEditMenu ?
+            {
+               role: "editMenu",
+               submenu: [
+                  { role: "undo" },
+                  { role: "redo" },
+                  { type: "separator" },
+                  { role: "cut" },
+                  { role: "copy" },
+                  { role: "paste" },
+                  ... process .platform === "darwin" ?
+                  [
+                     { role: "pasteAndMatchStyle" },
+                     { role: "delete" },
+                     { role: "selectAll" },
+                     { type: "separator" },
+                     {
+                        label: _("Speech"),
+                        submenu: [
+                           { role: "startSpeaking" },
+                           { role: "stopSpeaking" },
+                        ]
+                     },
+                  ]
+                  :
+                  [
+                     { role: "delete" },
+                     { type: "separator" },
+                     { role: "selectAll" },
+                  ],
+                  { type: "separator" },
                   {
-                     electron .shell .openExternal ("https://create3000.github.io/sunrize/");
+                     label: _("Toggle Line Comment"),
+                     accelerator: process .platform === "darwin" ? "CmdOrCtrl+Shift+7" : "CmdOrCtrl+#",
+                     enabled: this .menuOptions .monacoEditor,
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("script-editor", "runAction", "editor.action.commentLine");
+                     },
                   },
-               },
-               {
-                  label: _("A Quick Look at the User Interface"),
-                  click: () =>
                   {
-                     electron .shell .openExternal ("https://create3000.github.io/sunrize/documentation/a-quick-look-at-the-user-interface/");
+                     label: _("Toggle Block Comment"),
+                     accelerator: "Alt+Shift+A",
+                     enabled: this .menuOptions .monacoEditor,
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("script-editor", "runAction", "editor.action.blockComment");
+                     },
                   },
-               },
-               {
-                  label: _("How to Navigate in a Scene"),
-                  click: () =>
+               ]
+            }
+            :
+            {
+               role: "editMenu",
+               submenu: [
                   {
-                     electron .shell .openExternal ("https://create3000.github.io/x_ite/tutorials/how-to-navigate-in-a-scene/");
+                     label: this .menuOptions .undoLabel,
+                     accelerator: "CmdOrCtrl+Z",
+                     enabled: this .menuOptions .undoLabel !== _("Undo"),
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("undo");
+                     },
                   },
-               },
-               {
-                  label: _("Using the Outline Editor"),
-                  click: () =>
                   {
-                     electron .shell .openExternal ("https://create3000.github.io/sunrize/documentation/using-the-outline-editor/");
+                     label: this .menuOptions .redoLabel,
+                     accelerator: "Shift+CmdOrCtrl+Z",
+                     enabled: this .menuOptions .redoLabel !== _("Redo"),
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("redo");
+                     },
                   },
-               },
-               {
-                  label: _("Using the Script Editor"),
-                  click: () =>
+                  { type: "separator" },
                   {
-                     electron .shell .openExternal ("https://create3000.github.io/sunrize/documentation/using-the-script-editor/");
+                     role: "cut",
                   },
+                  {
+                     role: "copy",
+                  },
+                  {
+                     role: "paste",
+                  },
+                  {
+                     label: _("Delete"),
+                     accelerator: "CmdOrCtrl+Backspace",
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("delete");
+                     },
+                  },
+               ],
+            },
+            {
+               label: _("Selection"),
+               submenu: [
+                  {
+                     label: _("Select All"),
+                     accelerator: "CmdOrCtrl+A",
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("select-all");
+                     },
+                  },
+                  {
+                     label: _("Deselect All"),
+                     accelerator: "Shift+CmdOrCtrl+A",
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("deselect-all");
+                     },
+                  },
+                  { type: "separator" },
+                  {
+                     label: _("Hide Unselected Objects"),
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("hide-unselected-objects");
+                     },
+                  },
+                  {
+                     label: _("Show Selected Objects"),
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("show-selected-objects");
+                     },
+                  },
+                  {
+                     label: _("Show All Objects"),
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("show-all-objects");
+                     },
+                  },
+                  { type: "separator" },
+                  {
+                     label: _("Remove Empty Groups"),
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("remove-empty-groups");
+                     },
+                  },
+               ],
+            },
+            {
+               label: _("View"),
+               submenu: [
+                  {
+                     role: "reload",
+                     visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
+                  },
+                  {
+                     role: "forceReload",
+                     visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
+                  },
+                  {
+                     role: "toggleDevTools",
+                     visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
+                  },
+                  {
+                     label: _("Reload Tab"),
+                     visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("reload");
+                     },
+                  },
+                  {
+                     label: _("Toggle Tab Developer Tools"),
+                     visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("toggle-developer-tools");
+                     },
+                  },
+                  { type: "separator" },
+                  {
+                     label: _("Outline Editor"),
+                     submenu: [
+                        {
+                           label: _("Expand ExternProto Declarations"),
+                           type: "checkbox",
+                           checked: this .config .expandExternProtoDeclarations,
+                           click: () =>
+                           {
+                              this .config .expandExternProtoDeclarations = !this .config .expandExternProtoDeclarations;
+                              this .mainWindow .webContents .send ("expand-extern-proto-declarations", this .config .expandExternProtoDeclarations);
+                           },
+                        },
+                        {
+                           label: _("Expand Prototype Instances"),
+                           type: "checkbox",
+                           checked: this .config .expandPrototypeInstances,
+                           click: () =>
+                           {
+                              this .config .expandPrototypeInstances = !this .config .expandPrototypeInstances;
+                              this .mainWindow .webContents .send ("expand-prototype-instances", this .config .expandPrototypeInstances);
+                           },
+                        },
+                        {
+                           label: _("Expand Inline Nodes"),
+                           type: "checkbox",
+                           checked: this .config .expandInlineNodes,
+                           click: () =>
+                           {
+                              this .config .expandInlineNodes = !this .config .expandInlineNodes;
+                              this .mainWindow .webContents .send ("expand-inline-nodes", this .config .expandInlineNodes);
+                           },
+                        },
+                     ],
+                  },
+                  { type: "separator" },
+                  {
+                     label: _("Primitive Quality"),
+                     submenu: [
+                        {
+                           label: _("High"),
+                           type: "radio",
+                           checked: this .menuOptions .primitiveQuality === "HIGH",
+                           click: () =>
+                           {
+                              this .mainWindow .webContents .send ("primitive-quality", "HIGH");
+                           },
+                        },
+                        {
+                           label: _("Medium"),
+                           type: "radio",
+                           checked: this .menuOptions .primitiveQuality === "MEDIUM",
+                           click: () =>
+                           {
+                              this .mainWindow .webContents .send ("primitive-quality", "MEDIUM");
+                           },
+                        },
+                        {
+                           label: _("Low"),
+                           type: "radio",
+                           checked: this .menuOptions .primitiveQuality === "LOW",
+                           click: () =>
+                           {
+                              this .mainWindow .webContents .send ("primitive-quality", "LOW");
+                           },
+                        }
+                     ],
+                  },
+                  {
+                     label: _("Texture Quality"),
+                     submenu: [
+                        {
+                           label: _("High"),
+                           type: "radio",
+                           checked: this .menuOptions .textureQuality === "HIGH",
+                           click: () =>
+                           {
+                              this .mainWindow .webContents .send ("texture-quality", "HIGH");
+                           },
+                        },
+                        {
+                           label: _("Medium"),
+                           type: "radio",
+                           checked: this .menuOptions .textureQuality === "MEDIUM",
+                           click: () =>
+                           {
+                              this .mainWindow .webContents .send ("texture-quality", "MEDIUM");
+                           },
+                        },
+                        {
+                           label: _("Low"),
+                           type: "radio",
+                           checked: this .menuOptions .textureQuality === "LOW",
+                           click: () =>
+                           {
+                              this .mainWindow .webContents .send ("texture-quality", "LOW");
+                           },
+                        }
+                     ],
+                  },
+                  {
+                     label: _("Display Rubberband"),
+                     type: "checkbox",
+                     checked: this .menuOptions .rubberband,
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("display-rubberband", !this .menuOptions .rubberband);
+                     },
+                  },
+                  {
+                     label: _("Display Timings"),
+                     type: "checkbox",
+                     checked: this .menuOptions .timings,
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("display-timings", !this .menuOptions .timings);
+                     },
+                  },
+                  { type: "separator" },
+                  {
+                     label: _("Show Library..."),
+                     accelerator: "Shift+CmdOrCtrl+L",
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("show-library");
+                     },
+                  },
+                  { type: "separator" },
+                  {
+                     role: "togglefullscreen",
+                  },
+               ],
+            },
+            {
+               label: _("Layout"),
+               submenu: [
+                  {
+                     label: _("Browser Frame..."),
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("browser-frame");
+                     },
+                  },
+                  { type: "separator" },
+                  {
+                     label: _("Grid Layout Tool"),
+                     type: "checkbox",
+                     checked: this .menuOptions .GridTool,
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("grid-tool", "GridTool", !this .menuOptions .GridTool);
+                     },
+                  },
+                  {
+                     label: _("Angle Grid Layout Tool"),
+                     type: "checkbox",
+                     checked: this .menuOptions .AngleGridTool,
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("grid-tool", "AngleGridTool", !this .menuOptions .AngleGridTool);
+                     },
+                  },
+                  {
+                     label: _("Axonometric Grid Layout Tool"),
+                     type: "checkbox",
+                     checked: this .menuOptions .AxonometricGridTool,
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("grid-tool", "AxonometricGridTool", !this .menuOptions .AxonometricGridTool);
+                     },
+                  },
+                  { type: "separator" },
+                  {
+                     label: _("Show Grid Tool Options in Panel..."),
+                     accelerator: "CmdOrCtrl+G",
+                     enabled: this .menuOptions .GridTool || this .menuOptions .AngleGridTool || this .menuOptions .AxonometricGridTool,
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("grid-options");
+                     },
+                  },
+                  { type: "separator" },
+                  {
+                     label: _("Activate Snap Target"),
+                     type: "checkbox",
+                     checked: this .menuOptions .SnapTarget,
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("activate-snap-target", !this .menuOptions .SnapTarget);
+                     },
+                  },
+                  {
+                     label: _("Activate Snap Source"),
+                     type: "checkbox",
+                     checked: this .menuOptions .SnapSource,
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("activate-snap-source", !this .menuOptions .SnapSource);
+                     },
+                  },
+                  {
+                     label: _("Center Snap Target in Selection"),
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("center-snap-target-in-selection");
+                     },
+                  },
+                  {
+                     label: _("Move Selection to Snap Target"),
+                     accelerator: "CmdOrCtrl+M",
+                     enabled: this .menuOptions .SnapTarget,
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("move-selection-to-snap-target");
+                     },
+                  },
+                  {
+                     label: _("Move Selection Center to Snap Target"),
+                     accelerator: "Shift+CmdOrCtrl+M",
+                     enabled: this .menuOptions .SnapTarget,
+                     click: () =>
+                     {
+                        this .mainWindow .webContents .send ("move-selection-center-to-snap-target");
+                     },
+                  },
+               ],
+            },
+            ... process .platform === "darwin" ?
+            [
+               {
+                  role: "window",
+                  submenu: [ ],
                },
-            ],
-         },
-      ]));
+            ]
+            :
+            [ ],
+            {
+               role: "help",
+               submenu: [
+                  {
+                     label: _("Learn More"),
+                     click: () =>
+                     {
+                        electron .shell .openExternal ("https://create3000.github.io/sunrize/");
+                     },
+                  },
+                  {
+                     label: _("A Quick Look at the User Interface"),
+                     click: () =>
+                     {
+                        electron .shell .openExternal ("https://create3000.github.io/sunrize/documentation/a-quick-look-at-the-user-interface/");
+                     },
+                  },
+                  {
+                     label: _("How to Navigate in a Scene"),
+                     click: () =>
+                     {
+                        electron .shell .openExternal ("https://create3000.github.io/x_ite/tutorials/how-to-navigate-in-a-scene/");
+                     },
+                  },
+                  {
+                     label: _("Using the Outline Editor"),
+                     click: () =>
+                     {
+                        electron .shell .openExternal ("https://create3000.github.io/sunrize/documentation/using-the-outline-editor/");
+                     },
+                  },
+                  {
+                     label: _("Using the Script Editor"),
+                     click: () =>
+                     {
+                        electron .shell .openExternal ("https://create3000.github.io/sunrize/documentation/using-the-script-editor/");
+                     },
+                  },
+               ],
+            },
+         ]));
 
-      this .mainMenu [0] = menu;
+         this .mainMenu [0] = menu;
 
-      if (this .mainMenu .length === 1)
-         electron .Menu .setApplicationMenu (menu);
+         if (this .mainMenu .length === 1)
+            electron .Menu .setApplicationMenu (menu);
+      });
+
    }
 
    createDialogMenu ()
@@ -992,8 +1020,21 @@ module .exports = class Application
       return response;
    }
 
+   #recentDocumentsUpdated;
+
    addRecentDocument (filePath)
    {
+      // Workaround for https://github.com/electron/electron/issues/40611
+
+      this .config .recentDocuments = this .config .recentDocuments
+         .filter (item => item !== filePath)
+         .toSpliced (0, 0, filePath)
+         .toSpliced (10);
+
+      this .updateMenu ();
+
+      // System API
+
       electron .app .addRecentDocument (filePath);
    }
 
