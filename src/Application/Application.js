@@ -67,6 +67,7 @@ module .exports = class Application
          expandPrototypeInstances: true,
          expandInlineNodes: true,
          recentDocuments: [ ],
+         recentLocations: [ ],
       });
 
       Template .create (path .join (__dirname, "../assets/html/application-template.html"));
@@ -247,12 +248,24 @@ module .exports = class Application
                            };
                         }),
                         { type: "separator" },
+                        ... this .config .recentLocations .map (fileURL =>
+                        {
+                           return {
+                              label: fileURL,
+                              click: () =>
+                              {
+                                 this .openFiles ([fileURL]);
+                              },
+                           };
+                        }),
+                        { type: "separator" },
                         {
                            // role: "clearRecentDocuments",
                            label: _("Clear Menu"),
                            click: () =>
                            {
                               this .config .recentDocuments = [ ];
+                              this .config .recentLocations = [ ];
 
                               this .updateMenu ();
                            },
@@ -985,10 +998,12 @@ module .exports = class Application
    {
       if (this .ready)
       {
-         for (const URL of urls)
+         for (const fileURL of urls)
          {
-            if (URL .startsWith ("file:"))
-               this .addRecentDocument (url .fileURLToPath (URL));
+            if (fileURL .startsWith ("file:"))
+               this .addRecentDocument (url .fileURLToPath (fileURL));
+            else
+               this .addRecentLocation (fileURL);
          }
 
          this .mainWindow .webContents .send ("open-files", urls);
@@ -1021,6 +1036,7 @@ module .exports = class Application
    }
 
    recentDocumentsLength = 15;
+   recentLocationsLength = 15;
 
    addRecentDocument (filePath)
    {
@@ -1036,6 +1052,16 @@ module .exports = class Application
       // System API
 
       electron .app .addRecentDocument (filePath);
+   }
+
+   addRecentLocation (fileURL)
+   {
+      this .config .recentLocations = this .config .recentLocations
+         .filter (item => item !== fileURL)
+         .toSpliced (0, 0, fileURL)
+         .toSpliced (this .recentLocationsLength);
+
+      this .updateMenu ();
    }
 
    async showSaveDialog (defaultPath)
