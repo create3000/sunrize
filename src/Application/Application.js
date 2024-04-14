@@ -908,8 +908,8 @@ module .exports = class Application
       this .config .recentDocuments = this .config .recentDocuments
          .filter (item => item !== filePath)
          .toSpliced (0, 0, filePath)
-         .toSpliced (this .recentDocumentsLength)
-         .filter (item => fs .existsSync (item));
+         .filter (item => fs .existsSync (item))
+         .toSpliced (this .recentDocumentsLength);
 
       this .updateMenu ();
 
