@@ -234,7 +234,8 @@ module .exports = class Application
                   {
                      label: _("Open Recent"),
                      submenu: [
-                        ... this .config .recentDocuments .map (filePath =>
+                        ... this .config .recentDocuments
+                           .filter (filePath => fs .existsSync (filePath)) .map (filePath =>
                         {
                            return {
                               label: filePath,
