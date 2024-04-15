@@ -899,36 +899,6 @@ module .exports = class Application
       return response;
    }
 
-   recentDocumentsLength = 10;
-   recentLocationsLength = 10;
-
-   addRecentDocument (filePath)
-   {
-      // Workaround for https://github.com/electron/electron/issues/40611
-
-      this .config .recentDocuments = this .config .recentDocuments
-         .filter (item => item !== filePath)
-         .toSpliced (0, 0, filePath)
-         .filter (item => fs .existsSync (item))
-         .toSpliced (this .recentDocumentsLength);
-
-      this .updateMenu ();
-
-      // System API
-
-      electron .app .addRecentDocument (filePath);
-   }
-
-   addRecentLocation (fileURL)
-   {
-      this .config .recentLocations = this .config .recentLocations
-         .filter (item => item !== fileURL)
-         .toSpliced (0, 0, fileURL)
-         .toSpliced (this .recentLocationsLength);
-
-      this .updateMenu ();
-   }
-
    async showSaveDialog (defaultPath)
    {
       this .pushMenu (this .createDialogMenu ());
@@ -966,6 +936,36 @@ module .exports = class Application
       this .popMenu ();
 
       return response;
+   }
+
+   recentDocumentsLength = 10;
+   recentLocationsLength = 10;
+
+   addRecentDocument (filePath)
+   {
+      // Workaround for https://github.com/electron/electron/issues/40611
+
+      this .config .recentDocuments = this .config .recentDocuments
+         .filter (item => item !== filePath)
+         .toSpliced (0, 0, filePath)
+         .filter (item => fs .existsSync (item))
+         .toSpliced (this .recentDocumentsLength);
+
+      this .updateMenu ();
+
+      // System API
+
+      electron .app .addRecentDocument (filePath);
+   }
+
+   addRecentLocation (fileURL)
+   {
+      this .config .recentLocations = this .config .recentLocations
+         .filter (item => item !== fileURL)
+         .toSpliced (0, 0, fileURL)
+         .toSpliced (this .recentLocationsLength);
+
+      this .updateMenu ();
    }
 
    onmaximize ()
