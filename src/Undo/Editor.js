@@ -3001,6 +3001,44 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     * @param {MFNode|Array<X3DNode>} nodes
     * @param {UndoManager} undoManager
     */
+   static transformToZero (executionContext, nodes, undoManager = UndoManager .shared)
+   {
+      undoManager .beginUndo (_("Transform to Zero"));
+
+      if (nodes instanceof X3D .MFNode)
+      {
+         this .#transformToZeroFromArray (executionContext, nodes, undoManager);
+      }
+      else
+      {
+         for (const node of nodes)
+            this .#transformToZeroFromNode (executionContext, node, undoManager);
+      }
+
+
+      undoManager .endUndo ();
+   }
+
+   static #transformToZeroFromArray (executionContext, nodes, undoManager)
+   {
+      for (const node of nodes)
+         this .#transformToZeroFromNode (executionContext, node .getValue (), undoManager);
+   }
+
+   static #transformToZeroFromNode (executionContext, node, undoManager)
+   {
+      for (const type of node .getType () .toReversed ())
+      {
+         console .log (type);
+      }
+   }
+
+   /**
+    *
+    * @param {X3DExecutionContext} executionContext
+    * @param {MFNode|Array<X3DNode>} nodes
+    * @param {UndoManager} undoManager
+    */
    static removeEmptyGroups (executionContext, nodes, undoManager = UndoManager .shared)
    {
       undoManager .beginUndo (_("Remove Empty Groups"));

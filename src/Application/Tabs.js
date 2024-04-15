@@ -79,6 +79,7 @@ module .exports = new class Tabs
       this .forwardToActiveTab ("hide-unselected-objects");
       this .forwardToActiveTab ("show-selected-objects");
       this .forwardToActiveTab ("show-all-objects");
+      this .forwardToActiveTab ("transform-to-zero");
       this .forwardToActiveTab ("remove-empty-groups");
 
       this .forwardToAllTabs ("expand-extern-proto-declarations");

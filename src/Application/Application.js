@@ -477,6 +477,10 @@ module .exports = class Application
                   },
                   { type: "separator" },
                   {
+                     label: _("Transform to Zero"),
+                     click: () => this .mainWindow .webContents .send ("transform-to-zero"),
+                  },
+                  {
                      label: _("Remove Empty Groups"),
                      click: () => this .mainWindow .webContents .send ("remove-empty-groups"),
                   },

@@ -20,6 +20,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       element .on ("contextmenu", (event) => this .showContextMenu (event));
 
       electron .ipcRenderer .on ("outline-editor", (event, key, ...args) => this [key] (...args));
+      electron .ipcRenderer .on ("transform-to-zero", (event) => this .transformToZero ());
       electron .ipcRenderer .on ("remove-empty-groups", (event) => this .removeEmptyGroups ());
 
       this .setup ();
@@ -42,6 +43,26 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          X3D .X3DConstants .Transform,
          X3D .X3DConstants .X3DNBodyCollidableNode,
       ]);
+   }
+
+   transformToZero ()
+   {
+      const
+         selection = this .sceneGraph .find (".node.primary, .node.manually"),
+         ids       = selection .map (function () { return this .id }) .get (),
+         nodes     = ids .length ? ids .map (id => this .getNode ($(`#${id}`))) : this .executionContext .rootNodes;
+
+      Editor .transformToZero (this .executionContext, nodes);
+   }
+
+   removeEmptyGroups ()
+   {
+      const
+         selection = this .sceneGraph .find (".node.primary, .node.manually"),
+         ids       = selection .map (function () { return this .id }) .get (),
+         nodes     = ids .length ? ids .map (id => this .getNode ($(`#${id}`))) : this .executionContext .rootNodes;
+
+      Editor .removeEmptyGroups (this .executionContext, nodes);
    }
 
    showContextMenu (event)
@@ -2742,15 +2763,5 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       }
 
       return modelMatrix;
-   }
-
-   removeEmptyGroups ()
-   {
-      const
-         selection = this .sceneGraph .find (".node.primary, .node.manually"),
-         ids       = selection .map (function () { return this .id }) .get (),
-         nodes     = ids .length ? ids .map (id => this .getNode ($(`#${id}`))) : this .executionContext .rootNodes;
-
-      Editor .removeEmptyGroups (this .executionContext, nodes);
    }
 }
