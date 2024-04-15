@@ -3048,7 +3048,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                this .#transformToZeroFromArray (executionContext, node ._layers, matrix, undoManager);
                break;
             }
-            case X3D .X3DShapeNode:
+            case X3D .X3DConstants .X3DShapeNode:
             {
                if (node ._geometry)
                   this .#transformToZeroFromNode (executionContext, node ._geometry .getValue (), matrix, undoManager);
