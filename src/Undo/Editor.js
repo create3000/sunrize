@@ -3003,33 +3003,68 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static transformToZero (executionContext, nodes, undoManager = UndoManager .shared)
    {
+      const matrix = new X3D .Matrix4 ();
+
       undoManager .beginUndo (_("Transform to Zero"));
 
       if (nodes instanceof X3D .MFNode)
       {
-         this .#transformToZeroFromArray (executionContext, nodes, undoManager);
+         this .#transformToZeroFromArray (executionContext, nodes, matrix, undoManager);
       }
       else
       {
          for (const node of nodes)
-            this .#transformToZeroFromNode (executionContext, node, undoManager);
+            this .#transformToZeroFromNode (executionContext, node, matrix, undoManager);
       }
 
 
       undoManager .endUndo ();
    }
 
-   static #transformToZeroFromArray (executionContext, nodes, undoManager)
+   static #transformToZeroFromArray (executionContext, nodes, matrix, undoManager)
    {
       for (const node of nodes)
-         this .#transformToZeroFromNode (executionContext, node .getValue (), undoManager);
+         this .#transformToZeroFromNode (executionContext, node .getValue (), matrix, undoManager);
    }
 
-   static #transformToZeroFromNode (executionContext, node, undoManager)
+   static #transformToZeroFromNode (executionContext, node, matrix, undoManager)
    {
+      console .log (node .getTypeName ());
+
+      matrix = matrix .copy ();
+
       for (const type of node .getType () .toReversed ())
       {
-         console .log (type);
+         switch (type)
+         {
+            case X3D .X3DConstants .X3DGroupingNode:
+            case X3D .X3DConstants .X3DLayerNode:
+            {
+               this .#transformToZeroFromArray (executionContext, node ._children, matrix, undoManager);
+               break;
+            }
+            case X3D .X3DConstants .LayerSet:
+            {
+               this .#transformToZeroFromArray (executionContext, node ._layers, matrix, undoManager);
+               break;
+            }
+            case X3D .X3DShapeNode:
+            {
+               if (node ._geometry)
+                  this .#transformToZeroFromNode (executionContext, node ._geometry .getValue (), matrix, undoManager);
+
+               break;
+            }
+            case X3D .X3DConstants .X3DTransformMatrix3DNode:
+            {
+               matrix .multLeft (node .getMatrix ());
+               continue;
+            }
+            default:
+               continue;
+         }
+
+         break;
       }
    }
 
