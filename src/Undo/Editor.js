@@ -3087,6 +3087,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                break;
             }
             case X3D .X3DConstants .X3DLightNode:
+            case X3D .X3DConstants .X3DTextureProjectorNode:
             {
                if (node ._location)
                {
@@ -3095,15 +3096,22 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   this .setFieldValue (executionContext, node, node ._location, location, undoManager);
                }
 
+               const rotation = new X3D .Rotation4 ();
+
+               modelMatrix .get (null, rotation);
+
                if (node ._direction)
                {
-                  const rotation = new X3D .Rotation4 ();
-
-                  modelMatrix .get (null, rotation);
-
                   const direction = rotation .multVecRot (node ._direction .getValue () .copy ());
 
                   this .setFieldValue (executionContext, node, node ._direction, direction, undoManager);
+               }
+
+               if (node ._upVector)
+               {
+                  const upVector = rotation .multVecRot (node ._upVector .getValue () .copy ());
+
+                  this .setFieldValue (executionContext, node, node ._upVector, upVector, undoManager);
                }
 
                break;
@@ -3165,27 +3173,27 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                const
                   normalMatrix = modelMatrix .submatrix .copy () .inverse () .transpose (),
-                  value        = node ._vector .map (n => normalMatrix .multVecMatrix (n .getValue () .copy ()) .normalize ());
+                  vector       = node ._vector .map (n => normalMatrix .multVecMatrix (n .getValue () .copy ()) .normalize ());
 
-               this .setFieldValue (executionContext, node, node ._vector, value, undoManager);
+               this .setFieldValue (executionContext, node, node ._vector, vector, undoManager);
                break;
             }
             case X3D .X3DConstants .Coordinate:
             {
-               const value = node ._point
+               const point = node ._point
                   .map (p => modelMatrix .multVecMatrix (p .getValue () .copy ()));
 
-               this .setFieldValue (executionContext, node, node ._point, value, undoManager);
+               this .setFieldValue (executionContext, node, node ._point, point, undoManager);
                break;
             }
             case X3D .X3DConstants .GeoCoordinate:
             {
-               const value = node ._point
+               const point = node ._point
                   .map (p => node .getCoord (p, new X3D .Vector3 ()))
                   .map (p => modelMatrix .multVecMatrix (p .getValue () .copy ()))
                   .map (p => node .getGeoCoord (p, new X3D .Vector3 ()));
 
-               this .setFieldValue (executionContext, node, node ._point, value, undoManager);
+               this .setFieldValue (executionContext, node, node ._point, point, undoManager);
                break;
             }
             default:
