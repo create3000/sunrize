@@ -39,6 +39,8 @@ The user interface consists of four main parts: Menubar, Dashboard, Sidebar, and
 - **Hide Unselected Objects:** hides all unselected objects from view.
 - **Show Selected Objects:** shows all selected objects that were hidden by choosing *»Hide Selected Objects«*.
 - **Show All Objects:** displays any objects that were hidden using *»Hide Selected Objects«.*
+- **Transform to Zero:** set selected transforms to its default value and apply transformations to lowest objects.
+- **Remove Empty Groups:** removes empty grouping nodes.
 
 ### View
 
