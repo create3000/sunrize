@@ -3067,7 +3067,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             }
             case X3D .X3DConstants .X3DShapeNode:
             {
-               const geometry = node ._geometry ?.getValue ();
+               const geometry = node ._geometry .getValue ();
 
                this .#transformToZeroFromNode (executionContext, geometry, modelMatrix, undoManager);
                break;
@@ -3130,8 +3130,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             case X3D .X3DConstants .X3DComposedGeometryNode:
             {
                const
-                  normal = node ._normal ?.getValue (),
-                  coord  = node ._coord ?.getValue ();
+                  normal = node ._normal .getValue (),
+                  coord  = node ._coord .getValue ();
 
                this .#transformToZeroFromNode (executionContext, normal, modelMatrix, undoManager);
                this .#transformToZeroFromNode (executionContext, coord,  modelMatrix, undoManager);
@@ -3148,7 +3148,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             case X3D .X3DConstants .NurbsCurve:
             case X3D .X3DConstants .X3DNurbsSurfaceGeometryNode:
             {
-               const controlPoint = node ._controlPoint ?.getValue ();
+               const controlPoint = node ._controlPoint .getValue ();
 
                this .#transformToZeroFromNode (executionContext, controlPoint, modelMatrix, undoManager);
                break;
@@ -3156,7 +3156,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             case X3D .X3DConstants .NurbsSweptSurface:
             case X3D .X3DConstants .NurbsSwungSurface:
             {
-               const trajectoryCurve = node ._trajectoryCurve ?.getValue ();
+               const trajectoryCurve = node ._trajectoryCurve .getValue ();
 
                this .#transformToZeroFromNode (executionContext, trajectoryCurve, modelMatrix, undoManager);
                break;
