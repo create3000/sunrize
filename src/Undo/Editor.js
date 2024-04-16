@@ -3073,6 +3073,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                break;
             }
             case X3D .X3DConstants .X3DViewpointNode:
+            case X3D .X3DConstants .ListenerPointSource:
             {
                const rotation = new X3D .Rotation4 ();
 

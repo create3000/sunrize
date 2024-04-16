@@ -20,6 +20,11 @@ class ListenerPointSourceTool extends X3DChildNodeTool
    {
       this .undoSaveInitialValues (["position", "orientation"]);
    }
+
+   getBBox (bbox, shadows)
+   {
+      return this .getToolBBox (bbox, shadows);
+   }
 }
 
 module .exports = ListenerPointSourceTool;
