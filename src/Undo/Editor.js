@@ -3045,6 +3045,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                modelMatrix .identity ();
                continue;
             }
+            case X3D .X3DConstants .IndexedLineSet:
+            case X3D .X3DConstants .LineSet:
+            case X3D .X3DConstants .PointSet:
             case X3D .X3DConstants .X3DComposedGeometryNode:
             {
                const
@@ -3062,7 +3065,12 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
                if (coord)
                {
-                  const value = coord ._point .map (p => modelMatrix .multVecMatrix (p .getValue () .copy ()));
+                  const value = coord .getType () .includes (X3D .X3DConstants .GeoCoordinate)
+                     ? coord ._point
+                        .map (p => coord .getCoord (p, new X3D .Vector3 ()))
+                        .map (p => modelMatrix .multVecMatrix (p .getValue () .copy ()))
+                        .map (p => coord .getGeoCoord (p, new X3D .Vector3 ()))
+                     : coord ._point .map (p => modelMatrix .multVecMatrix (p .getValue () .copy ()));
 
                   this .setFieldValue (executionContext, coord, coord ._point, value, undoManager);
                }
