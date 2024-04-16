@@ -3024,14 +3024,13 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
    static #transformToZeroFromArray (executionContext, nodes, modelMatrix, undoManager)
    {
-      for (const node of nodes)
-         this .#transformToZeroFromNode (executionContext, node ?.getValue (), modelMatrix, undoManager);
+      return nodes .every (node => this .#transformToZeroFromNode (executionContext, node ?.getValue (), modelMatrix, undoManager));
    }
 
    static #transformToZeroFromNode (executionContext, node, modelMatrix, undoManager)
    {
       if (!node)
-         return;
+         return true;
 
       modelMatrix = modelMatrix .copy ();
 
@@ -3047,24 +3046,34 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             case X3D .X3DConstants .LayoutGroup:
             case X3D .X3DConstants .ScreenGroup:
             {
-               modelMatrix .identity ();
-               continue;
+               return false;
             }
             case X3D .X3DConstants .X3DTransformNode:
             {
                modelMatrix .multLeft (node .getMatrix ());
-
-               this .setFieldValue (executionContext, node, node ._translation,      new X3D .Vector3 (),        undoManager);
-               this .setFieldValue (executionContext, node, node ._rotation,         new X3D .Rotation4 (),      undoManager);
-               this .setFieldValue (executionContext, node, node ._scale,            new X3D .Vector3 (1, 1, 1), undoManager);
-               this .setFieldValue (executionContext, node, node ._scaleOrientation, new X3D .Rotation4 (),      undoManager);
-               this .setFieldValue (executionContext, node, node ._center,           new X3D .Vector3 (),        undoManager);
                continue;
             }
             case X3D .X3DConstants .X3DLayerNode:
             case X3D .X3DConstants .X3DGroupingNode:
             {
-               this .#transformToZeroFromArray (executionContext, node ._children, modelMatrix, undoManager);
+               const reset = this .#transformToZeroFromArray (executionContext, node ._children, modelMatrix, undoManager);
+
+               if (!node .getType () .includes (X3D .X3DConstants .X3DTransformNode))
+                  break;
+
+               if (reset)
+               {
+                  this .setFieldValue (executionContext, node, node ._translation,      new X3D .Vector3 (),        undoManager);
+                  this .setFieldValue (executionContext, node, node ._rotation,         new X3D .Rotation4 (),      undoManager);
+                  this .setFieldValue (executionContext, node, node ._scale,            new X3D .Vector3 (1, 1, 1), undoManager);
+                  this .setFieldValue (executionContext, node, node ._scaleOrientation, new X3D .Rotation4 (),      undoManager);
+                  this .setFieldValue (executionContext, node, node ._center,           new X3D .Vector3 (),        undoManager);
+               }
+               else
+               {
+                  this .setMatrixWithCenter (node, modelMatrix, node ._center .getValue (), undoManager);
+               }
+
                break;
             }
             case X3D .X3DConstants .X3DShapeNode:
@@ -3217,6 +3226,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
          break;
       }
+
+      return true;
    }
 
    /**
