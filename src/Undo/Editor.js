@@ -3029,12 +3029,14 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          X3D .X3DConstants .LayoutGroup,
       ]);
 
-      if (!nodes .filter (n => n .getType () .some (t => resetNodes .has (t))) .every (node => this .#transformToZeroFromNode (executionContext, node ?.getValue (), modelMatrix, undoManager)))
+      nodes = Array .from (nodes, n => n ?.getValue ()) .filter (n => n);
+
+      if (!nodes .filter (n => n .getType () .some (t => resetNodes .has (t))) .every (node => this .#transformToZeroFromNode (executionContext, node, modelMatrix, undoManager)))
       {
          return false;
       }
 
-      if (!nodes .filter (n => n .getType () .some (t => !resetNodes .has (t))) .every (node => this .#transformToZeroFromNode (executionContext, node ?.getValue (), modelMatrix, undoManager)))
+      if (!nodes .filter (n => n .getType () .some (t => !resetNodes .has (t))) .every (node => this .#transformToZeroFromNode (executionContext, node, modelMatrix, undoManager)))
       {
          return false;
       }
