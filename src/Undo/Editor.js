@@ -3042,6 +3042,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       if (!node)
          return true;
 
+      node        = node .valueOf ();
       modelMatrix = modelMatrix .copy ();
 
       for (const type of node .getType () .toReversed ())
@@ -3265,8 +3266,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
    static #removeEmptyGroupsFromArray (node, field, undoManager = UndoManager .shared)
    {
-      node = node .valueOf ();
-
       for (let index = field .length - 1; index >= 0; -- index)
       {
          const value = field [index];
