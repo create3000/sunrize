@@ -3031,17 +3031,10 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       nodes = Array .from (nodes, n => n ?.getValue ()) .filter (n => n);
 
-      if (!nodes .filter (n => n .getType () .some (t => resetNodes .has (t))) .every (node => this .#transformToZeroFromNode (executionContext, node, modelMatrix, undoManager)))
-      {
+      if (nodes .some (n => n .getType () .some (t => resetNodes .has (t))))
          return false;
-      }
 
-      if (!nodes .filter (n => !n .getType () .some (t => resetNodes .has (t))) .every (node => this .#transformToZeroFromNode (executionContext, node, modelMatrix, undoManager)))
-      {
-         return false;
-      }
-
-      return true;
+      return nodes .every (node => this .#transformToZeroFromNode (executionContext, node, modelMatrix, undoManager));
    }
 
    static #transformToZeroFromNode (executionContext, node, modelMatrix, undoManager)
