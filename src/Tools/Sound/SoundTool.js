@@ -65,6 +65,11 @@ class SoundTool extends X3DChildNodeTool
          }
       }
    }
+
+   getBBox (bbox, shadows)
+   {
+      return this .getToolBBox (bbox, shadows);
+   }
 }
 
 module .exports = SoundTool;

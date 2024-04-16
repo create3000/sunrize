@@ -435,6 +435,16 @@ class X3DNodeTool extends X3DBaseTool
 
    // Traverse
 
+   getToolBBox (bbox, shadows)
+   {
+      bbox .set ();
+
+      if (shadows)
+         return bbox;
+
+      return this .#innerNode ?.getBBox (bbox, shadows);
+   }
+
    toolPointingEnabled = true;
 
    traverse (type, renderObject = this .node)

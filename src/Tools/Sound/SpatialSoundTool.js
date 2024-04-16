@@ -23,6 +23,11 @@ class SpatialSoundTool extends X3DChildNodeTool
    {
       this .undoSaveInitialValues (["location", "direction"]);
    }
+
+   getBBox (bbox, shadows)
+   {
+      return this .getToolBBox (bbox, shadows);
+   }
 }
 
 module .exports = SpatialSoundTool;

@@ -24,6 +24,14 @@ class X3DEnvironmentalSensorNodeTool extends X3DChildNodeTool
    {
       this .undoSaveInitialValues (["size", "center"]);
    }
+
+   getBBox (bbox, shadows)
+   {
+      if (shadows)
+         return bbox .set ();
+
+      return bbox .set (this ._size .getValue (), this ._center .getValue ());
+   }
 }
 
 module .exports = X3DEnvironmentalSensorNodeTool;

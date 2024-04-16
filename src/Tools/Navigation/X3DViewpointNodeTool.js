@@ -33,6 +33,11 @@ class X3DViewpointNodeTool extends X3DChildNodeTool
    {
       this .undoSaveInitialValues (["position", "orientation"]);
    }
+
+   getBBox (bbox, shadows)
+   {
+      return this .getToolBBox (bbox, shadows);
+   }
 }
 
 module .exports = X3DViewpointNodeTool;

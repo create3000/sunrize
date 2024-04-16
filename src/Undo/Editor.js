@@ -3110,7 +3110,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             }
             case X3D .X3DConstants .X3DEnvironmentalSensorNode:
             {
-               const matrix = new X3D .Matrix4 (node ._center .getValue (), null, node ._size .getValue ());
+               const matrix = new X3D .Matrix4 () .set (node ._center .getValue (), null, node ._size .getValue ());
 
                modelMatrix .multLeft (matrix);
 

@@ -18,6 +18,11 @@ class X3DLightNodeTool extends X3DChildNodeTool
 
       this .tool .getField ("isActive") .addInterest ("handleUndo", this);
    }
+
+   getBBox (bbox, shadows)
+   {
+      return this .getToolBBox (bbox, shadows);
+   }
 }
 
 module .exports = X3DLightNodeTool;
