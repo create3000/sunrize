@@ -3271,7 +3271,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       {
          const value = field [index];
 
-         if (!this .#removeEmptyGroupsFromNode (value ? value .getValue () : null, undoManager))
+         if (!this .#removeEmptyGroupsFromNode (value ?.getValue (), undoManager))
             continue;
 
          this .removeValueFromArray (node .getExecutionContext (), node, field, index, undoManager);
