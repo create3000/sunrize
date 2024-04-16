@@ -3045,41 +3045,19 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                modelMatrix .identity ();
                continue;
             }
-            case X3D .X3DConstants .IndexedLineSet:
-            case X3D .X3DConstants .LineSet:
-            case X3D .X3DConstants .PointSet:
-            case X3D .X3DConstants .X3DComposedGeometryNode:
+            case X3D .X3DConstants .X3DTransformNode:
             {
-               const
-                  normal = node ._normal ?.getValue (),
-                  coord  = node ._coord ?.getValue ();
+               modelMatrix .multLeft (node .getMatrix ());
 
-               if (normal)
-               {
-                  const
-                     normalMatrix = modelMatrix .submatrix .copy () .inverse () .transpose (),
-                     value        = normal ._vector .map (n => normalMatrix .multVecMatrix (n .getValue () .copy ()) .normalize ());
-
-                  this .setFieldValue (executionContext, normal, normal ._vector, value, undoManager);
-               }
-
-               if (coord)
-               {
-                  const value = coord .getType () .includes (X3D .X3DConstants .GeoCoordinate)
-                     ? coord ._point
-                        .map (p => coord .getCoord (p, new X3D .Vector3 ()))
-                        .map (p => modelMatrix .multVecMatrix (p .getValue () .copy ()))
-                        .map (p => coord .getGeoCoord (p, new X3D .Vector3 ()))
-                     : coord ._point
-                        .map (p => modelMatrix .multVecMatrix (p .getValue () .copy ()));
-
-                  this .setFieldValue (executionContext, coord, coord ._point, value, undoManager);
-               }
-
-               break;
+               this .setFieldValue (executionContext, node, node ._translation,      new X3D .Vector3 (),        undoManager);
+               this .setFieldValue (executionContext, node, node ._rotation,         new X3D .Rotation4 (),      undoManager);
+               this .setFieldValue (executionContext, node, node ._scale,            new X3D .Vector3 (1, 1, 1), undoManager);
+               this .setFieldValue (executionContext, node, node ._scaleOrientation, new X3D .Rotation4 (),      undoManager);
+               this .setFieldValue (executionContext, node, node ._center,           new X3D .Vector3 (),        undoManager);
+               continue;
             }
-            case X3D .X3DConstants .X3DGroupingNode:
             case X3D .X3DConstants .X3DLayerNode:
+            case X3D .X3DConstants .X3DGroupingNode:
             {
                this .#transformToZeroFromArray (executionContext, node ._children, modelMatrix, undoManager);
                break;
@@ -3093,16 +3071,88 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
                break;
             }
-            case X3D .X3DConstants .X3DTransformNode:
+            case X3D .X3DConstants .IndexedLineSet:
+            case X3D .X3DConstants .LineSet:
+            case X3D .X3DConstants .PointSet:
+            case X3D .X3DConstants .X3DComposedGeometryNode:
             {
-               modelMatrix .multLeft (node .getMatrix ());
+               const
+                  normal = node ._normal ?.getValue (),
+                  coord  = node ._coord ?.getValue ();
 
-               this .setFieldValue (executionContext, node, node ._translation,      new X3D .Vector3 (),        undoManager);
-               this .setFieldValue (executionContext, node, node ._rotation,         new X3D .Rotation4 (),      undoManager);
-               this .setFieldValue (executionContext, node, node ._scale,            new X3D .Vector3 (1, 1, 1), undoManager);
-               this .setFieldValue (executionContext, node, node ._scaleOrientation, new X3D .Rotation4 (),      undoManager);
-               this .setFieldValue (executionContext, node, node ._center,           new X3D .Vector3 (),        undoManager);
-               continue;
+               if (normal)
+                  this .#transformToZeroFromNode (executionContext, normal, modelMatrix, undoManager);
+
+               if (coord)
+                  this .#transformToZeroFromNode (executionContext, coord, modelMatrix, undoManager);
+
+               break;
+            }
+            case X3D .X3DConstants .NurbsCurve:
+            case X3D .X3DConstants .X3DNurbsControlCurveNode:
+            case X3D .X3DConstants .X3DNurbsSurfaceGeometryNode:
+            {
+               const controlPoint = node ._controlPoint ?.getValue ();
+
+               if (controlPoint)
+                  this .#transformToZeroFromNode (executionContext, controlPoint, modelMatrix, undoManager);
+
+               break;
+            }
+            case X3D .X3DConstants .NurbsSweptSurface:
+            {
+               const
+                  crossSectionCurve = node ._crossSectionCurve ?.getValue (),
+                  trajectoryCurve   = node ._trajectoryCurve ?.getValue ();
+
+               if (crossSectionCurve)
+                  this .#transformToZeroFromNode (executionContext, crossSectionCurve, modelMatrix, undoManager);
+
+               if (trajectoryCurve)
+                  this .#transformToZeroFromNode (executionContext, trajectoryCurve, modelMatrix, undoManager);
+
+               break;
+            }
+            case X3D .X3DConstants .NurbsSwungSurface:
+            {
+               const
+                  profileCurve    = node ._profileCurve ?.getValue (),
+                  trajectoryCurve = node ._trajectoryCurve ?.getValue ();
+
+               if (profileCurve)
+                  this .#transformToZeroFromNode (executionContext, profileCurve, modelMatrix, undoManager);
+
+               if (trajectoryCurve)
+                  this .#transformToZeroFromNode (executionContext, trajectoryCurve, modelMatrix, undoManager);
+
+               break;
+            }
+            case X3D .X3DConstants .Normal:
+            {
+               const
+                  normalMatrix = modelMatrix .submatrix .copy () .inverse () .transpose (),
+                  value        = node ._vector .map (n => normalMatrix .multVecMatrix (n .getValue () .copy ()) .normalize ());
+
+               this .setFieldValue (executionContext, node, node ._vector, value, undoManager);
+               break;
+            }
+            case X3D .X3DConstants .Coordinate:
+            {
+               const value = node ._point
+                  .map (p => modelMatrix .multVecMatrix (p .getValue () .copy ()));
+
+               this .setFieldValue (executionContext, node, node ._point, value, undoManager);
+               break;
+            }
+            case X3D .X3DConstants .GeoCoordinate:
+            {
+               const value = node ._point
+                  .map (p => node .getCoord (p, new X3D .Vector3 ()))
+                  .map (p => modelMatrix .multVecMatrix (p .getValue () .copy ()))
+                  .map (p => node .getGeoCoord (p, new X3D .Vector3 ()));
+
+               this .setFieldValue (executionContext, node, node ._point, value, undoManager);
+               break;
             }
             default:
                continue;
