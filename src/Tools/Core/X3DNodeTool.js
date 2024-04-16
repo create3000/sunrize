@@ -437,12 +437,10 @@ class X3DNodeTool extends X3DBaseTool
 
    getToolBBox (bbox, shadows)
    {
-      bbox .set ();
-
       if (shadows)
-         return bbox;
+         return bbox .set ();
 
-      return this .#innerNode ?.getBBox (bbox, shadows) ?? bbox;
+      return this .#innerNode ?.getBBox (bbox, shadows) ?? bbox .set ();
    }
 
    toolPointingEnabled = true;
