@@ -3024,7 +3024,22 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
    static #transformToZeroFromArray (executionContext, nodes, modelMatrix, undoManager)
    {
-      return nodes .every (node => this .#transformToZeroFromNode (executionContext, node ?.getValue (), modelMatrix, undoManager));
+      const resetNodes = new Set ([
+         X3D .X3DConstants .ScreenGroup,
+         X3D .X3DConstants .LayoutGroup,
+      ]);
+
+      if (!nodes .filter (n => n .getType () .some (t => resetNodes .has (t))) .every (node => this .#transformToZeroFromNode (executionContext, node ?.getValue (), modelMatrix, undoManager)))
+      {
+         return false;
+      }
+
+      if (!nodes .filter (n => n .getType () .some (t => !resetNodes .has (t))) .every (node => this .#transformToZeroFromNode (executionContext, node ?.getValue (), modelMatrix, undoManager)))
+      {
+         return false;
+      }
+
+      return true;
    }
 
    static #transformToZeroFromNode (executionContext, node, modelMatrix, undoManager)
