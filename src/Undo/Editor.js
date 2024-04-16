@@ -3017,7 +3017,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             this .#transformToZeroFromNode (executionContext, node, modelMatrix, undoManager);
       }
 
-
       undoManager .endUndo ();
    }
 
@@ -3029,8 +3028,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
    static #transformToZeroFromNode (executionContext, node, modelMatrix, undoManager)
    {
-      console .log (node .getTypeName ());
-
       modelMatrix = modelMatrix .copy ();
 
       for (const type of node .getType () .toReversed ())
