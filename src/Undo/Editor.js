@@ -3086,6 +3086,44 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                this .setFieldValue (executionContext, node, node ._orientation, orientation, undoManager);
                break;
             }
+            case X3D .X3DConstants .X3DLightNode:
+            {
+               if (node ._location)
+               {
+                  const location = modelMatrix .multVecMatrix (node ._location .getValue () .copy ());
+
+                  this .setFieldValue (executionContext, node, node ._location, location, undoManager);
+               }
+
+               if (node ._direction)
+               {
+                  const rotation = new X3D .Rotation4 ();
+
+                  modelMatrix .get (null, rotation);
+
+                  const direction = rotation .multVecRot (node ._direction .getValue () .copy ());
+
+                  this .setFieldValue (executionContext, node, node ._direction, direction, undoManager);
+               }
+
+               break;
+            }
+            case X3D .X3DConstants .X3DEnvironmentalSensorNode:
+            {
+               const matrix = new X3D .Matrix4 (node ._center .getValue (), null, node ._size .getValue ());
+
+               modelMatrix .multLeft (matrix);
+
+               const
+                  center = new X3D .Vector3 (),
+                  size   = new X3D .Vector3 ();
+
+               modelMatrix .get (center, null, size);
+
+               this .setFieldValue (executionContext, node, node ._center, center, undoManager);
+               this .setFieldValue (executionContext, node, node ._size,   size,   undoManager);
+               break;
+            }
             case X3D .X3DConstants .IndexedLineSet:
             case X3D .X3DConstants .LineSet:
             case X3D .X3DConstants .PointSet:
