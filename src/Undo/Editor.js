@@ -3085,12 +3085,28 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                this .#transformToZeroFromNode (executionContext, coord,  modelMatrix, undoManager);
                break;
             }
+            case X3D .X3DConstants .Extrusion:
+            {
+               const value = node ._spine
+                  .map (s => modelMatrix .multVecMatrix (s .getValue () .copy ()));
+
+               this .setFieldValue (executionContext, node, node ._spine, value, undoManager);
+               break;
+            }
             case X3D .X3DConstants .NurbsCurve:
             case X3D .X3DConstants .X3DNurbsSurfaceGeometryNode:
             {
                const controlPoint = node ._controlPoint ?.getValue ();
 
                this .#transformToZeroFromNode (executionContext, controlPoint, modelMatrix, undoManager);
+               break;
+            }
+            case X3D .X3DConstants .NurbsSweptSurface:
+            case X3D .X3DConstants .NurbsSwungSurface:
+            {
+               const trajectoryCurve = node ._trajectoryCurve ?.getValue ();
+
+               this .#transformToZeroFromNode (executionContext, trajectoryCurve, modelMatrix, undoManager);
                break;
             }
             case X3D .X3DConstants .Normal:
