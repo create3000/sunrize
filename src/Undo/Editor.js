@@ -3037,12 +3037,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       {
          switch (type)
          {
-            case X3D .X3DConstants .X3DGroupingNode:
-            case X3D .X3DConstants .X3DLayerNode:
-            {
-               this .#transformToZeroFromArray (executionContext, node ._children, modelMatrix, undoManager);
-               break;
-            }
             case X3D .X3DConstants .LayerSet:
             {
                this .#transformToZeroFromArray (executionContext, node ._layers, modelMatrix, undoManager);
@@ -3070,6 +3064,12 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   this .setFieldValue (executionContext, coord, coord ._point, value, undoManager);
                }
 
+               break;
+            }
+            case X3D .X3DConstants .X3DGroupingNode:
+            case X3D .X3DConstants .X3DLayerNode:
+            {
+               this .#transformToZeroFromArray (executionContext, node ._children, modelMatrix, undoManager);
                break;
             }
             case X3D .X3DConstants .X3DShapeNode:
