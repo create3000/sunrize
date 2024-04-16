@@ -3072,6 +3072,20 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                this .#transformToZeroFromNode (executionContext, geometry, modelMatrix, undoManager);
                break;
             }
+            case X3D .X3DConstants .X3DViewpointNode:
+            {
+               const rotation = new X3D .Rotation4 ();
+
+               modelMatrix .get (null, rotation);
+
+               const
+                  position    = modelMatrix .multVecMatrix (node ._position .getValue () .copy ()),
+                  orientation = node ._orientation .getValue () .copy () .multRight (rotation);
+
+               this .setFieldValue (executionContext, node, node ._position,    position,    undoManager);
+               this .setFieldValue (executionContext, node, node ._orientation, orientation, undoManager);
+               break;
+            }
             case X3D .X3DConstants .IndexedLineSet:
             case X3D .X3DConstants .LineSet:
             case X3D .X3DConstants .PointSet:
