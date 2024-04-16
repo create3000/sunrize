@@ -3036,7 +3036,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          return false;
       }
 
-      if (!nodes .filter (n => n .getType () .some (t => !resetNodes .has (t))) .every (node => this .#transformToZeroFromNode (executionContext, node, modelMatrix, undoManager)))
+      if (!nodes .filter (n => !n .getType () .some (t => resetNodes .has (t))) .every (node => this .#transformToZeroFromNode (executionContext, node, modelMatrix, undoManager)))
       {
          return false;
       }
