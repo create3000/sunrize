@@ -3070,7 +3070,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                         .map (p => coord .getCoord (p, new X3D .Vector3 ()))
                         .map (p => modelMatrix .multVecMatrix (p .getValue () .copy ()))
                         .map (p => coord .getGeoCoord (p, new X3D .Vector3 ()))
-                     : coord ._point .map (p => modelMatrix .multVecMatrix (p .getValue () .copy ()));
+                     : coord ._point
+                        .map (p => modelMatrix .multVecMatrix (p .getValue () .copy ()));
 
                   this .setFieldValue (executionContext, coord, coord ._point, value, undoManager);
                }
