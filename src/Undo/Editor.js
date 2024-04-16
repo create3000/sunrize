@@ -2376,6 +2376,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          if (this .almostEqual (value, integer, epsilon))
             vector [key] = integer;
       }
+
+      return vector;
    }
 
    static almostEqual (target, value, epsilon = 1e-8)
@@ -3083,6 +3085,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   position    = modelMatrix .multVecMatrix (node ._position .getValue () .copy ()),
                   orientation = node ._orientation .getValue () .copy () .multRight (rotation);
 
+               this .roundToIntegerIfAlmostEqual (position);
+               this .roundToIntegerIfAlmostEqual (orientation);
+
                this .setFieldValue (executionContext, node, node ._position,    position,    undoManager);
                this .setFieldValue (executionContext, node, node ._orientation, orientation, undoManager);
                break;
@@ -3093,6 +3098,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                if (node ._location)
                {
                   const location = modelMatrix .multVecMatrix (node ._location .getValue () .copy ());
+
+                  this .roundToIntegerIfAlmostEqual (location);
 
                   this .setFieldValue (executionContext, node, node ._location, location, undoManager);
                }
@@ -3105,12 +3112,16 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                {
                   const direction = rotation .multVecRot (node ._direction .getValue () .copy ());
 
+                  this .roundToIntegerIfAlmostEqual (direction);
+
                   this .setFieldValue (executionContext, node, node ._direction, direction, undoManager);
                }
 
                if (node ._upVector)
                {
                   const upVector = rotation .multVecRot (node ._upVector .getValue () .copy ());
+
+                  this .roundToIntegerIfAlmostEqual (upVector);
 
                   this .setFieldValue (executionContext, node, node ._upVector, upVector, undoManager);
                }
@@ -3128,6 +3139,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   size   = new X3D .Vector3 ();
 
                modelMatrix .get (center, null, size);
+
+               this .roundToIntegerIfAlmostEqual (center);
+               this .roundToIntegerIfAlmostEqual (size);
 
                this .setFieldValue (executionContext, node, node ._center, center, undoManager);
                this .setFieldValue (executionContext, node, node ._size,   size,   undoManager);
@@ -3149,7 +3163,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             case X3D .X3DConstants .Extrusion:
             {
                const value = node ._spine
-                  .map (s => modelMatrix .multVecMatrix (s .getValue () .copy ()));
+                  .map (s => this .roundToIntegerIfAlmostEqual (modelMatrix .multVecMatrix (s .getValue () .copy ())));
 
                this .setFieldValue (executionContext, node, node ._spine, value, undoManager);
                break;
@@ -3174,7 +3188,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                const
                   normalMatrix = modelMatrix .submatrix .copy () .inverse () .transpose (),
-                  vector       = node ._vector .map (n => normalMatrix .multVecMatrix (n .getValue () .copy ()) .normalize ());
+                  vector       = node ._vector .map (n => this .roundToIntegerIfAlmostEqual (normalMatrix .multVecMatrix (n .getValue () .copy ()) .normalize ()));
 
                this .setFieldValue (executionContext, node, node ._vector, vector, undoManager);
                break;
@@ -3182,7 +3196,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             case X3D .X3DConstants .Coordinate:
             {
                const point = node ._point
-                  .map (p => modelMatrix .multVecMatrix (p .getValue () .copy ()));
+                  .map (p => this .roundToIntegerIfAlmostEqual (modelMatrix .multVecMatrix (p .getValue () .copy ())));
 
                this .setFieldValue (executionContext, node, node ._point, point, undoManager);
                break;
@@ -3191,7 +3205,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                const point = node ._point
                   .map (p => node .getCoord (p, new X3D .Vector3 ()))
-                  .map (p => modelMatrix .multVecMatrix (p .getValue () .copy ()))
+                  .map (p => this .roundToIntegerIfAlmostEqual (modelMatrix .multVecMatrix (p .getValue () .copy ())))
                   .map (p => node .getGeoCoord (p, new X3D .Vector3 ()));
 
                this .setFieldValue (executionContext, node, node ._point, point, undoManager);
