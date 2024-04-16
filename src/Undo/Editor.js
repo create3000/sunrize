@@ -3110,7 +3110,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   profileCurve    = node ._profileCurve ?.getValue (),
                   trajectoryCurve = node ._trajectoryCurve ?.getValue ();
 
-               this .#transformToZeroFromNode (executionContext, profileCurve, modelMatrix, undoManager);
+               this .#transformToZeroFromNode (executionContext, profileCurve,    modelMatrix, undoManager);
                this .#transformToZeroFromNode (executionContext, trajectoryCurve, modelMatrix, undoManager);
                break;
             }
