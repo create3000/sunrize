@@ -3086,32 +3086,11 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                break;
             }
             case X3D .X3DConstants .NurbsCurve:
-            case X3D .X3DConstants .X3DNurbsControlCurveNode:
             case X3D .X3DConstants .X3DNurbsSurfaceGeometryNode:
             {
                const controlPoint = node ._controlPoint ?.getValue ();
 
                this .#transformToZeroFromNode (executionContext, controlPoint, modelMatrix, undoManager);
-               break;
-            }
-            case X3D .X3DConstants .NurbsSweptSurface:
-            {
-               const
-                  crossSectionCurve = node ._crossSectionCurve ?.getValue (),
-                  trajectoryCurve   = node ._trajectoryCurve ?.getValue ();
-
-               this .#transformToZeroFromNode (executionContext, crossSectionCurve, modelMatrix, undoManager);
-               this .#transformToZeroFromNode (executionContext, trajectoryCurve,   modelMatrix, undoManager);
-               break;
-            }
-            case X3D .X3DConstants .NurbsSwungSurface:
-            {
-               const
-                  profileCurve    = node ._profileCurve ?.getValue (),
-                  trajectoryCurve = node ._trajectoryCurve ?.getValue ();
-
-               this .#transformToZeroFromNode (executionContext, profileCurve,    modelMatrix, undoManager);
-               this .#transformToZeroFromNode (executionContext, trajectoryCurve, modelMatrix, undoManager);
                break;
             }
             case X3D .X3DConstants .Normal:
