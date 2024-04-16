@@ -3003,35 +3003,35 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static transformToZero (executionContext, nodes, undoManager = UndoManager .shared)
    {
-      const matrix = new X3D .Matrix4 ();
+      const modelMatrix = new X3D .Matrix4 ();
 
       undoManager .beginUndo (_("Transform to Zero"));
 
       if (nodes instanceof X3D .MFNode)
       {
-         this .#transformToZeroFromArray (executionContext, nodes, matrix, undoManager);
+         this .#transformToZeroFromArray (executionContext, nodes, modelMatrix, undoManager);
       }
       else
       {
          for (const node of nodes)
-            this .#transformToZeroFromNode (executionContext, node, matrix, undoManager);
+            this .#transformToZeroFromNode (executionContext, node, modelMatrix, undoManager);
       }
 
 
       undoManager .endUndo ();
    }
 
-   static #transformToZeroFromArray (executionContext, nodes, matrix, undoManager)
+   static #transformToZeroFromArray (executionContext, nodes, modelMatrix, undoManager)
    {
       for (const node of nodes)
-         this .#transformToZeroFromNode (executionContext, node .getValue (), matrix, undoManager);
+         this .#transformToZeroFromNode (executionContext, node .getValue (), modelMatrix, undoManager);
    }
 
-   static #transformToZeroFromNode (executionContext, node, matrix, undoManager)
+   static #transformToZeroFromNode (executionContext, node, modelMatrix, undoManager)
    {
       console .log (node .getTypeName ());
 
-      matrix = matrix .copy ();
+      modelMatrix = modelMatrix .copy ();
 
       for (const type of node .getType () .toReversed ())
       {
@@ -3040,24 +3040,61 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             case X3D .X3DConstants .X3DGroupingNode:
             case X3D .X3DConstants .X3DLayerNode:
             {
-               this .#transformToZeroFromArray (executionContext, node ._children, matrix, undoManager);
+               this .#transformToZeroFromArray (executionContext, node ._children, modelMatrix, undoManager);
                break;
             }
             case X3D .X3DConstants .LayerSet:
             {
-               this .#transformToZeroFromArray (executionContext, node ._layers, matrix, undoManager);
+               this .#transformToZeroFromArray (executionContext, node ._layers, modelMatrix, undoManager);
+               break;
+            }
+            case X3D .X3DConstants .X3DComposedGeometryNode:
+            {
+               const
+                  normal = node ._normal ?.getValue (),
+                  coord  = node ._coord ?.getValue ();
+
+               if (normal)
+               {
+                  const
+                     normalMatrix = modelMatrix .submatrix .copy () .inverse () .transpose (),
+                     value        = normal ._vector .map (n => normalMatrix .multVecMatrix (n .getValue () .copy ()) .normalize ());
+
+                  this .setFieldValue (executionContext, normal, normal ._vector, value, undoManager);
+               }
+
+               if (coord)
+               {
+                  const value = coord ._point .map (p => modelMatrix .multVecMatrix (p .getValue () .copy ()));
+
+                  this .setFieldValue (executionContext, coord, coord ._point, value, undoManager);
+               }
+
                break;
             }
             case X3D .X3DConstants .X3DShapeNode:
             {
-               if (node ._geometry)
-                  this .#transformToZeroFromNode (executionContext, node ._geometry .getValue (), matrix, undoManager);
+               const geometry = node ._geometry ?.getValue ();
+
+               if (geometry)
+                  this .#transformToZeroFromNode (executionContext, geometry, modelMatrix, undoManager);
 
                break;
             }
-            case X3D .X3DConstants .X3DTransformMatrix3DNode:
+            case X3D .X3DConstants .X3DTransformNode:
             {
-               matrix .multLeft (node .getMatrix ());
+               modelMatrix .multLeft (node .getMatrix ());
+
+               this .setFieldValue (executionContext, node, node ._translation,      new X3D .Vector3 (),        undoManager);
+               this .setFieldValue (executionContext, node, node ._rotation,         new X3D .Rotation4 (),      undoManager);
+               this .setFieldValue (executionContext, node, node ._scale,            new X3D .Vector3 (1, 1, 1), undoManager);
+               this .setFieldValue (executionContext, node, node ._scaleOrientation, new X3D .Rotation4 (),      undoManager);
+               this .setFieldValue (executionContext, node, node ._center,           new X3D .Vector3 (),        undoManager);
+               continue;
+            }
+            case X3D .X3DConstants .ScreenGroup:
+            {
+               modelMatrix .identity ();
                continue;
             }
             default:
