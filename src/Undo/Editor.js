@@ -3023,11 +3023,14 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    static #transformToZeroFromArray (executionContext, nodes, modelMatrix, undoManager)
    {
       for (const node of nodes)
-         this .#transformToZeroFromNode (executionContext, node .getValue (), modelMatrix, undoManager);
+         this .#transformToZeroFromNode (executionContext, node ?.getValue (), modelMatrix, undoManager);
    }
 
    static #transformToZeroFromNode (executionContext, node, modelMatrix, undoManager)
    {
+      if (!node)
+         return;
+
       modelMatrix = modelMatrix .copy ();
 
       for (const type of node .getType () .toReversed ())
@@ -3066,9 +3069,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                const geometry = node ._geometry ?.getValue ();
 
-               if (geometry)
-                  this .#transformToZeroFromNode (executionContext, geometry, modelMatrix, undoManager);
-
+               this .#transformToZeroFromNode (executionContext, geometry, modelMatrix, undoManager);
                break;
             }
             case X3D .X3DConstants .IndexedLineSet:
@@ -3080,12 +3081,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   normal = node ._normal ?.getValue (),
                   coord  = node ._coord ?.getValue ();
 
-               if (normal)
-                  this .#transformToZeroFromNode (executionContext, normal, modelMatrix, undoManager);
-
-               if (coord)
-                  this .#transformToZeroFromNode (executionContext, coord, modelMatrix, undoManager);
-
+               this .#transformToZeroFromNode (executionContext, normal, modelMatrix, undoManager);
+               this .#transformToZeroFromNode (executionContext, coord,  modelMatrix, undoManager);
                break;
             }
             case X3D .X3DConstants .NurbsCurve:
@@ -3094,9 +3091,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                const controlPoint = node ._controlPoint ?.getValue ();
 
-               if (controlPoint)
-                  this .#transformToZeroFromNode (executionContext, controlPoint, modelMatrix, undoManager);
-
+               this .#transformToZeroFromNode (executionContext, controlPoint, modelMatrix, undoManager);
                break;
             }
             case X3D .X3DConstants .NurbsSweptSurface:
@@ -3105,12 +3100,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   crossSectionCurve = node ._crossSectionCurve ?.getValue (),
                   trajectoryCurve   = node ._trajectoryCurve ?.getValue ();
 
-               if (crossSectionCurve)
-                  this .#transformToZeroFromNode (executionContext, crossSectionCurve, modelMatrix, undoManager);
-
-               if (trajectoryCurve)
-                  this .#transformToZeroFromNode (executionContext, trajectoryCurve, modelMatrix, undoManager);
-
+               this .#transformToZeroFromNode (executionContext, crossSectionCurve, modelMatrix, undoManager);
+               this .#transformToZeroFromNode (executionContext, trajectoryCurve,   modelMatrix, undoManager);
                break;
             }
             case X3D .X3DConstants .NurbsSwungSurface:
@@ -3119,12 +3110,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   profileCurve    = node ._profileCurve ?.getValue (),
                   trajectoryCurve = node ._trajectoryCurve ?.getValue ();
 
-               if (profileCurve)
-                  this .#transformToZeroFromNode (executionContext, profileCurve, modelMatrix, undoManager);
-
-               if (trajectoryCurve)
-                  this .#transformToZeroFromNode (executionContext, trajectoryCurve, modelMatrix, undoManager);
-
+               this .#transformToZeroFromNode (executionContext, profileCurve, modelMatrix, undoManager);
+               this .#transformToZeroFromNode (executionContext, trajectoryCurve, modelMatrix, undoManager);
                break;
             }
             case X3D .X3DConstants .Normal:
