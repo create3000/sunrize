@@ -1317,7 +1317,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                      {
                         const
                            r = x < xDimension - 1 ? 0 : -1,
-                           l = z < zDimension - 1 || x < xDimension - 1 ? 0 : -2,
+                           l = r && b ? -2 : 0,
                            i = x * 6 + z * s + r + b + l;
 
                         vector .push (normals [i]);
