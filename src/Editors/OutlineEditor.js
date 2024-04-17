@@ -358,6 +358,10 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          {
             switch (type)
             {
+               case X3D .X3DConstants .IndexedFaceSet:
+               {
+                  break;
+               }
                case X3D .X3DConstants .Inline:
                {
                   menu .push ({
@@ -369,24 +373,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                      label: _("Fold Inline Back into Scene"),
                      enabled: node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE,
                      args: ["foldInlineBackIntoScene", element .attr ("id"), executionContext .getId (), node .getId ()],
-                  });
-
-                  continue;
-               }
-               case X3D .X3DConstants .X3DViewpointNode:
-               {
-                  menu .push ({
-                     label: _("Move Viewpoint to Camera"),
-                     args: ["moveViewpointToCamera", element .attr ("id"), executionContext .getId (), node .getId ()],
-                  });
-
-                  continue;
-               }
-               case X3D .X3DConstants .X3DBoundedObject:
-               {
-                  menu .push ({
-                     label: _("Determine Bounding Box from Scratch"),
-                     args: ["determineBoundingBoxFromScratch", element .attr ("id"), executionContext .getId (), node .getId ()],
                   });
 
                   continue;
@@ -407,7 +393,27 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
                   continue;
                }
+               case X3D .X3DConstants .X3DBoundedObject:
+               {
+                  menu .push ({
+                     label: _("Determine Bounding Box from Scratch"),
+                     args: ["determineBoundingBoxFromScratch", element .attr ("id"), executionContext .getId (), node .getId ()],
+                  });
+
+                  continue;
+               }
+               case X3D .X3DConstants .X3DViewpointNode:
+               {
+                  menu .push ({
+                     label: _("Move Viewpoint to Camera"),
+                     args: ["moveViewpointToCamera", element .attr ("id"), executionContext .getId (), node .getId ()],
+                  });
+
+                  continue;
+               }
             }
+
+            break;
          }
       }
 
