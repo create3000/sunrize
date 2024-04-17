@@ -1326,7 +1326,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                }
                else
                {
-                  for (let i = 0; i < normals .length; i += 6)
+                  for (let i = 0, length = normals .length; i < length; i += 6)
                      vector .push (normals [i] .add (normals [i + 3]) .normalize ());
                }
 
@@ -1388,18 +1388,18 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             {
                let
                   verticesPerPolygon = node .getVerticesPerPolygon (),
-                  polygonsSize       = node .getNumVertices ();
+                  numVertices        = node .getNumVertices ();
 
                // Set size to a multiple of vertexCount.
-               polygonsSize -= polygonsSize % verticesPerPolygon;
+               numVertices -= numVertices % verticesPerPolygon;
 
                const
                   normalPerVertex = node ._normalPerVertex .getValue (),
-                  normals         = node .createNormals (verticesPerPolygon, polygonsSize),
+                  normals         = node .createNormals (verticesPerPolygon, numVertices),
                   normalNode      = executionContext .createNode ("Normal") .getValue (),
                   vector          = normalNode ._vector;
 
-               for (let i = 0; i < polygonsSize; ++ i)
+               for (let i = 0; i < numVertices; ++ i)
                {
                   const
                      face  = Math .floor (i / verticesPerPolygon),
