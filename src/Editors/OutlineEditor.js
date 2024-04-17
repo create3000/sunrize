@@ -358,7 +358,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          {
             switch (type)
             {
-               case X3D .X3DConstants .IndexedFaceSet:
+               case X3D .X3DConstants .X3DComposedGeometryNode:
                {
                   if (node ._normal .getValue ())
                   {
@@ -426,6 +426,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
                   continue;
                }
+               default:
+                  continue;
             }
 
             break;
@@ -1291,10 +1293,14 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             case X3D .X3DConstants .IndexedFaceSet:
             {
                const
-                  polygons    = node .triangulate (),
-                  normals     = node .createNormals (polygons),
-                  normalIndex = new X3D .MFInt32 (),
-                  normalNode  = executionContext .createNode ("Normal") .getValue ();
+                  polygons        = node .triangulate (),
+                  normalPerVertex = node ._normalPerVertex .getValue (),
+                  normals         = node .createNormals (polygons),
+                  normalIndex     = new X3D .MFInt32 (),
+                  normalNode      = executionContext .createNode ("Normal") .getValue (),
+                  vector          = normalNode ._vector;
+
+               let face = 0;
 
                for (let i = 0, length = node ._coordIndex .length; i < length; ++ i)
                {
@@ -1302,20 +1308,61 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
                   if (index < 0)
                   {
-                     normalIndex .push (-1);
+                     ++ face;
+
+                     if (normalPerVertex)
+                        normalIndex .push (-1);
+                     else
+                        vector .length = face;
                   }
                   else
                   {
-                     normalIndex .push (normalNode ._vector .length);
-                     normalNode ._vector .push (normals [i]);
+                     if (normalPerVertex)
+                     {
+                        normalIndex .push (vector .length);
+                        vector .push (normals [i]);
+                     }
+                     else
+                     {
+                        if (vector .length === face)
+                           vector .push (normals [i]);
+                     }
                   }
                }
 
-               Editor .setFieldValue (executionContext, node, node ._normalPerVertex, true);
-               Editor .setFieldValue (executionContext, node, node ._normalIndex,     normalIndex);
-               Editor .setFieldValue (executionContext, node, node ._normal,          normalNode);
+               Editor .setFieldValue (executionContext, node, node ._normalIndex, normalIndex);
+               Editor .setFieldValue (executionContext, node, node ._normal,      normalNode);
                break;
             }
+            case X3D .X3DConstants .X3DComposedGeometryNode:
+            {
+               let
+                  verticesPerPolygon = node .getVerticesPerPolygon (),
+                  polygonsSize       = node .getNumVertices ();
+
+               // Set size to a multiple of vertexCount.
+               polygonsSize -= polygonsSize % verticesPerPolygon;
+
+               const
+                  normalPerVertex = node ._normalPerVertex .getValue (),
+                  normals         = node .createNormals (verticesPerPolygon, polygonsSize),
+                  normalNode      = executionContext .createNode ("Normal") .getValue (),
+                  vector          = normalNode ._vector;
+
+               for (let i = 0; i < polygonsSize; ++ i)
+               {
+                  const
+                     face  = Math .floor (i / verticesPerPolygon),
+                     index = node .getPolygonIndex (i);
+
+                  vector [normalPerVertex ? index : face] = normals [i];
+               }
+
+               Editor .setFieldValue (executionContext, node, node ._normal, normalNode);
+               break;
+            }
+            default:
+               continue;
          }
 
          break;
@@ -1338,11 +1385,24 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          {
             case X3D .X3DConstants .IndexedFaceSet:
             {
-               Editor .resetToDefaultValue (executionContext, node, node ._normalPerVertex);
                Editor .resetToDefaultValue (executionContext, node, node ._normalIndex);
                Editor .resetToDefaultValue (executionContext, node, node ._normal);
                break;
             }
+            case X3D .X3DConstants .IndexedQuadSet:
+            case X3D .X3DConstants .IndexedTriangleFanSet:
+            case X3D .X3DConstants .IndexedTriangleSet:
+            case X3D .X3DConstants .IndexedTriangleStripSet:
+            case X3D .X3DConstants .QuadSet:
+            case X3D .X3DConstants .TriangleFanSet:
+            case X3D .X3DConstants .TriangleSet:
+            case X3D .X3DConstants .TriangleStripSet:
+            {
+               Editor .resetToDefaultValue (executionContext, node, node ._normal);
+               break;
+            }
+            default:
+               continue;
          }
 
          break;
