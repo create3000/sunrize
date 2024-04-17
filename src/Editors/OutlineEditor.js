@@ -1343,27 +1343,34 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                   normalNode      = executionContext .createNode ("Normal") .getValue (),
                   vector          = normalNode ._vector;
 
-               let face = 0;
-
-               for (let i = 0, length = node ._coordIndex .length; i < length; ++ i)
+               if (normalPerVertex)
                {
-                  const index = node ._coordIndex [i];
-
-                  if (index < 0)
+                  for (let i = 0, length = node ._coordIndex .length; i < length; ++ i)
                   {
-                     ++ face;
+                     const index = node ._coordIndex [i];
 
-                     if (normalPerVertex)
+                     if (index < 0)
+                     {
                         normalIndex .push (-1);
+                     }
                      else
-                        vector .length = face;
-                  }
-                  else
-                  {
-                     if (normalPerVertex)
                      {
                         normalIndex .push (vector .length);
                         vector .push (normals [i]);
+                     }
+                  }
+               }
+               else
+               {
+                  let face = 0;
+
+                  for (let i = 0, length = node ._coordIndex .length; i < length; ++ i)
+                  {
+                     const index = node ._coordIndex [i];
+
+                     if (index < 0)
+                     {
+                        vector .length = ++ face;
                      }
                      else
                      {
