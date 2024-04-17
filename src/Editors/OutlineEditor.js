@@ -358,6 +358,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          {
             switch (type)
             {
+               case X3D .X3DConstants .ElevationGrid:
                case X3D .X3DConstants .X3DComposedGeometryNode:
                {
                   if (node ._normal .getValue ())
@@ -1290,6 +1291,46 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       {
          switch (type)
          {
+            case X3D .X3DConstants .ElevationGrid:
+            {
+               const
+                  xDimension      = node ._xDimension .getValue (),
+                  zDimension      = node ._zDimension .getValue (),
+                  normalPerVertex = node ._normalPerVertex .getValue (),
+                  coordIndex      = node .createCoordIndex (),
+                  points          = node .createPoints (),
+                  normals         = node .createNormals (points, coordIndex, Math .PI),
+                  normalNode      = executionContext .createNode ("Normal") .getValue (),
+                  vector          = normalNode ._vector;
+
+               if (normalPerVertex)
+               {
+                  for (let z = 0; z < zDimension; ++ z)
+                  {
+                     const
+                        s = (xDimension - 1) * 6,
+                        b = z < zDimension - 1 ? 0 : 1 - s;
+
+                     for (let x = 0; x < xDimension; ++ x)
+                     {
+                        const
+                           r = x < xDimension - 1 ? 0 : -1,
+                           l = z < zDimension - 1 || x < xDimension - 1 ? 0 : -2,
+                           i = x * 6 + z * s + r + b + l;
+
+                        vector .push (normals [i]);
+                     }
+                  }
+               }
+               else
+               {
+                  for (let i = 0; i < normals .length; i += 6)
+                     vector .push (normals [i] .add (normals [i + 3]) .normalize ());
+               }
+
+               Editor .setFieldValue (executionContext, node, node ._normal, normalNode);
+               break;
+            }
             case X3D .X3DConstants .IndexedFaceSet:
             {
                const
@@ -1389,6 +1430,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                Editor .resetToDefaultValue (executionContext, node, node ._normal);
                break;
             }
+            case X3D .X3DConstants .ElevationGrid:
             case X3D .X3DConstants .IndexedQuadSet:
             case X3D .X3DConstants .IndexedTriangleFanSet:
             case X3D .X3DConstants .IndexedTriangleSet:
