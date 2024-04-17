@@ -360,12 +360,22 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             {
                case X3D .X3DConstants .IndexedFaceSet:
                {
-                  menu .push ({
-                     label: _("Add Normals"),
-                     args: ["addNormalsToGeometry", element .attr ("id"), executionContext .getId (), node .getId ()],
-                  });
+                  if (node ._normal .getValue ())
+                  {
+                     menu .push ({
+                        label: _("Remove Normals"),
+                        args: ["removeNormalsFromGeometry", element .attr ("id"), executionContext .getId (), node .getId ()],
+                     });
+                  }
+                  else
+                  {
+                     menu .push ({
+                        label: _("Add Normals"),
+                        args: ["addNormalsToGeometry", element .attr ("id"), executionContext .getId (), node .getId ()],
+                     });
+                  }
 
-                  break;
+                  continue;
                }
                case X3D .X3DConstants .Inline:
                {
@@ -1269,7 +1279,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    addNormalsToGeometry (id, executionContextId, nodeId)
    {
       const
-         element          = $(`#${id}`),
          executionContext = this .objects .get (executionContextId),
          node             = this .objects .get (nodeId);
 
@@ -1305,6 +1314,33 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                Editor .setFieldValue (executionContext, node, node ._normalPerVertex, true);
                Editor .setFieldValue (executionContext, node, node ._normalIndex,     normalIndex);
                Editor .setFieldValue (executionContext, node, node ._normal,          normalNode);
+               break;
+            }
+         }
+
+         break;
+      }
+
+      UndoManager .shared .endUndo ();
+   }
+
+   removeNormalsFromGeometry (id, executionContextId, nodeId)
+   {
+      const
+         executionContext = this .objects .get (executionContextId),
+         node             = this .objects .get (nodeId);
+
+      UndoManager .shared .beginUndo (_("Remove Normals from %s"), node .getTypeName ());
+
+      for (const type of node .getType () .toReversed ())
+      {
+         switch (type)
+         {
+            case X3D .X3DConstants .IndexedFaceSet:
+            {
+               Editor .resetToDefaultValue (executionContext, node, node ._normalPerVertex);
+               Editor .resetToDefaultValue (executionContext, node, node ._normalIndex);
+               Editor .resetToDefaultValue (executionContext, node, node ._normal);
                break;
             }
          }
