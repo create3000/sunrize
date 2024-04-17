@@ -2772,6 +2772,23 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     *
     * @param {X3DExecutionContext} executionContext
     * @param {X3DNode} node
+    * @param {X3DField} field
+    * @param {UndoManager} undoManager
+    */
+   static resetToDefaultValue (executionContext, node, field, undoManager = UndoManager .shared)
+   {
+      const fieldDefinition = node .getFieldDefinitions () .get (field .getName ());
+
+      if (node .canUserDefinedFields () && node .getUserDefinedFields () .has (field .getName ()))
+         Editor .setFieldValue (executionContext, node, field, field .create (), undoManager);
+      else
+         Editor .setFieldValue (executionContext, node, field, fieldDefinition .value, undoManager);
+   }
+
+   /**
+    *
+    * @param {X3DExecutionContext} executionContext
+    * @param {X3DNode} node
     * @param {string} path
     * @param {X3DField} type
     * @param {UndoManager} undoManager

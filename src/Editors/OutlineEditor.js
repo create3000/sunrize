@@ -617,15 +617,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const
          executionContext = this .objects .get (executionContextId),
          node             = this .objects .get (nodeId),
-         field            = this .objects .get (fieldId),
-         fieldDefinition  = node .getFieldDefinitions () .get (field .getName ())
+         field            = this .objects .get (fieldId);
 
       this .beginUndoSetFieldValue (node, field);
 
-      if (node .canUserDefinedFields () && node .getUserDefinedFields () .has (field .getName ()))
-         Editor .setFieldValue (executionContext, node, field, field .create ());
-      else
-         Editor .setFieldValue (executionContext, node, field, fieldDefinition .value);
+      Editor .resetToDefaultValue (executionContext, node, field);
 
       this .endUndoSetFieldValue (node, field);
    }
