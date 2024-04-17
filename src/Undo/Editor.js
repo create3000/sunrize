@@ -2779,7 +2779,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       const fieldDefinition = node .getFieldDefinitions () .get (field .getName ());
 
-      undoManager .beginUndo (_("Reset Field »%s« of Node »%s« to It's Default Value"), field .getName (), node .getTypeName ());
+      undoManager .beginUndo (_("Reset Field »%s« of Node »%s« to Its Default Value"), field .getName (), node .getTypeName ());
 
       if (node .canUserDefinedFields () && node .getUserDefinedFields () .has (field .getName ()))
          Editor .setFieldValue (executionContext, node, field, field .create (), undoManager);
