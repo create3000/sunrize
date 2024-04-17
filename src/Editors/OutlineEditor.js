@@ -1373,10 +1373,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                      {
                         vector .length = ++ face;
                      }
-                     else
+                     else if (vector .length === face)
                      {
-                        if (vector .length === face)
-                           vector .push (normals [i]);
+                        vector .push (normals [i]);
                      }
                   }
                }
