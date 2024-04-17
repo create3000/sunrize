@@ -359,6 +359,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             switch (type)
             {
                case X3D .X3DConstants .ElevationGrid:
+               case X3D .X3DConstants .GeoElevationGrid:
                case X3D .X3DConstants .X3DComposedGeometryNode:
                {
                   if (node ._normal .getValue ())
@@ -1292,6 +1293,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          switch (type)
          {
             case X3D .X3DConstants .ElevationGrid:
+            case X3D .X3DConstants .GeoElevationGrid:
             {
                const
                   xDimension      = node ._xDimension .getValue (),
@@ -1431,6 +1433,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                break;
             }
             case X3D .X3DConstants .ElevationGrid:
+            case X3D .X3DConstants .GeoElevationGrid:
             case X3D .X3DConstants .IndexedQuadSet:
             case X3D .X3DConstants .IndexedTriangleFanSet:
             case X3D .X3DConstants .IndexedTriangleSet:
