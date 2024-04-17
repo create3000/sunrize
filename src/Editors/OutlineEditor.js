@@ -1337,6 +1337,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             {
                const
                   polygons        = node .triangulate (),
+                  coordIndex      = node ._coordIndex,
                   normalPerVertex = node ._normalPerVertex .getValue (),
                   normals         = node .createNormals (polygons),
                   normalIndex     = new X3D .MFInt32 (),
@@ -1345,9 +1346,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
                if (normalPerVertex)
                {
-                  for (let i = 0, length = node ._coordIndex .length; i < length; ++ i)
+                  for (let i = 0, length = coordIndex .length; i < length; ++ i)
                   {
-                     const index = node ._coordIndex [i];
+                     const index = coordIndex [i];
 
                      if (index < 0)
                      {
@@ -1364,9 +1365,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                {
                   let face = 0;
 
-                  for (let i = 0, length = node ._coordIndex .length; i < length; ++ i)
+                  for (let i = 0, length = coordIndex .length; i < length; ++ i)
                   {
-                     const index = node ._coordIndex [i];
+                     const index = coordIndex [i];
 
                      if (index < 0)
                      {
