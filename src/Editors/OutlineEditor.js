@@ -360,6 +360,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             {
                case X3D .X3DConstants .IndexedFaceSet:
                {
+                  menu .push ({
+                     label: _("Add Normals"),
+                     args: ["addNormalsToGeometry", element .attr ("id"), executionContext .getId (), node .getId ()],
+                  });
+
                   break;
                }
                case X3D .X3DConstants .Inline:
@@ -1263,6 +1268,55 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       UndoManager .shared .endUndo ();
 
       requestAnimationFrame (() => this .expandTo (inlineNode));
+   }
+
+   addNormalsToGeometry (id, executionContextId, nodeId)
+   {
+      const
+         element          = $(`#${id}`),
+         executionContext = this .objects .get (executionContextId),
+         node             = this .objects .get (nodeId);
+
+      UndoManager .shared .beginUndo (_("Add Normals to %s"), node .getTypeName ());
+
+      for (const type of node .getType () .toReversed ())
+      {
+         switch (type)
+         {
+            case X3D .X3DConstants .IndexedFaceSet:
+            {
+               const
+                  polygons    = node .triangulate (),
+                  normals     = node .createNormals (polygons),
+                  normalIndex = new X3D .MFInt32 (),
+                  normalNode  = executionContext .createNode ("Normal") .getValue ();
+
+               for (let i = 0, length = node ._coordIndex .length; i < length; ++ i)
+               {
+                  const index = node ._coordIndex [i];
+
+                  if (index < 0)
+                  {
+                     normalIndex .push (-1);
+                  }
+                  else
+                  {
+                     normalIndex .push (normalNode ._vector .length);
+                     normalNode ._vector .push (normals [i]);
+                  }
+               }
+
+               Editor .setFieldValue (executionContext, node, node ._normalPerVertex, true);
+               Editor .setFieldValue (executionContext, node, node ._normalIndex,     normalIndex);
+               Editor .setFieldValue (executionContext, node, node ._normal,          normalNode);
+               break;
+            }
+         }
+
+         break;
+      }
+
+      UndoManager .shared .endUndo ();
    }
 
    addPrototype (id, executionContextId)
