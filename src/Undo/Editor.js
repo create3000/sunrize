@@ -2392,14 +2392,10 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       UndoManager .shared .beginUndo (_("Move Viewpoint to Camera"));
 
       const
-         oldPosition         = viewpointNode .getPosition ()         .copy (),
-         oldOrientation      = viewpointNode .getOrientation ()      .copy (),
-         oldCenterOfRotation = viewpointNode .getCenterOfRotation () .copy ();
-
-      if (viewpointNode .getType () .includes (X3D .X3DConstants .OrthoViewpoint))
-         var oldFieldOfView = viewpointNode .getFieldOfView ();
-      else
-         var oldFieldOfView = viewpointNode .getFieldOfView ();
+         oldPosition         = viewpointNode .getPosition () .copy (),
+         oldOrientation      = viewpointNode .getOrientation () .copy (),
+         oldCenterOfRotation = viewpointNode .getCenterOfRotation () .copy (),
+         oldFieldOfView      = viewpointNode .getFieldOfView ();
 
       viewpointNode .resetUserOffsets ();
       viewpointNode .setPosition (position);
