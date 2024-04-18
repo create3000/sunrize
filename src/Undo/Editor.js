@@ -2397,7 +2397,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          oldCenterOfRotation = viewpointNode .getCenterOfRotation () .copy ();
 
       if (viewpointNode .getType () .includes (X3D .X3DConstants .OrthoViewpoint))
-         var oldFieldOfView = Array .from (viewpointNode .getFieldOfView ());
+         var oldFieldOfView = viewpointNode .getFieldOfView ();
       else
          var oldFieldOfView = viewpointNode .getFieldOfView ();
 
@@ -2406,16 +2406,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       viewpointNode .setOrientation (orientation);
       viewpointNode .setCenterOfRotation (centerOfRotation);
 
-      if (viewpointNode .getType () .includes (X3D .X3DConstants .OrthoViewpoint))
-      {
-         if (Array .isArray (fieldOfView))
-            viewpointNode ._fieldOfView = fieldOfView;
-      }
-      else
-      {
-         if (typeof fieldOfView === "number")
-            viewpointNode ._fieldOfView = fieldOfView;
-      }
+      viewpointNode ._fieldOfView = fieldOfView;
 
       undoManager .registerUndo (() =>
       {
@@ -3116,6 +3107,23 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                break;
             }
             case X3D .X3DConstants .X3DViewpointNode:
+            {
+               const rotation = new X3D .Rotation4 ();
+
+               modelMatrix .get (null, rotation);
+
+               const
+                  position         = modelMatrix .multVecMatrix (node .getPosition () .copy ()),
+                  orientation      = node .getOrientation () .copy () .multRight (rotation),
+                  centerOfRotation = node .getCenterOfRotation () .copy (),
+                  fieldOfView      = node .getFieldOfView ();
+
+               this .roundToIntegerIfAlmostEqual (position);
+               this .roundToIntegerIfAlmostEqual (orientation);
+
+               this .moveViewpoint (node, position, orientation, centerOfRotation, fieldOfView, undoManager);
+               break;
+            }
             case X3D .X3DConstants .ListenerPointSource:
             {
                const rotation = new X3D .Rotation4 ();
