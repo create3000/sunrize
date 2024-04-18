@@ -431,8 +431,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                default:
                   continue;
             }
-
-            break;
          }
       }
 
