@@ -40,7 +40,8 @@ module .exports = class Application
          require ("update-electron-app") .updateElectronApp ();
 
       electron .app .commandLine .appendSwitch ("--enable-features", "OverlayScrollbar");
-      electron .app .commandLine .appendSwitch ("--enable-features", "ConversionMeasurement,AttributionReportingCrossAppWeb");
+      electron .app .commandLine .appendSwitch ("--enable-features", "ConversionMeasurement");
+      electron .app .commandLine .appendSwitch ("--enable-features", "AttributionReportingCrossAppWeb");
 
       new Application ();
    }
