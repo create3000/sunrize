@@ -30,7 +30,7 @@ In Sunrize, the script itself is contained in the url field of the Script node, 
 
 ### Example
 
-Here is a simple example of including a Script node in a X3D file:
+Here is a simple example of including a Script node in an X3D file:
 
 ```js
 #X3D V3.3 utf8

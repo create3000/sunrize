@@ -9,7 +9,7 @@ Importing nodes from an inlined file is accomplished with two statements: IMPORT
 
 ## Example
 
-Here is a simple example of including a EXPORT statement in a X3D file (Export.x3dv):
+Here is a simple example of including a EXPORT statement in an X3D file (Export.x3dv):
 
 ```js
 #X3D V3.3 utf8
