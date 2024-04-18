@@ -2401,7 +2401,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       viewpointNode .setPosition (position);
       viewpointNode .setOrientation (orientation);
       viewpointNode .setCenterOfRotation (centerOfRotation);
-      viewpointNode ._fieldOfView = fieldOfView;
+      viewpointNode .setFieldOfView (fieldOfView);
 
       undoManager .registerUndo (() =>
       {
