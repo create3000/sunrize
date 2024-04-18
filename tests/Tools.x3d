@@ -9,12 +9,13 @@
     <component name='Layout' level='2'/>
     <component name='Sound' level='3'/>
     <component name='TextureProjection' level='2'/>
+    <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
     <meta name='created' content='Fri, 11 Aug 2023 21:33:17 GMT'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.6.7, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.6.9, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/tests/Tools.x3d'/>
-    <meta name='modified' content='Tue, 26 Mar 2024 12:17:50 GMT'/>
+    <meta name='modified' content='Thu, 18 Apr 2024 08:47:14 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='Test'>
@@ -70,8 +71,8 @@
           color='0.4352941 0.6588235 0.8627451'
           location='0 -2 0'
           direction='1 0 0'
-          beamWidth='1'
-          cutOffAngle='1.5'/>
+          beamWidth='57.29578'
+          cutOffAngle='85.94367'/>
     </Group>
     <Group DEF='Viewpoints'>
       <Viewpoint
@@ -104,8 +105,8 @@
           location='0 2 0'
           direction='-1 0 -0'/>
       <SpatialSound
-          coneInnerAngle='0.4'
-          coneOuterAngle='1'
+          coneInnerAngle='22.91831'
+          coneOuterAngle='57.29578'
           referenceDistance='2'/>
       <ListenerPointSource
           trackCurrentView='true'/>
