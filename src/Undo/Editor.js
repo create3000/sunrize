@@ -1843,7 +1843,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    static getConfigNode (browser, create = false, undoManager = UndoManager .shared)
    {
       return browser .getActiveLayer () === browser .getWorld () .getLayerSet () .getLayer0 ()
-         ? Editor .getWorldInfo (browser .currentScene, create, undoManager)
+         ? this .getWorldInfo (browser .currentScene, create, undoManager)
          : browser .getActiveLayer ();
    }
 
@@ -2768,9 +2768,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       undoManager .beginUndo (_("Reset Field »%s« of Node »%s« to Its Default Value"), field .getName (), node .getTypeName ());
 
       if (node .canUserDefinedFields () && node .getUserDefinedFields () .has (field .getName ()))
-         Editor .setFieldValue (executionContext, node, field, field .create (), undoManager);
+         this .setFieldValue (executionContext, node, field, field .create (), undoManager);
       else
-         Editor .setFieldValue (executionContext, node, field, fieldDefinition .value, undoManager);
+         this .setFieldValue (executionContext, node, field, fieldDefinition .value, undoManager);
 
       undoManager .endUndo ();
    }
