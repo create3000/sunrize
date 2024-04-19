@@ -149,6 +149,7 @@ class X3DNodeTool extends X3DBaseTool
 
                scene .setExecutionContext (scene);
                scene .setLive (true);
+               scene .setCountPrimitives (false);
 
                for (const externproto of scene .externprotos)
                   await externproto .requestImmediateLoad ();
