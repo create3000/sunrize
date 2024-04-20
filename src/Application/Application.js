@@ -604,6 +604,7 @@ module .exports = class Application
                   },
                   {
                      label: _("Display Timings"),
+                     accelerator: "CmdOrCtrl+Plus",
                      type: "checkbox",
                      checked: this .menuOptions .timings,
                      click: () => this .mainWindow .webContents .send ("display-timings", !this .menuOptions .timings),
