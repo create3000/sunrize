@@ -39,9 +39,7 @@ module .exports = class Application
       if (process .platform === "win32")
          require ("update-electron-app") .updateElectronApp ();
 
-      electron .app .commandLine .appendSwitch ("--enable-features", "OverlayScrollbar");
-      electron .app .commandLine .appendSwitch ("--enable-features", "ConversionMeasurement");
-      electron .app .commandLine .appendSwitch ("--enable-features", "AttributionReportingCrossAppWeb");
+      electron .app .commandLine .appendSwitch ("--enable-features", "OverlayScrollbar,ConversionMeasurement,AttributionReportingCrossAppWeb");
 
       new Application ();
    }
