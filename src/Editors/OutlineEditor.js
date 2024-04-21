@@ -1216,12 +1216,15 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxSize,   new X3D .Vector3 (-1, -1, -1));
       Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxCenter, new X3D .Vector3 ());
 
-      const bbox = node .getBBox (new X3D .Box3 ());
+      requestAnimationFrame (() =>
+      {
+         const bbox = node .getBBox (new X3D .Box3 ());
 
-      Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxSize,   bbox .size);
-      Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxCenter, bbox .center);
+         Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxSize,   bbox .size);
+         Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxCenter, bbox .center);
 
-      UndoManager .shared .endUndo ();
+         UndoManager .shared .endUndo ();
+      });
    }
 
    async convertNodeToInlineFile (id, executionContextId, nodeId)
