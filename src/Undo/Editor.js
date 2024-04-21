@@ -2637,7 +2637,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                switch (type)
                {
                   case X3D .X3DConstants .DirectionalLight:
-                     return new X3D .Box3 (X3D .Vector3 .One, innerNode .getMetaData ("DirectionalLight/location", new X3D .SFVec3f ()) .getValue ())
+                     return new X3D .Box3 (X3D .Vector3 .One, innerNode .getMetaData ("DirectionalLight/location", new X3D .Vector3 ()))
                         .multLeft (new X3D .Matrix4 () .setRotation (new X3D .Rotation4 (X3D .Vector3 .zAxis, innerNode ._direction .getValue ())))
                         .multRight (modelMatrix);
                   case X3D .X3DConstants .PointLight:
