@@ -68,6 +68,6 @@ DepthMode .find ("InterfaceDefinition")
 
 DepthMode
    .appendTo (X3DUOM .find ("ConcreteNodes"))
-   .attr ("name", "BlendMode");
+   .attr ("name", "DepthMode");
 
 module .exports = X3DUOM;
