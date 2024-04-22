@@ -49,6 +49,10 @@ const BlendMode = X3DUOM .find ("ConcreteNode[name=Material]") .clone ();
 
 BlendMode .find ("field:not([name=metadata])") .remove ();
 
+BlendMode .find ("InterfaceDefinition")
+   .attr ("specificationUrl", "https://create3000.github.io/x_ite/components/x-ite/blendmode/")
+   .attr ("appinfo", "BlendMode controls how pixels of an objects are drawn. Pixels can be drawn using a function that blends the incoming (source) RGBA values with the RGBA values that are already in the frame buffer (the destination values). BlendMode is an X3DAppearanceChildNode node that handles blend operations.");
+
 BlendMode
    .appendTo (X3DUOM .find ("ConcreteNodes"))
    .attr ("name", "BlendMode");
@@ -57,6 +61,10 @@ BlendMode
 const DepthMode = X3DUOM .find ("ConcreteNode[name=Material]") .clone ();
 
 DepthMode .find ("field:not([name=metadata])") .remove ();
+
+DepthMode .find ("InterfaceDefinition")
+   .attr ("specificationUrl", "https://create3000.github.io/x_ite/components/x-ite/depthmode/")
+   .attr ("appinfo", "DepthMode contains parameters that are specific for depth control, like the value used for depth buffer comparisons.");
 
 DepthMode
    .appendTo (X3DUOM .find ("ConcreteNodes"))
