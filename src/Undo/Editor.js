@@ -2400,7 +2400,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       viewpointNode = viewpointNode .valueOf ();
 
-      UndoManager .shared .beginUndo (_("Move Viewpoint to Camera"));
+      UndoManager .shared .beginUndo (_("Move Viewpoint to User Position"));
 
       const
          oldPosition         = viewpointNode .getPosition () .copy (),

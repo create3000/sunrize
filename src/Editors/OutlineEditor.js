@@ -422,8 +422,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                case X3D .X3DConstants .X3DViewpointNode:
                {
                   menu .push ({
-                     label: _("Move Viewpoint to Camera"),
-                     args: ["moveViewpointToCamera", element .attr ("id"), executionContext .getId (), node .getId ()],
+                     label: _("Move Viewpoint to User Position"),
+                     args: ["moveViewpointToUserPosition", element .attr ("id"), executionContext .getId (), node .getId ()],
                   });
 
                   continue;
@@ -1193,7 +1193,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          requestAnimationFrame (() => this .expandTo (childNode, true));
    }
 
-   moveViewpointToCamera (id, executionContextId, nodeId)
+   moveViewpointToUserPosition (id, executionContextId, nodeId)
    {
       const
          layerNode        = this .getLayer ($(`#${id}`)),
