@@ -25,7 +25,7 @@ module .exports = class Editor
    static nextFrame (browser)
    {
       browser .addBrowserEvent ();
-      
+
       return new Promise (resolve => requestAnimationFrame (resolve));
    }
 
