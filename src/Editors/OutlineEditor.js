@@ -1207,7 +1207,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       Editor .moveViewpoint (viewpointNode, position, orientation, centerOfRotation, fieldOfView);
    }
 
-   determineBoundingBoxFromScratch (id, executionContextId, nodeId)
+   async determineBoundingBoxFromScratch (id, executionContextId, nodeId)
    {
       const node = this .objects .get (nodeId);
 
@@ -1216,15 +1216,14 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxSize,   new X3D .Vector3 (-1, -1, -1));
       Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxCenter, new X3D .Vector3 ());
 
-      requestAnimationFrame (() =>
-      {
-         const bbox = node .getBBox (new X3D .Box3 ());
+      await Editor .nextFrame (this .browser);
 
-         Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxSize,   bbox .size);
-         Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxCenter, bbox .center);
+      const bbox = node .getBBox (new X3D .Box3 ());
 
-         UndoManager .shared .endUndo ();
-      });
+      Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxSize,   bbox .size);
+      Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxCenter, bbox .center);
+
+      UndoManager .shared .endUndo ();
    }
 
    async convertNodeToInlineFile (id, executionContextId, nodeId)
