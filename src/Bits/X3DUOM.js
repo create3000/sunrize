@@ -24,6 +24,7 @@ X3DUOM .find ("ConcreteNode[name=Shape]")
 X3DUOM .find ("ConcreteNode[name=ParticleSystem]")
    .append (X3DUOM .find ("field[name=pointerEvents]") .first () .clone ());
 
+// InstancedShape
 X3DUOM .find ("ConcreteNode[name=Shape]") .clone ()
    .appendTo (X3DUOM .find ("ConcreteNodes"))
    .attr ("name", "InstancedShape")
@@ -41,6 +42,24 @@ X3DUOM .find ("ConcreteNode[name=Shape]") .clone ()
       .attr ("name", "scales")
       .attr ("type", "MFVec3f")
       .attr ("accessType", "inputOutput")
-      .attr ("description", "List of scales, one for each instance."))
+      .attr ("description", "List of scales, one for each instance."));
+
+// BlendMode
+const BlendMode = X3DUOM .find ("ConcreteNode[name=Material]") .clone ();
+
+BlendMode .find ("field:not([name=metadata])") .remove ();
+
+BlendMode
+   .appendTo (X3DUOM .find ("ConcreteNodes"))
+   .attr ("name", "BlendMode");
+
+// DepthMode
+const DepthMode = X3DUOM .find ("ConcreteNode[name=Material]") .clone ();
+
+DepthMode .find ("field:not([name=metadata])") .remove ();
+
+DepthMode
+   .appendTo (X3DUOM .find ("ConcreteNodes"))
+   .attr ("name", "BlendMode");
 
 module .exports = X3DUOM;
