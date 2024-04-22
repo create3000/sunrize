@@ -417,6 +417,14 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                      args: ["determineBoundingBoxFromScratch", element .attr ("id"), executionContext .getId (), node .getId ()],
                   });
 
+                  if (!node .bboxSize .equals (new X3D .SFVec3f (-1, -1, -1)))
+                  {
+                     menu .push ({
+                        label: _("Remove Custom Bounding Box"),
+                        args: ["removeCustomBoundingBox", element .attr ("id"), executionContext .getId (), node .getId ()],
+                     });
+                  }
+
                   continue;
                }
                case X3D .X3DConstants .X3DViewpointNode:
@@ -1222,6 +1230,18 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxSize,   bbox .size);
       Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxCenter, bbox .center);
+
+      UndoManager .shared .endUndo ();
+   }
+
+   removeCustomBoundingBox (id, executionContextId, nodeId)
+   {
+      const node = this .objects .get (nodeId);
+
+      UndoManager .shared .beginUndo (_("Remove Custom Bounding Box"));
+
+      Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxSize,   new X3D .Vector3 (-1, -1, -1));
+      Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxCenter, new X3D .Vector3 ());
 
       UndoManager .shared .endUndo ();
    }
