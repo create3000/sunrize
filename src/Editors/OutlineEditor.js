@@ -417,7 +417,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                      args: ["determineBoundingBoxFromScratch", element .attr ("id"), executionContext .getId (), node .getId ()],
                   });
 
-                  if (!node .bboxSize .equals (new X3D .SFVec3f (-1, -1, -1)))
+                  if (!node ._bboxSize .equals (new X3D .SFVec3f (-1, -1, -1)))
                   {
                      menu .push ({
                         label: _("Remove Custom Bounding Box"),
