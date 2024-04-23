@@ -104,9 +104,8 @@ module .exports = class Document extends Interface
 
       // Browser Size
 
-      this .specificationVersion = this .browser .currentScene .specificationVersion;
-      this .fullname             = await electron .ipcRenderer .invoke ("fullname");
-      this .browserFrame         = require ("../Editors/BrowserFrame");
+      this .fullname     = await electron .ipcRenderer .invoke ("fullname");
+      this .browserFrame = require ("../Editors/BrowserFrame");
 
       // Change undo menu items.
 
@@ -332,7 +331,7 @@ Viewpoint {
          else
             await this .browser .replaceWorld (null);
 
-         this .browser .currentScene .setSpecificationVersion (this .specificationVersion);
+         this .browser .currentScene .setSpecificationVersion (X3D .LATEST_VERSION);
       }
       catch (error)
       {
