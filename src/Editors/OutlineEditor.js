@@ -6,6 +6,7 @@ const
    path              = require ("path"),
    url               = require ("url"),
    fs                = require ("fs"),
+   mime              = require ("mime-types"),
    X3D               = require ("../X3D"),
    OutlineRouteGraph = require ("./OutlineRouteGraph"),
    Editor            = require ("../Undo/Editor"),
@@ -1219,11 +1220,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          requestAnimationFrame (() => this .expandTo (childNode, true));
    }
 
+   // Some mime types not in mime-types.
    filters = new Map ([
-      ["image/gif",           [{ name: _("GIF"),             extensions: ["gif"]  }]],
-      ["image/jpg",           [{ name: _("JPEG"),            extensions: ["jpg"]  }]],
-      ["image/ktx2",          [{ name: _("KTX2"),            extensions: ["ktx2"] }]],
-      ["image/png",           [{ name: _("PNG"),             extensions: ["png"]  }]],
+      ["image/ktx2",          [{ name: _("KTX2 Image"),      extensions: ["ktx2"] }]],
       ["x-shader/x-vertex",   [{ name: _("Vertex Shader"),   extensions: ["vs"]   }]],
       ["x-shader/x-fragment", [{ name: _("Fragment Shader"), extensions: ["fs"]   }]],
    ]);
@@ -1242,10 +1241,16 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       // Open dialog.
 
+      const
+         extension = mime .extension (match [1]),
+         filters   = this .filters .get (match [1]) ?? (extension
+            ? [{ name: _("Document"), extensions: [extension] }]
+            : [{ name: _("All Files"), extensions: ["*"] }]);
+
       const response = await electron .ipcRenderer .invoke ("file-path",
       {
          type: "save",
-         filters: this .filters .get (match [1]) ?? [{ name: _("All Files"), extensions: ["*"] }],
+         filters: filters,
       });
 
       if (response .canceled)
