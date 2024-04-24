@@ -433,7 +433,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                   if (node ._url .some (fileURL => fileURL .match (/^data:/)))
                   {
                      menu .push ({
-                        label: _("Save Data to File..."),
+                        label: _("Save Data URL to File..."),
                         args: ["saveDataUrlToFile", element .attr ("id"), executionContext .getId (), node .getId ()],
                      });
                   }
