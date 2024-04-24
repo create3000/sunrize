@@ -47,8 +47,14 @@ module .exports = class Editor
     */
    static relativePath (executionContext, filePath)
    {
-      return $.try (() => path .relative (path .dirname (url .fileURLToPath (executionContext .getWorldURL ())), filePath))
-         ?? url .pathToFileURL (filePath);
+      try
+      {
+         return path .relative (path .dirname (url .fileURLToPath (executionContext .getWorldURL ())), filePath);
+      }
+      catch
+      {
+         return url .pathToFileURL (filePath);
+      }
    }
 
    /**
