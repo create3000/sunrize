@@ -1233,6 +1233,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       if (!match)
          return;
 
+      // Open dialog.
+
       const response = await electron .ipcRenderer .invoke ("file-path",
       {
          type: "save",
@@ -1246,10 +1248,13 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       const
          data   = dataURL .substring (dataURL .indexOf (",")),
-         buffer = Buffer .from (data, match [3] === "base64" ? "base64" : "utf8"),
-         value  = urlObject ._url .copy ();
+         buffer = Buffer .from (data, match [3] === "base64" ? "base64" : "utf8");
 
       fs .writeFile (response .filePath, buffer, Function .prototype);
+
+      // Add undo step.
+
+      const value  = urlObject ._url .copy ();
 
       value [index] = $.try (() => path .relative (path .dirname (url .fileURLToPath (executionContext .getWorldURL ())), response .filePath)) ?? url .pathToFileURL (response .filePath);
 
