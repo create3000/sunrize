@@ -4,12 +4,13 @@
   <head>
     <component name='Geometry2D' level='2'/>
     <component name='Scripting' level='1'/>
+    <component name='X_ITE' level='1'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Thu, 15 Jun 2017 07:19:14 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.6.2, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.6.10, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/library/AngleGrid.x3dv'/>
-    <meta name='modified' content='Mon, 11 Mar 2024 11:02:27 GMT'/>
+    <meta name='modified' content='Wed, 24 Apr 2024 06:06:12 GMT'/>
     <meta name='titania-add-world-info' content='true'/>
   </head>
   <Scene>
@@ -59,11 +60,8 @@
                 </Disk2D>
               </Shape>
             </Transform>
-            <Transform DEF='Rings'
-                rotation='0 0.70710528118436 0.707108281185553 3.14159'/>
-            <Shape DEF='MinorLines'
-                pointerEvents='false'
-                castShadow='false'>
+            <InstancedShape DEF='MinorRings_1'
+                rotations='0 0.70710528118436 0.707108281185553 3.14159'>
               <Appearance DEF='MinorAppearance'>
                 <UnlitMaterial DEF='_2'>
                   <IS>
@@ -72,13 +70,10 @@
                   </IS>
                 </UnlitMaterial>
               </Appearance>
-              <IndexedLineSet DEF='MinorLines_3'>
-                <Coordinate/>
-              </IndexedLineSet>
-            </Shape>
-            <Shape DEF='MajorLines'
-                pointerEvents='false'
-                castShadow='false'>
+              <Circle2D DEF='_1'/>
+            </InstancedShape>
+            <InstancedShape DEF='MajorRings'
+                rotations='0 0.70710528118436 0.707108281185553 3.14159'>
               <Appearance DEF='MajorAppearance'>
                 <UnlitMaterial DEF='MajorMaterial'>
                   <IS>
@@ -87,6 +82,20 @@
                   </IS>
                 </UnlitMaterial>
               </Appearance>
+              <Circle2D USE='_1'/>
+            </InstancedShape>
+            <Shape DEF='MinorLines'
+                pointerEvents='false'
+                castShadow='false'>
+              <Appearance USE='MinorAppearance'/>
+              <IndexedLineSet DEF='MinorLines_3'>
+                <Coordinate/>
+              </IndexedLineSet>
+            </Shape>
+            <Shape DEF='MajorLines'
+                pointerEvents='false'
+                castShadow='false'>
+              <Appearance USE='MajorAppearance'/>
               <IndexedLineSet DEF='MajorLines_4'>
                 <Coordinate/>
               </IndexedLineSet>
@@ -130,8 +139,11 @@
           <field accessType='initializeOnly' type='SFNode' name='disk'>
             <Transform USE='Disk'/>
           </field>
-          <field accessType='initializeOnly' type='SFNode' name='rings'>
-            <Transform USE='Rings'/>
+          <field accessType='initializeOnly' type='SFNode' name='minorRings'>
+            <InstancedShape USE='MinorRings_1'/>
+          </field>
+          <field accessType='initializeOnly' type='SFNode' name='majorRings'>
+            <InstancedShape USE='MajorRings'/>
           </field>
           <field accessType='initializeOnly' type='SFNode' name='minorLines'>
             <IndexedLineSet USE='MinorLines_3'/>
@@ -144,12 +156,6 @@
           </field>
           <field accessType='initializeOnly' type='SFNode' name='majorPoints'>
             <PointSet USE='MajorPoints_6'/>
-          </field>
-          <field accessType='initializeOnly' type='SFNode' name='minorAppearance'>
-            <Appearance USE='MinorAppearance'/>
-          </field>
-          <field accessType='initializeOnly' type='SFNode' name='majorAppearance'>
-            <Appearance USE='MajorAppearance'/>
           </field>
           <IS>
             <connect nodeField='dimension' protoField='dimension'/>
@@ -218,36 +224,18 @@ function generateRadiuses (major, radius, grid)
 
 function generateRings ()
 {
-   var scene = Browser .currentScene;
-   var size  = Math .min (dimension [0], rings .children .length);
+   minorRings .scales .length = 0;
+   majorRings .scales .length = 0;
 
-   for (var i = 0; i < size; ++ i)
+   for (var i = 0; i < dimension [0]; ++ i)
    {
-      var s         = i + 1;
-      var transform = rings .children [i];
-      var major     = isMajorLine (s, 0);
+      const s = i + 1;
 
-      transform .children [0] .appearance = major ? majorAppearance : minorAppearance;
-      transform .scale                    = new SFVec3f (s, s, s);
+      if (isMajorLine (s, 0))
+         majorRings .scales .push (new SFVec3f (s, s, s));
+      else
+         minorRings .scales .push (new SFVec3f (s, s, s));
    }
-
-   for (var i = size; i < dimension [0]; ++ i)
-   {
-      var s         = i + 1;
-      var circle    = scene .createNode ("Circle2D");
-      var shape     = scene .createNode ("Shape");
-      var transform = scene .createNode ("Transform");
-      var major     = isMajorLine (s, 0);
-
-      shape .pointerEvents    = false;
-      shape .appearance       = major ? majorAppearance : minorAppearance;
-      shape .geometry         = circle;
-      transform .children [0] = shape;
-      transform .scale        = new SFVec3f (s, s, s);
-      rings .children [i]     = transform;
-   }
-
-   rings .children .length = dimension [0];
 }
 
 function generatePoints (major, point)
