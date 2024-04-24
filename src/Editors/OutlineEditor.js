@@ -1220,10 +1220,12 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    }
 
    filters = new Map ([
-      ["image/gif",  [{ name: _("GIF"),  extensions: ["gif"]  }]],
-      ["image/jpg",  [{ name: _("JPEG"), extensions: ["jpg"]  }]],
-      ["image/ktx2", [{ name: _("KTX2"), extensions: ["ktx2"] }]],
-      ["image/png",  [{ name: _("PNG"),  extensions: ["png"]  }]],
+      ["image/gif",           [{ name: _("GIF"),             extensions: ["gif"]  }]],
+      ["image/jpg",           [{ name: _("JPEG"),            extensions: ["jpg"]  }]],
+      ["image/ktx2",          [{ name: _("KTX2"),            extensions: ["ktx2"] }]],
+      ["image/png",           [{ name: _("PNG"),             extensions: ["png"]  }]],
+      ["x-shader/x-vertex",   [{ name: _("Vertex Shader"),   extensions: ["vs"]   }]],
+      ["x-shader/x-fragment", [{ name: _("Fragment Shader"), extensions: ["fs"]   }]],
    ]);
 
    async saveDataUrlToFile (id, executionContextId, nodeId)
