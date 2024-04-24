@@ -855,7 +855,7 @@ module .exports = class Application
          case "open":
             return this .showOpenDialog (options .defaultPath, options .filters);
          case "save":
-            return this .showSaveDialog (options .defaultPath);
+            return this .showSaveDialog (options .defaultPath, options .filters);
       }
    }
 
@@ -904,14 +904,14 @@ module .exports = class Application
       return response;
    }
 
-   async showSaveDialog (defaultPath)
+   async showSaveDialog (defaultPath, filters)
    {
       this .pushMenu (this .createDialogMenu ());
 
       const response = await electron .dialog .showSaveDialog ({
          defaultPath: defaultPath,
          properties: ["createDirectory", "showOverwriteConfirmation"],
-         filters : [
+         filters: filters ?? [
             { name: _("X3D XML Document"), extensions: ["x3d"] },
             { name: _("X3D XML Document GZipped"), extensions: ["x3dz"] },
             { name: _("X3D JSON Document"), extensions: ["x3dj"] },

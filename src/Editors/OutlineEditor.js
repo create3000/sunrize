@@ -5,6 +5,7 @@ const
    electron          = require ("electron"),
    path              = require ("path"),
    url               = require ("url"),
+   fs                = require ("fs"),
    X3D               = require ("../X3D"),
    OutlineRouteGraph = require ("./OutlineRouteGraph"),
    Editor            = require ("../Undo/Editor"),
@@ -1213,14 +1214,29 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          requestAnimationFrame (() => this .expandTo (childNode, true));
    }
 
+   filters = new Map ([
+      ["image/gif",  [{ name: _("GIF"),  extensions: ["gif"]  }]],
+      ["image/jpg",  [{ name: _("JPEG"), extensions: ["jpg"]  }]],
+      ["image/ktx2", [{ name: _("KTX2"), extensions: ["ktx2"] }]],
+      ["image/png",  [{ name: _("PNG"),  extensions: ["png"]  }]],
+   ]);
+
    async saveDataUrlToFile (id, executionContextId, nodeId)
    {
+      const
+         executionContext = this .objects .get (executionContextId),
+         urlObject        = this .objects .get (nodeId),
+         index            = urlObject ._url .findIndex (fileURL => fileURL .match (/^data:/)),
+         dataURL          = urlObject ._url [index],
+         match            = dataURL .match (/^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s);
+
+      if (!match)
+         return;
+
       const response = await electron .ipcRenderer .invoke ("file-path",
       {
          type: "save",
-         filters: [
-            { name: _("All Files"), extensions: ["*"] },
-         ],
+         filters: this .filters .get (match [1]) ?? [{ name: _("All Files"), extensions: ["*"] }],
       });
 
       if (response .canceled)
@@ -1228,9 +1244,16 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       // Create file.
 
-      const urlObject = this .objects .get (nodeId);
+      const
+         data   = dataURL .substring (dataURL .indexOf (",")),
+         buffer = Buffer .from (data, match [3] === "base64" ? "base64" : "utf8"),
+         value  = urlObject ._url .copy ();
 
-      response .filePath;
+      fs .writeFile (response .filePath, buffer, Function .prototype);
+
+      value [index] = $.try (() => path .relative (path .dirname (url .fileURLToPath (executionContext .getWorldURL ())), response .filePath)) ?? url .pathToFileURL (response .filePath);
+
+      Editor .setFieldValue (executionContext, urlObject, urlObject ._url, value);
    }
 
    moveViewpointToUserPosition (id, executionContextId, nodeId)
