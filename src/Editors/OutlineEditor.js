@@ -427,6 +427,18 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
                   continue;
                }
+               case X3D .X3DConstants .X3DUrlObject:
+               {
+                  if (node ._url .some (fileURL => fileURL .match (/^data:/)))
+                  {
+                     menu .push ({
+                        label: _("Save Data to File..."),
+                        args: ["saveDataUrlToFile", element .attr ("id"), executionContext .getId (), node .getId ()],
+                     });
+                  }
+
+                  break;
+               }
                case X3D .X3DConstants .X3DViewpointNode:
                {
                   menu .push ({
@@ -1199,6 +1211,26 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       if (nodes .length > 1)
          requestAnimationFrame (() => this .expandTo (childNode, true));
+   }
+
+   async saveDataUrlToFile (id, executionContextId, nodeId)
+   {
+      const response = await electron .ipcRenderer .invoke ("file-path",
+      {
+         type: "save",
+         filters: [
+            { name: _("All Files"), extensions: ["*"] },
+         ],
+      });
+
+      if (response .canceled)
+         return;
+
+      // Create file.
+
+      const urlObject = this .objects .get (nodeId);
+
+      response .filePath;
    }
 
    moveViewpointToUserPosition (id, executionContextId, nodeId)
