@@ -1268,7 +1268,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       const value = urlObject ._url .copy ();
 
-      value [index] = $.try (() => path .relative (path .dirname (url .fileURLToPath (executionContext .getWorldURL ())), response .filePath)) ?? url .pathToFileURL (response .filePath);
+      value [index] = Editor .relativePath (executionContext, response .filePath);
 
       Editor .setFieldValue (executionContext, urlObject, urlObject ._url, value);
    }
@@ -1346,10 +1346,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       const inlineNode = executionContext .createNode ("Inline") .getValue ();
 
-      inlineNode ._url = [
-         $.try (() => path .relative (path .dirname (url .fileURLToPath (executionContext .getWorldURL ())), response .filePath))
-            ?? url .pathToFileURL (response .filePath)
-      ];
+      inlineNode ._url = [Editor .relativePath (executionContext, response .filePath)];
 
       if (childNode .getName ())
          Editor .updateNamedNode (executionContext, childNode .getName (), inlineNode);
@@ -1803,21 +1800,10 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          if (response .canceled)
             return;
 
-         const
-            worldURL = node .getExecutionContext () .getWorldURL (),
-            value    = field .copy ();
+         const value = field .copy ();
 
          for (const filePath of response .filePaths .reverse ())
-         {
-            try
-            {
-               value .unshift (path .relative (path .dirname (url .fileURLToPath (worldURL)), filePath));
-            }
-            catch
-            {
-               value .unshift (url .pathToFileURL (filePath));
-            }
-         }
+            value .unshift (Editor .relativePath (node .getExecutionContext (), filePath));
 
          Editor .setFieldValue (node .getExecutionContext (), node, field, value);
       });

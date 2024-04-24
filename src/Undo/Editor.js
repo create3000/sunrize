@@ -42,6 +42,18 @@ module .exports = class Editor
    /**
     *
     * @param {X3DExecutionContext} executionContext source execution context
+    * @param {string} filePath file path
+    * @returns {string} relative path
+    */
+   static relativePath (executionContext, filePath)
+   {
+      return $.try (() => path .relative (path .dirname (url .fileURLToPath (executionContext .getWorldURL ())), filePath))
+         ?? url .pathToFileURL (filePath);
+   }
+
+   /**
+    *
+    * @param {X3DExecutionContext} executionContext source execution context
     * @param {Array<X3DNode|X3DExternProtoDeclaration|X3DProtoDeclaration>} objects objects to export
     * @param {Object} options
     * @returns {string} x3dSyntax
@@ -1313,7 +1325,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       const
          name         = executionContext .getUniqueExternProtoName (proto .getName ()),
          externproto  = this .addExternProtoDeclaration (executionContext, name, undoManager),
-         relativePath = path .relative (path .dirname (url .fileURLToPath (executionContext .worldURL)), filePath),
+         relativePath = this .relativePath (executionContext, filePath),
          absolutePath = url .pathToFileURL (filePath) .href,
          hash         = "#" + proto .getName ();
 
