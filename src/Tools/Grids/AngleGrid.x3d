@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.6.10, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/library/AngleGrid.x3dv'/>
-    <meta name='modified' content='Wed, 24 Apr 2024 06:06:12 GMT'/>
+    <meta name='modified' content='Wed, 24 Apr 2024 06:18:47 GMT'/>
     <meta name='titania-add-world-info' content='true'/>
   </head>
   <Scene>
@@ -61,7 +61,9 @@
               </Shape>
             </Transform>
             <InstancedShape DEF='MinorRings_1'
-                rotations='0 0.70710528118436 0.707108281185553 3.14159'>
+                rotations='0 0.70710528118436 0.707108281185553 3.14159'
+                pointerEvents='false'
+                castShadow='false'>
               <Appearance DEF='MinorAppearance'>
                 <UnlitMaterial DEF='_2'>
                   <IS>
@@ -73,7 +75,9 @@
               <Circle2D DEF='_1'/>
             </InstancedShape>
             <InstancedShape DEF='MajorRings'
-                rotations='0 0.70710528118436 0.707108281185553 3.14159'>
+                rotations='0 0.70710528118436 0.707108281185553 3.14159'
+                pointerEvents='false'
+                castShadow='false'>
               <Appearance DEF='MajorAppearance'>
                 <UnlitMaterial DEF='MajorMaterial'>
                   <IS>
