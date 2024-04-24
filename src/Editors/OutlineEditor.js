@@ -44,6 +44,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          X3D .X3DConstants .Transform,
          X3D .X3DConstants .X3DNBodyCollidableNode,
       ]);
+
+      this .transformLikeNodes = new Set ([
+         X3D .X3DConstants .X3DTransformNode,
+         X3D .X3DConstants .HAnimHumanoid,
+      ]);
    }
 
    transformToZero ()
@@ -777,7 +782,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       {
          const node = this .getNode ($(element));
 
-         if (!node .getType () .includes (X3D .X3DConstants .X3DTransformNode))
+         if (!node .getType () .some (type => this .transformLikeNodes .has (type)))
             continue;
 
          Editor .setMatrixWithCenter (node, this .getModelMatrix (element), undefined, undoManager);
@@ -851,7 +856,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             // Adjust matrix.
 
-            if (node .getType () .includes (X3D .X3DConstants .X3DTransformNode))
+            if (node .getType () .some (type => this .transformLikeNodes .has (type)))
             {
                const
                   sourceModelMatrix = node .getMatrix (),
@@ -1056,7 +1061,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             if (otherParentField !== parentField)
             {
-               if (otherChildNode .getType () .includes (X3D .X3DConstants .X3DTransformNode))
+               if (otherChildNode .getType () .some (type => this .transformLikeNodes .has (type)))
                {
                   const
                      sourceModelMatrix = this .getModelMatrix (otherElement),
@@ -2923,7 +2928,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             if (destinationElement .data ("dropEffect") ?.match (/copy|move/))
             {
-               if (sourceNode .getType () .includes (X3D .X3DConstants .X3DTransformNode))
+               if (sourceNode .getType () .some (type => this .transformLikeNodes .has (type)))
                {
                   const
                      sourceModelMatrix      = this .getModelMatrix (sourceElement),

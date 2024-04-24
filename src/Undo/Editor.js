@@ -2588,6 +2588,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   break;
 
                }
+               case X3D .X3DConstants .HAnimHumanoid:
                case X3D .X3DConstants .X3DTransformNode:
                {
                   const matrix = node .getMatrix () .copy ()
@@ -3060,6 +3061,11 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       if (!node)
          return true;
 
+      const transformLikeNodes = new Set ([
+         X3D .X3DConstants .X3DTransformNode,
+         X3D .X3DConstants .HAnimHumanoid,
+      ]);
+
       node        = node .valueOf ();
       modelMatrix = modelMatrix .copy ();
 
@@ -3077,6 +3083,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                return false;
             }
+            case X3D .X3DConstants .HAnimHumanoid:
             case X3D .X3DConstants .X3DTransformNode:
             {
                modelMatrix .multLeft (node .getMatrix ());
@@ -3087,7 +3094,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                const reset = this .#transformToZeroFromArray (executionContext, node ._children, modelMatrix, undoManager);
 
-               if (!node .getType () .includes (X3D .X3DConstants .X3DTransformNode))
+               if (!node .getType () .some (type => transformLikeNodes .has (type)))
                   break;
 
                if (reset)
