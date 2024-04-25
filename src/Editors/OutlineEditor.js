@@ -1241,9 +1241,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    }
 
    protocols = new Map ([
-      ["ecmascript", "application/ecmascript"],
-      ["javascript", "application/javascript"],
-      ["vrmlscript", "application/vrmlscript"],
+      ["ecmascript:", "application/ecmascript"],
+      ["javascript:", "application/javascript"],
+      ["vrmlscript:", "application/vrmlscript"],
    ]);
 
    async saveDataUrlToFile (id, executionContextId, nodeId)
@@ -1253,9 +1253,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          urlObject        = this .objects .get (nodeId),
          index            = urlObject ._url .findIndex (fileURL => fileURL .match (/^(?:data|ecmascript|javascript|vrmlscript):/)),
          dataURL          = urlObject ._url [index],
-         protocol         = dataURL .match (/^(data|ecmascript|javascript|vrmlscript):/),
+         protocol         = dataURL .match (/^(?:data|ecmascript|javascript|vrmlscript):/),
          match            = dataURL .match (/^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s),
-         isData           = protocol [1] === "data";
+         isData           = protocol [0] === "data:";
 
       if (!((isData && match) || !isData))
          return;
@@ -1263,7 +1263,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       // Open dialog.
 
       const
-         extension = mime .extension (isData ? match [1] : this .protocols .get (protocol [1])),
+         extension = mime .extension (isData ? match [1] : this .protocols .get (protocol [0])),
          filters = extension
             ? [{ name: _(`${extension .toUpperCase ()} Document`), extensions: [extension] }]
             : [{ name: _("All Files"), extensions: ["*"] }];
