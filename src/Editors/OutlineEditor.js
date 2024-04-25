@@ -1244,7 +1244,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const
          extension = mime .extension (match [1]),
          filters   = this .filters .get (match [1]) ?? (extension
-            ? [{ name: _("Document"), extensions: [extension] }]
+            ? [{ name: _(`${extension .toUpperCase ()} Document`), extensions: [extension] }]
             : [{ name: _("All Files"), extensions: ["*"] }]);
 
       const response = await electron .ipcRenderer .invoke ("file-path",
