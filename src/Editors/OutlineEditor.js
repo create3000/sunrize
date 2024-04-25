@@ -1288,7 +1288,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
    textTypes = new Set ([
       "text/plain",
+      "application/ecmascript",
       "application/javascript",
+      "application/vrmlscript",
       "x-shader/x-vertex",
       "x-shader/x-fragment",
    ]);
