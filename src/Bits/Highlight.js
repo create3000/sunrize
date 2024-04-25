@@ -1,6 +1,6 @@
-"use strict"
+"use strict";
 
-const $ = require ("jquery")
+const $ = require ("jquery");
 
 /**
  * Animate element.
@@ -10,7 +10,7 @@ const $ = require ("jquery")
  */
 $.fn.highlight = function (classes = "highlight", duration = 1000)
 {
-   this .addClass (classes)
-   setTimeout (() => this .removeClass (classes), duration)
-   return this
-}
+   this .addClass (classes);
+   setTimeout (() => this .removeClass (classes), duration);
+   return this;
+};
