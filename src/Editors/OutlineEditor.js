@@ -13,6 +13,18 @@ const
    UndoManager       = require ("../Undo/UndoManager"),
    _                 = require ("../Application/GetText");
 
+const missingTypes = new Map ([
+   ["image/ktx2",          ["ktx2"]],
+   ["x-shader/x-vertex",   ["vs"]  ],
+   ["x-shader/x-fragment", ["fs"]  ],
+]);
+
+for (const [mimeType, extensions] of missingTypes)
+{
+   mime .types [extensions [0]] = mimeType;
+   mime .extensions [mimeType]  = extensions;
+}
+
 module .exports = class OutlineEditor extends OutlineRouteGraph
 {
    constructor (element)
@@ -441,6 +453,14 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                      menu .push ({
                         label: _("Save Data URL to File..."),
                         args: ["saveDataUrlToFile", element .attr ("id"), executionContext .getId (), node .getId ()],
+                     });
+                  }
+
+                  if (!node ._url .some (fileURL => fileURL .match (/^(?:data|ecmascript|javascript|vrmlscript):/)))
+                  {
+                     menu .push ({
+                        label: _("Embed External Resource As Data URL"),
+                        args: ["embedExternalResourceAsDataURL", element .attr ("id"), executionContext .getId (), node .getId ()],
                      });
                   }
 
@@ -1220,13 +1240,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          requestAnimationFrame (() => this .expandTo (childNode, true));
    }
 
-   // Some mime types not in mime-types.
-   filters = new Map ([
-      ["image/ktx2",          [{ name: _("KTX2 Image"),      extensions: ["ktx2"] }]],
-      ["x-shader/x-vertex",   [{ name: _("Vertex Shader"),   extensions: ["vs"]   }]],
-      ["x-shader/x-fragment", [{ name: _("Fragment Shader"), extensions: ["fs"]   }]],
-   ]);
-
    async saveDataUrlToFile (id, executionContextId, nodeId)
    {
       const
@@ -1243,9 +1256,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       const
          extension = mime .extension (match [1]),
-         filters   = this .filters .get (match [1]) ?? (extension
+         filters   = extension
             ? [{ name: _(`${extension .toUpperCase ()} Document`), extensions: [extension] }]
-            : [{ name: _("All Files"), extensions: ["*"] }]);
+            : [{ name: _("All Files"), extensions: ["*"] }];
 
       const response = await electron .ipcRenderer .invoke ("file-path",
       {
@@ -1269,6 +1282,46 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const value = urlObject ._url .copy ();
 
       value [index] = Editor .relativePath (executionContext, response .filePath);
+
+      Editor .setFieldValue (executionContext, urlObject, urlObject ._url, value);
+   }
+
+   textTypes = new Set ([
+      "text/plain",
+      "application/javascript",
+      "x-shader/x-vertex",
+      "x-shader/x-fragment",
+   ]);
+
+   async embedExternalResourceAsDataURL (id, executionContextId, nodeId)
+   {
+      const
+         executionContext = this .objects .get (executionContextId),
+         urlObject        = this .objects .get (nodeId),
+         index            = urlObject ._url .findIndex (fileURL => !fileURL .match (/^(?:data|ecmascript|javascript|vrmlscript):/)),
+         fileURL          = new URL (urlObject ._url [index], executionContext .getWorldURL ());
+
+      const
+         response = await fetch (fileURL),
+         mimeType = mime .lookup (fileURL .pathname)
+            || response .headers .get ("content-type") ?.replace (/;.*$/, "")
+            || "application/octet-stream";
+
+      // console .log (mimeType)
+
+      if (!response .ok)
+         return;
+
+      const buffer = Buffer .from (await response .arrayBuffer ());
+
+      // Add undo step.
+
+      const value = urlObject ._url .copy ();
+
+      if (this .textTypes .has (mimeType))
+         value [index] = `data:${mimeType},${buffer .toString ('utf8')}`;
+      else
+         value [index] = `data:${mimeType};base64,${buffer .toString ('base64')}`;
 
       Editor .setFieldValue (executionContext, urlObject, urlObject ._url, value);
    }
