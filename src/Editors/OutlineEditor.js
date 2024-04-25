@@ -1264,7 +1264,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       const
          extension = mime .extension (isData ? match [1] : this .protocols .get (protocol [1])),
-         filters   = extension
+         filters = extension
             ? [{ name: _(`${extension .toUpperCase ()} Document`), extensions: [extension] }]
             : [{ name: _("All Files"), extensions: ["*"] }];
 
