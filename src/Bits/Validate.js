@@ -32,7 +32,7 @@ $.fn.validate = function (regex, error)
       if (typeof error === "function")
          error .call (this, event);
    })
-   .on ("keyup.validate", (event) =>
+   .on ("keyup.validate", () =>
    {
       // https://stackoverflow.com/questions/44962941/html-text-input-element-disable-mac-double-space-to-insert-period
 
@@ -48,7 +48,7 @@ $.fn.validate = function (regex, error)
          .prop ("selectionStart", start)
          .prop ("selectionEnd", end);
    })
-   .on ("change.validate", (event) =>
+   .on ("change.validate", () =>
    {
       lastValue = this .val ();
    });
