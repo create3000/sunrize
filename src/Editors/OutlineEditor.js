@@ -1254,8 +1254,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          index            = urlObject ._url .findIndex (fileURL => fileURL .match (/^(?:data|ecmascript|javascript|vrmlscript):/)),
          dataURL          = urlObject ._url [index],
          protocol         = dataURL .match (/^(data|ecmascript|javascript|vrmlscript):/),
-         match            = dataURL .match (/^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s),
-         isData           = protocol [1] === "data";
+         match            = dataURL .match (/^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s);
 
       if (!(protocol || match))
          return;
@@ -1263,6 +1262,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       // Open dialog.
 
       const
+         isData    = protocol [1] === "data",
          extension = mime .extension (isData ? match [1] : this .protocols .get (protocol [1])),
          filters   = extension
             ? [{ name: _(`${extension .toUpperCase ()} Document`), extensions: [extension] }]
