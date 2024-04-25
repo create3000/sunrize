@@ -448,7 +448,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                }
                case X3D .X3DConstants .X3DUrlObject:
                {
-                  if (node ._url .some (fileURL => fileURL .match (/^data:/)))
+                  if (node ._url .some (fileURL => fileURL .match (/^(?:data|ecmascript|javascript|vrmlscript):/)))
                   {
                      menu .push ({
                         label: _("Save Data URL to File..."),
@@ -1240,22 +1240,30 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          requestAnimationFrame (() => this .expandTo (childNode, true));
    }
 
+   protocols = new Map ([
+      ["ecmascript", "application/ecmascript"],
+      ["javascript", "application/javascript"],
+      ["vrmlscript", "application/vrmlscript"],
+   ]);
+
    async saveDataUrlToFile (id, executionContextId, nodeId)
    {
       const
          executionContext = this .objects .get (executionContextId),
          urlObject        = this .objects .get (nodeId),
-         index            = urlObject ._url .findIndex (fileURL => fileURL .match (/^data:/)),
+         index            = urlObject ._url .findIndex (fileURL => fileURL .match (/^(?:data|ecmascript|javascript|vrmlscript):/)),
          dataURL          = urlObject ._url [index],
-         match            = dataURL .match (/^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s);
+         protocol         = dataURL .match (/^(data|ecmascript|javascript|vrmlscript):/),
+         match            = dataURL .match (/^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s),
+         isData           = protocol [1] === "data";
 
-      if (!match)
+      if (!(protocol || match))
          return;
 
       // Open dialog.
 
       const
-         extension = mime .extension (match [1]),
+         extension = mime .extension (isData ? match [1] : this .protocols .get (protocol [1])),
          filters   = extension
             ? [{ name: _(`${extension .toUpperCase ()} Document`), extensions: [extension] }]
             : [{ name: _("All Files"), extensions: ["*"] }];
@@ -1272,8 +1280,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       // Create file.
 
       const
-         data   = dataURL .substring (dataURL .indexOf (",") + 1),
-         buffer = Buffer .from (data, match [3] === "base64" ? "base64" : "utf8");
+         data   = dataURL .substring (dataURL .indexOf (isData ? "," : ":") + 1),
+         buffer = Buffer .from (data, isData && match [3] === "base64" ? "base64" : "utf8");
 
       fs .writeFile (response .filePath, buffer, Function .prototype);
 
