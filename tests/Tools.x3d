@@ -5,6 +5,7 @@
     <component name='CADGeometry' level='2'/>
     <component name='EnvironmentalSensor' level='3'/>
     <component name='Geospatial' level='2'/>
+    <component name='HAnim' level='3'/>
     <component name='Layering' level='1'/>
     <component name='Layout' level='2'/>
     <component name='Sound' level='3'/>
@@ -13,9 +14,9 @@
     <meta name='created' content='Fri, 11 Aug 2023 21:33:17 GMT'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.6.9, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.6.10, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/tests/Tools.x3d'/>
-    <meta name='modified' content='Thu, 18 Apr 2024 08:58:46 GMT'/>
+    <meta name='modified' content='Thu, 25 Apr 2024 16:27:42 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='Test'>
@@ -39,14 +40,27 @@
           center='0 -2 0'/>
     </Group>
     <Group DEF='Grouping'>
-      <Group
+      <Group DEF='_1'
           bboxSize='1 1 1'/>
-      <Transform
-          bboxSize='1 1 1'/>
+      <Transform/>
       <StaticGroup
           bboxSize='1 1 1'/>
       <Switch
           bboxSize='1 1 1'/>
+    </Group>
+    <Group DEF='HAnim'>
+      <HAnimHumanoid>
+        <Group USE='_1' containerField='skin'/>
+      </HAnimHumanoid>
+      <HAnimJoint>
+        <Group USE='_1'/>
+      </HAnimJoint>
+      <HAnimSegment>
+        <Group USE='_1'/>
+      </HAnimSegment>
+      <HAnimSite>
+        <Group USE='_1'/>
+      </HAnimSite>
     </Group>
     <LayerSet
         order='0, 1, 2'>
