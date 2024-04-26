@@ -464,7 +464,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                      });
                   }
 
-                  break;
+                  continue;
                }
                case X3D .X3DConstants .X3DViewpointNode:
                {
