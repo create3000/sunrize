@@ -1198,6 +1198,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       pixelTextureNode ._image .height = height;
       pixelTextureNode ._image .comp   = transparent ? 4 : 3;
 
+      // Flip image and set pixels.
+
       const array = pixelTextureNode ._image .array;
 
       for (let y = 0; y < height; ++ y)
@@ -1211,6 +1213,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             array [a] = transparent ? data .getUint32 (i * 4) : data .getUint32 (i * 4) >>> 8;
          }
       }
+
+      // Add undo step.
 
       UndoManager .shared .beginUndo (_("Convert Node to PixelTexture"));
 
