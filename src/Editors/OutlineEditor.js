@@ -456,7 +456,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                      });
                   }
 
-                  if (!node ._url .some (fileURL => fileURL .match (/^(?:data|ecmascript|javascript|vrmlscript):/)))
+                  if (node ._url .some (fileURL => !fileURL .match (/^(?:data|ecmascript|javascript|vrmlscript):/)))
                   {
                      menu .push ({
                         label: _("Embed External Resource As Data URL"),
