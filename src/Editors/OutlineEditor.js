@@ -1359,7 +1359,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       value [index] = Editor .relativePath (executionContext, response .filePath);
 
+      UndoManager .shared .beginUndo (_("Save Data URL to File"));
+
       Editor .setFieldValue (executionContext, urlObject, urlObject ._url, value);
+
+      UndoManager .shared .endUndo ();
    }
 
    textTypes = new Set ([
@@ -1403,7 +1407,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       else
          value [index] = `data:${mimeType};base64,${buffer .toString ('base64')}`;
 
+      UndoManager .shared .beginUndo (_("Embed External Resource as Data URL"));
+
       Editor .setFieldValue (executionContext, urlObject, urlObject ._url, value);
+
+      UndoManager .shared .endUndo ();
    }
 
    moveViewpointToUserPosition (id, executionContextId, nodeId)
