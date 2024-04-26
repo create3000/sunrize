@@ -1265,7 +1265,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       // Open dialog.
 
       const
-         extension        = mime .extension (isData ? match [1] : this .protocolToMimeType .get (protocol [0])),
+         extension        = mime .extension (isData ? match [1] || "text/plain" : this .protocolToMimeType .get (protocol [0])),
          defaultDirectory = $.try (() => path .dirname (url .fileURLToPath (executionContext .getWorldURL ()))),
          defaultPath      = urlObject .getName () && defaultDirectory ? path .join (defaultDirectory, `${urlObject .getName ()}.${extension}`) : defaultDirectory,
          filters          = extension
