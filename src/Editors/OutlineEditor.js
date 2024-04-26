@@ -1267,9 +1267,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const
          extension        = mime .extension (isData ? match [1] : this .protocolToMimeType .get (protocol [0])),
          defaultDirectory = $.try (() => path .dirname (url .fileURLToPath (executionContext .getWorldURL ()))),
-         defaultPath      = urlObject .getName ()
-            ? path .join (defaultDirectory, `${urlObject .getName ()}.${extension}`)
-            : defaultDirectory,
+         defaultPath      = urlObject .getName () && defaultDirectory ? path .join (defaultDirectory, `${urlObject .getName ()}.${extension}`) : defaultDirectory,
          filters          = extension
             ? [{ name: _(`${extension .toUpperCase ()} Document`), extensions: [extension] }]
             : [{ name: _("All Files"), extensions: ["*"] }];
@@ -1396,7 +1394,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          parentNodeElement      = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
          parentNode             = this .getNode (parentNodeElement),
          parentField            = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement),
-         response               = await electron .ipcRenderer .invoke ("file-path", { type: "save", defaultPath: childNode .getName () });
+         defaultDirectory       = $.try (() => path .dirname (url .fileURLToPath (executionContext .getWorldURL ()))),
+         defaultPath            = childNode .getName () && defaultDirectory ? path .join (defaultDirectory, `${childNode .getName ()}.x3d`) : defaultDirectory,
+         response               = await electron .ipcRenderer .invoke ("file-path", { type: "save", defaultPath });
 
       if (response .canceled)
          return;
@@ -1679,7 +1679,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const
          executionContext = this .objects .get (executionContextId),
          proto            = this .objects .get (protoNodeId),
-         response         = await electron .ipcRenderer .invoke ("file-path", { type: "save", defaultPath: proto .getName () });
+         defaultDirectory = $.try (() => path .dirname (url .fileURLToPath (executionContext .getWorldURL ()))),
+         defaultPath      = defaultDirectory ? path .join (defaultDirectory, `${proto .getName ()}.x3d`) : undefined,
+         response         = await electron .ipcRenderer .invoke ("file-path", { type: "save", defaultPath });
 
       if (response .canceled)
          return;
