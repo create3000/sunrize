@@ -1200,9 +1200,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          parentNodeElement  = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
          parentNode         = this .getNode (parentNodeElement),
          parentField        = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement),
+         transparent        = imageTextureNode .isTransparent (),
          width              = imageTextureNode .getWidth (),
          height             = imageTextureNode .getHeight (),
-         transparent        = imageTextureNode .isTransparent (),
          data               = new DataView (imageTextureNode .getTextureData () .buffer),
          pixelTextureNode   = executionContext .createNode ("PixelTexture") .getValue ();
 
