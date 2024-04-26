@@ -1247,7 +1247,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       UndoManager .shared .endUndo ();
    }
 
-   convertNodeToImageTexture (id, executionContextId, nodeId)
+   async convertNodeToImageTexture (id, executionContextId, nodeId)
    {
       const
          element            = $(`#${id}`),
@@ -1267,8 +1267,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       const
          canvas  = document .createElement ("canvas"),
-         context = canvas .getContext ("2d"),
-         imgData = context .createImageData (width, height);
+         context = canvas .getContext ("bitmaprenderer"),
+         imgData = new Uint8ClampedArray (width * height * 4);
 
       canvas .width  = width;
       canvas .height = height;
@@ -1284,11 +1284,13 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                d = (height - y - 1) * width + x;
 
             for (let c = 0; c < 4; ++ c)
-               imgData .data [i * 4 + c] = data [d * 4 + c];
+               imgData [i * 4 + c] = data [d * 4 + c];
          }
       }
 
-      context .putImageData (imgData, 0, 0);
+      const bitmap = await createImageBitmap (new ImageData (imgData, width, height), { premultiplyAlpha: "none" });
+
+      context .transferFromImageBitmap (bitmap);
 
       imageTextureNode ._url = [canvas .toDataURL ("image/png")];
 
