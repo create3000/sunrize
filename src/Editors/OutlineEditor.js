@@ -404,7 +404,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                   {
                      menu .push ({
                         label: _("Convert Node to PixelTexture"),
-                        args: ["convertNodeToPixelTexture", element .attr ("id"), executionContext .getId (), node .getId ()],
+                        args: ["convertImageTextureToPixelTexture", element .attr ("id"), executionContext .getId (), node .getId ()],
                      });
                   }
 
@@ -427,11 +427,16 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                }
                case X3D .X3DConstants .PixelTexture:
                {
+                  menu .push ({
+                     label: _("Update Image from File..."),
+                     args: ["updatePixelTextureFromFile", element .attr ("id"), executionContext .getId (), node .getId ()],
+                  });
+
                   if (node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE)
                   {
                      menu .push ({
                         label: _("Convert Node to ImageTexture"),
-                        args: ["convertNodeToImageTexture", element .attr ("id"), executionContext .getId (), node .getId ()],
+                        args: ["convertPixelTextureToImageTexture", element .attr ("id"), executionContext .getId (), node .getId ()],
                      });
                   }
 
@@ -1189,7 +1194,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       UndoManager .shared .endUndo ();
    }
 
-   convertNodeToPixelTexture (id, executionContextId, nodeId)
+   convertImageTextureToPixelTexture (id, executionContextId, nodeId)
    {
       const
          executionContext = this .objects .get (executionContextId),
@@ -1232,7 +1237,60 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       UndoManager .shared .endUndo ();
    }
 
-   async convertNodeToImageTexture (id, executionContextId, nodeId)
+   async updatePixelTextureFromFile (id, executionContextId, nodeId)
+   {
+      const
+         executionContext = this .objects .get (executionContextId),
+         pixelTextureNode = this .objects .get (nodeId);
+
+      const
+         defaultPath = $.try (() => path .dirname (url .fileURLToPath (executionContext .getWorldURL ()))),
+         filters     = [{ name: _("All Files"), extensions: ["*"] }];
+
+      const response = await electron .ipcRenderer .invoke ("file-path", { type: "open", defaultPath, filters, properties: [ ] });
+
+      if (response .canceled)
+         return;
+
+      const imageTextureNode = executionContext .createNode ("ImageTexture") .getValue ();
+
+      imageTextureNode ._url = response .filePaths;
+
+      await imageTextureNode .requestImmediateLoad ();
+
+      const
+         transparent = imageTextureNode .isTransparent (),
+         width       = imageTextureNode .getWidth (),
+         height      = imageTextureNode .getHeight (),
+         data        = new DataView (imageTextureNode .getTextureData () .buffer),
+         image       = new X3D .SFImage (width, height, transparent ? 4 : 3);
+
+      // Flip image and set pixels.
+
+      const array = image .array;
+
+      for (let y = 0; y < height; ++ y)
+      {
+         for (let x = 0; x < width; ++ x)
+         {
+            const
+               a = y * width + x,
+               d = (height - y - 1) * width + x;
+
+            array [a] = transparent ? data .getUint32 (d * 4) : data .getUint32 (d * 4) >>> 8;
+         }
+      }
+
+      // Add undo step.
+
+      UndoManager .shared .beginUndo (_("Update Image from File"));
+
+      Editor .setFieldValue (executionContext, pixelTextureNode, pixelTextureNode ._image, image);
+
+      UndoManager .shared .endUndo ();
+   }
+
+   async convertPixelTextureToImageTexture (id, executionContextId, nodeId)
    {
       const
          executionContext = this .objects .get (executionContextId),

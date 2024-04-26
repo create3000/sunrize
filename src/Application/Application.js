@@ -191,7 +191,7 @@ module .exports = class Application
                      accelerator: "CmdOrCtrl+O",
                      click: async () =>
                      {
-                        const response = await this .showOpenDialog (this .currentFile);
+                        const response = await this .showOpenDialog ({ defaultPath: this .currentFile });
 
                         if (response .canceled)
                            return;
@@ -282,7 +282,7 @@ module .exports = class Application
                      accelerator: "Shift+CmdOrCtrl+S",
                      click: async () =>
                      {
-                        const response = await this .showSaveDialog (this .currentFile);
+                        const response = await this .showSaveDialog ({ defaultPath: this .currentFile });
 
                         if (response .canceled)
                            return;
@@ -296,7 +296,7 @@ module .exports = class Application
                      label: _("Save A Copy..."),
                      click: async () =>
                      {
-                        const response = await this .showSaveDialog (this .currentFile);
+                        const response = await this .showSaveDialog ({ defaultPath: this .currentFile });
 
                         if (response .canceled)
                            return;
@@ -853,9 +853,9 @@ module .exports = class Application
       switch (options .type)
       {
          case "open":
-            return this .showOpenDialog (options .defaultPath, options .filters);
+            return this .showOpenDialog (options);
          case "save":
-            return this .showSaveDialog (options .defaultPath, options .filters);
+            return this .showSaveDialog (options);
       }
    }
 
@@ -884,13 +884,13 @@ module .exports = class Application
       }
    }
 
-   async showOpenDialog (defaultPath, filters)
+   async showOpenDialog ({ defaultPath, filters, properties = ["multiSelections"] })
    {
       this .pushMenu (this .createDialogMenu ());
 
       const response = await electron .dialog .showOpenDialog ({
          defaultPath: defaultPath,
-         properties: ["openFile", "multiSelections"],
+         properties: ["openFile", ... properties],
          filters: filters ?? [
             {
                name: _("X3D Document"),
@@ -904,13 +904,13 @@ module .exports = class Application
       return response;
    }
 
-   async showSaveDialog (defaultPath, filters)
+   async showSaveDialog ({ defaultPath, filters, properties = ["multiSelections"] })
    {
       this .pushMenu (this .createDialogMenu ());
 
       const response = await electron .dialog .showSaveDialog ({
          defaultPath: defaultPath,
-         properties: ["createDirectory", "showOverwriteConfirmation"],
+         properties: ["createDirectory", "showOverwriteConfirmation", ... properties],
          filters: filters ?? [
             { name: _("X3D XML Document"), extensions: ["x3d"] },
             { name: _("X3D XML Document GZipped"), extensions: ["x3dz"] },
