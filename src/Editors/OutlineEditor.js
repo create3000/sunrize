@@ -1860,11 +1860,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             }
          }
 
-         const response = await electron .ipcRenderer .invoke ("file-path",
-         {
-            type: "open",
-            filters: filters,
-         });
+         const
+            defaultPath = $.try (() => path .dirname (url .fileURLToPath (node .getExecutionContext () .getWorldURL ()))),
+            response    = await electron .ipcRenderer .invoke ("file-path", { type: "open", filters, defaultPath });
 
          if (response .canceled)
             return;
