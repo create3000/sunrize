@@ -1288,6 +1288,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          }
       }
 
+      // Create data URL.
+
       const bitmap = await createImageBitmap (new ImageData (imgData, width, height), { premultiplyAlpha: "none" });
 
       context .transferFromImageBitmap (bitmap);
