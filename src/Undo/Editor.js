@@ -2839,17 +2839,17 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                case X3D .X3DConstants .SFNode:
                {
-                  if (field .getValue () .valueOf () === original)
+                  if (field .getValue () ?.valueOf () === original)
                      Editor .setFieldValue (executionContext, node, field, replacement, undoManager);
 
                   break;
                }
                case X3D .X3DConstants .MFNode:
                {
-                  if (!field .some (value => value .getValue () .valueOf () === original))
+                  if (!field .some (value => value ?.getValue () .valueOf () === original))
                      break;
 
-                  const value = field .map (value => value .getValue () .valueOf () === original ? replacement : value);
+                  const value = field .map (value => value ?.getValue () .valueOf () === original ? replacement : value);
 
                   Editor .setFieldValue (executionContext, node, field, value, undoManager);
                   break;
