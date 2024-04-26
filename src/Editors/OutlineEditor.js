@@ -1240,11 +1240,13 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          requestAnimationFrame (() => this .expandTo (childNode, true));
    }
 
-   protocols = new Map ([
+   protocolToMimeType = new Map ([
       ["ecmascript:", "application/ecmascript"],
       ["javascript:", "application/javascript"],
       ["vrmlscript:", "application/vrmlscript"],
    ]);
+
+   mimeTypeToProtocol = new Map ([... this .protocolToMimeType .entries ()] .map (entry => entry .reverse ()));
 
    async saveDataUrlToFile (id, executionContextId, nodeId)
    {
@@ -1263,7 +1265,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       // Open dialog.
 
       const
-         extension = mime .extension (isData ? match [1] : this .protocols .get (protocol [0])),
+         extension = mime .extension (isData ? match [1] : this .protocolToMimeType .get (protocol [0])),
          filters = extension
             ? [{ name: _(`${extension .toUpperCase ()} Document`), extensions: [extension] }]
             : [{ name: _("All Files"), extensions: ["*"] }];
@@ -1328,7 +1330,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       const value = urlObject ._url .copy ();
 
-      if (this .textTypes .has (mimeType))
+      if (this .mimeTypeToProtocol .has (mimeType))
+         value [index] = `${this .mimeTypeToProtocol .get (mimeType)}${buffer .toString ('utf8')}`;
+      else if (this .textTypes .has (mimeType))
          value [index] = `data:${mimeType},${buffer .toString ('utf8')}`;
       else
          value [index] = `data:${mimeType};base64,${buffer .toString ('base64')}`;
