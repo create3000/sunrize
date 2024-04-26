@@ -2788,27 +2788,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     *
     * @param {X3DExecutionContext} executionContext
     * @param {X3DNode} node
-    * @param {X3DField} field
-    * @param {UndoManager} undoManager
-    */
-   static resetToDefaultValue (executionContext, node, field, undoManager = UndoManager .shared)
-   {
-      const fieldDefinition = node .getFieldDefinitions () .get (field .getName ());
-
-      undoManager .beginUndo (_("Reset Field »%s« of Node »%s« to Its Default Value"), field .getName (), node .getTypeName ());
-
-      if (node .canUserDefinedFields () && node .getUserDefinedFields () .has (field .getName ()))
-         this .setFieldValue (executionContext, node, field, field .create (), undoManager);
-      else
-         this .setFieldValue (executionContext, node, field, fieldDefinition .value, undoManager);
-
-      undoManager .endUndo ();
-   }
-
-   /**
-    *
-    * @param {X3DExecutionContext} executionContext
-    * @param {X3DNode} node
     * @param {string} path
     * @param {X3DField} type
     * @param {UndoManager} undoManager
@@ -2834,6 +2813,68 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       });
 
       this .requestUpdateInstances (node, undoManager);
+
+      undoManager .endUndo ();
+   }
+
+   /**
+    *
+    * @param {X3DExecutionContext} executionContext
+    * @param {X3DNode} original
+    * @param {X3DNode} replacement
+    * @param {UndoManager} undoManager
+    */
+   static replaceAllOccurrences (executionContext, original, replacement, undoManager = UndoManager .shared)
+   {
+      undoManager .beginUndo (_("Replace All Occurrences of %s by %s"), original .getTypeName (), replacement .getTypeName ());
+
+      Traverse .traverse (executionContext, Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, node =>
+      {
+         for (const field of node .getFields ())
+         {
+            switch (field .getType ())
+            {
+               case X3D .X3DConstants .SFNode:
+               {
+                  if (field .getValue () === original)
+                     Editor .setFieldValue (executionContext, node, field, replacement, undoManager);
+
+                  break;
+               }
+               case X3D .X3DConstants .MFNode:
+               {
+                  if (!field .some (value => value .getValue () === original))
+                     break;
+
+                  const value = field .map (value => value .getValue () === original ? replacement : value);
+
+                  Editor .setFieldValue (executionContext, node, field, value, undoManager);
+                  break;
+               }
+            }
+         }
+      });
+
+      undoManager .endUndo ();
+   }
+
+   /**
+    *
+    * @param {X3DExecutionContext} executionContext
+    * @param {X3DNode} node
+    * @param {X3DField} field
+    * @param {UndoManager} undoManager
+    */
+   static resetToDefaultValue (executionContext, node, field, undoManager = UndoManager .shared)
+   {
+      const fieldDefinition = node .getFieldDefinitions () .get (field .getName ());
+
+      undoManager .beginUndo (_("Reset Field »%s« of Node »%s« to Its Default Value"), field .getName (), node .getTypeName ());
+
+      if (node .canUserDefinedFields () && node .getUserDefinedFields () .has (field .getName ()))
+         this .setFieldValue (executionContext, node, field, field .create (), undoManager);
+      else
+         this .setFieldValue (executionContext, node, field, fieldDefinition .value, undoManager);
 
       undoManager .endUndo ();
    }

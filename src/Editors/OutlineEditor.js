@@ -1192,19 +1192,13 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    convertNodeToPixelTexture (id, executionContextId, nodeId)
    {
       const
-         element            = $(`#${id}`),
-         executionContext   = this .objects .get (executionContextId),
-         imageTextureNode   = this .objects .get (nodeId),
-         childIndex         = parseInt (element .attr ("index")),
-         parentFieldElement = element .closest (".field, .scene", this .sceneGraph),
-         parentNodeElement  = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
-         parentNode         = this .getNode (parentNodeElement),
-         parentField        = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement),
-         transparent        = imageTextureNode .isTransparent (),
-         width              = imageTextureNode .getWidth (),
-         height             = imageTextureNode .getHeight (),
-         data               = new DataView (imageTextureNode .getTextureData () .buffer),
-         pixelTextureNode   = executionContext .createNode ("PixelTexture") .getValue ();
+         executionContext = this .objects .get (executionContextId),
+         imageTextureNode = this .objects .get (nodeId),
+         transparent      = imageTextureNode .isTransparent (),
+         width            = imageTextureNode .getWidth (),
+         height           = imageTextureNode .getHeight (),
+         data             = new DataView (imageTextureNode .getTextureData () .buffer),
+         pixelTextureNode = executionContext .createNode ("PixelTexture") .getValue ();
 
       pixelTextureNode ._image .width  = width;
       pixelTextureNode ._image .height = height;
@@ -1233,16 +1227,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       if (imageTextureNode .getName ())
          Editor .updateNamedNode (executionContext, imageTextureNode .getName (), pixelTextureNode);
 
-      switch (parentField .getType ())
-      {
-         case X3D .X3DConstants .SFNode:
-            Editor .setFieldValue (executionContext, parentNode, parentField, pixelTextureNode);
-            break;
-         case X3D .X3DConstants .MFNode:
-            Editor .insertValueIntoArray (executionContext, parentNode, parentField, childIndex, pixelTextureNode);
-            Editor .removeValueFromArray (executionContext, parentNode, parentField, childIndex + 1);
-            break;
-      }
+      Editor .replaceAllOccurrences (executionContext, imageTextureNode, pixelTextureNode);
 
       UndoManager .shared .endUndo ();
    }
@@ -1250,18 +1235,12 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    async convertNodeToImageTexture (id, executionContextId, nodeId)
    {
       const
-         element            = $(`#${id}`),
-         executionContext   = this .objects .get (executionContextId),
-         pixelTextureNode   = this .objects .get (nodeId),
-         childIndex         = parseInt (element .attr ("index")),
-         parentFieldElement = element .closest (".field, .scene", this .sceneGraph),
-         parentNodeElement  = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
-         parentNode         = this .getNode (parentNodeElement),
-         parentField        = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement),
-         width              = pixelTextureNode .getWidth (),
-         height             = pixelTextureNode .getHeight (),
-         data               = pixelTextureNode .getTextureData (),
-         imageTextureNode   = executionContext .createNode ("ImageTexture") .getValue ();
+         executionContext = this .objects .get (executionContextId),
+         pixelTextureNode = this .objects .get (nodeId),
+         width            = pixelTextureNode .getWidth (),
+         height           = pixelTextureNode .getHeight (),
+         data             = pixelTextureNode .getTextureData (),
+         imageTextureNode = executionContext .createNode ("ImageTexture") .getValue ();
 
       // Create canvas
 
@@ -1303,16 +1282,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       if (pixelTextureNode .getName ())
          Editor .updateNamedNode (executionContext, pixelTextureNode .getName (), imageTextureNode);
 
-      switch (parentField .getType ())
-      {
-         case X3D .X3DConstants .SFNode:
-            Editor .setFieldValue (executionContext, parentNode, parentField, imageTextureNode);
-            break;
-         case X3D .X3DConstants .MFNode:
-            Editor .insertValueIntoArray (executionContext, parentNode, parentField, childIndex, imageTextureNode);
-            Editor .removeValueFromArray (executionContext, parentNode, parentField, childIndex + 1);
-            break;
-      }
+      Editor .replaceAllOccurrences (executionContext, pixelTextureNode, imageTextureNode);
 
       UndoManager .shared .endUndo ();
    }
@@ -1325,14 +1295,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    async foldInlineBackIntoScene (id, executionContextId, nodeId)
    {
       const
-         element            = $(`#${id}`),
-         executionContext   = this .objects .get (executionContextId),
-         inlineNode         = this .objects .get (nodeId),
-         childIndex         = parseInt (element .attr ("index")),
-         parentFieldElement = element .closest (".field, .scene", this .sceneGraph),
-         parentNodeElement  = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
-         parentNode         = this .getNode (parentNodeElement),
-         parentField        = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement);
+         executionContext = this .objects .get (executionContextId),
+         inlineNode       = this .objects .get (nodeId);
 
       if (inlineNode .getInternalScene () .rootNodes .length === 0)
          return;
@@ -1375,16 +1339,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       // Insert Inline node.
 
-      switch (parentField .getType ())
-      {
-         case X3D .X3DConstants .SFNode:
-            Editor .setFieldValue (executionContext, parentNode, parentField, childNode);
-            break;
-         case X3D .X3DConstants .MFNode:
-            Editor .insertValueIntoArray (executionContext, parentNode, parentField, childIndex, childNode);
-            Editor .removeValueFromArray (executionContext, parentNode, parentField, childIndex + 1);
-            break;
-      }
+      Editor .replaceAllOccurrences (executionContext, inlineNode, childNode);
 
       UndoManager .shared .endUndo ();
 
@@ -1547,17 +1502,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    async convertNodeToInlineFile (id, executionContextId, nodeId)
    {
       const
-         element                = $(`#${id}`),
-         executionContext       = this .objects .get (executionContextId),
-         childNode              = this .objects .get (nodeId),
-         childIndex             = parseInt (element .attr ("index")),
-         parentFieldElement     = element .closest (".field, .scene", this .sceneGraph),
-         parentNodeElement      = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
-         parentNode             = this .getNode (parentNodeElement),
-         parentField            = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement),
-         defaultDirectory       = $.try (() => path .dirname (url .fileURLToPath (executionContext .getWorldURL ()))),
-         defaultPath            = childNode .getName () && defaultDirectory ? path .join (defaultDirectory, `${childNode .getName ()}.x3d`) : defaultDirectory,
-         response               = await electron .ipcRenderer .invoke ("file-path", { type: "save", defaultPath });
+         executionContext = this .objects .get (executionContextId),
+         childNode        = this .objects .get (nodeId),
+         defaultDirectory = $.try (() => path .dirname (url .fileURLToPath (executionContext .getWorldURL ()))),
+         defaultPath      = childNode .getName () && defaultDirectory ? path .join (defaultDirectory, `${childNode .getName ()}.x3d`) : defaultDirectory,
+         response         = await electron .ipcRenderer .invoke ("file-path", { type: "save", defaultPath });
 
       if (response .canceled)
          return;
@@ -1581,16 +1530,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       // Insert Inline node.
 
-      switch (parentField .getType ())
-      {
-         case X3D .X3DConstants .SFNode:
-            Editor .setFieldValue (executionContext, parentNode, parentField, inlineNode);
-            break;
-         case X3D .X3DConstants .MFNode:
-            Editor .insertValueIntoArray (executionContext, parentNode, parentField, childIndex, inlineNode);
-            Editor .removeValueFromArray (executionContext, parentNode, parentField, childIndex + 1);
-            break;
-      }
+      Editor .replaceAllOccurrences (executionContext, childNode, inlineNode);
 
       UndoManager .shared .endUndo ();
 
