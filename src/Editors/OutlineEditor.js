@@ -1246,7 +1246,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       ["vrmlscript:", "application/vrmlscript"],
    ]);
 
-   mimeTypeToProtocol = new Map ([... this .protocolToMimeType .entries ()] .map (entry => entry .reverse ()));
+   mimeTypeToProtocol = new Map (Array .from (this .protocolToMimeType .entries (), entry => entry .reverse ()));
 
    async saveDataUrlToFile (id, executionContextId, nodeId)
    {
