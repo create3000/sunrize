@@ -448,19 +448,19 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                }
                case X3D .X3DConstants .X3DUrlObject:
                {
+                  if (node ._url .some (fileURL => !fileURL .match (/^(?:data|ecmascript|javascript|vrmlscript):/)))
+                  {
+                     menu .push ({
+                        label: _("Embed External Resource as Data URL"),
+                        args: ["embedExternalResourceAsDataURL", element .attr ("id"), executionContext .getId (), node .getId ()],
+                     });
+                  }
+
                   if (node ._url .some (fileURL => fileURL .match (/^(?:data|ecmascript|javascript|vrmlscript):/)))
                   {
                      menu .push ({
                         label: _("Save Data URL to File..."),
                         args: ["saveDataUrlToFile", element .attr ("id"), executionContext .getId (), node .getId ()],
-                     });
-                  }
-
-                  if (node ._url .some (fileURL => !fileURL .match (/^(?:data|ecmascript|javascript|vrmlscript):/)))
-                  {
-                     menu .push ({
-                        label: _("Embed External Resource As Data URL"),
-                        args: ["embedExternalResourceAsDataURL", element .attr ("id"), executionContext .getId (), node .getId ()],
                      });
                   }
 
