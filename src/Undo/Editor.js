@@ -2826,6 +2826,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static replaceAllOccurrences (executionContext, original, replacement, undoManager = UndoManager .shared)
    {
+      original    = original    .valueOf ();
+      replacement = replacement .valueOf ();
+
       undoManager .beginUndo (_("Replace All Occurrences of %s by %s"), original .getTypeName (), replacement .getTypeName ());
 
       Traverse .traverse (executionContext, Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, node =>
@@ -2836,17 +2839,17 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                case X3D .X3DConstants .SFNode:
                {
-                  if (field .getValue () === original)
+                  if (field .getValue () .valueOf () === original)
                      Editor .setFieldValue (executionContext, node, field, replacement, undoManager);
 
                   break;
                }
                case X3D .X3DConstants .MFNode:
                {
-                  if (!field .some (value => value .getValue () === original))
+                  if (!field .some (value => value .getValue () .valueOf () === original))
                      break;
 
-                  const value = field .map (value => value .getValue () === original ? replacement : value);
+                  const value = field .map (value => value .getValue () .valueOf () === original ? replacement : value);
 
                   Editor .setFieldValue (executionContext, node, field, value, undoManager);
                   break;
