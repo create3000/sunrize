@@ -425,6 +425,18 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
                   continue;
                }
+               case X3D .X3DConstants .PixelTexture:
+               {
+                  if (node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE)
+                  {
+                     menu .push ({
+                        label: _("Convert Node to ImageTexture"),
+                        args: ["convertNodeToImageTexture", element .attr ("id"), executionContext .getId (), node .getId ()],
+                     });
+                  }
+
+                  continue;
+               }
                case X3D .X3DConstants .X3DPrototypeInstance:
                {
                   if (!$.try (() => node .getInnerNode () .getType () .includes (X3D .X3DConstants .X3DChildNode)))
@@ -1191,8 +1203,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          width              = imageTextureNode .getWidth (),
          height             = imageTextureNode .getHeight (),
          transparent        = imageTextureNode .isTransparent (),
-         pixelTextureNode   = executionContext .createNode ("PixelTexture") .getValue (),
-         data               = new DataView (imageTextureNode .getTextureData () .buffer);
+         data               = new DataView (imageTextureNode .getTextureData () .buffer),
+         pixelTextureNode   = executionContext .createNode ("PixelTexture") .getValue ();
 
       pixelTextureNode ._image .width  = width;
       pixelTextureNode ._image .height = height;
@@ -1208,15 +1220,18 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          {
             const
                a = y * width + x,
-               i = (height - y - 1) * width + x;
+               d = (height - y - 1) * width + x;
 
-            array [a] = transparent ? data .getUint32 (i * 4) : data .getUint32 (i * 4) >>> 8;
+            array [a] = transparent ? data .getUint32 (d * 4) : data .getUint32 (d * 4) >>> 8;
          }
       }
 
       // Add undo step.
 
       UndoManager .shared .beginUndo (_("Convert Node to PixelTexture"));
+
+      if (imageTextureNode .getName ())
+         Editor .updateNamedNode (executionContext, imageTextureNode .getName (), pixelTextureNode);
 
       switch (parentField .getType ())
       {
@@ -1225,6 +1240,72 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             break;
          case X3D .X3DConstants .MFNode:
             Editor .insertValueIntoArray (executionContext, parentNode, parentField, childIndex, pixelTextureNode);
+            Editor .removeValueFromArray (executionContext, parentNode, parentField, childIndex + 1);
+            break;
+      }
+
+      UndoManager .shared .endUndo ();
+   }
+
+   convertNodeToImageTexture (id, executionContextId, nodeId)
+   {
+      const
+         element            = $(`#${id}`),
+         executionContext   = this .objects .get (executionContextId),
+         pixelTextureNode   = this .objects .get (nodeId),
+         childIndex         = parseInt (element .attr ("index")),
+         parentFieldElement = element .closest (".field, .scene", this .sceneGraph),
+         parentNodeElement  = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
+         parentNode         = this .getNode (parentNodeElement),
+         parentField        = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement),
+         width              = pixelTextureNode .getWidth (),
+         height             = pixelTextureNode .getHeight (),
+         data               = pixelTextureNode .getTextureData (),
+         imageTextureNode   = executionContext .createNode ("ImageTexture") .getValue ();
+
+      // Create canvas
+
+      const
+         canvas  = document .createElement ("canvas"),
+         context = canvas .getContext ("2d"),
+         imgData = context .createImageData (width, height);
+
+      canvas .width  = width;
+      canvas .height = height;
+
+      // Flip image and set pixels.
+
+      for (let y = 0; y < height; ++ y)
+      {
+         for (let x = 0; x < width; ++ x)
+         {
+            const
+               i = y * width + x,
+               d = (height - y - 1) * width + x;
+
+            for (let c = 0; c < 4; ++ c)
+               imgData .data [i * 4 + c] = data [d * 4 + c];
+         }
+      }
+
+      context .putImageData (imgData, 0, 0);
+
+      imageTextureNode ._url = [canvas .toDataURL ("image/png")];
+
+      // Add undo step.
+
+      UndoManager .shared .beginUndo (_("Convert Node to ImageTexture"));
+
+      if (pixelTextureNode .getName ())
+         Editor .updateNamedNode (executionContext, pixelTextureNode .getName (), imageTextureNode);
+
+      switch (parentField .getType ())
+      {
+         case X3D .X3DConstants .SFNode:
+            Editor .setFieldValue (executionContext, parentNode, parentField, imageTextureNode);
+            break;
+         case X3D .X3DConstants .MFNode:
+            Editor .insertValueIntoArray (executionContext, parentNode, parentField, childIndex, imageTextureNode);
             Editor .removeValueFromArray (executionContext, parentNode, parentField, childIndex + 1);
             break;
       }
