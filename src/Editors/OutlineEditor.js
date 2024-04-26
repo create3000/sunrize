@@ -398,6 +398,18 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
                   continue;
                }
+               case X3D .X3DConstants .ImageTexture:
+               {
+                  if (node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE)
+                  {
+                     menu .push ({
+                        label: _("Convert Node to PixelTexture"),
+                        args: ["convertNodeToPixelTexture", element .attr ("id"), executionContext .getId (), node .getId ()],
+                     });
+                  }
+
+                  continue;
+               }
                case X3D .X3DConstants .Inline:
                {
                   menu .push ({
@@ -1165,6 +1177,57 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       UndoManager .shared .endUndo ();
    }
 
+   convertNodeToPixelTexture (id, executionContextId, nodeId)
+   {
+      const
+         element            = $(`#${id}`),
+         executionContext   = this .objects .get (executionContextId),
+         imageTextureNode   = this .objects .get (nodeId),
+         childIndex         = parseInt (element .attr ("index")),
+         parentFieldElement = element .closest (".field, .scene", this .sceneGraph),
+         parentNodeElement  = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
+         parentNode         = this .getNode (parentNodeElement),
+         parentField        = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement),
+         width              = imageTextureNode .getWidth (),
+         height             = imageTextureNode .getHeight (),
+         transparent        = imageTextureNode .isTransparent (),
+         pixelTextureNode   = executionContext .createNode ("PixelTexture") .getValue (),
+         data               = new DataView (imageTextureNode .getTextureData () .buffer);
+
+      pixelTextureNode ._image .width  = width;
+      pixelTextureNode ._image .height = height;
+      pixelTextureNode ._image .comp   = transparent ? 4 : 3;
+
+      const array = pixelTextureNode ._image .array;
+
+      for (let y = 0; y < height; ++ y)
+      {
+         for (let x = 0; x < width; ++ x)
+         {
+            const
+               a = y * width + x,
+               i = (height - y - 1) * width + x;
+
+            array [a] = transparent ? data .getUint32 (i * 4) : data .getUint32 (i * 4) >>> 8;
+         }
+      }
+
+      UndoManager .shared .beginUndo (_("Convert Node to PixelTexture"));
+
+      switch (parentField .getType ())
+      {
+         case X3D .X3DConstants .SFNode:
+            Editor .setFieldValue (executionContext, parentNode, parentField, pixelTextureNode);
+            break;
+         case X3D .X3DConstants .MFNode:
+            Editor .insertValueIntoArray (executionContext, parentNode, parentField, childIndex, pixelTextureNode);
+            Editor .removeValueFromArray (executionContext, parentNode, parentField, childIndex + 1);
+            break;
+      }
+
+      UndoManager .shared .endUndo ();
+   }
+
    openFileInNewTab (fileURL)
    {
       electron .ipcRenderer .invoke ("open-files", [fileURL]);
@@ -1173,14 +1236,14 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    async foldInlineBackIntoScene (id, executionContextId, nodeId)
    {
       const
-         element                = $(`#${id}`),
-         executionContext       = this .objects .get (executionContextId),
-         inlineNode             = this .objects .get (nodeId),
-         childIndex             = parseInt (element .attr ("index")),
-         parentFieldElement     = element .closest (".field, .scene", this .sceneGraph),
-         parentNodeElement      = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
-         parentNode             = this .getNode (parentNodeElement),
-         parentField            = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement);
+         element            = $(`#${id}`),
+         executionContext   = this .objects .get (executionContextId),
+         inlineNode         = this .objects .get (nodeId),
+         childIndex         = parseInt (element .attr ("index")),
+         parentFieldElement = element .closest (".field, .scene", this .sceneGraph),
+         parentNodeElement  = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
+         parentNode         = this .getNode (parentNodeElement),
+         parentField        = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement);
 
       if (inlineNode .getInternalScene () .rootNodes .length === 0)
          return;
