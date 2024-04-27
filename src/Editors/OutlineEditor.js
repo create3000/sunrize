@@ -47,8 +47,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       ]);
 
       this .transformLikeNodes = new Set ([
-         X3D .X3DConstants .X3DTransformNode,
          X3D .X3DConstants .HAnimHumanoid,
+         X3D .X3DConstants .X3DTransformNode,
       ]);
    }
 
