@@ -1228,56 +1228,64 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
    async updatePixelTextureFromFile (id, executionContextId, nodeId)
    {
-      const
-         executionContext = this .objects .get (executionContextId),
-         pixelTextureNode = this .objects .get (nodeId);
-
-      const
-         defaultPath = $.try (() => path .dirname (url .fileURLToPath (executionContext .getWorldURL ()))),
-         filters     = [{ name: _("All Files"), extensions: ["*"] }];
-
-      const response = await electron .ipcRenderer .invoke ("file-path", { type: "open", defaultPath, filters, properties: [ ] });
-
-      if (response .canceled)
-         return;
-
-      const imageTextureNode = executionContext .createNode ("ImageTexture") .getValue ();
-
-      imageTextureNode ._url               = response .filePaths;
-      imageTextureNode ._textureProperties = pixelTextureNode ._textureProperties;
-
-      await imageTextureNode .loading ();
-
-      const
-         transparent = imageTextureNode .isTransparent (),
-         width       = imageTextureNode .getWidth (),
-         height      = imageTextureNode .getHeight (),
-         data        = new DataView (imageTextureNode .getTextureData () .buffer),
-         image       = new X3D .SFImage (width, height, transparent ? 4 : 3);
-
-      // Flip image and set pixels.
-
-      const array = image .array;
-
-      for (let y = 0; y < height; ++ y)
+      try
       {
-         for (let x = 0; x < width; ++ x)
+         const
+            executionContext = this .objects .get (executionContextId),
+            pixelTextureNode = this .objects .get (nodeId);
+
+         const
+            defaultPath = $.try (() => path .dirname (url .fileURLToPath (executionContext .getWorldURL ()))),
+            filters     = [{ name: _("All Files"), extensions: ["*"] }];
+
+         const response = await electron .ipcRenderer .invoke ("file-path", { type: "open", defaultPath, filters, properties: [ ] });
+
+         if (response .canceled)
+            return;
+
+         const imageTextureNode = executionContext .createNode ("ImageTexture") .getValue ();
+
+         imageTextureNode ._url               = response .filePaths;
+         imageTextureNode ._textureProperties = pixelTextureNode ._textureProperties;
+
+         await imageTextureNode .loading ();
+
+         const
+            transparent = imageTextureNode .isTransparent (),
+            width       = imageTextureNode .getWidth (),
+            height      = imageTextureNode .getHeight (),
+            data        = new DataView (imageTextureNode .getTextureData () .buffer),
+            image       = new X3D .SFImage (width, height, transparent ? 4 : 3);
+
+         // Flip image and set pixels.
+
+         const array = image .array;
+
+         for (let y = 0; y < height; ++ y)
          {
-            const
-               a = y * width + x,
-               d = (height - y - 1) * width + x;
+            for (let x = 0; x < width; ++ x)
+            {
+               const
+                  a = y * width + x,
+                  d = (height - y - 1) * width + x;
 
-            array [a] = transparent ? data .getUint32 (d * 4) : data .getUint32 (d * 4) >>> 8;
+               array [a] = transparent ? data .getUint32 (d * 4) : data .getUint32 (d * 4) >>> 8;
+            }
          }
+
+         // Add undo step.
+
+         UndoManager .shared .beginUndo (_("Update Image from File"));
+
+         Editor .setFieldValue (executionContext, pixelTextureNode, pixelTextureNode ._image, image);
+
+         UndoManager .shared .endUndo ();
       }
-
-      // Add undo step.
-
-      UndoManager .shared .beginUndo (_("Update Image from File"));
-
-      Editor .setFieldValue (executionContext, pixelTextureNode, pixelTextureNode ._image, image);
-
-      UndoManager .shared .endUndo ();
+      catch (error)
+      {
+         if (error)
+            console .error (error);
+      }
    }
 
    async convertPixelTextureToImageTexture (id, executionContextId, nodeId)
