@@ -1193,9 +1193,10 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          data             = new DataView (imageTextureNode .getTextureData () .buffer),
          pixelTextureNode = executionContext .createNode ("PixelTexture") .getValue ();
 
-      pixelTextureNode ._image .width  = width;
-      pixelTextureNode ._image .height = height;
-      pixelTextureNode ._image .comp   = transparent ? 4 : 3;
+      pixelTextureNode ._image .width      = width;
+      pixelTextureNode ._image .height     = height;
+      pixelTextureNode ._image .comp       = transparent ? 4 : 3;
+      pixelTextureNode ._textureProperties = imageTextureNode ._textureProperties;
 
       // Flip image and set pixels.
 
@@ -1242,7 +1243,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       const imageTextureNode = executionContext .createNode ("ImageTexture") .getValue ();
 
-      imageTextureNode ._url = response .filePaths;
+      imageTextureNode ._url               = response .filePaths;
+      imageTextureNode ._textureProperties = pixelTextureNode ._textureProperties;
 
       await imageTextureNode .requestImmediateLoad ();
 
