@@ -1246,7 +1246,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       imageTextureNode ._url               = response .filePaths;
       imageTextureNode ._textureProperties = pixelTextureNode ._textureProperties;
 
-      await imageTextureNode .requestImmediateLoad ();
+      await imageTextureNode .loading ();
 
       const
          transparent = imageTextureNode .isTransparent (),
