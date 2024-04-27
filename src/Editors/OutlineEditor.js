@@ -6,24 +6,12 @@ const
    path              = require ("path"),
    url               = require ("url"),
    fs                = require ("fs"),
-   mime              = require ("mime-types"),
+   mime              = require ("../Bits/MimeTypes"),
    X3D               = require ("../X3D"),
    OutlineRouteGraph = require ("./OutlineRouteGraph"),
    Editor            = require ("../Undo/Editor"),
    UndoManager       = require ("../Undo/UndoManager"),
    _                 = require ("../Application/GetText");
-
-const missingTypes = new Map ([
-   ["image/ktx2",          ["ktx2"]],
-   ["x-shader/x-vertex",   ["vs"]  ],
-   ["x-shader/x-fragment", ["fs"]  ],
-]);
-
-for (const [mimeType, extensions] of missingTypes)
-{
-   mime .types [extensions [0]] = mimeType;
-   mime .extensions [mimeType]  = extensions;
-}
 
 module .exports = class OutlineEditor extends OutlineRouteGraph
 {
