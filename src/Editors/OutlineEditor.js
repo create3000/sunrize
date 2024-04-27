@@ -1246,7 +1246,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       imageTextureNode ._url               = response .filePaths;
       imageTextureNode ._textureProperties = pixelTextureNode ._textureProperties;
 
-      await imageTextureNode .loading ();
+      await imageTextureNode .loading () .catch (Function .prototype);
 
       if (imageTextureNode .checkLoadState () === X3D .X3DConstants .FAILED_STATE)
          return;
