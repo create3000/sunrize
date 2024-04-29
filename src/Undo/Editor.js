@@ -3092,18 +3092,18 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       if (nodes instanceof X3D .MFNode)
       {
-         this .#transformToZeroFromArray (executionContext, nodes, modelMatrix, undoManager);
+         this .#transformToZeroFromArray (executionContext, nodes, modelMatrix, new Set (), undoManager);
       }
       else
       {
          for (const node of nodes)
-            this .#transformToZeroFromNode (executionContext, node, modelMatrix, undoManager);
+            this .#transformToZeroFromNode (executionContext, node, modelMatrix, new Set (), undoManager);
       }
 
       undoManager .endUndo ();
    }
 
-   static #transformToZeroFromArray (executionContext, nodes, modelMatrix, undoManager)
+   static #transformToZeroFromArray (executionContext, nodes, modelMatrix, seen, undoManager)
    {
       const resetNodes = new Set ([
          X3D .X3DConstants .ScreenGroup,
@@ -3115,13 +3115,18 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       if (nodes .some (n => n .getType () .some (t => resetNodes .has (t))))
          return false;
 
-      return nodes .every (node => this .#transformToZeroFromNode (executionContext, node, modelMatrix, undoManager));
+      return nodes .every (node => this .#transformToZeroFromNode (executionContext, node, modelMatrix, seen, undoManager));
    }
 
-   static #transformToZeroFromNode (executionContext, node, modelMatrix, undoManager)
+   static #transformToZeroFromNode (executionContext, node, modelMatrix, seen, undoManager)
    {
       if (!node)
          return true;
+
+      if (seen .has (node))
+         return true;
+
+      seen .add (node);
 
       const transformLikeNodes = new Set ([
          X3D .X3DConstants .X3DTransformNode,
@@ -3137,7 +3142,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          {
             case X3D .X3DConstants .LayerSet:
             {
-               this .#transformToZeroFromArray (executionContext, node ._layers, modelMatrix, undoManager);
+               this .#transformToZeroFromArray (executionContext, node ._layers, modelMatrix, seen, undoManager);
                break;
             }
             case X3D .X3DConstants .LayoutGroup:
@@ -3154,7 +3159,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             case X3D .X3DConstants .X3DLayerNode:
             case X3D .X3DConstants .X3DGroupingNode:
             {
-               const reset = this .#transformToZeroFromArray (executionContext, node ._children, modelMatrix, undoManager);
+               const reset = this .#transformToZeroFromArray (executionContext, node ._children, modelMatrix, seen, undoManager);
 
                if (!node .getType () .some (type => transformLikeNodes .has (type)))
                   break;
@@ -3178,7 +3183,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                const geometry = node ._geometry .getValue ();
 
-               this .#transformToZeroFromNode (executionContext, geometry, modelMatrix, undoManager);
+               this .#transformToZeroFromNode (executionContext, geometry, modelMatrix, seen, undoManager);
                break;
             }
             case X3D .X3DConstants .X3DViewpointNode:
@@ -3280,8 +3285,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   normal = node ._normal .getValue (),
                   coord  = node ._coord .getValue ();
 
-               this .#transformToZeroFromNode (executionContext, normal, modelMatrix, undoManager);
-               this .#transformToZeroFromNode (executionContext, coord,  modelMatrix, undoManager);
+               this .#transformToZeroFromNode (executionContext, normal, modelMatrix, seen, undoManager);
+               this .#transformToZeroFromNode (executionContext, coord,  modelMatrix, seen, undoManager);
                break;
             }
             case X3D .X3DConstants .Extrusion:
@@ -3297,7 +3302,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                const controlPoint = node ._controlPoint .getValue ();
 
-               this .#transformToZeroFromNode (executionContext, controlPoint, modelMatrix, undoManager);
+               this .#transformToZeroFromNode (executionContext, controlPoint, modelMatrix, seen, undoManager);
                break;
             }
             case X3D .X3DConstants .NurbsSweptSurface:
@@ -3305,7 +3310,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                const trajectoryCurve = node ._trajectoryCurve .getValue ();
 
-               this .#transformToZeroFromNode (executionContext, trajectoryCurve, modelMatrix, undoManager);
+               this .#transformToZeroFromNode (executionContext, trajectoryCurve, modelMatrix, seen, undoManager);
                break;
             }
             case X3D .X3DConstants .Normal:
@@ -3333,6 +3338,40 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   .map (p => node .getGeoCoord (p .getValue (), new X3D .Vector3 ()));
 
                this .setFieldValue (executionContext, node, node ._point, point, undoManager);
+               break;
+            }
+            case X3D .X3DConstants .ParticleSystem:
+            {
+               this .#transformToZeroFromNode (executionContext, node ._emitter .getValue (), modelMatrix, seen, undoManager);
+               break;
+            }
+            case X3D .X3DConstants .PointEmitter:
+            case X3D .X3DConstants .ConeEmitter:
+            case X3D .X3DConstants .PolylineEmitter:
+            case X3D .X3DConstants .SurfaceEmitter:
+            case X3D .X3DConstants .VolumeEmitter:
+            case X3D .X3DConstants .ExplosionEmitter:
+            {
+               if (node ._position)
+               {
+                  const position = modelMatrix .multVecMatrix (node ._position .getValue () .copy ());
+
+                  this .setFieldValue (executionContext, node, node ._position, position, undoManager);
+               }
+
+               if (node ._direction)
+               {
+                  const direction = modelMatrix .multDirMatrix (node ._direction .getValue () .copy ()) .normalize ();
+
+                  this .setFieldValue (executionContext, node, node ._direction, direction, undoManager);
+               }
+
+               if (node ._surface)
+                  this .#transformToZeroFromNode (executionContext, node ._surface .getValue (), modelMatrix, seen, undoManager);
+
+               if (node ._coord)
+                  this .#transformToZeroFromNode (executionContext, node ._coord .getValue (), modelMatrix, seen, undoManager);
+
                break;
             }
             default:
