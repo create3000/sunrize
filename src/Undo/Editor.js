@@ -3359,7 +3359,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   this .setFieldValue (executionContext, node, node ._position, position, undoManager);
                }
 
-               if (node ._direction && !node ._direction .getValue () .equals (Vector3 .Zero))
+               if (node ._direction && !node ._direction .getValue () .equals (X3D .Vector3 .Zero))
                {
                   const direction = modelMatrix .multDirMatrix (node ._direction .getValue () .copy ()) .normalize ();
 
