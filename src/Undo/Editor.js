@@ -3345,12 +3345,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                this .#transformToZeroFromNode (executionContext, node ._emitter .getValue (), modelMatrix, seen, undoManager);
                break;
             }
-            case X3D .X3DConstants .PointEmitter:
-            case X3D .X3DConstants .ConeEmitter:
-            case X3D .X3DConstants .PolylineEmitter:
-            case X3D .X3DConstants .SurfaceEmitter:
-            case X3D .X3DConstants .VolumeEmitter:
-            case X3D .X3DConstants .ExplosionEmitter:
+            case X3D .X3DConstants .X3DParticleEmitterNode:
             {
                if (node ._position)
                {
