@@ -332,12 +332,12 @@ main ()
 
    decodeURI (string)
    {
-      return string .match (/^data:/s) ? $.try (() => decodeURI (string)) ?? string : string;
+      return string .match (/^data:/) ? $.try (() => decodeURI (string)) ?? string : string;
    }
 
    encodeURI (string)
    {
-      return string .match (/^data:/s)
+      return string .match (/^data:/)
          ? encodeURI (string) .replace (this .#specialCharsRegExp, c => this .#specialChars .get (c .toUpperCase ()))
          : string;
    }
