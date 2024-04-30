@@ -338,14 +338,7 @@ main ()
 
    decodeURI (string)
    {
-      try
-      {
-         return string .match (/^data:/s) ? decodeURI (string) : string;
-      }
-      catch
-      {
-         return string;
-      }
+      return $.try (() => string .match (/^data:/s) ? decodeURI (string) : string) ?? string;
    }
 
    encodeURI (string)
