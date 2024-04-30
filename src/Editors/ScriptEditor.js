@@ -338,7 +338,14 @@ main ()
 
    decodeURI (string)
    {
-      return string .match (/^data:/s) ? decodeURI (this .node ._url [0]) : string;
+      try
+      {
+         return string .match (/^data:/s) ? decodeURI (string) : string;
+      }
+      catch
+      {
+         return string;
+      }
    }
 
    encodeURI (string)
