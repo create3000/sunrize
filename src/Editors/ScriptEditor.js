@@ -558,7 +558,7 @@ main ()
 
       const
          string = this .monaco .getModel () .getValue (),
-         value  = new X3D .MFString (Editor .encodeURI (string));
+         value  = this .node ._url .toSpliced (0, 1, Editor .encodeURI (string));
 
       if (this .node ._url .equals (value))
          return;
