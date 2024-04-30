@@ -317,7 +317,7 @@ main ()
    getScriptSource (node)
    {
       if (node ._url .length && node ._url [0] .length)
-         return node ._url [0];
+         return this .decodeURI (node ._url [0]);
 
       const value = this .defaultSources [node .getTypeName ()];
 
@@ -325,6 +325,27 @@ main ()
          return value .replace ("x-vertex", "x-fragment");
 
       return value;
+   }
+
+   decodeURI (string)
+   {
+      return string .match (/^\s*data:/s) ? decodeURI (this .node ._url [0]) : string;
+   }
+
+   specialChars = new Map ([
+      ["%09", "\t"],
+      ["%0A", "\n"],
+      ["%0D", "\r"],
+      ["%20", " "],
+      ["%7B", "{"],
+      ["%7D", "}"],
+   ]);
+
+   encodeURI (string)
+   {
+      return string .match (/^\s*data:/s)
+         ? encodeURI (string) .replace (/%(?:09|0A|0D|20|7B|7D)/ig, c => this .specialChars .get (c .toUpperCase ()))
+         : string;
    }
 
    showContextMenu ()
@@ -556,7 +577,9 @@ main ()
       if (!this .monaco)
          return;
 
-      const value = new X3D .MFString (this .monaco .getModel () .getValue ());
+      const
+         string = this .monaco .getModel () .getValue (),
+         value  = new X3D .MFString (this .encodeURI (string));
 
       if (this .node ._url .equals (value))
          return;
@@ -568,7 +591,7 @@ main ()
 
    set_url ()
    {
-      this .monaco .getModel () .setValue (this .node ._url [0]);
+      this .monaco .getModel () .setValue (this .decodeURI (this .node ._url [0]));
    }
 
    set_loadState ()
