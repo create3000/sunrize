@@ -332,14 +332,21 @@ main ()
 
    decodeURI (string)
    {
-      return string .match (/^(?:file|https?|ftp|data):/) ? $.try (() => decodeURI (string)) ?? string : string;
+      if (string .match (/^(?:ecmascript|javascript|vrmlscript):/))
+         return string;
+
+      return $.try (() => decodeURI (string));
    }
 
    encodeURI (string)
    {
-      return string .match (/^(?:file|https?|ftp|data):/)
-         ? encodeURI (string) .replace (this .#specialCharsRegExp, c => this .#specialChars .get (c .toUpperCase ()))
-         : string;
+      if (string .match (/^(?:ecmascript|javascript|vrmlscript):/))
+         return string;
+
+      if (string .match (/^data:/))
+         return encodeURI (string) .replace (this .#specialCharsRegExp, c => this .#specialChars .get (c .toUpperCase ()));
+
+      return encodeURI (string);
    }
 
    showContextMenu ()
