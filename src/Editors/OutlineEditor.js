@@ -1495,7 +1495,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       if (this .mimeTypeToProtocol .has (mimeType))
          value [index] = `${this .mimeTypeToProtocol .get (mimeType)}${buffer .toString ('utf8')}`;
       else if (this .textTypes .has (mimeType))
-         value [index] = `data:${mimeType},${buffer .toString ('utf8')}`;
+         value [index] = encodeURI (`data:${mimeType},${buffer .toString ('utf8')}`);
       else
          value [index] = `data:${mimeType};base64,${buffer .toString ('base64')}`;
 
