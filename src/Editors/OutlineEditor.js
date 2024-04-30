@@ -1412,10 +1412,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          executionContext = this .objects .get (executionContextId),
          urlObject        = this .objects .get (nodeId),
          index            = urlObject ._url .findIndex (fileURL => fileURL .match (/^(?:data|ecmascript|javascript|vrmlscript):/)),
-         dataURL          = urlObject ._url [index],
-         protocol         = dataURL .match (/^(?:data|ecmascript|javascript|vrmlscript):/),
-         match            = dataURL .match (/^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s),
-         isData           = protocol [0] === "data:";
+         string           = urlObject ._url [index],
+         protocol         = string .match (/^(?:data|ecmascript|javascript|vrmlscript):/),
+         isData           = protocol [0] === "data:",
+         dataURL          = isData ? $.try (() => decodeURI (string)) ?? string : string,
+         match            = dataURL .match (/^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s);
 
       if (!((isData && match) || !isData))
          return;
