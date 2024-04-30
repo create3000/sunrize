@@ -327,14 +327,8 @@ main ()
       return value;
    }
 
-   #specialChars = new Map ([
-      ["%09", "\t"],
-      ["%0A", "\n"],
-      ["%0D", "\r"],
-      ["%20", " "],
-      ["%7B", "{"],
-      ["%7D", "}"],
-   ]);
+   #specialChars = new Map ("\t\n\r \"[]{}" .split ("") .map (c => [encodeURIComponent (c), c]));
+   #specialCharsRegExp = new RegExp ([... this .#specialChars .keys ()] .join ("|"), "ig");
 
    decodeURI (string)
    {
@@ -344,7 +338,7 @@ main ()
    encodeURI (string)
    {
       return string .match (/^data:/s)
-         ? encodeURI (string) .replace (/%(?:09|0A|0D|20|7B|7D)/ig, c => this .#specialChars .get (c .toUpperCase ()))
+         ? encodeURI (string) .replace (this .#specialCharsRegExp, c => this .#specialChars .get (c .toUpperCase ()))
          : string;
    }
 
