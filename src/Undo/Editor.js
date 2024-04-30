@@ -57,6 +57,28 @@ module .exports = class Editor
       }
    }
 
+   static #specialChars = new Map ("\t\n\r \"[]{}" .split ("") .map (c => [encodeURIComponent (c), c]));
+   static #specialCharsRegExp = new RegExp ([... this .#specialChars .keys ()] .join ("|"), "ig");
+
+   static decodeURI (string)
+   {
+      if (string .match (/^(?:ecmascript|javascript|vrmlscript):/))
+         return string;
+
+      return $.try (() => decodeURI (string)) ?? string;
+   }
+
+   static encodeURI (string)
+   {
+      if (string .match (/^(?:ecmascript|javascript|vrmlscript):/))
+         return string;
+
+      if (string .match (/^data:/))
+         return encodeURI (string) .replace (this .#specialCharsRegExp, c => this .#specialChars .get (c .toUpperCase ()));
+
+      return encodeURI (string);
+   }
+
    /**
     *
     * @param {X3DExecutionContext} executionContext source execution context

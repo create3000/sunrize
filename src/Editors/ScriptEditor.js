@@ -317,7 +317,7 @@ main ()
    getScriptSource (node)
    {
       if (node ._url .length && node ._url [0] .length)
-         return this .decodeURI (node ._url [0]);
+         return Editor .decodeURI (node ._url [0]);
 
       const value = this .defaultSources [node .getTypeName ()];
 
@@ -325,28 +325,6 @@ main ()
          return value .replace ("x-vertex", "x-fragment");
 
       return value;
-   }
-
-   #specialChars = new Map ("\t\n\r \"[]{}" .split ("") .map (c => [encodeURIComponent (c), c]));
-   #specialCharsRegExp = new RegExp ([... this .#specialChars .keys ()] .join ("|"), "ig");
-
-   decodeURI (string)
-   {
-      if (string .match (/^(?:ecmascript|javascript|vrmlscript):/))
-         return string;
-
-      return $.try (() => decodeURI (string)) ?? string;
-   }
-
-   encodeURI (string)
-   {
-      if (string .match (/^(?:ecmascript|javascript|vrmlscript):/))
-         return string;
-
-      if (string .match (/^data:/))
-         return encodeURI (string) .replace (this .#specialCharsRegExp, c => this .#specialChars .get (c .toUpperCase ()));
-
-      return encodeURI (string);
    }
 
    showContextMenu ()
@@ -580,7 +558,7 @@ main ()
 
       const
          string = this .monaco .getModel () .getValue (),
-         value  = new X3D .MFString (this .encodeURI (string));
+         value  = new X3D .MFString (Editor .encodeURI (string));
 
       if (this .node ._url .equals (value))
          return;
@@ -592,7 +570,7 @@ main ()
 
    set_url ()
    {
-      this .monaco .getModel () .setValue (this .decodeURI (this .node ._url [0]));
+      this .monaco .getModel () .setValue (Editor .decodeURI (this .node ._url [0]));
    }
 
    set_loadState ()

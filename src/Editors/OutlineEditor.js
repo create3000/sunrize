@@ -1412,11 +1412,10 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          executionContext = this .objects .get (executionContextId),
          urlObject        = this .objects .get (nodeId),
          index            = urlObject ._url .findIndex (fileURL => fileURL .match (/^(?:data|ecmascript|javascript|vrmlscript):/)),
-         string           = urlObject ._url [index],
-         protocol         = string .match (/^(?:data|ecmascript|javascript|vrmlscript):/),
-         isData           = protocol [0] === "data:",
-         dataURL          = isData ? $.try (() => decodeURI (string)) ?? string : string,
-         match            = dataURL .match (/^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s);
+         dataURL          = Editor .decodeURI (urlObject ._url [index]),
+         protocol         = dataURL .match (/^(?:data|ecmascript|javascript|vrmlscript):/),
+         match            = dataURL .match (/^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s),
+         isData           = protocol [0] === "data:";
 
       if (!((isData && match) || !isData))
          return;
@@ -1449,7 +1448,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       const value = urlObject ._url .copy ();
 
-      value [index] = Editor .relativePath (executionContext, response .filePath);
+      value [index] = encodeURI (Editor .relativePath (executionContext, response .filePath));
 
       UndoManager .shared .beginUndo (_("Save Data URL to File"));
 
@@ -1495,7 +1494,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       if (this .mimeTypeToProtocol .has (mimeType))
          value [index] = `${this .mimeTypeToProtocol .get (mimeType)}${buffer .toString ('utf8')}`;
       else if (this .textTypes .has (mimeType))
-         value [index] = encodeURI (`data:${mimeType},${buffer .toString ('utf8')}`);
+         value [index] = Editor .encodeURI (`data:${mimeType},${buffer .toString ('utf8')}`);
       else
          value [index] = `data:${mimeType};base64,${buffer .toString ('base64')}`;
 
