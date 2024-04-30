@@ -60,23 +60,23 @@ module .exports = class Editor
    static #specialChars = new Map ("\t\n\r \"[]{}" .split ("") .map (c => [encodeURIComponent (c), c]));
    static #specialCharsRegExp = new RegExp ([... this .#specialChars .keys ()] .join ("|"), "ig");
 
-   static decodeURI (string)
+   static decodeURI (uri)
    {
-      if (string .match (/^(?:ecmascript|javascript|vrmlscript):/))
-         return string;
+      if (uri .match (/^(?:ecmascript|javascript|vrmlscript):/))
+         return uri;
 
-      return $.try (() => decodeURI (string)) ?? string;
+      return $.try (() => decodeURI (uri)) ?? uri;
    }
 
-   static encodeURI (string)
+   static encodeURI (uri)
    {
-      if (string .match (/^(?:ecmascript|javascript|vrmlscript):/))
-         return string;
+      if (uri .match (/^(?:ecmascript|javascript|vrmlscript):/))
+         return uri;
 
-      if (string .match (/^data:/))
-         return encodeURI (string) .replace (this .#specialCharsRegExp, c => this .#specialChars .get (c .toUpperCase ()));
+      if (uri .match (/^data:/))
+         return encodeURI (uri) .replace (this .#specialCharsRegExp, c => this .#specialChars .get (c .toUpperCase ()));
 
-      return encodeURI (string);
+      return encodeURI (uri);
    }
 
    /**
