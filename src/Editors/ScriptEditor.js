@@ -327,12 +327,7 @@ main ()
       return value;
    }
 
-   decodeURI (string)
-   {
-      return string .match (/^\s*data:/s) ? decodeURI (this .node ._url [0]) : string;
-   }
-
-   specialChars = new Map ([
+   #specialChars = new Map ([
       ["%09", "\t"],
       ["%0A", "\n"],
       ["%0D", "\r"],
@@ -341,10 +336,15 @@ main ()
       ["%7D", "}"],
    ]);
 
+   decodeURI (string)
+   {
+      return string .match (/^\s*data:/s) ? decodeURI (this .node ._url [0]) : string;
+   }
+
    encodeURI (string)
    {
       return string .match (/^\s*data:/s)
-         ? encodeURI (string) .replace (/%(?:09|0A|0D|20|7B|7D)/ig, c => this .specialChars .get (c .toUpperCase ()))
+         ? encodeURI (string) .replace (/%(?:09|0A|0D|20|7B|7D)/ig, c => this .#specialChars .get (c .toUpperCase ()))
          : string;
    }
 
