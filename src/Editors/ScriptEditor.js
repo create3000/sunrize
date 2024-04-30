@@ -332,12 +332,12 @@ main ()
 
    decodeURI (string)
    {
-      return string .match (/^data:/) ? $.try (() => decodeURI (string)) ?? string : string;
+      return string .match (/^(?:file|https?|ftp|data):/) ? $.try (() => decodeURI (string)) ?? string : string;
    }
 
    encodeURI (string)
    {
-      return string .match (/^data:/)
+      return string .match (/^(?:file|https?|ftp|data):/)
          ? encodeURI (string) .replace (this .#specialCharsRegExp, c => this .#specialChars .get (c .toUpperCase ()))
          : string;
    }
