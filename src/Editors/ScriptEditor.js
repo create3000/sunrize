@@ -335,7 +335,7 @@ main ()
       if (string .match (/^(?:ecmascript|javascript|vrmlscript):/))
          return string;
 
-      return $.try (() => decodeURI (string));
+      return $.try (() => decodeURI (string)) ?? string;
    }
 
    encodeURI (string)
