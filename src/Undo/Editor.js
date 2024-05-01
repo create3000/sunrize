@@ -43,7 +43,7 @@ module .exports = class Editor
     *
     * @param {X3DExecutionContext} executionContext source execution context
     * @param {string} filePath file path
-    * @returns {string} relative path
+    * @returns {string} URI encoded relative path
     */
    static relativePath (executionContext, filePath)
    {
