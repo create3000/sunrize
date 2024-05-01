@@ -1357,7 +1357,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          absolutePath = url .pathToFileURL (filePath) .href,
          hash         = "#" + proto .getName ();
 
-      externproto ._url = new X3D .MFString (relativePath + hash, absolutePath + hash);
+      externproto ._url = new X3D .MFString (encodeURI (relativePath + hash), encodeURI (absolutePath + hash));
 
       this .replaceProtoNodes (executionContext, proto, externproto, undoManager);
       this .removeProtoDeclaration (executionContext, proto .getName (), undoManager);
