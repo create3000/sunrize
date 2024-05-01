@@ -1448,7 +1448,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       const value = urlObject ._url .copy ();
 
-      value [index] = encodeURI (Editor .relativePath (executionContext, response .filePath));
+      value [index] = Editor .relativePath (executionContext, response .filePath);
 
       UndoManager .shared .beginUndo (_("Save Data URL to File"));
 
@@ -2022,7 +2022,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          const value = field .copy ();
 
          for (const filePath of response .filePaths .reverse ())
-            value .unshift (Editor .encodeURI (Editor .relativePath (node .getExecutionContext (), filePath)));
+            value .unshift (Editor .relativePath (node .getExecutionContext (), filePath));
 
          Editor .setFieldValue (node .getExecutionContext (), node, field, value);
       });

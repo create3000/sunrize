@@ -49,7 +49,7 @@ module .exports = class Editor
    {
       try
       {
-         return path .relative (path .dirname (url .fileURLToPath (executionContext .getWorldURL ())), filePath);
+         return encodeURI (path .relative (path .dirname (url .fileURLToPath (executionContext .getWorldURL ())), filePath));
       }
       catch
       {
@@ -1355,9 +1355,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          externproto  = this .addExternProtoDeclaration (executionContext, name, undoManager),
          relativePath = this .relativePath (executionContext, filePath),
          absolutePath = url .pathToFileURL (filePath) .href,
-         hash         = "#" + proto .getName ();
+         hash         = "#" + encodeURIComponent (proto .getName ());
 
-      externproto ._url = new X3D .MFString (encodeURI (relativePath + hash), encodeURI (absolutePath + hash));
+      externproto ._url = new X3D .MFString (relativePath + hash, absolutePath + hash);
 
       this .replaceProtoNodes (executionContext, proto, externproto, undoManager);
       this .removeProtoDeclaration (executionContext, proto .getName (), undoManager);
