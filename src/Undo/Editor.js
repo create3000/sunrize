@@ -62,7 +62,7 @@ module .exports = class Editor
 
    static decodeURI (uri)
    {
-      if (uri .match (/^(?:ecmascript|javascript|vrmlscript):/))
+      if (uri .match (/^\s*(?:ecmascript|javascript|vrmlscript):/s))
          return uri;
 
       return $.try (() => decodeURI (uri)) ?? uri;
@@ -70,10 +70,10 @@ module .exports = class Editor
 
    static encodeURI (uri)
    {
-      if (uri .match (/^(?:ecmascript|javascript|vrmlscript):/))
+      if (uri .match (/^\s*(?:ecmascript|javascript|vrmlscript):/s))
          return uri;
 
-      if (uri .match (/^data:/))
+      if (uri .match (/^\s*data:/s))
          return encodeURI (uri) .replace (this .#specialCharsRegExp, c => this .#specialChars .get (c .toUpperCase ()));
 
       return encodeURI (uri);

@@ -465,7 +465,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                }
                case X3D .X3DConstants .X3DUrlObject:
                {
-                  if (node ._url .some (fileURL => !fileURL .match (/^(?:data|ecmascript|javascript|vrmlscript):/)))
+                  if (node ._url .some (fileURL => !fileURL .match (/^\s*(?:data|ecmascript|javascript|vrmlscript):/s)))
                   {
                      menu .push ({
                         label: _("Embed External Resource as Data URL"),
@@ -473,7 +473,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                      });
                   }
 
-                  if (node ._url .some (fileURL => fileURL .match (/^(?:data|ecmascript|javascript|vrmlscript):/)))
+                  if (node ._url .some (fileURL => fileURL .match (/^\s*(?:data|ecmascript|javascript|vrmlscript):/s)))
                   {
                      menu .push ({
                         label: _("Save Data URL to File..."),
@@ -1411,10 +1411,10 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const
          executionContext = this .objects .get (executionContextId),
          urlObject        = this .objects .get (nodeId),
-         index            = urlObject ._url .findIndex (fileURL => fileURL .match (/^(?:data|ecmascript|javascript|vrmlscript):/)),
+         index            = urlObject ._url .findIndex (fileURL => fileURL .match (/^\s*(?:data|ecmascript|javascript|vrmlscript):/s)),
          dataURL          = Editor .decodeURI (urlObject ._url [index]),
-         protocol         = dataURL .match (/^(?:data|ecmascript|javascript|vrmlscript):/),
-         match            = dataURL .match (/^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s),
+         protocol         = dataURL .match (/^\s*(?:data|ecmascript|javascript|vrmlscript):/s),
+         match            = dataURL .match (/^\s*data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s),
          isData           = protocol [0] === "data:";
 
       if (!((isData && match) || !isData))
@@ -1471,7 +1471,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const
          executionContext = this .objects .get (executionContextId),
          urlObject        = this .objects .get (nodeId),
-         index            = urlObject ._url .findIndex (fileURL => !fileURL .match (/^(?:data|ecmascript|javascript|vrmlscript):/)),
+         index            = urlObject ._url .findIndex (fileURL => !fileURL .match (/^\s*(?:data|ecmascript|javascript|vrmlscript):/s)),
          fileURL          = new URL (urlObject ._url [index], executionContext .getWorldURL ());
 
       const
