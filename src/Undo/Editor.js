@@ -526,7 +526,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
                   // Add new relative file URL.
 
-                  newURL .push (relativePath);
+                  newURL .push (encodeURI (relativePath));
                   continue;
                }
                catch
@@ -543,7 +543,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                      relativePath = path .relative (path .dirname (url .fileURLToPath (newWorldURL)), filePath);
 
                   // Add new relative file URL.
-                  newURL .push (relativePath);
+                  newURL .push (encodeURI (relativePath));
                   continue;
                }
                catch
