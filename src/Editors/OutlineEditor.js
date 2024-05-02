@@ -1243,7 +1243,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       const imageTextureNode = executionContext .createNode ("ImageTexture") .getValue ();
 
-      imageTextureNode ._url               = response .filePaths;
+      imageTextureNode ._url               = response .filePaths .map (filePath => encodeURI (filePath));
       imageTextureNode ._textureProperties = pixelTextureNode ._textureProperties;
 
       await imageTextureNode .loading () .catch (Function .prototype);
@@ -1446,9 +1446,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       // Add undo step.
 
-      const value = urlObject ._url .copy ();
-
-      value [index] = Editor .relativePath (executionContext, response .filePath);
+      const value = urlObject ._url .toSpliced (index, 1, Editor .relativePath (executionContext, response .filePath));
 
       UndoManager .shared .beginUndo (_("Save Data URL to File"));
 
@@ -1494,7 +1492,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       if (this .mimeTypeToProtocol .has (mimeType))
          value [index] = `${this .mimeTypeToProtocol .get (mimeType)}${buffer .toString ('utf8')}`;
       else if (this .textTypes .has (mimeType))
-         value [index] = Editor .encodeURI (`data:${mimeType},${buffer .toString ('utf8')}`);
+         value [index] = encodeURI (`data:${mimeType},${buffer .toString ('utf8')}`);
       else
          value [index] = `data:${mimeType};base64,${buffer .toString ('base64')}`;
 
