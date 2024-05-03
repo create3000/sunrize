@@ -15,13 +15,15 @@ Sunrize is based on [X_ITE](https://create3000.github.io/x_ite/) and is a basic 
 
 ## Usage
 
-You can run Sunrize without installing it using **npx**:
+First you need to install both Node.js and npm on your system. To accomplish this, you can use a [Node installer](https://nodejs.org/en/download/) (Windows), or use [Homebrew](https://brew.sh) to install node (macos), or use your Linux package manager.
+
+Then you can run Sunrize without installing it using npm's **npx** command:
 
 ```console
-$ npx sunrize [files]
+$ npx sunrize@latest [files]
 ```
 
-**Note:** The first time, it may take a while for Sunrize to start.
+>**Note:** The first time, it may take a while for Sunrize to start.
 
 ## License
 
