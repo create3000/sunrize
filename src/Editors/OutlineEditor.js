@@ -861,8 +861,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       }
 
       navigator .clipboard .writeText (scene .toXMLString ());
-
-      scene .dispose ();
    }
 
    async pasteNodes (id, executionContextId, nodeId, fieldId)

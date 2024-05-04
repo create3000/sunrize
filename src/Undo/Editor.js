@@ -376,8 +376,6 @@ module .exports = class Editor
          }
       }
 
-      tempScene .dispose ();
-
       this .requestUpdateInstances (executionContext, undoManager);
 
       undoManager .endUndo ();
@@ -412,8 +410,6 @@ module .exports = class Editor
       fs .writeFileSync (filePath, this .getContents (scene, path .extname (filePath)));
 
       Traverse .traverse (scene, Traverse .ROOT_NODES | Traverse .PROTOTYPE_INSTANCES, node => node .dispose ());
-
-      scene .dispose ();
 
       browser .setBrowserOption ("LoadUrlObjects", loadUrlObjects);
    }
@@ -1351,8 +1347,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       await this .importX3D (scene, x3dSyntax, new UndoManager ());
       this .rewriteURLs (scene, scene, executionContext .worldURL, url .pathToFileURL (filePath) .href, new UndoManager ());
+
       fs .writeFileSync (filePath, this .getContents (scene, path .extname (filePath)));
-      scene .dispose ();
 
       const
          name         = executionContext .getUniqueExternProtoName (proto .getName ()),
