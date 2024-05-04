@@ -376,6 +376,8 @@ module .exports = class Editor
          }
       }
 
+      tempScene .dispose ();
+
       this .requestUpdateInstances (executionContext, undoManager);
 
       undoManager .endUndo ();
