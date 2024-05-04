@@ -1349,9 +1349,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       await this .importX3D (scene, x3dSyntax, new UndoManager ());
       this .rewriteURLs (scene, scene, executionContext .worldURL, url .pathToFileURL (filePath) .href, new UndoManager ());
-
       fs .writeFileSync (filePath, this .getContents (scene, path .extname (filePath)));
-
       scene .dispose ();
 
       const
