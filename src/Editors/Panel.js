@@ -356,7 +356,10 @@ module .exports = new class Panel extends Interface
 
             this .refresh (parameter, node, field);
 
-            const input = folder .addInput (parameter, field .getName (), options);
+            const input = $.try (() => folder .addInput (parameter, field .getName (), options));
+
+            if (!input)
+               break;
 
             $(input .element) .on ("mouseenter", () =>
             {
