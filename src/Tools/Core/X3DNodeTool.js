@@ -147,7 +147,7 @@ class X3DNodeTool extends X3DBaseTool
             {
                const scene = await this .getBrowser () .createX3DFromURL (new X3D .MFString (protoURL));
 
-               scene .setExecutionContext (scene);
+               scene .setExecutionContext (null);
                scene .setCountPrimitives (false);
 
                for (const externproto of scene .externprotos)
