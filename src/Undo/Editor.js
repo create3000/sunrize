@@ -32,6 +32,16 @@ module .exports = class Editor
    /**
     *
     * @param {X3DExecutionContext} executionContext source execution context
+    * @returns {X3DScene} corresponding scene
+    */
+   static getScene (executionContext)
+   {
+      return executionContext instanceof X3D .X3DScene ? executionContext : executionContext .getScene ();
+   }
+
+   /**
+    *
+    * @param {X3DExecutionContext} executionContext source execution context
     * @param {string} filePath file path
     * @returns {string} URI encoded relative path
     */
@@ -231,7 +241,7 @@ module .exports = class Editor
 
       const
          browser        = executionContext .getBrowser (),
-         scene          = executionContext .getScene (),
+         scene          = this .getScene (executionContext),
          profile        = scene .getProfile (),
          x_ite          = scene .hasComponent ("X_ITE"),
          externprotos   = new Map (Array .from (executionContext .externprotos, p => [p .getName (), p])),
@@ -868,7 +878,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static async addComponent (scene, name, undoManager = UndoManager .shared)
    {
-      scene = scene .getScene ();
+      scene = this .getScene (scene);
       name  = name instanceof X3D .ComponentInfo ? name .name : name;
 
       if (scene .hasComponent (name))
@@ -897,7 +907,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static removeComponent (scene, name, undoManager = UndoManager .shared)
    {
-      scene = scene .getScene ();
+      scene = this .getScene (scene);
       name  = name instanceof X3D .ComponentInfo ? name .name : name;
 
       if (!scene .hasComponent (name))
