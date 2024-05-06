@@ -146,7 +146,7 @@ module .exports = class Editor
 
       // Add exported nodes.
 
-      if (exportedNodes)
+      if (exportedNodes && (executionContext instanceof X3D .X3DScene))
       {
          for (const exportedNode of executionContext .exportedNodes)
          {
