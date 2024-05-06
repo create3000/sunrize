@@ -2860,14 +2860,16 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       Traverse .traverse (executionContext, Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, node =>
       {
-         for (const field of node .getFields ())
+         const fields = node instanceof X3D .X3DExecutionContext ? [node .getRootNodes ()] : node .getFields ()
+
+         for (const field of fields)
          {
             switch (field .getType ())
             {
                case X3D .X3DConstants .SFNode:
                {
                   if (field .getValue () ?.valueOf () === original)
-                     Editor .setFieldValue (executionContext, node, field, replacement, undoManager);
+                     this .setFieldValue (executionContext, node, field, replacement, undoManager);
 
                   break;
                }
@@ -2878,7 +2880,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
                   const value = field .map (value => value ?.getValue () .valueOf () === original ? replacement : value);
 
-                  Editor .setFieldValue (executionContext, node, field, value, undoManager);
+                  this .setFieldValue (executionContext, node, field, value, undoManager);
                   break;
                }
             }
