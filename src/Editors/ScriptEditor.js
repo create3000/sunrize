@@ -232,12 +232,12 @@ module .exports = class ScriptEditor extends Interface
    }
 
    #internalTypes = new Map ([
-      ["SFBool",   "boolean"],
-      ["SFDouble", "number"],
-      ["SFFloat",  "number"],
-      ["SFInt32",  "number"],
-      ["SFString", "string"],
-      ["SFTime",   "number"],
+      [X3D .X3DConstants .SFBool,   "boolean"],
+      [X3D .X3DConstants .SFDouble, "number"],
+      [X3D .X3DConstants .SFFloat,  "number"],
+      [X3D .X3DConstants .SFInt32,  "number"],
+      [X3D .X3DConstants .SFString, "string"],
+      [X3D .X3DConstants .SFTime,   "number"],
    ]);
 
    setDeclarations (monaco)
@@ -254,7 +254,7 @@ module .exports = class ScriptEditor extends Interface
             case X3D .X3DConstants .inputOutput:
             {
                return `declare let ${field .getName ()}: ${
-                  this .#internalTypes .get (field .getTypeName ()) ?? field .getTypeName ()
+                  this .#internalTypes .get (field .getType ()) ?? field .getTypeName ()
                };`
             }
          }
