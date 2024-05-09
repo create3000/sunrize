@@ -183,19 +183,17 @@ module .exports = class ScriptEditor extends Interface
 
          this .nodeName .renameNodeInput (this .node);
          this .applyButton .show ();
-
-         if (this .editor)
-            this .editor .detach ();
+         this .editor ?.detach ();
 
          this .editor = editor .element .appendTo (this .verticalSplitterRight);
-         this .monaco = editor .monaco;
+         this .monaco = editor .editor;
 
          this .monaco .restoreViewState (this .monaco .viewState);
 
          this .node ._url       .addFieldCallback (this, this .set_url       .bind (this));
-         this .node ._loadState .addFieldCallback (this, this .set_loadState .bind (this));
+         this .node ._loadState .addFieldCallback (this, this .set_loadState .bind (this, editor .monaco));
 
-         this .set_loadState ();
+         this .set_loadState (editor .monaco);
 
          switch (this .node .getTypeName ())
          {
@@ -226,13 +224,55 @@ module .exports = class ScriptEditor extends Interface
       {
          this .nodeName .renameNodeInput (null, null);
          this .applyButton .hide ();
-
-         if (this .editor)
-            this .editor .detach ();
+         this .editor ?.detach ();
 
          this .editor = null;
          this .monaco = null;
       }
+   }
+
+   #internalTypes = new Map ([
+      ["SFBool", "boolean"],
+      ["SFDouble", "number"],
+      ["SFFloat", "number"],
+      ["SFInt32", "number"],
+      ["SFString", "string"],
+      ["SFTime", "number"],
+   ]);
+
+   setDeclarations (monaco)
+   {
+      const declarations = fs .readFileSync (require .resolve ("x_ite/x_ite.d.ts"), "utf8")
+         .replace (/^.*?(?:declare const X3D: X3D;)/s, "");
+
+      const fields = Array .from (this .node .getUserDefinedFields (), field =>
+      {
+         switch (field .getAccessType ())
+         {
+            case X3D .X3DConstants .initializeOnly:
+            case X3D .X3DConstants .outputOnly:
+            case X3D .X3DConstants .inputOutput:
+            {
+               return `declare let ${field .getName ()}: ${
+                  this .#internalTypes .get (field .getTypeName ()) ?? field .getTypeName ()
+               };`
+            }
+         }
+      });
+
+      monaco .languages .typescript .javascriptDefaults .setExtraLibs ([
+      {
+         content: /* ts */ `
+            ${declarations};
+            declare const Browser: X3DBrowser;
+            declare const X3DConstants: X3DConstants;
+            declare const TRUE: true;
+            declare const FALSE: false;
+            declare const NULL: null;
+            declare function print (... args: any []): void;
+            ${fields .join ("\n")};
+         `},
+      ]);
    }
 
    editors = new Map ();
@@ -285,11 +325,7 @@ module .exports = class ScriptEditor extends Interface
                element .detach ();
 
                //this .debugFindActions (editor)
-               this .editors .set (node, { element: element, monaco: editor });
-
-               // x_ite.d.ts
-
-               this .setDeclarations (monaco);
+               this .editors .set (node, { element, editor, monaco });
 
                // Return editor.
 
@@ -297,25 +333,6 @@ module .exports = class ScriptEditor extends Interface
             });
          }
       });
-   }
-
-   setDeclarations (monaco)
-   {
-      const declarations = fs .readFileSync (require .resolve ("x_ite/x_ite.d.ts"), "utf8")
-         .replace (/^.*?(?:declare const X3D: X3D;)/s, "");
-
-      monaco .languages .typescript .javascriptDefaults .setExtraLibs ([
-      {
-         content: /* ts */ `
-            ${declarations};
-            declare const Browser: X3DBrowser;
-            declare const X3DConstants: X3DConstants;
-            declare const TRUE: true;
-            declare const FALSE: false;
-            declare const NULL: null;
-            declare function print (... args: any []): void;
-         `},
-      ]);
    }
 
    defaultSources = {
@@ -599,7 +616,7 @@ main ()
       this .monaco .getModel () .setValue (Editor .decodeURI (this .node ._url [0]));
    }
 
-   set_loadState ()
+   set_loadState (monaco)
    {
       this .applyButton .removeClass (["red", "green", "yellow"]);
 
@@ -617,6 +634,8 @@ main ()
             this .applyButton .addClass ("red");
             break;
       }
+
+      this .setDeclarations (monaco);
    }
 
    toggleDirectOutput ()
