@@ -289,7 +289,7 @@ module .exports = class ScriptEditor extends Interface
 
                // x_ite.d.ts
 
-               this .addDeclarations (monaco);
+               this .setDeclarations (monaco);
 
                // Return editor.
 
@@ -299,25 +299,23 @@ module .exports = class ScriptEditor extends Interface
       });
    }
 
-   addDeclarations (monaco)
+   setDeclarations (monaco)
    {
-      if (monaco .X3D)
-         return;
-
-      monaco .X3D = true;
-
       const declarations = fs .readFileSync (require .resolve ("x_ite/x_ite.d.ts"), "utf8")
          .replace (/^.*?(?:declare const X3D: X3D;)/s, "");
 
-      monaco .languages .typescript .javascriptDefaults .addExtraLib (/* ts */ `
-         ${declarations};
-         declare const Browser: X3DBrowser;
-         declare const X3DConstants: X3DConstants;
-         declare const TRUE: true;
-         declare const FALSE: false;
-         declare const NULL: null;
-         declare function print (... args: any []): void;
-      `);
+      monaco .languages .typescript .javascriptDefaults .setExtraLibs ([
+      {
+         content: /* ts */ `
+            ${declarations};
+            declare const Browser: X3DBrowser;
+            declare const X3DConstants: X3DConstants;
+            declare const TRUE: true;
+            declare const FALSE: false;
+            declare const NULL: null;
+            declare function print (... args: any []): void;
+         `},
+      ]);
    }
 
    defaultSources = {
