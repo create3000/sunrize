@@ -306,11 +306,11 @@ module .exports = class ScriptEditor extends Interface
 
       monaco .X3D = true;
 
-      const d = fs .readFileSync (require .resolve ("x_ite/x_ite.d.ts"), "utf8")
+      const declarations = fs .readFileSync (require .resolve ("x_ite/x_ite.d.ts"), "utf8")
          .replace (/^.*?(?:declare const X3D: X3D;)/s, "");
 
       monaco .languages .typescript .javascriptDefaults .addExtraLib (/* ts */ `
-         ${d};
+         ${declarations};
          declare const Browser: X3DBrowser;
          declare const X3DConstants: X3DConstants;
          declare const TRUE: true;
