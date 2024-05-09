@@ -5,6 +5,7 @@ const
    electron    = require ("electron"),
    path        = require ("path"),
    url         = require ("url"),
+   fs          = require ("fs"),
    X3D         = require ("../X3D"),
    Interface   = require ("../Application/Interface"),
    Splitter    = require ("../Controls/Splitter"),
@@ -286,10 +287,37 @@ module .exports = class ScriptEditor extends Interface
                //this .debugFindActions (editor)
                this .editors .set (node, { element: element, monaco: editor });
 
+               // x_ite.d.ts
+
+               this .addDeclarations (monaco);
+
+               // Return editor.
+
                resolve (this .editors .get (node));
             });
          }
       });
+   }
+
+   addDeclarations (monaco)
+   {
+      if (monaco .X3D)
+         return;
+
+      monaco .X3D = true;
+
+      const d = fs .readFileSync (require .resolve ("x_ite/x_ite.d.ts"), "utf8")
+         .replace (/^.*?(?:declare const X3D: X3D;)/s, "");
+
+      monaco .languages .typescript .javascriptDefaults .addExtraLib (/* ts */ `
+         ${d};
+         declare const Browser: X3DBrowser;
+         declare const X3DConstants: X3DConstants;
+         declare const TRUE: true;
+         declare const FALSE: false;
+         declare const NULL: null;
+         declare function print (... args: any []): void;
+      `);
    }
 
    defaultSources = {
