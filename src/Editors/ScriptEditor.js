@@ -232,12 +232,12 @@ module .exports = class ScriptEditor extends Interface
    }
 
    #internalTypes = new Map ([
-      ["SFBool", "boolean"],
+      ["SFBool",   "boolean"],
       ["SFDouble", "number"],
-      ["SFFloat", "number"],
-      ["SFInt32", "number"],
+      ["SFFloat",  "number"],
+      ["SFInt32",  "number"],
       ["SFString", "string"],
-      ["SFTime", "number"],
+      ["SFTime",   "number"],
    ]);
 
    setDeclarations (monaco)
