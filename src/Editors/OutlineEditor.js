@@ -997,7 +997,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          parentNode         = this .getNode (parentNodeElement),
          parentField        = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement),
          node               = this .objects .get (nodeId),
-         copy               = X3D .X3DBaseNode .prototype .copy .call (node, executionContext),
+         copy               = node .copy (executionContext),
          index              = parseInt (element .attr ("index"));
 
       UndoManager .shared .beginUndo (_("Unlink Clone"));
