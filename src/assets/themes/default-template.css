@@ -32,6 +32,11 @@ body {
   background: var(--system-gray4);
 }
 
+.monaco-findInput ::selection {
+  color: var(--system-gray5);
+  background: var(--system-gray1);
+}
+
 /* common */
 
 .green {
