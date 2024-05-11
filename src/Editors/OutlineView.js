@@ -1337,7 +1337,7 @@ module .exports = class OutlineView extends Interface
 
       const classes = [type];
 
-      if (field .hasReferences ())
+      if (field .getReferences () .size)
          classes .push ("references");
 
       if (node .getUserDefinedFields () .get (field .getName ()) === field)
@@ -1676,7 +1676,7 @@ module .exports = class OutlineView extends Interface
    {
       const element = parent .find (`.field[field-id=${field .getId ()}]`)
 
-      if (field .hasReferences ())
+      if (field .getReferences () .size)
          element .addClass ("references")
       else
          element .removeClass ("references")
