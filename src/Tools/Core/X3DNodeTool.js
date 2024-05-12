@@ -47,7 +47,7 @@ class X3DNodeTool extends X3DBaseTool
 
       node .setUserData (_tool, proxy);
 
-      X3D .SFNodeCache .add (proxy, X3D .SFNodeCache .get (node));
+      X3D .SFNodeCache .set (proxy, X3D .SFNodeCache .get (node));
 
       this .replaceNode (node, proxy);
       proxy .setupTool ();
