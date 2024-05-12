@@ -10,7 +10,9 @@ class X3DPrototypeInstanceTool extends X3DNodeTool
 
       try
       {
-         this .node .getInnerNode () .addTool ();
+         const tool = this .node .getInnerNode () .addTool ();
+
+         tool .toolPointingEnabled = false;
       }
       catch
       { }
