@@ -156,6 +156,18 @@ module .exports = class ScriptEditor extends Interface
          this .node ._url       .removeFieldCallback (this);
          this .node ._loadState .removeFieldCallback (this);
 
+         for (const field of this .node .getUserDefinedFields ())
+         {
+            switch (field .getType ())
+            {
+               case X3D .X3DConstants .SFNode:
+               {
+                  field .removeInterest ("setDeclarations", this);
+                  break;
+               }
+            }
+         }
+
          switch (this .node .getTypeName ())
          {
             case "Script":
@@ -253,9 +265,31 @@ module .exports = class ScriptEditor extends Interface
             case X3D .X3DConstants .outputOnly:
             case X3D .X3DConstants .inputOutput:
             {
-               return `declare let ${field .getName ()}: ${
-                  this .#internalTypes .get (field .getType ()) ?? field .getTypeName ()
-               };`
+               switch (field .getType ())
+               {
+                  case X3D .X3DConstants .SFNode:
+                  {
+                     if (field .getValue ())
+                        return `declare let ${field .getName ()}: ${field .getValue () .getTypeName ()}Proxy;`;
+                     else
+                        return `declare let ${field .getName ()}: null;`;
+                  }
+                  case X3D .X3DConstants .MFNode:
+                  {
+                     const types = Array .from (new Set (Array .from (field, node => node ? `${node .getNodeTypeName ()}Proxy` : "null")));
+
+                     if (field .length)
+                        return `declare let ${field .getName ()}: MFNode <${types .join ("|")}>;`;
+                     else
+                        return `declare let ${field .getName ()}: MFNode;`;
+                  }
+                  default:
+                  {
+                     return `declare let ${field .getName ()}: ${
+                        this .#internalTypes .get (field .getType ()) ?? field .getTypeName ()
+                     };`
+                  }
+               }
             }
          }
       });
@@ -633,6 +667,19 @@ main ()
          case X3D .X3DConstants .FAILED_STATE:
             this .applyButton .addClass ("red");
             break;
+      }
+
+      for (const field of this .node .getUserDefinedFields ())
+      {
+         switch (field .getType ())
+         {
+            case X3D .X3DConstants .SFNode:
+            case X3D .X3DConstants .MFNode:
+            {
+               field .addInterest ("setDeclarations", this, monaco);
+               break;
+            }
+         }
       }
 
       this .setDeclarations (monaco);
