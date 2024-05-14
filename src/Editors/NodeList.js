@@ -4,7 +4,8 @@ const
    $         = require ("jquery"),
    X3D       = require ("../X3D"),
    Interface = require ("../Application/Interface"),
-   Traverse  = require ("../Application/Traverse");
+   Traverse  = require ("../Application/Traverse"),
+   _         = require ("../Application/GetText");
 
 module .exports = class NodeList extends Interface
 {
@@ -101,7 +102,7 @@ module .exports = class NodeList extends Interface
    getName (node)
    {
       let
-         name      = node .getDisplayName (),
+         name      = node .getDisplayName () || _("<unnamed>"),
          outerNode = node .getExecutionContext () .getOuterNode ();
 
       while (outerNode instanceof X3D .X3DProtoDeclaration)
