@@ -277,14 +277,14 @@ module .exports = class ScriptEditor extends Interface
                      if (field .getValue ())
                         return `declare let ${field .getName ()}: ${field .getValue () .getTypeName ()}Proxy;`;
                      else
-                        return `declare let ${field .getName ()}: null;`;
+                        return `declare let ${field .getName ()}: SFNode | null;`;
                   }
                   case X3D .X3DConstants .MFNode:
                   {
                      const types = Array .from (new Set (Array .from (field, node => node ? `${node .getNodeTypeName ()}Proxy` : "null")));
 
-                     if (field .length)
-                        return `declare let ${field .getName ()}: MFNode <${types .join ("|")}>;`;
+                     if (types .length)
+                        return `declare let ${field .getName ()}: MFNode <${types .join ("|")}|null>;`;
                      else
                         return `declare let ${field .getName ()}: MFNode;`;
                   }
