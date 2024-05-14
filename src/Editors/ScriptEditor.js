@@ -252,9 +252,14 @@ module .exports = class ScriptEditor extends Interface
       [X3D .X3DConstants .SFTime,   "number"],
    ]);
 
+   #declarations;
+
    setDeclarations (monaco)
    {
-      const declarations = fs .readFileSync (require .resolve ("x_ite/x_ite.d.ts"), "utf8")
+      if (!this .node .getType () .includes (X3D .X3DConstants .Script))
+         return;
+
+      this .#declarations ??= fs .readFileSync (require .resolve ("x_ite/x_ite.d.ts"), "utf8")
          .replace (/^.*?(?:declare const X3D: X3D;)/s, "");
 
       const fields = Array .from (this .node .getUserDefinedFields (), field =>
@@ -297,7 +302,7 @@ module .exports = class ScriptEditor extends Interface
       monaco .languages .typescript .javascriptDefaults .setExtraLibs ([
       {
          content: /* ts */ `
-            ${declarations};
+            ${this .#declarations};
             declare const Browser: X3DBrowser;
             declare const X3DConstants: X3DConstants;
             declare const TRUE: true;
