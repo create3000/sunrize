@@ -16,10 +16,10 @@ timezone: Europe/Berlin
 
 title: Sunrize # the main title
 
-tagline: A Multi Platform X3D Editor # it will display as the sub-title
+tagline: A Multi-Platform X3D Editor # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
-  Sunrize — A Multi Platform X3D Editor
+  Sunrize — A Multi-Platform X3D Editor
 
 version: 1.6.8
 download_dmg: 143777104
