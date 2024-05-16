@@ -22,8 +22,8 @@ A script is written in JavaScript, a lightweight, platform-independent programmi
 
 A detailed description of JavaScript and the Script node can be found at:
 
-- <http://www.web3d.org/documents/specifications/19777-1/V3.0/Part1/functions.html>
-- <http://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/scripting.html>
+- <https://www.web3d.org/documents/specifications/19777-1/V3.0/Part1/functions.html>
+- <https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/scripting.html>
 - <https://developer.mozilla.org/de/docs/JavaScript/Guide>
 
 In Sunrize, the script itself is contained in the url field of the Script node, as a single string. The string must begin with »ecmascript:«. The script defines functions for each *inputOnly* and *inputOutput* fields. Internal fields called *initializeOnly* and *outputOnly* fields can be used as variables.

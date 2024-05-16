@@ -1,7 +1,11 @@
 ---
 ---
 
-@import 'main';
+@import 'main
+{%- if jekyll.environment == 'production' -%}
+  .bundle
+{%- endif -%}
+';
 
 /* append your custom style below */
 
@@ -141,6 +145,14 @@ header a.rounded-circle {
 
 .content h5 {
   font-weight: bold;
+}
+
+.post-tail-wrapper .nav-wrapper h2 {
+  font-size: 1rem;
+}
+
+.post-tail-wrapper .nav-wrapper a {
+  font-size: var(--bs-body-font-size);
 }
 
 .clear {
