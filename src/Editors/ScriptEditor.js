@@ -157,16 +157,7 @@ module .exports = class ScriptEditor extends Interface
          this .node ._loadState .removeFieldCallback (this);
 
          for (const field of this .node .getUserDefinedFields ())
-         {
-            switch (field .getType ())
-            {
-               case X3D .X3DConstants .SFNode:
-               {
-                  field .removeInterest ("setDeclarations", this);
-                  break;
-               }
-            }
-         }
+            field .removeInterest ("setDeclarations", this);
 
          switch (this .node .getTypeName ())
          {
@@ -205,6 +196,7 @@ module .exports = class ScriptEditor extends Interface
          this .node ._url       .addFieldCallback (this, this .set_url       .bind (this));
          this .node ._loadState .addFieldCallback (this, this .set_loadState .bind (this, editor .monaco));
 
+         this .set_url ();
          this .set_loadState (editor .monaco);
 
          switch (this .node .getTypeName ())
