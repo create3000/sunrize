@@ -339,7 +339,6 @@ module .exports = class ScriptEditor extends Interface
 
                const editor = monaco .editor .create (element .get (0),
                {
-                  value: this .getScriptSource (node),
                   language: this .languages [node .getTypeName ()],
                   contextmenu: false,
                   automaticLayout: true,
@@ -364,41 +363,6 @@ module .exports = class ScriptEditor extends Interface
             });
          }
       });
-   }
-
-   defaultSources = {
-      "Script": `ecmascript:
-
-function initialize ()
-{
-   // Add code here.
-}
-`,
-
-      "ShaderPart": `data:x-shader/x-vertex,#version 300 es
-
-precision highp float;
-precision highp int;
-
-void
-main ()
-{
-   // Add code here.
-}
-`,
-   };
-
-   getScriptSource (node)
-   {
-      if (node ._url .length && node ._url [0] .length)
-         return Editor .decodeURI (node ._url [0]);
-
-      const value = this .defaultSources [node .getTypeName ()];
-
-      if (node .getTypeName () === "ShaderPart" && node ._type .getValue () === "FRAGMENT")
-         return value .replace ("x-vertex", "x-fragment");
-
-      return value;
    }
 
    showContextMenu ()
