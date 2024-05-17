@@ -893,8 +893,24 @@ module .exports = class Application
          properties: ["openFile", ... properties],
          filters: filters ?? [
             {
-               name: _("X3D Document"),
+               name: _("All Documents"),
                extensions: ["x3d", "x3dz", "x3dv", "x3dvz", "x3dj", "x3djz", "wrl", "wrz", "wrl.gz", "vrml", "gltf", "glb", "obj", "stl", "ply", "svg", "png", "jpg", "jpeg", "gif", "webp", "ktx2", "mp4", "webm", "ogg", "mp3", "wav"],
+            },
+            {
+               name: _("X3D"),
+               extensions: ["x3d", "x3dz", "x3dv", "x3dvz", "x3dj", "x3djz", "wrl", "wrz", "wrl.gz", "vrml", "gltf", "glb", "obj", "stl", "ply", "svg"],
+            },
+            {
+               name: _("Audio"),
+               extensions: ["mp3", "wav"],
+            },
+            {
+               name: _("Images"),
+               extensions: ["png", "jpg", "jpeg", "gif", "webp", "ktx2"],
+            },
+            {
+               name: _("Video"),
+               extensions: ["mp4", "webm", "ogg"],
             },
          ],
       });
