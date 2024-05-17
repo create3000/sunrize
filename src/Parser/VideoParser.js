@@ -4,7 +4,7 @@ const
    X3D = require ("../X3D"),
    $   = require ("jquery");
 
-class ImageParser extends X3D .X3DParser
+class VideoParser extends X3D .X3DParser
 {
    constructor (scene)
    {
@@ -23,7 +23,7 @@ class ImageParser extends X3D .X3DParser
    {
       const worldURL = new URL (this .getScene () .worldURL);
 
-      if (!worldURL .pathname .match (/\.(?:png|jpg|jpeg|gif|webp)$/i))
+      if (!worldURL .pathname .match (/\.(?:mp4|webm|ogg)$/i))
          return;
 
       return true;
@@ -31,25 +31,26 @@ class ImageParser extends X3D .X3DParser
 
    parseIntoScene (resolve, reject)
    {
-      this .image ()
+      this .video ()
          .then (resolve)
          .catch (reject);
    }
 
-   async image ()
+   async video ()
    {
       const
          browser = this .getBrowser (),
          scene   = this .getScene (),
-         image   = $("<img></img>");
+         video   = $("<video></video>");
 
-      await new Promise ((resolve, reject) => image
-         .on ("load", resolve)
+      await new Promise ((resolve, reject) => video
+         .on ("loadeddata", resolve)
          .on ("abort error", event => reject (new Error (event .type)))
          .prop ("crossOrigin", "Anonymous")
+         .prop ("preload", "auto")
          .attr ("src", scene .worldURL));
 
-      scene .setEncoding ("IMAGE");
+      scene .setEncoding ("VIDEO");
       scene .setProfile (browser .getProfile ("Interchange"));
       scene .addComponent (browser .getComponent ("Geometry2D", 2));
 
@@ -61,22 +62,26 @@ class ImageParser extends X3D .X3DParser
          transformNode  = scene .createNode ("Transform"),
          shapeNode      = scene .createNode ("Shape"),
          appearanceNode = scene .createNode ("Appearance"),
-         textureNode    = scene .createNode ("ImageTexture"),
-         rectangleNode  = scene .createNode ("Rectangle2D");
+         textureNode    = scene .createNode ("MovieTexture"),
+         rectangleNode  = scene .createNode ("Rectangle2D"),
+         soundNode      = scene .createNode ("Sound");
 
       textureNode .url     = new X3D .MFString (scene .worldURL);
+      textureNode .loop    = true;
       textureNode .repeatS = false;
       textureNode .repeatT = false;
 
       appearanceNode .texture = textureNode;
 
-      rectangleNode .size .x = image .prop ("width")  / 72 * 0.0254;
-      rectangleNode .size .y = image .prop ("height") / 72 * 0.0254;
+      rectangleNode .size .x = video .prop ("videoWidth")  / 72 * 0.0254;
+      rectangleNode .size .y = video .prop ("videoHeight") / 72 * 0.0254;
 
       shapeNode .appearance = appearanceNode;
       shapeNode .geometry   = rectangleNode;
 
-      transformNode .children .push (shapeNode);
+      soundNode .source = textureNode;
+
+      transformNode .children .push (shapeNode, soundNode);
 
       scene .rootNodes .push (transformNode);
 
@@ -93,4 +98,4 @@ class ImageParser extends X3D .X3DParser
    }
 }
 
-module .exports = ImageParser;
+module .exports = VideoParser;
