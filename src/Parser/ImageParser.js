@@ -55,15 +55,7 @@ class ImageParser extends X3D .X3DParser
 
       await this .loadComponents ();
 
-      // Viewpoint
-
-      const viewpointNode = scene .createNode ("Viewpoint");
-
-      viewpointNode .position = new X3D .SFVec3f (0, 0, 10);
-
-      scene .rootNodes .push (viewpointNode);
-
-      // Box
+      // Rectangle
 
       const
          transformNode  = scene .createNode ("Transform"),
@@ -90,7 +82,11 @@ class ImageParser extends X3D .X3DParser
 
       scene .rootNodes .push (transformNode);
 
-      const name = scene .worldURL .match (/([^\/]+)\.[^.]+$/);
+      // Name
+
+      const
+         worldURL = new URL (this .getScene () .worldURL),
+         name     = worldURL .pathname .match (/([^\/]+)\.[^.]+$/);
 
       if (name)
          scene .addNamedNode (this .sanitizeName (name [1]), transformNode);
