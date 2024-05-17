@@ -39,6 +39,9 @@ function main ()
 	systemSync (`git push origin`);
 
 	// tags are created with github-publisher
+	// tag
+	systemSync (`git tag ${version}`);
+	systemSync (`git push origin --tags`);
 
 	// npm
 	systemSync (`npm publish`);
