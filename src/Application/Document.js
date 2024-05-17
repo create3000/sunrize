@@ -15,6 +15,7 @@ const
    ActionKeys         = require ("./ActionKeys"),
    Editor             = require ("../Undo/Editor"),
    UndoManager        = require ("../Undo/UndoManager"),
+   ImageParser        = require ("../Parser/ImageParser"),
    _                  = require ("./GetText");
 
 module .exports = class Document extends Interface
@@ -36,6 +37,10 @@ module .exports = class Document extends Interface
       this .secondaryToolbar   = new Dashboard ($("#secondary-toolbar"));
       this .footer             = new Footer ($("#footer"));
       this .sidebar            = new Sidebar ($("#sidebar"));
+
+      // Additional Parser
+
+      X3D .GoldenGate .Parser .push (ImageParser);
    }
 
    /**
@@ -378,7 +383,7 @@ Viewpoint {
 
       if (this .filePath)
       {
-         if (path .extname (this .filePath) .match (/\.(?:wrl|wrz|wrl\.gz|vrml|gltf|glb|obj|stl|ply|svg)$/i))
+         if (!path .extname (this .filePath) .match (/\.(?:x3dz?|x3dvz?|x3djz?|html)$/i))
          {
             if (!this .fileSaveFileTypeWarning)
                console .warn (`Couldn't save '${this .filePath}'. File type is not supported.`);
