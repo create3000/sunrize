@@ -17,6 +17,7 @@ const
    UndoManager        = require ("../Undo/UndoManager"),
    ImageParser        = require ("../Parser/ImageParser"),
    VideoParser        = require ("../Parser/VideoParser"),
+   AudioParser        = require ("../Parser/AudioParser"),
    _                  = require ("./GetText");
 
 module .exports = class Document extends Interface
@@ -41,7 +42,7 @@ module .exports = class Document extends Interface
 
       // Additional Parser
 
-      X3D .GoldenGate .Parser .push (ImageParser, VideoParser);
+      X3D .GoldenGate .Parser .push (ImageParser, VideoParser, AudioParser);
    }
 
    /**
