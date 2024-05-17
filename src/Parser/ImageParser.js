@@ -51,7 +51,7 @@ class ImageParser extends X3D .X3DParser
 
       scene .setEncoding ("IMAGE");
       scene .setProfile (browser .getProfile ("Interchange"));
-      scene .addComponent (browser .getComponent ("Geometry2D", 2));
+      scene .addComponent (browser .getComponent ("Geometry2D"));
 
       await this .loadComponents ();
 
@@ -87,7 +87,11 @@ class ImageParser extends X3D .X3DParser
          name     = worldURL .pathname .match (/([^\/]+)\.[^.]+$/);
 
       if (name)
+      {
+         textureNode .description = decodeURIComponent (name [1]);
+
          scene .addNamedNode (this .sanitizeName (decodeURIComponent (name [1])), transformNode);
+      }
 
       return scene;
    }
