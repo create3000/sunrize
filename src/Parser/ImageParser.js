@@ -23,7 +23,7 @@ class ImageParser extends X3D .X3DParser
    {
       const worldURL = new URL (this .getScene () .worldURL);
 
-      if (!worldURL .pathname .match (/\.(?:png|jpg|jpeg|gif|webp)$/i))
+      if (!worldURL .pathname .match (/\.(?:png|jpg|jpeg|gif|webp|ktx2)$/i))
          return;
 
       return true;
@@ -40,14 +40,7 @@ class ImageParser extends X3D .X3DParser
    {
       const
          browser = this .getBrowser (),
-         scene   = this .getScene (),
-         image   = $("<img></img>");
-
-      await new Promise ((resolve, reject) => image
-         .on ("load", resolve)
-         .on ("abort error", event => reject (new Error (event .type)))
-         .prop ("crossOrigin", "Anonymous")
-         .attr ("src", scene .worldURL));
+         scene   = this .getScene ();
 
       scene .setEncoding ("IMAGE");
       scene .setProfile (browser .getProfile ("Interchange"));
@@ -68,10 +61,12 @@ class ImageParser extends X3D .X3DParser
       textureNode .repeatS = false;
       textureNode .repeatT = false;
 
+      await textureNode .getValue () .loading ();
+
       appearanceNode .texture = textureNode;
 
-      rectangleNode .size .x = image .prop ("width")  / 72 * 0.0254;
-      rectangleNode .size .y = image .prop ("height") / 72 * 0.0254;
+      rectangleNode .size .x = textureNode .getValue () .getWidth ()  / 72 * 0.0254;
+      rectangleNode .size .y = textureNode .getValue () .getHeight () / 72 * 0.0254;
 
       shapeNode .appearance = appearanceNode;
       shapeNode .geometry   = rectangleNode;

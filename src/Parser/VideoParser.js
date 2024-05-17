@@ -40,15 +40,7 @@ class VideoParser extends X3D .X3DParser
    {
       const
          browser = this .getBrowser (),
-         scene   = this .getScene (),
-         video   = $("<video></video>");
-
-      await new Promise ((resolve, reject) => video
-         .on ("loadeddata", resolve)
-         .on ("abort error", event => reject (new Error (event .type)))
-         .prop ("crossOrigin", "Anonymous")
-         .prop ("preload", "auto")
-         .attr ("src", scene .worldURL));
+         scene   = this .getScene ();
 
       scene .setEncoding ("VIDEO");
       scene .setProfile (browser .getProfile ("Interchange"));
@@ -72,10 +64,12 @@ class VideoParser extends X3D .X3DParser
       textureNode .repeatS = false;
       textureNode .repeatT = false;
 
+      await textureNode .getValue () .loading ();
+
       appearanceNode .texture = textureNode;
 
-      rectangleNode .size .x = video .prop ("videoWidth")  / 72 * 0.0254;
-      rectangleNode .size .y = video .prop ("videoHeight") / 72 * 0.0254;
+      rectangleNode .size .x = textureNode .getValue () .getWidth ()  / 72 * 0.0254;
+      rectangleNode .size .y = textureNode .getValue () .getHeight () / 72 * 0.0254;
 
       shapeNode .appearance = appearanceNode;
       shapeNode .geometry   = rectangleNode;
