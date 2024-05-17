@@ -61,7 +61,6 @@ class ImageParser extends X3D .X3DParser
          transformNode  = scene .createNode ("Transform"),
          shapeNode      = scene .createNode ("Shape"),
          appearanceNode = scene .createNode ("Appearance"),
-         materialNode   = scene .createNode ("Material"),
          textureNode    = scene .createNode ("ImageTexture"),
          rectangleNode  = scene .createNode ("Rectangle2D");
 
@@ -69,8 +68,7 @@ class ImageParser extends X3D .X3DParser
       textureNode .repeatS = false;
       textureNode .repeatT = false;
 
-      appearanceNode .material = materialNode;
-      appearanceNode .texture  = textureNode;
+      appearanceNode .texture = textureNode;
 
       rectangleNode .size .x = image .prop ("width")  / 72 * 0.0254;
       rectangleNode .size .y = image .prop ("height") / 72 * 0.0254;
