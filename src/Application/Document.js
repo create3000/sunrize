@@ -385,7 +385,7 @@ Viewpoint {
 
       if (this .filePath)
       {
-         if (!path .extname (this .filePath) .match (/\.(?:x3dz?|x3dvz?|x3djz?)$/i))
+         if (!path .extname (this .filePath) .match (/\.(?:x3dz?|x3dvz?|x3djz?|html)$/i))
          {
             if (!this .fileSaveFileTypeWarning)
                console .warn (`Couldn't save '${this .filePath}'. File type is not supported.`);
