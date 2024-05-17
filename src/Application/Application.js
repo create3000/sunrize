@@ -894,7 +894,7 @@ module .exports = class Application
          filters: filters ?? [
             {
                name: _("X3D Document"),
-               extensions: ["x3d", "x3dz", "x3dv", "x3dvz", "x3dj", "x3djz", "wrl", "wrz", "wrl.gz", "vrml", "gltf", "glb", "obj", "stl", "ply", "svg", "png", "jpg", "jpeg", "gif"],
+               extensions: ["x3d", "x3dz", "x3dv", "x3dvz", "x3dj", "x3djz", "wrl", "wrz", "wrl.gz", "vrml", "gltf", "glb", "obj", "stl", "ply", "svg", "png", "jpg", "jpeg", "gif", "webp"],
             },
          ],
       });

@@ -23,7 +23,7 @@ class ImageParser extends X3D .X3DParser
    {
       const worldURL = new URL (this .getScene () .worldURL);
 
-      if (!worldURL .pathname .match (/\.(?:png|jpg|jpeg|gif)$/i))
+      if (!worldURL .pathname .match (/\.(?:png|jpg|jpeg|gif|webp)$/i))
          return;
 
       return true;
