@@ -1014,6 +1014,10 @@ body.dark .ui-widget .library-list .component {
   color: var(--system-gray1);
 }
 
+.scene-graph .material-symbols-outlined:hover {
+  color: var(--system-gray0);
+}
+
 .scene-graph .hidden {
   display: none;
 }
@@ -1313,7 +1317,19 @@ body.dark .ui-widget .library-list .component {
 }
 
 .scene-graph .button.off {
-  color: var(--text-color);
+  color: var(--system-gray1);
+}
+
+.scene-graph .button.off:hover {
+  color: var(--system-gray0);
+}
+
+.scene-graph .button.on {
+  color: var(--system-blue);
+}
+
+.scene-graph .button.on:hover {
+  color: var(--system-gray0);
 }
 
 /* Spectrum Color Picker */

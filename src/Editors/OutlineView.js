@@ -993,7 +993,7 @@ module .exports = class OutlineView extends Interface
 
             $("<span></span>")
                .addClass (["toggle-visibility", "button", "material-symbols-outlined"])
-               .addClass (node .isHidden () ? "off" : "")
+               .addClass (node .isHidden () ? "off" : "on")
                .attr ("title", "Toggle visibility.")
                .text (node .isHidden () ? "visibility_off" : "visibility")
                .appendTo (name);
@@ -1005,7 +1005,7 @@ module .exports = class OutlineView extends Interface
 
             $("<span></span>")
                .addClass (["toggle-tool", "button", "material-symbols-outlined"])
-               .addClass (node .valueOf () === node ? "off" : "")
+               .addClass (node .valueOf () === node ? "off" : "on")
                .attr ("title", _("Toggle display tool."))
                .text ("build_circle")
                .appendTo (name);
@@ -1036,7 +1036,7 @@ module .exports = class OutlineView extends Interface
 
                   $("<span></span>")
                      .addClass (["bind-node", "button", "material-symbols-outlined"])
-                     .addClass (node ._isBound .getValue () ? "" : "off")
+                     .addClass (node ._isBound .getValue () ? "on" : "off")
                      .attr ("title", _("Bind node."))
                      .text (node ._isBound .getValue () ? "radio_button_checked" : "radio_button_unchecked")
                      .appendTo (name);
@@ -1143,8 +1143,8 @@ module .exports = class OutlineView extends Interface
       this .sceneGraph
          .find (`.node[node-id=${node .getId ()}]`)
          .find ("> .item .bind-node")
-         .removeClass ("off")
-         .addClass (node ._isBound .getValue () ? "" : "off")
+         .removeClass (["on", "off"])
+         .addClass (node ._isBound .getValue () ? "on" : "off")
          .text (node ._isBound .getValue () ? "radio_button_checked" : "radio_button_unchecked");
    }
 
@@ -2936,8 +2936,8 @@ module .exports = class OutlineView extends Interface
 
       this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
          .find ("> .item .toggle-visibility")
-         .removeClass ("off")
-         .addClass (hidden ? "off" : "")
+         .removeClass (["on", "off"])
+         .addClass (hidden ? "off" : "on")
          .text (hidden ? "visibility_off" : "visibility");
    }
 
@@ -2965,8 +2965,8 @@ module .exports = class OutlineView extends Interface
       node .setUserData (_changing, true);
 
       this .sceneGraph .find (`.node[node-id=${node .getId ()}] > .item .toggle-tool`)
-         .removeClass ("off")
-         .addClass (tool ? "off" : "");
+         .removeClass (["on", "off"])
+         .addClass (tool ? "off" : "on");
    }
 
    activateLayer (event) { }
@@ -3013,8 +3013,8 @@ module .exports = class OutlineView extends Interface
 
          this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
             .find ("> .item .toggle-visibility")
-            .removeClass ("off")
-            .addClass (node .isHidden () ? "off" : "")
+            .removeClass (["on", "off"])
+            .addClass (node .isHidden () ? "off" : "on")
             .text (node .isHidden () ? "visibility_off" : "visibility")
       })
 
@@ -3035,6 +3035,7 @@ module .exports = class OutlineView extends Interface
          this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
             .find ("> .item .toggle-visibility")
             .removeClass ("off")
+            .addClass ("on")
             .text ("visibility")
       })
    }
@@ -3053,6 +3054,7 @@ module .exports = class OutlineView extends Interface
          this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
             .find ("> .item .toggle-visibility")
             .removeClass ("off")
+            .addClass ("on")
             .text ("visibility")
       })
    }
@@ -3069,6 +3071,7 @@ module .exports = class OutlineView extends Interface
          this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
             .find ("> .item .toggle-visibility")
             .removeClass ("off")
+            .addClass ("on")
             .text ("visibility")
       })
    }
