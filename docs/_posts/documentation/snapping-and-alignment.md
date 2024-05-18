@@ -10,7 +10,8 @@ tags: [Snap Target, Snap Source]
 There are two kinds of targets you can use to align objects. The Snap Target (yellow arrow), and the Snap Source (green arrow). Use the Snap Target to mark a position in the scene to which you want another object moved or aligned. Use the Snap Source to specify a particular point on the selection to move to the Snap Target.
 
 ![Snap Target](/assets/img/documentation/snap-target.png){: .normal .w-50 }
-<br><small>Snap Target</small>
+<br>Snap Target
+{: .small }
 
 Uses for the Snap Target:
 
@@ -67,8 +68,9 @@ Drag target to object. Select object to move, press *Ctrl-M* to move selection t
 
 Activate *Layout > Grid Layout Tool*, *Layout > Angle Grid Layout Tool* or *Layout > Axonometric Grid Layout Tool*. Activate *Layout > Show Grid Tool Options in Panel* to adjust more grid related properties.
 
-![Angle Layout Tool](/assets/img/documentation/angle-layout-tool.png){: .normal .w-50 }
-<br><small>Angle Layout Tool</small>
+![Angle Grid Layout Tool](/assets/img/documentation/angle-layout-tool.png){: .normal .w-50 }
+<br>Angle Grid Layout Tool
+{: .small }
 
 ### Layout Tools
 
