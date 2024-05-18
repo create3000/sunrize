@@ -42,7 +42,7 @@ module .exports = class Document extends Interface
 
       // Additional Parser
 
-      X3D .GoldenGate .Parser .push (ImageParser, VideoParser, AudioParser);
+      X3D .GoldenGate .addParser (ImageParser, VideoParser, AudioParser);
    }
 
    /**
