@@ -549,9 +549,6 @@ tr.disabled ~ tr > td > div {
   background-color: var(--system-gray7);
 }
 
-#secondary-toolbar {
-}
-
 /* Dialog */
 
 .dialog ::selection {
@@ -1010,13 +1007,11 @@ body.dark .ui-widget .library-list .component {
 
 /* Outline Editor */
 
-.outline-editor {
-}
-
 .scene-graph .material-symbols-outlined {
   font-size: var(--font-size);
   position: relative;
   top: 2.5px;
+  color: var(--system-gray1);
 }
 
 .scene-graph .hidden {
@@ -1162,7 +1157,6 @@ body.dark .ui-widget .library-list .component {
   position: relative;
   top: 4px;
   margin-left: 10px;
-  color: black;
   font-variation-settings: 'GRAD' 200;
 }
 
