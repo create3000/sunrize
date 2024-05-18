@@ -28,7 +28,7 @@ Use for the Snap Source:
 1. Activate and place the Snap Target and the Snap Source (if you decide to use it).
 2. Select the object you want to move to the target (click the object). Don't forget this step! If you don't select the object, it won't move to the target. If the Snap Source is activated, it will move to the Snap Target without the object.
 3. Choose *Layout > Move Selection to Snap Target* or press *Ctrl-M* to move the selected object to the target. You can also choose one of the other options under Layout; these include Center Snap Target in Selection and Move Selection Center to Snap Target.
-4. If you want, put away the Snap Target and Snap Source by rechoosing *Layout > Activate Snap Target / Source* or click the middle mouse button over empty space to put away the Snap Target, and Ctrl-click middle over empty space to put away the Snap Source.
+4. If you want, put away the Snap Target and Snap Source by rechoosing *Layout > Activate Snap Target / Source* or click the right mouse button over empty space to put away the Snap Target, and Alt-or-Option-click right over empty space to put away the Snap Source.
 
 ### Activating and Placing
 
