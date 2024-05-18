@@ -44,7 +44,7 @@ class ImageParser extends X3D .X3DParser
 
       scene .setEncoding ("IMAGE");
       scene .setProfile (browser .getProfile ("Interchange"));
-      scene .addComponent (browser .getComponent ("Geometry2D"));
+      scene .addComponent (browser .getComponent ("Geometry2D", 1));
 
       await this .loadComponents ();
 

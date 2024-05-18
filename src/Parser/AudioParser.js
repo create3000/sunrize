@@ -44,7 +44,7 @@ class AudioParser extends X3D .X3DParser
 
       scene .setEncoding ("AUDIO");
       scene .setProfile (browser .getProfile ("Interchange"));
-      scene .addComponent (browser .getComponent ("Sound"));
+      scene .addComponent (browser .getComponent ("Sound", 1));
 
       await this .loadComponents ();
 
