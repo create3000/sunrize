@@ -82,7 +82,7 @@ class AudioParser extends X3D .X3DParser
    {
       try
       {
-         return path .basename (url .fileURLToPath (worldURL))
+         return encodeURIComponent (path .basename (url .fileURLToPath (worldURL)));
       }
       catch
       {
