@@ -1,8 +1,6 @@
 "use strict";
 
-const
-   X3D = require ("../X3D"),
-   $   = require ("jquery");
+const X3D = require ("../X3D");
 
 class VideoParser extends X3D .X3DParser
 {
@@ -83,7 +81,7 @@ class VideoParser extends X3D .X3DParser
       // Name
 
       const
-         worldURL = new URL (this .getScene () .worldURL),
+         worldURL = new URL (scene .worldURL),
          name     = worldURL .pathname .match (/([^\/]+)\.[^.]+$/);
 
       if (name)
