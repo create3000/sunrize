@@ -373,6 +373,7 @@ DEF Text Transform {
       }
       geometry Text {
          string "3D Text"
+         fontStyle FontStyle { }
       }
    }
 }
