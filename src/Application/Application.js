@@ -889,7 +889,11 @@ module .exports = class Application
       const defaultFilters = [
          {
             name: _("X3D"),
-            extensions: ["x3d", "x3dz", "x3dv", "x3dvz", "x3dj", "x3djz", "wrl", "wrz", "wrl.gz", "vrml", "gltf", "glb", "obj", "stl", "ply", "svg"],
+            extensions: ["x3d", "x3dz", "x3dv", "x3dvz", "x3dj", "x3djz", "wrl", "wrz", "wrl.gz", "vrml"],
+         },
+         {
+            name: _("3D"),
+            extensions: ["gltf", "glb", "obj", "stl", "ply", "svg"],
          },
          {
             name: _("Audio"),
