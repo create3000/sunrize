@@ -43,7 +43,7 @@ Other ways to place the Snap Target include:
 
 - You can place the Snap Target to align an object's feature to the same plane as that of another. For example, suppose you have cube and a cone in your scene, and you'd like the cone's bottom polygon to align in the same plane as that of the cube. Place the Snap Target on one of the cube's polygons, then select and move the cone toward the cube until the Snap Target turns purple.
 
-### Snap two objects together
+### Snap Two Objects Together
 
 Use *Layout > Activate Snap Target*:
 
