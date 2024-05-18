@@ -1,6 +1,9 @@
 "use strict";
 
-const X3D = require ("../X3D");
+const
+   X3D  = require ("../X3D"),
+   url  = require ("url"),
+   path = require ("path");
 
 class ImageParser extends X3D .X3DParser
 {
@@ -55,7 +58,7 @@ class ImageParser extends X3D .X3DParser
          textureNode    = scene .createNode ("ImageTexture"),
          rectangleNode  = scene .createNode ("Rectangle2D");
 
-      textureNode .url     = new X3D .MFString (scene .worldURL);
+      textureNode .url     = new X3D .MFString (this .getURL (scene .worldURL));
       textureNode .repeatS = false;
       textureNode .repeatT = false;
 
@@ -87,6 +90,18 @@ class ImageParser extends X3D .X3DParser
       }
 
       return scene;
+   }
+
+   getURL (worldURL)
+   {
+      try
+      {
+         return path .basename (url .fileURLToPath (worldURL))
+      }
+      catch
+      {
+         return worldURL;
+      }
    }
 }
 

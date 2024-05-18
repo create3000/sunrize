@@ -1,6 +1,9 @@
 "use strict";
 
-const X3D = require ("../X3D");
+const
+   X3D  = require ("../X3D"),
+   url  = require ("url"),
+   path = require ("path");
 
 class VideoParser extends X3D .X3DParser
 {
@@ -57,7 +60,7 @@ class VideoParser extends X3D .X3DParser
          rectangleNode  = scene .createNode ("Rectangle2D"),
          soundNode      = scene .createNode ("Sound");
 
-      textureNode .url     = new X3D .MFString (scene .worldURL);
+      textureNode .url     = new X3D .MFString (this .getURL (scene .worldURL));
       textureNode .loop    = true;
       textureNode .repeatS = false;
       textureNode .repeatT = false;
@@ -92,6 +95,18 @@ class VideoParser extends X3D .X3DParser
       }
 
       return scene;
+   }
+
+   getURL (worldURL)
+   {
+      try
+      {
+         return path .basename (url .fileURLToPath (worldURL))
+      }
+      catch
+      {
+         return worldURL;
+      }
    }
 }
 

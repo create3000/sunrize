@@ -1,6 +1,9 @@
 "use strict";
 
-const X3D = require ("../X3D");
+const
+   X3D  = require ("../X3D"),
+   url  = require ("url"),
+   path = require ("path");
 
 class AudioParser extends X3D .X3DParser
 {
@@ -52,7 +55,7 @@ class AudioParser extends X3D .X3DParser
          soundNode     = scene .createNode ("Sound"),
          audioClipNode = scene .createNode ("AudioClip");
 
-      audioClipNode .url  = new X3D .MFString (scene .worldURL);
+      audioClipNode .url  = new X3D .MFString (this .getURL (scene .worldURL));
       audioClipNode .loop = true;
 
       soundNode .source = audioClipNode;
@@ -73,6 +76,18 @@ class AudioParser extends X3D .X3DParser
       }
 
       return scene;
+   }
+
+   getURL (worldURL)
+   {
+      try
+      {
+         return path .basename (url .fileURLToPath (worldURL))
+      }
+      catch
+      {
+         return worldURL;
+      }
    }
 }
 
