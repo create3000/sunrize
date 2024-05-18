@@ -40,7 +40,7 @@ module .exports = class Document extends Interface
       this .footer             = new Footer ($("#footer"));
       this .sidebar            = new Sidebar ($("#sidebar"));
 
-      // Additional Parser
+      // Additional Parsers
 
       X3D .GoldenGate .addParsers (ImageParser, VideoParser, AudioParser);
    }
