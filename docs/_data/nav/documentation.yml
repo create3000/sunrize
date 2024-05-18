@@ -18,5 +18,7 @@
       url: /documentation/editing-prototypes/
     - title: "Imported and Exported Nodes"
       url: /documentation/imported-and-exported-nodes/
+    - title: "Snapping and Alignment"
+      url: /documentation/snapping-and-alignment/
     - title: "Using the Script Editor"
       url: /documentation/using-the-script-editor/
