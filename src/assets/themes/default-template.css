@@ -1011,7 +1011,7 @@ body.dark .ui-widget .library-list .component {
   font-size: var(--font-size);
   position: relative;
   top: 2.5px;
-  color: var(--system-gray1);
+  color: var(--system-blue);
 }
 
 .scene-graph .material-symbols-outlined:hover {
@@ -1321,14 +1321,6 @@ body.dark .ui-widget .library-list .component {
 }
 
 .scene-graph .button.off:hover {
-  color: var(--system-gray0);
-}
-
-.scene-graph .button.on {
-  color: var(--system-blue);
-}
-
-.scene-graph .button.on:hover {
   color: var(--system-gray0);
 }
 
