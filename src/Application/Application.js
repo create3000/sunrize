@@ -893,7 +893,7 @@ module .exports = class Application
          },
          {
             name: _("Audio"),
-            extensions: ["mp3", "wav"],
+            extensions: ["mp3", "wav", "oga", "ogg"],
          },
          {
             name: _("Images"),
@@ -901,7 +901,7 @@ module .exports = class Application
          },
          {
             name: _("Video"),
-            extensions: ["mp4", "webm", "ogg"],
+            extensions: ["mp4", "webm", "ogv"],
          },
       ];
 

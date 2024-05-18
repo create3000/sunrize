@@ -24,7 +24,7 @@ class VideoParser extends X3D .X3DParser
    {
       const worldURL = new URL (this .getScene () .worldURL);
 
-      if (!worldURL .pathname .match (/\.(?:mp4|webm|ogg)$/i))
+      if (!worldURL .pathname .match (/\.(?:mp4|webm|ogv)$/i))
          return;
 
       return true;

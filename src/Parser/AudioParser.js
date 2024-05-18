@@ -24,7 +24,7 @@ class AudioParser extends X3D .X3DParser
    {
       const worldURL = new URL (this .getScene () .worldURL);
 
-      if (!worldURL .pathname .match (/\.(?:mp3|wav)$/i))
+      if (!worldURL .pathname .match (/\.(?:mp3|wav|oga|ogg)$/i))
          return;
 
       return true;
