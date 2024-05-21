@@ -12,12 +12,6 @@ Sunrize is an easy-to-use editor for X3D files that is based on the [X_ITE](/x_i
 
 ![Image of Sunrize Editor](/assets/img/sunrize.png)
 
-### Become a Patreon of X_ITE
-
-Yeah, tell me!
-
-X_ITE needs your support, with a small contribution you can make a big difference.
-
 [<i class="fa-solid fa-heart"></i> Support us on Patreon](https://patreon.com/X_ITE){: target="_blank" .patreon }
 
 ## Run from Console
