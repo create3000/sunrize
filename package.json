@@ -85,7 +85,7 @@
   "dependencies": {
     "capitalize": "^2.0.4",
     "console": "^0.7.2",
-    "electron": "^30.0.6",
+    "electron": "^30.0.8",
     "electron-prompt": "^1.7.0",
     "electron-squirrel-startup": "^1.0.1",
     "electron-tabs": "^1.0.4",
