@@ -345,6 +345,7 @@ module .exports = class ScriptEditor extends Interface
                   wordWrap: "on",
                   wrappingIndent: "indent",
                   minimap: { enabled: false },
+                  bracketPairColorization: { enabled: true },
                });
 
                editor .onDidBlurEditorWidget (() => this .apply ());
