@@ -1385,3 +1385,10 @@ body.dark .ui-widget .library-list .component {
 .tp-mllv_i:read-only {
   background-color: var(--tp-monitor-background-color-readonly);
 }
+
+/* monaco editor */
+
+.monaco-editor,
+.monaco-editor * {
+  all: revert;
+}
