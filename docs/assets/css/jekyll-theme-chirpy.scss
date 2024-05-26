@@ -171,6 +171,10 @@ small, .small {
   aspect-ratio: 16 / 9;
 }
 
+span[data-label-text="VRML" i] {
+  text-transform: uppercase;
+}
+
 .table-wrapper > table tbody tr td,
 .table-wrapper > table thead th {
   white-space: initial;
