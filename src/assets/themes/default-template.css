@@ -32,11 +32,6 @@ body {
   background: var(--system-gray4);
 }
 
-.monaco-findInput ::selection {
-  color: var(--system-gray5);
-  background: var(--system-gray1);
-}
-
 /* common */
 
 .green {
@@ -1391,4 +1386,9 @@ body.dark .ui-widget .library-list .component {
 .monaco-editor,
 .monaco-editor * {
   all: revert;
+}
+
+.monaco-findInput ::selection {
+  color: var(--system-gray5);
+  background: var(--system-gray1);
 }
