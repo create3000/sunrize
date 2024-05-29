@@ -1388,6 +1388,10 @@ body.dark .ui-widget .library-list .component {
   all: revert;
 }
 
+.monaco-scrollable-element > .shadow {
+  display: none !important;
+}
+
 .monaco-inputbox > .ibwrapper {
   height: auto !important;
 }
