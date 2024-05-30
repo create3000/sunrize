@@ -23,6 +23,16 @@
   --system-pink: rgb(255, 55, 95);
   --system-brown: rgb(172, 142, 104);
 
+  --system-gray0: rgb(72, 72, 77);
+  --system-gray1: rgb(122, 122, 127);
+  --system-gray2: rgb(174, 174, 178);
+  --system-gray3: rgb(199, 199, 204);
+  --system-gray4: rgb(209, 209, 214);
+  --system-gray5: rgb(229, 229, 234);
+  --system-gray6: rgb(242, 242, 247);
+  --system-gray7: rgb(249, 249, 255);
+  --system-gray8: rgb(255, 255, 255);
+
   --nav-border-color: rgba(158, 158, 158, 0.17);
   --nav-active-page: rgb(168, 182, 206);
 
@@ -46,6 +56,16 @@
   --system-purple: rgb(175, 82, 222);
   --system-pink: rgb(255, 45, 85);
   --system-brown: rgb(162, 132, 94);
+
+  --system-gray0: rgb(204, 204, 209);
+  --system-gray1: rgb(142, 142, 147);
+  --system-gray2: rgb(99, 99, 102);
+  --system-gray3: rgb(72, 72, 74);
+  --system-gray4: rgb(58, 58, 60);
+  --system-gray5: rgb(44, 44, 46);
+  --system-gray6: rgb(28, 28, 30);
+  --system-gray7: rgb(21, 21, 23);
+  --system-gray8: rgb(0, 0, 0);
 
   --h2-color: rgb(189, 0, 106);
   --h3-color: rgb(159, 103, 34);;
@@ -78,6 +98,10 @@
   .post-tail-wrapper > .nav-wrapper {
     display: none;
   }
+}
+
+html {
+  overflow: auto;
 }
 
 /* append your custom style below */
