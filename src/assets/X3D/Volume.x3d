@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.3//EN" "http://www.web3d.org/specifications/x3d-3.3.dtd">
-<X3D profile='Immersive' version='3.3' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.3.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
   <head>
-    <component name='CADGeometry' level='1'/>
+    <component name='CADGeometry' level='2'/>
+    <component name='EnvironmentalSensor' level='3'/>
+    <component name='Scripting' level='1'/>
     <component name='Shaders' level='1'/>
-    <component name='Texturing3D' level='1'/>
+    <component name='Texturing3D' level='2'/>
     <meta name='comment' content='World of Titania'/>
     <meta name='created' content='Tue, 14 May 2019 10:58:30 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Titania V4.5.3, http://titania.create3000.de'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.6.15, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Library/Tests/Components/Texturing3D/Volume.x3d'/>
-    <meta name='modified' content='Tue, 14 May 2019 10:58:30 GMT'/>
+    <meta name='modified' content='Thu, 30 May 2024 21:35:33 GMT'/>
     <meta name='titania-output-style' content='Nicest'/>
   </head>
   <Scene>
@@ -52,12 +55,12 @@ out vec4 texCoord;
 void
 main ()
 {
-	vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
+   vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
 
-	vertex   = position .xyz;
-	texCoord = x3d_TextureMatrix [0] * x3d_TexCoord0;
+   vertex   = position .xyz;
+   texCoord = x3d_TextureMatrix [0] * x3d_TexCoord0;
 
-	gl_Position = x3d_ProjectionMatrix * position;
+   gl_Position = x3d_ProjectionMatrix * position;
 }]]>
                   </ShaderPart>
                   <ShaderPart DEF='FragmentShader'
@@ -70,8 +73,8 @@ precision mediump sampler3D;
 uniform int       x3d_NumTextures;
 uniform sampler3D x3d_Texture3D [1];
 
-uniform int  x3d_NumClipPlanes;
-uniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];
+#define NUM_CLIP_PLANES 1
+uniform vec4 x3d_ClipPlane [NUM_CLIP_PLANES];
 
 in vec3 vertex;
 in vec4 texCoord;
@@ -81,42 +84,39 @@ out vec4 x3d_FragColor;
 void
 clip ()
 {
-	for (int i = 0; i < x3d_MaxClipPlanes; ++ i)
-	{
-		if (i == x3d_NumClipPlanes)
-			break;
-
-		if (dot (vertex, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)
-			discard;
-	}
+   for (int i = 0; i %3C NUM_CLIP_PLANES; ++ i)
+   {
+      if (dot (vertex, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w %3C 0.0)
+         discard;
+   }
 }
 
 vec4
 getTextureColor (in vec3 texCoord)
 {
-	if (x3d_NumTextures == 0)
-		vec4 (1.0, 1.0, 1.0, 1.0);
+   if (x3d_NumTextures == 0)
+      vec4 (1.0, 1.0, 1.0, 1.0);
 
-	if (texCoord .s < 0.0 || texCoord .s > 1.0)
-		discard;
+   if (texCoord .s %3C 0.0 %7C%7C texCoord .s %3E 1.0)
+      discard;
 
-	if (texCoord .t < 0.0 || texCoord .t > 1.0)
-		discard;
+   if (texCoord .t %3C 0.0 %7C%7C texCoord .t %3E 1.0)
+      discard;
 
-	if (texCoord .p < 0.0 || texCoord .p > 1.0)
-		discard;
+   if (texCoord .p %3C 0.0 %7C%7C texCoord .p %3E 1.0)
+      discard;
 
-	vec4 voxelColor = texture (x3d_Texture3D [0], vec3 (texCoord .s, texCoord .t, 1.0 - texCoord .p));
+   vec4 voxelColor = texture (x3d_Texture3D [0], vec3 (texCoord .s, texCoord .t, 1.0 - texCoord .p));
 
-	return voxelColor;
+   return voxelColor;
 }
 
 void
 main ()
 {
-	clip ();
+   clip ();
 
-	x3d_FragColor = getTextureColor (texCoord .stp / texCoord .q);
+   x3d_FragColor = getTextureColor (texCoord .stp / texCoord .q);
 }]]>
                   </ShaderPart>
                 </ComposedShader>
@@ -145,32 +145,32 @@ var NUM_PLANES = 200;
 
 function initialize ()
 {
-	set_dimension ();
+   set_dimension ();
 }
 
 function set_dimension ()
 {
-	var
-		size     = dimensions .length (),
-		size1_2  = size / 2,
-		coord    = geometry .coord,
-		texCoord = geometry .texCoord;
+   var
+      size     = dimensions .length (),
+      size1_2  = size / 2,
+      coord    = geometry .coord,
+      texCoord = geometry .texCoord;
 
-	coord .point .length = 0;
+   coord .point .length = 0;
 
-	for (var i = 0; i < NUM_PLANES; ++ i)
-	{
-		var z = i / (NUM_PLANES - 1) - 0.5;
+   for (var i = 0; i < NUM_PLANES; ++ i)
+   {
+      var z = i / (NUM_PLANES - 1) - 0.5;
 
-		coord .point .push (new SFVec3f ( size1_2,  size1_2, size * z),
-		                    new SFVec3f (-size1_2,  size1_2, size * z),
-		                    new SFVec3f (-size1_2, -size1_2, size * z),
-		                    new SFVec3f ( size1_2, -size1_2, size * z));
-	}
+      coord .point .push (new SFVec3f ( size1_2,  size1_2, size * z),
+                          new SFVec3f (-size1_2,  size1_2, size * z),
+                          new SFVec3f (-size1_2, -size1_2, size * z),
+                          new SFVec3f ( size1_2, -size1_2, size * z));
+   }
 
-	texCoord .point = coord .point;
+   texCoord .point = coord .point;
 
-	textureTransform .scale = new SFVec3f (1 / dimensions .x, 1 / dimensions .y, 1 / dimensions .z);
+   textureTransform .scale = new SFVec3f (1 / dimensions .x, 1 / dimensions .y, 1 / dimensions .z);
 }
 ]]>
         </Script>
@@ -178,7 +178,5 @@ function set_dimension ()
         <ROUTE fromNode='_1' fromField='orientation_changed' toNode='_3' toField='set_rotation'/>
       </ProtoBody>
     </ProtoDeclare>
-    <WorldInfo
-        title='Volume'/>
   </Scene>
 </X3D>

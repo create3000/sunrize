@@ -35,11 +35,24 @@ $.fn.texturePreviewPopover = async function (node)
    {
       switch (type)
       {
+         case X3D .X3DConstants .ComposedCubeMapTexture:
+         case X3D .X3DConstants .GeneratedCubeMapTexture:
+         case X3D .X3DConstants .ComposedTexture3D:
+         {
+            return;
+         }
          case X3D .X3DConstants .PixelTexture:
          case X3D .X3DConstants .PixelTexture3D:
          {
             textureNode ._image = node ._image;
             break;
+         }
+         case X3D .X3DConstants .ImageTextureAtlas:
+         {
+            textureNode ._slicesOverX    = node ._slicesOverX;
+            textureNode ._slicesOverY    = node ._slicesOverY;
+            textureNode ._numberOfSlices = node ._numberOfSlices;
+            continue;
          }
          case X3D .X3DConstants .X3DUrlObject:
          {
@@ -100,7 +113,8 @@ $.fn.texturePreviewPopover = async function (node)
       events: {
          hide (event, api)
          {
-            browser .dispose ();
+            textureNode .dispose ();
+            browser     .dispose ();
 
             api .destroy (true);
          },

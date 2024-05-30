@@ -14,7 +14,7 @@
     <meta name='generator' content='Titania V4.5.3, http://titania.create3000.de'/>
     <meta name='generator' content='Sunrize X3D Editor V1.6.15, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/Titania/share/titania/ui/Editors/TexturePreview.x3dv'/>
-    <meta name='modified' content='Thu, 30 May 2024 18:20:47 GMT'/>
+    <meta name='modified' content='Thu, 30 May 2024 19:45:32 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='Volume' url='"Volume.x3d#Volume"'>
@@ -92,9 +92,9 @@
 
 function set_translation (value)
 {
-   var distanceFromOrigin = new SFVec3f (0, 0, -1) .dot (value);
+   const distanceFromOrigin = new SFVec3f (0, 0, -1) .dot (value);
 
-   plane_changed = new SFVec4f (0,0,-1, -distanceFromOrigin);
+   plane_changed = new SFVec4f (0, 0, -1, -distanceFromOrigin);
 }
 ]]>
               </Script>
@@ -195,19 +195,19 @@ function set_texture (value)
          {
             case X3DConstants .X3DTexture2DNode:
             {
-               texture2DTrue       = true;
+               texture2D           = true;
                whichChoice_changed = 0;
                return;
             }
             case X3DConstants .X3DTexture3DNode:
             {
-               texture3DTrue       = true;
+               texture3D           = true;
                whichChoice_changed = 1;
                return;
             }
             case X3DConstants .X3DEnvironmentTextureNode:
             {
-               cubeMapTextureTrue  = true;
+               cubeMapTexture       = true;
                whichChoice_changed = 2;
                return;
             }
@@ -217,7 +217,7 @@ function set_texture (value)
       }
    }
 
-   texture2DTrue       = true;
+   texture2D           = true;
    whichChoice_changed = -1;
 }]]>
         </Script>
