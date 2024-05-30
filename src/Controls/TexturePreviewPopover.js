@@ -12,13 +12,16 @@ $.fn.texturePreviewPopover = async function (node)
 {
    // Create content.
 
-   const preview = $("<x3d-canvas></x3d-canvas>")
+   const preview = $("<div></div")
+
+   const canvas = $("<x3d-canvas></x3d-canvas>")
       .css ({ width: "30vh", height: "30vh" })
       .attr ("splashScreen", false)
       .attr ("contextMenu", false)
-      .attr ("notifications", false);
+      .attr ("notifications", false)
+      .appendTo (preview);
 
-   const browser = preview .prop ("browser");
+   const browser = canvas .prop ("browser");
 
    await browser .loadURL (new X3D .MFString (path .join (__dirname, "../assets/X3D/TexturePreview.x3d")));
 
@@ -26,23 +29,69 @@ $.fn.texturePreviewPopover = async function (node)
 
    const
       appearanceNode = browser .currentScene .getExportedNode ("Appearance"),
-      textureNode    = node .create (browser .currentScene),
-      _url           = Symbol ();
+      textureNode    = node .create (browser .currentScene);
 
-   function set_url ()
+   for (const type of node .getType () .toReversed ())
    {
-      textureNode ._url = node ._url .map (url => new URL (url, node .getExecutionContext () .worldURL));
+      switch (type)
+      {
+         case X3D .X3DConstants .PixelTexture:
+         case X3D .X3DConstants .PixelTexture3D:
+         {
+            textureNode ._image = node ._image;
+            break;
+         }
+         case X3D .X3DConstants .X3DUrlObject:
+         {
+            textureNode ._url = node ._url .map (url => new URL (url, node .getExecutionContext () .worldURL));
+            break;
+         }
+         default:
+            continue;
+      }
+
+      break;
    }
-
-   node ._url .addFieldCallback (_url, set_url);
-
-   set_url ();
 
    textureNode .setup ();
 
    // Assign texture node.
 
    appearanceNode .texture = textureNode;
+
+   // Sizes
+
+   for (const type of node .getType () .toReversed ())
+   {
+      switch (type)
+      {
+         case X3D .X3DConstants .X3DEnvironmentTextureNode:
+         {
+            $("<p></xp>")
+               .text (`${node .getSize ()} × ${node .getSize ()}`)
+               .appendTo (preview);
+            break;
+         }
+         case X3D .X3DConstants .X3DTexture2DNode:
+         {
+            $("<p></xp>")
+               .text (`${node .getWidth ()} × ${node .getHeight ()}`)
+               .appendTo (preview);
+            break;
+         }
+         case X3D .X3DConstants .X3DTexture3DNode:
+         {
+            $("<p></xp>")
+               .text (`${node .getWidth ()} × ${node .getHeight ()} × ${node .getDepth ()}`)
+               .appendTo (preview);
+            break;
+         }
+         default:
+            continue;
+      }
+
+      break;
+   }
 
    // Create tooltip.
 
@@ -51,8 +100,6 @@ $.fn.texturePreviewPopover = async function (node)
       events: {
          hide (event, api)
          {
-            node ._url .removeFieldCallback (_url);
-
             browser .dispose ();
 
             api .destroy (true);
