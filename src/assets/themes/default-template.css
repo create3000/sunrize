@@ -394,6 +394,11 @@ tr.disabled ~ tr > td > div {
   padding: 5px;
 }
 
+body.light .qtip-tipsy {
+  color: black;
+  text-shadow: none;
+}
+
 .qtip {
   max-width: unset;
 }
