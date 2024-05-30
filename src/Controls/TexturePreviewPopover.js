@@ -1,10 +1,12 @@
 "use strict";
 
 const
-   $    = require ("jquery"),
-   path = require ("path"),
-   X3D  = require ("../X3D"),
-   _    = require ("../Application/GetText");
+   $           = require ("jquery"),
+   path        = require ("path"),
+   X3D         = require ("../X3D"),
+   Editor      = require ("../Undo/Editor"),
+   UndoManager = require("../Undo/UndoManager"),
+   _           = require ("../Application/GetText");
 
 require ("./Popover");
 
@@ -29,44 +31,9 @@ $.fn.texturePreviewPopover = async function (node)
 
    const
       appearanceNode = browser .currentScene .getExportedNode ("Appearance"),
-      textureNode    = node .create (browser .currentScene);
-
-   for (const type of node .getType () .toReversed ())
-   {
-      switch (type)
-      {
-         case X3D .X3DConstants .ComposedCubeMapTexture:
-         case X3D .X3DConstants .GeneratedCubeMapTexture:
-         case X3D .X3DConstants .ComposedTexture3D:
-         {
-            return;
-         }
-         case X3D .X3DConstants .PixelTexture:
-         case X3D .X3DConstants .PixelTexture3D:
-         {
-            textureNode ._image = node ._image;
-            break;
-         }
-         case X3D .X3DConstants .ImageTextureAtlas:
-         {
-            textureNode ._slicesOverX    = node ._slicesOverX;
-            textureNode ._slicesOverY    = node ._slicesOverY;
-            textureNode ._numberOfSlices = node ._numberOfSlices;
-            continue;
-         }
-         case X3D .X3DConstants .X3DUrlObject:
-         {
-            textureNode ._url = node ._url .map (url => new URL (url, node .getExecutionContext () .worldURL));
-            break;
-         }
-         default:
-            continue;
-      }
-
-      break;
-   }
-
-   textureNode .setup ();
+      x3dSyntax      = Editor .exportX3D (node .getExecutionContext (), [node]),
+      nodes          = await Editor .importX3D (browser .currentScene, x3dSyntax, new UndoManager ()),
+      textureNode    = nodes [0];
 
    // Assign texture node.
 
