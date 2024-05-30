@@ -261,6 +261,9 @@ module .exports = class OutlineView extends Interface
             .on ("dragstart", this .onDragStartNode .bind (this));
       }
 
+      child .find (".node .icon")
+         .on ("click", this .onEnterNodeIcon .bind (this));
+
       child .find (".node .name")
          .on ("mouseenter", this .updateNodeTitle .bind (this));
 
@@ -1604,6 +1607,35 @@ module .exports = class OutlineView extends Interface
       return child;
    }
 
+   onEnterNodeIcon (event)
+   {
+      const
+         element = $(event .currentTarget) .closest (".node, .special", this .sceneGraph),
+         node    = this .objects .get (parseInt (element .attr ("node-id")));
+
+      // Handle NULL node element.
+      if (!node)
+         return;
+
+      for (const type of node .getType () .toReversed ())
+      {
+         switch (type)
+         {
+            case X3D .X3DConstants .X3DSingleTextureNode:
+            {
+               require ("../Controls/TexturePreviewPopover");
+
+               $(event .currentTarget) .texturePreviewPopover (node);
+               break;
+            }
+            default:
+               continue;
+         }
+
+         break;
+      }
+   }
+
    updateNodeTitle (event)
    {
       const
@@ -1905,7 +1937,7 @@ module .exports = class OutlineView extends Interface
       let index = 0
 
       for (const node of field)
-         ul .append (this .createNodeElement ("node", parent, node ? node .getValue () : null, index ++))
+         ul .append (this .createNodeElement ("node", parent, node ?.getValue (), index ++))
 
       // Make jsTree.
 
@@ -1943,6 +1975,9 @@ module .exports = class OutlineView extends Interface
             .attr ("draggable", "true")
             .on ("dragstart", this .onDragStartNode .bind (this))
       }
+
+      child .find (".node .icon")
+         .on ("click", this .onEnterNodeIcon .bind (this));
 
       child .find (".node .name")
          .on ("mouseenter", this .updateNodeTitle .bind (this));
@@ -2060,6 +2095,9 @@ module .exports = class OutlineView extends Interface
             .attr ("draggable", "true")
             .on ("dragstart", this .onDragStartNode .bind (this));
       }
+
+      child .find (".node .icon")
+         .on ("click", this .onEnterNodeIcon .bind (this));
 
       child .find (".node .name")
          .on ("mouseenter", this .updateNodeTitle .bind (this));

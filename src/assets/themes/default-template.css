@@ -394,6 +394,10 @@ tr.disabled ~ tr > td > div {
   padding: 5px;
 }
 
+.qtip {
+  max-width: unset;
+}
+
 .qtip input,
 .qtip select,
 .qtip button {
