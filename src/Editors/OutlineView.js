@@ -262,7 +262,7 @@ module .exports = class OutlineView extends Interface
       }
 
       child .find (".node .icon")
-         .on ("click", this .onEnterNodeIcon .bind (this));
+         .on ("click", this .showPreview .bind (this));
 
       child .find (".node .name")
          .on ("mouseenter", this .updateNodeTitle .bind (this));
@@ -961,6 +961,22 @@ module .exports = class OutlineView extends Interface
          .attr ("src", `../images/OutlineEditor/Node/${this .nodeIcons [type]}.svg`)
          .appendTo (child);
 
+      for (const type of node .getType ())
+      {
+         switch (type)
+         {
+            case X3D .X3DConstants .X3DSingleTextureNode:
+            {
+               icon .addClass ("pointer");
+               break;
+            }
+            default:
+               continue;
+         }
+
+         break;
+      }
+
       if (node)
       {
          // Name
@@ -1607,10 +1623,11 @@ module .exports = class OutlineView extends Interface
       return child;
    }
 
-   onEnterNodeIcon (event)
+   showPreview (event)
    {
       const
-         element = $(event .currentTarget) .closest (".node, .special", this .sceneGraph),
+         icon    = $(event .currentTarget) ,
+         element = icon .closest (".node, .special", this .sceneGraph),
          node    = this .objects .get (parseInt (element .attr ("node-id")));
 
       // Handle NULL node element.
@@ -1625,7 +1642,7 @@ module .exports = class OutlineView extends Interface
             {
                require ("../Controls/TexturePreviewPopover");
 
-               $(event .currentTarget) .texturePreviewPopover (node);
+               icon .texturePreviewPopover (node);
                break;
             }
             default:
@@ -1977,7 +1994,7 @@ module .exports = class OutlineView extends Interface
       }
 
       child .find (".node .icon")
-         .on ("click", this .onEnterNodeIcon .bind (this));
+         .on ("click", this .showPreview .bind (this));
 
       child .find (".node .name")
          .on ("mouseenter", this .updateNodeTitle .bind (this));
@@ -2097,7 +2114,7 @@ module .exports = class OutlineView extends Interface
       }
 
       child .find (".node .icon")
-         .on ("click", this .onEnterNodeIcon .bind (this));
+         .on ("click", this .showPreview .bind (this));
 
       child .find (".node .name")
          .on ("mouseenter", this .updateNodeTitle .bind (this));
