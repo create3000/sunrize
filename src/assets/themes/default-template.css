@@ -384,6 +384,10 @@ tr.disabled ~ tr > td > div {
   background: none;
 }
 
+.qtip {
+  max-width: unset;
+}
+
 .qtip-tipsy.qtip {
   border: var(--tool-border);
   background: var(--tool-background-color);
@@ -397,10 +401,6 @@ tr.disabled ~ tr > td > div {
 body.light .qtip-tipsy {
   color: black;
   text-shadow: none;
-}
-
-.qtip {
-  max-width: unset;
 }
 
 .qtip input,

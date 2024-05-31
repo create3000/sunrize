@@ -59,12 +59,25 @@ $.fn.texturePreviewPopover = async function (node)
    const
       x3dSyntax      = Editor .exportX3D (node .getExecutionContext (), [node]),
       nodes          = await Editor .importX3D (scene, x3dSyntax, new UndoManager ()),
-      textureNode    = nodes [0],
+      previewNode    = nodes [0],
       appearanceNode = browser .currentScene .getExportedNode ("Appearance");
 
    // Assign texture node.
 
-   appearanceNode .texture = textureNode;
+   for (const field of previewNode .getFields ())
+   {
+      switch (field .getType ())
+      {
+         case X3D .X3DConstants .SFNode:
+         case X3D .X3DConstants .MFNode:
+            break;
+         default:
+            field .addReference (node .getField (field .getName ()));
+            break;
+      }
+   }
+
+   appearanceNode .texture = previewNode;
 
    // Sizes and special cases.
 
@@ -115,16 +128,26 @@ $.fn.texturePreviewPopover = async function (node)
 
    const tooltip = this .popover ({
       content: preview,
+      show: {
+         modal: false,
+      },
+      style: {
+         classes: "qtip-tipsy qtip-preview",
+      },
       events: {
          hide (event, api)
          {
-            textureNode .dispose ();
+            $(".tree-view") .off (".texture-preview");
+
+            previewNode .dispose ();
             browser     .dispose ();
 
             api .destroy (true);
          },
       },
    });
+
+   $(".tree-view") .on ("scroll.texture-preview", () => this .qtip ("reposition"));
 
    return this;
 };

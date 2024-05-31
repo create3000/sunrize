@@ -37,11 +37,24 @@ $.fn.materialPreviewPopover = async function (node)
       appearanceNode = browser .currentScene .getExportedNode ("Appearance"),
       x3dSyntax      = Editor .exportX3D (node .getExecutionContext (), [node]),
       nodes          = await Editor .importX3D (scene, x3dSyntax, new UndoManager ()),
-      materialNode   = nodes [0];
+      previewNode    = nodes [0];
 
    // Assign material node.
 
-   appearanceNode .material = materialNode;
+   for (const field of previewNode .getFields ())
+   {
+      switch (field .getType ())
+      {
+         case X3D .X3DConstants .SFNode:
+         case X3D .X3DConstants .MFNode:
+            break;
+         default:
+            field .addReference (node .getField (field .getName ()));
+            break;
+      }
+   }
+
+   appearanceNode .material = previewNode;
 
    // Handle TwoSidedMaterial;
 
@@ -51,34 +64,61 @@ $.fn.materialPreviewPopover = async function (node)
 
       const
          appearanceNode = browser .currentScene .getExportedNode ("BackAppearance"),
-         materialNode   = scene .createNode ("Material");
+         previewNode    = scene .createNode ("Material");
 
       // Assign material node.
 
-      materialNode .ambientIntensity = node ._backAmbientIntensity;
-      materialNode .diffuseColor     = node ._backDiffuseColor;
-      materialNode .specularColor    = node ._backSpecularColor;
-      materialNode .emissiveColor    = node ._backEmissiveColor;
-      materialNode .shininess        = node ._backShininess;
-      materialNode .transparency     = node ._backTransparency;
+      const names = [
+         "ambientIntensity",
+         "diffuseColor",
+         "specularColor",
+         "emissiveColor",
+         "shininess",
+         "transparency",
+      ];
 
-      appearanceNode .material = materialNode;
+      for (const name of names)
+      {
+         const field = previewNode .getField (name);
+
+         switch (field .getType ())
+         {
+            case X3D .X3DConstants .SFNode:
+            case X3D .X3DConstants .MFNode:
+               break;
+            default:
+               field .addReference (node .getField (`back${name [0] .toUpperCase ()}${name .slice (1)}`));
+               break;
+         }
+      }
+
+      appearanceNode .material = previewNode;
    }
 
    // Create tooltip.
 
    const tooltip = this .popover ({
       content: preview,
+      show: {
+         modal: false,
+      },
+      style: {
+         classes: "qtip-tipsy qtip-preview",
+      },
       events: {
          hide (event, api)
          {
-            materialNode .dispose ();
-            browser      .dispose ();
+            $(".tree-view") .off (".material-preview");
+
+            previewNode .dispose ();
+            browser     .dispose ();
 
             api .destroy (true);
          },
       },
    });
+
+   $(".tree-view") .on ("scroll.material-preview", () => this .qtip ("reposition"));
 
    return this;
 };

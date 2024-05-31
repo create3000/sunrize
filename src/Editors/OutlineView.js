@@ -223,7 +223,6 @@ module .exports = class OutlineView extends Interface
          .off ("keypress.jstree dblclick.jstree")
          .on ("before_open.jstree", this .nodeBeforeOpen .bind (this))
          .on ("close_node.jstree",  this .nodeCloseNode .bind (this))
-         .on ("select_node.jstree", this .selectNode .bind (this))
          .appendTo (parent)
          .hide ();
 
@@ -260,6 +259,9 @@ module .exports = class OutlineView extends Interface
             .attr ("draggable", "true")
             .on ("dragstart", this .onDragStartNode .bind (this));
       }
+
+      child .find (".externproto .name, .externproto .icon, .proto .name, .proto .icon, .node .name, .node .icon")
+         .on ("click", this .selectNode .bind (this));
 
       child .find (".node .name")
          .on ("mouseenter", this .updateNodeTitle .bind (this));
@@ -711,7 +713,6 @@ module .exports = class OutlineView extends Interface
          .off ("keypress.jstree dblclick.jstree")
          .on ("before_open.jstree", this .fieldBeforeOpen .bind (this))
          .on ("close_node.jstree",  this .fieldCloseNode .bind (this))
-         .on ("select_node.jstree", this .selectField .bind (this))
          .appendTo (parent)
          .hide ();
 
@@ -733,6 +734,9 @@ module .exports = class OutlineView extends Interface
       child .find (".jstree-node")
          .wrapInner ("<div class=\"item no-select\"/>")
          .find (".item") .append ("<div class=\"route-curves-wrapper\"><canvas class=\"route-curves\"></canvas></div>");
+
+      child .find (".field .name, .field .icon, .special .name, .special .icon")
+         .on ("click", this .selectField .bind (this))
 
       child .find (".field .name, .special .name")
          .on ("mouseenter", this .updateFieldTitle .bind (this));
@@ -1052,7 +1056,7 @@ module .exports = class OutlineView extends Interface
                   name .append (document .createTextNode (" "));
 
                   $("<span></span>")
-                     .addClass (["show-preview", "button", "material-symbols-outlined"])
+                     .addClass (["show-preview", "button", "material-symbols-outlined", "off"])
                      .css ("top", "2px")
                      .attr ("title", _("Show preview."))
                      .text ("preview")
@@ -1931,7 +1935,6 @@ module .exports = class OutlineView extends Interface
          .off ("keypress.jstree dblclick.jstree")
          .on ("before_open.jstree", this .nodeBeforeOpen .bind (this))
          .on ("close_node.jstree",  this .nodeCloseNode .bind (this))
-         .on ("select_node.jstree", this .selectNode .bind (this))
          .appendTo (parent)
          .hide ()
 
@@ -1960,6 +1963,9 @@ module .exports = class OutlineView extends Interface
             .attr ("draggable", "true")
             .on ("dragstart", this .onDragStartNode .bind (this))
       }
+
+      child .find (".node .name, .node .icon")
+         .on ("click", this .selectNode .bind (this));
 
       child .find (".node .name")
          .on ("mouseenter", this .updateNodeTitle .bind (this));
@@ -2051,7 +2057,6 @@ module .exports = class OutlineView extends Interface
          .off ("keypress.jstree dblclick.jstree")
          .on ("before_open.jstree", this .nodeBeforeOpen .bind (this))
          .on ("close_node.jstree",  this .nodeCloseNode .bind (this))
-         .on ("select_node.jstree", this .selectNode .bind (this))
          .appendTo (parent)
          .hide ();
 
@@ -2080,6 +2085,9 @@ module .exports = class OutlineView extends Interface
             .attr ("draggable", "true")
             .on ("dragstart", this .onDragStartNode .bind (this));
       }
+
+      child .find (".node .name, .node .icon")
+         .on ("click", this .selectNode .bind (this));
 
       child .find (".node .name")
          .on ("mouseenter", this .updateNodeTitle .bind (this));
@@ -2191,7 +2199,6 @@ module .exports = class OutlineView extends Interface
       child
          .jstree ()
          .off ("keypress.jstree dblclick.jstree")
-         .on ("select_node.jstree", this .selectField .bind (this))
          .appendTo (parent)
          .hide ();
 
@@ -2314,7 +2321,6 @@ module .exports = class OutlineView extends Interface
       child
          .jstree ()
          .off ("keypress.jstree dblclick.jstree")
-         .on ("select_node.jstree", this .selectField .bind (this))
          .appendTo (parent)
          .hide ()
 
@@ -2950,14 +2956,25 @@ module .exports = class OutlineView extends Interface
          icon    = $(event .currentTarget) ,
          item    = icon .closest (".item", this .sceneGraph),
          element = icon .closest (".node", this .sceneGraph),
-         node    = this .objects .get (parseInt (element .attr ("node-id")));
+         node    = this .objects .get (parseInt (element .attr ("node-id"))),
+         on      = !!item .attr ("data-hasqtip");
 
       event .preventDefault ();
       event .stopImmediatePropagation ();
 
+      $("[data-hasqtip]") .qtip ?.("hide") .qtip ("destroy", true);
+      $(".show-preview.on") .removeClass ("on") .addClass ("off");
+
+      if (on)
+         return;
+
+      icon .removeClass ("off") .addClass ("on");
+
       // Handle NULL node element.
       if (!node)
          return;
+
+      this .selectNode (event);
 
       for (const type of node .getType () .toReversed ())
       {
@@ -3142,14 +3159,15 @@ module .exports = class OutlineView extends Interface
 
    selectNode (event, selected)
    {
-      // Click on node.
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
 
-      selected .instance .deselect_node (selected .node);
+      // Click on node.
 
       this .clearConnectors ();
 
       const
-         element = $("#" + selected .node .id),
+         element = $(event .currentTarget) .closest (".node, .externproto, .proto"),
          add     = window .event .shiftKey || window .event .metaKey;
 
       if (element .hasClass ("node"))
@@ -3235,17 +3253,18 @@ module .exports = class OutlineView extends Interface
       element .addClass (["primary", "manually"]);
    }
 
-   selectField (event, selected)
+   selectField (event)
    {
-      // Click on field.
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
 
-      selected .instance .deselect_node (selected .node);
+      // Click on field.
 
       this .clearConnectors ();
 
       // Make primary selection from user defined field.
 
-      const element = $(`#${selected .node .id}`);
+      const element = $(event .currentTarget) .closest (".field, .special");
 
       if (!element .hasClass ("field"))
          return;
