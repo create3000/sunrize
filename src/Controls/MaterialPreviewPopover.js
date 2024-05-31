@@ -39,7 +39,7 @@ $.fn.materialPreviewPopover = async function (node)
       nodes          = await Editor .importX3D (scene, x3dSyntax, new UndoManager ()),
       materialNode   = nodes [0];
 
-   // Assign texture node.
+   // Assign material node.
 
    appearanceNode .material = materialNode;
 
