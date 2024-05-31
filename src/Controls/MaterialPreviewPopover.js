@@ -62,9 +62,9 @@ $.fn.materialPreviewPopover = async function (node)
    {
       // Create material node.
 
-      const
-         appearanceNode = browser .currentScene .getExportedNode ("BackAppearance"),
-         previewNode    = scene .createNode ("Material");
+      const appearanceNode = browser .currentScene .getExportedNode ("BackAppearance");
+
+      var backPreviewNode = scene .createNode ("Material");
 
       // Assign material node.
 
@@ -79,7 +79,7 @@ $.fn.materialPreviewPopover = async function (node)
 
       for (const name of names)
       {
-         const field = previewNode .getField (name);
+         const field = backPreviewNode .getField (name);
 
          switch (field .getType ())
          {
@@ -92,7 +92,7 @@ $.fn.materialPreviewPopover = async function (node)
          }
       }
 
-      appearanceNode .material = previewNode;
+      appearanceNode .material = backPreviewNode;
    }
 
    // Create tooltip.
@@ -110,8 +110,9 @@ $.fn.materialPreviewPopover = async function (node)
          {
             $(".tree-view") .off (".material-preview");
 
-            previewNode .dispose ();
-            browser     .dispose ();
+            previewNode      .dispose ();
+            backPreviewNode ?.dispose ();
+            browser          .dispose ();
 
             api .destroy (true);
          },
