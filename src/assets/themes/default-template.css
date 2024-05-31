@@ -404,6 +404,10 @@ tr.disabled ~ tr > td > div {
   backdrop-filter: none;
 }
 
+.qtip-audio.qtip {
+  background: rgb(241, 243, 244);
+}
+
 .qtip-tipsy .qtip-content {
   padding: 5px;
 }

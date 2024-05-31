@@ -50,7 +50,7 @@ $.fn.audioPreviewPopover = async function (node)
          modal: false,
       },
       style: {
-         classes: "qtip-tipsy qtip-preview",
+         classes: "qtip-tipsy qtip-preview qtip-audio",
       },
       events: {
          hide: (event, api) =>
