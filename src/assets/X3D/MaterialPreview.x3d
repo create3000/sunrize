@@ -9,7 +9,7 @@
     <meta name='created' content='Thu, 10 Jul 2014 17:28:33 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.6.15, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 31 May 2024 05:45:17 GMT'/>
+    <meta name='modified' content='Fri, 31 May 2024 08:02:10 GMT'/>
   </head>
   <Scene>
     <LayerSet
@@ -58,7 +58,7 @@
                 scale='0.95 0.95 0.95'>
               <Shape DEF='_3'>
                 <Appearance DEF='Appearance'>
-                  <Material DEF='BackMaterial'/>
+                  <Material DEF='DefaultMaterial'/>
                 </Appearance>
                 <Sphere DEF='_4'/>
               </Shape>
@@ -72,7 +72,7 @@
                   translation='1 0 0'>
                 <Shape>
                   <Appearance DEF='BackAppearance'>
-                    <Material USE='BackMaterial'/>
+                    <Material USE='DefaultMaterial'/>
                   </Appearance>
                   <Sphere USE='_4'/>
                 </Shape>
@@ -123,7 +123,7 @@
             translation='0 -1.15 2.55351e-16'>
           <Shape>
             <Appearance DEF='LineAppearance'>
-              <Material USE='BackMaterial'/>
+              <Material USE='DefaultMaterial'/>
             </Appearance>
             <LineSet
                 vertexCount='2'>
@@ -134,21 +134,31 @@
         </Transform>
       </Layer>
     </LayerSet>
-    <Script DEF='BrowserOptionsScript'
+    <Script DEF='MaterialPreviewScript'
         directOutput='true'>
+      <field accessType='inputOutput' type='SFNode' name='material'/>
+      <field accessType='initializeOnly' type='SFNode' name='typeSwitch'>
+        <Switch USE='Sphere'/>
+      </field>
 <![CDATA[ecmascript:
 
 function initialize ()
 {
-	Browser .setBrowserOption ('PrimitiveQuality', 'HIGH');
-	Browser .setBrowserOption ('Shading',          'PHONG');
+   Browser .setBrowserOption ('PrimitiveQuality', 'HIGH');
+   Browser .setBrowserOption ('Shading',          'PHONG');
 }
-]]>
+
+function set_material ()
+{
+   typeSwitch .whichChoice = material .getNodeType () .includes (X3DConstants .TwoSidedMaterial);
+}]]>
     </Script>
     <ROUTE fromNode='Sphere' fromField='whichChoice_changed' toNode='Dragon' toField='set_whichChoice'/>
     <ROUTE fromNode='Dragon' fromField='whichChoice_changed' toNode='Sphere' toField='set_whichChoice'/>
     <ROUTE fromNode='Appearance' fromField='material_changed' toNode='LineAppearance' toField='set_material'/>
     <ROUTE fromNode='Appearance' fromField='fillProperties_changed' toNode='BackAppearance' toField='set_fillProperties'/>
+    <ROUTE fromNode='Appearance' fromField='material_changed' toNode='MaterialPreviewScript' toField='set_material'/>
     <EXPORT localDEF='Appearance'/>
+    <EXPORT localDEF='BackAppearance'/>
   </Scene>
 </X3D>

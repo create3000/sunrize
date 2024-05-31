@@ -1046,7 +1046,7 @@ module .exports = class OutlineView extends Interface
 
                   continue;
                }
-               case X3D .X3DConstants .X3DOneSidedMaterialNode:
+               case X3D .X3DConstants .X3DMaterialNode:
                case X3D .X3DConstants .X3DSingleTextureNode:
                {
                   name .append (document .createTextNode (" "));
@@ -1639,7 +1639,7 @@ module .exports = class OutlineView extends Interface
       {
          switch (type)
          {
-            case X3D .X3DConstants .X3DOneSidedMaterialNode:
+            case X3D .X3DConstants .X3DMaterialNode:
             {
                require ("../Controls/MaterialPreviewPopover");
 

@@ -25,13 +25,13 @@ $.fn.materialPreviewPopover = async function (node)
 
    const
       browser = canvas .prop ("browser"),
-      scene   = browser .currentScene;
+      scene   = browser .createScene (browser .getProfile ("Core"));
 
    scene .setWorldURL (node .getExecutionContext () .worldURL);
 
    await browser .loadURL (new X3D .MFString (path .join (__dirname, "../assets/X3D/MaterialPreview.x3d")));
 
-   // Create texture node.
+   // Create material node.
 
    const
       appearanceNode = browser .currentScene .getExportedNode ("Appearance"),
@@ -42,6 +42,29 @@ $.fn.materialPreviewPopover = async function (node)
    // Assign material node.
 
    appearanceNode .material = materialNode;
+
+
+   // Handle TwoSidedMaterial;
+
+   if (node .getType () .includes (X3D .X3DConstants .TwoSidedMaterial))
+   {
+      // Create material node.
+
+      const
+         appearanceNode = browser .currentScene .getExportedNode ("BackAppearance"),
+         materialNode   = scene .createNode ("Material");
+
+      // Assign material node.
+
+      materialNode .ambientIntensity = node ._backAmbientIntensity;
+      materialNode .diffuseColor     = node ._backDiffuseColor;
+      materialNode .specularColor    = node ._backSpecularColor;
+      materialNode .emissiveColor    = node ._backEmissiveColor;
+      materialNode .shininess        = node ._backShininess;
+      materialNode .transparency     = node ._backTransparency;
+
+      appearanceNode .material = materialNode;
+   }
 
    // Create tooltip.
 

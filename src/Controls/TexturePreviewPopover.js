@@ -48,7 +48,7 @@ $.fn.texturePreviewPopover = async function (node)
 
    const
       browser = canvas .prop ("browser"),
-      scene   = browser .createScene ();
+      scene   = browser .createScene (browser .getProfile ("Core"));
 
    scene .setWorldURL (node .getExecutionContext () .worldURL);
 
