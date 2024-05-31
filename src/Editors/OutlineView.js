@@ -958,7 +958,7 @@ module .exports = class OutlineView extends Interface
 
       const icon = $("<img></img>")
          .addClass ("icon")
-         .attr ("src", `../images/OutlineEditor/Node/${this .nodeIcons [type]}.svg`)
+         .attr ("src", `../images/OutlineEditor/Node/${this .nodeIcons .get (type)}.svg`)
          .appendTo (child);
 
       if (node)
@@ -971,7 +971,7 @@ module .exports = class OutlineView extends Interface
 
          $("<span></span>")
             .addClass ("node-type-name")
-            .text (this .typeNames [node .getTypeName ()] || node .getTypeName ())
+            .text (this .typeNames .get (node .getTypeName ()) ?? node .getTypeName ())
             .appendTo (name);
 
          name .append (document .createTextNode (" "));
@@ -1203,7 +1203,7 @@ module .exports = class OutlineView extends Interface
 
          const icon = $("<img></img>")
             .addClass ("icon")
-            .attr ("src", `../images/OutlineEditor/Node/${this .nodeIcons [type]}.svg`)
+            .attr ("src", `../images/OutlineEditor/Node/${this .nodeIcons .get (type)}.svg`)
             .appendTo (child);
 
          // Name
@@ -1253,7 +1253,7 @@ module .exports = class OutlineView extends Interface
 
          const icon = $("<img></img>")
             .addClass ("icon")
-            .attr ("src", `../images/OutlineEditor/Node/${this .nodeIcons [type]}.svg`)
+            .attr ("src", `../images/OutlineEditor/Node/${this .nodeIcons .get (type)}.svg`)
             .appendTo (child);
 
          // Name
@@ -1303,7 +1303,7 @@ module .exports = class OutlineView extends Interface
 
       const icon = $("<img></img>")
          .addClass ("icon")
-         .attr ("src", `../images/OutlineEditor/Node/${this .nodeIcons [type]}.svg`)
+         .attr ("src", `../images/OutlineEditor/Node/${this .nodeIcons .get (type)}.svg`)
          .appendTo (child);
 
       // Name
@@ -2189,18 +2189,18 @@ module .exports = class OutlineView extends Interface
       this .requestUpdateRouteGraph ();
    }
 
-   nodeIcons = {
-      "proto": "Prototype",
-      "externproto": "ExternProto",
-      "node": "X3DBaseNode",
-      "imported-node": "ImportedNode",
-      "exported-node": "ExportedNode",
-   };
+   nodeIcons = new Map ([
+      ["proto",         "Prototype"],
+      ["externproto",   "ExternProto"],
+      ["node",          "X3DBaseNode"],
+      ["imported-node", "ImportedNode"],
+      ["exported-node", "ExportedNode"],
+   ]);
 
-   typeNames = {
-      "X3DExternProtoDeclaration": "EXTERNPROTO",
-      "X3DProtoDeclaration": "PROTO",
-   };
+   typeNames = new Map ([
+      ["X3DExternProtoDeclaration", "EXTERNPROTO"],
+      ["X3DProtoDeclaration",       "PROTO",]
+   ]);
 
    expandSingleField (parent, node, field, type, full)
    {
