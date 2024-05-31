@@ -21,7 +21,8 @@ $.fn.videoPreviewPopover = async function (node)
       preview .empty ();
 
       const video = $("<video controls></video>")
-         .css ("width", "300px")
+         .css ("min-width", "300px")
+         .css ("width", "30vh")
          .appendTo (preview);
 
       for (const url of node ._url)
