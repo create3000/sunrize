@@ -146,7 +146,7 @@ $.fn.texturePreviewPopover = async function (node)
          {
             $(".tree-view") .off (".texture-preview");
 
-            this .data ("preview", undefined);
+            this .removeData ("preview");
 
             previewNode .dispose ();
             browser     .dispose ();
