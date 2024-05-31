@@ -98,6 +98,7 @@ $.fn.materialPreviewPopover = async function (node)
    // Create tooltip.
 
    const tooltip = this .popover ({
+      preview: true,
       content: preview,
       show: {
          modal: false,

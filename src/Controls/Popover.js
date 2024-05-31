@@ -4,9 +4,14 @@ const $ = require ("jquery");
 
 require ("qtip2");
 
+$.fn.qtip.zindex = "auto";
+
 $.fn.popover = function (options)
 {
    $("[data-hasqtip]") .qtip ?.("hide") .qtip ("destroy", true);
+
+   if (!options .preview)
+      $(".show-preview.on") .removeClass ("on") .addClass ("off");
 
    return this .qtip ($.extend (true,
    {
