@@ -112,7 +112,7 @@ $.fn.materialPreviewPopover = async function (node)
          classes: "qtip-tipsy qtip-preview",
       },
       events: {
-         hide (event, api)
+         hide: (event, api) =>
          {
             $(".tree-view") .off (".material-preview");
 

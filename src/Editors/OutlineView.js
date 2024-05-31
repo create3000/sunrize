@@ -3070,15 +3070,22 @@ module .exports = class OutlineView extends Interface
       const
          target  = $(event .target),
          element = target .closest (".node, .externproto", this .sceneGraph),
+         item    = target .closest (".item"),
          node    = this .getNode (element);
 
       event .preventDefault ();
       event .stopImmediatePropagation ();
 
       if (node ._load .getValue ())
+      {
          node .loadNow () .catch (Function .prototype);
+         item .data ("preview") ?.loadNow ?.() .catch (Function .prototype);
+      }
       else
+      {
          node .unloadNow ();
+         item .data ("preview") ?.unloadNow ?.();
+      }
    }
 
    hideUnselectedObjects ()

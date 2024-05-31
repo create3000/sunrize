@@ -126,6 +126,10 @@ $.fn.texturePreviewPopover = async function (node)
       break;
    }
 
+   // Reload handling.
+
+   this .data ("preview", previewNode);
+
    // Create tooltip.
 
    const tooltip = this .popover ({
@@ -138,9 +142,11 @@ $.fn.texturePreviewPopover = async function (node)
          classes: "qtip-tipsy qtip-preview",
       },
       events: {
-         hide (event, api)
+         hide: (event, api) =>
          {
             $(".tree-view") .off (".texture-preview");
+
+            this .data ("preview", undefined);
 
             previewNode .dispose ();
             browser     .dispose ();
