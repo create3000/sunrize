@@ -25,7 +25,7 @@ $.fn.texturePreviewPopover = async function (node)
 
    const
       browser = canvas .prop ("browser"),
-      scene   = browser .currentScene;
+      scene   = browser .createScene ();
 
    scene .setWorldURL (node .getExecutionContext () .worldURL);
 
@@ -34,10 +34,10 @@ $.fn.texturePreviewPopover = async function (node)
    // Create texture node.
 
    const
-      appearanceNode = browser .currentScene .getExportedNode ("Appearance"),
       x3dSyntax      = Editor .exportX3D (node .getExecutionContext (), [node]),
       nodes          = await Editor .importX3D (scene, x3dSyntax, new UndoManager ()),
-      textureNode    = nodes [0];
+      textureNode    = nodes [0],
+      appearanceNode = browser .currentScene .getExportedNode ("Appearance");
 
    // Assign texture node.
 
@@ -49,11 +49,6 @@ $.fn.texturePreviewPopover = async function (node)
    {
       switch (type)
       {
-         case X3D .X3DConstants .MovieTexture:
-         {
-            textureNode ._enabled = false;
-            continue;
-         }
          case X3D .X3DConstants .GeneratedCubeMapTexture:
          {
             return;

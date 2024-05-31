@@ -11,7 +11,7 @@
     <meta name='created' content='Thu, 10 Jul 2014 17:28:33 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.6.15, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 31 May 2024 05:31:50 GMT'/>
+    <meta name='modified' content='Fri, 31 May 2024 07:03:42 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='Volume' url='"Volume.x3d#Volume"'>
@@ -72,12 +72,14 @@
               <Appearance DEF='Appearance'/>
               <Rectangle2D/>
             </Shape>
+            <TouchSensor DEF='_2'
+                enabled='false'/>
           </Transform>
           <Group DEF='Texture3D'>
             <Group DEF='Volume'>
-              <ClipPlane DEF='_2'
+              <ClipPlane DEF='_3'
                   plane='0 0 -1 1'/>
-              <ProtoInstance name='Volume' DEF='_3'>
+              <ProtoInstance name='Volume' DEF='_4'>
                 <fieldValue name='dimensions' value='2 2 2'/>
               </ProtoInstance>
             </Group>
@@ -157,16 +159,20 @@ function set_translation (value)
               </IndexedFaceSet>
             </Shape>
           </Transform>
-          <TextureProjector DEF='_4'/>
+          <TextureProjector DEF='_5'/>
         </Switch>
         <Script DEF='TextureScript'>
           <field accessType='inputOnly' type='SFFloat' name='set_aspectRatio'/>
+          <field accessType='inputOnly' type='SFTime' name='set_time'/>
           <field accessType='inputOutput' type='SFNode' name='texture'/>
           <field accessType='outputOnly' type='SFBool' name='texture2D'/>
           <field accessType='outputOnly' type='SFBool' name='texture3D'/>
           <field accessType='outputOnly' type='SFBool' name='cubeMapTexture'/>
           <field accessType='outputOnly' type='SFInt32' name='whichChoice_changed'/>
           <field accessType='outputOnly' type='SFVec3f' name='scale_changed'/>
+          <field accessType='initializeOnly' type='SFNode' name='touchSensor'>
+            <TouchSensor USE='_2'/>
+          </field>
 <![CDATA[ecmascript:
 
 function initialize ()
@@ -182,14 +188,39 @@ function set_aspectRatio (value)
       scale_changed = new SFVec3f (1, 1 / value, 1);
 }
 
+function set_time (value, time)
+{
+   if (texture .enabled)
+   {
+      if (texture .isPaused)
+         texture .resumeTime = time;
+      else
+         texture .pauseTime = time;
+   }
+   else
+   {
+      texture .enabled   = true;
+      texture .loop      = true;
+      texture .startTime = time;
+   }
+}
+
 function set_texture (value)
 {
+   touchSensor .enabled = false;
+
    if (value)
    {
       for (const type of value .getNodeType () .reverse ())
       {
          switch (type)
          {
+            case X3DConstants .MovieTexture:
+            {
+               touchSensor .enabled = true;
+               value       .enabled = false;
+               continue;
+            }
             case X3DConstants .X3DTexture2DNode:
             {
                texture2D           = true;
@@ -220,7 +251,7 @@ function set_texture (value)
         </Script>
       </Layer>
     </LayerSet>
-    <ROUTE fromNode='ClipPlaneScript' fromField='plane_changed' toNode='_2' toField='set_plane'/>
+    <ROUTE fromNode='ClipPlaneScript' fromField='plane_changed' toNode='_3' toField='set_plane'/>
     <ROUTE fromNode='PlaneSensor' fromField='translation_changed' toNode='ClipPlaneScript' toField='set_translation'/>
     <ROUTE fromNode='PlaneSensor' fromField='translation_changed' toNode='ClipPlane' toField='set_translation'/>
     <ROUTE fromNode='TextureScript' fromField='whichChoice_changed' toNode='_1' toField='set_whichChoice'/>
@@ -228,10 +259,11 @@ function set_texture (value)
     <ROUTE fromNode='TextureScript' fromField='texture2D' toNode='Texture2DViewpoint' toField='set_bind'/>
     <ROUTE fromNode='TextureScript' fromField='texture3D' toNode='Texture3DViewpoint' toField='set_bind'/>
     <ROUTE fromNode='TextureScript' fromField='cubeMapTexture' toNode='CubeMapTextureNavigationInfo' toField='set_bind'/>
-    <ROUTE fromNode='Appearance' fromField='texture_changed' toNode='_3' toField='set_voxels'/>
-    <ROUTE fromNode='Appearance' fromField='texture_changed' toNode='_4' toField='set_texture'/>
-    <ROUTE fromNode='_4' fromField='aspectRatio' toNode='TextureScript' toField='set_aspectRatio'/>
+    <ROUTE fromNode='Appearance' fromField='texture_changed' toNode='_4' toField='set_voxels'/>
+    <ROUTE fromNode='Appearance' fromField='texture_changed' toNode='_5' toField='set_texture'/>
+    <ROUTE fromNode='_5' fromField='aspectRatio' toNode='TextureScript' toField='set_aspectRatio'/>
     <ROUTE fromNode='TextureScript' fromField='scale_changed' toNode='Texture2D' toField='set_scale'/>
+    <ROUTE fromNode='_2' fromField='touchTime' toNode='TextureScript' toField='set_time'/>
     <EXPORT localDEF='Appearance'/>
   </Scene>
 </X3D>
