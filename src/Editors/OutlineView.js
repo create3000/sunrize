@@ -1621,46 +1621,6 @@ module .exports = class OutlineView extends Interface
       return child;
    }
 
-   showPreview (event)
-   {
-      const
-         icon    = $(event .currentTarget) ,
-         element = icon .closest (".node, .special", this .sceneGraph),
-         node    = this .objects .get (parseInt (element .attr ("node-id")));
-
-      event .preventDefault ();
-      event .stopImmediatePropagation ();
-
-      // Handle NULL node element.
-      if (!node)
-         return;
-
-      for (const type of node .getType () .toReversed ())
-      {
-         switch (type)
-         {
-            case X3D .X3DConstants .X3DMaterialNode:
-            {
-               require ("../Controls/MaterialPreviewPopover");
-
-               icon .materialPreviewPopover (node);
-               break;
-            }
-            case X3D .X3DConstants .X3DSingleTextureNode:
-            {
-               require ("../Controls/TexturePreviewPopover");
-
-               icon .texturePreviewPopover (node);
-               break;
-            }
-            default:
-               continue;
-         }
-
-         break;
-      }
-   }
-
    updateNodeTitle (event)
    {
       const
@@ -2984,16 +2944,57 @@ module .exports = class OutlineView extends Interface
       selection .clear ();
    }
 
-   toggleVisibility (event)
+   showPreview (event)
    {
+      const
+         icon    = $(event .currentTarget) ,
+         item    = icon .closest (".item", this .sceneGraph),
+         element = icon .closest (".node", this .sceneGraph),
+         node    = this .objects .get (parseInt (element .attr ("node-id")));
+
       event .preventDefault ();
       event .stopImmediatePropagation ();
 
+      // Handle NULL node element.
+      if (!node)
+         return;
+
+      for (const type of node .getType () .toReversed ())
+      {
+         switch (type)
+         {
+            case X3D .X3DConstants .X3DMaterialNode:
+            {
+               require ("../Controls/MaterialPreviewPopover");
+
+               item .materialPreviewPopover (node);
+               break;
+            }
+            case X3D .X3DConstants .X3DSingleTextureNode:
+            {
+               require ("../Controls/TexturePreviewPopover");
+
+               item .texturePreviewPopover (node);
+               break;
+            }
+            default:
+               continue;
+         }
+
+         break;
+      }
+   }
+
+   toggleVisibility (event)
+   {
       const
          target  = $(event .target),
          element = target .closest (".node", this .sceneGraph),
          node    = this .getNode (element),
          hidden  = !node .isHidden ();
+
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
 
       node .setHidden (hidden);
 
@@ -3006,14 +3007,14 @@ module .exports = class OutlineView extends Interface
 
    toggleTool (event)
    {
-      event .preventDefault ();
-      event .stopImmediatePropagation ();
-
       const
          target  = $(event .target),
          element = target .closest (".node", this .sceneGraph),
          node    = this .getNode (element),
          tool    = node .getTool ();
+
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
 
       if (tool)
       {
@@ -3036,26 +3037,26 @@ module .exports = class OutlineView extends Interface
 
    bindNode (event)
    {
-      event .preventDefault ();
-      event .stopImmediatePropagation ();
-
       const
          target  = $(event .target),
          element = target .closest (".node", this .sceneGraph),
          node    = this .getNode (element);
+
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
 
       node ._set_bind = true;
    }
 
    reloadNode (event)
    {
-      event .preventDefault ();
-      event .stopImmediatePropagation ();
-
       const
          target  = $(event .target),
          element = target .closest (".node, .externproto", this .sceneGraph),
          node    = this .getNode (element);
+
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
 
       if (node ._load .getValue ())
          node .loadNow () .catch (Function .prototype);
