@@ -88,7 +88,8 @@ $.fn.texturePreviewPopover = async function (node)
       events: {
          hide (event, api)
          {
-            browser .dispose ();
+            textureNode .dispose ();
+            browser     .dispose ();
 
             api .destroy (true);
          },

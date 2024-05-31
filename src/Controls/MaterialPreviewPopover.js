@@ -50,7 +50,8 @@ $.fn.materialPreviewPopover = async function (node)
       events: {
          hide (event, api)
          {
-            browser .dispose ();
+            materialNode .dispose ();
+            browser      .dispose ();
 
             api .destroy (true);
          },
