@@ -43,7 +43,6 @@ $.fn.materialPreviewPopover = async function (node)
 
    appearanceNode .material = materialNode;
 
-
    // Handle TwoSidedMaterial;
 
    if (node .getType () .includes (X3D .X3DConstants .TwoSidedMaterial))
