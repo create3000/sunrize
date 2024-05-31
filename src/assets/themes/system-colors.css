@@ -224,3 +224,9 @@ body {
     --preview-border: 1px solid var(--system-gray4);
   }
 }
+
+body {
+  --qtip-background-color: var(--sidebar-background-color);
+  --qtip-border: var(--tool-border);
+  --qtip-shadow: var(--tool-shadow);
+}

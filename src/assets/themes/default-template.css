@@ -389,15 +389,23 @@ tr.disabled ~ tr > td > div {
 }
 
 .qtip-tipsy.qtip {
-  border: var(--tool-border);
-  background: var(--tool-background-color);
-  backdrop-filter: var(--tool-backdrop-filter);
+  border: var(--qtip-border);
+  background: var(--qtip-background-color);
+  box-shadow: var(--qtip-shadow);
+}
+
+.qtip-tipsy .qtip-tip {
+  background: var(--qtip-background-color) !important;
 }
 
 .qtip-preview.qtip {
   border: var(--preview-border);
   background: var(--preview-background-color);
   backdrop-filter: none;
+}
+
+.qtip-preview .qtip-tip {
+  background: var(--preview-background-color) !important;
 }
 
 .qtip-tipsy .qtip-content {
