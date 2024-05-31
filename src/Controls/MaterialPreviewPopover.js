@@ -80,7 +80,9 @@ $.fn.materialPreviewPopover = async function (node)
 
       for (const name of names)
       {
-         const field = backPreviewNode .getField (name);
+         const
+            field = backPreviewNode .getField (name),
+            back  = `back${name [0] .toUpperCase ()}${name .slice (1)}`;
 
          switch (field .getType ())
          {
@@ -88,8 +90,8 @@ $.fn.materialPreviewPopover = async function (node)
             case X3D .X3DConstants .MFNode:
                break;
             default:
-               field .addReference (node .getField (`back${name [0] .toUpperCase ()}${name .slice (1)}`));
-               field .removeFieldInterest (node .getField (`back${name [0] .toUpperCase ()}${name .slice (1)}`));
+               field .addReference (node .getField (back));
+               field .removeFieldInterest (node .getField (back));
                break;
          }
       }
