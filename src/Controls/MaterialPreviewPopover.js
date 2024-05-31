@@ -18,6 +18,7 @@ $.fn.materialPreviewPopover = async function (node)
 
    const canvas = $("<x3d-canvas></x3d-canvas>")
       .css ({ width: "30vh", height: "30vh" })
+      .attr ("cache", false)
       .attr ("splashScreen", false)
       .attr ("contextMenu", false)
       .attr ("notifications", false)
