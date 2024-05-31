@@ -3079,12 +3079,12 @@ module .exports = class OutlineView extends Interface
       if (node ._load .getValue ())
       {
          node .loadNow () .catch (Function .prototype);
-         item .data ("preview") ?.loadNow ?.() .catch (Function .prototype);
+         item .data ("preview") ?.loadNow () .catch (Function .prototype);
       }
       else
       {
          node .unloadNow ();
-         item .data ("preview") ?.unloadNow ?.();
+         item .data ("preview") ?.unloadNow ();
       }
    }
 
