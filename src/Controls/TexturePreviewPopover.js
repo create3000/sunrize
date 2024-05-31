@@ -43,12 +43,17 @@ $.fn.texturePreviewPopover = async function (node)
 
    appearanceNode .texture = textureNode;
 
-   // Sizes
+   // Sizes and special cases.
 
    for (const type of node .getType () .toReversed ())
    {
       switch (type)
       {
+         case X3D .X3DConstants .MovieTexture:
+         {
+            textureNode ._enabled = false;
+            continue;
+         }
          case X3D .X3DConstants .GeneratedCubeMapTexture:
          {
             return;
