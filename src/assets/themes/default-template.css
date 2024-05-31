@@ -394,6 +394,12 @@ tr.disabled ~ tr > td > div {
   backdrop-filter: var(--tool-backdrop-filter);
 }
 
+.qtip-preview.qtip {
+  border: var(--preview-border);
+  background: var(--preview-background-color);
+  backdrop-filter: none;
+}
+
 .qtip-tipsy .qtip-content {
   padding: 5px;
 }

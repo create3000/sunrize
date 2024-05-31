@@ -187,6 +187,9 @@ body {
   --tool-border: 1px solid var(--system-gray8);
   --tool-shadow: 3px 3px 9px rgba(0, 0, 0, 0.6);
 
+  --preview-background-color: white;
+  --preview-border: 1px solid var(--system-gray6);
+
   --background-disabled: repeating-linear-gradient(
     -45deg,
     var(--tint-color1),
@@ -216,5 +219,8 @@ body {
     --tool-background-color: rgba(42, 50, 63, 0.8); /* --sidebar-background-color */
     --tool-border: 1px solid var(--system-gray2);
     --tool-shadow: 3px 3px 9px var(--system-gray8);
+
+    --preview-background-color: black;
+    --preview-border: 1px solid var(--system-gray4);
   }
 }
