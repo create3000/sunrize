@@ -11,7 +11,7 @@
     <meta name='created' content='Thu, 10 Jul 2014 17:28:33 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.6.15, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 31 May 2024 07:03:42 GMT'/>
+    <meta name='modified' content='Fri, 31 May 2024 08:25:20 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='Volume' url='"Volume.x3d#Volume"'>
@@ -29,8 +29,7 @@
             skyColor='0.4 0.4 0.4'/>
         <Shape>
           <Appearance>
-            <Material
-                diffuseColor='0 0 0'
+            <UnlitMaterial
                 emissiveColor='0.6 0.6 0.6'/>
             <PixelTexture
                 image='2 2 2
@@ -66,7 +65,7 @@
               headlight='false'
               transitionType='"TELEPORT"'/>
         </Viewpoint>
-        <Switch DEF='_1'>
+        <Switch DEF='_6'>
           <Transform DEF='Texture2D'>
             <Shape>
               <Appearance DEF='Appearance'/>
@@ -254,7 +253,7 @@ function set_texture (value)
     <ROUTE fromNode='ClipPlaneScript' fromField='plane_changed' toNode='_3' toField='set_plane'/>
     <ROUTE fromNode='PlaneSensor' fromField='translation_changed' toNode='ClipPlaneScript' toField='set_translation'/>
     <ROUTE fromNode='PlaneSensor' fromField='translation_changed' toNode='ClipPlane' toField='set_translation'/>
-    <ROUTE fromNode='TextureScript' fromField='whichChoice_changed' toNode='_1' toField='set_whichChoice'/>
+    <ROUTE fromNode='TextureScript' fromField='whichChoice_changed' toNode='_6' toField='set_whichChoice'/>
     <ROUTE fromNode='Appearance' fromField='texture_changed' toNode='TextureScript' toField='set_texture'/>
     <ROUTE fromNode='TextureScript' fromField='texture2D' toNode='Texture2DViewpoint' toField='set_bind'/>
     <ROUTE fromNode='TextureScript' fromField='texture3D' toNode='Texture3DViewpoint' toField='set_bind'/>
