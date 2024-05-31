@@ -10,6 +10,29 @@ const
 
 require ("./Popover");
 
+function formatTime (time)
+{
+   const s = time % 60;
+
+   let string = s .toFixed (2) .padStart (5, "0");
+
+   time /= 60;
+   time  = Math .floor (time);
+
+   const m = time % 60;
+
+   string = String (m) .padStart (2, "0") + ":" + string;
+
+   time /= 60;
+   time  = Math .floor (time);
+
+   const h = time % 60;
+
+   string = String (h) .padStart (2, "0") + ":" + string;
+
+   return string;
+}
+
 $.fn.texturePreviewPopover = async function (node)
 {
    // Create content.
@@ -52,6 +75,13 @@ $.fn.texturePreviewPopover = async function (node)
          case X3D .X3DConstants .GeneratedCubeMapTexture:
          {
             return;
+         }
+         case X3D .X3DConstants .MovieTexture:
+         {
+            $("<p></xp>")
+               .text (`${node .getWidth ()} × ${node .getHeight ()}, ${formatTime (node ._duration_changed .getValue ())}`)
+               .appendTo (preview);
+            break;
          }
          case X3D .X3DConstants .X3DEnvironmentTextureNode:
          {
