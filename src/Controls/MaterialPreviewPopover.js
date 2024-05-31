@@ -122,6 +122,8 @@ $.fn.materialPreviewPopover = async function (node)
 
    $(".tree-view") .on ("scroll.material-preview", () => this .qtip ("reposition"));
 
+   this .qtip ("reposition");
+
    return this;
 };
 

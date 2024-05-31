@@ -283,11 +283,10 @@ tr.disabled ~ tr > td > div {
 
 .ui-tabs {
   position: absolute;
-  overflow: hidden;
   inset: 0;
   border: 0;
   padding: 0;
-  background: none;
+  background: inherit;
 }
 
 .ui-tabs.ui-widget.ui-widget-content {
@@ -303,7 +302,8 @@ tr.disabled ~ tr > td > div {
   padding: 0;
   height: var(--tabs-height);
   width: 100%;
-  background: none;
+  background: inherit;
+  z-index: 1;
 }
 
 .ui-tabs.top > .ui-tabs-nav {
@@ -912,10 +912,6 @@ body.dark .ui-widget .library-list .component {
 
 /* Sidebar */
 
-.sidebar {
-  overflow: hidden;
-}
-
 .sidebar.ui-widget.ui-widget-content {
   position: absolute;
   box-sizing: border-box;
@@ -927,7 +923,9 @@ body.dark .ui-widget .library-list .component {
 }
 
 .sidebar.ui-tabs .ui-tabs-nav {
-  background: unset;
+  left: -1px;
+  width: calc(100% + 1px);
+  border-left: 1px solid var(--border-color);
 }
 
 /* Tree View */
