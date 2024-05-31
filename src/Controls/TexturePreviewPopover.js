@@ -73,6 +73,7 @@ $.fn.texturePreviewPopover = async function (node)
             break;
          default:
             field .addReference (node .getField (field .getName ()));
+            field .removeFieldInterest (node .getField (field .getName ()));
             break;
       }
    }

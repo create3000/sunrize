@@ -50,6 +50,7 @@ $.fn.materialPreviewPopover = async function (node)
             break;
          default:
             field .addReference (node .getField (field .getName ()));
+            field .removeFieldInterest (node .getField (field .getName ()));
             break;
       }
    }
@@ -88,6 +89,7 @@ $.fn.materialPreviewPopover = async function (node)
                break;
             default:
                field .addReference (node .getField (`back${name [0] .toUpperCase ()}${name .slice (1)}`));
+               field .removeFieldInterest (node .getField (`back${name [0] .toUpperCase ()}${name .slice (1)}`));
                break;
          }
       }
