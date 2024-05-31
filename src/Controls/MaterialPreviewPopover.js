@@ -114,18 +114,18 @@ $.fn.materialPreviewPopover = async function (node)
       events: {
          hide: (event, api) =>
          {
-            $(".tree-view") .off (".material-preview");
-
             previewNode      .dispose ();
             backPreviewNode ?.dispose ();
             browser          .dispose ();
+
+            $(".tree-view") .off (".preview");
 
             api .destroy (true);
          },
       },
    });
 
-   $(".tree-view") .on ("scroll.material-preview", () => this .qtip ("reposition"));
+   $(".tree-view") .on ("scroll.preview", () => this .qtip ("reposition"));
 
    this .qtip ("reposition");
 

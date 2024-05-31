@@ -144,19 +144,19 @@ $.fn.texturePreviewPopover = async function (node)
       events: {
          hide: (event, api) =>
          {
-            $(".tree-view") .off (".texture-preview");
-
             this .removeData ("preview");
 
             previewNode .dispose ();
             browser     .dispose ();
+
+            $(".tree-view") .off (".preview");
 
             api .destroy (true);
          },
       },
    });
 
-   $(".tree-view") .on ("scroll.texture-preview", () => this .qtip ("reposition"));
+   $(".tree-view") .on ("scroll.preview", () => this .qtip ("reposition"));
 
    this .qtip ("reposition");
 

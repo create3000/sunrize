@@ -1022,6 +1022,22 @@ module .exports = class OutlineView extends Interface
          {
             switch (type)
             {
+               case X3D .X3DConstants .AudioClip:
+               case X3D .X3DConstants .BufferAudioSource:
+               case X3D .X3DConstants .X3DMaterialNode:
+               case X3D .X3DConstants .X3DSingleTextureNode:
+               {
+                  name .append (document .createTextNode (" "));
+
+                  $("<span></span>")
+                     .addClass (["show-preview", "button", "material-symbols-outlined", "off"])
+                     .css ("top", "2px")
+                     .attr ("title", _("Show preview."))
+                     .text ("preview")
+                     .appendTo (name);
+
+                  continue;
+               }
                case X3D .X3DConstants .X3DLayerNode:
                {
                   name .append (document .createTextNode (" "));
@@ -1046,20 +1062,6 @@ module .exports = class OutlineView extends Interface
                      .addClass (node ._isBound .getValue () ? "on" : "off")
                      .attr ("title", _("Bind node."))
                      .text (node ._isBound .getValue () ? "radio_button_checked" : "radio_button_unchecked")
-                     .appendTo (name);
-
-                  continue;
-               }
-               case X3D .X3DConstants .X3DMaterialNode:
-               case X3D .X3DConstants .X3DSingleTextureNode:
-               {
-                  name .append (document .createTextNode (" "));
-
-                  $("<span></span>")
-                     .addClass (["show-preview", "button", "material-symbols-outlined", "off"])
-                     .css ("top", "2px")
-                     .attr ("title", _("Show preview."))
-                     .text ("preview")
                      .appendTo (name);
 
                   continue;
@@ -2980,6 +2982,14 @@ module .exports = class OutlineView extends Interface
       {
          switch (type)
          {
+            case X3D .X3DConstants .AudioClip:
+            case X3D .X3DConstants .BufferAudioSource:
+            {
+               require ("../Controls/AudioPreviewPopover");
+
+               item .audioPreviewPopover (node);
+               break;
+            }
             case X3D .X3DConstants .X3DMaterialNode:
             {
                require ("../Controls/MaterialPreviewPopover");
