@@ -1053,7 +1053,7 @@ module .exports = class OutlineView extends Interface
 
                   $("<span></span>")
                      .addClass (["show-preview", "button", "material-symbols-outlined"])
-                     .css ("top", "1.5px")
+                     .css ("top", "2px")
                      .attr ("title", _("Show preview."))
                      .text ("preview")
                      .appendTo (name);
