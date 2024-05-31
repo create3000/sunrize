@@ -49,6 +49,10 @@ $.fn.texturePreviewPopover = async function (node)
    {
       switch (type)
       {
+         case X3D .X3DConstants .GeneratedCubeMapTexture:
+         {
+            return;
+         }
          case X3D .X3DConstants .X3DEnvironmentTextureNode:
          {
             $("<p></xp>")
