@@ -8,13 +8,10 @@
     <component name='PointingDeviceSensor' level='1'/>
     <component name='Scripting' level='1'/>
     <component name='TextureProjection' level='2'/>
-    <meta name='comment' content='World of Titania'/>
     <meta name='created' content='Thu, 10 Jul 2014 17:28:33 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Titania V4.5.3, http://titania.create3000.de'/>
     <meta name='generator' content='Sunrize X3D Editor V1.6.15, https://create3000.github.io/sunrize/'/>
-    <meta name='identifier' content='file:///home/holger/Projekte/Titania/Titania/share/titania/ui/Editors/TexturePreview.x3dv'/>
-    <meta name='modified' content='Thu, 30 May 2024 19:45:32 GMT'/>
+    <meta name='modified' content='Fri, 31 May 2024 05:31:50 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='Volume' url='"Volume.x3d#Volume"'>

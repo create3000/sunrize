@@ -261,9 +261,6 @@ module .exports = class OutlineView extends Interface
             .on ("dragstart", this .onDragStartNode .bind (this));
       }
 
-      child .find (".node .icon")
-         .on ("click", this .showPreview .bind (this));
-
       child .find (".node .name")
          .on ("mouseenter", this .updateNodeTitle .bind (this));
 
@@ -281,6 +278,9 @@ module .exports = class OutlineView extends Interface
 
       child .find (".reload-node")
          .on ("click", this .reloadNode .bind (this));
+
+      child .find (".show-preview")
+         .on ("click", this .showPreview .bind (this));
 
       // Expand children.
 
@@ -961,22 +961,6 @@ module .exports = class OutlineView extends Interface
          .attr ("src", `../images/OutlineEditor/Node/${this .nodeIcons [type]}.svg`)
          .appendTo (child);
 
-      for (const type of node .getType ())
-      {
-         switch (type)
-         {
-            case X3D .X3DConstants .X3DSingleTextureNode:
-            {
-               icon .addClass ("pointer");
-               break;
-            }
-            default:
-               continue;
-         }
-
-         break;
-      }
-
       if (node)
       {
          // Name
@@ -1058,6 +1042,20 @@ module .exports = class OutlineView extends Interface
                      .addClass (node ._isBound .getValue () ? "on" : "off")
                      .attr ("title", _("Bind node."))
                      .text (node ._isBound .getValue () ? "radio_button_checked" : "radio_button_unchecked")
+                     .appendTo (name);
+
+                  continue;
+               }
+               case X3D .X3DConstants .X3DOneSidedMaterialNode:
+               case X3D .X3DConstants .X3DSingleTextureNode:
+               {
+                  name .append (document .createTextNode (" "));
+
+                  $("<span></span>")
+                     .addClass (["show-preview", "button", "material-symbols-outlined"])
+                     .css ("top", "1.5px")
+                     .attr ("title", _("Show preview."))
+                     .text ("preview")
                      .appendTo (name);
 
                   continue;
@@ -1630,6 +1628,9 @@ module .exports = class OutlineView extends Interface
          element = icon .closest (".node, .special", this .sceneGraph),
          node    = this .objects .get (parseInt (element .attr ("node-id")));
 
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
+
       // Handle NULL node element.
       if (!node)
          return;
@@ -1638,6 +1639,13 @@ module .exports = class OutlineView extends Interface
       {
          switch (type)
          {
+            case X3D .X3DConstants .X3DOneSidedMaterialNode:
+            {
+               require ("../Controls/MaterialPreviewPopover");
+
+               icon .materialPreviewPopover (node);
+               break;
+            }
             case X3D .X3DConstants .X3DSingleTextureNode:
             {
                require ("../Controls/TexturePreviewPopover");
@@ -1993,9 +2001,6 @@ module .exports = class OutlineView extends Interface
             .on ("dragstart", this .onDragStartNode .bind (this))
       }
 
-      child .find (".node .icon")
-         .on ("click", this .showPreview .bind (this));
-
       child .find (".node .name")
          .on ("mouseenter", this .updateNodeTitle .bind (this));
 
@@ -2013,6 +2018,9 @@ module .exports = class OutlineView extends Interface
 
       child .find (".reload-node")
          .on ("click", this .reloadNode .bind (this))
+
+      child .find (".show-preview")
+         .on ("click", this .showPreview .bind (this));
 
       child .find ("area.input-selector")
          .on ("mouseenter", this .hoverInSingleConnector .bind (this, "input"))
@@ -2113,9 +2121,6 @@ module .exports = class OutlineView extends Interface
             .on ("dragstart", this .onDragStartNode .bind (this));
       }
 
-      child .find (".node .icon")
-         .on ("click", this .showPreview .bind (this));
-
       child .find (".node .name")
          .on ("mouseenter", this .updateNodeTitle .bind (this));
 
@@ -2133,6 +2138,9 @@ module .exports = class OutlineView extends Interface
 
       child .find (".reload-node")
          .on ("click", this .reloadNode .bind (this));
+
+      child .find (".show-preview")
+         .on ("click", this .showPreview .bind (this));
 
       child .find ("area.input-selector")
          .on ("mouseenter", this .hoverInSingleConnector .bind (this, "input"))

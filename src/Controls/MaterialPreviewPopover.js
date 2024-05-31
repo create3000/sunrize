@@ -10,7 +10,7 @@ const
 
 require ("./Popover");
 
-$.fn.texturePreviewPopover = async function (node)
+$.fn.materialPreviewPopover = async function (node)
 {
    // Create content.
 
@@ -29,7 +29,7 @@ $.fn.texturePreviewPopover = async function (node)
 
    scene .setWorldURL (node .getExecutionContext () .worldURL);
 
-   await browser .loadURL (new X3D .MFString (path .join (__dirname, "../assets/X3D/TexturePreview.x3d")));
+   await browser .loadURL (new X3D .MFString (path .join (__dirname, "../assets/X3D/MaterialPreview.x3d")));
 
    // Create texture node.
 
@@ -37,49 +37,11 @@ $.fn.texturePreviewPopover = async function (node)
       appearanceNode = browser .currentScene .getExportedNode ("Appearance"),
       x3dSyntax      = Editor .exportX3D (node .getExecutionContext (), [node]),
       nodes          = await Editor .importX3D (scene, x3dSyntax, new UndoManager ()),
-      textureNode    = nodes [0];
+      materialNode   = nodes [0];
 
    // Assign texture node.
 
-   appearanceNode .texture = textureNode;
-
-   // Sizes
-
-   for (const type of node .getType () .toReversed ())
-   {
-      switch (type)
-      {
-         case X3D .X3DConstants .GeneratedCubeMapTexture:
-         {
-            return;
-         }
-         case X3D .X3DConstants .X3DEnvironmentTextureNode:
-         {
-            $("<p></xp>")
-               .text (`${node .getSize ()} × ${node .getSize ()}`)
-               .appendTo (preview);
-            break;
-         }
-         case X3D .X3DConstants .X3DTexture2DNode:
-         {
-            $("<p></xp>")
-               .text (`${node .getWidth ()} × ${node .getHeight ()}`)
-               .appendTo (preview);
-            break;
-         }
-         case X3D .X3DConstants .X3DTexture3DNode:
-         {
-            $("<p></xp>")
-               .text (`${node .getWidth ()} × ${node .getHeight ()} × ${node .getDepth ()}`)
-               .appendTo (preview);
-            break;
-         }
-         default:
-            continue;
-      }
-
-      break;
-   }
+   appearanceNode .material = materialNode;
 
    // Create tooltip.
 
