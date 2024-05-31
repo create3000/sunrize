@@ -23,7 +23,11 @@ $.fn.texturePreviewPopover = async function (node)
       .attr ("notifications", false)
       .appendTo (preview);
 
-   const browser = canvas .prop ("browser");
+   const
+      browser = canvas .prop ("browser"),
+      scene   = browser .currentScene;
+
+   scene .setWorldURL (node .getExecutionContext () .worldURL);
 
    await browser .loadURL (new X3D .MFString (path .join (__dirname, "../assets/X3D/TexturePreview.x3d")));
 
@@ -32,7 +36,7 @@ $.fn.texturePreviewPopover = async function (node)
    const
       appearanceNode = browser .currentScene .getExportedNode ("Appearance"),
       x3dSyntax      = Editor .exportX3D (node .getExecutionContext (), [node]),
-      nodes          = await Editor .importX3D (browser .currentScene, x3dSyntax, new UndoManager ()),
+      nodes          = await Editor .importX3D (scene, x3dSyntax, new UndoManager ()),
       textureNode    = nodes [0];
 
    // Assign texture node.
