@@ -395,17 +395,13 @@ tr.disabled ~ tr > td > div {
 }
 
 .qtip-tipsy .qtip-tip {
-  background: var(--qtip-background-color) !important;
+  background: inherit !important;
 }
 
 .qtip-preview.qtip {
   border: var(--preview-border);
   background: var(--preview-background-color);
   backdrop-filter: none;
-}
-
-.qtip-preview .qtip-tip {
-  background: var(--preview-background-color) !important;
 }
 
 .qtip-tipsy .qtip-content {
