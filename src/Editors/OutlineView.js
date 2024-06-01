@@ -232,7 +232,7 @@ module .exports = class OutlineView extends Interface
          .find (".jstree-anchor")
             .removeAttr ("href")
             .removeAttr ("tabindex")
-            .on ("click", false);
+            .on ("click", this .selectNone .bind (this));
 
       child .find (".externproto, .proto, .node, .imported-node, .exported-node")
          .on ("dblclick", this .activateNode .bind (this));
@@ -724,7 +724,7 @@ module .exports = class OutlineView extends Interface
          .find (".jstree-anchor")
             .removeAttr ("href")
             .removeAttr ("tabindex")
-            .on ("click", false);
+            .on ("click", this .selectNone .bind (this));
 
       child .find ("li")
          .on ("dblclick", this .activateField .bind (this));
@@ -1950,7 +1950,7 @@ module .exports = class OutlineView extends Interface
          .find (".jstree-anchor")
             .removeAttr ("href")
             .removeAttr ("tabindex")
-            .on ("click", false);
+            .on ("click", this .selectNone .bind (this));
 
       child .find (".node")
          .on ("dblclick", this .activateNode .bind (this));
@@ -2073,7 +2073,7 @@ module .exports = class OutlineView extends Interface
          .find (".jstree-anchor")
             .removeAttr ("href")
             .removeAttr ("tabindex")
-            .on ("click", false);
+            .on ("click", this .selectNone .bind (this));
 
       child .find (".node")
          .on ("dblclick", this .activateNode .bind (this));
@@ -2946,7 +2946,7 @@ module .exports = class OutlineView extends Interface
       const elements = this .sceneGraph .find ("> .root-nodes > ul > li[node-id]");
 
       for (const element of elements)
-         this .selectNodeElement ($(element), true);
+         this .selectNodeElement ($(element));
    }
 
    deselectAll ()
@@ -2984,7 +2984,7 @@ module .exports = class OutlineView extends Interface
       if (!node)
          return;
 
-      this .selectNode (event);
+      this .selectNode (event, false);
 
       for (const type of node .getType () .toReversed ())
       {
@@ -3196,10 +3196,21 @@ module .exports = class OutlineView extends Interface
       })
    }
 
-   selectNode (event, selected)
+   selectNone (event)
    {
       event .preventDefault ();
       event .stopImmediatePropagation ();
+
+      $(document) .trigger ("click");
+   }
+
+   selectNode (event, blur = true)
+   {
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
+
+      if (blur)
+         $(document) .trigger ("click");
 
       // Click on node.
 
@@ -3296,6 +3307,8 @@ module .exports = class OutlineView extends Interface
    {
       event .preventDefault ();
       event .stopImmediatePropagation ();
+
+      $(document) .trigger ("click");
 
       // Click on field.
 
