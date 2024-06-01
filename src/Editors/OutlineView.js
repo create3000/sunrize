@@ -3201,6 +3201,7 @@ module .exports = class OutlineView extends Interface
       event .preventDefault ();
       event .stopImmediatePropagation ();
 
+      // Hide color editor.
       $(document) .trigger ("click");
    }
 
