@@ -83,7 +83,7 @@ $.fn.texturePreviewPopover = async function (node)
 
    // Sizes and special cases.
 
-   const sizes = $("<p></xp>") .appendTo (preview);
+   const sizes = $("<p></p>") .appendTo (preview);
 
    function loadState (loadState)
    {

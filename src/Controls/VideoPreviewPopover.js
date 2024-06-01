@@ -14,16 +14,18 @@ $.fn.videoPreviewPopover = async function (node)
 {
    // Create content.
 
-   const preview = $("<div></div");
+   const
+      preview   = $("<div></div"),
+      container = $("<div></div") .appendTo (preview);
 
    async function loadNow ()
    {
-      preview .empty ();
+      container .empty ();
 
       const video = $("<video controls></video>")
          .css ("min-width", "300px")
          .css ("width", "30vh")
-         .appendTo (preview);
+         .appendTo (container);
 
       for (const url of node ._url)
       {
@@ -33,13 +35,48 @@ $.fn.videoPreviewPopover = async function (node)
       }
    }
 
-   loadNow ();
+   // Sizes and special cases.
+
+   const sizes = $("<p></p>") .appendTo (preview);
+
+   function loadState (loadState)
+   {
+      switch (loadState)
+      {
+         case X3D .X3DConstants .NOT_STARTED_STATE:
+         {
+            sizes .text (_("Loading not started."))
+            break;
+         }
+         case X3D .X3DConstants .IN_PROGRESS_STATE:
+         {
+            sizes .text (_("Loading in progress."))
+            break;
+         }
+         case X3D .X3DConstants .FAILED_STATE:
+         {
+            sizes .text (_("Loading failed."))
+            break;
+         }
+         case X3D .X3DConstants .COMPLETE_STATE:
+         {
+            sizes .text (`${node .getWidth ()} × ${node .getHeight ()}`);
+            break;
+         }
+      }
+   }
 
    // Reload handling.
 
-   const _url = Symbol ();
+   const
+      _loadState = Symbol (),
+      _url       = Symbol ();
 
+   node ._loadState .addFieldCallback (_loadState, loadState);
    node ._url .addFieldCallback (_url, loadNow);
+
+   loadState (node ._loadState .getValue ());
+   loadNow ();
 
    this .data ("preview", { loadNow });
 
@@ -57,7 +94,8 @@ $.fn.videoPreviewPopover = async function (node)
       events: {
          hide: (event, api) =>
          {
-            node ._url .removeFieldCallback (_url);
+            node ._loadState .removeFieldCallback (_loadState);
+            node ._url       .removeFieldCallback (_url);
 
             this .removeData ("preview");
 
