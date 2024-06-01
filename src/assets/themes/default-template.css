@@ -303,7 +303,7 @@ tr.disabled ~ tr > td > div {
   height: var(--tabs-height);
   width: 100%;
   background: inherit;
-  z-index: 1;
+  z-index: 2000;
 }
 
 .ui-tabs.top > .ui-tabs-nav {
@@ -584,6 +584,10 @@ body.dark .dialog ::placeholder {
 
 .dialog .tabs-panel {
   padding: 0.5em 1em;
+}
+
+.dialog.ui-dialog {
+  z-index: 3000 !important;
 }
 
 .dialog.ui-dialog.ui-widget.ui-widget-content {

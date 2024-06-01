@@ -4,7 +4,7 @@ const $ = require ("jquery");
 
 require ("qtip2");
 
-$.fn.qtip.zindex = "auto";
+$.fn.qtip.zindex = 1000; // Results in 1000 and 1001.
 
 $.fn.popover = function (options)
 {
