@@ -230,7 +230,8 @@ module .exports = class OutlineView extends Interface
          .removeAttr ("tabindex")
          .find (".jstree-anchor")
             .removeAttr ("href")
-            .removeAttr ("tabindex");
+            .removeAttr ("tabindex")
+            .on ("click", false);
 
       child .find (".externproto, .proto, .node, .imported-node, .exported-node")
          .on ("dblclick", this .activateNode .bind (this));
@@ -720,7 +721,8 @@ module .exports = class OutlineView extends Interface
          .removeAttr ("tabindex")
          .find (".jstree-anchor")
             .removeAttr ("href")
-            .removeAttr ("tabindex");
+            .removeAttr ("tabindex")
+            .on ("click", false);
 
       child .find ("li")
          .on ("dblclick", this .activateField .bind (this));
@@ -994,60 +996,42 @@ module .exports = class OutlineView extends Interface
             .text (cloneCount > 1 ? `[${cloneCount}]` : "")
             .appendTo (name);
 
+         // Buttons
+
+         const buttons = [ ];
+
          if (node .setHidden && !(node .getExecutionContext () .getOuterNode () instanceof X3D .X3DProtoDeclaration))
          {
-            name .append (document .createTextNode (" "));
-
-            $("<span></span>")
+            buttons .push ($("<span></span>")
+               .attr ("order", "0")
                .addClass (["toggle-visibility", "button", "material-symbols-outlined"])
                .addClass (node .isHidden () ? "off" : "on")
                .attr ("title", "Toggle visibility.")
-               .text (node .isHidden () ? "visibility_off" : "visibility")
-               .appendTo (name);
+               .text (node .isHidden () ? "visibility_off" : "visibility"));
          }
 
          if (node .getType () .some (type => this .onDemandToolNodes .has (type)))
          {
-            name .append (document .createTextNode (" "));
-
-            $("<span></span>")
+            buttons .push ($("<span></span>")
+               .attr ("order", "1")
                .addClass (["toggle-tool", "button", "material-symbols-outlined"])
                .addClass (node .valueOf () === node ? "off" : "on")
                .attr ("title", _("Toggle display tool."))
-               .text ("build_circle")
-               .appendTo (name);
+               .text ("build_circle"));
          }
 
          for (const type of node .getType ())
          {
             switch (type)
             {
-               case X3D .X3DConstants .AudioClip:
-               case X3D .X3DConstants .BufferAudioSource:
-               case X3D .X3DConstants .X3DMaterialNode:
-               case X3D .X3DConstants .X3DSingleTextureNode:
-               {
-                  name .append (document .createTextNode (" "));
-
-                  $("<span></span>")
-                     .addClass (["show-preview", "button", "material-symbols-outlined", "off"])
-                     .css ("top", "2px")
-                     .attr ("title", _("Show preview."))
-                     .text ("preview")
-                     .appendTo (name);
-
-                  continue;
-               }
                case X3D .X3DConstants .X3DLayerNode:
                {
-                  name .append (document .createTextNode (" "));
-
-                  $("<span></span>")
+                  buttons .push ($("<span></span>")
+                     .attr ("order", "2")
                      .addClass (["activate-layer", "button", "material-symbols-outlined"])
                      .addClass (this .browser .getActiveLayer () === node ? "green" : "off")
                      .attr ("title", _("Activate layer."))
-                     .text ("check_circle")
-                     .appendTo (name);
+                     .text ("check_circle"));
 
                   continue;
                }
@@ -1055,14 +1039,12 @@ module .exports = class OutlineView extends Interface
                {
                   node ._isBound .addFieldCallback (this .#updateNodeBoundSymbol, this .updateNodeBound .bind (this, node));
 
-                  name .append (document .createTextNode (" "));
-
-                  $("<span></span>")
+                  buttons .push ($("<span></span>")
+                     .attr ("order", "3")
                      .addClass (["bind-node", "button", "material-symbols-outlined"])
                      .addClass (node ._isBound .getValue () ? "on" : "off")
                      .attr ("title", _("Bind node."))
-                     .text (node ._isBound .getValue () ? "radio_button_checked" : "radio_button_unchecked")
-                     .appendTo (name);
+                     .text (node ._isBound .getValue () ? "radio_button_checked" : "radio_button_unchecked"));
 
                   continue;
                }
@@ -1078,17 +1060,37 @@ module .exports = class OutlineView extends Interface
 
                   node .getLoadState () .addFieldCallback (this .#updateNodeLoadStateSymbol, this .updateNodeLoadState .bind (this, node));
 
-                  name .append (document .createTextNode (" "));
-
-                  $("<span></span>")
+                  buttons .push ($("<span></span>")
+                     .attr ("order", "4")
                      .addClass (["reload-node", "button", "material-symbols-outlined", className])
                      .attr ("title", "Load now.")
-                     .text ("autorenew")
-                     .appendTo (name);
+                     .text ("autorenew"));
+
+                  continue;
+               }
+               case X3D .X3DConstants .AudioClip:
+               case X3D .X3DConstants .BufferAudioSource:
+               case X3D .X3DConstants .X3DMaterialNode:
+               case X3D .X3DConstants .X3DSingleTextureNode:
+               {
+                  buttons .push ($("<span></span>")
+                     .attr ("order", "5")
+                     .addClass (["show-preview", "button", "material-symbols-outlined", "off"])
+                     .css ("top", "2px")
+                     .attr ("title", _("Show preview."))
+                     .text ("preview"));
 
                   continue;
                }
             }
+         }
+
+         buttons .sort ((a, b) => a .attr ("order") - b .attr ("order"))
+
+         for (const button of buttons)
+         {
+            name .append (document .createTextNode (" "));
+            name .append (button);
          }
 
          // Append empty tree to enable expander.
@@ -1798,7 +1800,7 @@ module .exports = class OutlineView extends Interface
             if (!field .getValue () || !field .getNodeUserData (_changing))
                break;
 
-               requestAnimationFrame (() => field .setNodeUserData (_changing, false));
+            requestAnimationFrame (() => field .setNodeUserData (_changing, false));
             return;
          }
          case X3D .X3DConstants .MFNode:
@@ -1945,6 +1947,7 @@ module .exports = class OutlineView extends Interface
          .find (".jstree-anchor")
             .removeAttr ("href")
             .removeAttr ("tabindex")
+            .on ("click", false)
 
       child .find (".node")
          .on ("dblclick", this .activateNode .bind (this))
@@ -2066,7 +2069,8 @@ module .exports = class OutlineView extends Interface
          .removeAttr ("tabindex")
          .find (".jstree-anchor")
             .removeAttr ("href")
-            .removeAttr ("tabindex");
+            .removeAttr ("tabindex")
+            .on ("click", false);
 
       child .find (".node")
          .on ("dblclick", this .activateNode .bind (this));
