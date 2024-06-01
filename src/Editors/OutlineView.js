@@ -3322,9 +3322,19 @@ module .exports = class OutlineView extends Interface
       this .selectPrimaryElement (element);
    }
 
-   selectExpander ()
+   selectExpander (event)
    {
       // Click on expander.
+
+      const element = $(event .currentTarget) .closest (".jstree-node");
+
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
+
+      if (element .jstree ("is_closed", element))
+         element .jstree ("open_node",  element);
+      else
+         element .jstree ("close_node", element);
 
       this .treeView .trigger ("focus");
    }
