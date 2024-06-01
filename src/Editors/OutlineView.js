@@ -2984,8 +2984,6 @@ module .exports = class OutlineView extends Interface
       if (!node)
          return;
 
-      this .selectNode (event, false);
-
       for (const type of node .getType () .toReversed ())
       {
          switch (type)
@@ -3205,13 +3203,12 @@ module .exports = class OutlineView extends Interface
       $(document) .trigger ("click");
    }
 
-   selectNode (event, blur = true)
+   selectNode (event)
    {
       event .preventDefault ();
       event .stopImmediatePropagation ();
 
-      if (blur)
-         $(document) .trigger ("click");
+      $(document) .trigger ("click");
 
       // Click on node.
 
