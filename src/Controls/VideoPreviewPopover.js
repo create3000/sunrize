@@ -108,8 +108,6 @@ $.fn.videoPreviewPopover = async function (node)
 
    $(".tree-view") .on ("scroll.preview", () => this .qtip ("reposition"));
 
-   setTimeout (() => this .qtip ("reposition"));
-
    return this;
 };
 

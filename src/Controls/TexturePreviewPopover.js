@@ -186,8 +186,6 @@ $.fn.texturePreviewPopover = async function (node)
 
    $(".tree-view") .on ("scroll.preview", () => this .qtip ("reposition"));
 
-   this .qtip ("reposition");
-
    return this;
 };
 
