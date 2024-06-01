@@ -1832,29 +1832,29 @@ module .exports = class OutlineView extends Interface
 
    expandField (parent, node, field, type, full)
    {
-      parent .data ("expanded",      true)
-      parent .data ("full-expanded", full)
+      parent .data ("expanded",      true);
+      parent .data ("full-expanded", full);
 
       if (full)
-         parent .find (".access-type") .addClass ("hidden")
+         parent .find (".access-type") .addClass ("hidden");
       else
-         parent .find (".access-type") .removeClass ("hidden")
+         parent .find (".access-type") .removeClass ("hidden");
 
       switch (field .getType ())
       {
          case X3D .X3DConstants .SFNode:
          {
-            field .addFieldCallback (this .#fieldSymbol, this .updateField .bind (this, parent, node, field, type, full))
+            field .addFieldCallback (this .#fieldSymbol, this .updateField .bind (this, parent, node, field, type, full));
 
-            this .expandSFNode (parent, node, field, type, full)
-            break
+            this .expandSFNode (parent, node, field, type, full);
+            break;
          }
          case X3D .X3DConstants .MFNode:
          {
-            field .addFieldCallback (this .#fieldSymbol, this .updateField .bind (this, parent, node, field, type, full))
+            field .addFieldCallback (this .#fieldSymbol, this .updateField .bind (this, parent, node, field, type, full));
 
-            this .expandMFNode (parent, node, field, type, full)
-            break
+            this .expandMFNode (parent, node, field, type, full);
+            break;
          }
          case X3D .X3DConstants .SFBool:
          case X3D .X3DConstants .SFColor:
@@ -1877,8 +1877,8 @@ module .exports = class OutlineView extends Interface
          case X3D .X3DConstants .SFVec4d:
          case X3D .X3DConstants .SFVec4f:
          {
-            this .expandSingleField (parent, node, field, type, full)
-            break
+            this .expandSingleField (parent, node, field, type, full);
+            break;
          }
          case X3D .X3DConstants .MFBool:
          case X3D .X3DConstants .MFColor:
@@ -1901,17 +1901,17 @@ module .exports = class OutlineView extends Interface
          case X3D .X3DConstants .MFVec4d:
          case X3D .X3DConstants .MFVec4f:
          {
-            this .expandArrayField (parent, node, field, type, full)
-            break
+            this .expandArrayField (parent, node, field, type, full);
+            break;
          }
          default:
          {
-            break
+            break;
          }
       }
 
       if (full)
-         field .addRouteCallback (this .#routesFullSymbol, this .updateField .bind (this, parent, node, field, type, full))
+         field .addRouteCallback (this .#routesFullSymbol, this .updateField .bind (this, parent, node, field, type, full));
    }
 
    expandMFNode (parent, node, field, type, full)
@@ -1919,18 +1919,18 @@ module .exports = class OutlineView extends Interface
       // Generate tree.
 
       const child = $("<div></div>")
-         .addClass ("subtree")
+         .addClass ("subtree");
 
       const ul = $("<ul></ul>")
-         .appendTo (child)
+         .appendTo (child);
 
       if (full)
-         ul .append (this .createRouteElements (node, field))
+         ul .append (this .createRouteElements (node, field));
 
-      let index = 0
+      let index = 0;
 
       for (const node of field)
-         ul .append (this .createNodeElement ("node", parent, node ?.getValue (), index ++))
+         ul .append (this .createNodeElement ("node", parent, node ?.getValue (), index ++));
 
       // Make jsTree.
 
@@ -1940,33 +1940,33 @@ module .exports = class OutlineView extends Interface
          .on ("before_open.jstree", this .nodeBeforeOpen .bind (this))
          .on ("close_node.jstree",  this .nodeCloseNode .bind (this))
          .appendTo (parent)
-         .hide ()
+         .hide ();
 
       child
          .removeAttr ("tabindex")
          .find (".jstree-anchor")
             .removeAttr ("href")
             .removeAttr ("tabindex")
-            .on ("click", false)
+            .on ("click", false);
 
       child .find (".node")
-         .on ("dblclick", this .activateNode .bind (this))
+         .on ("dblclick", this .activateNode .bind (this));
 
       child .find (".jstree-ocl")
          .addClass ("material-icons")
          .text ("arrow_right")
          .on ("click", this .selectExpander .bind (this))
-         .on ("dblclick", this .activateExpander .bind (this))
+         .on ("dblclick", this .activateExpander .bind (this));
 
       child .find (".jstree-node")
          .wrapInner ("<div class=\"item no-select\"/>")
-         .find (".item") .append ("<div class=\"route-curves-wrapper\"><canvas class=\"route-curves\"></canvas></div>")
+         .find (".item") .append ("<div class=\"route-curves-wrapper\"><canvas class=\"route-curves\"></canvas></div>");
 
       if (this .isEditable (parent))
       {
          child .find (".node:not([node-id=NULL]) > .item")
             .attr ("draggable", "true")
-            .on ("dragstart", this .onDragStartNode .bind (this))
+            .on ("dragstart", this .onDragStartNode .bind (this));
       }
 
       child .find (".node .name, .node .icon")
@@ -1976,19 +1976,19 @@ module .exports = class OutlineView extends Interface
          .on ("mouseenter", this .updateNodeTitle .bind (this));
 
       child .find (".toggle-visibility")
-         .on ("click", this .toggleVisibility .bind (this))
+         .on ("click", this .toggleVisibility .bind (this));
 
       child .find (".toggle-tool")
-         .on ("click", this .toggleTool .bind (this))
+         .on ("click", this .toggleTool .bind (this));
 
       child .find (".activate-layer")
          .on ("click", this .activateLayer .bind (this));
 
       child .find (".bind-node")
-         .on ("click", this .bindNode .bind (this))
+         .on ("click", this .bindNode .bind (this));
 
       child .find (".reload-node")
-         .on ("click", this .reloadNode .bind (this))
+         .on ("click", this .reloadNode .bind (this));
 
       child .find (".show-preview")
          .on ("click", this .showPreview .bind (this));
@@ -1996,25 +1996,25 @@ module .exports = class OutlineView extends Interface
       child .find ("area.input-selector")
          .on ("mouseenter", this .hoverInSingleConnector .bind (this, "input"))
          .on ("mouseleave", this .hoverOutSingleConnector .bind (this, "input"))
-         .on ("click", this .selectSingleConnector .bind (this, "input"))
+         .on ("click", this .selectSingleConnector .bind (this, "input"));
 
       child .find ("area.output-selector")
          .on ("mouseenter", this .hoverInSingleConnector .bind (this, "output"))
          .on ("mouseleave", this .hoverOutSingleConnector .bind (this, "output"))
-         .on ("click", this .selectSingleConnector .bind (this, "output"))
+         .on ("click", this .selectSingleConnector .bind (this, "output"));
 
       child .find ("area.input-routes-selector")
-         .on ("click", this .selectSingleRoute .bind (this, "input"))
+         .on ("click", this .selectSingleRoute .bind (this, "input"));
 
       child .find ("area.output-routes-selector")
-         .on ("click", this .selectSingleRoute .bind (this, "output"))
+         .on ("click", this .selectSingleRoute .bind (this, "output"));
 
       // Expand children.
 
-      const elements = child .find (".node")
+      const elements = child .find (".node");
 
-      child .show ()
-      this .expandMFNodeComplete (elements, field)
+      child .show ();
+      this .expandMFNodeComplete (elements, field);
    }
 
    expandMFNodeComplete (elements, field)
