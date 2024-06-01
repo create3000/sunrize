@@ -73,7 +73,7 @@ $.fn.videoPreviewPopover = async function (node)
       _url       = Symbol ();
 
    node ._loadState .addFieldCallback (_loadState, loadState);
-   node ._url .addFieldCallback (_url, loadNow);
+   node ._url       .addFieldCallback (_url,       loadNow);
 
    loadState (node ._loadState .getValue ());
    loadNow ();
