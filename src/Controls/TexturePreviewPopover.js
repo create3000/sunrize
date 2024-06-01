@@ -83,48 +83,74 @@ $.fn.texturePreviewPopover = async function (node)
 
    // Sizes and special cases.
 
-   for (const type of node .getType () .toReversed ())
-   {
-      switch (type)
-      {
-         case X3D .X3DConstants .GeneratedCubeMapTexture:
-         {
-            return;
-         }
-         case X3D .X3DConstants .MovieTexture:
-         {
-            $("<p></xp>")
-               .text (`${node .getWidth ()} × ${node .getHeight ()}, ${formatTime (node ._duration_changed .getValue ())}`)
-               .appendTo (preview);
-            break;
-         }
-         case X3D .X3DConstants .X3DEnvironmentTextureNode:
-         {
-            $("<p></xp>")
-               .text (`${node .getSize ()} × ${node .getSize ()}`)
-               .appendTo (preview);
-            break;
-         }
-         case X3D .X3DConstants .X3DTexture2DNode:
-         {
-            $("<p></xp>")
-               .text (`${node .getWidth ()} × ${node .getHeight ()}`)
-               .appendTo (preview);
-            break;
-         }
-         case X3D .X3DConstants .X3DTexture3DNode:
-         {
-            $("<p></xp>")
-               .text (`${node .getWidth ()} × ${node .getHeight ()} × ${node .getDepth ()}`)
-               .appendTo (preview);
-            break;
-         }
-         default:
-            continue;
-      }
+   const sizes = $("<p></xp>") .appendTo (preview);
 
-      break;
+   function loadState (loadState)
+   {
+      switch (loadState)
+      {
+         case X3D .X3DConstants .NOT_STARTED_STATE:
+         {
+            sizes .text (_("Loading not started."))
+            break;
+         }
+         case X3D .X3DConstants .IN_PROGRESS_STATE:
+         {
+            sizes .text (_("Loading in progress."))
+            break;
+         }
+         case X3D .X3DConstants .FAILED_STATE:
+         {
+            sizes .text (_("Loading failed."))
+            break;
+         }
+         case X3D .X3DConstants .COMPLETE_STATE:
+         {
+            sizesText ();
+            break;
+         }
+      }
    }
+
+   function sizesText ()
+   {
+      for (const type of node .getType () .toReversed ())
+      {
+         switch (type)
+         {
+            case X3D .X3DConstants .MovieTexture:
+            {
+               sizes .text (`${node .getWidth ()} × ${node .getHeight ()}, ${formatTime (node ._duration_changed .getValue ())}`);
+               break;
+            }
+            case X3D .X3DConstants .X3DEnvironmentTextureNode:
+            {
+               sizes .text (`${node .getSize ()} × ${node .getSize ()}`);
+               break;
+            }
+            case X3D .X3DConstants .X3DTexture2DNode:
+            {
+               sizes .text (`${node .getWidth ()} × ${node .getHeight ()}`);
+               break;
+            }
+            case X3D .X3DConstants .X3DTexture3DNode:
+            {
+               sizes .text (`${node .getWidth ()} × ${node .getHeight ()} × ${node .getDepth ()}`);
+               break;
+            }
+            default:
+               continue;
+         }
+
+         break;
+      }
+   }
+
+   const _loadState = Symbol ();
+
+   node ._loadState .addFieldCallback (_loadState, loadState);
+
+   loadState (node ._loadState .getValue ());
 
    // Reload handling.
 
@@ -144,6 +170,8 @@ $.fn.texturePreviewPopover = async function (node)
       events: {
          hide: (event, api) =>
          {
+            node ._loadState .removeFieldCallback (_loadState);
+
             this .removeData ("preview");
 
             previewNode .dispose ();

@@ -2990,6 +2990,10 @@ module .exports = class OutlineView extends Interface
                item .audioPreviewPopover (node);
                break;
             }
+            case X3D .X3DConstants .GeneratedCubeMapTexture:
+            {
+               break;
+            }
             case X3D .X3DConstants .MovieTexture:
             {
                require ("../Controls/VideoPreviewPopover");
