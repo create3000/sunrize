@@ -2996,6 +2996,9 @@ module .exports = class OutlineView extends Interface
             }
             case X3D .X3DConstants .MovieTexture:
             {
+               if (!(node .getMediaElement () instanceof HTMLVideoElement))
+                  continue;
+
                require ("../Controls/VideoPreviewPopover");
 
                item .videoPreviewPopover (node);
