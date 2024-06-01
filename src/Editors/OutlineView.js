@@ -178,8 +178,9 @@ module .exports = class OutlineView extends Interface
 
    expandScene (parent, scene)
    {
-      parent .data ("expanded",      true);
-      parent .data ("full-expanded", false);
+      parent
+         .data ("expanded",      true)
+         .data ("full-expanded", false);
 
       if (scene instanceof X3D .X3DScene)
          scene .units .addInterest ("updateScene", this, parent, scene);
@@ -596,8 +597,9 @@ module .exports = class OutlineView extends Interface
 
    expandNode (parent, node, full)
    {
-      parent .data ("expanded",      true);
-      parent .data ("full-expanded", full);
+      parent
+         .data ("expanded",      true)
+         .data ("full-expanded", full);
 
       // Generate tree.
 
@@ -1832,8 +1834,9 @@ module .exports = class OutlineView extends Interface
 
    expandField (parent, node, field, type, full)
    {
-      parent .data ("expanded",      true);
-      parent .data ("full-expanded", full);
+      parent
+         .data ("expanded",      true)
+         .data ("full-expanded", full);
 
       if (full)
          parent .find (".access-type") .addClass ("hidden");
@@ -2772,9 +2775,10 @@ module .exports = class OutlineView extends Interface
 
    closeNode (element)
    {
-      element .find (".jstree-ocl") .text ("arrow_right");
-      element .data ("expanded",      false);
-      element .data ("full-expanded", false);
+      element
+         .find (".jstree-ocl") .text ("arrow_right")
+         .data ("expanded",      false)
+         .data ("full-expanded", false);
 
       // Collapse children.
 
