@@ -343,7 +343,7 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .SFVec4f:
          {
             const
-               executionContext = this .browser .currentScene,
+               executionContext = node .getExecutionContext (),
                category         = field .getUnit (),
                min              = fieldElement .attr ("minInclusive") ?? fieldElement .attr ("minExclusive"),
                max              = fieldElement .attr ("maxInclusive") ?? fieldElement .attr ("maxExclusive");
@@ -441,7 +441,7 @@ module .exports = new class Panel extends Interface
    refresh (parameter, node, field)
    {
       const
-         executionContext = this .browser .currentScene,
+         executionContext = node .getExecutionContext (),
          category         = field .getUnit ();
 
       switch (field .getType ())
@@ -553,7 +553,7 @@ module .exports = new class Panel extends Interface
    onchange (node, field, value)
    {
       const
-         executionContext = this .browser .currentScene,
+         executionContext = node .getExecutionContext (),
          category         = field .getUnit ();
 
       switch (field .getType ())
@@ -682,18 +682,20 @@ module .exports = new class Panel extends Interface
    {
       if (this .mousedown)
       {
-         this .field ??= field .copy ();
+         this .original ??= field .copy ();
 
          field .setValue (value);
+
+         executionContext .getOuterNode () ?.requestUpdateInstances ?.();
       }
       else
       {
-         if (this .field)
-            field .assign (this .field);
+         if (this .original)
+            field .assign (this .original);
+
+         this .original = null;
 
          Editor .setFieldValue (executionContext, node, field, value);
-
-         this .field = null;
       }
    }
 
@@ -732,7 +734,7 @@ module .exports = new class Panel extends Interface
       else if (field .getType () === X3D .X3DConstants .SFString)
          title += `Current value: ${truncate (field .toString (), 20)}`;
       else
-         title += `Current value: ${field .toString ({ scene: this .browser .currentScene })}`;
+         title += `Current value: ${field .toString ({ scene: node .getExecutionContext () })}`;
 
       return title;
    }
