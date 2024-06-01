@@ -2842,6 +2842,8 @@ module .exports = class OutlineView extends Interface
          node .getLoadState () .removeFieldCallback (this .#updateNodeSymbol);
       });
 
+      element .find (".node [data-hasqtip]") .qtip ?.("hide") .qtip ("destroy", true);
+
       element .find (".node:not([node-id=NULL]), .exported-node")
          .addBack (".node:not([node-id=NULL]), .exported-node") .each ((i, e) =>
       {
