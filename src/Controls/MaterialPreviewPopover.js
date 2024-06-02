@@ -57,6 +57,8 @@ $.fn.materialPreviewPopover = async function (node)
       }
    }
 
+   previewNode .setup ();
+
    appearanceNode .material = previewNode;
 
    // Handle TwoSidedMaterial;
