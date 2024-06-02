@@ -1,3 +1,3 @@
 "use strict";
 
-require ("./Application/Application") .run ();
+const app = require ("./Application/Application") .run ();

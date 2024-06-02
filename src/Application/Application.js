@@ -41,7 +41,7 @@ module .exports = class Application
 
       electron .app .commandLine .appendSwitch ("--enable-features", "OverlayScrollbar,ConversionMeasurement,AttributionReportingCrossAppWeb");
 
-      new Application ();
+      return new Application ();
    }
 
    constructor ()
@@ -985,7 +985,7 @@ module .exports = class Application
    {
       if (fileURL .startsWith ("id:"))
          return;
-      
+
       if (fileURL .startsWith ("file:"))
          return this .addRecentDocument (url .fileURLToPath (fileURL));
 
