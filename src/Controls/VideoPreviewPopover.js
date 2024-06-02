@@ -18,6 +18,10 @@ $.fn.videoPreviewPopover = async function (node)
       preview   = $("<div></div"),
       container = $("<div></div") .appendTo (preview);
 
+   preview
+      .css ("min-width", "300px")
+      .css ("width", "30vh");
+
    async function loadNow ()
    {
       container .empty ();

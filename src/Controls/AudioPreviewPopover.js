@@ -14,13 +14,14 @@ $.fn.audioPreviewPopover = async function (node)
 {
    // Create content.
 
-   const preview = $("<div></div");
+   const preview = $("<div></div") .css ("width", "30vh");
 
    async function loadNow ()
    {
       preview .empty ();
 
       const audio = $("<audio controls></audio>")
+         .css ("width", "30vh")
          .appendTo (preview);
 
       for (const url of node ._url)

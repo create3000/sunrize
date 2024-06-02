@@ -37,10 +37,11 @@ $.fn.texturePreviewPopover = async function (node)
 {
    // Create content.
 
-   const preview = $("<div></div")
+   const preview = $("<div></div") .css ("width", "30vh");
 
    const canvas = $("<x3d-canvas></x3d-canvas>")
-      .css ({ width: "30vh", height: "30vh" })
+      .css ("width","30vh")
+      .css ("height", "30vh")
       .attr ("cache", false)
       .attr ("splashScreen", false)
       .attr ("contextMenu", false)
