@@ -1000,8 +1000,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          copy               = node .copy (executionContext),
          index              = parseInt (element .attr ("index"));
 
-      copy .setup ();
-
       UndoManager .shared .beginUndo (_("Unlink Clone"));
 
       if (node .getName ())
