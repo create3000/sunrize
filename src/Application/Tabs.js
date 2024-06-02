@@ -133,12 +133,7 @@ module .exports = new class Tabs
       })
 
       for (const fileURL of openTabs .filter (fileURL => !fileURL .startsWith ("id:")))
-      {
-         if (fileURL .startsWith ("file:"))
-            electron .ipcRenderer .send ("add-recent-document", url .fileURLToPath (fileURL));
-         else
-            electron .ipcRenderer .send ("add-recent-location", fileURL);
-      }
+         electron .ipcRenderer .send ("add-recent-location", fileURL);
 
       if (openTabs .length)
          this .openTabs (openTabs, false);
@@ -266,6 +261,7 @@ module .exports = new class Tabs
       $(tab .element) .find (".tab-title") .attr ("title", fileURL .startsWith ("id:") ? _("Currently still unsaved.") : decodeURI (fileURL));
 
       electron .ipcRenderer .send ("title", tab .getTitle ());
+      electron .ipcRenderer .send ("add-recent-location", fileURL);
 
       this .saveTabs ();
    }
@@ -302,6 +298,8 @@ module .exports = new class Tabs
    tabClose (tab)
    {
       // If all tabs are closed, open empty tab.
+
+      electron .ipcRenderer .send ("add-recent-location", tab .url);
 
       if (!this .tabs .getTabs () .length)
          this .openTabs ();

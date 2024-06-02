@@ -87,7 +87,6 @@ module .exports = class Application
 
       electron .ipcMain .on ("title",               (event, title)       => this .title = title);
       electron .ipcMain .on ("current-file",        (event, currentFile) => this .currentFile = currentFile);
-      electron .ipcMain .on ("add-recent-document", (event, filePath)    => this .addRecentDocument (filePath));
       electron .ipcMain .on ("add-recent-location", (event, fileURL)     => this .addRecentLocation (fileURL));
       electron .ipcMain .on ("update-menu",         (event, options)     => this .updateMenu (options));
       electron .ipcMain .on ("context-menu",        (event, id, menu)    => this .contextMenu (id, menu));
@@ -868,12 +867,7 @@ module .exports = class Application
       if (this .ready)
       {
          for (const fileURL of urls)
-         {
-            if (fileURL .startsWith ("file:"))
-               this .addRecentDocument (url .fileURLToPath (fileURL));
-            else
-               this .addRecentLocation (fileURL);
-         }
+            this .addRecentLocation (fileURL);
 
          this .mainWindow .webContents .send ("open-files", urls);
          this .mainWindow .show ();
@@ -989,6 +983,12 @@ module .exports = class Application
 
    addRecentLocation (fileURL)
    {
+      if (fileURL .startsWith ("id:"))
+         return;
+      
+      if (fileURL .startsWith ("file:"))
+         return this .addRecentDocument (url .fileURLToPath (fileURL));
+
       this .config .recentLocations = this .config .recentLocations
          .filter (item => item !== fileURL)
          .toSpliced (0, 0, fileURL)
