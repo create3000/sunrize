@@ -36,9 +36,7 @@ $.fn.materialPreviewPopover = async function (node)
 
    const
       appearanceNode = browser .currentScene .getExportedNode ("Appearance"),
-      x3dSyntax      = Editor .exportX3D (node .getExecutionContext (), [node]),
-      nodes          = await Editor .importX3D (scene, x3dSyntax, new UndoManager ()),
-      previewNode    = nodes [0];
+      previewNode    = node .copy (scene);
 
    // Assign material node.
 
@@ -47,7 +45,10 @@ $.fn.materialPreviewPopover = async function (node)
       switch (field .getType ())
       {
          case X3D .X3DConstants .SFNode:
+            field .setValue (null);
+            break
          case X3D .X3DConstants .MFNode:
+            field .length = 0;
             break;
          default:
             field .addReference (node .getField (field .getName ()));
