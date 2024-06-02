@@ -27,9 +27,9 @@ body {
   color: var(--system-gray2);
 }
 
-:not(.monaco-editor *)::selection {
-  color: var(--system-gray0);
-  background: var(--system-gray4);
+::selection {
+  color: var(--selection-color);
+  background: var(--selection-background-color);
 }
 
 /* common */
@@ -568,11 +568,6 @@ body.light .qtip-tipsy {
 }
 
 /* Dialog */
-
-.dialog ::selection {
-  color: var(--system-gray0);
-  background: var(--system-gray2);
-}
 
 .dialog ::placeholder {
   color: var(--system-gray1);
@@ -1374,12 +1369,6 @@ body.dark .ui-widget .library-list .component {
 }
 
 /* Tweakpane */
-
-@media (prefers-color-scheme: dark) {
-  .tp-dfwv ::selection {
-    background-color: var(--system-gray5);
-  }
-}
 
 .tp-dfwv {
   z-index: 3000 !important;
