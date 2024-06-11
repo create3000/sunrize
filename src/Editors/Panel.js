@@ -33,7 +33,13 @@ module .exports = new class Panel extends Interface
       this .setup ();
    }
 
-   configure () { }
+   configure ()
+   {
+      this .container .css ({
+         "right":  `${this .config .file .right}px`,
+         "bottom": `${this .config .file .bottom}px`,
+      });
+   }
 
    get visible ()
    {
@@ -74,10 +80,17 @@ module .exports = new class Panel extends Interface
 
    onmousemove (event)
    {
+      const
+         right  = this .startX - event .pageX,
+         bottom = this .startY - event .pageY;
+
       this .container .css ({
-         "right":  `${this .startX - event .pageX}px`,
-         "bottom": `${this .startY - event .pageY}px`,
+         "right":  `${right}px`,
+         "bottom": `${bottom}px`,
       });
+
+      this .config .file .right  = right;
+      this .config .file .bottom = bottom;
    }
 
    onselection ()
