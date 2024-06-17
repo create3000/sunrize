@@ -2776,15 +2776,15 @@ module .exports = class OutlineView extends Interface
    closeNode (element)
    {
       element
-         .find (".jstree-ocl") .text ("arrow_right")
          .data ("expanded",      false)
          .data ("full-expanded", false);
 
+      element.find (".jstree-ocl") .text ("arrow_right");
+
       // Collapse children.
 
-      const child = element .find ("> .subtree");
+      element .find ("> .subtree") .hide ();
 
-      child .hide ();
       this .afterClose (element);
    }
 
