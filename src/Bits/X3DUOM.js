@@ -9,27 +9,6 @@ const X3DUOM = $($.parseXML (fs .readFileSync (path .join (__dirname, "..", "ass
 X3DUOM .find ("AbstractNodeType[name=X3DOneSidedMaterialNode]")
    .append (X3DUOM .find ("field[name=emissiveColor]") .first () .clone ());
 
-// emissiveStrength
-const emissiveStrength = $(X3DUOM [0] .createElement ("field"))
-   .attr ("name", "emissiveStrength")
-   .attr ("type", "SFFloat")
-   .attr ("accessType", "inputOutput")
-   .attr ("default", "1")
-   .attr ("minInclusive", "0")
-   .attr ("description", "A scalar factor, that governs the upper limit of emissive strength per material.")
-
-X3DUOM .find ("AbstractNodeType[name=X3DOneSidedMaterialNode]")
-   .append (emissiveStrength .clone ());
-
-X3DUOM .find ("ConcreteNode[name=UnlitMaterial]")
-   .append (emissiveStrength .clone ());
-
-X3DUOM .find ("ConcreteNode[name=Material]")
-   .append (emissiveStrength .clone ());
-
-X3DUOM .find ("ConcreteNode[name=PhysicalMaterial]")
-   .append (emissiveStrength .clone ());
-
 // pointerEvents
 X3DUOM .find ("AbstractNodeType[name=X3DShapeNode]")
    .append ($(X3DUOM [0] .createElement ("field"))
