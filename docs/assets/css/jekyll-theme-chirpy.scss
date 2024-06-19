@@ -34,7 +34,6 @@
   --system-gray8: rgb(255, 255, 255);
 
   --nav-border-color: rgba(158, 158, 158, 0.17);
-  --nav-active-page: rgb(168, 182, 206);
 
   --h2-color: rgb(228, 228, 93);
   --h3-color: rgb(185, 137, 79);
@@ -139,7 +138,7 @@ header a.rounded-circle {
 }
 
 .nav-wrapper a.active {
-  color: var(--nav-active-page);
+  font-weight: bold;
 }
 
 .content h1 {
