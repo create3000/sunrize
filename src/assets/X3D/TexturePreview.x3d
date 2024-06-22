@@ -11,7 +11,7 @@
     <meta name='created' content='Thu, 10 Jul 2014 17:28:33 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.0, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sat, 22 Jun 2024 07:23:12 GMT'/>
+    <meta name='modified' content='Sat, 22 Jun 2024 07:32:16 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='Volume' url='"Volume.x3d#Volume"'>
@@ -65,8 +65,7 @@
               headlight='false'
               transitionType='"TELEPORT"'/>
         </Viewpoint>
-        <Switch DEF='_6'
-            whichChoice='2'>
+        <Switch DEF='_6'>
           <Transform DEF='Texture2D'>
             <Shape>
               <Appearance DEF='Appearance'/>
