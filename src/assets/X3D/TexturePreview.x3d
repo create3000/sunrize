@@ -10,8 +10,8 @@
     <component name='TextureProjection' level='2'/>
     <meta name='created' content='Thu, 10 Jul 2014 17:28:33 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.6.15, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 31 May 2024 08:25:20 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.7.0, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Sat, 22 Jun 2024 07:23:12 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='Volume' url='"Volume.x3d#Volume"'>
@@ -65,7 +65,8 @@
               headlight='false'
               transitionType='"TELEPORT"'/>
         </Viewpoint>
-        <Switch DEF='_6'>
+        <Switch DEF='_6'
+            whichChoice='2'>
           <Transform DEF='Texture2D'>
             <Shape>
               <Appearance DEF='Appearance'/>
@@ -158,7 +159,7 @@ function set_translation (value)
               </IndexedFaceSet>
             </Shape>
           </Transform>
-          <TextureProjector DEF='_5'/>
+          <TextureProjector DEF='_7'/>
         </Switch>
         <Script DEF='TextureScript'>
           <field accessType='inputOnly' type='SFFloat' name='set_aspectRatio'/>
@@ -234,7 +235,7 @@ function set_texture (value)
             }
             case X3DConstants .X3DEnvironmentTextureNode:
             {
-               cubeMapTexture       = true;
+               cubeMapTexture      = true;
                whichChoice_changed = 2;
                return;
             }
@@ -257,12 +258,12 @@ function set_texture (value)
     <ROUTE fromNode='Appearance' fromField='texture_changed' toNode='TextureScript' toField='set_texture'/>
     <ROUTE fromNode='TextureScript' fromField='texture2D' toNode='Texture2DViewpoint' toField='set_bind'/>
     <ROUTE fromNode='TextureScript' fromField='texture3D' toNode='Texture3DViewpoint' toField='set_bind'/>
-    <ROUTE fromNode='TextureScript' fromField='cubeMapTexture' toNode='CubeMapTextureNavigationInfo' toField='set_bind'/>
     <ROUTE fromNode='Appearance' fromField='texture_changed' toNode='_4' toField='set_voxels'/>
-    <ROUTE fromNode='Appearance' fromField='texture_changed' toNode='_5' toField='set_texture'/>
-    <ROUTE fromNode='_5' fromField='aspectRatio' toNode='TextureScript' toField='set_aspectRatio'/>
+    <ROUTE fromNode='Appearance' fromField='texture_changed' toNode='_7' toField='set_texture'/>
+    <ROUTE fromNode='_7' fromField='aspectRatio' toNode='TextureScript' toField='set_aspectRatio'/>
     <ROUTE fromNode='TextureScript' fromField='scale_changed' toNode='Texture2D' toField='set_scale'/>
     <ROUTE fromNode='_2' fromField='touchTime' toNode='TextureScript' toField='set_time'/>
+    <ROUTE fromNode='TextureScript' fromField='cubeMapTexture' toNode='CubeMapViewpoint' toField='set_bind'/>
     <EXPORT localDEF='Appearance'/>
   </Scene>
 </X3D>
