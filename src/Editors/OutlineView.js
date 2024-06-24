@@ -3094,7 +3094,7 @@ module .exports = class OutlineView extends Interface
       event .preventDefault ();
       event .stopImmediatePropagation ();
 
-      node ._set_bind = !node ._isBound .getValue ();
+      node ._set_bind = true;
    }
 
    reloadNode (event)
