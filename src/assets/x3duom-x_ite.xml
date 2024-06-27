@@ -101,8 +101,7 @@
 </InterfaceDefinition>
 </ConcreteNode>
 <ConcreteNodes>
-
-								<ConcreteNode name="AnisotropyMaterialExtension">
+<ConcreteNode name="AnisotropyMaterialExtension">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/anisotropymaterialextension"
 		appinfo="AnisotropyMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node.">
 	<componentInfo name="X_ITE" level="1"/>
