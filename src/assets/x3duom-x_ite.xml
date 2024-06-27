@@ -5,6 +5,7 @@
 <!-- Generated 2024-02-02-08:00 08:43:55.4184857-08:00 -->
 <X3dUnifiedObjectModel xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" version="4.0" xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/X3dUnifiedObjectModel.xsd">
 <ConcreteNodes>
+
 <ConcreteNode name="ImageTextureAtlas">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/imagetextureatlas"
 		appinfo="ImageTextureAtlas defines a 3D image-based texture map by specifying a single image file that contains slices for complete 3D data.">
