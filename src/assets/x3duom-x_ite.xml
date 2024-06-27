@@ -3,9 +3,103 @@
 <!-- Online at https://www.web3d.org/specifications/X3dUnifiedObjectModel-4.0.xml -->
 <!-- This file contains a listing of all abstract and concrete nodes in version 4.0 of X3D -->
 <!-- Generated 2024-02-02-08:00 08:43:55.4184857-08:00 -->
-<X3dUnifiedObjectModel xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
-                        version="4.0"
-                        xsd:noNamespaceSchemaLocation="X3dUnifiedObjectModel.xsd">
+<X3dUnifiedObjectModel xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" version="4.0" xsd:noNamespaceSchemaLocation="X3dUnifiedObjectModel.xsd">
+<ConcreteNode name="ImageTextureAtlas">
+	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/imagetextureatlas"
+		appinfo="ImageTextureAtlas defines a 3D image-based texture map by specifying a single image file that contains slices for complete 3D data.">
+	<componentInfo name="X_ITE" level="1"/>
+	<Inheritance baseType="X3DTexture3DNode"/>
+<field name="metadata"
+	type="SFNode"
+	accessType="inputOutput"
+	default="NULL"
+	inheritedFrom="X3DMetadataObject"
+	description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
+/>
+<field name="description"
+	type="SFString"
+	accessType="inputOutput"
+	default=""
+	description="Author-provided prose that describes intended purpose of the url asset."
+/>
+<field name="load"
+	type="SFBool"
+	accessType="inputOutput"
+	default="TRUE"
+	description="*load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded scene."
+/>
+<field name="url"
+	type="MFString"
+	accessType="inputOutput"
+	description="Location and filename of image. Multiple locations are more reliable, and including a Web address lets e-mail attachments work."
+/>
+<field name="autoRefresh"
+	type="SFTime"
+	accessType="inputOutput"
+	default="0"
+	minInclusive="0"
+	maxExclusive="∞"
+	description="*autoRefresh* defines interval in seconds before automatic reload of current url asset is performed."
+/>
+<field name="autoRefreshTimeLimit"
+	type="SFTime"
+	accessType="inputOutput"
+	default="3600"
+	minInclusive="0"
+	maxExclusive="∞"
+	description="*autoRefreshTimeLimit* defines maximum duration that automatic refresh activity can occur."
+/>
+<field name="slicesOverX"
+	type="SFInt32"
+	accessType="inputOutput"
+	default="0"
+	minInclusive="0"
+	maxExclusive="∞"
+	description="Number of images in x direction."
+/>
+<field name="slicesOverY"
+	type="SFInt32"
+	accessType="inputOutput"
+	default="0"
+	minInclusive="0"
+	maxExclusive="∞"
+	description="Number of images in y direction."
+/>
+<field name="numberOfSlices"
+	type="SFInt32"
+	accessType="inputOutput"
+	default="0"
+	minInclusive="0"
+	maxExclusive="∞"
+	description="Total number of images."
+/>
+<field name="repeatS"
+	type="SFBool"
+	accessType="initializeOnly"
+	default="FALSE"
+	description="Whether to repeat texture along S axis horizontally from left to right."
+/>
+<field name="repeatT"
+	type="SFBool"
+	accessType="initializeOnly"
+	default="FALSE"
+	description="Whether to repeat texture along T axis vertically from top to bottom."
+/>
+<field name="repeatR"
+	type="SFBool"
+	accessType="initializeOnly"
+	default="FALSE"
+	description="Whether to repeat texture along R axis from front to back."
+/>
+<field name="textureProperties"
+	type="SFNode"
+	accessType="initializeOnly"
+	default="NULL"
+	description="Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."
+/>
+<containerField default="texture" type="xs:NMTOKEN"/>
+</InterfaceDefinition>
+</ConcreteNode>
 <ConcreteNodes>
 
 								<ConcreteNode name="AnisotropyMaterialExtension">
