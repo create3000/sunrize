@@ -38,7 +38,6 @@
 	accessType="inputOutput"
 	default="0"
 	minInclusive="0"
-	maxExclusive="∞"
 	description="*autoRefresh* defines interval in seconds before automatic reload of current url asset is performed."
 />
 <field name="autoRefreshTimeLimit"
@@ -46,7 +45,6 @@
 	accessType="inputOutput"
 	default="3600"
 	minInclusive="0"
-	maxExclusive="∞"
 	description="*autoRefreshTimeLimit* defines maximum duration that automatic refresh activity can occur."
 />
 <field name="slicesOverX"
@@ -54,7 +52,6 @@
 	accessType="inputOutput"
 	default="0"
 	minInclusive="0"
-	maxExclusive="∞"
 	description="Number of images in x direction."
 />
 <field name="slicesOverY"
@@ -62,7 +59,6 @@
 	accessType="inputOutput"
 	default="0"
 	minInclusive="0"
-	maxExclusive="∞"
 	description="Number of images in y direction."
 />
 <field name="numberOfSlices"
@@ -70,7 +66,6 @@
 	accessType="inputOutput"
 	default="0"
 	minInclusive="0"
-	maxExclusive="∞"
 	description="Total number of images."
 />
 <field name="repeatS"
@@ -375,7 +370,6 @@
 	accessType="inputOutput"
 	default="0 0"
 	minExclusive="-∞"
-	maxExclusive="∞"
 	description="Specifies the scale factors and units to calculate depth values.The offset is added before the depth test is performed and before the value is written into the depth buffer.The first value is *factor*, a GLfloat which sets the scale factor for the variable depth offset for each polygon. The default value is 0.The second value is *units*, a GLfloat which sets the multiplier by which an implementation-specific value is multiplied with to create a constant depth offset. The default value is 0."
 />
 <field name="depthRange"
