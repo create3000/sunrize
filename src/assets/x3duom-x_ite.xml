@@ -10,7 +10,7 @@
 
 								<ConcreteNode name="AnisotropyMaterialExtension">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/anisotropymaterialextension"
-		appinfo="AnisotropyMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.">
+		appinfo="AnisotropyMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node.">
 	<componentInfo name="X_ITE" level="1"/>
 	<Inheritance baseType="X3DMaterialExtensionNode"/>
 <field name="metadata"
@@ -18,7 +18,7 @@
 	accessType="inputOutput"
 	default="NULL"
 	inheritedFrom="X3DMetadataObject"
-	description="Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node."
+	description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 />
 <field name="anisotropyStrength"
 	type="SFFloat"
@@ -60,7 +60,7 @@
 	accessType="inputOutput"
 	default="NULL"
 	inheritedFrom="X3DMetadataObject"
-	description="Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node."
+	description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 />
 <field name="blendColor"
 	type="SFColorRGBA"
@@ -199,7 +199,7 @@
 </ConcreteNode>
 <ConcreteNode name="ClearcoatMaterialExtension">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/clearcoatmaterialextension"
-		appinfo="ClearcoatMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.">
+		appinfo="ClearcoatMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node.">
 	<componentInfo name="X_ITE" level="1"/>
 	<Inheritance baseType="X3DMaterialExtensionNode"/>
 <field name="metadata"
@@ -207,7 +207,7 @@
 	accessType="inputOutput"
 	default="NULL"
 	inheritedFrom="X3DMetadataObject"
-	description="Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node."
+	description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 />
 <field name="clearcoat"
 	type="SFFloat"
@@ -275,7 +275,7 @@
 	accessType="inputOutput"
 	default="NULL"
 	inheritedFrom="X3DMetadataObject"
-	description="Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node."
+	description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 />
 <field name="polygonOffset"
 	type="SFVec2f"
@@ -324,7 +324,7 @@
 </ConcreteNode>
 <ConcreteNode name="DispersionMaterialExtension">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/dispersionmaterialextension"
-		appinfo="DispersionMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.">
+		appinfo="DispersionMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node.">
 	<componentInfo name="X_ITE" level="1"/>
 	<Inheritance baseType="X3DMaterialExtensionNode"/>
 <field name="metadata"
@@ -332,7 +332,7 @@
 	accessType="inputOutput"
 	default="NULL"
 	inheritedFrom="X3DMetadataObject"
-	description="Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node."
+	description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 />
 <field name="dispersion"
 	type="SFFloat"
@@ -346,7 +346,7 @@
 </ConcreteNode>
 <ConcreteNode name="EmissiveStrengthMaterialExtension">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/emissivestrengthmaterialextension"
-		appinfo="EmissiveStrengthMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.">
+		appinfo="EmissiveStrengthMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node.">
 	<componentInfo name="X_ITE" level="1"/>
 	<Inheritance baseType="X3DMaterialExtensionNode"/>
 <field name="metadata"
@@ -354,7 +354,7 @@
 	accessType="inputOutput"
 	default="NULL"
 	inheritedFrom="X3DMetadataObject"
-	description="Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node."
+	description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 />
 <field name="emissiveStrength"
 	type="SFFloat"
@@ -368,7 +368,7 @@
 </ConcreteNode>
 <ConcreteNode name="IORMaterialExtension">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/iormaterialextension"
-		appinfo="IORMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.">
+		appinfo="IORMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node.">
 	<componentInfo name="X_ITE" level="1"/>
 	<Inheritance baseType="X3DMaterialExtensionNode"/>
 <field name="metadata"
@@ -376,7 +376,7 @@
 	accessType="inputOutput"
 	default="NULL"
 	inheritedFrom="X3DMetadataObject"
-	description="Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node."
+	description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 />
 <field name="indexOfRefraction"
 	type="SFFloat"
@@ -398,7 +398,7 @@
 	accessType="inputOutput"
 	default="NULL"
 	inheritedFrom="X3DMetadataObject"
-	description="Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node."
+	description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 />
 <field name="translations"
 	type="MFVec3f"
@@ -476,7 +476,7 @@
 </ConcreteNode>
 <ConcreteNode name="IridescenceMaterialExtension">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/iridescencematerialextension"
-		appinfo="IridescenceMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.">
+		appinfo="IridescenceMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node.">
 	<componentInfo name="X_ITE" level="1"/>
 	<Inheritance baseType="X3DMaterialExtensionNode"/>
 <field name="metadata"
@@ -484,7 +484,7 @@
 	accessType="inputOutput"
 	default="NULL"
 	inheritedFrom="X3DMetadataObject"
-	description="Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node."
+	description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 />
 <field name="iridescence"
 	type="SFFloat"
@@ -545,7 +545,7 @@
 </ConcreteNode>
 <ConcreteNode name="SheenMaterialExtension">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/sheenmaterialextension"
-		appinfo="SheenMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.">
+		appinfo="SheenMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node.">
 	<componentInfo name="X_ITE" level="1"/>
 	<Inheritance baseType="X3DMaterialExtensionNode"/>
 <field name="metadata"
@@ -553,7 +553,7 @@
 	accessType="inputOutput"
 	default="NULL"
 	inheritedFrom="X3DMetadataObject"
-	description="Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node."
+	description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 />
 <field name="sheenColor"
 	type="SFColor"
@@ -609,7 +609,7 @@
 	accessType="inputOutput"
 	default="NULL"
 	inheritedFrom="X3DMetadataObject"
-	description="Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node."
+	description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 />
 <field name="diffuseColor"
 	type="SFColor"
@@ -742,7 +742,7 @@
 </ConcreteNode>
 <ConcreteNode name="SpecularMaterialExtension">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/specularmaterialextension"
-		appinfo="SpecularMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.">
+		appinfo="SpecularMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node.">
 	<componentInfo name="X_ITE" level="1"/>
 	<Inheritance baseType="X3DMaterialExtensionNode"/>
 <field name="metadata"
@@ -750,7 +750,7 @@
 	accessType="inputOutput"
 	default="NULL"
 	inheritedFrom="X3DMetadataObject"
-	description="Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node."
+	description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 />
 <field name="specular"
 	type="SFFloat"
@@ -798,7 +798,7 @@
 </ConcreteNode>
 <ConcreteNode name="TransmissionMaterialExtension">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/transmissionmaterialextension"
-		appinfo="TransmissionMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.">
+		appinfo="TransmissionMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node.">
 	<componentInfo name="X_ITE" level="1"/>
 	<Inheritance baseType="X3DMaterialExtensionNode"/>
 <field name="metadata"
@@ -806,7 +806,7 @@
 	accessType="inputOutput"
 	default="NULL"
 	inheritedFrom="X3DMetadataObject"
-	description="Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node."
+	description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 />
 <field name="transmission"
 	type="SFFloat"
@@ -833,7 +833,7 @@
 </ConcreteNode>
 <ConcreteNode name="UnlitMaterialExtension">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/unlitmaterialextension"
-		appinfo="UnlitMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.">
+		appinfo="UnlitMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node.">
 	<componentInfo name="X_ITE" level="1"/>
 	<Inheritance baseType="X3DMaterialExtensionNode"/>
 <field name="metadata"
@@ -841,14 +841,14 @@
 	accessType="inputOutput"
 	default="NULL"
 	inheritedFrom="X3DMetadataObject"
-	description="Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node."
+	description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 />
 <containerField default="extensions" type="xs:NMTOKEN"/>
 </InterfaceDefinition>
 </ConcreteNode>
 <ConcreteNode name="VolumeMaterialExtension">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/volumematerialextension"
-		appinfo="VolumeMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.">
+		appinfo="VolumeMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node.">
 	<componentInfo name="X_ITE" level="1"/>
 	<Inheritance baseType="X3DMaterialExtensionNode"/>
 <field name="metadata"
@@ -856,7 +856,7 @@
 	accessType="inputOutput"
 	default="NULL"
 	inheritedFrom="X3DMetadataObject"
-	description="Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node."
+	description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
 />
 <field name="thickness"
 	type="SFFloat"
