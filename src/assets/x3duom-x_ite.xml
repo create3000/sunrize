@@ -10,7 +10,7 @@
 
 								<ConcreteNode name="AnisotropyMaterialExtension">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/anisotropymaterialextension"
-		appinfo="OverviewAnisotropyMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.The AnisotropyMaterialExtension node belongs to the **X_ITE** component and requires at least level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.  **Info:** Please note that the functionality of this node is still experimental.">
+		appinfo="OverviewAnisotropyMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.">
 	<componentInfo name="X_ITE" level="1"/>
 	<Inheritance baseType="X3DMaterialExtensionNode"/>
 <field name="metadata"
@@ -52,7 +52,7 @@
 </ConcreteNode>
 <ConcreteNode name="BlendMode">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/blendmode"
-		appinfo="OverviewBlendMode controls how pixels of an objects are drawn. Pixels can be drawn using a function that blends the incoming (source) RGBA values with the RGBA values that are already in the frame buffer (the destination values). BlendMode is an X3DAppearanceChildNode node that handles blend operations.The BlendMode node belongs to the **X_ITE** component and its default container field is *blendMode.* It is available in X_ITE.  **Info:** Please note that the functionality of this node is still experimental.">
+		appinfo="OverviewBlendMode controls how pixels of an objects are drawn. Pixels can be drawn using a function that blends the incoming (source) RGBA values with the RGBA values that are already in the frame buffer (the destination values). BlendMode is an X3DAppearanceChildNode node that handles blend operations.">
 	<componentInfo name="X_ITE" level="1"/>
 	<Inheritance baseType="X3DAppearanceChildNode"/>
 <field name="metadata"
@@ -68,50 +68,138 @@
 	default="0 0 0 0"
 	minInclusive="0"
 	maxInclusive="1"
-	description="Input/Output field *blendColor*."
+	description="The *blendColor* may be used to calculate the source and destination blending factors."
 />
 <field name="sourceColorFactor"
 	type="SFString"
 	accessType="inputOutput"
 	default="SRC_ALPHA"
-	description="Input/Output field *sourceColorFactor*."
-/>
+	description="Specifies how the red, green, and blue source blending factors are computed.Source and destination parameters must be one of the following symbolic constants:
+- ZERO
+- ONE
+- SRC_COLOR
+- ONE_MINUS_SRC_COLOR
+- DST_COLOR
+- ONE_MINUS_DST_COLOR
+- SRC_ALPHA
+- ONE_MINUS_SRC_ALPHA
+- DST_ALPHA
+- ONE_MINUS_DST_ALPHA
+- CONSTANT_COLOR
+- ONE_MINUS_CONSTANT_COLOR
+- CONSTANT_ALPHA
+- ONE_MINUS_CONSTANT_ALPHA"
+>
+<enumeration value="ZERO"/>
+<enumeration value="ONE"/>
+<enumeration value="SRC_COLOR"/>
+<enumeration value="ONE_MINUS_SRC_COLOR"/>
+<enumeration value="DST_COLOR"/>
+<enumeration value="ONE_MINUS_DST_COLOR"/>
+<enumeration value="SRC_ALPHA"/>
+<enumeration value="ONE_MINUS_SRC_ALPHA"/>
+<enumeration value="DST_ALPHA"/>
+<enumeration value="ONE_MINUS_DST_ALPHA"/>
+<enumeration value="CONSTANT_COLOR"/>
+<enumeration value="ONE_MINUS_CONSTANT_COLOR"/>
+<enumeration value="CONSTANT_ALPHA"/>
+<enumeration value="ONE_MINUS_CONSTANT_ALPHA"/>
+</field>
 <field name="sourceAlphaFactor"
 	type="SFString"
 	accessType="inputOutput"
 	default="ONE"
-	description="Input/Output field *sourceAlphaFactor*."
-/>
+	description="Specifies how the alpha source blending factors are computed."
+>
+<enumeration value="ZERO"/>
+<enumeration value="ONE"/>
+<enumeration value="SRC_COLOR"/>
+<enumeration value="ONE_MINUS_SRC_COLOR"/>
+<enumeration value="DST_COLOR"/>
+<enumeration value="ONE_MINUS_DST_COLOR"/>
+<enumeration value="SRC_ALPHA"/>
+<enumeration value="ONE_MINUS_SRC_ALPHA"/>
+<enumeration value="DST_ALPHA"/>
+<enumeration value="ONE_MINUS_DST_ALPHA"/>
+<enumeration value="CONSTANT_COLOR"/>
+<enumeration value="ONE_MINUS_CONSTANT_COLOR"/>
+<enumeration value="CONSTANT_ALPHA"/>
+<enumeration value="ONE_MINUS_CONSTANT_ALPHA"/>
+</field>
 <field name="destinationColorFactor"
 	type="SFString"
 	accessType="inputOutput"
 	default="ONE_MINUS_SRC_ALPHA"
-	description="Input/Output field *destinationColorFactor*."
-/>
+	description="Specifies how the red, green, and blue destination blending factors are computed."
+>
+<enumeration value="ZERO"/>
+<enumeration value="ONE"/>
+<enumeration value="SRC_COLOR"/>
+<enumeration value="ONE_MINUS_SRC_COLOR"/>
+<enumeration value="DST_COLOR"/>
+<enumeration value="ONE_MINUS_DST_COLOR"/>
+<enumeration value="SRC_ALPHA"/>
+<enumeration value="ONE_MINUS_SRC_ALPHA"/>
+<enumeration value="DST_ALPHA"/>
+<enumeration value="ONE_MINUS_DST_ALPHA"/>
+<enumeration value="CONSTANT_COLOR"/>
+<enumeration value="ONE_MINUS_CONSTANT_COLOR"/>
+<enumeration value="CONSTANT_ALPHA"/>
+<enumeration value="ONE_MINUS_CONSTANT_ALPHA"/>
+</field>
 <field name="destinationAlphaFactor"
 	type="SFString"
 	accessType="inputOutput"
 	default="ONE_MINUS_SRC_ALPHA"
-	description="Input/Output field *destinationAlphaFactor*."
-/>
+	description="Specifies how the alpha destination blending factors are computed."
+>
+<enumeration value="ZERO"/>
+<enumeration value="ONE"/>
+<enumeration value="SRC_COLOR"/>
+<enumeration value="ONE_MINUS_SRC_COLOR"/>
+<enumeration value="DST_COLOR"/>
+<enumeration value="ONE_MINUS_DST_COLOR"/>
+<enumeration value="SRC_ALPHA"/>
+<enumeration value="ONE_MINUS_SRC_ALPHA"/>
+<enumeration value="DST_ALPHA"/>
+<enumeration value="ONE_MINUS_DST_ALPHA"/>
+<enumeration value="CONSTANT_COLOR"/>
+<enumeration value="ONE_MINUS_CONSTANT_COLOR"/>
+<enumeration value="CONSTANT_ALPHA"/>
+<enumeration value="ONE_MINUS_CONSTANT_ALPHA"/>
+</field>
 <field name="colorEquation"
 	type="SFString"
 	accessType="inputOutput"
 	default="FUNC_ADD"
-	description="Input/Output field *colorEquation*."
-/>
+	description="Specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be:
+- FUNC_ADD
+- FUNC_SUBTRACT
+- FUNC_REVERSE_SUBTRACT"
+>
+<enumeration value="FUNC_ADD"/>
+<enumeration value="FUNC_SUBTRACT"/>
+<enumeration value="FUNC_REVERSE_SUBTRACT"/>
+</field>
 <field name="alphaEquation"
 	type="SFString"
 	accessType="inputOutput"
 	default="FUNC_ADD"
-	description="Input/Output field *alphaEquation*."
-/>
-<containerField default="extensions" type="xs:NMTOKEN"/>
+	description="Specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be:
+- FUNC_ADD
+- FUNC_SUBTRACT
+- FUNC_REVERSE_SUBTRACT"
+>
+<enumeration value="FUNC_ADD"/>
+<enumeration value="FUNC_SUBTRACT"/>
+<enumeration value="FUNC_REVERSE_SUBTRACT"/>
+</field>
+<containerField default="blendMode" type="xs:NMTOKEN"/>
 </InterfaceDefinition>
 </ConcreteNode>
 <ConcreteNode name="ClearcoatMaterialExtension">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/clearcoatmaterialextension"
-		appinfo="OverviewClearcoatMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.The ClearcoatMaterialExtension node belongs to the **X_ITE** component and requires at least level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.  **Info:** Please note that the functionality of this node is still experimental.">
+		appinfo="OverviewClearcoatMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.">
 	<componentInfo name="X_ITE" level="1"/>
 	<Inheritance baseType="X3DMaterialExtensionNode"/>
 <field name="metadata"
@@ -179,7 +267,7 @@
 </ConcreteNode>
 <ConcreteNode name="DepthMode">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/depthmode"
-		appinfo="OverviewDepthMode contains parameters that are specific for depth control, like the value used for depth buffer comparisons.The DepthMode node belongs to the **X_ITE** component and its default container field is *depthMode.* It is available in X_ITE.  **Info:** Please note that the functionality of this node is still experimental.">
+		appinfo="OverviewDepthMode contains parameters that are specific for depth control, like the value used for depth buffer comparisons.">
 	<componentInfo name="X_ITE" level="1"/>
 	<Inheritance baseType="X3DAppearanceChildNode"/>
 <field name="metadata"
@@ -194,7 +282,8 @@
 	accessType="inputOutput"
 	default="0 0"
 	minExclusive="-∞"
-	description="Input/Output field *polygonOffset*."
+	maxExclusive="∞"
+	description="Specifies the scale factors and units to calculate depth values.The offset is added before the depth test is performed and before the value is written into the depth buffer.The first value is *factor*, a GLfloat which sets the scale factor for the variable depth offset for each polygon. The default value is 0.The second value is *units*, a GLfloat which sets the multiplier by which an implementation-specific value is multiplied with to create a constant depth offset. The default value is 0."
 />
 <field name="depthRange"
 	type="SFVec2f"
@@ -202,39 +291,40 @@
 	default="0 1"
 	minInclusive="0"
 	maxInclusive="1"
-	description="Input/Output field *depthRange*."
+	description="Specifies the depth range mapping from normalized device coordinates to window or viewport coordinates.The first value is *zNear*, a GLclampf specifying the mapping of the near clipping plane to window or viewport coordinates. Clamped to the range 0 to 1 and must be less than or equal to zFar. The default value is 0.The second value is *zFar*, a GLclampf specifying the mapping of the far clipping plane to window or viewport coordinates. Clamped to the range 0 to 1. The default value is 1."
 />
 <field name="depthTest"
 	type="SFBool"
 	accessType="inputOutput"
 	default="TRUE"
-	description="Input/Output field *depthTest*."
+	description="Activates depth comparisons and updates to the depth buffer."
 />
 <field name="depthFunction"
 	type="SFString"
 	accessType="inputOutput"
-	default="LESS_EQUAL">
-		<enumeration value="&#34;NEVER&#34;"/>
-		<enumeration value="&#34;LESS&#34;"/>
-		<enumeration value="&#34;EQUAL&#34;"/>
-		<enumeration value="&#34;LESS_EQUAL&#34;"/>
-		<enumeration value="&#34;GREATER&#34;"/>
-		<enumeration value="&#34;NOT_EQUAL&#34;"/>
-		<enumeration value="&#34;GREATER_EQUAL&#34;"/>
-		<enumeration value="&#34;ALWAYS&#34;"/>
+	default="LESS_EQUAL"
+	description="Specifies a function that compares incoming pixel depth to the current depth buffer value.Must be one of the following symbolic constants:* NEVER* LESS* EQUAL* LESS_EQUAL* GREATER* NOT_EQUAL* GREATER_EQUAL* ALWAYS">
+		<enumeration value="NEVER"/>
+		<enumeration value="LESS"/>
+		<enumeration value="EQUAL"/>
+		<enumeration value="LESS_EQUAL"/>
+		<enumeration value="GREATER"/>
+		<enumeration value="NOT_EQUAL"/>
+		<enumeration value="GREATER_EQUAL"/>
+		<enumeration value="ALWAYS"/>
 </field>
 <field name="depthMask"
 	type="SFBool"
 	accessType="inputOutput"
 	default="TRUE"
-	description="Input/Output field *depthMask*."
+	description="Sets whether writing into the depth buffer is enabled or disabled."
 />
-<containerField default="extensions" type="xs:NMTOKEN"/>
+<containerField default="depthMode" type="xs:NMTOKEN"/>
 </InterfaceDefinition>
 </ConcreteNode>
 <ConcreteNode name="DispersionMaterialExtension">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/dispersionmaterialextension"
-		appinfo="OverviewDispersionMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.The DispersionMaterialExtension node belongs to the **X_ITE** component and requires at least level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.  **Info:** Please note that the functionality of this node is still experimental.">
+		appinfo="OverviewDispersionMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.">
 	<componentInfo name="X_ITE" level="1"/>
 	<Inheritance baseType="X3DMaterialExtensionNode"/>
 <field name="metadata"
@@ -256,7 +346,7 @@
 </ConcreteNode>
 <ConcreteNode name="EmissiveStrengthMaterialExtension">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/emissivestrengthmaterialextension"
-		appinfo="OverviewEmissiveStrengthMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.The EmissiveStrengthMaterialExtension node belongs to the **X_ITE** component and requires at least level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.  **Info:** Please note that the functionality of this node is still experimental.">
+		appinfo="OverviewEmissiveStrengthMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.">
 	<componentInfo name="X_ITE" level="1"/>
 	<Inheritance baseType="X3DMaterialExtensionNode"/>
 <field name="metadata"
@@ -278,7 +368,7 @@
 </ConcreteNode>
 <ConcreteNode name="IORMaterialExtension">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/iormaterialextension"
-		appinfo="OverviewIORMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.The IORMaterialExtension node belongs to the **X_ITE** component and requires at least level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.  **Info:** Please note that the functionality of this node is still experimental.">
+		appinfo="OverviewIORMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.">
 	<componentInfo name="X_ITE" level="1"/>
 	<Inheritance baseType="X3DMaterialExtensionNode"/>
 <field name="metadata"
@@ -300,7 +390,7 @@
 </ConcreteNode>
 <ConcreteNode name="InstancedShape">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/instancedshape"
-		appinfo="OverviewInstancedShape can appear under any grouping node. InstancedShape can contain an Appearance node and a geometry node (for example one of the primitives Box Cone Cylinder Sphere Text, one of ElevationGrid Extrusion IndexedFaceSet IndexedLineSet LineSet PointSet, or one of the other geometry nodes) and this geometry node is instantiated as often as transformations are provided.The InstancedShape node belongs to the **X_ITE** component and its default container field is *children.* It is available in X_ITE.  **Info:** Please note that the functionality of this node is still experimental.">
+		appinfo="OverviewInstancedShape can appear under any grouping node. InstancedShape can contain an Appearance node and a geometry node (for example one of the primitives Box Cone Cylinder Sphere Text, one of ElevationGrid Extrusion IndexedFaceSet IndexedLineSet LineSet PointSet, or one of the other geometry nodes) and this geometry node is instantiated as often as transformations are provided.">
 	<componentInfo name="X_ITE" level="1"/>
 	<Inheritance baseType="X3DShapeNode"/>
 <field name="metadata"
@@ -386,7 +476,7 @@
 </ConcreteNode>
 <ConcreteNode name="IridescenceMaterialExtension">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/iridescencematerialextension"
-		appinfo="OverviewIridescenceMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.The IridescenceMaterialExtension node belongs to the **X_ITE** component and requires at least level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.  **Info:** Please note that the functionality of this node is still experimental.">
+		appinfo="OverviewIridescenceMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.">
 	<componentInfo name="X_ITE" level="1"/>
 	<Inheritance baseType="X3DMaterialExtensionNode"/>
 <field name="metadata"
@@ -455,7 +545,7 @@
 </ConcreteNode>
 <ConcreteNode name="SheenMaterialExtension">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/sheenmaterialextension"
-		appinfo="OverviewSheenMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.The SheenMaterialExtension node belongs to the **X_ITE** component and requires at least level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.  **Info:** Please note that the functionality of this node is still experimental.">
+		appinfo="OverviewSheenMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.">
 	<componentInfo name="X_ITE" level="1"/>
 	<Inheritance baseType="X3DMaterialExtensionNode"/>
 <field name="metadata"
@@ -511,7 +601,7 @@
 </ConcreteNode>
 <ConcreteNode name="SpecularGlossinessMaterial">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/specularglossinessmaterial"
-		appinfo="OverviewSpecularGlossinessMaterial specifies surface rendering properties for associated geometry nodes. Material attributes are used by the X3D lighting equations during rendering.The SpecularGlossinessMaterial node belongs to the **X_ITE** component and requires at least level **1,** its default container field is *material.* It is available from X3D version 4.0 or higher.  **Info:** Please note that the functionality of this node is still experimental.">
+		appinfo="OverviewSpecularGlossinessMaterial specifies surface rendering properties for associated geometry nodes. Material attributes are used by the X3D lighting equations during rendering.">
 	<componentInfo name="X_ITE" level="1"/>
 	<Inheritance baseType="X3DOneSidedMaterialNode"/>
 <field name="metadata"
@@ -652,7 +742,7 @@
 </ConcreteNode>
 <ConcreteNode name="SpecularMaterialExtension">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/specularmaterialextension"
-		appinfo="OverviewSpecularMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.The SpecularMaterialExtension node belongs to the **X_ITE** component and requires at least level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.  **Info:** Please note that the functionality of this node is still experimental.">
+		appinfo="OverviewSpecularMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.">
 	<componentInfo name="X_ITE" level="1"/>
 	<Inheritance baseType="X3DMaterialExtensionNode"/>
 <field name="metadata"
@@ -708,7 +798,7 @@
 </ConcreteNode>
 <ConcreteNode name="TransmissionMaterialExtension">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/transmissionmaterialextension"
-		appinfo="OverviewTransmissionMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.The TransmissionMaterialExtension node belongs to the **X_ITE** component and requires at least level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.  **Info:** Please note that the functionality of this node is still experimental.">
+		appinfo="OverviewTransmissionMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.">
 	<componentInfo name="X_ITE" level="1"/>
 	<Inheritance baseType="X3DMaterialExtensionNode"/>
 <field name="metadata"
@@ -743,7 +833,7 @@
 </ConcreteNode>
 <ConcreteNode name="UnlitMaterialExtension">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/unlitmaterialextension"
-		appinfo="OverviewUnlitMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.The UnlitMaterialExtension node belongs to the **X_ITE** component and requires at least level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.  **Info:** Please note that the functionality of this node is still experimental.">
+		appinfo="OverviewUnlitMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.">
 	<componentInfo name="X_ITE" level="1"/>
 	<Inheritance baseType="X3DMaterialExtensionNode"/>
 <field name="metadata"
@@ -758,7 +848,7 @@
 </ConcreteNode>
 <ConcreteNode name="VolumeMaterialExtension">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/volumematerialextension"
-		appinfo="OverviewVolumeMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.The VolumeMaterialExtension node belongs to the **X_ITE** component and requires at least level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.  **Info:** Please note that the functionality of this node is still experimental.">
+		appinfo="OverviewVolumeMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.">
 	<componentInfo name="X_ITE" level="1"/>
 	<Inheritance baseType="X3DMaterialExtensionNode"/>
 <field name="metadata"
