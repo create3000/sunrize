@@ -594,6 +594,29 @@ module .exports = class Application
                      ],
                   },
                   {
+                     label: _("Color Space"),
+                     submenu: [
+                        {
+                           label: _("sRGB"),
+                           type: "radio",
+                           checked: this .menuOptions .colorSpace === "SRGB",
+                           click: () => this .mainWindow .webContents .send ("color-space", "SRGB"),
+                        },
+                        {
+                           label: _("Linear When Physical Material"),
+                           type: "radio",
+                           checked: this .menuOptions .colorSpace === "LINEAR_WHEN_PHYSICAL_MATERIAL",
+                           click: () => this .mainWindow .webContents .send ("color-space", "LINEAR_WHEN_PHYSICAL_MATERIAL"),
+                        },
+                        {
+                           label: _("Linear"),
+                           type: "radio",
+                           checked: this .menuOptions .colorSpace === "LINEAR",
+                           click: () => this .mainWindow .webContents .send ("color-space", "LINEAR"),
+                        }
+                     ],
+                  },
+                  {
                      label: _("Display Rubberband"),
                      type: "checkbox",
                      checked: this .menuOptions .rubberband,

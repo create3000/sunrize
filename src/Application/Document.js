@@ -93,6 +93,7 @@ module .exports = class Document extends Interface
 
       electron .ipcRenderer .on ("primitive-quality",  (event, value) => this .setPrimitiveQuality (value));
       electron .ipcRenderer .on ("texture-quality",    (event, value) => this .setTextureQuality (value));
+      electron .ipcRenderer .on ("color-space",        (event, value) => this .setColorSpace (value));
       electron .ipcRenderer .on ("display-rubberband", (event, value) => this .setDisplayRubberband (value));
       electron .ipcRenderer .on ("display-timings",    (event, value) => this .setDisplayTimings (value));
       electron .ipcRenderer .on ("show-library",       (event)        => this .showLibrary ());
@@ -122,6 +123,7 @@ module .exports = class Document extends Interface
 
       this .browser .getBrowserOptions () .getField ("PrimitiveQuality") .addInterest ("set_primitiveQuality", this);
       this .browser .getBrowserOptions () .getField ("TextureQuality")   .addInterest ("set_textureQuality",   this);
+      this .browser .getBrowserOptions () .getField ("ColorSpace")       .addInterest ("set_colorSpace",       this);
       this .browser .getBrowserOptions () .getField ("Rubberband")       .addInterest ("set_rubberband",       this);
       this .browser .getBrowserOptions () .getField ("Timings")          .addInterest ("set_timings",          this);
 
@@ -152,6 +154,7 @@ module .exports = class Document extends Interface
          inferProfileAndComponents: true,
          primitiveQuality: "MEDIUM",
          textureQuality: "MEDIUM",
+         colorSpace: "LINEAR_WHEN_PHYSICAL_MATERIAL",
          rubberband: true,
          timings: false,
       });
@@ -162,6 +165,7 @@ module .exports = class Document extends Interface
 
       this .setPrimitiveQuality  (this .config .file .primitiveQuality);
       this .setTextureQuality    (this .config .file .textureQuality);
+      this .setColorSpace        (this .config .file .colorSpace);
       this .setDisplayRubberband (this .config .file .rubberband);
       this .setDisplayTimings    (this .config .file .timings);
 
@@ -609,6 +613,23 @@ Viewpoint {
 
    /**
     *
+    * @param {string} value
+    */
+   setColorSpace (value)
+   {
+      this .browser .setBrowserOption ("ColorSpace", value);
+      this .browser .setDescription (`Color Space: ${value}`);
+   }
+
+   set_colorSpace ()
+   {
+      this .config .file .colorSpace = this .browser .getBrowserOption ("ColorSpace");
+
+      this .updateMenu ();
+   }
+
+   /**
+    *
     * @param {boolean} value
     */
    setDisplayRubberband (value)
@@ -646,6 +667,7 @@ Viewpoint {
       {
          primitiveQuality: this .config .file .primitiveQuality,
          textureQuality: this .config .file .textureQuality,
+         colorSpace: this .config .file .colorSpace,
          rubberband: this .config .file .rubberband,
          timings: this .config .file .timings,
       });
