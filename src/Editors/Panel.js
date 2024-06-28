@@ -490,6 +490,12 @@ module .exports = new class Panel extends Interface
          }
          case X3D .X3DConstants .SFColor:
          case X3D .X3DConstants .SFColorRGBA:
+         {
+            if (this .browser .getBrowserOption ("ColorSpace") === "LINEAR")
+               field = this .linearTosRGB (field);
+
+            // Proceed with next case:
+         }
          case X3D .X3DConstants .SFVec2d:
          case X3D .X3DConstants .SFVec2f:
          case X3D .X3DConstants .SFVec3d:
@@ -579,14 +585,14 @@ module .exports = new class Panel extends Interface
          }
          case X3D .X3DConstants .SFColor:
          {
-            value = new X3D .Color3 (value .r, value .g, value .b);
+            value = this .sRGBtoLinear (new X3D .Color3 (value .r, value .g, value .b));
 
             this .assign (executionContext, node, field, value);
             break;
          }
          case X3D .X3DConstants .SFColorRGBA:
          {
-            value = new X3D .Color4 (value .r, value .g, value .b, value .a);
+            value = this .sRGBtoLinear (new X3D .Color4 (value .r, value .g, value .b, value .a));
 
             this .assign (executionContext, node, field, value);
             break;
@@ -750,5 +756,43 @@ module .exports = new class Panel extends Interface
          title += `Current value: ${field .toString ({ scene: node .getExecutionContext () })}`;
 
       return title;
+   }
+
+   linearTosRGB (color)
+   {
+      if (this .browser .getBrowserOption ("ColorSpace") !== "LINEAR")
+         return color;
+
+      const args = [
+         Math .pow (color .r, 1 / 2.2),
+         Math .pow (color .g, 1 / 2.2),
+         Math .pow (color .b, 1 / 2.2),
+      ];
+
+      if (color .a !== undefined)
+         args .push (color .a);
+
+      const c = new (color .constructor) (... args);
+
+      c .setName (color .getName ());
+
+      return c;
+   }
+
+   sRGBtoLinear (color)
+   {
+      if (this .browser .getBrowserOption ("ColorSpace") !== "LINEAR")
+         return color;
+
+      const args = [
+         Math .pow (color .r, 2.2),
+         Math .pow (color .g, 2.2),
+         Math .pow (color .b, 2.2),
+      ];
+
+      if (color .a !== undefined)
+         args .push (color .a);
+
+      return new (color .constructor) (... args);
    }
 };
