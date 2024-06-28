@@ -617,6 +617,42 @@ module .exports = class Application
                      ],
                   },
                   {
+                     label: _("Tone Mapping"),
+                     submenu: [
+                        {
+                           label: _("None"),
+                           type: "radio",
+                           checked: this .menuOptions .toneMapping === "NONE",
+                           click: () => this .mainWindow .webContents .send ("tone-mapping", "NONE"),
+                        },
+                        {
+                           label: _("ACES Narkowicz"),
+                           type: "radio",
+                           checked: this .menuOptions .toneMapping === "ACES_NARKOWICZ",
+                           click: () => this .mainWindow .webContents .send ("tone-mapping", "ACES_NARKOWICZ"),
+                        },
+                        {
+                           label: _("ACES Hill"),
+                           type: "radio",
+                           checked: this .menuOptions .toneMapping === "ACES_HILL",
+                           click: () => this .mainWindow .webContents .send ("tone-mapping", "ACES_HILL"),
+                        },
+                        {
+                           label: _("ACES Hill Exposure Boost"),
+                           type: "radio",
+                           checked: this .menuOptions .toneMapping === "ACES_HILL_EXPOSURE_BOOST",
+                           click: () => this .mainWindow .webContents .send ("tone-mapping", "ACES_HILL_EXPOSURE_BOOST"),
+                        },
+                        {
+                           label: _("KHR PBR Neutral"),
+                           type: "radio",
+                           checked: this .menuOptions .toneMapping === "KHR_PBR_NEUTRAL",
+                           click: () => this .mainWindow .webContents .send ("tone-mapping", "KHR_PBR_NEUTRAL"),
+                        }
+                     ],
+                  },
+                  { type: "separator" },
+                  {
                      label: _("Display Rubberband"),
                      type: "checkbox",
                      checked: this .menuOptions .rubberband,

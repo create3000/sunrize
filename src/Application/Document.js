@@ -94,6 +94,7 @@ module .exports = class Document extends Interface
       electron .ipcRenderer .on ("primitive-quality",  (event, value) => this .setPrimitiveQuality (value));
       electron .ipcRenderer .on ("texture-quality",    (event, value) => this .setTextureQuality (value));
       electron .ipcRenderer .on ("color-space",        (event, value) => this .setColorSpace (value));
+      electron .ipcRenderer .on ("tone-mapping",       (event, value) => this .setToneMapping (value));
       electron .ipcRenderer .on ("display-rubberband", (event, value) => this .setDisplayRubberband (value));
       electron .ipcRenderer .on ("display-timings",    (event, value) => this .setDisplayTimings (value));
       electron .ipcRenderer .on ("show-library",       (event)        => this .showLibrary ());
@@ -124,6 +125,7 @@ module .exports = class Document extends Interface
       this .browser .getBrowserOptions () .getField ("PrimitiveQuality") .addInterest ("set_primitiveQuality", this);
       this .browser .getBrowserOptions () .getField ("TextureQuality")   .addInterest ("set_textureQuality",   this);
       this .browser .getBrowserOptions () .getField ("ColorSpace")       .addInterest ("set_colorSpace",       this);
+      this .browser .getBrowserOptions () .getField ("ToneMapping")      .addInterest ("set_toneMapping",      this);
       this .browser .getBrowserOptions () .getField ("Rubberband")       .addInterest ("set_rubberband",       this);
       this .browser .getBrowserOptions () .getField ("Timings")          .addInterest ("set_timings",          this);
 
@@ -155,6 +157,7 @@ module .exports = class Document extends Interface
          primitiveQuality: "MEDIUM",
          textureQuality: "MEDIUM",
          colorSpace: "LINEAR_WHEN_PHYSICAL_MATERIAL",
+         toneMapping: "NONE",
          rubberband: true,
          timings: false,
       });
@@ -166,6 +169,7 @@ module .exports = class Document extends Interface
       this .setPrimitiveQuality  (this .config .file .primitiveQuality);
       this .setTextureQuality    (this .config .file .textureQuality);
       this .setColorSpace        (this .config .file .colorSpace);
+      this .setToneMapping       (this .config .file .toneMapping);
       this .setDisplayRubberband (this .config .file .rubberband);
       this .setDisplayTimings    (this .config .file .timings);
 
@@ -630,6 +634,23 @@ Viewpoint {
 
    /**
     *
+    * @param {string} value
+    */
+   setToneMapping (value)
+   {
+      this .browser .setBrowserOption ("ToneMapping", value);
+      this .browser .setDescription (`Tone Mapping: ${value}`);
+   }
+
+   set_toneMapping ()
+   {
+      this .config .file .toneMapping = this .browser .getBrowserOption ("ToneMapping");
+
+      this .updateMenu ();
+   }
+
+   /**
+    *
     * @param {boolean} value
     */
    setDisplayRubberband (value)
@@ -668,6 +689,7 @@ Viewpoint {
          primitiveQuality: this .config .file .primitiveQuality,
          textureQuality: this .config .file .textureQuality,
          colorSpace: this .config .file .colorSpace,
+         toneMapping: this .config .file .toneMapping,
          rubberband: this .config .file .rubberband,
          timings: this .config .file .timings,
       });
