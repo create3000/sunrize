@@ -567,7 +567,7 @@ module .exports = class Application
                            type: "radio",
                            checked: this .menuOptions .primitiveQuality === "LOW",
                            click: () => this .mainWindow .webContents .send ("primitive-quality", "LOW"),
-                        }
+                        },
                      ],
                   },
                   {
@@ -590,17 +590,17 @@ module .exports = class Application
                            type: "radio",
                            checked: this .menuOptions .textureQuality === "LOW",
                            click: () => this .mainWindow .webContents .send ("texture-quality", "LOW"),
-                        }
+                        },
                      ],
                   },
                   {
                      label: _("Color Space"),
                      submenu: [
                         {
-                           label: _("sRGB"),
+                           label: _("Linear"),
                            type: "radio",
-                           checked: this .menuOptions .colorSpace === "SRGB",
-                           click: () => this .mainWindow .webContents .send ("color-space", "SRGB"),
+                           checked: this .menuOptions .colorSpace === "LINEAR",
+                           click: () => this .mainWindow .webContents .send ("color-space", "LINEAR"),
                         },
                         {
                            label: _("Linear When PhysicalMaterial"),
@@ -609,33 +609,21 @@ module .exports = class Application
                            click: () => this .mainWindow .webContents .send ("color-space", "LINEAR_WHEN_PHYSICAL_MATERIAL"),
                         },
                         {
-                           label: _("Linear"),
+                           label: _("sRGB"),
                            type: "radio",
-                           checked: this .menuOptions .colorSpace === "LINEAR",
-                           click: () => this .mainWindow .webContents .send ("color-space", "LINEAR"),
-                        }
+                           checked: this .menuOptions .colorSpace === "SRGB",
+                           click: () => this .mainWindow .webContents .send ("color-space", "SRGB"),
+                        },
                      ],
                   },
                   {
                      label: _("Tone Mapping"),
                      submenu: [
                         {
-                           label: _("None"),
+                           label: _("KHR PBR Neutral"),
                            type: "radio",
-                           checked: this .menuOptions .toneMapping === "NONE",
-                           click: () => this .mainWindow .webContents .send ("tone-mapping", "NONE"),
-                        },
-                        {
-                           label: _("ACES Narkowicz"),
-                           type: "radio",
-                           checked: this .menuOptions .toneMapping === "ACES_NARKOWICZ",
-                           click: () => this .mainWindow .webContents .send ("tone-mapping", "ACES_NARKOWICZ"),
-                        },
-                        {
-                           label: _("ACES Hill"),
-                           type: "radio",
-                           checked: this .menuOptions .toneMapping === "ACES_HILL",
-                           click: () => this .mainWindow .webContents .send ("tone-mapping", "ACES_HILL"),
+                           checked: this .menuOptions .toneMapping === "KHR_PBR_NEUTRAL",
+                           click: () => this .mainWindow .webContents .send ("tone-mapping", "KHR_PBR_NEUTRAL"),
                         },
                         {
                            label: _("ACES Hill Exposure Boost"),
@@ -644,11 +632,23 @@ module .exports = class Application
                            click: () => this .mainWindow .webContents .send ("tone-mapping", "ACES_HILL_EXPOSURE_BOOST"),
                         },
                         {
-                           label: _("KHR PBR Neutral"),
+                           label: _("ACES Hill"),
                            type: "radio",
-                           checked: this .menuOptions .toneMapping === "KHR_PBR_NEUTRAL",
-                           click: () => this .mainWindow .webContents .send ("tone-mapping", "KHR_PBR_NEUTRAL"),
-                        }
+                           checked: this .menuOptions .toneMapping === "ACES_HILL",
+                           click: () => this .mainWindow .webContents .send ("tone-mapping", "ACES_HILL"),
+                        },
+                        {
+                           label: _("ACES Narkowicz"),
+                           type: "radio",
+                           checked: this .menuOptions .toneMapping === "ACES_NARKOWICZ",
+                           click: () => this .mainWindow .webContents .send ("tone-mapping", "ACES_NARKOWICZ"),
+                        },
+                        {
+                           label: _("None"),
+                           type: "radio",
+                           checked: this .menuOptions .toneMapping === "NONE",
+                           click: () => this .mainWindow .webContents .send ("tone-mapping", "NONE"),
+                        },
                      ],
                   },
                   {
