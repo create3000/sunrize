@@ -52,6 +52,7 @@ module .exports = class OutlineView extends Interface
          .on ("dragend", this .onDragEnd .bind (this))
       .appendTo (this .treeView);
 
+      this .browser .getBrowserOptions () ._ColorSpace .addInterest ("configure", this);
       this .browser ._activeLayer .addInterest ("updateActiveLayer", this);
 
       electron .ipcRenderer .on ("deselect-all",            () => this .deselectAll ());
@@ -1721,15 +1722,28 @@ module .exports = class OutlineView extends Interface
          .css ("background-color", this .getColorFromField (field))
    }
 
-   getColorFromField (field)
+   getColorFromField (field, colorSpace = this .browser .getBrowserOption ("ColorSpace"))
    {
-      const
-         r = Math .floor (field .r * 255),
-         g = Math .floor (field .g * 255),
-         b = Math .floor (field .b * 255),
-         a = field .a ?? 1
+      if (colorSpace === "LINEAR")
+      {
+         const
+            r = Math .floor (field .r * 100),
+            g = Math .floor (field .g * 100),
+            b = Math .floor (field .b * 100),
+            a = field .a ?? 1;
 
-      return `rgba(${r},${g},${b},${a})`
+         return `color(srgb-linear ${r}% ${g}% ${b}% / ${a})`;
+      }
+      else
+      {
+         const
+            r = Math .floor (field .r * 255),
+            g = Math .floor (field .g * 255),
+            b = Math .floor (field .b * 255),
+            a = field .a ?? 1;
+
+         return `rgba(${r},${g},${b},${a})`;
+      }
    }
 
    getAccessTypeImage (field, active)
