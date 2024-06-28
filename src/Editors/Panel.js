@@ -30,6 +30,8 @@ module .exports = new class Panel extends Interface
 
       this .container .on ("mousedown", event => this .onmousedown (event));
 
+      this .browser .getBrowserOptions () ._ColorSpace .addFieldCallback ("Panel", () => this .setNode (this .node));
+
       this .setup ();
    }
 
