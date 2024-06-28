@@ -652,16 +652,16 @@ module .exports = class Application
                      ],
                   },
                   {
-                     label: _("Logarithmic Depth Buffer"),
-                     type: "checkbox",
-                     checked: this .menuOptions .logarithmicDepthBuffer,
-                     click: () => this .mainWindow .webContents .send ("logarithmic-depth-buffer", !this .menuOptions .logarithmicDepthBuffer),
-                  },
-                  {
                      label: _("Order Independent Transparency"),
                      type: "checkbox",
                      checked: this .menuOptions .orderIndependentTransparency,
                      click: () => this .mainWindow .webContents .send ("order-independent-transparency", !this .menuOptions .orderIndependentTransparency),
+                  },
+                  {
+                     label: _("Logarithmic Depth Buffer"),
+                     type: "checkbox",
+                     checked: this .menuOptions .logarithmicDepthBuffer,
+                     click: () => this .mainWindow .webContents .send ("logarithmic-depth-buffer", !this .menuOptions .logarithmicDepthBuffer),
                   },
                   { type: "separator" },
                   {

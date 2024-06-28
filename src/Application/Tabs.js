@@ -90,8 +90,8 @@ module .exports = new class Tabs
       this .forwardToActiveTab ("texture-quality");
       this .forwardToActiveTab ("color-space");
       this .forwardToActiveTab ("tone-mapping");
-      this .forwardToActiveTab ("logarithmic-depth-buffer");
       this .forwardToActiveTab ("order-independent-transparency");
+      this .forwardToActiveTab ("logarithmic-depth-buffer");
       this .forwardToActiveTab ("display-rubberband");
       this .forwardToActiveTab ("display-timings");
       this .forwardToActiveTab ("show-library");

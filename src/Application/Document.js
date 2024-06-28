@@ -95,8 +95,8 @@ module .exports = class Document extends Interface
       electron .ipcRenderer .on ("texture-quality",                (event, value) => this .setTextureQuality (value));
       electron .ipcRenderer .on ("color-space",                    (event, value) => this .setColorSpace (value));
       electron .ipcRenderer .on ("tone-mapping",                   (event, value) => this .setToneMapping (value));
-      electron .ipcRenderer .on ("logarithmic-depth-buffer",       (event, value) => this .setLogarithmicDepthBuffer (value));
       electron .ipcRenderer .on ("order-independent-transparency", (event, value) => this .setOrderIndependentTransparency (value));
+      electron .ipcRenderer .on ("logarithmic-depth-buffer",       (event, value) => this .setLogarithmicDepthBuffer (value));
       electron .ipcRenderer .on ("display-rubberband",             (event, value) => this .setDisplayRubberband (value));
       electron .ipcRenderer .on ("display-timings",                (event, value) => this .setDisplayTimings (value));
       electron .ipcRenderer .on ("show-library",                   (event)        => this .showLibrary ());
@@ -129,8 +129,8 @@ module .exports = class Document extends Interface
          "TextureQuality",
          "ColorSpace",
          "ToneMapping",
-         "LogarithmicDepthBuffer",
          "OrderIndependentTransparency",
+         "LogarithmicDepthBuffer",
          "Rubberband",
          "Timings",
       ];
@@ -167,8 +167,8 @@ module .exports = class Document extends Interface
          textureQuality: "MEDIUM",
          colorSpace: "LINEAR_WHEN_PHYSICAL_MATERIAL",
          toneMapping: "NONE",
-         logarithmicDepthBuffer: false,
          orderIndependentTransparency: false,
+         logarithmicDepthBuffer: false,
          rubberband: true,
          timings: false,
       });
@@ -181,8 +181,8 @@ module .exports = class Document extends Interface
       this .setTextureQuality               (this .config .file .textureQuality);
       this .setColorSpace                   (this .config .file .colorSpace);
       this .setToneMapping                  (this .config .file .toneMapping);
-      this .setLogarithmicDepthBuffer       (this .config .file .logarithmicDepthBuffer);
       this .setOrderIndependentTransparency (this .config .file .orderIndependentTransparency);
+      this .setLogarithmicDepthBuffer       (this .config .file .logarithmicDepthBuffer);
       this .setDisplayRubberband            (this .config .file .rubberband);
       this .setDisplayTimings               (this .config .file .timings);
 
@@ -666,23 +666,6 @@ Viewpoint {
     *
     * @param {boolean} value
     */
-   setLogarithmicDepthBuffer (value)
-   {
-      this .browser .setBrowserOption ("LogarithmicDepthBuffer", value);
-      this .browser .setDescription (`LogarithmicDepthBuffer: ${value ? "on" : "off"}`);
-   }
-
-   set_LogarithmicDepthBuffer ()
-   {
-      this .config .file .logarithmicDepthBuffer = this .browser .getBrowserOption ("LogarithmicDepthBuffer");
-
-      this .updateMenu ();
-   }
-
-   /**
-    *
-    * @param {boolean} value
-    */
    setOrderIndependentTransparency (value)
    {
       this .browser .setBrowserOption ("OrderIndependentTransparency", value);
@@ -692,6 +675,23 @@ Viewpoint {
    set_OrderIndependentTransparency ()
    {
       this .config .file .orderIndependentTransparency = this .browser .getBrowserOption ("OrderIndependentTransparency");
+
+      this .updateMenu ();
+   }
+
+   /**
+    *
+    * @param {boolean} value
+    */
+   setLogarithmicDepthBuffer (value)
+   {
+      this .browser .setBrowserOption ("LogarithmicDepthBuffer", value);
+      this .browser .setDescription (`LogarithmicDepthBuffer: ${value ? "on" : "off"}`);
+   }
+
+   set_LogarithmicDepthBuffer ()
+   {
+      this .config .file .logarithmicDepthBuffer = this .browser .getBrowserOption ("LogarithmicDepthBuffer");
 
       this .updateMenu ();
    }
@@ -737,8 +737,8 @@ Viewpoint {
          textureQuality: this .config .file .textureQuality,
          colorSpace: this .config .file .colorSpace,
          toneMapping: this .config .file .toneMapping,
-         logarithmicDepthBuffer: this .config .file .logarithmicDepthBuffer,
          orderIndependentTransparency: this .config .file .orderIndependentTransparency,
+         logarithmicDepthBuffer: this .config .file .logarithmicDepthBuffer,
          rubberband: this .config .file .rubberband,
          timings: this .config .file .timings,
       });
