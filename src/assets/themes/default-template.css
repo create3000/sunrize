@@ -1378,7 +1378,6 @@ body.dark .ui-widget .library-list .component {
 /* Tweakpane */
 
 .tp-dfwv {
-  z-index: 3000 !important;
   overflow: auto;
 }
 

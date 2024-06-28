@@ -22,11 +22,11 @@ module .exports = new class Panel extends Interface
       this .container .hide () .appendTo ($("#browser-frame"));
 
       this .container .css ({
-         "z-index": "95",
+         "z-index": "3000",
+         "overflow": "unset",
+         "width": "fit-content",
          "bottom": this .container .css ("top"),
          "top": "unset",
-         "width": "unset",
-         "overflow": "unset",
       });
 
       this .container .on ("mousedown", event => this .onmousedown (event));
