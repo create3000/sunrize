@@ -603,7 +603,7 @@ module .exports = class Application
                            click: () => this .mainWindow .webContents .send ("color-space", "SRGB"),
                         },
                         {
-                           label: _("Linear When Physical Material"),
+                           label: _("Linear When PhysicalMaterial"),
                            type: "radio",
                            checked: this .menuOptions .colorSpace === "LINEAR_WHEN_PHYSICAL_MATERIAL",
                            click: () => this .mainWindow .webContents .send ("color-space", "LINEAR_WHEN_PHYSICAL_MATERIAL"),
