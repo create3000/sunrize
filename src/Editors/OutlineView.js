@@ -1421,7 +1421,7 @@ module .exports = class OutlineView extends Interface
             $("<div></div>")
                .addClass (["color-button", "field-button"])
                .attr ("title", _("Open color picker."))
-               .css ("background-color", this .getColorFromField (field))
+               .css ("background-color", this .getColorFromField (node, field))
                .appendTo (child);
 
             field .addFieldCallback (this .#fieldButtonSymbol, this .updateColor .bind (this, parent, node, field));
@@ -1719,12 +1719,12 @@ module .exports = class OutlineView extends Interface
    updateColor (parent, node, field)
    {
       parent .find (`.field[field-id=${field .getId ()}] > .item .color-button`)
-         .css ("background-color", this .getColorFromField (field))
+         .css ("background-color", this .getColorFromField (node, field))
    }
 
-   getColorFromField (field, colorSpace = this .browser .getBrowserOption ("ColorSpace"))
+   getColorFromField (node, field, colorSpace = this .browser .getBrowserOption ("ColorSpace"))
    {
-      if (colorSpace === "LINEAR")
+      if (colorSpace === "LINEAR" || (colorSpace === "LINEAR_WHEN_PHYSICAL_MATERIAL" && node .getType () .includes (X3D .X3DConstants .PhysicalMaterial)))
       {
          const
             r = Math .floor (field .r * 100),
