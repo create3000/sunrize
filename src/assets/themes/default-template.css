@@ -6,8 +6,14 @@
 @import url(../../node_modules/spectrum-colorpicker2/dist/spectrum.css);
 @import url(system-colors.css);
 
+html {
+  overflow: hidden;
+  height: 100%;
+}
+
 body {
   overflow: hidden;
+  height: 100%;
   margin: 0;
   background-color: var(--background-color);
   color: var(--text-color);
@@ -165,6 +171,7 @@ tr.disabled ~ tr > td > div {
 /* Vertical splitter */
 
 .vertical-splitter {
+  overflow: hidden;
   position: absolute;
   box-sizing: border-box;
   width: 100%;
