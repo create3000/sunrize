@@ -1372,7 +1372,6 @@ body.dark .ui-widget .library-list .component {
 
 .tp-dfwv {
   z-index: 3000 !important;
-  max-height: calc(100vh - 16px);
   overflow: auto;
 }
 

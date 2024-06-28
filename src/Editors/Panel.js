@@ -26,6 +26,7 @@ module .exports = new class Panel extends Interface
          "bottom": this .container .css ("top"),
          "top": "unset",
          "width": "unset",
+         "overflow": "unset",
       });
 
       this .container .on ("mousedown", event => this .onmousedown (event));
@@ -117,6 +118,11 @@ module .exports = new class Panel extends Interface
          return;
       }
 
+      this .container .css ({
+         "overflow": "unset",
+         "max-height": "unset",
+      });
+
       // Create folders.
 
       const concreteNode = X3DUOM .find (`ConcreteNode[name=${node .getTypeName ()}]`);
@@ -149,10 +155,10 @@ module .exports = new class Panel extends Interface
       // Move panel in view if top, left, bottom or right is outside of window.
 
       const
+         body   = $("body"),
          offset = this .container .parent () .offset (),
          width  = this .container .width (),
-         height = this .container .height (),
-         body   = $("body");
+         height = Math .min (this .container .height (), body .height () - 16);
 
       let
          right  = parseFloat (this .container .css ("right"))  || 0,
@@ -178,6 +184,14 @@ module .exports = new class Panel extends Interface
          "right":  `${right}px`,
          "bottom": `${bottom}px`,
       });
+
+      if (this .container .height () > body .height () - 16)
+      {
+         this .container .css ({
+            "overflow": "auto",
+            "max-height": "calc(100vh - 16px)",
+         });
+      }
    }
 
    removeNode (node)
