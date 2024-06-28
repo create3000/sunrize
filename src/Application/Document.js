@@ -91,13 +91,15 @@ module .exports = class Document extends Interface
 
       // View Menu
 
-      electron .ipcRenderer .on ("primitive-quality",  (event, value) => this .setPrimitiveQuality (value));
-      electron .ipcRenderer .on ("texture-quality",    (event, value) => this .setTextureQuality (value));
-      electron .ipcRenderer .on ("color-space",        (event, value) => this .setColorSpace (value));
-      electron .ipcRenderer .on ("tone-mapping",       (event, value) => this .setToneMapping (value));
-      electron .ipcRenderer .on ("display-rubberband", (event, value) => this .setDisplayRubberband (value));
-      electron .ipcRenderer .on ("display-timings",    (event, value) => this .setDisplayTimings (value));
-      electron .ipcRenderer .on ("show-library",       (event)        => this .showLibrary ());
+      electron .ipcRenderer .on ("primitive-quality",              (event, value) => this .setPrimitiveQuality (value));
+      electron .ipcRenderer .on ("texture-quality",                (event, value) => this .setTextureQuality (value));
+      electron .ipcRenderer .on ("color-space",                    (event, value) => this .setColorSpace (value));
+      electron .ipcRenderer .on ("tone-mapping",                   (event, value) => this .setToneMapping (value));
+      electron .ipcRenderer .on ("logarithmic-depth-buffer",       (event, value) => this .setLogarithmicDepthBuffer (value));
+      electron .ipcRenderer .on ("order-independent-transparency", (event, value) => this .setOrderIndependentTransparency (value));
+      electron .ipcRenderer .on ("display-rubberband",             (event, value) => this .setDisplayRubberband (value));
+      electron .ipcRenderer .on ("display-timings",                (event, value) => this .setDisplayTimings (value));
+      electron .ipcRenderer .on ("show-library",                   (event)        => this .showLibrary ());
 
       // Layout Menu
 
@@ -122,12 +124,19 @@ module .exports = class Document extends Interface
 
       // Connect browser options.
 
-      this .browser .getBrowserOptions () .getField ("PrimitiveQuality") .addInterest ("set_primitiveQuality", this);
-      this .browser .getBrowserOptions () .getField ("TextureQuality")   .addInterest ("set_textureQuality",   this);
-      this .browser .getBrowserOptions () .getField ("ColorSpace")       .addInterest ("set_colorSpace",       this);
-      this .browser .getBrowserOptions () .getField ("ToneMapping")      .addInterest ("set_toneMapping",      this);
-      this .browser .getBrowserOptions () .getField ("Rubberband")       .addInterest ("set_rubberband",       this);
-      this .browser .getBrowserOptions () .getField ("Timings")          .addInterest ("set_timings",          this);
+      const browserOptions = [
+         "PrimitiveQuality",
+         "TextureQuality",
+         "ColorSpace",
+         "ToneMapping",
+         "LogarithmicDepthBuffer",
+         "OrderIndependentTransparency",
+         "Rubberband",
+         "Timings",
+      ];
+
+      for (const option of browserOptions)
+         this .browser .getBrowserOptions () .getField (option) .addInterest (`set_${option}`, this);
 
       this .browser .setBrowserOption ("AlwaysUpdateGeometries", true);
       this .browser .setBrowserOption ("MetadataReference", require ("../../package.json") .homepage);
@@ -158,6 +167,8 @@ module .exports = class Document extends Interface
          textureQuality: "MEDIUM",
          colorSpace: "LINEAR_WHEN_PHYSICAL_MATERIAL",
          toneMapping: "NONE",
+         logarithmicDepthBuffer: false,
+         orderIndependentTransparency: false,
          rubberband: true,
          timings: false,
       });
@@ -166,12 +177,14 @@ module .exports = class Document extends Interface
 
       // Configure browser options.
 
-      this .setPrimitiveQuality  (this .config .file .primitiveQuality);
-      this .setTextureQuality    (this .config .file .textureQuality);
-      this .setColorSpace        (this .config .file .colorSpace);
-      this .setToneMapping       (this .config .file .toneMapping);
-      this .setDisplayRubberband (this .config .file .rubberband);
-      this .setDisplayTimings    (this .config .file .timings);
+      this .setPrimitiveQuality             (this .config .file .primitiveQuality);
+      this .setTextureQuality               (this .config .file .textureQuality);
+      this .setColorSpace                   (this .config .file .colorSpace);
+      this .setToneMapping                  (this .config .file .toneMapping);
+      this .setLogarithmicDepthBuffer       (this .config .file .logarithmicDepthBuffer);
+      this .setOrderIndependentTransparency (this .config .file .orderIndependentTransparency);
+      this .setDisplayRubberband            (this .config .file .rubberband);
+      this .setDisplayTimings               (this .config .file .timings);
 
       // Configure grids.
 
@@ -591,7 +604,7 @@ Viewpoint {
       this .browser .setDescription (`Primitive Quality: ${value .toLowerCase ()}`);
    }
 
-   set_primitiveQuality ()
+   set_PrimitiveQuality ()
    {
       this .config .file .primitiveQuality = this .browser .getBrowserOption ("PrimitiveQuality");
 
@@ -608,7 +621,7 @@ Viewpoint {
       this .browser .setDescription (`Texture Quality: ${value .toLowerCase ()}`);
    }
 
-   set_textureQuality ()
+   set_TextureQuality ()
    {
       this .config .file .textureQuality = this .browser .getBrowserOption ("TextureQuality");
 
@@ -625,7 +638,7 @@ Viewpoint {
       this .browser .setDescription (`Color Space: ${value}`);
    }
 
-   set_colorSpace ()
+   set_ColorSpace ()
    {
       this .config .file .colorSpace = this .browser .getBrowserOption ("ColorSpace");
 
@@ -642,9 +655,43 @@ Viewpoint {
       this .browser .setDescription (`Tone Mapping: ${value}`);
    }
 
-   set_toneMapping ()
+   set_ToneMapping ()
    {
       this .config .file .toneMapping = this .browser .getBrowserOption ("ToneMapping");
+
+      this .updateMenu ();
+   }
+
+   /**
+    *
+    * @param {boolean} value
+    */
+   setLogarithmicDepthBuffer (value)
+   {
+      this .browser .setBrowserOption ("LogarithmicDepthBuffer", value);
+      this .browser .setDescription (`LogarithmicDepthBuffer: ${value ? "on" : "off"}`);
+   }
+
+   set_LogarithmicDepthBuffer ()
+   {
+      this .config .file .logarithmicDepthBuffer = this .browser .getBrowserOption ("LogarithmicDepthBuffer");
+
+      this .updateMenu ();
+   }
+
+   /**
+    *
+    * @param {boolean} value
+    */
+   setOrderIndependentTransparency (value)
+   {
+      this .browser .setBrowserOption ("OrderIndependentTransparency", value);
+      this .browser .setDescription (`OrderIndependentTransparency: ${value ? "on" : "off"}`);
+   }
+
+   set_OrderIndependentTransparency ()
+   {
+      this .config .file .orderIndependentTransparency = this .browser .getBrowserOption ("OrderIndependentTransparency");
 
       this .updateMenu ();
    }
@@ -659,7 +706,7 @@ Viewpoint {
       this .browser .setDescription (`Rubberband: ${value ? "on" : "off"}`);
    }
 
-   set_rubberband ()
+   set_Rubberband ()
    {
       this .config .file .rubberband = this .browser .getBrowserOption ("Rubberband");
 
@@ -675,7 +722,7 @@ Viewpoint {
       this .browser .setBrowserOption ("Timings", value);
    }
 
-   set_timings ()
+   set_Timings ()
    {
       this .config .file .timings = this .browser .getBrowserOption ("Timings");
 
@@ -690,6 +737,8 @@ Viewpoint {
          textureQuality: this .config .file .textureQuality,
          colorSpace: this .config .file .colorSpace,
          toneMapping: this .config .file .toneMapping,
+         logarithmicDepthBuffer: this .config .file .logarithmicDepthBuffer,
+         orderIndependentTransparency: this .config .file .orderIndependentTransparency,
          rubberband: this .config .file .rubberband,
          timings: this .config .file .timings,
       });
