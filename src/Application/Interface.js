@@ -215,7 +215,7 @@ module .exports = class Interface
       if (this .browser .getBrowserOption ("ColorSpace") === "SRGB")
          return color;
 
-      if (this .browser .getBrowserOption ("ColorSpace") === "LINEAR_WHEN_PHYSICAL_MATERIAL" && !node .getType () .includes (X3D .X3DConstants .PhysicalMaterial))
+      if (this .browser .getBrowserOption ("ColorSpace") === "LINEAR_WHEN_PHYSICAL_MATERIAL" && !this .isPhysical (node))
       {
          return color;
       }
@@ -237,7 +237,7 @@ module .exports = class Interface
       if (this .browser .getBrowserOption ("ColorSpace") === "SRGB")
          return color;
 
-      if (this .browser .getBrowserOption ("ColorSpace") === "LINEAR_WHEN_PHYSICAL_MATERIAL" && !node .getType () .includes (X3D .X3DConstants .PhysicalMaterial))
+      if (this .browser .getBrowserOption ("ColorSpace") === "LINEAR_WHEN_PHYSICAL_MATERIAL" && !this .isPhysical (node))
       {
          return color;
       }
@@ -252,5 +252,19 @@ module .exports = class Interface
          args .push (color .a);
 
       return new (color .constructor) (... args);
+   }
+
+   isPhysical (node)
+   {
+      if (node .getType () .includes (X3D .X3DConstants .PhysicalMaterial))
+         return true;
+
+      if (node .getType () .includes (X3D .X3DConstants .X3DMaterialExtensionNode))
+         return true;
+
+      if (node .getType () .includes (X3D .X3DConstants .SpecularGlossinessMaterial))
+         return true;
+
+      return false;
    }
 };

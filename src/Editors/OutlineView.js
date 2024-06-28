@@ -1724,7 +1724,7 @@ module .exports = class OutlineView extends Interface
 
    getColorFromField (node, field, colorSpace = this .browser .getBrowserOption ("ColorSpace"))
    {
-      if (colorSpace === "LINEAR" || (colorSpace === "LINEAR_WHEN_PHYSICAL_MATERIAL" && node .getType () .includes (X3D .X3DConstants .PhysicalMaterial)))
+      if (colorSpace === "LINEAR" || (colorSpace === "LINEAR_WHEN_PHYSICAL_MATERIAL" && this .isPhysical (node)))
       {
          const
             r = Math .floor (field .r * 100),
