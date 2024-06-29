@@ -1401,6 +1401,15 @@ body.dark .ui-widget .library-list .component {
   background-color: var(--tp-monitor-background-color-readonly);
 }
 
+.tp-colv_s,
+.tp-colswv_b {
+  width: 100% !important;
+}
+
+.tp-colv_t {
+  display: none;
+}
+
 /* monaco editor */
 
 .monaco-editor,
