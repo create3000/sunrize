@@ -1737,9 +1737,9 @@ module .exports = class OutlineView extends Interface
       else
       {
          const
-            r = Math .round (field .r * 255),
-            g = Math .round (field .g * 255),
-            b = Math .round (field .b * 255),
+            r = field .r * 255,
+            g = field .g * 255,
+            b = field .b * 255,
             a = field .a ?? 1;
 
          return `rgba(${r},${g},${b},${a})`;
