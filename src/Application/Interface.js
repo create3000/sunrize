@@ -220,19 +220,10 @@ module .exports = class Interface
          return color;
       }
 
-      const args = [
-         Math .pow (color .r, 1 / 2.2),
-         Math .pow (color .g, 1 / 2.2),
-         Math .pow (color .b, 1 / 2.2),
-      ];
-
-      if (color .a !== undefined)
-         args .push (color .a);
-
-      return new (color .constructor) (... args);
+      return color .linearTosRGB ();
    }
 
-   sRGBtoLinear (node, color)
+   sRGBToLinear (node, color)
    {
       if (this .browser .getBrowserOption ("ColorSpace") === "SRGB")
          return color;
@@ -242,16 +233,7 @@ module .exports = class Interface
          return color;
       }
 
-      const args = [
-         Math .pow (color .r, 2.2),
-         Math .pow (color .g, 2.2),
-         Math .pow (color .b, 2.2),
-      ];
-
-      if (color .a !== undefined)
-         args .push (color .a);
-
-      return new (color .constructor) (... args);
+      return color .sRGBToLinear ();
    }
 
    isPhysical (node)

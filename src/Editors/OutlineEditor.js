@@ -1945,7 +1945,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          if (value .getType () === X3D .X3DConstants .SFColorRGBA)
             value .a = rgb .a;
 
-         Editor .setFieldValue (node .getExecutionContext (), node, field, this .sRGBtoLinear (node, value));
+         Editor .setFieldValue (node .getExecutionContext (), node, field, this .sRGBToLinear (node, value));
       })
       .on ("dragstart.spectrum", (event, tinyColor) =>
       {

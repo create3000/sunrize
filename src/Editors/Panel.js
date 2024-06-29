@@ -601,14 +601,14 @@ module .exports = new class Panel extends Interface
          }
          case X3D .X3DConstants .SFColor:
          {
-            value = this .sRGBtoLinear (node, new X3D .Color3 (value .r, value .g, value .b));
+            value = this .sRGBToLinear (node, new X3D .Color3 (value .r, value .g, value .b));
 
             this .assign (executionContext, node, field, value);
             break;
          }
          case X3D .X3DConstants .SFColorRGBA:
          {
-            value = this .sRGBtoLinear (node, new X3D .Color4 (value .r, value .g, value .b, value .a));
+            value = this .sRGBToLinear (node, new X3D .Color4 (value .r, value .g, value .b, value .a));
 
             this .assign (executionContext, node, field, value);
             break;
