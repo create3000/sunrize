@@ -119,8 +119,8 @@ module .exports = new class Panel extends Interface
       }
 
       this .container .css ({
-         "overflow": "unset",
-         "max-height": "unset",
+         "overflow": "visible",
+         "max-height": "auto",
       });
 
       // Create folders.
