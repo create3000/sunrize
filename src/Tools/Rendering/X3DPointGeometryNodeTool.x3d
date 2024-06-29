@@ -6,10 +6,11 @@
     <meta name='created' content='Tue, 28 Nov 2023 21:59:27 GMT'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.2.7, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 30 Nov 2023 09:48:53 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.7.1, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Sat, 29 Jun 2024 10:52:33 GMT'/>
   </head>
   <Scene>
+    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'/>
     <ProtoDeclare name='X3DPointGeometryNodeTool'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
