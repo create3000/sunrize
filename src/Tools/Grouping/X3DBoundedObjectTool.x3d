@@ -9,12 +9,11 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.2.7, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Tue, 28 Nov 2023 22:34:13 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.7.1, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Sat, 29 Jun 2024 11:06:25 GMT'/>
   </head>
   <Scene>
-    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
-    </ExternProtoDeclare>
+    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'/>
     <ProtoDeclare name='X3DBoundedObjectTool'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
@@ -49,11 +48,13 @@
                     <connect nodeField='linetype' protoField='bboxStyle'/>
                   </IS>
                 </LineProperties>
-                <UnlitMaterial DEF='BBoxMaterial'>
+                <Material DEF='BBoxMaterial'
+                    diffuseColor='0 0 0'>
                   <IS>
                     <connect nodeField='emissiveColor' protoField='bboxColor'/>
                   </IS>
-                </UnlitMaterial>
+                </Material>
+                <ProtoInstance name='ToolShader' DEF='_11' containerField='shaders'/>
                 <DepthMode
                     polygonOffset='-1 -1'/>
               </Appearance>
@@ -90,7 +91,7 @@
                     <Appearance DEF='Red_1'>
                       <Material
                           diffuseColor='1 0 0'/>
-                      <ProtoInstance name='ToolShader' DEF='_11' containerField='shaders'/>
+                      <ProtoInstance name='ToolShader' USE='_11' containerField='shaders'/>
                       <DepthMode USE='_12'/>
                     </Appearance>
                     <Cone DEF='Arrow_1'

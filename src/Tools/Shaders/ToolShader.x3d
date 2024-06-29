@@ -6,15 +6,22 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Sun, 03 Aug 2014 14:00:40 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.0.11, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.7.1, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Shaders/ToolShader.x3d'/>
-    <meta name='modified' content='Thu, 16 Mar 2023 12:32:57 GMT'/>
+    <meta name='modified' content='Sat, 29 Jun 2024 11:30:31 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='ToolShader'>
+      <ProtoInterface>
+        <field accessType='inputOutput' type='SFBool' name='instanced'/>
+      </ProtoInterface>
       <ProtoBody>
         <ComposedShader DEF='ToolShader'
             language='GLSL'>
+          <field accessType='inputOutput' type='SFBool' name='instanced'/>
+          <IS>
+            <connect nodeField='instanced' protoField='instanced'/>
+          </IS>
           <ShaderPart DEF='ToolVertexShader'>
 <![CDATA[data:text/plain,#version 300 es
 
@@ -24,6 +31,11 @@ uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 uniform mat3 x3d_NormalMatrix;
 
+uniform x3d_PointPropertiesParameters x3d_PointProperties;
+
+uniform bool instanced;
+
+in mat4 x3d_InstanceMatrix;
 in vec4 x3d_Vertex;
 in vec3 x3d_Normal;
 
@@ -33,10 +45,14 @@ out vec3 normal;
 void
 main ()
 {
-   vertex = vec3 (x3d_ModelViewMatrix * x3d_Vertex);
+   gl_PointSize = x3d_PointProperties .pointSizeScaleFactor;
+
+   mat4 instancedMatrix = instanced ? x3d_InstanceMatrix : mat4 (1.0);
+
+   vertex = vec3 (x3d_ModelViewMatrix * instancedMatrix * x3d_Vertex);
    normal = normalize (x3d_NormalMatrix * x3d_Normal);
 
-   gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * x3d_Vertex;
+   gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * instancedMatrix * x3d_Vertex;
 }
 ]]>
           </ShaderPart>

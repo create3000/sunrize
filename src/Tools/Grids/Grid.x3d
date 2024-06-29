@@ -45,12 +45,14 @@
               <Shape
                   castShadow='false'>
                 <Appearance>
-                  <UnlitMaterial DEF='Material2'>
+                  <Material DEF='Material2'
+                      diffuseColor='0 0 0'>
                     <IS>
                       <connect nodeField='emissiveColor' protoField='color'/>
                       <connect nodeField='transparency' protoField='transparency'/>
                     </IS>
-                  </UnlitMaterial>
+                  </Material>
+                  <ProtoInstance name='ToolShader' DEF='_999' containerField='shaders'/>
                 </Appearance>
                 <Rectangle2D
                     size='1 1'>
@@ -64,12 +66,14 @@
                 pointerEvents='false'
                 castShadow='false'>
               <Appearance>
-                <UnlitMaterial DEF='MajorMaterial'>
+                <Material DEF='MajorMaterial'
+                    diffuseColor='0 0 0'>
                   <IS>
                     <connect nodeField='emissiveColor' protoField='majorLineColor'/>
                     <connect nodeField='transparency' protoField='majorLineTransparency'/>
                   </IS>
-                </UnlitMaterial>
+                </Material>
+                <ProtoInstance name='ToolShader' USE='_999' containerField='shaders'/>
               </Appearance>
               <IndexedLineSet DEF='MajorGrid_2'>
                 <Coordinate/>
@@ -79,12 +83,14 @@
                 pointerEvents='false'
                 castShadow='false'>
               <Appearance>
-                <UnlitMaterial DEF='MinorMaterial'>
+                <Material DEF='MinorMaterial'
+                    diffuseColor='0 0 0'>
                   <IS>
                     <connect nodeField='emissiveColor' protoField='lineColor'/>
                     <connect nodeField='transparency' protoField='lineTransparency'/>
                   </IS>
-                </UnlitMaterial>
+                </Material>
+                <ProtoInstance name='ToolShader' USE='_999' containerField='shaders'/>
               </Appearance>
               <IndexedLineSet DEF='MinorGrid_3'>
                 <Coordinate/>
@@ -98,7 +104,8 @@
                     pointSizeScaleFactor='6'
                     pointSizeMinValue='6'
                     pointSizeMaxValue='6'/>
-                <UnlitMaterial USE='MajorMaterial'/>
+                <Material USE='MajorMaterial'/>
+                <ProtoInstance name='ToolShader' USE='_999' containerField='shaders'/>
               </Appearance>
               <PointSet DEF='MajorPoints_4'>
                 <Coordinate/>
@@ -112,7 +119,8 @@
                     pointSizeScaleFactor='4'
                     pointSizeMinValue='4'
                     pointSizeMaxValue='4'/>
-                <UnlitMaterial USE='MinorMaterial'/>
+                <Material USE='MinorMaterial'/>
+                <ProtoInstance name='ToolShader' USE='_999' containerField='shaders'/>
               </Appearance>
               <PointSet DEF='MinorPoints_5'>
                 <Coordinate/>

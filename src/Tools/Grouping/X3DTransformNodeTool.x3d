@@ -11,8 +11,8 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.6.7, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Wed, 27 Mar 2024 19:37:44 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.7.1, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Sat, 29 Jun 2024 11:08:56 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'/>
@@ -83,11 +83,13 @@
                 <Appearance>
                   <LineProperties DEF='_2'
                       linewidthScaleFactor='2'/>
-                  <UnlitMaterial DEF='BBoxMaterial'>
+                  <Material DEF='BBoxMaterial'
+                      diffuseColor='0 0 0'>
                     <IS>
                       <connect nodeField='emissiveColor' protoField='bboxColor'/>
                     </IS>
-                  </UnlitMaterial>
+                  </Material>
+                  <ProtoInstance name='ToolShader' DEF='_3' containerField='shaders'/>
                   <DepthMode
                       polygonOffset='-1 -1'/>
                 </Appearance>
@@ -133,7 +135,7 @@
                             <Appearance DEF='Red_1'>
                               <Material
                                   diffuseColor='1 0 0'/>
-                              <ProtoInstance name='ToolShader' DEF='_3' containerField='shaders'/>
+                              <ProtoInstance name='ToolShader' USE='_3' containerField='shaders'/>
                               <DepthMode USE='_4'/>
                             </Appearance>
                             <Cone DEF='Arrow_1'
@@ -730,8 +732,10 @@
                         <Appearance>
                           <LineProperties DEF='_29'
                               linewidthScaleFactor='3'/>
-                          <UnlitMaterial
+                          <Material
+                              diffuseColor='0 0 0'
                               emissiveColor='1 0 0'/>
+                          <ProtoInstance name='ToolShader' USE='_3' containerField='shaders'/>
                           <DepthMode USE='_4'/>
                         </Appearance>
                         <Circle2D/>
@@ -755,8 +759,10 @@
                           castShadow='false'>
                         <Appearance>
                           <LineProperties USE='_29'/>
-                          <UnlitMaterial
+                          <Material
+                              diffuseColor='0 0 0'
                               emissiveColor='0 1 0'/>
+                          <ProtoInstance name='ToolShader' USE='_3' containerField='shaders'/>
                           <DepthMode USE='_4'/>
                         </Appearance>
                         <Circle2D/>
@@ -780,8 +786,10 @@
                           castShadow='false'>
                         <Appearance>
                           <LineProperties USE='_29'/>
-                          <UnlitMaterial
+                          <Material
+                              diffuseColor='0 0 0'
                               emissiveColor='0 0 1'/>
+                          <ProtoInstance name='ToolShader' USE='_3' containerField='shaders'/>
                           <DepthMode USE='_4'/>
                         </Appearance>
                         <Circle2D/>

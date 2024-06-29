@@ -7,13 +7,12 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 01 Aug 2014 17:41:58 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.5.13, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.7.1, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/TextureProjector/X3DTextureProjectorNodeTool.x3d'/>
-    <meta name='modified' content='Fri, 01 Mar 2024 09:56:33 GMT'/>
+    <meta name='modified' content='Sat, 29 Jun 2024 11:23:51 GMT'/>
   </head>
   <Scene>
-    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
-    </ExternProtoDeclare>
+    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'/>
     <ExternProtoDeclare name='TextureShader' url='"../Shaders/TextureShader.x3d"'>
       <field accessType='inputOutput' type='SFBool' name='flipY'/>
     </ExternProtoDeclare>
@@ -66,7 +65,7 @@
                       <Material DEF='_2'
                           diffuseColor='0.2705882 0.2705882 0.2705882'
                           specularColor='0.8627451 0.8588235 0.8588235'/>
-                      <ProtoInstance name='ToolShader' containerField='shaders'/>
+                      <ProtoInstance name='ToolShader' DEF='_999' containerField='shaders'/>
                     </Appearance>
                     <Cylinder
                         top='false'
@@ -96,7 +95,7 @@
                           diffuseColor='0 0 0'
                           specularColor='1 1 1'
                           emissiveColor='1 0 0'/>
-                      <ProtoInstance name='ToolShader' DEF='_3' containerField='shaders'/>
+                      <ProtoInstance name='ToolShader' USE='_999' containerField='shaders'/>
                     </Appearance>
                     <Cylinder/>
                   </Shape>
@@ -111,7 +110,7 @@
                     <Appearance>
                       <Material
                           emissiveColor='0.5686275 0.5568627 0.4392157'/>
-                      <ProtoInstance name='ToolShader' USE='_3' containerField='shaders'/>
+                      <ProtoInstance name='ToolShader' USE='_999' containerField='shaders'/>
                     </Appearance>
                     <IndexedLineSet DEF='_5'
                         coordIndex='0, 4, -1, 4, 8, -1, 1, 5, -1, 5, 9, -1, 2, 6, -1, 6, 10, -1, 3, 7, -1, 7, 11, -1, 0, 1, 2, 3, 0, -1, 4, 5, 6, 7, 4, -1, 8, 9, 10, 11, 8, -1'>
@@ -124,7 +123,7 @@
                     <Appearance>
                       <Material
                           emissiveColor='1 0.985342 0.807597'/>
-                      <ProtoInstance name='ToolShader' USE='_3' containerField='shaders'/>
+                      <ProtoInstance name='ToolShader' USE='_999' containerField='shaders'/>
                     </Appearance>
                     <IndexedLineSet USE='_5'/>
                   </Shape>
@@ -264,7 +263,7 @@ function set_directionAndUpVector (i)
 
    changing [i] = true;
 
-   transform .rotation = new SFRotation (new SFVec3f (0, 0, 1), direction) 
+   transform .rotation = new SFRotation (new SFVec3f (0, 0, 1), direction)
       .straighten (upVector);
 }
 

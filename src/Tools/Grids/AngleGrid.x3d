@@ -10,11 +10,13 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.1, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///home/holger/Projekte/Titania/libtitania-x3d/share/titania/tools/library/AngleGrid.x3dv'/>
-    <meta name='modified' content='Sat, 29 Jun 2024 10:49:11 GMT'/>
+    <meta name='modified' content='Sat, 29 Jun 2024 11:35:21 GMT'/>
     <meta name='titania-add-world-info' content='true'/>
   </head>
   <Scene>
-    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'/>
+    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
+      <field accessType='inputOutput' type='SFBool' name='instanced'/>
+    </ExternProtoDeclare>
     <ProtoDeclare name='AngleGrid'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFVec3f' name='translation'/>
@@ -47,12 +49,14 @@
               <Shape
                   castShadow='false'>
                 <Appearance>
-                  <UnlitMaterial DEF='Material2'>
+                  <Material DEF='Material2'
+                      diffuseColor='0 0 0'>
                     <IS>
                       <connect nodeField='emissiveColor' protoField='color'/>
                       <connect nodeField='transparency' protoField='transparency'/>
                     </IS>
-                  </UnlitMaterial>
+                  </Material>
+                  <ProtoInstance name='ToolShader' DEF='_999' containerField='shaders'/>
                 </Appearance>
                 <Disk2D>
                   <IS>
@@ -66,12 +70,16 @@
                 pointerEvents='false'
                 castShadow='false'>
               <Appearance DEF='MinorAppearance'>
-                <UnlitMaterial DEF='_2'>
+                <Material DEF='_2'
+                    diffuseColor='0 0 0'>
                   <IS>
                     <connect nodeField='emissiveColor' protoField='lineColor'/>
                     <connect nodeField='transparency' protoField='lineTransparency'/>
                   </IS>
-                </UnlitMaterial>
+                </Material>
+                <ProtoInstance name='ToolShader' DEF='_3' containerField='shaders'>
+                  <fieldValue name='instanced' value='true'/>
+                </ProtoInstance>
               </Appearance>
               <Circle2D DEF='_1'/>
             </InstancedShape>
@@ -80,19 +88,24 @@
                 pointerEvents='false'
                 castShadow='false'>
               <Appearance DEF='MajorAppearance'>
-                <UnlitMaterial DEF='MajorMaterial'>
+                <Material DEF='MajorMaterial'
+                    diffuseColor='0 0 0'>
                   <IS>
                     <connect nodeField='emissiveColor' protoField='majorLineColor'/>
                     <connect nodeField='transparency' protoField='majorLineTransparency'/>
                   </IS>
-                </UnlitMaterial>
+                </Material>
+                <ProtoInstance name='ToolShader' USE='_3' containerField='shaders'/>
               </Appearance>
               <Circle2D USE='_1'/>
             </InstancedShape>
             <Shape DEF='MinorLines'
                 pointerEvents='false'
                 castShadow='false'>
-              <Appearance USE='MinorAppearance'/>
+              <Appearance DEF='MinorAppearance_1'>
+                <Material USE='_2'/>
+                <ProtoInstance name='ToolShader' USE='_999' containerField='shaders'/>
+              </Appearance>
               <IndexedLineSet DEF='MinorLines_3'>
                 <Coordinate/>
               </IndexedLineSet>
@@ -100,7 +113,10 @@
             <Shape DEF='MajorLines'
                 pointerEvents='false'
                 castShadow='false'>
-              <Appearance USE='MajorAppearance'/>
+              <Appearance DEF='MajorAppearance_1'>
+                <Material USE='MajorMaterial'/>
+                <ProtoInstance name='ToolShader' USE='_999' containerField='shaders'/>
+              </Appearance>
               <IndexedLineSet DEF='MajorLines_4'>
                 <Coordinate/>
               </IndexedLineSet>
@@ -113,7 +129,8 @@
                     pointSizeScaleFactor='4'
                     pointSizeMinValue='4'
                     pointSizeMaxValue='4'/>
-                <UnlitMaterial USE='_2'/>
+                <Material USE='_2'/>
+                <ProtoInstance name='ToolShader' USE='_999' containerField='shaders'/>
               </Appearance>
               <PointSet DEF='MinorPoints_5'>
                 <Coordinate/>
@@ -127,7 +144,8 @@
                     pointSizeScaleFactor='6'
                     pointSizeMinValue='6'
                     pointSizeMaxValue='6'/>
-                <UnlitMaterial USE='MajorMaterial'/>
+                <Material USE='MajorMaterial'/>
+                <ProtoInstance name='ToolShader' USE='_999' containerField='shaders'/>
               </Appearance>
               <PointSet DEF='MajorPoints_6'>
                 <Coordinate/>

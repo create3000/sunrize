@@ -45,11 +45,13 @@
                     <connect nodeField='linewidthScaleFactor' protoField='linewidthScaleFactor'/>
                   </IS>
                 </LineProperties>
-                <UnlitMaterial>
+                <Material
+                    diffuseColor='0 0 0'>
                   <IS>
                     <connect nodeField='emissiveColor' protoField='linesColor'/>
                   </IS>
-                </UnlitMaterial>
+                </Material>
+                <ProtoInstance name='ToolShader' DEF='_999' containerField='shaders'/>
                 <DepthMode
                     polygonOffset='-1 -1'/>
               </Appearance>
