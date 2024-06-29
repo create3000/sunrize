@@ -508,7 +508,7 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .SFColor:
          case X3D .X3DConstants .SFColorRGBA:
          {
-            field = this .linearTosRGB (node, field);
+            field = this .linearToSRGB (node, field);
 
             // Proceed with next case:
          }

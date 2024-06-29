@@ -1930,7 +1930,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       })
       .on ("beforeShow.spectrum", (event) =>
       {
-         button .spectrum ("set", this .getColorFromField (node, this .linearTosRGB (node, field), "SRGB"));
+         button .spectrum ("set", this .getColorFromField (node, this .linearToSRGB (node, field), "SRGB"));
       })
       .on("move.spectrum", (event, tinyColor) =>
       {

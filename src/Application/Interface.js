@@ -210,7 +210,7 @@ module .exports = class Interface
 
    configure () { }
 
-   linearTosRGB (node, color)
+   linearToSRGB (node, color)
    {
       if (this .browser .getBrowserOption ("ColorSpace") === "SRGB")
          return color;
@@ -220,7 +220,7 @@ module .exports = class Interface
          return color;
       }
 
-      return color .linearTosRGB ();
+      return color .linearToSRGB ();
    }
 
    sRGBToLinear (node, color)

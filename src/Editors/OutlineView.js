@@ -1727,9 +1727,9 @@ module .exports = class OutlineView extends Interface
       if (colorSpace === "LINEAR" || (colorSpace === "LINEAR_WHEN_PHYSICAL_MATERIAL" && this .isPhysical (node)))
       {
          const
-            r = Math .floor (field .r * 100),
-            g = Math .floor (field .g * 100),
-            b = Math .floor (field .b * 100),
+            r = field .r * 100,
+            g = field .g * 100,
+            b = field .b * 100,
             a = field .a ?? 1;
 
          return `color(srgb-linear ${r}% ${g}% ${b}% / ${a})`;
@@ -1737,9 +1737,9 @@ module .exports = class OutlineView extends Interface
       else
       {
          const
-            r = Math .floor (field .r * 255),
-            g = Math .floor (field .g * 255),
-            b = Math .floor (field .b * 255),
+            r = Math .round (field .r * 255),
+            g = Math .round (field .g * 255),
+            b = Math .round (field .b * 255),
             a = field .a ?? 1;
 
          return `rgba(${r},${g},${b},${a})`;
