@@ -8,6 +8,7 @@ const
    UndoManager      = require ("../Undo/UndoManager"),
    Primitives       = require ("./Primitives"),
    StringSimilarity = require ("string-similarity"),
+   Traverse         = require("../Application/Traverse"),
    _                = require ("../Application/GetText");
 
 module .exports = new class Library extends Dialog
@@ -376,6 +377,27 @@ module .exports = new class Library extends Dialog
       const
          node  = (await Editor .importX3D (this .executionContext, x3dSyntax)) .pop (),
          field = this .field ?? $.try (() => this .node ?.getField (node .getContainerField ()));
+
+      if (this .browser .getBrowserOption ("ColorSpace") === "LINEAR")
+      {
+         Traverse .traverse (node, Traverse .ROOT_NODES, node =>
+         {
+            for (const field of node .getFields ())
+            {
+               switch (field .getType ())
+               {
+                  case X3D .X3DConstants .SFColor:
+                  case X3D .X3DConstants .SFColorRGBA:
+                     field .assign (field .sRGBToLinear ());
+                     break;
+                  case X3D .X3DConstants .MFColor:
+                  case X3D .X3DConstants .MFColorRGBA:
+                     field .assign (field .map (value => value .sRGBToLinear ()));
+                     break;
+               }
+            }
+         });
+      }
 
       switch (field ?.getType ())
       {
