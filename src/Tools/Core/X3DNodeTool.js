@@ -176,7 +176,7 @@ class X3DNodeTool extends X3DBaseTool
 
    createTool (scene, protoName)
    {
-      this .tool = scene .createProto (protoName);
+      this .tool = scene .protos .get (protoName) .createInstance (this .getExecutionContext ());
 
       this .tool .getValue () .setPrivate (true);
 
