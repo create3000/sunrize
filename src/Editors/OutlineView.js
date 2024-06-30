@@ -52,7 +52,7 @@ module .exports = class OutlineView extends Interface
          .on ("dragend", this .onDragEnd .bind (this))
       .appendTo (this .treeView);
 
-      this .browser .getBrowserOptions () ._ColorSpace .addInterest ("configure", this);
+      this .browser .getBrowserOptions () ._ColorSpace .addInterest ("updateSceneGraph", this);
       this .browser ._activeLayer .addInterest ("updateActiveLayer", this);
 
       electron .ipcRenderer .on ("deselect-all",            () => this .deselectAll ());
