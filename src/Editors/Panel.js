@@ -372,16 +372,16 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .SFVec4f:
          {
             const
-               executionContext = node .getExecutionContext (),
-               category         = field .getUnit (),
-               min              = fieldElement .attr ("minInclusive") ?? fieldElement .attr ("minExclusive"),
-               max              = fieldElement .attr ("maxInclusive") ?? fieldElement .attr ("maxExclusive");
+               scene    = this .browser .currentScene,
+               category = field .getUnit (),
+               min      = fieldElement .attr ("minInclusive") ?? fieldElement .attr ("minExclusive"),
+               max      = fieldElement .attr ("maxInclusive") ?? fieldElement .attr ("maxExclusive");
 
             if (min !== undefined)
-               options .min = executionContext .toUnit (category, parseFloat (min));
+               options .min = scene .toUnit (category, parseFloat (min));
 
             if (max !== undefined)
-               options .max = executionContext .toUnit (category, parseFloat (max));
+               options .max = scene .toUnit (category, parseFloat (max));
 
             this .refresh (parameter, node, field);
 
@@ -470,9 +470,9 @@ module .exports = new class Panel extends Interface
    refresh (parameter, node, field)
    {
       const
-         executionContext = node .getExecutionContext (),
-         category         = field .getUnit (),
-         name             = field .getName ();
+         scene    = this .browser .currentScene,
+         category = field .getUnit (),
+         name     = field .getName ();
 
       switch (field .getType ())
       {
@@ -483,7 +483,7 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .SFString:
          case X3D .X3DConstants .SFTime:
          {
-            parameter [name] = executionContext .toUnit (category, field .getValue ());
+            parameter [name] = scene .toUnit (category, field .getValue ());
             break;
          }
          case X3D .X3DConstants .SFImage:
@@ -502,7 +502,7 @@ module .exports = new class Panel extends Interface
             p .x = field .x;
             p .y = field .y;
             p .z = field .z;
-            p .w = executionContext .toUnit ("angle", field .angle);
+            p .w = scene .toUnit ("angle", field .angle);
             break;
          }
          case X3D .X3DConstants .SFColor:
@@ -522,7 +522,7 @@ module .exports = new class Panel extends Interface
             const p = parameter [name] ??= { };
 
             for (const key in field)
-               p [key] = executionContext .toUnit (category, field [key]);
+               p [key] = scene .toUnit (category, field [key]);
 
             break;
          }
@@ -540,7 +540,7 @@ module .exports = new class Panel extends Interface
          {
             const
                single  = new (field .getSingleType ()) (),
-               options = { scene: executionContext };
+               options = { scene: scene };
 
             single .setUnit (field .getUnit ());
 
@@ -567,7 +567,7 @@ module .exports = new class Panel extends Interface
          {
             const
                single  = new (field .getSingleType ()) (),
-               options = { scene: executionContext };
+               options = { scene: scene };
 
             single .setUnit (field .getUnit ());
 
@@ -588,6 +588,7 @@ module .exports = new class Panel extends Interface
    onchange (node, field, value)
    {
       const
+         scene            = this .browser .currentScene,
          executionContext = node .getExecutionContext (),
          category         = field .getUnit ();
 
@@ -618,7 +619,7 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .SFInt32:
          case X3D .X3DConstants .SFTime:
          {
-            this .assign (executionContext, node, field, executionContext .fromUnit (category, value));
+            this .assign (executionContext, node, field, scene .fromUnit (category, value));
             break;
          }
          case X3D .X3DConstants .SFRotation:
@@ -626,7 +627,7 @@ module .exports = new class Panel extends Interface
             value = new X3D .Rotation4 (value .x,
                                         value .y,
                                         value .z,
-                                        executionContext .fromUnit ("angle", value .w));
+                                        scene .fromUnit ("angle", value .w));
 
             this .assign (executionContext, node, field, value);
             break;
@@ -634,8 +635,8 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .SFVec2d:
          case X3D .X3DConstants .SFVec2f:
          {
-            value = new X3D .Vector2 (executionContext .fromUnit (category, value .x),
-                                      executionContext .fromUnit (category, value .y));
+            value = new X3D .Vector2 (scene .fromUnit (category, value .x),
+            scene .fromUnit (category, value .y));
 
             this .assign (executionContext, node, field, value);
             break;
@@ -643,9 +644,9 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .SFVec3d:
          case X3D .X3DConstants .SFVec3f:
          {
-            value = new X3D .Vector3 (executionContext .fromUnit (category, value .x),
-                                      executionContext .fromUnit (category, value .y),
-                                      executionContext .fromUnit (category, value .z));
+            value = new X3D .Vector3 (scene .fromUnit (category, value .x),
+                                      scene .fromUnit (category, value .y),
+                                      scene .fromUnit (category, value .z));
 
             this .assign (executionContext, node, field, value);
             break;
@@ -653,10 +654,10 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .SFVec4d:
          case X3D .X3DConstants .SFVec4f:
          {
-            value = new X3D .Vector4 (executionContext .fromUnit (category, value .x),
-                                      executionContext .fromUnit (category, value .y),
-                                      executionContext .fromUnit (category, value .z),
-                                      executionContext .fromUnit (category, value .w));
+            value = new X3D .Vector4 (scene .fromUnit (category, value .x),
+                                      scene .fromUnit (category, value .y),
+                                      scene .fromUnit (category, value .z),
+                                      scene .fromUnit (category, value .w));
 
             this .assign (executionContext, node, field, value);
             break;
