@@ -751,7 +751,7 @@ module .exports = new class Panel extends Interface
    {
       function truncate (string, n)
       {
-         return string .length > n ? string .slice (0, n - 1) + "..." : string;
+         return string .length > n ? string .slice (0, n) + "..." : string;
       };
 
       const description = fieldElement .attr ("description");
