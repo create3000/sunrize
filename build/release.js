@@ -31,7 +31,7 @@ function main ()
 	systemSync (`npm i x_ite@latest`);
 
 	// x3duom
-	systemSync (`npm run x3duom`);
+	systemSync (`npm run X3DUOM`);
 
 	// commit
 	systemSync (`git add -A`);
