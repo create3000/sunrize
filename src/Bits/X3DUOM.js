@@ -5,7 +5,7 @@ const
    X3D  = require ("../X3D");
 
 const
-   X3DUOM = $($.parseXML (fs .readFileSync (path .join (__dirname, "..", "assets", "x3duom.xml"), "utf-8"))),
+   X3DUOM = $($.parseXML (fs .readFileSync (path .join (__dirname, "..", "assets", "X3DUOM.xml"), "utf-8"))),
    X_ITE  = $($.parseXML (fs .readFileSync (X3D .X3DUOM, "utf-8")));
 
 X3DUOM .find ("ConcreteNodes") .append (X_ITE .find ("ConcreteNode"));
