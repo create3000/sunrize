@@ -6,7 +6,7 @@ const
 
 const
    X3DUOM = $($.parseXML (fs .readFileSync (path .join (__dirname, "..", "assets", "X3DUOM.xml"), "utf-8"))),
-   X_ITE  = $($.parseXML (fs .readFileSync (X3D .X3DUOM, "utf-8")));
+   X_ITE  = $($.parseXML (fs .readFileSync (X3D .X3DUOM_PATH, "utf-8")));
 
 X3DUOM .find ("ConcreteNodes") .append (X_ITE .find ("ConcreteNode"));
 
