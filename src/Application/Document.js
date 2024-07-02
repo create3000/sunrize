@@ -566,7 +566,7 @@ Viewpoint {
       if (this .activeElementIsInputOrOutput ())
          return;
 
-      this .sidebar .outlineEditor .copyNodes ();
+      this .sidebar .outlineEditor .copyNodes (true);
       return false;
    }
 

@@ -803,7 +803,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       UndoManager .shared .endUndo ();
    }
 
-   copyNodes ()
+   copyNodes (deselect)
    {
       const
          primary     = $(".node.primary, .proto.primary, .externproto.primary"),
@@ -835,6 +835,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       navigator .clipboard .writeText (x3dSyntax);
 
       undoManager .undo ();
+
+      if (deselect)
+         this .deselectAll ();
    }
 
    copyExternPrototype ()
