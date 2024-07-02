@@ -1,12 +1,12 @@
 const
    $    = require ("jquery"),
    fs   = require ("fs"),
-   path = require ("path");
+   path = require ("path"),
+   X3D  = require ("../X3D");
 
 const
    X3DUOM = $($.parseXML (fs .readFileSync (path .join (__dirname, "..", "assets", "x3duom.xml"), "utf-8"))),
-   X_ITE  = $($.parseXML (fs .readFileSync (path .join (__dirname, "..", "assets", "x3duom-x_ite.xml"), "utf-8")));
-   // X_ITE  = $($.parseXML (fs .readFileSync (require .resolve ("x_ite/X3DUOM.xml"), "utf-8")));
+   X_ITE  = $($.parseXML (fs .readFileSync (X3D .X3DUOM, "utf-8")));
 
 X3DUOM .find ("ConcreteNodes") .append (X_ITE .find ("ConcreteNode"));
 

@@ -251,7 +251,7 @@ module .exports = class ScriptEditor extends Interface
       if (!this .node .getType () .includes (X3D .X3DConstants .Script))
          return;
 
-      this .#declarations ??= fs .readFileSync (require .resolve ("x_ite/x_ite.d.ts"), "utf8")
+      this .#declarations ??= fs .readFileSync (X3D .TYPE_SCRIPT, "utf8")
          .replace (/^.*?(?:declare const X3D: X3D;)/s, "");
 
       const fields = Array .from (this .node .getUserDefinedFields (), field =>
