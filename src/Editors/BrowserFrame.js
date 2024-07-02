@@ -95,6 +95,7 @@ module .exports = new class BrowserFrame extends Dialog
 
       this .connect (Editor .getWorldInfo (this .browser .currentScene));
       this .updateInputs ();
+      this .onresize ();
    }
 
    connect (worldInfoNode)
