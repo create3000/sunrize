@@ -7,6 +7,8 @@ const
    X3DUOM = $($.parseXML (fs .readFileSync (path .join (__dirname, "..", "assets", "x3duom.xml"), "utf-8"))),
    X_ITE  = $($.parseXML (fs .readFileSync (path .join (__dirname, "..", "assets", "x3duom-x_ite.xml"), "utf-8")));
 
+// require .resolve ("x_ite/x3duom.xml")
+
 X3DUOM .find ("ConcreteNodes") .append (X_ITE .find ("ConcreteNode"));
 
 // emissiveColor fix
