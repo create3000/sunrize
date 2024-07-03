@@ -6,7 +6,7 @@ const
    LibraryPanel     = require ("./LibraryPanel"),
    Editor           = require ("../../Undo/Editor"),
    UndoManager      = require ("../../Undo/UndoManager"),
-   PrimitivesList   = require ("./PrimitivesList"),
+   PrimitiveNodes   = require ("./PrimitiveNodes"),
    StringSimilarity = require ("string-similarity"),
    Traverse         = require ("../../Application/Traverse"),
    _                = require ("../../Application/GetText");
@@ -20,9 +20,13 @@ module .exports = class Primitives extends LibraryPanel
    {
       const cmp = (a, b) => (a > b) - (a < b);
 
-      // Clear list.
+      // Clear output.
 
-      this .list .empty ();
+      this .output .empty ();
+
+      this .list = $("<ul></ul>")
+         .appendTo (this .output)
+         .addClass ("library-list");
 
       // Make filter.
 
@@ -35,7 +39,7 @@ module .exports = class Primitives extends LibraryPanel
 
       // Get primitives.
 
-      const nodes = PrimitivesList
+      const nodes = PrimitiveNodes
          .filter (filter)
          .sort ((a, b) => cmp (a .typeName,  b .typeName))
          .sort ((a, b) => cmp (a .componentInfo .name, b .componentInfo .name));

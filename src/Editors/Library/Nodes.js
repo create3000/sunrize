@@ -18,13 +18,17 @@ module .exports = class Nodes extends LibraryPanel
    {
       const cmp = (a, b) => (a > b) - (a < b);
 
-      // Clear list.
+      // Clear output.
 
-      this .list .empty ();
+      this .output .empty ();
 
-      const input = this .input .val () .toLowerCase () .trim ();
+      this .list = $("<ul></ul>")
+         .appendTo (this .output)
+         .addClass ("library-list");
 
       // Get protos.
+
+      const input = this .input .val () .toLowerCase () .trim ();
 
       const protoFilter = input
          ? proto => StringSimilarity .compareTwoStrings (proto .name .toLowerCase (), input) > 0.4

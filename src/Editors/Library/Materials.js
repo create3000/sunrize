@@ -12,6 +12,8 @@ module .exports = class Materials extends LibraryPanel
 
    update ()
    {
-      this .list .empty ();
+      // Clear output.
+
+      this .output .empty ();
    }
 };

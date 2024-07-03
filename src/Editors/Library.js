@@ -66,10 +66,6 @@ module .exports = new class Library extends Dialog
          .appendTo (this .element)
          .addClass ("library-output");
 
-      this .list = $("<ul></ul>")
-         .appendTo (this .output)
-         .addClass ("library-list");
-
       // Configure list type.
 
       const button = [... this .buttons .children ()]

@@ -24,8 +24,8 @@ module .exports = class LibraryPanel
       return this .#library .input;
    }
 
-   get list ()
+   get output ()
    {
-      return this .#library .list;
+      return this .#library .output;
    }
 };
