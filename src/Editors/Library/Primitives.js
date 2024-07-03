@@ -13,7 +13,7 @@ const
 
 module .exports = class Primitives extends LibraryPanel
 {
-   id = "PRIMITIVES";
+   id          = "PRIMITIVES";
    description = "Primitives";
 
    update ()

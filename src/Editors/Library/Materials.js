@@ -7,7 +7,7 @@ const
 
 module .exports = class Materials extends LibraryPanel
 {
-   id = "MATERIALS";
+   id          = "MATERIALS";
    description = "Materials";
 
    update ()

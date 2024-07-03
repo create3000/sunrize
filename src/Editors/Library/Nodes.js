@@ -11,7 +11,7 @@ const
 
 module .exports = class Nodes extends LibraryPanel
 {
-   id = "NODES";
+   id          = "NODES";
    description = "Nodes";
 
    update ()
