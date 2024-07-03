@@ -9,7 +9,7 @@ const
    StringSimilarity = require ("string-similarity"),
    _                = require ("../../Application/GetText");
 
-module .exports = class Nodes extends LibraryPanel
+module .exports = class NodesLibrary extends LibraryPanel
 {
    id          = "NODES";
    description = "Nodes";

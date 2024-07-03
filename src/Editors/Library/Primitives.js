@@ -1,131 +1,458 @@
 "use strict";
 
-const
-   $                = require ("jquery"),
-   X3D              = require ("../../X3D"),
-   LibraryPanel     = require ("./LibraryPanel"),
-   Editor           = require ("../../Undo/Editor"),
-   UndoManager      = require ("../../Undo/UndoManager"),
-   PrimitiveNodes   = require ("./PrimitiveNodes"),
-   StringSimilarity = require ("string-similarity"),
-   Traverse         = require ("../../Application/Traverse"),
-   _                = require ("../../Application/GetText");
-
-module .exports = class Primitives extends LibraryPanel
-{
-   id          = "PRIMITIVES";
-   description = "Primitives";
-
-   update ()
+module .exports = [
    {
-      const cmp = (a, b) => (a > b) - (a < b);
-
-      // Clear output.
-
-      this .output .empty ();
-
-      this .list = $("<ul></ul>")
-         .appendTo (this .output)
-         .addClass ("library-list");
-
-      // Make filter.
-
-      const input = this .input .val () .toLowerCase () .trim ();
-
-      if (input)
-         var filter = (object) => StringSimilarity .compareTwoStrings (object .typeName .toLowerCase (), input) > 0.4;
-      else
-         var filter = () => true;
-
-      // Get primitives.
-
-      const nodes = PrimitiveNodes
-         .filter (filter)
-         .sort ((a, b) => cmp (a .typeName,  b .typeName))
-         .sort ((a, b) => cmp (a .componentInfo .name, b .componentInfo .name));
-
-      // Create list elements.
-
-      let componentName = "";
-
-      for (const node of nodes)
-      {
-         if (node .componentInfo .name !== componentName)
-         {
-            componentName = node .componentInfo .name;
-
-            $("<li></li>")
-               .addClass ("component")
-               .text (node .componentInfo .name)
-               .appendTo (this .list);
+      componentInfo: { name: "EnvironmentalEffects" },
+      typeName: "Background Gray",
+      x3dSyntax: `
+DEF Gray Background {
+   skyColor [0.2 0.2 0.2]
+}
+`
+   },
+   {
+      componentInfo: { name: "EnvironmentalEffects" },
+      typeName: "Background Summer",
+      x3dSyntax: `
+DEF Summer Background {
+   skyAngle [
+      0.8,
+      1.3,
+      1.4,
+      1.5708
+   ]
+   skyColor [
+      0.21 0.31 0.59,
+      0.33 0.45 0.7,
+      0.57 0.66 0.85,
+      0.6 0.73 0.89,
+      0.7 0.83 0.98
+   ]
+   groundAngle [
+      0.659972,
+      1.2,
+      1.39912,
+      1.5708
+   ]
+   groundColor [
+      0.105712 0.156051 0.297,
+      0.187629 0.255857 0.398,
+      0.33604 0.405546 0.542,
+      0.3612 0.469145 0.602,
+      0.39471 0.522059 0.669
+   ]
+   }`
+   },
+   {
+      componentInfo: { name: "EnvironmentalEffects" },
+      typeName: "Background Sunny",
+      x3dSyntax: `
+DEF Sunny Background {
+   skyAngle [
+      0.05,
+      0.1,
+      1,
+      1.5708
+   ]
+   skyColor [
+      1 1 0,
+      1 1 0.5,
+      0.125 0.125 0.5,
+      0.3 0.3 0.55,
+      0.64 0.734 0.844
+   ]
+   groundAngle 1.5708
+   groundColor [
+      0.1 0.1 0.09,
+      0.48 0.48 0.45
+   ]
+}
+`
+   },
+   {
+      componentInfo: { name: "EnvironmentalEffects" },
+      typeName: "Background White",
+      x3dSyntax: `
+DEF White Background {
+   skyColor [1 1 1]
+}
+`
+   },
+   {
+      componentInfo: { name: "EnvironmentalSensor" },
+      typeName: "ProximitySensor",
+      x3dSyntax: `
+ProximitySensor {
+   size 2 2 2
+}
+`
+   },
+   {
+      componentInfo: { name: "EnvironmentalSensor" },
+      typeName: "TransformSensor",
+      x3dSyntax: `
+TransformSensor {
+   size 2 2 2
+}
+`
+   },
+   {
+      componentInfo: { name: "EnvironmentalSensor" },
+      typeName: "VisibilitySensor",
+      x3dSyntax: `
+VisibilitySensor {
+   size 2 2 2
+}
+`
+   },
+   {
+      componentInfo: { name: "Geometry2D" },
+      typeName: "Arc2D",
+      x3dSyntax: `
+DEF Arc2D Transform {
+   children Shape {
+      appearance Appearance {
+         material UnlitMaterial {
+            emissiveColor 1 1 1
          }
-
-         $("<li></li>")
-            .addClass ("node")
-            .text (node .typeName)
-            .attr ("x3dSyntax", node .x3dSyntax)
-            .attr ("similarity", StringSimilarity .compareTwoStrings (node .typeName .toLowerCase (), input))
-            .appendTo (this .list)
-            .on ("dblclick", () => this .importX3D (node .typeName, node .x3dSyntax));
+      }
+      geometry Arc2D { }
+   }
+}
+`
+   },
+   {
+      componentInfo: { name: "Geometry2D" },
+      typeName: "ArcClose2D",
+      x3dSyntax: `
+DEF ArcClose2D Transform {
+   children Shape {
+      appearance Appearance {
+         material Material { }
+      }
+      geometry ArcClose2D { }
+   }
+}
+`
+   },
+   {
+      componentInfo: { name: "Geometry2D" },
+      typeName: "Circle2D",
+      x3dSyntax: `
+DEF Circle2D Transform {
+   children Shape {
+      appearance Appearance {
+         material UnlitMaterial {
+            emissiveColor 1 1 1
+         }
+      }
+      geometry Circle2D { }
+   }
+}
+`
+   },
+   {
+      componentInfo: { name: "Geometry2D" },
+      typeName: "Disk2D",
+      x3dSyntax: `
+DEF Disk2D Transform {
+   children Shape {
+      appearance Appearance {
+         material Material { }
+      }
+      geometry Disk2D { }
+   }
+}
+`
+   },
+   {
+      componentInfo: { name: "Geometry2D" },
+      typeName: "Polyline2D",
+      x3dSyntax: `
+DEF Polyline2D Transform {
+   children Shape {
+      appearance Appearance {
+         material UnlitMaterial {
+            emissiveColor 1 1 1
+         }
+      }
+      geometry Polyline2D {
+         lineSegments [
+            0.0 0.0,
+            1.0 1.0,
+            2.0 0.0,
+            3.0 2.0,
+            4.0 0.0
+         ]
       }
    }
-
-   async importX3D (typeName, x3dSyntax)
+}
+`
+   },
    {
-      UndoManager .shared .beginUndo (_("Import %s"), typeName);
-
-      const
-         node  = (await Editor .importX3D (this .executionContext, x3dSyntax)) .pop (),
-         field = this .field ?? $.try (() => this .node ?.getField (node .getContainerField ()));
-
-      if (this .browser .getBrowserOption ("ColorSpace") === "LINEAR")
-      {
-         Traverse .traverse (node, Traverse .ROOT_NODES, node =>
-         {
-            for (const field of node .getFields ())
-            {
-               switch (field .getType ())
-               {
-                  case X3D .X3DConstants .SFColor:
-                  case X3D .X3DConstants .SFColorRGBA:
-                     field .assign (field .sRGBToLinear ());
-                     break;
-                  case X3D .X3DConstants .MFColor:
-                  case X3D .X3DConstants .MFColorRGBA:
-                     field .assign (field .map (value => value .sRGBToLinear ()));
-                     break;
-               }
-            }
-         });
-      }
-
-      switch (field ?.getType ())
-      {
-         case X3D .X3DConstants .SFNode:
-         {
-            Editor .setFieldValue (this .executionContext, this .node, field, node);
-            Editor .removeValueFromArray (this .executionContext, this .executionContext, this .executionContext .rootNodes, this .executionContext .rootNodes .length - 1);
-            break;
-         }
-         case X3D .X3DConstants .MFNode:
-         {
-            Editor .insertValueIntoArray (this .executionContext, this .node, field, field .length, node);
-            Editor .removeValueFromArray (this .executionContext, this .executionContext, this .executionContext .rootNodes, this .executionContext .rootNodes .length - 1);
-            break;
+      componentInfo: { name: "Geometry2D" },
+      typeName: "Polypoint2D",
+      x3dSyntax: `
+DEF Polypoint2D Transform {
+   children Shape {
+      appearance Appearance {
+         material UnlitMaterial {
+            emissiveColor 1 1 1
          }
       }
-
-      if (node .getType () .includes (X3D .X3DConstants .X3DBindableNode))
-         Editor .setFieldValue (this .executionContext, node, node ._set_bind, true);
-
-      UndoManager .shared .endUndo ();
-
-      requestAnimationFrame (() =>
-      {
-         const outlineEditor = require ("../../Application/Window") .sidebar .outlineEditor;
-
-         outlineEditor .expandTo (node);
-         outlineEditor .selectNodeElement ($(`.node[node-id=${node .getId ()}]`));
-      });
+      geometry Polypoint2D {
+         point [
+            0.0 0.0,
+            1.0 1.0,
+            2.0 0.0,
+            3.0 2.0,
+            4.0 0.0
+         ]
+      }
    }
-};
+}
+`
+   },
+   {
+      componentInfo: { name: "Geometry2D" },
+      typeName: "Rectangle2D",
+      x3dSyntax: `
+DEF Rectangle2D Transform {
+   children Shape {
+      appearance Appearance {
+         material Material { }
+      }
+      geometry Rectangle2D { }
+   }
+}
+`
+   },
+   {
+      componentInfo: { name: "Geometry2D" },
+      typeName: "TriangleSet2D",
+      x3dSyntax: `
+DEF TriangleSet2D Transform {
+   children Shape {
+      appearance Appearance {
+         material Material { }
+      }
+      geometry TriangleSet2D {
+         vertices [
+            0.0 0.0,
+            2.0 0.0,
+            1.0 1.0,
+            2.0 0.0,
+            4.0 0.0
+            3.0 2.0,
+         ]
+      }
+   }
+}
+`
+   },
+   {
+      componentInfo: { name: "Geometry3D" },
+      typeName: "Box",
+      x3dSyntax: `
+DEF Box Transform {
+   children Shape {
+      appearance Appearance {
+         material Material { }
+      }
+      geometry Box { }
+   }
+}
+`
+   },
+   {
+      componentInfo: { name: "Geometry3D" },
+      typeName: "Cone",
+      x3dSyntax: `
+DEF Cone Transform {
+   children Shape {
+      appearance Appearance {
+         material Material { }
+      }
+      geometry Cone { }
+   }
+}
+`
+   },
+   {
+      componentInfo: { name: "Geometry3D" },
+      typeName: "Cylinder",
+      x3dSyntax: `
+DEF Cylinder Transform {
+   children Shape {
+      appearance Appearance {
+         material Material { }
+      }
+      geometry Cylinder { }
+   }
+}
+`
+   },
+   {
+      componentInfo: { name: "Geometry3D" },
+      typeName: "ElevationGrid",
+      x3dSyntax: `
+DEF ElevationGrid Transform {
+   children Shape {
+      appearance Appearance {
+         material Material { }
+      }
+      geometry ElevationGrid {
+         xDimension 10
+         zDimension 10
+      }
+   }
+}
+`
+   },
+   {
+      componentInfo: { name: "Geometry3D" },
+      typeName: "Extrusion",
+      x3dSyntax: `
+DEF Extrusion Transform {
+   children Shape {
+      appearance Appearance {
+         material Material { }
+      }
+      geometry Extrusion { }
+   }
+}
+`
+   },
+   {
+      componentInfo: { name: "Geometry3D" },
+      typeName: "IndexedFaceSet",
+      x3dSyntax: `
+DEF Pyramid Transform {
+   children Shape {
+      appearance Appearance {
+         material Material { }
+      }
+      geometry IndexedFaceSet {
+         coordIndex [3, 2, 1, 0, -1, 0, 1, 4, -1, 1, 2, 4, -1, 2, 3, 4, -1, 3, 0, 4, -1]
+         coord Coordinate {
+            point [
+               -1 -0.8660254037844386 1,
+                1 -0.8660254037844386 1,
+                1 -0.8660254037844386 -1,
+               -1 -0.8660254037844386 -1,
+               0 0.8660254037844386 0
+            ]
+         }
+      }
+   }
+}
+`
+   },
+   {
+      componentInfo: { name: "Geometry3D" },
+      typeName: "Sphere",
+      x3dSyntax: `
+DEF Sphere Transform {
+   children Shape {
+      appearance Appearance {
+         material Material { }
+      }
+      geometry Sphere { }
+   }
+}
+`
+   },
+   {
+      componentInfo: { name: "Text" },
+      typeName: "Text",
+      x3dSyntax: `
+DEF Text Transform {
+   children Shape {
+      appearance Appearance {
+         material Material { }
+      }
+      geometry Text {
+         string "3D Text"
+         fontStyle FontStyle { }
+      }
+   }
+}
+`
+   },
+   {
+      componentInfo: { name: "Rendering" },
+      typeName: "IndexedLineSet",
+      x3dSyntax: `
+DEF IndexedLineSet Transform {
+   children Shape {
+      appearance Appearance {
+         material UnlitMaterial { }
+      }
+      geometry IndexedLineSet {
+         coordIndex [
+            0,
+            1,
+            2,
+            3,
+            0,
+            -1,
+            4,
+            5,
+            6,
+            7,
+            4,
+            -1,
+            0,
+            4,
+            -1,
+            1,
+            5,
+            -1,
+            2,
+            6,
+            -1,
+            3,
+            7,
+            -1
+         ]
+         coord Coordinate {
+            point [
+               1 1 1,
+               -1 1 1,
+               -1 -1 1,
+               1 -1 1,
+               1 1 -1,
+               -1 1 -1,
+               -1 -1 -1,
+               1 -1 -1
+            ]
+         }
+      }
+   }
+}
+`
+   },
+   {
+      componentInfo: { name: "Rendering" },
+      typeName: "PointSet",
+      x3dSyntax: `
+DEF PointSet Transform {
+   children Shape {
+      appearance Appearance {
+         material UnlitMaterial { }
+      }
+      geometry PointSet {
+         coord Coordinate {
+            point [
+               1 1 0,
+               -1 1 0,
+               -1 -1 0,
+               1 -1 0
+            ]
+         }
+      }
+   }
+}
+`
+   },
+];

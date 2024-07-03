@@ -12,9 +12,9 @@ module .exports = new class Library extends Dialog
       super ("Sunrize.Library.");
 
       this .panes = [
-         new (require ("./Library/Nodes")) (this),
-         new (require ("./Library/Primitives")) (this),
-         new (require ("./Library/Materials")) (this),
+         new (require ("./Library/NodesLibrary")) (this),
+         new (require ("./Library/PrimitivesLibrary")) (this),
+         new (require ("./Library/MaterialsLibrary")) (this),
       ];
 
       this .setup ();
@@ -104,15 +104,18 @@ module .exports = new class Library extends Dialog
       if (event .key !== "Enter")
          return;
 
+      const input = this .input .val () .trim () .toLowerCase ();
+
+      if (!input)
+         return;
+
       const nodes = Array .from (this .output .find (".node"), element => $(element));
 
       if (!nodes .length)
          return;
 
-      const
-         input = this .input .val () .trim () .toLowerCase (),
-         node  = nodes .find (node => node .text () .toLowerCase () === input)
-            ?? nodes .sort ((a, b) => a .attr ("similarity") - b .attr ("similarity")) .at (-1);
+      const node = nodes .find (node => node .text () .toLowerCase () === input)
+         ?? nodes .sort ((a, b) => a .attr ("similarity") - b .attr ("similarity")) .at (-1);
 
       node .trigger ("dblclick");
    }
