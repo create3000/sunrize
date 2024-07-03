@@ -96,6 +96,7 @@ module .exports = class NodesLibrary extends LibraryPanel
             .on ("dblclick", () => this .createNode (node .typeName, node .componentInfo .name));
       }
    }
+   
    getProtos (executionContext = this .executionContext, protos = new Map (), outerNode)
    {
       if (!executionContext)
