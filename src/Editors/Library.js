@@ -28,7 +28,7 @@ module .exports = new class Library extends Dialog
       // Set default config values.
 
       this .config .file .setDefaultValues ({
-         type: "NODES",
+         type: this .panes [0] .id,
       });
 
       // Add class.
@@ -105,7 +105,7 @@ module .exports = new class Library extends Dialog
       if (event .key !== "Enter")
          return;
 
-      const nodes = Array .from (this .list .find (".node"), element => $(element));
+      const nodes = Array .from (this .output .find (".node"), element => $(element));
 
       if (!nodes .length)
          return;

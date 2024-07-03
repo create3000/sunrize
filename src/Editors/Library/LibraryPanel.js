@@ -19,6 +19,16 @@ module .exports = class LibraryPanel
       return this .#library .executionContext;
    }
 
+   get node ()
+   {
+      return this .#library .node;
+   }
+
+   get field ()
+   {
+      return this .#library .field;
+   }
+
    get input ()
    {
       return this .#library .input;
