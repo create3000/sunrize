@@ -63,6 +63,13 @@ module .exports = new class Library extends Dialog
          .text (_("Primitives"))
          .on ("click", () => this .button (this .primitivesButton));
 
+      this .materialsButton = $("<span></span>")
+         .appendTo (this .buttons)
+         .addClass ("library-button")
+         .data ("type", "MATERIALS")
+         .text (_("Materials"))
+         .on ("click", () => this .button (this .materialsButton));
+
       // Output
 
       this .output = $("<div></div>")
@@ -82,6 +89,9 @@ module .exports = new class Library extends Dialog
             break;
          case "PRIMITIVES":
             this .button (this .primitivesButton);
+            break;
+         case "MATERIALS":
+            this .button (this .materialsButton);
             break;
       }
    }
@@ -146,6 +156,9 @@ module .exports = new class Library extends Dialog
             break;
          case "PRIMITIVES":
             this .updatePrimitives ();
+            break;
+         case "MATERIALS":
+            this .updateMaterials ();
             break;
       }
    }
@@ -427,5 +440,10 @@ module .exports = new class Library extends Dialog
          outlineEditor .expandTo (node);
          outlineEditor .selectNodeElement ($(`.node[node-id=${node .getId ()}]`));
       });
+   }
+
+   updateMaterials ()
+   {
+      this .list .empty ();
    }
 }
