@@ -2,7 +2,6 @@
 
 const
    $      = require ("jquery"),
-   X3D    = require ("../X3D"),
    Dialog = require ("../Controls/Dialog"),
    _      = require ("../Application/GetText");
 
@@ -110,20 +109,12 @@ module .exports = new class Library extends Dialog
       if (!nodes .length)
          return;
 
-      try
-      {
-         const
-            input        = this .config .file .type === "NODES" ? this .input .val () .toUpperCase () .trim () : "",
-            ConcreteNode = this .browser .getConcreteNode (X3D .HTMLSupport .getNodeTypeName (input));
+      const
+         input = this .input .val () .toLowerCase () .trim (),
+         node  = nodes .find (node => node .text () .toLowerCase () === input)
+            ?? nodes .sort ((a, b) => a .attr ("similarity") - b .attr ("similarity")) .pop ();
 
-         this .createNode (ConcreteNode .typeName, ConcreteNode .componentInfo .name);
-      }
-      catch
-      {
-         nodes .sort ((a, b) => a .attr ("similarity") - b .attr ("similarity"))
-            .pop ()
-            .trigger ("dblclick");
-      }
+      node .trigger ("dblclick");
    }
 
    update ()
