@@ -112,7 +112,7 @@ module .exports = new class Library extends Dialog
       const
          input = this .input .val () .toLowerCase () .trim (),
          node  = nodes .find (node => node .text () .toLowerCase () === input)
-            ?? nodes .sort ((a, b) => a .attr ("similarity") - b .attr ("similarity")) .pop ();
+            ?? nodes .sort ((a, b) => a .attr ("similarity") - b .attr ("similarity")) .at (-1);
 
       node .trigger ("dblclick");
    }
