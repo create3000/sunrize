@@ -676,7 +676,12 @@ body.dark .ui-widget .library-list .component {
 }
 
 .ui-widget .library-list .node:hover {
-  background: rgba(0, 0, 0, 0.2)
+  background-color: rgba(0, 0, 0, 0.2)
+}
+
+.ui-widget .library-list .icon {
+  padding-left: 27px;
+  background: no-repeat;
 }
 
 .ui-widget .library-list .hidden {
