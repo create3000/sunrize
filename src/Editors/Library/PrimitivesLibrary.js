@@ -6,7 +6,6 @@ const
    LibraryPane = require ("./LibraryPane"),
    Editor      = require ("../../Undo/Editor"),
    UndoManager = require ("../../Undo/UndoManager"),
-   Primitives  = require ("./Primitives"),
    Traverse    = require ("../../Application/Traverse"),
    _           = require ("../../Application/GetText");
 
@@ -29,7 +28,7 @@ module .exports = class PrimitivesLibrary extends LibraryPane
 
       // Get primitives.
 
-      const nodes = Primitives
+      const nodes = require ("./Primitives")
          .sort ((a, b) => cmp (a .typeName,  b .typeName))
          .sort ((a, b) => cmp (a .componentInfo .name, b .componentInfo .name));
 
