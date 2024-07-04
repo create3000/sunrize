@@ -38,4 +38,6 @@ module .exports = class LibraryPanel
    {
       return this .#library .importX3D;
    }
+
+   open () { }
 };

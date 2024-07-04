@@ -91,6 +91,9 @@ module .exports = new class Library extends Dialog
       super .open ();
       this .update ();
       this .input .trigger ("focus");
+
+      for (const pane of this .panes)
+         pane .open ();
    }
 
    button (button)
@@ -189,7 +192,6 @@ module .exports = new class Library extends Dialog
 
       pane .update ();
    }
-
 
    async importX3D (typeName, x3dSyntax)
    {

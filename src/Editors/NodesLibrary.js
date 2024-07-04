@@ -15,11 +15,22 @@ module .exports = class NodesLibrary extends LibraryPane
 
    #list;
 
+   open ()
+   {
+      this .#list = undefined;
+   }
+
    update ()
    {
       // Clear output.
 
       this .output .empty ();
+
+      if (this .#list)
+      {
+         this .output .append (this .#list);
+         return;
+      }
 
       // Create list.
 
