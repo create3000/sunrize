@@ -109,6 +109,8 @@ module .exports = new class Library extends Dialog
       {
          const elements = Array .from (this .output .find (".node, .component"), e => $(e));
 
+         // Hide nodes.
+
          for (const node of elements)
          {
             if (!node .hasClass ("node"))
@@ -123,6 +125,8 @@ module .exports = new class Library extends Dialog
             else
                node .addClass ("hidden");
          }
+
+         // Hide components with only hidden nodes.
 
          let
             nodes  = 0,
