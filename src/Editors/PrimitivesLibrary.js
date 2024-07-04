@@ -9,13 +9,23 @@ module .exports = class PrimitivesLibrary extends LibraryPane
    id          = "PRIMITIVES";
    description = "Primitives";
 
+   #list;
+
    update ()
    {
       // Clear output.
 
       this .output .empty ();
 
-      this .list = $("<ul></ul>")
+      if (this .#list)
+      {
+         this .output .append (this .#list);
+         return;
+      }
+
+      // Create list.
+
+      this .#list = $("<ul></ul>")
          .appendTo (this .output)
          .addClass ("library-list");
 
@@ -38,14 +48,14 @@ module .exports = class PrimitivesLibrary extends LibraryPane
             $("<li></li>")
                .addClass ("component")
                .text (node .componentInfo .name)
-               .appendTo (this .list);
+               .appendTo (this .#list);
          }
 
          $("<li></li>")
             .addClass ("node")
             .text (node .typeName)
             .attr ("x3dSyntax", node .x3dSyntax)
-            .appendTo (this .list)
+            .appendTo (this .#list)
             .on ("dblclick", () => this .importX3D (node .typeName, node .x3dSyntax));
       }
    }

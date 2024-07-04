@@ -13,13 +13,23 @@ module .exports = class NodesLibrary extends LibraryPane
    id          = "NODES";
    description = "Nodes";
 
+   #list;
+
    update ()
    {
       // Clear output.
 
       this .output .empty ();
 
-      this .list = $("<ul></ul>")
+      if (this .#list)
+      {
+         this .output .append (this .#list);
+         return;
+      }
+
+      // Create list.
+
+      this .#list = $("<ul></ul>")
          .appendTo (this .output)
          .addClass ("library-list");
 
@@ -42,14 +52,14 @@ module .exports = class NodesLibrary extends LibraryPane
             .addClass ("component")
             .attr ("name", "prototypes")
             .text ("Prototypes")
-            .appendTo (this .list);
+            .appendTo (this .#list);
 
          for (const proto of protos)
          {
             $("<li></li>")
                .addClass ("node")
                .text (proto .name)
-               .appendTo (this .list)
+               .appendTo (this .#list)
                .on ("dblclick", () => this .createProto (proto));
          }
       }
@@ -68,14 +78,14 @@ module .exports = class NodesLibrary extends LibraryPane
                .addClass ("component")
                .attr ("name", node .componentInfo .name)
                .text (this .browser .getSupportedComponents () .get (node .componentInfo .name) .title)
-               .appendTo (this .list);
+               .appendTo (this .#list);
          }
 
          $("<li></li>")
             .addClass ("node")
             .text (node .typeName)
             .attr ("componentName", node .componentInfo .name)
-            .appendTo (this .list)
+            .appendTo (this .#list)
             .on ("dblclick", () => this .createNode (node .typeName, node .componentInfo .name));
       }
    }

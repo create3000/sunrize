@@ -10,6 +10,7 @@ module .exports = class Materials extends LibraryPane
    id          = "MATERIALS";
    description = "Materials";
 
+   #list;
    #scene;
 
    async update ()
@@ -20,7 +21,15 @@ module .exports = class Materials extends LibraryPane
 
       this .output .empty ();
 
-      this .list = $("<ul></ul>")
+      if (this .#list)
+      {
+         this .output .append (this .#list);
+         return;
+      }
+
+      // Create list.
+
+      this .#list = $("<ul></ul>")
          .appendTo (this .output)
          .addClass ("library-list");
 
@@ -31,7 +40,7 @@ module .exports = class Materials extends LibraryPane
          $("<li></li>")
             .addClass ("component")
             .text (group .getNodeName ())
-            .appendTo (this .list);
+            .appendTo (this .#list);
 
          for (const [i, node] of group .children .entries ())
          {
@@ -40,7 +49,7 @@ module .exports = class Materials extends LibraryPane
             $("<li></li>")
                .addClass ("node")
                .text (`${group .getNodeName ()} ${i + 1}`)
-               .appendTo (this .list)
+               .appendTo (this .#list)
                .on ("dblclick", () => this .importX3D (material .getNodeName (), material .toXMLString ()));
          }
       }
