@@ -30,13 +30,13 @@ module .exports = class Materials extends LibraryPane
 
       // Create list.
 
-      this .#canvas  ??= $("<x3d-canvas preserveDrawingBuffer='true''></x3d-canvas>");
-      this .#browser ??= this .#canvas .prop ("browser");
-      this .#scene   ??= await this .#browser .createX3DFromURL (new X3D .MFString (`file://${__dirname}/Materials.x3d`));
-
       this .#list = $("<ul></ul>")
          .appendTo (this .output)
          .addClass ("library-list");
+
+      this .#canvas  ??= $("<x3d-canvas preserveDrawingBuffer='true''></x3d-canvas>");
+      this .#browser ??= this .#canvas .prop ("browser");
+      this .#scene   ??= await this .#browser .createX3DFromURL (new X3D .MFString (`file://${__dirname}/Materials.x3d`));
 
       const
          materials = this .#scene .getExportedNode ("Materials"),
@@ -90,6 +90,7 @@ module .exports = class Materials extends LibraryPane
          element .css ("background-image", `url(${this .#canvas [0] .toDataURL ()})`);
       }
 
+      this .#browser .dispose ();
       this .#canvas .css ("display", "none");
    }
 };
