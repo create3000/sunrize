@@ -16,8 +16,6 @@ module .exports = class PrimitivesLibrary extends LibraryPane
 
    update ()
    {
-      const cmp = (a, b) => (a > b) - (a < b);
-
       // Clear output.
 
       this .output .empty ();
@@ -29,8 +27,8 @@ module .exports = class PrimitivesLibrary extends LibraryPane
       // Get primitives.
 
       const nodes = require ("./Primitives")
-         .sort ((a, b) => cmp (a .typeName,  b .typeName))
-         .sort ((a, b) => cmp (a .componentInfo .name, b .componentInfo .name));
+         .sort ((a, b) => a .typeName .localeCompare (b .typeName))
+         .sort ((a, b) => a .componentInfo .name .localeCompare (b .componentInfo .name));
 
       // Create list elements.
 

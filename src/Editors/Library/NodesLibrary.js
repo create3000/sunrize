@@ -15,8 +15,6 @@ module .exports = class NodesLibrary extends LibraryPane
 
    update ()
    {
-      const cmp = (a, b) => (a > b) - (a < b);
-
       // Clear output.
 
       this .output .empty ();
@@ -28,13 +26,13 @@ module .exports = class NodesLibrary extends LibraryPane
       // Get protos.
 
       const protos = Array .from (this .getProtos () .values ())
-         .sort ((a, b) => cmp (a .name, b .name));
+         .sort ((a, b) => a .name .localeCompare (b .name));
 
       // Get supported nodes.
 
       const nodes = [... this .browser .getConcreteNodes ()]
-         .sort ((a, b) => cmp (a .typeName, b .typeName))
-         .sort ((a, b) => cmp (a .componentInfo .name, b .componentInfo .name));
+         .sort ((a, b) => a .typeName .localeCompare (b .typeName))
+         .sort ((a, b) => a .componentInfo .name .localeCompare (b .componentInfo .name));
 
       // Create list for proto elements
 
