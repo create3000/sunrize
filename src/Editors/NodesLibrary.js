@@ -21,12 +21,6 @@ module .exports = class NodesLibrary extends LibraryPane
 
       this .output .empty ();
 
-      if (this .#list)
-      {
-         this .output .append (this .#list);
-         return;
-      }
-
       // Create list.
 
       this .#list = $("<ul></ul>")
