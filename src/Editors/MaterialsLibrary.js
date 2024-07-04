@@ -35,11 +35,13 @@ module .exports = class Materials extends LibraryPane
 
          for (const [i, node] of group .children .entries ())
          {
+            const material = node .children [0] .appearance .material;
+
             $("<li></li>")
                .addClass ("node")
                .text (`${group .getNodeName ()} ${i + 1}`)
                .appendTo (this .list)
-               .on ("dblclick", () => this .importX3D (`${group .getNodeName ()} ${i + 1}`, node .children [0] .appearance .material .toXMLString ()));
+               .on ("dblclick", () => this .importX3D (material .getNodeName (), material .toXMLString ()));
          }
       }
    }
