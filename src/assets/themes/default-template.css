@@ -679,6 +679,10 @@ body.dark .ui-widget .library-list .component {
   background: rgba(0, 0, 0, 0.2)
 }
 
+.ui-widget .library-list .hidden {
+  display: none;
+}
+
 /* Node List */
 
 .node-list {

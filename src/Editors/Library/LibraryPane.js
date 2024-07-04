@@ -29,11 +29,6 @@ module .exports = class LibraryPanel
       return this .#library .field;
    }
 
-   get input ()
-   {
-      return this .#library .input;
-   }
-
    get output ()
    {
       return this .#library .output;

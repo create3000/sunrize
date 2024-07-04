@@ -1,17 +1,16 @@
 "use strict";
 
 const
-   $                = require ("jquery"),
-   X3D              = require ("../../X3D"),
-   LibraryPanel     = require ("./LibraryPanel"),
-   Editor           = require ("../../Undo/Editor"),
-   UndoManager      = require ("../../Undo/UndoManager"),
-   Primitives       = require ("./Primitives"),
-   StringSimilarity = require ("string-similarity"),
-   Traverse         = require ("../../Application/Traverse"),
-   _                = require ("../../Application/GetText");
+   $           = require ("jquery"),
+   X3D         = require ("../../X3D"),
+   LibraryPane = require ("./LibraryPane"),
+   Editor      = require ("../../Undo/Editor"),
+   UndoManager = require ("../../Undo/UndoManager"),
+   Primitives  = require ("./Primitives"),
+   Traverse    = require ("../../Application/Traverse"),
+   _           = require ("../../Application/GetText");
 
-module .exports = class PrimitivesLibrary extends LibraryPanel
+module .exports = class PrimitivesLibrary extends LibraryPane
 {
    id          = "PRIMITIVES";
    description = "Primitives";
@@ -28,19 +27,9 @@ module .exports = class PrimitivesLibrary extends LibraryPanel
          .appendTo (this .output)
          .addClass ("library-list");
 
-      // Make filter.
-
-      const input = this .input .val () .toLowerCase () .trim ();
-
-      if (input)
-         var filter = (object) => StringSimilarity .compareTwoStrings (object .typeName .toLowerCase (), input) > 0.4;
-      else
-         var filter = () => true;
-
       // Get primitives.
 
       const nodes = Primitives
-         .filter (filter)
          .sort ((a, b) => cmp (a .typeName,  b .typeName))
          .sort ((a, b) => cmp (a .componentInfo .name, b .componentInfo .name));
 
@@ -64,7 +53,6 @@ module .exports = class PrimitivesLibrary extends LibraryPanel
             .addClass ("node")
             .text (node .typeName)
             .attr ("x3dSyntax", node .x3dSyntax)
-            .attr ("similarity", StringSimilarity .compareTwoStrings (node .typeName .toLowerCase (), input))
             .appendTo (this .list)
             .on ("dblclick", () => this .importX3D (node .typeName, node .x3dSyntax));
       }

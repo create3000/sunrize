@@ -1,9 +1,10 @@
 "use strict";
 
 const
-   $      = require ("jquery"),
-   Dialog = require ("../Controls/Dialog"),
-   _      = require ("../Application/GetText");
+   $                = require ("jquery"),
+   Dialog           = require ("../Controls/Dialog"),
+   StringSimilarity = require ("string-similarity"),
+   _                = require ("../Application/GetText");
 
 module .exports = new class Library extends Dialog
 {
@@ -41,7 +42,7 @@ module .exports = new class Library extends Dialog
          .addClass ("library-input")
          .attr ("placeholder", _("Search a node"))
          .on ("keydown", event => this .enter (event))
-         .on ("keyup", () => this .update ());
+         .on ("keyup", () => this .filter ());
 
       // Buttons
 
@@ -97,6 +98,59 @@ module .exports = new class Library extends Dialog
       button .addClass ("active");
 
       this .update ();
+      this .filter ();
+   }
+
+   filter ()
+   {
+      const input = this .input .val () .toLowerCase () .trim ();
+
+      if (input)
+      {
+         const elements = Array .from (this .output .find (".node, .component"), e => $(e));
+
+         for (const node of elements)
+         {
+            if (!node .hasClass ("node"))
+               continue;
+
+            const similarity = StringSimilarity .compareTwoStrings (node .text () .toLowerCase (), input);
+
+            node .data ("similarity", similarity);
+
+            if (similarity > 0.4)
+               node .removeClass ("hidden");
+            else
+               node .addClass ("hidden");
+         }
+
+         let
+            nodes  = 0,
+            hidden = 0;
+
+         for (const element of elements .reverse ())
+         {
+            if (element .hasClass ("component"))
+            {
+               if (hidden === nodes)
+                  element .addClass ("hidden")
+               else
+                  element .removeClass ("hidden");
+
+               nodes  = 0,
+               hidden = 0;
+            }
+            else if (element .hasClass ("node"))
+            {
+               nodes  += 1;
+               hidden += element .hasClass ("hidden");
+            }
+         }
+      }
+      else
+      {
+         this .output .find (".node, .component") .removeClass ("hidden");
+      }
    }
 
    enter (event)
@@ -115,7 +169,7 @@ module .exports = new class Library extends Dialog
          return;
 
       const node = nodes .find (node => node .text () .toLowerCase () === input)
-         ?? nodes .sort ((a, b) => a .attr ("similarity") - b .attr ("similarity")) .at (-1);
+         ?? nodes .sort ((a, b) => a .data ("similarity") - b .data ("similarity")) .at (-1);
 
       node .trigger ("dblclick");
    }

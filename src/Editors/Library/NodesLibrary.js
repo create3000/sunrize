@@ -1,15 +1,14 @@
 "use strict";
 
 const
-   $                = require ("jquery"),
-   X3D              = require ("../../X3D"),
-   LibraryPanel     = require ("./LibraryPanel"),
-   Editor           = require ("../../Undo/Editor"),
-   UndoManager      = require ("../../Undo/UndoManager"),
-   StringSimilarity = require ("string-similarity"),
-   _                = require ("../../Application/GetText");
+   $           = require ("jquery"),
+   X3D         = require ("../../X3D"),
+   LibraryPane = require ("./LibraryPane"),
+   Editor      = require ("../../Undo/Editor"),
+   UndoManager = require ("../../Undo/UndoManager"),
+   _           = require ("../../Application/GetText");
 
-module .exports = class NodesLibrary extends LibraryPanel
+module .exports = class NodesLibrary extends LibraryPane
 {
    id          = "NODES";
    description = "Nodes";
@@ -28,24 +27,12 @@ module .exports = class NodesLibrary extends LibraryPanel
 
       // Get protos.
 
-      const input = this .input .val () .toLowerCase () .trim ();
-
-      const protoFilter = input
-         ? proto => StringSimilarity .compareTwoStrings (proto .name .toLowerCase (), input) > 0.4
-         : () => true;
-
       const protos = Array .from (this .getProtos () .values ())
-         .filter (protoFilter)
          .sort ((a, b) => cmp (a .name, b .name));
 
       // Get supported nodes.
 
-      const nodeFilter = input
-         ? ConcreteNode => StringSimilarity .compareTwoStrings (ConcreteNode .typeName .toLowerCase (), input) > 0.4
-         : () => true;
-
       const nodes = [... this .browser .getConcreteNodes ()]
-         .filter (nodeFilter)
          .sort ((a, b) => cmp (a .typeName, b .typeName))
          .sort ((a, b) => cmp (a .componentInfo .name, b .componentInfo .name));
 
@@ -64,7 +51,6 @@ module .exports = class NodesLibrary extends LibraryPanel
             $("<li></li>")
                .addClass ("node")
                .text (proto .name)
-               .attr ("similarity", StringSimilarity .compareTwoStrings (proto .name .toLowerCase (), input))
                .appendTo (this .list)
                .on ("dblclick", () => this .createProto (proto));
          }
@@ -91,12 +77,11 @@ module .exports = class NodesLibrary extends LibraryPanel
             .addClass ("node")
             .text (node .typeName)
             .attr ("componentName", node .componentInfo .name)
-            .attr ("similarity", StringSimilarity .compareTwoStrings (node .typeName .toLowerCase (), input))
             .appendTo (this .list)
             .on ("dblclick", () => this .createNode (node .typeName, node .componentInfo .name));
       }
    }
-   
+
    getProtos (executionContext = this .executionContext, protos = new Map (), outerNode)
    {
       if (!executionContext)
