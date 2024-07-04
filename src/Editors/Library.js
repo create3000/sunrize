@@ -195,8 +195,6 @@ module .exports = new class Library extends Dialog
    {
       UndoManager .shared .beginUndo (_("Import %s"), typeName);
 
-      console .log (x3dSyntax)
-
       const
          node  = (await Editor .importX3D (this .executionContext, x3dSyntax)) .pop (),
          field = this .field ?? $.try (() => this .node ?.getField (node .getContainerField ()));
