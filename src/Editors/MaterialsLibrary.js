@@ -34,7 +34,7 @@ module .exports = class Materials extends LibraryPane
          .appendTo (this .output)
          .addClass ("library-list");
 
-      this .#canvas  ??= $("<x3d-canvas preserveDrawingBuffer='true''></x3d-canvas>");
+      this .#canvas  ??= $("<x3d-canvas preserveDrawingBuffer='true''></x3d-canvas>") .css ({ "width": "25px", "height": "25px" });
       this .#browser ??= this .#canvas .prop ("browser");
       this .#scene   ??= await this .#browser .createX3DFromURL (new X3D .MFString (`file://${__dirname}/Materials.x3d`));
 
@@ -66,9 +66,7 @@ module .exports = class Materials extends LibraryPane
 
       // Create icons.
 
-      this .#canvas
-         .appendTo (this .output)
-         .css ({ "width": "25px", "height": "25px" });
+      this .#canvas .appendTo (this .output);
 
       await this .#browser .replaceWorld (this .#scene);
 

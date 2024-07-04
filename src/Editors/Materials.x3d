@@ -5,7 +5,7 @@
     <meta name='created' content='Thu, 04 Jul 2024 10:54:01 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.4, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 04 Jul 2024 15:12:37 GMT'/>
+    <meta name='modified' content='Thu, 04 Jul 2024 15:40:12 GMT'/>
   </head>
   <Scene>
     <Background
@@ -6576,11 +6576,6 @@
         </Transform>
       </Group>
     </Switch>
-    <Material DEF='Metal9'
-        ambientIntensity='0.25641'
-        diffuseColor='0.222308 0.15428 0'
-        specularColor='0.678571 0.661796 0.528818'
-        shininess='0.0204082'/>
     <EXPORT localDEF='Materials'/>
     <EXPORT localDEF='Viewpoint'/>
   </Scene>
