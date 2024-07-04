@@ -163,7 +163,7 @@ module .exports = new class Library extends Dialog
       if (!input)
          return;
 
-      const nodes = Array .from (this .output .find (".node"), element => $(element));
+      const nodes = Array .from (this .output .find (".node:not(.hidden)"), element => $(element));
 
       if (!nodes .length)
          return;
