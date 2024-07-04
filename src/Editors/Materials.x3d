@@ -5,12 +5,13 @@
     <meta name='created' content='Thu, 04 Jul 2024 10:54:01 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.4, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 04 Jul 2024 14:28:28 GMT'/>
+    <meta name='modified' content='Thu, 04 Jul 2024 14:58:42 GMT'/>
   </head>
   <Scene>
     <Background
         transparency='1'/>
-    <Viewpoint DEF='Viewpoint'>
+    <Viewpoint DEF='Viewpoint'
+        position='0 0 20.62705'>
       <NavigationInfo containerField='navigationInfo'
           transitionType='"TELEPORT"'/>
     </Viewpoint>

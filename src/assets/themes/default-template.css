@@ -680,7 +680,7 @@ body.dark .ui-widget .library-list .component {
 }
 
 .ui-widget .library-list .icon {
-  padding-left: 27px;
+  padding-left: calc(27px + 0.5em);
   background: no-repeat;
 }
 
