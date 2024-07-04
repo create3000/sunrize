@@ -2,11 +2,11 @@
 
 const
    $           = require ("jquery"),
-   X3D         = require ("../../X3D"),
+   X3D         = require ("../X3D"),
    LibraryPane = require ("./LibraryPane"),
-   Editor      = require ("../../Undo/Editor"),
-   UndoManager = require ("../../Undo/UndoManager"),
-   _           = require ("../../Application/GetText");
+   Editor      = require ("../Undo/Editor"),
+   UndoManager = require ("../Undo/UndoManager"),
+   _           = require ("../Application/GetText");
 
 module .exports = class NodesLibrary extends LibraryPane
 {
@@ -164,7 +164,7 @@ module .exports = class NodesLibrary extends LibraryPane
 
       requestAnimationFrame (() =>
       {
-         const outlineEditor = require ("../../Application/Window") .sidebar .outlineEditor;
+         const outlineEditor = require ("../Application/Window") .sidebar .outlineEditor;
 
          outlineEditor .expandTo (node);
          outlineEditor .selectNodeElement ($(`.node[node-id=${node .getId ()}]`));

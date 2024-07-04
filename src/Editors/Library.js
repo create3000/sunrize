@@ -13,9 +13,9 @@ module .exports = new class Library extends Dialog
       super ("Sunrize.Library.");
 
       this .panes = [
-         new (require ("./Library/NodesLibrary")) (this),
-         new (require ("./Library/PrimitivesLibrary")) (this),
-         new (require ("./Library/MaterialsLibrary")) (this),
+         new (require ("./NodesLibrary")) (this),
+         new (require ("./PrimitivesLibrary")) (this),
+         new (require ("./MaterialsLibrary")) (this),
       ];
 
       this .setup ();

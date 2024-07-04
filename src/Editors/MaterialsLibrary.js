@@ -2,7 +2,7 @@
 
 const
    $           = require ("jquery"),
-   X3D         = require ("../../X3D"),
+   X3D         = require ("../X3D"),
    LibraryPane = require ("./LibraryPane");
 
 module .exports = class Materials extends LibraryPane
