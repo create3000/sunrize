@@ -5,8 +5,6 @@ const
    X3D         = require ("../X3D"),
    LibraryPane = require ("./LibraryPane");
 
-const fs = require ("fs");
-
 module .exports = class Materials extends LibraryPane
 {
    id          = "MATERIALS";
@@ -22,11 +20,27 @@ module .exports = class Materials extends LibraryPane
 
       this .output .empty ();
 
+      this .list = $("<ul></ul>")
+         .appendTo (this .output)
+         .addClass ("library-list");
+
       const materials = this .#scene .getExportedNode ("Materials");
 
       for (const group of materials .children)
       {
-         console .log (group .getNodeName ());
+         $("<li></li>")
+            .addClass ("component")
+            .text (group .getNodeName ())
+            .appendTo (this .list);
+
+         for (const [i, node] of group .children .entries ())
+         {
+            $("<li></li>")
+               .addClass ("node")
+               .text (`${group .getNodeName ()} ${i + 1}`)
+               .appendTo (this .list)
+               .on ("dblclick", () => this .importX3D (`${group .getNodeName ()} ${i + 1}`, node .children [0] .appearance .material .toXMLString ()));
+         }
       }
    }
 };

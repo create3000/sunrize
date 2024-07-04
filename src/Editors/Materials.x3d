@@ -5,16 +5,16 @@
     <meta name='created' content='Thu, 04 Jul 2024 10:54:01 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.4, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 04 Jul 2024 10:56:54 GMT'/>
+    <meta name='modified' content='Thu, 04 Jul 2024 11:04:47 GMT'/>
   </head>
   <Scene>
-    <Switch DEF='Materials_1'>
+    <Switch DEF='Materials'>
       <Group DEF='Artdeco'>
         <Transform
             translation='-5 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco1'
                   ambientIntensity='0.25'
                   diffuseColor='0.282435 0.0851587 0.134462'
                   specularColor='0.276305 0.11431 0.139857'
@@ -27,7 +27,7 @@
             translation='-3 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco2'
                   ambientIntensity='0.242424'
                   diffuseColor='0.304 0.09025 0.207364'
                   specularColor='0.6665 0.579046 0.830303'
@@ -40,7 +40,7 @@
             translation='-1 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco3'
                   ambientIntensity='0.258928'
                   diffuseColor='0.335631 0.207672 0.238304'
                   specularColor='0.198631 0.0754031 0.138803'
@@ -54,7 +54,7 @@
             translation='1 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco4'
                   ambientIntensity='0.240838'
                   diffuseColor='0.876873 0.14715 0.00856049'
                   specularColor='0.193878 0.0294159 0.0294159'
@@ -67,7 +67,7 @@
             translation='3 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco5'
                   ambientIntensity='0.25'
                   diffuseColor='0.794445 0.249425 0'
                   specularColor='0.62904 0.194211 0.0336632'
@@ -80,7 +80,7 @@
             translation='5 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco6'
                   ambientIntensity='0.25'
                   diffuseColor='0.510609 0.17264 0.0598717'
                   specularColor='0.533333 0.533333 0.533333'
@@ -93,7 +93,7 @@
             translation='-5 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco7'
                   ambientIntensity='0.255814'
                   diffuseColor='0.914894 0.444404 0.348914'
                   specularColor='0.345745 0.143066 0'
@@ -106,7 +106,7 @@
             translation='-3 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco8'
                   ambientIntensity='0.240838'
                   diffuseColor='0.876873 0.323147 0.199564'
                   specularColor='0.816327 0.278677 0.278677'
@@ -119,7 +119,7 @@
             translation='-1 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco9'
                   ambientIntensity='0.242424'
                   diffuseColor='0.515625 0.315496 0.252441'
                   specularColor='0.533333 0.533333 0.533333'
@@ -132,7 +132,7 @@
             translation='1 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco10'
                   ambientIntensity='0.264706'
                   diffuseColor='0 0.346939 0.253624'
                   specularColor='0 0.311074 0.357143'
@@ -145,7 +145,7 @@
             translation='3 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco11'
                   ambientIntensity='0.259259'
                   diffuseColor='0 0.251004 0.239248'
                   specularColor='0.177935 0.249369 0.229278'
@@ -158,7 +158,7 @@
             translation='5 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco12'
                   ambientIntensity='1.74528'
                   diffuseColor='0.536861 0.0529003 0.245479'
                   specularColor='0.805292 0.765198 0.747416'
@@ -171,7 +171,7 @@
             translation='-5 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco13'
                   ambientIntensity='0.24'
                   diffuseColor='0.228298 0.385771 0.186794'
                   specularColor='0.200464 0.300145 0.293518'
@@ -184,7 +184,7 @@
             translation='-3 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco14'
                   ambientIntensity='0.25'
                   diffuseColor='0.315389 0.544 0.258052'
                   specularColor='0.456 0.456 0.456'
@@ -197,7 +197,7 @@
             translation='-1 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco15'
                   ambientIntensity='0.246032'
                   diffuseColor='0.251104 0.312562 0.201724'
                   specularColor='0.209184 0.113842 0.111328'
@@ -210,7 +210,7 @@
             translation='1 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco16'
                   ambientIntensity='0.242423'
                   diffuseColor='0.392348 0.456 0.417708'
                   specularColor='0.533333 0.533333 0.533333'
@@ -223,7 +223,7 @@
             translation='3 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco17'
                   ambientIntensity='0.253968'
                   diffuseColor='1 0.854922 0'
                   specularColor='0.872449 0.247119 0.254214'
@@ -236,7 +236,7 @@
             translation='5 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco18'
                   ambientIntensity='0.256411'
                   diffuseColor='0.795918 0.505869 0.0933146'
                   specularColor='0.923469 0.428866 0.00636875'
@@ -249,7 +249,7 @@
             translation='-5 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco19'
                   ambientIntensity='2.70769'
                   diffuseColor='0.331633 0.296582 0.279057'
                   specularColor='0.311224 0.25183 0.133042'
@@ -262,7 +262,7 @@
             translation='-3 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco20'
                   ambientIntensity='0.263158'
                   diffuseColor='0.345455 0.163262 0.122622'
                   specularColor='0.212121 0.107475 0'
@@ -275,7 +275,7 @@
             translation='-1 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco21'
                   ambientIntensity='0.240506'
                   diffuseColor='0.277281 0.104336 0.0798996'
                   specularColor='0.305587 0.141916 0.270572'
@@ -288,7 +288,7 @@
             translation='1 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco22'
                   ambientIntensity='0.215686'
                   diffuseColor='0.0870338 0.0258875 0'
                   specularColor='0.224138 0.104091 0.104091'
@@ -301,7 +301,7 @@
             translation='3 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco23'
                   ambientIntensity='0.248649'
                   diffuseColor='1 0.452381 0.40339'
                   specularColor='0.686486 0.396903 0.419275'
@@ -314,7 +314,7 @@
             translation='5 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco24'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.293243 0.297387 0.290421'
@@ -327,7 +327,7 @@
             translation='-5 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco25'
                   ambientIntensity='0.25641'
                   diffuseColor='0.236364 0.236364 0.236364'
                   specularColor='0.29697 0.245839 0.295962'
@@ -340,7 +340,7 @@
             translation='-3 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco26'
                   ambientIntensity='0.242425'
                   diffuseColor='0.38087 0.382957 0.417708'
                   specularColor='0.533333 0.533333 0.533333'
@@ -353,7 +353,7 @@
             translation='-1 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco27'
                   ambientIntensity='0.230089'
                   diffuseColor='0.610811 0.610811 0.610811'
                   specularColor='0.767568 0.756757 0.764964'
@@ -366,7 +366,7 @@
             translation='1 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco28'
                   ambientIntensity='0.25'
                   shininess='0'/>
             </Appearance>
@@ -377,7 +377,7 @@
             translation='3 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco29'
                   ambientIntensity='0.25'/>
             </Appearance>
             <Sphere/>
@@ -387,7 +387,7 @@
             translation='5 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco30'
                   ambientIntensity='0.25'
                   diffuseColor='0.748016 0.298362 0.342624'
                   specularColor='0.345455 0.345455 0.345455'
@@ -400,7 +400,7 @@
             translation='-5 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco31'
                   ambientIntensity='0.24359'
                   diffuseColor='0.945455 0.318988 0.321717'
                   specularColor='0.0727273 0.0217051 0.0107323'
@@ -413,7 +413,7 @@
             translation='-3 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco32'
                   ambientIntensity='0.25946'
                   diffuseColor='0.228655 0.195513 0.425484'
                   specularColor='0.324504 0.404255 0.404255'
@@ -426,7 +426,7 @@
             translation='-1 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco33'
                   ambientIntensity='0.333332'
                   diffuseColor='0.200348 0.100857 0.320833'
                   specularColor='0.311358 0.387879 0.387879'
@@ -439,7 +439,7 @@
             translation='1 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco34'
                   ambientIntensity='0.242425'
                   diffuseColor='0.330519 0.3389 0.6'
                   specularColor='0.290909 0.290909 0.290909'
@@ -452,7 +452,7 @@
             translation='3 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco35'
                   ambientIntensity='0.333334'
                   diffuseColor='0.237059 0.0962728 0.215625'
                   specularColor='0.311358 0.387879 0.387879'
@@ -465,7 +465,7 @@
             translation='5 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Artdeco36'
                   ambientIntensity='0.25'/>
             </Appearance>
             <Sphere/>
@@ -477,7 +477,7 @@
             translation='-5 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn1'
                   ambientIntensity='0.251748'
                   diffuseColor='0.749548 0.601201 0.461629'
                   specularColor='0.0786239 0.0803968 0.0484226'
@@ -490,7 +490,7 @@
             translation='-3 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn2'
                   ambientIntensity='0.25641'
                   diffuseColor='0.584588 0.273554 0.00686136'
                   specularColor='0.428571 0.199032 0.00295567'
@@ -503,7 +503,7 @@
             translation='-1 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn3'
                   ambientIntensity='0.256411'
                   diffuseColor='0.795918 0.273554 0.00686136'
                   specularColor='0.48655 0.319155 0.444036'
@@ -516,7 +516,7 @@
             translation='1 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn4'
                   ambientIntensity='0.240839'
                   diffuseColor='0.460362 0.141445 0.0386304'
                   specularColor='0.193005 0.159326 0.125431'
@@ -529,7 +529,7 @@
             translation='3 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn5'
                   ambientIntensity='0.245763'
                   diffuseColor='0.34773 0.0909093 0.00528868'
                   specularColor='0.336735 0.0510908 0.0510908'
@@ -542,7 +542,7 @@
             translation='5 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn6'
                   ambientIntensity='0.240838'
                   diffuseColor='0.876873 0.217155 0.199564'
                   specularColor='0.928571 0.140887 0.140887'
@@ -555,7 +555,7 @@
             translation='-5 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn7'
                   ambientIntensity='0.240838'
                   diffuseColor='0.876873 0.323147 0.199564'
                   specularColor='0.816327 0.278677 0.278677'
@@ -568,7 +568,7 @@
             translation='-3 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn8'
                   ambientIntensity='0.240838'
                   diffuseColor='0.562852 0.14715 0.00856049'
                   specularColor='0.107143 0.0162562 0.0162562'
@@ -581,7 +581,7 @@
             translation='-1 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn9'
                   ambientIntensity='0.240838'
                   diffuseColor='0.876873 0.14715 0.00856049'
                   specularColor='0.193878 0.0294159 0.0294159'
@@ -594,7 +594,7 @@
             translation='1 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn10'
                   ambientIntensity='0.25'
                   diffuseColor='0.540541 0 0'
                   specularColor='0.592903 0 0.129656'
@@ -607,7 +607,7 @@
             translation='3 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn11'
                   ambientIntensity='0.25'
                   diffuseColor='0.453448 0.136207 0.0963852'
                   specularColor='0.0874736 0.207208 0.576531'
@@ -620,7 +620,7 @@
             translation='5 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn12'
                   ambientIntensity='0.25'
                   diffuseColor='0.395932 0.226244 0.128242'
                   specularColor='1 0.464407 0.4753'
@@ -633,7 +633,7 @@
             translation='-5 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn13'
                   ambientIntensity='0.245763'
                   diffuseColor='0.272994 0.0820021 0.0580278'
                   specularColor='0.27551 0.0418016 0.0418016'
@@ -646,7 +646,7 @@
             translation='-3 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn14'
                   ambientIntensity='0.250001'
                   diffuseColor='0.371013 0.644214 0.0965517'
                   specularColor='0.0874736 0.207208 0.576531'
@@ -659,7 +659,7 @@
             translation='-1 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn15'
                   ambientIntensity='0.248407'
                   diffuseColor='0.114827 0.546465 0.0856263'
                   specularColor='0.117347 0.0638623 0.0624524'
@@ -672,7 +672,7 @@
             translation='1 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn16'
                   ambientIntensity='0.253969'
                   diffuseColor='0 0.122449 0'
                   specularColor='0.071925 0.356628 0'
@@ -685,7 +685,7 @@
             translation='3 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn17'
                   ambientIntensity='0.246032'
                   diffuseColor='0.251104 0.312562 0.201724'
                   specularColor='0.494898 0.269332 0.263386'
@@ -698,7 +698,7 @@
             translation='5 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn18'
                   ambientIntensity='0.246032'
                   diffuseColor='0.251104 0.312562 0.201724'
                   specularColor='0.209184 0.113842 0.111328'
@@ -711,7 +711,7 @@
             translation='-5 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn19'
                   ambientIntensity='0.248407'
                   diffuseColor='0.193147 0.251355 0.178548'
                   specularColor='0.418367 0.227683 0.222656'
@@ -724,7 +724,7 @@
             translation='-3 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn20'
                   ambientIntensity='0.248407'
                   diffuseColor='0.135944 0.190588 0.122239'
                   specularColor='0.209184 0.113842 0.111328'
@@ -737,7 +737,7 @@
             translation='-1 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn21'
                   ambientIntensity='0.25'
                   diffuseColor='0.315389 0.544 0.258052'
                   specularColor='0.456 0.456 0.456'
@@ -750,7 +750,7 @@
             translation='1 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn22'
                   ambientIntensity='0.519749'
                   diffuseColor='0.176164 0.303858 0.144138'
                   specularColor='0.465986 0.253598 0.247999'
@@ -763,7 +763,7 @@
             translation='3 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn23'
                   ambientIntensity='0.215686'
                   diffuseColor='0.0870338 0.0258875 0'
                   specularColor='0.224138 0.104091 0.104091'
@@ -776,7 +776,7 @@
             translation='5 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn24'
                   ambientIntensity='0.253969'
                   diffuseColor='0 0.122449 0'
                   specularColor='0.356628 0.356628 0.356628'
@@ -789,7 +789,7 @@
             translation='-5 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn25'
                   ambientIntensity='0.253969'
                   diffuseColor='0 0.122449 0'
                   specularColor='0 0.303255 0.348166'
@@ -802,7 +802,7 @@
             translation='-3 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn26'
                   ambientIntensity='0.264706'
                   diffuseColor='0 0.346939 0.253624'
                   specularColor='0 0.311074 0.357143'
@@ -815,7 +815,7 @@
             translation='-1 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn27'
                   ambientIntensity='0.243243'
                   diffuseColor='0.0877551 0.0639456 0.183051'
                   specularColor='0.234804 0.171098 0.489785'
@@ -828,7 +828,7 @@
             translation='1 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn28'
                   ambientIntensity='0.243244'
                   diffuseColor='0.263265 0.191837 0.549153'
                   specularColor='0.374738 0.273065 0.781677'
@@ -841,7 +841,7 @@
             translation='3 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn29'
                   ambientIntensity='0.25'/>
             </Appearance>
             <Sphere/>
@@ -851,7 +851,7 @@
             translation='5 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn30'
                   ambientIntensity='0.251748'
                   diffuseColor='0.252438 0.108642 0.0704161'
                   specularColor='0.300449 0.142972 0.142972'
@@ -864,7 +864,7 @@
             translation='-5 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn31'
                   ambientIntensity='0.251748'
                   diffuseColor='0.502714 0.295535 0.191551'
                   specularColor='0.265851 0.126509 0.126509'
@@ -877,7 +877,7 @@
             translation='-3 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn32'
                   ambientIntensity='0.251748'
                   diffuseColor='0.502714 0.295535 0.191551'
                   specularColor='0.0786239 0.0803968 0.0484226'
@@ -890,7 +890,7 @@
             translation='-1 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn33'
                   ambientIntensity='0.256411'
                   diffuseColor='0.795918 0.505869 0.164673'
                   specularColor='0.295918 0.096084 0.00204082'
@@ -903,7 +903,7 @@
             translation='1 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn34'
                   ambientIntensity='0.243244'
                   diffuseColor='0.297959 0.140816 0.105763'
                   specularColor='0.176503 0.0894282 0'
@@ -916,7 +916,7 @@
             translation='3 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn35'
                   ambientIntensity='0.256411'
                   diffuseColor='0.795918 0.505869 0.0933146'
                   specularColor='0.923469 0.428866 0.00636875'
@@ -929,7 +929,7 @@
             translation='5 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Autumn36'
                   ambientIntensity='0.25'/>
             </Appearance>
             <Sphere/>
@@ -941,7 +941,7 @@
             translation='-5 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass1'
                   ambientIntensity='0.250001'
                   diffuseColor='0.748014 0.62085 0'
                   specularColor='0.860606 0.860606 0.860599'
@@ -955,7 +955,7 @@
             translation='-3 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass2'
                   ambientIntensity='0.25'
                   diffuseColor='0.748016 0.555721 0'
                   specularColor='0.836364 0.836364 0.836364'
@@ -969,7 +969,7 @@
             translation='-1 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass3'
                   ambientIntensity='0.256'
                   diffuseColor='0.0291577 0.0262922 0.0269642'
                   specularColor='0.641609 0 0.979592'
@@ -983,7 +983,7 @@
             translation='1 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass4'
                   ambientIntensity='0.25'
                   diffuseColor='0.002317 0 0.748016'
                   specularColor='0.884848 0.884848 0.884848'
@@ -997,7 +997,7 @@
             translation='3 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass5'
                   ambientIntensity='0.25'
                   diffuseColor='0.0207323 0.339645 0.748016'
                   specularColor='0.90303 0.90303 0.90303'
@@ -1011,7 +1011,7 @@
             translation='5 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass6'
                   ambientIntensity='0.25'
                   diffuseColor='0 0.631244 0.748016'
                   specularColor='0.915152 0.915152 0.915152'
@@ -1025,7 +1025,7 @@
             translation='-5 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass7'
                   ambientIntensity='0.248982'
                   diffuseColor='0 0.286882 0.261868'
                   specularColor='0.243549 0.556863 0.607143'
@@ -1039,7 +1039,7 @@
             translation='-3 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass8'
                   ambientIntensity='0.25'
                   diffuseColor='0 0.748016 0.469403'
                   specularColor='1 1 1'
@@ -1053,7 +1053,7 @@
             translation='-1 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass9'
                   ambientIntensity='0.25'
                   diffuseColor='0 0.748016 0.176015'
                   specularColor='0.981818 0.981818 0.981818'
@@ -1067,7 +1067,7 @@
             translation='1 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass10'
                   ambientIntensity='0.25'
                   diffuseColor='0.381944 0.748016 0'
                   specularColor='0.963636 0.963636 0.963636'
@@ -1081,7 +1081,7 @@
             translation='3 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass11'
                   ambientIntensity='1.9604'
                   diffuseColor='0.400769 0.441922 0.459091'
                   specularColor='0.814672 0.354965 0.310792'
@@ -1095,7 +1095,7 @@
             translation='5 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass12'
                   ambientIntensity='1.9604'
                   diffuseColor='0.400769 0.441922 0.459091'
                   specularColor='0.573887 0.649271 0.810811'
@@ -1109,7 +1109,7 @@
             translation='-5 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass13'
                   ambientIntensity='0.25'
                   diffuseColor='0.748016 0.299537 0'
                   specularColor='0.836364 0.836364 0.836364'
@@ -1123,7 +1123,7 @@
             translation='-3 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass14'
                   ambientIntensity='1.30687'
                   diffuseColor='0.481983 0.481084 0.552124'
                   specularColor='0.833977 0.565944 0.54019'
@@ -1137,7 +1137,7 @@
             translation='-1 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass15'
                   ambientIntensity='1.00163'
                   diffuseColor='0.566681 0.580872 0.580874'
                   specularColor='0.673937 0.45734 0.436528'
@@ -1151,7 +1151,7 @@
             translation='1 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass16'
                   ambientIntensity='2.84734'
                   diffuseColor='0.2606 0.28736 0.298524'
                   specularColor='0.420602 0.431402 0.454545'
@@ -1165,7 +1165,7 @@
             translation='3 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass17'
                   ambientIntensity='1.9604'
                   diffuseColor='0.400769 0.441922 0.459091'
                   specularColor='0.420602 0.431402 0.454545'
@@ -1179,7 +1179,7 @@
             translation='5 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass18'
                   ambientIntensity='0.234376'
                   diffuseColor='0.527894 0.52884 0.553483'
                   specularColor='0.757704 0.527183 0.490785'
@@ -1193,7 +1193,7 @@
             translation='-5 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass19'
                   ambientIntensity='0.256'
                   diffuseColor='0.372322 0.371574 0.373173'
                   specularColor='0.890909 0.887832 0.890909'
@@ -1207,7 +1207,7 @@
             translation='-3 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass20'
                   ambientIntensity='0.240601'
                   diffuseColor='0.526888 0.525905 0.603564'
                   specularColor='0.651092 0.441837 0.42173'
@@ -1221,7 +1221,7 @@
             translation='-1 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass21'
                   ambientIntensity='2.84734'
                   diffuseColor='0.2606 0.28736 0.298524'
                   specularColor='0.671665 0.688911 0.725869'
@@ -1235,7 +1235,7 @@
             translation='1 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass22'
                   ambientIntensity='0.234374'
                   diffuseColor='0.566681 0.580872 0.580874'
                   specularColor='0.610215 0.7546 0.942085'
@@ -1249,7 +1249,7 @@
             translation='3 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass23'
                   ambientIntensity='0.234374'
                   diffuseColor='0.566681 0.580872 0.580874'
                   specularColor='0.617761 0.429816 0.40014'
@@ -1263,7 +1263,7 @@
             translation='5 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass24'
                   ambientIntensity='0.25'
                   diffuseColor='0.748016 0.139569 0'
                   specularColor='0.709091 0.709091 0.709091'
@@ -1277,7 +1277,7 @@
             translation='-5 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass25'
                   ambientIntensity='0.249999'
                   diffuseColor='0.424238 0.424238 0.424238'
                   specularColor='0.168 0.168 0.168'
@@ -1291,7 +1291,7 @@
             translation='-3 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass26'
                   ambientIntensity='0.250001'
                   diffuseColor='0.152381 0.145141 0.15282'
                   specularColor='0.745455 0.745455 0.745455'
@@ -1305,7 +1305,7 @@
             translation='-1 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass27'
                   ambientIntensity='0.25'
                   diffuseColor='0.138667 0.138667 0.138667'
                   specularColor='0.168 0.168 0.168'
@@ -1319,7 +1319,7 @@
             translation='1 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass28'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.918367 0.910614 0.885116'
@@ -1333,7 +1333,7 @@
             translation='3 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass29'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='1 0.991559 0.963793'
@@ -1347,7 +1347,7 @@
             translation='5 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass30'
                   ambientIntensity='0.25'/>
             </Appearance>
             <Sphere/>
@@ -1357,7 +1357,7 @@
             translation='-5 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass31'
                   ambientIntensity='0.25'
                   diffuseColor='0.748016 0 0.0400871'
                   specularColor='0.89697 0.89697 0.89697'
@@ -1371,7 +1371,7 @@
             translation='-3 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass32'
                   ambientIntensity='0.256'
                   diffuseColor='0.0291577 0.0262922 0.0269642'
                   specularColor='0.981818 0 0'
@@ -1385,7 +1385,7 @@
             translation='-1 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass33'
                   ambientIntensity='0.25'
                   diffuseColor='0.748016 0.00625887 0.251931'
                   specularColor='0.684848 0.684848 0.684848'
@@ -1399,7 +1399,7 @@
             translation='1 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass34'
                   ambientIntensity='0.25'
                   diffuseColor='0.748016 0 0.550351'
                   specularColor='0.672727 0.672727 0.672727'
@@ -1413,7 +1413,7 @@
             translation='3 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass35'
                   ambientIntensity='0.25'
                   diffuseColor='0.624368 0 0.748016'
                   specularColor='0.951515 0.951515 0.951515'
@@ -1427,7 +1427,7 @@
             translation='5 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Glass36'
                   ambientIntensity='0.25'/>
             </Appearance>
             <Sphere/>
@@ -1439,7 +1439,7 @@
             translation='-5 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal1'
                   ambientIntensity='0.0227273'
                   diffuseColor='0.314286 0.218111 0'
                   specularColor='1 0.887979 0'
@@ -1452,7 +1452,7 @@
             translation='-3 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal2'
                   ambientIntensity='0.0227273'
                   diffuseColor='0.314286 0.218111 0'
                   specularColor='0.729592 0.647862 0'
@@ -1465,7 +1465,7 @@
             translation='-1 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal3'
                   ambientIntensity='0.0227273'
                   diffuseColor='0.314286 0.0743647 0'
                   specularColor='0.760204 0.582954 0'
@@ -1478,7 +1478,7 @@
             translation='1 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal4'
                   ambientIntensity='0.0227273'
                   diffuseColor='0.314286 0.0743647 0'
                   specularColor='0.780612 0.691177 0.397036'
@@ -1491,7 +1491,7 @@
             translation='3 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal5'
                   ambientIntensity='0.25641'
                   diffuseColor='0.222308 0.15428 0'
                   specularColor='0.714286 0.696627 0.55665'
@@ -1504,7 +1504,7 @@
             translation='5 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal6'
                   ambientIntensity='0.25641'
                   diffuseColor='0.222308 0.15428 0'
                   specularColor='0.882653 0.860832 0.687861'
@@ -1517,7 +1517,7 @@
             translation='-5 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal7'
                   ambientIntensity='0.25'
                   diffuseColor='0.315152 0.0745695 0'
                   specularColor='0.508861 0.684007 0.326263'
@@ -1530,7 +1530,7 @@
             translation='-3 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal8'
                   ambientIntensity='0.25'
                   diffuseColor='0.384722 0.266993 0'
                   specularColor='0.757576 0.738847 0.590386'
@@ -1543,7 +1543,7 @@
             translation='-1 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal9'
                   ambientIntensity='0.25641'
                   diffuseColor='0.222308 0.15428 0'
                   specularColor='0.678571 0.661796 0.528818'
@@ -1556,7 +1556,7 @@
             translation='1 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal10'
                   ambientIntensity='0.256'
                   diffuseColor='0.0291577 0.0262922 0.0269642'
                   specularColor='0.641609 0.651044 0.979592'
@@ -1569,7 +1569,7 @@
             translation='3 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal11'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='1 0.991559 0.963793'
@@ -1582,7 +1582,7 @@
             translation='5 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal12'
                   ambientIntensity='0.25'
                   diffuseColor='0.0811039 0 0.0795918'
                   specularColor='0.963636 0.955501 0.928746'
@@ -1595,7 +1595,7 @@
             translation='-5 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal13'
                   ambientIntensity='0.268292'
                   diffuseColor='0.49697 0.344891 0'
                   specularColor='1 0.887978 0'
@@ -1608,7 +1608,7 @@
             translation='-3 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal14'
                   ambientIntensity='0.249999'
                   diffuseColor='0 0 0.0425405'
                   specularColor='0.632653 0.627312 0.609747'
@@ -1621,7 +1621,7 @@
             translation='-1 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal15'
                   ambientIntensity='0.249999'
                   diffuseColor='0 0 0.0425405'
                   specularColor='0.632653 0.627312 0.609747'
@@ -1634,7 +1634,7 @@
             translation='1 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal16'
                   ambientIntensity='0.249999'
                   diffuseColor='0 0 0.0425405'
                   specularColor='0.821429 0.814494 0.791687'
@@ -1647,7 +1647,7 @@
             translation='3 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal17'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.918367 0.910614 0.885116'
@@ -1660,7 +1660,7 @@
             translation='5 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal18'
                   ambientIntensity='0.256'
                   diffuseColor='0.155308 0.150902 0.151742'
                   specularColor='0.528268 0.524391 0.524455'
@@ -1673,7 +1673,7 @@
             translation='-5 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal19'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.44898 0.445189 0.432723'
@@ -1686,7 +1686,7 @@
             translation='-3 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal20'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.780612 0.774022 0.752349'
@@ -1699,7 +1699,7 @@
             translation='-1 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal21'
                   ambientIntensity='1.26191'
                   diffuseColor='0.557827 0.571796 0.571797'
                   specularColor='0.708205 0.480594 0.458724'
@@ -1712,7 +1712,7 @@
             translation='1 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal22'
                   ambientIntensity='1.90385'
                   diffuseColor='0.412673 0.455048 0.472727'
                   specularColor='0.420602 0.431402 0.454545'
@@ -1725,7 +1725,7 @@
             translation='3 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal23'
                   ambientIntensity='0.234374'
                   diffuseColor='0.566681 0.580872 0.580874'
                   specularColor='0.673937 0.45734 0.436528'
@@ -1738,7 +1738,7 @@
             translation='5 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal24'
                   ambientIntensity='0.0227273'
                   diffuseColor='0.314286 0.218111 0'
                   specularColor='0.540816 0.480233 0'
@@ -1751,7 +1751,7 @@
             translation='-5 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal25'
                   ambientIntensity='0.256'
                   diffuseColor='0.372322 0.371574 0.373173'
                   specularColor='0.890909 0.887832 0.890909'
@@ -1764,7 +1764,7 @@
             translation='-3 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal26'
                   ambientIntensity='0.256'
                   diffuseColor='0.372322 0.371574 0.373173'
                   specularColor='0.556122 0.554201 0.556122'
@@ -1777,7 +1777,7 @@
             translation='-1 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal27'
                   ambientIntensity='0.113208'
                   diffuseColor='0.697737 0.696336 0.699331'
                   specularColor='0.227785 0.227345 0.227393'
@@ -1790,7 +1790,7 @@
             translation='1 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal28'
                   ambientIntensity='0.625'
                   diffuseColor='0.4 0.4 0.4'
                   specularColor='0.774597 0.774597 0.774597'
@@ -1803,7 +1803,7 @@
             translation='3 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal29'
                   ambientIntensity='0.833333'
                   diffuseColor='0.2775 0.2775 0.2775'
                   specularColor='0.773911 0.773911 0.773911'
@@ -1816,7 +1816,7 @@
             translation='5 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal30'
                   ambientIntensity='0.25'/>
             </Appearance>
             <Sphere/>
@@ -1826,7 +1826,7 @@
             translation='-5 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal31'
                   ambientIntensity='0.256'
                   diffuseColor='0.0291577 0.0262922 0.0269642'
                   specularColor='0.938776 0.0550317 0.0550317'
@@ -1839,7 +1839,7 @@
             translation='-3 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal32'
                   ambientIntensity='0.256'
                   diffuseColor='0.0291577 0.0262922 0.0269642'
                   specularColor='0.641609 0.976208 0.979592'
@@ -1852,7 +1852,7 @@
             translation='-1 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal33'
                   ambientIntensity='0.0227273'
                   diffuseColor='0.314286 0.0743647 0'
                   specularColor='0.780612 0.691177 0.397036'
@@ -1865,7 +1865,7 @@
             translation='1 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal34'
                   ambientIntensity='0.24'
                   diffuseColor='0.454545 0.107552 0'
                   specularColor='0.951515 0.729659 0'
@@ -1878,7 +1878,7 @@
             translation='3 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal35'
                   ambientIntensity='0.0227273'
                   diffuseColor='0.314286 0.0743647 0'
                   specularColor='0.780612 0.598604 0'
@@ -1891,7 +1891,7 @@
             translation='5 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Metal36'
                   ambientIntensity='0.25'/>
             </Appearance>
             <Sphere/>
@@ -1903,7 +1903,7 @@
             translation='-5 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon1'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.622449 0.622449 0.622449'
@@ -1917,7 +1917,7 @@
             translation='-3 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon2'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.622449 0.622449 0.622449'
@@ -1931,7 +1931,7 @@
             translation='-1 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon3'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.622449 0.622449 0.622449'
@@ -1945,7 +1945,7 @@
             translation='1 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon4'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.383784 0.383784 0.383784'
@@ -1959,7 +1959,7 @@
             translation='3 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon5'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.475676 0.475676 0.475676'
@@ -1973,7 +1973,7 @@
             translation='5 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon6'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.622449 0.622449 0.622449'
@@ -1987,7 +1987,7 @@
             translation='-5 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon7'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.622449 0.622449 0.622449'
@@ -2001,7 +2001,7 @@
             translation='-3 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon8'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.622449 0.622449 0.622449'
@@ -2015,7 +2015,7 @@
             translation='-1 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon9'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.622449 0.622449 0.622449'
@@ -2029,7 +2029,7 @@
             translation='1 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon10'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.622449 0.622449 0.622449'
@@ -2043,7 +2043,7 @@
             translation='3 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon11'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.622449 0.622449 0.622449'
@@ -2057,7 +2057,7 @@
             translation='5 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon12'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.622449 0.622449 0.622449'
@@ -2071,7 +2071,7 @@
             translation='-5 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon13'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.622449 0.622449 0.622449'
@@ -2085,7 +2085,7 @@
             translation='-3 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon14'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.622449 0.622449 0.622449'
@@ -2099,7 +2099,7 @@
             translation='-1 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon15'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.622449 0.622449 0.622449'
@@ -2113,7 +2113,7 @@
             translation='1 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon16'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.622449 0.622449 0.622449'
@@ -2127,7 +2127,7 @@
             translation='3 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon17'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.622449 0.622449 0.622449'
@@ -2141,7 +2141,7 @@
             translation='5 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon18'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.622449 0.622449 0.622449'
@@ -2155,7 +2155,7 @@
             translation='-5 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon19'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.622449 0.622449 0.622449'
@@ -2169,7 +2169,7 @@
             translation='-3 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon20'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.622449 0.622449 0.622449'
@@ -2183,7 +2183,7 @@
             translation='-1 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon21'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.616216 0.616216 0.616216'
@@ -2197,7 +2197,7 @@
             translation='1 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon22'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.616216 0.616216 0.616216'
@@ -2211,7 +2211,7 @@
             translation='3 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon23'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.622449 0.622449 0.622449'
@@ -2225,7 +2225,7 @@
             translation='5 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon24'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.637764 0.37654 0'
@@ -2239,7 +2239,7 @@
             translation='-5 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon25'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.535135 0.535135 0.535135'
@@ -2253,7 +2253,7 @@
             translation='-3 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon26'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.497297 0.497297 0.497297'
@@ -2267,7 +2267,7 @@
             translation='-1 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon27'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.6 0.6 0.6'
@@ -2281,7 +2281,7 @@
             translation='1 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon28'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.47027 0.47027 0.47027'
@@ -2295,7 +2295,7 @@
             translation='3 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon29'
                   ambientIntensity='0.25'/>
             </Appearance>
             <Sphere/>
@@ -2305,7 +2305,7 @@
             translation='5 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon30'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.622449 0.622449 0.622449'
@@ -2319,7 +2319,7 @@
             translation='-5 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon31'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.622449 0.622449 0.622449'
@@ -2333,7 +2333,7 @@
             translation='-3 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon32'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.622449 0.622449 0.622449'
@@ -2347,7 +2347,7 @@
             translation='-1 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon33'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.622449 0.622449 0.622449'
@@ -2361,7 +2361,7 @@
             translation='1 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon34'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.622449 0.622449 0.622449'
@@ -2375,7 +2375,7 @@
             translation='3 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon35'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.622449 0.622449 0.622449'
@@ -2389,7 +2389,7 @@
             translation='5 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Neon36'
                   ambientIntensity='0.25'/>
             </Appearance>
             <Sphere/>
@@ -2401,7 +2401,7 @@
             translation='-5 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo1'
                   ambientIntensity='0.25'
                   diffuseColor='0.636212 0.748016 0.300948'
                   specularColor='0.412121 0.412121 0.412121'
@@ -2414,7 +2414,7 @@
             translation='-3 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo2'
                   ambientIntensity='0.25'
                   diffuseColor='0.864256 0.833788 0.330482'
                   specularColor='0.0955906 0.0940254 0.0681705'
@@ -2427,7 +2427,7 @@
             translation='-1 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo3'
                   ambientIntensity='0.25'
                   diffuseColor='0.748016 0.298362 0.342624'
                   specularColor='0.345455 0.345455 0.345455'
@@ -2440,7 +2440,7 @@
             translation='1 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo4'
                   ambientIntensity='0.25'
                   diffuseColor='0.904409 0.146366 0.208768'
                   specularColor='0.0955906 0.0955906 0.0955906'
@@ -2453,7 +2453,7 @@
             translation='3 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo5'
                   ambientIntensity='0.25'
                   diffuseColor='0.748016 0.272334 0.406842'
                   specularColor='0.251984 0.251984 0.251984'
@@ -2466,7 +2466,7 @@
             translation='5 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo6'
                   ambientIntensity='0.25'
                   diffuseColor='0.904409 0.315531 0.544386'
                   specularColor='0.0955906 0.0955906 0.0955906'
@@ -2479,7 +2479,7 @@
             translation='-5 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo7'
                   ambientIntensity='0.25'
                   diffuseColor='0.748016 0.469867 0.673271'
                   specularColor='0.251984 0.251984 0.251984'
@@ -2492,7 +2492,7 @@
             translation='-3 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo8'
                   ambientIntensity='0.25'
                   diffuseColor='0.894461 0.382776 0.904409'
                   specularColor='0.0955906 0.0955906 0.0955906'
@@ -2505,7 +2505,7 @@
             translation='-1 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo9'
                   ambientIntensity='0.25'
                   diffuseColor='0.640987 0.460097 0.748016'
                   specularColor='0.251984 0.251984 0.251984'
@@ -2518,7 +2518,7 @@
             translation='1 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo10'
                   ambientIntensity='0.243902'
                   diffuseColor='0.630959 0.368649 0.745454'
                   specularColor='0.278788 0.278788 0.278788'
@@ -2531,7 +2531,7 @@
             translation='3 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo11'
                   ambientIntensity='0.25'
                   diffuseColor='0.412056 0.422504 0.748016'
                   specularColor='0.290909 0.290909 0.290909'
@@ -2544,7 +2544,7 @@
             translation='5 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo12'
                   ambientIntensity='0.25'
                   diffuseColor='0.52545 0.455896 0.904409'
                   specularColor='0.0955906 0.0955906 0.0955906'
@@ -2557,7 +2557,7 @@
             translation='-5 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo13'
                   ambientIntensity='0.25'
                   diffuseColor='0.748016 0.722635 0.268909'
                   specularColor='0.412121 0.412121 0.412121'
@@ -2570,7 +2570,7 @@
             translation='-3 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo14'
                   ambientIntensity='0.25'
                   diffuseColor='0.504157 0.607004 0.748016'
                   specularColor='0.309091 0.309091 0.309091'
@@ -2583,7 +2583,7 @@
             translation='-1 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo15'
                   ambientIntensity='0.25'
                   diffuseColor='0.455896 0.749706 0.904409'
                   specularColor='0.0955906 0.0955906 0.0955906'
@@ -2596,7 +2596,7 @@
             translation='1 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo16'
                   ambientIntensity='0.25'
                   diffuseColor='0.25829 0.534482 0.748016'
                   specularColor='0.251984 0.251984 0.251984'
@@ -2609,7 +2609,7 @@
             translation='3 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo17'
                   ambientIntensity='0.25'
                   diffuseColor='0.28636 0.554905 0.904409'
                   specularColor='0.0955906 0.0955906 0.0955906'
@@ -2622,7 +2622,7 @@
             translation='5 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo18'
                   ambientIntensity='0.25'
                   diffuseColor='0.261641 0.748016 0.725916'
                   specularColor='0.490909 0.490909 0.490909'
@@ -2635,7 +2635,7 @@
             translation='-5 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo19'
                   ambientIntensity='0.25'
                   diffuseColor='0.462339 0.904409 0.700718'
                   specularColor='0.0955906 0.0955906 0.0955906'
@@ -2648,7 +2648,7 @@
             translation='-3 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo20'
                   ambientIntensity='0.25'
                   diffuseColor='0.306368 0.748016 0.565651'
                   specularColor='0.569697 0.569697 0.569697'
@@ -2661,7 +2661,7 @@
             translation='-1 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo21'
                   ambientIntensity='0.25'
                   diffuseColor='0.279645 0.904409 0.511589'
                   specularColor='0.0955906 0.0955906 0.0955906'
@@ -2674,7 +2674,7 @@
             translation='1 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo22'
                   ambientIntensity='0.25'
                   diffuseColor='0.360748 0.748016 0.394778'
                   specularColor='0.345455 0.345455 0.345455'
@@ -2687,7 +2687,7 @@
             translation='3 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo23'
                   ambientIntensity='0.25'
                   diffuseColor='0.551217 0.904409 0.269294'
                   specularColor='0.0955906 0.0955906 0.0955906'
@@ -2700,7 +2700,7 @@
             translation='5 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo24'
                   ambientIntensity='0.25'
                   diffuseColor='0.904409 0.758737 0.271351'
                   specularColor='0.0955906 0.0955906 0.0955906'
@@ -2713,7 +2713,7 @@
             translation='-5 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo25'
                   ambientIntensity='0.25'
                   diffuseColor='0.730772 0.740381 0.748016'
                   specularColor='0.251984 0.251984 0.251984'
@@ -2726,7 +2726,7 @@
             translation='-3 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo26'
                   ambientIntensity='0.333333'
                   diffuseColor='0.581818 0.579698 0.573336'
                   specularColor='0.0955906 0.0955906 0.0955906'
@@ -2739,7 +2739,7 @@
             translation='-1 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo27'
                   ambientIntensity='0.250001'
                   diffuseColor='0.430504 0.436165 0.440663'
                   specularColor='0.251984 0.251984 0.251984'
@@ -2752,7 +2752,7 @@
             translation='1 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo28'
                   ambientIntensity='0.25'
                   diffuseColor='0.219386 0.218587 0.216188'
                   specularColor='0.0955906 0.0955906 0.0955906'
@@ -2765,7 +2765,7 @@
             translation='3 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo29'
                   ambientIntensity='0.25'
                   diffuseColor='0.195355 0.197924 0.199965'
                   specularColor='0.430303 0.430303 0.430303'
@@ -2778,7 +2778,7 @@
             translation='5 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo30'
                   ambientIntensity='0.25'/>
             </Appearance>
             <Sphere/>
@@ -2788,7 +2788,7 @@
             translation='-5 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo31'
                   ambientIntensity='0.25'
                   diffuseColor='0.748016 0.593789 0.256169'
                   specularColor='0.375758 0.375758 0.375758'
@@ -2801,7 +2801,7 @@
             translation='-3 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo32'
                   ambientIntensity='0.25'
                   diffuseColor='0.904409 0.549305 0.224283'
                   specularColor='0.0955906 0.0955906 0.0955906'
@@ -2814,7 +2814,7 @@
             translation='-1 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo33'
                   ambientIntensity='0.25'
                   diffuseColor='0.748016 0.467103 0.261641'
                   specularColor='0.251984 0.251984 0.251984'
@@ -2827,7 +2827,7 @@
             translation='1 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo34'
                   ambientIntensity='0.25'
                   diffuseColor='0.904409 0.457768 0.341109'
                   specularColor='0.0955906 0.0955906 0.0955906'
@@ -2840,7 +2840,7 @@
             translation='3 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo35'
                   ambientIntensity='0.25'
                   diffuseColor='0.748016 0.395395 0.306368'
                   specularColor='0.30303 0.30303 0.30303'
@@ -2853,7 +2853,7 @@
             translation='5 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Rococo36'
                   ambientIntensity='0.25'/>
             </Appearance>
             <Sphere/>
@@ -2865,7 +2865,7 @@
             translation='-5 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee1'
                   ambientIntensity='0.255814'
                   diffuseColor='0.914894 0.444404 0.348914'
                   specularColor='0.345745 0.143066 0'
@@ -2878,7 +2878,7 @@
             translation='-3 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee2'
                   ambientIntensity='0.245034'
                   diffuseColor='0.803191 0.464378 0.490554'
                   specularColor='0.319149 0.0813297 0.0813297'
@@ -2891,7 +2891,7 @@
             translation='-1 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee3'
                   ambientIntensity='0.25946'
                   diffuseColor='0.228655 0.195513 0.425484'
                   specularColor='0.324504 0.404255 0.404255'
@@ -2904,7 +2904,7 @@
             translation='1 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee4'
                   ambientIntensity='0.259504'
                   diffuseColor='0.0510601 0.241047 0.30737'
                   specularColor='0.0551487 0.0810796 0.207447'
@@ -2917,7 +2917,7 @@
             translation='3 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee5'
                   ambientIntensity='0.247422'
                   diffuseColor='0.130807 0.502591 0.479904'
                   specularColor='0.330429 0.336788 0.23505'
@@ -2930,7 +2930,7 @@
             translation='5 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee6'
                   ambientIntensity='0.234042'
                   diffuseColor='0.130133 0.5 0.47743'
                   specularColor='0.360091 0.367021 0.25615'
@@ -2943,7 +2943,7 @@
             translation='-5 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee7'
                   ambientIntensity='0.258928'
                   diffuseColor='0.359105 0.48895 0.32654'
                   specularColor='0.218085 0.218085 0.218085'
@@ -2956,7 +2956,7 @@
             translation='-3 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee8'
                   ambientIntensity='0.24468'
                   diffuseColor='0 0.413884 0.280316'
                   specularColor='0.112376 0.390598 0.205359'
@@ -2969,7 +2969,7 @@
             translation='-1 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee9'
                   ambientIntensity='0.244898'
                   diffuseColor='0.0164076 0.299131 0.281455'
                   specularColor='0.479592 0.428903 0.403559'
@@ -2982,7 +2982,7 @@
             translation='1 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee10'
                   ambientIntensity='0.253969'
                   diffuseColor='0 0.122449 0'
                   specularColor='0.356628 0.356628 0.356628'
@@ -2995,7 +2995,7 @@
             translation='3 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee11'
                   ambientIntensity='0.251748'
                   diffuseColor='0.749548 0.601201 0.461629'
                   specularColor='0.0786239 0.0803968 0.0484226'
@@ -3008,7 +3008,7 @@
             translation='5 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee12'
                   ambientIntensity='0.253334'
                   diffuseColor='0.449506 0.31044 0.208933'
                   specularColor='0.180851 0.068473 0.0473582'
@@ -3021,7 +3021,7 @@
             translation='-5 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee13'
                   ambientIntensity='0.254777'
                   diffuseColor='0.799639 0.326749 0.326749'
                   specularColor='0.327377 0.135466 0'
@@ -3034,7 +3034,7 @@
             translation='-3 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee14'
                   ambientIntensity='0.234042'
                   diffuseColor='0.5 0.243312 0.127417'
                   specularColor='0.276596 0.0550859 0.0152398'
@@ -3048,7 +3048,7 @@
             translation='-1 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee15'
                   ambientIntensity='0.245763'
                   diffuseColor='0.322063 0.156723 0.0820722'
                   specularColor='0.296891 0.0591278 0.016358'
@@ -3061,7 +3061,7 @@
             translation='1 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee16'
                   ambientIntensity='0.245763'
                   diffuseColor='0.322063 0.156723 0.0820722'
                   specularColor='0.122719 0.0363652 0.0100606'
@@ -3074,7 +3074,7 @@
             translation='3 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee17'
                   ambientIntensity='0.245763'
                   diffuseColor='0.34773 0.0909093 0.00528868'
                   specularColor='0.336735 0.0510908 0.0510908'
@@ -3087,7 +3087,7 @@
             translation='5 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee18'
                   ambientIntensity='0.245763'
                   diffuseColor='0.330514 0.258233 0.211415'
                   specularColor='0.183673 0.165545 0.163419'
@@ -3100,7 +3100,7 @@
             translation='-5 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee19'
                   ambientIntensity='0.248366'
                   diffuseColor='0.311801 0.204735 0.157819'
                   specularColor='0.204427 0.102753 0.114546'
@@ -3113,7 +3113,7 @@
             translation='-3 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee20'
                   ambientIntensity='0.297422'
                   diffuseColor='0.501339 0.321021 0.135513'
                   specularColor='0.0794227 0.0300707 0.0207978'
@@ -3126,7 +3126,7 @@
             translation='-1 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee21'
                   ambientIntensity='0.240501'
                   diffuseColor='0.484043 0.338715 0.035729'
                   specularColor='0.223676 0.109052 0.0333732'
@@ -3139,7 +3139,7 @@
             translation='1 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee22'
                   ambientIntensity='0.256411'
                   diffuseColor='0.795918 0.505869 0.0933146'
                   specularColor='0.923469 0.428866 0.00636875'
@@ -3152,7 +3152,7 @@
             translation='3 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee23'
                   ambientIntensity='0.253333'
                   diffuseColor='0.241185 0.100458 0.100458'
                   specularColor='0.00916127 0.0158039 0.108627'
@@ -3165,7 +3165,7 @@
             translation='5 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee24'
                   ambientIntensity='0.256637'
                   diffuseColor='0.601064 0.172185 0.212887'
                   specularColor='0.824468 0.227489 0.227489'
@@ -3178,7 +3178,7 @@
             translation='-5 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee25'
                   ambientIntensity='0.253334'
                   diffuseColor='0.449506 0.374156 0.319157'
                   specularColor='0.198631 0.0321162 0.160295'
@@ -3191,7 +3191,7 @@
             translation='-3 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee26'
                   ambientIntensity='0.258928'
                   diffuseColor='0.335631 0.207672 0.238304'
                   specularColor='0.198631 0.0754031 0.138803'
@@ -3205,7 +3205,7 @@
             translation='-1 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee27'
                   ambientIntensity='0.25641'
                   diffuseColor='0.381693 0.381693 0.381693'
                   specularColor='0.0397459 0.0341806 0.100964'
@@ -3218,7 +3218,7 @@
             translation='1 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee28'
                   ambientIntensity='0.208333'
                   diffuseColor='0.248705 0.248705 0.248705'
                   specularColor='0.0530324 0.0456067 0.134715'
@@ -3231,7 +3231,7 @@
             translation='3 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee29'
                   ambientIntensity='0.208333'
                   diffuseColor='0.042835 0.042835 0.042835'
                   specularColor='0.113468 0.109578 0.156265'
@@ -3244,7 +3244,7 @@
             translation='5 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee30'
                   ambientIntensity='0.25'/>
             </Appearance>
             <Sphere/>
@@ -3254,7 +3254,7 @@
             translation='-5 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee31'
                   ambientIntensity='0.256637'
                   diffuseColor='0.601064 0.0739446 0.114671'
                   specularColor='0.425532 0.032158 0.032158'
@@ -3267,7 +3267,7 @@
             translation='-3 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee32'
                   ambientIntensity='0.235294'
                   diffuseColor='0.191499 0.0265877 0.0665837'
                   specularColor='0.367348 0.0557356 0.0557356'
@@ -3280,7 +3280,7 @@
             translation='-1 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee33'
                   ambientIntensity='0.25946'
                   diffuseColor='0.461987 0.484316 0.685837'
                   specularColor='0.2038 0.253886 0.253886'
@@ -3293,7 +3293,7 @@
             translation='1 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee34'
                   ambientIntensity='0.25946'
                   diffuseColor='0.243598 0.390254 0.442269'
                   specularColor='0.257869 0.321244 0.321244'
@@ -3306,7 +3306,7 @@
             translation='3 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee35'
                   ambientIntensity='0.25946'
                   diffuseColor='0.340537 0.37498 0.685837'
                   specularColor='0.237073 0.295337 0.295337'
@@ -3319,7 +3319,7 @@
             translation='5 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Santafee36'
                   ambientIntensity='0.25'/>
             </Appearance>
             <Sphere/>
@@ -3331,7 +3331,7 @@
             translation='-5 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen1'
                   ambientIntensity='0.256'
                   diffuseColor='0.0291577 0.0262922 0.0269642'
                   specularColor='0.641609 0 0.979592'
@@ -3344,7 +3344,7 @@
             translation='-3 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen2'
                   ambientIntensity='0.293167'
                   diffuseColor='0 0.125353 0.262167'
                   specularColor='0.383952 0 0.607143'
@@ -3357,7 +3357,7 @@
             translation='-1 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen3'
                   ambientIntensity='0.255102'
                   diffuseColor='0.024884 0.185628 0.00258622'
                   specularColor='0.505305 0.463899 0'
@@ -3370,7 +3370,7 @@
             translation='1 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen4'
                   ambientIntensity='0.255103'
                   diffuseColor='0.024884 0.423143 0.00258622'
                   specularColor='0.505305 0.463899 0'
@@ -3383,7 +3383,7 @@
             translation='3 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen5'
                   ambientIntensity='0.25'
                   diffuseColor='0.314286 0.314286 0'
                   specularColor='0.367996 0.439089 0.957576'
@@ -3396,7 +3396,7 @@
             translation='5 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen6'
                   ambientIntensity='0.238213'
                   diffuseColor='0.287218 0.299852 0.00587991'
                   specularColor='0.15182 0.607143 0.173867'
@@ -3409,7 +3409,7 @@
             translation='-5 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen7'
                   ambientIntensity='0.255102'
                   diffuseColor='0.5 0.476914 0.187954'
                   specularColor='0.035776 0.591837 0'
@@ -3422,7 +3422,7 @@
             translation='-3 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen8'
                   ambientIntensity='0.255102'
                   diffuseColor='0.490091 0.5 0.217241'
                   specularColor='0.565306 0.591837 0'
@@ -3435,7 +3435,7 @@
             translation='-1 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen9'
                   ambientIntensity='0.253165'
                   diffuseColor='0.403061 0.395404 0'
                   specularColor='0.683673 0.0990148 0'
@@ -3448,7 +3448,7 @@
             translation='1 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen10'
                   ambientIntensity='0.0227273'
                   diffuseColor='0.314286 0.218111 0'
                   specularColor='0.607143 0.53913 0'
@@ -3461,7 +3461,7 @@
             translation='3 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen11'
                   ambientIntensity='0.0227273'
                   diffuseColor='0.314286 0.139969 0'
                   specularColor='0.607143 0.53913 0'
@@ -3474,7 +3474,7 @@
             translation='5 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen12'
                   ambientIntensity='0.246753'
                   diffuseColor='0.336937 0 0.111461'
                   specularColor='0.336183 0.372973 0.00126432'
@@ -3487,7 +3487,7 @@
             translation='-5 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen13'
                   ambientIntensity='0.25'
                   diffuseColor='0 0.00429352 0.314286'
                   specularColor='0.364672 0.833805 0.909091'
@@ -3500,7 +3500,7 @@
             translation='-3 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen14'
                   ambientIntensity='0.247862'
                   diffuseColor='0.42712 0.195852 0.00931052'
                   specularColor='0.233325 0.607143 0.572339'
@@ -3513,7 +3513,7 @@
             translation='-1 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen15'
                   ambientIntensity='0.25'
                   diffuseColor='0.314286 0.144113 0.00685092'
                   specularColor='0.233325 0.278401 0.607143'
@@ -3526,7 +3526,7 @@
             translation='1 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen16'
                   ambientIntensity='0.25'
                   diffuseColor='0.314286 0.0111632 0.00685092'
                   specularColor='0.381971 0.455764 0.993939'
@@ -3539,7 +3539,7 @@
             translation='3 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen17'
                   ambientIntensity='0.293166'
                   diffuseColor='0.26801 0 0'
                   specularColor='0.607143 0.132784 0.175795'
@@ -3552,7 +3552,7 @@
             translation='5 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen18'
                   ambientIntensity='0.256'
                   diffuseColor='0.0291577 0.0262922 0.0269642'
                   specularColor='0.938776 0.0550317 0.0550317'
@@ -3565,7 +3565,7 @@
             translation='-5 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen19'
                   ambientIntensity='0.256'
                   diffuseColor='0.0291577 0.0262922 0.0269642'
                   specularColor='0.981818 0 0'
@@ -3578,7 +3578,7 @@
             translation='-3 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen20'
                   ambientIntensity='0.293167'
                   diffuseColor='0.262167 0 0'
                   specularColor='0.383952 0 0.607143'
@@ -3591,7 +3591,7 @@
             translation='-1 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen21'
                   ambientIntensity='0.268711'
                   diffuseColor='0.265081 0 0.265819'
                   specularColor='0.607143 0.607143 0.00496302'
@@ -3604,7 +3604,7 @@
             translation='1 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen22'
                   ambientIntensity='0.231704'
                   diffuseColor='0.308275 0 0.300584'
                   specularColor='0.236417 0.945455 0.270749'
@@ -3617,7 +3617,7 @@
             translation='3 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen23'
                   ambientIntensity='0.25'
                   diffuseColor='0.273068 0.144113 0.314286'
                   specularColor='0.233325 0.278401 0.607143'
@@ -3630,7 +3630,7 @@
             translation='5 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen24'
                   ambientIntensity='0.25'
                   diffuseColor='0.12078 0.144113 0.314286'
                   specularColor='0.233325 0.278401 0.607143'
@@ -3643,7 +3643,7 @@
             translation='-5 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen25'
                   ambientIntensity='0.293167'
                   diffuseColor='0.262167 0 0.262167'
                   specularColor='0.383952 0 0.607143'
@@ -3656,7 +3656,7 @@
             translation='-3 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen26'
                   ambientIntensity='0.250001'
                   diffuseColor='0.348557 0 0.795918'
                   specularColor='0.448482 0 0.709184'
@@ -3669,7 +3669,7 @@
             translation='-1 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen27'
                   ambientIntensity='0.324073'
                   diffuseColor='0.187413 0.121184 0.25936'
                   specularColor='0 0.625 0.892857'
@@ -3682,7 +3682,7 @@
             translation='1 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen28'
                   ambientIntensity='0.243243'
                   diffuseColor='0.119925 0.0607008 0.183051'
                   specularColor='0.356263 0.383104 0.826531'
@@ -3695,7 +3695,7 @@
             translation='3 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen29'
                   ambientIntensity='0.243243'
                   diffuseColor='0.135374 0.138095 0.183051'
                   specularColor='0.362217 0.369498 0.489785'
@@ -3708,7 +3708,7 @@
             translation='5 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen30'
                   ambientIntensity='0.25'/>
             </Appearance>
             <Sphere/>
@@ -3718,7 +3718,7 @@
             translation='-5 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen31'
                   ambientIntensity='0.25'
                   diffuseColor='0.00183081 0 0.285714'
                   specularColor='0.15182 0.607143 0.173867'
@@ -3731,7 +3731,7 @@
             translation='-3 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen32'
                   ambientIntensity='0.293167'
                   diffuseColor='0 0.262167 0.262167'
                   specularColor='0.383952 0 0.607143'
@@ -3744,7 +3744,7 @@
             translation='-1 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen33'
                   ambientIntensity='0.293166'
                   diffuseColor='0 0.26801 0.265089'
                   specularColor='0.607143 0.132784 0.175795'
@@ -3757,7 +3757,7 @@
             translation='1 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen34'
                   ambientIntensity='0.25'
                   diffuseColor='0 0.282514 0.314286'
                   specularColor='0.233325 0.278401 0.607143'
@@ -3770,7 +3770,7 @@
             translation='3 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen35'
                   ambientIntensity='0.248982'
                   diffuseColor='0 0.286882 0.261868'
                   specularColor='0.243549 0.556863 0.607143'
@@ -3783,7 +3783,7 @@
             translation='5 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Sheen36'
                   ambientIntensity='0.25'/>
             </Appearance>
             <Sphere/>
@@ -3795,7 +3795,7 @@
             translation='-5 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky1'
                   ambientIntensity='0.25'
                   diffuseColor='0.684572 0.683198 0.686136'
                   specularColor='0.0347538 0.0335554 0.693878'
@@ -3808,7 +3808,7 @@
             translation='-3 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky2'
                   ambientIntensity='0.25'
                   diffuseColor='0.684572 0.683198 0.686136'
                   specularColor='0.425195 0.0335554 0.693878'
@@ -3821,7 +3821,7 @@
             translation='-1 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky3'
                   ambientIntensity='0.256'
                   diffuseColor='0.0291577 0.0262922 0.0269642'
                   specularColor='0.964441 0.641609 0.979592'
@@ -3834,7 +3834,7 @@
             translation='1 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky4'
                   ambientIntensity='0.256'
                   diffuseColor='0.0291577 0.0262922 0.0269642'
                   specularColor='0.979592 0.641609 0.798946'
@@ -3847,7 +3847,7 @@
             translation='3 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky5'
                   ambientIntensity='0.256'
                   diffuseColor='0.0291577 0.0262922 0.0269642'
                   specularColor='0.979592 0.641609 0.641609'
@@ -3860,7 +3860,7 @@
             translation='5 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky6'
                   ambientIntensity='0.256'
                   diffuseColor='0.0291577 0.0262922 0.0269642'
                   specularColor='0.979592 0.805939 0.641609'
@@ -3873,7 +3873,7 @@
             translation='-5 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky7'
                   ambientIntensity='0.256'
                   diffuseColor='0.0291577 0.0262922 0.0269642'
                   specularColor='0.946959 0.979592 0.641609'
@@ -3886,7 +3886,7 @@
             translation='-3 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky8'
                   ambientIntensity='0.256'
                   diffuseColor='0.0291577 0.0262922 0.0269642'
                   specularColor='0.641609 0.979592 0.657925'
@@ -3899,7 +3899,7 @@
             translation='-1 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky9'
                   ambientIntensity='0.256'
                   diffuseColor='0.0291577 0.0262922 0.0269642'
                   specularColor='0.641609 0.976208 0.979592'
@@ -3912,7 +3912,7 @@
             translation='1 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky10'
                   ambientIntensity='0.256'
                   diffuseColor='0.0291577 0.0262922 0.0269642'
                   specularColor='0.641609 0.748831 0.979592'
@@ -3925,7 +3925,7 @@
             translation='3 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky11'
                   ambientIntensity='0.243243'
                   diffuseColor='0.135374 0.138095 0.183051'
                   specularColor='0.362217 0.369498 0.489785'
@@ -3938,7 +3938,7 @@
             translation='5 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky12'
                   ambientIntensity='0.248982'
                   diffuseColor='0.280113 0.0864535 0.284904'
                   specularColor='0.588517 0.248038 0.596939'
@@ -3951,7 +3951,7 @@
             translation='-5 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky13'
                   ambientIntensity='0.25'
                   diffuseColor='0.684572 0.683198 0.686136'
                   specularColor='0.693878 0.0335554 0.313623'
@@ -3964,7 +3964,7 @@
             translation='-3 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky14'
                   ambientIntensity='0.248982'
                   diffuseColor='0.284904 0.0864535 0.1891'
                   specularColor='0.765306 0.33779 0.572187'
@@ -3977,7 +3977,7 @@
             translation='-1 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky15'
                   ambientIntensity='0.248982'
                   diffuseColor='0.284904 0 0'
                   specularColor='0.831633 0.403851 0.367065'
@@ -3990,7 +3990,7 @@
             translation='1 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky16'
                   ambientIntensity='0.248982'
                   diffuseColor='0.286882 0.120897 0'
                   specularColor='0.831633 0.482277 0.317353'
@@ -4003,7 +4003,7 @@
             translation='3 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky17'
                   ambientIntensity='0.248982'
                   diffuseColor='0.286882 0.274 0'
                   specularColor='0.631735 0.600752 0.241071'
@@ -4016,7 +4016,7 @@
             translation='5 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky18'
                   ambientIntensity='0.248982'
                   diffuseColor='0 0.286882 0.0603441'
                   specularColor='0.428943 0.632653 0.241422'
@@ -4029,7 +4029,7 @@
             translation='-5 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky19'
                   ambientIntensity='0.248982'
                   diffuseColor='0 0.286882 0.261868'
                   specularColor='0.243549 0.556863 0.607143'
@@ -4042,7 +4042,7 @@
             translation='-3 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky20'
                   ambientIntensity='0.243243'
                   diffuseColor='0.00727146 0.138095 0.183051'
                   specularColor='0.362217 0.369498 0.489785'
@@ -4055,7 +4055,7 @@
             translation='-1 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky21'
                   ambientIntensity='0.245763'
                   diffuseColor='0.211415 0.257055 0.330514'
                   specularColor='0.183673 0.165545 0.163419'
@@ -4068,7 +4068,7 @@
             translation='1 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky22'
                   ambientIntensity='0.245763'
                   diffuseColor='0.336312 0.24807 0.277146'
                   specularColor='0.221121 0.199297 0.196736'
@@ -4081,7 +4081,7 @@
             translation='3 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky23'
                   ambientIntensity='0.245763'
                   diffuseColor='0.330514 0.258233 0.211415'
                   specularColor='0.183673 0.165545 0.163419'
@@ -4094,7 +4094,7 @@
             translation='5 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky24'
                   ambientIntensity='0.25'
                   diffuseColor='0.684572 0.683198 0.686136'
                   specularColor='0.693878 0.0335554 0.0335554'
@@ -4107,7 +4107,7 @@
             translation='-5 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky25'
                   ambientIntensity='0.245763'
                   diffuseColor='0.336312 0.24807 0.201129'
                   specularColor='0.108805 0.0980667 0.0968068'
@@ -4120,7 +4120,7 @@
             translation='-3 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky26'
                   ambientIntensity='0.245763'
                   diffuseColor='0.267191 0.210849 0.0927759'
                   specularColor='0.183673 0.165545 0.163419'
@@ -4133,7 +4133,7 @@
             translation='-1 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky27'
                   ambientIntensity='0.245763'
                   diffuseColor='0.589217 0.581431 0.492013'
                   shininess='0.0612245'/>
@@ -4145,7 +4145,7 @@
             translation='1 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky28'
                   ambientIntensity='0.248983'
                   diffuseColor='0.280771 0.277061 0.234452'
                   specularColor='0.22814 0.205624 0.202982'
@@ -4158,7 +4158,7 @@
             translation='3 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky29'
                   ambientIntensity='0.245763'
                   diffuseColor='0.288982 0.330084 0.172823'
                   specularColor='0.108805 0.0980667 0.0968068'
@@ -4171,7 +4171,7 @@
             translation='5 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky30'
                   ambientIntensity='0.25'/>
             </Appearance>
             <Sphere/>
@@ -4181,7 +4181,7 @@
             translation='-5 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky31'
                   ambientIntensity='0.25'
                   diffuseColor='0.684572 0.683198 0.686136'
                   specularColor='0.693878 0.29313 0.0335554'
@@ -4194,7 +4194,7 @@
             translation='-3 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky32'
                   ambientIntensity='0.25'
                   diffuseColor='0.684572 0.683198 0.686136'
                   specularColor='0.535714 0.500555 0.0259067'
@@ -4207,7 +4207,7 @@
             translation='-1 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky33'
                   ambientIntensity='0.25'
                   diffuseColor='0.684572 0.683198 0.686136'
                   specularColor='0.182327 0.540816 0.0261535'
@@ -4220,7 +4220,7 @@
             translation='1 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky34'
                   ambientIntensity='0.25'
                   diffuseColor='0.684572 0.683198 0.686136'
                   specularColor='0.0261535 0.540816 0.439658'
@@ -4233,7 +4233,7 @@
             translation='3 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky35'
                   ambientIntensity='0.25'
                   diffuseColor='0.684572 0.683198 0.686136'
                   specularColor='0.0261535 0.242667 0.540816'
@@ -4246,7 +4246,7 @@
             translation='5 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Silky36'
                   ambientIntensity='0.25'/>
             </Appearance>
             <Sphere/>
@@ -4258,7 +4258,7 @@
             translation='-5 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring1'
                   ambientIntensity='2.70769'
                   diffuseColor='0.331633 0.296582 0.279057'
                   specularColor='0.489796 0.396323 0.209378'
@@ -4271,7 +4271,7 @@
             translation='-3 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring2'
                   ambientIntensity='0.25'
                   diffuseColor='0.864256 0.833788 0.330482'
                   specularColor='0.0955906 0.0940254 0.0681705'
@@ -4284,7 +4284,7 @@
             translation='-1 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring3'
                   ambientIntensity='0.254777'
                   diffuseColor='0.799639 0.0813426 0.125842'
                   specularColor='0.913265 0.373179 0.373179'
@@ -4297,7 +4297,7 @@
             translation='1 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring4'
                   ambientIntensity='0.254777'
                   diffuseColor='0.685208 0.0893143 0.027172'
                   specularColor='0.913265 0.373179 0.373179'
@@ -4310,7 +4310,7 @@
             translation='3 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring5'
                   ambientIntensity='0.254777'
                   diffuseColor='0.685208 0.134679 0.332385'
                   specularColor='0.122449 0.0500352 0.0500352'
@@ -4323,7 +4323,7 @@
             translation='5 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring6'
                   ambientIntensity='0.25'
                   diffuseColor='0.904409 0.315531 0.544386'
                   specularColor='0.0955906 0.0955906 0.0955906'
@@ -4336,7 +4336,7 @@
             translation='-5 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring7'
                   ambientIntensity='0.237501'
                   diffuseColor='0.484848 0.377104 0.433123'
                   specularColor='0.436364 0.243939 0.298678'
@@ -4349,7 +4349,7 @@
             translation='-3 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring8'
                   ambientIntensity='0.25'
                   diffuseColor='0.894461 0.382776 0.904409'
                   specularColor='0.0955906 0.0955906 0.0955906'
@@ -4362,7 +4362,7 @@
             translation='-1 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring9'
                   ambientIntensity='0.243902'
                   diffuseColor='0.630959 0.368649 0.745454'
                   specularColor='0.278788 0.278788 0.278788'
@@ -4375,7 +4375,7 @@
             translation='1 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring10'
                   ambientIntensity='0.253731'
                   diffuseColor='0.355416 0.133428 0.350088'
                   specularColor='0.680294 0.314997 0.841837'
@@ -4388,7 +4388,7 @@
             translation='3 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring11'
                   ambientIntensity='0.252525'
                   diffuseColor='0.432445 0.200235 0.535135'
                   specularColor='0.30577 0.141581 0.378378'
@@ -4401,7 +4401,7 @@
             translation='5 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring12'
                   ambientIntensity='0.25'
                   diffuseColor='0.455896 0.749706 0.904409'
                   specularColor='0.0955906 0.0955906 0.0955906'
@@ -4414,7 +4414,7 @@
             translation='-5 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring13'
                   ambientIntensity='0.253968'
                   diffuseColor='1 0.900511 0.314236'
                   specularColor='0.872449 0.247119 0.254214'
@@ -4427,7 +4427,7 @@
             translation='-3 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring14'
                   ambientIntensity='0.258064'
                   diffuseColor='0.453686 0.462806 0.613468'
                   specularColor='0.101243 0.093899 0.0914149'
@@ -4440,7 +4440,7 @@
             translation='-1 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring15'
                   ambientIntensity='0.25'
                   diffuseColor='0.278066 0.283655 0.375996'
                   specularColor='0.248796 0.253797 0.336418'
@@ -4453,7 +4453,7 @@
             translation='1 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring16'
                   ambientIntensity='0.25'
                   diffuseColor='0.35102 0.255782 0.732203'
                   specularColor='0.374738 0.273065 0.781677'
@@ -4466,7 +4466,7 @@
             translation='3 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring17'
                   ambientIntensity='0.25'
                   diffuseColor='0.35102 0.255782 0.732203'
                   specularColor='0.101986 0.0743151 0.212735'
@@ -4479,7 +4479,7 @@
             translation='5 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring18'
                   ambientIntensity='0.25'
                   diffuseColor='0.455896 0.749706 0.904409'
                   specularColor='0.0955906 0.0955906 0.0955906'
@@ -4492,7 +4492,7 @@
             translation='-5 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring19'
                   ambientIntensity='0.25'
                   diffuseColor='0.261641 0.748016 0.725916'
                   specularColor='0.490909 0.490909 0.490909'
@@ -4505,7 +4505,7 @@
             translation='-3 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring20'
                   ambientIntensity='0.247422'
                   diffuseColor='0.130807 0.502591 0.479904'
                   specularColor='0.330429 0.336788 0.23505'
@@ -4518,7 +4518,7 @@
             translation='-1 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring21'
                   ambientIntensity='0.247422'
                   diffuseColor='0.130807 0.502591 0.479904'
                   specularColor='0.330429 0.336788 0.23505'
@@ -4531,7 +4531,7 @@
             translation='1 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring22'
                   ambientIntensity='0.244898'
                   diffuseColor='0.0164076 0.299131 0.281455'
                   specularColor='0.479592 0.428903 0.403559'
@@ -4544,7 +4544,7 @@
             translation='3 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring23'
                   ambientIntensity='0.244898'
                   diffuseColor='0.0164076 0.299131 0.281455'
                   specularColor='0.168367 0.150572 0.141675'
@@ -4557,7 +4557,7 @@
             translation='5 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring24'
                   ambientIntensity='0.253968'
                   diffuseColor='1 0.854922 0'
                   specularColor='0.872449 0.247119 0.254214'
@@ -4570,7 +4570,7 @@
             translation='-5 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring25'
                   ambientIntensity='0.243055'
                   diffuseColor='0.0402987 0.592577 0.305278'
                   specularColor='0.0447285 0.612254 0.0843031'
@@ -4583,7 +4583,7 @@
             translation='-3 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring26'
                   ambientIntensity='0.243243'
                   diffuseColor='0.37066 0.672727 0.369066'
                   specularColor='0.355787 0.642424 0.355787'
@@ -4596,7 +4596,7 @@
             translation='-1 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring27'
                   ambientIntensity='0.254777'
                   diffuseColor='0.215415 0.533093 0.177391'
                   specularColor='0 0.272814 0'
@@ -4609,7 +4609,7 @@
             translation='1 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring28'
                   ambientIntensity='0.254777'
                   diffuseColor='0.215415 0.533093 0.177391'
                   specularColor='0 0.591097 0'
@@ -4622,7 +4622,7 @@
             translation='3 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring29'
                   ambientIntensity='0.280488'
                   diffuseColor='0 0.49697 0'
                   specularColor='0.585714 0.6 0'
@@ -4635,7 +4635,7 @@
             translation='5 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring30'
                   ambientIntensity='0.25'/>
             </Appearance>
             <Sphere/>
@@ -4645,7 +4645,7 @@
             translation='-5 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring31'
                   ambientIntensity='0.25'
                   diffuseColor='0.904409 0.549305 0.224283'
                   specularColor='0.0955906 0.0955906 0.0955906'
@@ -4658,7 +4658,7 @@
             translation='-3 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring32'
                   ambientIntensity='0.256411'
                   diffuseColor='0.795918 0.505869 0.0933146'
                   specularColor='0.304961 0.131827 0.00788694'
@@ -4671,7 +4671,7 @@
             translation='-1 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring33'
                   ambientIntensity='0.25'
                   diffuseColor='0.904409 0.457768 0.341109'
                   specularColor='0.0955906 0.0955906 0.0955906'
@@ -4684,7 +4684,7 @@
             translation='1 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring34'
                   ambientIntensity='0.254777'
                   diffuseColor='0.799639 0.256286 0.158549'
                   specularColor='0.20373 0.0832482 0.0832482'
@@ -4697,7 +4697,7 @@
             translation='3 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring35'
                   ambientIntensity='0.25'/>
             </Appearance>
             <Sphere/>
@@ -4707,7 +4707,7 @@
             translation='5 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Spring36'
                   ambientIntensity='0.25'/>
             </Appearance>
             <Sphere/>
@@ -4719,7 +4719,7 @@
             translation='-5 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer1'
                   ambientIntensity='0.724325'
                   diffuseColor='0.982993 0.969388 0.888136'
                   shininess='0'/>
@@ -4731,7 +4731,7 @@
             translation='-3 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer2'
                   ambientIntensity='0.254054'
                   diffuseColor='0.766102 0.577127 0.534973'
                   shininess='0.027027'/>
@@ -4743,7 +4743,7 @@
             translation='-1 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer3'
                   ambientIntensity='0.259459'
                   diffuseColor='0.406702 0.651555 0.738397'
                   specularColor='1 0.131592 0.218563'
@@ -4756,7 +4756,7 @@
             translation='1 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer4'
                   ambientIntensity='0.25'
                   diffuseColor='0.0540084 0.232911 0.389916'
                   specularColor='0.0963412 0.0794815 0.379258'
@@ -4770,7 +4770,7 @@
             translation='3 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer5'
                   ambientIntensity='0.25'
                   diffuseColor='0.0540084 0.232911 0.389916'
                   specularColor='0.0510891 0.220322 0.368839'
@@ -4784,7 +4784,7 @@
             translation='5 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer6'
                   ambientIntensity='0.25'
                   diffuseColor='0.35102 0.255782 0.732203'
                   specularColor='0.0801129 0.345487 0.578378'
@@ -4797,7 +4797,7 @@
             translation='-5 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer7'
                   ambientIntensity='0.256757'
                   diffuseColor='0.191761 0.139733 0.4'
                   specularColor='0.0381847 0.164671 0.275676'
@@ -4810,7 +4810,7 @@
             translation='-3 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer8'
                   ambientIntensity='0.256757'
                   diffuseColor='0.191761 0.139733 0.4'
                   specularColor='0.0898463 0.387462 0.648649'
@@ -4823,7 +4823,7 @@
             translation='-1 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer9'
                   ambientIntensity='0.19171'
                   diffuseColor='0.371245 0.753268 0.641749'
                   specularColor='0.0956359 0.280612 0.16999'
@@ -4836,7 +4836,7 @@
             translation='1 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer10'
                   ambientIntensity='0.702702'
                   diffuseColor='0 0.619048 0.20158'
                   specularColor='0.0714408 0.20962 0.126984'
@@ -4849,7 +4849,7 @@
             translation='3 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer11'
                   ambientIntensity='0.285713'
                   diffuseColor='0 0.538739 0.175429'
                   specularColor='0.280892 0.824187 0.499277'
@@ -4862,7 +4862,7 @@
             translation='5 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer12'
                   ambientIntensity='0.285713'
                   diffuseColor='0.178971 0.538739 0.296122'
                   specularColor='0.086242 0.259606 0.142694'
@@ -4875,7 +4875,7 @@
             translation='-5 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer13'
                   ambientIntensity='0.25'
                   diffuseColor='0.395932 0.226244 0.128242'
                   specularColor='0.192616 0.110064 0.0623879'
@@ -4888,7 +4888,7 @@
             translation='-3 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer14'
                   ambientIntensity='0.248648'
                   diffuseColor='0 0.619048 0.359036'
                   specularColor='0.259785 0.762254 0.461759'
@@ -4901,7 +4901,7 @@
             translation='-1 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer15'
                   ambientIntensity='0.259459'
                   diffuseColor='1 0.969526 0.308475'
                   specularColor='0.728905 0.691826 0.153194'
@@ -4914,7 +4914,7 @@
             translation='1 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer16'
                   ambientIntensity='0.259459'
                   diffuseColor='1 0.957367 0.0324675'
                   specularColor='0.990909 0.940502 0.208259'
@@ -4927,7 +4927,7 @@
             translation='3 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer17'
                   ambientIntensity='0.255682'
                   diffuseColor='0.792195 0.580431 0.0083994'
                   specularColor='0.25 0.237283 0.0525425'
@@ -4940,7 +4940,7 @@
             translation='5 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer18'
                   ambientIntensity='0.248649'
                   diffuseColor='1 0.578166 0.610756'
                   shininess='0.513514'/>
@@ -4952,7 +4952,7 @@
             translation='-5 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer19'
                   ambientIntensity='0.25'
                   diffuseColor='0.994595 0.349312 0.522584'
                   specularColor='0.718919 0.23964 0.370426'
@@ -4965,7 +4965,7 @@
             translation='-3 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer20'
                   ambientIntensity='0.248062'
                   diffuseColor='0.697297 0.244898 0.366377'
                   specularColor='0.335135 0.0306779 0'
@@ -4978,7 +4978,7 @@
             translation='-1 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer21'
                   ambientIntensity='1.74528'
                   diffuseColor='0.536861 0.0529003 0.245479'
                   specularColor='0.805292 0.765198 0.747416'
@@ -4991,7 +4991,7 @@
             translation='1 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer22'
                   ambientIntensity='0.246754'
                   diffuseColor='0.416216 0.0707851 0.14109'
                   specularColor='0.372973 0.00253723 0.00126432'
@@ -5004,7 +5004,7 @@
             translation='3 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer23'
                   ambientIntensity='0.246753'
                   diffuseColor='0.336937 0 0.111461'
                   specularColor='0.341055 0.20592 0'
@@ -5017,7 +5017,7 @@
             translation='5 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer24'
                   ambientIntensity='0.25'
                   diffuseColor='0.217687 0.114286 0.0705085'
                   specularColor='0.254054 0.117984 0.120752'
@@ -5030,7 +5030,7 @@
             translation='-5 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer25'
                   ambientIntensity='0.26415'
                   diffuseColor='0.465784 0.255864 0.357227'
                   specularColor='0.178011 0.093326 0.161906'
@@ -5043,7 +5043,7 @@
             translation='-3 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer26'
                   ambientIntensity='0.26415'
                   diffuseColor='0.465784 0.255864 0.357227'
                   specularColor='0.805405 0.805405 0.805405'
@@ -5056,7 +5056,7 @@
             translation='-1 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer27'
                   ambientIntensity='0.266839'
                   diffuseColor='0.228214 0.00897471 0.008937'
                   specularColor='0.237838 0 0.101038'
@@ -5069,7 +5069,7 @@
             translation='1 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer28'
                   ambientIntensity='0.266839'
                   diffuseColor='0.303858 0 0.132874'
                   specularColor='0.340541 0 0.144668'
@@ -5082,7 +5082,7 @@
             translation='3 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer29'
                   ambientIntensity='0.243242'
                   diffuseColor='0.12381 0.00264246 0.119322'
                   specularColor='0.151866 0.0223515 0.156482'
@@ -5095,7 +5095,7 @@
             translation='5 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer30'
                   ambientIntensity='0.25'/>
             </Appearance>
             <Sphere/>
@@ -5105,7 +5105,7 @@
             translation='-5 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer31'
                   ambientIntensity='0.25'
                   diffuseColor='0.217687 0.114286 0.0705085'
                   specularColor='1 0.464407 0.4753'
@@ -5118,7 +5118,7 @@
             translation='-3 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer32'
                   ambientIntensity='0.212766'
                   diffuseColor='0.0808068 0.112562 0.137792'
                   specularColor='0.127228 0.177225 0.216949'
@@ -5131,7 +5131,7 @@
             translation='-1 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer33'
                   ambientIntensity='0.243242'
                   diffuseColor='0.0227513 0.0165785 0.0474576'
                   specularColor='0.271499 0.302282 0.351351'
@@ -5144,7 +5144,7 @@
             translation='1 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer34'
                   diffuseColor='0.00128308 0.00806671 0.0293175'
                   specularColor='0.135714 0.151102 0.17563'
                   shininess='0.027027'/>
@@ -5156,7 +5156,7 @@
             translation='3 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer35'
                   ambientIntensity='0.273809'
                   diffuseColor='0.288842 0.402349 0.492533'
                   specularColor='0.288842 0.402349 0.492533'
@@ -5169,7 +5169,7 @@
             translation='5 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Summer36'
                   ambientIntensity='0.25'/>
             </Appearance>
             <Sphere/>
@@ -5181,7 +5181,7 @@
             translation='-5 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical1'
                   ambientIntensity='0.25'
                   diffuseColor='0.877539 0.904409 0'
                   specularColor='0.0955906 0.0955906 0.0955906'
@@ -5194,7 +5194,7 @@
             translation='-3 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical2'
                   ambientIntensity='0.250001'
                   diffuseColor='0.748014 0.62085 0'
                   specularColor='0.860606 0.860606 0.860599'
@@ -5207,7 +5207,7 @@
             translation='-1 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical3'
                   ambientIntensity='0.25'
                   diffuseColor='0.904409 0 0.309851'
                   specularColor='0.0955906 0.0955906 0.0955906'
@@ -5220,7 +5220,7 @@
             translation='1 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical4'
                   ambientIntensity='0.25'
                   diffuseColor='0.748016 0.00625887 0.251931'
                   specularColor='0.684848 0.684848 0.684848'
@@ -5233,7 +5233,7 @@
             translation='3 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical5'
                   ambientIntensity='0.25'
                   diffuseColor='0.904409 0.0469471 0.496108'
                   specularColor='0.0955906 0.0955906 0.0955906'
@@ -5246,7 +5246,7 @@
             translation='5 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical6'
                   ambientIntensity='0.25'
                   diffuseColor='0.748016 0 0.550351'
                   specularColor='0.672727 0.672727 0.672727'
@@ -5259,7 +5259,7 @@
             translation='-5 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical7'
                   ambientIntensity='0.25'
                   diffuseColor='0.895967 0 0.691271'
                   specularColor='0.0955906 0.0862563 0.093458'
@@ -5272,7 +5272,7 @@
             translation='-3 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical8'
                   ambientIntensity='0.25'
                   diffuseColor='0.624368 0 0.748016'
                   specularColor='0.951515 0.951515 0.951515'
@@ -5285,7 +5285,7 @@
             translation='-1 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical9'
                   ambientIntensity='0.25'
                   diffuseColor='0.62178 0.0209168 0.880181'
                   specularColor='0.0877258 0.0694377 0.0955906'
@@ -5298,7 +5298,7 @@
             translation='1 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical10'
                   ambientIntensity='0.25'
                   diffuseColor='0.374008 0 0.748016'
                   specularColor='0.909091 0.909091 0.909091'
@@ -5311,7 +5311,7 @@
             translation='3 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical11'
                   ambientIntensity='0.25'
                   diffuseColor='0.279501 0.00514168 0.845907'
                   specularColor='0.0522777 0.0312975 0.0955906'
@@ -5324,7 +5324,7 @@
             translation='5 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical12'
                   ambientIntensity='0.25'
                   diffuseColor='0.002317 0 0.748016'
                   specularColor='0.884848 0.884848 0.884848'
@@ -5337,7 +5337,7 @@
             translation='-5 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical13'
                   ambientIntensity='0.25'
                   diffuseColor='0.904409 0.774741 0.0830671'
                   specularColor='0.0955906 0.0955906 0.0955906'
@@ -5350,7 +5350,7 @@
             translation='-3 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical14'
                   ambientIntensity='0.250001'
                   diffuseColor='0 0.204955 0.845242'
                   specularColor='0.03017 0.0460332 0.0955906'
@@ -5363,7 +5363,7 @@
             translation='-1 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical15'
                   ambientIntensity='0.25'
                   diffuseColor='0.0207323 0.339645 0.748016'
                   specularColor='0.90303 0.90303 0.90303'
@@ -5376,7 +5376,7 @@
             translation='1 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical16'
                   ambientIntensity='0.25'
                   diffuseColor='0 0.596985 0.817956'
                   specularColor='0 0.0697667 0.0955906'
@@ -5389,7 +5389,7 @@
             translation='3 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical17'
                   ambientIntensity='0.25'
                   diffuseColor='0 0.631244 0.748016'
                   specularColor='0.915152 0.915152 0.915152'
@@ -5402,7 +5402,7 @@
             translation='5 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical18'
                   ambientIntensity='0.25'
                   diffuseColor='0.748016 0.555721 0'
                   specularColor='0.836364 0.836364 0.836364'
@@ -5415,7 +5415,7 @@
             translation='-5 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical19'
                   ambientIntensity='0.25'
                   diffuseColor='0 0.748016 0.469403'
                   specularColor='1 1 1'
@@ -5428,7 +5428,7 @@
             translation='-3 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical20'
                   ambientIntensity='0.25'
                   diffuseColor='0.0531526 0.817956 0.0880178'
                   specularColor='0.00621169 0.0955906 0.0102862'
@@ -5441,7 +5441,7 @@
             translation='-1 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical21'
                   ambientIntensity='0.25'
                   diffuseColor='0 0.748016 0.176015'
                   specularColor='0.981818 0.981818 0.981818'
@@ -5454,7 +5454,7 @@
             translation='1 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical22'
                   ambientIntensity='0.25'
                   diffuseColor='0.355377 0.817956 0.015797'
                   specularColor='0.0415311 0.0955906 0.00184612'
@@ -5467,7 +5467,7 @@
             translation='3 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical23'
                   ambientIntensity='0.25'
                   diffuseColor='0.381944 0.748016 0'
                   specularColor='0.963636 0.963636 0.963636'
@@ -5480,7 +5480,7 @@
             translation='5 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical24'
                   ambientIntensity='0.25'
                   diffuseColor='0.748016 0.555721 0'
                   specularColor='0.836364 0.836364 0.836364'
@@ -5493,7 +5493,7 @@
             translation='-5 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical25'
                   ambientIntensity='0.25'
                   diffuseColor='0.991732 0.939493 1'
                   shininess='0'/>
@@ -5505,7 +5505,7 @@
             translation='-3 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical26'
                   ambientIntensity='0.249999'
                   diffuseColor='0.425062 0.404868 0.426289'
                   specularColor='0.860606 0.860606 0.860606'
@@ -5518,7 +5518,7 @@
             translation='-1 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical27'
                   ambientIntensity='0.249999'
                   diffuseColor='0.424238 0.424238 0.424238'
                   specularColor='0.168 0.168 0.168'
@@ -5531,7 +5531,7 @@
             translation='1 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical28'
                   ambientIntensity='0.250001'
                   diffuseColor='0.152381 0.145141 0.15282'
                   specularColor='0.745455 0.745455 0.745455'
@@ -5544,7 +5544,7 @@
             translation='3 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical29'
                   ambientIntensity='0.25'
                   diffuseColor='0.138667 0.138667 0.138667'
                   specularColor='0.168 0.168 0.168'
@@ -5557,7 +5557,7 @@
             translation='5 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical30'
                   ambientIntensity='0.25'/>
             </Appearance>
             <Sphere/>
@@ -5567,7 +5567,7 @@
             translation='-5 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical31'
                   ambientIntensity='0.25'
                   diffuseColor='0.904409 0.412258 0'
                   specularColor='0.0955906 0.0955906 0.0955906'
@@ -5580,7 +5580,7 @@
             translation='-3 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical32'
                   ambientIntensity='0.25'
                   diffuseColor='0.748016 0.299537 0'
                   specularColor='0.836364 0.836364 0.836364'
@@ -5593,7 +5593,7 @@
             translation='-1 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical33'
                   ambientIntensity='0.25'
                   diffuseColor='0.904409 0.283754 0'
                   specularColor='0.0955906 0.0955906 0.0955906'
@@ -5606,7 +5606,7 @@
             translation='1 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical34'
                   ambientIntensity='0.25'
                   diffuseColor='0.748016 0.139569 0'
                   specularColor='0.709091 0.709091 0.709091'
@@ -5619,7 +5619,7 @@
             translation='3 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical35'
                   ambientIntensity='0.25'
                   diffuseColor='0.904409 0.150314 0'
                   specularColor='0.0955906 0.0955906 0.0955906'
@@ -5632,7 +5632,7 @@
             translation='5 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Tropical36'
                   ambientIntensity='0.25'/>
             </Appearance>
             <Sphere/>
@@ -5644,7 +5644,7 @@
             translation='-5 5 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_24'
+              <Material DEF='Velvet1'
                   ambientIntensity='0.0584795'
                   diffuseColor='0.954107 0.809844 0.782367'
                   specularColor='0.04 0.028616 0.0202979'
@@ -5657,7 +5657,7 @@
             translation='-3 5 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_25'
+              <Material DEF='Velvet2'
                   ambientIntensity='0.0292398'
                   diffuseColor='0.839 0.741143 0.57891'
                   specularColor='0.121 0.0979283 0.08107'
@@ -5670,7 +5670,7 @@
             translation='-1 5 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_26'
+              <Material DEF='Velvet3'
                   ambientIntensity='0.0292398'
                   diffuseColor='0.73 0.61739 0.4307'
                   specularColor='0.073 0.073 0.073'
@@ -5683,7 +5683,7 @@
             translation='1 5 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_27'
+              <Material DEF='Velvet4'
                   ambientIntensity='0.0292398'
                   diffuseColor='0.614328 0.544017 0.427454'
                   specularColor='0.04 0.04 0.04'
@@ -5696,7 +5696,7 @@
             translation='3 5 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_28'
+              <Material DEF='Velvet5'
                   ambientIntensity='0.0292398'
                   diffuseColor='0.46 0.421605 0.345'
                   specularColor='0.048 0.048 0.048'
@@ -5709,7 +5709,7 @@
             translation='5 5 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_29'
+              <Material DEF='Velvet6'
                   ambientIntensity='0.0292398'
                   diffuseColor='0.35 0.302983 0.2415'
                   specularColor='0.056 0.056 0.056'
@@ -5722,7 +5722,7 @@
             translation='-5 3 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_23'
+              <Material DEF='Velvet7'
                   ambientIntensity='0.0251316'
                   diffuseColor='0.702 0.513241 0.25272'
                   specularColor='0.038 0.0316016 0'
@@ -5735,7 +5735,7 @@
             translation='-3 3 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1'
+              <Material DEF='Velvet8'
                   ambientIntensity='0.0706087'
                   diffuseColor='0.637 0.348668 0.19747'
                   specularColor='0.13 0.101331 0.0659681'
@@ -5748,7 +5748,7 @@
             translation='-1 3 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_20'
+              <Material DEF='Velvet9'
                   ambientIntensity='0.0706087'
                   diffuseColor='0.56 0.287164 0.2352'
                   specularColor='0.04 0.028616 0.0202979'
@@ -5761,7 +5761,7 @@
             translation='1 3 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_1'
+              <Material DEF='Velvet10'
                   ambientIntensity='0.0673077'
                   diffuseColor='0.38 0.28196 0.2432'
                   specularColor='0.097 0.0482215 0.04462'
@@ -5774,7 +5774,7 @@
             translation='3 3 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_21'
+              <Material DEF='Velvet11'
                   ambientIntensity='0.0673077'
                   diffuseColor='0.29 0.0968013 0.0957'
                   specularColor='0.078 0.0591786 0.05772'
@@ -5787,7 +5787,7 @@
             translation='5 3 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_22'
+              <Material DEF='Velvet12'
                   ambientIntensity='0.0804094'
                   diffuseColor='0.17 0.0702685 0.0697'
                   specularColor='0.065 0.0325176 0.0292618'
@@ -5800,7 +5800,7 @@
             translation='-5 1 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_6'
+              <Material DEF='Velvet13'
                   ambientIntensity='0.087'
                   diffuseColor='0.548 0.335102 0.20276'
                   specularColor='0.073 0.0353799 0.019257'
@@ -5813,7 +5813,7 @@
             translation='-3 1 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_2'
+              <Material DEF='Velvet14'
                   ambientIntensity='0.204678'
                   diffuseColor='0.49 0.32536 0.1813'
                   specularColor='0.065 0.0590044 0.0546'
@@ -5826,7 +5826,7 @@
             translation='-1 1 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_3'
+              <Material DEF='Velvet15'
                   ambientIntensity='0.122807'
                   diffuseColor='0.49 0.378607 0.2744'
                   specularColor='0.143 0.0888502 0.0642034'
@@ -5839,7 +5839,7 @@
             translation='1 1 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_7'
+              <Material DEF='Velvet16'
                   ambientIntensity='0.169591'
                   diffuseColor='0.411 0.23838 0.15207'
                   specularColor='0.105 0.0652396 0.0471423'
@@ -5852,7 +5852,7 @@
             translation='3 1 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_4'
+              <Material DEF='Velvet17'
                   ambientIntensity='0.0484474'
                   diffuseColor='0.258 0.160476 0.09546'
                   specularColor='0.137 0.0851222 0.0615095'
@@ -5865,7 +5865,7 @@
             translation='5 1 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_5'
+              <Material DEF='Velvet18'
                   ambientIntensity='0.0172398'
                   diffuseColor='0.145 0.09019 0.05365'
                   specularColor='0.117 0.0726956 0.05253'
@@ -5878,7 +5878,7 @@
             translation='-5 -1 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_8'
+              <Material DEF='Velvet19'
                   ambientIntensity='0.269006'
                   diffuseColor='0.613 0.532411 0.19003'
                   specularColor='0.038 0.0337877 0'
@@ -5891,7 +5891,7 @@
             translation='-3 -1 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_9'
+              <Material DEF='Velvet20'
                   ambientIntensity='0.0877193'
                   diffuseColor='0.5174 0.613 0.20229'
                   specularColor='0.0371203 0.048 0.01968'
@@ -5904,7 +5904,7 @@
             translation='-1 -1 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_10'
+              <Material DEF='Velvet21'
                   ambientIntensity='0.0350877'
                   diffuseColor='0.28462 0.484 0.21296'
                   specularColor='0.110682 0.12 0.1092'
@@ -5917,7 +5917,7 @@
             translation='1 -1 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_11'
+              <Material DEF='Velvet22'
                   ambientIntensity='0.0350877'
                   diffuseColor='0.16415 0.335 0.195869'
                   specularColor='0.00988017 0.01 0.0096'
@@ -5930,7 +5930,7 @@
             translation='3 -1 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_12'
+              <Material DEF='Velvet23'
                   ambientIntensity='0.0438596'
                   diffuseColor='0.06018 0.177 0.0758153'
                   specularColor='0.1209 0.13 0.12139'
@@ -5943,7 +5943,7 @@
             translation='5 -1 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_13'
+              <Material DEF='Velvet24'
                   ambientIntensity='0.128655'
                   diffuseColor='0.01755 0.081 0'
                   specularColor='0.01625 0.065 0'
@@ -5956,7 +5956,7 @@
             translation='-5 -3 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_19'
+              <Material DEF='Velvet25'
                   ambientIntensity='0.163743'
                   diffuseColor='0.8 0.895781 1'
                   specularColor='0.02088 0.021099 0.024'
@@ -5969,7 +5969,7 @@
             translation='-3 -3 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_18'
+              <Material DEF='Velvet26'
                   ambientIntensity='0.00584795'
                   diffuseColor='0.6346 0.749884 0.835'
                   specularColor='0.04698 0.0474727 0.054'
@@ -5982,7 +5982,7 @@
             translation='-1 -3 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_17'
+              <Material DEF='Velvet27'
                   ambientIntensity='0.0175439'
                   diffuseColor='0.3135 0.490173 0.55'
                   specularColor='0.04176 0.046214 0.048'
@@ -5995,7 +5995,7 @@
             translation='1 -3 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_16'
+              <Material DEF='Velvet28'
                   ambientIntensity='0.0116959'
                   diffuseColor='0.2356 0.28148 0.31'
                   specularColor='0.02784 0.0296551 0.032'
@@ -6008,7 +6008,7 @@
             translation='3 -3 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_15'
+              <Material DEF='Velvet29'
                   ambientIntensity='0.128655'
                   diffuseColor='0.0935 0.119519 0.17'
                   specularColor='0.05096 0.0528856 0.056'
@@ -6021,7 +6021,7 @@
             translation='5 -3 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_14'
+              <Material DEF='Velvet30'
                   ambientIntensity='0.128655'
                   diffuseColor='0.0073 0.0478146 0.073'
                   specularColor='0.05785 0.0609697 0.065'
@@ -6034,7 +6034,7 @@
             translation='-5 -5 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_30'
+              <Material DEF='Velvet31'
                   ambientIntensity='0.0292398'
                   diffuseColor='0.18 0.144981 0.1188'
                   specularColor='0.04 0.0336093 0.0324'
@@ -6047,7 +6047,7 @@
             translation='-3 -5 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_31'
+              <Material DEF='Velvet32'
                   ambientIntensity='0.0292398'
                   diffuseColor='0.09 0.0804363 0.0738'
                   specularColor='0.073 0.04672 0.04672'
@@ -6060,7 +6060,7 @@
             translation='-1 -5 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_33'
+              <Material DEF='Velvet33'
                   ambientIntensity='0.0292398'
                   diffuseColor='0.08 0.0690314 0.0656'
                   specularColor='0.04 0.04 0.04'
@@ -6073,7 +6073,7 @@
             translation='1 -5 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_32'
+              <Material DEF='Velvet34'
                   ambientIntensity='0.0292398'
                   diffuseColor='0.1476 0.163194 0.18'
                   specularColor='0.0324 0.0372075 0.04'
@@ -6086,7 +6086,7 @@
             translation='3 -5 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1_34'
+              <Material DEF='Velvet35'
                   ambientIntensity='0.0292398'
                   diffuseColor='0.0656 0.0748745 0.08'
                   specularColor='0.09982 0.122758 0.161'
@@ -6099,7 +6099,7 @@
             translation='5 -5 0'>
           <Shape>
             <Appearance>
-              <Material/>
+              <Material DEF='Velvet36'/>
             </Appearance>
             <Sphere/>
           </Shape>
@@ -6110,7 +6110,7 @@
             translation='-5 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter1'
                   ambientIntensity='0.248649'
                   diffuseColor='0.986486 1 1'
                   specularColor='0.405259 0.410811 0.410811'
@@ -6123,7 +6123,7 @@
             translation='-3 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter2'
                   ambientIntensity='0.230089'
                   diffuseColor='0.610811 0.610811 0.610811'
                   specularColor='0.767568 0.756757 0.764964'
@@ -6136,7 +6136,7 @@
             translation='-1 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter3'
                   ambientIntensity='0.253968'
                   diffuseColor='0 0.309524 0'
                   specularColor='0.071925 0.677294 0'
@@ -6149,7 +6149,7 @@
             translation='1 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter4'
                   ambientIntensity='0.519749'
                   diffuseColor='0 0.488636 0'
                   shininess='0'/>
@@ -6161,7 +6161,7 @@
             translation='3 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter5'
                   ambientIntensity='0.253969'
                   diffuseColor='0 0.122449 0'
                   specularColor='0.071925 0.356628 0'
@@ -6174,7 +6174,7 @@
             translation='5 5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter6'
                   ambientIntensity='0.253969'
                   diffuseColor='0 0.122449 0'
                   specularColor='0.0816327 0.404762 0'
@@ -6187,7 +6187,7 @@
             translation='-5 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter7'
                   ambientIntensity='0.253969'
                   diffuseColor='0 0.122449 0'
                   specularColor='0.356628 0.356628 0.356628'
@@ -6200,7 +6200,7 @@
             translation='-3 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter8'
                   ambientIntensity='0.253969'
                   diffuseColor='0 0.122449 0'
                   specularColor='0.87027 0.458816 0.87027'
@@ -6213,7 +6213,7 @@
             translation='-1 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter9'
                   ambientIntensity='0.243243'
                   diffuseColor='0.0595385 0.0701343 0.211314'
                   specularColor='0.0845487 0.0995954 0.111647'
@@ -6226,7 +6226,7 @@
             translation='1 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter10'
                   ambientIntensity='0.24812'
                   diffuseColor='0.0827088 0.0679893 0.348453'
                   specularColor='0.656314 0.773115 0.866667'
@@ -6239,7 +6239,7 @@
             translation='3 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter11'
                   ambientIntensity='0.251798'
                   diffuseColor='0.442456 0.506497 0.842424'
                   specularColor='0.405259 0.410811 0.410811'
@@ -6252,7 +6252,7 @@
             translation='5 3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter12'
                   ambientIntensity='0.251798'
                   diffuseColor='0.23888 0.41719 0.842424'
                   specularColor='0.405259 0.410811 0.410811'
@@ -6265,7 +6265,7 @@
             translation='-5 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter13'
                   ambientIntensity='0.236842'
                   diffuseColor='0.205405 0.205405 0.205405'
                   specularColor='0.686486 0.676818 0.684159'
@@ -6278,7 +6278,7 @@
             translation='-3 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter14'
                   ambientIntensity='0.25'
                   diffuseColor='0.434323 0.695804 0.788544'
                   specularColor='0.0616885 0.0988278 0.112'
@@ -6291,7 +6291,7 @@
             translation='-1 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter15'
                   ambientIntensity='0.25'
                   diffuseColor='0.015119 0.331798 0.399133'
                   specularColor='0.0170845 0.374932 0.451021'
@@ -6304,7 +6304,7 @@
             translation='1 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter16'
                   ambientIntensity='0.25'
                   diffuseColor='0.015119 0.331798 0.399133'
                   specularColor='0.00438452 0.0962214 0.115749'
@@ -6317,7 +6317,7 @@
             translation='3 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter17'
                   ambientIntensity='0.242425'
                   diffuseColor='0.0308575 0.393852 0.522917'
                   specularColor='0.0137744 0.302289 0.363636'
@@ -6330,7 +6330,7 @@
             translation='5 1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter18'
                   ambientIntensity='0.248649'
                   diffuseColor='0.972789 0.619048 0.705085'
                   specularColor='0.610811 0.35315 0.373056'
@@ -6343,7 +6343,7 @@
             translation='-5 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter19'
                   ambientIntensity='0.248649'
                   diffuseColor='0.936975 0.0923259 0.42843'
                   specularColor='0.805292 0.216986 0.36733'
@@ -6356,7 +6356,7 @@
             translation='-3 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter20'
                   ambientIntensity='0.254054'
                   diffuseColor='0.738397 0.0923259 0.361345'
                   specularColor='0.526732 0.141928 0.240266'
@@ -6369,7 +6369,7 @@
             translation='-1 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter21'
                   ambientIntensity='0.266839'
                   diffuseColor='0.230477 0.106718 0.285207'
                   specularColor='0.551351 0 0.234225'
@@ -6382,7 +6382,7 @@
             translation='1 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter22'
                   ambientIntensity='0.266839'
                   diffuseColor='0.230477 0.106718 0.285207'
                   specularColor='0.848649 0 0.360523'
@@ -6395,7 +6395,7 @@
             translation='3 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter23'
                   ambientIntensity='0.267857'
                   diffuseColor='0.244615 0.113264 0.302703'
                   specularColor='0.690166 0.319568 0.854054'
@@ -6408,7 +6408,7 @@
             translation='5 -1 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter24'
                   ambientIntensity='0.254237'
                   diffuseColor='0.240246 0.261598 0.357576'
                   specularColor='0.220301 0.259507 0.290909'
@@ -6421,7 +6421,7 @@
             translation='-5 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter25'
                   ambientIntensity='0.267857'
                   diffuseColor='0.244615 0.113264 0.302703'
                   specularColor='0.253352 0.11731 0.313514'
@@ -6434,7 +6434,7 @@
             translation='-3 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter26'
                   ambientIntensity='0.266839'
                   diffuseColor='0.285207 0 0'
                   specularColor='0.110903 0 0.337957'
@@ -6447,7 +6447,7 @@
             translation='-1 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter27'
                   ambientIntensity='0.266839'
                   diffuseColor='0.285207 0 0'
                   specularColor='0.150101 0 0.457407'
@@ -6460,7 +6460,7 @@
             translation='1 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter28'
                   ambientIntensity='0.25'
                   diffuseColor='0.540541 0 0'
                   specularColor='0.0920022 0 0.0201191'
@@ -6473,7 +6473,7 @@
             translation='3 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter29'
                   ambientIntensity='0.25'
                   diffuseColor='0.540541 0 0'
                   specularColor='0.577569 0 0.126303'
@@ -6486,7 +6486,7 @@
             translation='5 -3 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter30'
                   ambientIntensity='0.25'/>
             </Appearance>
             <Sphere/>
@@ -6496,7 +6496,7 @@
             translation='-5 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter31'
                   ambientIntensity='0.254237'
                   diffuseColor='0.141299 0.145507 0.164421'
                   specularColor='0.394707 0.464951 0.521212'
@@ -6509,7 +6509,7 @@
             translation='-3 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter32'
                   ambientIntensity='0'
                   diffuseColor='0 0 0'
                   specularColor='0.293243 0.297387 0.290421'
@@ -6522,7 +6522,7 @@
             translation='-1 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter33'
                   ambientIntensity='2.70769'
                   diffuseColor='0.331633 0.296582 0.279057'
                   specularColor='0.311224 0.25183 0.133042'
@@ -6535,7 +6535,7 @@
             translation='1 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter34'
                   ambientIntensity='0.253968'
                   diffuseColor='1 1 0.474361'
                   shininess='0.0378378'/>
@@ -6547,7 +6547,7 @@
             translation='3 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter35'
                   ambientIntensity='0.253968'
                   diffuseColor='1 1 0'
                   specularColor='0.899871 0.893105 0.896821'
@@ -6560,7 +6560,7 @@
             translation='5 -5 0'>
           <Shape>
             <Appearance>
-              <Material
+              <Material DEF='Winter36'
                   ambientIntensity='0.25'/>
             </Appearance>
             <Sphere/>
@@ -6568,6 +6568,6 @@
         </Transform>
       </Group>
     </Switch>
-    <EXPORT localDEF='Materials_1' AS='Materials'/>
+    <EXPORT localDEF='Materials'/>
   </Scene>
 </X3D>
