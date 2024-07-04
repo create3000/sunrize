@@ -89,11 +89,9 @@ module .exports = new class Library extends Dialog
       this .field            = field;
 
       super .open ();
+      this .panes .forEach (pane => pane .open ());
       this .update ();
       this .input .trigger ("focus");
-
-      for (const pane of this .panes)
-         pane .open ();
    }
 
    button (button)
