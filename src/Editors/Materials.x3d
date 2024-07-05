@@ -28,7 +28,7 @@
                   specularColor='0.276305 0.11431 0.139857'
                   shininess='0.127273'/>
             </Appearance>
-            <Sphere/>
+            <Sphere DEF='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -41,7 +41,7 @@
                   specularColor='0.6665 0.579046 0.830303'
                   shininess='0.0727273'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -55,7 +55,7 @@
                   emissiveColor='0.0106383 0.0106383 0.0106383'
                   shininess='0.0212766'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -68,7 +68,7 @@
                   specularColor='0.193878 0.0294159 0.0294159'
                   shininess='0.0765306'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -81,7 +81,7 @@
                   specularColor='0.62904 0.194211 0.0336632'
                   shininess='0.551515'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -94,7 +94,7 @@
                   specularColor='0.533333 0.533333 0.533333'
                   shininess='0.933333'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -107,7 +107,7 @@
                   specularColor='0.345745 0.143066 0'
                   shininess='0.12766'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -120,7 +120,7 @@
                   specularColor='0.816327 0.278677 0.278677'
                   shininess='0.80102'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -133,7 +133,7 @@
                   specularColor='0.533333 0.533333 0.533333'
                   shininess='0.933333'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -146,7 +146,7 @@
                   specularColor='0 0.311074 0.357143'
                   shininess='0.316327'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -159,7 +159,7 @@
                   specularColor='0.177935 0.249369 0.229278'
                   shininess='0.0606061'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -172,7 +172,7 @@
                   specularColor='0.805292 0.765198 0.747416'
                   shininess='0.832432'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -185,7 +185,7 @@
                   specularColor='0.200464 0.300145 0.293518'
                   shininess='0.393939'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -198,7 +198,7 @@
                   specularColor='0.456 0.456 0.456'
                   shininess='0.509389'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -211,7 +211,7 @@
                   specularColor='0.209184 0.113842 0.111328'
                   shininess='0.0867347'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -224,7 +224,7 @@
                   specularColor='0.533333 0.533333 0.533333'
                   shininess='0.933333'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -237,7 +237,7 @@
                   specularColor='0.872449 0.247119 0.254214'
                   shininess='1'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -250,7 +250,7 @@
                   specularColor='0.923469 0.428866 0.00636875'
                   shininess='0.397959'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -263,7 +263,7 @@
                   specularColor='0.311224 0.25183 0.133042'
                   shininess='0.0969388'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -276,7 +276,7 @@
                   specularColor='0.212121 0.107475 0'
                   shininess='0.0486486'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -289,7 +289,7 @@
                   specularColor='0.305587 0.141916 0.270572'
                   shininess='0.0969697'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -302,7 +302,7 @@
                   specularColor='0.224138 0.104091 0.104091'
                   shininess='0.0459184'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -315,7 +315,7 @@
                   specularColor='0.686486 0.396903 0.419275'
                   shininess='0.902703'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -328,7 +328,7 @@
                   specularColor='0.293243 0.297387 0.290421'
                   shininess='0.0816327'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -341,7 +341,7 @@
                   specularColor='0.29697 0.245839 0.295962'
                   shininess='0.0545455'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -354,7 +354,7 @@
                   specularColor='0.533333 0.533333 0.533333'
                   shininess='0.933333'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -367,7 +367,7 @@
                   specularColor='0.767568 0.756757 0.764964'
                   shininess='0.897297'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -378,7 +378,7 @@
                   ambientIntensity='0.25'
                   shininess='0'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -388,7 +388,7 @@
               <Material DEF='Artdeco29'
                   ambientIntensity='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -401,7 +401,7 @@
                   specularColor='0.345455 0.345455 0.345455'
                   shininess='0.69697'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -414,7 +414,7 @@
                   specularColor='0.0727273 0.0217051 0.0107323'
                   shininess='0.0181818'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -427,7 +427,7 @@
                   specularColor='0.324504 0.404255 0.404255'
                   shininess='0.542553'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -440,7 +440,7 @@
                   specularColor='0.311358 0.387879 0.387879'
                   shininess='0.133333'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -453,7 +453,7 @@
                   specularColor='0.290909 0.290909 0.290909'
                   shininess='0.787879'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -466,7 +466,7 @@
                   specularColor='0.311358 0.387879 0.387879'
                   shininess='0.133333'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -476,7 +476,7 @@
               <Material DEF='Artdeco36'
                   ambientIntensity='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
       </Switch>
@@ -491,7 +491,7 @@
                   specularColor='0.0786239 0.0803968 0.0484226'
                   shininess='0.167568'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -504,7 +504,7 @@
                   specularColor='0.428571 0.199032 0.00295567'
                   shininess='0.0663265'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -517,7 +517,7 @@
                   specularColor='0.48655 0.319155 0.444036'
                   shininess='1'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -530,7 +530,7 @@
                   specularColor='0.193005 0.159326 0.125431'
                   shininess='0.178571'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -543,7 +543,7 @@
                   specularColor='0.336735 0.0510908 0.0510908'
                   shininess='0.0714286'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -556,7 +556,7 @@
                   specularColor='0.928571 0.140887 0.140887'
                   shininess='0.984694'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -569,7 +569,7 @@
                   specularColor='0.816327 0.278677 0.278677'
                   shininess='0.80102'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -582,7 +582,7 @@
                   specularColor='0.107143 0.0162562 0.0162562'
                   shininess='0.0714286'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -595,7 +595,7 @@
                   specularColor='0.193878 0.0294159 0.0294159'
                   shininess='0.0765306'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -608,7 +608,7 @@
                   specularColor='0.592903 0 0.129656'
                   shininess='0.0648649'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -621,7 +621,7 @@
                   specularColor='0.0874736 0.207208 0.576531'
                   shininess='0.892857'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -634,7 +634,7 @@
                   specularColor='1 0.464407 0.4753'
                   shininess='0.994595'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -647,7 +647,7 @@
                   specularColor='0.27551 0.0418016 0.0418016'
                   shininess='0.127551'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -660,7 +660,7 @@
                   specularColor='0.0874736 0.207208 0.576531'
                   shininess='0.892857'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -673,7 +673,7 @@
                   specularColor='0.117347 0.0638623 0.0624524'
                   shininess='0.0918367'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -686,7 +686,7 @@
                   specularColor='0.071925 0.356628 0'
                   shininess='0.0810811'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -699,7 +699,7 @@
                   specularColor='0.494898 0.269332 0.263386'
                   shininess='0.790816'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -712,7 +712,7 @@
                   specularColor='0.209184 0.113842 0.111328'
                   shininess='0.0867347'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -725,7 +725,7 @@
                   specularColor='0.418367 0.227683 0.222656'
                   shininess='0.0918367'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -738,7 +738,7 @@
                   specularColor='0.209184 0.113842 0.111328'
                   shininess='0.0867347'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -751,7 +751,7 @@
                   specularColor='0.456 0.456 0.456'
                   shininess='0.509389'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -764,7 +764,7 @@
                   specularColor='0.465986 0.253598 0.247999'
                   shininess='0.448649'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -777,7 +777,7 @@
                   specularColor='0.224138 0.104091 0.104091'
                   shininess='0.0459184'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -790,7 +790,7 @@
                   specularColor='0.356628 0.356628 0.356628'
                   shininess='0.0810811'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -803,7 +803,7 @@
                   specularColor='0 0.303255 0.348166'
                   shininess='0.194595'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -816,7 +816,7 @@
                   specularColor='0 0.311074 0.357143'
                   shininess='0.316327'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -829,7 +829,7 @@
                   specularColor='0.234804 0.171098 0.489785'
                   shininess='0.0702703'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -842,7 +842,7 @@
                   specularColor='0.374738 0.273065 0.781677'
                   shininess='0.0702703'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -852,7 +852,7 @@
               <Material DEF='Autumn29'
                   ambientIntensity='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -865,7 +865,7 @@
                   specularColor='0.300449 0.142972 0.142972'
                   shininess='0.0663265'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -878,7 +878,7 @@
                   specularColor='0.265851 0.126509 0.126509'
                   shininess='0.928571'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -891,7 +891,7 @@
                   specularColor='0.0786239 0.0803968 0.0484226'
                   shininess='0.167568'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -904,7 +904,7 @@
                   specularColor='0.295918 0.096084 0.00204082'
                   shininess='0.831633'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -917,7 +917,7 @@
                   specularColor='0.176503 0.0894282 0'
                   shininess='0.0486486'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -930,7 +930,7 @@
                   specularColor='0.923469 0.428866 0.00636875'
                   shininess='0.397959'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -940,7 +940,7 @@
               <Material DEF='Autumn36'
                   ambientIntensity='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
       </Switch>
@@ -956,7 +956,7 @@
                   shininess='0.939394'
                   transparency='0.34749'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -970,7 +970,7 @@
                   shininess='0.606061'
                   transparency='0.351351'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -984,7 +984,7 @@
                   shininess='0.0612245'
                   transparency='0.405405'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -998,7 +998,7 @@
                   shininess='0.830303'
                   transparency='0.34749'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1012,7 +1012,7 @@
                   shininess='0.927273'
                   transparency='0.362934'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1026,7 +1026,7 @@
                   shininess='0.642424'
                   transparency='0.389961'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1040,7 +1040,7 @@
                   shininess='0.0663265'
                   transparency='0.293436'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1054,7 +1054,7 @@
                   shininess='0.818182'
                   transparency='0.401544'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1068,7 +1068,7 @@
                   shininess='0.721212'
                   transparency='0.355212'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1082,7 +1082,7 @@
                   shininess='0.981818'
                   transparency='0.370656'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1096,7 +1096,7 @@
                   shininess='0.127273'
                   transparency='0.243243'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1110,7 +1110,7 @@
                   shininess='0.127273'
                   transparency='0.189189'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1124,7 +1124,7 @@
                   shininess='0.921212'
                   transparency='0.34749'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1138,7 +1138,7 @@
                   shininess='0.236364'
                   transparency='0.216216'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1152,7 +1152,7 @@
                   shininess='0.168182'
                   transparency='0.351351'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1166,7 +1166,7 @@
                   shininess='0.0454545'
                   transparency='0.216216'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1180,7 +1180,7 @@
                   shininess='0.127273'
                   transparency='0.208494'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1194,7 +1194,7 @@
                   shininess='0.854545'
                   transparency='0.285714'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1208,7 +1208,7 @@
                   shininess='0.127551'
                   transparency='0.30888'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1222,7 +1222,7 @@
                   shininess='0.636364'
                   transparency='0.285714'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1236,7 +1236,7 @@
                   shininess='0.127273'
                   transparency='0.27027'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1250,7 +1250,7 @@
                   shininess='0.168182'
                   transparency='0.196911'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1264,7 +1264,7 @@
                   shininess='0.0727273'
                   transparency='0.235521'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1278,7 +1278,7 @@
                   shininess='0.478788'
                   transparency='0.59'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1292,7 +1292,7 @@
                   shininess='0.153696'
                   transparency='0.254826'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1306,7 +1306,7 @@
                   shininess='0.957576'
                   transparency='0.254826'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1320,7 +1320,7 @@
                   shininess='0.153696'
                   transparency='0.351351'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1334,7 +1334,7 @@
                   shininess='0.0561224'
                   transparency='0.235521'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1348,7 +1348,7 @@
                   shininess='0.557576'
                   transparency='0.254826'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1358,7 +1358,7 @@
               <Material DEF='Glass30'
                   ambientIntensity='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1372,7 +1372,7 @@
                   shininess='1'
                   transparency='0.359073'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1386,7 +1386,7 @@
                   shininess='0.030303'
                   transparency='0.389961'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1400,7 +1400,7 @@
                   shininess='0.933333'
                   transparency='0.355212'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1414,7 +1414,7 @@
                   shininess='0.230303'
                   transparency='0.351351'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1428,7 +1428,7 @@
                   shininess='0.557576'
                   transparency='0.355212'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1438,7 +1438,7 @@
               <Material DEF='Glass36'
                   ambientIntensity='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
       </Switch>
@@ -1453,7 +1453,7 @@
                   specularColor='1 0.887979 0'
                   shininess='0.660606'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1466,7 +1466,7 @@
                   specularColor='0.729592 0.647862 0'
                   shininess='0.132653'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1479,7 +1479,7 @@
                   specularColor='0.760204 0.582954 0'
                   shininess='0.0408163'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1492,7 +1492,7 @@
                   specularColor='0.780612 0.691177 0.397036'
                   shininess='0.107143'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1505,7 +1505,7 @@
                   specularColor='0.714286 0.696627 0.55665'
                   shininess='0.163265'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1518,7 +1518,7 @@
                   specularColor='0.882653 0.860832 0.687861'
                   shininess='0.204082'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1531,7 +1531,7 @@
                   specularColor='0.508861 0.684007 0.326263'
                   shininess='0.0363636'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1544,7 +1544,7 @@
                   specularColor='0.757576 0.738847 0.590386'
                   shininess='0.0666667'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1557,7 +1557,7 @@
                   specularColor='0.678571 0.661796 0.528818'
                   shininess='0.0204082'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1570,7 +1570,7 @@
                   specularColor='0.641609 0.651044 0.979592'
                   shininess='0.0612245'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1583,7 +1583,7 @@
                   specularColor='1 0.991559 0.963793'
                   shininess='0.557576'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1596,7 +1596,7 @@
                   specularColor='0.963636 0.955501 0.928746'
                   shininess='0.654545'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1609,7 +1609,7 @@
                   specularColor='1 0.887978 0'
                   shininess='0.927273'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1622,7 +1622,7 @@
                   specularColor='0.632653 0.627312 0.609747'
                   shininess='0.102041'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1635,7 +1635,7 @@
                   specularColor='0.632653 0.627312 0.609747'
                   shininess='0.0561224'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1648,7 +1648,7 @@
                   specularColor='0.821429 0.814494 0.791687'
                   shininess='0.0561224'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1661,7 +1661,7 @@
                   specularColor='0.918367 0.910614 0.885116'
                   shininess='0.0561224'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1674,7 +1674,7 @@
                   specularColor='0.528268 0.524391 0.524455'
                   shininess='0.102041'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1687,7 +1687,7 @@
                   specularColor='0.44898 0.445189 0.432723'
                   shininess='0.0561224'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1700,7 +1700,7 @@
                   specularColor='0.780612 0.774022 0.752349'
                   shininess='0.102041'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1713,7 +1713,7 @@
                   specularColor='0.708205 0.480594 0.458724'
                   shininess='0.236364'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1726,7 +1726,7 @@
                   specularColor='0.420602 0.431402 0.454545'
                   shininess='0.127273'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1739,7 +1739,7 @@
                   specularColor='0.673937 0.45734 0.436528'
                   shininess='0.168182'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1752,7 +1752,7 @@
                   specularColor='0.540816 0.480233 0'
                   shininess='0.0306122'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1765,7 +1765,7 @@
                   specularColor='0.890909 0.887832 0.890909'
                   shininess='0.127551'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1778,7 +1778,7 @@
                   specularColor='0.556122 0.554201 0.556122'
                   shininess='0.127551'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1791,7 +1791,7 @@
                   specularColor='0.227785 0.227345 0.227393'
                   shininess='1'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1804,7 +1804,7 @@
                   specularColor='0.774597 0.774597 0.774597'
                   shininess='0.6'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1817,7 +1817,7 @@
                   specularColor='0.773911 0.773911 0.773911'
                   shininess='0.7'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1827,7 +1827,7 @@
               <Material DEF='Metal30'
                   ambientIntensity='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1840,7 +1840,7 @@
                   specularColor='0.938776 0.0550317 0.0550317'
                   shininess='0.0612245'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1853,7 +1853,7 @@
                   specularColor='0.641609 0.976208 0.979592'
                   shininess='0.0612245'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1866,7 +1866,7 @@
                   specularColor='0.780612 0.691177 0.397036'
                   shininess='0.357143'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1879,7 +1879,7 @@
                   specularColor='0.951515 0.729659 0'
                   shininess='0.927273'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1892,7 +1892,7 @@
                   specularColor='0.780612 0.598604 0'
                   shininess='0.107143'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1902,7 +1902,7 @@
               <Material DEF='Metal36'
                   ambientIntensity='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
       </Switch>
@@ -1918,7 +1918,7 @@
                   emissiveColor='0 0.398733 1'
                   shininess='0.0510204'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1932,7 +1932,7 @@
                   emissiveColor='1 0.871763 0'
                   shininess='0.0510204'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1946,7 +1946,7 @@
                   emissiveColor='1 0.7155 0'
                   shininess='0.0510204'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1960,7 +1960,7 @@
                   emissiveColor='1 0.577069 0'
                   shininess='0.0540541'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1974,7 +1974,7 @@
                   emissiveColor='1 0.442751 0'
                   shininess='0.0510204'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -1988,7 +1988,7 @@
                   emissiveColor='1 0.318894 0'
                   shininess='0.0864865'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2002,7 +2002,7 @@
                   emissiveColor='1 0.151505 0'
                   shininess='0.0510204'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2016,7 +2016,7 @@
                   emissiveColor='1 0 0'
                   shininess='0.0510204'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2030,7 +2030,7 @@
                   emissiveColor='1 0 0.0807333'
                   shininess='0.0510204'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2044,7 +2044,7 @@
                   emissiveColor='1 0 0.265757'
                   shininess='0.0510204'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2058,7 +2058,7 @@
                   emissiveColor='1 0 0.34678'
                   shininess='0.0510204'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2072,7 +2072,7 @@
                   emissiveColor='0.0188407 0.940276 1'
                   shininess='0.0510204'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2086,7 +2086,7 @@
                   emissiveColor='1 0.0790818 0.656922'
                   shininess='0.0510204'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2100,7 +2100,7 @@
                   emissiveColor='0.934028 0.00304288 1'
                   shininess='0.0510204'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2114,7 +2114,7 @@
                   emissiveColor='0.755836 0 1'
                   shininess='0.0510204'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2128,7 +2128,7 @@
                   emissiveColor='0.58832 0.0172936 1'
                   shininess='0.0510204'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2142,7 +2142,7 @@
                   emissiveColor='0.460235 0 1'
                   shininess='0.0510204'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2156,7 +2156,7 @@
                   emissiveColor='0.17496 0 1'
                   shininess='0.0510204'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2170,7 +2170,7 @@
                   emissiveColor='0 0.135953 1'
                   shininess='0.0510204'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2184,7 +2184,7 @@
                   emissiveColor='0 0.277276 1'
                   shininess='0.0510204'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2198,7 +2198,7 @@
                   emissiveColor='0 0.2805 0.39661'
                   shininess='0.0810811'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2212,7 +2212,7 @@
                   emissiveColor='0 0.2805 0.040678'
                   shininess='0.0810811'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2226,7 +2226,7 @@
                   emissiveColor='0 1 0.734243'
                   shininess='0.0510204'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2240,7 +2240,7 @@
                   emissiveColor='0.921769 0.544218 0'
                   shininess='0.0540541'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2254,7 +2254,7 @@
                   emissiveColor='1 0.286509 0.159322'
                   shininess='0.0540541'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2268,7 +2268,7 @@
                   emissiveColor='0.667797 0.0769664 0.171099'
                   shininess='0.0540541'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2282,7 +2282,7 @@
                   emissiveColor='0.59083 0.0582792 0.307405'
                   shininess='0.0756757'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2296,7 +2296,7 @@
                   emissiveColor='0.595346 0.187689 0.595358'
                   shininess='0.0540541'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2306,7 +2306,7 @@
               <Material DEF='Neon29'
                   ambientIntensity='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2320,7 +2320,7 @@
                   emissiveColor='0 1 0.456346'
                   shininess='0.0510204'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2334,7 +2334,7 @@
                   emissiveColor='0 1 0.168349'
                   shininess='0.0510204'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2348,7 +2348,7 @@
                   emissiveColor='0.0239058 1 0.00238997'
                   shininess='0.0510204'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2362,7 +2362,7 @@
                   emissiveColor='0.363921 1 0.0478005'
                   shininess='0.0510204'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2376,7 +2376,7 @@
                   emissiveColor='0.559606 1 0'
                   shininess='0.0510204'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2390,7 +2390,7 @@
                   emissiveColor='0.757687 1 0'
                   shininess='0.0510204'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2400,7 +2400,7 @@
               <Material DEF='Neon36'
                   ambientIntensity='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
       </Switch>
@@ -2415,7 +2415,7 @@
                   specularColor='0.412121 0.412121 0.412121'
                   shininess='0.8'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2428,7 +2428,7 @@
                   specularColor='0.0955906 0.0940254 0.0681705'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2441,7 +2441,7 @@
                   specularColor='0.345455 0.345455 0.345455'
                   shininess='0.69697'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2454,7 +2454,7 @@
                   specularColor='0.0955906 0.0955906 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2467,7 +2467,7 @@
                   specularColor='0.251984 0.251984 0.251984'
                   shininess='0.6'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2480,7 +2480,7 @@
                   specularColor='0.0955906 0.0955906 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2493,7 +2493,7 @@
                   specularColor='0.251984 0.251984 0.251984'
                   shininess='0.593939'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2506,7 +2506,7 @@
                   specularColor='0.0955906 0.0955906 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2519,7 +2519,7 @@
                   specularColor='0.251984 0.251984 0.251984'
                   shininess='0.612121'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2532,7 +2532,7 @@
                   specularColor='0.278788 0.278788 0.278788'
                   shininess='0.0909091'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2545,7 +2545,7 @@
                   specularColor='0.290909 0.290909 0.290909'
                   shininess='0.787879'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2558,7 +2558,7 @@
                   specularColor='0.0955906 0.0955906 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2571,7 +2571,7 @@
                   specularColor='0.412121 0.412121 0.412121'
                   shininess='0.806061'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2584,7 +2584,7 @@
                   specularColor='0.309091 0.309091 0.309091'
                   shininess='0.8'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2597,7 +2597,7 @@
                   specularColor='0.0955906 0.0955906 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2610,7 +2610,7 @@
                   specularColor='0.251984 0.251984 0.251984'
                   shininess='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2623,7 +2623,7 @@
                   specularColor='0.0955906 0.0955906 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2636,7 +2636,7 @@
                   specularColor='0.490909 0.490909 0.490909'
                   shininess='0.593939'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2649,7 +2649,7 @@
                   specularColor='0.0955906 0.0955906 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2662,7 +2662,7 @@
                   specularColor='0.569697 0.569697 0.569697'
                   shininess='0.636364'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2675,7 +2675,7 @@
                   specularColor='0.0955906 0.0955906 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2688,7 +2688,7 @@
                   specularColor='0.345455 0.345455 0.345455'
                   shininess='0.612121'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2701,7 +2701,7 @@
                   specularColor='0.0955906 0.0955906 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2714,7 +2714,7 @@
                   specularColor='0.0955906 0.0955906 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2727,7 +2727,7 @@
                   specularColor='0.251984 0.251984 0.251984'
                   shininess='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2740,7 +2740,7 @@
                   specularColor='0.0955906 0.0955906 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2753,7 +2753,7 @@
                   specularColor='0.251984 0.251984 0.251984'
                   shininess='0.684848'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2766,7 +2766,7 @@
                   specularColor='0.0955906 0.0955906 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2779,7 +2779,7 @@
                   specularColor='0.430303 0.430303 0.430303'
                   shininess='0.406061'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2789,7 +2789,7 @@
               <Material DEF='Rococo30'
                   ambientIntensity='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2802,7 +2802,7 @@
                   specularColor='0.375758 0.375758 0.375758'
                   shininess='0.781818'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2815,7 +2815,7 @@
                   specularColor='0.0955906 0.0955906 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2828,7 +2828,7 @@
                   specularColor='0.251984 0.251984 0.251984'
                   shininess='0.872727'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2841,7 +2841,7 @@
                   specularColor='0.0955906 0.0955906 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2854,7 +2854,7 @@
                   specularColor='0.30303 0.30303 0.30303'
                   shininess='0.69697'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2864,7 +2864,7 @@
               <Material DEF='Rococo36'
                   ambientIntensity='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
       </Switch>
@@ -2879,7 +2879,7 @@
                   specularColor='0.345745 0.143066 0'
                   shininess='0.12766'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2892,7 +2892,7 @@
                   specularColor='0.319149 0.0813297 0.0813297'
                   shininess='0.0265957'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2905,7 +2905,7 @@
                   specularColor='0.324504 0.404255 0.404255'
                   shininess='0.542553'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2918,7 +2918,7 @@
                   specularColor='0.0551487 0.0810796 0.207447'
                   shininess='0.0319149'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2931,7 +2931,7 @@
                   specularColor='0.330429 0.336788 0.23505'
                   shininess='0.0569948'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2944,7 +2944,7 @@
                   specularColor='0.360091 0.367021 0.25615'
                   shininess='0.308511'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2957,7 +2957,7 @@
                   specularColor='0.218085 0.218085 0.218085'
                   shininess='0.0585106'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2970,7 +2970,7 @@
                   specularColor='0.112376 0.390598 0.205359'
                   shininess='0.191489'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2983,7 +2983,7 @@
                   specularColor='0.479592 0.428903 0.403559'
                   shininess='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -2996,7 +2996,7 @@
                   specularColor='0.356628 0.356628 0.356628'
                   shininess='0.0810811'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3009,7 +3009,7 @@
                   specularColor='0.0786239 0.0803968 0.0484226'
                   shininess='0.167568'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3022,7 +3022,7 @@
                   specularColor='0.180851 0.068473 0.0473582'
                   shininess='0.0106383'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3035,7 +3035,7 @@
                   specularColor='0.327377 0.135466 0'
                   shininess='0.0765306'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3049,7 +3049,7 @@
                   emissiveColor='0.0159574 0.0159574 0.0159574'
                   shininess='0.0319149'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3062,7 +3062,7 @@
                   specularColor='0.296891 0.0591278 0.016358'
                   shininess='0.0319149'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3075,7 +3075,7 @@
                   specularColor='0.122719 0.0363652 0.0100606'
                   shininess='0.0319149'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3088,7 +3088,7 @@
                   specularColor='0.336735 0.0510908 0.0510908'
                   shininess='0.0714286'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3101,7 +3101,7 @@
                   specularColor='0.183673 0.165545 0.163419'
                   shininess='0.0255102'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3114,7 +3114,7 @@
                   specularColor='0.204427 0.102753 0.114546'
                   shininess='0.0957447'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3127,7 +3127,7 @@
                   specularColor='0.0794227 0.0300707 0.0207978'
                   shininess='0.0212766'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3140,7 +3140,7 @@
                   specularColor='0.223676 0.109052 0.0333732'
                   shininess='0.0851064'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3153,7 +3153,7 @@
                   specularColor='0.923469 0.428866 0.00636875'
                   shininess='0.397959'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3166,7 +3166,7 @@
                   specularColor='0.00916127 0.0158039 0.108627'
                   shininess='0.037234'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3179,7 +3179,7 @@
                   specularColor='0.824468 0.227489 0.227489'
                   shininess='1'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3192,7 +3192,7 @@
                   specularColor='0.198631 0.0321162 0.160295'
                   shininess='0.0106383'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3206,7 +3206,7 @@
                   emissiveColor='0.0106383 0.0106383 0.0106383'
                   shininess='0.0212766'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3219,7 +3219,7 @@
                   specularColor='0.0397459 0.0341806 0.100964'
                   shininess='0.0362694'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3232,7 +3232,7 @@
                   specularColor='0.0530324 0.0456067 0.134715'
                   shininess='0.0984456'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3245,7 +3245,7 @@
                   specularColor='0.113468 0.109578 0.156265'
                   shininess='0.0638298'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3255,7 +3255,7 @@
               <Material DEF='Santafee30'
                   ambientIntensity='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3268,7 +3268,7 @@
                   specularColor='0.425532 0.032158 0.032158'
                   shininess='0.0851064'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3281,7 +3281,7 @@
                   specularColor='0.367348 0.0557356 0.0557356'
                   shininess='0.0585106'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3294,7 +3294,7 @@
                   specularColor='0.2038 0.253886 0.253886'
                   shininess='0.0569948'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3307,7 +3307,7 @@
                   specularColor='0.257869 0.321244 0.321244'
                   shininess='0.0310881'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3320,7 +3320,7 @@
                   specularColor='0.237073 0.295337 0.295337'
                   shininess='0.466321'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3330,7 +3330,7 @@
               <Material DEF='Santafee36'
                   ambientIntensity='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
       </Switch>
@@ -3345,7 +3345,7 @@
                   specularColor='0.641609 0 0.979592'
                   shininess='0.0612245'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3358,7 +3358,7 @@
                   specularColor='0.383952 0 0.607143'
                   shininess='0.157143'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3371,7 +3371,7 @@
                   specularColor='0.505305 0.463899 0'
                   shininess='0.127551'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3384,7 +3384,7 @@
                   specularColor='0.505305 0.463899 0'
                   shininess='0.127551'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3397,7 +3397,7 @@
                   specularColor='0.367996 0.439089 0.957576'
                   shininess='0.345455'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3410,7 +3410,7 @@
                   specularColor='0.15182 0.607143 0.173867'
                   shininess='0.157143'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3423,7 +3423,7 @@
                   specularColor='0.035776 0.591837 0'
                   shininess='0.0816327'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3436,7 +3436,7 @@
                   specularColor='0.565306 0.591837 0'
                   shininess='0.107143'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3449,7 +3449,7 @@
                   specularColor='0.683673 0.0990148 0'
                   shininess='0.157143'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3462,7 +3462,7 @@
                   specularColor='0.607143 0.53913 0'
                   shininess='0.157143'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3475,7 +3475,7 @@
                   specularColor='0.607143 0.53913 0'
                   shininess='0.157143'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3488,7 +3488,7 @@
                   specularColor='0.336183 0.372973 0.00126432'
                   shininess='0.0648649'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3501,7 +3501,7 @@
                   specularColor='0.364672 0.833805 0.909091'
                   shininess='0.636364'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3514,7 +3514,7 @@
                   specularColor='0.233325 0.607143 0.572339'
                   shininess='0.157143'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3527,7 +3527,7 @@
                   specularColor='0.233325 0.278401 0.607143'
                   shininess='0.157143'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3540,7 +3540,7 @@
                   specularColor='0.381971 0.455764 0.993939'
                   shininess='0.8'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3553,7 +3553,7 @@
                   specularColor='0.607143 0.132784 0.175795'
                   shininess='0.157143'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3566,7 +3566,7 @@
                   specularColor='0.938776 0.0550317 0.0550317'
                   shininess='0.0612245'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3579,7 +3579,7 @@
                   specularColor='0.981818 0 0'
                   shininess='0.030303'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3592,7 +3592,7 @@
                   specularColor='0.383952 0 0.607143'
                   shininess='0.157143'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3605,7 +3605,7 @@
                   specularColor='0.607143 0.607143 0.00496302'
                   shininess='0.157143'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3618,7 +3618,7 @@
                   specularColor='0.236417 0.945455 0.270749'
                   shininess='0.369697'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3631,7 +3631,7 @@
                   specularColor='0.233325 0.278401 0.607143'
                   shininess='0.157143'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3644,7 +3644,7 @@
                   specularColor='0.233325 0.278401 0.607143'
                   shininess='0.157143'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3657,7 +3657,7 @@
                   specularColor='0.383952 0 0.607143'
                   shininess='0.157143'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3670,7 +3670,7 @@
                   specularColor='0.448482 0 0.709184'
                   shininess='0.433673'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3683,7 +3683,7 @@
                   specularColor='0 0.625 0.892857'
                   shininess='0.122449'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3696,7 +3696,7 @@
                   specularColor='0.356263 0.383104 0.826531'
                   shininess='0.0867347'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3709,7 +3709,7 @@
                   specularColor='0.362217 0.369498 0.489785'
                   shininess='0.0702703'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3719,7 +3719,7 @@
               <Material DEF='Sheen30'
                   ambientIntensity='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3732,7 +3732,7 @@
                   specularColor='0.15182 0.607143 0.173867'
                   shininess='0.157143'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3745,7 +3745,7 @@
                   specularColor='0.383952 0 0.607143'
                   shininess='0.157143'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3758,7 +3758,7 @@
                   specularColor='0.607143 0.132784 0.175795'
                   shininess='0.157143'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3771,7 +3771,7 @@
                   specularColor='0.233325 0.278401 0.607143'
                   shininess='0.157143'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3784,7 +3784,7 @@
                   specularColor='0.243549 0.556863 0.607143'
                   shininess='0.0663265'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3794,7 +3794,7 @@
               <Material DEF='Sheen36'
                   ambientIntensity='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
       </Switch>
@@ -3809,7 +3809,7 @@
                   specularColor='0.0347538 0.0335554 0.693878'
                   shininess='0.0714286'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3822,7 +3822,7 @@
                   specularColor='0.425195 0.0335554 0.693878'
                   shininess='0.0714286'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3835,7 +3835,7 @@
                   specularColor='0.964441 0.641609 0.979592'
                   shininess='0.0612245'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3848,7 +3848,7 @@
                   specularColor='0.979592 0.641609 0.798946'
                   shininess='0.0612245'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3861,7 +3861,7 @@
                   specularColor='0.979592 0.641609 0.641609'
                   shininess='0.0612245'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3874,7 +3874,7 @@
                   specularColor='0.979592 0.805939 0.641609'
                   shininess='0.0612245'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3887,7 +3887,7 @@
                   specularColor='0.946959 0.979592 0.641609'
                   shininess='0.0612245'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3900,7 +3900,7 @@
                   specularColor='0.641609 0.979592 0.657925'
                   shininess='0.0612245'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3913,7 +3913,7 @@
                   specularColor='0.641609 0.976208 0.979592'
                   shininess='0.0612245'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3926,7 +3926,7 @@
                   specularColor='0.641609 0.748831 0.979592'
                   shininess='0.0612245'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3939,7 +3939,7 @@
                   specularColor='0.362217 0.369498 0.489785'
                   shininess='0.0702703'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3952,7 +3952,7 @@
                   specularColor='0.588517 0.248038 0.596939'
                   shininess='0.0204082'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3965,7 +3965,7 @@
                   specularColor='0.693878 0.0335554 0.313623'
                   shininess='0.0714286'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3978,7 +3978,7 @@
                   specularColor='0.765306 0.33779 0.572187'
                   shininess='0.0408163'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -3991,7 +3991,7 @@
                   specularColor='0.831633 0.403851 0.367065'
                   shininess='0.0408163'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4004,7 +4004,7 @@
                   specularColor='0.831633 0.482277 0.317353'
                   shininess='0.0408163'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4017,7 +4017,7 @@
                   specularColor='0.631735 0.600752 0.241071'
                   shininess='0.0408163'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4030,7 +4030,7 @@
                   specularColor='0.428943 0.632653 0.241422'
                   shininess='0.0255102'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4043,7 +4043,7 @@
                   specularColor='0.243549 0.556863 0.607143'
                   shininess='0.0663265'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4056,7 +4056,7 @@
                   specularColor='0.362217 0.369498 0.489785'
                   shininess='0.0702703'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4069,7 +4069,7 @@
                   specularColor='0.183673 0.165545 0.163419'
                   shininess='0.0255102'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4082,7 +4082,7 @@
                   specularColor='0.221121 0.199297 0.196736'
                   shininess='0.0357143'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4095,7 +4095,7 @@
                   specularColor='0.183673 0.165545 0.163419'
                   shininess='0.0255102'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4108,7 +4108,7 @@
                   specularColor='0.693878 0.0335554 0.0335554'
                   shininess='0.0714286'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4121,7 +4121,7 @@
                   specularColor='0.108805 0.0980667 0.0968068'
                   shininess='0.0612245'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4134,7 +4134,7 @@
                   specularColor='0.183673 0.165545 0.163419'
                   shininess='0.0255102'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4146,7 +4146,7 @@
                   diffuseColor='0.589217 0.581431 0.492013'
                   shininess='0.0612245'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4159,7 +4159,7 @@
                   specularColor='0.22814 0.205624 0.202982'
                   shininess='0.0612245'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4172,7 +4172,7 @@
                   specularColor='0.108805 0.0980667 0.0968068'
                   shininess='0.0612245'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4182,7 +4182,7 @@
               <Material DEF='Silky30'
                   ambientIntensity='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4195,7 +4195,7 @@
                   specularColor='0.693878 0.29313 0.0335554'
                   shininess='0.0714286'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4208,7 +4208,7 @@
                   specularColor='0.535714 0.500555 0.0259067'
                   shininess='0.0714286'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4221,7 +4221,7 @@
                   specularColor='0.182327 0.540816 0.0261535'
                   shininess='0.0714286'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4234,7 +4234,7 @@
                   specularColor='0.0261535 0.540816 0.439658'
                   shininess='0.0714286'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4247,7 +4247,7 @@
                   specularColor='0.0261535 0.242667 0.540816'
                   shininess='0.0714286'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4257,7 +4257,7 @@
               <Material DEF='Silky36'
                   ambientIntensity='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
       </Switch>
@@ -4272,7 +4272,7 @@
                   specularColor='0.489796 0.396323 0.209378'
                   shininess='0.979592'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4285,7 +4285,7 @@
                   specularColor='0.0955906 0.0940254 0.0681705'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4298,7 +4298,7 @@
                   specularColor='0.913265 0.373179 0.373179'
                   shininess='0.959184'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4311,7 +4311,7 @@
                   specularColor='0.913265 0.373179 0.373179'
                   shininess='0.959184'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4324,7 +4324,7 @@
                   specularColor='0.122449 0.0500352 0.0500352'
                   shininess='0.0714286'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4337,7 +4337,7 @@
                   specularColor='0.0955906 0.0955906 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4350,7 +4350,7 @@
                   specularColor='0.436364 0.243939 0.298678'
                   shininess='0.0242424'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4363,7 +4363,7 @@
                   specularColor='0.0955906 0.0955906 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4376,7 +4376,7 @@
                   specularColor='0.278788 0.278788 0.278788'
                   shininess='0.0909091'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4389,7 +4389,7 @@
                   specularColor='0.680294 0.314997 0.841837'
                   shininess='0.107143'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4402,7 +4402,7 @@
                   specularColor='0.30577 0.141581 0.378378'
                   shininess='0.567568'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4415,7 +4415,7 @@
                   specularColor='0.0955906 0.0955906 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4428,7 +4428,7 @@
                   specularColor='0.872449 0.247119 0.254214'
                   shininess='1'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4441,7 +4441,7 @@
                   specularColor='0.101243 0.093899 0.0914149'
                   shininess='0.0432432'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4454,7 +4454,7 @@
                   specularColor='0.248796 0.253797 0.336418'
                   shininess='0.0432432'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4467,7 +4467,7 @@
                   specularColor='0.374738 0.273065 0.781677'
                   shininess='0.0702703'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4480,7 +4480,7 @@
                   specularColor='0.101986 0.0743151 0.212735'
                   shininess='0.0702703'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4493,7 +4493,7 @@
                   specularColor='0.0955906 0.0955906 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4506,7 +4506,7 @@
                   specularColor='0.490909 0.490909 0.490909'
                   shininess='0.593939'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4519,7 +4519,7 @@
                   specularColor='0.330429 0.336788 0.23505'
                   shininess='0.0569948'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4532,7 +4532,7 @@
                   specularColor='0.330429 0.336788 0.23505'
                   shininess='0.585492'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4545,7 +4545,7 @@
                   specularColor='0.479592 0.428903 0.403559'
                   shininess='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4558,7 +4558,7 @@
                   specularColor='0.168367 0.150572 0.141675'
                   shininess='0.0867347'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4571,7 +4571,7 @@
                   specularColor='0.872449 0.247119 0.254214'
                   shininess='1'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4584,7 +4584,7 @@
                   specularColor='0.0447285 0.612254 0.0843031'
                   shininess='0.678571'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4597,7 +4597,7 @@
                   specularColor='0.355787 0.642424 0.355787'
                   shininess='0.909091'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4610,7 +4610,7 @@
                   specularColor='0 0.272814 0'
                   shininess='0.0714286'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4623,7 +4623,7 @@
                   specularColor='0 0.591097 0'
                   shininess='0.0765306'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4636,7 +4636,7 @@
                   specularColor='0.585714 0.6 0'
                   shininess='0.109091'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4646,7 +4646,7 @@
               <Material DEF='Spring30'
                   ambientIntensity='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4659,7 +4659,7 @@
                   specularColor='0.0955906 0.0955906 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4672,7 +4672,7 @@
                   specularColor='0.304961 0.131827 0.00788694'
                   shininess='0.97449'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4685,7 +4685,7 @@
                   specularColor='0.0955906 0.0955906 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4698,7 +4698,7 @@
                   specularColor='0.20373 0.0832482 0.0832482'
                   shininess='0.0714286'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4708,7 +4708,7 @@
               <Material DEF='Spring35'
                   ambientIntensity='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4718,7 +4718,7 @@
               <Material DEF='Spring36'
                   ambientIntensity='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
       </Switch>
@@ -4732,7 +4732,7 @@
                   diffuseColor='0.982993 0.969388 0.888136'
                   shininess='0'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4744,7 +4744,7 @@
                   diffuseColor='0.766102 0.577127 0.534973'
                   shininess='0.027027'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4757,7 +4757,7 @@
                   specularColor='1 0.131592 0.218563'
                   shininess='0.848649'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4771,7 +4771,7 @@
                   emissiveColor='0.00540541 0.00540541 0.00540541'
                   shininess='0.994595'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4785,7 +4785,7 @@
                   emissiveColor='0.00540541 0.00540541 0.00540541'
                   shininess='0.0648649'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4798,7 +4798,7 @@
                   specularColor='0.0801129 0.345487 0.578378'
                   shininess='0.0918919'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4811,7 +4811,7 @@
                   specularColor='0.0381847 0.164671 0.275676'
                   shininess='0.0216216'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4824,7 +4824,7 @@
                   specularColor='0.0898463 0.387462 0.648649'
                   shininess='0.924324'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4837,7 +4837,7 @@
                   specularColor='0.0956359 0.280612 0.16999'
                   shininess='0.403061'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4850,7 +4850,7 @@
                   specularColor='0.0714408 0.20962 0.126984'
                   shininess='0.0108108'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4863,7 +4863,7 @@
                   specularColor='0.280892 0.824187 0.499277'
                   shininess='1'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4876,7 +4876,7 @@
                   specularColor='0.086242 0.259606 0.142694'
                   shininess='0.0648649'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4889,7 +4889,7 @@
                   specularColor='0.192616 0.110064 0.0623879'
                   shininess='0.027027'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4902,7 +4902,7 @@
                   specularColor='0.259785 0.762254 0.461759'
                   shininess='0.827027'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4915,7 +4915,7 @@
                   specularColor='0.728905 0.691826 0.153194'
                   shininess='0.891892'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4928,7 +4928,7 @@
                   specularColor='0.990909 0.940502 0.208259'
                   shininess='0.363636'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4941,7 +4941,7 @@
                   specularColor='0.25 0.237283 0.0525425'
                   shininess='0.177273'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4953,7 +4953,7 @@
                   diffuseColor='1 0.578166 0.610756'
                   shininess='0.513514'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4966,7 +4966,7 @@
                   specularColor='0.718919 0.23964 0.370426'
                   shininess='1'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4979,7 +4979,7 @@
                   specularColor='0.335135 0.0306779 0'
                   shininess='0.0594595'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -4992,7 +4992,7 @@
                   specularColor='0.805292 0.765198 0.747416'
                   shininess='0.832432'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5005,7 +5005,7 @@
                   specularColor='0.372973 0.00253723 0.00126432'
                   shininess='0.0108108'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5018,7 +5018,7 @@
                   specularColor='0.341055 0.20592 0'
                   shininess='0.0648649'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5031,7 +5031,7 @@
                   specularColor='0.254054 0.117984 0.120752'
                   shininess='0.135135'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5044,7 +5044,7 @@
                   specularColor='0.178011 0.093326 0.161906'
                   shininess='0.0540541'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5057,7 +5057,7 @@
                   specularColor='0.805405 0.805405 0.805405'
                   shininess='0.751351'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5070,7 +5070,7 @@
                   specularColor='0.237838 0 0.101038'
                   shininess='0.113514'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5083,7 +5083,7 @@
                   specularColor='0.340541 0 0.144668'
                   shininess='0.0486486'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5096,7 +5096,7 @@
                   specularColor='0.151866 0.0223515 0.156482'
                   shininess='0.0648649'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5106,7 +5106,7 @@
               <Material DEF='Summer30'
                   ambientIntensity='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5119,7 +5119,7 @@
                   specularColor='1 0.464407 0.4753'
                   shininess='0.994595'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5132,7 +5132,7 @@
                   specularColor='0.127228 0.177225 0.216949'
                   shininess='0.0486486'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5145,7 +5145,7 @@
                   specularColor='0.271499 0.302282 0.351351'
                   shininess='0.135135'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5157,7 +5157,7 @@
                   specularColor='0.135714 0.151102 0.17563'
                   shininess='0.027027'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5170,7 +5170,7 @@
                   specularColor='0.288842 0.402349 0.492533'
                   shininess='0.962162'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5180,7 +5180,7 @@
               <Material DEF='Summer36'
                   ambientIntensity='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
       </Switch>
@@ -5195,7 +5195,7 @@
                   specularColor='0.0955906 0.0955906 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5208,7 +5208,7 @@
                   specularColor='0.860606 0.860606 0.860599'
                   shininess='0.939394'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5221,7 +5221,7 @@
                   specularColor='0.0955906 0.0955906 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5234,7 +5234,7 @@
                   specularColor='0.684848 0.684848 0.684848'
                   shininess='0.933333'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5247,7 +5247,7 @@
                   specularColor='0.0955906 0.0955906 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5260,7 +5260,7 @@
                   specularColor='0.672727 0.672727 0.672727'
                   shininess='0.230303'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5273,7 +5273,7 @@
                   specularColor='0.0955906 0.0862563 0.093458'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5286,7 +5286,7 @@
                   specularColor='0.951515 0.951515 0.951515'
                   shininess='0.557576'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5299,7 +5299,7 @@
                   specularColor='0.0877258 0.0694377 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5312,7 +5312,7 @@
                   specularColor='0.909091 0.909091 0.909091'
                   shininess='0.406061'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5325,7 +5325,7 @@
                   specularColor='0.0522777 0.0312975 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5338,7 +5338,7 @@
                   specularColor='0.884848 0.884848 0.884848'
                   shininess='0.830303'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5351,7 +5351,7 @@
                   specularColor='0.0955906 0.0955906 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5364,7 +5364,7 @@
                   specularColor='0.03017 0.0460332 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5377,7 +5377,7 @@
                   specularColor='0.90303 0.90303 0.90303'
                   shininess='0.927273'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5390,7 +5390,7 @@
                   specularColor='0 0.0697667 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5403,7 +5403,7 @@
                   specularColor='0.915152 0.915152 0.915152'
                   shininess='0.642424'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5416,7 +5416,7 @@
                   specularColor='0.836364 0.836364 0.836364'
                   shininess='0.606061'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5429,7 +5429,7 @@
                   specularColor='1 1 1'
                   shininess='0.818182'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5442,7 +5442,7 @@
                   specularColor='0.00621169 0.0955906 0.0102862'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5455,7 +5455,7 @@
                   specularColor='0.981818 0.981818 0.981818'
                   shininess='0.721212'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5468,7 +5468,7 @@
                   specularColor='0.0415311 0.0955906 0.00184612'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5481,7 +5481,7 @@
                   specularColor='0.963636 0.963636 0.963636'
                   shininess='0.981818'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5494,7 +5494,7 @@
                   specularColor='0.836364 0.836364 0.836364'
                   shininess='0.606061'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5506,7 +5506,7 @@
                   diffuseColor='0.991732 0.939493 1'
                   shininess='0'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5519,7 +5519,7 @@
                   specularColor='0.860606 0.860606 0.860606'
                   shininess='0.90303'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5532,7 +5532,7 @@
                   specularColor='0.168 0.168 0.168'
                   shininess='0.153696'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5545,7 +5545,7 @@
                   specularColor='0.745455 0.745455 0.745455'
                   shininess='0.957576'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5558,7 +5558,7 @@
                   specularColor='0.168 0.168 0.168'
                   shininess='0.153696'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5568,7 +5568,7 @@
               <Material DEF='Tropical30'
                   ambientIntensity='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5581,7 +5581,7 @@
                   specularColor='0.0955906 0.0955906 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5594,7 +5594,7 @@
                   specularColor='0.836364 0.836364 0.836364'
                   shininess='0.921212'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5607,7 +5607,7 @@
                   specularColor='0.0955906 0.0955906 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5620,7 +5620,7 @@
                   specularColor='0.709091 0.709091 0.709091'
                   shininess='0.478788'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5633,7 +5633,7 @@
                   specularColor='0.0955906 0.0955906 0.0955906'
                   shininess='0.078125'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5643,7 +5643,7 @@
               <Material DEF='Tropical36'
                   ambientIntensity='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
       </Switch>
@@ -5658,7 +5658,7 @@
                   specularColor='0.04 0.028616 0.0202979'
                   shininess='0.795322'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5671,7 +5671,7 @@
                   specularColor='0.121 0.0979283 0.08107'
                   shininess='0.660819'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5684,7 +5684,7 @@
                   specularColor='0.073 0.073 0.073'
                   shininess='0.122807'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5697,7 +5697,7 @@
                   specularColor='0.04 0.04 0.04'
                   shininess='0.324'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5710,7 +5710,7 @@
                   specularColor='0.048 0.048 0.048'
                   shininess='0.324'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5723,7 +5723,7 @@
                   specularColor='0.056 0.056 0.056'
                   shininess='0.324'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5736,7 +5736,7 @@
                   specularColor='0.038 0.0316016 0'
                   shininess='0.0511696'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5749,7 +5749,7 @@
                   specularColor='0.13 0.101331 0.0659681'
                   shininess='0.0625'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5762,7 +5762,7 @@
                   specularColor='0.04 0.028616 0.0202979'
                   shininess='0.0625'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5775,7 +5775,7 @@
                   specularColor='0.097 0.0482215 0.04462'
                   shininess='0.134615'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5788,7 +5788,7 @@
                   specularColor='0.078 0.0591786 0.05772'
                   shininess='0.0584795'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5801,7 +5801,7 @@
                   specularColor='0.065 0.0325176 0.0292618'
                   shininess='0.0584795'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5814,7 +5814,7 @@
                   specularColor='0.073 0.0353799 0.019257'
                   shininess='0.725146'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5827,7 +5827,7 @@
                   specularColor='0.065 0.0590044 0.0546'
                   shininess='0.356725'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5840,7 +5840,7 @@
                   specularColor='0.143 0.0888502 0.0642034'
                   shininess='0.0921053'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5853,7 +5853,7 @@
                   specularColor='0.105 0.0652396 0.0471423'
                   shininess='0.0672515'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5866,7 +5866,7 @@
                   specularColor='0.137 0.0851222 0.0615095'
                   shininess='0.0760234'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5879,7 +5879,7 @@
                   specularColor='0.117 0.0726956 0.05253'
                   shininess='0.0537895'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5892,7 +5892,7 @@
                   specularColor='0.038 0.0337877 0'
                   shininess='0.0292398'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5905,7 +5905,7 @@
                   specularColor='0.0371203 0.048 0.01968'
                   shininess='0.0804094'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5918,7 +5918,7 @@
                   specularColor='0.110682 0.12 0.1092'
                   shininess='0.163743'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5931,7 +5931,7 @@
                   specularColor='0.00988017 0.01 0.0096'
                   shininess='0.0687134'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5944,7 +5944,7 @@
                   specularColor='0.1209 0.13 0.12139'
                   shininess='0.0687134'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5957,7 +5957,7 @@
                   specularColor='0.01625 0.065 0'
                   shininess='0.0467836'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5970,7 +5970,7 @@
                   specularColor='0.02088 0.021099 0.024'
                   shininess='0.0175439'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5983,7 +5983,7 @@
                   specularColor='0.04698 0.0474727 0.054'
                   shininess='0.0643275'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -5996,7 +5996,7 @@
                   specularColor='0.04176 0.046214 0.048'
                   shininess='0.0818713'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6009,7 +6009,7 @@
                   specularColor='0.02784 0.0296551 0.032'
                   shininess='0.0467836'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6022,7 +6022,7 @@
                   specularColor='0.05096 0.0528856 0.056'
                   shininess='0.0467836'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6035,7 +6035,7 @@
                   specularColor='0.05785 0.0609697 0.065'
                   shininess='0.0467836'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6048,7 +6048,7 @@
                   specularColor='0.04 0.0336093 0.0324'
                   shininess='0.324'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6061,7 +6061,7 @@
                   specularColor='0.073 0.04672 0.04672'
                   shininess='0.0994152'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6074,7 +6074,7 @@
                   specularColor='0.04 0.04 0.04'
                   shininess='0.324'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6087,7 +6087,7 @@
                   specularColor='0.0324 0.0372075 0.04'
                   shininess='0.324'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6100,7 +6100,7 @@
                   specularColor='0.09982 0.122758 0.161'
                   shininess='0.0935673'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6109,7 +6109,7 @@
             <Appearance>
               <Material DEF='Velvet36'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
       </Switch>
@@ -6124,7 +6124,7 @@
                   specularColor='0.405259 0.410811 0.410811'
                   shininess='0.524324'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6137,7 +6137,7 @@
                   specularColor='0.767568 0.756757 0.764964'
                   shininess='0.897297'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6150,7 +6150,7 @@
                   specularColor='0.071925 0.677294 0'
                   shininess='0.0810811'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6162,7 +6162,7 @@
                   diffuseColor='0 0.488636 0'
                   shininess='0'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6175,7 +6175,7 @@
                   specularColor='0.071925 0.356628 0'
                   shininess='0.0810811'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6188,7 +6188,7 @@
                   specularColor='0.0816327 0.404762 0'
                   shininess='0.789189'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6201,7 +6201,7 @@
                   specularColor='0.356628 0.356628 0.356628'
                   shininess='0.0810811'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6214,7 +6214,7 @@
                   specularColor='0.87027 0.458816 0.87027'
                   shininess='0.724324'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6227,7 +6227,7 @@
                   specularColor='0.0845487 0.0995954 0.111647'
                   shininess='1'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6240,7 +6240,7 @@
                   specularColor='0.656314 0.773115 0.866667'
                   shininess='0.684848'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6253,7 +6253,7 @@
                   specularColor='0.405259 0.410811 0.410811'
                   shininess='0.524324'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6266,7 +6266,7 @@
                   specularColor='0.405259 0.410811 0.410811'
                   shininess='0.524324'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6279,7 +6279,7 @@
                   specularColor='0.686486 0.676818 0.684159'
                   shininess='1'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6292,7 +6292,7 @@
                   specularColor='0.0616885 0.0988278 0.112'
                   shininess='0.094483'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6305,7 +6305,7 @@
                   specularColor='0.0170845 0.374932 0.451021'
                   shininess='0.772973'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6318,7 +6318,7 @@
                   specularColor='0.00438452 0.0962214 0.115749'
                   shininess='0.0972973'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6331,7 +6331,7 @@
                   specularColor='0.0137744 0.302289 0.363636'
                   shininess='0.0972973'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6344,7 +6344,7 @@
                   specularColor='0.610811 0.35315 0.373056'
                   shininess='0.832432'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6357,7 +6357,7 @@
                   specularColor='0.805292 0.216986 0.36733'
                   shininess='0.832432'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6370,7 +6370,7 @@
                   specularColor='0.526732 0.141928 0.240266'
                   shininess='0.151351'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6383,7 +6383,7 @@
                   specularColor='0.551351 0 0.234225'
                   shininess='0.0540541'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6396,7 +6396,7 @@
                   specularColor='0.848649 0 0.360523'
                   shininess='0.740541'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6409,7 +6409,7 @@
                   specularColor='0.690166 0.319568 0.854054'
                   shininess='0.659459'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6422,7 +6422,7 @@
                   specularColor='0.220301 0.259507 0.290909'
                   shininess='0.0727273'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6435,7 +6435,7 @@
                   specularColor='0.253352 0.11731 0.313514'
                   shininess='0.0702703'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6448,7 +6448,7 @@
                   specularColor='0.110903 0 0.337957'
                   shininess='0.0972973'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6461,7 +6461,7 @@
                   specularColor='0.150101 0 0.457407'
                   shininess='0.740541'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6474,7 +6474,7 @@
                   specularColor='0.0920022 0 0.0201191'
                   shininess='0.0648649'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6487,7 +6487,7 @@
                   specularColor='0.577569 0 0.126303'
                   shininess='0.772973'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6497,7 +6497,7 @@
               <Material DEF='Winter30'
                   ambientIntensity='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6510,7 +6510,7 @@
                   specularColor='0.394707 0.464951 0.521212'
                   shininess='0.0727273'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6523,7 +6523,7 @@
                   specularColor='0.293243 0.297387 0.290421'
                   shininess='0.0816327'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6536,7 +6536,7 @@
                   specularColor='0.311224 0.25183 0.133042'
                   shininess='0.0969388'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6548,7 +6548,7 @@
                   diffuseColor='1 1 0.474361'
                   shininess='0.0378378'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6561,7 +6561,7 @@
                   specularColor='0.899871 0.893105 0.896821'
                   shininess='0.681081'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
         <Transform
@@ -6571,7 +6571,7 @@
               <Material DEF='Winter36'
                   ambientIntensity='0.25'/>
             </Appearance>
-            <Sphere/>
+            <Sphere USE='_1'/>
           </Shape>
         </Transform>
       </Switch>
