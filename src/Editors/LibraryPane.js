@@ -29,6 +29,11 @@ module .exports = class LibraryPanel
       return this .#library .field;
    }
 
+   get element ()
+   {
+      return this .#library .element;
+   }
+
    get output ()
    {
       return this .#library .output;

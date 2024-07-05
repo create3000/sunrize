@@ -65,7 +65,7 @@ module .exports = class Materials extends LibraryPane
 
       this .#canvas
          .css ({ "position": "absolute", "visibility": "hidden" })
-         .prependTo (this .output);
+         .prependTo (this .element);
 
       await this .#browser .resize (25, 25);
       await this .#browser .replaceWorld (this .#scene);
