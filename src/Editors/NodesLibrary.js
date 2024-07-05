@@ -17,14 +17,13 @@ module .exports = class NodesLibrary extends LibraryPane
 
    open ()
    {
+      this .#list ?.remove ();
       this .#list = undefined;
    }
 
    update ()
    {
       // Clear output.
-
-      this .output .empty ();
 
       if (this .#list)
       {

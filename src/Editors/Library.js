@@ -185,6 +185,8 @@ module .exports = new class Library extends Dialog
 
    update ()
    {
+      this .output .children () .detach ();
+      
       const pane = this .panes
          .find (pane => pane .id === this .config .file .type);
 

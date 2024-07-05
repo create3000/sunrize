@@ -19,8 +19,6 @@ module .exports = class Materials extends LibraryPane
    {
       // Clear output.
 
-      this .output .empty ();
-
       if (this .#list)
       {
          this .output .append (this .#list);

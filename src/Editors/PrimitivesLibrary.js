@@ -15,8 +15,6 @@ module .exports = class PrimitivesLibrary extends LibraryPane
    {
       // Clear output.
 
-      this .output .empty ();
-
       if (this .#list)
       {
          this .output .append (this .#list);
