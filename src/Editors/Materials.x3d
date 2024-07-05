@@ -17,7 +17,7 @@
     </Viewpoint>
     <Switch DEF='Materials'
         whichChoice='0'>
-      <Group DEF='Artdeco'>
+      <Switch DEF='Artdeco'>
         <Transform
             translation='-5 5 0'>
           <Shape>
@@ -479,8 +479,8 @@
             <Sphere/>
           </Shape>
         </Transform>
-      </Group>
-      <Group DEF='Autumn'>
+      </Switch>
+      <Switch DEF='Autumn'>
         <Transform
             translation='-5 5 0'>
           <Shape>
@@ -943,8 +943,8 @@
             <Sphere/>
           </Shape>
         </Transform>
-      </Group>
-      <Group DEF='Glass'>
+      </Switch>
+      <Switch DEF='Glass'>
         <Transform
             translation='-5 5 0'>
           <Shape>
@@ -1441,8 +1441,8 @@
             <Sphere/>
           </Shape>
         </Transform>
-      </Group>
-      <Group DEF='Metal'>
+      </Switch>
+      <Switch DEF='Metal'>
         <Transform
             translation='-5 5 0'>
           <Shape>
@@ -1905,8 +1905,8 @@
             <Sphere/>
           </Shape>
         </Transform>
-      </Group>
-      <Group DEF='Neon'>
+      </Switch>
+      <Switch DEF='Neon'>
         <Transform
             translation='-5 5 0'>
           <Shape>
@@ -2403,8 +2403,8 @@
             <Sphere/>
           </Shape>
         </Transform>
-      </Group>
-      <Group DEF='Rococo'>
+      </Switch>
+      <Switch DEF='Rococo'>
         <Transform
             translation='-5 5 0'>
           <Shape>
@@ -2867,8 +2867,8 @@
             <Sphere/>
           </Shape>
         </Transform>
-      </Group>
-      <Group DEF='Santafee'>
+      </Switch>
+      <Switch DEF='Santafee'>
         <Transform
             translation='-5 5 0'>
           <Shape>
@@ -3333,8 +3333,8 @@
             <Sphere/>
           </Shape>
         </Transform>
-      </Group>
-      <Group DEF='Sheen'>
+      </Switch>
+      <Switch DEF='Sheen'>
         <Transform
             translation='-5 5 0'>
           <Shape>
@@ -3797,8 +3797,8 @@
             <Sphere/>
           </Shape>
         </Transform>
-      </Group>
-      <Group DEF='Silky'>
+      </Switch>
+      <Switch DEF='Silky'>
         <Transform
             translation='-5 5 0'>
           <Shape>
@@ -4260,8 +4260,8 @@
             <Sphere/>
           </Shape>
         </Transform>
-      </Group>
-      <Group DEF='Spring'>
+      </Switch>
+      <Switch DEF='Spring'>
         <Transform
             translation='-5 5 0'>
           <Shape>
@@ -4721,8 +4721,8 @@
             <Sphere/>
           </Shape>
         </Transform>
-      </Group>
-      <Group DEF='Summer'>
+      </Switch>
+      <Switch DEF='Summer'>
         <Transform
             translation='-5 5 0'>
           <Shape>
@@ -5183,8 +5183,8 @@
             <Sphere/>
           </Shape>
         </Transform>
-      </Group>
-      <Group DEF='Tropical'>
+      </Switch>
+      <Switch DEF='Tropical'>
         <Transform
             translation='-5 5 0'>
           <Shape>
@@ -5646,8 +5646,8 @@
             <Sphere/>
           </Shape>
         </Transform>
-      </Group>
-      <Group DEF='Velvet'>
+      </Switch>
+      <Switch DEF='Velvet'>
         <Transform
             translation='-5 5 0'>
           <Shape>
@@ -6112,8 +6112,8 @@
             <Sphere/>
           </Shape>
         </Transform>
-      </Group>
-      <Group DEF='Winter'>
+      </Switch>
+      <Switch DEF='Winter'>
         <Transform
             translation='-5 5 0'>
           <Shape>
@@ -6574,7 +6574,7 @@
             <Sphere/>
           </Shape>
         </Transform>
-      </Group>
+      </Switch>
     </Switch>
     <EXPORT localDEF='Materials'/>
     <EXPORT localDEF='Viewpoint'/>
