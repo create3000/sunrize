@@ -65,7 +65,9 @@ module .exports = class Materials extends LibraryPane
 
       // Create icons.
 
-      this .#canvas .prependTo (this .output) .css ({ "position": "absolute", "visibility": "hidden" });
+      this .#canvas
+         .css ({ "position": "absolute", "visibility": "hidden" })
+         .prependTo (this .output);
 
       await this .#browser .resize (25, 25);
       await this .#browser .replaceWorld (this .#scene);
