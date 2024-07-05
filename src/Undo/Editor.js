@@ -20,17 +20,6 @@ module .exports = class Editor
 
    /**
     *
-    * @param {X3DBrowser} browser
-    */
-   static nextFrame (browser)
-   {
-      browser .addBrowserEvent ();
-
-      return new Promise (resolve => requestAnimationFrame (resolve));
-   }
-
-   /**
-    *
     * @param {X3DExecutionContext} executionContext source execution context
     * @returns {X3DScene} corresponding scene
     */

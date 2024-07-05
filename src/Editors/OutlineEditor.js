@@ -1533,7 +1533,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxSize,   new X3D .Vector3 (-1, -1, -1));
       Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxCenter, new X3D .Vector3 ());
 
-      await Editor .nextFrame (this .browser);
+      await this .browser .nextFrame ();
 
       const bbox = node .getBBox (new X3D .Box3 ());
 

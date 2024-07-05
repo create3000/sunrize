@@ -86,12 +86,12 @@ module .exports = class Materials extends LibraryPane
          viewpoint .position .y = node .translation .y;
          viewpoint .position .z = 2.65;
 
-         await Editor .nextFrame (this .#browser);
+         await this .#browser .nextFrame ();
 
          element .css ("background-image", `url(${this .#canvas [0] .toDataURL ()})`);
       }
 
       this .#browser .dispose ();
-      this .#canvas .css ("display", "none");
+      this .#canvas .remove ();
    }
 };
