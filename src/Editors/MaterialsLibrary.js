@@ -17,7 +17,7 @@ module .exports = class Materials extends LibraryPane
 
    async update ()
    {
-      // Clear output.
+      // Fill output.
 
       if (this .#list)
       {

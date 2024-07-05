@@ -13,7 +13,7 @@ module .exports = class PrimitivesLibrary extends LibraryPane
 
    update ()
    {
-      // Clear output.
+      // Fill output.
 
       if (this .#list)
       {

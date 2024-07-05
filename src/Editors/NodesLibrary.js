@@ -23,7 +23,7 @@ module .exports = class NodesLibrary extends LibraryPane
 
    update ()
    {
-      // Clear output.
+      // Fill output.
 
       if (this .#list)
       {
