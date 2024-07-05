@@ -3,8 +3,7 @@
 const
    $           = require ("jquery"),
    X3D         = require ("../X3D"),
-   LibraryPane = require ("./LibraryPane"),
-   Editor      = require("../Undo/Editor");
+   LibraryPane = require ("./LibraryPane");
 
 module .exports = class Materials extends LibraryPane
 {
@@ -66,7 +65,7 @@ module .exports = class Materials extends LibraryPane
 
       // Create icons.
 
-      this .#canvas .appendTo (this .output);
+      this .#canvas .prependTo (this .output) .css ({ "position": "absolute", "visibility": "hidden" });
 
       await this .#browser .resize (25, 25);
       await this .#browser .replaceWorld (this .#scene);
