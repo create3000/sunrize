@@ -159,6 +159,8 @@ module .exports = class Document extends Interface
       await this .browser .loadComponents (this .browser .getProfile ("Full"),
                                            this .browser .getComponent ("X_ITE"));
 
+      this .browser .updateConcreteNode (require ("../Components/Grouping/StaticGroup"));
+
       // Restore
 
       await this .restoreFile ();
@@ -318,8 +320,6 @@ module .exports = class Document extends Interface
 
    async restoreFile ()
    {
-      this .browser .updateConcreteNode (require ("../Components/Grouping/StaticGroup"));
-
       if (this .fileId)
       {
          const contents = this .config .global .addNameSpace ("unsaved.") [this .fileId];
