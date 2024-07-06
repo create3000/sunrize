@@ -125,11 +125,6 @@ module .exports = class Document extends Interface
 
       UndoManager .shared .addInterest (this, () => this .undoManager ());
 
-      // Load components.
-
-      await this .browser .loadComponents (this .browser .getProfile ("Full"),
-                                           this .browser .getComponent ("X_ITE"));
-
       // Connect browser options.
 
       const browserOptions = [
@@ -158,6 +153,11 @@ module .exports = class Document extends Interface
       $(this .browser .element .shadowRoot) .find ("canvas")
          .on ("mousedown", event => this .onmousedown (event))
          .on ("mouseup",   event => this .onmouseup   (event));
+
+      // Load components.
+
+      await this .browser .loadComponents (this .browser .getProfile ("Full"),
+                                           this .browser .getComponent ("X_ITE"));
 
       // Restore
 
