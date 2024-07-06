@@ -139,7 +139,7 @@ module .exports = class NodesLibrary extends LibraryPane
 
       UndoManager .shared .endUndo ();
 
-      this .expandToAndSelectNode (node .getValue ());
+      await this .expandToAndSelectNode (node .getValue ());
    }
 
    async createProto (proto)
@@ -152,7 +152,7 @@ module .exports = class NodesLibrary extends LibraryPane
 
       UndoManager .shared .endUndo ();
 
-      this .expandToAndSelectNode (node .getValue ());
+      await this .expandToAndSelectNode (node .getValue ());
    }
 
    addNode (node)
