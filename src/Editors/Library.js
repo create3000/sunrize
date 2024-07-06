@@ -243,12 +243,16 @@ module .exports = new class Library extends Dialog
 
       UndoManager .shared .endUndo ();
 
-      requestAnimationFrame (() =>
-      {
-         const outlineEditor = require ("../Application/Window") .sidebar .outlineEditor;
+      await this .expandToAndSelectNode (node);
+   }
 
-         outlineEditor .expandTo (node);
-         outlineEditor .selectNodeElement ($(`.node[node-id=${node .getId ()}]`));
-      });
+   async expandToAndSelectNode (node)
+   {
+      await this .browser .nextFrame ();
+
+      const outlineEditor = require ("../Application/Window") .sidebar .outlineEditor;
+
+      outlineEditor .expandTo (node);
+      outlineEditor .selectNodeElement ($(`.node[node-id=${node .getId ()}]`));
    }
 }

@@ -179,14 +179,4 @@ module .exports = class NodesLibrary extends LibraryPane
          }
       }
    }
-
-   async expandToAndSelectNode (node)
-   {
-      await this .browser .nextFrame ();
-
-      const outlineEditor = require ("../Application/Window") .sidebar .outlineEditor;
-
-      outlineEditor .expandTo (node);
-      outlineEditor .selectNodeElement ($(`.node[node-id=${node .getId ()}]`));
-   }
 };

@@ -929,11 +929,10 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
          UndoManager .shared .endUndo ();
 
-         requestAnimationFrame (() =>
-         {
-            for (const node of nodes)
-               this .expandTo (node);
-         });
+         await this .browser .nextFrame ();
+
+         for (const node of nodes)
+            this .expandTo (node);
       }
       catch (error)
       {
@@ -1138,7 +1137,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       UndoManager .shared .endUndo ();
 
-      requestAnimationFrame (() => this .expandTo (node, true));
+      await this .browser .nextFrame ();
+
+      this .expandTo (node, true);
    }
 
    removeParent (id, executionContextId, nodeId)
@@ -1401,8 +1402,12 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       UndoManager .shared .endUndo ();
 
-      if (nodes .length > 1)
-         requestAnimationFrame (() => this .expandTo (childNode, true));
+      if (nodes .length < 2)
+         return;
+
+      await this .browser .nextFrame ();
+
+      this .expandTo (childNode, true);
    }
 
    protocolToMimeType = new Map ([
@@ -1590,7 +1595,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       UndoManager .shared .endUndo ();
 
-      requestAnimationFrame (() => this .expandTo (inlineNode));
+      await this .browser .nextFrame ();
+
+      this .expandTo (inlineNode);
    }
 
    addNormalsToGeometry (id, executionContextId, nodeId)

@@ -457,7 +457,9 @@ module .exports = class OutlineView extends Interface
 
          const nodes = Array .from (scene .rootNodes);
 
-         requestAnimationFrame (() => nodes .forEach (n => n .setNodeUserData (_changing, false)));
+         this .browser .nextFrame ()
+            .then (() => nodes .forEach (n => n .setNodeUserData (_changing, false)));
+
          return;
       }
 
@@ -1816,7 +1818,9 @@ module .exports = class OutlineView extends Interface
             if (!field .getValue () || !field .getNodeUserData (_changing))
                break;
 
-            requestAnimationFrame (() => field .setNodeUserData (_changing, false));
+            this .browser .nextFrame ()
+               .then (() => field .setNodeUserData (_changing, false));
+
             return;
          }
          case X3D .X3DConstants .MFNode:
@@ -1828,7 +1832,9 @@ module .exports = class OutlineView extends Interface
 
                const nodes = Array .from (field);
 
-               requestAnimationFrame (() => nodes .forEach (n => n .setNodeUserData (_changing, false)));
+               this .browser .nextFrame ()
+                  .then (() => nodes .forEach (n => n .setNodeUserData (_changing, false)));
+
                return;
             }
 

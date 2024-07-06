@@ -1792,7 +1792,7 @@ function set_moveCenterToBBoxCenter (value)
 
       center = bboxCenter;
 
-      requestAnimationFrame (() => active = false);
+      Browser .nextFrame () .then (() => active = false);
    }
 }
 
