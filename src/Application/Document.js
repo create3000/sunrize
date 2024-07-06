@@ -67,19 +67,19 @@ module .exports = class Document extends Interface
 
       // File Menu
 
-      electron .ipcRenderer .on ("open-files",       (event, urls)     => this .loadURL (urls [0])); // DEBUG
-      electron .ipcRenderer .on ("save-file",        (event, force)    => this .saveFile (force));
-      electron .ipcRenderer .on ("save-file-as",     (event, filePath) => this .saveFileAs (filePath));
-      electron .ipcRenderer .on ("save-copy-as",     (event, filePath) => this .saveCopyAs (filePath));
-      electron .ipcRenderer .on ("auto-save",        (event, value)    => this .autoSave = value);
-      electron .ipcRenderer .on ("export-as",        (event, filePath) => this .exportAs (filePath));
-      electron .ipcRenderer .on ("scene-properties", (event)           => require ("../Editors/SceneProperties") .open ());
-      electron .ipcRenderer .on ("close",            (event)           => this .close ());
+      electron .ipcRenderer .on ("open-files",         (event, urls)     => this .loadURL (urls [0])); // DEBUG
+      electron .ipcRenderer .on ("save-file",          (event, force)    => this .saveFile (force));
+      electron .ipcRenderer .on ("save-file-as",       (event, filePath) => this .saveFileAs (filePath));
+      electron .ipcRenderer .on ("save-copy-as", async (event, filePath) => await this .saveCopyAs (filePath));
+      electron .ipcRenderer .on ("auto-save",          (event, value)    => this .autoSave = value);
+      electron .ipcRenderer .on ("export-as",    async (event, filePath) => await this .exportAs (filePath));
+      electron .ipcRenderer .on ("scene-properties",   (event)           => require ("../Editors/SceneProperties") .open ());
+      electron .ipcRenderer .on ("close",              (event)           => this .close ());
 
       // Edit Menu
 
-      electron .ipcRenderer .on ("undo", () => this .undo ());
-      electron .ipcRenderer .on ("redo", () => this .redo ());
+      electron .ipcRenderer .on ("undo", async () => await this .undo ());
+      electron .ipcRenderer .on ("redo", async () => await this .redo ());
 
       $(window)
          .on ("cut",   () => this .cut ())
@@ -462,7 +462,7 @@ Viewpoint {
     *
     * @param {string} filePath
     */
-   saveCopyAs (filePath)
+   async saveCopyAs (filePath)
    {
       const
          scene       = this .browser .currentScene,
@@ -478,7 +478,7 @@ Viewpoint {
 
       this .saveFile (true);
 
-      undoManager .undo ();
+      await undoManager .undo ();
 
       this .filePath = oldFilePath;
    }
@@ -507,9 +507,9 @@ Viewpoint {
       this .#saveTimeoutId = setTimeout (() => this .saveFile (false), 1000);
    }
 
-   exportAs (filePath)
+   async exportAs (filePath)
    {
-      this .saveCopyAs (filePath);
+      await this .saveCopyAs (filePath);
    }
 
    close ()
@@ -523,14 +523,14 @@ Viewpoint {
     * Edit Menu
     */
 
-   undo ()
+   async undo ()
    {
-      UndoManager .shared .undo ();
+      await UndoManager .shared .undo ();
    }
 
-   redo ()
+   async redo ()
    {
-      UndoManager .shared .redo ();
+      await UndoManager .shared .redo ();
    }
 
    undoManager ()

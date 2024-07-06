@@ -21,9 +21,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       element .on ("contextmenu", (event) => this .showContextMenu (event));
 
-      electron .ipcRenderer .on ("outline-editor", (event, key, ...args) => this [key] (...args));
-      electron .ipcRenderer .on ("transform-to-zero", (event) => this .transformToZero ());
-      electron .ipcRenderer .on ("remove-empty-groups", (event) => this .removeEmptyGroups ());
+      electron .ipcRenderer .on ("outline-editor", async (event, key, ...args) => await this [key] (...args));
+      electron .ipcRenderer .on ("transform-to-zero",   () => this .transformToZero ());
+      electron .ipcRenderer .on ("remove-empty-groups", () => this .removeEmptyGroups ());
 
       this .setup ();
    }
@@ -793,17 +793,17 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       Editor .removeImportedNode (importedNode .getExecutionContext (), importedNode .getImportedName ());
    }
 
-   cutNodes ()
+   async cutNodes ()
    {
       UndoManager .shared .beginUndo (_("Cut Nodes"));
 
-      this .copyNodes ();
-      this .deleteNodes ();
+      await this .copyNodes ();
+      await this .deleteNodes ();
 
       UndoManager .shared .endUndo ();
    }
 
-   copyNodes (deselect)
+   async copyNodes (deselect)
    {
       const
          primary     = $(".node.primary, .proto.primary, .externproto.primary"),
@@ -834,7 +834,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       navigator .clipboard .writeText (x3dSyntax);
 
-      undoManager .undo ();
+      await undoManager .undo ();
 
       if (deselect)
          this .deselectAll ();

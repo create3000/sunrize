@@ -906,9 +906,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       scene .removeComponent (name);
 
-      undoManager .registerUndo (() =>
+      undoManager .registerUndo (async () =>
       {
-         this .addComponent (scene, name, undoManager);
+         await this .addComponent (scene, name, undoManager);
       });
 
       undoManager .endUndo ();

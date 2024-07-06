@@ -17,7 +17,7 @@ module .exports = class UndoManager
    undoLabel      = _("Undo");
    redoLabel      = _("Redo");
 
-   undo ()
+   async undo ()
    {
       if (this .undoIndex < 0)
          return;
@@ -29,7 +29,7 @@ module .exports = class UndoManager
       this .beginUndo (undoItem .description);
 
       for (const undoFunction of undoItem .undoFunctions)
-         undoFunction ();
+         await undoFunction ();
 
       // Process deferred functions.
 
@@ -62,7 +62,7 @@ module .exports = class UndoManager
       this .processInterests ();
    }
 
-   redo ()
+   async redo ()
    {
       if (this .undoIndex + 1 >= this .undoList .length)
          return;
@@ -76,7 +76,7 @@ module .exports = class UndoManager
       this .beginUndo (undoItem .description);
 
       for (const redoFunction of undoItem .redoFunctions)
-         redoFunction ();
+         await redoFunction ();
 
       // Process deferred functions.
 

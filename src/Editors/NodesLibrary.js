@@ -138,22 +138,27 @@ module .exports = class NodesLibrary extends LibraryPane
       this .addNode (node);
 
       UndoManager .shared .endUndo ();
+
+      this .expandToAndSelectNode (node .getValue ());
    }
 
    async createProto (proto)
    {
       UndoManager .shared .beginUndo (_("Create Proto Instance %s"), proto .name);
 
-      const node  = proto .createInstance (this .executionContext);
+      const node = proto .createInstance (this .executionContext);
 
       this .addNode (node);
 
       UndoManager .shared .endUndo ();
+
+      this .expandToAndSelectNode (node .getValue ());
    }
 
    addNode (node)
    {
-      const field = this .field ?? $.try (() => this .node ?.getField (node .getValue () .getContainerField ()));
+      const field = this .field
+         ?? $.try (() => this .node ?.getField (node .getValue () .getContainerField ()));
 
       switch (field ?.getType ())
       {
@@ -173,15 +178,15 @@ module .exports = class NodesLibrary extends LibraryPane
             break;
          }
       }
+   }
 
-      node = node .getValue ();
+   async expandToAndSelectNode (node)
+   {
+      await this .browser .nextFrame ();
 
-      requestAnimationFrame (() =>
-      {
-         const outlineEditor = require ("../Application/Window") .sidebar .outlineEditor;
+      const outlineEditor = require ("../Application/Window") .sidebar .outlineEditor;
 
-         outlineEditor .expandTo (node);
-         outlineEditor .selectNodeElement ($(`.node[node-id=${node .getId ()}]`));
-      });
+      outlineEditor .expandTo (node);
+      outlineEditor .selectNodeElement ($(`.node[node-id=${node .getId ()}]`));
    }
 };
