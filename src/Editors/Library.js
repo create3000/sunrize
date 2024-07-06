@@ -81,9 +81,6 @@ module .exports = new class Library extends Dialog
 
    async open (executionContext, node, field)
    {
-      await this .browser .loadComponents (this .browser .getProfile ("Full"),
-                                           this .browser .getComponent ("X_ITE"));
-
       this .executionContext = executionContext;
       this .node             = node;
       this .field            = field;

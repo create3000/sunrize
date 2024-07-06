@@ -241,8 +241,6 @@ module .exports = class Editor
       scene .setProfile (browser .getProfile ("Full"));
       scene .updateComponent (browser .getComponent ("X_ITE"));
 
-      await browser .loadComponents (scene .getProfile (), scene .getComponents ());
-
       try
       {
          const parser = new X3D .GoldenGate (tempScene);
@@ -818,7 +816,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       undoManager .beginUndo (_("Set Profile to »%s«"), profile ? profile .title : "Full");
 
-      browser .loadComponents (profile);
       scene .setProfile (profile);
 
       undoManager .registerUndo (() =>
@@ -843,8 +840,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       undoManager .beginUndo (_("Set Components of Scene"));
 
-      browser .loadComponents (... components .map (component => component .name));
-
       for (const { name } of oldComponents)
          scene .removeComponent (name);
 
@@ -865,7 +860,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     * @param {string|ComponentInfo} name
     * @param {UndoManager} undoManager
     */
-   static async addComponent (scene, name, undoManager = UndoManager .shared)
+   static addComponent (scene, name, undoManager = UndoManager .shared)
    {
       scene = this .getScene (scene);
       name  = name instanceof X3D .ComponentInfo ? name .name : name;
@@ -877,7 +872,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       undoManager .beginUndo (_("Add Component %s"), name);
 
-      await browser .loadComponents (name);
       scene .addComponent (browser .getComponent (name));
 
       undoManager .registerUndo (() =>
@@ -906,9 +900,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       scene .removeComponent (name);
 
-      undoManager .registerUndo (async () =>
+      undoManager .registerUndo (() =>
       {
-         await this .addComponent (scene, name, undoManager);
+         this .addComponent (scene, name, undoManager);
       });
 
       undoManager .endUndo ();

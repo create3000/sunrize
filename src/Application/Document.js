@@ -67,19 +67,19 @@ module .exports = class Document extends Interface
 
       // File Menu
 
-      electron .ipcRenderer .on ("open-files",         (event, urls)     => this .loadURL (urls [0])); // DEBUG
-      electron .ipcRenderer .on ("save-file",          (event, force)    => this .saveFile (force));
-      electron .ipcRenderer .on ("save-file-as",       (event, filePath) => this .saveFileAs (filePath));
-      electron .ipcRenderer .on ("save-copy-as", async (event, filePath) => await this .saveCopyAs (filePath));
-      electron .ipcRenderer .on ("auto-save",          (event, value)    => this .autoSave = value);
-      electron .ipcRenderer .on ("export-as",    async (event, filePath) => await this .exportAs (filePath));
-      electron .ipcRenderer .on ("scene-properties",   (event)           => require ("../Editors/SceneProperties") .open ());
-      electron .ipcRenderer .on ("close",              (event)           => this .close ());
+      electron .ipcRenderer .on ("open-files",       (event, urls)     => this .loadURL (urls [0])); // DEBUG
+      electron .ipcRenderer .on ("save-file",        (event, force)    => this .saveFile (force));
+      electron .ipcRenderer .on ("save-file-as",     (event, filePath) => this .saveFileAs (filePath));
+      electron .ipcRenderer .on ("save-copy-as",     (event, filePath) => this .saveCopyAs (filePath));
+      electron .ipcRenderer .on ("auto-save",        (event, value)    => this .autoSave = value);
+      electron .ipcRenderer .on ("export-as",        (event, filePath) => this .exportAs (filePath));
+      electron .ipcRenderer .on ("scene-properties", (event)           => require ("../Editors/SceneProperties") .open ());
+      electron .ipcRenderer .on ("close",            (event)           => this .close ());
 
       // Edit Menu
 
-      electron .ipcRenderer .on ("undo", async () => await this .undo ());
-      electron .ipcRenderer .on ("redo", async () => await this .redo ());
+      electron .ipcRenderer .on ("undo", () => this .undo ());
+      electron .ipcRenderer .on ("redo", () => this .redo ());
 
       $(window)
          .on ("cut",   () => this .cut ())
@@ -124,6 +124,11 @@ module .exports = class Document extends Interface
       // Change undo menu items.
 
       UndoManager .shared .addInterest (this, () => this .undoManager ());
+
+      // Load components.
+
+      await this .browser .loadComponents (this .browser .getProfile ("Full"),
+                                           this .browser .getComponent ("X_ITE"));
 
       // Connect browser options.
 
@@ -313,8 +318,6 @@ module .exports = class Document extends Interface
 
    async restoreFile ()
    {
-      await this .browser .loadComponents (this .browser .getComponent ("Grouping"));
-
       this .browser .updateConcreteNode (require ("../Components/Grouping/StaticGroup"));
 
       if (this .fileId)
@@ -462,7 +465,7 @@ Viewpoint {
     *
     * @param {string} filePath
     */
-   async saveCopyAs (filePath)
+   saveCopyAs (filePath)
    {
       const
          scene       = this .browser .currentScene,
@@ -478,7 +481,7 @@ Viewpoint {
 
       this .saveFile (true);
 
-      await undoManager .undo ();
+      undoManager .undo ();
 
       this .filePath = oldFilePath;
    }
@@ -507,9 +510,9 @@ Viewpoint {
       this .#saveTimeoutId = setTimeout (() => this .saveFile (false), 1000);
    }
 
-   async exportAs (filePath)
+   exportAs (filePath)
    {
-      await this .saveCopyAs (filePath);
+      this .saveCopyAs (filePath);
    }
 
    close ()
@@ -523,14 +526,14 @@ Viewpoint {
     * Edit Menu
     */
 
-   async undo ()
+   undo ()
    {
-      await UndoManager .shared .undo ();
+      UndoManager .shared .undo ();
    }
 
-   async redo ()
+   redo ()
    {
-      await UndoManager .shared .redo ();
+      UndoManager .shared .redo ();
    }
 
    undoManager ()
