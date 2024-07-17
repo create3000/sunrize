@@ -29,4 +29,14 @@ X3DUOM .find ("ConcreteNode[name=Shape]")
 X3DUOM .find ("ConcreteNode[name=ParticleSystem]")
    .append (X3DUOM .find ("field[name=pointerEvents]") .first () .clone ());
 
+// damping
+X3DUOM .find ("ConcreteNode[name=BoundedPhysicsModel]")
+   .append ($(X3DUOM [0] .createElement ("field"))
+      .attr ("name", "damping")
+      .attr ("type", "SFFloat")
+      .attr ("accessType", "inputOutput")
+      .attr ("default", "1")
+      .attr ("minInclusive", "0")
+      .attr ("description", "Damping that particles experience in the event of a collision."));
+
 module .exports = X3DUOM;
