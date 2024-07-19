@@ -10,12 +10,9 @@
     <meta name='created' content='Thu, 10 Jul 2014 17:28:33 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.6, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 19 Jul 2024 17:35:36 GMT'/>
+    <meta name='modified' content='Fri, 19 Jul 2024 18:04:50 GMT'/>
   </head>
   <Scene>
-    <ExternProtoDeclare name='TextureShader' url='"../../Tools/Shaders/TextureShader.x3d#TextureShader"'>
-      <field accessType='inputOutput' type='SFBool' name='flipY'/>
-    </ExternProtoDeclare>
     <LayerSet
         activeLayer='-1'
         order='1, 2'>
@@ -30,7 +27,6 @@
                   0x66 0x99'/>
             <TextureTransform
                 scale='5000 5000'/>
-            <ProtoInstance name='TextureShader' containerField='shaders'/>
           </Appearance>
           <Rectangle2D
               size='80000 80000'/>
