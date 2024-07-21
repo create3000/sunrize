@@ -30,7 +30,6 @@ module .exports = class Materials extends LibraryPane
 
       // Create list.
 
-
       this .#list = $("<ul></ul>")
          .appendTo (this .output)
          .addClass ("library-list");
