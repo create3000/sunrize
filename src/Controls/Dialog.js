@@ -23,15 +23,15 @@ module .exports = class Dialog extends Interface
          {
             this .element .dialog ("widget")
                .nextAll (".ui-widget-overlay")
-               .on ("click", () => this .close ())
+               .on ("click", () => this .close ());
 
-            this .onopen ()
+            this .onopen ();
          },
          close: () =>
          {
-            this .onclose ()
+            this .onclose ();
          },
-      })
+      });
 
       this .element .dialog ("widget")
          .draggable ({
@@ -40,7 +40,7 @@ module .exports = class Dialog extends Interface
          .resizable({
             resize: (event, ui) => this .config .file .size = [ui .size .width, ui .size .height],
           })
-         .find (".ui-dialog-titlebar") .remove ()
+         .find (".ui-dialog-titlebar") .remove ();
    }
 
    configure (defaults = { })
@@ -51,7 +51,7 @@ module .exports = class Dialog extends Interface
          position: undefined,
          size: [400, 250],
       },
-      defaults))
+      defaults));
    }
 
    open ()
@@ -63,14 +63,19 @@ module .exports = class Dialog extends Interface
          width: this .config .file .size [0],
          height: this .config .file .size [1],
       })
-      .dialog ("open")
+      .dialog ("open");
+   }
+
+   isOpen ()
+   {
+      return this .element .dialog ("isOpen");
    }
 
    close ()
    {
-      this .element .dialog ("close")
+      this .element .dialog ("close");
    }
 
    onopen () { }
    onclose () { }
-}
+};

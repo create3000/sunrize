@@ -10,10 +10,13 @@ module .exports = class Materials extends LibraryPane
    id          = "MATERIALS";
    description = "Materials";
 
-   #canvas;
-   #browser;
-   #scene;
    #list;
+
+   open ()
+   {
+      this .#list ?.remove ();
+      this .#list = undefined;
+   }
 
    async update ()
    {
@@ -27,17 +30,19 @@ module .exports = class Materials extends LibraryPane
 
       // Create list.
 
+
       this .#list = $("<ul></ul>")
          .appendTo (this .output)
          .addClass ("library-list");
 
-      this .#canvas  ??= $("<x3d-canvas preserveDrawingBuffer='true''></x3d-canvas>");
-      this .#browser ??= this .#canvas .prop ("browser");
-      this .#scene   ??= await this .#browser .createX3DFromURL (new X3D .MFString (`file://${__dirname}/Materials.x3d`));
+      const
+         canvas  = $("<x3d-canvas preserveDrawingBuffer='true'></x3d-canvas>"),
+         browser = canvas .prop ("browser"),
+         scene   = await browser .createX3DFromURL (new X3D .MFString (`file://${__dirname}/Materials.x3d`));
 
       const
-         materials = this .#scene .getExportedNode ("Materials"),
-         viewpoint = this .#scene .getExportedNode ("Viewpoint"),
+         materials = scene .getExportedNode ("Materials"),
+         viewpoint = scene .getExportedNode ("Viewpoint"),
          nodes     = [ ];
 
       for (const [g, group] of materials .children .entries ())
@@ -63,12 +68,12 @@ module .exports = class Materials extends LibraryPane
 
       // Create icons.
 
-      this .#canvas
+      canvas
          .css ({ "position": "absolute", "visibility": "hidden" })
          .prependTo (this .element);
 
-      await this .#browser .resize (25, 25);
-      await this .#browser .replaceWorld (this .#scene);
+      await browser .resize (25, 25);
+      await browser .replaceWorld (scene);
 
       for (const element of Array .from (this .output .find (".node"), e => $(e)))
       {
@@ -85,12 +90,12 @@ module .exports = class Materials extends LibraryPane
          viewpoint .position .y = node .translation .y;
          viewpoint .position .z = 2.65;
 
-         await this .#browser .nextFrame ();
+         await browser .nextFrame ();
 
-         element .css ("background-image", `url(${this .#canvas [0] .toDataURL ()})`);
+         element .css ("background-image", `url(${canvas [0] .toDataURL ()})`);
       }
 
-      this .#browser .dispose ();
-      this .#canvas .remove ();
+      browser .dispose ();
+      canvas .remove ();
    }
 };

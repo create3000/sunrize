@@ -70,13 +70,15 @@ module .exports = new class Library extends Dialog
          .appendTo (this .element)
          .addClass ("library-output");
 
+      if (!this .isOpen ())
+         return;
+
       // Configure list type.
 
       const button = [... this .buttons .children ()]
          .find (button => $(button) .data ("type") === this .config .file .type);
 
-      if (button)
-         this .button ($(button));
+      this .button ($(button ?? this .buttons .children () [0]));
    }
 
    async open (executionContext, node, field)
@@ -87,7 +89,14 @@ module .exports = new class Library extends Dialog
 
       super .open ();
       this .panes .forEach (pane => pane .open ());
-      this .update ();
+
+      // Configure list type.
+
+      const button = [... this .buttons .children ()]
+         .find (button => $(button) .data ("type") === this .config .file .type);
+
+      this .button ($(button ?? this .buttons .children () [0]));
+
       this .input .trigger ("focus");
    }
 
