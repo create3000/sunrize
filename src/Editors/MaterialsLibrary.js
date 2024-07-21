@@ -11,11 +11,11 @@ module .exports = class Materials extends LibraryPane
    description = "Materials";
 
    #list;
+   #build;
 
    open ()
    {
-      this .#list ?.remove ();
-      this .#list = undefined;
+      this .#build = true;
    }
 
    async update ()
@@ -25,47 +25,57 @@ module .exports = class Materials extends LibraryPane
       if (this .#list)
       {
          this .output .append (this .#list);
-         return;
       }
-
-      // Create list.
-
-      this .#list = $("<ul></ul>")
-         .appendTo (this .output)
-         .addClass ("library-list");
-
-      const
-         canvas  = $("<x3d-canvas preserveDrawingBuffer='true'></x3d-canvas>"),
-         browser = canvas .prop ("browser"),
-         scene   = await browser .createX3DFromURL (new X3D .MFString (`file://${__dirname}/Materials.x3d`));
-
-      const
-         materials = scene .getExportedNode ("Materials"),
-         viewpoint = scene .getExportedNode ("Viewpoint"),
-         nodes     = [ ];
-
-      for (const [g, group] of materials .children .entries ())
+      else
       {
-         $("<li></li>")
-            .addClass ("component")
-            .text (group .getNodeName ())
-            .appendTo (this .#list);
+         // Create list.
 
-         for (const [c, node] of group .children .entries ())
+         this .#list = $("<ul></ul>")
+            .appendTo (this .output)
+            .addClass ("library-list");
+
+         const
+            canvas    = $("<x3d-canvas preserveDrawingBuffer='true'></x3d-canvas>"),
+            browser   = canvas .prop ("browser"),
+            scene     = await browser .createX3DFromURL (new X3D .MFString (`file://${__dirname}/Materials.x3d`)),
+            materials = scene .getExportedNode ("Materials"),
+            nodes     = [ ];
+
+         for (const [g, group] of materials .children .entries ())
          {
-            const material = node .children [0] .appearance .material;
+            $("<li></li>")
+               .addClass ("component")
+               .text (group .getNodeName ())
+               .appendTo (this .#list);
 
-            nodes .push ($("<li></li>")
-               .addClass (["node", "icon"])
-               .text (`${group .getNodeName ()} ${c + 1}`)
-               .attr ("group", g)
-               .attr ("child", c)
-               .appendTo (this .#list)
-               .on ("dblclick", () => this .importX3D (material .getNodeName (), material .toXMLString ())));
+            for (const [c, node] of group .children .entries ())
+            {
+               const material = node .children [0] .appearance .material;
+
+               nodes .push ($("<li></li>")
+                  .addClass (["node", "icon"])
+                  .text (`${group .getNodeName ()} ${c + 1}`)
+                  .attr ("group", g)
+                  .attr ("child", c)
+                  .appendTo (this .#list)
+                  .on ("dblclick", () => this .importX3D (material .getNodeName (), material .toXMLString ())));
+            }
          }
+
+         browser .dispose ();
       }
+
+      if (!this .#build)
+         return;
 
       // Create icons.
+
+      const
+         canvas    = $("<x3d-canvas preserveDrawingBuffer='true'></x3d-canvas>"),
+         browser   = canvas .prop ("browser"),
+         scene     = await browser .createX3DFromURL (new X3D .MFString (`file://${__dirname}/Materials.x3d`)),
+         materials = scene .getExportedNode ("Materials"),
+         viewpoint = scene .getExportedNode ("Viewpoint");
 
       canvas
          .css ({ "position": "absolute", "visibility": "hidden" })
@@ -96,5 +106,6 @@ module .exports = class Materials extends LibraryPane
 
       browser .dispose ();
       canvas .remove ();
+      this .#build = false;
    }
 };
