@@ -15,7 +15,8 @@ const
 const
    _expanded     = Symbol (),
    _fullExpanded = Symbol (),
-   _changing     = Symbol ();
+   _changing     = Symbol (),
+   _primary      = Symbol ();
 
 module .exports = class OutlineView extends Interface
 {
@@ -974,6 +975,9 @@ module .exports = class OutlineView extends Interface
 
       if (node)
       {
+         if (node .getUserData (_primary))
+            child .addClass ("primary");
+
          // Name
 
          const name = $("<div></div>")
@@ -1380,6 +1384,9 @@ module .exports = class OutlineView extends Interface
          .attr ("node-id", node .getId ())
          .attr ("field-id", field .getId ())
          .attr ("type-name", field .getTypeName ());
+
+      if (field .getUserData (_primary))
+         child .addClass ("primary");
 
       // Icon
 
@@ -2975,9 +2982,11 @@ module .exports = class OutlineView extends Interface
    {
       const
          selection = require ("../Application/Selection"),
-         nodes     = this .sceneGraph .find (".primary, .selected");
+         nodes     = this .sceneGraph .find (".selected");
 
-      nodes .removeClass (["primary", "manually", "selected"]);
+      nodes .removeClass (["manually", "selected"]);
+
+      this .deselectPrimary ();
 
       selection .clear ();
    }
@@ -3257,7 +3266,7 @@ module .exports = class OutlineView extends Interface
       const
          selection        = require ("../Application/Selection"),
          selected         = element .hasClass ("manually"),
-         selectedElements = this .sceneGraph .find (".primary, .selected"),
+         selectedElements = this .sceneGraph .find (".selected"),
          node             = this .getNode (element),
          elements         = $(`.node[node-id=${node ?.getId ()}]`),
          changed          = new Map (selection .nodes .map (node => [node, node .getTool ()]));
@@ -3266,8 +3275,6 @@ module .exports = class OutlineView extends Interface
          return; // NULL node
 
       changed .set (node .valueOf (), node .getTool ());
-
-      selectedElements .removeClass ("primary");
 
       if (add)
       {
@@ -3287,7 +3294,8 @@ module .exports = class OutlineView extends Interface
          }
          else
          {
-            element .addClass (["primary", "manually", "selected"]);
+            element .addClass ("selected");
+            this .selectPrimaryElement (element);
          }
 
          if (elements .filter (".manually") .length)
@@ -3298,8 +3306,8 @@ module .exports = class OutlineView extends Interface
       else
       {
          selectedElements .removeClass (["manually", "selected"]);
-         element .addClass (["primary", "manually"]);
          elements .addClass ("selected");
+         this .selectPrimaryElement (element);
          selection .set (node);
       }
 
@@ -3315,12 +3323,24 @@ module .exports = class OutlineView extends Interface
       if (!this .isEditable (element))
          return;
 
+      this .deselectPrimary ();
+
       if (!add)
          this .sceneGraph .find (".manually") .removeClass ("manually");
 
-      this .sceneGraph .find (".primary") .removeClass ("primary");
-
       element .addClass (["primary", "manually"]);
+
+      this .getObject (element) .setUserData (_primary, true);
+   }
+
+   deselectPrimary ()
+   {
+      const nodes = this .sceneGraph .find (".primary");
+
+      nodes .removeClass (["primary", "manually"]);
+
+      for (const element of nodes)
+         this .getObject ($(element)) .removeUserData (_primary);
    }
 
    selectField (event)
@@ -3468,14 +3488,14 @@ module .exports = class OutlineView extends Interface
       return this .browser .getActiveLayer ();
    }
 
+   getObject (element)
+   {
+      return this .getField (element) ?? this .getNode (element);
+   }
+
    getNode (element)
    {
       return this .objects .get (parseInt (element .attr ("node-id")));
-   }
-
-   getExportedNode (element)
-   {
-      return this .objects .get (parseInt (element .attr ("exported-node-id")));
    }
 
    getField (element)
@@ -3494,6 +3514,11 @@ module .exports = class OutlineView extends Interface
       }
 
       return null;
+   }
+
+   getExportedNode (element)
+   {
+      return this .objects .get (parseInt (element .attr ("exported-node-id")));
    }
 
    onresize ()
