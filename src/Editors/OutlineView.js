@@ -975,7 +975,7 @@ module .exports = class OutlineView extends Interface
 
       if (node)
       {
-         if (node .getUserData (_primary) && !$(".primary") .length)
+         if (node .getUserData (_primary))
             child .addClass (["primary", "manually"]);
 
          // Name
@@ -1385,7 +1385,7 @@ module .exports = class OutlineView extends Interface
          .attr ("field-id", field .getId ())
          .attr ("type-name", field .getTypeName ());
 
-      if (field .getUserData (_primary) && !$(".primary") .length)
+      if (field .getUserData (_primary))
          child .addClass (["primary", "manually"]);
 
       // Icon
@@ -3320,6 +3320,8 @@ module .exports = class OutlineView extends Interface
       }
    }
 
+   #primaryObject = null;
+
    selectPrimaryElement (element, add = false)
    {
       if (!this .isEditable (element))
@@ -3332,7 +3334,9 @@ module .exports = class OutlineView extends Interface
 
       element .addClass (["primary", "manually"]);
 
-      this .getObject (element) .setUserData (_primary, true);
+      this .#primaryObject = this .getObject (element);
+
+      this .#primaryObject .setUserData (_primary, true);
    }
 
    deselectPrimary ()
@@ -3341,8 +3345,9 @@ module .exports = class OutlineView extends Interface
 
       nodes .removeClass ("primary");
 
-      for (const element of nodes)
-         this .getObject ($(element)) .removeUserData (_primary);
+      this .#primaryObject ?.removeUserData (_primary);
+
+      this .#primaryObject = null;
    }
 
    selectField (event)
