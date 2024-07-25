@@ -645,7 +645,7 @@ Viewpoint {
    setTextCompression (value)
    {
       this .browser .setBrowserOption ("TextCompression", value);
-      this .browser .setDescription (`Text Compression: ${value .toLowerCase ()}`);
+      this .browser .setDescription (`Text Compression: ${value}`);
    }
 
    set_TextCompression ()
