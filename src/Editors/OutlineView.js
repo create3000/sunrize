@@ -976,7 +976,10 @@ module .exports = class OutlineView extends Interface
       if (node)
       {
          if (node .getUserData (_primary))
+         {
             child .addClass (["primary", "manually"]);
+            this .#primaryObject = node .valueOf ();
+         }
 
          // Name
 
@@ -1386,7 +1389,10 @@ module .exports = class OutlineView extends Interface
          .attr ("type-name", field .getTypeName ());
 
       if (field .getUserData (_primary))
+      {
          child .addClass (["primary", "manually"]);
+         this .#primaryObject = field;
+      }
 
       // Icon
 
@@ -3292,7 +3298,8 @@ module .exports = class OutlineView extends Interface
                   element .removeClass ("manually");
             }
 
-            this .deselectPrimary ();
+            if (node === this .#primaryObject)
+               this .deselectPrimary ();
          }
          else
          {
