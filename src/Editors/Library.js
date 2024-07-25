@@ -199,7 +199,7 @@ module .exports = new class Library extends Dialog
       pane .update ();
    }
 
-   async importX3D (typeName, x3dSyntax)
+   async importX3D (typeName, x3dSyntax, select = true)
    {
       UndoManager .shared .beginUndo (_("Import %s"), typeName);
 
@@ -249,16 +249,18 @@ module .exports = new class Library extends Dialog
 
       UndoManager .shared .endUndo ();
 
-      await this .expandToAndSelectNode (node);
+      await this .expandToAndSelectNode (node, select);
    }
 
-   async expandToAndSelectNode (node)
+   async expandToAndSelectNode (node, select = true)
    {
       await this .browser .nextFrame ();
 
       const outlineEditor = require ("../Application/Window") .sidebar .outlineEditor;
 
       outlineEditor .expandTo (node);
-      outlineEditor .selectNodeElement ($(`.node[node-id=${node .getId ()}]`));
+
+      if (select)
+         outlineEditor .selectNodeElement ($(`.node[node-id=${node .getId ()}]`));
    }
 }
