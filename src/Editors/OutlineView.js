@@ -3276,8 +3276,6 @@ module .exports = class OutlineView extends Interface
 
       changed .set (node .valueOf (), node .getTool ());
 
-      this .deselectPrimary ();
-
       if (add)
       {
          if (selected)
@@ -3293,6 +3291,8 @@ module .exports = class OutlineView extends Interface
                else
                   element .removeClass ("manually");
             }
+
+            this .deselectPrimary ();
          }
          else
          {
