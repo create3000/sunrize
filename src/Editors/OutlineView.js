@@ -975,8 +975,8 @@ module .exports = class OutlineView extends Interface
 
       if (node)
       {
-         if (node .getUserData (_primary))
-            child .addClass ($(".primary") .length ? ["manually"] : ["primary", "manually"]);
+         if (node .getUserData (_primary) && !$(".primary") .length)
+            child .addClass (["primary", "manually"]);
 
          // Name
 
