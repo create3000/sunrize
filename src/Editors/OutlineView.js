@@ -975,8 +975,8 @@ module .exports = class OutlineView extends Interface
 
       if (node)
       {
-         if (node .getUserData (_primary))
-            child .addClass ("primary");
+         if (node .getUserData (_primary) && !$(".primary") .length)
+            child .addClass (["primary", "manually"]);
 
          // Name
 
@@ -1385,8 +1385,8 @@ module .exports = class OutlineView extends Interface
          .attr ("field-id", field .getId ())
          .attr ("type-name", field .getTypeName ());
 
-      if (field .getUserData (_primary))
-         child .addClass ("primary");
+      if (field .getUserData (_primary) && !$(".primary") .length)
+         child .addClass (["primary", "manually"]);
 
       // Icon
 
@@ -3297,7 +3297,7 @@ module .exports = class OutlineView extends Interface
          else
          {
             element .addClass ("selected");
-            this .selectPrimaryElement (element);
+            this .selectPrimaryElement (element, true);
          }
 
          if (elements .filter (".manually") .length)
@@ -3339,7 +3339,7 @@ module .exports = class OutlineView extends Interface
    {
       const nodes = this .sceneGraph .find (".primary");
 
-      nodes .removeClass (["primary", "manually"]);
+      nodes .removeClass ("primary");
 
       for (const element of nodes)
          this .getObject ($(element)) .removeUserData (_primary);
