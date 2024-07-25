@@ -594,6 +594,23 @@ module .exports = class Application
                      ],
                   },
                   {
+                     label: _("Text Compression"),
+                     submenu: [
+                        {
+                           label: _("Char Spacing"),
+                           type: "radio",
+                           checked: this .menuOptions .textCompression === "CHAR_SPACING",
+                           click: () => this .mainWindow .webContents .send ("text-compression", "CHAR_SPACING"),
+                        },
+                        {
+                           label: _("Scaling"),
+                           type: "radio",
+                           checked: this .menuOptions .textCompression === "SCALING",
+                           click: () => this .mainWindow .webContents .send ("text-compression", "SCALING"),
+                        },
+                     ],
+                  },
+                  {
                      label: _("Color Space"),
                      submenu: [
                         {

@@ -88,6 +88,7 @@ module .exports = new class Tabs
 
       this .forwardToActiveTab ("primitive-quality");
       this .forwardToActiveTab ("texture-quality");
+      this .forwardToActiveTab ("text-compression");
       this .forwardToActiveTab ("color-space");
       this .forwardToActiveTab ("tone-mapping");
       this .forwardToActiveTab ("order-independent-transparency");

@@ -96,6 +96,7 @@ module .exports = class Document extends Interface
 
       electron .ipcRenderer .on ("primitive-quality",              (event, value) => this .setPrimitiveQuality (value));
       electron .ipcRenderer .on ("texture-quality",                (event, value) => this .setTextureQuality (value));
+      electron .ipcRenderer .on ("text-compression",               (event, value) => this .setTextCompression (value));
       electron .ipcRenderer .on ("color-space",                    (event, value) => this .setColorSpace (value));
       electron .ipcRenderer .on ("tone-mapping",                   (event, value) => this .setToneMapping (value));
       electron .ipcRenderer .on ("order-independent-transparency", (event, value) => this .setOrderIndependentTransparency (value));
@@ -130,6 +131,7 @@ module .exports = class Document extends Interface
       const browserOptions = [
          "PrimitiveQuality",
          "TextureQuality",
+         "TextCompression",
          "ColorSpace",
          "ToneMapping",
          "OrderIndependentTransparency",
@@ -175,6 +177,7 @@ module .exports = class Document extends Interface
          inferProfileAndComponents: true,
          primitiveQuality: "MEDIUM",
          textureQuality: "MEDIUM",
+         textCompression: "CHAR_SPACING",
          colorSpace: "LINEAR_WHEN_PHYSICAL_MATERIAL",
          toneMapping: "NONE",
          orderIndependentTransparency: false,
@@ -189,6 +192,7 @@ module .exports = class Document extends Interface
 
       this .setPrimitiveQuality             (this .config .file .primitiveQuality);
       this .setTextureQuality               (this .config .file .textureQuality);
+      this .setTextCompression              (this .config .file .textCompression);
       this .setColorSpace                   (this .config .file .colorSpace);
       this .setToneMapping                  (this .config .file .toneMapping);
       this .setOrderIndependentTransparency (this .config .file .orderIndependentTransparency);
@@ -638,6 +642,23 @@ Viewpoint {
     *
     * @param {string} value
     */
+   setTextCompression (value)
+   {
+      this .browser .setBrowserOption ("TextCompression", value);
+      this .browser .setDescription (`Text Compression: ${value .toLowerCase ()}`);
+   }
+
+   set_TextCompression ()
+   {
+      this .config .file .textCompression = this .browser .getBrowserOption ("TextCompression");
+
+      this .updateMenu ();
+   }
+
+   /**
+    *
+    * @param {string} value
+    */
    setColorSpace (value)
    {
       this .browser .setBrowserOption ("ColorSpace", value);
@@ -741,6 +762,7 @@ Viewpoint {
       {
          primitiveQuality: this .config .file .primitiveQuality,
          textureQuality: this .config .file .textureQuality,
+         textCompression: this .config .file .textCompression,
          colorSpace: this .config .file .colorSpace,
          toneMapping: this .config .file .toneMapping,
          orderIndependentTransparency: this .config .file .orderIndependentTransparency,
