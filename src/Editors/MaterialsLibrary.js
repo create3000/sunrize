@@ -55,7 +55,7 @@ module .exports = class Materials extends LibraryPane
                .attr ("group", g)
                .attr ("child", c)
                .appendTo (this .#list)
-               .on ("dblclick", () => this .importX3D (material .getNodeName (), material .toXMLString (), false)));
+               .on ("dblclick", () => this .importX3D (material .getNodeName (), material .toXMLString ())));
          }
       }
 
