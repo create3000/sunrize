@@ -12,11 +12,11 @@ Sunrize is an easy-to-use editor for X3D files that is based on the [X_ITE](/x_i
 
 ![Image of Sunrize Editor](/assets/img/sunrize.png)
 
-[<i class="fa-solid fa-heart"></i> Support us on Patreon](https://patreon.com/X_ITE){: target="_blank" .patreon }
+[<i class="fa-solid fa-heart"></i> Support us on Patreon](https://patreon.com/X_ITE){: .patreon }
 
 ## Run from Console
 
-First you need to install both Node.js and npm on your system. To accomplish this, you can use a [Node installer](https://nodejs.org/en/download/){:target="_blank"} (Windows), or use [Homebrew](https://brew.sh){:target="_blank"} to install node (macos), or use your Linux package manager.
+First you need to install both Node.js and npm on your system. To accomplish this, you can use a [Node installer](https://nodejs.org/en/download/) (Windows), or use [Homebrew](https://brew.sh) to install node (macos), or use your Linux package manager.
 
 Then you can run Sunrize without installing it using npm's **npx** command:
 
