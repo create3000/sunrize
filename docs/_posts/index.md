@@ -10,8 +10,6 @@ permalink: /
 [![NPM Downloads](https://img.shields.io/npm/dm/sunrize)](https://npmtrends.com/sunrize)
 [![DeepScan grade](https://deepscan.io/api/teams/23540/projects/26817/branches/855450/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=23540&pid=26817&bid=855450)
 
-## Introduction
-
 Sunrize is an easy-to-use editor for X3D files that is based on the [X_ITE](/x_ite/) framework. The Outline Editor allows for intuitive scene editing, while the Script Editor provides comprehensive editing of [Script](/x_ite/components/scripting/script/) and [ComposedShader](/x_ite/components/shaders/composedshader/) nodes.
 
 ![Image of Sunrize Editor](/assets/img/sunrize.png)
