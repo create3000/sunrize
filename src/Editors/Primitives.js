@@ -363,6 +363,26 @@ DEF Sphere Transform {
 `
    },
    {
+      componentInfo: { name: "Lighting" },
+      typeName: "EnvironmentLight",
+      x3dSyntax: `
+EnvironmentLight {
+   diffuseTexture ImageCubeMapTexture {
+      url "https://create3000.github.io/Library/Tests/Components/images/helipad-diffuse.jpg"
+      textureProperties DEF _1 TextureProperties {
+         generateMipMaps TRUE
+         minificationFilter "NICEST"
+         magnificationFilter "NICEST"
+      }
+   }
+   specularTexture ImageCubeMapTexture {
+      url "https://create3000.github.io/Library/Tests/Components/images/helipad-specular.jpg"
+      textureProperties USE _1
+   }
+}
+`
+   },
+   {
       componentInfo: { name: "Text" },
       typeName: "Text",
       x3dSyntax: `
