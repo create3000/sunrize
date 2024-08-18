@@ -47,6 +47,7 @@ $.fn.texturePreviewPopover = async function (node)
       .attr ("contextMenu", false)
       .attr ("notifications", false)
       .attr ("colorSpace", node .getBrowser () .getBrowserOption ("ColorSpace"))
+      .attr ("xrSessionMode", "NONE")
       .appendTo (preview);
 
    const

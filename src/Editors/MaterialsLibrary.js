@@ -29,7 +29,7 @@ module .exports = class Materials extends LibraryPane
          .addClass ("library-list");
 
       const
-         canvas  = $("<x3d-canvas preserveDrawingBuffer='true'></x3d-canvas>"),
+         canvas  = $("<x3d-canvas preserveDrawingBuffer='true' xrSessionMode='NONE'></x3d-canvas>"),
          browser = canvas .prop ("browser"),
          scene   = await browser .createX3DFromURL (new X3D .MFString (`file://${__dirname}/Materials.x3d`));
 
