@@ -54,17 +54,25 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3D .X3DChildNod
 
 Object .defineProperties (StaticGroup,
 {
-   ... X3D .X3DNode .getStaticProperties ("StaticGroup", "Grouping", 3, "children", "3.0"),
+   typeName:
+   {
+      value: X3D .StaticGroup .typeName,
+   },
+   componentInfo:
+   {
+      value: X3D .StaticGroup .componentInfo,
+   },
+   containerField:
+   {
+      value: X3D .StaticGroup .containerField,
+   },
+   specificationRange:
+   {
+      value: X3D .StaticGroup .specificationRange,
+   },
    fieldDefinitions:
    {
-      value: new X3D .FieldDefinitionArray ([
-         new X3D .X3DFieldDefinition (X3D .X3DConstants .inputOutput,    "metadata",    new X3D .SFNode ()),
-         new X3D .X3DFieldDefinition (X3D .X3DConstants .inputOutput,    "visible",     new X3D .SFBool (true)),
-         new X3D .X3DFieldDefinition (X3D .X3DConstants .inputOutput,    "bboxDisplay", new X3D .SFBool ()),
-         new X3D .X3DFieldDefinition (X3D .X3DConstants .initializeOnly, "bboxSize",    new X3D .SFVec3f (-1, -1, -1)),
-         new X3D .X3DFieldDefinition (X3D .X3DConstants .initializeOnly, "bboxCenter",  new X3D .SFVec3f ()),
-         new X3D .X3DFieldDefinition (X3D .X3DConstants .initializeOnly, "children",    new X3D .MFNode ()),
-      ]),
+      value: X3D .StaticGroup .fieldDefinitions,
    },
 });
 
