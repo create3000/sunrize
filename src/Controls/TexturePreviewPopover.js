@@ -125,7 +125,7 @@ $.fn.texturePreviewPopover = async function (node)
          {
             case X3D .X3DConstants .MovieTexture:
             {
-               sizes .text (`${node .getWidth ()} × ${node .getHeight ()}, ${formatTime (node ._duration_changed .getValue ())}`);
+               sizes .text (`${node .getWidth ()} × ${node .getHeight ()}, ${formatTime (node ._duration_changed .getValue ())}, ${format}`);
                break;
             }
             case X3D .X3DConstants .X3DEnvironmentTextureNode:
