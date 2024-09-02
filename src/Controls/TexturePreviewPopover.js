@@ -117,6 +117,8 @@ $.fn.texturePreviewPopover = async function (node)
 
    function sizesText ()
    {
+      const format = node .isTransparent () ? "RGBA" : "RGB";
+
       for (const type of node .getType () .toReversed ())
       {
          switch (type)
@@ -128,17 +130,17 @@ $.fn.texturePreviewPopover = async function (node)
             }
             case X3D .X3DConstants .X3DEnvironmentTextureNode:
             {
-               sizes .text (`${node .getSize ()} × ${node .getSize ()}`);
+               sizes .text (`${node .getSize ()} × ${node .getSize ()}, ${format}`);
                break;
             }
             case X3D .X3DConstants .X3DTexture2DNode:
             {
-               sizes .text (`${node .getWidth ()} × ${node .getHeight ()}`);
+               sizes .text (`${node .getWidth ()} × ${node .getHeight ()}, ${format}`);
                break;
             }
             case X3D .X3DConstants .X3DTexture3DNode:
             {
-               sizes .text (`${node .getWidth ()} × ${node .getHeight ()} × ${node .getDepth ()}`);
+               sizes .text (`${node .getWidth ()} × ${node .getHeight ()} × ${node .getDepth ()}, ${format}`);
                break;
             }
             default:
