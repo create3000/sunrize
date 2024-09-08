@@ -447,15 +447,15 @@ class X3DNodeTool extends X3DBaseTool
 
    // Traverse
 
+   #childBBox = new X3D .Box3 ();
+
    getToolBBox (bbox, shadows)
    {
       if (shadows)
          return bbox .set ();
 
-      const childBbox = new X3D .Box ();
-
       for (const innerNode of this .#innerNodes)
-         bbox .add (innerNode ?.getBBox (childBbox, shadows) ?? childBbox .set ());
+         bbox .add (innerNode ?.getBBox (this .#childBBox, shadows) ?? this .#childBBox .set ());
 
       return bbox;
    }
