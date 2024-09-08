@@ -1,8 +1,28 @@
 "use strict";
 
-const X3DGeometryNodeTool = require ("../Rendering/X3DGeometryNodeTool");
+const
+   X3DGeometryNodeTool = require ("../Rendering/X3DGeometryNodeTool"),
+   ToolColors          = require ("../Core/ToolColors");
 
-class X3DNurbsSurfaceGeometryNodeTool extends X3DGeometryNodeTool { }
+class X3DNurbsSurfaceGeometryNodeTool extends X3DGeometryNodeTool
+{
+   async initializeTool (type)
+   {
+      await Promise .all ([
+         super .initializeTool (type),
+         super .loadTool ("nurbsSurfaceGeometryTool", __dirname, "X3DNurbsSurfaceGeometryNodeTool.x3d"),
+      ]);
+
+      this .nurbsSurfaceGeometryTool .controlPointColor = ToolColors .DARK_BLUE;
+
+      this .nurbsSurfaceGeometryTool .getField ("uDimension") .addReference (this .node ._uDimension);
+      this .nurbsSurfaceGeometryTool .getField ("vDimension") .addReference (this .node ._vDimension);
+
+      this .nurbsSurfaceGeometryTool .getField ("controlPoint") .addReference (this .node ._controlPoint);
+
+      this .addExternalNode (this .node ._controlPoint);
+   }
+}
 
 
 module .exports = X3DNurbsSurfaceGeometryNodeTool;
