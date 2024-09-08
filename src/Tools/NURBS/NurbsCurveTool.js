@@ -13,6 +13,15 @@ class NurbsCurveTool extends X3DParametricGeometryNodeTool (X3DLineGeometryNodeT
       this .parametricGeometryNodeTool .vDimension = 1;
 
       // this .parametricGeometryNodeTool .getField ("uDimension") .addReference (this .node ._uDimension);
+
+      this .set_toolRebuildParametricGeometry ();
+   }
+
+   set_toolRebuildParametricGeometry ()
+   {
+      this .parametricGeometryNodeTool .uDimension = this .node ._controlPoint .getValue () ?._point .length ?? 0;
+
+      super .set_toolRebuildParametricGeometry ();
    }
 }
 

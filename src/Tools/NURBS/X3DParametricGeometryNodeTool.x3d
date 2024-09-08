@@ -7,7 +7,7 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.17, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 08 Sep 2024 10:10:41 GMT'/>
+    <meta name='modified' content='Sun, 08 Sep 2024 10:46:15 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -20,6 +20,7 @@
         <field accessType='inputOutput' type='SFBool' name='undo'/>
         <field accessType='inputOutput' type='SFInt32' name='uDimension'/>
         <field accessType='inputOutput' type='SFInt32' name='vDimension'/>
+        <field accessType='inputOnly' type='MFInt32' name='set_controlPointConnections'/>
         <field accessType='inputOutput' type='SFColor' name='controlPointColor' value='1 1 1'/>
         <field accessType='inputOutput' type='SFNode' name='controlPoint'/>
       </ProtoInterface>
@@ -38,7 +39,7 @@
                 </IS>
               </Material>
               <ProtoInstance name='ToolShader' containerField='shaders'/>
-              <DepthMode
+              <DepthMode DEF='_1'
                   polygonOffset='-1 -1'/>
             </Appearance>
             <PointSet>
@@ -46,6 +47,21 @@
                 <connect nodeField='coord' protoField='controlPoint'/>
               </IS>
             </PointSet>
+          </Shape>
+          <Shape DEF='ControlPointConnections'>
+            <Appearance>
+              <LineProperties
+                  linetype='3'
+                  linewidthScaleFactor='2'/>
+              <UnlitMaterial/>
+              <DepthMode USE='_1'/>
+            </Appearance>
+            <IndexedLineSet>
+              <IS>
+                <connect nodeField='set_coordIndex' protoField='set_controlPointConnections'/>
+                <connect nodeField='coord' protoField='controlPoint'/>
+              </IS>
+            </IndexedLineSet>
           </Shape>
         </Group>
       </ProtoBody>
