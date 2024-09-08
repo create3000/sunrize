@@ -8,7 +8,7 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.17, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 08 Sep 2024 11:04:44 GMT'/>
+    <meta name='modified' content='Sun, 08 Sep 2024 11:18:00 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -27,6 +27,23 @@
       </ProtoInterface>
       <ProtoBody>
         <Group>
+          <Shape DEF='ControlPointConnections'>
+            <Appearance>
+              <LineProperties
+                  linetype='3'
+                  linewidthScaleFactor='2'/>
+              <UnlitMaterial/>
+              <DepthMode DEF='_4'
+                  polygonOffset='-2 -2'
+                  depthRange='0 0'/>
+            </Appearance>
+            <IndexedLineSet DEF='_3'>
+              <IS>
+                <connect nodeField='set_coordIndex' protoField='set_controlPointConnections'/>
+                <connect nodeField='coord' protoField='controlPoint'/>
+              </IS>
+            </IndexedLineSet>
+          </Shape>
           <Shape DEF='ControlPoints'>
             <Appearance>
               <PointProperties
@@ -40,29 +57,13 @@
                 </IS>
               </Material>
               <ProtoInstance name='ToolShader' containerField='shaders'/>
-              <DepthMode DEF='_1'
-                  polygonOffset='-1 -1'/>
+              <DepthMode USE='_4'/>
             </Appearance>
             <PointSet DEF='_2'>
               <IS>
                 <connect nodeField='coord' protoField='controlPoint'/>
               </IS>
             </PointSet>
-          </Shape>
-          <Shape DEF='ControlPointConnections'>
-            <Appearance>
-              <LineProperties
-                  linetype='3'
-                  linewidthScaleFactor='2'/>
-              <UnlitMaterial/>
-              <DepthMode USE='_1'/>
-            </Appearance>
-            <IndexedLineSet DEF='_3'>
-              <IS>
-                <connect nodeField='set_coordIndex' protoField='set_controlPointConnections'/>
-                <connect nodeField='coord' protoField='controlPoint'/>
-              </IS>
-            </IndexedLineSet>
           </Shape>
         </Group>
         <Script DEF='CloneCountScript'>
