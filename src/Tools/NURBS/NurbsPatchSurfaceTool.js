@@ -15,6 +15,9 @@ class NurbsPatchSurfaceTool extends X3DNurbsSurfaceGeometryNodeTool
 
       this .nurbsSurfaceGeometryTool .controlPointColor = ToolColors .DARK_BLUE;
 
+      this .nurbsSurfaceGeometryTool .getField ("uDimension") .addReference (this .node ._uDimension);
+      this .nurbsSurfaceGeometryTool .getField ("vDimension") .addReference (this .node ._vDimension);
+
       this .nurbsSurfaceGeometryTool .getField ("controlPoint") .addReference (this .node ._controlPoint);
 
       this .addExternalNode (this .node ._controlPoint);

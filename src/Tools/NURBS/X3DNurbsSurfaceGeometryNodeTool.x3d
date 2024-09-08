@@ -7,7 +7,7 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.17, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 08 Sep 2024 09:25:41 GMT'/>
+    <meta name='modified' content='Sun, 08 Sep 2024 09:53:17 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -18,6 +18,8 @@
         <field accessType='inputOutput' type='SFBool' name='selected'/>
         <field accessType='inputOutput' type='SFString' name='group' value='NONE'/>
         <field accessType='inputOutput' type='SFBool' name='undo'/>
+        <field accessType='inputOutput' type='SFInt32' name='uDimension'/>
+        <field accessType='inputOutput' type='SFInt32' name='vDimension'/>
         <field accessType='inputOutput' type='SFColor' name='controlPointColor' value='1 1 1'/>
         <field accessType='inputOutput' type='SFNode' name='controlPoint'/>
       </ProtoInterface>
