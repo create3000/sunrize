@@ -27,6 +27,8 @@ const X3DParametricGeometryNodeTool = Base => class extends Base
          vDimension  = this .parametricGeometryNodeTool .vDimension,
          connections = [ ];
 
+      // Generate u connections.
+
       for (let u = 0; u < uDimension; ++ u)
       {
          for (let v = 0; v < vDimension; ++ v)
@@ -34,6 +36,8 @@ const X3DParametricGeometryNodeTool = Base => class extends Base
 
          connections .push (-1);
       }
+
+      // Generate v connections.
 
       for (let v = 0; v < vDimension; ++ v)
       {
