@@ -8,7 +8,7 @@ class X3DLineGeometryNodeTool extends X3DGeometryNodeTool
 {
    async initializeTool (type)
    {
-      await super .loadTool (__dirname, "X3DLineGeometryNodeTool.x3d");
+      await super .loadTool ("tool", __dirname, "X3DLineGeometryNodeTool.x3d");
 
       this .tool .pointsColor = ToolColors .BLUE;
 

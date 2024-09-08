@@ -30,9 +30,10 @@ class X3DNodeTool extends X3DBaseTool
    static #sensors = [ ];        // Always empty
 
    tool           = null;
+   #tools         = new Set ();
    #proxy         = null;
    #selected      = false;
-   #promise       = null;
+   #promise       = new Map ();
    #innerNode     = null;
    #externalNodes = new Map ();
    #groupedTools  = new Set ();
@@ -68,25 +69,28 @@ class X3DNodeTool extends X3DBaseTool
    {
       this .#selected = value;
 
-      if (!this .tool)
-         return;
+      for (const tool of this .#tools)
+      {
+         if (!this [tool])
+            continue;
 
-      if (this .tool .hasOwnProperty ("selected"))
-         this .tool .selected = value;
+         if (this [tool] .hasOwnProperty ("selected"))
+            this [tool] .selected = value;
+      }
    }
 
    // Tool Loading
 
-   async getToolInstance ()
+   async getToolInstance (tool = "tool")
    {
-      await this .#promise;
+      await this .#promise .get (tool);
 
-      return this .tool;
+      return this [tool];
    }
 
-   getToolScene ()
+   getToolScene (tool = "tool")
    {
-      return this .tool .getValue () .getExecutionContext ();
+      return this [tool] .getValue () .getExecutionContext ();
    }
 
    addTool ()
@@ -125,9 +129,9 @@ class X3DNodeTool extends X3DBaseTool
       }
    }
 
-   async initializeTool () { }
+   initializeTool () { }
 
-   loadTool (... args)
+   loadTool (tool, ... args)
    {
       const
          filePath  = path .resolve (... args),
@@ -135,9 +139,11 @@ class X3DNodeTool extends X3DBaseTool
          protoURL  = url .pathToFileURL (filePath),
          promise   = X3DNodeTool .#scenes .get (protoURL .href);
 
+      this .#tools .add (tool);
+
       if (promise)
       {
-         this .#promise = promise;
+         this .#promise .set (tool, promise);
       }
       else
       {
@@ -163,22 +169,22 @@ class X3DNodeTool extends X3DBaseTool
 
          X3DNodeTool .#scenes .set (protoURL .href, promise);
 
-         this .#promise = promise;
+         this .#promise .set (tool, promise);
       }
 
       if (this .#disposed)
          return Promise .reject (new Error ("Tool is already disposed."));
 
-      this .#promise .then (scene => this .createTool (scene, protoName));
+      this .#promise .get (tool) .then (scene => this .createTool (tool, scene, protoName));
 
-      return this .#promise;
+      return this .#promise .get (tool);
    }
 
-   createTool (scene, protoName)
+   createTool (tool, scene, protoName)
    {
-      this .tool = scene .createProto (protoName);
+      this [tool] = scene .createProto (protoName);
 
-      this .tool .getValue () .setPrivate (true);
+      this [tool] .getValue () .setPrivate (true);
 
       X3DNodeTool .tools .add (this);
       X3DNodeTool .processToolInterests ();
@@ -207,7 +213,10 @@ class X3DNodeTool extends X3DBaseTool
 
       const nodesToDispose = [ ]
 
-      Traverse .traverse (this .tool, Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES, node => nodesToDispose .push (node));
+      for (const tool of this .#tools)
+      {
+         Traverse .traverse (this [tool], Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES, node => nodesToDispose .push (node));
+      }
 
       for (const node of nodesToDispose .filter (node => !this .#externalNodes .has (node)))
          node .dispose ();
