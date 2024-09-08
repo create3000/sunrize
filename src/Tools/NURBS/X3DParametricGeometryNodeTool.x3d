@@ -8,7 +8,7 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.17, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 08 Sep 2024 11:18:00 GMT'/>
+    <meta name='modified' content='Sun, 08 Sep 2024 11:22:47 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -34,7 +34,6 @@
                   linewidthScaleFactor='2'/>
               <UnlitMaterial/>
               <DepthMode DEF='_4'
-                  polygonOffset='-2 -2'
                   depthRange='0 0'/>
             </Appearance>
             <IndexedLineSet DEF='_3'>
