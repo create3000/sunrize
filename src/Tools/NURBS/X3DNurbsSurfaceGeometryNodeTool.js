@@ -1,26 +1,17 @@
 "use strict";
 
 const
-   X3DGeometryNodeTool = require ("../Rendering/X3DGeometryNodeTool"),
-   ToolColors          = require ("../Core/ToolColors");
+   X3DGeometryNodeTool           = require ("../Rendering/X3DGeometryNodeTool"),
+   X3DParametricGeometryNodeTool = require ("./X3DParametricGeometryNodeTool");;
 
-class X3DNurbsSurfaceGeometryNodeTool extends X3DGeometryNodeTool
+class X3DNurbsSurfaceGeometryNodeTool extends X3DParametricGeometryNodeTool (X3DGeometryNodeTool)
 {
-   async initializeTool (type)
+   async initializeTool ()
    {
-      await Promise .all ([
-         super .initializeTool (type),
-         super .loadTool ("nurbsSurfaceGeometryTool", __dirname, "X3DNurbsSurfaceGeometryNodeTool.x3d"),
-      ]);
+      await super .initializeTool ();
 
-      this .nurbsSurfaceGeometryTool .controlPointColor = ToolColors .DARK_BLUE;
-
-      this .nurbsSurfaceGeometryTool .getField ("uDimension") .addReference (this .node ._uDimension);
-      this .nurbsSurfaceGeometryTool .getField ("vDimension") .addReference (this .node ._vDimension);
-
-      this .nurbsSurfaceGeometryTool .getField ("controlPoint") .addReference (this .node ._controlPoint);
-
-      this .addExternalNode (this .node ._controlPoint);
+      this .parametricGeometryNodeTool .getField ("uDimension") .addReference (this .node ._uDimension);
+      this .parametricGeometryNodeTool .getField ("vDimension") .addReference (this .node ._vDimension);
    }
 }
 
