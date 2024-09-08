@@ -32,20 +32,20 @@ class X3DGeometryNodeTool extends X3DNodeTool
    set_toolGeometry ()
    {
       const
-         points = this .node .getVertices () .filter ((_, i) => i % 4 < 3),
-         length = points .length / 3;
-
-      if (length !== this .tool .linesCoord .point .length)
-      {
-         const coordIndex = [ ];
-
-         for (let i = 0; i < length; i += 3)
-            coordIndex .push (i, i + 1, i + 2, i, -1);
-
-         this .tool .set_linesCoordIndex = coordIndex;
-      }
+         points    = this .node .getVertices () .filter ((_, i) => i % 4 < 3),
+         numPoints = points .length / 3;
 
       this .tool .linesCoord .point = points;
+
+      if (numPoints === this .tool .linesCoord .point .length)
+         return;
+
+      const coordIndex = [ ];
+
+      for (let i = 0; i < numPoints; i += 3)
+         coordIndex .push (i, i + 1, i + 2, i, -1);
+
+      this .tool .set_linesCoordIndex = coordIndex;
    }
 }
 
