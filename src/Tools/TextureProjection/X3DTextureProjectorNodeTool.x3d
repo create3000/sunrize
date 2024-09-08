@@ -220,8 +220,8 @@
 
 async function initialize ()
 {
-   this .getValue () .collectCloneCount = () => 0;
-   textureAppearance .getValue () .collectCloneCount = () => 0;
+   this              .getValue () .setPrivate (true);
+   textureAppearance .getValue () .setPrivate (true);
 
    const tool = await transform .getValue () .addTool () .getToolInstance ();
 
