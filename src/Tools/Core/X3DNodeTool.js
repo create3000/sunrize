@@ -451,8 +451,10 @@ class X3DNodeTool extends X3DBaseTool
 
    getToolBBox (bbox, shadows)
    {
+      bbox .set ();
+
       if (shadows)
-         return bbox .set ();
+         return bbox;
 
       for (const innerNode of this .#innerNodes)
          bbox .add (innerNode .getBBox (this .#childBBox, shadows));
