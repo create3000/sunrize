@@ -29,12 +29,15 @@ const X3DParametricGeometryNodeTool = Base => class extends Base
 
       // Generate u connections.
 
-      for (let v = 0; v < vDimension; ++ v)
+      if (uDimension > 1)
       {
-         for (let u = 0; u < uDimension; ++ u)
-            hullIndex .push (v * uDimension + u);
+         for (let v = 0; v < vDimension; ++ v)
+         {
+            for (let u = 0; u < uDimension; ++ u)
+               hullIndex .push (v * uDimension + u);
 
-         hullIndex .push (-1);
+            hullIndex .push (-1);
+         }
       }
 
       // Generate v connections.
