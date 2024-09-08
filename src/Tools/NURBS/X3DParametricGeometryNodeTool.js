@@ -47,7 +47,7 @@ const X3DParametricGeometryNodeTool = Base => class extends Base
          connections .push (-1);
       }
 
-      this .parametricGeometryNodeTool .set_controlPointConnections = connections;
+      this .parametricGeometryNodeTool .set_hullIndex = connections;
    }
 };
 

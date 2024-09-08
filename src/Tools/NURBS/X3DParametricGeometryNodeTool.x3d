@@ -8,7 +8,7 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.17, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 08 Sep 2024 11:43:28 GMT'/>
+    <meta name='modified' content='Sun, 08 Sep 2024 11:48:23 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -21,7 +21,7 @@
         <field accessType='inputOutput' type='SFBool' name='undo'/>
         <field accessType='inputOutput' type='SFInt32' name='uDimension'/>
         <field accessType='inputOutput' type='SFInt32' name='vDimension'/>
-        <field accessType='inputOnly' type='MFInt32' name='set_controlPointConnections'/>
+        <field accessType='inputOnly' type='MFInt32' name='set_hullIndex'/>
         <field accessType='inputOutput' type='SFColor' name='controlPointColor' value='1 1 1'/>
         <field accessType='inputOutput' type='SFNode' name='controlPoint'/>
       </ProtoInterface>
@@ -38,7 +38,7 @@
             </Appearance>
             <IndexedLineSet DEF='_3'>
               <IS>
-                <connect nodeField='set_coordIndex' protoField='set_controlPointConnections'/>
+                <connect nodeField='set_coordIndex' protoField='set_hullIndex'/>
                 <connect nodeField='coord' protoField='controlPoint'/>
               </IS>
             </IndexedLineSet>
