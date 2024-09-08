@@ -31,7 +31,7 @@ class X3DLineGeometryNodeTool extends X3DGeometryNodeTool
 
    set_toolGeometry ()
    {
-      const points = this .node .getVertices () .filter ((_, i) => i % 4 !== 3);
+      const points = this .node .getVertices () .filter ((_, i) => i % 4 < 3);
 
       this .tool .pointsCoord .point = points;
    }
