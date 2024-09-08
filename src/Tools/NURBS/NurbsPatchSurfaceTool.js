@@ -1,6 +1,8 @@
 "use strict";
 
-const X3DNurbsSurfaceGeometryNodeTool = require ("./X3DNurbsSurfaceGeometryNodeTool");
+const
+   X3DNurbsSurfaceGeometryNodeTool = require ("./X3DNurbsSurfaceGeometryNodeTool"),
+   ToolColors                      = require ("../Core/ToolColors");
 
 class NurbsPatchSurfaceTool extends X3DNurbsSurfaceGeometryNodeTool
 {
@@ -11,7 +13,11 @@ class NurbsPatchSurfaceTool extends X3DNurbsSurfaceGeometryNodeTool
          super .loadTool ("nurbsSurfaceGeometryTool", __dirname, "X3DNurbsSurfaceGeometryNodeTool.x3d"),
       ]);
 
-      console .log (this .nurbsSurfaceGeometryTool .selected)
+      this .nurbsSurfaceGeometryTool .controlPointColor = ToolColors .DARK_BLUE;
+
+      this .nurbsSurfaceGeometryTool .getField ("controlPoint") .addReference (this .node ._controlPoint);
+
+      this .addExternalNode (this .node ._controlPoint);
    }
 }
 
