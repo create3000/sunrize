@@ -23,18 +23,18 @@ const X3DParametricGeometryNodeTool = Base => class extends Base
    set_toolRebuildParametricGeometry ()
    {
       const
-         uDimension  = this .parametricGeometryNodeTool .uDimension,
-         vDimension  = this .parametricGeometryNodeTool .vDimension,
-         connections = [ ];
+         uDimension = this .parametricGeometryNodeTool .uDimension,
+         vDimension = this .parametricGeometryNodeTool .vDimension,
+         hullIndex  = [ ];
 
       // Generate u connections.
 
       for (let u = 0; u < uDimension; ++ u)
       {
          for (let v = 0; v < vDimension; ++ v)
-            connections .push (v * uDimension + u);
+            hullIndex .push (v * uDimension + u);
 
-         connections .push (-1);
+         hullIndex .push (-1);
       }
 
       // Generate v connections.
@@ -42,12 +42,12 @@ const X3DParametricGeometryNodeTool = Base => class extends Base
       for (let v = 0; v < vDimension; ++ v)
       {
          for (let u = 0; u < uDimension; ++ u)
-            connections .push (v * uDimension + u);
+            hullIndex .push (v * uDimension + u);
 
-         connections .push (-1);
+         hullIndex .push (-1);
       }
 
-      this .parametricGeometryNodeTool .set_hullIndex = connections;
+      this .parametricGeometryNodeTool .set_hullIndex = hullIndex;
    }
 };
 
