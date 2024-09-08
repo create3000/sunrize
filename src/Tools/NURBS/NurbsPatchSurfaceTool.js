@@ -8,8 +8,10 @@ class NurbsPatchSurfaceTool extends X3DNurbsSurfaceGeometryNodeTool
    {
       await Promise .all ([
          super .initializeTool (type),
-         // super .loadTool ("nurbsSurfaceGeometry", __dirname, "X3DNurbsSurfaceGeometryNode.x3d"),
+         super .loadTool ("nurbsSurfaceGeometryTool", __dirname, "X3DNurbsSurfaceGeometryNodeTool.x3d"),
       ]);
+
+      console .log (this .nurbsSurfaceGeometryTool .selected)
    }
 }
 

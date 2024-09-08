@@ -34,7 +34,7 @@ class X3DNodeTool extends X3DBaseTool
    #proxy         = null;
    #selected      = false;
    #promise       = new Map ();
-   #innerNode     = null;
+   #innerNodes    = [ ];
    #externalNodes = new Map ();
    #groupedTools  = new Set ();
    #initialValues = new Map ();
@@ -113,15 +113,18 @@ class X3DNodeTool extends X3DBaseTool
       {
          await this .initializeTool ();
 
-         // X3DLayerNodeTool and X3DPrototypeInstanceTool have no own tool.
+         for (const tool of this .#tools)
+         {
+            // X3DLayerNodeTool and X3DPrototypeInstanceTool have no own tool.
 
-         if (!this .tool)
-            return;
+            if (!this [tool])
+               continue;
 
-         this .#innerNode = this .tool .getValue () .getInnerNode ();
+            this .#innerNodes .push (this [tool] .getValue () .getInnerNode ());
 
-         if (this .tool .hasOwnProperty ("selected"))
-            this .tool .selected = this .#selected;
+            if (this [tool] .hasOwnProperty ("selected"))
+               this [tool] .selected = this .#selected;
+         }
       }
       catch (error)
       {
@@ -449,7 +452,12 @@ class X3DNodeTool extends X3DBaseTool
       if (shadows)
          return bbox .set ();
 
-      return this .#innerNode ?.getBBox (bbox, shadows) ?? bbox .set ();
+      const childBbox = new X3D .Box ();
+
+      for (const innerNode of this .#innerNodes)
+         bbox .add (innerNode ?.getBBox (childBbox, shadows) ?? childBbox .set ());
+
+      return bbox;
    }
 
    toolPointingEnabled = true;
@@ -472,7 +480,8 @@ class X3DNodeTool extends X3DBaseTool
       renderObject .getHumanoids () .push (null);
       renderObject .getSensors ()   .push (X3DNodeTool .#sensors);
 
-      this .#innerNode ?.traverse (type, renderObject);
+      for (const innerNode of this .#innerNodes)
+         innerNode ?.traverse (type, renderObject);
 
       renderObject .getSensors ()   .pop ();
       renderObject .getHumanoids () .pop ();
