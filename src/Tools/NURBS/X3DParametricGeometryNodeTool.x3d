@@ -8,7 +8,7 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.17, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 08 Sep 2024 11:48:23 GMT'/>
+    <meta name='modified' content='Sun, 08 Sep 2024 13:04:14 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -22,6 +22,7 @@
         <field accessType='inputOutput' type='SFInt32' name='uDimension'/>
         <field accessType='inputOutput' type='SFInt32' name='vDimension'/>
         <field accessType='inputOnly' type='MFInt32' name='set_hullIndex'/>
+        <field accessType='inputOutput' type='SFColor' name='hullColor' value='1 1 1'/>
         <field accessType='inputOutput' type='SFColor' name='controlPointColor' value='1 1 1'/>
         <field accessType='inputOutput' type='SFNode' name='controlPoint'/>
       </ProtoInterface>
@@ -32,7 +33,11 @@
               <LineProperties
                   linetype='3'
                   linewidthScaleFactor='2'/>
-              <UnlitMaterial/>
+              <UnlitMaterial>
+                <IS>
+                  <connect nodeField='emissiveColor' protoField='hullColor'/>
+                </IS>
+              </UnlitMaterial>
               <DepthMode DEF='_4'
                   depthRange='0 0'/>
             </Appearance>
