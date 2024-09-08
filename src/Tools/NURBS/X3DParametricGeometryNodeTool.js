@@ -13,6 +13,7 @@ const X3DParametricGeometryNodeTool = Base => class extends Base
 
       this .node ._rebuild .addInterest ("set_toolRebuildParametricGeometry", this);
 
+      this .parametricGeometryNodeTool .hullColor         = ToolColors .LIGHT_GREY;
       this .parametricGeometryNodeTool .controlPointColor = ToolColors .DARK_BLUE;
 
       this .parametricGeometryNodeTool .getField ("controlPoint") .addReference (this .node ._controlPoint);

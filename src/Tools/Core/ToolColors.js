@@ -26,8 +26,9 @@ module .exports = class ToolColors
    static DARK_RED    = new X3D .Color3 (0.5, 0.175, 0.175); //
    static DARK_ORANGE = new X3D .Color3 (0.5, 0.35, 0.175);  // VolumeData
 
-   static GREY      = new X3D .Color3 (0.7, 0.7, 0.7);       //
-   static DARK_GREY = new X3D .Color3 (0.35, 0.35, 0.35);    // StaticGroup
+   static LIGHT_GREY = new X3D .Color3 (0.90, 0.90, 0.90);       // Inline
+   static GREY       = new X3D .Color3 (0.7, 0.7, 0.7);       //
+   static DARK_GREY  = new X3D .Color3 (0.35, 0.35, 0.35);    // StaticGroup
 
    static PROXIMITY_SENSOR  = new X3D .Color3 (0.5, 0, 1);
    static TRANSFORM_SENSOR  = new X3D .Color3 (0, 1, 0);
