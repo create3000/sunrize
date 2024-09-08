@@ -8,7 +8,7 @@ class X3DLightNodeTool extends X3DChildNodeTool
 
    async initializeTool ()
    {
-      await super .initializeTool (__dirname, "X3DLightNodeTool.x3d");
+      await super .loadTool ("tool", __dirname, "X3DLightNodeTool.x3d");
 
       this .tool .getField ("on")        .addReference (this .node ._on);
       this .tool .getField ("color")     .addReference (this .node ._color);

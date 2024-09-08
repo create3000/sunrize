@@ -8,7 +8,7 @@ class SpatialSoundTool extends X3DChildNodeTool
 
    async initializeTool ()
    {
-      await super .initializeTool (__dirname, "SpatialSoundTool.x3d");
+      await super .loadTool ("tool", __dirname, "SpatialSoundTool.x3d");
 
       this .tool .getField ("location")          .addReference (this .node ._location);
       this .tool .getField ("direction")         .addReference (this .node ._direction);

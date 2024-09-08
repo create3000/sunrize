@@ -14,7 +14,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
    async initializeTool ()
    {
-      await super .initializeTool (__dirname, "X3DTransformNodeTool.x3d");
+      await super .loadTool ("tool", __dirname, "X3DTransformNodeTool.x3d");
 
       X3DTransformNodeTool .#transformTools .add (this);
 

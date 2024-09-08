@@ -10,7 +10,7 @@ class X3DViewpointNodeTool extends X3DChildNodeTool
 
    async initializeTool ()
    {
-      await super .initializeTool (__dirname, "X3DViewpointNodeTool.x3d");
+      await super .loadTool ("tool", __dirname, "X3DViewpointNodeTool.x3d");
 
       this .tool .getField ("isActive") .addInterest ("handleUndo", this);
 

@@ -19,7 +19,7 @@ class X3DActiveLayerNodeTool extends X3DChildNodeTool
 
    async initializeTool (... args)
    {
-      await super .initializeTool (... args);
+      await super .loadTool ("tool", ... args);
 
       this .getBrowser () ._activeLayer .addInterest ("set_activeLayer", this);
 

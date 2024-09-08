@@ -8,7 +8,7 @@ class X3DBoundedObjectTool extends X3DChildNodeTool
 {
    async initializeTool ()
    {
-      await super .initializeTool (__dirname, "X3DBoundedObjectTool.x3d");
+      await super .loadTool ("tool", __dirname, "X3DBoundedObjectTool.x3d");
 
       this .getBrowser () .displayEvents () .addInterest ("reshapeTool", this);
 

@@ -8,7 +8,7 @@ class ListenerPointSourceTool extends X3DChildNodeTool
 
    async initializeTool ()
    {
-      await super .initializeTool (__dirname, "ListenerPointSourceTool.x3d");
+      await super .loadTool ("tool", __dirname, "ListenerPointSourceTool.x3d");
 
       this .tool .getField ("position")    .addReference (this .node ._position);
       this .tool .getField ("orientation") .addReference (this .node ._orientation);

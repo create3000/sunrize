@@ -8,11 +8,6 @@ class X3DChildNodeTool extends X3DNodeTool
    {
       return true;
    }
-
-   async initializeTool (... args)
-   {
-      await super .loadTool ("tool", ... args);
-   }
 }
 
 module .exports = X3DChildNodeTool;
