@@ -141,8 +141,10 @@ module .exports = class Application
          this .#currentFile = url .fileURLToPath (currentFile)
       else if (currentFile .startsWith ("data:"))
          this .#currentFile = "";
-      else
+      else if (currentFile .match (/^.+?:/))
          this .#currentFile = new URL (currentFile) .pathname .split ("/") .at (-1);
+      else
+         this .#currentFile = "";
 
       this .mainWindow .setRepresentedFilename (this .#currentFile);
    }
