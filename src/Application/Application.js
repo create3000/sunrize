@@ -137,7 +137,12 @@ module .exports = class Application
 
    set currentFile (currentFile)
    {
-      this .#currentFile = currentFile .startsWith ("file:") ? url .fileURLToPath (currentFile) : "";
+      if (currentFile .startsWith ("file:"))
+         this .#currentFile = url .fileURLToPath (currentFile)
+      else if (currentFile .startsWith ("data:"))
+         this .#currentFile = "";
+      else
+         this .#currentFile = new URL (currentFile) .pathname .split ("/") .at (-1);
 
       this .mainWindow .setRepresentedFilename (this .#currentFile);
    }
