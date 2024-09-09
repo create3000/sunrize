@@ -2968,7 +2968,7 @@ module .exports = class OutlineView extends Interface
       const elements = this .sceneGraph .find ("> .root-nodes > ul > li[node-id]");
 
       for (const element of elements)
-         this .selectNodeElement ($(element));
+         this .selectNodeElement ($(element), true);
    }
 
    deselectAll ()
