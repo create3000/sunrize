@@ -2676,8 +2676,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                switch (type)
                {
-                  case X3D .X3DConstants .X3DLayerNode:
-                     return innerNode .getBBox (new X3D .Box3 ());
                   case X3D .X3DConstants .DirectionalLight:
                      return new X3D .Box3 (X3D .Vector3 .One, innerNode .getMetaData ("DirectionalLight/location", new X3D .Vector3 ()))
                         .multLeft (new X3D .Matrix4 () .setRotation (new X3D .Rotation4 (X3D .Vector3 .zAxis, innerNode ._direction .getValue ())))
@@ -2702,6 +2700,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                      return new X3D .Box3 (X3D .Vector3 .One, innerNode ._position .getValue ())
                         .multLeft (new X3D .Matrix4 () .setRotation (innerNode ._orientation .getValue ()))
                         .multRight (modelMatrix);
+                  case X3D .X3DConstants .X3DLayerNode:
+                     return innerNode .getBBox (new X3D .Box3 ());
                   default:
                      continue;
                }
