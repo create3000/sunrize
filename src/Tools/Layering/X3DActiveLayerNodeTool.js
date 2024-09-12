@@ -10,8 +10,6 @@ class X3DActiveLayerNodeTool extends X3DChildNodeTool
    {
       const node = executionContext .createNode ("Group", false);
 
-      node ._visible = false;
-
       node .setup ();
 
       super (node);
