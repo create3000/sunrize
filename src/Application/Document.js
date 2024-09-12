@@ -108,7 +108,7 @@ module .exports = class Document extends Interface
       // Layout Menu
 
       electron .ipcRenderer .on ("browser-frame", () => this .browserFrame .open ());
-      electron .ipcRenderer .on ("grid-tool", (event, typeName, visible) => this .activateGridTool (typeName, visible));
+      electron .ipcRenderer .on ("grid-tool", (event, typeName, visible) => this .activateGridTool (typeName, visible, true));
       electron .ipcRenderer .on ("grid-options", () => this .showGridOptions ());
 
       electron .ipcRenderer .on ("activate-snap-target",                 (event, visible) => this .activateSnapTarget (visible));
@@ -342,7 +342,7 @@ Viewpoint {
 }
             `));
 
-            this .activateGridTool ("GridTool", true);
+            this .activateGridTool ("GridTool", true, false);
          }
       }
       else
