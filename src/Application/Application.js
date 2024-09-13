@@ -137,14 +137,22 @@ module .exports = class Application
 
    set currentFile (currentFile)
    {
-      if (currentFile .startsWith ("file:"))
-         this .#currentFile = url .fileURLToPath (currentFile)
-      else if (currentFile .startsWith ("data:") || currentFile .startsWith ("id:"))
-         this .#currentFile = "";
-      else if (currentFile .match (/^.+?:/))
-         this .#currentFile = new URL (currentFile) .pathname .split ("/") .at (-1);
-      else
-         this .#currentFile = "";
+      const protocol = currentFile .match (/^(.+?:)/);
+
+      switch (protocol ?.[1])
+      {
+         default:
+            this .#currentFile = new URL (currentFile) .pathname .split ("/") .at (-1);
+            break;
+         case "file:":
+            this .#currentFile = url .fileURLToPath (currentFile);
+            break;
+         case "data:":
+         case "id:":
+         case undefined:
+            this .#currentFile = "";
+            break;
+      }
 
       this .mainWindow .setRepresentedFilename (this .#currentFile);
    }
