@@ -817,6 +817,11 @@ module .exports = class Application
                      label: _("Using the Script Editor"),
                      click: () => electron .shell .openExternal ("https://create3000.github.io/sunrize/documentation/using-the-script-editor/"),
                   },
+                  { type: "separator" },
+                  {
+                     label: _("Report a Bug"),
+                     click: () => electron .shell .openExternal ("https://github.com/create3000/sunrize/issues"),
+                  },
                ],
             },
          ]));
