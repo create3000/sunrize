@@ -21,6 +21,13 @@ const X3DParametricGeometryNodeTool = Base => class extends Base
       this .addExternalNode (this .node ._controlPoint);
    }
 
+   disposeTool ()
+   {
+      this .node ._rebuild .removeInterest ("set_toolRebuildParametricGeometry", this);
+
+      super .disposeTool ();
+   }
+
    set_toolRebuildParametricGeometry ()
    {
       const
