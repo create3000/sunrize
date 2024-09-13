@@ -139,7 +139,7 @@ module .exports = class Application
    {
       if (currentFile .startsWith ("file:"))
          this .#currentFile = url .fileURLToPath (currentFile)
-      else if (currentFile .startsWith ("data:"))
+      else if (currentFile .startsWith ("data:") || currentFile .startsWith ("id:"))
          this .#currentFile = "";
       else if (currentFile .match (/^.+?:/))
          this .#currentFile = new URL (currentFile) .pathname .split ("/") .at (-1);
