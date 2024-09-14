@@ -559,6 +559,87 @@ DEF NurbsDisk2D Transform {
    },
    {
       componentInfo: { name: "NURBS" },
+      typeName: "NurbsCone",
+      x3dSyntax: `
+DEF NurbsCone Transform {
+  children Shape {
+    appearance Appearance {
+      material Material { }
+    }
+    geometry NurbsPatchSurface {
+      solid FALSE
+      uClosed TRUE
+      vOrder 2
+      uDimension 9
+      vDimension 2
+      uKnot [
+        0,
+        0,
+        0,
+        0.25,
+        0.25,
+        0.5,
+        0.5,
+        0.75,
+        0.75,
+        1,
+        1,
+        1
+      ]
+      vKnot [
+        0,
+        0,
+        1,
+        1
+      ]
+      weight [
+        1,
+        0.707106781186548,
+        1,
+        0.707106781186548,
+        1,
+        0.707106781186548,
+        1,
+        0.707106781186548,
+        1,
+        1,
+        0.707106781186548,
+        1,
+        0.707106781186548,
+        1,
+        0.707106781186548,
+        1,
+        0.707106781186548,
+        1
+      ]
+      controlPoint CoordinateDouble {
+        point [
+          1 -1 0,
+          0.707106781186548 -0.707106781186548 -0.707106781186548,
+          0 -1 -1,
+          -0.707106781186548 -0.707106781186548 -0.707106781186548,
+          -1 -1 0,
+          -0.707106781186548 -0.707106781186548 0.707106781186548,
+          0 -1 1,
+          0.707106781186548 -0.707106781186548 0.707106781186548,
+          1 -1 0,
+          0 1 0,
+          0 0.707106781186548 0,
+          0 1 0,
+          0 0.707106781186548 0,
+          0 1 0,
+          0 0.707106781186548 0,
+          0 1 0,
+          0 0.707106781186548 0,
+          0 1 0
+        ]
+      }
+    }
+  }
+}`
+   },
+   {
+      componentInfo: { name: "NURBS" },
       typeName: "NurbsRectangle2D",
       x3dSyntax: `
 DEF NurbsCircle2D Transform {
