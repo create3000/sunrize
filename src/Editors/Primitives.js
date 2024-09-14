@@ -445,7 +445,6 @@ DEF NurbsCylinder Transform {
       material Material { }
     }
     geometry NurbsPatchSurface {
-      solid FALSE
       uClosed TRUE
       vOrder 2
       uDimension 9
@@ -567,7 +566,6 @@ DEF NurbsCone Transform {
       material Material { }
     }
     geometry NurbsPatchSurface {
-      solid FALSE
       uClosed TRUE
       vOrder 2
       uDimension 9
