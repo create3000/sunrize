@@ -518,6 +518,47 @@ DEF NurbsCylinder Transform {
    },
    {
       componentInfo: { name: "NURBS" },
+      typeName: "NurbsDisk2D",
+      x3dSyntax: `
+DEF NurbsDisk2D Transform {
+  children Shape {
+    appearance Appearance {
+      material Material { }
+    }
+    geometry NurbsPatchSurface {
+      solid FALSE
+      uDimension 3
+      vDimension 3
+      weight [
+        1,
+        0.707106781186548,
+        1,
+        0.707106781186548,
+        1,
+        0.707106781186548,
+        1,
+        0.707106781186548,
+        1
+      ]
+      controlPoint CoordinateDouble {
+        point [
+          -0.707106781186548 -0.707106781186548 0,
+          0 -1 0,
+          0.707106781186548 -0.707106781186548 0,
+          -1 0 0,
+          0 0 0,
+          1 0 0,
+          -0.707106781186548 0.707106781186548 0,
+          0 1 0,
+          0.707106781186548 0.707106781186548 0
+        ]
+      }
+    }
+  }
+}`,
+   },
+   {
+      componentInfo: { name: "NURBS" },
       typeName: "NurbsRectangle2D",
       x3dSyntax: `
 DEF NurbsCircle2D Transform {
