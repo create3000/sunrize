@@ -3337,6 +3337,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                break;
             }
             case X3D .X3DConstants .Coordinate:
+            case X3D .X3DConstants .CoordinateDouble:
             {
                const point = node ._point
                   .map (p => this .roundToIntegerIfAlmostEqual (modelMatrix .multVecMatrix (p .getValue () .copy ())));
