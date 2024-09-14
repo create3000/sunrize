@@ -643,7 +643,7 @@ DEF NurbsCone Transform {
 DEF NurbsRectangle2D Transform {
   children Shape {
     appearance Appearance {
-      material UnlitMaterial { }
+      material Material { }
     }
     geometry NurbsPatchSurface {
       solid FALSE
