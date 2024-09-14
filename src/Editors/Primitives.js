@@ -642,7 +642,7 @@ DEF NurbsCone Transform {
       componentInfo: { name: "NURBS" },
       typeName: "NurbsRectangle2D",
       x3dSyntax: `
-DEF NurbsCircle2D Transform {
+DEF NurbsRectangle2D Transform {
   children Shape {
     appearance Appearance {
       material UnlitMaterial { }
