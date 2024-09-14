@@ -383,6 +383,98 @@ EnvironmentLight {
 `
    },
    {
+      componentInfo: { name: "NURBS" },
+      typeName: "NurbsCircle2D",
+      x3dSyntax: `
+DEF NurbsCircle2D Transform {
+  children Shape {
+    appearance Appearance {
+      material UnlitMaterial { }
+    }
+    geometry NurbsCurve {
+      closed TRUE
+      knot [
+        0,
+        0,
+        0,
+        0.25,
+        0.25,
+        0.5,
+        0.5,
+        0.75,
+        0.75,
+        1,
+        1,
+        1
+      ]
+      weight [
+        1,
+        0.7071067811865476,
+        1,
+        0.7071067811865476,
+        1,
+        0.7071067811865476,
+        1,
+        0.7071067811865476,
+        1
+      ]
+      controlPoint CoordinateDouble {
+        point [
+          1 0 0,
+          0.7071067811865476 -0.7071067811865476 0,
+          0 -1 0,
+          -0.7071067811865476 -0.7071067811865476 0,
+          -1 0 0,
+          -0.7071067811865476 0.7071067811865476 0,
+          0 1 0,
+          0.7071067811865476 0.7071067811865476 0,
+          1 0 0
+        ]
+      }
+    }
+  }
+}`
+   },
+   {
+      componentInfo: { name: "NURBS" },
+      typeName: "NurbsRectangle2D",
+      x3dSyntax: `
+DEF NurbsCircle2D Transform {
+  children Shape {
+    appearance Appearance {
+      material UnlitMaterial { }
+    }
+    geometry NurbsPatchSurface {
+      solid FALSE
+      uOrder 2
+      vOrder 2
+      uDimension 2
+      vDimension 2
+      uKnot [
+        -1,
+        -1,
+        1,
+        1
+      ]
+      vKnot [
+        -1,
+        -1,
+        1,
+        1
+      ]
+      controlPoint CoordinateDouble {
+        point [
+          -1 -1 0,
+          1 -1 0,
+          -1 1 0,
+          1 1 0
+        ]
+      }
+    }
+  }
+}`
+   },
+   {
       componentInfo: { name: "Text" },
       typeName: "Text",
       x3dSyntax: `
