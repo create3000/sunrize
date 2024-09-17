@@ -174,7 +174,7 @@ module .exports = class Interface
     * @param {string} from path|URL
     * @param {string} to path|URL
     */
-   updateFileConfigs (from, to)
+   updateFileConfigs (from = "", to = "")
    {
       const
          fromHash = `.${md5 (from)}.`,
