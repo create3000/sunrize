@@ -16,7 +16,7 @@ module .exports = class Traverse
    static PROTOTYPE_INSTANCES           = flags <<= 1;
    static INLINE_SCENE                  = flags <<= 1;
    static ALL                           = (flags << 1) - 1;
-   
+
    /**
     *
     * @param {X3DScene|X3DExecutionContext|MFNode|Array<SFNode>|SFNode} object
@@ -353,7 +353,7 @@ module .exports = class Traverse
                case X3D .X3DConstants .MFNode:
                {
                   for (const node of field)
-                     this .findInNode (node .getValue (), object, flags, hierarchies, hierarchy, seen);
+                     this .findInNode (node ?.getValue (), object, flags, hierarchies, hierarchy, seen);
 
                   break;
                }
