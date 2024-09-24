@@ -3084,7 +3084,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
                   if (!destinationParentField)
                   {
-                     for (const field of destinationParentNode .getFields () .reverse ())
+                     for (const field of destinationParentNode .getFields () .toReversed ())
                      {
                         if (!field .isInitializable ())
                            continue;
