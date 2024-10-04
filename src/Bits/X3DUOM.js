@@ -9,7 +9,7 @@ const
    X_ITE  = $($.parseXML (fs .readFileSync (X3D .X3DUOM_PATH, "utf-8")));
 
 X3DUOM .find ("AbstractNodeTypes") .append (X_ITE .find ("AbstractNodeTypes"));
-X3DUOM .find ("ConcreteNodes") .append (X_ITE .find ("ConcreteNode"));
+X3DUOM .find ("ConcreteNodes")     .append (X_ITE .find ("ConcreteNode"));
 
 // emissiveColor fix
 X3DUOM .find ("AbstractNodeType[name=X3DOneSidedMaterialNode]")
