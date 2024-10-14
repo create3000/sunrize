@@ -355,7 +355,7 @@ module .exports = class ScriptEditor extends Interface
                element .on ("contextmenu", (event) => this .showContextMenu ());
                element .detach ();
 
-               //this .debugFindActions (editor)
+               // this .debugFindActions (editor)
                this .editors .set (node, { element, editor, monaco });
 
                // Return editor.
@@ -369,31 +369,31 @@ module .exports = class ScriptEditor extends Interface
    showContextMenu ()
    {
       const menu = [
-         {
-            label: _("Go to Definition"),
-            args: ["runAction", "editor.action.revealDefinition"],
-         },
-         {
-            label: _("Go to References"),
-            args: ["runAction", "editor.action.goToReferences"],
-         },
-         {
-            label: _("Go to Symbol..."),
-            args: ["runAction", "editor.action.quickOutline"],
-         },
-         {
-            label: _("Peek"),
-            submenu: [
-               {
-                  label: _("Peek Definition"),
-                  args: ["runAction", "editor.action.peekDefinition"],
-               },
-               {
-                  label: _("Peek References"),
-                  args: ["runAction", "editor.action.referenceSearch.trigger"],
-               },
-            ],
-         },
+         // {
+         //    label: _("Go to Definition"),
+         //    args: ["runAction", "editor.action.revealDefinition"],
+         // },
+         // {
+         //    label: _("Go to References"),
+         //    args: ["runAction", "editor.action.goToReferences"],
+         // },
+         // {
+         //    label: _("Go to Symbol..."),
+         //    args: ["runAction", "editor.action.quickOutline"],
+         // },
+         // {
+         //    label: _("Peek"),
+         //    submenu: [
+         //       {
+         //          label: _("Peek Definition"),
+         //          args: ["runAction", "editor.action.peekDefinition"],
+         //       },
+         //       {
+         //          label: _("Peek References"),
+         //          args: ["runAction", "editor.action.referenceSearch.trigger"],
+         //       },
+         //    ],
+         // },
          { type: "separator" },
          {
             label: _("Rename Symbol"),
