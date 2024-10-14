@@ -252,7 +252,7 @@ module .exports = class ScriptEditor extends Interface
          return;
 
       this .#declarations ??= fs .readFileSync (X3D .TYPE_SCRIPT_PATH, "utf8")
-         .replace (/^.*?(?:declare const X3D: X3D;)/s, "");
+         .replace (/^.*?(?:export = X3D;)/s, "");
 
       const fields = Array .from (this .node .getUserDefinedFields (), field =>
       {
@@ -267,23 +267,23 @@ module .exports = class ScriptEditor extends Interface
                   case X3D .X3DConstants .SFNode:
                   {
                      if (field .getValue ())
-                        return `declare let ${field .getName ()}: ${field .getValue () .getTypeName ()}Proxy;`;
+                        return `declare let ${field .getName ()}: X3D .${field .getValue () .getTypeName ()}Proxy;`;
                      else
-                        return `declare let ${field .getName ()}: SFNode | null;`;
+                        return `declare let ${field .getName ()}: X3D .SFNode | null;`;
                   }
                   case X3D .X3DConstants .MFNode:
                   {
                      const types = Array .from (new Set (Array .from (field, node => node ? `${node .getNodeTypeName ()}Proxy` : "null")));
 
                      if (types .length)
-                        return `declare let ${field .getName ()}: MFNode <${types .join ("|")}|null>;`;
+                        return `declare let ${field .getName ()}: X3D .MFNode <${types .join ("|")}|null>;`;
                      else
-                        return `declare let ${field .getName ()}: MFNode;`;
+                        return `declare let ${field .getName ()}: X3D .MFNode;`;
                   }
                   default:
                   {
                      return `declare let ${field .getName ()}: ${
-                        this .#internalTypes .get (field .getType ()) ?? field .getTypeName ()
+                        this .#internalTypes .get (field .getType ()) ?? "X3D ." + field .getTypeName ()
                      };`
                   }
                }
@@ -295,8 +295,8 @@ module .exports = class ScriptEditor extends Interface
       {
          content: /* ts */ `
             ${this .#declarations};
-            declare const Browser: X3DBrowser;
-            declare const X3DConstants: X3DConstants;
+            declare const Browser: X3D .X3DBrowser;
+            declare const X3DConstants: typeof X3D .X3DConstants;
             declare const TRUE: true;
             declare const FALSE: false;
             declare const NULL: null;
