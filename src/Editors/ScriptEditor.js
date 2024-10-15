@@ -296,7 +296,7 @@ module .exports = class ScriptEditor extends Interface
          content: /* ts */ `
             ${this .#declarations};
             declare const Browser: X3D .X3DBrowser;
-            declare const X3DConstants: typeof X3D .X3DConstants;
+            declare const X3DConstants: X3D .X3DConstants;
             declare const TRUE: true;
             declare const FALSE: false;
             declare const NULL: null;
