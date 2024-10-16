@@ -479,14 +479,14 @@ class X3DNodeTool extends X3DBaseTool
          }
       }
 
-      renderObject .getHumanoids () .push (null);
+      renderObject .getHAnimNode () .push (null);
       renderObject .getSensors ()   .push (X3DNodeTool .#sensors);
 
       for (const innerNode of this .#innerNodes)
          innerNode ?.traverse (type, renderObject);
 
       renderObject .getSensors ()   .pop ();
-      renderObject .getHumanoids () .pop ();
+      renderObject .getHAnimNode () .pop ();
    }
 
    // Destruction
