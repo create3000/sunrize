@@ -12,7 +12,7 @@ Importing nodes from an inlined file is accomplished with two statements: IMPORT
 Here is a simple example of including a EXPORT statement in an X3D file (Export.x3dv):
 
 ```vrml
-#X3D V3.3 utf8
+#X3D V{{ site.x3d_latest_version }} utf8
 
 DEF XFORM Transform {
   children Shape {
@@ -28,7 +28,7 @@ The IMPORT feature allows authors to incorporate content defined within Inline n
 And now the appropriate file with the IMPORT statement (Import.x3dv):
 
 ```vrml
-#X3D V3.3 utf8
+#X3D V{{ site.x3d_latest_version }} utf8
 
 DEF INLINE Inline {
   url "Export.x3dv"

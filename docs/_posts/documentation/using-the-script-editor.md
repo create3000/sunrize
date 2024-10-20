@@ -33,7 +33,7 @@ In Sunrize, the script itself is contained in the url field of the Script node, 
 Here is a simple example of including a Script node in an X3D file:
 
 ```vrml
-#X3D V3.3 utf8
+#X3D V{{ site.x3d_latest_version }} utf8
 
 DEF XFORM Transform {
   children [

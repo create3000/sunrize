@@ -22,6 +22,7 @@ description: >- # used by seo meta and the atom feed
   Sunrize — A Multi-Platform X3D Editor
 
 version: 1.6.8
+x3d_latest_version: 4.0 # x3d latest version
 download_dmg: 143777104
 download_exe: 158058496
 
