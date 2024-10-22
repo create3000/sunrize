@@ -8,16 +8,14 @@ const
 function main ()
 {
    make ();
-   docs ();
-   merge ();
 }
 
 function make ()
 {
    systemSync (`rm -r -f out/make/`);
 
-   systemSync (`npm run github -- --platform darwin`);
-   systemSync (`npm run github -- --platform win32`);
+   systemSync (`GITHUB_TOKEN=$SUNRIZE_TOKEN npm run github -- --platform darwin`);
+   // systemSync (`GITHUB_TOKEN=$SUNRIZE_TOKEN npm run github -- --platform win32`);
 }
 
 function docs ()

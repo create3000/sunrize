@@ -90,7 +90,7 @@
   "dependencies": {
     "capitalize": "^2.0.4",
     "console": "^0.7.2",
-    "electron": "^33.0.1",
+    "electron": "^33.0.2",
     "electron-prompt": "^1.7.0",
     "electron-squirrel-startup": "^1.0.1",
     "electron-tabs": "^1.0.4",
@@ -117,8 +117,6 @@
         "icon": "./src/assets/images/icon.png",
         "dir": "./src",
         "ignore": "^/(?!src|package\\.json|node_modules)",
-        "certificateFile": "./build/certificate.pfx",
-        "certificatePassword": "CREATE3000",
         "extendInfo": "./src/assets/Info.plist",
         "osxSign": {}
       },
