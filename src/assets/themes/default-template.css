@@ -1037,6 +1037,10 @@ body.dark .ui-widget .library-list .component {
 
 /* Outline Editor */
 
+.scene-graph {
+  width: min-content;
+}
+
 .scene-graph .material-symbols-outlined {
   font-size: var(--font-size);
   position: relative;
