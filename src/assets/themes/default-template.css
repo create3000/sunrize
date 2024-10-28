@@ -983,6 +983,7 @@ body.dark .ui-widget .library-list .component {
 .tree-view .item {
   display: flex;
   flex-direction: row;
+  white-space: nowrap;
 }
 
 .tree-view .item > * {
