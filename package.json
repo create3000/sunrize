@@ -110,45 +110,5 @@
     "tweakpane": "^3.1.10",
     "update-electron-app": "^3.0.0",
     "x_ite": "^10.5.9"
-  },
-  "config": {
-    "forge": {
-      "packagerConfig": {
-        "icon": "./src/assets/images/icon.png",
-        "dir": "./src",
-        "ignore": "^/(?!src|package\\.json|node_modules)",
-        "certificateFile": "./build/certificate.pfx",
-        "certificatePassword": "CREATE3000",
-        "extendInfo": "./src/assets/Info.plist",
-        "osxSign": {}
-      },
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel"
-        },
-        {
-          "name": "@electron-forge/maker-dmg"
-        },
-        {
-          "name": "@electron-forge/maker-deb"
-        },
-        {
-          "name": "@electron-forge/maker-rpm"
-        }
-      ],
-      "publishers": [
-        {
-          "name": "@electron-forge/publisher-github",
-          "config": {
-            "repository": {
-              "owner": "create3000",
-              "name": "sunrize"
-            },
-            "prerelease": false,
-            "draft": false
-          }
-        }
-      ]
-    }
   }
 }
