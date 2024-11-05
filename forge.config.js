@@ -4,7 +4,7 @@ module.exports = {
     "dir": "./src",
     "ignore": "^/(?!src|package\\.json|node_modules)",
     "certificateFile": "./build/certificate.pfx",
-    "certificatePassword": "CREATE3000",
+    "certificatePassword": process .env .CERT_PASSWORD,
     "extendInfo": "./src/assets/Info.plist",
     "osxSign": {
       "optionsForFile": (filePath) => {
