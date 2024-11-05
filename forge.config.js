@@ -12,7 +12,7 @@ module.exports = {
         // You can use this callback to map different sets of entitlements
         // to specific files in your packaged app.
         return {
-          "entitlements": "src/assets/entitlements.plist"
+          "entitlements": "src/assets/Entitlements.plist"
         };
       }
     }
