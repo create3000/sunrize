@@ -24,7 +24,7 @@
       <string>Owner</string>
       <key>LSIsAppleDefaultForType</key>
       <true/>
-      <key>LSItemContentTypes</key>
+      <key>UTTypeConformsTo</key>
       <array>
         <string>io.github.create3000.x3d</string>
         <string>io.castleengine.view3dscene.x3d</string>
@@ -54,7 +54,7 @@
       <string>Owner</string>
       <key>LSIsAppleDefaultForType</key>
       <true/>
-      <key>LSItemContentTypes</key>
+      <key>UTTypeConformsTo</key>
       <array>
         <string>io.github.create3000.x3d</string>
         <string>io.castleengine.view3dscene.x3d</string>
@@ -81,7 +81,7 @@
       <string>Owner</string>
       <key>LSIsAppleDefaultForType</key>
       <true/>
-      <key>LSItemContentTypes</key>
+      <key>UTTypeConformsTo</key>
       <array>
         <string>io.github.create3000.x3dv</string>
         <string>io.castleengine.view3dscene.x3dv</string>
@@ -111,7 +111,7 @@
       <string>Owner</string>
       <key>LSIsAppleDefaultForType</key>
       <true/>
-      <key>LSItemContentTypes</key>
+      <key>UTTypeConformsTo</key>
       <array>
         <string>io.github.create3000.x3dv</string>
         <string>io.castleengine.view3dscene.x3dv</string>
@@ -138,7 +138,7 @@
       <string>Owner</string>
       <key>LSIsAppleDefaultForType</key>
       <true/>
-      <key>LSItemContentTypes</key>
+      <key>UTTypeConformsTo</key>
       <array>
         <string>io.github.create3000.x3dj</string>
         <string>io.castleengine.view3dscene.x3dj</string>
@@ -168,7 +168,7 @@
       <string>Owner</string>
       <key>LSIsAppleDefaultForType</key>
       <true/>
-      <key>LSItemContentTypes</key>
+      <key>UTTypeConformsTo</key>
       <array>
         <string>io.github.create3000.x3dj</string>
         <string>io.castleengine.view3dscene.x3dj</string>
@@ -198,7 +198,7 @@
       <string>Owner</string>
       <key>LSIsAppleDefaultForType</key>
       <true/>
-      <key>LSItemContentTypes</key>
+      <key>UTTypeConformsTo</key>
       <array>
         <string>io.github.create3000.vrml</string>
         <string>io.castleengine.view3dscene.vrml</string>
@@ -229,7 +229,7 @@
       <string>Owner</string>
       <key>LSIsAppleDefaultForType</key>
       <true/>
-      <key>LSItemContentTypes</key>
+      <key>UTTypeConformsTo</key>
       <array>
         <string>io.github.create3000.vrml</string>
         <string>io.castleengine.view3dscene.vrml</string>
