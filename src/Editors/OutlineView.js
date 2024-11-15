@@ -3689,7 +3689,7 @@ module .exports = class OutlineView extends Interface
 
          this .expandHierarchy (hierarchy, element);
       }
-      else
+      else // X3DBaseNode
       {
          const
             objectClass = OutlineView .objectClasses [object .getTypeName ()] || "node",
