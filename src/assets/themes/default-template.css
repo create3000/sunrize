@@ -1057,7 +1057,7 @@ body.dark .ui-widget .library-list .component {
   display: none;
 }
 
-.scene-graph .description {
+.scene-graph .description .jstree-anchor {
   padding: 2px 0;
   font-size: smaller;
 }
@@ -1079,7 +1079,7 @@ body.dark .ui-widget .library-list .component {
 }
 
 .scene-graph .last {
-  height: 1px;
+  height: 0;
 }
 
 .scene-graph .last * {
