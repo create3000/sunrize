@@ -633,7 +633,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          {
             // Add nodes and child nodes.
 
-            const children = new Set ()
+            const children = new Set ();
 
             Array .from (Traverse .traverse (nodesToRemove, Traverse .ROOT_NODES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY))
             .filter (object => object instanceof X3D .SFNode)
