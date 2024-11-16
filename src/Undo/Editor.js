@@ -499,7 +499,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       undoManager .beginUndo (_("Rewrite URLs"))
 
-      for (const object of Traverse .traverse (Traverse .EXTERNPROTO_DECLARATIONS | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES))
+      for (const object of Traverse .traverse (objects, Traverse .EXTERNPROTO_DECLARATIONS | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES))
       {
          if (!(object instanceof X3D .SFNode))
             continue;
@@ -1562,7 +1562,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
     static isProtoNodeUsed (executionContext, protoNode)
     {
-      for (const object of executionContext .traverse ( Traverse .ROOT_NODES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY))
+      for (const object of executionContext .traverse (Traverse .ROOT_NODES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY))
       {
          if (!(object instanceof X3D .SFNode))
             continue;
