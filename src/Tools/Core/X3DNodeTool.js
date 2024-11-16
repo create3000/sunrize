@@ -5,7 +5,7 @@ const
    X3D         = require ("../../X3D"),
    Editor      = require ("../../Undo/Editor"),
    UndoManager = require ("../../Undo/UndoManager"),
-   Traverse    = require ("../../Application/Traverse"),
+   Traverse    = require ("x3d-traverse") (X3D),
    path        = require ("path"),
    url         = require ("url"),
    _           = require ("../../Application/GetText");
@@ -218,7 +218,10 @@ class X3DNodeTool extends X3DBaseTool
 
       for (const tool of this .#tools)
       {
-         Traverse .traverse (this [tool], Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES, node => nodesToDispose .push (node));
+         for (const node of Traverse .traverse (this [tool], Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES))
+         {
+            nodesToDispose .push (node instanceof X3D .SFNode ? node .getValue () : node);
+         }
       }
 
       for (const node of nodesToDispose .filter (node => !this .#externalNodes .has (node)))

@@ -4,7 +4,7 @@ const
    $         = require ("jquery"),
    X3D       = require ("../X3D"),
    Interface = require ("../Application/Interface"),
-   Traverse  = require ("../Application/Traverse"),
+   Traverse  = require ("x3d-traverse") (X3D),
    _         = require ("../Application/GetText");
 
 module .exports = class NodeList extends Interface
@@ -92,11 +92,7 @@ module .exports = class NodeList extends Interface
 
    getNodes ()
    {
-      const nodes = [ ];
-
-      Traverse .traverse (this .executionContext, Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, node => nodes .push (node));
-
-      return nodes;
+      return Array .from (this .executionContext .traverse (Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES), node => node instanceof X3D .SFNode ? node .getValue () : node);
    }
 
    getName (node)
