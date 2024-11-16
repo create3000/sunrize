@@ -3665,39 +3665,45 @@ module .exports = class OutlineView extends Interface
       if (!object)
          return;
 
-      if (object instanceof X3D .X3DField)
+      switch (true)
       {
-         let element = parent .find (`.field[field-id=${object .getId ()}]`);
-
-         if (element .length === 0)
+         case object instanceof X3D .X3DField:
          {
-            parent .jstree ("close_node", parent);
-            parent .jstree ("open_node",  parent);
+            let element = parent .find (`.field[field-id=${object .getId ()}]`);
 
-            element = parent .find (`.field[field-id=${object .getId ()}]`);
+            if (element .length === 0)
+            {
+               parent .jstree ("close_node", parent);
+               parent .jstree ("open_node",  parent);
+
+               element = parent .find (`.field[field-id=${object .getId ()}]`);
+            }
+
+            element .jstree ("open_node", element);
+
+            this .expandHierarchy (hierarchy, element);
+            break;
          }
+         case object instanceof X3D .X3DImportedNode:
+         {
+            const element = parent .find (`.imported-node[imported-node-id=${object .getId ()}]`);
 
-         element .jstree ("open_node", element);
+            element .jstree ("open_node", element);
 
-         this .expandHierarchy (hierarchy, element);
-      }
-      else if (object instanceof X3D .X3DImportedNode)
-      {
-         const element = parent .find (`.imported-node[imported-node-id=${object .getId ()}]`);
+            this .expandHierarchy (hierarchy, element);
+            break;
+         }
+         default: // X3DBaseNode
+         {
+            const
+               objectClass = OutlineView .objectClasses [object .getTypeName ()] || "node",
+               element     = parent .find (`.${objectClass}[node-id=${object .getId ()}]`);
 
-         element .jstree ("open_node", element);
+            element .jstree ("open_node", element);
 
-         this .expandHierarchy (hierarchy, element);
-      }
-      else // X3DBaseNode
-      {
-         const
-            objectClass = OutlineView .objectClasses [object .getTypeName ()] || "node",
-            element     = parent .find (`.${objectClass}[node-id=${object .getId ()}]`);
-
-         element .jstree ("open_node", element);
-
-         this .expandHierarchy (hierarchy, element);
+            this .expandHierarchy (hierarchy, element);
+            break;
+         }
       }
    }
 
