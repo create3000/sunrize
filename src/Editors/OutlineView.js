@@ -8,7 +8,7 @@ const
    X3D        = require ("../X3D"),
    Interface  = require ("../Application/Interface"),
    ActionKeys = require ("../Application/ActionKeys"),
-   Traverse   = require ("../Application/Traverse"),
+   Traverse   = require ("x3d-traverse") (X3D),
    X3DUOM     = require ("../Bits/X3DUOM"),
    _          = require ("../Application/GetText");
 
@@ -3144,76 +3144,96 @@ module .exports = class OutlineView extends Interface
    {
       // Hide all X3DShapeNode nodes and show all other nodes.
 
-      Traverse .traverse (this .executionContext, Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, node =>
+      for (const object of this .executionContext .traverse (Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES))
       {
-         if (!node .setHidden)
-            return
+         if (!(object instanceof X3D .SFNode))
+            continue;
 
-         node .setHidden (node .getType () .includes (X3D .X3DConstants .X3DShapeNode))
+         const node = object .getValue ();
+
+         if (!node .setHidden)
+            continue;
+
+         node .setHidden (node .getType () .includes (X3D .X3DConstants .X3DShapeNode));
 
          this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
             .find ("> .item .toggle-visibility")
             .removeClass (["on", "off"])
             .addClass (node .isHidden () ? "off" : "on")
-            .text (node .isHidden () ? "visibility_off" : "visibility")
-      })
+            .text (node .isHidden () ? "visibility_off" : "visibility");
+      }
 
       // Show all nodes in selection.
 
       const selection = require ("../Application/Selection");
 
-      Traverse .traverse (selection .nodes, Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, node =>
+      for (const object of Traverse .traverse (selection .nodes, Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES))
       {
+         if (!(object instanceof X3D .SFNode))
+            continue;
+
+         const node = object .getValue ();
+
          if (!node .setHidden)
-            return
+            continue;
 
          if (!node .getType () .includes (X3D .X3DConstants .X3DShapeNode))
-            return
+            continue;
 
-         node .setHidden (false)
+         node .setHidden (false);
 
          this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
             .find ("> .item .toggle-visibility")
             .removeClass ("off")
             .addClass ("on")
-            .text ("visibility")
-      })
+            .text ("visibility");
+      }
    }
 
    showSelectedObjects ()
    {
       const selection = require ("../Application/Selection")
 
-      Traverse .traverse (selection .nodes .length ? selection .nodes : this .executionContext, Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, node =>
+      for (const object of Traverse .traverse (selection .nodes .length ? selection .nodes : this .executionContext, Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES))
       {
-         if (!node .setHidden)
-            return
+         if (!(object instanceof X3D .SFNode))
+            continue;
 
-         node .setHidden (false)
+         const node = object .getValue ();
+
+         if (!node .setHidden)
+            continue;
+
+         node .setHidden (false);
 
          this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
             .find ("> .item .toggle-visibility")
             .removeClass ("off")
             .addClass ("on")
-            .text ("visibility")
-      })
+            .text ("visibility");
+      }
    }
 
    showAllObjects ()
    {
-      Traverse .traverse (this .executionContext, Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES, node =>
+      for (const object of this .executionContext .traverse (Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES))
       {
-         if (!node .setHidden)
-            return
+         if (!(object instanceof X3D .SFNode))
+            continue;
 
-         node .setHidden (false)
+         const node = object .getValue ();
+
+         if (!node .setHidden)
+            continue;
+
+         node .setHidden (false);
 
          this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
             .find ("> .item .toggle-visibility")
             .removeClass ("off")
             .addClass ("on")
-            .text ("visibility")
-      })
+            .text ("visibility");
+      }
    }
 
    selectNone (event)
@@ -3637,16 +3657,15 @@ module .exports = class OutlineView extends Interface
 
       flags |= Traverse .IMPORTED_NODES;
 
-      const hierarchies = Traverse .find (this .executionContext, object, flags);
-
-      for (const hierarchy of hierarchies)
+      for (const hierarchy of this .executionContext .find (object, flags))
       {
          hierarchy .shift (); // execution context
+         hierarchy .shift (); // rootNode | protos ...
 
          if (!expandObject)
             hierarchy .pop ();
 
-         this .expandHierarchy (hierarchy, this .sceneGraph);
+         this .expandHierarchy (hierarchy, this .sceneGraph, this .executionContext);
          break;
       }
    }
@@ -3658,17 +3677,19 @@ module .exports = class OutlineView extends Interface
       "X3DExecutionContext": "scene",
    };
 
-   expandHierarchy (hierarchy, parent)
+   expandHierarchy (hierarchy, parent, parentObject)
    {
-      const object = hierarchy .shift ();
+      let object = hierarchy .shift ();
 
-      if (!object)
+      if (object === undefined)
          return;
 
       switch (true)
       {
-         case object instanceof X3D .X3DField:
+         case typeof object === "string":
          {
+            object = parentObject .getField (object);
+
             let element = parent .find (`.field[field-id=${object .getId ()}]`);
 
             if (element .length === 0)
@@ -3684,6 +3705,11 @@ module .exports = class OutlineView extends Interface
             this .expandHierarchy (hierarchy, element);
             break;
          }
+         case typeof object === "number":
+         {
+            this .expandHierarchy (hierarchy, parent);
+            break;
+         }
          case object instanceof X3D .X3DImportedNode:
          {
             const element = parent .find (`.imported-node[imported-node-id=${object .getId ()}]`);
@@ -3693,6 +3719,11 @@ module .exports = class OutlineView extends Interface
             this .expandHierarchy (hierarchy, element);
             break;
          }
+         case object instanceof X3D .SFNode:
+         {
+            object = object .getValue ();
+            // Proceed with next case:
+         }
          default: // X3DBaseNode
          {
             const
@@ -3701,7 +3732,10 @@ module .exports = class OutlineView extends Interface
 
             element .jstree ("open_node", element);
 
-            this .expandHierarchy (hierarchy, element);
+            if (object instanceof X3D .X3DExecutionContext)
+               hierarchy .shift (); // rootNode | protos ...
+
+            this .expandHierarchy (hierarchy, element, object);
             break;
          }
       }

@@ -109,6 +109,7 @@
     "string-similarity": "^4.0.4",
     "tweakpane": "^3.1.10",
     "update-electron-app": "^3.0.0",
-    "x_ite": "^10.5.10"
+    "x_ite": "^10.5.10",
+    "x3d-traverse": "^1.0.1"
   }
 }
