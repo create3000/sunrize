@@ -7,7 +7,7 @@ const
    Dialog           = require ("../Controls/Dialog"),
    Editor           = require ("../Undo/Editor"),
    UndoManager      = require ("../Undo/UndoManager"),
-   Traverse         = require ("../Application/Traverse"),
+   Traverse         = require ("x3d-traverse") (X3D),
    _                = require ("../Application/GetText");
 
 module .exports = new class Library extends Dialog
@@ -209,8 +209,10 @@ module .exports = new class Library extends Dialog
 
       if (this .browser .getBrowserOption ("ColorSpace") === "LINEAR")
       {
-         Traverse .traverse (node, Traverse .ROOT_NODES, node =>
+         for (const object of Traverse .traverse (node, Traverse .ROOT_NODES))
          {
+            const node = object .getValue ();
+
             for (const field of node .getFields ())
             {
                switch (field .getType ())
@@ -225,7 +227,7 @@ module .exports = new class Library extends Dialog
                      break;
                }
             }
-         });
+         }
       }
 
       switch (field ?.getType ())
