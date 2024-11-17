@@ -1079,10 +1079,11 @@ body.dark .ui-widget .library-list .component {
 }
 
 .scene-graph .last {
-  height: 0;
+  /* make drag & drop work */
+  height: 2px;
 }
 
-.scene-graph .last * {
+.scene-graph .last .item *:not(.route-curves-wrapper, .route-curves) {
   visibility: hidden;
 }
 
