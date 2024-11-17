@@ -1078,8 +1078,8 @@ body.dark .ui-widget .library-list .component {
   color: var(--system-red);
 }
 
+/* make drag & drop work */
 .scene-graph .last {
-  /* make drag & drop work */
   height: 2px;
 }
 
