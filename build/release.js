@@ -29,6 +29,7 @@ function main ()
 	console .log (`New version ${version}`);
 
 	systemSync (`npm i x_ite@latest`);
+	systemSync (`npm i x3d-traverse@latest`);
 
 	// x3duom
 	systemSync (`npm run X3DUOM`);
