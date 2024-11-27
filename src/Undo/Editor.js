@@ -2813,10 +2813,12 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       {
          const modelMatrix = new X3D .Matrix4 ();
 
-         for (const object of hierarchy .reverse ())
+         for (let object of hierarchy .reverse ())
          {
-            if (!(object instanceof X3D .X3DNode))
+            if (!(object instanceof X3D .SFNode))
                continue;
+
+            object = object .getValue ();
 
             if (object .getType () .includes (X3D .X3DConstants .X3DLayerNode))
             {
