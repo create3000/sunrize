@@ -267,7 +267,7 @@ module .exports = class ScriptEditor extends Interface
                   case X3D .X3DConstants .SFNode:
                   {
                      if (field .getValue ())
-                        return `declare let ${field .getName ()}: X3D .${field .getValue () .getTypeName ()}Proxy;`;
+                        return `declare let ${field .getName ()}: X3D .${field .getNodeTypeName ()}Proxy;`;
                      else
                         return `declare let ${field .getName ()}: X3D .SFNode | null;`;
                   }
