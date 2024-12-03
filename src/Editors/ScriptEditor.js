@@ -284,7 +284,7 @@ module .exports = class ScriptEditor extends Interface
                   {
                      return `declare let ${field .getName ()}: ${
                         this .#internalTypes .get (field .getType ()) ?? "X3D ." + field .getTypeName ()
-                     };`
+                     };`;
                   }
                }
             }
