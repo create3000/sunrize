@@ -297,6 +297,36 @@ module .exports = class ScriptEditor extends Interface
             ${this .#declarations};
             declare const Browser: X3D .X3DBrowser;
             declare const X3DConstants: X3D .X3DConstants;
+            declare const X3DBrowser: typeof X3D. X3DBrowser;
+            declare const X3DExecutionContext: typeof X3D. X3DExecutionContext;
+            declare const X3DScene: typeof X3D. X3DScene;
+            declare const ComponentInfo: typeof X3D. ComponentInfo;
+            declare const ComponentInfoArray: typeof X3D. ComponentInfoArray;
+            declare const ProfileInfo: typeof X3D. ProfileInfo;
+            declare const ProfileInfoArray: typeof X3D. ProfileInfoArray;
+            declare const ConcreteNodesArray: typeof X3D. ConcreteNodesArray;
+            declare const AbstractNodesArray: typeof X3D. AbstractNodesArray;
+            declare const UnitInfo: typeof X3D. UnitInfo;
+            declare const UnitInfoArray: typeof X3D. UnitInfoArray;
+            declare const NamedNodesArray: typeof X3D. NamedNodesArray;
+            declare const ImportedNodesArray: typeof X3D. ImportedNodesArray;
+            declare const X3DImportedNode: typeof X3D. X3DImportedNode;
+            declare const ExportedNodesArray: typeof X3D. ExportedNodesArray;
+            declare const X3DExportedNode: typeof X3D. X3DExportedNode;
+            declare const ExternProtoDeclarationArray: typeof X3D. ExternProtoDeclarationArray;
+            declare const ProtoDeclarationArray: typeof X3D. ProtoDeclarationArray;
+            declare const X3DExternProtoDeclaration: typeof X3D. X3DExternProtoDeclaration;
+            declare const X3DProtoDeclaration: typeof X3D. X3DProtoDeclaration;
+            declare const X3DProtoDeclarationNode: typeof X3D. X3DProtoDeclarationNode;
+            declare const RouteArray: typeof X3D. RouteArray;
+            declare const X3DRoute: typeof X3D. X3DRoute;
+            declare const X3DFieldDefinition: typeof X3D. X3DFieldDefinition;
+            declare const FieldDefinitionArray: typeof X3D. FieldDefinitionArray;
+            declare const X3DField: typeof X3D. X3DField;
+            declare const X3DArrayField: typeof X3D. X3DArrayField;
+            ${Array .from (this .browser .fieldTypes)
+               .map (type => `declare const ${type .typeName}: typeof X3D .${type .typeName};`)
+               .join ("\n")}
             declare const TRUE: true;
             declare const FALSE: false;
             declare const NULL: null;
