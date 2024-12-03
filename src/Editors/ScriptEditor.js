@@ -252,7 +252,7 @@ module .exports = class ScriptEditor extends Interface
          return;
 
       this .#declarations ??= fs .readFileSync (X3D .TYPE_SCRIPT_PATH, "utf8")
-         .replace (/^.*?(?:export = X3D;)/s, "");
+         .replace (/^.*?(?:export.*?;)/s, "");
 
       const fields = Array .from (this .node .getUserDefinedFields (), field =>
       {
