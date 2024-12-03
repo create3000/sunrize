@@ -288,6 +288,8 @@ module .exports = class ScriptEditor extends Interface
                   }
                }
             }
+            default:
+               return "";
          }
       });
 
