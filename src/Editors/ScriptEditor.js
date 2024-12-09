@@ -275,8 +275,10 @@ module .exports = class ScriptEditor extends Interface
          }
          else
          {
+            const  = 16;
+
             if (field instanceof X3D .SFString)
-               value += `"${field .valueOf () .substring (0, 16)}${field .length <= 16 ? "" : "..."}"`;
+               value += `"${field .valueOf () .substring (0, STRING_MAX)}${field .length <= STRING_MAX ? "" : "..."}"`;
             else
                value += String (field);
          }
