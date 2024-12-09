@@ -256,55 +256,48 @@ module .exports = class ScriptEditor extends Interface
 
       const fields = Array .from (this .node .getUserDefinedFields (), field =>
       {
-         switch (field .getAccessType ())
+         if (field .getAccessType () === X3D .X3DConstants .inputOnly)
+            return "";
+
+         const accessType = [ ];
+
+         if (field .isInput ())
+            accessType .push ("in");
+
+         if (field .isOutput ())
+            accessType .push ("out");
+
+         let string = "";
+
+         string += `/** This is the user-defined field ${field .getTypeName ()} [${accessType .join (", ")}] *${field .getName ()}*. */\n`;
+         string += `declare let ${field .getName ()}: `;
+
+         switch (field .getType ())
          {
-            case X3D .X3DConstants .initializeOnly:
-            case X3D .X3DConstants .outputOnly:
-            case X3D .X3DConstants .inputOutput:
+            case X3D .X3DConstants .SFNode:
             {
-               const accessType = [ ];
+               if (field .getValue ())
+                  string += `X3D .${field .getNodeTypeName ()}Proxy;`;
+               else
+                  string += `X3D .SFNode | null;`;
+            }
+            case X3D .X3DConstants .MFNode:
+            {
+               const types = Array .from (new Set (Array .from (field, node => node ? `${node .getNodeTypeName ()}Proxy` : "null")));
 
-               if (field .isInput ())
-                  accessType .push ("in");
-
-               if (field .isOutput ())
-                  accessType .push ("out");
-
-               let string = "";
-
-               string += `/** This is the user-defined field ${field .getTypeName ()} [${accessType .join (", ")}] *${field .getName ()}*. */\n`;
-               string += `declare let ${field .getName ()}: `;
-
-               switch (field .getType ())
-               {
-                  case X3D .X3DConstants .SFNode:
-                  {
-                     if (field .getValue ())
-                        string += `X3D .${field .getNodeTypeName ()}Proxy;`;
-                     else
-                        string += `X3D .SFNode | null;`;
-                  }
-                  case X3D .X3DConstants .MFNode:
-                  {
-                     const types = Array .from (new Set (Array .from (field, node => node ? `${node .getNodeTypeName ()}Proxy` : "null")));
-
-                     if (types .length)
-                        string += `X3D .MFNode <${types .join ("|")}|null>;`;
-                     else
-                        string += `X3D .MFNode;`;
-                  }
-                  default:
-                  {
-                     string += `${
-                        this .#internalTypes .get (field .getType ()) ?? "X3D ." + field .getTypeName ()
-                     };`;
-                  }
-
-                  return string;
-               }
+               if (types .length)
+                  string += `X3D .MFNode <${types .join ("|")}|null>;`;
+               else
+                  string += `X3D .MFNode;`;
             }
             default:
-               return "";
+            {
+               string += `${
+                  this .#internalTypes .get (field .getType ()) ?? "X3D ." + field .getTypeName ()
+               };`;
+            }
+
+            return string;
          }
       });
 
