@@ -262,9 +262,17 @@ module .exports = class ScriptEditor extends Interface
             case X3D .X3DConstants .outputOnly:
             case X3D .X3DConstants .inputOutput:
             {
+               const accessType = [ ];
+
+               if (field .isInput ())
+                  accessType .push ("in");
+
+               if (field .isOutput ())
+                  accessType .push ("out");
+
                let string = "";
 
-               string += `/** This is the user-defined field ${field .getTypeName ()} *${field .getName ()}*. */\n`;
+               string += `/** This is the user-defined field ${field .getTypeName ()} [${accessType .join (", ")}] *${field .getName ()}*. */\n`;
                string += `declare let ${field .getName ()}: `;
 
                switch (field .getType ())
