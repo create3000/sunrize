@@ -271,7 +271,7 @@ module .exports = class ScriptEditor extends Interface
 
          if (field instanceof X3D .X3DArrayField)
          {
-            value += `(${field .length})`;
+            value += `(${field .length} elements)`;
          }
          else
          {
