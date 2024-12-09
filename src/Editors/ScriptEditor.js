@@ -262,36 +262,45 @@ module .exports = class ScriptEditor extends Interface
             case X3D .X3DConstants .outputOnly:
             case X3D .X3DConstants .inputOutput:
             {
+               let string = "";
+
+               string += `/** This is the user-defined field ${field .getTypeName ()} *${field .getName ()}*. */\n`;
+               string += `declare let ${field .getName ()}: `;
+
                switch (field .getType ())
                {
                   case X3D .X3DConstants .SFNode:
                   {
                      if (field .getValue ())
-                        return `declare let ${field .getName ()}: X3D .${field .getNodeTypeName ()}Proxy;`;
+                        string += `X3D .${field .getNodeTypeName ()}Proxy;`;
                      else
-                        return `declare let ${field .getName ()}: X3D .SFNode | null;`;
+                        string += `X3D .SFNode | null;`;
                   }
                   case X3D .X3DConstants .MFNode:
                   {
                      const types = Array .from (new Set (Array .from (field, node => node ? `${node .getNodeTypeName ()}Proxy` : "null")));
 
                      if (types .length)
-                        return `declare let ${field .getName ()}: X3D .MFNode <${types .join ("|")}|null>;`;
+                        string += `X3D .MFNode <${types .join ("|")}|null>;`;
                      else
-                        return `declare let ${field .getName ()}: X3D .MFNode;`;
+                        string += `X3D .MFNode;`;
                   }
                   default:
                   {
-                     return `declare let ${field .getName ()}: ${
+                     string += `${
                         this .#internalTypes .get (field .getType ()) ?? "X3D ." + field .getTypeName ()
                      };`;
                   }
+
+                  return string;
                }
             }
             default:
                return "";
          }
       });
+
+      console .log (fields .join ("\n"))
 
       monaco .languages .typescript .javascriptDefaults .setExtraLibs ([
       {
