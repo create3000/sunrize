@@ -267,9 +267,23 @@ module .exports = class ScriptEditor extends Interface
          if (field .isOutput ())
             accessType .push ("out");
 
+         let value = "";
+
+         if (field instanceof X3D .X3DArrayField)
+         {
+            value += `(${field .length})`;
+         }
+         else
+         {
+            if (field instanceof X3D .SFString)
+               value += `"${field .valueOf () .substring (0, 16)}${field .length <= 16 ? "" : "..."}"`;
+            else
+               value += String (field);
+         }
+
          let string = "";
 
-         string += `/** This is the user-defined field ${field .getTypeName ()} [${accessType .join (", ")}] *${field .getName ()}*. */\n`;
+         string += `/** This is the user-defined field ${field .getTypeName ()} [${accessType .join (", ")}] *${field .getName ()}* ${value}. */\n`;
          string += `declare let ${field .getName ()}: `;
 
          switch (field .getType ())
@@ -292,9 +306,8 @@ module .exports = class ScriptEditor extends Interface
             }
             default:
             {
-               string += `${
-                  this .#internalTypes .get (field .getType ()) ?? "X3D ." + field .getTypeName ()
-               };`;
+               string += this .#internalTypes .get (field .getType ()) ?? `X3D .${field .getTypeName ()}`;
+               string += "";"";
             }
 
             return string;
@@ -388,11 +401,12 @@ module .exports = class ScriptEditor extends Interface
                   bracketPairColorization: { enabled: true },
                });
 
+               editor .onDidFocusEditorWidget (() => this .setDeclarations (monaco));
                editor .onDidBlurEditorWidget (() => this .apply ());
 
                editor .viewState = editor .saveViewState ();
 
-               element .on ("contextmenu", (event) => this .showContextMenu ());
+               element .on ("contextmenu", () => this .showContextMenu ());
                element .detach ();
 
                // this .debugFindActions (editor)
