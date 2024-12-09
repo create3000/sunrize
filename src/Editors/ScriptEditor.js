@@ -300,8 +300,6 @@ module .exports = class ScriptEditor extends Interface
          }
       });
 
-      console .log (fields .join ("\n"))
-
       monaco .languages .typescript .javascriptDefaults .setExtraLibs ([
       {
          content: /* ts */ `

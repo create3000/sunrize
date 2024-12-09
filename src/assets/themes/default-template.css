@@ -171,7 +171,6 @@ tr.disabled ~ tr > td > div {
 /* Vertical splitter */
 
 .vertical-splitter {
-  overflow: hidden;
   position: absolute;
   box-sizing: border-box;
   inset: 0;
@@ -365,7 +364,6 @@ tr.disabled ~ tr > td > div {
 }
 
 .ui-tabs > .ui-tabs-panel {
-  overflow: hidden;
   box-sizing: border-box;
   position: relative;
   padding: unset;
@@ -380,7 +378,6 @@ tr.disabled ~ tr > td > div {
 
 .tabs-panel {
   position: absolute;
-  overflow: hidden;
   inset: 0;
 }
 
@@ -728,7 +725,6 @@ body.dark .ui-widget .library-list .component {
 /* Footer */
 
 #footer {
-  overflow: hidden;
   position: absolute;
   box-sizing: border-box;
   width: 100%;
@@ -743,7 +739,6 @@ body.dark .ui-widget .library-list .component {
 }
 
 .console {
-  overflow: hidden;
   box-sizing: border-box;
 }
 
@@ -882,7 +877,6 @@ body.dark .ui-widget .library-list .component {
 }
 
 .script-editor .script-editor-left {
-  overflow: hidden;
   position: absolute;
   box-sizing: border-box;
   left: 0;
@@ -928,7 +922,6 @@ body.dark .ui-widget .library-list .component {
 /* Animation Editor */
 
 .animation-editor {
-  overflow: hidden;
   box-sizing: border-box;
 }
 
