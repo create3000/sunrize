@@ -52,7 +52,7 @@ $.fn.texturePreviewPopover = async function (node)
 
    const
       browser = canvas .prop ("browser"),
-      scene   = browser .createScene (browser .getProfile ("Core"));
+      scene   = await browser .createScene (browser .getProfile ("Core"));
 
    scene .setWorldURL (node .getExecutionContext () .worldURL);
 
@@ -61,7 +61,7 @@ $.fn.texturePreviewPopover = async function (node)
    // Create texture node.
 
    const
-      x3dSyntax      = Editor .exportX3D (node .getExecutionContext (), [node]),
+      x3dSyntax      = await Editor .exportX3D (node .getExecutionContext (), [node]),
       nodes          = await Editor .importX3D (scene, x3dSyntax, new UndoManager ()),
       previewNode    = nodes [0],
       appearanceNode = browser .currentScene .getExportedNode ("Appearance");

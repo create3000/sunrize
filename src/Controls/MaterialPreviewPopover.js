@@ -28,7 +28,7 @@ $.fn.materialPreviewPopover = async function (node)
 
    const
       browser = canvas .prop ("browser"),
-      scene   = browser .createScene (browser .getProfile ("Core"));
+      scene   = await browser .createScene (browser .getProfile ("Core"));
 
    scene .setWorldURL (node .getExecutionContext () .worldURL);
 
