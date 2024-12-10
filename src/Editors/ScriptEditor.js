@@ -278,7 +278,7 @@ module .exports = class ScriptEditor extends Interface
             const STRING_MAX = 16;
 
             if (field instanceof X3D .SFString)
-               value += `"${field .valueOf () .substring (0, STRING_MAX)}${field .length <= STRING_MAX ? "" : "..."}"`;
+               value += `"${X3D .SFString .escape (field .valueOf ()) .substring (0, STRING_MAX)}${field .length <= STRING_MAX ? "" : "..."}"`;
             else
                value += String (field);
          }
