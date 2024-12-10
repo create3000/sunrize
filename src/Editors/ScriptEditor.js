@@ -408,6 +408,7 @@ module .exports = class ScriptEditor extends Interface
 
                editor .viewState = editor .saveViewState ();
 
+               element .on ("mouseenter", () => this .setDeclarations (monaco))
                element .on ("contextmenu", () => this .showContextMenu ());
                element .detach ();
 
