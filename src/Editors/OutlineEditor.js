@@ -799,7 +799,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       UndoManager .shared .beginUndo (_("Cut Nodes"));
 
       await this .copyNodes ();
-      this .deleteNodes ();
+      await this .deleteNodes ();
 
       UndoManager .shared .endUndo ();
    }
