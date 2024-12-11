@@ -220,6 +220,7 @@ module .exports = class Editor
 
       // Dispose scene.
 
+      scene .routes .clear ();
       scene .dispose ();
       nodes .dispose ();
 
