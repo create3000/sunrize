@@ -504,7 +504,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       {
          if (!(object instanceof X3D .SFNode))
             continue;
-         
+
          const
             node          = object .getValue (),
             urlObject     = node .getType () .includes (X3D .X3DConstants .X3DUrlObject),
@@ -540,15 +540,13 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                }
                catch (error)
                {
-                  console .log (error)
+                  // console .log (error)
                }
 
                newURL .push (fileURL);
             }
             else
             {
-               console .log ("rel", object .getNodeTypeName ())
-
                try
                {
                   const
@@ -1366,8 +1364,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       this .rewriteURLs (scene, scene, executionContext .worldURL, scene .worldURL, new UndoManager ());
       this .inferProfileAndComponents (scene, new UndoManager ());
-
-      console .log (this .getContents (scene, path .extname (filePath)))
 
       fs .writeFileSync (filePath, this .getContents (scene, path .extname (filePath)));
       scene .dispose ();
