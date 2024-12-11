@@ -408,6 +408,7 @@ module .exports = class Editor
 
       await this .importX3D (scene, x3dSyntax, new UndoManager ());
 
+      this .rewriteURLs (scene, scene, executionContext .worldURL, scene .worldURL, new UndoManager ());
       this .inferProfileAndComponents (scene, new UndoManager ());
 
       fs .writeFileSync (filePath, this .getContents (scene, path .extname (filePath)));
@@ -503,7 +504,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       {
          if (!(object instanceof X3D .SFNode))
             continue;
-
+         
          const
             node          = object .getValue (),
             urlObject     = node .getType () .includes (X3D .X3DConstants .X3DUrlObject),
@@ -525,7 +526,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                try
                {
-                  const filePath = path .resolve (path .dirname (url .fileURLToPath (oldWorldURL)), url .fileURLToPath (fileURL));
+                  const filePath = url .fileURLToPath (new URL (fileURL, oldWorldURL));
 
                   let relativePath = path .relative (path .dirname (url .fileURLToPath (newWorldURL)), filePath);
 
@@ -537,13 +538,17 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   newURL .push (encodeURI (relativePath));
                   continue;
                }
-               catch
-               { }
+               catch (error)
+               {
+                  console .log (error)
+               }
 
                newURL .push (fileURL);
             }
             else
             {
+               console .log ("rel", object .getNodeTypeName ())
+
                try
                {
                   const
@@ -1355,8 +1360,14 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       undoManager .beginUndo (_("Turn Prototype »%s« into Extern Prototype"), proto .getName ());
 
+      scene .setWorldURL (url .pathToFileURL (filePath));
+
       await this .importX3D (scene, x3dSyntax, new UndoManager ());
-      this .rewriteURLs (scene, scene, executionContext .worldURL, url .pathToFileURL (filePath) .href, new UndoManager ());
+
+      this .rewriteURLs (scene, scene, executionContext .worldURL, scene .worldURL, new UndoManager ());
+      this .inferProfileAndComponents (scene, new UndoManager ());
+
+      console .log (this .getContents (scene, path .extname (filePath)))
 
       fs .writeFileSync (filePath, this .getContents (scene, path .extname (filePath)));
       scene .dispose ();
