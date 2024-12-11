@@ -794,17 +794,17 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       Editor .removeImportedNode (importedNode .getExecutionContext (), importedNode .getImportedName ());
    }
 
-   cutNodes ()
+   async cutNodes ()
    {
       UndoManager .shared .beginUndo (_("Cut Nodes"));
 
-      this .copyNodes ();
-      this .deleteNodes ();
+      await this .copyNodes ();
+      await this .deleteNodes ();
 
       UndoManager .shared .endUndo ();
    }
 
-   copyNodes (deselect)
+   async copyNodes (deselect)
    {
       const
          primary     = $(".node.primary, .proto.primary, .externproto.primary"),
@@ -829,7 +829,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       undoManager .endUndo ();
 
-      const x3dSyntax = Editor .exportX3D (this .executionContext, nodes, { importedNodes: true });
+      const x3dSyntax = await Editor .exportX3D (this .executionContext, nodes, { importedNodes: true });
 
       //console .log (x3dSyntax)
 
@@ -841,7 +841,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          this .deselectAll ();
    }
 
-   copyExternPrototype ()
+   async copyExternPrototype ()
    {
       const
          elements = $(".proto.primary, .proto.manually"),
@@ -849,7 +849,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       const
          browser  = this .executionContext .getBrowser (),
-         scene    = browser .createScene (),
+         scene    = await browser .createScene (browser .getProfile ("Full")),
          worldURL = new URL (this .executionContext .worldURL),
          basename = path .basename (worldURL .pathname);
 
@@ -1366,7 +1366,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const
          rootNodes     = executionContext .rootNodes .copy (),
          nodesToImport = [... inlineNode .getInternalScene () .rootNodes] .map (node => node .getValue ()),
-         x3dSyntax     = Editor .exportX3D (inlineNode .getInternalScene (), nodesToImport, { importedNodes: true }),
+         x3dSyntax     = await Editor .exportX3D (inlineNode .getInternalScene (), nodesToImport, { importedNodes: true }),
          nodes         = await Editor .importX3D (executionContext, x3dSyntax);
 
       // Remove imported nodes from root nodes.
@@ -2865,7 +2865,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             {
                UndoManager .shared .beginUndo (_("Copy Extern Proto »%s«"), sourceExternProto .getName ());
 
-               await Editor .importX3D (destinationExecutionContext, Editor .exportX3D (sourceExecutionContext, [sourceExternProto]));
+               await Editor .importX3D (destinationExecutionContext, await Editor .exportX3D (sourceExecutionContext, [sourceExternProto]));
 
                const
                   externprotos = Array .from (destinationExecutionContext .externprotos),
@@ -2939,7 +2939,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             {
                UndoManager .shared .beginUndo (_("Copy Prototype »%s«"), sourceProto .getName ());
 
-               await Editor .importX3D (destinationExecutionContext, Editor .exportX3D (sourceExecutionContext, [sourceProto]));
+               await Editor .importX3D (destinationExecutionContext, await Editor .exportX3D (sourceExecutionContext, [sourceProto]));
 
                const
                   protos = Array .from (destinationExecutionContext .protos),
@@ -3044,7 +3044,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          }
 
          const copiedNodes = sourceNodes .length
-            ? await Editor .importX3D (destinationExecutionContext, Editor .exportX3D (this .executionContext, sourceNodes, { importedNodes: true }))
+            ? await Editor .importX3D (destinationExecutionContext, await Editor .exportX3D (this .executionContext, sourceNodes, { importedNodes: true }))
             : [ ];
 
          if (copiedNodes .length)

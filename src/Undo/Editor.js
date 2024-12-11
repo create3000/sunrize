@@ -75,7 +75,7 @@ module .exports = class Editor
     * @param {Object} options
     * @returns {string} x3dSyntax
     */
-   static exportX3D (executionContext, objects = [ ], { type = "x3d", importedNodes = false, exportedNodes = false } = { })
+   static async exportX3D (executionContext, objects = [ ], { type = "x3d", importedNodes = false, exportedNodes = false } = { })
    {
       const
          externprotos = new Set (),
@@ -84,7 +84,7 @@ module .exports = class Editor
 
       const
          browser = executionContext .getBrowser (),
-         scene   = browser .createScene ();
+         scene   = await browser .createScene (browser .getProfile ("Core"));
 
       // Determine protos.
 
@@ -245,7 +245,7 @@ module .exports = class Editor
          externprotos   = new Map (Array .from (executionContext .externprotos, p => [p .getName (), p])),
          protos         = new Map (Array .from (executionContext .protos,       p => [p .getName (), p])),
          rootNodes      = executionContext .rootNodes .copy (),
-         tempScene      = browser .createScene (browser .getProfile ("Core"));
+         tempScene      = await browser .createScene (browser .getProfile ("Core"));
 
       scene .setProfile (browser .getProfile ("Full"));
       scene .updateComponent (browser .getComponent ("X_ITE"));
@@ -398,8 +398,8 @@ module .exports = class Editor
    {
       const
          browser        = executionContext .getBrowser (),
-         scene          = browser .createScene (),
-         x3dSyntax      = this .exportX3D (executionContext, nodes, { importedNodes: true, exportedNodes: true }),
+         scene          = await browser .createScene (browser .getProfile ("Core")),
+         x3dSyntax      = await this .exportX3D (executionContext, nodes, { importedNodes: true, exportedNodes: true }),
          loadUrlObjects = browser .getBrowserOption ("LoadUrlObjects");
 
       browser .setBrowserOption ("LoadUrlObjects", false);
@@ -1350,8 +1350,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       const
          browser   = executionContext .getBrowser (),
-         scene     = browser .createScene (),
-         x3dSyntax = this .exportX3D (executionContext, [proto]);
+         scene     = await browser .createScene (browser .getProfile ("Core")),
+         x3dSyntax = await this .exportX3D (executionContext, [proto]);
 
       undoManager .beginUndo (_("Turn Prototype »%s« into Extern Prototype"), proto .getName ());
 
@@ -1530,7 +1530,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       const
          numProtos = executionContext .protos .length,
-         x3dSyntax = this .exportX3D (externproto .getInternalScene (), [externproto .getProtoDeclaration ()])
+         x3dSyntax = await this .exportX3D (externproto .getInternalScene (), [externproto .getProtoDeclaration ()])
 
       undoManager .beginUndo (_("Turn Extern Prototype »%s« into Prototype"), externproto .getName ())
 
