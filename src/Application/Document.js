@@ -20,14 +20,14 @@ const
    AudioParser        = require ("../Parser/AudioParser"),
    _                  = require ("./GetText");
 
-// Add X3D to window to provide access in Script nodes.
-window .X3D = X3D;
-
 module .exports = class Document extends Interface
 {
    constructor ()
    {
       super ("Sunrize.Document.");
+
+      // Add X3D to window to provide access in Script nodes.
+      window .X3D = X3D;
 
       // Globals
 
