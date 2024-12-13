@@ -787,9 +787,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
          const node = object .getValue ();
 
-         if (node .getScene () !== scene)
-            continue;
-
          components .add (node .getComponentInfo () .name);
       }
 
