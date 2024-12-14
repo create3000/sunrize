@@ -98,9 +98,10 @@ module .exports = class Console extends Interface
       this .scriptNode .setup ();
    }
 
+   // Add strings to exclude here:
    excludes = new Set ([
-      "The vm module of Node.js is deprecated in the renderer process and will be removed.",
-      "Invalid asm.js: Invalid member of stdlib",
+      // "The vm module of Node.js is deprecated in the renderer process and will be removed.",
+      // "Invalid asm.js: Invalid member of stdlib",
    ]);
 
    addMessage (event, level, sourceId, line, message)
