@@ -28,8 +28,11 @@ function main ()
 	console .log (`NPM version ${online}`);
 	console .log (`New version ${version}`);
 
-	systemSync (`npm i x_ite@latest`);
-	systemSync (`npm i x3d-traverse@latest`);
+	while (systemSync (`npm i x_ite@latest`))
+		systemSync (`countdown 60s`);
+
+	while (systemSync (`npm i x3d-traverse@latest`))
+		systemSync (`countdown 60s`);
 
 	// x3duom
 	systemSync (`npm run X3DUOM`);
