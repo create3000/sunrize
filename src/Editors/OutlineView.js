@@ -903,6 +903,7 @@ module .exports = class OutlineView extends Interface
    #nodeSymbol                = Symbol ();
    #updateNodeBoundSymbol     = Symbol ();
    #updateNodeLoadStateSymbol = Symbol ();
+   #updateNodePlaySymbol      = Symbol ();
 
    createNodeElement (type, parent, node, index)
    {
@@ -1087,6 +1088,27 @@ module .exports = class OutlineView extends Interface
 
                   continue;
                }
+               case X3D .X3DConstants .X3DTimeDependentNode:
+               {
+                  node ._isActive .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
+                  node ._isPaused .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
+
+                  buttons .push ($("<span></span>")
+                     .attr ("order", "6")
+                     .addClass (["play-node", "button", "material-symbols-outlined"])
+                     .addClass (node ._isPaused .getValue () ? "on" : "off")
+                     .attr ("title", _("Activate node."))
+                     .text (node ._isActive .getValue () ? "pause" : "play_arrow"));
+
+                  buttons .push ($("<span></span>")
+                     .attr ("order", "7")
+                     .addClass (["stop-node", "button", "material-symbols-outlined"])
+                     .addClass (node ._isActive .getValue () ? "on" : "off")
+                     .attr ("title", _("Stop node."))
+                     .text ("stop"));
+
+                  continue;
+               }
             }
          }
 
@@ -1187,6 +1209,22 @@ module .exports = class OutlineView extends Interface
          .find ("> .item .reload-node")
          .removeClass (["not-started-state", "in-progress-state", "complete-state", "failed-state"])
          .addClass (className);
+   }
+
+   updateNodePlay (node)
+   {
+      this .sceneGraph
+         .find (`.node[node-id=${node .getId ()}]`)
+         .find ("> .item .play-node")
+         .removeClass (["on", "off"])
+         .addClass (node ._isPaused .getValue () ? "on" : "off")
+         .text (node ._isActive .getValue () ? "pause" : "play_arrow");
+
+      this .sceneGraph
+         .find (`.node[node-id=${node .getId ()}]`)
+         .find ("> .item .stop-node")
+         .removeClass (["on", "off"])
+         .addClass (node ._isActive .getValue () ? "on" : "off");
    }
 
    isInParents (parent, node)
