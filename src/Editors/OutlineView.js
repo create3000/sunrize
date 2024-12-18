@@ -1065,6 +1065,7 @@ module .exports = class OutlineView extends Interface
                }
                case X3D .X3DConstants .X3DTimeDependentNode:
                {
+                  node ._enabled  .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
                   node ._isActive .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
                   node ._isPaused .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
                   node ._loop     .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
@@ -1089,6 +1090,9 @@ module .exports = class OutlineView extends Interface
                      .addClass (node ._loop .getValue () ? "on" : "off")
                      .attr ("title", _("Toggle loop."))
                      .text ("repeat"));
+
+                  if (!node ._enabled .getValue ())
+                     buttons .slice (-3) .forEach (button => button .hide ());
 
                   continue;
                }
@@ -1230,24 +1234,31 @@ module .exports = class OutlineView extends Interface
 
    updateNodePlay (node)
    {
-      this .sceneGraph
+      const buttons = [ ];
+
+      buttons .push (this .sceneGraph
          .find (`.node[node-id=${node .getId ()}]`)
          .find ("> .item .play-node")
          .removeClass (["on", "off"])
          .addClass (node ._isPaused .getValue () ? "on" : "off")
-         .text (node ._isActive .getValue () ? "pause" : "play_arrow");
+         .text (node ._isActive .getValue () ? "pause" : "play_arrow"));
 
-      this .sceneGraph
+      buttons .push (this .sceneGraph
          .find (`.node[node-id=${node .getId ()}]`)
          .find ("> .item .stop-node")
          .removeClass (["on", "off"])
-         .addClass (node ._isActive .getValue () ? "on" : "off");
+         .addClass (node ._isActive .getValue () ? "on" : "off"));
 
-      this .sceneGraph
+      buttons .push (this .sceneGraph
          .find (`.node[node-id=${node .getId ()}]`)
          .find ("> .item .loop-node")
          .removeClass (["on", "off"])
-         .addClass (node ._loop .getValue () ? "on" : "off");
+         .addClass (node ._loop .getValue () ? "on" : "off"));
+
+      if (node ._enabled .getValue ())
+         buttons .slice (-3) .forEach (button => button .show ());
+      else
+         buttons .slice (-3) .forEach (button => button .hide ());
    }
 
    isInParents (parent, node)
@@ -2985,6 +2996,7 @@ module .exports = class OutlineView extends Interface
             {
                case X3D .X3DConstants .X3DTimeDependentNode:
                {
+                  node ._enabled  .removeFieldCallback (this .#updateNodePlaySymbol);
                   node ._isActive .removeFieldCallback (this .#updateNodePlaySymbol);
                   node ._isPaused .removeFieldCallback (this .#updateNodePlaySymbol);
                   node ._loop     .removeFieldCallback (this .#updateNodePlaySymbol);
