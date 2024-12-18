@@ -1898,6 +1898,55 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          Editor .setFieldValue (this .browser .currentScene, layerSet, layerSet ._activeLayer, index + 1);
    }
 
+   playNode (event)
+   {
+      const
+         target  = $(event .target),
+         element = target .closest (".node", this .sceneGraph),
+         node    = this .getNode (element);
+
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
+
+      if (node ._isActive .getValue ())
+      {
+         if (node ._isPaused .getValue ())
+            Editor .setFieldValue (this .browser .currentScene, node, node ._resumeTime, Date .now () / 1000);
+         else
+            Editor .setFieldValue (this .browser .currentScene, node, node ._pauseTime, Date .now () / 1000);
+      }
+      else
+      {
+         Editor .setFieldValue (this .browser .currentScene, node, node ._startTime, Date .now () / 1000);
+      }
+   }
+
+   stopNode (event)
+   {
+      const
+         target  = $(event .target),
+         element = target .closest (".node", this .sceneGraph),
+         node    = this .getNode (element);
+
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
+
+      Editor .setFieldValue (this .browser .currentScene, node, node ._stopTime, Date .now () / 1000);
+   }
+
+   loopNode (event)
+   {
+      const
+         target  = $(event .target),
+         element = target .closest (".node", this .sceneGraph),
+         node    = this .getNode (element);
+
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
+
+      Editor .setFieldValue (this .browser .currentScene, node, node ._loop, !node ._loop .getValue ());
+   }
+
    addBooleanField (button)
    {
       const

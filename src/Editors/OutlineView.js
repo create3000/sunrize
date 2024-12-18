@@ -281,6 +281,15 @@ module .exports = class OutlineView extends Interface
       child .find (".bind-node")
          .on ("click", this .bindNode .bind (this));
 
+      child .find (".play-node")
+         .on ("click", this .playNode .bind (this));
+
+      child .find (".stop-node")
+         .on ("click", this .stopNode .bind (this));
+
+      child .find (".loop-node")
+         .on ("click", this .loopNode .bind (this));
+
       child .find (".reload-node")
          .on ("click", this .reloadNode .bind (this));
 
@@ -1058,20 +1067,28 @@ module .exports = class OutlineView extends Interface
                {
                   node ._isActive .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
                   node ._isPaused .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
+                  node ._loop     .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
 
                   buttons .push ($("<span></span>")
                      .attr ("order", "4")
                      .addClass (["play-node", "button", "material-symbols-outlined"])
                      .addClass (node ._isPaused .getValue () ? "on" : "off")
-                     .attr ("title", _("Activate node."))
+                     .attr ("title", _("Play."))
                      .text (node ._isActive .getValue () ? "pause" : "play_arrow"));
 
                   buttons .push ($("<span></span>")
                      .attr ("order", "5")
                      .addClass (["stop-node", "button", "material-symbols-outlined"])
                      .addClass (node ._isActive .getValue () ? "on" : "off")
-                     .attr ("title", _("Stop node."))
+                     .attr ("title", _("Stop."))
                      .text ("stop"));
+
+                  buttons .push ($("<span></span>")
+                     .attr ("order", "6")
+                     .addClass (["loop-node", "button", "material-symbols-outlined"])
+                     .addClass (node ._loop .getValue () ? "on" : "off")
+                     .attr ("title", _("Toggle loop."))
+                     .text ("repeat"));
 
                   continue;
                }
@@ -1088,7 +1105,7 @@ module .exports = class OutlineView extends Interface
                   node .getLoadState () .addFieldCallback (this .#updateNodeLoadStateSymbol, this .updateNodeLoadState .bind (this, node));
 
                   buttons .push ($("<span></span>")
-                     .attr ("order", "6")
+                     .attr ("order", "7")
                      .addClass (["reload-node", "button", "material-symbols-outlined", className])
                      .attr ("title", "Load now.")
                      .text ("autorenew"));
@@ -1101,7 +1118,7 @@ module .exports = class OutlineView extends Interface
                case X3D .X3DConstants .X3DSingleTextureNode:
                {
                   buttons .push ($("<span></span>")
-                     .attr ("order", "7")
+                     .attr ("order", "8")
                      .addClass (["show-preview", "button", "material-symbols-outlined", "off"])
                      .css ("top", "2px")
                      .attr ("title", _("Show preview."))
@@ -1225,6 +1242,12 @@ module .exports = class OutlineView extends Interface
          .find ("> .item .stop-node")
          .removeClass (["on", "off"])
          .addClass (node ._isActive .getValue () ? "on" : "off");
+
+      this .sceneGraph
+         .find (`.node[node-id=${node .getId ()}]`)
+         .find ("> .item .loop-node")
+         .removeClass (["on", "off"])
+         .addClass (node ._loop .getValue () ? "on" : "off");
    }
 
    isInParents (parent, node)
@@ -2048,6 +2071,15 @@ module .exports = class OutlineView extends Interface
       child .find (".bind-node")
          .on ("click", this .bindNode .bind (this));
 
+      child .find (".play-node")
+         .on ("click", this .playNode .bind (this));
+
+      child .find (".stop-node")
+         .on ("click", this .stopNode .bind (this));
+
+      child .find (".loop-node")
+         .on ("click", this .loopNode .bind (this));
+
       child .find (".reload-node")
          .on ("click", this .reloadNode .bind (this));
 
@@ -2170,6 +2202,15 @@ module .exports = class OutlineView extends Interface
 
       child .find (".bind-node")
          .on ("click", this .bindNode .bind (this))
+
+      child .find (".play-node")
+         .on ("click", this .playNode .bind (this));
+
+      child .find (".stop-node")
+         .on ("click", this .stopNode .bind (this));
+
+      child .find (".loop-node")
+         .on ("click", this .loopNode .bind (this));
 
       child .find (".reload-node")
          .on ("click", this .reloadNode .bind (this));
@@ -2946,6 +2987,7 @@ module .exports = class OutlineView extends Interface
                {
                   node ._isActive .removeFieldCallback (this .#updateNodePlaySymbol);
                   node ._isPaused .removeFieldCallback (this .#updateNodePlaySymbol);
+                  node ._loop     .removeFieldCallback (this .#updateNodePlaySymbol);
                   continue;
                }
                case X3D .X3DConstants .X3DBindableNode:
@@ -3160,6 +3202,12 @@ module .exports = class OutlineView extends Interface
 
       node ._set_bind = true;
    }
+
+   playNode (event) { }
+
+   stopNode (event) { }
+
+   loopNode (event) { }
 
    reloadNode (event)
    {
