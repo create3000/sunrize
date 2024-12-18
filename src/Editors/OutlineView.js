@@ -1103,14 +1103,14 @@ module .exports = class OutlineView extends Interface
                   .attr ("order", "4")
                   .addClass (["play-node", "button", "material-symbols-outlined"])
                   .addClass (node ._isPaused .getValue () ? "on" : "off")
-                  .attr ("title", _("Play."))
+                  .attr ("title", _("Start timer."))
                   .text (node ._isActive .getValue () ? "pause" : "play_arrow"));
 
                buttons .push ($("<span></span>")
                   .attr ("order", "5")
                   .addClass (["stop-node", "button", "material-symbols-outlined"])
                   .addClass (node ._isActive .getValue () ? "on" : "off")
-                  .attr ("title", _("Stop."))
+                  .attr ("title", _("Stop timer."))
                   .text ("stop"));
 
                buttons .push ($("<span></span>")
