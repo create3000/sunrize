@@ -1054,6 +1054,27 @@ module .exports = class OutlineView extends Interface
 
                   continue;
                }
+               case X3D .X3DConstants .X3DTimeDependentNode:
+               {
+                  node ._isActive .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
+                  node ._isPaused .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
+
+                  buttons .push ($("<span></span>")
+                     .attr ("order", "4")
+                     .addClass (["play-node", "button", "material-symbols-outlined"])
+                     .addClass (node ._isPaused .getValue () ? "on" : "off")
+                     .attr ("title", _("Activate node."))
+                     .text (node ._isActive .getValue () ? "pause" : "play_arrow"));
+
+                  buttons .push ($("<span></span>")
+                     .attr ("order", "5")
+                     .addClass (["stop-node", "button", "material-symbols-outlined"])
+                     .addClass (node ._isActive .getValue () ? "on" : "off")
+                     .attr ("title", _("Stop node."))
+                     .text ("stop"));
+
+                  continue;
+               }
                case X3D .X3DConstants .X3DUrlObject:
                {
                   if (node .getExecutionContext () .getOuterNode () instanceof X3D .X3DProtoDeclaration)
@@ -1067,7 +1088,7 @@ module .exports = class OutlineView extends Interface
                   node .getLoadState () .addFieldCallback (this .#updateNodeLoadStateSymbol, this .updateNodeLoadState .bind (this, node));
 
                   buttons .push ($("<span></span>")
-                     .attr ("order", "4")
+                     .attr ("order", "6")
                      .addClass (["reload-node", "button", "material-symbols-outlined", className])
                      .attr ("title", "Load now.")
                      .text ("autorenew"));
@@ -1080,32 +1101,11 @@ module .exports = class OutlineView extends Interface
                case X3D .X3DConstants .X3DSingleTextureNode:
                {
                   buttons .push ($("<span></span>")
-                     .attr ("order", "5")
+                     .attr ("order", "7")
                      .addClass (["show-preview", "button", "material-symbols-outlined", "off"])
                      .css ("top", "2px")
                      .attr ("title", _("Show preview."))
                      .text ("preview"));
-
-                  continue;
-               }
-               case X3D .X3DConstants .X3DTimeDependentNode:
-               {
-                  node ._isActive .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
-                  node ._isPaused .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
-
-                  buttons .push ($("<span></span>")
-                     .attr ("order", "6")
-                     .addClass (["play-node", "button", "material-symbols-outlined"])
-                     .addClass (node ._isPaused .getValue () ? "on" : "off")
-                     .attr ("title", _("Activate node."))
-                     .text (node ._isActive .getValue () ? "pause" : "play_arrow"));
-
-                  buttons .push ($("<span></span>")
-                     .attr ("order", "7")
-                     .addClass (["stop-node", "button", "material-symbols-outlined"])
-                     .addClass (node ._isActive .getValue () ? "on" : "off")
-                     .attr ("title", _("Stop node."))
-                     .text ("stop"));
 
                   continue;
                }
@@ -2942,6 +2942,12 @@ module .exports = class OutlineView extends Interface
          {
             switch (type)
             {
+               case X3D .X3DConstants .X3DTimeDependentNode:
+               {
+                  node ._isActive .removeFieldCallback (this .#updateNodePlaySymbol);
+                  node ._isPaused .removeFieldCallback (this .#updateNodePlaySymbol);
+                  continue;
+               }
                case X3D .X3DConstants .X3DBindableNode:
                {
                   node ._isBound .removeFieldCallback (this .#updateNodeBoundSymbol);
