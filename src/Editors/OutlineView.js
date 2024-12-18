@@ -250,6 +250,20 @@ module .exports = class OutlineView extends Interface
 
       // Connect actions.
 
+      this .connectNodeActions (parent, child);
+
+      // Expand children.
+
+      const
+         specialElements = child .find (".externproto, .proto, .imported-node, .exported-node"),
+         elements        = child .find (".node");
+
+      child .show ();
+      this .expandSceneSubtreeComplete (specialElements, elements);
+   }
+
+   connectNodeActions (parent, child)
+   {
       if (this .isEditable (parent))
       {
          child .find (".externproto > .item")
@@ -265,20 +279,6 @@ module .exports = class OutlineView extends Interface
             .on ("dragstart", this .onDragStartNode .bind (this));
       }
 
-      this .connectNodeActions (child);
-
-      // Expand children.
-
-      const
-         specialElements = child .find (".externproto, .proto, .imported-node, .exported-node"),
-         elements        = child .find (".node");
-
-      child .show ();
-      this .expandSceneSubtreeComplete (specialElements, elements);
-   }
-
-   connectNodeActions (child)
-   {
       child .find (".externproto .name, .externproto .icon, .proto .name, .proto .icon, .node .name, .node .icon")
          .on ("click", this .selectNode .bind (this));
 
@@ -311,6 +311,25 @@ module .exports = class OutlineView extends Interface
 
       child .find (".show-preview")
          .on ("click", this .showPreview .bind (this));
+   }
+
+   connectFieldActions (child)
+   {
+      child .find ("area.input-selector")
+         .on ("mouseenter", this .hoverInSingleConnector .bind (this, "input"))
+         .on ("mouseleave", this .hoverOutSingleConnector .bind (this, "input"))
+         .on ("click", this .selectSingleConnector .bind (this, "input"));
+
+      child .find ("area.output-selector")
+         .on ("mouseenter", this .hoverInSingleConnector .bind (this, "output"))
+         .on ("mouseleave", this .hoverOutSingleConnector .bind (this, "output"))
+         .on ("click", this .selectSingleConnector .bind (this, "output"));
+
+      child .find ("area.input-routes-selector")
+         .on ("click", this .selectSingleRoute .bind (this, "input"));
+
+      child .find ("area.output-routes-selector")
+         .on ("click", this .selectSingleRoute .bind (this, "output"));
    }
 
    expandSceneSubtreeComplete (specialElements, elements)
@@ -2076,30 +2095,10 @@ module .exports = class OutlineView extends Interface
          .wrapInner ("<div class=\"item no-select\"/>")
          .find (".item") .append ("<div class=\"route-curves-wrapper\"><canvas class=\"route-curves\"></canvas></div>");
 
-      if (this .isEditable (parent))
-      {
-         child .find (".node:not([node-id=NULL]) > .item")
-            .attr ("draggable", "true")
-            .on ("dragstart", this .onDragStartNode .bind (this));
-      }
+      // Connect actions.
 
-      this .connectNodeActions (child);
-
-      child .find ("area.input-selector")
-         .on ("mouseenter", this .hoverInSingleConnector .bind (this, "input"))
-         .on ("mouseleave", this .hoverOutSingleConnector .bind (this, "input"))
-         .on ("click", this .selectSingleConnector .bind (this, "input"));
-
-      child .find ("area.output-selector")
-         .on ("mouseenter", this .hoverInSingleConnector .bind (this, "output"))
-         .on ("mouseleave", this .hoverOutSingleConnector .bind (this, "output"))
-         .on ("click", this .selectSingleConnector .bind (this, "output"));
-
-      child .find ("area.input-routes-selector")
-         .on ("click", this .selectSingleRoute .bind (this, "input"));
-
-      child .find ("area.output-routes-selector")
-         .on ("click", this .selectSingleRoute .bind (this, "output"));
+      this .connectNodeActions (parent, child);
+      this .connectFieldActions (child);
 
       // Expand children.
 
@@ -2177,30 +2176,10 @@ module .exports = class OutlineView extends Interface
          .wrapInner ("<div class=\"item no-select\"/>")
          .find (".item") .append ("<div class=\"route-curves-wrapper\"><canvas class=\"route-curves\"></canvas></div>");
 
-      if (this .isEditable (parent))
-      {
-         child .find (".node:not([node-id=NULL]) > .item")
-            .attr ("draggable", "true")
-            .on ("dragstart", this .onDragStartNode .bind (this));
-      }
+      // Connect actions.
 
-      this .connectNodeActions (child);
-
-      child .find ("area.input-selector")
-         .on ("mouseenter", this .hoverInSingleConnector .bind (this, "input"))
-         .on ("mouseleave", this .hoverOutSingleConnector .bind (this, "input"))
-         .on ("click", this .selectSingleConnector .bind (this, "input"));
-
-      child .find ("area.output-selector")
-         .on ("mouseenter", this .hoverInSingleConnector .bind (this, "output"))
-         .on ("mouseleave", this .hoverOutSingleConnector .bind (this, "output"))
-         .on ("click", this .selectSingleConnector .bind (this, "output"));
-
-      child .find ("area.input-routes-selector")
-         .on ("click", this .selectSingleRoute .bind (this, "input"));
-
-      child .find ("area.output-routes-selector")
-         .on ("click", this .selectSingleRoute .bind (this, "output"));
+      this .connectNodeActions (parent, child);
+      this .connectFieldActions (child);
 
       // Expand children.
 
