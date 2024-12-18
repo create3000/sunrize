@@ -248,6 +248,22 @@ module .exports = class OutlineView extends Interface
          .wrapInner ("<div class=\"item no-select\"/>")
          .find (".item") .append ("<div class=\"route-curves-wrapper\"><canvas class=\"route-curves\"></canvas></div>");
 
+      // Connect actions.
+
+      this .connectNodeActions (parent, child);
+
+      // Expand children.
+
+      const
+         specialElements = child .find (".externproto, .proto, .imported-node, .exported-node"),
+         elements        = child .find (".node");
+
+      child .show ();
+      this .expandSceneSubtreeComplete (specialElements, elements);
+   }
+
+   connectNodeActions (parent, child)
+   {
       if (this .isEditable (parent))
       {
          child .find (".externproto > .item")
@@ -295,15 +311,6 @@ module .exports = class OutlineView extends Interface
 
       child .find (".show-preview")
          .on ("click", this .showPreview .bind (this));
-
-      // Expand children.
-
-      const
-         specialElements = child .find (".externproto, .proto, .imported-node, .exported-node"),
-         elements        = child .find (".node");
-
-      child .show ();
-      this .expandSceneSubtreeComplete (specialElements, elements);
    }
 
    expandSceneSubtreeComplete (specialElements, elements)
