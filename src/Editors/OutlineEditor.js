@@ -1902,7 +1902,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    {
       const
          target  = $(event .target),
-         element = target .closest (".node", this .sceneGraph),
+         element = target .closest (".node, .exported-node", this .sceneGraph),
          node    = this .getNode (element);
 
       event .preventDefault ();
@@ -1925,7 +1925,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    {
       const
          target  = $(event .target),
-         element = target .closest (".node", this .sceneGraph),
+         element = target .closest (".node, .exported-node", this .sceneGraph),
          node    = this .getNode (element);
 
       event .preventDefault ();
@@ -1938,7 +1938,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    {
       const
          target  = $(event .target),
-         element = target .closest (".node", this .sceneGraph),
+         element = target .closest (".node, .exported-node", this .sceneGraph),
          node    = this .getNode (element);
 
       event .preventDefault ();

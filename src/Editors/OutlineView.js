@@ -1013,133 +1013,7 @@ module .exports = class OutlineView extends Interface
 
          // Buttons
 
-         const buttons = [ ];
-
-         if (node .setHidden && !(node .getExecutionContext () .getOuterNode () instanceof X3D .X3DProtoDeclaration))
-         {
-            buttons .push ($("<span></span>")
-               .attr ("order", "0")
-               .addClass (["toggle-visibility", "button", "material-symbols-outlined"])
-               .addClass (node .isHidden () ? "off" : "on")
-               .attr ("title", "Toggle visibility.")
-               .text (node .isHidden () ? "visibility_off" : "visibility"));
-         }
-
-         if (node .getType () .some (type => this .onDemandToolNodes .has (type)))
-         {
-            buttons .push ($("<span></span>")
-               .attr ("order", "1")
-               .addClass (["toggle-tool", "button", "material-symbols-outlined"])
-               .addClass (node .valueOf () === node ? "off" : "on")
-               .attr ("title", _("Toggle display tool."))
-               .text ("build_circle"));
-         }
-
-         for (const type of node .getType ())
-         {
-            switch (type)
-            {
-               case X3D .X3DConstants .X3DLayerNode:
-               {
-                  buttons .push ($("<span></span>")
-                     .attr ("order", "2")
-                     .addClass (["activate-layer", "button", "material-symbols-outlined"])
-                     .addClass (this .browser .getActiveLayer () === node ? "green" : "off")
-                     .attr ("title", _("Activate layer."))
-                     .text ("check_circle"));
-
-                  continue;
-               }
-               case X3D .X3DConstants .X3DBindableNode:
-               {
-                  node ._isBound .addFieldCallback (this .#updateNodeBoundSymbol, this .updateNodeBound .bind (this, node));
-
-                  buttons .push ($("<span></span>")
-                     .attr ("order", "3")
-                     .addClass (["bind-node", "button", "material-symbols-outlined"])
-                     .addClass (node ._isBound .getValue () ? "on" : "off")
-                     .attr ("title", _("Bind node."))
-                     .text (node ._isBound .getValue () ? "radio_button_checked" : "radio_button_unchecked"));
-
-                  continue;
-               }
-               case X3D .X3DConstants .X3DTimeDependentNode:
-               {
-                  node ._enabled  .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
-                  node ._isActive .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
-                  node ._isPaused .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
-                  node ._loop     .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
-
-                  buttons .push ($("<span></span>")
-                     .attr ("order", "4")
-                     .addClass (["play-node", "button", "material-symbols-outlined"])
-                     .addClass (node ._isPaused .getValue () ? "on" : "off")
-                     .attr ("title", _("Play."))
-                     .text (node ._isActive .getValue () ? "pause" : "play_arrow"));
-
-                  buttons .push ($("<span></span>")
-                     .attr ("order", "5")
-                     .addClass (["stop-node", "button", "material-symbols-outlined"])
-                     .addClass (node ._isActive .getValue () ? "on" : "off")
-                     .attr ("title", _("Stop."))
-                     .text ("stop"));
-
-                  buttons .push ($("<span></span>")
-                     .attr ("order", "6")
-                     .addClass (["loop-node", "button", "material-symbols-outlined"])
-                     .addClass (node ._loop .getValue () ? "on" : "off")
-                     .attr ("title", _("Toggle loop."))
-                     .text ("repeat"));
-
-                  if (!node ._enabled .getValue ())
-                     buttons .slice (-3) .forEach (button => button .hide ());
-
-                  continue;
-               }
-               case X3D .X3DConstants .X3DUrlObject:
-               {
-                  if (node .getExecutionContext () .getOuterNode () instanceof X3D .X3DProtoDeclaration)
-                  {
-                     if (!node .getType () .includes (X3D .X3DConstants .Inline))
-                        continue;
-                  }
-
-                  const [className] = this .getLoadState (node .checkLoadState (), node .getTypeName ());
-
-                  node .getLoadState () .addFieldCallback (this .#updateNodeLoadStateSymbol, this .updateNodeLoadState .bind (this, node));
-
-                  buttons .push ($("<span></span>")
-                     .attr ("order", "7")
-                     .addClass (["reload-node", "button", "material-symbols-outlined", className])
-                     .attr ("title", "Load now.")
-                     .text ("autorenew"));
-
-                  continue;
-               }
-               case X3D .X3DConstants .AudioClip:
-               case X3D .X3DConstants .BufferAudioSource:
-               case X3D .X3DConstants .X3DMaterialNode:
-               case X3D .X3DConstants .X3DSingleTextureNode:
-               {
-                  buttons .push ($("<span></span>")
-                     .attr ("order", "8")
-                     .addClass (["show-preview", "button", "material-symbols-outlined", "off"])
-                     .css ("top", "2px")
-                     .attr ("title", _("Show preview."))
-                     .text ("preview"));
-
-                  continue;
-               }
-            }
-         }
-
-         buttons .sort ((a, b) => a .attr ("order") - b .attr ("order"))
-
-         for (const button of buttons)
-         {
-            name .append (document .createTextNode (" "));
-            name .append (button);
-         }
+         this .addNodeButtons (node, name);
 
          // Append empty tree to enable expander.
 
@@ -1155,6 +1029,139 @@ module .exports = class OutlineView extends Interface
       }
 
       return child;
+   }
+
+   addNodeButtons (node, name)
+   {
+      // Buttons
+
+      const buttons = [ ];
+
+      if (node .setHidden && !(node .getExecutionContext () .getOuterNode () instanceof X3D .X3DProtoDeclaration))
+      {
+         buttons .push ($("<span></span>")
+            .attr ("order", "0")
+            .addClass (["toggle-visibility", "button", "material-symbols-outlined"])
+            .addClass (node .isHidden () ? "off" : "on")
+            .attr ("title", "Toggle visibility.")
+            .text (node .isHidden () ? "visibility_off" : "visibility"));
+      }
+
+      if (node .getType () .some (type => this .onDemandToolNodes .has (type)))
+      {
+         buttons .push ($("<span></span>")
+            .attr ("order", "1")
+            .addClass (["toggle-tool", "button", "material-symbols-outlined"])
+            .addClass (node .valueOf () === node ? "off" : "on")
+            .attr ("title", _("Toggle display tool."))
+            .text ("build_circle"));
+      }
+
+      for (const type of node .getType ())
+      {
+         switch (type)
+         {
+            case X3D .X3DConstants .X3DLayerNode:
+            {
+               buttons .push ($("<span></span>")
+                  .attr ("order", "2")
+                  .addClass (["activate-layer", "button", "material-symbols-outlined"])
+                  .addClass (this .browser .getActiveLayer () === node ? "green" : "off")
+                  .attr ("title", _("Activate layer."))
+                  .text ("check_circle"));
+
+               continue;
+            }
+            case X3D .X3DConstants .X3DBindableNode:
+            {
+               node ._isBound .addFieldCallback (this .#updateNodeBoundSymbol, this .updateNodeBound .bind (this, node));
+
+               buttons .push ($("<span></span>")
+                  .attr ("order", "3")
+                  .addClass (["bind-node", "button", "material-symbols-outlined"])
+                  .addClass (node ._isBound .getValue () ? "on" : "off")
+                  .attr ("title", _("Bind node."))
+                  .text (node ._isBound .getValue () ? "radio_button_checked" : "radio_button_unchecked"));
+
+               continue;
+            }
+            case X3D .X3DConstants .X3DTimeDependentNode:
+            {
+               node ._enabled  .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
+               node ._isActive .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
+               node ._isPaused .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
+               node ._loop     .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
+
+               buttons .push ($("<span></span>")
+                  .attr ("order", "4")
+                  .addClass (["play-node", "button", "material-symbols-outlined"])
+                  .addClass (node ._isPaused .getValue () ? "on" : "off")
+                  .attr ("title", _("Play."))
+                  .text (node ._isActive .getValue () ? "pause" : "play_arrow"));
+
+               buttons .push ($("<span></span>")
+                  .attr ("order", "5")
+                  .addClass (["stop-node", "button", "material-symbols-outlined"])
+                  .addClass (node ._isActive .getValue () ? "on" : "off")
+                  .attr ("title", _("Stop."))
+                  .text ("stop"));
+
+               buttons .push ($("<span></span>")
+                  .attr ("order", "6")
+                  .addClass (["loop-node", "button", "material-symbols-outlined"])
+                  .addClass (node ._loop .getValue () ? "on" : "off")
+                  .attr ("title", _("Toggle loop."))
+                  .text ("repeat"));
+
+               if (!node ._enabled .getValue ())
+                  buttons .slice (-3) .forEach (button => button .hide ());
+
+               continue;
+            }
+            case X3D .X3DConstants .X3DUrlObject:
+            {
+               if (node .getExecutionContext () .getOuterNode () instanceof X3D .X3DProtoDeclaration)
+               {
+                  if (!node .getType () .includes (X3D .X3DConstants .Inline))
+                     continue;
+               }
+
+               const [className] = this .getLoadState (node .checkLoadState (), node .getTypeName ());
+
+               node .getLoadState () .addFieldCallback (this .#updateNodeLoadStateSymbol, this .updateNodeLoadState .bind (this, node));
+
+               buttons .push ($("<span></span>")
+                  .attr ("order", "7")
+                  .addClass (["reload-node", "button", "material-symbols-outlined", className])
+                  .attr ("title", "Load now.")
+                  .text ("autorenew"));
+
+               continue;
+            }
+            case X3D .X3DConstants .AudioClip:
+            case X3D .X3DConstants .BufferAudioSource:
+            case X3D .X3DConstants .X3DMaterialNode:
+            case X3D .X3DConstants .X3DSingleTextureNode:
+            {
+               buttons .push ($("<span></span>")
+                  .attr ("order", "8")
+                  .addClass (["show-preview", "button", "material-symbols-outlined", "off"])
+                  .css ("top", "2px")
+                  .attr ("title", _("Show preview."))
+                  .text ("preview"));
+
+               continue;
+            }
+         }
+      }
+
+      buttons .sort ((a, b) => a .attr ("order") - b .attr ("order"))
+
+      for (const button of buttons)
+      {
+         name .append (document .createTextNode (" "));
+         name .append (button);
+      }
    }
 
    updateNodeTypeName (node)
@@ -1237,20 +1244,20 @@ module .exports = class OutlineView extends Interface
       const buttons = [ ];
 
       buttons .push (this .sceneGraph
-         .find (`.node[node-id=${node .getId ()}]`)
+         .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}]`)
          .find ("> .item .play-node")
          .removeClass (["on", "off"])
          .addClass (node ._isPaused .getValue () ? "on" : "off")
          .text (node ._isActive .getValue () ? "pause" : "play_arrow"));
 
       buttons .push (this .sceneGraph
-         .find (`.node[node-id=${node .getId ()}]`)
+         .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}]`)
          .find ("> .item .stop-node")
          .removeClass (["on", "off"])
          .addClass (node ._isActive .getValue () ? "on" : "off"));
 
       buttons .push (this .sceneGraph
-         .find (`.node[node-id=${node .getId ()}]`)
+         .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}]`)
          .find ("> .item .loop-node")
          .removeClass (["on", "off"])
          .addClass (node ._loop .getValue () ? "on" : "off"));
@@ -1417,6 +1424,10 @@ module .exports = class OutlineView extends Interface
 
       if (exportedNode .getExportedName () === node .getName ())
          name .find (".node-name") .nextAll () .hide ();
+
+      // Buttons
+
+      this .addNodeButtons (node, name);
 
       // Append empty tree to enable expander.
 
