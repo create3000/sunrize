@@ -2272,21 +2272,7 @@ module .exports = class OutlineView extends Interface
          .wrapInner ("<div class=\"item no-select\"/>")
          .find (".item") .append ("<div class=\"route-curves-wrapper\"><canvas class=\"route-curves\"></canvas></div>");
 
-      child .find ("area.input-selector")
-         .on ("mouseenter", this .hoverInSingleConnector .bind (this, "input"))
-         .on ("mouseleave", this .hoverOutSingleConnector .bind (this, "input"))
-         .on ("click", this .selectSingleConnector .bind (this, "input"));
-
-      child .find ("area.output-selector")
-         .on ("mouseenter", this .hoverInSingleConnector .bind (this, "output"))
-         .on ("mouseleave", this .hoverOutSingleConnector .bind (this, "output"))
-         .on ("click", this .selectSingleConnector .bind (this, "output"));
-
-      child .find ("area.input-routes-selector")
-         .on ("click", this .selectSingleRoute .bind (this, "input"));
-
-      child .find ("area.output-routes-selector")
-         .on ("click", this .selectSingleRoute .bind (this, "output"));
+      this .connectFieldActions (child);
 
       // Input
 
@@ -2394,21 +2380,7 @@ module .exports = class OutlineView extends Interface
          .wrapInner ("<div class=\"item no-select\"/>")
          .find (".item") .append ("<div class=\"route-curves-wrapper\"><canvas class=\"route-curves\"></canvas></div>")
 
-      child .find ("area.input-selector")
-         .on ("mouseenter", this .hoverInSingleConnector .bind (this, "input"))
-         .on ("mouseleave", this .hoverOutSingleConnector .bind (this, "input"))
-         .on ("click", this .selectSingleConnector .bind (this, "input"))
-
-      child .find ("area.output-selector")
-         .on ("mouseenter", this .hoverInSingleConnector .bind (this, "output"))
-         .on ("mouseleave", this .hoverOutSingleConnector .bind (this, "output"))
-         .on ("click", this .selectSingleConnector .bind (this, "output"))
-
-      child .find ("area.input-routes-selector")
-         .on ("click", this .selectSingleRoute .bind (this, "input"))
-
-      child .find ("area.output-routes-selector")
-         .on ("click", this .selectSingleRoute .bind (this, "output"))
+      this .connectFieldActions (child);
 
       // Textarea
 
