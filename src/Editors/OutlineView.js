@@ -250,20 +250,6 @@ module .exports = class OutlineView extends Interface
 
       // Connect actions.
 
-      this .connectNodeActions (parent, child);
-
-      // Expand children.
-
-      const
-         specialElements = child .find (".externproto, .proto, .imported-node, .exported-node"),
-         elements        = child .find (".node");
-
-      child .show ();
-      this .expandSceneSubtreeComplete (specialElements, elements);
-   }
-
-   connectNodeActions (parent, child)
-   {
       if (this .isEditable (parent))
       {
          child .find (".externproto > .item")
@@ -279,6 +265,20 @@ module .exports = class OutlineView extends Interface
             .on ("dragstart", this .onDragStartNode .bind (this));
       }
 
+      this .connectNodeActions (child);
+
+      // Expand children.
+
+      const
+         specialElements = child .find (".externproto, .proto, .imported-node, .exported-node"),
+         elements        = child .find (".node");
+
+      child .show ();
+      this .expandSceneSubtreeComplete (specialElements, elements);
+   }
+
+   connectNodeActions (child)
+   {
       child .find (".externproto .name, .externproto .icon, .proto .name, .proto .icon, .node .name, .node .icon")
          .on ("click", this .selectNode .bind (this));
 
@@ -1219,7 +1219,7 @@ module .exports = class OutlineView extends Interface
       if (!this .browser .getActiveLayer ())
          return;
 
-      this .sceneGraph .find (`.node[node-id=${this .browser .getActiveLayer () .getId ()}]`)
+      this .sceneGraph .find (`.node[node-id=${this .browser .getActiveLayer () .getId ()}], .exported-node[node-id=${this .browser .getActiveLayer () .getId ()}]`)
          .find ("> .item .activate-layer")
          .removeClass ("off")
          .addClass ("green");
@@ -1228,7 +1228,7 @@ module .exports = class OutlineView extends Interface
    updateNodeBound (node)
    {
       this .sceneGraph
-         .find (`.node[node-id=${node .getId ()}]`)
+         .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}]`)
          .find ("> .item .bind-node")
          .removeClass (["on", "off"])
          .addClass (node ._isBound .getValue () ? "on" : "off")
@@ -1240,7 +1240,7 @@ module .exports = class OutlineView extends Interface
       const [className] = this .getLoadState (node .checkLoadState (), node .getTypeName ());
 
       this .sceneGraph
-         .find (`.node[node-id=${node .getId ()}],.externproto[node-id=${node .getId ()}]`)
+         .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}], .externproto[node-id=${node .getId ()}]`)
          .find ("> .item .reload-node")
          .removeClass (["not-started-state", "in-progress-state", "complete-state", "failed-state"])
          .addClass (className);
@@ -2082,38 +2082,7 @@ module .exports = class OutlineView extends Interface
             .on ("dragstart", this .onDragStartNode .bind (this));
       }
 
-      child .find (".node .name, .node .icon")
-         .on ("click", this .selectNode .bind (this));
-
-      child .find (".node .name")
-         .on ("mouseenter", this .updateNodeTitle .bind (this));
-
-      child .find (".toggle-visibility")
-         .on ("click", this .toggleVisibility .bind (this));
-
-      child .find (".toggle-tool")
-         .on ("click", this .toggleTool .bind (this));
-
-      child .find (".activate-layer")
-         .on ("click", this .activateLayer .bind (this));
-
-      child .find (".bind-node")
-         .on ("click", this .bindNode .bind (this));
-
-      child .find (".play-node")
-         .on ("click", this .playNode .bind (this));
-
-      child .find (".stop-node")
-         .on ("click", this .stopNode .bind (this));
-
-      child .find (".loop-node")
-         .on ("click", this .loopNode .bind (this));
-
-      child .find (".reload-node")
-         .on ("click", this .reloadNode .bind (this));
-
-      child .find (".show-preview")
-         .on ("click", this .showPreview .bind (this));
+      this .connectNodeActions (child);
 
       child .find ("area.input-selector")
          .on ("mouseenter", this .hoverInSingleConnector .bind (this, "input"))
@@ -2214,38 +2183,7 @@ module .exports = class OutlineView extends Interface
             .on ("dragstart", this .onDragStartNode .bind (this));
       }
 
-      child .find (".node .name, .node .icon")
-         .on ("click", this .selectNode .bind (this));
-
-      child .find (".node .name")
-         .on ("mouseenter", this .updateNodeTitle .bind (this));
-
-      child .find (".toggle-visibility")
-         .on ("click", this .toggleVisibility .bind (this));
-
-      child .find (".toggle-tool")
-         .on ("click", this .toggleTool .bind (this));
-
-      child .find (".activate-layer")
-         .on ("click", this .activateLayer .bind (this));
-
-      child .find (".bind-node")
-         .on ("click", this .bindNode .bind (this))
-
-      child .find (".play-node")
-         .on ("click", this .playNode .bind (this));
-
-      child .find (".stop-node")
-         .on ("click", this .stopNode .bind (this));
-
-      child .find (".loop-node")
-         .on ("click", this .loopNode .bind (this));
-
-      child .find (".reload-node")
-         .on ("click", this .reloadNode .bind (this));
-
-      child .find (".show-preview")
-         .on ("click", this .showPreview .bind (this));
+      this .connectNodeActions (child);
 
       child .find ("area.input-selector")
          .on ("mouseenter", this .hoverInSingleConnector .bind (this, "input"))
@@ -3103,7 +3041,7 @@ module .exports = class OutlineView extends Interface
       const
          icon    = $(event .currentTarget) ,
          item    = icon .closest (".item", this .sceneGraph),
-         element = icon .closest (".node", this .sceneGraph),
+         element = icon .closest (".node, .exported-node", this .sceneGraph),
          node    = this .objects .get (parseInt (element .attr ("node-id"))),
          on      = !!item .attr ("data-hasqtip");
 
@@ -3174,7 +3112,7 @@ module .exports = class OutlineView extends Interface
    {
       const
          target  = $(event .target),
-         element = target .closest (".node", this .sceneGraph),
+         element = target .closest (".node, .exported-node", this .sceneGraph),
          node    = this .getNode (element),
          hidden  = !node .isHidden ();
 
@@ -3183,7 +3121,7 @@ module .exports = class OutlineView extends Interface
 
       node .setHidden (hidden);
 
-      this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
+      this .sceneGraph .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}]`)
          .find ("> .item .toggle-visibility")
          .removeClass (["on", "off"])
          .addClass (hidden ? "off" : "on")
@@ -3194,7 +3132,7 @@ module .exports = class OutlineView extends Interface
    {
       const
          target  = $(event .target),
-         element = target .closest (".node", this .sceneGraph),
+         element = target .closest (".node, .exported-node", this .sceneGraph),
          node    = this .getNode (element),
          tool    = node .getTool ();
 
@@ -3213,7 +3151,7 @@ module .exports = class OutlineView extends Interface
 
       node .setUserData (_changing, true);
 
-      this .sceneGraph .find (`.node[node-id=${node .getId ()}] > .item .toggle-tool`)
+      this .sceneGraph .find (`.node[node-id=${node .getId ()}] > .item .toggle-tool, .exported-node[node-id=${node .getId ()}] > .item .toggle-tool`)
          .removeClass (["on", "off"])
          .addClass (tool ? "off" : "on");
    }
@@ -3224,7 +3162,7 @@ module .exports = class OutlineView extends Interface
    {
       const
          target  = $(event .target),
-         element = target .closest (".node", this .sceneGraph),
+         element = target .closest (".node, .exported-node", this .sceneGraph),
          node    = this .getNode (element);
 
       event .preventDefault ();
@@ -3243,7 +3181,7 @@ module .exports = class OutlineView extends Interface
    {
       const
          target  = $(event .target),
-         element = target .closest (".node, .externproto", this .sceneGraph),
+         element = target .closest (".node, .exported-node, .externproto", this .sceneGraph),
          item    = target .closest (".item"),
          node    = this .getNode (element);
 
@@ -3278,7 +3216,7 @@ module .exports = class OutlineView extends Interface
 
          node .setHidden (node .getType () .includes (X3D .X3DConstants .X3DShapeNode));
 
-         this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
+         this .sceneGraph .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}]`)
             .find ("> .item .toggle-visibility")
             .removeClass (["on", "off"])
             .addClass (node .isHidden () ? "off" : "on")
@@ -3304,7 +3242,7 @@ module .exports = class OutlineView extends Interface
 
          node .setHidden (false);
 
-         this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
+         this .sceneGraph .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}]`)
             .find ("> .item .toggle-visibility")
             .removeClass ("off")
             .addClass ("on")
@@ -3328,7 +3266,7 @@ module .exports = class OutlineView extends Interface
 
          node .setHidden (false);
 
-         this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
+         this .sceneGraph .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}]`)
             .find ("> .item .toggle-visibility")
             .removeClass ("off")
             .addClass ("on")
@@ -3350,7 +3288,7 @@ module .exports = class OutlineView extends Interface
 
          node .setHidden (false);
 
-         this .sceneGraph .find (`.node[node-id=${node .getId ()}]`)
+         this .sceneGraph .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}]`)
             .find ("> .item .toggle-visibility")
             .removeClass ("off")
             .addClass ("on")
