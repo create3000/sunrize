@@ -1103,7 +1103,7 @@ module .exports = class OutlineView extends Interface
                   .attr ("order", "4")
                   .addClass (["play-node", "button", "material-symbols-outlined"])
                   .addClass (node ._isPaused .getValue () ? "on" : "off")
-                  .attr ("title", _("Start timer."))
+                  .attr ("title", node ._isActive .getValue () && !node ._isPaused .getValue () ? _("Pause timer.") : _("Start timer."))
                   .text (node ._isActive .getValue () ? "pause" : "play_arrow"));
 
                buttons .push ($("<span></span>")
@@ -1255,6 +1255,7 @@ module .exports = class OutlineView extends Interface
          .find ("> .item .play-node")
          .removeClass (["on", "off"])
          .addClass (node ._isPaused .getValue () ? "on" : "off")
+         .attr ("title", node ._isActive .getValue () && !node ._isPaused .getValue () ? _("Pause timer.") : _("Start timer."))
          .text (node ._isActive .getValue () ? "pause" : "play_arrow"));
 
       buttons .push (this .sceneGraph
