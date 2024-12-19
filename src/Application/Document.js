@@ -132,7 +132,7 @@ module .exports = class Document extends Interface
       UndoManager .shared .addInterest (this, () => this .undoManager ());
 
       // Override replaceWorld and loadURL.
-      
+
       this .#replaceWorld = X3D .X3DBrowser .prototype .replaceWorld;
 
       X3D .X3DBrowser .prototype .loadURL      = () => Promise .resolve ();

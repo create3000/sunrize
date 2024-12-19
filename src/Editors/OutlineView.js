@@ -1067,9 +1067,9 @@ module .exports = class OutlineView extends Interface
       {
          buttons .push ($("<span></span>")
             .attr ("order", "0")
+            .attr ("title", "Toggle visibility.")
             .addClass (["toggle-visibility", "button", "material-symbols-outlined"])
             .addClass (node .isHidden () ? "off" : "on")
-            .attr ("title", "Toggle visibility.")
             .text (node .isHidden () ? "visibility_off" : "visibility"));
       }
 
@@ -1077,9 +1077,9 @@ module .exports = class OutlineView extends Interface
       {
          buttons .push ($("<span></span>")
             .attr ("order", "1")
+            .attr ("title", _("Toggle display tool."))
             .addClass (["toggle-tool", "button", "material-symbols-outlined"])
             .addClass (node .valueOf () === node ? "off" : "on")
-            .attr ("title", _("Toggle display tool."))
             .text ("build_circle"));
       }
 
@@ -1091,9 +1091,9 @@ module .exports = class OutlineView extends Interface
             {
                buttons .push ($("<span></span>")
                   .attr ("order", "2")
+                  .attr ("title", _("Activate layer."))
                   .addClass (["activate-layer", "button", "material-symbols-outlined"])
                   .addClass (this .browser .getActiveLayer () === node ? "green" : "off")
-                  .attr ("title", _("Activate layer."))
                   .text ("check_circle"));
 
                continue;
@@ -1104,9 +1104,9 @@ module .exports = class OutlineView extends Interface
 
                buttons .push ($("<span></span>")
                   .attr ("order", "3")
+                  .attr ("title", _("Bind node."))
                   .addClass (["bind-node", "button", "material-symbols-outlined"])
                   .addClass (node ._isBound .getValue () ? "on" : "off")
-                  .attr ("title", _("Bind node."))
                   .text (node ._isBound .getValue () ? "radio_button_checked" : "radio_button_unchecked"));
 
                continue;
@@ -1123,23 +1123,23 @@ module .exports = class OutlineView extends Interface
 
                buttons .push ($("<span></span>")
                   .attr ("order", "4")
+                  .attr ("title", node ._isActive .getValue () && !node ._isPaused .getValue () ? _("Pause timer.") : _("Start timer."))
                   .addClass (["play-node", "button", "material-icons"])
                   .addClass (node ._isPaused .getValue () ? "on" : "off")
-                  .attr ("title", node ._isActive .getValue () && !node ._isPaused .getValue () ? _("Pause timer.") : _("Start timer."))
                   .text (node ._isActive .getValue () ? "pause" : "play_arrow"));
 
                buttons .push ($("<span></span>")
                   .attr ("order", "5")
+                  .attr ("title", _("Stop timer."))
                   .addClass (["stop-node", "button", "material-icons"])
                   .addClass (node ._isActive .getValue () ? "on" : "off")
-                  .attr ("title", _("Stop timer."))
                   .text ("stop"));
 
                buttons .push ($("<span></span>")
                   .attr ("order", "6")
+                  .attr ("title", _("Toggle loop."))
                   .addClass (["loop-node", "button", "material-icons"])
                   .addClass (node ._loop .getValue () ? "on" : "off")
-                  .attr ("title", _("Toggle loop."))
                   .text ("repeat"));
 
                if (!node ._enabled .getValue ())
@@ -1161,8 +1161,8 @@ module .exports = class OutlineView extends Interface
 
                buttons .push ($("<span></span>")
                   .attr ("order", "7")
-                  .addClass (["reload-node", "button", "material-symbols-outlined", className])
                   .attr ("title", "Load now.")
+                  .addClass (["reload-node", "button", "material-symbols-outlined", className])
                   .text ("autorenew"));
 
                continue;
@@ -1174,9 +1174,9 @@ module .exports = class OutlineView extends Interface
             {
                buttons .push ($("<span></span>")
                   .attr ("order", "8")
+                  .attr ("title", _("Show preview."))
                   .addClass (["show-preview", "button", "material-symbols-outlined", "off"])
                   .css ("top", "2px")
-                  .attr ("title", _("Show preview."))
                   .text ("preview"));
 
                continue;
