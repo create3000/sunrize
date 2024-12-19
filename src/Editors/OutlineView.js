@@ -1520,57 +1520,61 @@ module .exports = class OutlineView extends Interface
 
       // Color
 
-      switch (field .getType ())
+      if (field .isInitializable ())
       {
-         case X3D .X3DConstants .SFBool:
+         switch (field .getType ())
          {
-            $("<img></img>")
-               .addClass (["boolean-button", "field-button"])
-               .attr ("src", `../images/OutlineEditor/Values/${field .getValue () ? "TRUE" : "FALSE"}.svg`)
-               .attr ("title", _("Toggle value."))
-               .appendTo (child);
-
-            field .addFieldCallback (this .#fieldButtonSymbol, this .updateBoolean .bind (this, parent, node, field));
-            break;
-         }
-         case X3D .X3DConstants .SFColor:
-         case X3D .X3DConstants .SFColorRGBA:
-         {
-            $("<div></div>")
-               .addClass (["color-button", "field-button"])
-               .attr ("title", _("Open color picker."))
-               .css ("background-color", this .getColorFromField (node, field))
-               .appendTo (child);
-
-            field .addFieldCallback (this .#fieldButtonSymbol, this .updateColor .bind (this, parent, node, field));
-            break;
-         }
-         case X3D .X3DConstants .SFTime:
-         {
-            $("<img></img>")
-               .addClass (["time-button", "field-button"])
-               .attr ("src", `../images/OutlineEditor/Values/Bell.svg`)
-               .attr ("title", _("Set current time."))
-               .appendTo (child);
-
-            break;
-         }
-         case X3D .X3DConstants .MFString:
-         {
-            if (OutlineView .urlFields .has (field .getName ()) && field .isInitializable ())
+            case X3D .X3DConstants .SFBool:
             {
-               $("<span></span>")
-                  .addClass (["url-button", "field-button", "material-symbols-outlined"])
-                  .attr ("title", _("Add URLs."))
-                  .text ("add_circle")
+               $("<img></img>")
+                  .addClass (["boolean-button", "field-button", "button",])
+                  .attr ("src", `../images/OutlineEditor/Values/${field .getValue () ? "TRUE" : "FALSE"}.svg`)
+                  .attr ("title", _("Toggle value."))
                   .appendTo (child);
-            }
 
-            break;
+               field .addFieldCallback (this .#fieldButtonSymbol, this .updateBoolean .bind (this, parent, node, field));
+               break;
+            }
+            case X3D .X3DConstants .SFColor:
+            case X3D .X3DConstants .SFColorRGBA:
+            {
+               $("<div></div>")
+                  .addClass (["color-button", "field-button", "button",])
+                  .attr ("title", _("Open color picker."))
+                  .css ("background-color", this .getColorFromField (node, field))
+                  .appendTo (child);
+
+               field .addFieldCallback (this .#fieldButtonSymbol, this .updateColor .bind (this, parent, node, field));
+               break;
+            }
+            case X3D .X3DConstants .SFTime:
+            {
+               $("<img></img>")
+                  .addClass (["time-button", "field-button", "button",])
+                  .attr ("src", `../images/OutlineEditor/Values/Bell.svg`)
+                  .attr ("title", _("Set current time."))
+                  .appendTo (child);
+
+               break;
+            }
+            case X3D .X3DConstants .MFString:
+            {
+               if (OutlineView .urlFields .has (field .getName ()) && field .isInitializable ())
+               {
+                  $("<span></span>")
+                     .addClass (["url-button", "field-button", "button", "material-symbols-outlined"])
+                     .attr ("title", _("Add URLs."))
+                     .text ("add_circle")
+                     .appendTo (child);
+               }
+
+               break;
+            }
+            default:
+               break;
          }
-         default:
-            break;
       }
+
 
       // Access type
 
