@@ -1037,7 +1037,7 @@ module .exports = class OutlineView extends Interface
             .text (cloneCount > 1 ? `[${cloneCount}]` : "")
             .appendTo (name);
 
-         // Buttons
+         // Add buttons to name.
 
          this .addNodeButtons (node, name);
 
@@ -1059,7 +1059,7 @@ module .exports = class OutlineView extends Interface
 
    addNodeButtons (node, name)
    {
-      // Buttons
+      // Add buttons to name.
 
       const buttons = [ ];
 
@@ -1358,7 +1358,7 @@ module .exports = class OutlineView extends Interface
                .append ($("<span></span>") .addClass ("as-name") .text (importedNode .getImportedName ()));
          }
 
-         // Buttons
+         // Add buttons to name.
 
          this .addNodeButtons (importedNode .getExportedNode (), name);
 
@@ -1462,7 +1462,7 @@ module .exports = class OutlineView extends Interface
       if (exportedNode .getExportedName () === node .getName ())
          name .find (".node-name") .nextAll () .hide ();
 
-      // Buttons
+      // Add buttons to name.
 
       this .addNodeButtons (node, name);
 
