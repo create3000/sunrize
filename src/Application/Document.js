@@ -379,16 +379,16 @@ Viewpoint {
    {
       try
       {
-         const { loadURL, replaceWorld } = this .browser;
+         const { replaceWorld } = this .browser;
 
-         X3D .X3DBrowser .prototype .loadURL = () => Promise .resolve ();
-
-         if (fileURL)
-            await loadURL .call (this .browser, new X3D .MFString (fileURL));
-         else
-            await replaceWorld .call (this .browser, null);
-
+         X3D .X3DBrowser .prototype .loadURL      = () => Promise .resolve ();
          X3D .X3DBrowser .prototype .replaceWorld = () => Promise .resolve ();
+
+         const scene = fileURL
+            ? await this .browser .createX3DFromURL (new X3D .MFString (fileURL))
+            : null;
+
+         await replaceWorld .call (this .browser, scene);
 
          this .browser .currentScene .setSpecificationVersion (X3D .LATEST_VERSION);
       }
