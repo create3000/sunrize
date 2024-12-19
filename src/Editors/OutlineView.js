@@ -1063,24 +1063,27 @@ module .exports = class OutlineView extends Interface
 
       const buttons = [ ];
 
-      if (node .setHidden && !(node .getExecutionContext () .getOuterNode () instanceof X3D .X3DProtoDeclaration))
+      if (!(node .getExecutionContext () .getOuterNode () instanceof X3D .X3DProtoDeclaration))
       {
-         buttons .push ($("<span></span>")
-            .attr ("order", "0")
-            .attr ("title", "Toggle visibility.")
-            .addClass (["toggle-visibility", "button", "material-symbols-outlined"])
-            .addClass (node .isHidden () ? "off" : "on")
-            .text (node .isHidden () ? "visibility_off" : "visibility"));
-      }
+         if (node .setHidden)
+         {
+            buttons .push ($("<span></span>")
+               .attr ("order", "0")
+               .attr ("title", "Toggle visibility.")
+               .addClass (["toggle-visibility", "button", "material-symbols-outlined"])
+               .addClass (node .isHidden () ? "off" : "on")
+               .text (node .isHidden () ? "visibility_off" : "visibility"));
+         }
 
-      if (node .getType () .some (type => this .onDemandToolNodes .has (type)))
-      {
-         buttons .push ($("<span></span>")
-            .attr ("order", "1")
-            .attr ("title", _("Toggle display tool."))
-            .addClass (["toggle-tool", "button", "material-symbols-outlined"])
-            .addClass (node .valueOf () === node ? "off" : "on")
-            .text ("build_circle"));
+         if (node .getType () .some (type => this .onDemandToolNodes .has (type)))
+         {
+            buttons .push ($("<span></span>")
+               .attr ("order", "1")
+               .attr ("title", _("Toggle display tool."))
+               .addClass (["toggle-tool", "button", "material-symbols-outlined"])
+               .addClass (node .valueOf () === node ? "off" : "on")
+               .text ("build_circle"));
+         }
       }
 
       for (const type of node .getType ())
@@ -1100,6 +1103,9 @@ module .exports = class OutlineView extends Interface
             }
             case X3D .X3DConstants .X3DBindableNode:
             {
+               if (node .getExecutionContext () .getOuterNode () instanceof X3D .X3DProtoDeclaration)
+                  continue;
+
                node ._isBound .addFieldCallback (this .#updateNodeBoundSymbol, this .updateNodeBound .bind (this, node));
 
                buttons .push ($("<span></span>")
