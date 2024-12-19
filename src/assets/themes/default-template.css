@@ -1035,6 +1035,7 @@ body.dark .ui-widget .library-list .component {
   width: min-content;
 }
 
+.scene-graph .name .material-icons,
 .scene-graph .material-symbols-outlined {
   font-size: var(--font-size);
   position: relative;
@@ -1042,6 +1043,7 @@ body.dark .ui-widget .library-list .component {
   color: var(--system-blue);
 }
 
+.scene-graph .name .material-icons:hover,
 .scene-graph .material-symbols-outlined:hover {
   color: var(--system-gray0);
 }
