@@ -1345,6 +1345,10 @@ body.dark .ui-widget .library-list .component {
   cursor: pointer;
 }
 
+.scene-graph .button.on:hover {
+  color: var(--system-cyan);
+}
+
 .scene-graph .button.off {
   color: var(--system-gray1);
 }
