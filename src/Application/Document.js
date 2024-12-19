@@ -22,6 +22,8 @@ const
 
 module .exports = class Document extends Interface
 {
+   #replaceWorld;
+
    constructor ()
    {
       super ("Sunrize.Document.");
@@ -128,6 +130,13 @@ module .exports = class Document extends Interface
       // Change undo menu items.
 
       UndoManager .shared .addInterest (this, () => this .undoManager ());
+
+      // Override replaceWorld and loadURL.
+      
+      this .#replaceWorld = X3D .X3DBrowser .prototype .replaceWorld;
+
+      X3D .X3DBrowser .prototype .loadURL      = () => Promise .resolve ();
+      X3D .X3DBrowser .prototype .replaceWorld = () => Promise .resolve ();
 
       // Connect browser options.
 
@@ -379,16 +388,11 @@ Viewpoint {
    {
       try
       {
-         const { replaceWorld } = this .browser;
-
-         X3D .X3DBrowser .prototype .loadURL      = () => Promise .resolve ();
-         X3D .X3DBrowser .prototype .replaceWorld = () => Promise .resolve ();
-
          const scene = fileURL
             ? await this .browser .createX3DFromURL (new X3D .MFString (fileURL))
             : null;
 
-         await replaceWorld .call (this .browser, scene);
+         await this .#replaceWorld .call (this .browser, scene);
 
          this .browser .currentScene .setSpecificationVersion (X3D .LATEST_VERSION);
       }
