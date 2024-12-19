@@ -1035,19 +1035,6 @@ body.dark .ui-widget .library-list .component {
   width: min-content;
 }
 
-.scene-graph .name .material-icons,
-.scene-graph .material-symbols-outlined {
-  font-size: var(--font-size);
-  position: relative;
-  top: 2.5px;
-  color: var(--system-blue);
-}
-
-.scene-graph .name .material-icons:hover,
-.scene-graph .material-symbols-outlined:hover {
-  color: var(--system-gray0);
-}
-
 .scene-graph .hidden {
   display: none;
 }
@@ -1345,6 +1332,14 @@ body.dark .ui-widget .library-list .component {
 
 .scene-graph .button {
   cursor: pointer;
+  font-size: var(--font-size);
+  position: relative;
+  top: 2.5px;
+  color: var(--system-blue);
+}
+
+.scene-graph .button:hover {
+  color: var(--system-gray0);
 }
 
 .scene-graph .button.on:hover {
