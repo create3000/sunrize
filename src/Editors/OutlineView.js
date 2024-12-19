@@ -1113,6 +1113,9 @@ module .exports = class OutlineView extends Interface
             }
             case X3D .X3DConstants .X3DTimeDependentNode:
             {
+               if (node .getExecutionContext () !== this .executionContext)
+                  continue;
+
                node ._enabled  .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
                node ._isActive .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
                node ._isPaused .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
