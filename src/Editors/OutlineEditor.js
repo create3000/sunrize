@@ -1918,7 +1918,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       else
       {
          node ._isEvenLive = true;
-         
+
          Editor .setFieldValue (this .browser .currentScene, node, node ._startTime, Date .now () / 1000);
       }
    }
