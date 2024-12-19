@@ -1358,6 +1358,10 @@ module .exports = class OutlineView extends Interface
                .append ($("<span></span>") .addClass ("as-name") .text (importedNode .getImportedName ()));
          }
 
+         // Buttons
+
+         this .addNodeButtons (importedNode .getExportedNode (), name);
+
          // Append empty tree to enable expander.
 
          $("<ul><li></li></ul>") .appendTo (child);
