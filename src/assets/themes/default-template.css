@@ -1354,6 +1354,10 @@ body.dark .ui-widget .library-list .component {
   color: var(--system-gray0);
 }
 
+.scene-graph .field-button {
+  top: 4px;
+}
+
 /* Spectrum Color Picker */
 
 .sp-container {
