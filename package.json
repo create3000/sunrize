@@ -1,7 +1,7 @@
 {
   "name": "sunrize",
   "productName": "Sunrize X3D Editor",
-  "version": "1.7.37",
+  "version": "1.7.38",
   "description": "A Multi-Platform X3D Editor",
   "main": "src/main.js",
   "bin": {
@@ -109,7 +109,7 @@
     "string-similarity": "^4.0.4",
     "tweakpane": "^3.1.10",
     "update-electron-app": "^3.1.0",
-    "x_ite": "^11.0.1",
+    "x_ite": "^11.0.2",
     "x3d-traverse": "^1.0.7"
   }
 }
