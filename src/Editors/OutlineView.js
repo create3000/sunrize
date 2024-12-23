@@ -358,7 +358,7 @@ module .exports = class OutlineView extends Interface
             element = $(e),
             node    = this .getNode (element);
 
-         if (node .getUserData (_expanded) && element .jstree ("is_closed", element))
+         if (node ?.getUserData (_expanded) && element .jstree ("is_closed", element))
          {
             element .data ("auto-expand", true);
             element .jstree ("open_node", element);
