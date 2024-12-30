@@ -194,6 +194,7 @@ small, .small {
 
 .content x3d-canvas,
 .content iframe {
+  display: inline-block;
   border: none;
   width: 100%;
   height: auto;
