@@ -493,7 +493,7 @@ module .exports = class OutlineView extends Interface
          const nodes = Array .from (scene .rootNodes);
 
          this .browser .nextFrame ()
-            .then (() => nodes .forEach (n => n .setNodeUserData (_changing, false)));
+            .then (() => nodes .forEach (node => node ?.setNodeUserData (_changing, false)));
 
          return;
       }
