@@ -3314,11 +3314,6 @@ module .exports = class OutlineView extends Interface
          elements         = $(`.node[node-id=${node ?.getId ()}]`),
          changed          = new Map (selection .nodes .map (node => [node, node .getTool ()]));
 
-      if (!node)
-         return; // NULL node
-
-      changed .set (node .valueOf (), node .getTool ());
-
       selectedElements .removeClass ("primary");
 
       if (add)
@@ -3355,10 +3350,15 @@ module .exports = class OutlineView extends Interface
          selection .set (node);
       }
 
-      for (const [node, tool] of changed)
+      if (node)
       {
-         if (node .getTool () !== tool)
-            node .setUserData (_changing, true);
+         changed .set (node .valueOf (), node .getTool ());
+
+         for (const [node, tool] of changed)
+         {
+            if (node .getTool () !== tool)
+               node .setUserData (_changing, true);
+         }
       }
    }
 

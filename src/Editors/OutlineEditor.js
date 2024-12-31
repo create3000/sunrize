@@ -81,9 +81,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       if (!(this .isEditable (element) || element .is (".exported-node")))
          return;
 
-      if (element .attr ("node-id") === "NULL")
-         return;
-
       if (!element .is (".manually"))
          this .sceneGraph .find (".manually") .removeClass ("manually");
 
@@ -206,296 +203,308 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             parentFieldElement = element .closest (".field, .scene", this .sceneGraph),
             parentNodeElement  = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph);
 
-         var menu = [
-            {
-               label: _("Rename Node..."),
-               args: ["renameNode", element .attr ("id"), executionContext .getId (), node .getId ()],
-            },
-            {
-               label: _("Export Node..."),
-               enabled: executionContext === this .executionContext,
-               args: ["addExportedNode", element .attr ("id"), executionContext .getId (), node .getId ()],
-            },
-            {
-               label: _("Add Node..."),
-               args: ["openLibrary", element .attr ("id"), executionContext .getId (), node .getId ()],
-            },
-            { type: "separator" },
-            {
-               label: _("Cut"),
-               args: ["cutNodes"],
-            },
-            {
-               label: _("Copy"),
-               args: ["copyNodes"],
-            },
-            {
-               label: _("Paste"),
-               args: ["pasteNodes", element .attr ("id"), executionContext .getId (), node .getId ()],
-            },
-            {
-               label: _("Delete"),
-               args: ["deleteNodes"],
-            },
-            {
-               label: _("Unlink Clone"),
-               enabled: node .getCloneCount () > 1,
-               args: ["unlinkClone", element .attr ("id"), executionContext .getId (), node .getId ()],
-            },
-            { type: "separator" },
-            {
-               label: _("Add Field..."),
-               visible: node .canUserDefinedFields (),
-               args: ["addUserDefinedField", element .attr ("id"), executionContext .getId (), node .getId ()],
-            },
-            { type: "separator" },
-            {
-               label: _("Add Parent Group"),
-               submenu: [
-                  {
-                     label: "Transform",
-                     args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "Transform", "children"],
-                  },
-                  {
-                     label: "Group",
-                     args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "Group", "children"],
-                  },
-                  {
-                     label: "StaticGroup",
-                     args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "StaticGroup", "children"],
-                  },
-                  {
-                     label: "Switch",
-                     args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "Switch", "children"],
-                  },
-                  { type: "separator" },
-                  {
-                     label: "Billboard",
-                     args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "Billboard", "children"],
-                  },
-                  {
-                     label: "Collision",
-                     args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "Collision", "children"],
-                  },
-                  {
-                     label: "LOD",
-                     args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "LOD", "children"],
-                  },
-                  {
-                     label: "ViewpointGroup",
-                     args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "ViewpointGroup", "children"],
-                  },
-                  { type: "separator" },
-                  {
-                     label: "Anchor",
-                     args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "Anchor", "children"],
-                  },
-                  { type: "separator" },
-                  {
-                     label: "LayoutLayer",
-                     args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layout", "LayoutLayer", "children"],
-                  },
-                  {
-                     label: "ScreenGroup",
-                     args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layout", "ScreenGroup", "children"],
-                  },
-                  { type: "separator" },
-                  {
-                     label: "GeoTransform",
-                     args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Geospatial", "GeoTransform", "children"],
-                  },
-                  {
-                     label: "GeoLocation",
-                     args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Geospatial", "GeoLocation", "children"],
-                  },
-                  { type: "separator" },
-                  {
-                     label: "CADLayer",
-                     args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADLayer", "children"],
-                  },
-                  {
-                     label: "CADAssembly",
-                     args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADAssembly", "children"],
-                  },
-                  {
-                     label: "CADPart",
-                     args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADPart", "children"],
-                  },
-                  {
-                     label: "CADFace",
-                     args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADFace", "shape"],
-                  },
-                  { type: "separator" },
-                  {
-                     label: "LayerSet",
-                     args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layering", "LayerSet", "layers"],
-                  },
-                  {
-                     label: "Layer",
-                     args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layering", "Layer", "children"],
-                  },
-                  {
-                     label: "Viewport",
-                     args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layering", "Viewport", "children"],
-                  },
-                  { type: "separator" },
-                  {
-                     label: "PickableGroup",
-                     args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Picking", "PickableGroup", "children"],
-                  },
-                  { type: "separator" },
-                  {
-                     label: "CollidableOffset",
-                     args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "RigidBodyPhysics", "CollidableOffset", "collidable"],
-                  },
-                  {
-                     label: "CollidableShape",
-                     args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "RigidBodyPhysics", "CollidableShape", "shape"],
-                  },
-               ],
-            },
-            {
-               label: _("Remove Parent"),
-               enabled: parentNodeElement .hasClass ("node"),
-               args: ["removeParent", element .attr ("id"), executionContext .getId (), node .getId ()],
-            },
-            { type: "separator" },
-         ];
-
-         for (const type of node .getType () .toReversed ())
+         if (node)
          {
-            switch (type)
+            var menu = [
+               {
+                  label: _("Rename Node..."),
+                  args: ["renameNode", element .attr ("id"), executionContext .getId (), node .getId ()],
+               },
+               {
+                  label: _("Export Node..."),
+                  enabled: executionContext === this .executionContext,
+                  args: ["addExportedNode", element .attr ("id"), executionContext .getId (), node .getId ()],
+               },
+               {
+                  label: _("Add Node..."),
+                  args: ["openLibrary", element .attr ("id"), executionContext .getId (), node .getId ()],
+               },
+               { type: "separator" },
+               {
+                  label: _("Cut"),
+                  args: ["cutNodes"],
+               },
+               {
+                  label: _("Copy"),
+                  args: ["copyNodes"],
+               },
+               {
+                  label: _("Paste"),
+                  args: ["pasteNodes", element .attr ("id"), executionContext .getId (), node .getId ()],
+               },
+               {
+                  label: _("Delete"),
+                  args: ["deleteNodes"],
+               },
+               {
+                  label: _("Unlink Clone"),
+                  enabled: node .getCloneCount () > 1,
+                  args: ["unlinkClone", element .attr ("id"), executionContext .getId (), node .getId ()],
+               },
+               { type: "separator" },
+               {
+                  label: _("Add Field..."),
+                  visible: node .canUserDefinedFields (),
+                  args: ["addUserDefinedField", element .attr ("id"), executionContext .getId (), node .getId ()],
+               },
+               { type: "separator" },
+               {
+                  label: _("Add Parent Group"),
+                  submenu: [
+                     {
+                        label: "Transform",
+                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "Transform", "children"],
+                     },
+                     {
+                        label: "Group",
+                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "Group", "children"],
+                     },
+                     {
+                        label: "StaticGroup",
+                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "StaticGroup", "children"],
+                     },
+                     {
+                        label: "Switch",
+                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "Switch", "children"],
+                     },
+                     { type: "separator" },
+                     {
+                        label: "Billboard",
+                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "Billboard", "children"],
+                     },
+                     {
+                        label: "Collision",
+                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "Collision", "children"],
+                     },
+                     {
+                        label: "LOD",
+                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "LOD", "children"],
+                     },
+                     {
+                        label: "ViewpointGroup",
+                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "ViewpointGroup", "children"],
+                     },
+                     { type: "separator" },
+                     {
+                        label: "Anchor",
+                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "Anchor", "children"],
+                     },
+                     { type: "separator" },
+                     {
+                        label: "LayoutLayer",
+                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layout", "LayoutLayer", "children"],
+                     },
+                     {
+                        label: "ScreenGroup",
+                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layout", "ScreenGroup", "children"],
+                     },
+                     { type: "separator" },
+                     {
+                        label: "GeoTransform",
+                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Geospatial", "GeoTransform", "children"],
+                     },
+                     {
+                        label: "GeoLocation",
+                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Geospatial", "GeoLocation", "children"],
+                     },
+                     { type: "separator" },
+                     {
+                        label: "CADLayer",
+                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADLayer", "children"],
+                     },
+                     {
+                        label: "CADAssembly",
+                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADAssembly", "children"],
+                     },
+                     {
+                        label: "CADPart",
+                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADPart", "children"],
+                     },
+                     {
+                        label: "CADFace",
+                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADFace", "shape"],
+                     },
+                     { type: "separator" },
+                     {
+                        label: "LayerSet",
+                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layering", "LayerSet", "layers"],
+                     },
+                     {
+                        label: "Layer",
+                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layering", "Layer", "children"],
+                     },
+                     {
+                        label: "Viewport",
+                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layering", "Viewport", "children"],
+                     },
+                     { type: "separator" },
+                     {
+                        label: "PickableGroup",
+                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Picking", "PickableGroup", "children"],
+                     },
+                     { type: "separator" },
+                     {
+                        label: "CollidableOffset",
+                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "RigidBodyPhysics", "CollidableOffset", "collidable"],
+                     },
+                     {
+                        label: "CollidableShape",
+                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "RigidBodyPhysics", "CollidableShape", "shape"],
+                     },
+                  ],
+               },
+               {
+                  label: _("Remove Parent"),
+                  enabled: parentNodeElement .hasClass ("node"),
+                  args: ["removeParent", element .attr ("id"), executionContext .getId (), node .getId ()],
+               },
+               { type: "separator" },
+            ];
+
+            for (const type of node .getType () .toReversed ())
             {
-               case X3D .X3DConstants .ElevationGrid:
-               case X3D .X3DConstants .GeoElevationGrid:
-               case X3D .X3DConstants .X3DComposedGeometryNode:
+               switch (type)
                {
-                  if (node ._normal .getValue ())
+                  case X3D .X3DConstants .ElevationGrid:
+                  case X3D .X3DConstants .GeoElevationGrid:
+                  case X3D .X3DConstants .X3DComposedGeometryNode:
                   {
-                     menu .push ({
-                        label: _("Remove Normals"),
-                        args: ["removeNormalsFromGeometry", element .attr ("id"), executionContext .getId (), node .getId ()],
-                     });
-                  }
-                  else
-                  {
-                     menu .push ({
-                        label: _("Add Normals"),
-                        args: ["addNormalsToGeometry", element .attr ("id"), executionContext .getId (), node .getId ()],
-                     });
-                  }
+                     if (node ._normal .getValue ())
+                     {
+                        menu .push ({
+                           label: _("Remove Normals"),
+                           args: ["removeNormalsFromGeometry", element .attr ("id"), executionContext .getId (), node .getId ()],
+                        });
+                     }
+                     else
+                     {
+                        menu .push ({
+                           label: _("Add Normals"),
+                           args: ["addNormalsToGeometry", element .attr ("id"), executionContext .getId (), node .getId ()],
+                        });
+                     }
 
-                  continue;
-               }
-               case X3D .X3DConstants .ImageTexture:
-               {
-                  if (node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE)
-                  {
-                     menu .push ({
-                        label: _("Convert Node to PixelTexture"),
-                        args: ["convertImageTextureToPixelTexture", element .attr ("id"), executionContext .getId (), node .getId ()],
-                     });
-                  }
-
-                  continue;
-               }
-               case X3D .X3DConstants .Inline:
-               {
-                  menu .push ({
-                     label: _("Open Inline Scene in New Tab"),
-                     enabled: node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE,
-                     args: ["openFileInNewTab", node .getInternalScene () ?.worldURL],
-                  },
-                  {
-                     label: _("Fold Inline Back into Scene"),
-                     enabled: node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE,
-                     args: ["foldInlineBackIntoScene", element .attr ("id"), executionContext .getId (), node .getId ()],
-                  });
-
-                  continue;
-               }
-               case X3D .X3DConstants .PixelTexture:
-               {
-                  menu .push ({
-                     label: _("Update Image from File..."),
-                     args: ["updatePixelTextureFromFile", element .attr ("id"), executionContext .getId (), node .getId ()],
-                  });
-
-                  if (node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE)
-                  {
-                     menu .push ({
-                        label: _("Convert Node to ImageTexture"),
-                        args: ["convertPixelTextureToImageTexture", element .attr ("id"), executionContext .getId (), node .getId ()],
-                     });
-                  }
-
-                  continue;
-               }
-               case X3D .X3DConstants .X3DPrototypeInstance:
-               {
-                  if (!$.try (() => node .getInnerNode () .getType () .includes (X3D .X3DConstants .X3DChildNode)))
                      continue;
+                  }
+                  case X3D .X3DConstants .ImageTexture:
+                  {
+                     if (node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE)
+                     {
+                        menu .push ({
+                           label: _("Convert Node to PixelTexture"),
+                           args: ["convertImageTextureToPixelTexture", element .attr ("id"), executionContext .getId (), node .getId ()],
+                        });
+                     }
 
-                  // Proceed with next case:
-               }
-               case X3D .X3DConstants .X3DChildNode:
-               {
-                  menu .push ({
-                     label: _("Convert Node to Inline File..."),
-                     args: ["convertNodeToInlineFile", element .attr ("id"), executionContext .getId (), node .getId ()],
-                  });
-
-                  continue;
-               }
-               case X3D .X3DConstants .X3DBoundedObject:
-               {
-                  menu .push ({
-                     label: _("Determine Bounding Box from Scratch"),
-                     args: ["determineBoundingBoxFromScratch", element .attr ("id"), executionContext .getId (), node .getId ()],
-                  });
-
-                  if (!node ._bboxSize .equals (new X3D .SFVec3f (-1, -1, -1)))
+                     continue;
+                  }
+                  case X3D .X3DConstants .Inline:
                   {
                      menu .push ({
-                        label: _("Remove Custom Bounding Box"),
-                        args: ["removeCustomBoundingBox", element .attr ("id"), executionContext .getId (), node .getId ()],
+                        label: _("Open Inline Scene in New Tab"),
+                        enabled: node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE,
+                        args: ["openFileInNewTab", node .getInternalScene () ?.worldURL],
+                     },
+                     {
+                        label: _("Fold Inline Back into Scene"),
+                        enabled: node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE,
+                        args: ["foldInlineBackIntoScene", element .attr ("id"), executionContext .getId (), node .getId ()],
                      });
-                  }
 
-                  continue;
-               }
-               case X3D .X3DConstants .X3DUrlObject:
-               {
-                  if (node ._url .some (fileURL => !fileURL .match (/^\s*(?:data|ecmascript|javascript|vrmlscript):/s)))
+                     continue;
+                  }
+                  case X3D .X3DConstants .PixelTexture:
                   {
                      menu .push ({
-                        label: _("Embed External Resource as Data URL"),
-                        args: ["embedExternalResourceAsDataURL", element .attr ("id"), executionContext .getId (), node .getId ()],
+                        label: _("Update Image from File..."),
+                        args: ["updatePixelTextureFromFile", element .attr ("id"), executionContext .getId (), node .getId ()],
                      });
-                  }
 
-                  if (node ._url .some (fileURL => fileURL .match (/^\s*(?:data|ecmascript|javascript|vrmlscript):/s)))
+                     if (node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE)
+                     {
+                        menu .push ({
+                           label: _("Convert Node to ImageTexture"),
+                           args: ["convertPixelTextureToImageTexture", element .attr ("id"), executionContext .getId (), node .getId ()],
+                        });
+                     }
+
+                     continue;
+                  }
+                  case X3D .X3DConstants .X3DPrototypeInstance:
+                  {
+                     if (!$.try (() => node .getInnerNode () .getType () .includes (X3D .X3DConstants .X3DChildNode)))
+                        continue;
+
+                     // Proceed with next case:
+                  }
+                  case X3D .X3DConstants .X3DChildNode:
                   {
                      menu .push ({
-                        label: _("Save Data URL to File..."),
-                        args: ["saveDataUrlToFile", element .attr ("id"), executionContext .getId (), node .getId ()],
+                        label: _("Convert Node to Inline File..."),
+                        args: ["convertNodeToInlineFile", element .attr ("id"), executionContext .getId (), node .getId ()],
                      });
+
+                     continue;
                   }
+                  case X3D .X3DConstants .X3DBoundedObject:
+                  {
+                     menu .push ({
+                        label: _("Determine Bounding Box from Scratch"),
+                        args: ["determineBoundingBoxFromScratch", element .attr ("id"), executionContext .getId (), node .getId ()],
+                     });
 
-                  continue;
-               }
-               case X3D .X3DConstants .X3DViewpointNode:
-               {
-                  menu .push ({
-                     label: _("Move Viewpoint to User Position"),
-                     args: ["moveViewpointToUserPosition", element .attr ("id"), executionContext .getId (), node .getId ()],
-                  });
+                     if (!node ._bboxSize .equals (new X3D .SFVec3f (-1, -1, -1)))
+                     {
+                        menu .push ({
+                           label: _("Remove Custom Bounding Box"),
+                           args: ["removeCustomBoundingBox", element .attr ("id"), executionContext .getId (), node .getId ()],
+                        });
+                     }
 
-                  continue;
+                     continue;
+                  }
+                  case X3D .X3DConstants .X3DUrlObject:
+                  {
+                     if (node ._url .some (fileURL => !fileURL .match (/^\s*(?:data|ecmascript|javascript|vrmlscript):/s)))
+                     {
+                        menu .push ({
+                           label: _("Embed External Resource as Data URL"),
+                           args: ["embedExternalResourceAsDataURL", element .attr ("id"), executionContext .getId (), node .getId ()],
+                        });
+                     }
+
+                     if (node ._url .some (fileURL => fileURL .match (/^\s*(?:data|ecmascript|javascript|vrmlscript):/s)))
+                     {
+                        menu .push ({
+                           label: _("Save Data URL to File..."),
+                           args: ["saveDataUrlToFile", element .attr ("id"), executionContext .getId (), node .getId ()],
+                        });
+                     }
+
+                     continue;
+                  }
+                  case X3D .X3DConstants .X3DViewpointNode:
+                  {
+                     menu .push ({
+                        label: _("Move Viewpoint to User Position"),
+                        args: ["moveViewpointToUserPosition", element .attr ("id"), executionContext .getId (), node .getId ()],
+                     });
+
+                     continue;
+                  }
+                  default:
+                     continue;
                }
-               default:
-                  continue;
             }
+         }
+         else
+         {
+            var menu = [
+               {
+                  label: _("Delete"),
+                  args: ["deleteNodes"],
+               },
+            ];
          }
       }
 
@@ -953,7 +962,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       if (ids .length > 1)
          UndoManager .shared .beginUndo (_("Delete %s Nodes"), ids .length);
       else if (ids .length === 1)
-         UndoManager .shared .beginUndo (_("Delete Node %s"), this .getNode ($(`#${ids [0]}`)) .getTypeName ());
+         UndoManager .shared .beginUndo (_("Delete Node %s"), this .getNode ($(`#${ids [0]}`)) ?.getTypeName () ?? "NULL");
       else
          return;
 

@@ -42,6 +42,9 @@ module .exports = new class Selection extends Interface
 
    has (node)
    {
+      if (!node)
+         return false;
+
       return this .nodes .includes (node .valueOf ());
    }
 
@@ -53,6 +56,9 @@ module .exports = new class Selection extends Interface
 
    set (node)
    {
+      if (!node)
+         return;
+
       this .#clear (node);
       this .#add (node);
       this .processInterests ();
@@ -60,12 +66,18 @@ module .exports = new class Selection extends Interface
 
    add (node)
    {
+      if (!node)
+         return;
+
       this .#add (node);
       this .processInterests ();
    }
 
    remove (node)
    {
+      if (!node)
+         return;
+
       this .#remove (node);
       this .processInterests ();
    }
