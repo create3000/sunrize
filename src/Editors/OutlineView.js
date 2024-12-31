@@ -274,7 +274,7 @@ module .exports = class OutlineView extends Interface
             .attr ("draggable", "true")
             .on ("dragstart", this .onDragStartProto .bind (this));
 
-         child .find (".node:not([node-id=NULL]) > .item")
+         child .find (".node  > .item")
             .attr ("draggable", "true")
             .on ("dragstart", this .onDragStartNode .bind (this));
       }

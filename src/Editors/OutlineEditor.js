@@ -3076,9 +3076,16 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          {
             const
                sourceElement = $("#" + sourceElementsIds [0]),
-               sourceNode    = this .getNode (sourceElement) .getTool () ?? this .getNode (sourceElement);
+               sourceNode    = this .getNode (sourceElement) ?.getTool () ?? this .getNode (sourceElement);
 
-            UndoManager .shared .beginUndo (this .getUndoDescriptionForNode (destinationElement .data ("dropEffect"), sourceNode), sourceNode .getTypeName (), sourceNode .getDisplayName ());
+            if (sourceNode)
+            {
+               UndoManager .shared .beginUndo (this .getUndoDescriptionForNode (destinationElement .data ("dropEffect"), sourceNode), sourceNode .getTypeName (), sourceNode .getDisplayName ());
+            }
+            else
+            {
+               UndoManager .shared .beginUndo (this .getUndoDescriptionForNode (destinationElement .data ("dropEffect"), sourceNode), "NULL");
+            }
          }
          else
          {
@@ -3093,7 +3100,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          {
             const
                sourceElement                 = $("#" + sourceElementId),
-               sourceNode                    = this .getNode (sourceElement) .getTool () ?? this .getNode (sourceElement),
+               sourceNode                    = this .getNode (sourceElement) ?.getTool () ?? this .getNode (sourceElement),
                sourceExecutionContextElement = sourceElement .closest (".scene", this .sceneGraph),
                sourceExecutionContext        = this .getNode (sourceExecutionContextElement);
 
@@ -3126,7 +3133,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                sourceExecutionContext        = this .getNode (sourceExecutionContextElement);
 
             let
-               sourceNode  = this .getNode (sourceElement) .getTool () ?? this .getNode (sourceElement),
+               sourceNode  = this .getNode (sourceElement) ?.getTool () ?? this .getNode (sourceElement),
                sourceIndex = parseInt (sourceElement .attr ("index"));
 
             if (destinationElement .attr ("node-id") !== "NULL")
@@ -3213,7 +3220,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             if (destinationElement .data ("dropEffect") ?.match (/copy|move/))
             {
-               if (sourceNode .getType () .some (type => this .transformLikeNodes .has (type)))
+               if (sourceNode ?.getType () .some (type => this .transformLikeNodes .has (type)))
                {
                   const
                      sourceModelMatrix      = this .getModelMatrix (sourceElement),
@@ -3300,7 +3307,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       }
       else
       {
-         if (node .getDisplayName ())
+         if (node ?.getDisplayName ())
          {
             switch (dropEffect)
             {
