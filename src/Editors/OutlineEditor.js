@@ -813,7 +813,15 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
    async cutNodes ()
    {
-      UndoManager .shared .beginUndo (_("Cut Nodes"));
+      const
+         primary     = $(".node.primary, .proto.primary, .externproto.primary"),
+         selected    = this .sceneGraph .find (".node.manually, .proto.manually, .externproto.manually"),
+         selection   = selected .filter (primary) .length ? selected : primary,
+         ids         = selection .map (function () { return this .id }) .get (),
+         elements    = ids .map (id => $(`#${id}`)),
+         nodes       = elements .map (element => this .getNode ($(element)));
+
+      UndoManager .shared .beginUndo (nodes .length === 1 ? _("Cut %d Node") : _("Cut %d Nodes"), nodes .length);
 
       await this .copyNodes ();
       await this .deleteNodes ();
