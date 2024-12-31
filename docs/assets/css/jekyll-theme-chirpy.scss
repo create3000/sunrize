@@ -10,18 +10,20 @@
 /* append your custom style below */
 
 @mixin x_ite-dark-scheme {
-  --system-red: rgb(255, 69, 58);
-  --system-orange: rgb(255, 159, 10);
+  /* Colors */
+
+  --system-red: rgb(255, 59, 48);
+  --system-orange: rgb(255, 149, 0);
   --system-yellow: rgb(255, 214, 10);
-  --system-green: rgb(48, 209, 88);
-  --system-mint: rgb(102, 212, 207);
-  --system-teal: rgb(64, 200, 224);
-  --system-cyan: rgb(100, 210, 255);
-  --system-blue: rgb(10, 132, 255);
-  --system-indigo: rgb(94, 92, 230);
-  --system-purple: rgb(191, 90, 242);
-  --system-pink: rgb(255, 55, 95);
-  --system-brown: rgb(172, 142, 104);
+  --system-green: rgb(52, 199, 89);
+  --system-mint: rgb(0, 199, 190);
+  --system-teal: rgb(48, 176, 199);
+  --system-cyan: rgb(50, 173, 230);
+  --system-blue: rgb(0, 122, 255);
+  --system-indigo: rgb(88, 86, 214);
+  --system-purple: rgb(175, 82, 222);
+  --system-pink: rgb(255, 45, 85);
+  --system-brown: rgb(162, 132, 94);
 
   --system-gray0: rgb(72, 72, 77);
   --system-gray1: rgb(122, 122, 127);
@@ -39,22 +41,29 @@
   --h3-color: rgb(185, 137, 79);
   --h3-color-strong: rgb(232, 201, 133);
   --h4-color: rgb(60, 107, 184);
-  --h4-color-strong: rgb(175, 206, 255);
+  --h4-color-strong: rgb(130, 173, 241);
+  --h4-color-strong-writable: rgb(175, 206, 255);
+
+  --example-background-color: rgba(0, 0, 0, 0.471);
+  --playground-console-background: rgba(0, 0, 0, 0.2);
+  --button-background-color: black;
 }
 
 @mixin x_ite-light-scheme {
-  --system-red: rgb(255, 59, 48);
-  --system-orange: rgb(255, 149, 0);
+  /* Colors */
+
+  --system-red: rgb(255, 69, 58);
+  --system-orange: rgb(255, 159, 10);
   --system-yellow: rgb(255, 214, 10);
-  --system-green: rgb(52, 199, 89);
-  --system-mint: rgb(0, 199, 190);
-  --system-teal: rgb(48, 176, 199);
-  --system-cyan: rgb(50, 173, 230);
-  --system-blue: rgb(0, 122, 255);
-  --system-indigo: rgb(88, 86, 214);
-  --system-purple: rgb(175, 82, 222);
-  --system-pink: rgb(255, 45, 85);
-  --system-brown: rgb(162, 132, 94);
+  --system-green: hsl(135, 64%, 45%);
+  --system-mint: rgb(104, 212, 207);
+  --system-teal: rgb(64, 200, 224);
+  --system-cyan: rgb(100, 210, 255);
+  --system-blue: rgb(10, 132, 255);
+  --system-indigo: rgb(94, 92, 230);
+  --system-purple: rgb(191, 90, 242);
+  --system-pink: rgb(255, 55, 95);
+  --system-brown: rgb(172, 142, 104);
 
   --system-gray0: rgb(204, 204, 209);
   --system-gray1: rgb(142, 142, 147);
@@ -66,11 +75,16 @@
   --system-gray7: rgb(21, 21, 23);
   --system-gray8: rgb(0, 0, 0);
 
-  --h2-color: rgb(189, 0, 106);
+  --h2-color: rgb(189, 0, 0);
   --h3-color: rgb(159, 103, 34);;
   --h3-color-strong: rgb(173, 81, 0);
   --h4-color: rgb(29, 80, 163);
   --h4-color-strong: rgb(10, 80, 144);
+  --h4-color-strong-writable: rgb(97, 29, 163);
+
+  --example-background-color: rgba(235, 235, 255, 0.644);
+  --playground-console-background: rgb(0, 0, 0, 0.02);
+  --button-background-color: white;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -121,6 +135,10 @@ html {
   color: var(--system-yellow) !important;
 }
 
+.bold {
+  font-weight: bold;
+}
+
 header a.rounded-circle {
   border-radius: 0% !important;
 }
@@ -166,8 +184,20 @@ header a.rounded-circle {
   color: var(--h4-color-strong);
 }
 
+.content h4.writable strong {
+  color: var(--h4-color-strong-writable);
+}
+
 .content h5 {
   font-weight: bold;
+}
+
+.content dl dt {
+  color: var(--h3-color-strong);
+}
+
+.content dl dt strong {
+  color: var(--h3-color);
 }
 
 .post-tail-wrapper .nav-wrapper {
@@ -196,10 +226,70 @@ small, .small {
 .content iframe {
   display: inline-block;
   border: none;
+  aspect-ratio: 16 / 9;
   width: 100%;
   height: auto;
-  aspect-ratio: 16 / 9;
 }
+
+/* xr-button */
+
+x3d-canvas.xr-button-tr::part(xr-button) {
+  top: 10px;
+  right: 10px;
+  bottom: unset;
+  left: unset;
+}
+
+x3d-canvas.xr-button-cr::part(xr-button) {
+  top: 50%;
+  right: 10px;
+  bottom: unset;
+  left: unset;
+}
+
+x3d-canvas.xr-button-br::part(xr-button) {
+  top: unset;
+  right: 10px;
+  bottom: 10px;
+  left: unset;
+}
+
+x3d-canvas.xr-button-bl::part(xr-button) {
+  top: unset;
+  right: unset;
+  bottom: 10px;
+  left: 10px;
+}
+
+x3d-canvas.xr-button-tl::part(xr-button) {
+  top: 10px;
+  right: unset;
+  bottom: unset;
+  left: 10px;
+}
+
+/* teaser */
+
+.content .teaser {
+    aspect-ratio: 16 / 5;
+}
+
+.content .teaser::part(surface) {
+  cursor: default !important;
+}
+
+.content .mascot-wrapper {
+  position: relative;
+}
+
+.content .mascot {
+  pointer-events: none;
+  aspect-ratio: 780 / 280;
+  position: absolute;
+  transform: translateY(-70%);
+}
+
+/* */
 
 span[data-label-text="X3D" i],
 span[data-label-text="VRML" i] {
@@ -209,6 +299,183 @@ span[data-label-text="VRML" i] {
 .table-wrapper > table tbody tr td,
 .table-wrapper > table thead th {
   white-space: initial;
+}
+
+.badge-link img {
+  display: inline;
+}
+
+input[type=button].button,
+input[type=file].button {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+  background: none;
+  border: 1px solid var(--text-color);
+  border-radius: 1rem;
+  padding: 0 0.7rem 0.5rem;
+  height: 2rem;
+  color: var(--text-color);
+}
+
+input.button::file-selector-button {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  position: relative;
+  background: none;
+  outline: none;
+  border: none;
+  padding-bottom: 0.5rem;
+}
+
+/* Special Safari only Selector */
+_::-webkit-full-page-media, _:future, :root input.button::file-selector-button {
+  top: -2px;
+}
+
+input[type=button].button:hover,
+input[type=file].button:hover {
+  border: 1px solid var(--system-gray8);
+  color: var(--system-gray8);
+}
+
+input[type=button].button:focus,
+input[type=file].button:focus {
+  border: 1px solid var(--system-green);
+  color: var(--system-green);
+}
+
+input[type=""],
+input[type=text],
+input[type=number] {
+  border: none;
+  border-radius: 1rem;
+  height: 2rem;
+  padding: 0 1rem;
+  background: var(--system-gray0);
+}
+
+input[type=""]:focus,
+input[type=text]:focus,
+input[type=number]:focus {
+  outline: 1px solid var(--system-green);
+}
+
+input[type=range].range {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  position: relative;
+  top: -2px;
+  margin-left: 0.3rem;
+  background: var(--text-color);
+  height: 4px;
+}
+
+input[type=range].range:hover {
+  background: var(--system-gray8);
+}
+
+input[type=range].range:focus {
+  background: var(--system-green);
+}
+
+/* Must have a selector for each browser separately. */
+input[type=range].range::-webkit-slider-thumb {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--text-color);
+  height: 0.8rem;
+  width: 0.8rem;
+  border-radius: 50%;
+}
+
+input[type=range].range:hover::-webkit-slider-thumb {
+  background: var(--system-gray8);
+}
+
+/* Must have a selector for each browser separately. */
+input[type=range].range::-moz-range-thumb {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--text-color);
+  height: 0.8rem;
+  width: 0.8rem;
+  border-radius: 50%;
+}
+
+input[type=range].range:hover::-moz-range-thumb {
+  background: var(--system-gray8);
+}
+
+button {
+  cursor: pointer;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none;
+  border: none;
+  background: none;
+  padding: 0;
+  color: var(--text-color);
+}
+
+button:hover {
+  color: var(--system-gray8);
+}
+
+button i {
+  cursor: pointer;
+  padding-right: 0.5rem;
+}
+
+button:hover,
+button i:hover {
+  color: var(--system-gray8);
+}
+
+button.selected {
+  color: var(--system-green);
+}
+
+select.select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  display: block;
+  outline: none;
+  background: none;
+  border: 1px solid var(--text-color);
+  border-radius: 1rem;
+  margin: 0.3rem 0;
+  padding: 0 0.7rem 0.06rem 0.7rem;
+  width: 100%;
+  height: 2rem;
+  color: var(--text-color);
+  font-size: inherit;
+  font-family: inherit;
+}
+
+select.select:hover {
+  border: 1px solid var(--system-gray8);
+  color: var(--system-gray8);
+}
+
+select.select:focus {
+  border: 1px solid var(--system-green);
+  color: var(--system-green);
+}
+
+select.select option {
+  color: var(--text-color);
+  background: var(--main-bg);
 }
 
 /* Patreon link  */
