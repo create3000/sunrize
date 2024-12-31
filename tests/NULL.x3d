@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='created' content='Sun, 29 Dec 2024 15:49:36 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.7.40, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Tue, 31 Dec 2024 12:31:39 GMT'/>
+  </head>
+  <Scene>
+    <ProtoDeclare name='Test'>
+      <ProtoInterface>
+        <field accessType='inputOutput' type='SFNode' name='node'>
+          <Group DEF='_1' containerField='node'/>
+        </field>
+        <field accessType='inputOutput' type='MFNode' name='nodes'>
+          <Group USE='_1' containerField='nodes'/>
+        </field>
+      </ProtoInterface>
+      <ProtoBody>
+      </ProtoBody>
+    </ProtoDeclare>
+    <WorldInfo>
+      <MetadataSet containerField='metadata'
+          name='Sunrize'
+          reference='https://create3000.github.io/sunrize/'>
+        <MetadataSet
+            name='GridTool'>
+          <MetadataBoolean
+              name='visible'
+              value='true'/>
+        </MetadataSet>
+      </MetadataSet>
+    </WorldInfo>
+    <Viewpoint
+        description='Initial View'
+        position='2.869677 3.854335 8.769781'
+        orientation='-0.7765887 0.6177187 0.1238285 0.5052317'/>
+    <Group
+        bboxDisplay='true'
+        bboxSize='1 1 1'>
+      <NULL containerField='children'/>
+      <NULL containerField='children'/>
+    </Group>
+    <NULL/>
+    <NULL/>
+    <ProtoInstance name='Test'>
+      <fieldValue name='node' value='null'/>
+      <fieldValue name='nodes'>
+        <NULL containerField='nodes'/>
+        <NULL containerField='nodes'/>
+      </fieldValue>
+    </ProtoInstance>
+  </Scene>
+</X3D>
