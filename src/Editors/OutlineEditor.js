@@ -501,6 +501,14 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          {
             var menu = [
                {
+                  label: _("Cut"),
+                  args: ["cutNodes"],
+               },
+               {
+                  label: _("Copy"),
+                  args: ["copyNodes"],
+               },
+               {
                   label: _("Delete"),
                   args: ["deleteNodes"],
                },
@@ -830,7 +838,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       {
          const node = this .getNode ($(element));
 
-         if (!node .getType () .some (type => this .transformLikeNodes .has (type)))
+         if (!node ?.getType () .some (type => this .transformLikeNodes .has (type)))
             continue;
 
          Editor .setMatrixWithCenter (node, this .getModelMatrix (element), undefined, undoManager);
@@ -880,7 +888,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
    async pasteNodes (id, executionContextId, nodeId, fieldId)
    {
-      try
+      // try
       {
          // if there is a selected field or node, update nodeId and fieldId.
 
@@ -901,7 +909,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          for (const node of nodes)
          {
             const
-               containerField = $.try (() => node .getInnerNode () .getContainerField ()) ?? node .getContainerField (),
+               containerField = $.try (() => node .getInnerNode () .getContainerField ()) ?? node ?.getContainerField (),
                field          = targetField ?? $.try (() => targetNode ?.getField (containerField));
 
             if (!field)
@@ -909,7 +917,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             // Adjust matrix.
 
-            if (node .getType () .some (type => this .transformLikeNodes .has (type)))
+            if (node ?.getType () .some (type => this .transformLikeNodes .has (type)))
             {
                const
                   sourceModelMatrix = node .getMatrix (),
@@ -944,11 +952,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          for (const node of nodes)
             this .expandTo (node);
       }
-      catch (error)
-      {
-         // Catch "Document is not focused." from navigator.clipboard.readText.
-         console .error (`Paste failed: ${error .message}`);
-      }
+      // catch (error)
+      // {
+      //    // Catch "Document is not focused." from navigator.clipboard.readText.
+      //    console .error (`Paste failed: ${error .message}`);
+      // }
    }
 
    deleteNodes ()
@@ -3144,7 +3152,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                      continue;
 
                   const containerField = $.try (() => sourceNode .getInnerNode () .getContainerField ())
-                     ?? sourceNode .getContainerField ();
+                     ?? sourceNode ?.getContainerField ();
 
                   if (containerField)
                      destinationParentField = $.try (() => destinationParentNode .getField (containerField));

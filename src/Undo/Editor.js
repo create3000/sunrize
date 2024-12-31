@@ -80,7 +80,7 @@ module .exports = class Editor
       const
          externprotos = new Set (),
          protos       = new Set (),
-         nodes        = new X3D .MFNode (... objects .filter (o => o .getType () .includes (X3D .X3DConstants .X3DNode)));
+         nodes        = new X3D .MFNode (... objects .filter (o => o ?.getType () .includes (X3D .X3DConstants .X3DNode) ?? true));
 
       const
          browser = executionContext .getBrowser (),
@@ -298,7 +298,7 @@ module .exports = class Editor
       // Remove protos that already exists in context.
 
       const
-         nodes               = [... executionContext .rootNodes] .slice (rootNodes .length) .map (n => n .getValue ()),
+         nodes               = [... executionContext .rootNodes] .slice (rootNodes .length) .map (n => n ?.getValue ()),
          newExternProtos     = [... executionContext .externprotos] .slice (externprotos .size),
          newProtos           = [... executionContext .protos] .slice (protos .size),
          updatedExternProtos = new Map (),
