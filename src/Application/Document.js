@@ -131,13 +131,6 @@ module .exports = class Document extends Interface
 
       UndoManager .shared .addInterest (this, () => this .undoManager ());
 
-      // Override replaceWorld and loadURL.
-
-      this .#replaceWorld = X3D .X3DBrowser .prototype .replaceWorld;
-
-      X3D .X3DBrowser .prototype .loadURL      = () => Promise .resolve ();
-      X3D .X3DBrowser .prototype .replaceWorld = () => Promise .resolve ();
-
       // Connect browser options.
 
       const browserOptions = [
@@ -392,7 +385,7 @@ Viewpoint {
             ? await this .browser .createX3DFromURL (new X3D .MFString (fileURL))
             : null;
 
-         await this .#replaceWorld .call (this .browser, scene);
+         await this .browser .replaceWorld (scene);
 
          this .browser .currentScene .setSpecificationVersion (X3D .LATEST_VERSION);
       }
