@@ -6,7 +6,7 @@ const
    electron           = require ("electron"),
    fs                 = require ("fs"),
    path               = require ("path"),
-   X3D                = require ("../X3D"),
+   X3D                = require ("x_ite"),
    Interface          = require ("./Interface"),
    Splitter           = require ("../Controls/Splitter"),
    Dashboard          = require ("./Dashboard"),
@@ -130,6 +130,13 @@ module .exports = class Document extends Interface
       // Change undo menu items.
 
       UndoManager .shared .addInterest (this, () => this .undoManager ());
+
+      // Override replaceWorld and loadURL.
+
+      this .#replaceWorld = this .browser .replaceWorld;
+
+      this .browser .loadURL      = () => Promise .resolve ();
+      this .browser .replaceWorld = () => Promise .resolve ();
 
       // Connect browser options.
 
@@ -385,7 +392,7 @@ Viewpoint {
             ? await this .browser .createX3DFromURL (new X3D .MFString (fileURL))
             : null;
 
-         await this .browser .replaceWorld (scene);
+         await this .#replaceWorld .call (this .browser, scene);
 
          this .browser .currentScene .setSpecificationVersion (X3D .LATEST_VERSION);
       }
