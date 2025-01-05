@@ -4,8 +4,8 @@
   <head>
     <meta name='created' content='Thu, 02 Jan 2025 21:08:20 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.7.40, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 02 Jan 2025 21:12:01 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.7.41, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Sun, 05 Jan 2025 11:39:51 GMT'/>
   </head>
   <Scene>
     <WorldInfo
@@ -31,6 +31,10 @@
       <Shape>
         <Appearance>
           <Material/>
+          <PixelTexture
+              image='2 2 3
+                0xff 0xff00
+                0xff0000 0xff00ff'/>
         </Appearance>
         <Sphere/>
       </Shape>
