@@ -2,7 +2,7 @@
 <!-- X3D Unified Object Model (X3DUOM) X3dUnifiedObjectModel-4.0.xml -->
 <!-- Online at https://www.web3d.org/specifications/X3dUnifiedObjectModel-4.0.xml -->
 <!-- This file contains a listing of all abstract and concrete nodes in version 4.0 of X3D -->
-<!-- Generated 2024-12-10-08:00 12:33:23.8336395-08:00 -->
+<!-- Generated 2024-12-31-08:00 13:12:27.809051-08:00 -->
 <X3dUnifiedObjectModel xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
                        version="4.0"
                        xsd:noNamespaceSchemaLocation="X3dUnifiedObjectModel.xsd">
@@ -33510,6 +33510,7 @@
             <field name="name"
                    type="SFString"
                    accessType="inputOutput"
+                   use="required"
                    baseType="xs:NMTOKEN"
                    description="name of the prototype node being instanced."/>
             <field name="DEF"
@@ -38531,7 +38532,7 @@
                    accessType="inputOutput"
                    default="0 1 0"
                    inheritedFrom="X3DTextureProjectorNode"
-                   description="upVector describes the roll of the camera by saying which direction is up for the camera's orientation."/>
+                   description="upVector describes the roll of the camera by defining which direction is up for camera orientation."/>
             <field name="DEF"
                    type="SFString"
                    accessType="inputOutput"
@@ -38694,7 +38695,7 @@
                    accessType="inputOutput"
                    default="0 1 0"
                    inheritedFrom="X3DTextureProjectorNode"
-                   description="upVector describes the roll of the camera by saying which direction is up for the camera's orientation."/>
+                   description="upVector describes the roll of the camera by defining which direction is up for camera orientation."/>
             <field name="DEF"
                    type="SFString"
                    accessType="inputOutput"
