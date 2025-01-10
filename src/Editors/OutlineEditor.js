@@ -1971,7 +1971,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       event .preventDefault ();
       event .stopImmediatePropagation ();
 
-      if (!node ._loop .getValue ())
+      if (!node ._loop .getValue () && node ._startTime .getValue () >= node ._stopTime .getValue ())
          node ._isEvenLive = true;
 
       Editor .setFieldValue (this .browser .currentScene, node, node ._loop, !node ._loop .getValue ());
