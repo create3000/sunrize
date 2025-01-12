@@ -2926,7 +2926,7 @@ module .exports = class OutlineView extends Interface
          }
       });
 
-      element .find (".node:not([node-id=NULL])") .each ((i, e) =>
+      element .find (".node:not([node-id=NULL]), .imported-node, .exported-node") .each ((i, e) =>
       {
          const
             child = $(e),
