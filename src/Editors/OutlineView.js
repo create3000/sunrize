@@ -1247,7 +1247,9 @@ module .exports = class OutlineView extends Interface
       if (!this .browser .getActiveLayer ())
          return;
 
-      this .sceneGraph .find (`.node[node-id=${this .browser .getActiveLayer () .getId ()}], .exported-node[node-id=${this .browser .getActiveLayer () .getId ()}]`)
+      this .sceneGraph .find (`.node[node-id=${this .browser .getActiveLayer () .getId ()}],
+         .imported-node[node-id=${this .browser .getActiveLayer () .getId ()}],
+         .exported-node[node-id=${this .browser .getActiveLayer () .getId ()}]`)
          .find ("> .item .activate-layer")
          .removeClass ("off")
          .addClass ("green");
@@ -1256,7 +1258,9 @@ module .exports = class OutlineView extends Interface
    updateNodeBound (node)
    {
       this .sceneGraph
-         .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}]`)
+         .find (`.node[node-id=${node .getId ()}],
+         .imported-node[node-id=${node .getId ()}],
+         .exported-node[node-id=${node .getId ()}]`)
          .find ("> .item .bind-node")
          .removeClass (["on", "off"])
          .addClass (node ._isBound .getValue () ? "on" : "off")
@@ -1268,7 +1272,10 @@ module .exports = class OutlineView extends Interface
       const [className] = this .getLoadState (node .checkLoadState (), node .getTypeName ());
 
       this .sceneGraph
-         .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}], .externproto[node-id=${node .getId ()}]`)
+         .find (`.node[node-id=${node .getId ()}],
+         .imported-node[node-id=${node .getId ()}],
+         .exported-node[node-id=${node .getId ()}],
+         .externproto[node-id=${node .getId ()}]`)
          .find ("> .item .reload-node")
          .removeClass (["not-started-state", "in-progress-state", "complete-state", "failed-state"])
          .addClass (className);
@@ -1279,7 +1286,9 @@ module .exports = class OutlineView extends Interface
       const buttons = [ ];
 
       buttons .push (this .sceneGraph
-         .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}]`)
+         .find (`.node[node-id=${node .getId ()}],
+         .imported-node[node-id=${node .getId ()}],
+         .exported-node[node-id=${node .getId ()}]`)
          .find ("> .item .play-node")
          .removeClass (["on", "off"])
          .addClass (node ._isPaused .getValue () ? "on" : "off")
@@ -1287,13 +1296,17 @@ module .exports = class OutlineView extends Interface
          .text (node ._isActive .getValue () ? "pause" : "play_arrow"));
 
       buttons .push (this .sceneGraph
-         .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}]`)
+         .find (`.node[node-id=${node .getId ()}],
+         .imported-node[node-id=${node .getId ()}],
+         .exported-node[node-id=${node .getId ()}]`)
          .find ("> .item .stop-node")
          .removeClass (["on", "off"])
          .addClass (node ._isActive .getValue () ? "on" : "off"));
 
       buttons .push (this .sceneGraph
-         .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}]`)
+         .find (`.node[node-id=${node .getId ()}],
+         .imported-node[node-id=${node .getId ()}],
+         .exported-node[node-id=${node .getId ()}]`)
          .find ("> .item .loop-node")
          .removeClass (["on", "off"])
          .addClass (node ._loop .getValue () ? "on" : "off"));
@@ -1309,7 +1322,7 @@ module .exports = class OutlineView extends Interface
 
    isInParents (parent, node)
    {
-      return parent .closest (".node[node-id=" + node .getId () + "]", this .sceneGraph) .length;
+      return parent .closest (`.node[node-id=${node .getId ()}]`, this .sceneGraph) .length;
    }
 
    #importedNodeSymbol = Symbol ();
