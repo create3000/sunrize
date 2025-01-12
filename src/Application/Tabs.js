@@ -62,7 +62,8 @@ module .exports = new class Tabs
       $(window) .on ("beforeunload", () => this .close ());
 
       // Forward Actions
-
+      
+      this .forwardToAllTabs ("browser-update");
       this .forwardToAllTabs ("auto-save");
       this .forwardToActiveTab ("export-as");
 

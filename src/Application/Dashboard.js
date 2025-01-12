@@ -2,6 +2,7 @@
 
 const
    $         = require ("jquery"),
+   electron  = require ("electron"),
    Interface = require ("./Interface"),
    Editor    = require("../Undo/Editor"),
    _         = require ("./GetText");
@@ -65,18 +66,20 @@ module .exports = class Dashboard extends Interface
          .text ("edit_note")
          .appendTo (this .toolbar)
          .on ("click", () => this .togglePanel (!this .config .file .panel));
+
+      electron .ipcRenderer .on ("browser-update", (event, value) => this .config .global .play = value);
    }
 
    configure ()
    {
       this .config .file .setDefaultValues ({
          pointer: "arrow",
-         play: false,
+         play: this .config .global .play,
          panel: false,
       });
 
       this [this .config .file .pointer] ();
-      this .play (this .config .file .play && !this .isInitialScene);
+      this .play ((this .config .file .play) && !this .isInitialScene);
       this .straighten (this .browser .getBrowserOption ("StraightenHorizon"));
 
       if (this .config .file .panel)

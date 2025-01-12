@@ -58,16 +58,17 @@ module .exports = class Application
       };
 
       this .config .setDefaultValues ({
-         position: [undefined, undefined],
-         size: [1100, 680],
-         maximized: false,
-         fullscreen: false,
          autoSave: true,
+         browserUpdate: false,
          expandExternProtoDeclarations: true,
-         expandPrototypeInstances: true,
          expandInlineNodes: true,
+         expandPrototypeInstances: true,
+         fullscreen: false,
+         maximized: false,
+         position: [undefined, undefined],
          recentDocuments: [ ],
          recentLocations: [ ],
+         size: [1100, 680],
       });
 
       Template .create (path .join (__dirname, "../assets/html/application-template.html"));
@@ -284,6 +285,17 @@ module .exports = class Application
                      label: _("Reload"),
                      accelerator: "F5",
                      click: () => this .mainWindow .webContents .send ("reload"),
+                  },
+                  { type: "separator" },
+                  {
+                     label: _("Default Play Button State"),
+                     type: "checkbox",
+                     checked: this .config .browserUpdate,
+                     click: () =>
+                     {
+                        this .config .browserUpdate = !this .config .browserUpdate;
+                        this .mainWindow .webContents .send ("browser-update", this .config .browserUpdate);
+                     },
                   },
                   { type: "separator" },
                   {
