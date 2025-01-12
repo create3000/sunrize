@@ -2996,12 +2996,12 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       const
          instance  = node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance),
          name      = field .getName (),
-         auxillary = field .create ();
+         auxiliary = field .create ();
 
-      auxillary .setUnit (field .getUnit ());
-      auxillary .fromString (string, executionContext);
+      auxiliary .setUnit (field .getUnit ());
+      auxiliary .fromString (string, executionContext);
 
-      if (auxillary .equals (field))
+      if (auxiliary .equals (field))
       {
          field .addEvent ();
          return;
@@ -3014,7 +3014,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       else
          undoManager .beginUndo (_("Change Field »%s« of Node %s"), field .getName (), node .getTypeName ());
 
-      field .assign (auxillary);
+      field .assign (auxiliary);
 
       if (node .isDefaultValue (field))
          field .setModificationTime (0);
@@ -3045,11 +3045,11 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       const
          instance  = node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance),
          name      = field .getName (),
-         auxillary = field .create ();
+         auxiliary = field .create ();
 
-      auxillary .setValue (value);
+      auxiliary .setValue (value);
 
-      if (auxillary .equals (field))
+      if (auxiliary .equals (field))
       {
          field .addEvent ();
          return;
@@ -3062,7 +3062,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       else
          undoManager .beginUndo (_("Change Field »%s« of Node %s"), field .getName (), node .getTypeName ());
 
-      field .assign (auxillary);
+      field .assign (auxiliary);
 
       if (node .isDefaultValue (field))
          field .setModificationTime (0);
