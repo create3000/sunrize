@@ -680,7 +680,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
                // Remove imported nodes if node is an Inline node.
 
-               for (const importedNode of executionContext .getImportedNodes ())
+               for (const importedNode of Array .from (executionContext .getImportedNodes ()))
                {
                   if (importedNode .getInlineNode () .valueOf () === node)
                      this .removeImportedNode (executionContext, importedNode .getImportedName (), undoManager);
@@ -690,7 +690,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
                if (executionContext instanceof X3D .X3DScene)
                {
-                  for (const exportedNode of executionContext .getExportedNodes ())
+                  for (const exportedNode of Array .from (executionContext .getExportedNodes ()))
                   {
                      if (exportedNode .getLocalNode () .valueOf () === node)
                         this .removeExportedNode (executionContext, exportedNode .getExportedName (), undoManager);
