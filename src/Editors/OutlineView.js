@@ -3021,7 +3021,7 @@ module .exports = class OutlineView extends Interface
       const
          icon    = $(event .currentTarget) ,
          item    = icon .closest (".item", this .sceneGraph),
-         element = icon .closest (".node, .exported-node", this .sceneGraph),
+         element = icon .closest (".node, .exported-node, .imported-node", this .sceneGraph),
          node    = this .objects .get (parseInt (element .attr ("node-id"))),
          on      = !!item .attr ("data-hasqtip");
 
@@ -3112,7 +3112,7 @@ module .exports = class OutlineView extends Interface
    {
       const
          target  = $(event .target),
-         element = target .closest (".node, .exported-node", this .sceneGraph),
+         element = target .closest (".node, .exported-node, .imported-node", this .sceneGraph),
          node    = this .getNode (element),
          tool    = node .getTool ();
 
@@ -3131,7 +3131,7 @@ module .exports = class OutlineView extends Interface
 
       node .setUserData (_changing, true);
 
-      this .sceneGraph .find (`.node[node-id=${node .getId ()}] > .item .toggle-tool, .exported-node[node-id=${node .getId ()}] > .item .toggle-tool`)
+      this .sceneGraph .find (`.node[node-id=${node .getId ()}] > .item .toggle-tool, .exported-node[node-id=${node .getId ()}] > .item .toggle-tool, .imported-node[node-id=${node .getId ()}] > .item .toggle-tool`)
          .removeClass (["on", "off"])
          .addClass (tool ? "off" : "on");
    }
@@ -3142,7 +3142,7 @@ module .exports = class OutlineView extends Interface
    {
       const
          target  = $(event .target),
-         element = target .closest (".node, .exported-node", this .sceneGraph),
+         element = target .closest (".node, .exported-node, .imported-node", this .sceneGraph),
          node    = this .getNode (element);
 
       event .preventDefault ();
@@ -3161,7 +3161,7 @@ module .exports = class OutlineView extends Interface
    {
       const
          target  = $(event .target),
-         element = target .closest (".node, .exported-node, .externproto", this .sceneGraph),
+         element = target .closest (".node, .exported-node, .imported-node, .externproto", this .sceneGraph),
          item    = target .closest (".item"),
          node    = this .getNode (element);
 
@@ -3196,7 +3196,7 @@ module .exports = class OutlineView extends Interface
 
          node .setHidden (node .getType () .includes (X3D .X3DConstants .X3DShapeNode));
 
-         this .sceneGraph .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}]`)
+         this .sceneGraph .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}], .imported-node[node-id=${node .getId ()}]`)
             .find ("> .item .toggle-visibility")
             .removeClass (["on", "off"])
             .addClass (node .isHidden () ? "off" : "on")
@@ -3222,7 +3222,7 @@ module .exports = class OutlineView extends Interface
 
          node .setHidden (false);
 
-         this .sceneGraph .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}]`)
+         this .sceneGraph .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}], .imported-node[node-id=${node .getId ()}]`)
             .find ("> .item .toggle-visibility")
             .removeClass ("off")
             .addClass ("on")
@@ -3246,7 +3246,7 @@ module .exports = class OutlineView extends Interface
 
          node .setHidden (false);
 
-         this .sceneGraph .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}]`)
+         this .sceneGraph .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}], .imported-node[node-id=${node .getId ()}]`)
             .find ("> .item .toggle-visibility")
             .removeClass ("off")
             .addClass ("on")
@@ -3268,7 +3268,7 @@ module .exports = class OutlineView extends Interface
 
          node .setHidden (false);
 
-         this .sceneGraph .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}]`)
+         this .sceneGraph .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}], .imported-node[node-id=${node .getId ()}]`)
             .find ("> .item .toggle-visibility")
             .removeClass ("off")
             .addClass ("on")
