@@ -2852,8 +2852,8 @@ module .exports = class OutlineView extends Interface
       element .find (".scene") .addBack (".scene") .each ((i, e) =>
       {
          const
-            element = $(e),
-            scene   = this .getNode (element);
+            child = $(e),
+            scene = this .getNode (child);
 
          scene .externprotos  .removeInterest ("updateSceneSubtree", this);
          scene .protos        .removeInterest ("updateSceneSubtree", this);
@@ -2874,8 +2874,8 @@ module .exports = class OutlineView extends Interface
       element .find (".externproto") .addBack (".externproto") .each ((i, e) =>
       {
          const
-            element = $(e),
-            node    = this .getNode (element);
+            child = $(e),
+            node = this .getNode (child);
 
          node .getLoadState () .removeFieldCallback (this .#updateNodeSymbol);
       });
@@ -2885,12 +2885,12 @@ module .exports = class OutlineView extends Interface
       element .find (".node:not([node-id=NULL]), .exported-node")
          .addBack (".node:not([node-id=NULL]), .exported-node") .each ((i, e) =>
       {
-         const element = $(e);
+         const child = $(e);
 
-         if (!element .jstree ("is_open", element))
+         if (!child .jstree ("is_open", child))
             return;
 
-         const node = this .getNode (element);
+         const node = this .getNode (child);
 
          node .getPredefinedFields ()  .removeInterest ("updateNode", this);
          node .getUserDefinedFields () .removeInterest ("updateNode", this);
@@ -2911,8 +2911,16 @@ module .exports = class OutlineView extends Interface
       element .find (".node:not([node-id=NULL])") .each ((i, e) =>
       {
          const
-            element = $(e),
-            node    = this .getNode (element);
+            child = $(e),
+            node  = this .getNode (child);
+
+         // If node is somewhere else, don't disconnect.
+         if (Array .from (this .sceneGraph .find (`.node[node-id="${node .getId ()}"],
+            .exported-node[node-id="${node .getId ()}"]`))
+            .some (s => !$(s) .closest (element) .length))
+         {
+            return;
+         }
 
          node .typeName_changed .removeFieldCallback (this .#nodeSymbol);
          node .name_changed     .removeFieldCallback (this .#nodeSymbol);
@@ -2947,8 +2955,8 @@ module .exports = class OutlineView extends Interface
       element .find (".exported-node") .each ((i, e) =>
       {
          const
-            element = $(e),
-            node    = this .getNode (element);
+            child = $(e),
+            node = this .getNode (child);
 
          node .typeName_changed .removeFieldCallback (this .#exportedNodeSymbol);
          node .name_changed     .removeFieldCallback (this .#exportedNodeSymbol);
@@ -2957,8 +2965,8 @@ module .exports = class OutlineView extends Interface
       element .find (".field, .special") .each ((i, e) =>
       {
          const
-            element = $(e),
-            field   = this .getField (element);
+            child = $(e),
+            field   = this .getField (child);
 
          field .removeReferencesCallback (this .#fieldSymbol);
          field .removeRouteCallback (this .#fieldSymbol);
@@ -2974,8 +2982,8 @@ module .exports = class OutlineView extends Interface
          element .each ((i, e) =>
          {
             const
-               element = $(e),
-               field   = this .getField (element);
+               child = $(e),
+               field = this .getField (child);
 
             field .removeRouteCallback (this .#routesFullSymbol);
             field .removeFieldCallback (this .#fieldValueSymbol);
