@@ -2916,7 +2916,8 @@ module .exports = class OutlineView extends Interface
 
          // If node is somewhere else, don't disconnect.
          if (Array .from (this .sceneGraph .find (`.node[node-id="${node .getId ()}"],
-            .exported-node[node-id="${node .getId ()}"]`))
+            .exported-node[node-id="${node .getId ()}"],
+            .imported-node[node-id="${node .getId ()}"]`))
             .some (s => !$(s) .closest (element) .length))
          {
             return;
@@ -3101,7 +3102,9 @@ module .exports = class OutlineView extends Interface
 
       node .setHidden (hidden);
 
-      this .sceneGraph .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}], .imported-node[node-id=${node .getId ()}]`)
+      this .sceneGraph .find (`.node[node-id=${node .getId ()}],
+         .exported-node[node-id=${node .getId ()}],
+         .imported-node[node-id=${node .getId ()}]`)
          .find ("> .item .toggle-visibility")
          .removeClass (["on", "off"])
          .addClass (hidden ? "off" : "on")
@@ -3131,7 +3134,9 @@ module .exports = class OutlineView extends Interface
 
       node .setUserData (_changing, true);
 
-      this .sceneGraph .find (`.node[node-id=${node .getId ()}] > .item .toggle-tool, .exported-node[node-id=${node .getId ()}] > .item .toggle-tool, .imported-node[node-id=${node .getId ()}] > .item .toggle-tool`)
+      this .sceneGraph .find (`.node[node-id=${node .getId ()}] > .item .toggle-tool,
+         .exported-node[node-id=${node .getId ()}] > .item .toggle-tool,
+         .imported-node[node-id=${node .getId ()}] > .item .toggle-tool`)
          .removeClass (["on", "off"])
          .addClass (tool ? "off" : "on");
    }
@@ -3196,7 +3201,9 @@ module .exports = class OutlineView extends Interface
 
          node .setHidden (node .getType () .includes (X3D .X3DConstants .X3DShapeNode));
 
-         this .sceneGraph .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}], .imported-node[node-id=${node .getId ()}]`)
+         this .sceneGraph .find (`.node[node-id=${node .getId ()}],
+            .exported-node[node-id=${node .getId ()}],
+            .imported-node[node-id=${node .getId ()}]`)
             .find ("> .item .toggle-visibility")
             .removeClass (["on", "off"])
             .addClass (node .isHidden () ? "off" : "on")
@@ -3222,7 +3229,9 @@ module .exports = class OutlineView extends Interface
 
          node .setHidden (false);
 
-         this .sceneGraph .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}], .imported-node[node-id=${node .getId ()}]`)
+         this .sceneGraph .find (`.node[node-id=${node .getId ()}],
+            .exported-node[node-id=${node .getId ()}],
+            .imported-node[node-id=${node .getId ()}]`)
             .find ("> .item .toggle-visibility")
             .removeClass ("off")
             .addClass ("on")
@@ -3246,7 +3255,9 @@ module .exports = class OutlineView extends Interface
 
          node .setHidden (false);
 
-         this .sceneGraph .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}], .imported-node[node-id=${node .getId ()}]`)
+         this .sceneGraph .find (`.node[node-id=${node .getId ()}],
+            .exported-node[node-id=${node .getId ()}],
+            .imported-node[node-id=${node .getId ()}]`)
             .find ("> .item .toggle-visibility")
             .removeClass ("off")
             .addClass ("on")
@@ -3268,7 +3279,9 @@ module .exports = class OutlineView extends Interface
 
          node .setHidden (false);
 
-         this .sceneGraph .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}], .imported-node[node-id=${node .getId ()}]`)
+         this .sceneGraph .find (`.node[node-id=${node .getId ()}],
+            .exported-node[node-id=${node .getId ()}],
+            .imported-node[node-id=${node .getId ()}]`)
             .find ("> .item .toggle-visibility")
             .removeClass ("off")
             .addClass ("on")
