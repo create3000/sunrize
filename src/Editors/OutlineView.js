@@ -2975,7 +2975,7 @@ module .exports = class OutlineView extends Interface
       {
          const
             child = $(e),
-            node = this .getNode (child);
+            node  = this .getNode (child);
 
          node .typeName_changed .removeFieldCallback (this .#exportedNodeSymbol);
          node .name_changed     .removeFieldCallback (this .#exportedNodeSymbol);
@@ -2985,7 +2985,7 @@ module .exports = class OutlineView extends Interface
       {
          const
             child = $(e),
-            field   = this .getField (child);
+            field = this .getField (child);
 
          field .removeReferencesCallback (this .#fieldSymbol);
          field .removeRouteCallback (this .#fieldSymbol);
