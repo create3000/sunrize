@@ -1,11 +1,11 @@
-"use strict"
+"use strict";
 
 const
    $ = require ("jquery"),
-   _ = require ("../Application/GetText")
+   _ = require ("../Application/GetText");
 
-require ("./Popover")
-require ("./RenameNodeInput")
+require ("./Popover");
+require ("./RenameNodeInput");
 
 $.fn.renameNodePopover = function (node)
 {
@@ -13,7 +13,7 @@ $.fn.renameNodePopover = function (node)
 
    const nameInput = $("<input></input>")
       .attr ("placeholder", _("Enter name"))
-      .renameNodeInput (node)
+      .renameNodeInput (node);
 
    // Create tooltip.
 
@@ -22,19 +22,19 @@ $.fn.renameNodePopover = function (node)
       events: {
          show: (event, api) =>
          {
-            nameInput .on ("keydown.renameNodePopover", (event) =>
+            nameInput .off (".renameNodePopover") .on ("keydown.renameNodePopover", (event) =>
             {
                if (event .key !== "Enter")
-                  return
+                  return;
 
-               api .toggle (false)
+               api .toggle (false);
             })
 
-            setTimeout (() => nameInput .trigger ("select"), 1)
+            setTimeout (() => nameInput .trigger ("select"), 1);
          },
       },
-   })
+   });
 
-   return this
-}
+   return this;
+};
 

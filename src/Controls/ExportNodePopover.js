@@ -26,7 +26,7 @@ $.fn.exportNodePopover = function (node, oldExportedName)
       events: {
          show: (event, api) =>
          {
-            nameInput .validate (Editor .Id, () =>
+            nameInput .off () .validate (Editor .Id, () =>
             {
                electron .shell .beep ();
                nameInput .highlight ();

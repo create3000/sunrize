@@ -3092,7 +3092,7 @@ module .exports = class OutlineView extends Interface
    {
       const
          target  = $(event .target),
-         element = target .closest (".node, .exported-node", this .sceneGraph),
+         element = target .closest (".node, .exported-node, .imported-node", this .sceneGraph),
          node    = this .getNode (element),
          hidden  = !node .isHidden ();
 
@@ -3101,7 +3101,7 @@ module .exports = class OutlineView extends Interface
 
       node .setHidden (hidden);
 
-      this .sceneGraph .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}]`)
+      this .sceneGraph .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}], .imported-node[node-id=${node .getId ()}]`)
          .find ("> .item .toggle-visibility")
          .removeClass (["on", "off"])
          .addClass (hidden ? "off" : "on")

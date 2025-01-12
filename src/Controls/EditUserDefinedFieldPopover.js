@@ -135,7 +135,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
       events: {
          show (event, api)
          {
-            nameInput .validate (Editor .Id, () =>
+            nameInput .off () .validate (Editor .Id, () =>
             {
                electron .shell .beep ();
                nameInput .highlight ();
