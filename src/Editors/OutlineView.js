@@ -1092,6 +1092,9 @@ module .exports = class OutlineView extends Interface
          {
             case X3D .X3DConstants .X3DLayerNode:
             {
+               if (node .getExecutionContext () !== this .executionContext)
+                  continue;
+
                buttons .push ($("<span></span>")
                   .attr ("order", "2")
                   .attr ("title", _("Activate layer."))
