@@ -1,12 +1,17 @@
 "use strict";
 
-module .exports = class LibraryPanel
+module .exports = class LibraryPane
 {
    #library;
 
    constructor (library)
    {
       this .#library = library;
+   }
+
+   get config ()
+   {
+      return this .#library .config;
    }
 
    get browser ()

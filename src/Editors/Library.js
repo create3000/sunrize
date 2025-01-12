@@ -31,6 +31,10 @@ module .exports = new class Library extends Dialog
 
       // Set default config values.
 
+      this .config .global .setDefaultValues ({
+         recentNodes: [ ],
+      });
+
       this .config .file .setDefaultValues ({
          type: this .panes [0] .id,
       });
@@ -97,7 +101,9 @@ module .exports = new class Library extends Dialog
 
       this .button ($(button ?? this .buttons .children () [0]));
 
+      this .input .val ("");
       this .input .trigger ("focus");
+      this .filter ();
    }
 
    button (button)

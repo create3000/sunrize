@@ -48,7 +48,32 @@ module .exports = class NodesLibrary extends LibraryPane
          .sort ((a, b) => a .typeName .localeCompare (b .typeName))
          .sort ((a, b) => a .componentInfo .name .localeCompare (b .componentInfo .name));
 
-      // Create list for proto elements
+      // Get recently used elements.
+
+      const recentNodes = this .config .global .recentNodes .map (typeName => this .browser .getConcreteNode (typeName));
+
+      // Create list for recently used elements.
+
+      if (recentNodes .length)
+      {
+         $("<li></li>")
+            .addClass ("component")
+            .attr ("name", "recent")
+            .text ("Recently Used Nodes")
+            .appendTo (this .#list);
+
+         for (const node of recentNodes)
+         {
+            $("<li></li>")
+               .addClass ("node")
+               .text (node .typeName)
+               .attr ("componentName", node .componentInfo .name)
+               .appendTo (this .#list)
+               .on ("dblclick", () => this .createNode (node .typeName, node .componentInfo .name));
+         }
+      }
+
+      // Create list for proto elements.
 
       if (protos .length)
       {
@@ -129,6 +154,13 @@ module .exports = class NodesLibrary extends LibraryPane
 
    async createNode (typeName, componentName)
    {
+      const recentNodes = this .config .global .recentNodes .filter (name => name !== typeName);
+
+      recentNodes .unshift (typeName);
+      recentNodes .splice (10);
+
+      this .config .global .recentNodes = recentNodes;
+
       UndoManager .shared .beginUndo (_("Create Node %s"), typeName);
 
       await Editor .addComponent (this .executionContext, componentName);
