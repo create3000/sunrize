@@ -17,6 +17,14 @@ module .exports = class NodesLibrary extends LibraryPane
 
    open ()
    {
+      // Set default config values.
+
+      this .config .global .setDefaultValues ({
+         recentNodes: [ ],
+      });
+
+      // Clear output.
+
       this .#list ?.remove ();
       this .#list = undefined;
    }

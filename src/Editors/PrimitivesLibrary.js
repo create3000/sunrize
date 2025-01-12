@@ -11,6 +11,20 @@ module .exports = class PrimitivesLibrary extends LibraryPane
 
    #list;
 
+   open ()
+   {
+      // Set default config values.
+
+      this .config .global .setDefaultValues ({
+         recentPrimitives: [ ],
+      });
+
+      // Clear output.
+
+      this .#list ?.remove ();
+      this .#list = undefined;
+   }
+
    update ()
    {
       // Fill output.
@@ -33,6 +47,30 @@ module .exports = class PrimitivesLibrary extends LibraryPane
          .sort ((a, b) => a .typeName .localeCompare (b .typeName))
          .sort ((a, b) => a .componentInfo .name .localeCompare (b .componentInfo .name));
 
+      // Get recently used primitives.
+
+      const recentPrimitives = this .config .global .recentPrimitives;
+
+      // Create list for recently used elements.
+
+      if (recentPrimitives .length)
+      {
+         $("<li></li>")
+            .addClass ("component")
+            .attr ("name", "recent")
+            .text ("Recently Used Primitives")
+            .appendTo (this .#list);
+
+         for (const typeName of recentPrimitives)
+         {
+            $("<li></li>")
+               .addClass ("node")
+               .text (typeName)
+               .appendTo (this .#list)
+               .on ("dblclick", () => this .createRecentNode (nodes, typeName));
+         }
+      }
+
       // Create list elements.
 
       let componentName = "";
@@ -52,9 +90,27 @@ module .exports = class PrimitivesLibrary extends LibraryPane
          $("<li></li>")
             .addClass ("node")
             .text (node .typeName)
-            .attr ("x3dSyntax", node .x3dSyntax)
             .appendTo (this .#list)
-            .on ("dblclick", () => this .importX3D (node .typeName, node .x3dSyntax));
+            .on ("dblclick", () => this .createNode (node));
       }
+   }
+
+   createRecentNode (nodes, typeName)
+   {
+      const node = nodes .find (node => node .typeName === typeName);
+
+      this .createNode (node);
+   }
+
+   createNode ({ typeName, x3dSyntax})
+   {
+      const recentPrimitives = this .config .global .recentPrimitives .filter (name => name !== typeName);
+
+      recentPrimitives .unshift (typeName);
+      recentPrimitives .splice (10);
+
+      this .config .global .recentPrimitives = recentPrimitives;
+
+      this .importX3D (typeName, x3dSyntax);
    }
 };

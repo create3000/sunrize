@@ -31,10 +31,6 @@ module .exports = new class Library extends Dialog
 
       // Set default config values.
 
-      this .config .global .setDefaultValues ({
-         recentNodes: [ ],
-      });
-
       this .config .file .setDefaultValues ({
          type: this .panes [0] .id,
       });
