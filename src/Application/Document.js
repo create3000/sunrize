@@ -177,15 +177,7 @@ module .exports = class Document extends Interface
 
       this .browser .updateConcreteNode (require ("../Components/Grouping/StaticGroup"));
 
-      X3D .NurbsSweptSurface .prototype .traverse = function (type, renderObject)
-      {
-         this .getTrajectoryCurve () ?.traverse (type, renderObject);
-      };
-
-      X3D .NurbsSwungSurface .prototype .traverse = function (type, renderObject)
-      {
-         this .getTrajectoryCurve () ?.traverse (type, renderObject);
-      };
+      require ("../Components");
 
       // Restore
 
