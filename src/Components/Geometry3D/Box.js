@@ -8,6 +8,8 @@ X3D .Box .prototype .toPrimitive = function (executionContext = this .getExecuti
 	   geometry = executionContext .createNode ("IndexedFaceSet"),
       size1_2  = this ._size .divide (2);
 
+	geometry ._solid = this ._solid;
+
 	geometry .texCoord = texCoord;
 	geometry .coord    = coord;
 

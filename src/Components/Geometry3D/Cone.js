@@ -1,11 +1,11 @@
 const X3D = require ("../../X3D");
 
-X3D .Cylinder .prototype .toPrimitive = function (executionContext = this .getExecutionContext ())
+X3D .Cone .prototype .toPrimitive = function (executionContext = this .getExecutionContext ())
 {
    const
       browser   = this .getBrowser (),
-      geometry  = browser .getCylinderOptions () .getSideGeometry () .copy (executionContext),
-      radius    = this ._radius .getValue (),
+      geometry  = browser .getConeOptions () .getSideGeometry () .copy (executionContext),
+      radius    = this ._bottomRadius .getValue (),
       height1_2 = this ._height .getValue () / 2;
 
    geometry ._solid = this ._solid;
@@ -28,27 +28,15 @@ X3D .Cylinder .prototype .toPrimitive = function (executionContext = this .getEx
       geometry ._coordIndex    .length = 0;
    }
 
-   if (this ._top .getValue ())
-   {
-      for (const index of browser .getCylinderOptions () .getTopGeometry () ._texCoordIndex)
-         geometry ._texCoordIndex .push (index);
-
-      for (const index of browser .getCylinderOptions () .getTopGeometry () ._normalIndex)
-         geometry ._normalIndex .push (index);
-
-      for (const index of browser .getCylinderOptions () .getTopGeometry () ._coordIndex)
-         geometry ._coordIndex .push (index);
-   }
-
    if (this ._bottom .getValue ())
    {
-      for (const index of browser .getCylinderOptions () .getBottomGeometry () ._texCoordIndex)
+      for (const index of browser .getConeOptions () .getBottomGeometry () ._texCoordIndex)
          geometry ._texCoordIndex .push (index);
 
-      for (const index of browser .getCylinderOptions () .getBottomGeometry () ._normalIndex)
+      for (const index of browser .getConeOptions () .getBottomGeometry () ._normalIndex)
          geometry ._normalIndex .push (index);
 
-      for (const index of browser .getCylinderOptions () .getBottomGeometry () ._coordIndex)
+      for (const index of browser .getConeOptions () .getBottomGeometry () ._coordIndex)
          geometry ._coordIndex .push (index);
    }
 

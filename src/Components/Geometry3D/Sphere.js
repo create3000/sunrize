@@ -7,6 +7,8 @@ X3D .Sphere .prototype .toPrimitive = function (executionContext = this .getExec
       geometry = browser .getSphereOptions () .getGeometry () .copy (executionContext),
       radius   = this ._radius .getValue ();
 
+   geometry ._solid = this ._solid;
+
    geometry ._texCoord = geometry ._texCoord .getValue () .copy (executionContext);
    geometry ._coord    = geometry ._coord    .getValue () .copy (executionContext);
 
