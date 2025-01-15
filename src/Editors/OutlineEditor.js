@@ -390,6 +390,19 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
                      continue;
                   }
+                  case X3D .X3DConstants .X3DGeometryNode:
+                  {
+                     if (!node .toPrimitive)
+                        continue;
+
+                     menu .push (
+                     {
+                        label: _("Convert Node to Next Lower Primitive"),
+                        args: ["toPrimitive", element .attr ("id"), executionContext .getId (), node .getId ()],
+                     });
+
+                     continue;
+                  }
                   case X3D .X3DConstants .ImageTexture:
                   {
                      if (node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE)
@@ -492,19 +505,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                      menu .push ({
                         label: _("Move Viewpoint to User Position"),
                         args: ["moveViewpointToUserPosition", element .attr ("id"), executionContext .getId (), node .getId ()],
-                     });
-
-                     continue;
-                  }
-                  case X3D .X3DConstants .X3DGeometryNode:
-                  {
-                     if (!node .toPrimitive)
-                        continue;
-
-                     menu .push (
-                     {
-                        label: _("Convert Node to Next Lower Primitive"),
-                        args: ["toPrimitive", element .attr ("id"), executionContext .getId (), node .getId ()],
                      });
 
                      continue;
