@@ -248,7 +248,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                   args: ["addUserDefinedField", element .attr ("id"), executionContext .getId (), node .getId ()],
                },
                { type: "separator" },
-               {
+            ];
+
+            if (node .getType () .includes (X3D .X3DConstants .X3DChildNode))
+            {
+               menu .push ({
                   label: _("Add Parent Group"),
                   submenu: [
                      {
@@ -358,8 +362,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                   enabled: parentNodeElement .hasClass ("node"),
                   args: ["removeParent", element .attr ("id"), executionContext .getId (), node .getId ()],
                },
-               { type: "separator" },
-            ];
+               { type: "separator" });
+            }
 
             for (const type of node .getType () .toReversed ())
             {
@@ -488,6 +492,19 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                      menu .push ({
                         label: _("Move Viewpoint to User Position"),
                         args: ["moveViewpointToUserPosition", element .attr ("id"), executionContext .getId (), node .getId ()],
+                     });
+
+                     continue;
+                  }
+                  case X3D .X3DConstants .X3DGeometryNode:
+                  {
+                     if (!node .toPrimitive)
+                        continue;
+
+                     menu .push (
+                     {
+                        label: _("Convert Node to Next Lower Primitive"),
+                        args: ["toPrimitive", element .attr ("id"), executionContext .getId (), node .getId ()],
                      });
 
                      continue;
@@ -1804,6 +1821,42 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          }
 
          break;
+      }
+
+      UndoManager .shared .endUndo ();
+   }
+
+   toPrimitive (id, executionContextId, nodeId)
+   {
+      const
+         element            = $(`#${id}`),
+         executionContext   = this .objects .get (executionContextId),
+         parentFieldElement = element .closest (".field, .scene", this .sceneGraph),
+         parentNodeElement  = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
+         parentNode         = this .getNode (parentNodeElement),
+         parentField        = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement),
+         node               = this .objects .get (nodeId),
+         primitive          = node .toPrimitive (executionContext),
+         index              = parseInt (element .attr ("index"));
+
+      UndoManager .shared .beginUndo (_("Convert Node to Next Lower Primitive"));
+
+      if (node .getName ())
+         Editor .updateNamedNode (executionContext, executionContext .getUniqueName (node .getName ()), primitive);
+
+      switch (parentField .getType ())
+      {
+         case X3D .X3DConstants .SFNode:
+         {
+            Editor .setFieldValue (executionContext, parentNode, parentField, primitive);
+            break;
+         }
+         case X3D .X3DConstants .MFNode:
+         {
+            Editor .removeValueFromArray (executionContext, parentNode, parentField, index);
+            Editor .insertValueIntoArray (executionContext, parentNode, parentField, index, primitive);
+            break;
+         }
       }
 
       UndoManager .shared .endUndo ();
