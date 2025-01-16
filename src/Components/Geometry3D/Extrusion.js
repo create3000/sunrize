@@ -25,6 +25,9 @@ X3D .Extrusion .prototype .toPrimitive = function (executionContext = this .getE
       numSpines_1        = numSpines - 1,
       numCrossSections_1 = numCrossSections - 1;
 
+   if (numSpines < 2 || numCrossSections < 2)
+      return geometry;
+
    const closedSpine = this .getClosed (this ._spine)
       && this .getClosed (this ._orientation)
       && this .getClosed (this ._scale);
