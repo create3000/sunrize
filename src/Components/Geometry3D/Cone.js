@@ -8,10 +8,13 @@ X3D .Cone .prototype .toPrimitive = function (executionContext = this .getExecut
       radius    = this ._bottomRadius .getValue (),
       height1_2 = this ._height .getValue () / 2;
 
-   geometry ._solid = this ._solid;
+   geometry ._coordIndex  = [ ];
+   geometry ._normalIndex = [ ];
+   geometry ._solid       = this ._solid;
+   geometry ._creaseAngle = Math .PI;
 
    geometry ._texCoord = geometry ._texCoord .getValue () .copy (executionContext);
-   geometry ._normal   = geometry ._normal   .getValue () .copy (executionContext);
+   geometry ._normal   = null;
    geometry ._coord    = geometry ._coord    .getValue () .copy (executionContext);
 
    for (const point of geometry ._coord .point)
@@ -21,11 +24,26 @@ X3D .Cone .prototype .toPrimitive = function (executionContext = this .getExecut
       point .z *= radius;
    }
 
-   if (!this ._side .getValue ())
+   if (this ._side .getValue ())
+   {
+      const last = geometry ._coord .point .length - 1;
+
+      for (const index of browser .getConeOptions () .getSideGeometry () ._coordIndex)
+      {
+         if (index < 0 || index !== last)
+         {
+            geometry ._coordIndex .push (index);
+         }
+         else
+         {
+            geometry ._coordIndex .push (geometry ._coord .point .length);
+            geometry ._coord .point .push (geometry ._coord .point [index]);
+         }
+      }
+   }
+   else
    {
       geometry ._texCoordIndex .length = 0;
-      geometry ._normalIndex   .length = 0;
-      geometry ._coordIndex    .length = 0;
    }
 
    if (this ._bottom .getValue ())
@@ -33,17 +51,23 @@ X3D .Cone .prototype .toPrimitive = function (executionContext = this .getExecut
       for (const index of browser .getConeOptions () .getBottomGeometry () ._texCoordIndex)
          geometry ._texCoordIndex .push (index);
 
-      for (const index of browser .getConeOptions () .getBottomGeometry () ._normalIndex)
-         geometry ._normalIndex .push (index);
-
       for (const index of browser .getConeOptions () .getBottomGeometry () ._coordIndex)
-         geometry ._coordIndex .push (index);
+      {
+         if (index < 0)
+         {
+            geometry ._coordIndex .push (-1);
+         }
+         else
+         {
+            geometry ._coordIndex .push (geometry ._coord .point .length);
+            geometry ._coord .point .push (geometry ._coord .point [index]);
+         }
+      }
    }
 
    // geometry .optimize ();
 
    geometry ._texCoord .getValue () .setup ();
-   geometry ._normal   .getValue () .setup ();
    geometry ._coord    .getValue () .setup ();
    geometry .setup ();
 
