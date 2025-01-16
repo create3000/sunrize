@@ -40,6 +40,8 @@ X3D .Cone .prototype .toPrimitive = function (executionContext = this .getExecut
          geometry ._coordIndex .push (index);
    }
 
+   // geometry .optimize ();
+
    geometry ._texCoord .getValue () .setup ();
    geometry ._normal   .getValue () .setup ();
    geometry ._coord    .getValue () .setup ();

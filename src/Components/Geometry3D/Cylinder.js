@@ -52,6 +52,8 @@ X3D .Cylinder .prototype .toPrimitive = function (executionContext = this .getEx
          geometry ._coordIndex .push (index);
    }
 
+   // geometry .optimize ();
+
    geometry ._texCoord .getValue () .setup ();
    geometry ._normal   .getValue () .setup ();
    geometry ._coord    .getValue () .setup ();

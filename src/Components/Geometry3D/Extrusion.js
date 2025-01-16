@@ -174,5 +174,7 @@ X3D .Extrusion .prototype .toPrimitive = function (executionContext = this .getE
       geometry .texCoordIndex .push (-1);
    }
 
+   // geometry .getValue () .optimize ();
+
    return geometry;
 };
