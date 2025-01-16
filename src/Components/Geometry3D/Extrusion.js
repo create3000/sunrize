@@ -80,6 +80,8 @@ X3D .Extrusion .prototype .toPrimitive = function (executionContext = this .getE
       }
    }
 
+   const texCoordPoints = [ ];
+
    for (let s = 0; s < numSpines; ++ s)
    {
       for (let c = 0; c < numCrossSections; ++ c)
@@ -88,15 +90,15 @@ X3D .Extrusion .prototype .toPrimitive = function (executionContext = this .getE
             tx = c / numCrossSections_1,
             ty = s / numSpines_1;
 
-         texCoord .point .push (new X3D .SFVec2f (tx, ty));
+         texCoordPoints .push (tx, ty);
       }
    }
 
+   texCoord .point = texCoordPoints;
+
    // Caps
 
-   let
-      min = this ._crossSection [0],
-      max = this ._crossSection [0];
+   let min = max = this ._crossSection [0];
 
    for (let c = 1; c < numCrossSections; ++ c)
    {
