@@ -717,8 +717,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                }
 
                this .#setLive (node, false, undoManager);
-
-               require ("../Application/Selection") .remove (node);
+               this .#removeSelection (node);
             }
 
             this .requestUpdateInstances (executionContext, undoManager);
@@ -734,6 +733,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     *
     * @param {X3DBaseNode} node
     * @param {boolean} value
+    * @param {UndoManager} undoManager
     */
    static #setLive (node, value, undoManager = UndoManager .shared)
    {
@@ -748,6 +748,54 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       undoManager .registerUndo (() =>
       {
          this .#setLive (node, oldValue, undoManager);
+      });
+
+      undoManager .endUndo ();
+   }
+
+   /**
+    *
+    * @param {X3DBaseNode} node
+    * @param {UndoManager} undoManager
+    */
+   static #addSelection (node, undoManager = UndoManager .shared)
+   {
+      const selection = require ("../Application/Selection");
+
+      if (selection .has (node))
+         return;
+
+      undoManager .beginUndo (_("Select node"));
+
+      selection .add (node);
+
+      undoManager .registerUndo (() =>
+      {
+         this .#removeSelection (node);
+      });
+
+      undoManager .endUndo ();
+   }
+
+   /**
+    *
+    * @param {X3DBaseNode} node
+    * @param {UndoManager} undoManager
+    */
+   static #removeSelection (node, undoManager = UndoManager .shared)
+   {
+      const selection = require ("../Application/Selection");
+
+      if (!selection .has (node))
+         return;
+
+      undoManager .beginUndo (_("Deselect node"));
+
+      selection .remove (node);
+
+      undoManager .registerUndo (() =>
+      {
+         this .#addSelection (node);
       });
 
       undoManager .endUndo ();
