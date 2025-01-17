@@ -1,6 +1,9 @@
 const X3D = require ("../../X3D");
 
-X3D .NurbsSweptSurface .prototype .traverse = function (type, renderObject)
+Object .assign (X3D .NurbsSweptSurface .prototype,
 {
-   this .getTrajectoryCurve () ?.traverse (type, renderObject);
-};
+   traverse (type, renderObject)
+   {
+      this .getTrajectoryCurve () ?.traverse (type, renderObject);
+   },
+});
