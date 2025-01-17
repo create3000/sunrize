@@ -717,7 +717,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                }
 
                this .#setLive (node, false, undoManager);
-               this .#removeSelection (node);
+               this .#removeSelection (node, undoManager);
             }
 
             this .requestUpdateInstances (executionContext, undoManager);
