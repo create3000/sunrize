@@ -7,7 +7,7 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.44, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 17 Jan 2025 14:26:57 GMT'/>
+    <meta name='modified' content='Fri, 17 Jan 2025 15:21:55 GMT'/>
   </head>
   <Scene>
     <Viewpoint
@@ -239,6 +239,21 @@
         <Disk2D
             innerRadius='0.4897927'
             outerRadius='0.6523092'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='Polypoint2D'
+        translation='9.693389 -2.482184 0'
+        scale='0.4200323 0.4200323 0.4200323'>
+      <Shape>
+        <Appearance>
+          <PointProperties
+              pointSizeScaleFactor='5'
+              pointSizeMinValue='5'
+              pointSizeMaxValue='5'/>
+          <UnlitMaterial/>
+        </Appearance>
+        <Polypoint2D
+            point='0 0, 1 1, 2 0, 3 2, 4 0'/>
       </Shape>
     </Transform>
   </Scene>
