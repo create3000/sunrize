@@ -9,6 +9,8 @@ Object .assign (X3D .TriangleSet2D .prototype,
          vertices  = this .getVertices (),
          geometry  = executionContext .createNode ("IndexedFaceSet", false);
 
+      geometry ._solid = this ._solid;
+
       geometry ._texCoord = executionContext .createNode ("TextureCoordinate", false);
       geometry ._coord    = executionContext .createNode ("Coordinate",        false);
 
