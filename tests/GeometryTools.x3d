@@ -7,7 +7,7 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.44, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Wed, 15 Jan 2025 15:08:42 GMT'/>
+    <meta name='modified' content='Fri, 17 Jan 2025 14:05:03 GMT'/>
   </head>
   <Scene>
     <Viewpoint
@@ -96,6 +96,49 @@
         <Cylinder
             height='0.5'
             radius='0.5'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='Pyramid'
+        translation='-4.5 -2 0'>
+      <Shape>
+        <Appearance>
+          <Material/>
+        </Appearance>
+        <IndexedFaceSet
+            coordIndex='3, 2, 1, 0, -1, 0, 1, 4, -1, 1, 2, 4, -1, 2, 3, 4, -1, 3, 0, 4, -1'>
+          <Coordinate
+              point='-1 -0.8660254 1, 1 -0.8660254 1, 1 -0.8660254 -1, -1 -0.8660254 -1, 0 0.8660254 0'/>
+        </IndexedFaceSet>
+      </Shape>
+    </Transform>
+    <Transform DEF='Extrusion'
+        translation='-1.534752 -2.281252 0'
+        scale='0.378827 0.378827 0.378827'>
+      <Shape>
+        <Appearance>
+          <Material/>
+        </Appearance>
+        <Extrusion DEF='Geometry_1'
+            beginCap='false'
+            endCap='false'
+            creaseAngle='3.14159'
+            crossSection='0 1, 0.5877852 0.809017, 0.9510565 0.309017, 0.9510565 -0.309017, 0.5877852 -0.809017, 1.224647e-16 -1, -0.5877852 -0.809017, -0.9510565 -0.309017, -0.9510565 0.309017, -0.5877852 0.809017, 0 1'
+            spine='0 0 2, 1.17557 0 1.618034, 1.902113 0 0.618034, 1.902113 0 -0.618034, 1.17557 0 -1.618034, 2.449294e-16 0 -2, -1.17557 0 -1.618034, -1.902113 0 -0.618034, -1.902113 0 0.618034, -1.17557 0 1.618034, 0 0 2'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='ElevationGrid_1'
+        translation='0.5387682 -2.454865 -1.136845'>
+      <Shape>
+        <Appearance>
+          <Material/>
+        </Appearance>
+        <ElevationGrid
+            xDimension='3'
+            zDimension='3'
+            height='0, 0, 0, 0, 1, 0, 0, 0, 0'>
+          <Color
+              color='1 0 0, 0 1 0, 0 0 1, 1 1 0, 1 0 1, 0 1 1, 1 1 1, 0 0 0, 0.5 0.5 0.5'/>
+        </ElevationGrid>
       </Shape>
     </Transform>
     <Transform DEF='Rectangle2D'
@@ -196,19 +239,6 @@
         <Disk2D
             innerRadius='0.4897927'
             outerRadius='0.6523092'/>
-      </Shape>
-    </Transform>
-    <Transform DEF='Pyramid'
-        translation='-4.5 -2 0'>
-      <Shape>
-        <Appearance>
-          <Material/>
-        </Appearance>
-        <IndexedFaceSet
-            coordIndex='3, 2, 1, 0, -1, 0, 1, 4, -1, 1, 2, 4, -1, 2, 3, 4, -1, 3, 0, 4, -1'>
-          <Coordinate
-              point='-1 -0.8660254 1, 1 -0.8660254 1, 1 -0.8660254 -1, -1 -0.8660254 -1, 0 0.8660254 0'/>
-        </IndexedFaceSet>
       </Shape>
     </Transform>
   </Scene>

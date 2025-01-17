@@ -1,3 +1,6 @@
+// Geometry2D
+require ("./Components/Geometry2D/Rectangle2D");
+
 // Geometry3D
 require ("./Components/Geometry3D/Box");
 require ("./Components/Geometry3D/Cone");
