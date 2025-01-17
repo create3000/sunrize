@@ -3,7 +3,7 @@ const X3D = require ("../../X3D");
 X3D .ElevationGrid .prototype .toPrimitive = function (executionContext = this .getExecutionContext ())
 {
    const
-      coord    = executionContext .createNode ("Coordinate", false),
+      coord    = executionContext .createNode ("Coordinate",     false),
       geometry = executionContext .createNode ("IndexedFaceSet", false);
 
    geometry ._solid           = this ._solid;

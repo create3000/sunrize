@@ -3,17 +3,17 @@ const X3D = require ("../../X3D");
 X3D .Extrusion .prototype .toPrimitive = function (executionContext = this .getExecutionContext ())
 {
    const
-      geometry = executionContext .createNode ("IndexedFaceSet"),
-      texCoord = executionContext .createNode ("TextureCoordinate"),
-      coord    = executionContext .createNode ("Coordinate");
+      geometry = executionContext .createNode ("IndexedFaceSet",    false),
+      texCoord = executionContext .createNode ("TextureCoordinate", false),
+      coord    = executionContext .createNode ("Coordinate",        false);
 
-   geometry .solid       = this ._solid;
-   geometry .ccw         = this ._ccw;
-   geometry .convex      = this ._convex;
-   geometry .creaseAngle = this ._creaseAngle;
+   geometry ._solid       = this ._solid;
+   geometry ._ccw         = this ._ccw;
+   geometry ._convex      = this ._convex;
+   geometry ._creaseAngle = this ._creaseAngle;
 
-   geometry .texCoord = texCoord;
-   geometry .coord    = coord;
+   geometry ._texCoord = texCoord;
+   geometry ._coord    = coord;
 
    // Fill the geometry with points.
 
@@ -26,7 +26,13 @@ X3D .Extrusion .prototype .toPrimitive = function (executionContext = this .getE
       numCrossSections_1 = numCrossSections - 1;
 
    if (numSpines < 2 || numCrossSections < 2)
+   {
+      texCoord .setup ();
+      coord    .setup ();
+      geometry .setup ();
+
       return geometry;
+   }
 
    const closedSpine = this .getClosed (this ._spine)
       && this .getClosed (this ._orientation)
@@ -57,11 +63,11 @@ X3D .Extrusion .prototype .toPrimitive = function (executionContext = this .getE
             p2 = s1 * numCrossSections + c1,
             p3 = s1 * numCrossSections + c;
 
-         geometry .coordIndex .push (p0, p1, p2, -1, p0, p2, p3, -1);
+         geometry ._coordIndex .push (p0, p1, p2, -1, p0, p2, p3, -1);
       }
    }
 
-   coord .point = points .flatMap (point => [... point]);
+   coord ._point = points .flatMap (point => [... point]);
 
    // Texture coordinates
 
@@ -79,7 +85,7 @@ X3D .Extrusion .prototype .toPrimitive = function (executionContext = this .getE
             p2 = s1 * numCrossSections + c1,
             p3 = s1 * numCrossSections + c;
 
-         geometry .texCoordIndex .push (p0, p1, p2, -1, p0, p2, p3, -1);
+         geometry ._texCoordIndex .push (p0, p1, p2, -1, p0, p2, p3, -1);
       }
    }
 
@@ -97,7 +103,7 @@ X3D .Extrusion .prototype .toPrimitive = function (executionContext = this .getE
       }
    }
 
-   texCoord .point = texCoordPoints;
+   texCoord ._point = texCoordPoints;
 
    // Caps
 
@@ -120,27 +126,27 @@ X3D .Extrusion .prototype .toPrimitive = function (executionContext = this .getE
    {
       // Coordinates
 
-      const numCoords = coord .point .length;
+      const numCoords = coord ._point .length;
 
       for (let c = numCapPoints - 1; c >= 0; -- c)
-         coord .point .push (coord .point [c]);
+         coord ._point .push (coord ._point [c]);
 
       for (let c = 0; c < numCapPoints; ++ c)
-         geometry .coordIndex .push (numCoords + c);
+         geometry ._coordIndex .push (numCoords + c);
 
-      geometry .coordIndex .push (-1);
+      geometry ._coordIndex .push (-1);
 
       // Texture coordinates
 
-      const numTexCoords = texCoord .point .length;
+      const numTexCoords = texCoord ._point .length;
 
       for (let c = numCapPoints - 1; c >= 0; -- c)
-         texCoord .point .push (this ._crossSection [c] .subtract (min) .divide (capMax));
+         texCoord ._point .push (this ._crossSection [c] .subtract (min) .divide (capMax));
 
       for (let c = 0; c < numCapPoints; ++ c)
-         geometry .texCoordIndex .push (numTexCoords + c);
+         geometry ._texCoordIndex .push (numTexCoords + c);
 
-      geometry .texCoordIndex .push (-1);
+      geometry ._texCoordIndex .push (-1);
    }
 
    // End Cap
@@ -151,30 +157,34 @@ X3D .Extrusion .prototype .toPrimitive = function (executionContext = this .getE
 
       const first = numSpines * numCrossSections - numCrossSections;
 
-      const numCoords = coord .point .length;
+      const numCoords = coord ._point .length;
 
       for (let c = 0; c < numCapPoints; ++ c)
-         coord .point .push (coord .point [first + c]);
+         coord ._point .push (coord ._point [first + c]);
 
       for (let c = 0; c < numCapPoints; ++ c)
-         geometry .coordIndex .push (numCoords + c);
+         geometry ._coordIndex .push (numCoords + c);
 
-      geometry .coordIndex .push (-1);
+      geometry ._coordIndex .push (-1);
 
       // Texture coordinates
 
-      const numTexCoords = texCoord .point .length;
+      const numTexCoords = texCoord ._point .length;
 
       for (let c = 0; c < numCapPoints; ++ c)
-         texCoord .point .push (this ._crossSection [c] .subtract (min) .divide (capMax));
+         texCoord ._point .push (this ._crossSection [c] .subtract (min) .divide (capMax));
 
       for (let c = 0; c < numCapPoints; ++ c)
-         geometry .texCoordIndex .push (numTexCoords + c);
+         geometry ._texCoordIndex .push (numTexCoords + c);
 
-      geometry .texCoordIndex .push (-1);
+      geometry ._texCoordIndex .push (-1);
    }
 
-   // geometry .getValue () .optimize ();
+   // geometry ._optimize ();
+
+   texCoord .setup ();
+   coord    .setup ();
+   geometry .setup ();
 
    return geometry;
 };

@@ -1068,6 +1068,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       }
 
       UndoManager .shared .endUndo ();
+
+      if (element .hasClass ("selected"))
+         require ("../Application/Selection") .add (primitive);
    }
 
    async addParentGroup (id, executionContextId, nodeId, component, typeName, fieldName)
@@ -1860,6 +1863,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       }
 
       UndoManager .shared .endUndo ();
+
+      if (element .hasClass ("selected"))
+         require ("../Application/Selection") .add (primitive);
    }
 
    addPrototype (id, executionContextId)
