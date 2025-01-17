@@ -7,7 +7,7 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.44, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 17 Jan 2025 15:21:55 GMT'/>
+    <meta name='modified' content='Fri, 17 Jan 2025 15:33:42 GMT'/>
   </head>
   <Scene>
     <Viewpoint
@@ -254,6 +254,19 @@
         </Appearance>
         <Polypoint2D
             point='0 0, 1 1, 2 0, 3 2, 4 0'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='TriangleSet2D_1'
+        translation='12.71923 -2.54847 0'
+        scale='0.5675108 0.5675108 0.5675108'>
+      <Shape>
+        <Appearance>
+          <Material/>
+          <ImageTexture
+              url='"https://picsum.photos/200"'/>
+        </Appearance>
+        <TriangleSet2D
+            vertices='0 0, 2 0, 1 1, 2 0, 4 0, 3 2'/>
       </Shape>
     </Transform>
   </Scene>

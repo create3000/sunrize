@@ -2,6 +2,7 @@
 require ("./Components/Geometry2D/Circle2D");
 require ("./Components/Geometry2D/Polypoint2D");
 require ("./Components/Geometry2D/Rectangle2D");
+require ("./Components/Geometry2D/TriangleSet2D");
 
 // Geometry3D
 require ("./Components/Geometry3D/Box");
