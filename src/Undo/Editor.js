@@ -607,204 +607,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       return executionContext === parentContext
    }
 
-   static nodesToRemove = new Map ()
-
-   /**
-    *
-    * @param {X3DExecutionContext} executionContext
-    * @param {Array<X3DNode|SFNode>|MFNode} nodes
-    * @param {UndoManager} undoManager
-    */
-   static removeNodesFromExecutionContextIfNecessary (executionContext, nodes, undoManager = UndoManager .shared)
-   {
-      if (!nodes .length)
-         return;
-
-      if (!this .nodesToRemove .has (executionContext))
-         this .nodesToRemove .set (executionContext, [ ]);
-
-      const nodesToRemove = this .nodesToRemove .get (executionContext);
-
-      for (const node of nodes)
-         nodesToRemove .push (node);
-
-      if (undoManager .defer ("removeNodesFromExecutionContextIfNecessary"))
-         return;
-
-      undoManager .defer ("removeNodesFromExecutionContextIfNecessary", () =>
-      {
-         for (const [executionContext, nodesToRemove] of this .nodesToRemove)
-         {
-            // Add nodes and child nodes.
-
-            const children = new Set ();
-
-            Array .from (Traverse .traverse (nodesToRemove, Traverse .ROOT_NODES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY))
-            .filter (object => object instanceof X3D .SFNode)
-            .forEach (node => children .add (node .getValue () .valueOf ()));
-
-            // Remove nodes still in scene graph.
-
-            Array .from (Traverse .traverse (executionContext, Traverse .ROOT_NODES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY))
-            .filter (object => object instanceof X3D .SFNode)
-            .forEach (node => children .delete (node .getValue () .valueOf ()));
-
-            if (children .size === 0)
-               continue;
-
-            undoManager .beginUndo (_("Remove %s Nodes from Execution Context"), children .size);
-
-            for (const node of children)
-            {
-               // Rebind X3DBindableNode nodes.
-
-               if (node .getType () .includes (X3D .X3DConstants .X3DBindableNode))
-               {
-                  if (node ._isBound .getValue ())
-                  {
-                     undoManager .registerUndo (() =>
-                     {
-                        this .setFieldValue (executionContext, node, node ._set_bind, true, undoManager);
-                     });
-                  }
-               }
-
-               // Remove named nodes.
-
-               if (node .getName ())
-                  this .removeNamedNode (executionContext, node, undoManager);
-
-               // Remove routes.
-
-               this .deleteRoutes (executionContext, node, undoManager);
-
-               // Remove imported nodes if node is an Inline node.
-
-               for (const importedNode of Array .from (executionContext .getImportedNodes ()))
-               {
-                  if (importedNode .getInlineNode () .valueOf () === node)
-                     this .removeImportedNode (executionContext, importedNode .getImportedName (), undoManager);
-               }
-
-               // Remove exported nodes.
-
-               if (executionContext instanceof X3D .X3DScene)
-               {
-                  for (const exportedNode of Array .from (executionContext .getExportedNodes ()))
-                  {
-                     if (exportedNode .getLocalNode () .valueOf () === node)
-                        this .removeExportedNode (executionContext, exportedNode .getExportedName (), undoManager);
-                  }
-               }
-
-               // Clear fields, to get right clone count.
-
-               for (const field of node .getFields ())
-               {
-                  switch (field .getType ())
-                  {
-                     case X3D .X3DConstants .SFNode:
-                     {
-                        this .setFieldValue (executionContext, node, field, null, undoManager);
-                        break;
-                     }
-                     case X3D .X3DConstants .MFNode:
-                     {
-                        this .setFieldValue (executionContext, node, field, new X3D .MFNode (), undoManager);
-                        break;
-                     }
-                  }
-               }
-
-               this .#setLive (node, false, undoManager);
-               this .#removeSelection (node, undoManager);
-            }
-
-            this .requestUpdateInstances (executionContext, undoManager);
-
-            undoManager .endUndo ();
-         }
-
-         this .nodesToRemove .clear ();
-      });
-   }
-
-   /**
-    *
-    * @param {X3DBaseNode} node
-    * @param {boolean} value
-    * @param {UndoManager} undoManager
-    */
-   static #setLive (node, value, undoManager = UndoManager .shared)
-   {
-      node = node .valueOf ();
-
-      const oldValue = node .isLive ();
-
-      undoManager .beginUndo (_("Set live state to »%s«"), value);
-
-      node .setLive (value);
-
-      undoManager .registerUndo (() =>
-      {
-         this .#setLive (node, oldValue, undoManager);
-      });
-
-      undoManager .endUndo ();
-   }
-
-   /**
-    *
-    * @param {X3DBaseNode} node
-    * @param {UndoManager} undoManager
-    */
-   static #addSelection (node, undoManager = UndoManager .shared)
-   {
-      node = node .valueOf ();
-
-      const selection = require ("../Application/Selection");
-
-      if (selection .has (node))
-         return;
-
-      undoManager .beginUndo (_("Select node"));
-
-      selection .add (node);
-
-      undoManager .registerUndo (() =>
-      {
-         this .#removeSelection (node, undoManager);
-      });
-
-      undoManager .endUndo ();
-   }
-
-   /**
-    *
-    * @param {X3DBaseNode} node
-    * @param {UndoManager} undoManager
-    */
-   static #removeSelection (node, undoManager = UndoManager .shared)
-   {
-      node = node .valueOf ();
-
-      const selection = require ("../Application/Selection");
-
-      if (!selection .has (node))
-         return;
-
-      undoManager .beginUndo (_("Deselect node"));
-
-      selection .remove (node);
-
-      undoManager .registerUndo (() =>
-      {
-         this .#addSelection (node, undoManager);
-      });
-
-      undoManager .endUndo ();
-   }
-
    /**
     *
     * @param {X3DScene} scene
@@ -3594,6 +3396,204 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                return true;
          }
       });
+   }
+
+   static #nodesToRemove = new Map ();
+
+   /**
+    *
+    * @param {X3DExecutionContext} executionContext
+    * @param {Array<X3DNode|SFNode>|MFNode} nodes
+    * @param {UndoManager} undoManager
+    */
+   static removeNodesFromExecutionContextIfNecessary (executionContext, nodes, undoManager = UndoManager .shared)
+   {
+      if (!nodes .length)
+         return;
+
+      if (!this .#nodesToRemove .has (executionContext))
+         this .#nodesToRemove .set (executionContext, [ ]);
+
+      const nodesToRemove = this .#nodesToRemove .get (executionContext);
+
+      for (const node of nodes)
+         nodesToRemove .push (node);
+
+      if (undoManager .defer ("removeNodesFromExecutionContextIfNecessary"))
+         return;
+
+      undoManager .defer ("removeNodesFromExecutionContextIfNecessary", () =>
+      {
+         for (const [executionContext, nodesToRemove] of this .#nodesToRemove)
+         {
+            // Add nodes and child nodes.
+
+            const children = new Set ();
+
+            Array .from (Traverse .traverse (nodesToRemove, Traverse .ROOT_NODES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY))
+            .filter (object => object instanceof X3D .SFNode)
+            .forEach (node => children .add (node .getValue () .valueOf ()));
+
+            // Remove nodes still in scene graph.
+
+            Array .from (Traverse .traverse (executionContext, Traverse .ROOT_NODES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY))
+            .filter (object => object instanceof X3D .SFNode)
+            .forEach (node => children .delete (node .getValue () .valueOf ()));
+
+            if (children .size === 0)
+               continue;
+
+            undoManager .beginUndo (_("Remove %s Nodes from Execution Context"), children .size);
+
+            for (const node of children)
+            {
+               // Rebind X3DBindableNode nodes.
+
+               if (node .getType () .includes (X3D .X3DConstants .X3DBindableNode))
+               {
+                  if (node ._isBound .getValue ())
+                  {
+                     undoManager .registerUndo (() =>
+                     {
+                        this .setFieldValue (executionContext, node, node ._set_bind, true, undoManager);
+                     });
+                  }
+               }
+
+               // Remove named nodes.
+
+               if (node .getName ())
+                  this .removeNamedNode (executionContext, node, undoManager);
+
+               // Remove routes.
+
+               this .deleteRoutes (executionContext, node, undoManager);
+
+               // Remove imported nodes if node is an Inline node.
+
+               for (const importedNode of Array .from (executionContext .getImportedNodes ()))
+               {
+                  if (importedNode .getInlineNode () .valueOf () === node)
+                     this .removeImportedNode (executionContext, importedNode .getImportedName (), undoManager);
+               }
+
+               // Remove exported nodes.
+
+               if (executionContext instanceof X3D .X3DScene)
+               {
+                  for (const exportedNode of Array .from (executionContext .getExportedNodes ()))
+                  {
+                     if (exportedNode .getLocalNode () .valueOf () === node)
+                        this .removeExportedNode (executionContext, exportedNode .getExportedName (), undoManager);
+                  }
+               }
+
+               // Clear fields, to get right clone count.
+
+               for (const field of node .getFields ())
+               {
+                  switch (field .getType ())
+                  {
+                     case X3D .X3DConstants .SFNode:
+                     {
+                        this .setFieldValue (executionContext, node, field, null, undoManager);
+                        break;
+                     }
+                     case X3D .X3DConstants .MFNode:
+                     {
+                        this .setFieldValue (executionContext, node, field, new X3D .MFNode (), undoManager);
+                        break;
+                     }
+                  }
+               }
+
+               this .#setLive (node, false, undoManager);
+               this .#removeSelection (node, undoManager);
+            }
+
+            this .requestUpdateInstances (executionContext, undoManager);
+
+            undoManager .endUndo ();
+         }
+
+         this .#nodesToRemove .clear ();
+      });
+   }
+
+   /**
+    *
+    * @param {X3DBaseNode} node
+    * @param {boolean} value
+    * @param {UndoManager} undoManager
+    */
+   static #setLive (node, value, undoManager = UndoManager .shared)
+   {
+      node = node .valueOf ();
+
+      const oldValue = node .isLive ();
+
+      undoManager .beginUndo (_("Set live state to »%s«"), value);
+
+      node .setLive (value);
+
+      undoManager .registerUndo (() =>
+      {
+         this .#setLive (node, oldValue, undoManager);
+      });
+
+      undoManager .endUndo ();
+   }
+
+   /**
+    *
+    * @param {X3DBaseNode} node
+    * @param {UndoManager} undoManager
+    */
+   static #addSelection (node, undoManager = UndoManager .shared)
+   {
+      node = node .valueOf ();
+
+      const selection = require ("../Application/Selection");
+
+      if (selection .has (node))
+         return;
+
+      undoManager .beginUndo (_("Select node"));
+
+      selection .add (node);
+
+      undoManager .registerUndo (() =>
+      {
+         this .#removeSelection (node, undoManager);
+      });
+
+      undoManager .endUndo ();
+   }
+
+   /**
+    *
+    * @param {X3DBaseNode} node
+    * @param {UndoManager} undoManager
+    */
+   static #removeSelection (node, undoManager = UndoManager .shared)
+   {
+      node = node .valueOf ();
+
+      const selection = require ("../Application/Selection");
+
+      if (!selection .has (node))
+         return;
+
+      undoManager .beginUndo (_("Deselect node"));
+
+      selection .remove (node);
+
+      undoManager .registerUndo (() =>
+      {
+         this .#addSelection (node, undoManager);
+      });
+
+      undoManager .endUndo ();
    }
 
    /**
