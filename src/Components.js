@@ -1,4 +1,5 @@
 // Geometry2D
+require ("./Components/Geometry2D/Circle2D");
 require ("./Components/Geometry2D/Rectangle2D");
 
 // Geometry3D
