@@ -773,7 +773,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       undoManager .registerUndo (() =>
       {
-         this .#removeSelection (node);
+         this .#removeSelection (node, undoManager);
       });
 
       undoManager .endUndo ();
@@ -799,7 +799,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       undoManager .registerUndo (() =>
       {
-         this .#addSelection (node);
+         this .#addSelection (node, undoManager);
       });
 
       undoManager .endUndo ();
