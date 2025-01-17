@@ -760,6 +760,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static #addSelection (node, undoManager = UndoManager .shared)
    {
+      node = node .valueOf ();
+
       const selection = require ("../Application/Selection");
 
       if (selection .has (node))
@@ -784,6 +786,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static #removeSelection (node, undoManager = UndoManager .shared)
    {
+      node = node .valueOf ();
+
       const selection = require ("../Application/Selection");
 
       if (!selection .has (node))
