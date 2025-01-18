@@ -1721,8 +1721,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                }
                else
                {
-                  const normalIndex = new X3D .MFInt32 ();
-
                   let face = 0;
 
                   for (const [i, index] of coordIndex .entries ())
@@ -1736,8 +1734,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                         vector .push (normals [i]);
                      }
                   }
-
-                  Editor .setFieldValue (executionContext, node, node ._normalIndex, normalIndex);
                }
 
                Editor .setFieldValue (executionContext, node, node ._normal, normalNode);
