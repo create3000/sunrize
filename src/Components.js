@@ -17,6 +17,7 @@ require ("./Components/Geometry3D/IndexedFaceSet");
 require ("./Components/Geometry3D/Sphere");
 
 // NURBS
+require ("./Components/NURBS/NurbsCurve");
 require ("./Components/NURBS/NurbsSweptSurface");
 require ("./Components/NURBS/NurbsSwungSurface");
 require ("./Components/NURBS/X3DNurbsSurfaceGeometryNode");

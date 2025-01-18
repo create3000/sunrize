@@ -2,6 +2,25 @@ const X3D = require ("../../X3D");
 
 Object .assign (X3D .X3DGeometryNode .prototype,
 {
+   toIndexedLineSet (executionContext = this .getExecutionContext (), options = { })
+   {
+      const geometry = executionContext .createNode ("IndexedLineSet", false);
+
+      // Coordinate
+
+      const [coordIndex, points] = this .mergePoints (this .getVertices ());
+
+      geometry ._coordIndex   = coordIndex .flatMap ((index, i) => i % 2 === 1 ? [index, -1] : index);
+      geometry ._coord        = executionContext .createNode (options .double ? "CoordinateDouble" : "Coordinate", false);
+      geometry ._coord .point = points .filter ((p, i) => i % 4 < 3);
+
+      // Setup
+
+      geometry ._coord .getValue () ?.setup ();
+      geometry .setup ();
+
+      return geometry;
+   },
    toIndexedFaceSet (executionContext = this .getExecutionContext (), options = { })
    {
       const geometry = executionContext .createNode ("IndexedFaceSet", false);
@@ -11,7 +30,7 @@ Object .assign (X3D .X3DGeometryNode .prototype,
       const [coordIndex, points] = this .mergePoints (this .getVertices ());
 
       geometry ._coordIndex   = coordIndex .flatMap ((index, i) => i % 3 === 2 ? [index, -1] : index);
-      geometry ._coord        = executionContext .createNode ("Coordinate", false);
+      geometry ._coord        = executionContext .createNode (options .double ? "CoordinateDouble" : "Coordinate", false);
       geometry ._coord .point = points .filter ((p, i) => i % 4 < 3);
 
       // Tangent

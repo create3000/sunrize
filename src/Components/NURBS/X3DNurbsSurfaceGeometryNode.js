@@ -6,6 +6,7 @@ Object .assign (X3D .X3DNurbsSurfaceGeometryNode .prototype,
    {
       const geometry = this .toIndexedFaceSet (executionContext,
       {
+         double: !!X3D .X3DCast (X3D .X3DConstants .CoordinateDouble, this ._controlPoint),
          texCoord: true,
       });
 

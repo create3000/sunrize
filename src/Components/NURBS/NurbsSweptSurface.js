@@ -10,6 +10,7 @@ Object .assign (X3D .NurbsSweptSurface .prototype,
    {
       const geometry = this .toIndexedFaceSet (executionContext,
       {
+         double: true,
          texCoord: true,
       });
 
