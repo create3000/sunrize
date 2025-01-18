@@ -12,7 +12,9 @@ Object .assign (X3D .IndexedLineSet .prototype,
       if (this ._colorPerVertex .getValue ())
          geometry ._color = this ._color;
 
-      geometry ._coord = this ._coord;
+      geometry ._tangent = this ._tangent;
+      geometry ._normal  = this ._normal;
+      geometry ._coord   = this ._coord;
 
       geometry .setup ();
 
