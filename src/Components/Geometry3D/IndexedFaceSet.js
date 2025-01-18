@@ -45,7 +45,7 @@ Object .assign (X3D .IndexedFaceSet .prototype,
             }
 
             const
-               minMax = [Math .min (previous, index), Math .max (previous, index)],
+               minMax = `${Math .min (previous, index)}, ${Math .max (previous, index)}`,
                exists = lineIndex .has (minMax);
 
             if (!exists)

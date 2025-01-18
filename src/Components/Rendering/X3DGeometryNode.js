@@ -123,24 +123,29 @@ Object .assign (X3D .X3DGeometryNode .prototype,
    mergePoints (array)
    {
       const
-         index       = [ ],
-         points      = new X3D .MFVec4f (),
-         pointsIndex = new Map (),
-         length      = array .length;
+         index  = [ ],
+         points = [ ],
+         map    = new Map (),
+         length = array .length;
 
       for (let i = 0; i < length; i += 4)
       {
-         const p = new X3D .SFVec4f (array [i], array [i + 1], array [i + 2], array [i + 3]);
+         const p = `${array [i]}, ${array [i + 1]}, ${array [i + 2]}, ${array [i + 3]}`;
 
-         if (!pointsIndex .has (p .toString ()))
+         if (map .has (p))
          {
-            pointsIndex .set (p .toString (), points .length);
-            points .push (p);
+            index .push (map .get (p));
          }
+         else
+         {
+            const i4 = points .length / 4;
 
-         index .push (pointsIndex .get (p .toString ()));
+            map .set (p, i4);
+            index .push (i4);
+            points .push (array [i], array [i + 1], array [i + 2], array [i + 3]);
+         }
       }
 
-      return [index, points .flat ()];
+      return [index, points];
    },
 });
