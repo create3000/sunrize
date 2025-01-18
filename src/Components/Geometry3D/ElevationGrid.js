@@ -27,7 +27,7 @@ Object .assign (X3D .ElevationGrid .prototype,
             coordIndex = this .createCoordIndex (),
             points     = this .createPoints ();
 
-         geometry ._coordIndex = coordIndex .map ((index, i) => i % 3 === 2 ? [index, -1] : index) .flat ();
+         geometry ._coordIndex = coordIndex .flatMap ((index, i) => i % 3 === 2 ? [index, -1] : index);
          coord    ._point      = points .flatMap (point => [... point]);
       }
 
