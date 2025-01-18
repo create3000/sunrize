@@ -12,93 +12,93 @@ Object .assign (X3D .IndexedFaceSet .prototype,
       geometry ._color          = this ._color;
       geometry ._coord          = this ._coord;
 
-      if (this ._coordIndex .length)
+      if (this ._normalPerVertex .getValue () && this ._normalIndex .equals (this ._coordIndex))
+         geometry ._normal = this ._normal;
+
+      // The coord index must end with -1!
+
+      const
+         lineIndex  = new Set (),
+         colorIndex = geometry ._colorIndex,
+         coordIndex = geometry ._coordIndex,
+         length     = this ._coordIndex .length;
+
+      let
+         line  = false,
+         last  = -1,
+         first = 0,
+         face  = 0;
+
+      for (let i = 1; i < length; ++ i)
       {
-         // The coord index must end with -1!
-
-         const lineIndex = new Set ();
-
          const
-            colorIndex = geometry ._colorIndex,
-            coordIndex = geometry ._coordIndex;
+            p        = i - 1,
+            previous = this ._coordIndex [p];
 
          let
-            line  = false,
-            last  = -1,
-            first = 0,
-            face  = 0;
+            index = this ._coordIndex [i],
+            c     = i;
 
-         for (let i = 1, length = this ._coordIndex .length; i < length; ++ i)
+         if (index === -1)
          {
-            const
-               p        = i - 1,
-               previous = this ._coordIndex [p];
+            index = this ._coordIndex [first];
+            c     = first;
+         }
 
-            let
-               index = this ._coordIndex [i],
-               c     = i;
+         const
+            minMax = `${Math .min (previous, index)} ${Math .max (previous, index)}`,
+            exists = lineIndex .has (minMax);
 
-            if (index === -1)
-            {
-               index = this ._coordIndex [first];
-               c     = first;
-            }
+         if (!exists)
+            lineIndex .add (minMax);
 
-            const
-               minMax = `${Math .min (previous, index)} ${Math .max (previous, index)}`,
-               exists = lineIndex .has (minMax);
-
-            if (!exists)
-               lineIndex .add (minMax);
-
-            if ((previous === -1 || exists) && line)
-            {
-               if (this ._colorIndex .length)
-               {
-                  if (this ._colorPerVertex .getValue ())
-                     colorIndex .push (-1);
-                  else
-                     colorIndex .push (this .getColorPerFaceIndex (face));
-               }
-
-               coordIndex .push (-1);
-
-               line = false;
-            }
-
-            if (previous === -1)
-            {
-               first = i;
-               face += 1;
-               last  = -1;
-               continue;
-            }
-
-            if (exists)
-               continue;
-
-            if (last !== previous)
-            {
-               if (this ._colorIndex .length)
-               {
-                  if (this ._colorPerVertex .getValue ())
-                     colorIndex .push (this .getColorPerVertexIndex (p));
-               }
-
-               coordIndex .push (previous);
-            }
-
-            if (this ._colorIndex .length)
+         if ((previous === -1 || exists) && line)
+         {
+            if (this ._color .getValue ())
             {
                if (this ._colorPerVertex .getValue ())
-                  colorIndex .push (this .getColorPerVertexIndex (c));
+                  colorIndex .push (-1);
+               else
+                  colorIndex .push (this .getColorPerFaceIndex (face));
             }
 
-            coordIndex .push (index);
+            coordIndex .push (-1);
 
-            last = index;
-            line = true;
+            line = false;
          }
+
+         if (previous === -1)
+         {
+            first = i;
+            face += 1;
+            last  = -1;
+            continue;
+         }
+
+         if (exists)
+            continue;
+
+         if (last !== previous)
+         {
+            if (this ._color .getValue ())
+            {
+               if (this ._colorPerVertex .getValue ())
+                  colorIndex .push (this .getColorPerVertexIndex (p));
+            }
+
+            coordIndex .push (previous);
+         }
+
+         if (this ._color .getValue ())
+         {
+            if (this ._colorPerVertex .getValue ())
+               colorIndex .push (this .getColorPerVertexIndex (c));
+         }
+
+         coordIndex .push (index);
+
+         last = index;
+         line = true;
       }
 
       geometry .setup ();
