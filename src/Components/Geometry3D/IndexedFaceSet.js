@@ -45,15 +45,13 @@ Object .assign (X3D .IndexedFaceSet .prototype,
             }
 
             const
-               min = Math .min (previous, index),
-               max = Math .max (previous, index);
-
-            const exists = lineIndex .has ([min, max]);
+               minMax = [Math .min (previous, index), Math .max (previous, index)],
+               exists = lineIndex .has (minMax);
 
             if (!exists)
-               lineIndex .add ([min, max]);
+               lineIndex .add (minMax);
 
-            if ((previous == -1 || exists) && line)
+            if ((previous === -1 || exists) && line)
             {
                if (this ._colorIndex .length)
                {
@@ -68,7 +66,7 @@ Object .assign (X3D .IndexedFaceSet .prototype,
                line = false;
             }
 
-            if (previous == -1)
+            if (previous === -1)
             {
                first = i;
                face += 1;
