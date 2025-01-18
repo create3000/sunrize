@@ -19,40 +19,6 @@ class Disk2DTool extends X3DGeometryNodeTool
 
       const toolChildren = new X3D .MFNode ();
 
-      // Transform Tool innerRadius
-      {
-         const
-            groupNode     = this .getToolScene () .createNode ("Group"),
-            transformNode = this .getToolScene () .createNode ("Transform"),
-            transformTool = await transformNode .getValue () .addTool () .getToolInstance ();
-
-         this .#innerRadiusTransformNode = transformNode;
-
-         transformNode .scale .addInterest ("set_innerRadiusScale", this);
-         transformTool .getField ("isActive") .addInterest ("handleUndo", this);
-         transformTool .getField ("isActive") .addInterest ("set_innerRadiusActive", this);
-
-         groupNode     .bboxSize      = new X3D .Vector3 (2, 2, 0);
-         transformNode .children      = [groupNode];
-         transformTool .group         = `${this .getTypeName ()}.innerRadius`;
-         transformTool .undo          = false;
-         transformTool .tools         = ["SCALE"];
-         transformTool .keys          = [ ];
-         transformTool .connectedAxes = ["XY", "YX", "ZX"];
-         transformTool .centerDisplay = false;
-         transformTool .centerTool    = false;
-         transformTool .zAxisDisplay  = false;
-         transformTool .bboxColor     = ToolColors .BLUE;
-
-         toolChildren .push (transformNode);
-
-         // Connections innerRadius
-
-         this .node ._innerRadius .addInterest ("set_innerRadius", this);
-
-         this .set_innerRadius (this .node ._innerRadius);
-      }
-
       // Transform Tool outerRadius
       {
          const
@@ -85,6 +51,40 @@ class Disk2DTool extends X3DGeometryNodeTool
          this .node ._outerRadius .addInterest ("set_outerRadius", this);
 
          this .set_outerRadius (this .node ._outerRadius);
+      }
+
+      // Transform Tool innerRadius
+      {
+         const
+            groupNode     = this .getToolScene () .createNode ("Group"),
+            transformNode = this .getToolScene () .createNode ("Transform"),
+            transformTool = await transformNode .getValue () .addTool () .getToolInstance ();
+
+         this .#innerRadiusTransformNode = transformNode;
+
+         transformNode .scale .addInterest ("set_innerRadiusScale", this);
+         transformTool .getField ("isActive") .addInterest ("handleUndo", this);
+         transformTool .getField ("isActive") .addInterest ("set_innerRadiusActive", this);
+
+         groupNode     .bboxSize      = new X3D .Vector3 (2, 2, 0);
+         transformNode .children      = [groupNode];
+         transformTool .group         = `${this .getTypeName ()}.innerRadius`;
+         transformTool .undo          = false;
+         transformTool .tools         = ["SCALE"];
+         transformTool .keys          = [ ];
+         transformTool .connectedAxes = ["XY", "YX", "ZX"];
+         transformTool .centerDisplay = false;
+         transformTool .centerTool    = false;
+         transformTool .zAxisDisplay  = false;
+         transformTool .bboxColor     = ToolColors .BLUE;
+
+         toolChildren .push (transformNode);
+
+         // Connections innerRadius
+
+         this .node ._innerRadius .addInterest ("set_innerRadius", this);
+
+         this .set_innerRadius (this .node ._innerRadius);
       }
 
       this .tool .undo        = true;
