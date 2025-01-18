@@ -14,6 +14,7 @@ Object .assign (X3D .NurbsSweptSurface .prototype,
          texCoord: true,
       });
 
+      geometry ._metadata    = this ._metadata;
       geometry ._solid       = this ._solid;
       geometry ._ccw         = this ._ccw;
       geometry ._creaseAngle = Math .PI;

@@ -10,6 +10,7 @@ Object .assign (X3D .Cone .prototype,
          radius    = this ._bottomRadius .getValue (),
          height1_2 = this ._height .getValue () / 2;
 
+      geometry ._metadata    = this ._metadata;
       geometry ._coordIndex  = [ ];
       geometry ._normalIndex = [ ];
       geometry ._solid       = this ._solid;

@@ -9,6 +9,7 @@ Object .assign (X3D .Extrusion .prototype,
          texCoord = executionContext .createNode ("TextureCoordinate", false),
          coord    = executionContext .createNode ("Coordinate",        false);
 
+      geometry ._metadata    = this ._metadata;
       geometry ._solid       = this ._solid;
       geometry ._ccw         = this ._ccw;
       geometry ._convex      = this ._convex;

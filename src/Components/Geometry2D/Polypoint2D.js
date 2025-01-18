@@ -6,7 +6,8 @@ Object .assign (X3D .Polypoint2D .prototype,
    {
       const geometry = executionContext .createNode ("PointSet", false);
 
-      geometry ._coord = executionContext .createNode ("Coordinate", false);
+      geometry ._metadata = this ._metadata;
+      geometry ._coord    = executionContext .createNode ("Coordinate", false);
 
       for (const point of this ._point)
          geometry ._coord .point .push (new X3D .SFVec3f (... point, 0));

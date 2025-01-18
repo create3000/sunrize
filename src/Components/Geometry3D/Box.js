@@ -9,7 +9,8 @@ Object .assign (X3D .Box .prototype,
          geometry = browser .getBoxOptions () .getGeometry () .copy (executionContext),
          size1_2  = this ._size .divide (2);
 
-      geometry ._solid = this ._solid;
+      geometry ._metadata = this ._metadata;
+      geometry ._solid    = this ._solid;
 
       geometry ._texCoord = geometry ._texCoord .getValue () .copy (executionContext);
       geometry ._coord    = geometry ._coord    .getValue () .copy (executionContext);

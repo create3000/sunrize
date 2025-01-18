@@ -9,7 +9,8 @@ Object .assign (X3D .Circle2D .prototype,
          geometry = browser .getCircle2DOptions () .getGeometry () .copy (executionContext),
          radius   = this ._radius .getValue ();
 
-      geometry ._coord = geometry ._coord .getValue () .copy (executionContext);
+      geometry ._metadata = this ._metadata;
+      geometry ._coord    = geometry ._coord .getValue () .copy (executionContext);
 
       for (const [i, point] of geometry ._coord .point .entries ())
          geometry ._coord .point [i] = point .multiply (radius);

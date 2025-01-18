@@ -6,7 +6,8 @@ Object .assign (X3D .ArcClose2D .prototype,
    {
       const geometry = this .toIndexedFaceSet (executionContext, { texCoord: true });
 
-      geometry ._solid = this ._solid;
+      geometry ._metadata = this ._metadata;
+      geometry ._solid    = this ._solid;
 
       return geometry;
    },

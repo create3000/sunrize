@@ -6,6 +6,7 @@ Object .assign (X3D .LineSet .prototype,
    {
       const geometry = executionContext .createNode ("IndexedLineSet", false);
 
+      geometry ._metadata = this ._metadata;
       geometry ._attrib   = this ._attrib;
       geometry ._fogCoord = this ._fogCoord;
       geometry ._color    = this ._color;

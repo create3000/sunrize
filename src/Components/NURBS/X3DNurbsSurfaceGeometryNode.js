@@ -10,6 +10,7 @@ Object .assign (X3D .X3DNurbsSurfaceGeometryNode .prototype,
          texCoord: true,
       });
 
+      geometry ._metadata    = this ._metadata;
       geometry ._solid       = this ._solid;
       geometry ._creaseAngle = Math .PI;
 

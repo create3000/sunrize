@@ -8,7 +8,8 @@ Object .assign (X3D .Arc2D .prototype,
          vertices = this .getVertices (),
          geometry = executionContext .createNode ("IndexedLineSet", false);
 
-      geometry ._coord = executionContext .createNode ("Coordinate", false);
+      geometry ._metadata = this ._metadata;
+      geometry ._coord    = executionContext .createNode ("Coordinate", false);
 
       for (let i = 0, length = vertices .length / 8; i < length; ++ i)
          geometry ._coordIndex .push (i);

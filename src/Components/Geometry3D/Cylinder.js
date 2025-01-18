@@ -10,6 +10,7 @@ Object .assign (X3D .Cylinder .prototype,
          radius    = this ._radius .getValue (),
          height1_2 = this ._height .getValue () / 2;
 
+      geometry ._metadata    = this ._metadata;
       geometry ._normalIndex = [ ];
       geometry ._solid       = this ._solid;
       geometry ._creaseAngle = Math .PI;
