@@ -14,6 +14,37 @@ Object .assign (X3D .X3DGeometryNode .prototype,
       geometry ._coord        = executionContext .createNode ("Coordinate", false);
       geometry ._coord .point = points .filter ((p, i) => i % 4 < 3);
 
+      // Tangent
+
+      if (options .fogCoord)
+      {
+         geometry ._fogCoord        = executionContext .createNode ("FogCoordinate", false);
+         geometry ._fogCoord .depth = this .getFogDepths ();
+      }
+
+      // Color
+
+      if (options .color)
+      {
+         const [colorIndex, colors] = this .mergePoints (this .getColors ());
+
+         geometry ._colorIndex = colorIndex .flatMap ((index, i) => i % 3 === 2 ? [index, -1] : index);
+
+         if (geometry ._colorIndex .equals (geometry ._coordIndex))
+            geometry ._colorIndex = [ ];
+
+         if (colors .some ((p, i)=> i === 3 && p !== 1))
+         {
+            geometry ._color        = executionContext .createNode ("ColorRGBA", false);
+            geometry ._color .color = colors;
+         }
+         else
+         {
+            geometry ._color        = executionContext .createNode ("Color", false);
+            geometry ._color .color = colors .filter ((p, i) => i % 4 < 3);
+         }
+      }
+
       // TextureCoordinate
 
       if (options .texCoord)
@@ -37,6 +68,13 @@ Object .assign (X3D .X3DGeometryNode .prototype,
          }
       }
 
+      // Tangent
+
+      if (options .tangent)
+      {
+         // TODO: Implement Tangent
+      }
+
       // Normal
 
       if (options .normal)
@@ -53,8 +91,12 @@ Object .assign (X3D .X3DGeometryNode .prototype,
 
       // Setup
 
-      geometry ._texCoord .getValue () .setup ();
-      geometry ._coord    .getValue () .setup ();
+      geometry ._fogCoord .getValue () ?.setup ();
+      geometry ._color    .getValue () ?.setup ();
+      geometry ._texCoord .getValue () ?.setup ();
+      geometry ._tangent  .getValue () ?.setup ();
+      geometry ._normal   .getValue () ?.setup ();
+      geometry ._coord    .getValue () ?.setup ();
       geometry .setup ();
 
       return geometry;
