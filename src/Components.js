@@ -25,3 +25,7 @@ require ("./Components/NURBS/X3DNurbsSurfaceGeometryNode");
 // Rendering
 require ("./Components/Rendering/IndexedLineSet");
 require ("./Components/Rendering/X3DGeometryNode");
+
+// Text
+
+require ("./Components/Text/Text");
