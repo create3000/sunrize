@@ -21,4 +21,5 @@ require ("./Components/NURBS/NurbsSweptSurface");
 require ("./Components/NURBS/NurbsSwungSurface");
 
 // Rendering
+require ("./Components/Rendering/IndexedLineSet");
 require ("./Components/Rendering/X3DGeometryNode");
