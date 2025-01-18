@@ -43,7 +43,7 @@ Object .assign (X3D .Disk2D .prototype,
          return geometry;
       }
 
-      const geometry = X3D .X3DGeometryNode .prototype .toPrimitive .call (this, executionContext, { texCoord: true });
+      const geometry = this .toIndexedFaceSet (executionContext, { texCoord: true });
 
       geometry ._solid = this ._solid;
 

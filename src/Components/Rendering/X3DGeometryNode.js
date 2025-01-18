@@ -2,7 +2,7 @@ const X3D = require ("../../X3D");
 
 Object .assign (X3D .X3DGeometryNode .prototype,
 {
-   toPrimitive (executionContext = this .getExecutionContext (), options = { })
+   toIndexedFaceSet (executionContext = this .getExecutionContext (), options = { })
    {
       const geometry = executionContext .createNode ("IndexedFaceSet", false);
 
