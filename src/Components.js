@@ -1,5 +1,6 @@
 // Geometry2D
 require ("./Components/Geometry2D/Arc2D");
+require ("./Components/Geometry2D/ArcClose2D");
 require ("./Components/Geometry2D/Circle2D");
 require ("./Components/Geometry2D/Disk2D");
 require ("./Components/Geometry2D/Polypoint2D");
