@@ -130,7 +130,7 @@ Object .assign (X3D .X3DGeometryNode .prototype,
 
       for (let i = 0; i < length; i += 4)
       {
-         const p = `${array [i]}, ${array [i + 1]}, ${array [i + 2]}, ${array [i + 3]}`;
+         const p = `${array [i]} ${array [i + 1]} ${array [i + 2]} ${array [i + 3]}`;
 
          if (map .has (p))
          {
