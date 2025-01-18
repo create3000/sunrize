@@ -7,7 +7,7 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.44, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sat, 18 Jan 2025 12:27:39 GMT'/>
+    <meta name='modified' content='Sat, 18 Jan 2025 12:40:26 GMT'/>
   </head>
   <Scene>
     <Viewpoint
@@ -131,14 +131,10 @@
       <Shape>
         <Appearance>
           <Material/>
-          <ImageTexture
-              url='"https://www.timeanddate.com/scripts/sunmap.php"'
-              autoRefresh='300'
-              autoRefreshTimeLimit='0'/>
         </Appearance>
         <ElevationGrid
             xDimension='3'
-            zDimension='6'
+            zDimension='3'
             height='0, 0, 0, 0, 1, 0, 0, 0, 0'>
           <Color
               color='1 0 0, 0 1 0, 0 0 1, 1 1 0, 1 0 1, 0 1 1, 1 1 1, 0 0 0, 0.5 0.5 0.5'/>

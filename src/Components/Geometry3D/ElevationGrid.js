@@ -13,7 +13,9 @@ Object .assign (X3D .ElevationGrid .prototype,
          normal: !!this ._normal .getValue (),
       });
 
-      geometry ._solid = this ._solid;
+      geometry ._solid       = this ._solid;
+      geometry ._ccw         = this ._ccw;
+      geometry ._creaseAngle = this ._creaseAngle;
 
       return geometry;
    },
