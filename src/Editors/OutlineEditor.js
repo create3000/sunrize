@@ -1702,39 +1702,31 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             case X3D .X3DConstants .IndexedFaceSet:
             {
                const
-                  polygons        = node .triangulate (),
                   coordIndex      = node ._coordIndex,
                   normalPerVertex = node ._normalPerVertex .getValue (),
+                  polygons        = node .triangulate (),
                   normals         = node .createNormals (polygons),
-                  normalIndex     = new X3D .MFInt32 (),
                   normalNode      = executionContext .createNode ("Normal") .getValue (),
                   vector          = normalNode ._vector;
 
                if (normalPerVertex)
                {
-                  for (let i = 0, length = coordIndex .length; i < length; ++ i)
+                  for (const [i, index] of coordIndex .entries ())
                   {
-                     const index = coordIndex [i];
-
                      if (index < 0)
-                     {
-                        normalIndex .push (-1);
-                     }
-                     else
-                     {
-                        normalIndex .push (vector .length);
-                        vector .push (normals [i]);
-                     }
+                        continue;
+
+                     vector [index] = normals [i];
                   }
                }
                else
                {
+                  const normalIndex = new X3D .MFInt32 ();
+
                   let face = 0;
 
-                  for (let i = 0, length = coordIndex .length; i < length; ++ i)
+                  for (const [i, index] of coordIndex .entries ())
                   {
-                     const index = coordIndex [i];
-
                      if (index < 0)
                      {
                         vector .length = ++ face;
@@ -1744,10 +1736,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                         vector .push (normals [i]);
                      }
                   }
+
+                  Editor .setFieldValue (executionContext, node, node ._normalIndex, normalIndex);
                }
 
-               Editor .setFieldValue (executionContext, node, node ._normalIndex, normalIndex);
-               Editor .setFieldValue (executionContext, node, node ._normal,      normalNode);
+               Editor .setFieldValue (executionContext, node, node ._normal, normalNode);
                break;
             }
             case X3D .X3DConstants .X3DComposedGeometryNode:

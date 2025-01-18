@@ -28,5 +28,4 @@ require ("./Components/Rendering/LineSet");
 require ("./Components/Rendering/X3DGeometryNode");
 
 // Text
-
 require ("./Components/Text/Text");

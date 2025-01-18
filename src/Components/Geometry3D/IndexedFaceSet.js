@@ -12,8 +12,11 @@ Object .assign (X3D .IndexedFaceSet .prototype,
       geometry ._color          = this ._color;
       geometry ._coord          = this ._coord;
 
-      if (this ._normalPerVertex .getValue () && this ._normalIndex .equals (this ._coordIndex))
-         geometry ._normal = this ._normal;
+      if (this ._normalPerVertex .getValue ())
+      {
+         if (!this ._normalIndex .length || this ._normalIndex .equals (this ._coordIndex))
+            geometry ._normal = this ._normal;
+      }
 
       // The coord index must end with -1!
 
