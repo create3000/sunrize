@@ -13,6 +13,7 @@ require ("./Components/Geometry3D/Cone");
 require ("./Components/Geometry3D/Cylinder");
 require ("./Components/Geometry3D/ElevationGrid");
 require ("./Components/Geometry3D/Extrusion");
+require ("./Components/Geometry3D/IndexedFaceSet");
 require ("./Components/Geometry3D/Sphere");
 
 // NURBS
