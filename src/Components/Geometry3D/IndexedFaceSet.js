@@ -58,7 +58,7 @@ Object .assign (X3D .IndexedFaceSet .prototype,
                   if (this ._colorPerVertex .getValue ())
                      colorIndex .push (-1);
                   else
-                     colorIndex .push (this .getColorIndex (face));
+                     colorIndex .push (this .getColorPerFaceIndex (face));
                }
 
                coordIndex .push (-1);
@@ -82,7 +82,7 @@ Object .assign (X3D .IndexedFaceSet .prototype,
                if (this ._colorIndex .length)
                {
                   if (this ._colorPerVertex .getValue ())
-                     colorIndex .push (this .getVertexColorIndex (p));
+                     colorIndex .push (this .getColorPerVertexIndex (p));
                }
 
                coordIndex .push (previous);
@@ -91,7 +91,7 @@ Object .assign (X3D .IndexedFaceSet .prototype,
             if (this ._colorIndex .length)
             {
                if (this ._colorPerVertex .getValue ())
-                  colorIndex .push (this .getVertexColorIndex (c));
+                  colorIndex .push (this .getColorPerVertexIndex (c));
             }
 
             coordIndex .push (index);

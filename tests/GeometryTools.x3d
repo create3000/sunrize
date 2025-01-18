@@ -7,7 +7,7 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.44, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sat, 18 Jan 2025 12:40:26 GMT'/>
+    <meta name='modified' content='Sat, 18 Jan 2025 20:34:30 GMT'/>
   </head>
   <Scene>
     <Viewpoint
@@ -262,8 +262,6 @@
       <Shape>
         <Appearance>
           <Material/>
-          <ImageTexture
-              url='"https://picsum.photos/200"'/>
         </Appearance>
         <TriangleSet2D
             vertices='0 0, 2 0, 1 1, 2 0, 4 0, 3 2'/>
