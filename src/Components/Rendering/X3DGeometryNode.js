@@ -27,7 +27,7 @@ Object .assign (X3D .X3DGeometryNode .prototype,
                geometry ._coord .point .push (last);
 
             // Index
-            
+
             for (let i = 0, length = numVertices / 8; i < length; ++ i)
                geometry ._coordIndex .push (i);
 
