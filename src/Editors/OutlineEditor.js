@@ -397,7 +397,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
                      menu .push (
                      {
-                        label: _("Convert Node to Next Lower Primitive"),
+                        label: _("Convert Node to Next Lower Geometry Type"),
                         args: ["toPrimitive", element .attr ("id"), executionContext .getId (), node .getId ()],
                      });
 
