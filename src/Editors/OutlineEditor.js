@@ -1725,13 +1725,22 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
                if (normalPerVertex)
                {
+                  const normalIndex = new X3D .MFInt32 ();
+
                   for (const [i, index] of coordIndex .entries ())
                   {
                      if (index < 0)
-                        continue;
-
-                     vector [index] = normals [i];
+                     {
+                        normalIndex .push (-1);
+                     }
+                     else
+                     {
+                        normalIndex .push (vector .length);
+                        vector .push (normals [i]);
+                     }
                   }
+
+                  Editor .setFieldValue (executionContext, node, node ._normalIndex, normalIndex);
                }
                else
                {
