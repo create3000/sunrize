@@ -392,14 +392,23 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                   }
                   case X3D .X3DConstants .X3DGeometryNode:
                   {
-                     if (!node .toPrimitive)
-                        continue;
-
-                     menu .push (
+                     if (node .toIndexedTriangleSet)
                      {
-                        label: _("Convert Node to Next Lower Geometry Type"),
-                        args: ["toPrimitive", element .attr ("id"), executionContext .getId (), node .getId ()],
-                     });
+                        menu .push (
+                        {
+                           label: _("Convert Node to IndexedTriangleSet"),
+                           args: ["toIndexedTriangleSet", element .attr ("id"), executionContext .getId (), node .getId ()],
+                        });
+                     }
+
+                     if (node .toPrimitive)
+                     {
+                        menu .push (
+                        {
+                           label: _("Convert Node to Next Lower Geometry Type"),
+                           args: ["toPrimitive", element .attr ("id"), executionContext .getId (), node .getId ()],
+                        });
+                     }
 
                      continue;
                   }
@@ -1821,6 +1830,45 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       }
 
       UndoManager .shared .endUndo ();
+   }
+
+   toIndexedTriangleSet (id, executionContextId, nodeId)
+   {
+      const
+         element            = $(`#${id}`),
+         executionContext   = this .objects .get (executionContextId),
+         parentFieldElement = element .closest (".field, .scene", this .sceneGraph),
+         parentNodeElement  = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
+         parentNode         = this .getNode (parentNodeElement),
+         parentField        = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement),
+         node               = this .objects .get (nodeId),
+         primitive          = node .toIndexedTriangleSet (executionContext),
+         index              = parseInt (element .attr ("index"));
+
+      UndoManager .shared .beginUndo (_("Convert Node to IndexedTriangleSet"));
+
+      if (node .getName ())
+         Editor .updateNamedNode (executionContext, executionContext .getUniqueName (node .getName ()), primitive);
+
+      switch (parentField .getType ())
+      {
+         case X3D .X3DConstants .SFNode:
+         {
+            Editor .setFieldValue (executionContext, parentNode, parentField, primitive);
+            break;
+         }
+         case X3D .X3DConstants .MFNode:
+         {
+            Editor .removeValueFromArray (executionContext, parentNode, parentField, index);
+            Editor .insertValueIntoArray (executionContext, parentNode, parentField, index, primitive);
+            break;
+         }
+      }
+
+      UndoManager .shared .endUndo ();
+
+      if (element .hasClass ("selected"))
+         require ("../Application/Selection") .add (primitive);
    }
 
    toPrimitive (id, executionContextId, nodeId)

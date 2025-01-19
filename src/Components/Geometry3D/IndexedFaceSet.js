@@ -2,6 +2,49 @@ const X3D = require ("../../X3D");
 
 Object .assign (X3D .IndexedFaceSet .prototype,
 {
+   toIndexedTriangleSet (executionContext = this .getExecutionContext ())
+   {
+      const geometry = executionContext .createNode ("IndexedTriangleSet", false);
+
+      geometry ._metadata        = this ._metadata;
+      geometry ._solid           = this ._solid;
+      geometry ._ccw             = this ._ccw;
+      geometry ._colorPerVertex  = this ._colorPerVertex;
+      geometry ._normalPerVertex = this ._normalPerVertex;
+      geometry ._attrib          = this ._attrib;
+      geometry ._fogCoord        = this ._fogCoord;
+      geometry ._coord           = this ._coord;
+
+      if (!this ._colorIndex .length || this ._colorIndex .equals (this ._coordIndex))
+      {
+         geometry ._color = this ._color;
+      }
+
+      if (!this ._texCoordIndex .length || this ._texCoordIndex .equals (this ._coordIndex))
+      {
+         geometry ._texCoord = this ._texCoord;
+      }
+
+      if (!this ._normalIndex .length || this ._normalIndex .equals (this ._coordIndex))
+      {
+         geometry ._tangent = this ._tangent;
+         geometry ._normal  = this ._normal;
+      }
+
+      const polygons = this .triangulate ();
+
+      for (const { triangles } of polygons)
+      {
+         for (const i of triangles)
+         {
+            geometry ._index .push (this ._coordIndex [i]);
+         }
+      }
+
+      geometry .setup ();
+
+      return geometry;
+   },
    toPrimitive (executionContext = this .getExecutionContext ())
    {
       const geometry = executionContext .createNode ("IndexedLineSet", false);
