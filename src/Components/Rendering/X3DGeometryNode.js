@@ -18,23 +18,23 @@ Object .assign (X3D .X3DGeometryNode .prototype,
       {
          if (options .polyline)
          {
-            for (let i = 0; i < numVertices; i += 8)
-               geometry ._coord .point .push (new X3D .SFVec3f (vertexArray [i], vertexArray [i + 1], 0));
-
-            const last = new X3D .SFVec3f (vertexArray .at (-4), vertexArray .at (-3), 0);
-
-            if (!last .equals (geometry ._coord .point .at (0)))
-               geometry ._coord .point .push (last);
-
-            // Index
+            const
+               first = new X3D .SFVec3f (vertexArray .at (0),  vertexArray .at (1),  0),
+               last  = new X3D .SFVec3f (vertexArray .at (-4), vertexArray .at (-3), 0);
 
             for (let i = 0, length = numVertices / 8; i < length; ++ i)
                geometry ._coordIndex .push (i);
 
-            if (last .equals (geometry ._coord .point .at (0)))
+            if (last .equals (first))
                geometry ._coordIndex .push (0, -1);
             else
                geometry ._coordIndex .push (geometry ._coordIndex .at (-1) + 1, -1);
+
+            for (let i = 0; i < numVertices; i += 8)
+               geometry ._coord .point .push (new X3D .SFVec3f (vertexArray [i], vertexArray [i + 1], 0));
+
+            if (!last .equals (first))
+               geometry ._coord .point .push (last);
          }
          else
          {
