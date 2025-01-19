@@ -7,10 +7,11 @@ Object .assign (X3D .NurbsCurve .prototype,
       const geometry = this .toIndexedLineSet (executionContext,
       {
          double: !!X3D .X3DCast (X3D .X3DConstants .CoordinateDouble, this ._controlPoint),
+         polyline: true,
       });
 
       geometry ._metadata = this ._metadata;
-      
+
       return geometry;
    },
 });

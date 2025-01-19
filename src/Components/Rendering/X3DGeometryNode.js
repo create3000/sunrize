@@ -8,11 +8,42 @@ Object .assign (X3D .X3DGeometryNode .prototype,
 
       // Coordinate
 
-      const [coordIndex, points] = this .mergePoints (this .getVertices ());
+      const
+         vertexArray = this .getVertices (),
+         numVertices = vertexArray .length;
 
-      geometry ._coordIndex   = coordIndex .flatMap ((index, i) => i % 2 === 1 ? [index, -1] : index);
-      geometry ._coord        = executionContext .createNode (options .double ? "CoordinateDouble" : "Coordinate", false);
-      geometry ._coord .point = points .filter ((point, i) => i % 4 < 3);
+      geometry ._coord = executionContext .createNode (options .double ? "CoordinateDouble" : "Coordinate", false);
+
+      if (numVertices)
+      {
+         if (options .polyline)
+         {
+            for (let i = 0; i < numVertices; i += 8)
+               geometry ._coord .point .push (new X3D .SFVec3f (vertexArray [i], vertexArray [i + 1], 0));
+
+            const last = new X3D .SFVec3f (vertexArray .at (-4), vertexArray .at (-3), 0);
+
+            if (!last .equals (geometry ._coord .point .at (0)))
+               geometry ._coord .point .push (last);
+
+            // Index
+            
+            for (let i = 0, length = numVertices / 8; i < length; ++ i)
+               geometry ._coordIndex .push (i);
+
+            if (last .equals (geometry ._coord .point .at (0)))
+               geometry ._coordIndex .push (0, -1);
+            else
+               geometry ._coordIndex .push (geometry ._coordIndex .at (-1) + 1, -1);
+         }
+         else
+         {
+            const [coordIndex, points] = this .mergePoints (vertexArray);
+
+            geometry ._coordIndex   = coordIndex .flatMap ((index, i) => i % 2 === 1 ? [index, -1] : index);
+            geometry ._coord .point = points .filter ((point, i) => i % 4 < 3);
+         }
+      }
 
       // Setup
 

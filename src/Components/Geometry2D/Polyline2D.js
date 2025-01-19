@@ -1,6 +1,6 @@
 const X3D = require ("../../X3D");
 
-Object .assign (X3D .Arc2D .prototype,
+Object .assign (X3D .Polyline2D .prototype,
 {
    toPrimitive (executionContext = this .getExecutionContext ())
    {
