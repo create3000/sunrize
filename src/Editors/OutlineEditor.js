@@ -1725,22 +1725,37 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
                if (normalPerVertex)
                {
-                  const normalIndex = new X3D .MFInt32 ();
+                  const creaseAngle = X3D .Algorithm .clamp (node ._creaseAngle .getValue (), 0, Math .PI);
 
-                  for (const [i, index] of coordIndex .entries ())
+                  if (Math .abs (creaseAngle - Math .PI) < 0.1)
                   {
-                     if (index < 0)
+                     for (const [i, index] of coordIndex .entries ())
                      {
-                        normalIndex .push (-1);
-                     }
-                     else
-                     {
-                        normalIndex .push (vector .length);
-                        vector .push (normals [i]);
+                        if (index < 0)
+                           continue;
+
+                        vector [index] = normals [i];
                      }
                   }
+                  else
+                  {
+                     const normalIndex = new X3D .MFInt32 ();
 
-                  Editor .setFieldValue (executionContext, node, node ._normalIndex, normalIndex);
+                     for (const [i, index] of coordIndex .entries ())
+                     {
+                        if (index < 0)
+                        {
+                           normalIndex .push (-1);
+                        }
+                        else
+                        {
+                           normalIndex .push (vector .length);
+                           vector .push (normals [i]);
+                        }
+                     }
+
+                     Editor .setFieldValue (executionContext, node, node ._normalIndex, normalIndex);
+                  }
                }
                else
                {
