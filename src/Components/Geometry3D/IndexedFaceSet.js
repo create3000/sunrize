@@ -16,7 +16,10 @@ Object .assign (X3D .IndexedFaceSet .prototype,
       if (this ._normalPerVertex .getValue ())
       {
          if (!this ._normalIndex .length || this ._normalIndex .equals (this ._coordIndex))
-            geometry ._normal = this ._normal;
+         {
+            geometry ._tangent = this ._tangent;
+            geometry ._normal  = this ._normal;
+         }
       }
 
       // The coord index must end with -1!

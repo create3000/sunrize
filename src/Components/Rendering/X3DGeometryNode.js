@@ -2,6 +2,12 @@ const X3D = require ("../../X3D");
 
 Object .assign (X3D .X3DGeometryNode .prototype,
 {
+   /**
+    * Converts any line geometry to IndexedLineSet.
+    * @param {X3D .X3DExecutionContext} executionContext
+    * @param {object} options
+    * @returns
+    */
    toIndexedLineSet (executionContext = this .getExecutionContext (), options = { })
    {
       const geometry = executionContext .createNode ("IndexedLineSet", false);
@@ -53,6 +59,12 @@ Object .assign (X3D .X3DGeometryNode .prototype,
 
       return geometry;
    },
+   /**
+    * Converts any polygon geometry to IndexedFaceSet.
+    * @param {X3D .X3DExecutionContext} executionContext
+    * @param {object} options
+    * @returns
+    */
    toIndexedFaceSet (executionContext = this .getExecutionContext (), options = { })
    {
       const geometry = executionContext .createNode ("IndexedFaceSet", false);
