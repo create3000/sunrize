@@ -12,7 +12,7 @@ Object .assign (X3D .X3DGeometryNode .prototype,
 
       geometry ._coordIndex   = coordIndex .flatMap ((index, i) => i % 2 === 1 ? [index, -1] : index);
       geometry ._coord        = executionContext .createNode (options .double ? "CoordinateDouble" : "Coordinate", false);
-      geometry ._coord .point = points .filter ((p, i) => i % 4 < 3);
+      geometry ._coord .point = points .filter ((point, i) => i % 4 < 3);
 
       // Setup
 
@@ -130,18 +130,18 @@ Object .assign (X3D .X3DGeometryNode .prototype,
 
       for (let i = 0; i < length; i += 4)
       {
-         const p = `${array [i]} ${array [i + 1]} ${array [i + 2]} ${array [i + 3]}`;
+         const key = `${array [i]} ${array [i + 1]} ${array [i + 2]} ${array [i + 3]}`;
 
-         if (map .has (p))
+         if (map .has (key))
          {
-            index .push (map .get (p));
+            index .push (map .get (key));
          }
          else
          {
-            const i4 = points .length / 4;
+            const l = points .length / 4;
 
-            map .set (p, i4);
-            index .push (i4);
+            map .set (key, l);
+            index .push (l);
             points .push (array [i], array [i + 1], array [i + 2], array [i + 3]);
          }
       }
