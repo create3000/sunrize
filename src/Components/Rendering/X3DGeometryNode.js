@@ -138,10 +138,10 @@ Object .assign (X3D .X3DGeometryNode .prototype,
          }
          else
          {
-            const l = points .length / 4;
+            const next = points .length / 4;
 
-            map .set (key, l);
-            index .push (l);
+            map .set (key, next);
+            index .push (next);
             points .push (array [i], array [i + 1], array [i + 2], array [i + 3]);
          }
       }
