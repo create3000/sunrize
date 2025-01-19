@@ -449,6 +449,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                   }
                   case X3D .X3DConstants .X3DPrototypeInstance:
                   {
+                     menu .push ({
+                        label: _("Unwrap Inner Node"),
+                        args: ["unwrapInnerNode", element .attr ("id"), executionContext .getId (), node .getId ()],
+                     });
+
                      if (!$.try (() => node .getInnerNode () .getType () .includes (X3D .X3DConstants .X3DChildNode)))
                         continue;
 
@@ -1855,6 +1860,46 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       if (element .hasClass ("selected"))
          require ("../Application/Selection") .add (primitive);
+   }
+
+   async unwrapInnerNode (id, executionContextId, nodeId)
+   {
+      const
+         element            = $(`#${id}`),
+         executionContext   = this .objects .get (executionContextId),
+         parentFieldElement = element .closest (".field, .scene", this .sceneGraph),
+         parentNodeElement  = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
+         parentNode         = this .getNode (parentNodeElement),
+         parentField        = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement),
+         node               = this .objects .get (nodeId),
+         x3dSyntax          = await Editor .exportX3D (this .executionContext, [node]),
+         importedNodes      = await Editor .importX3D (this .executionContext, x3dSyntax),
+         innerNode          = importedNodes [0],
+         index              = parseInt (element .attr ("index"));
+
+      this .executionContext .rootNodes .length -= importedNodes .length;
+
+      UndoManager .shared .beginUndo (_("Convert Node to Next Lower Primitive"));
+
+      switch (parentField .getType ())
+      {
+         case X3D .X3DConstants .SFNode:
+         {
+            Editor .setFieldValue (executionContext, parentNode, parentField, innerNode);
+            break;
+         }
+         case X3D .X3DConstants .MFNode:
+         {
+            Editor .removeValueFromArray (executionContext, parentNode, parentField, index);
+            Editor .insertValueIntoArray (executionContext, parentNode, parentField, index, innerNode);
+            break;
+         }
+      }
+
+      UndoManager .shared .endUndo ();
+
+      if (element .hasClass ("selected"))
+         require ("../Application/Selection") .add (innerNode);
    }
 
    addPrototype (id, executionContextId)
