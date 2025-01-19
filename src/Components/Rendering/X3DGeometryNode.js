@@ -19,8 +19,9 @@ Object .assign (X3D .X3DGeometryNode .prototype,
          if (options .polyline)
          {
             const
-               first = new X3D .SFVec3f (vertexArray .at (0),  vertexArray .at (1),  0),
-               last  = new X3D .SFVec3f (vertexArray .at (-4), vertexArray .at (-3), 0);
+               SFVec3 = options .double ? X3D .SFVec3d : X3D .SFVec3f,
+               first  = new SFVec3 (vertexArray .at (0),  vertexArray .at (1),  0),
+               last   = new SFVec3 (vertexArray .at (-4), vertexArray .at (-3), 0);
 
             for (let i = 0, length = numVertices / 8; i < length; ++ i)
                geometry ._coordIndex .push (i);
@@ -31,7 +32,7 @@ Object .assign (X3D .X3DGeometryNode .prototype,
                geometry ._coordIndex .push (geometry ._coordIndex .at (-1) + 1, -1);
 
             for (let i = 0; i < numVertices; i += 8)
-               geometry ._coord .point .push (new X3D .SFVec3f (vertexArray [i], vertexArray [i + 1], 0));
+               geometry ._coord .point .push (new SFVec3 (vertexArray [i], vertexArray [i + 1], 0));
 
             if (!last .equals (first))
                geometry ._coord .point .push (last);
