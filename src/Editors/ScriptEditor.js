@@ -573,15 +573,15 @@ module .exports = class ScriptEditor extends Interface
       // Set the clipboard contents.
       navigator .clipboard .writeText (data || "");
 
-      if (cut)
-      {
-        // This is a cut operation, so replace the selection with an empty string.
-        this .monaco .executeEdits ("clipboard", [{
-            range: selection,
-            text: "",
-            forceMoveMarkers: true,
-         }]);
-      }
+      if (!cut)
+         return;
+
+      // This is a cut operation, so replace the selection with an empty string.
+      this .monaco .executeEdits ("clipboard", [{
+         range: selection,
+         text: "",
+         forceMoveMarkers: true,
+      }]);
    }
 
    async paste ()
