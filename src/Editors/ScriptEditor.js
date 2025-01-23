@@ -552,10 +552,10 @@ module .exports = class ScriptEditor extends Interface
       }
    }
 
-   execCommand (command)
-   {
-      document .execCommand (command);
-   }
+   // execCommand (command)
+   // {
+   //    document .execCommand (command);
+   // }
 
    cutOrCopy (cut)
    {
