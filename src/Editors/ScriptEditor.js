@@ -406,6 +406,14 @@ module .exports = class ScriptEditor extends Interface
                editor .onDidFocusEditorWidget (() => this .setDeclarations (monaco));
                editor .onDidBlurEditorWidget (() => this .apply ());
 
+               editor .onKeyDown ((event) =>
+               {
+                  const { keyCode, ctrlKey, metaKey } = event;
+
+                  if (keyCode === 52 && (metaKey || ctrlKey))
+                     this .paste ();
+               });
+
                editor .viewState = editor .saveViewState ();
 
                element .on ("mouseenter", () => this .setDeclarations (monaco))
@@ -467,15 +475,15 @@ module .exports = class ScriptEditor extends Interface
          { type: "separator" },
          {
             label: _("Cut"),
-            args: ["execCommand", "cut"],
+            args: ["cutOrCopy", true],
          },
          {
             label: _("Copy"),
-            args: ["execCommand", "copy"],
+            args: ["cutOrCopy", false],
          },
          {
             label: _("Paste"),
-            args: ["execCommand", "paste"],
+            args: ["paste"],
          },
          { type: "separator" },
          {
@@ -544,6 +552,57 @@ module .exports = class ScriptEditor extends Interface
    execCommand (command)
    {
       document .execCommand (command);
+   }
+
+   cutOrCopy (cut)
+   {
+      this .monaco .focus ();
+
+      // Get the current selection in the editor.
+      const selection = this .monaco .getSelection ();
+
+      if (!selection || selection .isEmpty ())
+      {
+        navigator .clipboard .writeText ("");
+        return;
+      }
+
+      // Get the text from that selection.
+      const data = this .monaco .getModel () ?.getValueInRange (selection);
+
+      // Set the clipboard contents.
+      navigator .clipboard .writeText (data || "");
+
+      if (cut)
+      {
+        // This is a cut operation, so replace the selection with an empty string.
+        this .monaco .executeEdits ("clipboard", [{
+            range: selection,
+            text: "",
+            forceMoveMarkers: true,
+         }]);
+      }
+   }
+
+   async paste ()
+   {
+      this .monaco .focus ();
+
+      // Get the current clipboard contents
+      const text = await navigator .clipboard .readText ();
+
+      // Get the current selection in the editor.
+      const selection = this .monaco .getSelection ();
+
+      if (!selection)
+        return;
+
+      // Replace the current contents with the text from the clipboard.
+      this .monaco .executeEdits ("clipboard", [{
+        range: selection,
+        text: text,
+        forceMoveMarkers: true,
+      }]);
    }
 
    create ()
