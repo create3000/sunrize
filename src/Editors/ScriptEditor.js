@@ -411,7 +411,10 @@ module .exports = class ScriptEditor extends Interface
                   const { keyCode, ctrlKey, metaKey } = event;
 
                   if (keyCode === 52 && (metaKey || ctrlKey))
+                  {
+                     event .preventDefault ();
                      this .paste ();
+                  }
                });
 
                editor .viewState = editor .saveViewState ();
