@@ -174,8 +174,8 @@ module .exports = class ScriptEditor extends Interface
             }
          }
 
-         if (this .monaco)
-            this .monaco .viewState = this .monaco .saveViewState ();
+         if (this .editor)
+            this .editor .viewState = this .editor .saveViewState ();
       }
 
       this .node = node;
@@ -186,12 +186,12 @@ module .exports = class ScriptEditor extends Interface
 
          this .nodeName .renameNodeInput (this .node);
          this .applyButton .show ();
-         this .editor ?.detach ();
+         this .monaco ?.detach ();
 
-         this .editor = editor .element .appendTo (this .verticalSplitterRight);
-         this .monaco = editor .editor;
+         this .monaco = editor .element .appendTo (this .verticalSplitterRight);
+         this .editor = editor .editor;
 
-         this .monaco .restoreViewState (this .monaco .viewState);
+         this .editor .restoreViewState (this .editor .viewState);
 
          this .node ._url       .addFieldCallback (this, this .set_url       .bind (this));
          this .node ._loadState .addFieldCallback (this, this .set_loadState .bind (this, editor .monaco));
@@ -228,10 +228,10 @@ module .exports = class ScriptEditor extends Interface
       {
          this .nodeName .renameNodeInput (null, null);
          this .applyButton .hide ();
-         this .editor ?.detach ();
+         this .monaco ?.detach ();
 
-         this .editor = null;
          this .monaco = null;
+         this .editor = null;
       }
    }
 
@@ -500,7 +500,7 @@ module .exports = class ScriptEditor extends Interface
 
    runAction (id)
    {
-      this .monaco .getAction (id) .run ();
+      this .editor .getAction (id) .run ();
    }
 
    debugFindActions (editor = this .editor)
@@ -559,10 +559,10 @@ module .exports = class ScriptEditor extends Interface
 
    cutOrCopy (cut)
    {
-      this .monaco .focus ();
+      this .editor .focus ();
 
       // Get the current selection in the editor.
-      const selection = this .monaco .getSelection ();
+      const selection = this .editor .getSelection ();
 
       if (!selection || selection .isEmpty ())
       {
@@ -571,7 +571,7 @@ module .exports = class ScriptEditor extends Interface
       }
 
       // Get the text from that selection.
-      const data = this .monaco .getModel () ?.getValueInRange (selection);
+      const data = this .editor .getModel () ?.getValueInRange (selection);
 
       // Set the clipboard contents.
       navigator .clipboard .writeText (data || "");
@@ -580,7 +580,7 @@ module .exports = class ScriptEditor extends Interface
          return;
 
       // This is a cut operation, so replace the selection with an empty string.
-      this .monaco .executeEdits ("clipboard", [{
+      this .editor .executeEdits ("clipboard", [{
          range: selection,
          text: "",
          forceMoveMarkers: true,
@@ -589,19 +589,19 @@ module .exports = class ScriptEditor extends Interface
 
    async paste ()
    {
-      this .monaco .focus ();
+      this .editor .focus ();
 
       // Get the current clipboard contents
       const text = await navigator .clipboard .readText ();
 
       // Get the current selection in the editor.
-      const selection = this .monaco .getSelection ();
+      const selection = this .editor .getSelection ();
 
       if (!selection)
         return;
 
       // Replace the current contents with the text from the clipboard.
-      this .monaco .executeEdits ("clipboard", [{
+      this .editor .executeEdits ("clipboard", [{
         range: selection,
         text: text,
         forceMoveMarkers: true,
@@ -711,11 +711,11 @@ main ()
       if (!this .node)
          return;
 
-      if (!this .monaco)
+      if (!this .editor)
          return;
 
       const
-         string = this .monaco .getModel () .getValue (),
+         string = this .editor .getModel () .getValue (),
          value  = this .node ._url .toSpliced (0, 1, Editor .encodeURI (string));
 
       if (this .node ._url .equals (value))
@@ -728,7 +728,7 @@ main ()
 
    set_url ()
    {
-      this .monaco .getModel () .setValue (Editor .decodeURI (this .node ._url [0]));
+      this .editor .getModel () .setValue (Editor .decodeURI (this .node ._url [0]));
    }
 
    set_loadState (monaco)
