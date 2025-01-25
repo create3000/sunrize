@@ -78,13 +78,13 @@
     "url": "https://patreon.com/X_ITE"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^7.6.0",
-    "@electron-forge/maker-deb": "^7.6.0",
-    "@electron-forge/maker-dmg": "^7.6.0",
-    "@electron-forge/maker-rpm": "^7.6.0",
-    "@electron-forge/maker-squirrel": "^7.6.0",
-    "@electron-forge/maker-zip": "^7.6.0",
-    "@electron-forge/publisher-github": "^7.6.0",
+    "@electron-forge/cli": "^7.6.1",
+    "@electron-forge/maker-deb": "^7.6.1",
+    "@electron-forge/maker-dmg": "^7.6.1",
+    "@electron-forge/maker-rpm": "^7.6.1",
+    "@electron-forge/maker-squirrel": "^7.6.1",
+    "@electron-forge/maker-zip": "^7.6.1",
+    "@electron-forge/publisher-github": "^7.6.1",
     "shell-tools": "^1.1.9"
   },
   "dependencies": {
@@ -98,8 +98,8 @@
     "jquery": "^3.7.1",
     "jquery-ui-dist": "^1.13.3",
     "jstree": "^3.3.17",
-    "material-icons": "^1.13.12",
-    "material-symbols": "^0.27.2",
+    "material-icons": "^1.13.13",
+    "material-symbols": "^0.28.0",
     "md5": "^2.3.0",
     "mime-types": "^2.1.35",
     "monaco-editor": "^0.50.0",
