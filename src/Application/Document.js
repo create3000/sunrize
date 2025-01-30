@@ -6,7 +6,7 @@ const
    electron           = require ("electron"),
    fs                 = require ("fs"),
    path               = require ("path"),
-   X3D                = require ("x_ite"),
+   X3D                = require ("../X3D"),
    Interface          = require ("./Interface"),
    Splitter           = require ("../Controls/Splitter"),
    Dashboard          = require ("./Dashboard"),
