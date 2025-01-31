@@ -6,6 +6,7 @@ mime .add = function (mimeType, extensions)
    this .extensions [mimeType]  = extensions;
 }
 
+mime .add ("image/jpeg",          ["jpg"]);
 mime .add ("image/ktx2",          ["ktx2"]);
 mime .add ("x-shader/x-vertex",   ["vs"]);
 mime .add ("x-shader/x-fragment", ["fs"]);
