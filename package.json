@@ -78,19 +78,19 @@
     "url": "https://patreon.com/X_ITE"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^7.6.1",
-    "@electron-forge/maker-deb": "^7.6.1",
-    "@electron-forge/maker-dmg": "^7.6.1",
-    "@electron-forge/maker-rpm": "^7.6.1",
-    "@electron-forge/maker-squirrel": "^7.6.1",
-    "@electron-forge/maker-zip": "^7.6.1",
-    "@electron-forge/publisher-github": "^7.6.1",
+    "@electron-forge/cli": "^7.7.0",
+    "@electron-forge/maker-deb": "^7.7.0",
+    "@electron-forge/maker-dmg": "^7.7.0",
+    "@electron-forge/maker-rpm": "^7.7.0",
+    "@electron-forge/maker-squirrel": "^7.7.0",
+    "@electron-forge/maker-zip": "^7.7.0",
+    "@electron-forge/publisher-github": "^7.7.0",
     "shell-tools": "^1.1.9"
   },
   "dependencies": {
     "capitalize": "^2.0.4",
     "console": "^0.7.2",
-    "electron": "^34.0.1",
+    "electron": "^34.2.0",
     "electron-prompt": "^1.7.0",
     "electron-squirrel-startup": "^1.0.1",
     "electron-tabs": "^1.0.4",
@@ -98,8 +98,8 @@
     "jquery": "^3.7.1",
     "jquery-ui-dist": "^1.13.3",
     "jstree": "^3.3.17",
-    "material-icons": "^1.13.13",
-    "material-symbols": "^0.28.0",
+    "material-icons": "^1.13.14",
+    "material-symbols": "^0.28.2",
     "md5": "^2.3.0",
     "mime-types": "^2.1.35",
     "monaco-editor": "^0.50.0",
@@ -108,7 +108,7 @@
     "spectrum-colorpicker2": "^2.0.10",
     "string-similarity": "^4.0.4",
     "tweakpane": "^3.1.10",
-    "update-electron-app": "^3.1.0",
+    "update-electron-app": "^3.1.1",
     "x_ite": "^11.2.0",
     "x3d-traverse": "^1.0.9"
   }
