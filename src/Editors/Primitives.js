@@ -363,6 +363,23 @@ DEF Sphere Transform {
 `
    },
    {
+      componentInfo: { name: "Layout" },
+      typeName: "ScreenText",
+      x3dSyntax: `
+DEF ScreenText Transform {
+   children Shape {
+      appearance Appearance {
+         material Material { }
+      }
+      geometry Text {
+         string "3D Text"
+         fontStyle ScreenFontStyle { }
+      }
+   }
+}
+`
+   },
+   {
       componentInfo: { name: "Lighting" },
       typeName: "EnvironmentLight",
       x3dSyntax: `
