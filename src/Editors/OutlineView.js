@@ -2932,6 +2932,10 @@ module .exports = class OutlineView extends Interface
             child = $(e),
             node  = this .getNode (child);
 
+         // In case imported node is not yet loaded.
+         if (!node)
+            return;
+
          // If node is somewhere else, don't disconnect.
          if (Array .from (this .sceneGraph .find (`.node[node-id="${node .getId ()}"],
             .imported-node[node-id="${node .getId ()}"],
