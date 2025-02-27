@@ -1496,7 +1496,7 @@ module .exports = class OutlineView extends Interface
    }
 
    static connectorId = 0;
-   static urlFields   = new Set (["url", "frontUrl", "backUrl", "leftUrl", "rightUrl", "topUrl", "bottomUrl", "family"]);
+   static urlFields   = new Set (["url", "frontUrl", "backUrl", "leftUrl", "rightUrl", "topUrl", "bottomUrl"]);
 
    #fieldSymbol       = Symbol ();
    #fieldButtonSymbol = Symbol ();
