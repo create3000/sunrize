@@ -7,7 +7,7 @@ class X3DChildNodeTool extends X3DNodeTool
    isVisibleObject ()
    {
       return true;
-   },
+   }
 }
 
 module .exports = X3DChildNodeTool;
