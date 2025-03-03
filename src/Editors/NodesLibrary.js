@@ -58,7 +58,7 @@ module .exports = class NodesLibrary extends LibraryPane
 
       // Get recently used elements.
 
-      const recentNodes = this .config .global .recentNodes .map (typeName => this .browser .getConcreteNode (typeName));
+      const recentNodes = this .config .global .recentNodes .map (typeName => $.try (() => this .browser .getConcreteNode (typeName))) .filter (node => node);
 
       // Create list for recently used elements.
 
