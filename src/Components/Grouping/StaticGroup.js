@@ -31,10 +31,12 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3D .X3DChildNod
       this .groupNode .setup ();
 
       // Connect after Group setup.
+      this .groupNode ._isPointingObject .addFieldInterest (this ._isPointingObject);
       this .groupNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
       this .groupNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
       this .groupNode ._isVisibleObject  .addFieldInterest (this ._isVisibleObject);
 
+      this .setPointingObject (this .groupNode .isPointingObject ());
       this .setCameraObject   (this .groupNode .isCameraObject ());
       this .setPickableObject (this .groupNode .isPickableObject ());
       this .setVisibleObject  (this .groupNode .isVisibleObject ());
