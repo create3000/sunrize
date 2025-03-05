@@ -38,10 +38,12 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3D .X3DChildNod
       this .groupNode ._isShadowObject    .addFieldInterest (this ._isShadowObject);
       this .groupNode ._isVisibleObject   .addFieldInterest (this ._isVisibleObject);
 
-      this .setPointingObject (this .groupNode .isPointingObject ());
-      this .setCameraObject   (this .groupNode .isCameraObject ());
-      this .setPickableObject (this .groupNode .isPickableObject ());
-      this .setVisibleObject  (this .groupNode .isVisibleObject ());
+      this .setPointingObject  (this .groupNode .isPointingObject ());
+      this .setCameraObject    (this .groupNode .isCameraObject ());
+      this .setPickableObject  (this .groupNode .isPickableObject ());
+      this .setCollisionObject (this .groupNode .isCollisionObject ());
+      this .setShadowObject    (this .groupNode .isShadowObject ());
+      this .setVisibleObject   (this .groupNode .isVisibleObject ());
    },
    getBBox (bbox, shadows)
    {
