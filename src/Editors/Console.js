@@ -95,14 +95,14 @@ module .exports = class Console extends Interface
    }
 
    // Add strings to exclude here:
-   excludes = new Set ([
-      "The vm module of Node.js is deprecated in the renderer process and will be removed.",
+   excludes = [
+      "The vm module of Node.js is unsupported",
       // "Invalid asm.js: Invalid member of stdlib",
-   ]);
+   ];
 
    addMessage (event, level, sourceId, line, message)
    {
-      if (this .excludes .has (message))
+      if (this .excludes .some (exclude => message .includes (exclude)))
          return;
 
       const
