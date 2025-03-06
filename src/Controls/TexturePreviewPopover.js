@@ -153,9 +153,9 @@ $.fn.texturePreviewPopover = async function (node)
 
    const _loadState = Symbol ();
 
-   node ._loadState .addFieldCallback (_loadState, loadState);
+   node ._loadState ?.addFieldCallback (_loadState, loadState);
 
-   loadState (node ._loadState .getValue ());
+   loadState (node ._loadState ?.getValue () ?? X3D .X3DConstants .COMPLETE_STATE);
 
    // Reload handling.
 
@@ -175,7 +175,7 @@ $.fn.texturePreviewPopover = async function (node)
       events: {
          hide: (event, api) =>
          {
-            node ._loadState .removeFieldCallback (_loadState);
+            node ._loadState ?.removeFieldCallback (_loadState);
 
             this .removeData ("preview");
 
