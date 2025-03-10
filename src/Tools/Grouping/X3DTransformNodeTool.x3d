@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
-<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
   <head>
     <component name='Geometry2D' level='2'/>
     <component name='Layout' level='2'/>
@@ -11,11 +11,13 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.7.1, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sat, 29 Jun 2024 11:08:56 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.7.55, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Mon, 10 Mar 2025 09:34:42 GMT'/>
   </head>
   <Scene>
-    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'/>
+    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
+      <field accessType='inputOutput' type='SFBool' name='instanced'/>
+    </ExternProtoDeclare>
     <ExternProtoDeclare name='BooleanSwitch' url='"BooleanSwitch.x3d#BooleanSwitch"'>
       <field accessType='inputOutput' type='SFBool' name='whichChoice'/>
       <field accessType='inputOutput' type='SFBool' name='visible'/>
@@ -649,7 +651,7 @@
               </IS>
               <ProtoInstance name='BooleanSwitch' DEF='CenterLine'>
                 <fieldValue name='children'>
-                  <Shape DEF='_1'
+                  <Shape DEF='_30'
                       castShadow='false'>
                     <Appearance DEF='CenterLineStyle'>
                       <LineProperties
@@ -700,8 +702,14 @@
                     <connect nodeField='translation' protoField='center'/>
                   </IS>
                   <ScreenGroup>
-                    <Group
-                        bboxSize='40 40 40'/>
+                    <Shape>
+                      <Appearance>
+                        <UnlitMaterial
+                            transparency='1'/>
+                      </Appearance>
+                      <Box
+                          size='40 40 40'/>
+                    </Shape>
                   </ScreenGroup>
                 </Transform>
               </Transform>
@@ -972,7 +980,7 @@ function set_bboxSize ()
           <field accessType='outputOnly' type='SFBool' name='scale'/>
           <field accessType='outputOnly' type='SFInt32' name='whichChoice_changed'/>
           <field accessType='outputOnly' type='SFString' name='activeTool'/>
-          <field accessType='initializeOnly' type='SFTime' name='time'/>
+          <field accessType='initializeOnly' type='SFTime' name='time' value='-1'/>
           <field accessType='initializeOnly' type='SFInt32' name='tool'/>
           <IS>
             <connect nodeField='tools' protoField='tools'/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
-<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
   <head>
     <component name='Layout' level='2'/>
     <component name='Scripting' level='1'/>
@@ -8,11 +8,13 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Thu, 18 Feb 2016 08:47:54 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.6.7, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Tue, 26 Mar 2024 14:18:58 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.7.55, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Mon, 10 Mar 2025 09:39:33 GMT'/>
   </head>
   <Scene>
-    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'/>
+    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
+      <field accessType='inputOutput' type='SFBool' name='instanced'/>
+    </ExternProtoDeclare>
     <ExternProtoDeclare name='BooleanSwitch' url='"../Grouping/BooleanSwitch.x3d"'>
       <field accessType='inputOutput' type='SFBool' name='whichChoice'/>
       <field accessType='inputOutput' type='SFBool' name='visible'/>
@@ -179,7 +181,7 @@ function eventsProcessed ()
                 rotation='1 0 0 90'>
               <ProtoInstance name='BooleanSwitch'>
                 <fieldValue name='children'>
-                  <Shape DEF='_3'>
+                  <Shape>
                     <Appearance>
                       <LineProperties DEF='_5'
                           linewidthScaleFactor='1'/>
@@ -196,7 +198,7 @@ function eventsProcessed ()
                       </IS>
                     </ProtoInstance>
                   </Shape>
-                  <Shape DEF='_6'>
+                  <Shape>
                     <Appearance>
                       <LineProperties USE='_5'/>
                       <Material
@@ -216,7 +218,7 @@ function eventsProcessed ()
                 rotation='1 0 0 90'>
               <ProtoInstance name='BooleanSwitch'>
                 <fieldValue name='children'>
-                  <Shape DEF='_12'>
+                  <Shape>
                     <Appearance>
                       <LineProperties USE='_5'/>
                       <Material
@@ -232,7 +234,7 @@ function eventsProcessed ()
                       </IS>
                     </ProtoInstance>
                   </Shape>
-                  <Shape DEF='_14'>
+                  <Shape>
                     <Appearance>
                       <LineProperties USE='_5'/>
                       <Material
@@ -255,8 +257,14 @@ function eventsProcessed ()
               <connect nodeField='visible' protoField='selected'/>
             </IS>
             <ScreenGroup>
-              <Group
-                  bboxSize='60 60 60'/>
+              <Shape>
+                <Appearance>
+                  <UnlitMaterial
+                      transparency='1'/>
+                </Appearance>
+                <Box
+                    size='60 60 60'/>
+              </Shape>
             </ScreenGroup>
           </Transform>
         </Collision>

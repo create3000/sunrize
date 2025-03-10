@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
-<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
   <head>
     <component name='Layout' level='2'/>
     <component name='Scripting' level='1'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 01 Aug 2014 17:41:58 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.7.1, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.7.55, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/TextureProjector/X3DTextureProjectorNodeTool.x3d'/>
-    <meta name='modified' content='Sat, 29 Jun 2024 11:23:51 GMT'/>
+    <meta name='modified' content='Mon, 10 Mar 2025 09:40:26 GMT'/>
   </head>
   <Scene>
-    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'/>
+    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
+      <field accessType='inputOutput' type='SFBool' name='instanced'/>
+    </ExternProtoDeclare>
     <ExternProtoDeclare name='TextureShader' url='"../Shaders/TextureShader.x3d"'>
       <field accessType='inputOutput' type='SFBool' name='flipY'/>
     </ExternProtoDeclare>
@@ -105,7 +107,7 @@
             <Transform DEF='Frustum'>
               <ProtoInstance name='BooleanSwitch'>
                 <fieldValue name='children'>
-                  <Shape DEF='_4'
+                  <Shape
                       castShadow='false'>
                     <Appearance>
                       <Material
@@ -118,7 +120,7 @@
                           point='0 0 0, 0 0 0, 0 0 0, 0 0 0, 1 1 1, -1 1 1, -1 -1 1, 1 -1 1, 2 2 2, -2 2 2, -2 -2 2, 2 -2 2'/>
                     </IndexedLineSet>
                   </Shape>
-                  <Shape DEF='_7'
+                  <Shape
                       castShadow='false'>
                     <Appearance>
                       <Material
@@ -159,8 +161,14 @@
               <connect nodeField='visible' protoField='selected'/>
             </IS>
             <ScreenGroup>
-              <Group
-                  bboxSize='60 60 60'/>
+              <Shape>
+                <Appearance>
+                  <UnlitMaterial
+                      transparency='1'/>
+                </Appearance>
+                <Box
+                    size='60 60 60'/>
+              </Shape>
             </ScreenGroup>
           </Transform>
         </Collision>
