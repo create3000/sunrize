@@ -26,6 +26,11 @@ class X3DTextureProjectorNodeTool extends X3DChildNodeTool
       this .undoSaveInitialValues (["location", "direction", "upVector"]);
    }
 
+   isBoundedObject ()
+   {
+      return true;
+   }
+
    getBBox (bbox, shadows)
    {
       return this .getToolBBox (bbox, shadows);

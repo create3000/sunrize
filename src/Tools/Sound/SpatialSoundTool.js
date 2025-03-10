@@ -24,6 +24,11 @@ class SpatialSoundTool extends X3DChildNodeTool
       this .undoSaveInitialValues (["location", "direction"]);
    }
 
+   isBoundedObject ()
+   {
+      return true;
+   }
+
    getBBox (bbox, shadows)
    {
       return this .getToolBBox (bbox, shadows);

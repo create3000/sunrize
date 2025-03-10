@@ -32,6 +32,11 @@ class X3DViewpointNodeTool extends X3DChildNodeTool
       this .undoSaveInitialValues (["position", "orientation"]);
    }
 
+   isBoundedObject ()
+   {
+      return true;
+   }
+
    getBBox (bbox, shadows)
    {
       return this .getToolBBox (bbox, shadows);

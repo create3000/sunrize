@@ -25,6 +25,11 @@ class X3DEnvironmentalSensorNodeTool extends X3DChildNodeTool
       this .undoSaveInitialValues (["size", "center"]);
    }
 
+   isBoundedObject ()
+   {
+      return true;
+   }
+
    getBBox (bbox, shadows)
    {
       if (shadows)

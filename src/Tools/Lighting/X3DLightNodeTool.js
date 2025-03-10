@@ -17,6 +17,11 @@ class X3DLightNodeTool extends X3DChildNodeTool
       this .tool .getField ("isActive") .addInterest ("handleUndo", this);
    }
 
+   isBoundedObject ()
+   {
+      return true;
+   }
+
    getBBox (bbox, shadows)
    {
       return this .getToolBBox (bbox, shadows);
