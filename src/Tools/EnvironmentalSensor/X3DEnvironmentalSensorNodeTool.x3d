@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
-<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
   <head>
     <component name='Scripting' level='1'/>
     <meta name='created' content='Mon, 14 Aug 2023 12:10:25 GMT'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.7.55, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.5.1, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/EnvironmentalSensor/X3DEnvironmentalSensorNodeTool.x3d'/>
-    <meta name='modified' content='Mon, 10 Mar 2025 09:41:20 GMT'/>
+    <meta name='modified' content='Wed, 31 Jan 2024 23:21:37 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
-      <field accessType='inputOutput' type='SFBool' name='instanced'/>
     </ExternProtoDeclare>
     <ProtoDeclare name='X3DEnvironmentalSensorNodeTool'>
       <ProtoInterface>
@@ -57,14 +56,8 @@
               <connect nodeField='scale' protoField='size'/>
               <connect nodeField='visible' protoField='selected'/>
             </IS>
-            <Shape>
-              <Appearance>
-                <UnlitMaterial
-                    transparency='1'/>
-              </Appearance>
-              <Box
-                  size='1 1 1'/>
-            </Shape>
+            <Group
+                bboxSize='1 1 1'/>
           </Transform>
         </Collision>
         <Script DEF='Tool'

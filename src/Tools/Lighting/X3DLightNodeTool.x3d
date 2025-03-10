@@ -4,12 +4,13 @@
   <head>
     <component name='Layout' level='2'/>
     <component name='Scripting' level='1'/>
+    <component name='Shaders' level='1'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 01 Aug 2014 17:41:58 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.7.55, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.7.57, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Lighting/X3DLightNodeTool.x3d'/>
-    <meta name='modified' content='Mon, 10 Mar 2025 09:30:35 GMT'/>
+    <meta name='modified' content='Mon, 10 Mar 2025 10:42:47 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -36,7 +37,7 @@
       <ProtoBody>
         <Collision
             enabled='false'>
-          <Transform DEF='_7'
+          <Transform DEF='_1'
               rotation='0 1 0 3.14159265358979'>
             <ScreenGroup>
               <Transform DEF='Lights'
@@ -221,14 +222,8 @@
               <connect nodeField='visible' protoField='selected'/>
             </IS>
             <ScreenGroup>
-              <Shape>
-                <Appearance>
-                  <UnlitMaterial
-                      transparency='1'/>
-                </Appearance>
-                <Box
-                    size='60 60 60'/>
-              </Shape>
+              <Group
+                  bboxSize='60 60 60'/>
             </ScreenGroup>
           </Transform>
         </Collision>
@@ -392,10 +387,11 @@ function set_angle ()
 }
 ]]>
         </Script>
-        <ROUTE fromNode='TransformTool' fromField='translation_changed' toNode='_7' toField='set_translation'/>
-        <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='_7' toField='set_rotation'/>
+        <ROUTE fromNode='TransformTool' fromField='translation_changed' toNode='_1' toField='set_translation'/>
+        <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='_1' toField='set_rotation'/>
         <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='Tool' toField='set_rotation'/>
       </ProtoBody>
     </ProtoDeclare>
+    <ProtoInstance name='X3DLightNodeTool'/>
   </Scene>
 </X3D>

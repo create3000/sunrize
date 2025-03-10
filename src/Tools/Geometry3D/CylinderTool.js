@@ -18,7 +18,7 @@ class CylinderTool extends X3DGeometryNodeTool
       // Transform Tool
 
       const
-         boxNode       = this .getBoxShape (new X3D .Vector3 (2, 2, 2)),
+         groupNode     = this .getToolScene () .createNode ("Group"),
          transformNode = this .getToolScene () .createNode ("Transform"),
          transformTool = await transformNode .getValue () .addTool () .getToolInstance ();
 
@@ -28,7 +28,8 @@ class CylinderTool extends X3DGeometryNodeTool
       transformNode .scale .addFieldInterest (this .tool .size);
       transformTool .getField ("isActive") .addInterest ("handleUndo", this);
 
-      transformNode .children      = [boxNode];
+      groupNode     .bboxSize      = new X3D .Vector3 (2, 2, 2);
+      transformNode .children      = [groupNode];
       transformTool .group         = this .getTypeName ();
       transformTool .undo          = false;
       transformTool .tools         = ["SCALE"];

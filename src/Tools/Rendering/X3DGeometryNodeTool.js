@@ -29,23 +29,6 @@ class X3DGeometryNodeTool extends X3DNodeTool
       super .disposeTool ();
    }
 
-   getBoxShape (size)
-   {
-      const
-         shapeNode      = this .getToolScene () .createNode ("Shape"),
-         appearanceNode = this .getToolScene () .createNode ("Appearance"),
-         materialNode   = this .getToolScene () .createNode ("UnlitMaterial"),
-         boxNode        = this .getToolScene () .createNode ("Box");
-
-      materialNode .transparency = 1;
-      boxNode .size              = size;
-      appearanceNode .material   = materialNode;
-      shapeNode .appearance      = appearanceNode;
-      shapeNode .geometry        = boxNode;
-
-      return shapeNode;
-   }
-
    set_toolRebuildGeometry ()
    {
       const
