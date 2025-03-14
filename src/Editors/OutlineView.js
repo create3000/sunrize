@@ -274,9 +274,12 @@ module .exports = class OutlineView extends Interface
             .attr ("draggable", "true")
             .on ("dragstart", this .onDragStartProto .bind (this));
 
-         child .find (".node  > .item")
-            .attr ("draggable", "true")
-            .on ("dragstart", this .onDragStartNode .bind (this));
+         if (this .getField (parent) ?.getAccessType () !== X3D .X3DConstants .outputOnly)
+         {
+            child .find (".node  > .item")
+               .attr ("draggable", "true")
+               .on ("dragstart", this .onDragStartNode .bind (this));
+         }
       }
 
       child .find (".externproto .name, .externproto .icon, .proto .name, .proto .icon, .node .name, .node .icon")
