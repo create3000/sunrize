@@ -9,6 +9,8 @@ function StaticGroup (executionContext)
 
    this .addType (X3D .X3DConstants .StaticGroup);
 
+   // Private properties
+
    this .groupNode = new X3D .Group (this .getExecutionContext ());
 }
 
@@ -52,22 +54,27 @@ Object .defineProperties (StaticGroup,
    typeName:
    {
       value: X3D .StaticGroup .typeName,
+      enumerable: true,
    },
    componentInfo:
    {
       value: X3D .StaticGroup .componentInfo,
+      enumerable: true,
    },
    containerField:
    {
       value: X3D .StaticGroup .containerField,
+      enumerable: true,
    },
    specificationRange:
    {
       value: X3D .StaticGroup .specificationRange,
+      enumerable: true,
    },
    fieldDefinitions:
    {
       value: X3D .StaticGroup .fieldDefinitions,
+      enumerable: true,
    },
 });
 
