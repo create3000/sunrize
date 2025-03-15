@@ -30,7 +30,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3D .X3DChildNod
       this .groupNode .setPrivate (true);
       this .groupNode .setup ();
 
-      this .connectChildNode (this .groupNode);
+      this .connectChildNode (this .groupNode, [X3D .TraverseType .CAMERA]);
    },
    getBBox (bbox, shadows)
    {
