@@ -2630,6 +2630,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                      return innerNode .getBBox (new X3D .Box3 ()) .multRight (modelMatrix);
                   case X3D .X3DConstants .X3DGeometryNode:
                      return innerNode .getBBox () .copy () .multRight (modelMatrix);
+                  case X3D .X3DConstants .ViewpointGroup:
                   case X3D .X3DConstants .X3DEnvironmentalSensorNode:
                      return new X3D .Box3 (innerNode ._size .getValue (), innerNode ._center .getValue ())
                         .multRight (modelMatrix);
