@@ -6,8 +6,6 @@ const
 
 class ViewpointGroupTool extends X3DEnvironmentalSensorNodeTool
 {
-   static createOnSelection = true;
-
    toolBoxColor = ToolColors .PROXIMITY_SENSOR;
 }
 

@@ -153,6 +153,7 @@ module .exports = class OutlineView extends Interface
          X3D .X3DConstants .SpotLight,
          X3D .X3DConstants .Sound,
          X3D .X3DConstants .SpatialSound,
+         X3D .X3DConstants .ViewpointGroup,
          X3D .X3DConstants .X3DEnvironmentalSensorNode,
          X3D .X3DConstants .X3DTextureProjectorNode,
          X3D .X3DConstants .X3DViewpointNode,
