@@ -486,8 +486,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 </html>`
    }
 
-   static absoluteURL = new RegExp ("^(?:[a-z]+:|//)", "i")
-   static fontFamilies = new Set (["SERIF", "SANS", "TYPEWRITER"])
+   static absoluteURL = new RegExp ("^(?:[a-z]+:|//)", "i");
 
    /**
     *
