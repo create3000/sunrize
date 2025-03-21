@@ -507,23 +507,17 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             continue;
 
          const
-            node          = object .getValue (),
-            urlObject     = node .getType () .includes (X3D .X3DConstants .X3DUrlObject),
-            fontStyleNode = node .getType () .includes (X3D .X3DConstants .X3DFontStyleNode);
+            node      = object .getValue (),
+            urlObject = node .getType () .includes (X3D .X3DConstants .X3DUrlObject);
 
-         if (!(urlObject || fontStyleNode))
+         if (!urlObject)
             continue;
 
          const newURL = new X3D .MFString ();
 
          for (const fileURL of node ._url)
          {
-            if (fontStyleNode && this .fontFamilies .has (fileURL))
-            {
-               newURL .push (fileURL);
-               continue;
-            }
-            else if (this .absoluteURL .test (fileURL))
+            if (this .absoluteURL .test (fileURL))
             {
                try
                {
