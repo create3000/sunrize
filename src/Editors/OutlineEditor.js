@@ -577,12 +577,12 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          var menu = [
             {
                label: _("Rename Imported Node..."),
-               visible: Editor .getScene (importedNode .getExecutionContext ()) === this .executionContext,
+               visible: importedNode .getExecutionContext () .getLocalScene () === this .executionContext,
                args: ["renameImportedNode", element .attr ("id")],
             },
             {
                label: _("Remove Imported Node"),
-               visible: Editor .getScene (importedNode .getExecutionContext ()) === this .executionContext,
+               visible: importedNode .getExecutionContext () .getLocalScene () === this .executionContext,
                args: ["removeImportedNode", element .attr ("id")],
             },
          ];
