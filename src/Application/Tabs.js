@@ -62,7 +62,7 @@ module .exports = new class Tabs
       $(window) .on ("beforeunload", () => this .close ());
 
       // Forward Actions
-      
+
       this .forwardToAllTabs ("browser-update");
       this .forwardToAllTabs ("auto-save");
       this .forwardToActiveTab ("export-as");
@@ -94,6 +94,7 @@ module .exports = new class Tabs
       this .forwardToActiveTab ("tone-mapping");
       this .forwardToActiveTab ("order-independent-transparency");
       this .forwardToActiveTab ("logarithmic-depth-buffer");
+      this .forwardToActiveTab ("mute");
       this .forwardToActiveTab ("display-rubberband");
       this .forwardToActiveTab ("display-timings");
       this .forwardToActiveTab ("show-library");

@@ -55,6 +55,7 @@ module .exports = class Application
          defaultEditMenu: false,
          undoLabel: _("Undo"),
          redoLabel: _("Redo"),
+         mute: false,
       };
 
       this .config .setDefaultValues ({
@@ -708,6 +709,12 @@ module .exports = class Application
                      click: () => this .mainWindow .webContents .send ("logarithmic-depth-buffer", !this .menuOptions .logarithmicDepthBuffer),
                   },
                   { type: "separator" },
+                  {
+                     label: _("Mute Audio"),
+                     type: "checkbox",
+                     checked: this .menuOptions .mute,
+                     click: () => this .mainWindow .webContents .send ("mute", !this .menuOptions .mute),
+                  },
                   {
                      label: _("Display Rubberband"),
                      type: "checkbox",

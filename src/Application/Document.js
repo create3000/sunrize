@@ -106,6 +106,7 @@ module .exports = class Document extends Interface
       electron .ipcRenderer .on ("tone-mapping",                   (event, value) => this .setToneMapping (value));
       electron .ipcRenderer .on ("order-independent-transparency", (event, value) => this .setOrderIndependentTransparency (value));
       electron .ipcRenderer .on ("logarithmic-depth-buffer",       (event, value) => this .setLogarithmicDepthBuffer (value));
+      electron .ipcRenderer .on ("mute",                           (event, value) => this .setMute (value));
       electron .ipcRenderer .on ("display-rubberband",             (event, value) => this .setDisplayRubberband (value));
       electron .ipcRenderer .on ("display-timings",                (event, value) => this .setDisplayTimings (value));
       electron .ipcRenderer .on ("show-library",                   (event)        => this .showLibrary ());
@@ -148,6 +149,7 @@ module .exports = class Document extends Interface
          "ToneMapping",
          "OrderIndependentTransparency",
          "LogarithmicDepthBuffer",
+         "Mute",
          "Rubberband",
          "Timings",
       ];
@@ -198,6 +200,7 @@ module .exports = class Document extends Interface
          toneMapping: "NONE",
          orderIndependentTransparency: false,
          logarithmicDepthBuffer: false,
+         mute: false,
          rubberband: true,
          timings: false,
       });
@@ -213,6 +216,7 @@ module .exports = class Document extends Interface
       this .setToneMapping                  (this .config .file .toneMapping);
       this .setOrderIndependentTransparency (this .config .file .orderIndependentTransparency);
       this .setLogarithmicDepthBuffer       (this .config .file .logarithmicDepthBuffer);
+      this .setMute                         (this .config .file .mute);
       this .setDisplayRubberband            (this .config .file .rubberband);
       this .setDisplayTimings               (this .config .file .timings);
 
@@ -744,6 +748,23 @@ Viewpoint {
     *
     * @param {boolean} value
     */
+   setMute (value)
+   {
+      this .browser .setBrowserOption ("Mute", value);
+      this .browser .setDescription (`Mute: ${value ? "on" : "off"}`);
+   }
+
+   set_Mute ()
+   {
+      this .config .file .mute = this .browser .getBrowserOption ("Mute");
+
+      this .updateMenu ();
+   }
+
+   /**
+    *
+    * @param {boolean} value
+    */
    setDisplayRubberband (value)
    {
       this .browser .setBrowserOption ("Rubberband", value);
@@ -784,6 +805,7 @@ Viewpoint {
          toneMapping: this .config .file .toneMapping,
          orderIndependentTransparency: this .config .file .orderIndependentTransparency,
          logarithmicDepthBuffer: this .config .file .logarithmicDepthBuffer,
+         mute: this .config .file .mute,
          rubberband: this .config .file .rubberband,
          timings: this .config .file .timings,
       });
