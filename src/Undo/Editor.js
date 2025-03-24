@@ -493,11 +493,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       for (const object of Traverse .traverse (objects, Traverse .EXTERNPROTO_DECLARATIONS | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES))
       {
-         if (!(object instanceof X3D .SFNode))
-            continue;
-
          const
-            node          = object .getValue (),
+            node          = object instanceof X3D .SFNode ? object .getValue () : object,
             urlObject     = node .getType () .includes (X3D .X3DConstants .X3DUrlObject),
             fontStyleNode = node .getType () .includes (X3D .X3DConstants .X3DFontStyleNode);
 
