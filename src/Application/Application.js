@@ -55,7 +55,6 @@ module .exports = class Application
          defaultEditMenu: false,
          undoLabel: _("Undo"),
          redoLabel: _("Redo"),
-         mute: false,
       };
 
       this .config .setDefaultValues ({
