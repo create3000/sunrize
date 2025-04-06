@@ -1016,6 +1016,7 @@ Viewpoint {
       if (!element .length)
          return;
 
+      element [0] .scrollIntoView ({ block: "center", inline: "nearest" });
       outlineEditor .selectNodeElement (element, event .shiftKey || event .metaKey);
    }
 
