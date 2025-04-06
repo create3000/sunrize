@@ -986,7 +986,7 @@ Viewpoint {
       this .#snapTarget ?.onmouseup (event);
    }
 
-   async ondblclick (event)
+   ondblclick (event)
    {
       if (!this .secondaryToolbar .arrowButton .hasClass ("active"))
          return;
@@ -997,8 +997,6 @@ Viewpoint {
       event .preventDefault ();
       event .stopPropagation ();
       event .stopImmediatePropagation ();
-
-      await $.sleep (0);
 
       const [x, y] = this .browser .getPointerFromEvent (event);
 
