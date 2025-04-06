@@ -1009,7 +1009,7 @@ Viewpoint {
          shapeNode     = this .browser .getHit () .shapeNode,
          outlineEditor = this .sidebar .outlineEditor;
 
-      outlineEditor .expandTo (shapeNode, { expandAll: true });
+      outlineEditor .expandTo (shapeNode, { expandObject: true, expandAll: true });
 
       const element = outlineEditor .sceneGraph .find (`.node[node-id=${shapeNode .getId ()}]`);
 
