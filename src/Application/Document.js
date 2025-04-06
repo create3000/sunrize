@@ -1015,7 +1015,7 @@ Viewpoint {
          return;
 
       outlineEditor .selectNodeElement (element, event .shiftKey || event .metaKey);
-      element [0] .scrollIntoView ({ block: "center", inline: "center", behavior: "smooth" });
+      element [0] .scrollIntoView ({ block: "center", inline: "start", behavior: "smooth" });
       $(window) .scrollTop (0);
    }
 
