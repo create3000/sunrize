@@ -3711,7 +3711,7 @@ module .exports = class OutlineView extends Interface
 
    onDragEnd (event) { }
 
-   expandTo (object, expandObject = false)
+   expandTo (object, { expandObject = false, expandAll = false } = { })
    {
       let flags = Traverse .NONE;
 
@@ -3739,7 +3739,9 @@ module .exports = class OutlineView extends Interface
             hierarchy .pop ();
 
          this .expandHierarchy (hierarchy, this .sceneGraph, this .executionContext);
-         break;
+
+         if (!expandAll)
+            break;
       }
    }
 

@@ -28,9 +28,6 @@ module .exports = class Document extends Interface
    {
       super ("Sunrize.Document.");
 
-      // Add X3D to window to provide access in Script nodes.
-      window .X3D = X3D;
-
       // Globals
 
       this .config .global .setDefaultValues ({
@@ -168,7 +165,8 @@ module .exports = class Document extends Interface
 
       $(this .browser .element .shadowRoot) .find ("canvas")
          .on ("mousedown", event => this .onmousedown (event))
-         .on ("mouseup",   event => this .onmouseup   (event));
+         .on ("mouseup",   event => this .onmouseup   (event))
+         .on ("dblclick",  event => this .ondblclick  (event));
 
       // Load components.
 
@@ -978,9 +976,6 @@ Viewpoint {
 
    async onmouseup (event)
    {
-      if (ActionKeys .value & ActionKeys .Control)
-         event .button = 2;
-
       if (event .button !== 2)
          return;
 
@@ -989,6 +984,39 @@ Viewpoint {
 
       this .#snapSource ?.onmouseup (event);
       this .#snapTarget ?.onmouseup (event);
+   }
+
+   async ondblclick (event)
+   {
+      if (!this .secondaryToolbar .arrowButton .hasClass ("active"))
+         return;
+
+      if (event .button !== 0)
+         return;
+
+      event .preventDefault ();
+      event .stopPropagation ();
+      event .stopImmediatePropagation ();
+
+      await $.sleep (0);
+
+      const [x, y] = this .browser .getPointerFromEvent (event);
+
+      if (!this .browser .touch (x, y))
+         return;
+
+      const
+         shapeNode     = this .browser .getHit () .shapeNode,
+         outlineEditor = this .sidebar .outlineEditor;
+
+      outlineEditor .expandTo (shapeNode, { expandAll: true });
+
+      const element = outlineEditor .sceneGraph .find (`.node[node-id=${shapeNode .getId ()}]`);
+
+      if (!element .length)
+         return;
+
+      outlineEditor .selectNodeElement (element, event .shiftKey || event .metaKey);
    }
 
    activateSnapTarget (visible)

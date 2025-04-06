@@ -1199,7 +1199,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       await this .browser .nextFrame ();
 
-      this .expandTo (node, true);
+      this .expandTo (node, { expandObject: true });
    }
 
    removeParent (id, executionContextId, nodeId)
@@ -1467,7 +1467,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       await this .browser .nextFrame ();
 
-      this .expandTo (childNode, true);
+      this .expandTo (childNode, { expandObject: true });
    }
 
    protocolToMimeType = new Map ([
