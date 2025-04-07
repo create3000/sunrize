@@ -3333,7 +3333,7 @@ module .exports = class OutlineView extends Interface
 
       const
          element = $(event .currentTarget) .closest (".node, .externproto, .proto"),
-         add     = window .event .shiftKey || window .event .metaKey;
+         add     = event .shiftKey || event .metaKey;
 
       if (element .hasClass ("node"))
          this .selectNodeElement (element, add);
