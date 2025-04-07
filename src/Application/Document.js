@@ -1015,7 +1015,12 @@ Viewpoint {
          return;
 
       while (!outlineEditor .isEditable (element))
-         element = element .parent () .closest (".node", outlineEditor .sceneGraph);
+      {
+         element = element .parent () .closest (".node, .scene", outlineEditor .sceneGraph);
+
+         if (element .hasClass ("scene"))
+            element .jstree ("close_node", element);
+      }
 
       outlineEditor .selectNodeElement (element, event .shiftKey || event .metaKey);
       element [0] .scrollIntoView ({ block: "center", inline: "start", behavior: "smooth" });
