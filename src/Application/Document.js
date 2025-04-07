@@ -1016,10 +1016,8 @@ Viewpoint {
 
       while (!outlineEditor .isEditable (element))
       {
+         element .jstree ("close_node", element);
          element = element .parent () .closest (".node, .scene", outlineEditor .sceneGraph);
-
-         if (element .hasClass ("scene"))
-            element .jstree ("close_node", element);
       }
 
       outlineEditor .selectNodeElement (element, event .shiftKey || event .metaKey);
