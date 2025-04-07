@@ -1011,11 +1011,11 @@ Viewpoint {
 
       let element = outlineEditor .sceneGraph .find (`.node[node-id=${shapeNode .getId ()}]`);
 
-      while (!outlineEditor .isEditable (element) && element .length)
-         element = element .parent () .closest (".node", outlineEditor .sceneGraph);
-
       if (!element .length)
          return;
+
+      while (!outlineEditor .isEditable (element))
+         element = element .parent () .closest (".node", outlineEditor .sceneGraph);
 
       outlineEditor .selectNodeElement (element, event .shiftKey || event .metaKey);
       element [0] .scrollIntoView ({ block: "center", inline: "start", behavior: "smooth" });
