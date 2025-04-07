@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const X3D = require ("../../X3D");
 

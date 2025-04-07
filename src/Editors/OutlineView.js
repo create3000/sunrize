@@ -295,6 +295,9 @@ module .exports = class OutlineView extends Interface
       child .find (".toggle-tool")
          .on ("click", this .toggleTool .bind (this));
 
+      child .find (".proxy-display")
+         .on ("click", this .proxyDisplay .bind (this));
+
       child .find (".activate-layer")
          .on ("click", this .activateLayer .bind (this));
 
@@ -1094,6 +1097,17 @@ module .exports = class OutlineView extends Interface
       {
          switch (type)
          {
+            case X3D .X3DConstants .Collision:
+            {
+               buttons .push ($("<span></span>")
+                  .attr ("order", "1")
+                  .attr ("title", _("Display proxy node."))
+                  .addClass (["proxy-display", "button", "material-symbols-outlined"])
+                  .addClass (node .getProxyDisplay () ? "on" : "off")
+                  .text ("build_circle"));
+
+               break;
+            }
             case X3D .X3DConstants .X3DLayerNode:
             {
                if (node .getExecutionContext () !== this .executionContext)
@@ -3161,6 +3175,25 @@ module .exports = class OutlineView extends Interface
          .exported-node[node-id=${node .getId ()}] > .item .toggle-tool`)
          .removeClass (["on", "off"])
          .addClass (tool ? "off" : "on");
+   }
+
+   proxyDisplay (event)
+   {
+      const
+         target  = $(event .target),
+         element = target .closest (".node, .imported-node, .exported-node", this .sceneGraph),
+         node    = this .getNode (element);
+
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
+
+      node .setProxyDisplay (!node .getProxyDisplay ());
+
+      this .sceneGraph .find (`.node[node-id=${node .getId ()}] > .item .proxy-display,
+         .imported-node[node-id=${node .getId ()}] > .item .proxy-display,
+         .exported-node[node-id=${node .getId ()}] > .item .proxy-display`)
+         .removeClass (["on", "off"])
+         .addClass (node .getProxyDisplay () ? "on" : "off");
    }
 
    activateLayer (event) { }
