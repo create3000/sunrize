@@ -1009,7 +1009,10 @@ Viewpoint {
 
       outlineEditor .expandTo (shapeNode, { expandObject: true, expandAll: true });
 
-      const element = outlineEditor .sceneGraph .find (`.node[node-id=${shapeNode .getId ()}]`);
+      let element = outlineEditor .sceneGraph .find (`.node[node-id=${shapeNode .getId ()}]`);
+
+      while (!outlineEditor .isEditable (element) && element .length)
+         element = element .parent () .closest (".node", outlineEditor .sceneGraph);
 
       if (!element .length)
          return;
