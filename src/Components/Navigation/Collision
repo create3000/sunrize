@@ -11,6 +11,13 @@ function Collision (executionContext)
 
 Object .assign (Object .setPrototypeOf (Collision .prototype, X3D .Collision .prototype),
 {
+   set_proxy__ ()
+   {
+      this .pointingObjects .delete (this .proxyNode);
+      this .visibleObjects  .delete (this .proxyNode);
+
+      X3D .Collision .prototype .set_proxy__ .call (this);
+   },
    set_pointingObjects__ ()
    {
       if (this .proxyNode)
