@@ -1019,9 +1019,11 @@ Viewpoint {
 
       if (outlineEditor .isEditable (element))
       {
-         const parentElement = element .parent () .closest (".node", outlineEditor .sceneGraph);
+         const
+            parentElement = element .parent () .closest (".node", outlineEditor .sceneGraph),
+            parent        = outlineEditor .getNode (parentElement);
 
-         if (parentElement .length)
+         if (parentElement .length && parent .getType () .includes (X3D .X3DConstants .X3DGroupingNode))
             element = parentElement;
       }
       else
