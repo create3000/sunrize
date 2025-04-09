@@ -156,6 +156,7 @@ class X3DNodeTool extends X3DBaseTool
             {
                const scene = await this .getBrowser () .createX3DFromURL (new X3D .MFString (protoURL));
 
+               scene .setPrivate (true);
                scene .setExecutionContext (this .getBrowser () .getPrivateScene ());
                scene .setCountPrimitives (false);
 

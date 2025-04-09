@@ -960,12 +960,14 @@ Viewpoint {
             if (this .browser .getHit () .sensors .size)
                return;
 
-            const
-               shapeNode     = this .browser .getHit () .shapeNode,
-               outlineEditor = this .sidebar .outlineEditor,
-               element       = outlineEditor .sceneGraph .find (`.node[node-id=${shapeNode .getId ()}]`);
+            let
+               node = this .browser .getHit () .shapeNode,
+               priv = false;
 
-            if (!element .length)
+            while (node && !(priv ||= node .isPrivate ()))
+               node = node .getExecutionContext ();
+
+            if (priv)
                return;
 
             event .preventDefault ();
