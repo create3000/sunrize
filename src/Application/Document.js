@@ -945,6 +945,8 @@ Viewpoint {
 
    async onmousedown (event)
    {
+      this .select = false;
+
       if (!this .secondaryToolbar .arrowButton .hasClass ("active"))
          return;
 
@@ -969,6 +971,8 @@ Viewpoint {
 
             if (priv)
                return;
+
+            this .select = true;
 
             event .preventDefault ();
             event .stopPropagation ();
@@ -1029,6 +1033,9 @@ Viewpoint {
          return;
 
       if (event .button !== 0)
+         return;
+
+      if (!this .select)
          return;
 
       const [x, y] = this .browser .getPointerFromEvent (event);
