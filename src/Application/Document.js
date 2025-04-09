@@ -962,6 +962,8 @@ Viewpoint {
             if (this .browser .getHit () .sensors .size)
                return;
 
+            // Check if a parent is private.
+
             let
                node = this .browser .getHit () .shapeNode,
                priv = false;
@@ -971,6 +973,8 @@ Viewpoint {
 
             if (priv)
                return;
+
+            // Start selection.
 
             this .select = true;
 
