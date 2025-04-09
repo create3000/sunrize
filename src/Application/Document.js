@@ -178,6 +178,7 @@ module .exports = class Document extends Interface
       this .browser .updateConcreteNode (require ("../Components/Grouping/StaticGroup"));
       this .browser .updateConcreteNode (require ("../Components/Grouping/Switch"));
       this .browser .updateConcreteNode (require ("../Components/Navigation/Collision"));
+      this .browser .updateConcreteNode (require ("../Components/Navigation/LOD"));
 
       require ("../Components");
 

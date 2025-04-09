@@ -2,14 +2,14 @@
 
 const X3D = require ("../../X3D");
 
-function Switch (executionContext)
+function LOD (executionContext)
 {
-   X3D .Switch .call (this, executionContext);
+   X3D .LOD .call (this, executionContext);
 
    this .editChild = null;
 }
 
-Object .assign (Object .setPrototypeOf (Switch .prototype, X3D .Switch .prototype),
+Object .assign (Object .setPrototypeOf (LOD .prototype, X3D .LOD .prototype),
 {
    getEditChild ()
    {
@@ -28,10 +28,10 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3D .Switch .prototyp
       if (this .editChild)
          this .setChild (this .editChild .getTool () ?? this .editChild);
       else
-         X3D .Switch .prototype .set_children__ .call (this);
+         X3D .LOD .prototype .set_children__ .call (this);
    },
 });
 
-Object .assign (Switch, X3D .Switch);
+Object .assign (LOD, X3D .LOD);
 
-module .exports = Switch;
+module .exports = LOD;

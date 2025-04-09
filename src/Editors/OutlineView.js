@@ -1250,6 +1250,7 @@ module .exports = class OutlineView extends Interface
       {
          switch (type)
          {
+            case X3D .X3DConstants .LOD:
             case X3D .X3DConstants .Switch:
             {
                buttons .push ($("<span></span>")
