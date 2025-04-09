@@ -338,6 +338,10 @@ module .exports = class OutlineView extends Interface
          case "show-preview":
             this .showPreview (event);
             break;
+
+         case "edit-branch":
+            this .editBranch (event);
+            break;
       }
    }
 
@@ -1250,8 +1254,8 @@ module .exports = class OutlineView extends Interface
             {
                buttons .push ($("<span></span>")
                   .attr ("order", "10")
-                  .attr ("title", _("Display child node."))
-                  .attr ("action", "display-child")
+                  .attr ("title", _("Edit branch."))
+                  .attr ("action", "edit-branch")
                   .addClass (["button", "material-symbols-outlined"])
                   .addClass (parent .getEditChild () === node ? "on" : "off")
                   .text ("highlight_mouse_cursor"));
@@ -1332,7 +1336,7 @@ module .exports = class OutlineView extends Interface
          .find (`.node[node-id=${node .getId ()}],
          .imported-node[node-id=${node .getId ()}],
          .exported-node[node-id=${node .getId ()}]`)
-         .find ("> .item .bind-node")
+         .find ("> .item [action=bind-node]")
          .removeClass (["on", "off"])
          .addClass (node ._isBound .getValue () ? "on" : "off")
          .text (node ._isBound .getValue () ? "radio_button_checked" : "radio_button_unchecked");
@@ -1360,7 +1364,7 @@ module .exports = class OutlineView extends Interface
          .find (`.node[node-id=${node .getId ()}],
          .imported-node[node-id=${node .getId ()}],
          .exported-node[node-id=${node .getId ()}]`)
-         .find ("> .item .play-node")
+         .find ("> .item [action=play-node]")
          .removeClass (["on", "off"])
          .addClass (node ._isPaused .getValue () ? "on" : "off")
          .attr ("title", node ._isActive .getValue () && !node ._isPaused .getValue () ? _("Pause timer.") : _("Start timer."))
@@ -1370,7 +1374,7 @@ module .exports = class OutlineView extends Interface
          .find (`.node[node-id=${node .getId ()}],
          .imported-node[node-id=${node .getId ()}],
          .exported-node[node-id=${node .getId ()}]`)
-         .find ("> .item .stop-node")
+         .find ("> .item [action=stop-node]")
          .removeClass (["on", "off"])
          .addClass (node ._isActive .getValue () ? "on" : "off"));
 
@@ -1378,7 +1382,7 @@ module .exports = class OutlineView extends Interface
          .find (`.node[node-id=${node .getId ()}],
          .imported-node[node-id=${node .getId ()}],
          .exported-node[node-id=${node .getId ()}]`)
-         .find ("> .item .loop-node")
+         .find ("> .item [action=loop-node]")
          .removeClass (["on", "off"])
          .addClass (node ._loop .getValue () ? "on" : "off"));
 
@@ -3191,7 +3195,7 @@ module .exports = class OutlineView extends Interface
       this .sceneGraph .find (`.node[node-id=${node .getId ()}],
          .imported-node[node-id=${node .getId ()}],
          .exported-node[node-id=${node .getId ()}]`)
-         .find ("> .item .toggle-visibility")
+         .find ("> .item [action=toggle-visibility]")
          .removeClass (["on", "off"])
          .addClass (hidden ? "off" : "on")
          .text (hidden ? "visibility_off" : "visibility");
@@ -3220,9 +3224,10 @@ module .exports = class OutlineView extends Interface
 
       node .setUserData (_changing, true);
 
-      this .sceneGraph .find (`.node[node-id=${node .getId ()}] > .item .toggle-tool,
-         .imported-node[node-id=${node .getId ()}] > .item .toggle-tool,
-         .exported-node[node-id=${node .getId ()}] > .item .toggle-tool`)
+      this .sceneGraph .find (`.node[node-id=${node .getId ()}],
+         .imported-node[node-id=${node .getId ()}],
+         .exported-node[node-id=${node .getId ()}]`)
+         .find ("> .item [action=toggle-tool]")
          .removeClass (["on", "off"])
          .addClass (tool ? "off" : "on");
    }
@@ -3239,9 +3244,10 @@ module .exports = class OutlineView extends Interface
 
       node .setProxyDisplay (!node .getProxyDisplay ());
 
-      this .sceneGraph .find (`.node[node-id=${node .getId ()}] > .item .proxy-display,
-         .imported-node[node-id=${node .getId ()}] > .item .proxy-display,
-         .exported-node[node-id=${node .getId ()}] > .item .proxy-display`)
+      this .sceneGraph .find (`.node[node-id=${node .getId ()}],
+         .imported-node[node-id=${node .getId ()}],
+         .exported-node[node-id=${node .getId ()}]`)
+         .find ("> .item [action=proxy-display]")
          .removeClass (["on", "off"])
          .addClass (node .getProxyDisplay () ? "on" : "off");
    }
@@ -3290,6 +3296,35 @@ module .exports = class OutlineView extends Interface
       }
    }
 
+   editBranch (event)
+   {
+      const
+         target        = $(event .target),
+         element       = target .closest (".node", this .sceneGraph),
+         parentElement = element .parent () .closest (".node", this .sceneGraph),
+         node          = this .getNode (element),
+         parent        = this .getNode (parentElement);
+
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
+
+      this .sceneGraph .find (`.node[node-id=${parent .getId ()}] .node[node-id=${node .getId ()}]`)
+         .siblings ()
+         .find ("> .item [action=edit-branch]")
+         .removeClass (["on", "off"])
+         .addClass ("off");
+
+      this .sceneGraph .find (`.node[node-id=${parent .getId ()}] .node[node-id=${node .getId ()}]`)
+         .find ("> .item [action=edit-branch]")
+         .removeClass (["on", "off"])
+         .addClass (parent .getEditChild () !== node ? "on" : "off");
+
+      if (parent .getEditChild () === node)
+         parent .setEditChild (null)
+      else
+         parent .setEditChild (node);
+   }
+
    hideUnselectedObjects ()
    {
       // Hide all X3DShapeNode nodes and show all other nodes.
@@ -3309,7 +3344,7 @@ module .exports = class OutlineView extends Interface
          this .sceneGraph .find (`.node[node-id=${node .getId ()}],
             .imported-node[node-id=${node .getId ()}],
             .exported-node[node-id=${node .getId ()}]`)
-            .find ("> .item .toggle-visibility")
+            .find ("> .item [action=toggle-visibility]")
             .removeClass (["on", "off"])
             .addClass (node .isHidden () ? "off" : "on")
             .text (node .isHidden () ? "visibility_off" : "visibility");
