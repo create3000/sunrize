@@ -960,6 +960,14 @@ Viewpoint {
             if (this .browser .getHit () .sensors .size)
                return;
 
+            const
+               shapeNode     = this .browser .getHit () .shapeNode,
+               outlineEditor = this .sidebar .outlineEditor,
+               element       = outlineEditor .sceneGraph .find (`.node[node-id=${shapeNode .getId ()}]`);
+
+            if (!element .length)
+               return;
+
             event .preventDefault ();
             event .stopPropagation ();
             event .stopImmediatePropagation ();
