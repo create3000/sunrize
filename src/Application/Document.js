@@ -165,8 +165,8 @@ module .exports = class Document extends Interface
 
       $(this .browser .element .shadowRoot) .find ("canvas")
          .on ("mousedown", event => this .onmousedown (event))
-         .on ("mouseup",   event => this .onmouseup   (event))
-         .on ("dblclick",  event => this .ondblclick  (event));
+         .on ("mouseup", event => this .onsnaptool (event))
+         .on ("mouseup", event => this .onselect (event));
 
       // Load components.
 
@@ -945,39 +945,63 @@ Viewpoint {
 
    async onmousedown (event)
    {
-      if (event .button !== 2)
+      if (!this .secondaryToolbar .arrowButton .hasClass ("active"))
          return;
 
-      switch (ActionKeys .value)
+      switch (event .button)
       {
-         case ActionKeys .None:
+         case 0:
          {
-            if (this .#snapTarget ?._visible .getValue ())
-               break;
+            const [x, y] = this .browser .getPointerFromEvent (event);
 
-            this .activateSnapTarget (true);
+            if (!this .browser .touch (x, y))
+               return;
 
-            await this .#snapTarget .getToolInstance ();
+            if (this .browser .getHit () .sensors .size)
+               return;
 
-            this .#snapTarget .onmousedown (event, true);
+            event .preventDefault ();
+            event .stopPropagation ();
+            event .stopImmediatePropagation ();
             break;
          }
-         case ActionKeys .Option:
+         case 2:
          {
-            if (this .#snapSource ?._visible .getValue ())
-               break;
+            switch (ActionKeys .value)
+            {
+               case ActionKeys .None:
+               {
+                  if (this .#snapTarget ?._visible .getValue ())
+                     break;
 
-            this .activateSnapSource (true);
+                  this .activateSnapTarget (true);
 
-            await this .#snapSource .getToolInstance ();
+                  await this .#snapTarget .getToolInstance ();
 
-            this .#snapSource .onmousedown (event, true);
+                  this .#snapTarget .onmousedown (event, true);
+                  break;
+               }
+               case ActionKeys .Option:
+               {
+                  if (this .#snapSource ?._visible .getValue ())
+                     break;
+
+                  this .activateSnapSource (true);
+
+                  await this .#snapSource .getToolInstance ();
+
+                  this .#snapSource .onmousedown (event, true);
+                  break;
+               }
+            }
+
             break;
          }
       }
+
    }
 
-   async onmouseup (event)
+   async onsnaptool (event)
    {
       if (event .button !== 2)
          return;
@@ -989,17 +1013,13 @@ Viewpoint {
       this .#snapTarget ?.onmouseup (event);
    }
 
-   ondblclick (event)
+   onselect (event)
    {
       if (!this .secondaryToolbar .arrowButton .hasClass ("active"))
          return;
 
       if (event .button !== 0)
          return;
-
-      event .preventDefault ();
-      event .stopPropagation ();
-      event .stopImmediatePropagation ();
 
       const [x, y] = this .browser .getPointerFromEvent (event);
 
