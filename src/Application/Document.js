@@ -1017,10 +1017,20 @@ Viewpoint {
       if (!element .length)
          return;
 
-      while (!outlineEditor .isEditable (element))
+      if (outlineEditor .isEditable (element))
       {
-         element .jstree ("close_node", element);
-         element = element .parent () .closest (".node, .scene", outlineEditor .sceneGraph);
+         const parentElement = element .parent () .closest (".node", outlineEditor .sceneGraph);
+
+         if (parentElement .length)
+            element = parentElement;
+      }
+      else
+      {
+         while (!outlineEditor .isEditable (element))
+         {
+            element .jstree ("close_node", element);
+            element = element .parent () .closest (".node, .scene", outlineEditor .sceneGraph);
+         }
       }
 
       outlineEditor .selectNodeElement (element, event .shiftKey || event .metaKey);
