@@ -9,6 +9,10 @@
 
 /* append your custom style below */
 
+/*
+ * Common rules start here
+ */
+
 @mixin x_ite-dark-scheme {
   /* Colors */
 
@@ -149,10 +153,6 @@ html {
   font-weight: bold;
 }
 
-header a.rounded-circle {
-  border-radius: 0% !important;
-}
-
 #topbar-title {
   text-transform: uppercase;
 }
@@ -225,6 +225,15 @@ header a.rounded-circle {
   margin-bottom: .5rem;
 }
 
+.content a:has(> .example-icon),
+.content a:has(> .example-icon):hover {
+  border-bottom: none;
+}
+
+.content .example-icon {
+  margin: 0 0.2rem;
+}
+
 .post-tail-wrapper .nav-wrapper {
   border: 1px solid var(--nav-border-color);
   border-radius: 10px;
@@ -291,27 +300,6 @@ x3d-canvas.xr-button-tl::part(xr-button) {
   right: unset;
   bottom: unset;
   left: 10px;
-}
-
-/* teaser */
-
-.content .teaser {
-    aspect-ratio: 16 / 5;
-}
-
-.content .teaser::part(surface) {
-  cursor: default !important;
-}
-
-.content .mascot-wrapper {
-  position: relative;
-}
-
-.content .mascot {
-  pointer-events: none;
-  aspect-ratio: 780 / 280;
-  position: absolute;
-  transform: translateY(-70%);
 }
 
 /* */
@@ -511,6 +499,15 @@ select.select option {
   border-radius: .625rem;
   padding: .5rem;
   text-align: center;
+}
+
+/*
+ * Website specify rules start here
+ */
+
+/* logo */
+header a.rounded-circle {
+  border-radius: 0% !important;
 }
 
 /* download links */
