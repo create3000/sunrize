@@ -23,12 +23,9 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3D .LOD .prototype),
 
       this .getBrowser () .addBrowserEvent ();
    },
-   set_children__ ()
+   setChild (childNode)
    {
-      if (this .editChild)
-         this .setChild (this .editChild .getTool () ?? this .editChild);
-      else
-         X3D .LOD .prototype .set_children__ .call (this);
+      X3D .LOD .prototype .setChild .call (this, this .editChild ?.getTool () ?? this .editChild ?? childNode);
    },
 });
 
