@@ -289,35 +289,56 @@ module .exports = class OutlineView extends Interface
       child .find (".node .name")
          .on ("mouseenter", this .updateNodeTitle .bind (this));
 
-      child .find (".toggle-visibility")
-         .on ("click", this .toggleVisibility .bind (this));
+      child .find ("[action]")
+         .on ("click", this .nodeAction .bind (this));
+   }
 
-      child .find (".toggle-tool")
-         .on ("click", this .toggleTool .bind (this));
+   nodeAction (event)
+   {
+      const button = $(event .target);
 
-      child .find (".proxy-display")
-         .on ("click", this .proxyDisplay .bind (this));
+      switch (button .attr ("action"))
+      {
+         case "toggle-visibility":
+            this .toggleVisibility (event);
+            break;
 
-      child .find (".activate-layer")
-         .on ("click", this .activateLayer .bind (this));
+         case "toggle-tool":
+            this .toggleTool (event);
+            break;
 
-      child .find (".bind-node")
-         .on ("click", this .bindNode .bind (this));
+         case "proxy-display":
+            this .proxyDisplay (event);
+            break;
 
-      child .find (".play-node")
-         .on ("click", this .playNode .bind (this));
+         case "activate-layer":
+            this .activateLayer (event);
+            break;
 
-      child .find (".stop-node")
-         .on ("click", this .stopNode .bind (this));
+         case "bind-node":
+            this .bindNode (event);
+            break;
 
-      child .find (".loop-node")
-         .on ("click", this .loopNode .bind (this));
+         case "play-node":
+            this .playNode (event);
+            break;
 
-      child .find (".reload-node")
-         .on ("click", this .reloadNode .bind (this));
+         case "stop-node":
+            this .stopNode (event);
+            break;
 
-      child .find (".show-preview")
-         .on ("click", this .showPreview .bind (this));
+         case "loop-node":
+            this .loopNode (event);
+            break;
+
+         case "reload-node":
+            this .reloadNode (event);
+            break;
+
+         case "show-preview":
+            this .showPreview (event);
+            break;
+      }
    }
 
    connectFieldActions (child)
@@ -1046,7 +1067,7 @@ module .exports = class OutlineView extends Interface
 
          // Add buttons to name.
 
-         this .addNodeButtons (node, name);
+         this .addNodeButtons (this .getNode (parent), node, name);
 
          // Append empty tree to enable expander.
 
@@ -1064,7 +1085,7 @@ module .exports = class OutlineView extends Interface
       return child;
    }
 
-   addNodeButtons (node, name)
+   addNodeButtons (parent, node, name)
    {
       // Add buttons to name.
 
@@ -1077,7 +1098,8 @@ module .exports = class OutlineView extends Interface
             buttons .push ($("<span></span>")
                .attr ("order", "0")
                .attr ("title", "Toggle visibility.")
-               .addClass (["toggle-visibility", "button", "material-symbols-outlined"])
+               .attr ("action", "toggle-visibility")
+               .addClass (["button", "material-symbols-outlined"])
                .addClass (node .isHidden () ? "off" : "on")
                .text (node .isHidden () ? "visibility_off" : "visibility"));
          }
@@ -1087,7 +1109,8 @@ module .exports = class OutlineView extends Interface
             buttons .push ($("<span></span>")
                .attr ("order", "1")
                .attr ("title", _("Toggle display tool."))
-               .addClass (["toggle-tool", "button", "material-symbols-outlined"])
+               .attr ("action", "toggle-tool")
+               .addClass (["button", "material-symbols-outlined"])
                .addClass (node .valueOf () === node ? "off" : "on")
                .text ("build_circle"));
          }
@@ -1100,9 +1123,10 @@ module .exports = class OutlineView extends Interface
             case X3D .X3DConstants .Collision:
             {
                buttons .push ($("<span></span>")
-                  .attr ("order", "1")
+                  .attr ("order", "2")
                   .attr ("title", _("Display proxy node."))
-                  .addClass (["proxy-display", "button", "material-symbols-outlined"])
+                  .attr ("action", "proxy-display")
+                  .addClass (["button", "material-symbols-outlined"])
                   .addClass (node .getProxyDisplay () ? "on" : "off")
                   .text ("build_circle"));
 
@@ -1114,9 +1138,10 @@ module .exports = class OutlineView extends Interface
                   continue;
 
                buttons .push ($("<span></span>")
-                  .attr ("order", "2")
+                  .attr ("order", "3")
                   .attr ("title", _("Activate layer."))
-                  .addClass (["activate-layer", "button", "material-symbols-outlined"])
+                  .attr ("action", "activate-layer")
+                  .addClass (["button", "material-symbols-outlined"])
                   .addClass (this .browser .getActiveLayer () === node ? "green" : "off")
                   .text ("check_circle"));
 
@@ -1130,9 +1155,10 @@ module .exports = class OutlineView extends Interface
                node ._isBound .addFieldCallback (this .#updateNodeBoundSymbol, this .updateNodeBound .bind (this, node));
 
                buttons .push ($("<span></span>")
-                  .attr ("order", "3")
+                  .attr ("order", "4")
                   .attr ("title", _("Bind node."))
-                  .addClass (["bind-node", "button", "material-symbols-outlined"])
+                  .attr ("action", "bind-node")
+                  .addClass (["button", "material-symbols-outlined"])
                   .addClass (node ._isBound .getValue () ? "on" : "off")
                   .text (node ._isBound .getValue () ? "radio_button_checked" : "radio_button_unchecked"));
 
@@ -1149,23 +1175,26 @@ module .exports = class OutlineView extends Interface
                node ._loop     .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
 
                buttons .push ($("<span></span>")
-                  .attr ("order", "4")
+                  .attr ("order", "5")
                   .attr ("title", node ._isActive .getValue () && !node ._isPaused .getValue () ? _("Pause timer.") : _("Start timer."))
-                  .addClass (["play-node", "button", "material-icons"])
+                  .attr ("action", "play-node")
+                  .addClass (["button", "material-icons"])
                   .addClass (node ._isPaused .getValue () ? "on" : "off")
                   .text (node ._isActive .getValue () ? "pause" : "play_arrow"));
 
                buttons .push ($("<span></span>")
-                  .attr ("order", "5")
+                  .attr ("order", "6")
                   .attr ("title", _("Stop timer."))
-                  .addClass (["stop-node", "button", "material-icons"])
+                  .attr ("action", "stop-node")
+                  .addClass (["button", "material-icons"])
                   .addClass (node ._isActive .getValue () ? "on" : "off")
                   .text ("stop"));
 
                buttons .push ($("<span></span>")
-                  .attr ("order", "6")
+                  .attr ("order", "7")
                   .attr ("title", _("Toggle loop."))
-                  .addClass (["loop-node", "button", "material-icons"])
+                  .attr ("action", "loop-node")
+                  .addClass (["button", "material-icons"])
                   .addClass (node ._loop .getValue () ? "on" : "off")
                   .text ("repeat"));
 
@@ -1187,9 +1216,10 @@ module .exports = class OutlineView extends Interface
                node .getLoadState () .addFieldCallback (this .#updateNodeLoadStateSymbol, this .updateNodeLoadState .bind (this, node));
 
                buttons .push ($("<span></span>")
-                  .attr ("order", "7")
+                  .attr ("order", "8")
                   .attr ("title", "Load now.")
-                  .addClass (["reload-node", "button", "material-symbols-outlined", className])
+                  .attr ("action", "reload-node")
+                  .addClass (["button", "material-symbols-outlined", className])
                   .text ("autorenew"));
 
                continue;
@@ -1200,13 +1230,33 @@ module .exports = class OutlineView extends Interface
             case X3D .X3DConstants .X3DSingleTextureNode:
             {
                buttons .push ($("<span></span>")
-                  .attr ("order", "8")
+                  .attr ("order", "9")
                   .attr ("title", _("Show preview."))
-                  .addClass (["show-preview", "button", "material-symbols-outlined", "off"])
+                  .attr ("action", "show-preview")
+                  .addClass (["button", "material-symbols-outlined", "off"])
                   .css ("top", "2px")
                   .text ("preview"));
 
                continue;
+            }
+         }
+      }
+
+      for (const type of parent .getType ())
+      {
+         switch (type)
+         {
+            case X3D .X3DConstants .Switch:
+            {
+               buttons .push ($("<span></span>")
+                  .attr ("order", "10")
+                  .attr ("title", _("Display child node."))
+                  .attr ("action", "display-child")
+                  .addClass (["button", "material-symbols-outlined"])
+                  .addClass (parent .getEditChild () === node ? "on" : "off")
+                  .text ("highlight_mouse_cursor"));
+
+               break;
             }
          }
       }
@@ -1400,7 +1450,7 @@ module .exports = class OutlineView extends Interface
 
          // Add buttons to name.
 
-         this .addNodeButtons (importedNode .getExportedNode (), name);
+         this .addNodeButtons (this .getNode (parent), importedNode .getExportedNode (), name);
 
          // Append empty tree to enable expander.
 
@@ -1504,7 +1554,7 @@ module .exports = class OutlineView extends Interface
 
       // Add buttons to name.
 
-      this .addNodeButtons (node, name);
+      this .addNodeButtons (this .getNode (parent), node, name);
 
       // Append empty tree to enable expander.
 
