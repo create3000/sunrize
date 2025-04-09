@@ -339,8 +339,8 @@ module .exports = class OutlineView extends Interface
             this .showPreview (event);
             break;
 
-         case "edit-branch":
-            this .editBranch (event);
+         case "show-branch":
+            this .showBranch (event);
             break;
       }
    }
@@ -1255,8 +1255,8 @@ module .exports = class OutlineView extends Interface
             {
                buttons .push ($("<span></span>")
                   .attr ("order", "10")
-                  .attr ("title", _("Edit branch."))
-                  .attr ("action", "edit-branch")
+                  .attr ("title", _("Show branch."))
+                  .attr ("action", "show-branch")
                   .addClass (["button", "material-symbols-outlined"])
                   .addClass (parent .getEditChild () === node ? "on" : "off")
                   .text ("highlight_mouse_cursor"));
@@ -3300,7 +3300,7 @@ module .exports = class OutlineView extends Interface
       }
    }
 
-   editBranch (event)
+   showBranch (event)
    {
       const
          target        = $(event .target),
@@ -3314,12 +3314,12 @@ module .exports = class OutlineView extends Interface
 
       this .sceneGraph .find (`.node[node-id=${parent .getId ()}] .node[node-id=${node .getId ()}]`)
          .siblings ()
-         .find ("> .item [action=edit-branch]")
+         .find ("> .item [action=show-branch]")
          .removeClass (["on", "off"])
          .addClass ("off");
 
       this .sceneGraph .find (`.node[node-id=${parent .getId ()}] .node[node-id=${node .getId ()}]`)
-         .find ("> .item [action=edit-branch]")
+         .find ("> .item [action=show-branch]")
          .removeClass (["on", "off"])
          .addClass (parent .getEditChild () !== node ? "on" : "off");
 
