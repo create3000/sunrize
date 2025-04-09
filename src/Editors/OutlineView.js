@@ -1132,7 +1132,7 @@ module .exports = class OutlineView extends Interface
                   .attr ("action", "proxy-display")
                   .addClass (["button", "material-symbols-outlined"])
                   .addClass (node .getProxyDisplay () ? "on" : "off")
-                  .text ("build_circle"));
+                  .text ("highlight_mouse_cursor"));
 
                break;
             }

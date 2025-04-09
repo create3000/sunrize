@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='created' content='Tue, 25 Mar 2025 16:00:53 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.7.63, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Wed, 09 Apr 2025 10:41:42 GMT'/>
+  </head>
+  <Scene>
+    <WorldInfo>
+      <MetadataSet containerField='metadata'
+          name='Sunrize'
+          reference='https://create3000.github.io/sunrize/'>
+        <MetadataSet
+            name='GridTool'>
+          <MetadataBoolean
+              name='visible'
+              value='true'/>
+        </MetadataSet>
+      </MetadataSet>
+    </WorldInfo>
+    <Background
+        skyColor='0.2 0.2 0.2'/>
+    <Viewpoint
+        position='4.75079 5.5764 6.80689'
+        orientation='-0.67979594907481 0.70155548858341 0.2137694179717 0.842769006819'/>
+    <Transform DEF='Switch'
+        translation='0 -0 -2'>
+      <Switch
+          whichChoice='0'>
+        <Transform DEF='Box_3'
+            translation='-3 -0 0'>
+          <Shape>
+            <Appearance>
+              <Material/>
+            </Appearance>
+            <Box/>
+          </Shape>
+        </Transform>
+        <Transform DEF='Box_4'>
+          <Shape>
+            <Appearance>
+              <Material/>
+            </Appearance>
+            <Box/>
+          </Shape>
+        </Transform>
+        <Transform DEF='Box_5'
+            translation='3 -0 -0'>
+          <Shape>
+            <Appearance>
+              <Material/>
+            </Appearance>
+            <Box/>
+          </Shape>
+        </Transform>
+      </Switch>
+    </Transform>
+    <Transform DEF='LOD'
+        translation='0 0 2'>
+      <LOD
+          range='10, 15, 20'>
+        <Transform DEF='Box_6'
+            translation='-3 -0 0'>
+          <Shape>
+            <Appearance>
+              <Material/>
+            </Appearance>
+            <Box/>
+          </Shape>
+        </Transform>
+        <Transform DEF='Box_2'>
+          <Shape>
+            <Appearance>
+              <Material/>
+            </Appearance>
+            <Box/>
+          </Shape>
+        </Transform>
+        <Transform DEF='Box'
+            translation='3 -0 -0'>
+          <Shape>
+            <Appearance>
+              <Material/>
+            </Appearance>
+            <Box/>
+          </Shape>
+        </Transform>
+      </LOD>
+    </Transform>
+    <Collision>
+      <Transform DEF='Box_1' containerField='proxy'>
+        <Shape>
+          <Appearance>
+            <Material/>
+          </Appearance>
+          <Box/>
+        </Shape>
+      </Transform>
+      <Transform DEF='Sphere'>
+        <Shape>
+          <Appearance>
+            <Material/>
+          </Appearance>
+          <Sphere/>
+        </Shape>
+      </Transform>
+    </Collision>
+  </Scene>
+</X3D>
