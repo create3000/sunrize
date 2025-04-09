@@ -44,6 +44,27 @@ module .exports = class Dashboard extends Interface
 
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
+      if (process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT")
+      {
+         this .upButton = $("<span></span>")
+            .addClass (["material-icons"])
+            .attr ("title", _("Select parent node(s)."))
+            .css ({ transform: "rotate(-90deg) scaleX(0.8)", "margin-top": "-6px" })
+            .text ("play_arrow")
+            .appendTo (this .toolbar)
+            .on ("click", () => this .selectParent ());
+
+         this .downButton = $("<span></span>")
+            .addClass (["material-icons"])
+            .attr ("title", _("Select child node."))
+            .css ({ transform: "rotate(90deg) scaleX(0.8)", "margin-top": "-14px", "margin-bottom": "-6px" })
+            .text ("play_arrow")
+            .appendTo (this .toolbar)
+            .on ("click", () => this .selectChild ());
+
+         $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
+      }
+
       this .viewAllButton = $("<span></span>")
          .addClass (["material-symbols-outlined"])
          .attr ("title", _("Look at selected objects."))
@@ -128,6 +149,16 @@ module .exports = class Dashboard extends Interface
          this .playButton .addClass ("active");
       else
          this .playButton .removeClass ("active");
+   }
+
+   selectParent ()
+   {
+      console .log ("selectParent")
+   }
+
+   selectChild ()
+   {
+      console .log ("selectChild")
    }
 
    viewAll ()
