@@ -1330,7 +1330,8 @@ module .exports = class OutlineView extends Interface
          .imported-node[node-id=${node .getId ()}],
          .exported-node[node-id=${node .getId ()}]`)
          .find ("> .item [action=activate-layer]")
-         .removeClass ("off");
+         .removeClass ("off")
+         .addClass ("on");
    }
 
    updateNodeBound (node)
