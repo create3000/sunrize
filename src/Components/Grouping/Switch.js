@@ -15,9 +15,9 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3D .Switch .prototyp
    {
       return this .editChild;
    },
-   setEditChild (child)
+   setEditChild (childNode)
    {
-      this .editChild = child;
+      this .editChild = childNode;
 
       this .set_children__ ();
 

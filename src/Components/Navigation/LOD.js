@@ -15,9 +15,9 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3D .LOD .prototype),
    {
       return this .editChild;
    },
-   setEditChild (child)
+   setEditChild (childNode)
    {
-      this .editChild = child;
+      this .editChild = childNode;
 
       this .set_children__ ();
 
