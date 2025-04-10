@@ -107,7 +107,13 @@ module .exports = new class Hierarchy extends Interface
 
    up ()
    {
+      const nodes = this .#indices (this .#node) .map ((index, i) =>
+      {
+         return this .#hierarchies [i] .findLastIndex ((object, i) => i < index && object instanceof X3D .SFNode) ?? index;
+      })
+      .map ((index, i) => this .#hierarchies [i] [index] .getValue () .valueOf ());
 
+      return nodes;
    }
 
    down ()
