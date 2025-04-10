@@ -1073,7 +1073,7 @@ Viewpoint {
          if (parentElement .length && parent .getType () .includes (X3D .X3DConstants .X3DGroupingNode))
             element = parentElement;
 
-         hierarchy .setTarget (shapeNode);
+         var node = shapeNode;
       }
       else
       {
@@ -1083,7 +1083,19 @@ Viewpoint {
             element = element .parent () .closest (".node, .scene", outlineEditor .sceneGraph);
          }
 
-         hierarchy .setTarget (outlineEditor .getNode (element));
+         var node = outlineEditor .getNode (element);
+      }
+
+      if (event .shiftKey || event .metaKey)
+      {
+         if (hierarchy .get () === node)
+            hierarchy .clear ();
+         else
+            hierarchy .set (node);
+      }
+      else
+      {
+         hierarchy .set (node);
       }
 
       outlineEditor .selectNodeElement (element, event .shiftKey || event .metaKey);

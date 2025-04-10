@@ -27,23 +27,36 @@ module .exports = new class Hierarchy extends Interface
 
    update ()
    {
-      if (this .#target .isLive ())
-         return;
-
-      this .setTarget (null);
+      if (this .#target ?.isLive ())
+         this .#hierarchies = this .#find (this .#target);
+      else
+         this .set (null);
    }
 
-   setTarget (node)
+   get ()
    {
-      this .#node = node ?.valueOf () ?? null;
+      return this .#target;
+   }
+
+   set (node)
+   {
+      node = node ?.valueOf () ?? null;
+
+      this .#node = node;
 
       if (!this .#has (this .#node))
       {
          this .#target      = this .#node;
          this .#hierarchies = this .#find (this .#target);
-
-         console .log (this .#target ?.getTypeName (), this .#hierarchies .length);
       }
+
+      this .processInterests ();
+   }
+
+   clear ()
+   {
+      this .#node   = null;
+      this .#target = null;
 
       this .processInterests ();
    }
@@ -78,6 +91,20 @@ module .exports = new class Hierarchy extends Interface
       });
    }
 
+   #indices (node)
+   {
+      return this .#hierarchies .map (hierarchy =>
+      {
+         return hierarchy .findIndex (object =>
+         {
+            if (object instanceof X3D .SFNode)
+               return object .getValue () .valueOf () === node;
+
+            return false;
+         });
+      });
+   }
+
    up ()
    {
 
@@ -90,12 +117,22 @@ module .exports = new class Hierarchy extends Interface
 
    canUp ()
    {
+      return this .#indices (this .#node) .some ((index, i) =>
+      {
+         const first = this .#hierarchies [i] .findIndex (object => object instanceof X3D .SFNode);
 
+         return first >= 0 && first < index;
+      });
    }
 
    canDown ()
    {
+      return this .#indices (this .#node) .some ((index, i) =>
+      {
+         const last = this .#hierarchies [i] .findLastIndex (object => object instanceof X3D .SFNode);
 
+         return last >= 0 && last > index;
+      });
    }
 
    #interest = new Map ();

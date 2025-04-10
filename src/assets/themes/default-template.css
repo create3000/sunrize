@@ -501,6 +501,11 @@ body.light .qtip-tipsy {
   color: var(--accent-color);
 }
 
+.vertical-toolbar .material-icons.disabled,
+.vertical-toolbar .material-symbols-outlined.disabled {
+  color: var(--system-gray3);
+}
+
 .large-toolbar .material-icons {
   margin: 5px auto;
   width: var(--large-icon-size);

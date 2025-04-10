@@ -44,6 +44,8 @@ module .exports = class Dashboard extends Interface
 
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
+      const hierarchy = require ("./Hierarchy");
+
       this .upButton = $("<span></span>")
          .addClass (["material-icons"])
          .attr ("title", _("Select parent node(s)."))
@@ -59,6 +61,9 @@ module .exports = class Dashboard extends Interface
          .text ("play_arrow")
          .appendTo (this .toolbar)
          .on ("click", () => this .selectChild ());
+
+      hierarchy .addInterest (this, () => this .onHierarchy ());
+      hierarchy .processInterests ();
 
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
@@ -156,6 +161,21 @@ module .exports = class Dashboard extends Interface
    selectChild ()
    {
       console .log ("selectChild")
+   }
+
+   onHierarchy ()
+   {
+      const hierarchy = require ("./Hierarchy");
+
+      if (hierarchy .canUp ())
+         this .upButton .removeClass ("disabled");
+      else
+         this .upButton .addClass ("disabled");
+
+      if (hierarchy .canDown ())
+         this .downButton .removeClass ("disabled");
+      else
+         this .downButton .addClass ("disabled");
    }
 
    viewAll ()

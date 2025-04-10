@@ -3480,8 +3480,6 @@ module .exports = class OutlineView extends Interface
          elements         = $(`.node[node-id=${node ?.getId ()}]`),
          changed          = new Map (selection .nodes .map (node => [node, node .getTool ()]));
 
-      hierarchy .setTarget (node);
-
       if (node)
          changed .set (node .valueOf (), node .getTool ());
 
@@ -3509,15 +3507,22 @@ module .exports = class OutlineView extends Interface
          }
 
          if (elements .filter (".manually") .length)
+         {
+            hierarchy .set (node);
             selection .add (node);
+         }
          else
+         {
+            hierarchy .clear ();
             selection .remove (node);
+         }
       }
       else
       {
          selectedElements .removeClass (["manually", "selected"]);
          element .addClass (["primary", "manually"]);
          elements .addClass ("selected");
+         hierarchy .set (node);
          selection .set (node);
       }
 
