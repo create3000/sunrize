@@ -67,7 +67,7 @@ module .exports = new class Hierarchy extends Interface
       if (!target)
          return [ ];
 
-      // Find node
+      // Find target node.
 
       let flags = Traverse .NONE;
 
