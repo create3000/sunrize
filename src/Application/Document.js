@@ -1062,6 +1062,8 @@ Viewpoint {
       if (!element .length)
          return;
 
+      const hierarchy = require ("./Hierarchy");
+
       if (outlineEditor .isEditable (element))
       {
          const
@@ -1070,6 +1072,8 @@ Viewpoint {
 
          if (parentElement .length && parent .getType () .includes (X3D .X3DConstants .X3DGroupingNode))
             element = parentElement;
+
+         hierarchy .setTarget (shapeNode);
       }
       else
       {
@@ -1078,6 +1082,8 @@ Viewpoint {
             element .jstree ("close_node", element);
             element = element .parent () .closest (".node, .scene", outlineEditor .sceneGraph);
          }
+
+         hierarchy .setTarget (outlineEditor .getNode (element));
       }
 
       outlineEditor .selectNodeElement (element, event .shiftKey || event .metaKey);

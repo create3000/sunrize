@@ -3472,12 +3472,15 @@ module .exports = class OutlineView extends Interface
          return;
 
       const
+         hierarchy        = require ("../Application/Hierarchy"),
          selection        = require ("../Application/Selection"),
          selected         = element .hasClass ("manually"),
          selectedElements = this .sceneGraph .find (".primary, .selected"),
          node             = this .getNode (element),
          elements         = $(`.node[node-id=${node ?.getId ()}]`),
          changed          = new Map (selection .nodes .map (node => [node, node .getTool ()]));
+
+      hierarchy .setTarget (node);
 
       if (node)
          changed .set (node .valueOf (), node .getTool ());
