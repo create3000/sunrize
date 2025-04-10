@@ -75,7 +75,8 @@ module .exports = new class Hierarchy extends Interface
       flags |= Traverse .ROOT_NODES;
       flags |= Traverse .PROTOTYPE_INSTANCES;
 
-      return Array .from (this .executionContext .find (this .#target, flags), hierarchy => hierarchy .filter (object => object instanceof X3D .SFNode));
+      return Array .from (this .executionContext .find (this .#target, flags),
+         hierarchy => hierarchy .filter (object => object instanceof X3D .SFNode));
    }
 
    #has (node)
@@ -131,7 +132,8 @@ module .exports = new class Hierarchy extends Interface
 
    canDown ()
    {
-      return this .#nodes .some (node => this .#indices (node) .some ((index, i) => index < this .#hierarchies [i] .length - 1));
+      return this .#nodes .some (node => this .#indices (node)
+         .some ((index, i) => index < this .#hierarchies [i] .length - 1));
    }
 
    #interest = new Map ();
