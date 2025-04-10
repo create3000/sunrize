@@ -76,23 +76,18 @@ module .exports = new class Hierarchy extends Interface
       flags |= Traverse .PROTOTYPE_INSTANCES;
 
       return Array .from (this .executionContext .find (this .#target, flags),
-         hierarchy => hierarchy .filter (object => object instanceof X3D .SFNode));
+         hierarchy => hierarchy .filter (object => object instanceof X3D .SFNode)
+            .map (node => node .getValue () .valueOf ()));
    }
 
    #has (node)
    {
-      return !!this .#hierarchies .find (hierarchy =>
-      {
-         return hierarchy .find (object => object .getValue () .valueOf () === node);
-      });
+      return this .#hierarchies .some (hierarchy => hierarchy .includes (node));
    }
 
    #indices (node)
    {
-      return this .#hierarchies .map (hierarchy =>
-      {
-         return hierarchy .findIndex (object => object .getValue () .valueOf () === node);
-      });
+      return this .#hierarchies .map (hierarchy => hierarchy .indexOf (node));
    }
 
    up ()
@@ -101,7 +96,7 @@ module .exports = new class Hierarchy extends Interface
       {
          return index - 1 >= 0 ? index - 1 : index;
       })
-      .map ((index, i) => this .#hierarchies [i] [index] .getValue () .valueOf ()))));
+      .map ((index, i) => this .#hierarchies [i] [index]))));
 
       this .#nodes = nodes;
 
@@ -116,7 +111,7 @@ module .exports = new class Hierarchy extends Interface
       {
          return index + 1 < this .#hierarchies [i] .length ? index + 1 : index;
       })
-      .map ((index, i) => this .#hierarchies [i] [index] .getValue () .valueOf ()))));
+      .map ((index, i) => this .#hierarchies [i] [index]))));
 
       this .#nodes = nodes;
 
