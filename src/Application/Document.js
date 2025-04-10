@@ -1057,49 +1057,48 @@ Viewpoint {
 
       outlineEditor .expandTo (shapeNode, { expandObject: true, expandAll: true });
 
-      let element = outlineEditor .sceneGraph .find (`.node[node-id=${shapeNode .getId ()}]`);
+      let elements = outlineEditor .sceneGraph .find (`.node[node-id=${shapeNode .getId ()}]`);
 
-      if (!element .length)
+      if (!elements .length)
          return;
 
       const hierarchy = require ("./Hierarchy");
 
-      if (outlineEditor .isEditable (element))
+      if (outlineEditor .isEditable (elements))
       {
-         const
-            parentElement = element .parent () .closest (".node", outlineEditor .sceneGraph),
-            parent        = outlineEditor .getNode (parentElement);
+         const parentElements = elements .parent () .closest (".node", outlineEditor .sceneGraph);
 
-         if (parentElement .length && parent .getType () .includes (X3D .X3DConstants .X3DGroupingNode))
-            element = parentElement;
+         elements = $(Array .from (parentElements, (parentElement, i) => outlineEditor .getNode ($(parentElement)) .getType () .includes (X3D .X3DConstants .X3DGroupingNode) ? parentElements [i] : elements [i]));
 
-         var node = shapeNode;
+         var target = shapeNode;
       }
       else
       {
-         while (!outlineEditor .isEditable (element))
+         while (!outlineEditor .isEditable (elements))
          {
-            element .jstree ("close_node", element);
-            element = element .parent () .closest (".node, .scene", outlineEditor .sceneGraph);
+            elements .jstree ("close_node", elements);
+            elements = elements .parent () .closest (".node, .scene", outlineEditor .sceneGraph);
          }
 
-         var node = outlineEditor .getNode (element);
+         var target = outlineEditor .getNode (elements);
       }
 
       if (event .shiftKey || event .metaKey)
       {
-         if (hierarchy .get () === node)
+         if (hierarchy .get () === target)
             hierarchy .clear ();
          else
-            hierarchy .set (node);
+            hierarchy .set (target);
       }
       else
       {
-         hierarchy .set (node);
+         hierarchy .set (target);
       }
 
-      outlineEditor .selectNodeElement (element, event .shiftKey || event .metaKey);
-      element [0] .scrollIntoView ({ block: "center", inline: "start", behavior: "smooth" });
+      for (const [i, element] of Array .from (elements) .entries ())
+         outlineEditor .selectNodeElement ($(element), (event .shiftKey || event .metaKey) || i > 0);
+
+      elements .get (0) .scrollIntoView ({ block: "center", inline: "start", behavior: "smooth" });
       $(window) .scrollTop (0);
    }
 
