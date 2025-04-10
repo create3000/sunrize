@@ -954,6 +954,9 @@ Viewpoint {
       {
          case 0:
          {
+            if (event .shiftKey && event .ctrlKey)
+               return;
+
             const [x, y] = this .browser .getPointerFromEvent (event);
 
             if (!this .browser .touch (x, y))
