@@ -1068,7 +1068,8 @@ Viewpoint {
       {
          const parentElements = elements .parent () .closest (".node", outlineEditor .sceneGraph);
 
-         elements = $(Array .from (parentElements, (parentElement, i) => outlineEditor .getNode ($(parentElement)) .getType () .includes (X3D .X3DConstants .X3DGroupingNode) ? parentElements [i] : elements [i]));
+         elements = Array .from (parentElements, (parentElement, i) => outlineEditor .getNode ($(parentElement)) .getType ()
+            .includes (X3D .X3DConstants .X3DGroupingNode) ? parentElements [i] : elements [i]);
 
          var target = shapeNode;
       }
@@ -1079,6 +1080,8 @@ Viewpoint {
             elements .jstree ("close_node", elements);
             elements = elements .parent () .closest (".node, .scene", outlineEditor .sceneGraph);
          }
+
+         elements = Array .from (elements);
 
          var target = outlineEditor .getNode (elements);
       }
@@ -1095,10 +1098,10 @@ Viewpoint {
          hierarchy .set (target);
       }
 
-      for (const [i, element] of Array .from (elements) .entries ())
+      for (const [i, element] of elements .entries ())
          outlineEditor .selectNodeElement ($(element), (event .shiftKey || event .metaKey) || i > 0);
 
-      elements .get (0) .scrollIntoView ({ block: "center", inline: "start", behavior: "smooth" });
+      elements [0] .scrollIntoView ({ block: "center", inline: "start", behavior: "smooth" });
       $(window) .scrollTop (0);
    }
 
