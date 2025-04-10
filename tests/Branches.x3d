@@ -5,7 +5,7 @@
     <meta name='created' content='Tue, 25 Mar 2025 16:00:53 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.63, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 10 Apr 2025 09:18:08 GMT'/>
+    <meta name='modified' content='Thu, 10 Apr 2025 21:26:22 GMT'/>
   </head>
   <Scene>
     <WorldInfo>
@@ -29,9 +29,9 @@
         translation='0 -0 -2'>
       <Switch
           whichChoice='0'>
-        <Transform DEF='Box_3'
+        <Transform DEF='Box_7'
             translation='-3 -0 0'>
-          <Shape>
+          <Shape DEF='_1'>
             <Appearance>
               <Material/>
             </Appearance>
@@ -39,21 +39,11 @@
           </Shape>
         </Transform>
         <Transform DEF='Box_4'>
-          <Shape>
-            <Appearance>
-              <Material/>
-            </Appearance>
-            <Box/>
-          </Shape>
+          <Shape USE='_1'/>
         </Transform>
         <Transform DEF='Box_5'
             translation='3 -0 -0'>
-          <Shape>
-            <Appearance>
-              <Material/>
-            </Appearance>
-            <Box/>
-          </Shape>
+          <Shape USE='_1'/>
         </Transform>
       </Switch>
     </Transform>
