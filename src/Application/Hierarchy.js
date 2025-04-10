@@ -87,7 +87,7 @@ module .exports = new class Hierarchy extends Interface
 
    #indices (node)
    {
-      return this .#hierarchies .map (hierarchy => hierarchy .indexOf (node));
+      return this .#hierarchies .map (hierarchy => hierarchy .indexOf (node)) .filter (index => index >= 0);
    }
 
    up ()
