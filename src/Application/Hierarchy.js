@@ -75,20 +75,14 @@ module .exports = new class Hierarchy extends Interface
       flags |= Traverse .ROOT_NODES;
       flags |= Traverse .PROTOTYPE_INSTANCES;
 
-      return Array .from (this .executionContext .find (this .#target, flags));
+      return Array .from (this .executionContext .find (this .#target, flags), hierarchy => hierarchy .filter (object => object instanceof X3D .SFNode));
    }
 
    #has (node)
    {
       return !!this .#hierarchies .find (hierarchy =>
       {
-         return hierarchy .find (object =>
-         {
-            if (object instanceof X3D .SFNode)
-               return object .getValue () .valueOf () === node;
-
-            return false;
-         });
+         return hierarchy .find (object => object .getValue () .valueOf () === node);
       });
    }
 
@@ -96,23 +90,15 @@ module .exports = new class Hierarchy extends Interface
    {
       return this .#hierarchies .map (hierarchy =>
       {
-         return hierarchy .findIndex (object =>
-         {
-            if (object instanceof X3D .SFNode)
-               return object .getValue () .valueOf () === node;
-
-            return false;
-         });
+         return hierarchy .findIndex (object => object .getValue () .valueOf () === node);
       });
    }
 
    up ()
    {
-      const nodes = Array .from (new Set (this .#nodes .flatMap (node => this .#indices (node) .map ((index, i) =>
+      const nodes = Array .from (new Set (this .#nodes .flatMap (node => this .#indices (node) .map (index =>
       {
-         const before = this .#hierarchies [i] .findLastIndex ((object, i) => i < index && object instanceof X3D .SFNode);
-
-         return before >= 0 ? before : index;
+         return index - 1 >= 0 ? index - 1 : index;
       })
       .map ((index, i) => this .#hierarchies [i] [index] .getValue () .valueOf ()))));
 
@@ -127,9 +113,7 @@ module .exports = new class Hierarchy extends Interface
    {
       const nodes = Array .from (new Set (this .#nodes .flatMap (node => this .#indices (node) .map ((index, i) =>
       {
-         const after = this .#hierarchies [i] .findIndex ((object, i) => i > index && object instanceof X3D .SFNode);
-
-         return after >= 0 ? after : index;
+         return index + 1 < this .#hierarchies [i] .length ? index + 1 : index;
       })
       .map ((index, i) => this .#hierarchies [i] [index] .getValue () .valueOf ()))));
 
@@ -142,22 +126,12 @@ module .exports = new class Hierarchy extends Interface
 
    canUp ()
    {
-      return this .#nodes .some (node => this .#indices (node) .some ((index, i) =>
-      {
-         const first = this .#hierarchies [i] .findIndex (object => object instanceof X3D .SFNode);
-
-         return first >= 0 && first < index;
-      }));
+      return this .#nodes .some (node => this .#indices (node) .some (index => index > 0));
    }
 
    canDown ()
    {
-      return this .#nodes .some (node => this .#indices (node) .some ((index, i) =>
-      {
-         const last = this .#hierarchies [i] .findLastIndex (object => object instanceof X3D .SFNode);
-
-         return last >= 0 && last > index;
-      }));
+      return this .#nodes .some (node => this .#indices (node) .some ((index, i) => index < this .#hierarchies [i] .length - 1));
    }
 
    #interest = new Map ();
