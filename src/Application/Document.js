@@ -940,12 +940,13 @@ Viewpoint {
       }
    }
 
+   #select     = false;
    #snapTarget = null;
    #snapSource = null;
 
    async onmousedown (event)
    {
-      this .select = false;
+      this .#select = false;
 
       if (!this .secondaryToolbar .arrowButton .hasClass ("active"))
          return;
@@ -979,7 +980,7 @@ Viewpoint {
 
             // Start selection.
 
-            this .select = true;
+            this .#select = true;
 
             event .preventDefault ();
             event .stopPropagation ();
@@ -1042,7 +1043,7 @@ Viewpoint {
       if (event .button !== 0)
          return;
 
-      if (!this .select)
+      if (!this .#select)
          return;
 
       const [x, y] = this .browser .getPointerFromEvent (event);
