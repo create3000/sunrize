@@ -1081,9 +1081,9 @@ Viewpoint {
             elements = elements .parent () .closest (".node, .scene", outlineEditor .sceneGraph);
          }
 
-         elements = Array .from (elements);
-
          var target = outlineEditor .getNode (elements);
+
+         elements = Array .from (elements);
       }
 
       if (event .shiftKey || event .metaKey)
