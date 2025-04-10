@@ -33,21 +33,27 @@ module .exports = new class Hierarchy extends Interface
          this .set (null);
    }
 
-   get ()
-   {
-      return this .#target;
-   }
-
-   set (node)
+   set (node, add = true)
    {
       node = node ?.valueOf () ?? null;
 
-      this .#nodes = [node];
-
-      if (!this .#has (node))
+      if (this .#has (node))
+      {
+         if (add)
+         {
+            this .#nodes .push (node);
+            this .#nodes = Array .from (new Set (this .#nodes));
+         }
+         else
+         {
+            this .#nodes = [node];
+         }
+      }
+      else
       {
          this .#target      = node;
-         this .#hierarchies = this .#find (this .#target);
+         this .#nodes       = add ? [node] : [ ];
+         this .#hierarchies = this .#find (node);
       }
 
       this .processInterests ();
@@ -75,7 +81,7 @@ module .exports = new class Hierarchy extends Interface
       flags |= Traverse .ROOT_NODES;
       flags |= Traverse .PROTOTYPE_INSTANCES;
 
-      return Array .from (this .executionContext .find (this .#target, flags),
+      return Array .from (this .executionContext .find (target, flags),
          hierarchy => hierarchy .filter (object => object instanceof X3D .SFNode)
             .map (node => node .getValue () .valueOf ()));
    }
@@ -87,7 +93,7 @@ module .exports = new class Hierarchy extends Interface
 
    #indices (node)
    {
-      return this .#hierarchies .map (hierarchy => hierarchy .indexOf (node)) .filter (index => index >= 0);
+      return this .#hierarchies .map (hierarchy => hierarchy .indexOf (node));
    }
 
    up ()
@@ -96,7 +102,8 @@ module .exports = new class Hierarchy extends Interface
       {
          return index - 1 >= 0 ? index - 1 : index;
       })
-      .map ((index, i) => this .#hierarchies [i] [index]))));
+      .map ((index, i) => this .#hierarchies [i] [index])
+      .filter (node => node))));
 
       this .#nodes = nodes;
 
@@ -109,9 +116,10 @@ module .exports = new class Hierarchy extends Interface
    {
       const nodes = Array .from (new Set (this .#nodes .flatMap (node => this .#indices (node) .map ((index, i) =>
       {
-         return index + 1 < this .#hierarchies [i] .length ? index + 1 : index;
+         return index >= 0 && index + 1 < this .#hierarchies [i] .length ? index + 1 : index;
       })
-      .map ((index, i) => this .#hierarchies [i] [index]))));
+      .map ((index, i) => this .#hierarchies [i] [index])
+      .filter (node => node))));
 
       this .#nodes = nodes;
 
@@ -128,7 +136,7 @@ module .exports = new class Hierarchy extends Interface
    canDown ()
    {
       return this .#nodes .some (node => this .#indices (node)
-         .some ((index, i) => index < this .#hierarchies [i] .length - 1));
+         .some ((index, i) => index >= 0 && index < this .#hierarchies [i] .length - 1));
    }
 
    #interest = new Map ();

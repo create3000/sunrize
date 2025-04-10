@@ -1086,17 +1086,8 @@ Viewpoint {
          elements = Array .from (elements);
       }
 
-      if (event .shiftKey || event .metaKey)
-      {
-         if (hierarchy .get () === target)
-            hierarchy .clear ();
-         else
-            hierarchy .set (target);
-      }
-      else
-      {
-         hierarchy .set (target);
-      }
+      hierarchy .clear ();
+      hierarchy .set (target, false);
 
       for (const [i, element] of elements .entries ())
          outlineEditor .selectNodeElement ($(element), (event .shiftKey || event .metaKey) || i > 0);

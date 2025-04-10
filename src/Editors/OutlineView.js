@@ -3522,7 +3522,8 @@ module .exports = class OutlineView extends Interface
          selectedElements .removeClass (["manually", "selected"]);
          element .addClass (["primary", "manually"]);
          elements .addClass ("selected");
-         hierarchy .set (node);
+
+         hierarchy .set (node, false);
          selection .set (node);
       }
 
