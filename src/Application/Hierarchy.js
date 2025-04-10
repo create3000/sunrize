@@ -55,8 +55,9 @@ module .exports = new class Hierarchy extends Interface
 
    clear ()
    {
-      this .#target = null;
-      this .#nodes  = [ ];
+      this .#target      = null;
+      this .#nodes       = [ ];
+      this .#hierarchies = [ ];
 
       this .processInterests ();
    }
