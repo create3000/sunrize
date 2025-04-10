@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
-<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
   <head>
     <component name='Layout' level='2'/>
     <component name='Scripting' level='1'/>
+    <component name='Shaders' level='1'/>
     <component name='X_ITE' level='1'/>
     <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.7.1, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sat, 29 Jun 2024 11:06:25 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.7.63, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Thu, 10 Apr 2025 09:16:01 GMT'/>
   </head>
   <Scene>
-    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'/>
+    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
+      <field accessType='inputOutput' type='SFBool' name='instanced'/>
+    </ExternProtoDeclare>
     <ProtoDeclare name='X3DBoundedObjectTool'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
@@ -48,13 +51,11 @@
                     <connect nodeField='linetype' protoField='bboxStyle'/>
                   </IS>
                 </LineProperties>
-                <Material DEF='BBoxMaterial'
-                    diffuseColor='0 0 0'>
+                <UnlitMaterial>
                   <IS>
                     <connect nodeField='emissiveColor' protoField='bboxColor'/>
                   </IS>
-                </Material>
-                <ProtoInstance name='ToolShader' DEF='_11' containerField='shaders'/>
+                </UnlitMaterial>
                 <DepthMode
                     polygonOffset='-1 -1'/>
               </Appearance>
@@ -91,7 +92,7 @@
                     <Appearance DEF='Red_1'>
                       <Material
                           diffuseColor='1 0 0'/>
-                      <ProtoInstance name='ToolShader' USE='_11' containerField='shaders'/>
+                      <ProtoInstance name='ToolShader' DEF='_11' containerField='shaders'/>
                       <DepthMode USE='_12'/>
                     </Appearance>
                     <Cone DEF='Arrow_1'
