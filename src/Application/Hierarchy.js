@@ -124,6 +124,17 @@ module .exports = new class Hierarchy extends Interface
 
    down ()
    {
+      const nodes = Array .from (new Set (this .#nodes .flatMap (node => this .#indices (node) .map ((index, i) =>
+      {
+         const after = this .#hierarchies [i] .findIndex ((object, i) => i > index && object instanceof X3D .SFNode);
+
+         return after >= 0 ? after : index;
+      })
+      .map ((index, i) => this .#hierarchies [i] [index] .getValue () .valueOf ()))));
+
+      this .#nodes = nodes;
+
+      console .log (nodes)
 
       this .processInterests ();
    }
