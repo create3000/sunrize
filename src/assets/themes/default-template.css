@@ -503,6 +503,7 @@ body.light .qtip-tipsy {
 
 .vertical-toolbar .material-icons.disabled,
 .vertical-toolbar .material-symbols-outlined.disabled {
+  pointer-events: none;
   color: var(--system-gray3);
 }
 
