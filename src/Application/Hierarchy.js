@@ -31,23 +31,24 @@ module .exports = new class Hierarchy extends Interface
          return;
 
       this .setTarget (null);
-      this .processInterests ();
    }
 
    setTarget (node)
    {
       this .#node = node ?.valueOf () ?? null;
 
-      if (this .has (this .#node))
-         return;
+      if (!this .#has (this .#node))
+      {
+         this .#target      = this .#node;
+         this .#hierarchies = this .#find (this .#target);
 
-      this .#target      = node ?.valueOf () ?? null;
-      this .#hierarchies = this .find (this .#target);
+         console .log (this .#target ?.getTypeName (), this .#hierarchies .length);
+      }
 
-      console .log (this .#target ?.getTypeName (), this .#hierarchies .length)
+      this .processInterests ();
    }
 
-   find (target)
+   #find (target)
    {
       if (!target)
          return [ ];
@@ -63,7 +64,7 @@ module .exports = new class Hierarchy extends Interface
       return Array .from (this .executionContext .find (this .#target, flags));
    }
 
-   has (node)
+   #has (node)
    {
       return !!this .#hierarchies .find (hierarchy =>
       {
