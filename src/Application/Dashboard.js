@@ -155,20 +155,16 @@ module .exports = class Dashboard extends Interface
 
    selectParent ()
    {
-      const
-         hierarchy = require ("./Hierarchy"),
-         nodes     = hierarchy .up ();
+      const hierarchy = require ("./Hierarchy");
 
-      console .log (nodes);
+      hierarchy .up ();
    }
 
    selectChild ()
    {
-      const
-         hierarchy = require ("./Hierarchy"),
-         nodes     = hierarchy .down ();
+      const hierarchy = require ("./Hierarchy");
 
-      console .log (nodes);
+      hierarchy .down ();
    }
 
    onHierarchy ()
