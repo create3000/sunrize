@@ -288,7 +288,7 @@ module .exports = class Application
                   },
                   { type: "separator" },
                   {
-                     label: _("Default Play Button State"),
+                     label: _("Enable Browser Update on Load"),
                      type: "checkbox",
                      checked: this .config .browserUpdate,
                      click: () =>
