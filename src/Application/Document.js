@@ -1095,8 +1095,15 @@ Viewpoint {
       for (const [i, element] of elements .entries ())
          outlineEditor .selectNodeElement ($(element), (event .shiftKey || event .metaKey) || i > 0);
 
+      // Scroll element into view.
+      // Hide scrollbars during scroll to prevent overlay issue.
+
+      outlineEditor .treeView .css ("overflow", "hidden");
+
       elements [0] ?.scrollIntoView ({ block: "center", inline: "start", behavior: "smooth" });
       $(window) .scrollTop (0);
+
+      setTimeout (() => outlineEditor .treeView .css ("overflow", ""), 1000);
    }
 
    activateSnapTarget (visible)
