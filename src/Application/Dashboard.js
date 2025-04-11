@@ -9,11 +9,12 @@ const
 
 module .exports = class Dashboard extends Interface
 {
-   constructor (element)
+   constructor (element, document)
    {
       super ("Sunrize.Dashboard.");
 
-      this .toolbar = element;
+      this .document = document;
+      this .toolbar  = element;
 
       this .setup ();
    }
@@ -155,16 +156,24 @@ module .exports = class Dashboard extends Interface
 
    selectParent ()
    {
-      const hierarchy = require ("./Hierarchy");
-
-      hierarchy .up ();
+      this .selectHierarchy ("up");
    }
 
    selectChild ()
    {
-      const hierarchy = require ("./Hierarchy");
+      this .selectHierarchy ("down");
+   }
 
-      hierarchy .down ();
+   selectHierarchy (direction)
+   {
+      const
+         hierarchy     = require ("./Hierarchy"),
+         outlineEditor = this .document .sidebar .outlineEditor,
+         nodes         = hierarchy [direction] (),
+         elements      = nodes .map (node => outlineEditor .sceneGraph .find (`.node[node-id=${node .getId ()}]`));
+
+      for (const [i, element] of elements .entries ())
+         outlineEditor .selectNodeElement (element, i > 0);
    }
 
    onHierarchy ()

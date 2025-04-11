@@ -38,7 +38,7 @@ module .exports = class Document extends Interface
 
       this .verticalSplitter   = new Splitter ($("#vertical-splitter"), "vertical");
       this .horizontalSplitter = new Splitter ($("#horizontal-splitter"), "horizontal");
-      this .secondaryToolbar   = new Dashboard ($("#secondary-toolbar"));
+      this .secondaryToolbar   = new Dashboard ($("#secondary-toolbar"), this);
       this .footer             = new Footer ($("#footer"));
       this .sidebar            = new Sidebar ($("#sidebar"));
 

@@ -127,10 +127,9 @@ module .exports = new class Hierarchy extends Interface
 
       this .#nodes = Array .from (new Set (nodes));
 
-      selection .clear ()
-      this .#nodes .forEach (node => selection .add (node));
-
       this .processInterests ();
+
+      return this .#nodes;
    }
 
    down ()
@@ -146,10 +145,9 @@ module .exports = new class Hierarchy extends Interface
 
       this .#nodes = Array .from (new Set (nodes));
 
-      selection .clear ()
-      this .#nodes .forEach (node => selection .add (node));
-
       this .processInterests ();
+
+      return this .#nodes;
    }
 
    canUp ()
