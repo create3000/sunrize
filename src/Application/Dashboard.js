@@ -57,8 +57,8 @@ module .exports = class Dashboard extends Interface
 
       this .downButton = $("<span></span>")
          .addClass (["material-icons"])
-         .attr ("title", _("Select child node."))
-         .css ({ transform: "rotate(90deg) scaleX(0.8)", "margin-top": "-16px", "margin-bottom": "-6px" })
+         .attr ("title", _("Select child node(s)."))
+         .css ({ transform: "rotate(90deg) scaleX(0.8)", "margin-top": "-15px", "margin-bottom": "-6px" })
          .text ("play_arrow")
          .appendTo (this .toolbar)
          .on ("click", () => this .selectChild ());
