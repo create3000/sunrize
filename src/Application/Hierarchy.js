@@ -47,7 +47,7 @@ module .exports = new class Hierarchy extends Interface
       this .#nodes       = [ ];
       this .#hierarchies = this .#find (target);
 
-      this .processInterests ();
+      this .#processInterests ();
    }
 
    set (node)
@@ -59,7 +59,7 @@ module .exports = new class Hierarchy extends Interface
 
       this .#nodes = [node];
 
-      this .processInterests ();
+      this .#processInterests ();
    }
 
    add (node)
@@ -74,7 +74,7 @@ module .exports = new class Hierarchy extends Interface
 
       this .#nodes .push (node);
 
-      this .processInterests ();
+      this .#processInterests ();
    }
 
    remove (node)
@@ -83,7 +83,7 @@ module .exports = new class Hierarchy extends Interface
 
       this .#nodes = this .#nodes .filter (n => n !== node);
 
-      this .processInterests ();
+      this .#processInterests ();
    }
 
    clear ()
@@ -92,7 +92,7 @@ module .exports = new class Hierarchy extends Interface
       this .#nodes       = [ ];
       this .#hierarchies = [ ];
 
-      this .processInterests ();
+      this .#processInterests ();
    }
 
    #find (target)
@@ -134,7 +134,7 @@ module .exports = new class Hierarchy extends Interface
 
       this .#nodes = Array .from (new Set (nodes));
 
-      this .processInterests ();
+      this .#processInterests ();
 
       return this .#nodes;
    }
@@ -150,7 +150,7 @@ module .exports = new class Hierarchy extends Interface
 
       this .#nodes = Array .from (new Set (nodes));
 
-      this .processInterests ();
+      this .#processInterests ();
 
       return this .#nodes;
    }
@@ -178,7 +178,7 @@ module .exports = new class Hierarchy extends Interface
       this .#interest .delete (key);
    }
 
-   processInterests ()
+   #processInterests ()
    {
       for (const callback of this .#interest .values ())
          callback (this .nodes);

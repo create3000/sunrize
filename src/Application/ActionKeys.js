@@ -58,7 +58,7 @@ module .exports = new class ActionKeys
       if (this .value === value)
          return;
 
-      this .processInterests ();
+      this .#processInterests ();
    }
 
    onkeyup (event)
@@ -94,7 +94,7 @@ module .exports = new class ActionKeys
       if (this .value === value)
          return;
 
-      this .processInterests ();
+      this .#processInterests ();
    }
 
    #interests = new Map ();
@@ -109,7 +109,7 @@ module .exports = new class ActionKeys
       this .#interests .delete (key);
    }
 
-   processInterests ()
+   #processInterests ()
    {
       for (const callback of this .#interests .values ())
          callback (this .value);
