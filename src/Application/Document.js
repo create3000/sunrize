@@ -1095,7 +1095,7 @@ Viewpoint {
       for (const [i, element] of elements .entries ())
          outlineEditor .selectNodeElement ($(element), (event .shiftKey || event .metaKey) || i > 0);
 
-      elements [0] ?.scrollIntoView ({ block: "start", inline: "start", behavior: "smooth" });
+      elements [0] ?.scrollIntoView ({ block: "center", inline: "start", behavior: "smooth" });
       $(window) .scrollTop (0);
    }
 
