@@ -70,6 +70,9 @@ module .exports = new class Hierarchy extends Interface
 
             this .#hierarchies .push (... this .#find (target));
          }
+
+         if (!this .#hierarchies .length)
+            this .#hierarchies = this .#find (node);
       }
       else
       {
