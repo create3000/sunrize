@@ -1073,7 +1073,7 @@ Viewpoint {
             return parentElements .length ? parentElements : element;
          });
 
-         elements = Array .from (parentElements, (element, i) => outlineEditor .getNode ($(element)) .getType () .includes (X3D .X3DConstants .X3DGroupingNode) ? parentElements [i] : elements [i]);
+         elements = parentElements .map ((element, i) => outlineEditor .getNode ($(element)) .getType () .includes (X3D .X3DConstants .X3DGroupingNode) ? parentElements [i] : elements [i]);
 
          var target = shapeNode;
       }
