@@ -1074,8 +1074,6 @@ Viewpoint {
          });
 
          elements = parentElements .map ((element, i) => outlineEditor .getNode ($(element)) .getType () .includes (X3D .X3DConstants .X3DGroupingNode) ? parentElements [i] : elements [i]);
-
-         var target = shapeNode;
       }
       else
       {
@@ -1085,15 +1083,11 @@ Viewpoint {
             elements = elements .parent () .closest (".node, .scene", outlineEditor .sceneGraph);
          }
 
-         var target = outlineEditor .getNode (elements);
-
          elements = Array .from (elements);
       }
 
-      hierarchy .target (target);
-
       for (const [i, element] of elements .entries ())
-         outlineEditor .selectNodeElement ($(element), (event .shiftKey || event .metaKey) || i > 0);
+         outlineEditor .selectNodeElement ($(element), { add: (event .shiftKey || event .metaKey) || i > 0, target: true });
 
       // Scroll element into view.
       // Hide scrollbars during scroll to prevent overlay issue.

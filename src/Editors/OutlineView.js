@@ -3098,10 +3098,14 @@ module .exports = class OutlineView extends Interface
    {
       this .deselectAll ();
 
-      const elements = this .sceneGraph .find ("> .root-nodes > ul > li[node-id]");
+      const
+         hierarchy = require ("../Application/Hierarchy"),
+         elements  = this .sceneGraph .find ("> .root-nodes > ul > li[node-id]");
+
+      hierarchy .target (this .executionContext);
 
       for (const element of elements)
-         this .selectNodeElement ($(element), true);
+         this .selectNodeElement ($(element), { add: true });
    }
 
    deselectAll ()
@@ -3463,22 +3467,13 @@ module .exports = class OutlineView extends Interface
          return;
 
       if (element .hasClass ("node"))
-      {
-         const
-            hierarchy = require ("../Application/Hierarchy"),
-            node      = this .getNode (element);
+         this .selectNodeElement (element, { add, target: true });
 
-         hierarchy .target (node);
-
-         this .selectNodeElement (element, add);
-      }
       else if (element .is (".externproto, .proto"))
-      {
          this .selectPrimaryElement (element, add);
-      }
    }
 
-   selectNodeElement (element, add = false)
+   selectNodeElement (element, { add = false, target = false } = { })
    {
       if (!element .hasClass ("node"))
          return;
@@ -3523,6 +3518,9 @@ module .exports = class OutlineView extends Interface
 
          if (elements .filter (".manually") .length)
          {
+            if (target)
+               hierarchy .target (node);
+
             selection .add (node);
             hierarchy .add (node);
          }
@@ -3537,6 +3535,9 @@ module .exports = class OutlineView extends Interface
          selectedElements .removeClass (["manually", "selected"]);
          element .addClass (["primary", "manually"]);
          elements .addClass ("selected");
+
+         if (target)
+            hierarchy .target (node);
 
          selection .set (node);
          hierarchy .set (node);

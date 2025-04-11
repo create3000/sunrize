@@ -176,7 +176,7 @@ module .exports = class Dashboard extends Interface
       const elements = nodes .map (node => outlineEditor .sceneGraph .find (`.node[node-id=${node .getId ()}]`));
 
       for (const [i, element] of elements .entries ())
-         outlineEditor .selectNodeElement (element, i > 0);
+         outlineEditor .selectNodeElement (element, { add: i > 0 });
 
       // Scroll element into view.
       // Hide scrollbars during scroll to prevent overlay issue.

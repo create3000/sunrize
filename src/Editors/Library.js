@@ -263,6 +263,6 @@ module .exports = new class Library extends Dialog
       const outlineEditor = require ("../Application/Window") .sidebar .outlineEditor;
 
       outlineEditor .expandTo (node);
-      outlineEditor .selectNodeElement ($(`.node[node-id=${node .getId ()}]`));
+      outlineEditor .selectNodeElement ($(`.node[node-id=${node .getId ()}]`), { target: true });
    }
 }

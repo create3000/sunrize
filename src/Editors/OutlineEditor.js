@@ -1203,7 +1203,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       const groupElement = this .sceneGraph .find (`.node[node-id=${node .getId ()}]`);
 
-      this .selectNodeElement (groupElement);
+      this .selectNodeElement (groupElement, { target: true });
    }
 
    removeParent (id, executionContextId, nodeId)
