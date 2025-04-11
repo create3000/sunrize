@@ -68,7 +68,8 @@ module .exports = new class Hierarchy extends Interface
                node   = object .getValue () .valueOf (),
                target = node .getGeometry () ?.valueOf () ?? node;
 
-            this .#hierarchies .push (... this .#find (target));
+            for (const hierarchy of this .#find (target))
+               this .#hierarchies .push (hierarchy);
          }
 
          if (!this .#hierarchies .length)
