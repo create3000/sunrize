@@ -167,14 +167,14 @@ module .exports = new class Hierarchy extends Interface
 
    up ()
    {
-      const nodes = this .#nodes .flatMap (node => this .#indices (node) .map (index =>
+      this .#nodes = this .#nodes .flatMap (node => this .#indices (node) .map (index =>
       {
          return index - 1 >= 0 ? index - 1 : index;
       })
       .map ((index, i) => this .#hierarchies [i] [index])
       .filter (node => node));
 
-      this .#nodes = Array .from (new Set (nodes));
+      this .#nodes = Array .from (new Set (this .#nodes));
 
       // Combine to most highest node.
 
@@ -191,7 +191,8 @@ module .exports = new class Hierarchy extends Interface
          }
       }
 
-      this .#nodes = Array .from (new Set (indices .map ((index, i) => this .#hierarchies [i] [index]) .filter (node => node)));
+      this .#nodes = indices .map ((index, i) => this .#hierarchies [i] [index]) .filter (node => node);
+      this .#nodes = Array .from (new Set (this .#nodes));
 
       // Propagate change.
 
@@ -202,14 +203,14 @@ module .exports = new class Hierarchy extends Interface
 
    down ()
    {
-      const nodes = this .#nodes .flatMap (node => this .#indices (node) .map ((index, i) =>
+      this .#nodes = this .#nodes .flatMap (node => this .#indices (node) .map ((index, i) =>
       {
          return index >= 0 && index + 1 < this .#hierarchies [i] .length ? index + 1 : index;
       })
       .map ((index, i) => this .#hierarchies [i] [index])
       .filter (node => node));
 
-      this .#nodes = Array .from (new Set (nodes));
+      this .#nodes = Array .from (new Set (this .#nodes));
 
       // Combine to most lowest node.
 
@@ -226,7 +227,8 @@ module .exports = new class Hierarchy extends Interface
          }
       }
 
-      this .#nodes = Array .from (new Set (indices .map ((index, i) => this .#hierarchies [i] [index]) .filter (node => node)));
+      this .#nodes = indices .map ((index, i) => this .#hierarchies [i] [index]) .filter (node => node);
+      this .#nodes = Array .from (new Set (this .#nodes));
 
       // Propagate change.
 
