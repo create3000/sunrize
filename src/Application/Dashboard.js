@@ -177,6 +177,9 @@ module .exports = class Dashboard extends Interface
 
       for (const [i, element] of elements .entries ())
          outlineEditor .selectNodeElement (element, i > 0);
+
+      elements [0] [0] ?.scrollIntoView ({ block: "start", inline: "start", behavior: "smooth" });
+      $(window) .scrollTop (0);
    }
 
    onHierarchy ()
