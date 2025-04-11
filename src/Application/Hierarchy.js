@@ -45,7 +45,7 @@ module .exports = new class Hierarchy extends Interface
 
       this .#target      = target;
       this .#nodes       = [ ];
-      this .#hierarchies = this .#find (node);
+      this .#hierarchies = this .#find (target);
 
       this .processInterests ();
    }
