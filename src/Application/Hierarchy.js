@@ -39,8 +39,17 @@ module .exports = new class Hierarchy extends Interface
    {
       node = node ?.valueOf () ?? null;
 
-      if (node && !node ?.getType () .includes (X3D .X3DConstants .X3DShapeNode))
+      this .#target = node;
+      this .#nodes  = [ ];
+
+      if (!node)
       {
+         this .#hierarchies = [ ];
+      }
+      else if (!node .getType () .includes (X3D .X3DConstants .X3DShapeNode))
+      {
+         this .#hierarchies = [ ];
+
          let flags = Traverse .NONE;
 
          flags |= Traverse .PROTO_DECLARATIONS;
@@ -55,18 +64,21 @@ module .exports = new class Hierarchy extends Interface
             if (!object .getValue () .getType () .includes (X3D .X3DConstants .X3DShapeNode))
                continue;
 
-            node = object .getValue () .valueOf ();
-            break;
+            const
+               node   = object .getValue () .valueOf (),
+               target = node .getGeometry () ?.valueOf () ?? node;
+
+            this .#hierarchies .push (... this .#find (target));
          }
       }
+      else
+      {
+         const target = node .getType () .includes (X3D .X3DConstants .X3DShapeNode)
+            ? node .getGeometry () ?.valueOf () ?? node
+            : node;
 
-      const target = node ?.getType () .includes (X3D .X3DConstants .X3DShapeNode)
-         ? node .getGeometry () ?.valueOf () ?? node
-         : node;
-
-      this .#target      = target;
-      this .#nodes       = [ ];
-      this .#hierarchies = this .#find (target);
+         this .#hierarchies = this .#find (target);
+      }
 
       this .#processInterests ();
    }
