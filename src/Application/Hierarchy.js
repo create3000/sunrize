@@ -39,6 +39,26 @@ module .exports = new class Hierarchy extends Interface
    {
       node = node ?.valueOf () ?? null;
 
+      if (node && !node ?.getType () .includes (X3D .X3DConstants .X3DShapeNode))
+      {
+         let flags = Traverse .NONE;
+
+         flags |= Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY;
+         flags |= Traverse .ROOT_NODES;
+
+         for (const object of Traverse .traverse (node, flags))
+         {
+            if (!(object instanceof X3D .SFNode))
+               continue;
+
+            if (!object .getValue () .getType () .includes (X3D .X3DConstants .X3DShapeNode))
+               continue;
+
+            node = object .getValue () .valueOf ();
+            break;
+         }
+      }
+
       const target = node ?.getType () .includes (X3D .X3DConstants .X3DShapeNode)
          ? node .getGeometry () ?.valueOf () ?? node
          : node;
@@ -106,7 +126,6 @@ module .exports = new class Hierarchy extends Interface
 
       flags |= Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY;
       flags |= Traverse .ROOT_NODES;
-      flags |= Traverse .PROTOTYPE_INSTANCES;
 
       return Array .from (this .executionContext .find (target, flags),
          hierarchy => hierarchy .filter (object => object instanceof X3D .SFNode)
