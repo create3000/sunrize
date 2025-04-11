@@ -169,8 +169,12 @@ module .exports = class Dashboard extends Interface
       const
          hierarchy     = require ("./Hierarchy"),
          outlineEditor = this .document .sidebar .outlineEditor,
-         nodes         = hierarchy [direction] (),
-         elements      = nodes .map (node => outlineEditor .sceneGraph .find (`.node[node-id=${node .getId ()}]`));
+         nodes         = hierarchy [direction] ();
+
+      for (const node of nodes)
+         outlineEditor .expandTo (node, { expandObject: true, expandAll: true });
+
+      const elements = nodes .map (node => outlineEditor .sceneGraph .find (`.node[node-id=${node .getId ()}]`));
 
       for (const [i, element] of elements .entries ())
          outlineEditor .selectNodeElement (element, i > 0);

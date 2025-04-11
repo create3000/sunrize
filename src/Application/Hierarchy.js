@@ -39,7 +39,11 @@ module .exports = new class Hierarchy extends Interface
    {
       node = node ?.valueOf () ?? null;
 
-      this .#target      = node;
+      const target = node ?.getType () .includes (X3D .X3DConstants .X3DShapeNode)
+         ? node .getGeometry () .valueOf () ?? node
+         : node;
+
+      this .#target      = target;
       this .#nodes       = [ ];
       this .#hierarchies = this .#find (node);
 
@@ -116,8 +120,6 @@ module .exports = new class Hierarchy extends Interface
 
    up ()
    {
-      const selection = require ("./Selection");
-
       const nodes = this .#nodes .flatMap (node => this .#indices (node) .map (index =>
       {
          return index - 1 >= 0 ? index - 1 : index;
@@ -134,8 +136,6 @@ module .exports = new class Hierarchy extends Interface
 
    down ()
    {
-      const selection = require ("./Selection");
-
       const nodes = this .#nodes .flatMap (node => this .#indices (node) .map ((index, i) =>
       {
          return index >= 0 && index + 1 < this .#hierarchies [i] .length ? index + 1 : index;
