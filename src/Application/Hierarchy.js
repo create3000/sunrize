@@ -69,7 +69,10 @@ module .exports = new class Hierarchy extends Interface
       if (!this .#has (node))
          return;
 
-      this .#nodes = Array .from (new Set (this .#nodes .toSpliced (-1, 0, node)));
+      if (this .#nodes .includes (node))
+         return;
+
+      this .#nodes .push (node);
 
       this .processInterests ();
    }
