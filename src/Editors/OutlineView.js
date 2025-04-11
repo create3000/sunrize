@@ -3108,11 +3108,13 @@ module .exports = class OutlineView extends Interface
    {
       const
          selection = require ("../Application/Selection"),
+         hierarchy = require ("../Application/Hierarchy"),
          nodes     = this .sceneGraph .find (".primary, .selected");
 
       nodes .removeClass (["primary", "manually", "selected"]);
 
       selection .clear ();
+      hierarchy .clear ();
    }
 
    showPreview (event)
@@ -3485,8 +3487,8 @@ module .exports = class OutlineView extends Interface
          return;
 
       const
-         hierarchy        = require ("../Application/Hierarchy"),
          selection        = require ("../Application/Selection"),
+         hierarchy        = require ("../Application/Hierarchy"),
          selected         = element .hasClass ("manually"),
          selectedElements = this .sceneGraph .find (".primary, .selected"),
          node             = this .getNode (element),

@@ -80,6 +80,15 @@ module .exports = new class Hierarchy extends Interface
       this .#nodes = this .#nodes .filter (n => n !== node);
    }
 
+   clear ()
+   {
+      this .#target      = null;
+      this .#nodes       = [ ];
+      this .#hierarchies = [ ];
+
+      this .processInterests ();
+   }
+
    #find (target)
    {
       if (!target)
@@ -110,6 +119,8 @@ module .exports = new class Hierarchy extends Interface
 
    up ()
    {
+      const selection = require ("./Selection");
+
       const nodes = this .#nodes .flatMap (node => this .#indices (node) .map (index =>
       {
          return index - 1 >= 0 ? index - 1 : index;
@@ -119,13 +130,16 @@ module .exports = new class Hierarchy extends Interface
 
       this .#nodes = Array .from (new Set (nodes));
 
-      console .log (this .#nodes)
+      selection .clear ()
+      this .#nodes .forEach (node => selection .add (node));
 
       this .processInterests ();
    }
 
    down ()
    {
+      const selection = require ("./Selection");
+
       const nodes = this .#nodes .flatMap (node => this .#indices (node) .map ((index, i) =>
       {
          return index >= 0 && index + 1 < this .#hierarchies [i] .length ? index + 1 : index;
@@ -135,7 +149,8 @@ module .exports = new class Hierarchy extends Interface
 
       this .#nodes = Array .from (new Set (nodes));
 
-      console .log (this .#nodes)
+      selection .clear ()
+      this .#nodes .forEach (node => selection .add (node));
 
       this .processInterests ();
    }
