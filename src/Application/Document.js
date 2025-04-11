@@ -1066,10 +1066,14 @@ Viewpoint {
 
       if (outlineEditor .isEditable (elements))
       {
-         const parentElements = elements .parent () .closest (".node", outlineEditor .sceneGraph);
+         const parentElements = Array .from (elements) .flatMap (element =>
+         {
+            const parentElements = Array .from ($(element) .parent () .closest (".node", outlineEditor .sceneGraph));
 
-         elements = Array .from (parentElements, (parentElement, i) => outlineEditor .getNode ($(parentElement)) .getType ()
-            .includes (X3D .X3DConstants .X3DGroupingNode) ? parentElements [i] : elements [i]);
+            return parentElements .length ? parentElements : element;
+         });
+
+         elements = Array .from (parentElements, (element, i) => outlineEditor .getNode ($(element)) .getType () .includes (X3D .X3DConstants .X3DGroupingNode) ? parentElements [i] : elements [i]);
 
          var target = shapeNode;
       }
@@ -1091,7 +1095,7 @@ Viewpoint {
       for (const [i, element] of elements .entries ())
          outlineEditor .selectNodeElement ($(element), (event .shiftKey || event .metaKey) || i > 0);
 
-      elements [0] .scrollIntoView ({ block: "center", inline: "start", behavior: "smooth" });
+      elements [0] ?.scrollIntoView ({ block: "center", inline: "start", behavior: "smooth" });
       $(window) .scrollTop (0);
    }
 
