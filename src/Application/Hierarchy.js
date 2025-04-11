@@ -43,7 +43,8 @@ module .exports = new class Hierarchy extends Interface
       {
          let flags = Traverse .NONE;
 
-         flags |= Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY;
+         flags |= Traverse .PROTO_DECLARATIONS;
+         flags |= Traverse .PROTO_DECLARATION_BODY;
          flags |= Traverse .ROOT_NODES;
 
          for (const object of Traverse .traverse (node, flags))
@@ -124,7 +125,8 @@ module .exports = new class Hierarchy extends Interface
 
       let flags = Traverse .NONE;
 
-      flags |= Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY;
+      flags |= Traverse .PROTO_DECLARATIONS;
+      flags |= Traverse .PROTO_DECLARATION_BODY;
       flags |= Traverse .ROOT_NODES;
 
       return Array .from (this .executionContext .find (target, flags),

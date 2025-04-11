@@ -3864,7 +3864,8 @@ module .exports = class OutlineView extends Interface
       if (this .expandExternProtoDeclarations)
          flags |= Traverse .EXTERNPROTO_DECLARATIONS | Traverse .EXTERNPROTO_DECLARATION_SCENE;
 
-      flags |= Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY;
+      flags |= Traverse .PROTO_DECLARATIONS;
+      flags |= Traverse .PROTO_DECLARATION_BODY;
 
       if (this .expandInlineNodes)
          flags |= Traverse .INLINE_SCENE;
