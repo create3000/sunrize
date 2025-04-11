@@ -66,12 +66,12 @@ module .exports = new class Hierarchy extends Interface
             if (!(object instanceof X3D .SFNode))
                continue;
 
-            if (!object .getValue () .getType () .some (type => this .#targetTypes .has (type)))
+            const node = object .getValue () .valueOf ();
+
+            if (!node .getType () .some (type => this .#targetTypes .has (type)))
                continue;
 
-            const
-               node   = object .getValue () .valueOf (),
-               target = node .getGeometry ?.() ?.valueOf () ?? node;
+            const target = node .getGeometry ?.() ?.valueOf () ?? node;
 
             for (const hierarchy of this .#find (target))
                this .#hierarchies .push (hierarchy);
