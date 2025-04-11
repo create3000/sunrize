@@ -79,6 +79,8 @@ module .exports = new class Hierarchy extends Interface
       node = node ?.valueOf () ?? null;
 
       this .#nodes = this .#nodes .filter (n => n !== node);
+
+      this .processInterests ();
    }
 
    clear ()
