@@ -50,7 +50,7 @@ module .exports = class Dashboard extends Interface
       this .upButton = $("<span></span>")
          .addClass (["material-icons", "disabled"])
          .attr ("title", _("Select parent node(s)."))
-         .css ({ transform: "rotate(-90deg) scaleX(0.8)", "margin-top": "-6px" })
+         .css ({ transform: "rotate(-90deg) scaleX(0.8)", "margin-top": "-6px", "margin-bottom": "-7px" })
          .text ("play_arrow")
          .appendTo (this .toolbar)
          .on ("click", () => this .selectParent ());
@@ -58,7 +58,7 @@ module .exports = class Dashboard extends Interface
       this .downButton = $("<span></span>")
          .addClass (["material-icons", "disabled"])
          .attr ("title", _("Select child node(s)."))
-         .css ({ transform: "rotate(90deg) scaleX(0.8)", "margin-top": "-15px", "margin-bottom": "-6px" })
+         .css ({ transform: "rotate(90deg) scaleX(0.8)", "margin-top": "-7px", "margin-bottom": "-6px" })
          .text ("play_arrow")
          .appendTo (this .toolbar)
          .on ("click", () => this .selectChild ());

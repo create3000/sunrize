@@ -176,6 +176,25 @@ module .exports = new class Hierarchy extends Interface
 
       this .#nodes = Array .from (new Set (nodes));
 
+      // Combine to most highest node.
+
+      const indices = Array .from (this .#hierarchies, hierarchy => hierarchy .length);
+
+      for (const node of this .#nodes)
+      {
+         for (const [i, index] of this .#indices (node) .entries ())
+         {
+            if (index < 0)
+               continue;
+
+            indices [i] = Math .min (indices [i], index);
+         }
+      }
+
+      this .#nodes = Array .from (new Set (indices .map ((index, i) => this .#hierarchies [i] [index]) .filter (node => node)));
+
+      // Propagate change.
+
       this .#processInterests ();
 
       return this .#nodes;
@@ -191,6 +210,25 @@ module .exports = new class Hierarchy extends Interface
       .filter (node => node));
 
       this .#nodes = Array .from (new Set (nodes));
+
+      // Combine to most lowest node.
+
+      const indices = Array .from (this .#hierarchies, () => -1);
+
+      for (const node of this .#nodes)
+      {
+         for (const [i, index] of this .#indices (node) .entries ())
+         {
+            if (index < 0)
+               continue;
+
+            indices [i] = Math .max (indices [i], index);
+         }
+      }
+
+      this .#nodes = Array .from (new Set (indices .map ((index, i) => this .#hierarchies [i] [index]) .filter (node => node)));
+
+      // Propagate change.
 
       this .#processInterests ();
 
