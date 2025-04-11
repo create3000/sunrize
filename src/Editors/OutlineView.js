@@ -3457,10 +3457,23 @@ module .exports = class OutlineView extends Interface
          element = $(event .currentTarget) .closest (".node, .externproto, .proto"),
          add     = event .shiftKey || event .metaKey;
 
+      if (!this .isEditable (element))
+         return;
+
       if (element .hasClass ("node"))
+      {
+         const
+            hierarchy = require ("../Application/Hierarchy"),
+            node      = this .getNode (element);
+
+         hierarchy .target (node);
+
          this .selectNodeElement (element, add);
+      }
       else if (element .is (".externproto, .proto"))
+      {
          this .selectPrimaryElement (element, add);
+      }
    }
 
    selectNodeElement (element, add = false)
@@ -3508,13 +3521,13 @@ module .exports = class OutlineView extends Interface
 
          if (elements .filter (".manually") .length)
          {
-            hierarchy .set (node);
             selection .add (node);
+            hierarchy .add (node);
          }
          else
          {
-            hierarchy .clear ();
             selection .remove (node);
+            hierarchy .remove (node);
          }
       }
       else
@@ -3523,8 +3536,8 @@ module .exports = class OutlineView extends Interface
          element .addClass (["primary", "manually"]);
          elements .addClass ("selected");
 
-         hierarchy .set (node, false);
          selection .set (node);
+         hierarchy .set (node);
       }
 
       for (const [node, tool] of changed)

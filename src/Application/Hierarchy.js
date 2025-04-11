@@ -27,45 +27,57 @@ module .exports = new class Hierarchy extends Interface
 
    update ()
    {
-      if (this .#target ?.isLive ())
-         this .#hierarchies = this .#find (this .#target);
-      else
-         this .set (null);
+      const
+         target = this .#target,
+         nodes  = this .#nodes;
+
+      this .target (target ?.isLive () ? target : null);
+      nodes .forEach (node => this .add (node));
    }
 
-   set (node, add = true)
+   target (node)
    {
       node = node ?.valueOf () ?? null;
 
-      if (this .#has (node))
-      {
-         if (add)
-         {
-            this .#nodes .push (node);
-            this .#nodes = Array .from (new Set (this .#nodes));
-         }
-         else
-         {
-            this .#nodes = [node];
-         }
-      }
-      else
-      {
-         this .#target      = node;
-         this .#nodes       = add ? [node] : [ ];
+      this .#target      = node;
+      this .#nodes       = [ ];
+      this .#hierarchies = this .#hierarchies .filter (hierarchy => hierarchy .includes (node));
+
+      if (!this .#hierarchies .length)
          this .#hierarchies = this .#find (node);
-      }
 
       this .processInterests ();
    }
 
-   clear ()
+   set (node)
    {
-      this .#target      = null;
-      this .#nodes       = [ ];
-      this .#hierarchies = [ ];
+      node = node ?.valueOf () ?? null;
+
+      if (!this .#has (node))
+         return;
+
+      this .#nodes = [node];
 
       this .processInterests ();
+   }
+
+   add (node)
+   {
+      node = node ?.valueOf () ?? null;
+
+      if (!this .#has (node))
+         return;
+
+      this .#nodes = Array .from (new Set (this .#nodes .toSpliced (-1, 0, node)));
+
+      this .processInterests ();
+   }
+
+   remove (node)
+   {
+      node = node ?.valueOf () ?? null;
+
+      this .#nodes = this .#nodes .filter (n => n !== node);
    }
 
    #find (target)
@@ -98,32 +110,32 @@ module .exports = new class Hierarchy extends Interface
 
    up ()
    {
-      const nodes = Array .from (new Set (this .#nodes .flatMap (node => this .#indices (node) .map (index =>
+      const nodes = this .#nodes .flatMap (node => this .#indices (node) .map (index =>
       {
          return index - 1 >= 0 ? index - 1 : index;
       })
       .map ((index, i) => this .#hierarchies [i] [index])
-      .filter (node => node))));
+      .filter (node => node));
 
-      this .#nodes = nodes;
+      this .#nodes = Array .from (new Set (nodes));
 
-      console .log (nodes)
+      console .log (this .#nodes)
 
       this .processInterests ();
    }
 
    down ()
    {
-      const nodes = Array .from (new Set (this .#nodes .flatMap (node => this .#indices (node) .map ((index, i) =>
+      const nodes = this .#nodes .flatMap (node => this .#indices (node) .map ((index, i) =>
       {
          return index >= 0 && index + 1 < this .#hierarchies [i] .length ? index + 1 : index;
       })
       .map ((index, i) => this .#hierarchies [i] [index])
-      .filter (node => node))));
+      .filter (node => node));
 
-      this .#nodes = nodes;
+      this .#nodes = Array .from (new Set (nodes));
 
-      console .log (nodes)
+      console .log (this .#nodes)
 
       this .processInterests ();
    }

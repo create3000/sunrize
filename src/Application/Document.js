@@ -1086,8 +1086,7 @@ Viewpoint {
          elements = Array .from (elements);
       }
 
-      hierarchy .clear ();
-      hierarchy .set (target, false);
+      hierarchy .target (target);
 
       for (const [i, element] of elements .entries ())
          outlineEditor .selectNodeElement ($(element), (event .shiftKey || event .metaKey) || i > 0);
