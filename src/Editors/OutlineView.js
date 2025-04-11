@@ -3463,9 +3463,6 @@ module .exports = class OutlineView extends Interface
          element = $(event .currentTarget) .closest (".node, .externproto, .proto"),
          add     = event .shiftKey || event .metaKey;
 
-      if (!this .isEditable (element))
-         return;
-
       if (element .hasClass ("node"))
          this .selectNodeElement (element, { add, target: true });
 
