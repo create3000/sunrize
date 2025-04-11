@@ -40,7 +40,7 @@ module .exports = new class Hierarchy extends Interface
       node = node ?.valueOf () ?? null;
 
       const target = node ?.getType () .includes (X3D .X3DConstants .X3DShapeNode)
-         ? node .getGeometry () .valueOf () ?? node
+         ? node .getGeometry () ?.valueOf () ?? node
          : node;
 
       this .#target      = target;
