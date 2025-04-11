@@ -61,7 +61,7 @@ module .exports = new class Hierarchy extends Interface
             if (!(object instanceof X3D .SFNode))
                continue;
 
-            if (!object .getValue () .getType () .includes (X3D .X3DConstants .X3DShapeNode))
+            if (!(object .getValue () .getType () .includes (X3D .X3DConstants .X3DShapeNode) || object .getValue () .getType () .includes (X3D .X3DConstants .Inline)))
                continue;
 
             const
