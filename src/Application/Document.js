@@ -1033,7 +1033,7 @@ Viewpoint {
       if (event .button !== 0)
          return;
 
-      if (!(this .#deselect || this .#select))
+      if (!(this .#select || this .#deselect))
          return;
 
       const pointer = this .browser .getPointerFromEvent (event);
