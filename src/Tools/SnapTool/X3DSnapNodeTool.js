@@ -40,7 +40,7 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
       if (event .button !== 2 && !show)
          return;
 
-      const [x, y] = this .getBrowser () .getPointerFromEvent (event);
+      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
       if (!this .getBrowser () .touch (x, y))
       {
@@ -68,7 +68,7 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
 
    onmousemove (event)
    {
-      const [x, y] = this .getBrowser () .getPointerFromEvent (event);
+      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
       if (!this .getBrowser () .touch (x, y))
          return;
