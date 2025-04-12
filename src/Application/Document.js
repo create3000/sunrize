@@ -1033,12 +1033,12 @@ Viewpoint {
       if (event .button !== 0)
          return;
 
+      if (!(this .#deselect || this .#select))
+         return;
+
       const pointer = this .browser .getPointerFromEvent (event);
 
       if (this .#pointer .distance (pointer) > 1)
-         return;
-
-      if (!(this .#deselect || this .#select))
          return;
 
       const outlineEditor = this .sidebar .outlineEditor;
