@@ -6,14 +6,13 @@
     <component name='Layout' level='2'/>
     <component name='PointingDeviceSensor' level='1'/>
     <component name='Scripting' level='1'/>
-    <component name='Shaders' level='1'/>
     <component name='X_ITE' level='1'/>
     <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 29 Aug 2014 13:13:27 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.63, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 10 Apr 2025 09:17:09 GMT'/>
+    <meta name='modified' content='Sat, 12 Apr 2025 08:20:24 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -54,6 +53,7 @@
         <field accessType='inputOutput' type='SFBool' name='scaleDisplay' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='centerDisplay' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='centerTool' value='true'/>
+        <field accessType='inputOutput' type='SFBool' name='bboxEvents' value='true'/>
         <field accessType='inputOutput' type='SFBool' name='bboxDisplay' value='true'/>
         <field accessType='inputOutput' type='SFColor' name='bboxColor' value='1 1 1'/>
         <field accessType='inputOutput' type='SFVec3f' name='bboxSize' value='1 1 1'/>
@@ -78,6 +78,20 @@
               <IS>
                 <connect nodeField='translation' protoField='bboxCenter'/>
               </IS>
+              <Transform DEF='Box'>
+                <IS>
+                  <connect nodeField='scale' protoField='bboxSize'/>
+                  <connect nodeField='visible' protoField='bboxEvents'/>
+                </IS>
+                <Shape>
+                  <Appearance>
+                    <UnlitMaterial
+                        transparency='1'/>
+                  </Appearance>
+                  <Box
+                      size='1 1 1'/>
+                </Shape>
+              </Transform>
               <Shape DEF='BoundingBox_1'
                   castShadow='false'>
                 <IS>
@@ -650,7 +664,7 @@
               </IS>
               <ProtoInstance name='BooleanSwitch' DEF='CenterLine'>
                 <fieldValue name='children'>
-                  <Shape DEF='_1'
+                  <Shape
                       castShadow='false'>
                     <Appearance DEF='CenterLineStyle'>
                       <LineProperties

@@ -20,6 +20,8 @@ const
    AudioParser        = require ("../Parser/AudioParser"),
    _                  = require ("./GetText");
 
+const _tool = Symbol .for ("Sunrize.tool");
+
 module .exports = class Document extends Interface
 {
    #replaceWorld;
@@ -973,10 +975,12 @@ Viewpoint {
                node = this .browser .getHit () .shapeNode,
                priv = false;
 
+            const tool = node .getExecutionContext () .getOuterNode () ?.getUserData (_tool);
+
             while (node && !(priv ||= node .isPrivate ()))
                node = node .getExecutionContext ();
 
-            if (priv)
+            if (priv && !tool)
                return;
 
             // Start selection.
@@ -1056,25 +1060,34 @@ Viewpoint {
 
       const
          shapeNode     = this .browser .getHit () .shapeNode,
+         tool          = shapeNode .getExecutionContext () .getOuterNode () ?.getUserData (_tool),
+         node          = tool ?.valueOf () ?? shapeNode,
          outlineEditor = this .sidebar .outlineEditor;
 
-      outlineEditor .expandTo (shapeNode, { expandObject: true, expandAll: true });
+      outlineEditor .expandTo (node, { expandObject: true, expandAll: true });
 
-      let elements = outlineEditor .sceneGraph .find (`.node[node-id=${shapeNode .getId ()}]`);
+      let elements = outlineEditor .sceneGraph .find (`.node[node-id=${node .getId ()}]`);
 
       if (!elements .length)
          return;
 
       if (outlineEditor .isEditable (elements))
       {
-         const parentElements = Array .from (elements) .flatMap (element =>
+         if (tool)
          {
-            const parentElements = Array .from ($(element) .parent () .closest (".node", outlineEditor .sceneGraph));
+            elements = Array .from (elements);
+         }
+         else
+         {
+            const parentElements = Array .from (elements) .flatMap (element =>
+            {
+               const parentElements = Array .from ($(element) .parent () .closest (".node", outlineEditor .sceneGraph));
 
-            return parentElements .length ? parentElements : element;
-         });
+               return parentElements .length ? parentElements : element;
+            });
 
-         elements = parentElements .map ((element, i) => outlineEditor .getNode ($(element)) .getType () .includes (X3D .X3DConstants .X3DGroupingNode) ? parentElements [i] : elements [i]);
+            elements = parentElements .map ((element, i) => outlineEditor .getNode ($(element)) .getType () .includes (X3D .X3DConstants .X3DGroupingNode) ? parentElements [i] : elements [i]);
+         }
       }
       else
       {

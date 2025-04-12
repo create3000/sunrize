@@ -231,6 +231,7 @@ async function initialize ()
    tool .undo          = false;
    tool .tools         = new MFString ("TRANSLATE", "ROTATE");
    tool .centerDisplay = false;
+   tool .bboxEvents    = false;
    tool .bboxDisplay   = false;
 }
 
