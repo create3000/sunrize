@@ -941,15 +941,13 @@ Viewpoint {
    }
 
    #select     = false;
-   #deselect   = false;
    #pointer    = new X3D .Vector2 ();
    #snapTarget = null;
    #snapSource = null;
 
    async onmousedown (event)
    {
-      this .#select   = false;
-      this .#deselect = false;
+      this .#select = false;
 
       if (!this .secondaryToolbar .arrowButton .hasClass ("active"))
          return;
@@ -972,7 +970,7 @@ Viewpoint {
             }
             else
             {
-               this .#deselect = true;
+               this .#select = true;
             }
 
             break;
@@ -1033,7 +1031,7 @@ Viewpoint {
       if (event .button !== 0)
          return;
 
-      if (!(this .#select || this .#deselect))
+      if (!this .#select)
          return;
 
       const pointer = this .browser .getPointerFromEvent (event);
