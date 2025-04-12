@@ -983,6 +983,8 @@ Viewpoint {
 
             this .#select = true;
 
+            // Navigation will be disabled now.
+
             event .preventDefault ();
             event .stopPropagation ();
             event .stopImmediatePropagation ();
