@@ -1038,7 +1038,7 @@ Viewpoint {
 
       const pointer = this .browser .getPointerFromEvent (event);
 
-      if (this .#pointer .distance (pointer) > 1)
+      if (this .#pointer .distance (pointer) > this .browser .getRenderingProperty ("ContentScale"))
          return;
 
       const outlineEditor = this .sidebar .outlineEditor;
