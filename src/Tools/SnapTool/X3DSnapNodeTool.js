@@ -48,6 +48,10 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
          return;
       }
 
+      // Stop event propagation.
+
+      event .preventDefault ();
+
       $(this .getBrowser () .element)
          .on (`mousemove.X3DSnapNodeTool${this .getId ()}`, event => this .onmousemove (event));
 
@@ -68,6 +72,10 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
 
       if (!this .getBrowser () .touch (x, y))
          return;
+
+      // Stop event propagation.
+
+      event .preventDefault ();
 
       this .changePosition (this .getBrowser () .getHit ());
    }

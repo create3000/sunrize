@@ -1039,6 +1039,12 @@ Viewpoint {
       if (this .#pointer .distance (pointer) > this .browser .getRenderingProperty ("ContentScale"))
          return;
 
+      // Stop event propagation.
+
+      event .preventDefault ();
+
+      // Select or deselect.
+
       const outlineEditor = this .sidebar .outlineEditor;
 
       if (!this .browser .touch (... pointer))
@@ -1046,6 +1052,8 @@ Viewpoint {
          outlineEditor .deselectAll ();
          return;
       }
+
+      // Select.
 
       const
          shapeNode    = this .browser .getHit () .shapeNode,
