@@ -2424,7 +2424,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          });
 
          const
-            center      = moveCenter ? bboxCenter .copy () : (sourcePosition ?? axis .copy () .add (bboxCenter)),
+            center      = (moveCenter ? bboxCenter .copy () : (sourcePosition ?.copy () ?? bboxCenter .copy () .add (axis))) .subtract (modelMatrices [0] .origin),
             translation = targetPosition .copy () .subtract (center),
             rotation    = new X3D .Rotation4 (sourceNormal ?? axis, targetNormal .copy () .negate ()),
             snapMatrix  = new X3D .Matrix4 () .set (translation, rotation, null, null, center);

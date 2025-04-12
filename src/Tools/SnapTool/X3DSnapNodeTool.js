@@ -19,14 +19,14 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
    {
       super .connectTool ();
 
-      $(this .getBrowser () .element .shadowRoot) .find ("canvas")
+      $(this .getBrowser () .element)
          .on (`mousedown.X3DSnapNodeTool${this .getId ()}`, event => this .onmousedown (event))
          .on (`mouseup.X3DSnapNodeTool${this .getId ()}`,   event => this .onmouseup   (event));
    }
 
    disconnectTool ()
    {
-      $(this .getBrowser () .element .shadowRoot) .find ("canvas")
+      $(this .getBrowser () .element)
          .off (`.X3DSnapNodeTool${this .getId ()}`);
 
       super .disconnectTool ();
@@ -40,7 +40,7 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
       if (event .button !== 2 && !show)
          return;
 
-      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
+      const [x, y] = this .getBrowser () .getPointerFromEvent (event);
 
       if (!this .getBrowser () .touch (x, y))
       {
@@ -48,10 +48,7 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
          return;
       }
 
-      event .preventDefault ();
-      event .stopImmediatePropagation ();
-
-      $(this .getBrowser () .element .shadowRoot) .find ("canvas")
+      $(this .getBrowser () .element)
          .on (`mousemove.X3DSnapNodeTool${this .getId ()}`, event => this .onmousemove (event));
 
       this .changePosition (this .getBrowser () .getHit ());
@@ -59,7 +56,7 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
 
    onmouseup (event)
    {
-      $(this .getBrowser () .element .shadowRoot) .find ("canvas")
+      $(this .getBrowser () .element)
          .off (`mousemove.X3DSnapNodeTool${this .getId ()}`);
 
       this .tool .snapped = false;
@@ -67,13 +64,10 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
 
    onmousemove (event)
    {
-      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
+      const [x, y] = this .getBrowser () .getPointerFromEvent (event);
 
       if (!this .getBrowser () .touch (x, y))
          return;
-
-      event .preventDefault ();
-      event .stopImmediatePropagation ();
 
       this .changePosition (this .getBrowser () .getHit ());
    }

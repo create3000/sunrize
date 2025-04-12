@@ -163,10 +163,10 @@ module .exports = class Document extends Interface
 
       // Connect for Snap Target and Snap Source.
 
-      $(this .browser .element .shadowRoot) .find ("canvas")
+      $(this .browser .element)
          .on ("mousedown", event => this .onmousedown (event))
-         .on ("mouseup", event => this .onsnaptool (event))
-         .on ("click", event => this .onselect (event));
+         .on ("mouseup",   event => this .onsnaptool (event))
+         .on ("mouseup",   event => this .onselect (event));
 
       // Load components.
 
