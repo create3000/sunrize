@@ -67,12 +67,19 @@ module .exports = class Dashboard extends Interface
 
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
-      this .viewAllButton = $("<span></span>")
+      this .viewSelectedButton = $("<span></span>")
          .addClass (["material-symbols-outlined"])
          .attr ("title", _("Look at selected objects."))
          .text ("center_focus_strong")
          .appendTo (this .toolbar)
-         .on ("click", () => this .viewAll ());
+         .on ("click", () => this .viewAll (true));
+
+      this .viewAllButton = $("<span></span>")
+         .addClass (["material-symbols-outlined"])
+         .attr ("title", _("Look at all objects in active layer."))
+         .text ("zoom_out_map")
+         .appendTo (this .toolbar)
+         .on ("click", () => this .viewAll (false));
 
       this .straightenButton = $("<span></span>")
          .addClass (["material-symbols-outlined", "active"])
@@ -204,13 +211,13 @@ module .exports = class Dashboard extends Interface
          this .downButton .addClass ("disabled");
    }
 
-   viewAll ()
+   viewAll (all)
    {
       const
          selection = require ("./Selection"),
          nodes     = selection .nodes;
 
-      if (nodes .length)
+      if (all && nodes .length)
       {
          const
             executionContext = this .browser .currentScene,
