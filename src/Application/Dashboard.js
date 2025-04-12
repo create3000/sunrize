@@ -211,13 +211,13 @@ module .exports = class Dashboard extends Interface
          this .downButton .addClass ("disabled");
    }
 
-   viewAll (all)
+   viewAll (selected)
    {
       const
          selection = require ("./Selection"),
          nodes     = selection .nodes;
 
-      if (all && nodes .length)
+      if (selected && nodes .length)
       {
          const
             executionContext = this .browser .currentScene,
