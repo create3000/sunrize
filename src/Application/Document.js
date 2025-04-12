@@ -956,7 +956,7 @@ Viewpoint {
       {
          case 0:
          {
-            if (event .shiftKey && event .ctrlKey)
+            if (event .shiftKey && (event .ctrlKey || event .metaKey))
                return;
 
             this .#pointer .assign (this .browser .getPointerFromEvent (event));
