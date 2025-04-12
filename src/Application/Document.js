@@ -940,13 +940,16 @@ Viewpoint {
       }
    }
 
-   #select     = null;
+   #select     = false;
+   #deselect   = false;
+   #pointer    = new X3D .Vector2 ();
    #snapTarget = null;
    #snapSource = null;
 
    async onmousedown (event)
    {
-      this .#select = null;
+      this .#select   = false;
+      this .#deselect = false;
 
       if (!this .secondaryToolbar .arrowButton .hasClass ("active"))
          return;
@@ -958,17 +961,20 @@ Viewpoint {
             if (event .shiftKey && event .ctrlKey)
                return;
 
-            const pointer = this .browser .getPointerFromEvent (event);
+            this .#pointer .assign (this .browser .getPointerFromEvent (event));
 
-            if (!this .browser .touch (... pointer))
-               return;
+            if (this .browser .touch (... this .#pointer))
+            {
+               if (this .browser .getHit () .sensors .size)
+                  return;
 
-            if (this .browser .getHit () .sensors .size)
-               return;
+               this .#select = true;
+            }
+            else
+            {
+               this .#deselect = true;
+            }
 
-            // Start selection.
-
-            this .#select = pointer .copy ();
             break;
          }
          case 2:
@@ -1027,23 +1033,27 @@ Viewpoint {
       if (event .button !== 0)
          return;
 
-      if (!this .#select)
-         return;
-
       const pointer = this .browser .getPointerFromEvent (event);
 
-      if (this .#select .distance (pointer) > 1)
+      if (this .#pointer .distance (pointer) > 1)
          return;
 
-      if (!this .browser .touch (... pointer))
+      if (!(this .#deselect || this .#select))
          return;
+
+      const outlineEditor = this .sidebar .outlineEditor;
+
+      if (!this .browser .touch (... pointer))
+      {
+         outlineEditor .deselectAll ();
+         return;
+      }
 
       const
          shapeNode     = this .browser .getHit () .shapeNode,
          geometryTool  = shapeNode .getGeometry () ?.getTool (),
          tool          = geometryTool ?? shapeNode .getExecutionContext () .getOuterNode () ?.getTool (),
-         node          = tool ?? shapeNode,
-         outlineEditor = this .sidebar .outlineEditor;
+         node          = tool ?? shapeNode;
 
       outlineEditor .expandTo (node, { expandObject: true, expandAll: true });
 
