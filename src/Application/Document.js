@@ -1050,10 +1050,10 @@ Viewpoint {
       }
 
       const
-         shapeNode     = this .browser .getHit () .shapeNode,
-         geometryTool  = shapeNode .getGeometry () ?.getTool (),
-         tool          = geometryTool ?? shapeNode .getExecutionContext () .getOuterNode () ?.getTool (),
-         node          = tool ?? shapeNode;
+         shapeNode    = this .browser .getHit () .shapeNode,
+         geometryTool = shapeNode .getGeometry () ?.getTool (),
+         tool         = geometryTool ?? shapeNode .getExecutionContext () .getOuterNode () ?.getTool (),
+         node         = tool ?? shapeNode;
 
       outlineEditor .expandTo (node, { expandObject: true, expandAll: true });
 
