@@ -37,6 +37,7 @@ class CylinderTool extends X3DGeometryNodeTool
       transformTool .connectedAxes = ["XZ", "ZX"];
       transformTool .centerDisplay = false;
       transformTool .centerTool    = false;
+      transformTool .bboxEvents    = false;
       transformTool .bboxColor     = ToolColors .BLUE;
 
       this .tool .group       = this .getTypeName ();
