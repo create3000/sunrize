@@ -966,7 +966,8 @@ Viewpoint {
             if (this .browser .getHit () .sensors .size)
                return;
 
-            // Check if a parent is private.
+            // Check if a parent is private to enable
+            // Navigation when over grid or tool.
 
             let
                node = this .browser .getHit () .shapeNode,
@@ -1040,10 +1041,10 @@ Viewpoint {
       if (!this .secondaryToolbar .arrowButton .hasClass ("active"))
          return;
 
-      if (event .button !== 0)
+      if (!this .#select)
          return;
 
-      if (!this .#select)
+      if (event .button !== 0)
          return;
 
       const [x, y] = this .browser .getPointerFromEvent (event);
@@ -1061,8 +1062,6 @@ Viewpoint {
 
       if (!elements .length)
          return;
-
-      const hierarchy = require ("./Hierarchy");
 
       if (outlineEditor .isEditable (elements))
       {
