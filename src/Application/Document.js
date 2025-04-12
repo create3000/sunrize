@@ -166,7 +166,7 @@ module .exports = class Document extends Interface
       $(this .browser .element .shadowRoot) .find ("canvas")
          .on ("mousedown", event => this .onmousedown (event))
          .on ("mouseup", event => this .onsnaptool (event))
-         .on ("mouseup", event => this .onselect (event));
+         .on ("click", event => this .onselect (event));
 
       // Load components.
 
@@ -940,13 +940,13 @@ Viewpoint {
       }
    }
 
-   #select     = false;
+   #select     = null;
    #snapTarget = null;
    #snapSource = null;
 
    async onmousedown (event)
    {
-      this .#select = false;
+      this .#select = null;
 
       if (!this .secondaryToolbar .arrowButton .hasClass ("active"))
          return;
@@ -958,38 +958,17 @@ Viewpoint {
             if (event .shiftKey && event .ctrlKey)
                return;
 
-            const [x, y] = this .browser .getPointerFromEvent (event);
+            const pointer = this .browser .getPointerFromEvent (event);
 
-            if (!this .browser .touch (x, y))
+            if (!this .browser .touch (... pointer))
                return;
 
             if (this .browser .getHit () .sensors .size)
                return;
 
-            // Check if a parent is private to enable
-            // Navigation when over grid or tool.
-
-            let
-               node = this .browser .getHit () .shapeNode,
-               priv = false;
-
-            const tool = node .getExecutionContext () .getOuterNode () ?.getTool ();
-
-            while (node && !(priv ||= node .isPrivate ()))
-               node = node .getExecutionContext ();
-
-            if (priv && !tool)
-               return;
-
             // Start selection.
 
-            this .#select = true;
-
-            // Navigation will be disabled now.
-
-            event .preventDefault ();
-            event .stopPropagation ();
-            event .stopImmediatePropagation ();
+            this .#select = pointer .copy ();
             break;
          }
          case 2:
@@ -1045,15 +1024,18 @@ Viewpoint {
       if (!this .secondaryToolbar .arrowButton .hasClass ("active"))
          return;
 
-      if (!this .#select)
-         return;
-
       if (event .button !== 0)
          return;
 
-      const [x, y] = this .browser .getPointerFromEvent (event);
+      if (!this .#select)
+         return;
 
-      if (!this .browser .touch (x, y))
+      const pointer = this .browser .getPointerFromEvent (event);
+
+      if (this .#select .distance (pointer) > 1)
+         return;
+
+      if (!this .browser .touch (... pointer))
          return;
 
       const
