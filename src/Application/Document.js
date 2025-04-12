@@ -20,8 +20,6 @@ const
    AudioParser        = require ("../Parser/AudioParser"),
    _                  = require ("./GetText");
 
-const _tool = Symbol .for ("Sunrize.tool");
-
 module .exports = class Document extends Interface
 {
    #replaceWorld;
@@ -975,7 +973,7 @@ Viewpoint {
                node = this .browser .getHit () .shapeNode,
                priv = false;
 
-            const tool = node .getExecutionContext () .getOuterNode () ?.getUserData (_tool);
+            const tool = node .getExecutionContext () .getOuterNode () ?.getTool ();
 
             while (node && !(priv ||= node .isPrivate ()))
                node = node .getExecutionContext ();
@@ -1060,7 +1058,8 @@ Viewpoint {
 
       const
          shapeNode     = this .browser .getHit () .shapeNode,
-         tool          = shapeNode .getExecutionContext () .getOuterNode () ?.getUserData (_tool),
+         geometryTool  = shapeNode .getGeometry () ?.getTool (),
+         tool          = geometryTool ?? shapeNode .getExecutionContext () .getOuterNode () ?.getTool (),
          node          = tool ?.valueOf () ?? shapeNode,
          outlineEditor = this .sidebar .outlineEditor;
 
