@@ -117,6 +117,7 @@ module .exports = class Document extends Interface
       electron .ipcRenderer .on ("activate-snap-target",                 (event, visible) => this .activateSnapTarget (visible));
       electron .ipcRenderer .on ("activate-snap-source",                 (event, visible) => this .activateSnapSource (visible));
       electron .ipcRenderer .on ("center-snap-target-in-selection",      () => this .centerSnapTargetInSelection ());
+      electron .ipcRenderer .on ("center-snap-source-in-selection",      () => this .centerSnapSourceInSelection ());
       electron .ipcRenderer .on ("move-selection-to-snap-target",        () => this .moveSelectionToSnapTarget ());
       electron .ipcRenderer .on ("move-selection-center-to-snap-target", () => this .moveSelectionCenterToSnapTarget ());
 
@@ -1151,6 +1152,28 @@ Viewpoint {
       UndoManager .shared .beginUndo (_("Center SnapTarget in Selection"));
 
       Editor .setFieldValue (executionContext, target .getValue (), target .position, bbox .center);
+
+      UndoManager .shared .endUndo ();
+   }
+
+   async centerSnapSourceInSelection ()
+   {
+      this .activateSnapSource (true);
+
+      const
+         selection        = require ("./Selection"),
+         source           = await this .#snapSource .getToolInstance (),
+         executionContext = this .browser .currentScene,
+         layerNode        = this .browser .getActiveLayer (),
+         nodes            = selection .nodes,
+         [values, bbox]   = Editor .getModelMatricesAndBBoxes (executionContext, layerNode, nodes);
+
+      if (!bbox .size .magnitude ())
+         return;
+
+      UndoManager .shared .beginUndo (_("Center SnapSource in Selection"));
+
+      Editor .setFieldValue (executionContext, source .getValue (), source .position, bbox .center);
 
       UndoManager .shared .endUndo ();
    }

@@ -790,6 +790,10 @@ module .exports = class Application
                      click: () => this .mainWindow .webContents .send ("center-snap-target-in-selection"),
                   },
                   {
+                     label: _("Center Snap Source in Selection"),
+                     click: () => this .mainWindow .webContents .send ("center-snap-source-in-selection"),
+                  },
+                  {
                      label: _("Move Selection to Snap Target"),
                      accelerator: "CmdOrCtrl+M",
                      enabled: this .menuOptions .SnapTarget,
