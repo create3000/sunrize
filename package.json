@@ -56,7 +56,7 @@
     "XML"
   ],
   "author": "Holger Seelig",
-  "license": "GPL-3.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/create3000/sunrize/issues"
   },
