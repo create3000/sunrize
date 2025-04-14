@@ -105,7 +105,6 @@ module .exports = new class Tabs
       this .forwardToActiveTab ("activate-snap-target");
       this .forwardToActiveTab ("activate-snap-source");
       this .forwardToActiveTab ("center-snap-target-in-selection");
-      this .forwardToActiveTab ("center-snap-source-in-selection");
       this .forwardToActiveTab ("move-selection-to-snap-target");
       this .forwardToActiveTab ("move-selection-center-to-snap-target");
 
