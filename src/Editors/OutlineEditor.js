@@ -1084,7 +1084,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       UndoManager .shared .endUndo ();
 
       if (element .hasClass ("selected"))
-         require ("../Application/Selection") .add (primitive);
+         require ("../Application/Selection") .add (copy);
    }
 
    async addParentGroup (id, executionContextId, nodeId, component, typeName, fieldName)

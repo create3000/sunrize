@@ -3,6 +3,40 @@
 module .exports = [
    {
       componentInfo: { name: "EnvironmentalEffects" },
+      typeName: "Background CityNight",
+      x3dSyntax: `
+DEF CityNight Background {
+  skyAngle [
+    0.8,
+    1.3,
+    1.4,
+    1.5708
+  ]
+  skyColor [
+    0.0392 0.0392 0.0471,
+    0.0588 0.0745 0.1098,
+    0.051 0.0667 0.0588,
+    0.0471 0.0627 0.0275,
+    0.12 0.0902 0.05098
+  ]
+  groundAngle [
+    0.6,
+    1.2,
+    1.3,
+    1.5708
+  ]
+  groundColor [
+    0 0 0,
+    0 0 0,
+    0 0 0,
+    0 0 0,
+    0 0 0
+  ]
+}
+`
+   },
+   {
+      componentInfo: { name: "EnvironmentalEffects" },
       typeName: "Background Gray",
       x3dSyntax: `
 DEF Gray Background {
@@ -41,7 +75,8 @@ DEF Summer Background {
       0.3612 0.469145 0.602,
       0.39471 0.522059 0.669
    ]
-   }`
+}
+`
    },
    {
       componentInfo: { name: "EnvironmentalEffects" },
