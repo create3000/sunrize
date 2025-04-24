@@ -106,6 +106,15 @@ DEF Sunny Background {
    },
    {
       componentInfo: { name: "EnvironmentalEffects" },
+      typeName: "Background Transparent",
+      x3dSyntax: `
+DEF Transparent Background {
+   transparency 1
+}
+`
+   },
+   {
+      componentInfo: { name: "EnvironmentalEffects" },
       typeName: "Background White",
       x3dSyntax: `
 DEF White Background {
