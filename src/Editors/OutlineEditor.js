@@ -1783,18 +1783,13 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             }
             case X3D .X3DConstants .X3DComposedGeometryNode:
             {
-               let
-                  verticesPerPolygon = node .getVerticesPerPolygon (),
-                  numVertices        = node .getNumVertices ();
-
-               // Set size to a multiple of vertexCount.
-               numVertices -= numVertices % verticesPerPolygon;
-
                const
-                  normalPerVertex = node ._normalPerVertex .getValue (),
-                  normals         = node .createNormals (verticesPerPolygon, numVertices),
-                  normalNode      = executionContext .createNode ("Normal") .getValue (),
-                  vector          = normalNode ._vector;
+                  normalPerVertex    = node ._normalPerVertex .getValue (),
+                  verticesPerPolygon = node .getVerticesPerPolygon (),
+                  numVertices        = node .getNumVertices (),
+                  normals            = node .createNormals (verticesPerPolygon, numVertices),
+                  normalNode         = executionContext .createNode ("Normal") .getValue (),
+                  vector             = normalNode ._vector;
 
                for (let i = 0; i < numVertices; ++ i)
                {
