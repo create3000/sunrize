@@ -458,12 +458,15 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                   }
                   case X3D .X3DConstants .X3DPrototypeInstance:
                   {
+                     if (!$.try (() => node .getInnerNode ()))
+                        continue;
+
                      menu .push ({
                         label: _("Unwrap Inner Node"),
                         args: ["unwrapInnerNode", element .attr ("id"), executionContext .getId (), node .getId ()],
                      });
 
-                     if (!$.try (() => node .getInnerNode () .getType () .includes (X3D .X3DConstants .X3DChildNode)))
+                     if (node .getInnerNode () .getType () .includes (X3D .X3DConstants .X3DChildNode))
                         continue;
 
                      // Proceed with next case:
@@ -1943,7 +1946,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          parentNode         = this .getNode (parentNodeElement),
          parentField        = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement),
          node               = this .objects .get (nodeId),
-         x3dSyntax          = await Editor .exportX3D (this .executionContext, [node]),
+         x3dSyntax          = await Editor .exportX3D (this .executionContext, [node .getInnerNode ()]),
          importedNodes      = await Editor .importX3D (this .executionContext, x3dSyntax),
          innerNode          = importedNodes [0],
          index              = parseInt (element .attr ("index"));
