@@ -23,9 +23,9 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3D .Switch .prototyp
 
       this .getBrowser () .addBrowserEvent ();
    },
-   setChild (childNode)
+   addChild (childNode)
    {
-      X3D .Switch .prototype .setChild .call (this, this .editChild ?.getTool () ?? this .editChild ?? childNode);
+      X3D .Switch .prototype .addChild .call (this, this .editChild ?.getTool () ?? this .editChild ?? childNode);
    },
 });
 
