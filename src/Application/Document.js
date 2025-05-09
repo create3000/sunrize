@@ -155,7 +155,6 @@ module .exports = class Document extends Interface
          this .browser .getBrowserOptions () .getField (option) .addInterest (`set_${option}`, this);
 
       this .browser .setBrowserOption ("AlwaysUpdateGeometries", true);
-      this .browser .setBrowserOption ("AutoUpdate", false);
       this .browser .setBrowserOption ("MetadataReference", require ("../../package.json") .homepage);
 
       // Connect browser events.
