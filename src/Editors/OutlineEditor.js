@@ -1249,14 +1249,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          Editor .setFieldValue (executionContext, parent2Node, parent2Field, childNode);
       }
 
-      if (parentNode .getCloneCount () === 0)
-      {
-         if (parentField instanceof X3D .X3DArrayField)
-            Editor .setFieldValue (executionContext, parentNode, parentField, new X3D .MFNode ());
-         else
-            Editor .setFieldValue (executionContext, parentNode, parentField, null);
-      }
-
       UndoManager .shared .endUndo ();
    }
 
