@@ -429,7 +429,7 @@ DEF ScreenText Transform {
       x3dSyntax: `
 EnvironmentLight {
    diffuseTexture ImageCubeMapTexture {
-      url "https://create3000.github.io/Library/Tests/Components/images/helipad-diffuse.jpg"
+      url "https://cdn.jsdelivr.net/npm/x3d-image@2.1.3/src/images/cannon-exterior-diffuse.avif"
       textureProperties DEF _1 TextureProperties {
          generateMipMaps TRUE
          minificationFilter "NICEST"
@@ -437,7 +437,7 @@ EnvironmentLight {
       }
    }
    specularTexture ImageCubeMapTexture {
-      url "https://create3000.github.io/Library/Tests/Components/images/helipad-specular.jpg"
+      url "https://cdn.jsdelivr.net/npm/x3d-image@2.1.3/src/images/cannon-exterior-specular.avif"
       textureProperties USE _1
    }
 }
