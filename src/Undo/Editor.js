@@ -1199,6 +1199,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       undoManager .beginUndo (_("Turn Prototype »%s« into Extern Prototype"), proto .getName ());
 
+      this .removeProtoDeclaration (executionContext, proto .getName (), undoManager);
+
       scene .setWorldURL (url .pathToFileURL (filePath));
 
       await this .importX3D (scene, x3dSyntax, new UndoManager ());
@@ -1208,8 +1210,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       fs .writeFileSync (filePath, this .getContents (scene, path .extname (filePath)));
       scene .dispose ();
-
-      this .removeProtoDeclaration (executionContext, proto .getName (), undoManager);
 
       const
          name         = executionContext .getUniqueExternProtoName (proto .getName ()),
