@@ -1209,6 +1209,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       fs .writeFileSync (filePath, this .getContents (scene, path .extname (filePath)));
       scene .dispose ();
 
+      this .removeProtoDeclaration (executionContext, proto .getName (), undoManager);
+
       const
          name         = executionContext .getUniqueExternProtoName (proto .getName ()),
          externproto  = this .addExternProtoDeclaration (executionContext, name, undoManager),
@@ -1219,7 +1221,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       externproto ._url = new X3D .MFString (relativePath + hash, absolutePath + hash);
 
       this .replaceProtoNodes (executionContext, proto, externproto, undoManager);
-      this .removeProtoDeclaration (executionContext, proto .getName (), undoManager);
 
       undoManager .endUndo ();
    }
@@ -1288,21 +1289,21 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static updateExternProtoDeclaration (executionContext, name, externproto, undoManager = UndoManager .shared)
    {
-      const oldName = externproto .getName ()
+      const oldName = externproto .getName ();
 
-      undoManager .beginUndo (_("Update Extern Prototype Declaration »%s«"), name)
+      undoManager .beginUndo (_("Update Extern Prototype Declaration »%s«"), name);
 
-      executionContext .updateExternProtoDeclaration (name, externproto)
+      executionContext .updateExternProtoDeclaration (name, externproto);
 
       undoManager .registerUndo (() =>
       {
          if (oldName)
-            this .updateExternProtoDeclaration (executionContext, oldName, externproto, undoManager)
+            this .updateExternProtoDeclaration (executionContext, oldName, externproto, undoManager);
          else
-            this .removeExternProtoDeclaration (executionContext, name, undoManager)
+            this .removeExternProtoDeclaration (executionContext, name, undoManager);
       });
 
-      this .requestUpdateInstances (executionContext, undoManager)
+      this .requestUpdateInstances (executionContext, undoManager);
 
       undoManager .endUndo ();
    }
@@ -1315,18 +1316,18 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static removeExternProtoDeclaration (executionContext, name, undoManager = UndoManager .shared)
    {
-      const oldExternProtos = new Map (Array .from (executionContext .externprotos, p => [p .getName (), p]))
+      const oldExternProtos = new Map (Array .from (executionContext .externprotos, p => [p .getName (), p]));
 
-      undoManager .beginUndo (_("Remove Extern Prototype Declaration »%s«"), name)
+      undoManager .beginUndo (_("Remove Extern Prototype Declaration »%s«"), name);
 
-      executionContext .removeExternProtoDeclaration (name)
+      executionContext .removeExternProtoDeclaration (name);
 
       undoManager .registerUndo (() =>
       {
-         this .setExternProtoDeclarations (executionContext, oldExternProtos, undoManager)
+         this .setExternProtoDeclarations (executionContext, oldExternProtos, undoManager);
       });
 
-      this .requestUpdateInstances (executionContext, undoManager)
+      this .requestUpdateInstances (executionContext, undoManager);
 
       undoManager .endUndo ();
    }
@@ -1339,30 +1340,30 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static setExternProtoDeclarations (executionContext, externprotos, undoManager = UndoManager .shared)
    {
-      const oldExternProtos = new Map (Array .from (executionContext .externprotos, p => [p .getName (), p]))
+      const oldExternProtos = new Map (Array .from (executionContext .externprotos, p => [p .getName (), p]));
 
-      undoManager .beginUndo (_("Update Extern Prototype Declarations"))
+      undoManager .beginUndo (_("Update Extern Prototype Declarations"));
 
       for (const name of oldExternProtos .keys ())
-         executionContext .removeExternProtoDeclaration (name)
+         executionContext .removeExternProtoDeclaration (name);
 
       if (Array .isArray (externprotos))
       {
          for (const externproto of externprotos)
-            executionContext .updateExternProtoDeclaration (externproto .getName (), externproto)
+            executionContext .updateExternProtoDeclaration (externproto .getName (), externproto);
       }
       else
       {
          for (const [name, externproto] of externprotos)
-            executionContext .updateExternProtoDeclaration (name, externproto)
+            executionContext .updateExternProtoDeclaration (name, externproto);
       }
 
       undoManager .registerUndo (() =>
       {
-         this .setExternProtoDeclarations (executionContext, oldExternProtos, undoManager)
+         this .setExternProtoDeclarations (executionContext, oldExternProtos, undoManager);
       });
 
-      this .requestUpdateInstances (executionContext, undoManager)
+      this .requestUpdateInstances (executionContext, undoManager);
 
       undoManager .endUndo ();
    }
@@ -1378,26 +1379,27 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       const
          numProtos = executionContext .protos .length,
-         x3dSyntax = await this .exportX3D (externproto .getInternalScene (), [externproto .getProtoDeclaration ()])
+         x3dSyntax = await this .exportX3D (externproto .getInternalScene (), [externproto .getProtoDeclaration ()]);
 
-      undoManager .beginUndo (_("Turn Extern Prototype »%s« into Prototype"), externproto .getName ())
+      undoManager .beginUndo (_("Turn Extern Prototype »%s« into Prototype"), externproto .getName ());
 
-      await this .importX3D (executionContext, x3dSyntax, undoManager)
+      this .removeExternProtoDeclaration (executionContext, externproto .getName (), undoManager);
+
+      await this .importX3D (executionContext, x3dSyntax, undoManager);
 
       const
          protos         = Array .from (executionContext .protos),
          importedProtos = protos .splice (numProtos, protos .length - numProtos),
-         proto          = importedProtos .at (-1)
+         proto          = importedProtos .at (-1);
 
       for (const proto of importedProtos .reverse ())
       {
-         protos .unshift (proto)
-         this .rewriteURLs (executionContext, proto, externproto .getInternalScene () .worldURL, executionContext .worldURL, new UndoManager ())
+         protos .unshift (proto);
+         this .rewriteURLs (executionContext, proto, externproto .getInternalScene () .worldURL, executionContext .worldURL, new UndoManager ());
       }
 
-      this .setProtoDeclarations (executionContext, protos, undoManager)
-      this .replaceProtoNodes (executionContext, externproto, proto, undoManager)
-      this .removeExternProtoDeclaration (executionContext, externproto .getName (), undoManager)
+      this .setProtoDeclarations (executionContext, protos, undoManager);
+      this .replaceProtoNodes (executionContext, externproto, proto, undoManager);
 
       undoManager .endUndo ();
    }
