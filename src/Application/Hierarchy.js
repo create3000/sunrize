@@ -61,6 +61,8 @@ module .exports = new class Hierarchy extends Interface
          flags |= Traverse .PROTO_DECLARATION_BODY;
          flags |= Traverse .ROOT_NODES;
 
+         const targets = [ ];
+
          for (const object of Traverse .traverse (node, flags))
          {
             if (!(object instanceof X3D .SFNode))
@@ -71,19 +73,14 @@ module .exports = new class Hierarchy extends Interface
             if (!node .getType () .some (type => this .#targetTypes .has (type)))
                continue;
 
-            const target = node .getGeometry ?.() ?.valueOf () ?? node;
-
-            for (const hierarchy of this .#find (target))
-               this .#hierarchies .push (hierarchy);
-
-            // TODO: optimize up and down.
-            // If we have found a hierarchy, we can stop searching.
-            if (this .#hierarchies .length)
-               break;
+            targets .push (node .getGeometry ?.() ?.valueOf () ?? node);
          }
 
+         for (const hierarchy of this .#find (targets))
+            this .#hierarchies .push (hierarchy);
+
          if (!this .#hierarchies .length)
-            this .#hierarchies = this .#find (node);
+            this .#hierarchies = this .#find ([node]);
       }
       else
       {
@@ -91,7 +88,7 @@ module .exports = new class Hierarchy extends Interface
             ? node .getGeometry () ?.valueOf () ?? node
             : node;
 
-         this .#hierarchies = this .#find (target);
+         this .#hierarchies = this .#find ([target]);
       }
 
       this .#processInterests ();
@@ -142,9 +139,9 @@ module .exports = new class Hierarchy extends Interface
       this .#processInterests ();
    }
 
-   #find (target)
+   #find (targets)
    {
-      if (!target)
+      if (!targets .length)
          return [ ];
 
       // Find target node.
@@ -155,18 +152,9 @@ module .exports = new class Hierarchy extends Interface
       flags |= Traverse .PROTO_DECLARATION_BODY;
       flags |= Traverse .ROOT_NODES;
 
-      // TODO: optimize up and down.
-      // return Array .from (this .executionContext .find (target, flags),
-      //    hierarchy => hierarchy .filter (object => object instanceof X3D .SFNode)
-      //       .map (node => node .getValue () .valueOf ()));
-
-      for (const hierarchy of this .executionContext .find (target, flags))
-      {
-         return [hierarchy .filter (object => object instanceof X3D .SFNode)
-            .map (node => node .getValue () .valueOf ())];
-      }
-
-      return [ ];
+      return Array .from (this .executionContext .find (targets, flags),
+         hierarchy => hierarchy .filter (object => object instanceof X3D .SFNode)
+            .map (node => node .getValue () .valueOf ()));
    }
 
    #has (node)
