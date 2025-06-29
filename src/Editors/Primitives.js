@@ -282,12 +282,9 @@ DEF TriangleSet2D Transform {
       }
       geometry TriangleSet2D {
          vertices [
-            0.0 0.0,
-            2.0 0.0,
-            1.0 1.0,
-            2.0 0.0,
-            4.0 0.0
-            3.0 2.0,
+            -1 -0.8660254,
+            1 -0.8660254,
+            0 0.8660254
          ]
       }
    }
