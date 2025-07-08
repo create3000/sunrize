@@ -3855,22 +3855,22 @@ module .exports = class OutlineView extends Interface
 
    onDragEnd (event) { }
 
-   expandTo (object, { expandObject = false, expandAll = false } = { })
+   expandTo (object, { expandExternProtoDeclarations = false, expandInlineNodes = false, expandPrototypeInstances = false, expandObject = false, expandAll = false } = { })
    {
       let flags = Traverse .NONE;
 
-      if (this .expandExternProtoDeclarations)
+      if (this .expandExternProtoDeclarations && expandExternProtoDeclarations)
          flags |= Traverse .EXTERNPROTO_DECLARATIONS | Traverse .EXTERNPROTO_DECLARATION_SCENE;
 
       flags |= Traverse .PROTO_DECLARATIONS;
       flags |= Traverse .PROTO_DECLARATION_BODY;
 
-      if (this .expandInlineNodes)
+      if (this .expandInlineNodes && expandInlineNodes)
          flags |= Traverse .INLINE_SCENE;
 
       flags |= Traverse .ROOT_NODES;
 
-      if (this .expandPrototypeInstances)
+      if (this .expandPrototypeInstances && expandPrototypeInstances)
          flags |= Traverse .PROTOTYPE_INSTANCES;
 
       flags |= Traverse .IMPORTED_NODES;
