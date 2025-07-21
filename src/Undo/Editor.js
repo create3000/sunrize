@@ -2405,9 +2405,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       {
          const
             bboxMatrix = subBBoxes [0] .matrix,
-            bboxXAxes  = bboxMatrix .xAxis .magnitude () ? bboxMatrix .xAxis : X3D .Vector3 .xAxis,
-            bboxYAxes  = bboxMatrix .yAxis .magnitude () ? bboxMatrix .yAxis : X3D .Vector3 .yAxis,
-            bboxZAxes  = bboxMatrix .zAxis .magnitude () ? bboxMatrix .zAxis : X3D .Vector3 .zAxis;
+            bboxXAxes  = bboxMatrix .xAxis .norm () ? bboxMatrix .xAxis : X3D .Vector3 .xAxis,
+            bboxYAxes  = bboxMatrix .yAxis .norm () ? bboxMatrix .yAxis : X3D .Vector3 .yAxis,
+            bboxZAxes  = bboxMatrix .zAxis .norm () ? bboxMatrix .zAxis : X3D .Vector3 .zAxis;
 
          const axes = [
             bboxXAxes .copy (),            // right

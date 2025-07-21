@@ -1145,7 +1145,7 @@ Viewpoint {
          nodes            = selection .nodes,
          [values, bbox]   = Editor .getModelMatricesAndBBoxes (executionContext, layerNode, nodes);
 
-      if (!bbox .size .magnitude ())
+      if (!bbox .size .norm ())
          return;
 
       UndoManager .shared .beginUndo (_("Center SnapTarget in Selection"));
