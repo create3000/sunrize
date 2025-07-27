@@ -425,17 +425,13 @@ DEF ScreenText Transform {
       typeName: "EnvironmentLight",
       x3dSyntax: `
 EnvironmentLight {
-   diffuseTexture ImageCubeMapTexture {
-      url "https://cdn.jsdelivr.net/npm/x3d-image@2.1.3/src/images/cannon-exterior-diffuse.avif"
-      textureProperties DEF _1 TextureProperties {
+   specularTexture ImageCubeMapTexture {
+      url "https://cdn.jsdelivr.net/npm/x3d-image@2.1.3/src/images/cannon-exterior-specular.avif"
+      textureProperties TextureProperties {
          generateMipMaps TRUE
          minificationFilter "NICEST"
          magnificationFilter "NICEST"
       }
-   }
-   specularTexture ImageCubeMapTexture {
-      url "https://cdn.jsdelivr.net/npm/x3d-image@2.1.3/src/images/cannon-exterior-specular.avif"
-      textureProperties USE _1
    }
 }
 `
