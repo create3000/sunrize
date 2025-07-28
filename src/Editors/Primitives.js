@@ -426,7 +426,7 @@ DEF ScreenText Transform {
       x3dSyntax: `
 EnvironmentLight {
    specularTexture ImageCubeMapTexture {
-      url "https://cdn.jsdelivr.net/npm/x3d-image@2.1.3/src/images/cannon-exterior-specular.avif"
+      url "https://cdn.jsdelivr.net/npm/x3d-image@2.2.0/src/images/cannon-exterior.avif"
       textureProperties TextureProperties {
          generateMipMaps TRUE
          minificationFilter "NICEST"
