@@ -1867,7 +1867,7 @@ module .exports = class OutlineView extends Interface
       if (!node)
          return;
 
-      const interfaceDefinitionElement = X3DUOM .find (`ConcreteNode[name=${node .getTypeName ()}] InterfaceDefinition`);
+      const interfaceDefinitionElement = X3DUOM .find (`ConcreteNode[name="${node .getTypeName ()}"] InterfaceDefinition`);
 
       name .attr ("title", this .getNodeTitle (interfaceDefinitionElement));
    }
@@ -1879,7 +1879,7 @@ module .exports = class OutlineView extends Interface
          element      = $(event .currentTarget) .closest (".field, .special", this .sceneGraph),
          node         = this .objects .get (parseInt (element .attr ("node-id"))),
          field        = this .objects .get (parseInt (element .attr ("field-id"))),
-         fieldElement = X3DUOM .find (`ConcreteNode[name=${node .getTypeName ()}] field[name=${field .getName ()}]`);
+         fieldElement = X3DUOM .find (`ConcreteNode[name="${node .getTypeName ()}"] field[name="${field .getName ()}"]`);
 
       name .attr ("title", this .getFieldTitle (node, field, fieldElement));
    }

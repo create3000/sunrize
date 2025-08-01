@@ -125,7 +125,7 @@ module .exports = new class Panel extends Interface
 
       // Create folders.
 
-      const concreteNode = X3DUOM .find (`ConcreteNode[name=${node .getTypeName ()}]`);
+      const concreteNode = X3DUOM .find (`ConcreteNode[name="${node .getTypeName ()}"]`);
 
       this .browser .currentScene .units .addInterest ("updateNode", this);
       node .getPredefinedFields ()       .addInterest ("updateNode", this);
@@ -242,7 +242,7 @@ module .exports = new class Panel extends Interface
          {
             const
                typeName = X3D .X3DConstants [type],
-               fields   = new Set (X3DUOM .find (`ConcreteNode[name=${typeName}],AbstractNodeType[name=${typeName}],AbstractObjectType[name=${typeName}]`) .find ("field") .map (function () { return this .getAttribute ("name"); }) .get ());
+               fields   = new Set (X3DUOM .find (`ConcreteNode[name="${typeName}"],AbstractNodeType[name="${typeName}"],AbstractObjectType[name="${typeName}"]`) .find ("field") .map (function () { return this .getAttribute ("name"); }) .get ());
 
             switch (type)
             {
@@ -315,7 +315,7 @@ module .exports = new class Panel extends Interface
          return;
 
       const
-         fieldElement = concreteNode .find (`field[name=${field .getName ()}]`),
+         fieldElement = concreteNode .find (`field[name="${field .getName ()}"]`),
          options      = { };
 
       switch (field .getType ())
