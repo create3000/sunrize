@@ -4,7 +4,12 @@ const X3DNodeTool = require ("./X3DNodeTool");
 
 class X3DChildNodeTool extends X3DNodeTool
 {
-   isRenderingRequired ()
+   isPointingObject ()
+   {
+      return true;
+   }
+
+   isVisibleObject ()
    {
       return true;
    }

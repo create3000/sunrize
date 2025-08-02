@@ -59,7 +59,7 @@ module .exports = class UndoManager
 
       // Propagate change.
 
-      this .processInterests ();
+      this .#processInterests ();
    }
 
    redo ()
@@ -105,7 +105,7 @@ module .exports = class UndoManager
 
       // Propagate change.
 
-      this .processInterests ();
+      this .#processInterests ();
    }
 
    /**
@@ -159,7 +159,7 @@ module .exports = class UndoManager
 
       // Propagate change.
 
-      this .processInterests ();
+      this .#processInterests ();
    }
 
    /**
@@ -197,7 +197,7 @@ module .exports = class UndoManager
       this .#interest .delete (key);
    }
 
-   processInterests ()
+   #processInterests ()
    {
       for (const callback of this .#interest .values ())
          callback ();

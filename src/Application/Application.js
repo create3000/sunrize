@@ -288,7 +288,7 @@ module .exports = class Application
                   },
                   { type: "separator" },
                   {
-                     label: _("Default Play Button State"),
+                     label: _("Enable Browser Update on Load"),
                      type: "checkbox",
                      checked: this .config .browserUpdate,
                      click: () =>
@@ -708,6 +708,12 @@ module .exports = class Application
                      click: () => this .mainWindow .webContents .send ("logarithmic-depth-buffer", !this .menuOptions .logarithmicDepthBuffer),
                   },
                   { type: "separator" },
+                  {
+                     label: _("Mute Audio"),
+                     type: "checkbox",
+                     checked: this .menuOptions .mute,
+                     click: () => this .mainWindow .webContents .send ("mute", !this .menuOptions .mute),
+                  },
                   {
                      label: _("Display Rubberband"),
                      type: "checkbox",

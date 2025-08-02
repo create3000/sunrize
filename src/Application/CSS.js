@@ -1,20 +1,20 @@
-"use strict"
+"use strict";
 
-const $ = require ("jquery")
+const $ = require ("jquery");
 
 // CSS
 
-const colorScheme = window .matchMedia ("(prefers-color-scheme: dark)")
+const colorScheme = window .matchMedia ("(prefers-color-scheme: dark)");
 
 colorScheme .addEventListener ("change", event => changeColorScheme (event));
 
-changeColorScheme (colorScheme)
+changeColorScheme (colorScheme);
 
 function changeColorScheme (event)
 {
    $("body")
       .removeClass (["light", "dark"])
-      .addClass (event .matches ? "dark" : "light")
+      .addClass (event .matches ? "dark" : "light");
 }
 
-module .exports = { colorScheme }
+module .exports = { colorScheme };

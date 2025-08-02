@@ -36,6 +36,7 @@ class Rectangle2DTool extends X3DGeometryNodeTool
       transformTool .centerDisplay = false;
       transformTool .centerTool    = false;
       transformTool .zAxisDisplay  = false;
+      transformTool .bboxEvents    = false;
       transformTool .bboxDisplay   = false;
 
       this .tool .group       = this .getTypeName ();

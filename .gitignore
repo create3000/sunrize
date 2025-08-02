@@ -2,7 +2,7 @@
 /out/
 /x_ite/
 /package-lock.json
-/docs/ssl/
+/docs/ssl
 certificate.pfx
 certificate-creation.ps1
 

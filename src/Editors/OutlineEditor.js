@@ -458,12 +458,15 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                   }
                   case X3D .X3DConstants .X3DPrototypeInstance:
                   {
+                     if (!$.try (() => node .getInnerNode ()))
+                        continue;
+
                      menu .push ({
                         label: _("Unwrap Inner Node"),
                         args: ["unwrapInnerNode", element .attr ("id"), executionContext .getId (), node .getId ()],
                      });
 
-                     if (!$.try (() => node .getInnerNode () .getType () .includes (X3D .X3DConstants .X3DChildNode)))
+                     if (node .getInnerNode () .getType () .includes (X3D .X3DConstants .X3DChildNode))
                         continue;
 
                      // Proceed with next case:
@@ -577,12 +580,12 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          var menu = [
             {
                label: _("Rename Imported Node..."),
-               visible: Editor .getScene (importedNode .getExecutionContext ()) === this .executionContext,
+               visible: importedNode .getExecutionContext () .getLocalScene () === this .executionContext,
                args: ["renameImportedNode", element .attr ("id")],
             },
             {
                label: _("Remove Imported Node"),
-               visible: Editor .getScene (importedNode .getExecutionContext ()) === this .executionContext,
+               visible: importedNode .getExecutionContext () .getLocalScene () === this .executionContext,
                args: ["removeImportedNode", element .attr ("id")],
             },
          ];
@@ -1084,7 +1087,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       UndoManager .shared .endUndo ();
 
       if (element .hasClass ("selected"))
-         require ("../Application/Selection") .add (primitive);
+         require ("../Application/Selection") .add (copy);
    }
 
    async addParentGroup (id, executionContextId, nodeId, component, typeName, fieldName)
@@ -1199,7 +1202,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       await this .browser .nextFrame ();
 
-      this .expandTo (node, true);
+      this .expandTo (node, { expandObject: true });
+
+      const groupElement = this .sceneGraph .find (`.node[node-id=${node .getId ()}]`);
+
+      this .selectNodeElement (groupElement, { target: true });
    }
 
    removeParent (id, executionContextId, nodeId)
@@ -1241,11 +1248,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       {
          Editor .setFieldValue (executionContext, parent2Node, parent2Field, childNode);
       }
-
-      if (parentField instanceof X3D .X3DArrayField)
-         Editor .setFieldValue (executionContext, parentNode, parentField, new X3D .MFNode ());
-      else
-         Editor .setFieldValue (executionContext, parentNode, parentField, null);
 
       UndoManager .shared .endUndo ();
    }
@@ -1467,7 +1469,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       await this .browser .nextFrame ();
 
-      this .expandTo (childNode, true);
+      this .expandTo (childNode, { expandObject: true });
    }
 
    protocolToMimeType = new Map ([
@@ -1779,18 +1781,13 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             }
             case X3D .X3DConstants .X3DComposedGeometryNode:
             {
-               let
-                  verticesPerPolygon = node .getVerticesPerPolygon (),
-                  numVertices        = node .getNumVertices ();
-
-               // Set size to a multiple of vertexCount.
-               numVertices -= numVertices % verticesPerPolygon;
-
                const
-                  normalPerVertex = node ._normalPerVertex .getValue (),
-                  normals         = node .createNormals (verticesPerPolygon, numVertices),
-                  normalNode      = executionContext .createNode ("Normal") .getValue (),
-                  vector          = normalNode ._vector;
+                  normalPerVertex    = node ._normalPerVertex .getValue (),
+                  verticesPerPolygon = node .getVerticesPerPolygon (),
+                  numVertices        = node .getNumVertices (),
+                  normals            = node .createNormals (verticesPerPolygon, numVertices),
+                  normalNode         = executionContext .createNode ("Normal") .getValue (),
+                  vector             = normalNode ._vector;
 
                for (let i = 0; i < numVertices; ++ i)
                {
@@ -1944,7 +1941,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          parentNode         = this .getNode (parentNodeElement),
          parentField        = parentFieldElement .hasClass ("scene") ? parentNode .rootNodes : this .getField (parentFieldElement),
          node               = this .objects .get (nodeId),
-         x3dSyntax          = await Editor .exportX3D (this .executionContext, [node]),
+         x3dSyntax          = await Editor .exportX3D (this .executionContext, [node .getInnerNode ()]),
          importedNodes      = await Editor .importX3D (this .executionContext, x3dSyntax),
          innerNode          = importedNodes [0],
          index              = parseInt (element .attr ("index"));

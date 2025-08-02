@@ -28,9 +28,6 @@ module .exports = class Document extends Interface
    {
       super ("Sunrize.Document.");
 
-      // Add X3D to window to provide access in Script nodes.
-      window .X3D = X3D;
-
       // Globals
 
       this .config .global .setDefaultValues ({
@@ -41,7 +38,7 @@ module .exports = class Document extends Interface
 
       this .verticalSplitter   = new Splitter ($("#vertical-splitter"), "vertical");
       this .horizontalSplitter = new Splitter ($("#horizontal-splitter"), "horizontal");
-      this .secondaryToolbar   = new Dashboard ($("#secondary-toolbar"));
+      this .secondaryToolbar   = new Dashboard ($("#secondary-toolbar"), this);
       this .footer             = new Footer ($("#footer"));
       this .sidebar            = new Sidebar ($("#sidebar"));
 
@@ -106,6 +103,7 @@ module .exports = class Document extends Interface
       electron .ipcRenderer .on ("tone-mapping",                   (event, value) => this .setToneMapping (value));
       electron .ipcRenderer .on ("order-independent-transparency", (event, value) => this .setOrderIndependentTransparency (value));
       electron .ipcRenderer .on ("logarithmic-depth-buffer",       (event, value) => this .setLogarithmicDepthBuffer (value));
+      electron .ipcRenderer .on ("mute",                           (event, value) => this .setMute (value));
       electron .ipcRenderer .on ("display-rubberband",             (event, value) => this .setDisplayRubberband (value));
       electron .ipcRenderer .on ("display-timings",                (event, value) => this .setDisplayTimings (value));
       electron .ipcRenderer .on ("show-library",                   (event)        => this .showLibrary ());
@@ -148,6 +146,7 @@ module .exports = class Document extends Interface
          "ToneMapping",
          "OrderIndependentTransparency",
          "LogarithmicDepthBuffer",
+         "Mute",
          "Rubberband",
          "Timings",
       ];
@@ -164,9 +163,10 @@ module .exports = class Document extends Interface
 
       // Connect for Snap Target and Snap Source.
 
-      $(this .browser .element .shadowRoot) .find ("canvas")
+      $(this .browser .element)
          .on ("mousedown", event => this .onmousedown (event))
-         .on ("mouseup",   event => this .onmouseup   (event));
+         .on ("mouseup",   event => this .onsnaptool (event))
+         .on ("mouseup",   event => this .onselect (event));
 
       // Load components.
 
@@ -176,6 +176,9 @@ module .exports = class Document extends Interface
       // Modify nodes.
 
       this .browser .updateConcreteNode (require ("../Components/Grouping/StaticGroup"));
+      this .browser .updateConcreteNode (require ("../Components/Grouping/Switch"));
+      this .browser .updateConcreteNode (require ("../Components/Navigation/Collision"));
+      this .browser .updateConcreteNode (require ("../Components/Navigation/LOD"));
 
       require ("../Components");
 
@@ -198,6 +201,7 @@ module .exports = class Document extends Interface
          toneMapping: "NONE",
          orderIndependentTransparency: false,
          logarithmicDepthBuffer: false,
+         mute: false,
          rubberband: true,
          timings: false,
       });
@@ -213,6 +217,7 @@ module .exports = class Document extends Interface
       this .setToneMapping                  (this .config .file .toneMapping);
       this .setOrderIndependentTransparency (this .config .file .orderIndependentTransparency);
       this .setLogarithmicDepthBuffer       (this .config .file .logarithmicDepthBuffer);
+      this .setMute                         (this .config .file .mute);
       this .setDisplayRubberband            (this .config .file .rubberband);
       this .setDisplayTimings               (this .config .file .timings);
 
@@ -744,6 +749,23 @@ Viewpoint {
     *
     * @param {boolean} value
     */
+   setMute (value)
+   {
+      this .browser .setBrowserOption ("Mute", value);
+      this .browser .setDescription (`Mute: ${value ? "on" : "off"}`);
+   }
+
+   set_Mute ()
+   {
+      this .config .file .mute = this .browser .getBrowserOption ("Mute");
+
+      this .updateMenu ();
+   }
+
+   /**
+    *
+    * @param {boolean} value
+    */
    setDisplayRubberband (value)
    {
       this .browser .setBrowserOption ("Rubberband", value);
@@ -784,6 +806,7 @@ Viewpoint {
          toneMapping: this .config .file .toneMapping,
          orderIndependentTransparency: this .config .file .orderIndependentTransparency,
          logarithmicDepthBuffer: this .config .file .logarithmicDepthBuffer,
+         mute: this .config .file .mute,
          rubberband: this .config .file .rubberband,
          timings: this .config .file .timings,
       });
@@ -917,48 +940,79 @@ Viewpoint {
       }
    }
 
+   #select     = false;
+   #pointer    = new X3D .Vector2 ();
    #snapTarget = null;
    #snapSource = null;
 
    async onmousedown (event)
    {
-      if (event .button !== 2)
+      this .#select = false;
+
+      if (!this .secondaryToolbar .arrowButton .hasClass ("active"))
          return;
 
-      switch (ActionKeys .value)
+      switch (event .button)
       {
-         case ActionKeys .None:
+         case 0:
          {
-            if (this .#snapTarget ?._visible .getValue ())
-               break;
+            if (event .shiftKey && (event .ctrlKey || event .metaKey))
+               return;
 
-            this .activateSnapTarget (true);
+            this .#pointer .assign (this .browser .getPointerFromEvent (event));
 
-            await this .#snapTarget .getToolInstance ();
+            if (this .browser .touch (... this .#pointer))
+            {
+               if (this .browser .getHit () .sensors .size)
+                  return;
 
-            this .#snapTarget .onmousedown (event, true);
+               this .#select = true;
+            }
+            else
+            {
+               this .#select = true;
+            }
+
             break;
          }
-         case ActionKeys .Option:
+         case 2:
          {
-            if (this .#snapSource ?._visible .getValue ())
-               break;
+            switch (ActionKeys .value)
+            {
+               case ActionKeys .None:
+               {
+                  if (this .#snapTarget ?._visible .getValue ())
+                     break;
 
-            this .activateSnapSource (true);
+                  this .activateSnapTarget (true);
 
-            await this .#snapSource .getToolInstance ();
+                  await this .#snapTarget .getToolInstance ();
 
-            this .#snapSource .onmousedown (event, true);
+                  this .#snapTarget .onmousedown (event, true);
+                  break;
+               }
+               case ActionKeys .Option:
+               {
+                  if (this .#snapSource ?._visible .getValue ())
+                     break;
+
+                  this .activateSnapSource (true);
+
+                  await this .#snapSource .getToolInstance ();
+
+                  this .#snapSource .onmousedown (event, true);
+                  break;
+               }
+            }
+
             break;
          }
       }
+
    }
 
-   async onmouseup (event)
+   async onsnaptool (event)
    {
-      if (ActionKeys .value & ActionKeys .Control)
-         event .button = 2;
-
       if (event .button !== 2)
          return;
 
@@ -967,6 +1021,94 @@ Viewpoint {
 
       this .#snapSource ?.onmouseup (event);
       this .#snapTarget ?.onmouseup (event);
+   }
+
+   onselect (event)
+   {
+      if (!this .secondaryToolbar .arrowButton .hasClass ("active"))
+         return;
+
+      if (event .button !== 0)
+         return;
+
+      if (!this .#select)
+         return;
+
+      const pointer = this .browser .getPointerFromEvent (event);
+
+      if (this .#pointer .distance (pointer) > this .browser .getRenderingProperty ("ContentScale"))
+         return;
+
+      // Stop event propagation.
+
+      event .preventDefault ();
+
+      // Select or deselect.
+
+      const outlineEditor = this .sidebar .outlineEditor;
+
+      if (!this .browser .touch (... pointer))
+      {
+         outlineEditor .deselectAll ();
+         return;
+      }
+
+      // Select.
+
+      const
+         shapeNode    = this .browser .getHit () .shapeNode,
+         geometryTool = shapeNode .getGeometry () ?.getTool (),
+         tool         = geometryTool ?? shapeNode .getExecutionContext () .getOuterNode () ?.getTool (),
+         node         = tool ?? shapeNode .getExecutionContext () .getOuterNode () ?? shapeNode;
+
+      outlineEditor .expandTo (node, { expandObject: true, expandAll: true });
+
+      let elements = outlineEditor .sceneGraph .find (`.node[node-id=${node .getId ()}]`);
+
+      if (!elements .length)
+         return;
+
+      if (outlineEditor .isEditable (elements))
+      {
+         if (tool)
+         {
+            elements = Array .from (elements);
+         }
+         else
+         {
+            const parentElements = Array .from (elements) .flatMap (element =>
+            {
+               const parentElements = Array .from ($(element) .parent () .closest (".node", outlineEditor .sceneGraph));
+
+               return parentElements .length ? parentElements : element;
+            });
+
+            elements = parentElements .map ((element, i) => outlineEditor .getNode ($(element)) .getType () .includes (X3D .X3DConstants .X3DGroupingNode) ? parentElements [i] : elements [i]);
+         }
+      }
+      else
+      {
+         while (!outlineEditor .isEditable (elements))
+         {
+            elements .jstree ("close_node", elements);
+            elements = elements .parent () .closest (".node, .scene", outlineEditor .sceneGraph);
+         }
+
+         elements = Array .from (elements);
+      }
+
+      for (const [i, element] of elements .entries ())
+         outlineEditor .selectNodeElement ($(element), { add: (event .shiftKey || event .metaKey) || i > 0, target: true });
+
+      // Scroll element into view.
+      // Hide scrollbars during scroll to prevent overlay issue.
+
+      outlineEditor .treeView .css ("overflow", "hidden");
+
+      elements [0] ?.scrollIntoView ({ block: "center", inline: "start", behavior: "smooth" });
+      $(window) .scrollTop (0);
+
+      setTimeout (() => outlineEditor .treeView .css ("overflow", ""), 1000);
    }
 
    activateSnapTarget (visible)
@@ -1003,7 +1145,7 @@ Viewpoint {
          nodes            = selection .nodes,
          [values, bbox]   = Editor .getModelMatricesAndBBoxes (executionContext, layerNode, nodes);
 
-      if (!bbox .size .magnitude ())
+      if (!bbox .size .norm ())
          return;
 
       UndoManager .shared .beginUndo (_("Center SnapTarget in Selection"));

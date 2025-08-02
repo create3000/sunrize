@@ -177,7 +177,7 @@ Shaders are written in OpenGL Shading Language (GLSL), a high-level shading lang
 #### Move (drag arrow handles of manipulator)
 
 - Move along one axis = ***drag arrow handles***
-- Move in plane of surface = ***Alt/Option-drag arrow handles***
+- Move in plane of surface = ***Alt-or-Option-drag arrow handles***
 
 #### Rotate (drag circle handles of manipulator)
 
@@ -186,9 +186,9 @@ Shaders are written in OpenGL Shading Language (GLSL), a high-level shading lang
 #### Resize (drag corner boxes of manipulator)
 
 - Uniform scale = ***drag corner handles or Shift-drag axes handles***
-- Uniform scale from one corner = ***Alt/Option-drag corner handles***
+- Uniform scale from one corner = ***Alt-or-Option-drag corner handles***
 - Squish &amp; stretch = ***drag axis handles***
-- Squish &amp; stretch from one side = ***Alt/Option-drag axis handles***
+- Squish &amp; stretch from one side = ***Alt-or-Option-drag axis handles***
 
 ### Outline Editor
 

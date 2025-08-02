@@ -136,7 +136,7 @@ class SnapTarget extends X3DSnapNodeTool
 
       const snapTranslation = snapTranslationX .add (snapTranslationY) .add (snapTranslationZ);
 
-      this .tool .snapped = snapTranslation .magnitude () > 0.0001;
+      this .tool .snapped = snapTranslation .norm () > 0.0001;
 
       if (snapTranslation .equals (X3D .Vector3 .Zero))
          return;
@@ -206,7 +206,7 @@ class SnapTarget extends X3DSnapNodeTool
 
       const
          dynamicSnapDistance = this .getDynamicSnapDistance () * 2,
-         distance            = Math .max (bbox .center .distance (center), bbox .size .magnitude ()),
+         distance            = Math .max (bbox .center .distance (center), bbox .size .norm ()),
          snapPoint           = snapVector .copy () .multiply (distance),
          point1a             = axis1 .copy () .multiply (distance),
          point1b             = axis1 .copy () .negate () .multiply (distance),
@@ -326,7 +326,7 @@ class SnapTarget extends X3DSnapNodeTool
             axis          = axes [i],
             normal        = normals [i],
             positionPlane = new X3D .Plane3 (position, normal),
-            axisLine      = new X3D .Line3 (center, axis .magnitude () > 0 ? axis .copy () .normalize () : normal),
+            axisLine      = new X3D .Line3 (center, axis .norm () > 0 ? axis .copy () .normalize () : normal),
             intersection  = new X3D .Vector3 (),
             intersected   = positionPlane .intersectsLine (axisLine, intersection);
 
@@ -335,14 +335,14 @@ class SnapTarget extends X3DSnapNodeTool
 
          const translation = intersection .subtract (center);
 
-         if (translation .magnitude () > snapDistance)
+         if (translation .norm () > snapDistance)
             continue;
 
          translations .push ([translation, i]);
       }
 
       if (translations .length)
-         return translations .reduce (([p, pi], [c, ci]) => p .magnitude () < c .magnitude () ? [p, pi] : [c, ci]);
+         return translations .reduce (([p, pi], [c, ci]) => p .norm () < c .norm () ? [p, pi] : [c, ci]);
 
       return [new X3D .Vector3 (), undefined];
    }
@@ -377,7 +377,7 @@ class SnapTarget extends X3DSnapNodeTool
 
             const [snapTranslation, aAxis] = this .getSnapTranslation (absolutePosition, aCenters, aAxes, aNormals, dynamicSnapDistance);
 
-            this .tool .snapped = snapTranslation .magnitude () > 0.0001;
+            this .tool .snapped = snapTranslation .norm () > 0.0001;
 
             if (snapTranslation .equals (X3D .Vector3 .Zero))
                return undefined;
@@ -386,7 +386,7 @@ class SnapTarget extends X3DSnapNodeTool
                aBefore = aAxes [aAxis],
                aAfter  = aAxes [aAxis] .copy () .add (snapTranslation),
                aDelta  = aAfter .distance (aBefore),
-               aRatio  = aAfter .magnitude () / aBefore .magnitude ();
+               aRatio  = aAfter .norm () / aBefore .norm ();
 
             if (Math .abs (aDelta) < MIN_DELTA || Math .abs (aRatio) < MIN_RATIO || isNaN (aRatio) || Math .abs (aRatio) === Infinity)
             {
@@ -417,7 +417,7 @@ class SnapTarget extends X3DSnapNodeTool
 
             const [snapTranslation, aAxis] = this .getSnapTranslation (absolutePosition, aCenters, aAxes, aNormals, dynamicSnapDistance);
 
-            this .tool .snapped = snapTranslation .magnitude () > 0.0001;
+            this .tool .snapped = snapTranslation .norm () > 0.0001;
 
             if (snapTranslation .equals (X3D .Vector3 .Zero))
                return undefined;
@@ -426,7 +426,7 @@ class SnapTarget extends X3DSnapNodeTool
                aBefore = aAxes [aAxis] .copy () .multiply (2),
                aAfter  = aBefore .copy () .add (snapTranslation),
                aDelta  = aAfter .distance (aBefore),
-               aRatio  = aAfter .magnitude () / aBefore .magnitude ();
+               aRatio  = aAfter .norm () / aBefore .norm ();
 
             if (Math .abs (aDelta) < MIN_DELTA || Math .abs (aRatio) < MIN_RATIO || isNaN (aRatio) || Math .abs (aRatio) === Infinity)
             {
@@ -525,7 +525,7 @@ class SnapTarget extends X3DSnapNodeTool
 
             const [snapTranslation, aAxis] = this .getSnapTranslation (absolutePosition, aCenters, aAxes, aNormals, dynamicSnapDistance);
 
-            this .tool .snapped = snapTranslation .magnitude () > 0.0001;
+            this .tool .snapped = snapTranslation .norm () > 0.0001;
 
             if (snapTranslation .equals (X3D .Vector3 .Zero))
                return undefined;
@@ -534,7 +534,7 @@ class SnapTarget extends X3DSnapNodeTool
                aBefore = aAxes [aAxis],
                aAfter  = aAxes [aAxis] .copy () .add (snapTranslation),
                aDelta  = aAfter .distance (aBefore),
-               aRatio  = aAfter .magnitude () / aBefore .magnitude ();
+               aRatio  = aAfter .norm () / aBefore .norm ();
 
             if (Math .abs (aDelta) < MIN_DELTA || Math .abs (aRatio) < MIN_RATIO || isNaN (aRatio) || Math .abs (aRatio) === Infinity)
             {
@@ -584,7 +584,7 @@ class SnapTarget extends X3DSnapNodeTool
 
             const [snapTranslation, aAxis] = this .getSnapTranslation (absolutePosition, aCenters, aAxes, aNormals, dynamicSnapDistance);
 
-            this .tool .snapped = snapTranslation .magnitude () > 0.0001;
+            this .tool .snapped = snapTranslation .norm () > 0.0001;
 
             if (snapTranslation .equals (X3D .Vector3 .Zero))
                return undefined;
@@ -593,7 +593,7 @@ class SnapTarget extends X3DSnapNodeTool
                aBefore = aAxes [aAxis] .copy () .multiply (2),
                aAfter  = aBefore .copy () .add (snapTranslation),
                aDelta  = aAfter .distance (aBefore),
-               aRatio  = aAfter .magnitude () / aBefore .magnitude ();
+               aRatio  = aAfter .norm () / aBefore .norm ();
 
             if (Math .abs (aDelta) < MIN_DELTA || Math .abs (aRatio) < MIN_RATIO || isNaN (aRatio) || Math .abs (aRatio) === Infinity)
             {

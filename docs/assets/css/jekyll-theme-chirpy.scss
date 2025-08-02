@@ -9,6 +9,10 @@
 
 /* append your custom style below */
 
+/*
+ * Common rules start here
+ */
+
 @mixin x_ite-dark-scheme {
   /* Colors */
 
@@ -117,6 +121,24 @@ html {
   overflow: auto;
 }
 
+/* rouge console */
+
+/* rest of text */
+.language-console .highlight pre,
+.language-console .highlight .o {
+  @extend .na;
+}
+
+/* $ */
+.language-console .highlight .gp {
+  @extend .k;
+}
+
+/* some parameter */
+.language-console .highlight .nb {
+  @extend .mf;
+}
+
 /* append your custom style below */
 
 .red {
@@ -137,10 +159,6 @@ html {
 
 .bold {
   font-weight: bold;
-}
-
-header a.rounded-circle {
-  border-radius: 0% !important;
 }
 
 #topbar-title {
@@ -215,6 +233,15 @@ header a.rounded-circle {
   margin-bottom: .5rem;
 }
 
+.content a:has(> .example-icon),
+.content a:has(> .example-icon):hover {
+  border-bottom: none;
+}
+
+.content .example-icon {
+  margin: 0 0.2rem;
+}
+
 .post-tail-wrapper .nav-wrapper {
   border: 1px solid var(--nav-border-color);
   border-radius: 10px;
@@ -283,27 +310,6 @@ x3d-canvas.xr-button-tl::part(xr-button) {
   left: 10px;
 }
 
-/* teaser */
-
-.content .teaser {
-    aspect-ratio: 16 / 5;
-}
-
-.content .teaser::part(surface) {
-  cursor: default !important;
-}
-
-.content .mascot-wrapper {
-  position: relative;
-}
-
-.content .mascot {
-  pointer-events: none;
-  aspect-ratio: 780 / 280;
-  position: absolute;
-  transform: translateY(-70%);
-}
-
 /* */
 
 span[data-label-text="X3D" i],
@@ -316,8 +322,30 @@ span[data-label-text="VRML" i] {
   white-space: initial;
 }
 
+.badge-link {
+  cursor: pointer;
+}
+
 .badge-link img {
   display: inline;
+}
+
+input[type=checkbox] {
+  cursor: pointer;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  mask-image: url(../img/icons/xmark.svg);
+  mask-repeat: no-repeat;
+  mask-size: 16px 16px;
+  width: 16px;
+  height: 16px;
+  background-color: var(--text-color);
+}
+
+input[type=checkbox]:checked {
+  mask-image: url(../img/icons/check.svg);
+  background-color: var(--system-green);
 }
 
 input[type=button].button,
@@ -501,6 +529,15 @@ select.select option {
   border-radius: .625rem;
   padding: .5rem;
   text-align: center;
+}
+
+/*
+ * Website specify rules start here
+ */
+
+/* logo */
+header a.rounded-circle {
+  border-radius: 0% !important;
 }
 
 /* download links */

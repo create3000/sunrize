@@ -19,7 +19,7 @@
         <field accessType='inputOutput' type='SFString' name='type' value='SNAP_TARGET'/>
         <field accessType='inputOutput' type='SFBool' name='snapToCenter' value='true'/>
         <field accessType='inputOutput' type='SFVec3f' name='position'/>
-        <field accessType='inputOutput' type='SFVec3f' name='normal' value='0 0 1'/>
+        <field accessType='inputOutput' type='SFVec3f' name='normal' value='0 1 0'/>
         <field accessType='inputOutput' type='SFBool' name='snapped'/>
       </ProtoInterface>
       <ProtoBody>

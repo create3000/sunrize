@@ -37,7 +37,7 @@ module .exports = new class Selection extends Interface
       // this .nodes = this .nodes .map (n => n .isLive ()); // Leave tool working.
 
       if (length !== this .nodes .length)
-         this .processInterests ();
+         this .#processInterests ();
    }
 
    has (node)
@@ -51,7 +51,7 @@ module .exports = new class Selection extends Interface
    clear ()
    {
       this .#clear ();
-      this .processInterests ();
+      this .#processInterests ();
    }
 
    set (node)
@@ -61,7 +61,7 @@ module .exports = new class Selection extends Interface
 
       this .#clear (node);
       this .#add (node);
-      this .processInterests ();
+      this .#processInterests ();
    }
 
    add (node)
@@ -70,7 +70,7 @@ module .exports = new class Selection extends Interface
          return;
 
       this .#add (node);
-      this .processInterests ();
+      this .#processInterests ();
    }
 
    remove (node)
@@ -79,7 +79,7 @@ module .exports = new class Selection extends Interface
          return;
 
       this .#remove (node);
-      this .processInterests ();
+      this .#processInterests ();
    }
 
    #clear (exclude)
@@ -132,7 +132,7 @@ module .exports = new class Selection extends Interface
       this .#interest .delete (key);
    }
 
-   processInterests ()
+   #processInterests ()
    {
       for (const callback of this .#interest .values ())
          callback (this .nodes);

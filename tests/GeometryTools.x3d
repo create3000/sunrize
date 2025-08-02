@@ -6,8 +6,8 @@
     <meta name='created' content='Tue, 28 Nov 2023 18:23:35 GMT'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.7.44, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sat, 18 Jan 2025 20:34:30 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.7.63, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Wed, 09 Apr 2025 18:33:01 GMT'/>
   </head>
   <Scene>
     <Viewpoint
@@ -135,10 +135,7 @@
         <ElevationGrid
             xDimension='3'
             zDimension='3'
-            height='0, 0, 0, 0, 1, 0, 0, 0, 0'>
-          <Color
-              color='1 0 0, 0 1 0, 0 0 1, 1 1 0, 1 0 1, 0 1 1, 1 1 1, 0 0 0, 0.5 0.5 0.5'/>
-        </ElevationGrid>
+            height='0, 0, 0, 0, 1, 0, 0, 0, 0'/>
       </Shape>
     </Transform>
     <Transform DEF='Rectangle2D'
@@ -165,6 +162,8 @@
         translation='10.5 0 0'>
       <Shape>
         <Appearance>
+          <LineProperties
+              linewidthScaleFactor='5'/>
           <UnlitMaterial/>
         </Appearance>
         <Circle2D
@@ -175,6 +174,8 @@
         translation='10.5 2 0'>
       <Shape>
         <Appearance>
+          <LineProperties
+              linewidthScaleFactor='5'/>
           <UnlitMaterial/>
         </Appearance>
         <Circle2D
@@ -185,6 +186,8 @@
         translation='13.5 0 0'>
       <Shape>
         <Appearance>
+          <LineProperties
+              linewidthScaleFactor='5'/>
           <UnlitMaterial/>
         </Appearance>
         <Arc2D
@@ -195,6 +198,8 @@
         translation='13.5 2 0'>
       <Shape>
         <Appearance>
+          <LineProperties
+              linewidthScaleFactor='5'/>
           <UnlitMaterial/>
         </Appearance>
         <Arc2D/>

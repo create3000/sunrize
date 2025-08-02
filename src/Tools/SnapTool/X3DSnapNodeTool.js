@@ -19,14 +19,14 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
    {
       super .connectTool ();
 
-      $(this .getBrowser () .element .shadowRoot) .find ("canvas")
+      $(this .getBrowser () .element)
          .on (`mousedown.X3DSnapNodeTool${this .getId ()}`, event => this .onmousedown (event))
          .on (`mouseup.X3DSnapNodeTool${this .getId ()}`,   event => this .onmouseup   (event));
    }
 
    disconnectTool ()
    {
-      $(this .getBrowser () .element .shadowRoot) .find ("canvas")
+      $(this .getBrowser () .element)
          .off (`.X3DSnapNodeTool${this .getId ()}`);
 
       super .disconnectTool ();
@@ -48,10 +48,11 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
          return;
       }
 
-      event .preventDefault ();
-      event .stopImmediatePropagation ();
+      // Stop event propagation.
 
-      $(this .getBrowser () .element .shadowRoot) .find ("canvas")
+      event .preventDefault ();
+
+      $(this .getBrowser () .element)
          .on (`mousemove.X3DSnapNodeTool${this .getId ()}`, event => this .onmousemove (event));
 
       this .changePosition (this .getBrowser () .getHit ());
@@ -59,7 +60,7 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
 
    onmouseup (event)
    {
-      $(this .getBrowser () .element .shadowRoot) .find ("canvas")
+      $(this .getBrowser () .element)
          .off (`mousemove.X3DSnapNodeTool${this .getId ()}`);
 
       this .tool .snapped = false;
@@ -72,8 +73,9 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
       if (!this .getBrowser () .touch (x, y))
          return;
 
+      // Stop event propagation.
+
       event .preventDefault ();
-      event .stopImmediatePropagation ();
 
       this .changePosition (this .getBrowser () .getHit ());
    }

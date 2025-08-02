@@ -3,6 +3,40 @@
 module .exports = [
    {
       componentInfo: { name: "EnvironmentalEffects" },
+      typeName: "Background CityNight",
+      x3dSyntax: `
+DEF CityNight Background {
+  skyAngle [
+    0.8,
+    1.3,
+    1.4,
+    1.5708
+  ]
+  skyColor [
+    0.0392 0.0392 0.0471,
+    0.0588 0.0745 0.1098,
+    0.051 0.0667 0.0588,
+    0.0471 0.0627 0.0275,
+    0.12 0.0902 0.05098
+  ]
+  groundAngle [
+    0.6,
+    1.2,
+    1.3,
+    1.5708
+  ]
+  groundColor [
+    0 0 0,
+    0 0 0,
+    0 0 0,
+    0 0 0,
+    0 0 0
+  ]
+}
+`
+   },
+   {
+      componentInfo: { name: "EnvironmentalEffects" },
       typeName: "Background Gray",
       x3dSyntax: `
 DEF Gray Background {
@@ -41,7 +75,8 @@ DEF Summer Background {
       0.3612 0.469145 0.602,
       0.39471 0.522059 0.669
    ]
-   }`
+}
+`
    },
    {
       componentInfo: { name: "EnvironmentalEffects" },
@@ -66,6 +101,15 @@ DEF Sunny Background {
       0.1 0.1 0.09,
       0.48 0.48 0.45
    ]
+}
+`
+   },
+   {
+      componentInfo: { name: "EnvironmentalEffects" },
+      typeName: "Background Transparent",
+      x3dSyntax: `
+DEF Transparent Background {
+   transparency 1
 }
 `
    },
@@ -238,12 +282,9 @@ DEF TriangleSet2D Transform {
       }
       geometry TriangleSet2D {
          vertices [
-            0.0 0.0,
-            2.0 0.0,
-            1.0 1.0,
-            2.0 0.0,
-            4.0 0.0
-            3.0 2.0,
+            -1 -0.8660254,
+            1 -0.8660254,
+            0 0.8660254
          ]
       }
    }
@@ -381,20 +422,33 @@ DEF ScreenText Transform {
    },
    {
       componentInfo: { name: "Lighting" },
-      typeName: "EnvironmentLight",
+      typeName: "EnvironmentLight Cannon Exterior",
       x3dSyntax: `
 EnvironmentLight {
-   diffuseTexture ImageCubeMapTexture {
-      url "https://create3000.github.io/Library/Tests/Components/images/helipad-diffuse.jpg"
-      textureProperties DEF _1 TextureProperties {
-         generateMipMaps TRUE
-         minificationFilter "NICEST"
-         magnificationFilter "NICEST"
-      }
-   }
    specularTexture ImageCubeMapTexture {
-      url "https://create3000.github.io/Library/Tests/Components/images/helipad-specular.jpg"
-      textureProperties USE _1
+      url "https://cdn.jsdelivr.net/npm/x3d-image@2.2.0/src/images/cannon-exterior.avif"
+   }
+}
+`
+   },
+   {
+      componentInfo: { name: "Lighting" },
+      typeName: "EnvironmentLight Helipad",
+      x3dSyntax: `
+EnvironmentLight {
+   specularTexture ImageCubeMapTexture {
+      url "https://cdn.jsdelivr.net/npm/x3d-image@2.2.0/src/images/helipad.avif"
+   }
+}
+`
+   },
+   {
+      componentInfo: { name: "Lighting" },
+      typeName: "EnvironmentLight Footprint Court",
+      x3dSyntax: `
+EnvironmentLight {
+   specularTexture ImageCubeMapTexture {
+      url "https://cdn.jsdelivr.net/npm/x3d-image@2.2.0/src/images/footprint-court.avif"
    }
 }
 `

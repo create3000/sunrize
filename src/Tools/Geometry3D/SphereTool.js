@@ -37,6 +37,7 @@ class SphereTool extends X3DGeometryNodeTool
       transformTool .connectedAxes = ["XY", "XZ", "YX", "YZ", "ZX", "ZY"];
       transformTool .centerDisplay = false;
       transformTool .centerTool    = false;
+      transformTool .bboxEvents    = false;
       transformTool .bboxColor     = ToolColors .BLUE;
 
       this .tool .group       = this .getTypeName ();

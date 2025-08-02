@@ -2,7 +2,8 @@
 
 const
    X3DSnapNodeTool = require ("./X3DSnapNodeTool"),
-   ActionKeys      = require ("../../Application/ActionKeys");
+   ActionKeys      = require ("../../Application/ActionKeys"),
+   X3D             = require ("../../X3D");
 
 class SnapSource extends X3DSnapNodeTool
 {
@@ -12,7 +13,8 @@ class SnapSource extends X3DSnapNodeTool
    {
       await super .initializeTool ();
 
-      this .tool .type = "SNAP_SOURCE";
+      this .tool .normal = new X3D .Vector3 (0, -1, 0);
+      this .tool .type   = "SNAP_SOURCE";
    }
 }
 

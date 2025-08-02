@@ -1,8 +1,6 @@
 "use strict";
 
-const
-   X3DChildNodeTool = require ("../Core/X3DChildNodeTool"),
-   Editor           = require ("../../Undo/Editor");
+const X3DChildNodeTool = require ("../Core/X3DChildNodeTool");
 
 class X3DEnvironmentalSensorNodeTool extends X3DChildNodeTool
 {
@@ -23,6 +21,11 @@ class X3DEnvironmentalSensorNodeTool extends X3DChildNodeTool
    beginUndo ()
    {
       this .undoSaveInitialValues (["size", "center"]);
+   }
+
+   isBoundedObject ()
+   {
+      return true;
    }
 
    getBBox (bbox, shadows)

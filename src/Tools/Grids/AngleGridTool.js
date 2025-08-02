@@ -20,10 +20,10 @@ class AngleGridTool extends X3DGridNodeTool
       // Calculate snapping radius and snapping angle
 
       const
-         complex    = new X3D .Complex (translation .x, translation .z),
-         phi        = 2 * Math .PI / this .tool .dimension [1],
-         radius     = complex .magnitude,
-         angle      = complex .angle;
+         complex = new X3D .Complex (translation .x, translation .z),
+         phi     = 2 * Math .PI / this .tool .dimension [1],
+         radius  = complex .magnitude,
+         angle   = complex .angle;
 
       let
          snapRadius = Math .round (radius),

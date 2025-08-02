@@ -66,6 +66,11 @@ class SoundTool extends X3DChildNodeTool
       }
    }
 
+   isBoundedObject ()
+   {
+      return true;
+   }
+
    getBBox (bbox, shadows)
    {
       return this .getToolBBox (bbox, shadows);

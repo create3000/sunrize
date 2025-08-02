@@ -344,6 +344,7 @@ async function initialize ()
    tool .undo          = false;
    tool .tools         = new MFString ("TRANSLATE", "ROTATE");
    tool .centerDisplay = false;
+   tool .bboxEvents    = false;
    tool .bboxDisplay   = false;
 }
 
@@ -412,6 +413,7 @@ async function set_minBackTime ()
    tool .yAxisDisplay  = false;
    tool .zAxisDisplay  = false;
    tool .centerDisplay = false;
+   tool .bboxEvents    = false;
    tool .bboxDisplay   = false;
 }
 
@@ -482,6 +484,7 @@ async function set_minFrontTime ()
    tool .yAxisDisplay  = false;
    tool .zAxisDisplay  = false;
    tool .centerDisplay = false;
+   tool .bboxEvents    = false;
    tool .bboxDisplay   = false;
 }
 
@@ -552,6 +555,7 @@ async function set_maxBackTime ()
    tool .xAxisDisplay  = false;
    tool .zAxisDisplay  = false;
    tool .centerDisplay = false;
+   tool .bboxEvents    = false;
    tool .bboxDisplay   = false;
 }
 
@@ -622,6 +626,7 @@ async function set_maxFrontTime ()
    tool .xAxisDisplay  = false;
    tool .zAxisDisplay  = false;
    tool .centerDisplay = false;
+   tool .bboxEvents    = false;
    tool .bboxDisplay   = false;
 }
 

@@ -153,6 +153,7 @@ module .exports = class OutlineView extends Interface
          X3D .X3DConstants .SpotLight,
          X3D .X3DConstants .Sound,
          X3D .X3DConstants .SpatialSound,
+         X3D .X3DConstants .ViewpointGroup,
          X3D .X3DConstants .X3DEnvironmentalSensorNode,
          X3D .X3DConstants .X3DTextureProjectorNode,
          X3D .X3DConstants .X3DViewpointNode,
@@ -274,9 +275,12 @@ module .exports = class OutlineView extends Interface
             .attr ("draggable", "true")
             .on ("dragstart", this .onDragStartProto .bind (this));
 
-         child .find (".node  > .item")
-            .attr ("draggable", "true")
-            .on ("dragstart", this .onDragStartNode .bind (this));
+         if (this .getField (parent) ?.getAccessType () !== X3D .X3DConstants .outputOnly)
+         {
+            child .find (".node  > .item")
+               .attr ("draggable", "true")
+               .on ("dragstart", this .onDragStartNode .bind (this));
+         }
       }
 
       child .find (".externproto .name, .externproto .icon, .proto .name, .proto .icon, .node .name, .node .icon")
@@ -285,32 +289,60 @@ module .exports = class OutlineView extends Interface
       child .find (".node .name")
          .on ("mouseenter", this .updateNodeTitle .bind (this));
 
-      child .find (".toggle-visibility")
-         .on ("click", this .toggleVisibility .bind (this));
+      child .find ("[action]")
+         .on ("click", this .nodeAction .bind (this));
+   }
 
-      child .find (".toggle-tool")
-         .on ("click", this .toggleTool .bind (this));
+   nodeAction (event)
+   {
+      const button = $(event .target);
 
-      child .find (".activate-layer")
-         .on ("click", this .activateLayer .bind (this));
+      switch (button .attr ("action"))
+      {
+         case "toggle-visibility":
+            this .toggleVisibility (event);
+            break;
 
-      child .find (".bind-node")
-         .on ("click", this .bindNode .bind (this));
+         case "toggle-tool":
+            this .toggleTool (event);
+            break;
 
-      child .find (".play-node")
-         .on ("click", this .playNode .bind (this));
+         case "proxy-display":
+            this .proxyDisplay (event);
+            break;
 
-      child .find (".stop-node")
-         .on ("click", this .stopNode .bind (this));
+         case "activate-layer":
+            this .activateLayer (event);
+            break;
 
-      child .find (".loop-node")
-         .on ("click", this .loopNode .bind (this));
+         case "bind-node":
+            this .bindNode (event);
+            break;
 
-      child .find (".reload-node")
-         .on ("click", this .reloadNode .bind (this));
+         case "play-node":
+            this .playNode (event);
+            break;
 
-      child .find (".show-preview")
-         .on ("click", this .showPreview .bind (this));
+         case "stop-node":
+            this .stopNode (event);
+            break;
+
+         case "loop-node":
+            this .loopNode (event);
+            break;
+
+         case "reload-node":
+            this .reloadNode (event);
+            break;
+
+         case "show-preview":
+            this .showPreview (event);
+            break;
+
+         case "show-branch":
+            this .showBranch (event);
+            break;
+      }
    }
 
    connectFieldActions (child)
@@ -1039,7 +1071,7 @@ module .exports = class OutlineView extends Interface
 
          // Add buttons to name.
 
-         this .addNodeButtons (node, name);
+         this .addNodeButtons (this .getNode (parent), node, name);
 
          // Append empty tree to enable expander.
 
@@ -1057,7 +1089,7 @@ module .exports = class OutlineView extends Interface
       return child;
    }
 
-   addNodeButtons (node, name)
+   addNodeButtons (parent, node, name)
    {
       // Add buttons to name.
 
@@ -1070,7 +1102,8 @@ module .exports = class OutlineView extends Interface
             buttons .push ($("<span></span>")
                .attr ("order", "0")
                .attr ("title", "Toggle visibility.")
-               .addClass (["toggle-visibility", "button", "material-symbols-outlined"])
+               .attr ("action", "toggle-visibility")
+               .addClass (["button", "material-symbols-outlined"])
                .addClass (node .isHidden () ? "off" : "on")
                .text (node .isHidden () ? "visibility_off" : "visibility"));
          }
@@ -1080,7 +1113,8 @@ module .exports = class OutlineView extends Interface
             buttons .push ($("<span></span>")
                .attr ("order", "1")
                .attr ("title", _("Toggle display tool."))
-               .addClass (["toggle-tool", "button", "material-symbols-outlined"])
+               .attr ("action", "toggle-tool")
+               .addClass (["button", "material-symbols-outlined"])
                .addClass (node .valueOf () === node ? "off" : "on")
                .text ("build_circle"));
          }
@@ -1090,16 +1124,29 @@ module .exports = class OutlineView extends Interface
       {
          switch (type)
          {
+            case X3D .X3DConstants .Collision:
+            {
+               buttons .push ($("<span></span>")
+                  .attr ("order", "2")
+                  .attr ("title", _("Display proxy node."))
+                  .attr ("action", "proxy-display")
+                  .addClass (["button", "material-symbols-outlined"])
+                  .addClass (node .getProxyDisplay () ? "on" : "off")
+                  .text ("highlight_mouse_cursor"));
+
+               break;
+            }
             case X3D .X3DConstants .X3DLayerNode:
             {
                if (node .getExecutionContext () !== this .executionContext)
                   continue;
 
                buttons .push ($("<span></span>")
-                  .attr ("order", "2")
+                  .attr ("order", "3")
                   .attr ("title", _("Activate layer."))
-                  .addClass (["activate-layer", "button", "material-symbols-outlined"])
-                  .addClass (this .browser .getActiveLayer () === node ? "green" : "off")
+                  .attr ("action", "activate-layer")
+                  .addClass (["button", "material-symbols-outlined"])
+                  .addClass (this .browser .getActiveLayer () === node ? "on" : "off")
                   .text ("check_circle"));
 
                continue;
@@ -1112,9 +1159,10 @@ module .exports = class OutlineView extends Interface
                node ._isBound .addFieldCallback (this .#updateNodeBoundSymbol, this .updateNodeBound .bind (this, node));
 
                buttons .push ($("<span></span>")
-                  .attr ("order", "3")
+                  .attr ("order", "4")
                   .attr ("title", _("Bind node."))
-                  .addClass (["bind-node", "button", "material-symbols-outlined"])
+                  .attr ("action", "bind-node")
+                  .addClass (["button", "material-symbols-outlined"])
                   .addClass (node ._isBound .getValue () ? "on" : "off")
                   .text (node ._isBound .getValue () ? "radio_button_checked" : "radio_button_unchecked"));
 
@@ -1131,23 +1179,26 @@ module .exports = class OutlineView extends Interface
                node ._loop     .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
 
                buttons .push ($("<span></span>")
-                  .attr ("order", "4")
+                  .attr ("order", "5")
                   .attr ("title", node ._isActive .getValue () && !node ._isPaused .getValue () ? _("Pause timer.") : _("Start timer."))
-                  .addClass (["play-node", "button", "material-icons"])
+                  .attr ("action", "play-node")
+                  .addClass (["button", "material-icons"])
                   .addClass (node ._isPaused .getValue () ? "on" : "off")
                   .text (node ._isActive .getValue () ? "pause" : "play_arrow"));
 
                buttons .push ($("<span></span>")
-                  .attr ("order", "5")
+                  .attr ("order", "6")
                   .attr ("title", _("Stop timer."))
-                  .addClass (["stop-node", "button", "material-icons"])
+                  .attr ("action", "stop-node")
+                  .addClass (["button", "material-icons"])
                   .addClass (node ._isActive .getValue () ? "on" : "off")
                   .text ("stop"));
 
                buttons .push ($("<span></span>")
-                  .attr ("order", "6")
+                  .attr ("order", "7")
                   .attr ("title", _("Toggle loop."))
-                  .addClass (["loop-node", "button", "material-icons"])
+                  .attr ("action", "loop-node")
+                  .addClass (["button", "material-icons"])
                   .addClass (node ._loop .getValue () ? "on" : "off")
                   .text ("repeat"));
 
@@ -1169,9 +1220,10 @@ module .exports = class OutlineView extends Interface
                node .getLoadState () .addFieldCallback (this .#updateNodeLoadStateSymbol, this .updateNodeLoadState .bind (this, node));
 
                buttons .push ($("<span></span>")
-                  .attr ("order", "7")
+                  .attr ("order", "8")
                   .attr ("title", "Load now.")
-                  .addClass (["reload-node", "button", "material-symbols-outlined", className])
+                  .attr ("action", "reload-node")
+                  .addClass (["button", "material-symbols-outlined", className])
                   .text ("autorenew"));
 
                continue;
@@ -1182,13 +1234,34 @@ module .exports = class OutlineView extends Interface
             case X3D .X3DConstants .X3DSingleTextureNode:
             {
                buttons .push ($("<span></span>")
-                  .attr ("order", "8")
+                  .attr ("order", "9")
                   .attr ("title", _("Show preview."))
-                  .addClass (["show-preview", "button", "material-symbols-outlined", "off"])
+                  .attr ("action", "show-preview")
+                  .addClass (["button", "material-symbols-outlined", "off"])
                   .css ("top", "2px")
                   .text ("preview"));
 
                continue;
+            }
+         }
+      }
+
+      for (const type of parent .getType ())
+      {
+         switch (type)
+         {
+            case X3D .X3DConstants .LOD:
+            case X3D .X3DConstants .Switch:
+            {
+               buttons .push ($("<span></span>")
+                  .attr ("order", "10")
+                  .attr ("title", _("Show branch."))
+                  .attr ("action", "show-branch")
+                  .addClass (["button", "material-symbols-outlined"])
+                  .addClass (parent .getEditChild () === node ? "on" : "off")
+                  .text ("highlight_mouse_cursor"));
+
+               break;
             }
          }
       }
@@ -1245,17 +1318,20 @@ module .exports = class OutlineView extends Interface
 
    updateActiveLayer ()
    {
-      this .sceneGraph .find (".activate-layer") .removeClass ("green") .addClass ("off");
+      const node = this .browser .getActiveLayer ();
 
-      if (!this .browser .getActiveLayer ())
+      this .sceneGraph .find ("[action=activate-layer]") .addClass ("off");
+
+      if (!node)
          return;
 
-      this .sceneGraph .find (`.node[node-id=${this .browser .getActiveLayer () .getId ()}],
-         .imported-node[node-id=${this .browser .getActiveLayer () .getId ()}],
-         .exported-node[node-id=${this .browser .getActiveLayer () .getId ()}]`)
-         .find ("> .item .activate-layer")
+      this .sceneGraph
+         .find (`.node[node-id=${node .getId ()}],
+         .imported-node[node-id=${node .getId ()}],
+         .exported-node[node-id=${node .getId ()}]`)
+         .find ("> .item [action=activate-layer]")
          .removeClass ("off")
-         .addClass ("green");
+         .addClass ("on");
    }
 
    updateNodeBound (node)
@@ -1264,7 +1340,7 @@ module .exports = class OutlineView extends Interface
          .find (`.node[node-id=${node .getId ()}],
          .imported-node[node-id=${node .getId ()}],
          .exported-node[node-id=${node .getId ()}]`)
-         .find ("> .item .bind-node")
+         .find ("> .item [action=bind-node]")
          .removeClass (["on", "off"])
          .addClass (node ._isBound .getValue () ? "on" : "off")
          .text (node ._isBound .getValue () ? "radio_button_checked" : "radio_button_unchecked");
@@ -1292,7 +1368,7 @@ module .exports = class OutlineView extends Interface
          .find (`.node[node-id=${node .getId ()}],
          .imported-node[node-id=${node .getId ()}],
          .exported-node[node-id=${node .getId ()}]`)
-         .find ("> .item .play-node")
+         .find ("> .item [action=play-node]")
          .removeClass (["on", "off"])
          .addClass (node ._isPaused .getValue () ? "on" : "off")
          .attr ("title", node ._isActive .getValue () && !node ._isPaused .getValue () ? _("Pause timer.") : _("Start timer."))
@@ -1302,7 +1378,7 @@ module .exports = class OutlineView extends Interface
          .find (`.node[node-id=${node .getId ()}],
          .imported-node[node-id=${node .getId ()}],
          .exported-node[node-id=${node .getId ()}]`)
-         .find ("> .item .stop-node")
+         .find ("> .item [action=stop-node]")
          .removeClass (["on", "off"])
          .addClass (node ._isActive .getValue () ? "on" : "off"));
 
@@ -1310,7 +1386,7 @@ module .exports = class OutlineView extends Interface
          .find (`.node[node-id=${node .getId ()}],
          .imported-node[node-id=${node .getId ()}],
          .exported-node[node-id=${node .getId ()}]`)
-         .find ("> .item .loop-node")
+         .find ("> .item [action=loop-node]")
          .removeClass (["on", "off"])
          .addClass (node ._loop .getValue () ? "on" : "off"));
 
@@ -1382,7 +1458,7 @@ module .exports = class OutlineView extends Interface
 
          // Add buttons to name.
 
-         this .addNodeButtons (importedNode .getExportedNode (), name);
+         this .addNodeButtons (this .getNode (parent), importedNode .getExportedNode (), name);
 
          // Append empty tree to enable expander.
 
@@ -1486,7 +1562,7 @@ module .exports = class OutlineView extends Interface
 
       // Add buttons to name.
 
-      this .addNodeButtons (node, name);
+      this .addNodeButtons (this .getNode (parent), node, name);
 
       // Append empty tree to enable expander.
 
@@ -1791,7 +1867,7 @@ module .exports = class OutlineView extends Interface
       if (!node)
          return;
 
-      const interfaceDefinitionElement = X3DUOM .find (`ConcreteNode[name=${node .getTypeName ()}] InterfaceDefinition`);
+      const interfaceDefinitionElement = X3DUOM .find (`ConcreteNode[name="${node .getTypeName ()}"] InterfaceDefinition`);
 
       name .attr ("title", this .getNodeTitle (interfaceDefinitionElement));
    }
@@ -1803,7 +1879,7 @@ module .exports = class OutlineView extends Interface
          element      = $(event .currentTarget) .closest (".field, .special", this .sceneGraph),
          node         = this .objects .get (parseInt (element .attr ("node-id"))),
          field        = this .objects .get (parseInt (element .attr ("field-id"))),
-         fieldElement = X3DUOM .find (`ConcreteNode[name=${node .getTypeName ()}] field[name=${field .getName ()}]`);
+         fieldElement = X3DUOM .find (`ConcreteNode[name="${node .getTypeName ()}"] field[name="${field .getName ()}"]`);
 
       name .attr ("title", this .getFieldTitle (node, field, fieldElement));
    }
@@ -3022,21 +3098,27 @@ module .exports = class OutlineView extends Interface
    {
       this .deselectAll ();
 
-      const elements = this .sceneGraph .find ("> .root-nodes > ul > li[node-id]");
+      const
+         hierarchy = require ("../Application/Hierarchy"),
+         elements  = this .sceneGraph .find ("> .root-nodes > ul > li[node-id]");
+
+      hierarchy .target (this .executionContext);
 
       for (const element of elements)
-         this .selectNodeElement ($(element), true);
+         this .selectNodeElement ($(element), { add: true });
    }
 
    deselectAll ()
    {
       const
          selection = require ("../Application/Selection"),
+         hierarchy = require ("../Application/Hierarchy"),
          nodes     = this .sceneGraph .find (".primary, .selected");
 
       nodes .removeClass (["primary", "manually", "selected"]);
 
       selection .clear ();
+      hierarchy .clear ();
    }
 
    showPreview (event)
@@ -3073,10 +3155,6 @@ module .exports = class OutlineView extends Interface
                require ("../Controls/AudioPreviewPopover");
 
                item .audioPreviewPopover (node);
-               break;
-            }
-            case X3D .X3DConstants .GeneratedCubeMapTexture:
-            {
                break;
             }
             case X3D .X3DConstants .MovieTexture:
@@ -3127,7 +3205,7 @@ module .exports = class OutlineView extends Interface
       this .sceneGraph .find (`.node[node-id=${node .getId ()}],
          .imported-node[node-id=${node .getId ()}],
          .exported-node[node-id=${node .getId ()}]`)
-         .find ("> .item .toggle-visibility")
+         .find ("> .item [action=toggle-visibility]")
          .removeClass (["on", "off"])
          .addClass (hidden ? "off" : "on")
          .text (hidden ? "visibility_off" : "visibility");
@@ -3156,11 +3234,32 @@ module .exports = class OutlineView extends Interface
 
       node .setUserData (_changing, true);
 
-      this .sceneGraph .find (`.node[node-id=${node .getId ()}] > .item .toggle-tool,
-         .imported-node[node-id=${node .getId ()}] > .item .toggle-tool,
-         .exported-node[node-id=${node .getId ()}] > .item .toggle-tool`)
+      this .sceneGraph .find (`.node[node-id=${node .getId ()}],
+         .imported-node[node-id=${node .getId ()}],
+         .exported-node[node-id=${node .getId ()}]`)
+         .find ("> .item [action=toggle-tool]")
          .removeClass (["on", "off"])
          .addClass (tool ? "off" : "on");
+   }
+
+   proxyDisplay (event)
+   {
+      const
+         target  = $(event .target),
+         element = target .closest (".node, .imported-node, .exported-node", this .sceneGraph),
+         node    = this .getNode (element);
+
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
+
+      node .setProxyDisplay (!node .getProxyDisplay ());
+
+      this .sceneGraph .find (`.node[node-id=${node .getId ()}],
+         .imported-node[node-id=${node .getId ()}],
+         .exported-node[node-id=${node .getId ()}]`)
+         .find ("> .item [action=proxy-display]")
+         .removeClass (["on", "off"])
+         .addClass (node .getProxyDisplay () ? "on" : "off");
    }
 
    activateLayer (event) { }
@@ -3207,6 +3306,35 @@ module .exports = class OutlineView extends Interface
       }
    }
 
+   showBranch (event)
+   {
+      const
+         target        = $(event .target),
+         element       = target .closest (".node", this .sceneGraph),
+         parentElement = element .parent () .closest (".node", this .sceneGraph),
+         node          = this .getNode (element),
+         parent        = this .getNode (parentElement);
+
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
+
+      this .sceneGraph .find (`.node[node-id=${parent .getId ()}] .node[node-id=${node .getId ()}]`)
+         .siblings ()
+         .find ("> .item [action=show-branch]")
+         .removeClass (["on", "off"])
+         .addClass ("off");
+
+      this .sceneGraph .find (`.node[node-id=${parent .getId ()}] .node[node-id=${node .getId ()}]`)
+         .find ("> .item [action=show-branch]")
+         .removeClass (["on", "off"])
+         .addClass (parent .getEditChild () !== node ? "on" : "off");
+
+      if (parent .getEditChild () === node)
+         parent .setEditChild (null)
+      else
+         parent .setEditChild (node);
+   }
+
    hideUnselectedObjects ()
    {
       // Hide all X3DShapeNode nodes and show all other nodes.
@@ -3226,7 +3354,7 @@ module .exports = class OutlineView extends Interface
          this .sceneGraph .find (`.node[node-id=${node .getId ()}],
             .imported-node[node-id=${node .getId ()}],
             .exported-node[node-id=${node .getId ()}]`)
-            .find ("> .item .toggle-visibility")
+            .find ("> .item [action=toggle-visibility]")
             .removeClass (["on", "off"])
             .addClass (node .isHidden () ? "off" : "on")
             .text (node .isHidden () ? "visibility_off" : "visibility");
@@ -3333,15 +3461,16 @@ module .exports = class OutlineView extends Interface
 
       const
          element = $(event .currentTarget) .closest (".node, .externproto, .proto"),
-         add     = window .event .shiftKey || window .event .metaKey;
+         add     = event .shiftKey || event .metaKey;
 
       if (element .hasClass ("node"))
-         this .selectNodeElement (element, add);
+         this .selectNodeElement (element, { add, target: true });
+
       else if (element .is (".externproto, .proto"))
          this .selectPrimaryElement (element, add);
    }
 
-   selectNodeElement (element, add = false)
+   selectNodeElement (element, { add = false, target = false } = { })
    {
       if (!element .hasClass ("node"))
          return;
@@ -3351,6 +3480,7 @@ module .exports = class OutlineView extends Interface
 
       const
          selection        = require ("../Application/Selection"),
+         hierarchy        = require ("../Application/Hierarchy"),
          selected         = element .hasClass ("manually"),
          selectedElements = this .sceneGraph .find (".primary, .selected"),
          node             = this .getNode (element),
@@ -3384,16 +3514,30 @@ module .exports = class OutlineView extends Interface
          }
 
          if (elements .filter (".manually") .length)
+         {
+            if (target)
+               hierarchy .target (node);
+
             selection .add (node);
+            hierarchy .add (node);
+         }
          else
+         {
             selection .remove (node);
+            hierarchy .remove (node);
+         }
       }
       else
       {
          selectedElements .removeClass (["manually", "selected"]);
          element .addClass (["primary", "manually"]);
          elements .addClass ("selected");
+
+         if (target)
+            hierarchy .target (node);
+
          selection .set (node);
+         hierarchy .set (node);
       }
 
       for (const [node, tool] of changed)
@@ -3711,21 +3855,22 @@ module .exports = class OutlineView extends Interface
 
    onDragEnd (event) { }
 
-   expandTo (object, expandObject = false)
+   expandTo (object, { expandExternProtoDeclarations = false, expandInlineNodes = false, expandPrototypeInstances = false, expandObject = false, expandAll = false } = { })
    {
       let flags = Traverse .NONE;
 
-      if (this .expandExternProtoDeclarations)
+      if (this .expandExternProtoDeclarations && expandExternProtoDeclarations)
          flags |= Traverse .EXTERNPROTO_DECLARATIONS | Traverse .EXTERNPROTO_DECLARATION_SCENE;
 
-      flags |= Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY;
+      flags |= Traverse .PROTO_DECLARATIONS;
+      flags |= Traverse .PROTO_DECLARATION_BODY;
 
-      if (this .expandInlineNodes)
+      if (this .expandInlineNodes && expandInlineNodes)
          flags |= Traverse .INLINE_SCENE;
 
       flags |= Traverse .ROOT_NODES;
 
-      if (this .expandPrototypeInstances)
+      if (this .expandPrototypeInstances && expandPrototypeInstances)
          flags |= Traverse .PROTOTYPE_INSTANCES;
 
       flags |= Traverse .IMPORTED_NODES;
@@ -3739,7 +3884,9 @@ module .exports = class OutlineView extends Interface
             hierarchy .pop ();
 
          this .expandHierarchy (hierarchy, this .sceneGraph, this .executionContext);
-         break;
+
+         if (!expandAll)
+            break;
       }
    }
 

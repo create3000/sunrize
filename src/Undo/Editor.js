@@ -21,16 +21,6 @@ module .exports = class Editor
    /**
     *
     * @param {X3DExecutionContext} executionContext source execution context
-    * @returns {X3DScene} corresponding scene
-    */
-   static getScene (executionContext)
-   {
-      return executionContext instanceof X3D .X3DScene ? executionContext : executionContext .getScene ();
-   }
-
-   /**
-    *
-    * @param {X3DExecutionContext} executionContext source execution context
     * @param {string} filePath file path
     * @returns {string} URI encoded relative path
     */
@@ -240,7 +230,7 @@ module .exports = class Editor
 
       const
          browser        = executionContext .getBrowser (),
-         scene          = this .getScene (executionContext),
+         scene          = executionContext .getLocalScene (),
          profile        = scene .getProfile (),
          x_ite          = scene .hasComponent ("X_ITE"),
          externprotos   = new Map (Array .from (executionContext .externprotos, p => [p .getName (), p])),
@@ -502,11 +492,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       for (const object of Traverse .traverse (objects, Traverse .EXTERNPROTO_DECLARATIONS | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES))
       {
-         if (!(object instanceof X3D .SFNode))
-            continue;
-
          const
-            node      = object .getValue (),
+            node      = object instanceof X3D .SFNode ? object .getValue () : object,
             urlObject = node .getType () .includes (X3D .X3DConstants .X3DUrlObject);
 
          if (!urlObject)
@@ -735,7 +722,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static addComponent (scene, name, undoManager = UndoManager .shared)
    {
-      scene = this .getScene (scene);
+      scene = scene .getLocalScene ();
       name  = name instanceof X3D .ComponentInfo ? name .name : name;
 
       if (scene .hasComponent (name))
@@ -763,7 +750,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static removeComponent (scene, name, undoManager = UndoManager .shared)
    {
-      scene = this .getScene (scene);
+      scene = scene .getLocalScene ();
       name  = name instanceof X3D .ComponentInfo ? name .name : name;
 
       if (!scene .hasComponent (name))
@@ -1205,6 +1192,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       undoManager .beginUndo (_("Turn Prototype »%s« into Extern Prototype"), proto .getName ());
 
+      this .removeProtoDeclaration (executionContext, proto .getName (), undoManager);
+
       scene .setWorldURL (url .pathToFileURL (filePath));
 
       await this .importX3D (scene, x3dSyntax, new UndoManager ());
@@ -1225,7 +1214,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       externproto ._url = new X3D .MFString (relativePath + hash, absolutePath + hash);
 
       this .replaceProtoNodes (executionContext, proto, externproto, undoManager);
-      this .removeProtoDeclaration (executionContext, proto .getName (), undoManager);
 
       undoManager .endUndo ();
    }
@@ -1294,21 +1282,21 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static updateExternProtoDeclaration (executionContext, name, externproto, undoManager = UndoManager .shared)
    {
-      const oldName = externproto .getName ()
+      const oldName = externproto .getName ();
 
-      undoManager .beginUndo (_("Update Extern Prototype Declaration »%s«"), name)
+      undoManager .beginUndo (_("Update Extern Prototype Declaration »%s«"), name);
 
-      executionContext .updateExternProtoDeclaration (name, externproto)
+      executionContext .updateExternProtoDeclaration (name, externproto);
 
       undoManager .registerUndo (() =>
       {
          if (oldName)
-            this .updateExternProtoDeclaration (executionContext, oldName, externproto, undoManager)
+            this .updateExternProtoDeclaration (executionContext, oldName, externproto, undoManager);
          else
-            this .removeExternProtoDeclaration (executionContext, name, undoManager)
+            this .removeExternProtoDeclaration (executionContext, name, undoManager);
       });
 
-      this .requestUpdateInstances (executionContext, undoManager)
+      this .requestUpdateInstances (executionContext, undoManager);
 
       undoManager .endUndo ();
    }
@@ -1321,18 +1309,18 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static removeExternProtoDeclaration (executionContext, name, undoManager = UndoManager .shared)
    {
-      const oldExternProtos = new Map (Array .from (executionContext .externprotos, p => [p .getName (), p]))
+      const oldExternProtos = new Map (Array .from (executionContext .externprotos, p => [p .getName (), p]));
 
-      undoManager .beginUndo (_("Remove Extern Prototype Declaration »%s«"), name)
+      undoManager .beginUndo (_("Remove Extern Prototype Declaration »%s«"), name);
 
-      executionContext .removeExternProtoDeclaration (name)
+      executionContext .removeExternProtoDeclaration (name);
 
       undoManager .registerUndo (() =>
       {
-         this .setExternProtoDeclarations (executionContext, oldExternProtos, undoManager)
+         this .setExternProtoDeclarations (executionContext, oldExternProtos, undoManager);
       });
 
-      this .requestUpdateInstances (executionContext, undoManager)
+      this .requestUpdateInstances (executionContext, undoManager);
 
       undoManager .endUndo ();
    }
@@ -1345,30 +1333,30 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static setExternProtoDeclarations (executionContext, externprotos, undoManager = UndoManager .shared)
    {
-      const oldExternProtos = new Map (Array .from (executionContext .externprotos, p => [p .getName (), p]))
+      const oldExternProtos = new Map (Array .from (executionContext .externprotos, p => [p .getName (), p]));
 
-      undoManager .beginUndo (_("Update Extern Prototype Declarations"))
+      undoManager .beginUndo (_("Update Extern Prototype Declarations"));
 
       for (const name of oldExternProtos .keys ())
-         executionContext .removeExternProtoDeclaration (name)
+         executionContext .removeExternProtoDeclaration (name);
 
       if (Array .isArray (externprotos))
       {
          for (const externproto of externprotos)
-            executionContext .updateExternProtoDeclaration (externproto .getName (), externproto)
+            executionContext .updateExternProtoDeclaration (externproto .getName (), externproto);
       }
       else
       {
          for (const [name, externproto] of externprotos)
-            executionContext .updateExternProtoDeclaration (name, externproto)
+            executionContext .updateExternProtoDeclaration (name, externproto);
       }
 
       undoManager .registerUndo (() =>
       {
-         this .setExternProtoDeclarations (executionContext, oldExternProtos, undoManager)
+         this .setExternProtoDeclarations (executionContext, oldExternProtos, undoManager);
       });
 
-      this .requestUpdateInstances (executionContext, undoManager)
+      this .requestUpdateInstances (executionContext, undoManager);
 
       undoManager .endUndo ();
    }
@@ -1384,26 +1372,27 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       const
          numProtos = executionContext .protos .length,
-         x3dSyntax = await this .exportX3D (externproto .getInternalScene (), [externproto .getProtoDeclaration ()])
+         x3dSyntax = await this .exportX3D (externproto .getInternalScene (), [externproto .getProtoDeclaration ()]);
 
-      undoManager .beginUndo (_("Turn Extern Prototype »%s« into Prototype"), externproto .getName ())
+      undoManager .beginUndo (_("Turn Extern Prototype »%s« into Prototype"), externproto .getName ());
 
-      await this .importX3D (executionContext, x3dSyntax, undoManager)
+      this .removeExternProtoDeclaration (executionContext, externproto .getName (), undoManager);
+
+      await this .importX3D (executionContext, x3dSyntax, undoManager);
 
       const
          protos         = Array .from (executionContext .protos),
          importedProtos = protos .splice (numProtos, protos .length - numProtos),
-         proto          = importedProtos .at (-1)
+         proto          = importedProtos .at (-1);
 
       for (const proto of importedProtos .reverse ())
       {
-         protos .unshift (proto)
-         this .rewriteURLs (executionContext, proto, externproto .getInternalScene () .worldURL, executionContext .worldURL, new UndoManager ())
+         protos .unshift (proto);
+         this .rewriteURLs (executionContext, proto, externproto .getInternalScene () .worldURL, executionContext .worldURL, new UndoManager ());
       }
 
-      this .setProtoDeclarations (executionContext, protos, undoManager)
-      this .replaceProtoNodes (executionContext, externproto, proto, undoManager)
-      this .removeExternProtoDeclaration (executionContext, externproto .getName (), undoManager)
+      this .setProtoDeclarations (executionContext, protos, undoManager);
+      this .replaceProtoNodes (executionContext, externproto, proto, undoManager);
 
       undoManager .endUndo ();
    }
@@ -2409,9 +2398,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       {
          const
             bboxMatrix = subBBoxes [0] .matrix,
-            bboxXAxes  = bboxMatrix .xAxis .magnitude () ? bboxMatrix .xAxis : X3D .Vector3 .xAxis,
-            bboxYAxes  = bboxMatrix .yAxis .magnitude () ? bboxMatrix .yAxis : X3D .Vector3 .yAxis,
-            bboxZAxes  = bboxMatrix .zAxis .magnitude () ? bboxMatrix .zAxis : X3D .Vector3 .zAxis;
+            bboxXAxes  = bboxMatrix .xAxis .norm () ? bboxMatrix .xAxis : X3D .Vector3 .xAxis,
+            bboxYAxes  = bboxMatrix .yAxis .norm () ? bboxMatrix .yAxis : X3D .Vector3 .yAxis,
+            bboxZAxes  = bboxMatrix .zAxis .norm () ? bboxMatrix .zAxis : X3D .Vector3 .zAxis;
 
          const axes = [
             bboxXAxes .copy (),            // right
@@ -2430,7 +2419,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          });
 
          const
-            center      = moveCenter ? bboxCenter .copy () : (sourcePosition ?? axis .copy () .add (bboxCenter)),
+            center      = (moveCenter ? bboxCenter .copy () : (sourcePosition ?.copy () ?? bboxCenter .copy () .add (axis))) .subtract (modelMatrices [0] .origin),
             translation = targetPosition .copy () .subtract (center),
             rotation    = new X3D .Rotation4 (sourceNormal ?? axis, targetNormal .copy () .negate ()),
             snapMatrix  = new X3D .Matrix4 () .set (translation, rotation, null, null, center);
@@ -2623,6 +2612,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                      return innerNode .getBBox (new X3D .Box3 ()) .multRight (modelMatrix);
                   case X3D .X3DConstants .X3DGeometryNode:
                      return innerNode .getBBox () .copy () .multRight (modelMatrix);
+                  case X3D .X3DConstants .ViewpointGroup:
                   case X3D .X3DConstants .X3DEnvironmentalSensorNode:
                      return new X3D .Box3 (innerNode ._size .getValue (), innerNode ._center .getValue ())
                         .multRight (modelMatrix);

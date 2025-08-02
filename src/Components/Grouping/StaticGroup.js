@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const X3D = require ("../../X3D");
 
@@ -8,6 +8,8 @@ function StaticGroup (executionContext)
    X3D .X3DBoundedObject .call (this, executionContext);
 
    this .addType (X3D .X3DConstants .StaticGroup);
+
+   // Private properties
 
    this .groupNode = new X3D .Group (this .getExecutionContext ());
 }
@@ -30,12 +32,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3D .X3DChildNod
       this .groupNode .setPrivate (true);
       this .groupNode .setup ();
 
-      // Connect after Group setup.
-      this .groupNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
-      this .groupNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
-
-      this .setCameraObject   (this .groupNode .isCameraObject ());
-      this .setPickableObject (this .groupNode .isPickableObject ());
+      this .connectChildNode (this .groupNode, [X3D .TraverseType .CAMERA]);
    },
    getBBox (bbox, shadows)
    {
@@ -57,22 +54,27 @@ Object .defineProperties (StaticGroup,
    typeName:
    {
       value: X3D .StaticGroup .typeName,
+      enumerable: true,
    },
    componentInfo:
    {
       value: X3D .StaticGroup .componentInfo,
+      enumerable: true,
    },
    containerField:
    {
       value: X3D .StaticGroup .containerField,
+      enumerable: true,
    },
    specificationRange:
    {
       value: X3D .StaticGroup .specificationRange,
+      enumerable: true,
    },
    fieldDefinitions:
    {
       value: X3D .StaticGroup .fieldDefinitions,
+      enumerable: true,
    },
 });
 

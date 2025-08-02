@@ -54,7 +54,7 @@ function initialize ()
 
 function eventsProcessed ()
 {
-   const 
+   const
       uDimension  = dimension,
       vDimension  = Math .ceil ((dimension * coneAngle) / (4 * Math .PI)),
       angle       = coneAngle / 2,
@@ -288,6 +288,7 @@ async function initialize ()
    tool .undo          = false;
    tool .tools         = new MFString ("TRANSLATE", "ROTATE");
    tool .centerDisplay = false;
+   tool .bboxEvents    = false;
    tool .bboxDisplay   = false;
 }
 

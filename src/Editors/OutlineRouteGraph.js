@@ -38,7 +38,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
             for (const route of field .getInputRoutes ())
             {
                this .selectedRoutes .add (route);
-               this .expandTo (route .getSourceNode (), true);
+               this .expandTo (route .getSourceNode (), { expandExternProtoDeclarations: true, expandInlineNodes: true, expandPrototypeInstances: true, expandObject: true });
             }
 
             break;
@@ -48,7 +48,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
             for (const route of field .getOutputRoutes ())
             {
                this .selectedRoutes .add (route);
-               this .expandTo (route .getDestinationNode (), true);
+               this .expandTo (route .getDestinationNode (), { expandExternProtoDeclarations: true, expandInlineNodes: true, expandPrototypeInstances: true, expandObject: true });
             }
 
             break;
@@ -78,7 +78,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
             const route = this .getRoute (element, field .getInputRoutes ());
 
             this .selectedRoutes .add (route);
-            this .expandTo (route .getSourceNode (), true);
+            this .expandTo (route .getSourceNode (), { expandExternProtoDeclarations: true, expandInlineNodes: true, expandPrototypeInstances: true, expandObject: true });
             break;
          }
          case "output":
@@ -86,7 +86,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
             const route = this .getRoute (element, field .getOutputRoutes ());
 
             this .selectedRoutes .add (route);
-            this .expandTo (route .getDestinationNode (), true);
+            this .expandTo (route .getDestinationNode (), { expandExternProtoDeclarations: true, expandInlineNodes: true, expandPrototypeInstances: true, expandObject: true });
             break;
          }
       }

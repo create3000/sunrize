@@ -27,4 +27,4 @@ $ npx sunrize@latest [files]
 
 ## License
 
-Sunrize is free software: you can redistribute it and/or modify it under the terms of the [GNU General Public License version 3](LICENSE.md) only, as published by the Free Software Foundation.
+Sunrize is free software and licensed under the [MIT License](LICENSE.md).

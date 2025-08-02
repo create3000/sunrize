@@ -16,6 +16,7 @@ Object .assign (X3D .X3DComposedGeometryNode .prototype,
       geometry ._attrib   = this ._attrib;
       geometry ._fogCoord = this ._fogCoord;
       geometry ._color    = this ._color;
+      geometry ._texCoord = this ._texCoord;
       geometry ._tangent  = this ._tangent;
       geometry ._normal   = this ._normal;
       geometry ._coord    = this ._coord;
