@@ -1032,7 +1032,7 @@ module .exports = class Application
       this .pushMenu (this .createDialogMenu ());
 
       const response = await electron .dialog .showOpenDialog ({
-         defaultPath: defaultPath,
+         defaultPath,
          properties: ["openFile", ... properties],
          filters: filters ?? [
             {
@@ -1053,7 +1053,7 @@ module .exports = class Application
       this .pushMenu (this .createDialogMenu ());
 
       const response = await electron .dialog .showSaveDialog ({
-         defaultPath: defaultPath,
+         defaultPath,
          properties: ["createDirectory", "showOverwriteConfirmation", ... properties],
          filters: filters ?? [
             { name: _("X3D XML Document"), extensions: ["x3d"] },
@@ -1075,7 +1075,7 @@ module .exports = class Application
       this .pushMenu (this .createDialogMenu ());
 
       const response = await electron .dialog .showSaveDialog ({
-         defaultPath: defaultPath,
+         defaultPath,
          properties: ["createDirectory", "showOverwriteConfirmation"],
          filters : [
             { name: "HTML Document", extensions: ["html"] },
