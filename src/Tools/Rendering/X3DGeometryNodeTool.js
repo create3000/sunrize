@@ -33,15 +33,15 @@ class X3DGeometryNodeTool extends X3DNodeTool
    set_toolRebuildGeometry ()
    {
       const
-         coordIndices = this .node .getCoordIndices (),
-         vertices     = this .node .getVertices (),
-         numTriangles = coordIndices .length;
+         coordIndices    = this .node .getCoordIndices (),
+         vertices        = this .node .getVertices (),
+         numCoordIndices = coordIndices .length;
 
       const
          coordIndex = [ ],
          points     = [ ];
 
-      for (let i = 0; i < numTriangles; i += 3)
+      for (let i = 0; i < numCoordIndices; i += 3)
       {
          coordIndex .push (coordIndices [i], coordIndices [i + 1], coordIndices [i + 2], coordIndices [i], -1);
 
