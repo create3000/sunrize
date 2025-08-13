@@ -1,7 +1,6 @@
 "use strict";
 
 const
-   X3D         = require ("../../X3D"),
    X3DNodeTool = require ("../Core/X3DNodeTool"),
    ToolColors  = require ("../Core/ToolColors");
 
@@ -33,32 +32,20 @@ class X3DGeometryNodeTool extends X3DNodeTool
    set_toolRebuildGeometry ()
    {
       const
-         coordIndices    = this .node .getCoordIndices (),
-         vertices        = this .node .getVertices (),
-         numCoordIndices = coordIndices .length;
+         points    = this .node .getVertices () .filter ((_, i) => i % 4 < 3),
+         numPoints = points .length / 3;
 
-      const
-         coordIndex = [ ],
-         points     = [ ];
-
-      for (let i = 0; i < numCoordIndices; i += 3)
+      if (numPoints !== this .tool .linesCoord .point .length)
       {
-         coordIndex .push (coordIndices [i], coordIndices [i + 1], coordIndices [i + 2], coordIndices [i], -1);
+         const coordIndex = [ ];
 
-         const l = i + 3;
+         for (let i = 0; i < numPoints; i += 3)
+            coordIndex .push (i, i + 1, i + 2, i, -1);
 
-         for (let e = i; e < l; ++ e)
-         {
-            const c = coordIndices [e];
-
-            points [c * 3]     = vertices [e * 4];
-            points [c * 3 + 1] = vertices [e * 4 + 1];
-            points [c * 3 + 2] = vertices [e * 4 + 2];
-         }
+         this .tool .set_linesCoordIndex = coordIndex;
       }
 
-      this .tool .set_linesCoordIndex = coordIndex;
-      this .tool .linesCoord .point   = points;
+      this .tool .linesCoord .point = points;
    }
 }
 

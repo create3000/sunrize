@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
-<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
   <head>
     <component name='X_ITE' level='1'/>
     <meta name='created' content='Tue, 28 Nov 2023 21:59:27 GMT'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.8.24, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Tue, 12 Aug 2025 14:15:19 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.7.1, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Sat, 29 Jun 2024 10:51:34 GMT'/>
   </head>
   <Scene>
+    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'/>
     <ProtoDeclare name='X3DGeometryNodeTool'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
@@ -44,11 +45,13 @@
                     <connect nodeField='linewidthScaleFactor' protoField='linewidthScaleFactor'/>
                   </IS>
                 </LineProperties>
-                <UnlitMaterial>
+                <Material
+                    diffuseColor='0 0 0'>
                   <IS>
                     <connect nodeField='emissiveColor' protoField='linesColor'/>
                   </IS>
-                </UnlitMaterial>
+                </Material>
+                <ProtoInstance name='ToolShader' DEF='_999' containerField='shaders'/>
                 <DepthMode
                     polygonOffset='-1 -1'/>
               </Appearance>
