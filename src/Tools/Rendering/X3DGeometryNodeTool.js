@@ -7,7 +7,7 @@ const
 
 class X3DGeometryNodeTool extends X3DNodeTool
 {
-   static hAnim = true;
+   toolHAnim = true;
 
    async initializeTool (type)
    {
