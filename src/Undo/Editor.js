@@ -2398,9 +2398,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       {
          const
             bboxMatrix = subBBoxes [0] .matrix,
-            bboxXAxes  = bboxMatrix .xAxis .norm () ? bboxMatrix .xAxis : X3D .Vector3 .xAxis,
-            bboxYAxes  = bboxMatrix .yAxis .norm () ? bboxMatrix .yAxis : X3D .Vector3 .yAxis,
-            bboxZAxes  = bboxMatrix .zAxis .norm () ? bboxMatrix .zAxis : X3D .Vector3 .zAxis;
+            bboxXAxes  = bboxMatrix .X_AXIS .norm () ? bboxMatrix .X_AXIS : X3D .Vector3 .X_AXIS,
+            bboxYAxes  = bboxMatrix .Y_AXIS .norm () ? bboxMatrix .Y_AXIS : X3D .Vector3 .Y_AXIS,
+            bboxZAxes  = bboxMatrix .Z_AXIS .norm () ? bboxMatrix .Z_AXIS : X3D .Vector3 .Z_AXIS;
 
          const axes = [
             bboxXAxes .copy (),            // right
@@ -2596,17 +2596,17 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                switch (type)
                {
                   case X3D .X3DConstants .DirectionalLight:
-                     return new X3D .Box3 (X3D .Vector3 .One, innerNode .getMetaData ("DirectionalLight/location", new X3D .Vector3 ()))
-                        .multLeft (new X3D .Matrix4 () .setRotation (new X3D .Rotation4 (X3D .Vector3 .zAxis, innerNode ._direction .getValue ())))
+                     return new X3D .Box3 (X3D .Vector3 .ONE, innerNode .getMetaData ("DirectionalLight/location", new X3D .Vector3 ()))
+                        .multLeft (new X3D .Matrix4 () .setRotation (new X3D .Rotation4 (X3D .Vector3 .Z_AXIS, innerNode ._direction .getValue ())))
                         .multRight (modelMatrix);
                   case X3D .X3DConstants .PointLight:
-                     return new X3D .Box3 (X3D .Vector3 .One, innerNode ._location .getValue ())
+                     return new X3D .Box3 (X3D .Vector3 .ONE, innerNode ._location .getValue ())
                         .multRight (modelMatrix);
                   case X3D .X3DConstants .SpotLight:
                   case X3D .X3DConstants .Sound:
                   case X3D .X3DConstants .X3DTextureProjectorNode:
-                     return new X3D .Box3 (X3D .Vector3 .One, innerNode ._location .getValue ())
-                        .multLeft (new X3D .Matrix4 () .setRotation (new X3D .Rotation4 (X3D .Vector3 .zAxis, innerNode ._direction .getValue ())))
+                     return new X3D .Box3 (X3D .Vector3 .ONE, innerNode ._location .getValue ())
+                        .multLeft (new X3D .Matrix4 () .setRotation (new X3D .Rotation4 (X3D .Vector3 .Z_AXIS, innerNode ._direction .getValue ())))
                         .multRight (modelMatrix);
                   case X3D .X3DConstants .X3DBoundedObject:
                      return innerNode .getBBox (new X3D .Box3 ()) .multRight (modelMatrix);
@@ -2617,7 +2617,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                      return new X3D .Box3 (innerNode ._size .getValue (), innerNode ._center .getValue ())
                         .multRight (modelMatrix);
                   case X3D .X3DConstants .X3DViewpointNode:
-                     return new X3D .Box3 (X3D .Vector3 .One, innerNode ._position .getValue ())
+                     return new X3D .Box3 (X3D .Vector3 .ONE, innerNode ._position .getValue ())
                         .multLeft (new X3D .Matrix4 () .setRotation (innerNode ._orientation .getValue ()))
                         .multRight (modelMatrix);
                   case X3D .X3DConstants .X3DLayerNode:
@@ -3293,7 +3293,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   this .setFieldValue (executionContext, node, node ._position, position, undoManager);
                }
 
-               if (node ._direction && !node ._direction .getValue () .equals (X3D .Vector3 .Zero))
+               if (node ._direction && !node ._direction .getValue () .equals (X3D .Vector3 .ZERO))
                {
                   const direction = modelMatrix .multDirMatrix (node ._direction .getValue () .copy ()) .normalize ();
 

@@ -138,7 +138,7 @@ class SnapTarget extends X3DSnapNodeTool
 
       this .tool .snapped = snapTranslation .norm () > 0.0001;
 
-      if (snapTranslation .equals (X3D .Vector3 .Zero))
+      if (snapTranslation .equals (X3D .Vector3 .ZERO))
          return;
 
       // Snap translation.
@@ -183,9 +183,9 @@ class SnapTarget extends X3DSnapNodeTool
          index2 = (index0 + 2) % 3;
 
       const axes = [
-         absoluteMatrix .xAxis .copy (),
-         absoluteMatrix .yAxis .copy (),
-         absoluteMatrix .zAxis .copy (),
+         absoluteMatrix .X_AXIS .copy (),
+         absoluteMatrix .Y_AXIS .copy (),
+         absoluteMatrix .Z_AXIS .copy (),
       ]; // Rotation axis, equates to grid normal.
 
       const
@@ -251,7 +251,7 @@ class SnapTarget extends X3DSnapNodeTool
 
       this .tool .snapped = Math .abs (snapRotation .angle) > 0.0001;
 
-      if (snapRotation .equals (X3D .Rotation4 .Identity))
+      if (snapRotation .equals (X3D .Rotation4 .IDENTITY))
          return;
 
       // Snap rotation.
@@ -379,7 +379,7 @@ class SnapTarget extends X3DSnapNodeTool
 
             this .tool .snapped = snapTranslation .norm () > 0.0001;
 
-            if (snapTranslation .equals (X3D .Vector3 .Zero))
+            if (snapTranslation .equals (X3D .Vector3 .ZERO))
                return undefined;
 
             const
@@ -419,7 +419,7 @@ class SnapTarget extends X3DSnapNodeTool
 
             this .tool .snapped = snapTranslation .norm () > 0.0001;
 
-            if (snapTranslation .equals (X3D .Vector3 .Zero))
+            if (snapTranslation .equals (X3D .Vector3 .ZERO))
                return undefined;
 
             const
@@ -527,7 +527,7 @@ class SnapTarget extends X3DSnapNodeTool
 
             this .tool .snapped = snapTranslation .norm () > 0.0001;
 
-            if (snapTranslation .equals (X3D .Vector3 .Zero))
+            if (snapTranslation .equals (X3D .Vector3 .ZERO))
                return undefined;
 
             const
@@ -586,7 +586,7 @@ class SnapTarget extends X3DSnapNodeTool
 
             this .tool .snapped = snapTranslation .norm () > 0.0001;
 
-            if (snapTranslation .equals (X3D .Vector3 .Zero))
+            if (snapTranslation .equals (X3D .Vector3 .ZERO))
                return undefined;
 
             const
