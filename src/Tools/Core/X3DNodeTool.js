@@ -16,6 +16,7 @@ class X3DNodeTool extends X3DBaseTool
 {
    static createOnSelection = true;
    static createOnDemand    = true;
+   static hAnim             = false;
    static tools             = new Set (); // Set of all X3DNodeTool tools.
 
    static #gridNode = null;
@@ -484,12 +485,19 @@ class X3DNodeTool extends X3DBaseTool
          }
       }
 
+
+      if (!this .constructor .hAnim)
+         renderObject .getHAnimNode () .push (null);
+
       renderObject .getSensors () .push (X3DNodeTool .#sensors);
 
       for (const innerNode of this .#innerNodes)
          innerNode ?.traverse (type, renderObject);
 
       renderObject .getSensors () .pop ();
+
+      if (!this .constructor .hAnim)
+         renderObject .getHAnimNode () .pop ();
    }
 
    // Destruction

@@ -7,6 +7,8 @@ const
 
 class X3DGeometryNodeTool extends X3DNodeTool
 {
+   static hAnim = true;
+
    async initializeTool (type)
    {
       await super .loadTool ("tool", __dirname, "X3DGeometryNodeTool.x3d");
