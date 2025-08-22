@@ -1865,9 +1865,9 @@ module .exports = class OutlineView extends Interface
       if (!node)
          return;
 
-      const interfaceDefinitionElement = X3DUOM .find (`ConcreteNode[name="${node .getTypeName ()}"] InterfaceDefinition`);
+      const nodeElement = X3DUOM .find (`ConcreteNode[name="${node .getTypeName ()}"] InterfaceDefinition`);
 
-      name .attr ("title", this .getNodeTitle (node, interfaceDefinitionElement));
+      name .attr ("title", this .getNodeTitle (node, nodeElement));
    }
 
    updateFieldTitle (event)
@@ -1882,9 +1882,9 @@ module .exports = class OutlineView extends Interface
       name .attr ("title", this .getFieldTitle (node, field, fieldElement));
    }
 
-   getNodeTitle (node, interfaceDefinitionElement)
+   getNodeTitle (node, nodeElement)
    {
-      const description = interfaceDefinitionElement .attr ("appinfo") ?? node .getAppInfo ?.();
+      const description = nodeElement .attr ("appinfo") ?? node .getAppInfo ?.();
 
       let title = "";
 
