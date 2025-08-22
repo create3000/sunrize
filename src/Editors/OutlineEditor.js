@@ -201,7 +201,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       {
          const
             parentFieldElement = element .closest (".field, .scene", this .sceneGraph),
-            parentNodeElement  = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph);
+            parentNodeElement  = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
+            innerNode          = $.try (() => node .getInnerNode ()) ?? node;
 
          if (node)
          {
@@ -250,7 +251,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                { type: "separator" },
             ];
 
-            if (node .getType () .includes (X3D .X3DConstants .X3DChildNode))
+            if (innerNode .getType () .includes (X3D .X3DConstants .X3DChildNode))
             {
                menu .push ({
                   label: _("Add Parent Group"),
