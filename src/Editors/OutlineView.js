@@ -284,9 +284,7 @@ module .exports = class OutlineView extends Interface
       }
 
       child .find (".externproto .name, .externproto .icon, .proto .name, .proto .icon, .node .name, .node .icon")
-         .on ("click", this .selectNode .bind (this));
-
-      child .find (".node .name")
+         .on ("click", this .selectNode .bind (this))
          .on ("mouseenter", this .updateNodeTitle .bind (this));
 
       child .find ("[action]")
@@ -1860,7 +1858,7 @@ module .exports = class OutlineView extends Interface
    {
       const
          name    = $(event .currentTarget),
-         element = $(event .currentTarget) .closest (".node, .special", this .sceneGraph),
+         element = $(event .currentTarget) .closest (".externproto, .proto, .node, .special", this .sceneGraph),
          node    = this .objects .get (parseInt (element .attr ("node-id")));
 
       // Handle NULL node element.
@@ -1869,7 +1867,7 @@ module .exports = class OutlineView extends Interface
 
       const interfaceDefinitionElement = X3DUOM .find (`ConcreteNode[name="${node .getTypeName ()}"] InterfaceDefinition`);
 
-      name .attr ("title", this .getNodeTitle (interfaceDefinitionElement));
+      name .attr ("title", this .getNodeTitle (node, interfaceDefinitionElement));
    }
 
    updateFieldTitle (event)
@@ -1884,9 +1882,9 @@ module .exports = class OutlineView extends Interface
       name .attr ("title", this .getFieldTitle (node, field, fieldElement));
    }
 
-   getNodeTitle (interfaceDefinitionElement)
+   getNodeTitle (node, interfaceDefinitionElement)
    {
-      const description = interfaceDefinitionElement .attr ("appinfo");
+      const description = interfaceDefinitionElement .attr ("appinfo") ?? node .getAppInfo ?.();
 
       let title = "";
 
@@ -1903,7 +1901,7 @@ module .exports = class OutlineView extends Interface
          return string .length > n ? string .slice (0, n) + "..." : string;
       };
 
-      const description = fieldElement .attr ("description");
+      const description = fieldElement .attr ("description") ?? field .getAppInfo ();
 
       let title = "";
 
