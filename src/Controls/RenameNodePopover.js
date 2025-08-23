@@ -14,21 +14,33 @@ $.fn.renameNodePopover = function (node)
 
    const content = $("<div></div>");
 
+   $("<span></span>")
+      .text (_("Name"))
+      .appendTo (content);
+
    const nameInput = $("<input></input>")
       .attr ("placeholder", _("Enter name"))
       .appendTo (content);
 
-   if (node instanceof X3D .X3DProtoDeclarationNode)
+   if (node instanceof X3D .X3DProtoDeclaration)
    {
+      $("<span></span>")
+         .text (_("Application Information"))
+         .appendTo (content);
+
       $("<input></input>")
          .addClass ("appinfo")
-         .attr ("placeholder", _("Application information"))
+         .attr ("placeholder", _("Enter application information"))
          .val (node .getAppInfo ())
+         .appendTo (content);
+
+      $("<span></span>")
+         .text (_("Documentation"))
          .appendTo (content);
 
       $("<input></input>")
          .addClass ("documentation")
-         .attr ("placeholder", _("Documentation"))
+         .attr ("placeholder", _("Enter documentation"))
          .val (node .getDocumentation ())
          .appendTo (content);
    }
