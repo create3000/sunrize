@@ -35,7 +35,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
    const typeNameMenu = $("<select></select>")
       .appendTo (content);
 
-   const singleFields = $("<optgroup></optgroup>")
+   $("<optgroup></optgroup>")
       .attr ("label", "Single Fields")
       .append ($("<option></option>") .text ("SFBool"))
       .append ($("<option></option>") .text ("SFColor"))
@@ -60,7 +60,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
       .append ($("<option></option>") .text ("SFVec4f"))
       .appendTo (typeNameMenu);
 
-   const multiFields = $("<optgroup></optgroup>")
+   $("<optgroup></optgroup>")
       .attr ("label", "Multi Fields")
       .append ($("<option></option>") .text ("MFBool"))
       .append ($("<option></option>") .text ("MFColor"))
@@ -92,11 +92,15 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
       .append ($("<option></option>") .text ("inputOutput"))
       .appendTo (content);
 
+   $("<span></span>")
+      .text (_("Name"))
+      .appendTo (content);
+
    const nameInput = $("<input></input>")
       .attr ("placeholder", _("Enter name"))
       .appendTo (content);
 
-   const okButton = $("<button></button>")
+   $("<button></button>")
       .text (_("Apply"))
       .on ("click", confirm)
       .appendTo (content);

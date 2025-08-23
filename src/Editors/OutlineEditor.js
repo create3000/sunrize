@@ -208,8 +208,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          {
             var menu = [
                {
-                  label: _("Rename Node..."),
-                  args: ["renameNode", element .attr ("id"), executionContext .getId (), node .getId ()],
+                  label: _("Edit Node..."),
+                  args: ["editNode", element .attr ("id"), executionContext .getId (), node .getId ()],
                },
                {
                   label: _("Export Node..."),
@@ -762,15 +762,15 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       field .addEvent ();
    }
 
-   renameNode (id, executionContextId, nodeId)
+   editNode (id, executionContextId, nodeId)
    {
-      require ("../Controls/RenameNodePopover");
+      require ("../Controls/EditNodePopover");
 
       const
          element = $(`#${id}`),
          node    = this .objects .get (nodeId);
 
-      element .find ("> .item") .renameNodePopover (node);
+      element .find ("> .item") .editNodePopover (node);
    }
 
    openLibrary (id, executionContextId, nodeId, fieldId)
@@ -1995,13 +1995,13 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
    editPrototype (id, executionContextId, protoNodeId)
    {
-      require ("../Controls/RenameNodePopover");
+      require ("../Controls/EditNodePopover");
 
       const
          element   = $(`#${id}`),
          protoNode = this .objects .get (protoNodeId);
 
-      element .find ("> .item") .renameNodePopover (protoNode);
+      element .find ("> .item") .editNodePopover (protoNode);
    }
 
    deletePrototype (id, executionContextId, protoNodeId, used, availableId)

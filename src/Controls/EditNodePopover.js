@@ -8,7 +8,7 @@ const
 require ("./Popover");
 require ("./RenameNodeInput");
 
-$.fn.renameNodePopover = function (node)
+$.fn.editNodePopover = function (node)
 {
    // Create content.
 
@@ -52,10 +52,16 @@ $.fn.renameNodePopover = function (node)
 
    const tooltip = this .popover ({
       content: content,
+      ... node instanceof X3D .X3DProtoDeclaration ? {
+         style: {
+            width: "300px",
+         }
+      }
+      : { },
       events: {
          show: (event, api) =>
          {
-            content .children () .off (".renameNodePopover") .on ("keydown.renameNodePopover", (event) =>
+            content .children () .off (".editNodePopover") .on ("keydown.editNodePopover", (event) =>
             {
                if (event .key !== "Enter")
                   return;
