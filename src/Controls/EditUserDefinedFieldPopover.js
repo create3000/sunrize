@@ -35,7 +35,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
    const typeNameMenu = $("<select></select>")
       .appendTo (content);
 
-   const singleFields = $("<optgroup></optgroup>")
+   $("<optgroup></optgroup>")
       .attr ("label", "Single Fields")
       .append ($("<option></option>") .text ("SFBool"))
       .append ($("<option></option>") .text ("SFColor"))
@@ -60,7 +60,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
       .append ($("<option></option>") .text ("SFVec4f"))
       .appendTo (typeNameMenu);
 
-   const multiFields = $("<optgroup></optgroup>")
+   $("<optgroup></optgroup>")
       .attr ("label", "Multi Fields")
       .append ($("<option></option>") .text ("MFBool"))
       .append ($("<option></option>") .text ("MFColor"))
@@ -92,13 +92,12 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
       .append ($("<option></option>") .text ("inputOutput"))
       .appendTo (content);
 
-   const nameInput = $("<input></input>")
-      .attr ("placeholder", _("Enter name"))
+   $("<span></span>")
+      .text (_("Name"))
       .appendTo (content);
 
-   const okButton = $("<button></button>")
-      .text (_("Apply"))
-      .on ("click", confirm)
+   const nameInput = $("<input></input>")
+      .attr ("placeholder", _("Enter name"))
       .appendTo (content);
 
    if (field instanceof X3D .X3DField)
@@ -114,6 +113,26 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
          .prop ("selected", true);
 
       nameInput .val (field .getName ());
+
+      $("<span></span>")
+         .text (_("Application Information"))
+         .appendTo (content);
+
+      $("<input></input>")
+         .addClass ("appinfo")
+         .attr ("placeholder", _("Enter application information"))
+         .val (field .getAppInfo ())
+         .appendTo (content);
+
+      $("<span></span>")
+         .text (_("Documentation"))
+         .appendTo (content);
+
+      $("<input></input>")
+         .addClass ("documentation")
+         .attr ("placeholder", _("Enter documentation"))
+         .val (field .getDocumentation ())
+         .appendTo (content);
    }
    else
    {
@@ -128,10 +147,21 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
          .prop ("selected", true);
    }
 
+   $("<button></button>")
+      .text (_("Apply"))
+      .on ("click", confirm)
+      .appendTo (content);
+
    // Create tooltip.
 
    const tooltip = this .popover ({
       content: content,
+      ... field instanceof X3D .X3DField ? {
+         style: {
+            width: "300px",
+         }
+      }
+      : { },
       events: {
          show (event, api)
          {
@@ -140,7 +170,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
                electron .shell .beep ();
                nameInput .highlight ();
             })
-            .on ("keydown", event =>
+            .siblings (".appinfo, .documentation") .addBack () .on ("keydown", event =>
             {
                if (event .key !== "Enter")
                   return;
@@ -181,17 +211,26 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
             if (!name .length)
                return;
 
-            if (type === field .getType () && accessType == field .getAccessType () && name === field .getName ())
-               return;
+            // Edit field.
 
-            // Change field.
-
-            const fields = Array .from (node .getUserDefinedFields ());
+            const
+               fields        = Array .from (node .getUserDefinedFields ()),
+               appInfo       = content .children (".appinfo") .val (),
+               documentation = content .children (".documentation") .val ();
 
             if (type === field .getType ())
             {
                UndoManager .shared .beginUndo (_("Edit Field »%s«"), field .getName ());
-               Editor .updateUserDefinedField (executionContext, node, field, accessType, name);
+
+               if (accessType !== field .getAccessType () || name !== field .getName ())
+                  Editor .updateUserDefinedField (executionContext, node, field, accessType, name);
+
+               if (appInfo !== field .getAppInfo ())
+                  Editor .updateAppInfo (field, appInfo);
+
+               if (documentation !== field .getDocumentation ())
+                  Editor .updateDocumentation (field, documentation);
+
                UndoManager .shared .endUndo ();
             }
             else
@@ -207,6 +246,13 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
                fields .splice (index, 1, newField);
 
                Editor .setUserDefinedFields (executionContext, node, fields);
+
+               if (appInfo !== field .getAppInfo ())
+                  Editor .updateAppInfo (newField, appInfo);
+
+               if (documentation !== field .getDocumentation ())
+                  Editor .updateDocumentation (newField, documentation);
+
                UndoManager .shared .endUndo ();
             }
          }

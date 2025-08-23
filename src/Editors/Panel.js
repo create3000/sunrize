@@ -137,9 +137,9 @@ module .exports = new class Panel extends Interface
 
       // Set title.
 
-      const interfaceDefinitionElement = concreteNode .find (`InterfaceDefinition`);
+      const nodeElement = concreteNode .find (`InterfaceDefinition`);
 
-      this .container .attr ("title", this .getNodeTitle (interfaceDefinitionElement));
+      this .container .attr ("title", this .getNodeTitle (node, nodeElement));
 
       // Make first folder title draggable.
 
@@ -736,9 +736,9 @@ module .exports = new class Panel extends Interface
       }
    }
 
-   getNodeTitle (interfaceDefinitionElement)
+   getNodeTitle (node, nodeElement)
    {
-      const description = interfaceDefinitionElement .attr ("appinfo");
+      const description = nodeElement .attr ("appinfo") ?? node .getAppInfo ?.();
 
       let title = "";
 
@@ -755,7 +755,10 @@ module .exports = new class Panel extends Interface
          return string .length > n ? string .slice (0, n) + "..." : string;
       };
 
-      const description = fieldElement .attr ("description");
+      if (node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance))
+         field = node .getFieldDefinitions () .get (field .getName ()) .getValue ();
+
+      const description = fieldElement .attr ("description") ?? field .getAppInfo ();
 
       let title = "";
 

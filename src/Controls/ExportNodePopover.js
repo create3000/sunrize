@@ -17,7 +17,7 @@ $.fn.exportNodePopover = function (node, oldExportedName, oldDescription = "")
 
    const content = $("<div></div>");
 
-   const nameText = $("<span></span>")
+   $("<span></span>")
       .text ("Exported Name")
       .appendTo (content);
 
@@ -26,7 +26,7 @@ $.fn.exportNodePopover = function (node, oldExportedName, oldDescription = "")
       .val (oldExportedName ?? scene .getUniqueExportName (node .getName ()))
       .appendTo (content);
 
-   const descriptionText = $("<span></span>")
+   $("<span></span>")
       .text ("Description")
       .appendTo (content);
 

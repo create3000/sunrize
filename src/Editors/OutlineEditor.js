@@ -201,14 +201,15 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       {
          const
             parentFieldElement = element .closest (".field, .scene", this .sceneGraph),
-            parentNodeElement  = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph);
+            parentNodeElement  = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
+            innerNode          = $.try (() => node .getInnerNode ()) ?? node;
 
          if (node)
          {
             var menu = [
                {
-                  label: _("Rename Node..."),
-                  args: ["renameNode", element .attr ("id"), executionContext .getId (), node .getId ()],
+                  label: _("Edit Node..."),
+                  args: ["editNode", element .attr ("id"), executionContext .getId (), node .getId ()],
                },
                {
                   label: _("Export Node..."),
@@ -250,7 +251,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                { type: "separator" },
             ];
 
-            if (node .getType () .includes (X3D .X3DConstants .X3DChildNode))
+            if (innerNode .getType () .includes (X3D .X3DConstants .X3DChildNode))
             {
                menu .push ({
                   label: _("Add Parent Group"),
@@ -604,8 +605,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                args: ["addPrototype", element .attr ("id"), executionContext .getId ()],
             },
             {
-               label: _("Rename Prototype..."),
-               args: ["renamePrototype", element .attr ("id"), executionContext .getId (), protoNode .getId ()],
+               label: _("Edit Prototype..."),
+               args: ["editPrototype", element .attr ("id"), executionContext .getId (), protoNode .getId ()],
             },
             {
                label: _("Delete Prototype"),
@@ -761,15 +762,15 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       field .addEvent ();
    }
 
-   renameNode (id, executionContextId, nodeId)
+   editNode (id, executionContextId, nodeId)
    {
-      require ("../Controls/RenameNodePopover");
+      require ("../Controls/EditNodePopover");
 
       const
          element = $(`#${id}`),
          node    = this .objects .get (nodeId);
 
-      element .find ("> .item") .renameNodePopover (node);
+      element .find ("> .item") .editNodePopover (node);
    }
 
    openLibrary (id, executionContextId, nodeId, fieldId)
@@ -1992,15 +1993,15 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          element .addPrototypePopover (executionContext);
    }
 
-   renamePrototype (id, executionContextId, protoNodeId)
+   editPrototype (id, executionContextId, protoNodeId)
    {
-      require ("../Controls/RenameNodePopover");
+      require ("../Controls/EditNodePopover");
 
       const
          element   = $(`#${id}`),
          protoNode = this .objects .get (protoNodeId);
 
-      element .find ("> .item") .renameNodePopover (protoNode);
+      element .find ("> .item") .editNodePopover (protoNode);
    }
 
    deletePrototype (id, executionContextId, protoNodeId, used, availableId)

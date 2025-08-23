@@ -17,7 +17,7 @@ $.fn.importNodePopover = function (inlineNode, exportedName, oldImportedName, ol
 
    const content = $("<div></div>");
 
-   const nameText = $("<span></span>")
+   $("<span></span>")
       .text ("Imported Name")
       .appendTo (content);
 
@@ -26,7 +26,7 @@ $.fn.importNodePopover = function (inlineNode, exportedName, oldImportedName, ol
       .val (oldImportedName ?? executionContext .getUniqueImportName (exportedName))
       .appendTo (content);
 
-   const descriptionText = $("<span></span>")
+   $("<span></span>")
       .text ("Description")
       .appendTo (content);
 

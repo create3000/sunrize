@@ -35,6 +35,10 @@ $.fn.addPrototypePopover = function (executionContext, type)
       .on ("change", () => config .selectedIndex = protoMenu .prop ("selectedIndex"))
       .appendTo (content);
 
+   $("<span></span>")
+      .text (_("Name"))
+      .appendTo (content);
+
    const nameInput = $("<input></input>")
       .attr ("placeholder", _("Enter name"))
       .appendTo (content);
