@@ -156,12 +156,10 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
 
    const tooltip = this .popover ({
       content: content,
-      ... field instanceof X3D .X3DField ? {
-         style: {
-            width: "300px",
-         }
-      }
-      : { },
+      extension:
+      {
+         wide: node instanceof X3D .X3DProtoDeclaration,
+      },
       events: {
          show (event, api)
          {

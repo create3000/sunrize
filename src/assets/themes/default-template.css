@@ -448,6 +448,10 @@ body.light .qtip-tipsy {
   color: var(--system-gray0);
 }
 
+.qtip-wide {
+  width: 300px;
+}
+
 /* Toolbar */
 
 .toolbar {
