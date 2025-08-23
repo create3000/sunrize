@@ -412,7 +412,7 @@ tr.disabled ~ tr > td > div {
 }
 
 .qtip-tipsy .qtip-content {
-  padding: 5px;
+  padding: 8px;
 }
 
 body.light .qtip-tipsy {
@@ -431,7 +431,7 @@ body.light .qtip-tipsy {
 }
 
 .qtip .qtip-content > div > * {
-  margin: 0.2em 0em;
+  margin: 0.3em 0em;
 }
 
 .qtip .qtip-content > div:first-child {
