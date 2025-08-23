@@ -222,7 +222,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
             {
                UndoManager .shared .beginUndo (_("Edit Field »%s«"), field .getName ());
 
-               if (type !== field .getType () || accessType !== field .getAccessType () && name !== field .getName ())
+               if (accessType !== field .getAccessType () || name !== field .getName ())
                   Editor .updateUserDefinedField (executionContext, node, field, accessType, name);
 
                if (appInfo !== field .getAppInfo ())
@@ -245,14 +245,14 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
                newField .setName (name);
                fields .splice (index, 1, newField);
 
-               if (type !== field .getType () || accessType !== field .getAccessType () && name !== field .getName ())
+               if (accessType !== field .getAccessType () || name !== field .getName ())
                   Editor .setUserDefinedFields (executionContext, node, fields);
 
                if (appInfo !== field .getAppInfo ())
-                  Editor .updateAppInfo (field, appInfo);
+                  Editor .updateAppInfo (newField, appInfo);
 
                if (documentation !== field .getDocumentation ())
-                  Editor .updateDocumentation (field, documentation);
+                  Editor .updateDocumentation (newField, documentation);
 
                UndoManager .shared .endUndo ();
             }
