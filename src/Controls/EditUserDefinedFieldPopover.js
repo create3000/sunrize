@@ -245,8 +245,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
                newField .setName (name);
                fields .splice (index, 1, newField);
 
-               if (accessType !== field .getAccessType () || name !== field .getName ())
-                  Editor .setUserDefinedFields (executionContext, node, fields);
+               Editor .setUserDefinedFields (executionContext, node, fields);
 
                if (appInfo !== field .getAppInfo ())
                   Editor .updateAppInfo (newField, appInfo);
