@@ -39,6 +39,9 @@ $.fn.importNodePopover = function (inlineNode, exportedName, oldImportedName, ol
 
    const tooltip = this .popover ({
       content: content,
+      style: {
+         width: "300px",
+      },
       events: {
          show: (event, api) =>
          {

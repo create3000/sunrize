@@ -39,6 +39,9 @@ $.fn.exportNodePopover = function (node, oldExportedName, oldDescription = "")
 
    const tooltip = this .popover ({
       content: content,
+      style: {
+         width: "300px",
+      },
       events: {
          show: (event, api) =>
          {
