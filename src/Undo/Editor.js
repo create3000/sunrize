@@ -2822,7 +2822,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       if (node .canUserDefinedFields () && node .getUserDefinedFields () .has (field .getName ()))
          this .setFieldValue (executionContext, node, field, field .create (), undoManager);
       else
-         this .setFieldValue (executionContext, node, field, fieldDefinition .value, undoManager);
+         this .setFieldValue (executionContext, node, field, fieldDefinition .getValue (), undoManager);
 
       undoManager .endUndo ();
    }

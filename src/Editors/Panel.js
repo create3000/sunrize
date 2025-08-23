@@ -756,7 +756,7 @@ module .exports = new class Panel extends Interface
       };
 
       if (node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance))
-         field = node .getFieldDefinitions () .get (field .getName ()) .value;
+         field = node .getFieldDefinitions () .get (field .getName ()) .getValue ();
 
       const description = fieldElement .attr ("description") ?? field .getAppInfo ();
 
