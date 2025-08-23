@@ -557,9 +557,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
          var menu = [
             {
-               label: _("Rename Exported Node..."),
+               label: _("Edit Exported Node..."),
                visible: exportedNode .getExecutionContext () === this .executionContext,
-               args: ["renameExportedNode", element .attr ("id")],
+               args: ["editExportedNode", element .attr ("id")],
             },
             {
                label: _("Remove Exported Node"),
@@ -580,9 +580,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
          var menu = [
             {
-               label: _("Rename Imported Node..."),
+               label: _("Edit Imported Node..."),
                visible: importedNode .getExecutionContext () .getLocalScene () === this .executionContext,
-               args: ["renameImportedNode", element .attr ("id")],
+               args: ["editImportedNode", element .attr ("id")],
             },
             {
                label: _("Remove Imported Node"),
@@ -794,7 +794,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       element .find ("> .item") .exportNodePopover (node);
    }
 
-   renameExportedNode (id)
+   editExportedNode (id)
    {
       require ("../Controls/ExportNodePopover");
 
@@ -826,7 +826,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       element .find ("> .item") .importNodePopover (inlineNode, exportedNode .getExportedName ());
    }
 
-   renameImportedNode (id)
+   editImportedNode (id)
    {
       require ("../Controls/ImportNodePopover");
 
