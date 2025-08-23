@@ -605,8 +605,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                args: ["addPrototype", element .attr ("id"), executionContext .getId ()],
             },
             {
-               label: _("Rename Prototype..."),
-               args: ["renamePrototype", element .attr ("id"), executionContext .getId (), protoNode .getId ()],
+               label: _("Edit Prototype..."),
+               args: ["editPrototype", element .attr ("id"), executionContext .getId (), protoNode .getId ()],
             },
             {
                label: _("Delete Prototype"),
@@ -1993,7 +1993,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          element .addPrototypePopover (executionContext);
    }
 
-   renamePrototype (id, executionContextId, protoNodeId)
+   editPrototype (id, executionContextId, protoNodeId)
    {
       require ("../Controls/RenameNodePopover");
 

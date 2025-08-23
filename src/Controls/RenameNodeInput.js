@@ -13,15 +13,15 @@ require ("../Bits/Validate");
 $.fn.renameNodeInput = function (node)
 {
    this
-      .off ("keydown.renameNodeInput")
-      .val (node ? node .getName () : "");
+      .val (node ? node .getName () : "")
+      .siblings () .addBack () .off ("keydown.renameNodeInput")
 
    this .validate (Editor .Id, () =>
    {
       electron .shell .beep ();
       this .highlight ();
    })
-   .on ("keydown.renameNodeInput", (event) =>
+   .siblings () .addBack () .on ("keydown.renameNodeInput", (event) =>
    {
       if (!node)
          return;
@@ -33,9 +33,6 @@ $.fn.renameNodeInput = function (node)
 
       let name = this .val ();
 
-      if (name === node .getName ())
-         return;
-
       const executionContext = node .getExecutionContext ();
 
       if (node instanceof X3D .X3DProtoDeclarationNode)
@@ -45,11 +42,14 @@ $.fn.renameNodeInput = function (node)
 
          if (node .isExternProto)
          {
-            name = executionContext .getUniqueExternProtoName (name);
+            if (name === node .getName ())
+               return;
 
             const externproto = node;
 
             UndoManager .shared .beginUndo (_("Update Extern Proto Declaration »%s«"), name);
+
+            name = executionContext .getUniqueExternProtoName (name);
 
             Editor .updateExternProtoDeclaration (executionContext, name, externproto);
 
@@ -65,13 +65,25 @@ $.fn.renameNodeInput = function (node)
          }
          else
          {
-            name = executionContext .getUniqueProtoName (name);
-
-            const proto = node;
+            const
+               proto         = node,
+               appInfo       = this .siblings (".appinfo") .val (),
+               documentation = this .siblings (".documentation") .val ();
 
             UndoManager .shared .beginUndo (_("Update Proto Declaration »%s«"), name);
 
-            Editor .updateProtoDeclaration (executionContext, name, proto);
+            if (name !== node .getName ())
+            {
+               name = executionContext .getUniqueProtoName (name);
+
+               Editor .updateProtoDeclaration (executionContext, name, proto);
+            }
+
+            if (appInfo !== node .getAppInfo ())
+               Editor .updateAppInfo (proto, appInfo);
+
+            if (documentation !== node .getDocumentation ())
+               Editor .updateDocumentation (proto, documentation);
 
             const available = Editor .getNextAvailableProtoNode (executionContext, proto);
 
@@ -83,6 +95,9 @@ $.fn.renameNodeInput = function (node)
       }
       else
       {
+         if (name === node .getName ())
+            return;
+
          if (name)
             Editor .updateNamedNode (executionContext, executionContext .getUniqueName (name), node);
          else
