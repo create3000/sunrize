@@ -1901,6 +1901,9 @@ module .exports = class OutlineView extends Interface
          return string .length > n ? string .slice (0, n) + "..." : string;
       };
 
+      if (node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance))
+         field = node .getFieldDefinitions () .get (field .getName ()) .value;
+
       const description = fieldElement .attr ("description") ?? field .getAppInfo ();
 
       let title = "";
