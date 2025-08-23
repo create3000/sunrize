@@ -52,12 +52,10 @@ $.fn.editNodePopover = function (node)
 
    const tooltip = this .popover ({
       content: content,
-      ... node instanceof X3D .X3DProtoDeclaration ? {
-         style: {
-            width: "300px",
-         }
-      }
-      : { },
+      extension:
+      {
+         wide: node instanceof X3D .X3DProtoDeclaration,
+      },
       events: {
          show: (event, api) =>
          {

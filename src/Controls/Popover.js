@@ -13,6 +13,11 @@ $.fn.popover = function (options)
    if (!options .preview)
       $(".show-preview.on") .removeClass ("on") .addClass ("off");
 
+   let classes = "qtip-tipsy";
+
+   if (options .extension ?.wide)
+      classes += " qtip-wide";
+
    return this .qtip ($.extend (true,
    {
       position: {
@@ -22,7 +27,7 @@ $.fn.popover = function (options)
          effect: false,
       },
       style: {
-         classes: "qtip-tipsy",
+         classes: classes,
       },
       show: {
          ready: true,
