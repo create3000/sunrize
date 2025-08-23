@@ -397,6 +397,15 @@ tr.disabled ~ tr > td > div {
   box-shadow: var(--qtip-shadow);
 }
 
+.qtip-tipsy {
+  color: var(--system-gray1);
+}
+
+body.light .qtip-tipsy {
+  color: black;
+  text-shadow: none;
+}
+
 .qtip-tipsy .qtip-tip {
   background: inherit !important;
 }
@@ -413,11 +422,6 @@ tr.disabled ~ tr > td > div {
 
 .qtip-tipsy .qtip-content {
   padding: 8px;
-}
-
-body.light .qtip-tipsy {
-  color: black;
-  text-shadow: none;
 }
 
 .qtip input,
