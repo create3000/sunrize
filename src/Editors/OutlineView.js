@@ -284,9 +284,7 @@ module .exports = class OutlineView extends Interface
       }
 
       child .find (".externproto .name, .externproto .icon, .proto .name, .proto .icon, .node .name, .node .icon")
-         .on ("click", this .selectNode .bind (this));
-
-      child .find (".node .name")
+         .on ("click", this .selectNode .bind (this))
          .on ("mouseenter", this .updateNodeTitle .bind (this));
 
       child .find ("[action]")
@@ -1860,16 +1858,16 @@ module .exports = class OutlineView extends Interface
    {
       const
          name    = $(event .currentTarget),
-         element = $(event .currentTarget) .closest (".node, .special", this .sceneGraph),
+         element = $(event .currentTarget) .closest (".externproto, .proto, .node, .special", this .sceneGraph),
          node    = this .objects .get (parseInt (element .attr ("node-id")));
 
       // Handle NULL node element.
       if (!node)
          return;
 
-      const interfaceDefinitionElement = X3DUOM .find (`ConcreteNode[name="${node .getTypeName ()}"] InterfaceDefinition`);
+      const nodeElement = X3DUOM .find (`ConcreteNode[name="${node .getTypeName ()}"] InterfaceDefinition`);
 
-      name .attr ("title", this .getNodeTitle (interfaceDefinitionElement));
+      name .attr ("title", this .getNodeTitle (node, nodeElement));
    }
 
    updateFieldTitle (event)
@@ -1884,9 +1882,9 @@ module .exports = class OutlineView extends Interface
       name .attr ("title", this .getFieldTitle (node, field, fieldElement));
    }
 
-   getNodeTitle (interfaceDefinitionElement)
+   getNodeTitle (node, nodeElement)
    {
-      const description = interfaceDefinitionElement .attr ("appinfo");
+      const description = nodeElement .attr ("appinfo") ?? node .getAppInfo ?.();
 
       let title = "";
 
@@ -1903,7 +1901,10 @@ module .exports = class OutlineView extends Interface
          return string .length > n ? string .slice (0, n) + "..." : string;
       };
 
-      const description = fieldElement .attr ("description");
+      if (node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance))
+         field = node .getFieldDefinitions () .get (field .getName ()) .getValue ();
+
+      const description = fieldElement .attr ("description") ?? field .getAppInfo ();
 
       let title = "";
 

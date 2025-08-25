@@ -15,14 +15,21 @@ $.fn.exportNodePopover = function (node, oldExportedName)
 
    const scene = node .getExecutionContext ();
 
+   const content = $("<div></div>");
+
+   $("<span></span>")
+      .text (_("Name"))
+      .appendTo (content);
+
    const nameInput = $("<input></input>")
       .attr ("placeholder", _("Enter exported name"))
-      .val (oldExportedName ?? scene .getUniqueExportName (node .getName ()));
+      .val (oldExportedName ?? scene .getUniqueExportName (node .getName ()))
+      .appendTo (content);
 
    // Create tooltip.
 
    const tooltip = this .popover ({
-      content: nameInput,
+      content: content,
       events: {
          show: (event, api) =>
          {

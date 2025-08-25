@@ -397,6 +397,15 @@ tr.disabled ~ tr > td > div {
   box-shadow: var(--qtip-shadow);
 }
 
+.qtip-tipsy {
+  color: var(--system-gray1);
+}
+
+body.light .qtip-tipsy {
+  color: black;
+  text-shadow: none;
+}
+
 .qtip-tipsy .qtip-tip {
   background: inherit !important;
 }
@@ -412,12 +421,7 @@ tr.disabled ~ tr > td > div {
 }
 
 .qtip-tipsy .qtip-content {
-  padding: 5px;
-}
-
-body.light .qtip-tipsy {
-  color: black;
-  text-shadow: none;
+  padding: 8px;
 }
 
 .qtip input,
@@ -431,7 +435,7 @@ body.light .qtip-tipsy {
 }
 
 .qtip .qtip-content > div > * {
-  margin: 0.2em 0em;
+  margin: 0.3em 0em;
 }
 
 .qtip .qtip-content > div:first-child {
@@ -446,6 +450,10 @@ body.light .qtip-tipsy {
 .qtip button:hover {
   background-color: var(--system-gray4);
   color: var(--system-gray0);
+}
+
+.qtip-wide {
+  width: 300px;
 }
 
 /* Toolbar */

@@ -1675,6 +1675,48 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
    /**
     *
+    * @param {X3DProtoDeclaration | X3DField} object
+    * @param {UndoManager} undoManager
+    */
+   static updateAppInfo (object, appInfo, undoManager = UndoManager .shared)
+   {
+      const oldAppInfo = object .getAppInfo ();
+
+      undoManager .beginUndo (_("Update App Info"));
+
+      object .setAppInfo (appInfo);
+
+      undoManager .registerUndo (() =>
+      {
+         this .updateAppInfo (object, oldAppInfo, undoManager);
+      });
+
+      undoManager .endUndo ();
+   }
+
+   /**
+    *
+    * @param {X3DProtoDeclaration | X3DField} object
+    * @param {UndoManager} undoManager
+    */
+   static updateDocumentation (object, documentation, undoManager = UndoManager .shared)
+   {
+      const oldDocumentation = object .getDocumentation ();
+
+      undoManager .beginUndo (_("Update App Info"));
+
+      object .setDocumentation (documentation);
+
+      undoManager .registerUndo (() =>
+      {
+         this .updateDocumentation (object, oldDocumentation, undoManager);
+      });
+
+      undoManager .endUndo ();
+   }
+
+   /**
+    *
     * @param {X3DExecutionContext} executionContext
     * @param {X3DNode} sourceNode
     * @param {string} sourceField
@@ -2822,7 +2864,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       if (node .canUserDefinedFields () && node .getUserDefinedFields () .has (field .getName ()))
          this .setFieldValue (executionContext, node, field, field .create (), undoManager);
       else
-         this .setFieldValue (executionContext, node, field, fieldDefinition .value, undoManager);
+         this .setFieldValue (executionContext, node, field, fieldDefinition .getValue (), undoManager);
 
       undoManager .endUndo ();
    }
