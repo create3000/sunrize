@@ -158,7 +158,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
       content: content,
       extension:
       {
-         wide: node instanceof X3D .X3DProtoDeclaration,
+         wide: field instanceof X3D .X3DField,
       },
       events: {
          show (event, api)
