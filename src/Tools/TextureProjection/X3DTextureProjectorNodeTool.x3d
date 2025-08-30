@@ -159,8 +159,14 @@
               <connect nodeField='visible' protoField='selected'/>
             </IS>
             <ScreenGroup>
-              <Group
-                  bboxSize='60 60 60'/>
+              <Shape>
+                <Appearance>
+                  <UnlitMaterial
+                      transparency='1'/>
+                </Appearance>
+                <Box
+                    size='60 60 60'/>
+              </Shape>
             </ScreenGroup>
           </Transform>
         </Collision>

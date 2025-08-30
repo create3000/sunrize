@@ -718,8 +718,14 @@
                     <connect nodeField='translation' protoField='center'/>
                   </IS>
                   <ScreenGroup>
-                    <Group
-                        bboxSize='40 40 40'/>
+                    <Shape>
+                      <Appearance>
+                        <UnlitMaterial
+                            transparency='1'/>
+                      </Appearance>
+                      <Box
+                          size='40 40 40'/>
+                    </Shape>
                   </ScreenGroup>
                 </Transform>
               </Transform>
