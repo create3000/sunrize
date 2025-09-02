@@ -471,7 +471,8 @@ class X3DNodeTool extends X3DBaseTool
 
    traverse (type, renderObject = this .node)
    {
-      this .node .traverse (type, renderObject);
+      if (this .node .isVisibleObject ?.())
+         this .node .traverse (type, renderObject);
 
       switch (type)
       {
