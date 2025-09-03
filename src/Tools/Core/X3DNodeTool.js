@@ -469,9 +469,14 @@ class X3DNodeTool extends X3DBaseTool
 
    toolPointingEnabled = true;
 
+   isNodeTraversable (type)
+   {
+      return true;
+   }
+
    traverse (type, renderObject = this .node)
    {
-      if (this .node .isVisibleObject ?.())
+      if (this .isNodeTraversable (type))
          this .node .traverse (type, renderObject);
 
       switch (type)
