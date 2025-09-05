@@ -71,10 +71,10 @@ module .exports = class Application
          size: [1100, 680],
       });
 
-      Template .create (path .join (__dirname, "../assets/html/application-template.html"));
-      Template .create (path .join (__dirname, "../assets/html/window-template.html"));
-      Template .create (path .join (__dirname, "../assets/themes/default-template.css"));
-      Template .create (path .join (__dirname, "../assets/themes/prompt-template.css"));
+      // Template .create (path .join (__dirname, "../assets/html/application-template.html"));
+      // Template .create (path .join (__dirname, "../assets/html/window-template.html"));
+      // Template .create (path .join (__dirname, "../assets/themes/default-template.css"));
+      // Template .create (path .join (__dirname, "../assets/themes/prompt-template.css"));
 
       this .setup ();
    }
@@ -1172,7 +1172,7 @@ module .exports = class Application
       if (!this .applicationShouldQuitAfterLastWindowClosed)
          return;
 
-      Template .removeAll ();
+      // Template .removeAll ();
       electron .app .quit ();
    }
 };
