@@ -1,0 +1,22 @@
+#!/usr/bin/env node
+const { spawn } = require ("child_process");
+const { systemSync } = require ("shell-tools");
+
+const
+   args = process .argv .slice (2),
+   cmd  = args .shift (),
+   cwd  = process .cwd ();
+
+systemSync (`echo '${cmd}' >> wine.log`);
+
+if (cmd .endsWith ("7z.exe"))
+{
+   const z7Args = args .filter (v => v !== "on");
+
+   spawn ("7zz", z7Args, { cwd });
+}
+else
+{
+   // Cannot use "wine" loop!
+   spawn ("/opt/homebrew/bin/wine", [cmd, ... args], { cwd });
+}
