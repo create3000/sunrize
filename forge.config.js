@@ -3,8 +3,8 @@ module.exports = {
     "icon": "./src/assets/images/icon.png",
     "dir": "./src",
     "ignore": "^/(?!src|package\\.json|node_modules)",
-    "certificateFile": "./build/certificate.pfx",
-    "certificatePassword": process .env .CERT_PASSWORD,
+    "certificateFile": "../ssl/certificate.pfx",
+    "certificatePassword": process .env .SUNRIZE_CERT_PASSWORD,
     "extendInfo": "./src/assets/Info.plist",
     "osxSign": {
       "optionsForFile": (filePath) => {
