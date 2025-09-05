@@ -1,51 +1,51 @@
 module.exports = {
-  "packagerConfig": {
-    "icon": "./src/assets/images/icon.png",
-    "dir": "./src",
-    "ignore": "^/(?!src|package\\.json|node_modules)",
-    "certificateFile": "../ssl/certificate.pfx",
-    "certificatePassword": process .env .SUNRIZE_CERT_PASSWORD,
-    "extendInfo": "./src/assets/Info.plist",
-    "osxSign": {
-      "optionsForFile": (filePath) => {
+  packagerConfig: {
+    icon: "./src/assets/images/icon.png",
+    dir: "./src",
+    ignore: "^/(?!src|package\\.json|node_modules)",
+    certificateFile: "../ssl/certificate.pfx",
+    certificatePassword: process .env .SUNRIZE_CERT_PASSWORD,
+    extendInfo: "./src/assets/Info.plist",
+    osxSign: {
+      optionsForFile: (filePath) => {
         // Here, we keep it simple and return a single entitlements.plist file.
         // You can use this callback to map different sets of entitlements
         // to specific files in your packaged app.
         return {
-          "entitlements": "src/assets/Entitlements.plist"
+          entitlements: "src/assets/Entitlements.plist",
         };
-      }
-    }
+      },
+    },
   },
-  "makers": [
+  makers: [
     {
-      "name": "@electron-forge/maker-squirrel",
+      name: "@electron-forge/maker-squirrel",
     },
     // {
-    //   "name": "@electron-forge/maker-dmg",
+    //   name: "@electron-forge/maker-dmg",
     // },
     {
-      "name": "@electron-forge/maker-zip",
-      "platforms": ["darwin"],
+      name: "@electron-forge/maker-zip",
+      platforms: ["darwin"],
     },
     {
-      "name": "@electron-forge/maker-deb",
+      name: "@electron-forge/maker-deb",
     },
     {
-      "name": "@electron-forge/maker-rpm",
-    }
+      name: "@electron-forge/maker-rpm",
+    },
   ],
-  "publishers": [
+  publishers: [
     {
-      "name": "@electron-forge/publisher-github",
-      "config": {
-        "repository": {
-          "owner": "create3000",
-          "name": "sunrize"
+      name: "@electron-forge/publisher-github",
+      config: {
+        repository: {
+          owner: "create3000",
+          name: "sunrize"
         },
-        "prerelease": false,
-        "draft": false
-      }
-    }
-  ]
+        prerelease: false,
+        draft: false,
+      },
+    },
+  ],
 };
