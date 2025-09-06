@@ -6,17 +6,13 @@ const path = require ("path");
 const { spawn } = require ("child_process");
 const win = os .platform () === "win32";
 const cwd = process .cwd ();
-const cmd = win ? "npm.cmd" : "npm";
-const args = process .argv .slice (2) .map (escapeQuotes);
+const args = process .argv .slice (2);
 
 process .chdir (path .resolve (__dirname, ".."));
 
-const p = spawn (cmd, ["start", "--silent", "--", ... args], { cwd, shell: win });
+const p = win
+   ? spawn ("cmd.exe", ["/c", "npm.cmd", "start", "--silent", "--", ... args], { cwd })
+   : spawn ("npm", ["start", "--silent", "--", ... args], { cwd });
 
 p .stdout .pipe (process .stdout);
 p .stderr .pipe (process .stderr);
-
-function escapeQuotes (arg)
-{
-   return win ? `"${arg .replaceAll ('"', '"""')}"` : arg;
-}
