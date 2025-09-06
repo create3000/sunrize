@@ -16,11 +16,7 @@ const localStorage = new LocalStorage (path .join (electron .app .getPath ("user
 
 module .exports = class Application
 {
-   config            = new DataStorage (localStorage, "Sunrize.Application.");
-   receivedFiles     = [ ];
-   mainMenu          = [ ];
-   openLocationValue = "";
-   exportPath        = new Map ();
+   static app;
 
    static run ()
    {
@@ -41,8 +37,14 @@ module .exports = class Application
 
       electron .app .commandLine .appendSwitch ("--enable-features", "OverlayScrollbar,ConversionMeasurement,AttributionReportingCrossAppWeb");
 
-      return new Application ();
+      return this .app = new Application ();
    }
+
+   config            = new DataStorage (localStorage, "Sunrize.Application.");
+   receivedFiles     = [ ];
+   mainMenu          = [ ];
+   openLocationValue = "";
+   exportPath        = new Map ();
 
    constructor ()
    {
