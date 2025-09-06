@@ -10,12 +10,6 @@
             "problemMatcher": [],
         },
         {
-            "label": "Package Sunrize for Download",
-            "type": "shell",
-            "command": "npm run download",
-            "problemMatcher": []
-        },
-        {
             "label": "Make X_ITE for Sunrize",
             "type": "shell",
             "command": "npm run make-x_ite-for-sunrize",
