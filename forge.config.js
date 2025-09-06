@@ -20,9 +20,11 @@ module.exports = {
   makers: [
     {
       name: "@electron-forge/maker-squirrel",
+      platforms: ["win32"],
     },
     // {
     //   name: "@electron-forge/maker-dmg",
+    //   platforms: ["darwin"],
     // },
     {
       name: "@electron-forge/maker-zip",
@@ -30,9 +32,11 @@ module.exports = {
     },
     {
       name: "@electron-forge/maker-deb",
+      platforms: ["linux"],
     },
     {
       name: "@electron-forge/maker-rpm",
+      platforms: ["linux"],
     },
   ],
   publishers: [
