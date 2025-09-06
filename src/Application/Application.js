@@ -116,11 +116,6 @@ module .exports = class Application
       });
    }
 
-   get applicationShouldQuitAfterLastWindowClosed ()
-   {
-      return true || process .platform !== "darwin" || process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT";
-   }
-
    get title ()
    {
       return this .mainWindow .title;
@@ -1171,9 +1166,6 @@ module .exports = class Application
 
    quit ()
    {
-      if (!this .applicationShouldQuitAfterLastWindowClosed)
-         return;
-
       Template .removeAll ();
       electron .app .quit ();
    }
