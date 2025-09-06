@@ -10,7 +10,7 @@ const args = process .argv .slice (2);
 
 process .chdir (path .resolve (__dirname, ".."));
 
-const p = spawn (cmd, ["start", "--silent", "--", ... args], { cwd });
+const p = spawn (cmd, ["start", "--silent", "--", ... args], { cwd, shell: true });
 
 p .stdout .pipe (process .stdout);
 p .stderr .pipe (process .stderr);
