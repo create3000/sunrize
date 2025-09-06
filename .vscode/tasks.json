@@ -6,7 +6,7 @@
         {
             "label": "Open Sunrize",
             "type": "shell",
-            "command": "npm run development -- `echo -n \"[\\\"${file}\\\"]\" | grep -E '\\.(?:x3d|x3dz|x3dv|x3dvz|x3dj|x3djz|gltf|glb|obj|stl|svg|svgz)' | base64` 2>&1 | grep -v -E '^\\d'",
+            "command": "npm run development",
             "problemMatcher": [],
         },
         {
