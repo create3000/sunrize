@@ -4,15 +4,16 @@
 const os = require ("os");
 const path = require ("path");
 const { spawn } = require ("child_process");
-const win = os .platform () === "win32";
-const cwd = process .cwd ();
+const dir = process .cwd ();
+const cwd = path .resolve (__dirname, "..");
 const args = process .argv .slice (2);
 
-process .chdir (path .resolve (__dirname, ".."));
+args .unshift ("start", "--silent", "--");
+args .push ("--cwd", dir);
 
-const p = win
-   ? spawn ("cmd.exe", ["/c", "npm.cmd", "start", "--silent", "--", ... args], { cwd })
-   : spawn ("npm", ["start", "--silent", "--", ... args], { cwd });
+const p = os .platform () === "win32"
+   ? spawn ("cmd.exe", ["/c", "npm.cmd", ... args], { cwd })
+   : spawn ("npm", args, { cwd });
 
 p .stdout .pipe (process .stdout);
 p .stderr .pipe (process .stderr);
