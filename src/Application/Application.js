@@ -384,9 +384,14 @@ module .exports = class Application
                   },
                   { type: "separator" },
                   {
-                     label: _("Close"),
+                     label: _("Close Tab"),
                      accelerator: "CmdOrCtrl+W",
-                     click: () => this .mainWindow .webContents .send ("close"),
+                     click: () => this .mainWindow .webContents .send ("close-tab"),
+                  },
+                  {
+                     label: _("Close All Tabs"),
+                     accelerator: "Option+CmdOrCtrl+W",
+                     click: () => this .mainWindow .webContents .send ("close-all-tabs"),
                   },
                   ... process .platform === "darwin" ?
                   [ ]
