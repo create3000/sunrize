@@ -429,19 +429,6 @@ module .exports = class Application
                      { type: "separator" },
                      { role: "selectAll" },
                   ],
-                  { type: "separator" },
-                  {
-                     label: _("Toggle Line Comment"),
-                     accelerator: process .platform === "darwin" ? "CmdOrCtrl+Shift+7" : "CmdOrCtrl+#",
-                     enabled: this .menuOptions .monacoEditor,
-                     click: () => this .mainWindow .webContents .send ("script-editor", "runAction", "editor.action.commentLine"),
-                  },
-                  {
-                     label: _("Toggle Block Comment"),
-                     accelerator: "Alt+Shift+A",
-                     enabled: this .menuOptions .monacoEditor,
-                     click: () => this .mainWindow .webContents .send ("script-editor", "runAction", "editor.action.blockComment"),
-                  },
                ]
             }
             : this .menuOptions .monacoEditor ?
@@ -466,13 +453,11 @@ module .exports = class Application
                   {
                      label: _("Toggle Line Comment"),
                      accelerator: process .platform === "darwin" ? "CmdOrCtrl+Shift+7" : "CmdOrCtrl+#",
-                     enabled: this .menuOptions .monacoEditor,
                      click: () => this .mainWindow .webContents .send ("script-editor", "runAction", "editor.action.commentLine"),
                   },
                   {
                      label: _("Toggle Block Comment"),
                      accelerator: "Alt+Shift+A",
-                     enabled: this .menuOptions .monacoEditor,
                      click: () => this .mainWindow .webContents .send ("script-editor", "runAction", "editor.action.blockComment"),
                   },
                ]
