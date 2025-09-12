@@ -318,7 +318,7 @@ module .exports = class Document extends Interface
          },
       ];
 
-      electron .ipcRenderer .send ("context-menu", "input-context-menu", menu);
+      electron .ipcRenderer .send ("context-menu", "default-context-menu", menu);
    }
 
    updateEditMenu (menu)
