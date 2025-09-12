@@ -368,89 +368,86 @@ module .exports = class ScriptEditor extends Interface
       "ShaderPart": "c",
    };
 
-   getEditor (node)
+   async getEditor (node)
    {
-      return new Promise ((resolve, reject) =>
+      if (!this .editors .has (node))
+         this .editors .set (node, await this .createEditor (node));
+
+      return this .editors .get (node);
+   }
+
+   createEditor (node)
+   {
+      return new Promise (resolve =>
       {
-         if (this .editors .has (node))
+         monacoLoader .require (["vs/editor/editor.main"], ({ m: monaco }) =>
          {
-            resolve (this .editors .get (node));
-         }
-         else
-         {
-            monacoLoader .require (["vs/editor/editor.main"], ({ m: monaco }) =>
+            const element = $("<div></div>") .addClass ("script-editor-monaco");
+
+            const editor = monaco .editor .create (element .get (0),
             {
-               const element = $("<div></div>") .addClass ("script-editor-monaco");
-
-               const editor = monaco .editor .create (element .get (0),
-               {
-                  language: this .languages [node .getTypeName ()],
-                  contextmenu: false,
-                  automaticLayout: true,
-                  wordWrap: "on",
-                  wrappingIndent: "indent",
-                  minimap: { enabled: false },
-                  bracketPairColorization: { enabled: true },
-               });
-
-               editor .onDidFocusEditorWidget (() => this .setDeclarations (monaco));
-               editor .onDidBlurEditorWidget (() => this .apply ());
-
-               editor .onKeyDown ((event) =>
-               {
-                  const { keyCode, ctrlKey, metaKey } = event;
-
-                  switch (keyCode)
-                  {
-                     case 33: // c
-                     {
-                        if (metaKey || ctrlKey)
-                        {
-                           event .preventDefault ();
-                           event .stopPropagation ();
-                           this .cutOrCopy (false);
-                        }
-
-                        break;
-                     }
-                     case 52: // v
-                     {
-                        if (metaKey || ctrlKey)
-                        {
-                           event .preventDefault ();
-                           event .stopPropagation ();
-                           this .paste ();
-                        }
-
-                        break;
-                     }
-                     case 54: // x
-                     {
-                        if (metaKey || ctrlKey)
-                        {
-                           event .preventDefault ();
-                           event .stopPropagation ();
-                           this .cutOrCopy (true);
-                        }
-
-                        break;
-                     }
-                  }
-               });
-
-               editor .viewState = editor .saveViewState ();
-
-               element .on ("mouseenter", () => this .setDeclarations (monaco))
-               element .on ("contextmenu", () => this .showContextMenu ());
-
-               // this .debugFindActions (editor)
-               this .editors .set (node, { element, editor, monaco });
-
-               // Return editor.
-
-               resolve (this .editors .get (node));
+               language: this .languages [node .getTypeName ()],
+               contextmenu: false,
+               automaticLayout: true,
+               wordWrap: "on",
+               wrappingIndent: "indent",
+               minimap: { enabled: false },
+               bracketPairColorization: { enabled: true },
             });
-         }
+
+            editor .onDidFocusEditorWidget (() => this .setDeclarations (monaco));
+            editor .onDidBlurEditorWidget (() => this .apply ());
+
+            editor .onKeyDown ((event) =>
+            {
+               const { keyCode, ctrlKey, metaKey } = event;
+
+               switch (keyCode)
+               {
+                  case 33: // c
+                  {
+                     if (metaKey || ctrlKey)
+                     {
+                        event .preventDefault ();
+                        event .stopPropagation ();
+                        this .cutOrCopy (false);
+                     }
+
+                     break;
+                  }
+                  case 52: // v
+                  {
+                     if (metaKey || ctrlKey)
+                     {
+                        event .preventDefault ();
+                        event .stopPropagation ();
+                        this .paste ();
+                     }
+
+                     break;
+                  }
+                  case 54: // x
+                  {
+                     if (metaKey || ctrlKey)
+                     {
+                        event .preventDefault ();
+                        event .stopPropagation ();
+                        this .cutOrCopy (true);
+                     }
+
+                     break;
+                  }
+               }
+            });
+
+            editor .viewState = editor .saveViewState ();
+
+            element .on ("mouseenter", () => this .setDeclarations (monaco))
+            element .on ("contextmenu", () => this .showContextMenu ());
+
+            // this .debugFindActions (editor)
+            resolve ({ element, editor, monaco });
+         });
       });
    }
 
