@@ -446,9 +446,18 @@ module .exports = class Application
                      click: () => this .mainWindow .webContents .send ("script-editor", "triggerEvent", "keyboard", "redo", null),
                   },
                   { type: "separator" },
-                  { role: "cut" },
-                  { role: "copy" },
-                  { role: "paste" },
+                  {
+                     role: "cut",
+                     click: () => this .mainWindow .webContents .send ("script-editor", "cutOrCopy", "cut"),
+                  },
+                  {
+                     role: "copy",
+                     click: () => this .mainWindow .webContents .send ("script-editor", "cutOrCopy", "copy"),
+                  },
+                  {
+                     role: "paste",
+                     click: () => this .mainWindow .webContents .send ("script-editor", "paste"),
+                  },
                   { type: "separator" },
                   {
                      label: _("Toggle Line Comment"),
