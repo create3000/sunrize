@@ -290,32 +290,14 @@ module .exports = class Document extends Interface
          return;
 
       const menu = [
-         {
-            label: "Undo",
-            role: "undo",
-         },
-         {
-            label: "Redo",
-            role: "redo",
-         },
+         { role: "undo", accelerator: "CmdOrCtrl+Z" },
+         { role: "redo", accelerator: "Shift+CmdOrCtrl+Z" },
          { type: "separator" },
-         {
-            label: "Cut",
-            role: "cut",
-         },
-         {
-            label: "Copy",
-            role: "copy",
-         },
-         {
-            label: "Paste",
-            role: "paste",
-         },
+         { role: "cut", accelerator: "CmdOrCtrl+X" },
+         { role: "copy", accelerator: "CmdOrCtrl+C" },
+         { role: "paste", accelerator: "CmdOrCtrl+P" },
          { type: "separator" },
-         {
-            label: "Select all",
-            role: "selectall",
-         },
+         { role: "selectAll", accelerator: "CmdOrCtrl+A" },
       ];
 
       electron .ipcRenderer .send ("context-menu", "default-context-menu", menu);
