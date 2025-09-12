@@ -397,48 +397,7 @@ module .exports = class ScriptEditor extends Interface
 
             editor .onDidFocusEditorWidget (() => this .setDeclarations (monaco));
             editor .onDidBlurEditorWidget (() => this .apply ());
-
-            editor .onKeyDown ((event) =>
-            {
-               const { keyCode, ctrlKey, metaKey } = event;
-
-               switch (keyCode)
-               {
-                  case 33: // c
-                  {
-                     if (metaKey || ctrlKey)
-                     {
-                        event .preventDefault ();
-                        event .stopPropagation ();
-                        this .cutOrCopy ("copy");
-                     }
-
-                     break;
-                  }
-                  case 52: // v
-                  {
-                     if (metaKey || ctrlKey)
-                     {
-                        event .preventDefault ();
-                        event .stopPropagation ();
-                        this .paste ();
-                     }
-
-                     break;
-                  }
-                  case 54: // x
-                  {
-                     if (metaKey || ctrlKey)
-                     {
-                        event .preventDefault ();
-                        event .stopPropagation ();
-                        this .cutOrCopy ("cut");
-                     }
-
-                     break;
-                  }
-               }
-            });
+            editor .onKeyDown (event => this .onKeyDown (event));
 
             editor .viewState = editor .saveViewState ();
 
@@ -449,6 +408,45 @@ module .exports = class ScriptEditor extends Interface
             resolve ({ element, editor, monaco });
          });
       });
+   }
+
+   onKeyDown (event)
+   {
+      const { keyCode, ctrlKey, metaKey } = event;
+
+      switch (keyCode)
+      {
+         case 33: // c
+         {
+            if (!(metaKey || ctrlKey))
+               break;
+
+            event .preventDefault ();
+            event .stopPropagation ();
+            this .cutOrCopy ("copy");
+            break;
+         }
+         case 52: // v
+         {
+            if (!(metaKey || ctrlKey))
+               break;
+
+            event .preventDefault ();
+            event .stopPropagation ();
+            this .paste ();
+            break;
+         }
+         case 54: // x
+         {
+            if (!(metaKey || ctrlKey))
+               break;
+
+            event .preventDefault ();
+            event .stopPropagation ();
+            this .cutOrCopy ("cut");
+            break;
+         }
+      }
    }
 
    async showContextMenu ()
