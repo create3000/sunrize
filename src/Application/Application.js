@@ -937,7 +937,7 @@ module .exports = class Application
       {
          if (menuItem .submenu)
             this .addMenuItemHandlers (id, menuItem .submenu);
-         else
+         else if (menuItem .args)
             menuItem .click = () => this .mainWindow .webContents .send (id, ... menuItem .args);
       }
 

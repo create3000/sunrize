@@ -272,7 +272,53 @@ module .exports = class Document extends Interface
    {
       this .activeElement = document .activeElement ? $(document .activeElement) : null;
 
+      if (this .activeElement ?.is ("input, textarea"))
+      {
+         this .activeElement
+            .off ("contextmenu.Document")
+            .on ("contextmenu.Document", () => this .showContextMenu ());
+      }
+
       electron .ipcRenderer .send ("update-menu", this .updateEditMenu ({ }));
+   }
+
+   async showContextMenu ()
+   {
+      await $.sleep ();
+
+      if (this .activeElementIsMonacoEditor ())
+         return;
+
+      const menu = [
+         {
+            label: "Undo",
+            role: "undo",
+         },
+         {
+            label: "Redo",
+            role: "redo",
+         },
+         { type: "separator" },
+         {
+            label: "Cut",
+            role: "cut",
+         },
+         {
+            label: "Copy",
+            role: "copy",
+         },
+         {
+            label: "Paste",
+            role: "paste",
+         },
+         { type: "separator" },
+         {
+            label: "Select all",
+            role: "selectall",
+         },
+      ];
+
+      electron .ipcRenderer .send ("context-menu", "input-context-menu", menu);
    }
 
    updateEditMenu (menu)
