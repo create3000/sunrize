@@ -494,15 +494,9 @@ module .exports = class Application
                      click: () => this .mainWindow .webContents .send ("redo"),
                   },
                   { type: "separator" },
-                  {
-                     role: "cut",
-                  },
-                  {
-                     role: "copy",
-                  },
-                  {
-                     role: "paste",
-                  },
+                  { role: "cut" },
+                  { role: "copy" },
+                  { role: "paste" },
                   {
                      label: _("Delete"),
                      accelerator: "CmdOrCtrl+Backspace",
