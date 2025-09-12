@@ -380,9 +380,7 @@ module .exports = class ScriptEditor extends Interface
          {
             monacoLoader .require (["vs/editor/editor.main"], ({ m: monaco }) =>
             {
-               const element = $("<div></div>")
-                  .addClass ("script-editor-monaco")
-                  .appendTo (this .verticalSplitterRight);
+               const element = $("<div></div>") .addClass ("script-editor-monaco");
 
                const editor = monaco .editor .create (element .get (0),
                {
@@ -444,7 +442,6 @@ module .exports = class ScriptEditor extends Interface
 
                element .on ("mouseenter", () => this .setDeclarations (monaco))
                element .on ("contextmenu", () => this .showContextMenu ());
-               element .detach ();
 
                // this .debugFindActions (editor)
                this .editors .set (node, { element, editor, monaco });
