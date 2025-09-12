@@ -436,12 +436,12 @@ module .exports = class Application
                role: "editMenu",
                submenu: [
                   {
-                     label: "Undo",
+                     label: _("Undo"),
                      accelerator: "CmdOrCtrl+Z",
                      click: () => this .mainWindow .webContents .send ("script-editor", "triggerEvent", "keyboard", "undo", null),
                   },
                   {
-                     label: "Redo",
+                     label: _("Redo"),
                      accelerator: "CmdOrCtrl+Shift+Z",
                      click: () => this .mainWindow .webContents .send ("script-editor", "triggerEvent", "keyboard", "redo", null),
                   },
