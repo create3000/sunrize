@@ -400,11 +400,11 @@ module .exports = class ScriptEditor extends Interface
          bracketPairColorization: { enabled: true },
       });
 
+      editor .viewState = editor .saveViewState ();
+
       editor .onDidFocusEditorWidget (() => this .setDeclarations (monaco));
       editor .onDidBlurEditorWidget (() => this .apply ());
       editor .onKeyDown (event => this .onKeyDown (event));
-
-      editor .viewState = editor .saveViewState ();
 
       element .on ("mouseenter", () => this .setDeclarations (monaco));
       element .on ("contextmenu", () => this .showContextMenu ());
