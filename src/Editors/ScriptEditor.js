@@ -1,22 +1,22 @@
 "use strict";
 
 const
-   $           = require ("jquery"),
-   electron    = require ("electron"),
-   path        = require ("path"),
-   url         = require ("url"),
-   fs          = require ("fs"),
-   X3D         = require ("../X3D"),
-   Interface   = require ("../Application/Interface"),
-   Splitter    = require ("../Controls/Splitter"),
-   NodeList    = require ("./NodeList"),
-   Console     = require ("./Console"),
-   Editor      = require ("../Undo/Editor"),
-   UndoManager = require ("../Undo/UndoManager"),
-   monaco      = require ("monaco-editor/min/vs/loader.js"),
-   _           = require ("../Application/GetText");
+   $            = require ("jquery"),
+   electron     = require ("electron"),
+   path         = require ("path"),
+   url          = require ("url"),
+   fs           = require ("fs"),
+   X3D          = require ("../X3D"),
+   Interface    = require ("../Application/Interface"),
+   Splitter     = require ("../Controls/Splitter"),
+   NodeList     = require ("./NodeList"),
+   Console      = require ("./Console"),
+   Editor       = require ("../Undo/Editor"),
+   UndoManager  = require ("../Undo/UndoManager"),
+   monacoLoader = require ("monaco-editor/min/vs/loader.js"),
+   _            = require ("../Application/GetText");
 
-monaco .require .config ({
+monacoLoader .require .config ({
    baseUrl: url .pathToFileURL (path .resolve (path .dirname (require .resolve ("monaco-editor/package.json")), "min")) + "/",
 });
 
@@ -139,7 +139,7 @@ module .exports = class ScriptEditor extends Interface
 
    colorScheme (shouldUseDarkColors)
    {
-      monaco .require (["vs/editor/editor.main"], monaco =>
+      monacoLoader .require (["vs/editor/editor.main"], ({ m: monaco }) =>
       {
          monaco .editor .setTheme (shouldUseDarkColors ? "vs-dark" : "vs-light");
       });
@@ -378,19 +378,11 @@ module .exports = class ScriptEditor extends Interface
          }
          else
          {
-            monaco .require (["vs/editor/editor.main"], monaco =>
+            monacoLoader .require (["vs/editor/editor.main"], ({ m: monaco }) =>
             {
                const element = $("<div></div>")
                   .addClass ("script-editor-monaco")
                   .appendTo (this .verticalSplitterRight);
-
-               self .MonacoEnvironment =
-               {
-                  getWorkerUrl (moduleId, label)
-                  {
-                     return url .pathToFileURL (require .resolve ("monaco-editor/min/vs/base/worker/workerMain.js"));
-                  },
-               };
 
                const editor = monaco .editor .create (element .get (0),
                {
@@ -410,10 +402,41 @@ module .exports = class ScriptEditor extends Interface
                {
                   const { keyCode, ctrlKey, metaKey } = event;
 
-                  if (keyCode === 52 && (metaKey || ctrlKey))
+                  switch (keyCode)
                   {
-                     event .preventDefault ();
-                     this .paste ();
+                     case 33: // c
+                     {
+                        if (metaKey || ctrlKey)
+                        {
+                           event .preventDefault ();
+                           event .stopPropagation ();
+                           this .cutOrCopy (false);
+                        }
+
+                        break;
+                     }
+                     case 52: // v
+                     {
+                        if (metaKey || ctrlKey)
+                        {
+                           event .preventDefault ();
+                           event .stopPropagation ();
+                           this .paste ();
+                        }
+
+                        break;
+                     }
+                     case 54: // x
+                     {
+                        if (metaKey || ctrlKey)
+                        {
+                           event .preventDefault ();
+                           event .stopPropagation ();
+                           this .cutOrCopy (true);
+                        }
+
+                        break;
+                     }
                   }
                });
 
