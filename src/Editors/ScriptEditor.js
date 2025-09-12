@@ -137,12 +137,19 @@ module .exports = class ScriptEditor extends Interface
       this .setup ();
    }
 
-   colorScheme (shouldUseDarkColors)
+   getMonaco ()
    {
-      monacoLoader .require (["vs/editor/editor.main"], ({ m: monaco }) =>
+      return new Promise (resolve =>
       {
-         monaco .editor .setTheme (shouldUseDarkColors ? "vs-dark" : "vs-light");
+         monacoLoader .require (["vs/editor/editor.main"], ({ m: monaco }) => resolve (monaco));
       });
+   }
+
+   async colorScheme (shouldUseDarkColors)
+   {
+      const monaco = await this .getMonaco ();
+
+      monaco .editor .setTheme (shouldUseDarkColors ? "vs-dark" : "vs-light");
    }
 
    async setNode (node)
@@ -376,38 +383,34 @@ module .exports = class ScriptEditor extends Interface
       return this .editors .get (node);
    }
 
-   createEditor (node)
+   async createEditor (node)
    {
-      return new Promise (resolve =>
+      const
+         monaco  = await this .getMonaco (),
+         element = $("<div></div>") .addClass ("script-editor-monaco");
+
+      const editor = monaco .editor .create (element .get (0),
       {
-         monacoLoader .require (["vs/editor/editor.main"], ({ m: monaco }) =>
-         {
-            const element = $("<div></div>") .addClass ("script-editor-monaco");
-
-            const editor = monaco .editor .create (element .get (0),
-            {
-               language: this .languages [node .getTypeName ()],
-               contextmenu: false,
-               automaticLayout: true,
-               wordWrap: "on",
-               wrappingIndent: "indent",
-               minimap: { enabled: false },
-               bracketPairColorization: { enabled: true },
-            });
-
-            editor .onDidFocusEditorWidget (() => this .setDeclarations (monaco));
-            editor .onDidBlurEditorWidget (() => this .apply ());
-            editor .onKeyDown (event => this .onKeyDown (event));
-
-            editor .viewState = editor .saveViewState ();
-
-            element .on ("mouseenter", () => this .setDeclarations (monaco))
-            element .on ("contextmenu", () => this .showContextMenu ());
-
-            // this .debugFindActions (editor)
-            resolve ({ element, editor, monaco });
-         });
+         language: this .languages [node .getTypeName ()],
+         contextmenu: false,
+         automaticLayout: true,
+         wordWrap: "on",
+         wrappingIndent: "indent",
+         minimap: { enabled: false },
+         bracketPairColorization: { enabled: true },
       });
+
+      editor .onDidFocusEditorWidget (() => this .setDeclarations (monaco));
+      editor .onDidBlurEditorWidget (() => this .apply ());
+      editor .onKeyDown (event => this .onKeyDown (event));
+
+      editor .viewState = editor .saveViewState ();
+
+      element .on ("mouseenter", () => this .setDeclarations (monaco));
+      element .on ("contextmenu", () => this .showContextMenu ());
+
+      // this .debugFindActions (editor)
+      return { element, editor, monaco };
    }
 
    onKeyDown (event)
