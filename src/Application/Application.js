@@ -477,7 +477,7 @@ module .exports = class Application
                   },
                ]
             }
-            :
+            : // Outline Editor, Browser
             {
                role: "editMenu",
                submenu: [
