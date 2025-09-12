@@ -3448,7 +3448,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       const nodesToRemove = this .#nodesToRemove .get (executionContext);
 
-      for (const node of nodes)
+      for (const node of nodes .filter (node => node))
          nodesToRemove .push (node .valueOf ());
 
       if (undoManager .defer ("removeNodesFromExecutionContextIfNecessary"))

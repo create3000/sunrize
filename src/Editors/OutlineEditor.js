@@ -151,6 +151,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             { type: "separator" },
             {
                label: _("Paste"),
+               accelerator: "CmdOrCtrl+V",
                visible: field .getType () === X3D .X3DConstants .SFNode || field .getType () === X3D .X3DConstants .MFNode,
                args: ["pasteNodes", element .attr ("id"), executionContext .getId (), node .getId (), field .getId ()],
             },
@@ -223,18 +224,22 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                { type: "separator" },
                {
                   label: _("Cut"),
+                  accelerator: "CmdOrCtrl+X",
                   args: ["cutNodes"],
                },
                {
                   label: _("Copy"),
+                  accelerator: "CmdOrCtrl+C",
                   args: ["copyNodes"],
                },
                {
                   label: _("Paste"),
+                  accelerator: "CmdOrCtrl+V",
                   args: ["pasteNodes", element .attr ("id"), executionContext .getId (), node .getId ()],
                },
                {
                   label: _("Delete"),
+                  accelerator: "CmdOrCtrl+Backspace",
                   args: ["deleteNodes"],
                },
                {
@@ -537,14 +542,17 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             var menu = [
                {
                   label: _("Cut"),
+                  accelerator: "CmdOrCtrl+X",
                   args: ["cutNodes"],
                },
                {
                   label: _("Copy"),
+                  accelerator: "CmdOrCtrl+C",
                   args: ["copyNodes"],
                },
                {
                   label: _("Delete"),
+                  accelerator: "CmdOrCtrl+Backspace",
                   args: ["deleteNodes"],
                },
             ];
@@ -670,6 +678,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             },
             {
                label: _("Paste"),
+               accelerator: "CmdOrCtrl+V",
                args: ["pasteNodes", element .attr ("id"), executionContext .getId ()],
             },
          ];
