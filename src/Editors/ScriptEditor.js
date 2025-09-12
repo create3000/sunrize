@@ -410,7 +410,7 @@ module .exports = class ScriptEditor extends Interface
                      {
                         event .preventDefault ();
                         event .stopPropagation ();
-                        this .cutOrCopy (false);
+                        this .cutOrCopy ("copy");
                      }
 
                      break;
@@ -432,7 +432,7 @@ module .exports = class ScriptEditor extends Interface
                      {
                         event .preventDefault ();
                         event .stopPropagation ();
-                        this .cutOrCopy (true);
+                        this .cutOrCopy ("cut");
                      }
 
                      break;
@@ -502,11 +502,11 @@ module .exports = class ScriptEditor extends Interface
          { type: "separator" },
          {
             label: _("Cut"),
-            args: ["cutOrCopy", true],
+            args: ["cutOrCopy", "cut"],
          },
          {
             label: _("Copy"),
-            args: ["cutOrCopy", false],
+            args: ["cutOrCopy", "copy"],
          },
          {
             label: _("Paste"),
@@ -581,7 +581,7 @@ module .exports = class ScriptEditor extends Interface
    //    document .execCommand (command);
    // }
 
-   cutOrCopy (cut)
+   cutOrCopy (type)
    {
       this .editor .focus ();
 
@@ -600,7 +600,7 @@ module .exports = class ScriptEditor extends Interface
       // Set the clipboard contents.
       navigator .clipboard .writeText (data || "");
 
-      if (!cut)
+      if (type === "copy")
          return;
 
       // This is a cut operation, so replace the selection with an empty string.
