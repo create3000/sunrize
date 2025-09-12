@@ -503,14 +503,17 @@ module .exports = class ScriptEditor extends Interface
          { type: "separator" },
          {
             label: _("Cut"),
+            accelerator: "CmdOrCtrl+X",
             args: ["cutOrCopy", "cut"],
          },
          {
             label: _("Copy"),
+            accelerator: "CmdOrCtrl+C",
             args: ["cutOrCopy", "copy"],
          },
          {
             label: _("Paste"),
+            accelerator: "CmdOrCtrl+V",
             args: ["paste"],
          },
          { type: "separator" },
