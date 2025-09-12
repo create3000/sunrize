@@ -314,6 +314,9 @@ module .exports = class Document extends Interface
       if (!this .activeElement .closest (".monaco-editor") .length)
          return false;
 
+      if (this .activeElement .closest (".ibwrapper") .length)
+         return false;
+
       return true;
    }
 

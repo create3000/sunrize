@@ -227,9 +227,9 @@ module .exports = new class SceneProperties extends Dialog
 
       this .executionContext .getWorldInfos () .addInterest ("updateWorldInfo", this);
 
-      const window = require ("../Application/Window");
+      const app = require ("../Application/Window");
 
-      this .profileAndComponents .inputs .checkbox .prop ("checked", window .config .file .inferProfileAndComponents);
+      this .profileAndComponents .inputs .checkbox .prop ("checked", app .config .file .inferProfileAndComponents);
 
       this .toggleInferProfileAndComponents ();
       this .updateProfile ();
@@ -251,9 +251,9 @@ module .exports = new class SceneProperties extends Dialog
 
    toggleInferProfileAndComponents ()
    {
-      const window = require ("../Application/Window");
+      const app = require ("../Application/Window");
 
-      window .config .file .inferProfileAndComponents = this .profileAndComponents .inputs .checkbox .prop ("checked");
+      app .config .file .inferProfileAndComponents = this .profileAndComponents .inputs .checkbox .prop ("checked");
 
       if (this .profileAndComponents .inputs .checkbox .prop ("checked"))
          this .profileAndComponents .checkboxRow .addClass ("disabled");

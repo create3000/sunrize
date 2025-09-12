@@ -451,8 +451,15 @@ module .exports = class ScriptEditor extends Interface
       });
    }
 
-   showContextMenu ()
+   async showContextMenu ()
    {
+      await $.sleep ();
+
+      const app = require ("../Application/Window");
+
+      if (!app .activeElementIsMonacoEditor ())
+         return;
+
       const menu = [
          // {
          //    label: _("Go to Definition"),
