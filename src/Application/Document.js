@@ -617,6 +617,9 @@ Viewpoint {
       if (this .activeElementIsInputOrOutput ())
          return;
 
+      if (this .activeElementIsMonacoEditor ())
+         return;
+
       this .sidebar .outlineEditor .cutNodes ();
       return false;
    }
@@ -626,6 +629,9 @@ Viewpoint {
       if (this .activeElementIsInputOrOutput ())
          return;
 
+      if (this .activeElementIsMonacoEditor ())
+         return;
+
       this .sidebar .outlineEditor .copyNodes (true);
       return false;
    }
@@ -633,6 +639,9 @@ Viewpoint {
    paste ()
    {
       if (this .activeElementIsInputOrOutput ())
+         return;
+
+      if (this .activeElementIsMonacoEditor ())
          return;
 
       this .sidebar .outlineEditor .pasteNodes ();

@@ -444,6 +444,39 @@ module .exports = class Application
                   },
                ]
             }
+            : this .menuOptions .monacoEditor ?
+            {
+               role: "editMenu",
+               submenu: [
+                  {
+                     label: "Undo",
+                     accelerator: "CmdOrCtrl+Z",
+                     click: () => this .mainWindow .webContents .send ("script-editor", "triggerEvent", "keyboard", "undo", null),
+                  },
+                  {
+                     label: "Redo",
+                     accelerator: "CmdOrCtrl+Shift+Z",
+                     click: () => this .mainWindow .webContents .send ("script-editor", "triggerEvent", "keyboard", "redo", null),
+                  },
+                  { type: "separator" },
+                  { role: "cut" },
+                  { role: "copy" },
+                  { role: "paste" },
+                  { type: "separator" },
+                  {
+                     label: _("Toggle Line Comment"),
+                     accelerator: process .platform === "darwin" ? "CmdOrCtrl+Shift+7" : "CmdOrCtrl+#",
+                     enabled: this .menuOptions .monacoEditor,
+                     click: () => this .mainWindow .webContents .send ("script-editor", "runAction", "editor.action.commentLine"),
+                  },
+                  {
+                     label: _("Toggle Block Comment"),
+                     accelerator: "Alt+Shift+A",
+                     enabled: this .menuOptions .monacoEditor,
+                     click: () => this .mainWindow .webContents .send ("script-editor", "runAction", "editor.action.blockComment"),
+                  },
+               ]
+            }
             :
             {
                role: "editMenu",

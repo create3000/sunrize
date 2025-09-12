@@ -531,6 +531,16 @@ module .exports = class ScriptEditor extends Interface
       this .editor .getAction (id) .run ();
    }
 
+   triggerEvent (... args)
+   {
+      this .editor .trigger (... args);
+   }
+
+   // execCommand (command)
+   // {
+   //    document .execCommand (command);
+   // }
+
    debugFindActions (editor = this .editor)
    {
       for (const action of editor .getSupportedActions ())
@@ -579,11 +589,6 @@ module .exports = class ScriptEditor extends Interface
          }
       }
    }
-
-   // execCommand (command)
-   // {
-   //    document .execCommand (command);
-   // }
 
    cutOrCopy (type)
    {
