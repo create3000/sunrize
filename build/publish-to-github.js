@@ -5,6 +5,7 @@ const { systemSync } = require ("shell-tools");
 
 function main ()
 {
+   systemSync (`git pull origin`);
    systemSync (`npm up`);
    systemSync (`npm i -D electron`);
    systemSync (`electron-forge publish`);
