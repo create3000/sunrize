@@ -1716,7 +1716,7 @@ module .exports = class OutlineView extends Interface
                   .addClass ("input-selector") .appendTo (map);
 
                const inputRoutesSelector = $("<area></area>")
-                  .attr ("title", _("Select routes."))
+                  .attr ("title", _("Select route(s)."))
                   .attr ("shape", "rect")
                   .attr ("coords", "20,0,28,7")
                   .addClass ("input-routes-selector") .appendTo (map);
@@ -1736,7 +1736,7 @@ module .exports = class OutlineView extends Interface
                   .addClass ("output-selector") .appendTo (map);
 
                const outputRoutesSelector = $("<area></area>")
-                  .attr ("title", _("Select routes."))
+                  .attr ("title", _("Select route(s)."))
                   .attr ("shape", "rect")
                   .attr ("coords", "20,5,28,12")
                   .addClass ("output-routes-selector")
@@ -1765,7 +1765,7 @@ module .exports = class OutlineView extends Interface
                   .appendTo (map);
 
                const inputRoutesSelector = $("<area></area>")
-                  .attr ("title", _("Select routes."))
+                  .attr ("title", _("Select route(s)."))
                   .attr ("shape", "rect")
                   .attr ("coords", "34,0,42,7")
                   .addClass ("input-routes-selector")
@@ -1775,7 +1775,7 @@ module .exports = class OutlineView extends Interface
                   inputRoutesSelector .attr ("href", "#");
 
                const outputRoutesSelector = $("<area></area>")
-                  .attr ("title", _("Select routes."))
+                  .attr ("title", _("Select route(s)."))
                   .attr ("shape", "rect")
                   .addClass ("output-routes-selector")
                   .appendTo (map);
@@ -3827,7 +3827,7 @@ module .exports = class OutlineView extends Interface
 
    selectRoutes (type, event)
    {
-      // Select routes.
+      // Select route(s).
    }
 
    selectSingleRoute (type, event)
