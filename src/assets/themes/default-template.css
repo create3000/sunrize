@@ -57,6 +57,7 @@ body {
 
 ::-webkit-resizer {
   background-color: var(--scrollbar-thumb-color);
+  border-top: 2px dotted var(--scrollbar-thumb-color);
 }
 
 /* common */
