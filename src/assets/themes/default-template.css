@@ -55,6 +55,10 @@ body {
   background-color: var(--scrollbar-thumb-color);
 }
 
+::-webkit-resizer {
+  background-color: var(--scrollbar-thumb-color);
+}
+
 /* common */
 
 .green {
