@@ -617,7 +617,7 @@ body.dark .dialog ::placeholder {
 }
 
 .dialog .tabs-panel {
-  padding: 0.5em 1em;
+  margin: 0.5em 1em;
 }
 
 .dialog.ui-dialog {
@@ -677,8 +677,8 @@ body.dark .dialog ::placeholder {
   user-select: none;
   position: absolute;
   overflow: scroll;
-  margin: 10px 0;
-  inset: 75px 0 0 1em;
+  margin: 1rem 1rem 0.5rem 1rem;
+  inset: 75px 0 0 0;
 }
 
 .ui-widget .library-list {
