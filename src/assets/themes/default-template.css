@@ -724,7 +724,7 @@ body.dark .ui-widget .library-list .component {
 /* Node List */
 
 .node-list {
-  overflow: scroll;
+  overflow: auto;
   position: absolute;
   inset: 0 0 0 0;
   padding: 0;
