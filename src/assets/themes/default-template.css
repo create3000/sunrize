@@ -1462,7 +1462,7 @@ body.dark .ui-widget .library-list .component {
 
 .monaco-editor,
 .monaco-editor * {
-  all: revert;
+  all: unset;
 }
 
 /* Fix stange tooltip with placehoder in Find widget */

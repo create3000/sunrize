@@ -120,7 +120,7 @@ module .exports = new class Panel extends Interface
 
       this .container .css ({
          "overflow": "visible",
-         "max-height": "auto",
+         "max-height": "unset",
       });
 
       // Create folders.
