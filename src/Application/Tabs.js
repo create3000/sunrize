@@ -20,6 +20,8 @@ module .exports = new class Tabs
 
    constructor ()
    {
+      $("tab-group") .attr ("platform", process .platform);
+
       this .tabs = $("tab-group") .get (0);
 
       this .config .setDefaultValues ({

@@ -39,27 +39,27 @@ body {
   background: var(--selection-background-color);
 }
 
-::-webkit-scrollbar {
-  width: 15px;
-  height: 15px;
+html:not([platform=darwin]) ::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
 }
 
 /* Track */
-::-webkit-scrollbar-track {
+html:not([platform=darwin]) ::-webkit-scrollbar-track {
   background-color: transparent;
 }
 
 /* Handle */
-::-webkit-scrollbar-thumb {
+html:not([platform=darwin]) ::-webkit-scrollbar-thumb {
   background: var(--system-gray3);
 }
 
-::-webkit-scrollbar-thumb:window-inactive {
+html:not([platform=darwin]) ::-webkit-scrollbar-thumb:window-inactive {
   background: transparent;
 }
 
 /* Corner */
-::-webkit-scrollbar-corner {
+html:not([platform=darwin]) ::-webkit-scrollbar-corner {
   background: transparent;
 }
 
