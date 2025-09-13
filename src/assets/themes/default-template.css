@@ -82,7 +82,7 @@ body {
 
 textarea, input, button, select,
 th, td,
-.ui-widget, .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button, .ui-widget-content {
+.ui-widget, .ui-widget:has(input, select, textarea, button), .ui-widget-content {
   border: none;
   padding: 0;
   background: none;
