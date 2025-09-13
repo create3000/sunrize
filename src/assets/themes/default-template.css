@@ -18,6 +18,8 @@ body {
   color: var(--text-color);
   font-family: var(--sans-serif);
   font-size: var(--font-size);
+  scrollbar-color: var(--system-gray8);
+  scrollbar-width: thin;
 }
 
 .material-symbols-outlined {
@@ -35,6 +37,30 @@ body {
 ::selection {
   color: var(--selection-color);
   background: var(--selection-background-color);
+}
+
+::-webkit-scrollbar {
+  width: 15px;
+  height: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--system-gray3);
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+  background: transparent;
+}
+
+/* Corner */
+::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 /* common */
