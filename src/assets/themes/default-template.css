@@ -18,8 +18,6 @@ body {
   color: var(--text-color);
   font-family: var(--sans-serif);
   font-size: var(--font-size);
-  scrollbar-color: var(--system-gray8);
-  scrollbar-width: thin;
 }
 
 .material-symbols-outlined {
