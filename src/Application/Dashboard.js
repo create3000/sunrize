@@ -92,7 +92,7 @@ module .exports = class Dashboard extends Interface
 
       this .showPanelsButton = $("<span></span>")
          .addClass (["material-symbols-outlined"])
-         .attr ("title", _("Toggle visibility of Panel."))
+         .attr ("title", _("Show Node Panel."))
          .text ("edit_note")
          .appendTo (this .toolbar)
          .on ("click", () => this .togglePanel (!this .config .file .panel));
