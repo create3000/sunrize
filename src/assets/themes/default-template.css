@@ -51,6 +51,7 @@ body {
 }
 
 /* Handle */
+.scroll::-webkit-scrollbar-thumb,
 :hover::-webkit-scrollbar-thumb {
   background-color: var(--scrollbar-thumb-color);
 }
@@ -678,7 +679,7 @@ body.dark .dialog ::placeholder {
   position: absolute;
   overflow: scroll;
   margin: 10px 0;
-  inset: 75px 1em 0 1em;
+  inset: 75px 0 0 1em;
 }
 
 .ui-widget .library-list {
