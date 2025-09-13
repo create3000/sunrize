@@ -50,7 +50,8 @@ body {
 
 /* Handle */
 .scroll::-webkit-scrollbar-thumb,
-:hover::-webkit-scrollbar-thumb {
+:hover::-webkit-scrollbar-thumb,
+:focus::-webkit-scrollbar-thumb {
   background-color: var(--scrollbar-thumb-color);
 }
 
