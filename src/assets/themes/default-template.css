@@ -39,20 +39,20 @@ body {
   background: var(--selection-background-color);
 }
 
-html:not([platform=darwin]) ::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 14px;
   height: 14px;
 }
 
-html:not([platform=darwin]) ::-webkit-scrollbar-track, /* Track */
-html:not([platform=darwin]) ::-webkit-scrollbar-thumb:window-inactive, /* Handle */
-html:not([platform=darwin]) ::-webkit-scrollbar-corner { /* Corner */
+::-webkit-scrollbar-track, /* Track */
+::-webkit-scrollbar-thumb:window-inactive, /* Handle */
+::-webkit-scrollbar-corner { /* Corner */
   background-color: transparent;
 }
 
 /* Handle */
-html:not([platform=darwin]) ::-webkit-scrollbar-thumb {
-  background: var(--system-gray3);
+:hover::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb-color);
 }
 
 /* common */
