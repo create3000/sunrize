@@ -58,8 +58,6 @@ body {
 /* textarea resizer */
 ::-webkit-resizer {
   background-color: var(--scrollbar-thumb-color);
-  border-top: 2px dotted var(--scrollbar-thumb-color);
-  border-left: 2px dotted var(--scrollbar-thumb-color);
 }
 
 /* common */
@@ -1068,11 +1066,6 @@ body.dark .ui-widget .library-list .component {
 }
 
 /* Outline Editor */
-
-/* textarea resizer */
-.outline-editor ::-webkit-resizer {
-  border-left: none;
-}
 
 .scene-graph {
   width: min-content;
