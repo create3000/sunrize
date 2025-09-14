@@ -1,9 +1,10 @@
 module.exports = {
   packagerConfig: {
-    loadingGif: './src/assets/images/loading.gif',
     icon: "./src/assets/images/icon.png",
     dir: "./src",
     ignore: "^/(?!src|package\\.json|node_modules)",
+    certificateFile: "../ssl/certificate.pfx",
+    certificatePassword: process .env .SUNRIZE_CERT_PASSWORD,
     extendInfo: "./src/assets/Info.plist",
     osxSign: {
       optionsForFile: (filePath) => {
@@ -20,6 +21,9 @@ module.exports = {
     {
       name: "@electron-forge/maker-squirrel",
       platforms: ["win32"],
+      config: (arch) => ({
+        loadingGif: './src/assets/images/loading.gif',
+      }),
     },
     // {
     //   name: "@electron-forge/maker-dmg",
