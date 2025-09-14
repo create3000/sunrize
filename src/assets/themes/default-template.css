@@ -376,7 +376,7 @@ tr.disabled ~ tr > td > div {
 
 .ui-tabs > .ui-tabs-nav .ui-tabs-anchor,
 .ui-tabs > .ui-tabs-nav .ui-tabs-active .ui-tabs-anchor {
-  cursor: pointer;
+  cursor: pointer !important;
   color: inherit;
 }
 
