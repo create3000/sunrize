@@ -7,7 +7,7 @@
     <meta name='created' content='Sun, 14 Sep 2025 15:38:13 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.10.0, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 14 Sep 2025 20:48:47 GMT'/>
+    <meta name='modified' content='Sun, 14 Sep 2025 21:34:25 GMT'/>
   </head>
   <Scene>
     <WorldInfo>
@@ -204,5 +204,6 @@
         </Transform>
       </Transform>
     </Switch>
+    <EXPORT localDEF='Points'/>
   </Scene>
 </X3D>

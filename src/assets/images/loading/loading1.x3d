@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Scripting' level='1'/>
+    <meta name='created' content='Sun, 14 Sep 2025 21:33:20 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.10.0, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Sun, 14 Sep 2025 21:49:58 GMT'/>
+  </head>
+  <Scene>
+    <WorldInfo
+        title='loading1'>
+      <MetadataSet containerField='metadata'
+          name='Sunrize'
+          reference='https://create3000.github.io/sunrize/'>
+        <MetadataSet
+            name='BrowserFrame'
+            reference='https://create3000.github.io/sunrize/'>
+          <MetadataBoolean
+              name='fixedSize'
+              reference='https://create3000.github.io/sunrize/'
+              value='true'/>
+          <MetadataDouble
+              name='aspectRatio'
+              reference='https://create3000.github.io/sunrize/'
+              value='1, 1'/>
+          <MetadataString
+              name='backgroundColor'
+              reference='https://create3000.github.io/sunrize/'
+              value='""'/>
+        </MetadataSet>
+      </MetadataSet>
+    </WorldInfo>
+    <Viewpoint
+        description='Initial View'/>
+    <Inline DEF='_3'
+        url='"loading.x3d"'/>
+    <LoadSensor DEF='_2'>
+      <Inline USE='_3'/>
+    </LoadSensor>
+    <Script DEF='FrameScript'>
+      <field accessType='inputOnly' type='SFTime' name='set_loadTime'/>
+      <field accessType='initializeOnly' type='SFInt32' name='whichChoice'/>
+      <field accessType='outputOnly' type='SFInt32' name='whichChoice_changed'/>
+<![CDATA[ecmascript:
+
+function set_loadTime ()
+{
+   whichChoice_changed = whichChoice;
+}
+]]>
+    </Script>
+    <IMPORT inlineDEF='_3' importedDEF='Points'/>
+    <ROUTE fromNode='_2' fromField='loadTime' toNode='FrameScript' toField='set_loadTime'/>
+    <ROUTE fromNode='FrameScript' fromField='whichChoice_changed' toNode='Points' toField='set_whichChoice'/>
+  </Scene>
+</X3D>
