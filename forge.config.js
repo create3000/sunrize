@@ -24,6 +24,7 @@ module.exports = {
       config: (arch) => ({
         loadingGif: "./src/assets/images/loading.gif",
         setupIcon: "./src/assets/images/icon.ico",
+        iconUrl: "https://github.com/create3000/sunrize/raw/refs/heads/development/src/assets/images/icon.ico",
         // certificateFile: "../ssl/certificate.pfx",
         // certificatePassword: process .env .SUNRIZE_CERT_PASSWORD,
       }),
