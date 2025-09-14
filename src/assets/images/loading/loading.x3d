@@ -7,7 +7,7 @@
     <meta name='created' content='Sun, 14 Sep 2025 15:38:13 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.10.0, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 14 Sep 2025 16:28:48 GMT'/>
+    <meta name='modified' content='Sun, 14 Sep 2025 17:07:59 GMT'/>
   </head>
   <Scene>
     <WorldInfo>
@@ -36,7 +36,7 @@
         skyColor='1 1 1'/>
     <Viewpoint
         description='Initial View'/>
-    <Transform DEF='Rectangle2D'
+    <Transform DEF='Rectangle2D_1'
         translation='0 0 -1'
         scale='5.269842 5.269842 5.269842'>
       <Shape>
@@ -48,7 +48,7 @@
       </Shape>
     </Transform>
     <Transform DEF='Logo'
-        translation='-0.4131285 0.8825043 -0'
+        translation='-0.4131285 0.8825043 -0.1'
         scale='82.62918 82.62918 82.62918'
         center='0.06477464 -0.07640937 0'>
       <Transform DEF='g1'
@@ -56,7 +56,7 @@
           rotation='0 1 0 3.14159265358979'
           scale='-0.004452366 -0.004452366 -1'>
         <Shape>
-          <Appearance>
+          <Appearance DEF='_1'>
             <UnlitMaterial
                 emissiveColor='0.8431373 0.1215686 0.1215686'/>
           </Appearance>
@@ -68,7 +68,7 @@
           </IndexedTriangleSet>
         </Shape>
         <Shape>
-          <Appearance>
+          <Appearance DEF='_2'>
             <UnlitMaterial
                 emissiveColor='1 0.6235294 0.1803922'/>
           </Appearance>
@@ -80,7 +80,7 @@
           </IndexedTriangleSet>
         </Shape>
         <Shape>
-          <Appearance>
+          <Appearance DEF='_3'>
             <UnlitMaterial
                 emissiveColor='1 0.8901961 0.1764706'/>
           </Appearance>
@@ -93,7 +93,20 @@
         </Shape>
       </Transform>
     </Transform>
-    <Group>
+    <Transform DEF='Rectangle2D'
+        translation='-0.08522638 -1.483046 -0.05'
+        scale='4.587256 1.785739 1'>
+      <Shape>
+        <Appearance>
+          <UnlitMaterial
+              emissiveColor='0.6 0.6 0.6'
+              transparency='0.7132073'/>
+        </Appearance>
+        <Rectangle2D/>
+      </Shape>
+    </Transform>
+    <Transform DEF='Text_2'
+        translation='-4.106466 0.6690564 0'>
       <Transform DEF='Text_1'
           translation='0.3264987 -2.251147 0'
           scale='0.7319125 0.7319125 0.7319125'>
@@ -101,12 +114,12 @@
           <Appearance>
             <UnlitMaterial/>
           </Appearance>
-          <Text
+          <Text DEF='_4'
               string='"Sunrize", "X3D Editor"'>
             <FontStyle
                 family='"Higher%20Jump.ttf", "Wasted-Vindey.ttf"'
                 spacing='2.2'
-                justify='"MIDDLE", "MIDDLE"'/>
+                justify='"BEGIN", "MIDDLE"'/>
           </Text>
         </Shape>
       </Transform>
@@ -118,15 +131,69 @@
             <UnlitMaterial
                 emissiveColor='0 0 0'/>
           </Appearance>
-          <Text
-              string='"Sunrize", "X3D Editor"'>
-            <FontStyle
-                family='"Higher%20Jump.ttf", "Wasted-Vindey.ttf"'
-                spacing='2.2'
-                justify='"MIDDLE", "MIDDLE"'/>
-          </Text>
+          <Text USE='_4'/>
         </Shape>
       </Transform>
-    </Group>
+    </Transform>
+    <Switch DEF='Points'
+        whichChoice='2'>
+      <Transform
+          translation='2.306195 -0.1241205 0'>
+        <Transform DEF='Disk2D_3'
+            translation='0 -3.539849 0'>
+          <Shape DEF='_5'>
+            <Appearance USE='_1'/>
+            <Disk2D
+                outerRadius='0.1864754'/>
+          </Shape>
+        </Transform>
+        <Transform DEF='Disk2D_4'
+            translation='0.6 -3.539849 0'>
+          <Shape USE='_5'/>
+        </Transform>
+        <Transform DEF='Disk2D_5'
+            translation='1.2 -3.539849 0'>
+          <Shape USE='_5'/>
+        </Transform>
+      </Transform>
+      <Transform
+          translation='2.306195 -0.1241205 0'>
+        <Transform DEF='Disk2D_6'
+            translation='0 -3.539849 0'>
+          <Shape DEF='_6'>
+            <Appearance USE='_2'/>
+            <Disk2D
+                outerRadius='0.1864754'/>
+          </Shape>
+        </Transform>
+        <Transform DEF='Disk2D_7'
+            translation='0.6 -3.539849 0'>
+          <Shape USE='_6'/>
+        </Transform>
+        <Transform DEF='Disk2D_8'
+            translation='1.2 -3.539849 0'>
+          <Shape USE='_6'/>
+        </Transform>
+      </Transform>
+      <Transform
+          translation='2.306195 -0.1241205 0'>
+        <Transform DEF='Disk2D_1'
+            translation='0 -3.539849 0'>
+          <Shape DEF='_7'>
+            <Appearance USE='_3'/>
+            <Disk2D
+                outerRadius='0.1864754'/>
+          </Shape>
+        </Transform>
+        <Transform DEF='Disk2D_2'
+            translation='0.6 -3.539849 0'>
+          <Shape USE='_7'/>
+        </Transform>
+        <Transform DEF='Disk2D'
+            translation='1.2 -3.539849 0'>
+          <Shape USE='_7'/>
+        </Transform>
+      </Transform>
+    </Switch>
   </Scene>
 </X3D>
