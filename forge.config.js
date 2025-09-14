@@ -25,7 +25,7 @@ module.exports = {
       platforms: ["win32"],
       config: (arch) => ({
         loadingGif: "./src/assets/images/loading.gif",
-        setupIcon: path .resolve (__dirname, "src", "assets", "images", "icon.ico"),
+        setupIcon: "./src/assets/images/icon.ico",
       }),
     },
     // {
