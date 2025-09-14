@@ -27,7 +27,8 @@
     "docs-install": "cd docs && gem install bundler && bundle install",
     "docs-update": "cd docs && bundle update",
     "merge-development": "sh build/merge-development.sh",
-    "make-x_ite-for-sunrize": "sh build/make-x_ite-for-sunrize.sh"
+    "make-x_ite-for-sunrize": "sh build/make-x_ite-for-sunrize.sh",
+    "loading-gif": "node build/loading-gif.js"
   },
   "repository": {
     "type": "git",
