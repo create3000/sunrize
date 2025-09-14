@@ -51,8 +51,8 @@ function set_loadTime ()
 }
 ]]>
     </Script>
-    <IMPORT inlineDEF='_3' importedDEF='Points'/>
+    <IMPORT inlineDEF='_3' importedDEF='Frames'/>
     <ROUTE fromNode='_2' fromField='loadTime' toNode='FrameScript' toField='set_loadTime'/>
-    <ROUTE fromNode='FrameScript' fromField='whichChoice_changed' toNode='Points' toField='set_whichChoice'/>
+    <ROUTE fromNode='FrameScript' fromField='whichChoice_changed' toNode='Frames' toField='set_whichChoice'/>
   </Scene>
 </X3D>
