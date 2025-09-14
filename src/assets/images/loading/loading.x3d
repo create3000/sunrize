@@ -3,11 +3,12 @@
 <X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
   <head>
     <component name='Geometry2D' level='2'/>
+    <component name='Scripting' level='1'/>
     <component name='Text' level='1'/>
     <meta name='created' content='Sun, 14 Sep 2025 15:38:13 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.10.0, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 14 Sep 2025 22:23:39 GMT'/>
+    <meta name='modified' content='Sun, 14 Sep 2025 23:24:04 GMT'/>
   </head>
   <Scene>
     <WorldInfo>
@@ -135,64 +136,19 @@
         </Shape>
       </Transform>
     </Transform>
-    <Switch DEF='Points'
-        whichChoice='0'>
-      <Transform
-          translation='2.306195 -0.1241205 0'>
-        <Transform DEF='Disk2D_1'
-            translation='0 -3.539849 0'>
-          <Shape DEF='_2'>
-            <Appearance USE='Yellow'/>
-            <Disk2D DEF='_3'
-                outerRadius='0.1864754'/>
-          </Shape>
-        </Transform>
-        <Transform DEF='Disk2D_7'
-            translation='0.6 -3.539849 0'>
-          <Shape DEF='_5'>
-            <Appearance USE='Orange'/>
-            <Disk2D USE='_3'/>
-          </Shape>
-        </Transform>
-        <Transform DEF='Disk2D_5'
-            translation='1.2 -3.539849 0'>
-          <Shape DEF='_4'>
-            <Appearance USE='Red'/>
-            <Disk2D USE='_3'/>
-          </Shape>
-        </Transform>
-      </Transform>
-      <Transform
-          translation='2.306195 -0.1241205 0'>
-        <Transform DEF='Disk2D_6'
-            translation='0 -3.539849 0'>
-          <Shape USE='_5'/>
-        </Transform>
-        <Transform DEF='Disk2D_4'
-            translation='0.6 -3.539849 0'>
-          <Shape USE='_4'/>
-        </Transform>
-        <Transform DEF='Disk2D'
-            translation='1.2 -3.539849 0'>
-          <Shape USE='_2'/>
-        </Transform>
-      </Transform>
-      <Transform
-          translation='2.306195 -0.1241205 0'>
-        <Transform DEF='Disk2D_3'
-            translation='0 -3.539849 0'>
-          <Shape USE='_4'/>
-        </Transform>
-        <Transform DEF='Disk2D_2'
-            translation='0.6 -3.539849 0'>
-          <Shape USE='_2'/>
-        </Transform>
-        <Transform DEF='Disk2D_8'
-            translation='1.2 -3.539849 0'>
-          <Shape USE='_5'/>
-        </Transform>
-      </Transform>
-    </Switch>
-    <EXPORT localDEF='Points' AS='Frames'/>
+    <Script DEF='FramesScript'>
+      <field accessType='inputOutput' type='SFInt32' name='frame'/>
+      <field accessType='inputOutput' type='SFInt32' name='numFrames' value='72'/>
+      <field accessType='outputOnly' type='SFRotation' name='rotation_changed'/>
+<![CDATA[ecmascript:
+
+function set_frame (value, time)
+{
+   rotation_changed = new SFRotation (0, 0, 1, -Math .PI * 2 * frame / numFrames);
+}
+]]>
+    </Script>
+    <ROUTE fromNode='FramesScript' fromField='rotation_changed' toNode='Logo' toField='set_rotation'/>
+    <EXPORT localDEF='FramesScript' AS='Frames'/>
   </Scene>
 </X3D>

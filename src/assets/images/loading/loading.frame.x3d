@@ -6,7 +6,7 @@
     <meta name='created' content='Sun, 14 Sep 2025 21:33:20 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.10.0, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 14 Sep 2025 21:51:03 GMT'/>
+    <meta name='modified' content='Sun, 14 Sep 2025 23:00:56 GMT'/>
   </head>
   <Scene>
     <WorldInfo
@@ -41,18 +41,18 @@
     </LoadSensor>
     <Script DEF='FrameScript'>
       <field accessType='inputOnly' type='SFTime' name='set_loadTime'/>
-      <field accessType='initializeOnly' type='SFInt32' name='whichChoice' value='2'/>
-      <field accessType='outputOnly' type='SFInt32' name='whichChoice_changed'/>
+      <field accessType='initializeOnly' type='SFInt32' name='frame'/>
+      <field accessType='outputOnly' type='SFInt32' name='frame_changed'/>
 <![CDATA[ecmascript:
 
 function set_loadTime ()
 {
-   whichChoice_changed = whichChoice;
+   frame_changed = frame;
 }
 ]]>
     </Script>
     <IMPORT inlineDEF='_3' importedDEF='Frames'/>
     <ROUTE fromNode='_2' fromField='loadTime' toNode='FrameScript' toField='set_loadTime'/>
-    <ROUTE fromNode='FrameScript' fromField='whichChoice_changed' toNode='Frames' toField='set_whichChoice'/>
+    <ROUTE fromNode='FrameScript' fromField='frame_changed' toNode='Frames' toField='set_frame'/>
   </Scene>
 </X3D>
