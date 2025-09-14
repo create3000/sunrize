@@ -7,7 +7,7 @@
     <meta name='created' content='Sun, 14 Sep 2025 15:38:13 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.10.0, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 14 Sep 2025 17:07:59 GMT'/>
+    <meta name='modified' content='Sun, 14 Sep 2025 19:39:53 GMT'/>
   </head>
   <Scene>
     <WorldInfo>
@@ -139,59 +139,59 @@
         whichChoice='2'>
       <Transform
           translation='2.306195 -0.1241205 0'>
-        <Transform DEF='Disk2D_3'
+        <Transform DEF='Disk2D_1'
             translation='0 -3.539849 0'>
           <Shape DEF='_5'>
-            <Appearance USE='_1'/>
-            <Disk2D
-                outerRadius='0.1864754'/>
-          </Shape>
-        </Transform>
-        <Transform DEF='Disk2D_4'
-            translation='0.6 -3.539849 0'>
-          <Shape USE='_5'/>
-        </Transform>
-        <Transform DEF='Disk2D_5'
-            translation='1.2 -3.539849 0'>
-          <Shape USE='_5'/>
-        </Transform>
-      </Transform>
-      <Transform
-          translation='2.306195 -0.1241205 0'>
-        <Transform DEF='Disk2D_6'
-            translation='0 -3.539849 0'>
-          <Shape DEF='_6'>
-            <Appearance USE='_2'/>
+            <Appearance USE='_3'/>
             <Disk2D
                 outerRadius='0.1864754'/>
           </Shape>
         </Transform>
         <Transform DEF='Disk2D_7'
             translation='0.6 -3.539849 0'>
-          <Shape USE='_6'/>
-        </Transform>
-        <Transform DEF='Disk2D_8'
-            translation='1.2 -3.539849 0'>
-          <Shape USE='_6'/>
-        </Transform>
-      </Transform>
-      <Transform
-          translation='2.306195 -0.1241205 0'>
-        <Transform DEF='Disk2D_1'
-            translation='0 -3.539849 0'>
-          <Shape DEF='_7'>
-            <Appearance USE='_3'/>
+          <Shape DEF='_6'>
+            <Appearance USE='_2'/>
             <Disk2D
                 outerRadius='0.1864754'/>
           </Shape>
         </Transform>
-        <Transform DEF='Disk2D_2'
+        <Transform DEF='Disk2D_5'
+            translation='1.2 -3.539849 0'>
+          <Shape DEF='_7'>
+            <Appearance USE='_1'/>
+            <Disk2D
+                outerRadius='0.1864754'/>
+          </Shape>
+        </Transform>
+      </Transform>
+      <Transform
+          translation='2.306195 -0.1241205 0'>
+        <Transform DEF='Disk2D_9'
+            translation='0 -3.539849 0'>
+          <Shape USE='_6'/>
+        </Transform>
+        <Transform DEF='Disk2D_4'
             translation='0.6 -3.539849 0'>
           <Shape USE='_7'/>
         </Transform>
         <Transform DEF='Disk2D'
             translation='1.2 -3.539849 0'>
+          <Shape USE='_5'/>
+        </Transform>
+      </Transform>
+      <Transform
+          translation='2.306195 -0.1241205 0'>
+        <Transform DEF='Disk2D_3'
+            translation='0 -3.539849 0'>
           <Shape USE='_7'/>
+        </Transform>
+        <Transform DEF='Disk2D_2'
+            translation='0.6 -3.539849 0'>
+          <Shape USE='_5'/>
+        </Transform>
+        <Transform DEF='Disk2D_8'
+            translation='1.2 -3.539849 0'>
+          <Shape USE='_6'/>
         </Transform>
       </Transform>
     </Switch>
