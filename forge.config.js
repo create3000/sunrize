@@ -5,7 +5,8 @@ module.exports = {
     icon: path .resolve (__dirname, "src", "assets", "images", "icon"),
     dir: "./src",
     ignore: "^/(?!src|package\\.json|node_modules)",
-    // Squirrel Legacy Stuff
+    // Squirrel Legacy Cert Stuff
+    // If not set or valid, there is no Setup.exe icon.
     certificateFile: "../ssl/certificate.pfx",
     certificatePassword: process .env .SUNRIZE_CERT_PASSWORD,
     // macOS
