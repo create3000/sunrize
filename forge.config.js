@@ -1,3 +1,5 @@
+const path = require ("path");
+
 module.exports = {
   packagerConfig: {
     icon: "./src/assets/images/icon.png",
@@ -22,7 +24,8 @@ module.exports = {
       name: "@electron-forge/maker-squirrel",
       platforms: ["win32"],
       config: (arch) => ({
-        loadingGif: './src/assets/images/loading.gif',
+        loadingGif: "./src/assets/images/loading.gif",
+        setupIcon: path .resolve (__dirname, "src", "assets", "images", "icon.ico"),
       }),
     },
     // {
