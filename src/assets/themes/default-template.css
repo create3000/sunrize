@@ -49,10 +49,13 @@ body {
 }
 
 /* Handle */
-.scroll::-webkit-scrollbar-thumb,
-:hover::-webkit-scrollbar-thumb,
-:focus::-webkit-scrollbar-thumb {
+:hover::-webkit-scrollbar-thumb {
   background-color: var(--scrollbar-thumb-color);
+}
+
+/* https://developer.chrome.com/docs/css-ui/scrollbar-styling?hl=de */
+:hover {
+  --fix: ; /* This custom property invalidates styles on hover, thereby enforcing a style recomputation. This is needed to work around a bug in Safari. */
 }
 
 /* textarea resizer */

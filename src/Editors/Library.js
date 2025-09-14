@@ -68,7 +68,7 @@ module .exports = new class Library extends Dialog
 
       this .output = $("<div></div>")
          .appendTo (this .element)
-         .addClass (["library-output", "scroll"]);
+         .addClass ("library-output");
 
       if (!this .isOpen ())
          return;

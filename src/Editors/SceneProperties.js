@@ -46,7 +46,7 @@ module .exports = new class SceneProperties extends Dialog
 
       this .profileAndComponents = $("#profile-and-components") .addClass ("scrollable");
       this .units                = $("#units") .addClass ("scrollable");
-      this .metaData             = $("#meta-data") .addClass (["scrollable", "scroll"]);
+      this .metaData             = $("#meta-data") .addClass ("scrollable");
       this .worldInfo            = $("#world-info") .addClass ("scrollable");
 
       // Profile And Components
@@ -63,7 +63,7 @@ module .exports = new class SceneProperties extends Dialog
       this .profileAndComponents .inputs .profile = $("<select></select>")
          .on ("change", () => this .changeProfile ());
 
-      this .profileAndComponents .components        = $("<div></div>") .addClass ("scroll") .css ({ "overflow-y": "auto", "height": "20em" });
+      this .profileAndComponents .components        = $("<div></div>") .css ({ "overflow-y": "auto", "height": "20em" });
       this .profileAndComponents .components .table = $("<table></table>") .appendTo (this .profileAndComponents .components);
       this .profileAndComponents .components .body  = $("<tbody></tbody>") .appendTo (this .profileAndComponents .components .table);
 
