@@ -7,7 +7,7 @@
     <meta name='created' content='Sun, 14 Sep 2025 15:38:13 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.10.0, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 14 Sep 2025 22:08:07 GMT'/>
+    <meta name='modified' content='Sun, 14 Sep 2025 22:23:39 GMT'/>
   </head>
   <Scene>
     <WorldInfo>
@@ -56,7 +56,7 @@
           rotation='0 1 0 3.14159265358979'
           scale='-0.004452366 -0.004452366 -1'>
         <Shape>
-          <Appearance>
+          <Appearance DEF='Red'>
             <UnlitMaterial
                 emissiveColor='0.8431373 0.1215686 0.1215686'/>
           </Appearance>
@@ -68,7 +68,7 @@
           </IndexedTriangleSet>
         </Shape>
         <Shape>
-          <Appearance>
+          <Appearance DEF='Orange'>
             <UnlitMaterial
                 emissiveColor='1 0.6235294 0.1803922'/>
           </Appearance>
@@ -80,7 +80,7 @@
           </IndexedTriangleSet>
         </Shape>
         <Shape>
-          <Appearance>
+          <Appearance DEF='Yellow'>
             <UnlitMaterial
                 emissiveColor='1 0.8901961 0.1764706'/>
           </Appearance>
@@ -136,40 +136,29 @@
       </Transform>
     </Transform>
     <Switch DEF='Points'
-        whichChoice='2'>
+        whichChoice='0'>
       <Transform
           translation='2.306195 -0.1241205 0'>
         <Transform DEF='Disk2D_1'
             translation='0 -3.539849 0'>
           <Shape DEF='_2'>
-            <Appearance>
-              <UnlitMaterial
-                  emissiveColor='1 0.8901961 0.1764706'/>
-            </Appearance>
-            <Disk2D
+            <Appearance USE='Yellow'/>
+            <Disk2D DEF='_3'
                 outerRadius='0.1864754'/>
           </Shape>
         </Transform>
         <Transform DEF='Disk2D_7'
             translation='0.6 -3.539849 0'>
           <Shape DEF='_5'>
-            <Appearance>
-              <UnlitMaterial
-                  emissiveColor='1 0.6235294 0.1803922'/>
-            </Appearance>
-            <Disk2D
-                outerRadius='0.1864754'/>
+            <Appearance USE='Orange'/>
+            <Disk2D USE='_3'/>
           </Shape>
         </Transform>
         <Transform DEF='Disk2D_5'
             translation='1.2 -3.539849 0'>
-          <Shape DEF='_3'>
-            <Appearance>
-              <UnlitMaterial
-                  emissiveColor='0.8431373 0.1215686 0.1215686'/>
-            </Appearance>
-            <Disk2D
-                outerRadius='0.1864754'/>
+          <Shape DEF='_4'>
+            <Appearance USE='Red'/>
+            <Disk2D USE='_3'/>
           </Shape>
         </Transform>
       </Transform>
@@ -181,7 +170,7 @@
         </Transform>
         <Transform DEF='Disk2D_4'
             translation='0.6 -3.539849 0'>
-          <Shape USE='_3'/>
+          <Shape USE='_4'/>
         </Transform>
         <Transform DEF='Disk2D'
             translation='1.2 -3.539849 0'>
@@ -192,7 +181,7 @@
           translation='2.306195 -0.1241205 0'>
         <Transform DEF='Disk2D_3'
             translation='0 -3.539849 0'>
-          <Shape USE='_3'/>
+          <Shape USE='_4'/>
         </Transform>
         <Transform DEF='Disk2D_2'
             translation='0.6 -3.539849 0'>
