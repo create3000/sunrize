@@ -33,7 +33,7 @@ module .exports = class Application
       }
 
       if (process .platform === "win32")
-         require ("update-electron-app") .updateElectronApp ();
+         require ("update-electron-app") .updateElectronApp ({ updateInterval: "1 hour" });
 
       electron .app .commandLine .appendSwitch ("--enable-features", "OverlayScrollbar,ConversionMeasurement,AttributionReportingCrossAppWeb");
 
