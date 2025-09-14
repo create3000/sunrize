@@ -27,7 +27,7 @@ module.exports = {
       platforms: ["win32"],
       config: (arch) => ({
         loadingGif: "./src/assets/images/loading.gif",
-        setupIcon: "./src/assets/images/icon.ico",
+        setupIcon: path .resolve (__dirname, "src", "assets", "images", "icon.ico"),
         iconUrl: "https://github.com/create3000/sunrize/raw/refs/heads/development/src/assets/images/icon.ico",
       }),
     },
