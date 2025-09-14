@@ -2,7 +2,7 @@ const path = require ("path");
 
 module.exports = {
   packagerConfig: {
-    icon: "./src/assets/images/icon.png",
+    icon: path .resolve (__dirname, "src", "assets", "images", "icon"),
     dir: "./src",
     ignore: "^/(?!src|package\\.json|node_modules)",
     // Squirrel Legacy Stuff
