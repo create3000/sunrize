@@ -39,7 +39,7 @@ function main ()
 
    // Optimize GIF.
 
-   systemSync (`gifsicle --batch -O3 src/assets/images/loading.gif`);
+   systemSync (`gifsicle --batch -O3 --colors 256 src/assets/images/loading.gif`);
 }
 
 main ();

@@ -8,7 +8,7 @@
     <meta name='created' content='Sun, 14 Sep 2025 15:38:13 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.10.0, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Mon, 15 Sep 2025 01:25:51 GMT'/>
+    <meta name='modified' content='Mon, 15 Sep 2025 08:10:13 GMT'/>
   </head>
   <Scene>
     <WorldInfo>
@@ -46,6 +46,23 @@
               emissiveColor='0.1882353 0.1960784 0.2588235'/>
         </Appearance>
         <Rectangle2D/>
+      </Shape>
+    </Transform>
+    <Transform DEF='Icons_1'
+        translation='0 -1.5175 -0.9'
+        scale='24 24 24'>
+      <Shape>
+        <Appearance>
+          <UnlitMaterial
+              transparency='0.6487886'/>
+          <ImageTexture
+              description='icons'
+              url='"icons.png"'
+              repeatS='false'
+              repeatT='false'/>
+        </Appearance>
+        <Rectangle2D
+            size='0.381 0.8255'/>
       </Shape>
     </Transform>
     <Transform DEF='Logo'
