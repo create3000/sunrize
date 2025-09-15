@@ -27,7 +27,7 @@ module.exports = {
       name: "@electron-forge/maker-squirrel",
       platforms: ["win32"],
       config: (arch) => ({
-        authors: 'CREATE3000 and contributors',
+        authors: 'CREATE3000 and Contributors',
         loadingGif: "./src/assets/images/loading.gif",
         setupIcon: path .resolve (__dirname, "src", "assets", "images", "icon.ico"),
         iconUrl: "https://raw.githubusercontent.com/create3000/sunrize/refs/heads/development/src/assets/images/icon.ico",
