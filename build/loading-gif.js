@@ -14,7 +14,7 @@ function main ()
    for (let i = 1; i <= NUM_FRAMES; ++ i)
    {
       systemSync (`cp src/assets/images/loading/loading.x3d src/assets/images/loading/loading${i}.x3d`)
-      systemSync (`sed -i '' "s/name='frame'/name='frame' value='${i - 1}'/" src/assets/images/loading/loading${i}.x3d`)
+      systemSync (`sed -i "" "s/name='frame'/name='frame' value='${i - 1}'/" src/assets/images/loading/loading${i}.x3d`)
    }
 
    // Create GIF frames.
