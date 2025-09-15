@@ -13,7 +13,11 @@ Sunrize is based on [X_ITE](https://create3000.github.io/x_ite/) and is a basic 
 * [Website](https://create3000.github.io/sunrize/)
 * [Documentation](https://create3000.github.io/sunrize/documentation/)
 
-## Usage
+## Installer Packages
+
+The latest builds of Sunrize are available as installer packages on the [Sunrize Releases](https://github.com/create3000/sunrize/releases) page on GitHub. From there, you can download precompiled binaries, but currently only for Windows.
+
+## Run from Console
 
 First you need to install both Node.js and npm on your system. To accomplish this, you can use a [Node installer](https://nodejs.org/en/download/) (Windows), or use [Homebrew](https://brew.sh) to install node (macos), or use your Linux package manager.
 
