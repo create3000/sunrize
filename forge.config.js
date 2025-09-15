@@ -5,6 +5,10 @@ module.exports = {
     icon: path .resolve (__dirname, "src", "assets", "images", "icon"),
     dir: "./src",
     ignore: "^/(?!src|package\\.json|node_modules)",
+    // Windows
+    win32metadata: {
+      CompanyName: 'CREATE3000 and Contributors',
+    },
     // Squirrel Legacy Cert Stuff
     // If not set or valid, there is no Setup.exe icon.
     certificateFile: "../ssl/certificate.pfx",
