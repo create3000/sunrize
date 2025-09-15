@@ -534,7 +534,7 @@ select.select option {
 /* Platform link  */
 
 .platform {
-  display: block;
+  display: inline-block;
   margin-right: 0;
   border: 1px solid;
   border-radius: .625rem;
@@ -545,10 +545,6 @@ select.select option {
 
 .platform i {
   font-size: 200%;
-}
-
-.clear {
-  clear: both;
 }
 
 /*

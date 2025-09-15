@@ -22,10 +22,9 @@ Sunrize is an easy-to-use editor for X3D files that is based on the [X_ITE](/x_i
 
 The latest builds of Sunrize are available as installer packages on the [Sunrize Releases](https://github.com/create3000/sunrize/releases) page on GitHub. From there, you can download precompiled binaries, but currently only for Windows.
 
-[<i class="fa-brands fa-windows"></i><br>Windows](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/Sunrize.X3D.Editor-{{ site.version }}.Setup.exe){: download="" .platform .w-25 .left }
+[<i class="fa-brands fa-windows"></i><br>Windows](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/Sunrize.X3D.Editor-{{ site.version }}.Setup.exe){: download="" .platform .w-25 }
 
 ## Run from Console
-{: .clear }
 
 First you need to install both Node.js and npm on your system. To accomplish this, you can use a [Node installer](https://nodejs.org/en/download/) (Windows), or use [Homebrew](https://brew.sh) to install node (macos), or use your Linux package manager.
 
