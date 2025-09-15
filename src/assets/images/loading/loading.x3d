@@ -8,7 +8,7 @@
     <meta name='created' content='Sun, 14 Sep 2025 15:38:13 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.10.0, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 14 Sep 2025 23:24:04 GMT'/>
+    <meta name='modified' content='Mon, 15 Sep 2025 00:08:05 GMT'/>
   </head>
   <Scene>
     <WorldInfo>
@@ -142,7 +142,7 @@
       <field accessType='outputOnly' type='SFRotation' name='rotation_changed'/>
 <![CDATA[ecmascript:
 
-function set_frame (value, time)
+function initialize (value, time)
 {
    rotation_changed = new SFRotation (0, 0, 1, -Math .PI * 2 * frame / numFrames);
 }

@@ -12,7 +12,7 @@ function main ()
    for (let i = 1; i <= NUM_FRAMES; ++ i)
    {
       console .log (`Frame: ${i}`);
-      systemSync (`cp src/assets/images/loading/loading.frame.x3d src/assets/images/loading/loading${i}.x3d`)
+      systemSync (`cp src/assets/images/loading/loading.x3d src/assets/images/loading/loading${i}.x3d`)
       systemSync (`sed -i '' "s/name='frame'/name='frame' value='${i - 1}'/" src/assets/images/loading/loading${i}.x3d`)
       systemSync (`npx --yes x3d-image -s "445x445" -e .png -i src/assets/images/loading/loading${i}.x3d`);
       systemSync (`magick src/assets/images/loading/loading${i}.png src/assets/images/loading${i}.gif`);
