@@ -4,8 +4,8 @@
 const { systemSync } = require ("shell-tools");
 
 const
-   NUM_FRAMES = 72 / 3,
-   DELAY      = 20;
+   NUM_FRAMES = 360 / 3,
+   DELAY      = 4;
 
 function main ()
 {
