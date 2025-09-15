@@ -531,6 +531,26 @@ select.select option {
   text-align: center;
 }
 
+/* Platform link  */
+
+.platform {
+  display: block;
+  margin-right: 0;
+  border: 1px solid;
+  border-radius: .625rem;
+  padding: 1rem;
+  text-align: center;
+  font-size: 150%;
+}
+
+.platform i {
+  font-size: 200%;
+}
+
+.clear {
+  clear: both;
+}
+
 /*
  * Website specify rules start here
  */
