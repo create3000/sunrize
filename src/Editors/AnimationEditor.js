@@ -13,9 +13,14 @@ module .exports = class AnimationEditor extends Interface
 
       this .animationEditor = element;
 
+      this .toolbar = $("<div></div>")
+         .attr ("id", "animation-editor-toolbar")
+         .addClass (["animation-editor-toolbar", "toolbar", "horizontal-toolbar"])
+         .appendTo (this .animationEditor);
+
       this .verticalSplitter = $("<div></div>")
-         .attr ("id", "animation-editor-left")
-         .addClass (["animation-editor-left", "vertical-splitter"])
+         .attr ("id", "animation-editor-content")
+         .addClass (["animation-editor-content", "vertical-splitter"])
          .appendTo (this .animationEditor);
 
       this .verticalSplitterLeft = $("<div></div>")

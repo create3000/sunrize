@@ -495,6 +495,12 @@ body.light .qtip-tipsy {
   box-sizing: border-box;
 }
 
+.horizontal-toolbar {
+  top: 0;
+  width: 100%;
+  height: var(--toolbar-width);
+}
+
 .vertical-toolbar {
   right: 0;
   height: 100%;
@@ -969,6 +975,24 @@ body.dark .ui-widget .library-list .component {
 
 .animation-editor {
   box-sizing: border-box;
+}
+
+.animation-editor .animation-editor-content {
+  position: absolute;
+  box-sizing: border-box;
+  left: 0;
+  right: var(--toolbar-width);
+  width: unset;
+  height: 100%;
+}
+
+.animation-editor .vertical-splitter-right {
+  border-left: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
+}
+
+.animation-editor .horizontal-splitter-top {
+  border-bottom: 1px solid var(--border-color);
 }
 
 /* Sidebar */
