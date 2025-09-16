@@ -7,6 +7,7 @@ const
    Interface   = require ("../Application/Interface"),
    Splitter    = require ("../Controls/Splitter"),
    NodeList    = require ("./NodeList"),
+   MemberList  = require ("./AnimationMemberList"),
    Editor      = require ("../Undo/Editor"),
    _           = require ("../Application/GetText");
 
@@ -53,23 +54,23 @@ module .exports = class AnimationEditor extends Interface
          .appendTo (this .toolbar)
          .on ("click", () => this .createAnimation ());
 
-      this .separator1 = $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
+      $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
-      this .addMemberIcon = $("<span></span>")
+      this .addMembersIcon = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Add member to animation."))
+         .attr ("title", _("Add member(s) to animation."))
          .text ("add")
          .appendTo (this .toolbar)
-         .on ("click", () => this .addMember ());
+         .on ("click", () => this .addMembers ());
 
       this .removeMemberIcon = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _("Remove member from animation."))
          .text ("remove")
          .appendTo (this .toolbar)
-         .on ("click", () => this .addMember ());
+         .on ("click", () => this .removeMember ());
 
-      this .separator2 =$("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
+      $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
       this .closeAnimationIcon = $("<span></span>")
          .addClass (["material-symbols-outlined", "right"])
@@ -85,7 +86,8 @@ module .exports = class AnimationEditor extends Interface
          .appendTo (this .verticalSplitterLeft);
 
       this .membersListElement = $("<div></div>")
-         .addClass ("node-list");
+         .addClass ("node-list")
+         .appendTo (this .verticalSplitterLeft);
 
       this .animationName = $("<input></input>")
          .addClass ("node-name")
@@ -98,6 +100,8 @@ module .exports = class AnimationEditor extends Interface
             this .highlight ();
          })
          .on ("keydown", event => this .renameAnimation (event));
+
+      this .memberList = new MemberList (this .membersListElement);
 
       this .nodeList = new NodeList (this .nodeListElement, node => this .isAnimation (node), animation => this .setAnimation (animation));
 
@@ -174,6 +178,8 @@ module .exports = class AnimationEditor extends Interface
       {
          // Show Animations List
 
+         this .memberList .clearNodes ();
+
          this .membersListElement .hide ();
          this .nodeListElement .show ();
 
@@ -187,7 +193,7 @@ module .exports = class AnimationEditor extends Interface
    enableIcons (enabled)
    {
       $([
-         this .addMemberIcon,
+         this .addMembersIcon,
          this .removeMemberIcon,
          this .closeAnimationIcon,
       ]
@@ -202,6 +208,11 @@ module .exports = class AnimationEditor extends Interface
          this .createAnimationIcon .removeClass ("disabled");
       else
          this .createAnimationIcon .addClass ("disabled");
+
+      if (selection .nodes .at (-1))
+         this .addMembersIcon .removeClass ("disabled");
+      else
+         this .addMembersIcon .addClass ("disabled");
    }
 
    #groupingNodes = new Set ([
@@ -279,7 +290,14 @@ module .exports = class AnimationEditor extends Interface
       Editor .undoManager .endUndo ();
    }
 
-   addMember ()
+   addMembers ()
+   {
+      const selection = require ("../Application/Selection");
+
+      this .memberList .addNodes (selection .nodes);
+   }
+
+   removeMember ()
    {
 
    }
