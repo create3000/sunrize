@@ -584,6 +584,11 @@ body.light .qtip-tipsy {
   color: var(--system-gray3);
 }
 
+.horizontal-toolbar .right {
+  float: right;
+  margin-right: 3px;
+}
+
 .large-toolbar .material-icons {
   margin: 5px auto;
   width: var(--large-icon-size);
