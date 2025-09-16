@@ -1,18 +1,18 @@
-"use strict"
+"use strict";
 
 const
-   Interface = require ("../Application/Interface")
+   Interface = require ("../Application/Interface");
 
 module .exports = class AnimationEditor extends Interface
 {
    constructor (element)
    {
-      super (`Sunrize.AnimationEditor.${element .attr ("id")}.`)
+      super (`Sunrize.AnimationEditor.${element .attr ("id")}.`);
 
-      this .animationEditor = element
+      this .animationEditor = element;
 
-      this .animationEditor .text ("Animation Editor")
+      this .animationEditor .text ("Animation Editor");
 
-      this .setup ()
+      this .setup ();
    }
 }
