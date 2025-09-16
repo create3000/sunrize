@@ -117,6 +117,7 @@ module .exports = class ScriptEditor extends Interface
 
       this .nodeName = $("<input></input>")
          .addClass ("node-name")
+         .attr ("title", _("Rename node."))
          .attr ("placeholder", _("Enter node name."))
          .appendTo (this .horizontalSplitterTop)
          .renameNodeInput (null);

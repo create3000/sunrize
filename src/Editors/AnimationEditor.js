@@ -90,6 +90,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .animationName = $("<input></input>")
          .addClass ("node-name")
+         .attr ("title", _("Rename animation."))
          .attr ("placeholder", _("Enter animation name."))
          .appendTo (this .animations)
          .validate (Editor .Id, () =>
