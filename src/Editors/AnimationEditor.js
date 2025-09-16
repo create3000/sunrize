@@ -167,15 +167,17 @@ module .exports = class AnimationEditor extends Interface
          this .createAnimationIcon .addClass ("disabled");
    }
 
+   #groupingNodes = new Set ([
+      X3D .X3DConstants .X3DGroupingNode,
+      X3D .X3DConstants .ViewpointGroup,
+   ]);
+
    isGroupingNodeLike (node)
    {
       if (!node)
          return;
 
-      if (node .getType () .includes (X3D .X3DConstants .X3DGroupingNode))
-         return true;
-
-      if (node .getType () .includes (X3D .X3DConstants .ViewpointGroup))
+      if (node .getType () .some (type => this .#groupingNodes .has (type)))
          return true;
 
       return false;
