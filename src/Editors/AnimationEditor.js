@@ -154,7 +154,7 @@ module .exports = class AnimationEditor extends Interface
 
    setSelection (selection)
    {
-      if (selection .nodes .length && this .isGroupingNodeLike (selection .nodes .at (-1)))
+      if (this .isGroupingNodeLike (selection .nodes .at (-1)))
          this .createAnimationIcon .removeClass ("disabled");
       else
          this .createAnimationIcon .addClass ("disabled");
@@ -162,6 +162,9 @@ module .exports = class AnimationEditor extends Interface
 
    isGroupingNodeLike (node)
    {
+      if (!node)
+         return;
+
       if (node .getType () .includes (X3D .X3DConstants .X3DGroupingNode))
          return true;
 
