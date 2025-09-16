@@ -119,7 +119,7 @@ module .exports = class ScriptEditor extends Interface
          .addClass ("node-name")
          .attr ("placeholder", _("Enter node name."))
          .appendTo (this .horizontalSplitterTop)
-         .renameNodeInput (null, null);
+         .renameNodeInput (null);
 
       this .nodeList = new NodeList (this .nodeListElement, node => node .getTypeName () .match (/^(?:Script|ShaderPart)$/), node => this .setNode (node));
 
@@ -233,7 +233,7 @@ module .exports = class ScriptEditor extends Interface
       }
       else
       {
-         this .nodeName .renameNodeInput (null, null);
+         this .nodeName .renameNodeInput (null);
          this .applyButton .hide ();
          this .monaco ?.detach ();
 

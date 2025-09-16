@@ -91,7 +91,7 @@ module .exports = class AnimationEditor extends Interface
          .addClass ("node-name")
          .attr ("placeholder", _("Enter node name."))
          .appendTo (this .animations)
-         .renameNodeInput (null, null);
+         .renameNodeInput (null);
 
       this .nodeList = new NodeList (this .nodeListElement, node => this .isAnimation (node), animation => this .setAnimation (animation));
 
@@ -143,7 +143,7 @@ module .exports = class AnimationEditor extends Interface
       }
       else
       {
-         this .nodeName .renameNodeInput (null, null);
+         this .nodeName .renameNodeInput (null);
       }
    }
 
@@ -204,7 +204,9 @@ module .exports = class AnimationEditor extends Interface
       timeSensor .setup ();
       animation  .setup ();
 
-      executionContext .addNamedNode (executionContext .getUniqueName ("NewAnimation"), animation);
+      executionContext .addNamedNode (executionContext .getUniqueName ("NewAnimation"),      animation);
+      executionContext .addNamedNode (executionContext .getUniqueName ("NewAnimationTimer"), timeSensor);
+
       animation .setMetaData ("Animation/duration",  new X3D .SFInt32 (10));
       animation .setMetaData ("Animation/frameRate", new X3D .SFInt32 (10));
 
