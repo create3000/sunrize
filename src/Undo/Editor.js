@@ -14,6 +14,11 @@ const
 module .exports = class Editor
 {
    /**
+    * Shard UndoManager
+    */
+   static get undoManager () { return UndoManager .shared; }
+
+   /**
     * X3D Id
     */
    static Id = /(?:^[^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*$|^$)/

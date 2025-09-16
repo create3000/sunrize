@@ -1,12 +1,13 @@
 "use strict";
 
 const
-   $         = require ("jquery"),
-   X3D       = require ("../X3D"),
-   Interface = require ("../Application/Interface"),
-   Splitter  = require ("../Controls/Splitter"),
-   NodeList  = require ("./NodeList"),
-   _         = require ("../Application/GetText");
+   $           = require ("jquery"),
+   X3D         = require ("../X3D"),
+   Interface   = require ("../Application/Interface"),
+   Splitter    = require ("../Controls/Splitter"),
+   NodeList    = require ("./NodeList"),
+   Editor      = require ("../Undo/Editor"),
+   _           = require ("../Application/GetText");
 
 require ("../Controls/RenameNodeInput");
 
@@ -133,6 +134,12 @@ module .exports = class AnimationEditor extends Interface
       if (this .animation)
       {
          this .nodeName .renameNodeInput (this .animation);
+
+         this .executionContext = this .animation .getExecutionContext ();
+         this .timeSensor       = this .animation ._children .find (node => node .getType () .includes (X3D .X3DConstants .TimeSensor));
+
+         if (!this .timeSensor)
+            this .nodeList .setNode (null);
       }
       else
       {
@@ -176,7 +183,32 @@ module .exports = class AnimationEditor extends Interface
 
    createAnimation ()
    {
+      Editor .undoManager .beginUndo (_("Add Animation"));
 
+      const
+         selection        = require ("../Application/Selection"),
+         group            = selection .nodes .at (-1),
+         executionContext = group .getExecutionContext ();
+
+      Editor .addComponent (executionContext .getLocalScene (), "Time");
+
+      const
+         animation  = executionContext .createNode ("Group", false),
+         timeSensor = executionContext .createNode ("TimeSensor", false);
+
+      animation ._children .push (timeSensor);
+
+      timeSensor .setup ();
+      animation  .setup ();
+
+      executionContext .addNamedNode (executionContext .getUniqueName ("NewAnimation"), animation);
+      animation .setMetaData ("Animation/duration",  new X3D .SFInt32 (10));
+      animation .setMetaData ("Animation/frameRate", new X3D .SFInt32 (10));
+
+      Editor .insertValueIntoArray (executionContext, group, group ._children, 0, animation);
+      Editor .undoManager .endUndo ();
+
+      this .nodeList .setNode (animation);
    }
 
    closeAnimation ()
