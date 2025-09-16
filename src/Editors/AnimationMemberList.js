@@ -115,9 +115,9 @@ module .exports = class AnimationMembersList extends Interface
 
          const applyIcon = $("<span></span>")
             .addClass (["material-icons", "button", "off"])
-            .attr ("title", _("Set keyframe."))
+            .attr ("title", _("Add keyframe."))
             .text ("check")
-            .on ("click", () => this .setKeyframe (node, field));
+            .on ("click", () => this .addKeyframe (node, field));
 
          $("<li></li>")
             .attr ("field-id", field .getId ())
@@ -168,7 +168,7 @@ module .exports = class AnimationMembersList extends Interface
       element .text (this .getName (node));
    }
 
-   setKeyframe (node, field)
+   addKeyframe (node, field)
    {
 
    }
