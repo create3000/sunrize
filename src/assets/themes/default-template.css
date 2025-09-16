@@ -796,7 +796,7 @@ body.dark .ui-widget .library-list .component {
   white-space: nowrap;
 }
 
-.node-list li:not(:has(li)) {
+.node-list > ul > li:not(:has(li)) {
   cursor: pointer;
 }
 
