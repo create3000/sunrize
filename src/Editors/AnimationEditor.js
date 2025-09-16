@@ -169,7 +169,6 @@ module .exports = class AnimationEditor extends Interface
          // Show Animations List
 
          this .memberList .clearNodes ();
-
          this .membersListElement .hide ();
          this .nodeListElement .show ();
 
