@@ -2,6 +2,7 @@
 
 const
    $           = require ("jquery"),
+   electron    = require ("electron"),
    X3D         = require ("../X3D"),
    Interface   = require ("../Application/Interface"),
    Splitter    = require ("../Controls/Splitter"),
@@ -9,7 +10,7 @@ const
    Editor      = require ("../Undo/Editor"),
    _           = require ("../Application/GetText");
 
-require ("../Controls/RenameNodeInput");
+require ("../Bits/Validate");
 
 module .exports = class AnimationEditor extends Interface
 {
@@ -87,11 +88,16 @@ module .exports = class AnimationEditor extends Interface
          .addClass ("node-list")
          .appendTo (this .animations);
 
-      this .nodeName = $("<input></input>")
+      this .animationName = $("<input></input>")
          .addClass ("node-name")
-         .attr ("placeholder", _("Enter node name."))
+         .attr ("placeholder", _("Enter animation name."))
          .appendTo (this .animations)
-         .renameNodeInput (null);
+         .validate (Editor .Id, () =>
+         {
+            electron .shell .beep ();
+            this .highlight ();
+         })
+         .on ("keydown", event => this .renameAnimation (event));
 
       this .nodeList = new NodeList (this .nodeListElement, node => this .isAnimation (node), animation => this .setAnimation (animation));
 
@@ -127,23 +133,40 @@ module .exports = class AnimationEditor extends Interface
 
    setAnimation (animation)
    {
+      // Remove
+
+      this .animation ?.name_changed .removeInterest ("setAnimationName", this);
+
+      // Set
+
       this .animation = animation;
+
+      // Add
 
       this .enableIcons (this .animation);
 
       if (this .animation)
       {
-         this .nodeName .renameNodeInput (this .animation);
+         // TimeSensor
 
          this .executionContext = this .animation .getExecutionContext ();
-         this .timeSensor       = this .animation ._children .find (node => node .getType () .includes (X3D .X3DConstants .TimeSensor));
+         this .timeSensor       = this .animation ._children .find (node => node .getValue () .getType () .includes (X3D .X3DConstants .TimeSensor)) .getValue ();
 
          if (!this .timeSensor)
             this .nodeList .setNode (null);
+
+         // Animation Name
+
+         this .animationName .removeAttr ("disabled");
+
+         this .animation .name_changed .addInterest ("setAnimationName", this);
+
+         this .setAnimationName ();
       }
       else
       {
-         this .nodeName .renameNodeInput (null);
+         this .animationName .val ("");
+         this .animationName .attr ("disabled", "");
       }
    }
 
@@ -219,6 +242,27 @@ module .exports = class AnimationEditor extends Interface
    closeAnimation ()
    {
       this .nodeList .setNode (null);
+   }
+
+   setAnimationName ()
+   {
+      this .animationName .val (this .animation .getName () .replace (/Animation(?:_\d+)?$/, ""));
+   }
+
+   renameAnimation (event)
+   {
+      if (event .key !== "Enter")
+         return;
+
+      const { executionContext, animation, timeSensor } = this;
+      const name = this .animationName .val ();
+
+      Editor .undoManager .beginUndo (_("Rename Animation"));
+
+      Editor .updateNamedNode (executionContext, executionContext .getUniqueName (`${name}Animation`), animation);
+      Editor .updateNamedNode (executionContext, executionContext .getUniqueName (`${name}AnimationTimer`), timeSensor);
+
+      Editor .undoManager .endUndo ();
    }
 
    addMember ()
