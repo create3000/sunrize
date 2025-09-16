@@ -783,18 +783,24 @@ body.dark .ui-widget .library-list .component {
   padding: 0;
 }
 
-.node-list > ul {
+.node-list ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
-  color: var(--system-blue);
 }
 
-.node-list > ul > li {
-  cursor: pointer;
-  margin: 0;
+.node-list li {
+  margin: 1px 0;
   padding: 3px 10px;
   white-space: nowrap;
+}
+
+.node-list li:not(:has(li)) {
+  cursor: pointer;
+}
+
+.node-list > ul {
+  color: var(--system-blue);
 }
 
 .node-list > ul > li:nth-child(odd) {
@@ -806,22 +812,40 @@ body.dark .ui-widget .library-list .component {
 }
 
 .node-list > ul > li > ul {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
   color: var(--system-orange);
-}
-
-.node-list > ul > li > ul > li {
-  margin: 0;
-  padding: 3px 10px;
-  white-space: nowrap;
 }
 
 .node-list .icon {
   position: relative;
   margin-right: 2px;
   top: 2px;
+}
+
+.node-list .button {
+  cursor: pointer;
+  position: relative;
+  top: 2px;
+  font-size: var(--font-size);
+}
+
+.node-list .button:hover {
+  color: var(--system-cyan);
+}
+
+.node-list .button.on {
+  color: var(--system-blue);
+}
+
+.node-list .button.on:hover {
+  color: var(--system-cyan);
+}
+
+.node-list .button.off {
+  color: var(--system-gray1);
+}
+
+.node-list .button.off:hover {
+  color: var(--system-gray0);
 }
 
 /* Footer */

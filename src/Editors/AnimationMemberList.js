@@ -56,14 +56,21 @@ module .exports = class AnimationMembersList extends Interface
             nameElement     = $("<span></span>") .addClass ("name") .text (this .getName (node)),
             fieldList       = $("<ul></ul>");
 
+         const removeIcon = $("<span></span>")
+            .addClass (["material-icons-outlined", "button"])
+            .attr ("title", _("Remove member from animation."))
+            .text ("cancel")
+            .on ("click", () => this .removeNodes ([node]));
+
          $("<li></li>")
             .attr ("node-id", node .getId ())
             .append ($("<img></img>") .addClass ("icon") .attr ("src", "../images/OutlineEditor/Node/X3DBaseNode.svg"))
             .append (typeNameElement)
             .append (document .createTextNode (" "))
             .append (nameElement)
+            .append (document .createTextNode (" "))
+            .append (removeIcon)
             .append (fieldList)
-            .on ("click", () => this .setNode (node))
             .appendTo (this .#list);
 
          this .createFieldElements (fieldList, node);
@@ -97,12 +104,27 @@ module .exports = class AnimationMembersList extends Interface
          if (!this .#fieldTypes .has (field .getType ()))
             continue;
 
-         const nameElement = $("<span></span>") .addClass ("field-name") .text (field .getName ());
+         const iconElement = $("<img></img>")
+            .attr ("title", field .getTypeName ())
+            .addClass ("icon")
+            .attr ("src", `../images/OutlineEditor/Fields/${field .getTypeName()}.svg`);
+
+         const nameElement = $("<span></span>")
+            .addClass ("field-name")
+            .text (field .getName ());
+
+         const applyIcon = $("<span></span>")
+            .addClass (["material-icons", "button", "off"])
+            .attr ("title", _("Set keyframe."))
+            .text ("check")
+            .on ("click", () => this .setKeyframe (node, field));
 
          $("<li></li>")
             .attr ("field-id", field .getId ())
-            .append ($("<img></img>") .addClass ("icon") .attr ("src", `../images/OutlineEditor/Fields/${field .getTypeName()}.svg`))
+            .append (iconElement)
             .append (nameElement)
+            .append (document .createTextNode (" "))
+            .append (applyIcon)
             .on ("click", () => void (undefined))
             .appendTo (fieldList);
       }
@@ -144,5 +166,10 @@ module .exports = class AnimationMembersList extends Interface
    set_name (element, node)
    {
       element .text (this .getName (node));
+   }
+
+   setKeyframe (node, field)
+   {
+
    }
 };
