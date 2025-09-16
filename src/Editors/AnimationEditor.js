@@ -2,6 +2,7 @@
 
 const
    $         = require ("jquery"),
+   X3D       = require ("../X3D"),
    Interface = require ("../Application/Interface"),
    Splitter  = require ("../Controls/Splitter"),
    NodeList  = require ("./NodeList"),
@@ -44,7 +45,7 @@ module .exports = class AnimationEditor extends Interface
          .appendTo (this .animationEditor);
 
       this .createAnimationIcon = $("<span></span>")
-         .addClass (["material-symbols-outlined"])
+         .addClass (["material-symbols-outlined", "disabled"])
          .attr ("title", _("Create animation."))
          .text ("animation")
          .appendTo (this .toolbar)
@@ -92,6 +93,14 @@ module .exports = class AnimationEditor extends Interface
          .renameNodeInput (null, null);
 
       this .nodeList = new NodeList (this .nodeListElement, node => this .isAnimation (node), animation => this .setAnimation (animation));
+
+      // Selection
+
+      const selection = require ("../Application/Selection");
+
+      selection .addInterest (this, () => this .setSelection (selection));
+
+      // Setup
 
       this .setup ();
    }
@@ -141,6 +150,25 @@ module .exports = class AnimationEditor extends Interface
       .flatMap (object => [... object]))
       .removeClass (enabled ? "disabled" : [ ])
       .addClass (enabled ? [ ] : "disabled");
+   }
+
+   setSelection (selection)
+   {
+      if (selection .nodes .length && this .isGroupingNodeLike (selection .nodes .at (-1)))
+         this .createAnimationIcon .removeClass ("disabled");
+      else
+         this .createAnimationIcon .addClass ("disabled");
+   }
+
+   isGroupingNodeLike (node)
+   {
+      if (node .getType () .includes (X3D .X3DConstants .X3DGroupingNode))
+         return true;
+
+      if (node .getType () .includes (X3D .X3DConstants .ViewpointGroup))
+         return true;
+
+      return false;
    }
 
    createAnimation ()
