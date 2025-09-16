@@ -138,7 +138,7 @@ module .exports = class AnimationEditor extends Interface
    {
       // Remove
 
-      this .animation ?.name_changed .removeInterest ("setAnimationName", this);
+      this .animation ?.name_changed .removeInterest ("set_animation_name", this);
 
       // Set
 
@@ -162,9 +162,9 @@ module .exports = class AnimationEditor extends Interface
 
          this .animationName .removeAttr ("disabled");
 
-         this .animation .name_changed .addInterest ("setAnimationName", this);
+         this .animation .name_changed .addInterest ("set_animation_name", this);
 
-         this .setAnimationName ();
+         this .set_animation_name ();
       }
       else
       {
@@ -247,7 +247,7 @@ module .exports = class AnimationEditor extends Interface
       this .nodeList .setNode (null);
    }
 
-   setAnimationName ()
+   set_animation_name ()
    {
       this .animationName .val (this .animation .getName () .replace (/Animation(?:_\d+)?$/, ""));
    }
