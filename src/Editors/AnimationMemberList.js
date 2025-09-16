@@ -125,7 +125,6 @@ module .exports = class AnimationMembersList extends Interface
             .append (nameElement)
             .append (document .createTextNode (" "))
             .append (applyIcon)
-            .on ("click", () => void (undefined))
             .appendTo (fieldList);
       }
    }
