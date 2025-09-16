@@ -60,9 +60,9 @@ module .exports = class AnimationMembersList extends Interface
          $("<li></li>")
             .attr ("node-id", node .getId ())
             .append ($("<img></img>") .addClass ("icon") .attr ("src", "../images/OutlineEditor/Node/X3DBaseNode.svg"))
-            .append ($("<span></span>") .addClass ("type-name") .text (node .getTypeName ()))
+            .append (typeNameElement)
             .append (document .createTextNode (" "))
-            .append ($("<span></span>") .addClass ("name") .text (this .getName (node)))
+            .append (nameElement)
             .on ("click", () => this .setNode (node))
             .appendTo (this .#list);
 
