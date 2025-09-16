@@ -190,6 +190,7 @@ module .exports = class AnimationEditor extends Interface
          group            = selection .nodes .at (-1),
          executionContext = group .getExecutionContext ();
 
+      Editor .addComponent (executionContext .getLocalScene (), "Grouping");
       Editor .addComponent (executionContext .getLocalScene (), "Time");
 
       const
