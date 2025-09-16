@@ -14,14 +14,12 @@ module .exports = class NodeList extends Interface
       super ("Sunrize.NodeList.");
 
       this .nodeList         = element;
+      this .list             = $("<ul></ul>") .appendTo (this .nodeList);
       this .filter           = filter;
       this .callback         = callback;
       this .executionContext = null;
       this .node             = null;
       this .nodes            = [ ];
-
-      this .list = $("<ul></ul>")
-         .appendTo (this .nodeList);
 
       this .setup ();
    }

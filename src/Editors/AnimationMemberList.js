@@ -18,10 +18,8 @@ module .exports = class AnimationMembersList extends Interface
       super ("Sunrize.AnimationMembersList.");
 
       this .#nodeList = element;
+      this .#list     = $("<ul></ul>") .appendTo (this .#nodeList);
       this .#nodes    = [ ];
-
-      this .#list = $("<ul></ul>")
-         .appendTo (this .#nodeList);
 
       this .setup ();
    }
@@ -55,7 +53,8 @@ module .exports = class AnimationMembersList extends Interface
       {
          const
             typeNameElement = $("<span></span>") .addClass ("type-name") .text (node .getTypeName ()),
-            nameElement     = $("<span></span>") .addClass ("name") .text (this .getName (node));
+            nameElement     = $("<span></span>") .addClass ("name") .text (this .getName (node)),
+            fieldList       = $("<ul></ul>");
 
          $("<li></li>")
             .attr ("node-id", node .getId ())
@@ -63,14 +62,50 @@ module .exports = class AnimationMembersList extends Interface
             .append (typeNameElement)
             .append (document .createTextNode (" "))
             .append (nameElement)
+            .append (fieldList)
             .on ("click", () => this .setNode (node))
             .appendTo (this .#list);
+
+         this .createFieldElements (fieldList, node);
 
          node .typeName_changed .addInterest ("set_typeName", this, typeNameElement, node);
          node .name_changed     .addInterest ("set_name",     this, nameElement,     node);
       }
 
       this .#nodes .push (... nodes);
+   }
+
+	#fieldTypes = new Set ([
+	   X3D .X3DConstants .SFBool,
+		X3D .X3DConstants .SFColor,
+		X3D .X3DConstants .SFFloat,
+		X3D .X3DConstants .SFInt32,
+		X3D .X3DConstants .SFRotation,
+		X3D .X3DConstants .SFVec2f,
+		X3D .X3DConstants .SFVec3f,
+		X3D .X3DConstants .MFVec2f,
+		X3D .X3DConstants .MFVec3f
+   ]);
+
+   createFieldElements (fieldList, node)
+   {
+      for (const field of node .getFields ())
+      {
+         if (!field .isInput ())
+            continue;
+
+         if (!this .#fieldTypes .has (field .getType ()))
+            continue;
+
+         const nameElement = $("<span></span>") .addClass ("field-name") .text (field .getName ());
+
+         $("<li></li>")
+            .attr ("field-id", field .getId ())
+            .append ($("<img></img>") .addClass ("icon") .attr ("src", `../images/OutlineEditor/Fields/${field .getTypeName()}.svg`))
+            .append (nameElement)
+            .on ("click", () => void (undefined))
+            .appendTo (fieldList);
+      }
    }
 
    removeNodes (nodes)

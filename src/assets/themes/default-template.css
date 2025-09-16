@@ -776,6 +776,7 @@ body.dark .ui-widget .library-list .component {
 /* Node List */
 
 .node-list {
+  user-select: none;
   overflow: auto;
   position: absolute;
   inset: 0 0 0 0;
@@ -786,11 +787,11 @@ body.dark .ui-widget .library-list .component {
   margin: 0;
   padding: 0;
   list-style-type: none;
+  color: var(--system-blue);
 }
 
 .node-list > ul > li {
   cursor: pointer;
-  user-select: none;
   margin: 0;
   padding: 3px 10px;
   white-space: nowrap;
@@ -802,6 +803,19 @@ body.dark .ui-widget .library-list .component {
 
 .node-list > ul > li:hover {
   background-color: var(--tint-color2);
+}
+
+.node-list > ul > li > ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  color: var(--system-orange);
+}
+
+.node-list > ul > li > ul > li {
+  margin: 0;
+  padding: 3px 10px;
+  white-space: nowrap;
 }
 
 .node-list .icon {
@@ -983,10 +997,8 @@ body.dark .ui-widget .library-list .component {
 }
 
 .script-editor .node-list {
-  user-select: none;
   bottom: var(--input-height);
   border-bottom: 1px solid var(--border-color);
-  color: var(--system-blue);
 }
 
 .script-editor .type-name {
@@ -1035,10 +1047,8 @@ body.dark .ui-widget .library-list .component {
 }
 
 .animation-editor .node-list {
-  user-select: none;
   bottom: var(--input-height);
   border-bottom: 1px solid var(--border-color);
-  color: var(--system-blue);
 }
 
 .animation-editor .type-name {

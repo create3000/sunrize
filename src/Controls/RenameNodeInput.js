@@ -12,6 +12,11 @@ require ("../Bits/Validate");
 
 $.fn.renameNodeInput = function (node)
 {
+   this .data ("node") ?.name_changed .removeFieldCallback (this);
+   this .data ("node", node);
+
+   node ?.name_changed .addFieldCallback (this, () => this .val (node .getName ()));
+
    if (node)
       this .removeAttr ("disabled");
    else
@@ -19,7 +24,7 @@ $.fn.renameNodeInput = function (node)
 
    this
       .val (node ? node .getName () : "")
-      .siblings () .addBack () .off ("keydown.renameNodeInput")
+      .siblings () .addBack () .off ("keydown.renameNodeInput");
 
    this .validate (Editor .Id, () =>
    {
