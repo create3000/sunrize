@@ -44,9 +44,9 @@ module .exports = class AnimationMembersList extends Interface
          node .name_changed     .removeInterest ("set_name",     this);
       }
 
-      this .list .empty ();
+      this .nodes = this .nodes .filter (node => node .isLive ());
 
-      // this .nodes = this .nodes .filter (node => node .isLive ());
+      this .list .empty ();
 
       for (const node of this .nodes)
       {
@@ -100,7 +100,9 @@ module .exports = class AnimationMembersList extends Interface
 
    addNodes (nodes)
    {
-      this .nodes .push (... nodes .filter (node => !this .nodes .includes (node)));
+      nodes = nodes .filter (node => !this .nodes .includes (node));
+
+      this .nodes .push (... nodes);
 
       this .update ();
    }

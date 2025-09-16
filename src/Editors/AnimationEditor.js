@@ -141,7 +141,8 @@ module .exports = class AnimationEditor extends Interface
    {
       // Remove
 
-      this .animation ?.name_changed .removeInterest ("set_animation_name", this);
+      this .animation ?._children    .removeInterest ("updateInterpolators", this);
+      this .animation ?.name_changed .removeInterest ("set_animation_name",  this);
 
       // Set
 
@@ -160,6 +161,12 @@ module .exports = class AnimationEditor extends Interface
 
          if (!this .timeSensor)
             this .nodeList .setNode (null);
+
+         // Interpolators
+
+         this .animation ._children .addInterest ("updateInterpolators", this);
+
+         this .updateInterpolators ();
 
          // Show Member List
 
@@ -298,6 +305,11 @@ module .exports = class AnimationEditor extends Interface
    }
 
    removeMember ()
+   {
+
+   }
+
+   updateInterpolators ()
    {
 
    }
