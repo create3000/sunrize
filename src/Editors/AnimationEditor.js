@@ -17,11 +17,6 @@ module .exports = class AnimationEditor extends Interface
 
       this .animationEditor = element;
 
-      this .toolbar = $("<div></div>")
-         .attr ("id", "animation-editor-toolbar")
-         .addClass (["animation-editor-toolbar", "toolbar", "horizontal-toolbar"])
-         .appendTo (this .animationEditor);
-
       this .verticalSplitter = $("<div></div>")
          .attr ("id", "animation-editor-content")
          .addClass (["animation-editor-content", "vertical-splitter"])
@@ -59,6 +54,36 @@ module .exports = class AnimationEditor extends Interface
 
       this .nodeList = new NodeList (this .nodeListElement, node => this .isAnimation (node), animation => this .setAnimation (animation));
 
+      // Toolbar
+
+      this .toolbar = $("<div></div>")
+         .attr ("id", "animation-editor-toolbar")
+         .addClass (["animation-editor-toolbar", "toolbar", "horizontal-toolbar"])
+         .appendTo (this .animationEditor);
+
+      this .createAnimationIcon = $("<span></span>")
+         .addClass (["material-symbols-outlined"])
+         .attr ("title", _("Create animation."))
+         .text ("animation")
+         .appendTo (this .toolbar)
+         .on ("click", () => this .createAnimation ());
+
+      $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
+
+      this .addMemberIcon = $("<span></span>")
+         .addClass ("material-icons")
+         .attr ("title", _("Add member to animation."))
+         .text ("add")
+         .appendTo (this .toolbar)
+         .on ("click", () => this .addMember ());
+
+      this .removeMemberIcon = $("<span></span>")
+         .addClass ("material-icons")
+         .attr ("title", _("Remove member from animation."))
+         .text ("remove")
+         .appendTo (this .toolbar)
+         .on ("click", () => this .addMember ());
+
       this .setup ();
    }
 
@@ -93,5 +118,15 @@ module .exports = class AnimationEditor extends Interface
       {
          this .nodeName .renameNodeInput (null, null);
       }
+   }
+
+   createAnimation ()
+   {
+
+   }
+
+   addMember ()
+   {
+
    }
 }

@@ -507,6 +507,16 @@ body.light .qtip-tipsy {
   width: var(--toolbar-width);
 }
 
+.horizontal-toolbar .material-icons,
+.horizontal-toolbar .material-symbols-outlined {
+  display: inline-block;
+  margin: auto 5px;
+  height: var(--icon-size);
+  cursor: pointer;
+  font-size: var(--icon-size);
+  user-select: none;
+}
+
 .vertical-toolbar .material-icons,
 .vertical-toolbar .material-symbols-outlined {
   display: block;
@@ -515,6 +525,12 @@ body.light .qtip-tipsy {
   cursor: pointer;
   font-size: var(--icon-size);
   user-select: none;
+}
+
+.horizontal-toolbar .material-symbols-outlined {
+  font-size: calc(var(--icon-size) + 7px);
+  position: relative;
+  top: 3px;
 }
 
 .vertical-toolbar .material-symbols-outlined {
@@ -528,6 +544,15 @@ body.light .qtip-tipsy {
   left: -1px;
 }
 
+.horizontal-toolbar .separator {
+  display: inline-block;
+  margin: auto 10px;
+  width: 0;
+  height: var(--icon-size);
+  border-right: 1px solid var(--separator-color);
+  user-select: none;
+}
+
 .vertical-toolbar .separator {
   display: block;
   margin: 10px auto;
@@ -537,16 +562,22 @@ body.light .qtip-tipsy {
   user-select: none;
 }
 
+.horizontal-toolbar .material-icons:hover,
+.horizontal-toolbar .material-symbols-outlined:hover,
 .vertical-toolbar .material-icons:hover,
 .vertical-toolbar .material-symbols-outlined:hover {
   color: var(--highlight-color);
 }
 
+.horizontal-toolbar .material-icons.active,
+.horizontal-toolbar .material-symbols-outlined.active,
 .vertical-toolbar .material-icons.active,
 .vertical-toolbar .material-symbols-outlined.active {
   color: var(--accent-color);
 }
 
+.horizontal-toolbar .material-icons.disabled,
+.horizontal-toolbar .material-symbols-outlined.disabled,
 .vertical-toolbar .material-icons.disabled,
 .vertical-toolbar .material-symbols-outlined.disabled {
   pointer-events: none;
@@ -977,6 +1008,10 @@ body.dark .ui-widget .library-list .component {
   --input-height: 20px;
 
   box-sizing: border-box;
+}
+
+.animation-editor-toolbar {
+  padding-left: 5px;
 }
 
 .animation-editor .animation-editor-content {
