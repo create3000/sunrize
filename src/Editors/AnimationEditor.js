@@ -38,8 +38,6 @@ module .exports = class AnimationEditor extends Interface
 
       this .vSplitter = new Splitter (this .verticalSplitter, "vertical");
 
-      this .verticalSplitter .on ("position", () => this .onSplitterPosition ());
-
       // Toolbar
 
       this .toolbar = $("<div></div>")
@@ -109,14 +107,6 @@ module .exports = class AnimationEditor extends Interface
       // Setup
 
       this .setup ();
-   }
-
-   onSplitterPosition ()
-   {
-      if (this .vSplitter .position)
-         this .toggleSidebarButton .addClass ("active");
-      else
-         this .toggleSidebarButton .removeClass ("active");
    }
 
    isAnimation (node)
