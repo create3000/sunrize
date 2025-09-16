@@ -157,9 +157,9 @@ module .exports = class AnimationEditor extends Interface
 
          // Interpolators
 
-         this .animation ._children .addInterest ("updateInterpolators", this);
+         this .animation ._children .addInterest ("set_interpolators", this);
 
-         this .updateInterpolators ();
+         this .set_interpolators ();
 
          // Show Member List
 
@@ -301,8 +301,39 @@ module .exports = class AnimationEditor extends Interface
 
    }
 
-   updateInterpolators ()
-   {
+   #interpolatorTypes = new Set ([
+		X3D .X3DConstants .BooleanSequencer,
+		X3D .X3DConstants .IntegerSequencer,
+		X3D .X3DConstants .ColorInterpolator,
+		X3D .X3DConstants .ScalarInterpolator,
+		X3D .X3DConstants .OrientationInterpolator,
+		X3D .X3DConstants .PositionInterpolator2D,
+		X3D .X3DConstants .PositionInterpolator,
+		X3D .X3DConstants .CoordinateInterpolator2D,
+		X3D .X3DConstants .CoordinateInterpolator,
+   ]);
 
+   set_interpolators ()
+   {
+      const members = new Map ();
+
+      for (const node of this .animation ._children)
+      {
+         const interpolatorNode = node .getValue ();
+
+         if (!interpolatorNode .getType () .some (type => this .#interpolatorTypes .has (type)))
+            continue;
+
+         for (const route of interpolatorNode ._value_changed .getOutputRoutes ())
+         {
+            const
+               node  = route .getDestinationNode (),
+               field = node .getField (route .getDestinationField ());
+
+            members .set (node, field);
+         }
+      }
+
+      this .memberList .addNodes (Array .from (members .keys ()));
    }
 }
