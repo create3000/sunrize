@@ -57,7 +57,7 @@ module .exports = class AnimationEditor extends Interface
          .appendTo (this .animations)
          .renameNodeInput (null, null);
 
-      this .nodeList = new NodeList (this .nodeListElement, node => node .getTypeName () === "Group" && node ._metadata .name === "Animation", node => this .setNode (node));
+      this .nodeList = new NodeList (this .nodeListElement, node => this .isAnimation (node), animation => this .setAnimation (animation));
 
       this .setup ();
    }
@@ -70,13 +70,24 @@ module .exports = class AnimationEditor extends Interface
          this .toggleSidebarButton .removeClass ("active");
    }
 
-   setNode (node)
+   isAnimation (node)
    {
-      this .node = node;
+      if (node .getTypeName () !== "Group")
+         return false;
 
-      if (this .node)
+      if (!node .hasMetaData ("Animation/duration"))
+         return false;
+
+      return true;
+   }
+
+   setAnimation (animation)
+   {
+      this .animation = animation;
+
+      if (this .animation)
       {
-         this .nodeName .renameNodeInput (this .node);
+         this .nodeName .renameNodeInput (this .animation);
       }
       else
       {
