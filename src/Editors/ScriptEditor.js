@@ -16,11 +16,11 @@ const
    monacoLoader = require ("monaco-editor/min/vs/loader.js"),
    _            = require ("../Application/GetText");
 
+require ("../Controls/RenameNodeInput");
+
 monacoLoader .require .config ({
    baseUrl: url .pathToFileURL (path .resolve (path .dirname (require .resolve ("monaco-editor/package.json")), "min")) + "/",
 });
-
-require ("../Controls/RenameNodeInput");
 
 module .exports = class ScriptEditor extends Interface
 {
