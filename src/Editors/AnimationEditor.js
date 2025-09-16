@@ -84,6 +84,9 @@ module .exports = class AnimationEditor extends Interface
          .addClass ("node-list")
          .appendTo (this .verticalSplitterLeft);
 
+      this .membersListElement = $("<div></div>")
+         .addClass ("node-list");
+
       this .animationName = $("<input></input>")
          .addClass ("node-name")
          .attr ("title", _("Rename animation."))
@@ -154,6 +157,11 @@ module .exports = class AnimationEditor extends Interface
          if (!this .timeSensor)
             this .nodeList .setNode (null);
 
+         // List
+
+         this .nodeListElement .hide ();
+         this .membersListElement .show ();
+
          // Animation Name
 
          this .animationName .removeAttr ("disabled");
@@ -164,6 +172,9 @@ module .exports = class AnimationEditor extends Interface
       }
       else
       {
+         this .membersListElement .hide ();
+         this .nodeListElement .show ();
+
          this .animationName .val ("");
          this .animationName .attr ("disabled", "");
       }
