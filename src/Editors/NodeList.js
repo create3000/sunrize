@@ -117,6 +117,6 @@ module .exports = class NodeList extends Interface
 
    set_name (listItem, node)
    {
-      listItem .find (".name") .text (node .getName ());
+      listItem .find (".name") .text (this .getName (node));
    }
 };
