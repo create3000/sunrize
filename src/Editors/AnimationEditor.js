@@ -80,19 +80,15 @@ module .exports = class AnimationEditor extends Interface
 
       // Animations List
 
-      this .animations = $("<div></div>")
-         .addClass ("animations")
-         .appendTo (this .verticalSplitterLeft);
-
       this .nodeListElement = $("<div></div>")
          .addClass ("node-list")
-         .appendTo (this .animations);
+         .appendTo (this .verticalSplitterLeft);
 
       this .animationName = $("<input></input>")
          .addClass ("node-name")
          .attr ("title", _("Rename animation."))
          .attr ("placeholder", _("Enter animation name."))
-         .appendTo (this .animations)
+         .appendTo (this .verticalSplitterLeft)
          .validate (Editor .Id, () =>
          {
             electron .shell .beep ();

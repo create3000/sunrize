@@ -1034,11 +1034,6 @@ body.dark .ui-widget .library-list .component {
   border-right: 1px solid var(--border-color);
 }
 
-.animation-editor .animations {
-  position: absolute;
-  inset: 0;
-}
-
 .animation-editor .node-list {
   user-select: none;
   bottom: var(--input-height);
