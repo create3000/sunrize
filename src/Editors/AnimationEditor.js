@@ -157,7 +157,7 @@ module .exports = class AnimationEditor extends Interface
          if (!this .timeSensor)
             this .nodeList .setNode (null);
 
-         // List
+         // Show Member List
 
          this .nodeListElement .hide ();
          this .membersListElement .show ();
@@ -172,8 +172,12 @@ module .exports = class AnimationEditor extends Interface
       }
       else
       {
+         // Show Animations List
+
          this .membersListElement .hide ();
          this .nodeListElement .show ();
+
+         // Animation Name
 
          this .animationName .val ("");
          this .animationName .attr ("disabled", "");
