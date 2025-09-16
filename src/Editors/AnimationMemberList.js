@@ -8,62 +8,78 @@ const
 
 module .exports = class AnimationMembersList extends Interface
 {
+   #nodeList;
+   #list;
+   #nodes;
+   #executionContext;
+
    constructor (element)
    {
       super ("Sunrize.AnimationMembersList.");
 
-      this .nodeList = element;
-      this .nodes    = [ ];
+      this .#nodeList = element;
+      this .#nodes    = [ ];
 
-      this .list = $("<ul></ul>")
-         .appendTo (this .nodeList);
+      this .#list = $("<ul></ul>")
+         .appendTo (this .#nodeList);
 
       this .setup ();
    }
 
    configure ()
    {
-      this .executionContext ?.sceneGraph_changed .removeInterest ("update", this);
+      this .#executionContext ?.sceneGraph_changed .removeInterest ("set_sceneGraph", this);
 
-      this .executionContext = this .browser .currentScene;
+      this .#executionContext = this .browser .currentScene;
 
-      this .executionContext .sceneGraph_changed .addInterest ("update", this);
+      this .#executionContext .sceneGraph_changed .addInterest ("set_sceneGraph", this);
 
-      this .update ();
+      this .set_sceneGraph ();
    }
 
-   update ()
+   set_sceneGraph ()
    {
-      const
-         scrollTop  = this .nodeList .scrollTop (),
-         scrollLeft = this .nodeList .scrollLeft ();
+      this .removeNodes (this .#nodes .filter (node => !node .isLive ()));
+   }
 
-      for (const node of this .nodes)
-      {
-         node .typeName_changed .removeInterest ("set_typeName", this);
-         node .name_changed     .removeInterest ("set_name",     this);
-      }
+   clearNodes ()
+   {
+      this .removeNodes (this .#nodes);
+   }
 
-      this .nodes = this .nodes .filter (node => node .isLive ());
+   addNodes (nodes)
+   {
+      nodes = nodes .filter (node => !this .#nodes .includes (node));
 
-      this .list .empty ();
-
-      for (const node of this .nodes)
+      for (const node of nodes)
       {
          const listItem = $("<li></li>")
+            .attr ("node-id", node .getId ())
             .append ($("<img></img>") .addClass ("icon") .attr ("src", "../images/OutlineEditor/Node/X3DBaseNode.svg"))
             .append ($("<span></span>") .addClass ("type-name") .text (node .getTypeName ()))
             .append (document .createTextNode (" "))
             .append ($("<span></span>") .addClass ("name") .text (this .getName (node)))
             .on ("click", () => this .setNode (node))
-            .appendTo (this .list);
+            .appendTo (this .#list);
 
          node .typeName_changed .addInterest ("set_typeName", this, listItem, node);
          node .name_changed     .addInterest ("set_name",     this, listItem, node);
       }
 
-      this .nodeList .scrollTop (scrollTop);
-      this .nodeList .scrollLeft (scrollLeft);
+      this .#nodes .push (... nodes);
+   }
+
+   removeNodes (nodes)
+   {
+      for (const node of nodes)
+      {
+         this .#list .find (`li[node-id=${node .getId ()}]`) .remove ();
+
+         node .typeName_changed .removeInterest ("set_typeName", this);
+         node .name_changed     .removeInterest ("set_name",     this);
+      }
+
+      this .#nodes = this .#nodes .filter (node => !nodes .includes (node));
    }
 
    getName (node)
@@ -89,28 +105,5 @@ module .exports = class AnimationMembersList extends Interface
    set_name (listItem, node)
    {
       listItem .find (".name") .text (this .getName (node));
-   }
-
-   clearNodes ()
-   {
-      this .nodes .length = 0;
-
-      this .update ();
-   }
-
-   addNodes (nodes)
-   {
-      nodes = nodes .filter (node => !this .nodes .includes (node));
-
-      this .nodes .push (... nodes);
-
-      this .update ();
-   }
-
-   removeNodes (nodes)
-   {
-      this .nodes = this .nodes .filter (node => !nodes .includes (node));
-
-      this .update ();
    }
 };
