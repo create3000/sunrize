@@ -53,7 +53,11 @@ module .exports = class AnimationMembersList extends Interface
 
       for (const node of nodes)
       {
-         const listItem = $("<li></li>")
+         const
+            typeNameElement = $("<span></span>") .addClass ("type-name") .text (node .getTypeName ()),
+            nameElement     = $("<span></span>") .addClass ("name") .text (this .getName (node));
+
+         $("<li></li>")
             .attr ("node-id", node .getId ())
             .append ($("<img></img>") .addClass ("icon") .attr ("src", "../images/OutlineEditor/Node/X3DBaseNode.svg"))
             .append ($("<span></span>") .addClass ("type-name") .text (node .getTypeName ()))
@@ -62,8 +66,8 @@ module .exports = class AnimationMembersList extends Interface
             .on ("click", () => this .setNode (node))
             .appendTo (this .#list);
 
-         node .typeName_changed .addInterest ("set_typeName", this, listItem, node);
-         node .name_changed     .addInterest ("set_name",     this, listItem, node);
+         node .typeName_changed .addInterest ("set_typeName", this, typeNameElement, node);
+         node .name_changed     .addInterest ("set_name",     this, nameElement,     node);
       }
 
       this .#nodes .push (... nodes);
@@ -97,13 +101,13 @@ module .exports = class AnimationMembersList extends Interface
       return name;
    }
 
-   set_typeName (listItem, node)
+   set_typeName (element, node)
    {
-      listItem .find (".type-name") .text (node .getTypeName ());
+      element .text (node .getTypeName ());
    }
 
-   set_name (listItem, node)
+   set_name (element, node)
    {
-      listItem .find (".name") .text (this .getName (node));
+      element .text (this .getName (node));
    }
 };
