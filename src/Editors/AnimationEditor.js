@@ -108,6 +108,8 @@ module .exports = class AnimationEditor extends Interface
 
       selection .addInterest (this, () => this .setSelection (selection));
 
+      this .setSelection (selection);
+
       // Setup
 
       this .setup ();
