@@ -12,6 +12,11 @@ require ("../Bits/Validate");
 
 $.fn.renameNodeInput = function (node)
 {
+   if (node)
+      this .removeAttr ("disabled");
+   else
+      this .attr ("disabled", "");
+
    this
       .val (node ? node .getName () : "")
       .siblings () .addBack () .off ("keydown.renameNodeInput")
@@ -107,4 +112,3 @@ $.fn.renameNodeInput = function (node)
 
    return this;
 };
-
