@@ -63,13 +63,6 @@ module .exports = class AnimationEditor extends Interface
          .appendTo (this .toolbar)
          .on ("click", () => this .addMembers ());
 
-      this .removeMemberIcon = $("<span></span>")
-         .addClass ("material-icons")
-         .attr ("title", _("Remove member from animation."))
-         .text ("remove")
-         .appendTo (this .toolbar)
-         .on ("click", () => this .removeMember ());
-
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
       this .closeAnimationIcon = $("<span></span>")
@@ -201,7 +194,6 @@ module .exports = class AnimationEditor extends Interface
    {
       $([
          this .addMembersIcon,
-         this .removeMemberIcon,
          this .closeAnimationIcon,
       ]
       .flatMap (object => [... object]))
