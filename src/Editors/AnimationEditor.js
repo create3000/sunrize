@@ -186,6 +186,10 @@ module .exports = class AnimationEditor extends Interface
          this .animation .name_changed .addInterest ("set_animation_name", this);
 
          this .set_animation_name ();
+
+         // Tracks
+
+         this .on_zoom_fit ();
       }
       else
       {
@@ -389,17 +393,117 @@ module .exports = class AnimationEditor extends Interface
       return `${nodeName}${fieldName}Interpolator`;
    }
 
+   // Draw Properties
+
+   FRAME_SIZE          = 7;            // in pixel
+   DEFAULT_TRANSLATION = 8;            // in pixel
+   DEFAULT_SCALE       = 16;           // in pixel
+   SCROLL_FACTOR       = 1 + 1 / 16.0; // something nice
+
+   translation = 0;
+   scale = 1;
+
+   getDuration ()
+   {
+      if (this .animation)
+         return Math .max (this .animation .getMetaData ("Animation/duration", new X3D .SFInt32 (10)), 1);
+
+      return 10;
+   }
+
+   getFrameRate ()
+   {
+      if (this .animation)
+         return Math .max (this .animation .getMetaData ("Animation/frameRate", new X3D .SFInt32 (10)), 1);
+
+      return 10;
+   }
+
+   getTranslation ()
+   {
+      return this .translation;
+   }
+
+   setTranslation (translation)
+   {
+      const width = this .getWidth ();
+      const max   = (width - this .DEFAULT_TRANSLATION) - (this .getDuration () * this .getScale ());
+
+      translation = Math .max (translation, max);
+      translation = Math .min (translation, this .DEFAULT_TRANSLATION);
+
+      this .translation = translation;
+   }
+
+   getScale ()
+   {
+      return this .scale;
+   }
+
+   setScale (scale)
+   {
+      this .scale = scale;
+   }
+
+   /**
+    *
+    * @returns {number} start of tracks area
+    */
+   getX ()
+   {
+      return Math .floor (this .tracks .width () - this .getWidth () - 10);
+   }
+
+   /**
+    *
+    * @returns {number} width of tracks area
+    */
+   getWidth ()
+   {
+      return Math .floor (this .verticalSplitterRight .width () - 20);
+   }
+
+   // Draw Function Handler
+
+   on_zoom_fit ()
+   {
+      const width = this .getWidth () - 2 * this .DEFAULT_TRANSLATION;
+
+      this .setScale (width / this .getDuration ());
+      this .setTranslation (this .DEFAULT_TRANSLATION);
+   }
+
+   on_zoom_100 ()
+   {
+      const frame = 0; // frame input value
+      const x     = frame * this .getScale () + this .getTranslation ();
+
+      this .setScale (this .DEFAULT_SCALE);
+      this .setTranslation (x - frame * this .DEFAULT_SCALE);
+   }
+
    updateTracks (event)
    {
       const
-         width        = this .tracks .width (),
-         height       = this .tracks .height (),
+         tracksX      = this .getX (),
+         tracksWidth  = this .tracks .width (),
+         tracksHeight = this .tracks .height (),
          context      = this .tracks [0] .getContext ("2d"),
          trackOffsets = this .memberList .getTrackOffsets ();
 
+      const
+         firstFrame = Math .max (0, Math .floor (-this .getTranslation () / this .getScale ())),
+         lastFrame  = Math .min (this .getDuration (), Math .ceil ((tracksWidth - this .getTranslation ()) / this .getScale ())) + 1;
+
+		const { frameStep, frameFactor } = this .getFrameParams ();
+
       this .tracks
-         .prop ("width",  width)
-         .prop ("height", height);
+         .prop ("width",  tracksWidth)
+         .prop ("height", tracksHeight);
+
+      const
+         blue   = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-blue"),
+         orange = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-orange");
 
       const
          tint1 = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--tint-color1"),
@@ -413,7 +517,7 @@ module .exports = class AnimationEditor extends Interface
 
          context .fillStyle = item .hasClass ("node") || item .data ("i") % 2 ? "transparent" : tint1;
 
-         context .fillRect (0, top, width, height);
+         context .fillRect (0, top, tracksWidth, height);
 
          // Track Tint
 
@@ -428,7 +532,7 @@ module .exports = class AnimationEditor extends Interface
          {
             context .fillStyle = tint2;
 
-            context .fillRect (0, top, width, height);
+            context .fillRect (0, top, tracksWidth, height);
          }
 
          // Node Border
@@ -439,9 +543,25 @@ module .exports = class AnimationEditor extends Interface
 
             context .beginPath ();
             context .moveTo (0, top - 1 + 0.5);
-            context .lineTo (width, top - 1 + 0.5);
+            context .lineTo (tracksWidth, top - 1 + 0.5);
             context .stroke ();
          }
+
+			// Draw vertical lines.
+
+         context .strokeStyle = blue;
+
+			for (let frame = firstFrame - (firstFrame % frameStep); frame < lastFrame; frame += frameStep)
+			{
+				const s = frame % frameFactor; // small
+            const y = Math .floor (top + height * (s ? 0.75 : 0.5));
+				const x = Math .floor (tracksX + frame * this .getScale () + this .getTranslation ());
+
+            context .beginPath ();
+				context .moveTo (x + 0.5, y);
+				context .lineTo (x + 0.5, bottom);
+            context .stroke ();
+			}
       }
 
       // // Outline
@@ -459,14 +579,14 @@ module .exports = class AnimationEditor extends Interface
 
       //    context .beginPath ();
       //    context .moveTo (0, top - 0.5);
-      //    context .lineTo (width, top - 0.5);
+      //    context .lineTo (tracksWidth, top - 0.5);
       //    context .stroke ();
 
       //    const offset = item .hasClass ("node") ? Math .floor (item .closest ("li") .height ()) - height : 0;
 
       //    context .beginPath ();
       //    context .moveTo (0, bottom + offset + 1 + 0.5);
-      //    context .lineTo (width, bottom + offset + 1 + 0.5);
+      //    context .lineTo (tracksWidth, bottom + offset + 1 + 0.5);
       //    context .stroke ();
       // }
    }
@@ -479,5 +599,26 @@ module .exports = class AnimationEditor extends Interface
       const pointerY = event .pageY - this .tracks .offset () .top;
 
       return pointerY > top && pointerY < bottom;
+   }
+
+   #params = [
+      [5 / 1.0,        [10,        50]],
+      [5 / 10.0,       [100,       500]],
+      [5 / 100.0,      [1000,      5000]],
+      [5 / 1000.0,     [10000,     50000]],
+      [5 / 10000.0,    [100000,    500000]],
+      [5 / 100000.0,   [1000000,   5000000]],
+      [5 / 1000000.0,  [10000000,  50000000]],
+      [5 / 10000000.0, [100000000, 500000000]],
+   ];
+
+   getFrameParams ()
+   {
+      const index = X3D .Algorithm .upperBound (this .#params, 0, this .#params .length, this .getScale (), (a, b) =>
+      {
+         return a < b [0];
+      });
+
+      return this .#params [index] ?.[1] ?? { frameStep: 1, frameFactor: 5 };
    }
 }
