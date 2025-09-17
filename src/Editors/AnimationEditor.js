@@ -16,13 +16,14 @@ require ("../Bits/Validate");
 
 module .exports = class AnimationEditor extends Interface
 {
+   members       = new Map ();
+   interpolators = [ ];
+
    constructor (element)
    {
       super (`Sunrize.AnimationEditor.${element .attr ("id")}.`);
 
       this .animationEditor = element;
-      this .members         = new Map ();
-      this .interpolators   = [ ];
 
       this .verticalSplitter = $("<div></div>")
          .attr ("id", "animation-editor-content")
@@ -395,10 +396,10 @@ module .exports = class AnimationEditor extends Interface
 
    // Draw Properties
 
-   FRAME_SIZE          = 7;            // in pixel
-   DEFAULT_TRANSLATION = 8;            // in pixel
-   DEFAULT_SCALE       = 16;           // in pixel
-   SCROLL_FACTOR       = 1 + 1 / 16.0; // something nice
+   FRAME_SIZE          = 7;          // in pixel
+   DEFAULT_TRANSLATION = 8;          // in pixel
+   DEFAULT_SCALE       = 16;         // in pixel
+   SCROLL_FACTOR       = 1 + 1 / 16; // something nice
 
    translation = 0;
    scale = 1;
@@ -451,7 +452,7 @@ module .exports = class AnimationEditor extends Interface
     */
    getX ()
    {
-      return Math .floor (this .tracks .width () - this .getWidth () - 10);
+      return Math .floor (this .tracks .width () - this .getWidth () - 11);
    }
 
    /**
@@ -602,14 +603,14 @@ module .exports = class AnimationEditor extends Interface
    }
 
    #params = [
-      [5 / 1.0,        [10,        50]],
-      [5 / 10.0,       [100,       500]],
-      [5 / 100.0,      [1000,      5000]],
-      [5 / 1000.0,     [10000,     50000]],
-      [5 / 10000.0,    [100000,    500000]],
-      [5 / 100000.0,   [1000000,   5000000]],
-      [5 / 1000000.0,  [10000000,  50000000]],
-      [5 / 10000000.0, [100000000, 500000000]],
+      [5 / 1,        [10,        50]],
+      [5 / 10,       [100,       500]],
+      [5 / 100,      [1000,      5000]],
+      [5 / 1000,     [10000,     50000]],
+      [5 / 10000,    [100000,    500000]],
+      [5 / 100000,   [1000000,   5000000]],
+      [5 / 1000000,  [10000000,  50000000]],
+      [5 / 10000000, [100000000, 500000000]],
    ];
 
    getFrameParams ()
