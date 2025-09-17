@@ -49,6 +49,8 @@ module .exports = class AnimationMembersList extends Interface
    {
       nodes = nodes .filter (node => !this .#nodes .includes (node));
 
+      let i = 0;
+
       for (const node of nodes)
       {
          const
@@ -67,7 +69,8 @@ module .exports = class AnimationMembersList extends Interface
             .on ("click", () => this .removeNodes ([node]));
 
          $("<div></div>")
-            .addClass ("item")
+            .data ("i", i ++)
+            .addClass (["node", "item"])
             .append ($("<img></img>") .addClass ("icon") .attr ("src", "../images/OutlineEditor/Node/X3DBaseNode.svg"))
             .append (typeNameElement)
             .append (document .createTextNode (" "))
@@ -101,6 +104,8 @@ module .exports = class AnimationMembersList extends Interface
 
    createFieldElements (fieldList, node)
    {
+      let i = 0;
+
       for (const field of node .getFields ())
       {
          if (!field .isInput ())
@@ -129,7 +134,8 @@ module .exports = class AnimationMembersList extends Interface
             .on ("click", () => this .addKeyframe (node, field));
 
          $("<div></div>")
-            .addClass ("item")
+            .data ("i", i ++ )
+            .addClass (["field", "item"])
             .append (iconElement)
             .append (nameElement)
             .append (document .createTextNode (" "))
@@ -188,8 +194,9 @@ module .exports = class AnimationMembersList extends Interface
       {
          const
             item   = $(element),
-            top    = item .offset () .top - listTop + 10,
-            bottom = top + item .height ();
+            height = item .outerHeight (),
+            top    = item .offset () .top - listTop,
+            bottom = top + height;
 
          if (bottom < 0)
             continue;
@@ -197,7 +204,7 @@ module .exports = class AnimationMembersList extends Interface
          if (top > listHeight)
             continue;
 
-         offsets .push ({ top, bottom });
+         offsets .push ({ item, top, bottom, height });
       }
 
       return offsets;

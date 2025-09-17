@@ -394,21 +394,31 @@ module .exports = class AnimationEditor extends Interface
          context      = this .tracks [0] .getContext ("2d"),
          trackOffsets = this .memberList .getTrackOffsets ();
 
-      const lineColor = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-gray1");
+      const
+         blue   = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-blue"),
+         orange = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-orange"),
+         tint1  = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--tint-color1"),
+         tint2  = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--tint-color2");
 
       this .tracks
          .prop ("width",  width)
          .prop ("height", height);
 
-      context .strokeStyle = lineColor;
-      context .lineWidth   = 1;
+      context .lineWidth = 1;
 
-      for (const offset of trackOffsets)
+      for (const { item, top, bottom, height } of trackOffsets)
       {
-         const bottom = Math .floor (offset .bottom);
+         context .fillStyle = item .hasClass ("node") || item .data ("i") % 2 ? "transparent" : tint1;
 
-         context .moveTo (0, bottom);
-         context .lineTo (width, bottom);
+         context .fillRect (0, top, width, height);
+
+         if (item .hasClass ("node") && item .data ("i") > 0)
+         {
+            context .strokeStyle = tint2;
+
+            context .moveTo (0, Math .floor (top - 1) + 0.5);
+            context .lineTo (width, Math .floor (top - 1) + 0.5);
+         }
       }
 
       context .stroke ();
