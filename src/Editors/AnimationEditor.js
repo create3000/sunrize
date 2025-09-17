@@ -213,7 +213,7 @@ module .exports = class AnimationEditor extends Interface
 
       // Tracks
 
-      this .updateTracks ();
+      this .requestUpdateTracks ();
    }
 
    enableIcons (enabled)
@@ -434,6 +434,8 @@ module .exports = class AnimationEditor extends Interface
       translation = Math .min (translation, this .DEFAULT_TRANSLATION);
 
       this .translation = translation;
+
+      this .requestUpdateTracks ();
    }
 
    getScale ()
@@ -444,6 +446,8 @@ module .exports = class AnimationEditor extends Interface
    setScale (scale)
    {
       this .scale = scale;
+
+      this .requestUpdateTracks ();
    }
 
    /**
@@ -515,6 +519,15 @@ module .exports = class AnimationEditor extends Interface
 
       this .setScale (this .DEFAULT_SCALE);
       this .setTranslation (x - frame * this .DEFAULT_SCALE);
+   }
+
+   #updateTracksId = undefined;
+
+   requestUpdateTracks ()
+   {
+      clearTimeout (this .#updateTracksId);
+
+      this .#updateTracksId = setTimeout (() => this .updateTracks ());
    }
 
    updateTracks (event)
