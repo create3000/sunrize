@@ -196,7 +196,7 @@ module .exports = class AnimationMembersList extends Interface
    {
       const
          listTop    = Math .floor (this .#nodeList .offset () .top),
-         listHeight = Math .floor (this .#nodeList .height ()),
+         listHeight = Math .floor (this .#nodeList .parent () .height ()),
          items      = this .#nodeList .find (".item"),
          offsets    = [ ];
 
