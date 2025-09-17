@@ -394,19 +394,21 @@ module .exports = class AnimationEditor extends Interface
          context      = this .tracks [0] .getContext ("2d"),
          trackOffsets = this .memberList .getTrackOffsets ();
 
-      const lineColor = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-gray0");
+      const lineColor = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-gray1");
 
       this .tracks
          .prop ("width",  width)
          .prop ("height", height);
 
       context .strokeStyle = lineColor;
-      context .lineWidth   = 2;
+      context .lineWidth   = 1;
 
       for (const offset of trackOffsets)
       {
-         context .moveTo (0, offset .bottom);
-         context .lineTo (width, offset .bottom);
+         const bottom = Math .floor (offset .bottom);
+
+         context .moveTo (0, bottom);
+         context .lineTo (width, bottom);
       }
 
       context .stroke ();
