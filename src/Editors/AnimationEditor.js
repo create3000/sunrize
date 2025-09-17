@@ -388,6 +388,11 @@ module .exports = class AnimationEditor extends Interface
 
    updateTracks ()
    {
+      console .log (this .tracks .offset () .top, this .tracks .height ());
+      console .log (this .membersListElement .offset () .top, this .membersListElement .height ());
+
+      this .tracks .height (this .membersListElement .height ());
+
       const
          width        = this .tracks .width (),
          height       = this .tracks .height (),
@@ -399,10 +404,8 @@ module .exports = class AnimationEditor extends Interface
          .prop ("height", height);
 
       const
-         blue   = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-blue"),
-         orange = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-orange"),
-         tint1  = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--tint-color1"),
-         tint2  = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--tint-color2");
+         tint1 = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--tint-color1"),
+         tint2 = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--tint-color2");
 
       context .lineWidth = 1;
 
@@ -414,7 +417,16 @@ module .exports = class AnimationEditor extends Interface
 
          context .fillRect (0, top, width, height);
 
-         // Border
+         // Track Tint
+
+         if (item .hasClass ("hover"))
+         {
+            context .fillStyle = tint2;
+
+            context .fillRect (0, top, width, height);
+         }
+
+         // Node Border
 
          if (item .hasClass ("node") && item .data ("i"))
          {
@@ -427,32 +439,30 @@ module .exports = class AnimationEditor extends Interface
          }
       }
 
-      for (const { item, top, bottom, height } of trackOffsets)
-      {
-         if (!item .hasClass ("hover"))
-            continue;
+      // const
+      //    blue   = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-blue"),
+      //    orange = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-orange");
 
-         // Track Tint
+      // for (const { item, top, bottom, height } of trackOffsets)
+      // {
+      //    if (!item .hasClass ("hover"))
+      //       continue;
 
-         context .fillStyle = item .hasClass ("node") ? "transparent" : tint2;
+      //    // Outline
 
-         context .fillRect (0, top, width, height);
+      //    context .strokeStyle = item .hasClass ("node") ? blue : orange;
 
-         // // Outline
+      //    context .beginPath ();
+      //    context .moveTo (0, top - 0.5);
+      //    context .lineTo (width, top - 0.5);
+      //    context .stroke ();
 
-         // context .strokeStyle = item .hasClass ("node") ? blue : orange;
+      //    const offset = item .hasClass ("node") ? Math .floor (item .closest ("li") .height ()) - height : 0;
 
-         // context .beginPath ();
-         // context .moveTo (0, top - 0.5);
-         // context .lineTo (width, top - 0.5);
-         // context .stroke ();
-
-         // const offset = item .hasClass ("node") ? Math .floor (item .closest ("li") .height ()) - height : 0;
-
-         // context .beginPath ();
-         // context .moveTo (0, bottom + offset + 1 + 0.5);
-         // context .lineTo (width, bottom + offset + 1 + 0.5);
-         // context .stroke ();
-      }
+      //    context .beginPath ();
+      //    context .moveTo (0, bottom + offset + 1 + 0.5);
+      //    context .lineTo (width, bottom + offset + 1 + 0.5);
+      //    context .stroke ();
+      // }
    }
 }

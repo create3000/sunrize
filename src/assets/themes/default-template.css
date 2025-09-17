@@ -818,13 +818,13 @@ body.dark .ui-widget .library-list .component {
   padding-left: 20px;
 }
 
-.node-list > ul > li:has(> .item:hover) {
+/* .node-list > ul > li:has(> .item:hover) {
   outline: 1px solid var(--system-blue);
 }
 
 .node-list > ul > li > ul > li:has(> .item:hover) {
   outline: 1px solid var(--system-orange);
-}
+} */
 
 .node-list > ul li:not(:has(li)):nth-child(odd) > .item {
   background-color: var(--tint-color1);
