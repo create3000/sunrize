@@ -301,21 +301,6 @@ module .exports = class AnimationEditor extends Interface
       Editor .undoManager .endUndo ();
    }
 
-   getInterpolatorName (interpolator)
-   {
-      const route = Array .from (interpolator ._value_changed .getOutputRoutes ()) [0];
-
-      if (!route)
-         return;
-
-      const
-         destinationNode  = route .getDestinationNode (),
-         destinationField = route .getDestinationField (),
-         fieldName        = capitalize (destinationField .replace (/^set_|_changed$/g, ""), true);
-
-      return `${destinationNode .getName ()}${fieldName}Interpolator`;
-   }
-
    addMembers ()
    {
       const selection = require ("../Application/Selection");
@@ -362,5 +347,20 @@ module .exports = class AnimationEditor extends Interface
       }
 
       this .memberList .addNodes (Array .from (this .members .values ()));
+   }
+
+   getInterpolatorName (interpolator)
+   {
+      const route = Array .from (interpolator ._value_changed .getOutputRoutes ()) [0];
+
+      if (!route)
+         return;
+
+      const
+         destinationNode  = route .getDestinationNode (),
+         destinationField = route .getDestinationField (),
+         fieldName        = capitalize (destinationField .replace (/^set_|_changed$/g, ""), true);
+
+      return `${destinationNode .getName ()}${fieldName}Interpolator`;
    }
 }
