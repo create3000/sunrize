@@ -804,11 +804,11 @@ body.dark .ui-widget .library-list .component {
   color: var(--system-blue);
 }
 
-.node-list > ul > li:nth-child(odd) {
+.node-list > ul li:not(:has(li)):nth-child(odd) {
   background-color: var(--tint-color1);
 }
 
-.node-list > ul > li:hover {
+.node-list > ul li:not(:has(li)):hover {
   background-color: var(--tint-color2);
 }
 
