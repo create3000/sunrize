@@ -272,7 +272,7 @@ module .exports = class AnimationEditor extends Interface
 
    getAnimationName ()
    {
-      return this .animation .getName () .replace (/Animation(?:_\d+)?$/, "");
+      return this .animation .getDisplayName () .replace (/Animation$/, "");
    }
 
    renameAnimation (event)
