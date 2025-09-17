@@ -18,6 +18,9 @@ module .exports = class OutlineRouteGraph extends OutlineView
    {
       super .colorScheme (shouldUseDarkColors);
 
+      this .routeColor         = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-gray1");
+      this .routeSelectedColor = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-red");
+
       this .requestUpdateRouteGraph ();
    }
 
@@ -146,9 +149,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
          parent  = canvas .parent (),
          context = canvas .get (0) .getContext ("2d");
 
-      const
-         routeColor         = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-gray1"),
-         routeSelectedColor = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-red");
+      const { routeColor, routeSelectedColor } = this;
 
       canvas .height (Math .ceil (parent .height ()));
 
@@ -228,9 +229,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
          parent  = canvas .parent (),
          context = canvas .get (0) .getContext ("2d");
 
-      const
-         routeColor         = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-gray1"),
-         routeSelectedColor = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-red");
+      const { routeColor, routeSelectedColor } = this;
 
       canvas .height (Math .ceil (parent .height ()));
 
@@ -286,9 +285,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
    updateRouteCurves (canvases, fields)
    {
-      const
-         routeColor         = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-gray1"),
-         routeSelectedColor = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-red");
+      const { routeColor, routeSelectedColor } = this;
 
       // Scale canvases
 
