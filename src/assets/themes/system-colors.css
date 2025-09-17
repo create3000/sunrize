@@ -125,8 +125,8 @@ body {
   /* Special Colors */
 
   --sidebar-background-color: rgb(208, 219, 231);
-  --tint-color1: rgba(255, 255, 255, 0.3);
-  --tint-color2: rgba(255, 255, 255, 0.5);
+  --tint-color1: rgba(255, 255, 255, 0.5);
+  --tint-color2: rgba(255, 255, 255, 0.8);
 }
 
 @media (prefers-color-scheme: dark) {

@@ -791,9 +791,12 @@ body.dark .ui-widget .library-list .component {
 
 .node-list li {
   margin: 0;
-  padding: 1px 0;
-  padding: 3px 10px;
+  padding: 3px 0 3px 10px;
   white-space: nowrap;
+}
+
+.node-list i:not(:has(li)) {
+  padding-right: 10px;
 }
 
 .node-list > ul > li:not(:has(li)) {
