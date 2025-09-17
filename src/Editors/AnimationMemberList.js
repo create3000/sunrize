@@ -204,8 +204,8 @@ module .exports = class AnimationMembersList extends Interface
       {
          const
             item   = $(element),
-            height = Math .floor (item .outerHeight ()),
-            top    = Math .floor (item .offset () .top) - listTop,
+            height = Math .round (item .outerHeight ()),
+            top    = Math .round (item .offset () .top) - listTop,
             bottom = top + height;
 
          if (bottom < 0)

@@ -1112,8 +1112,8 @@ body.dark .ui-widget .library-list .component {
   position: absolute;
   display: block;
   width: 100%;
-   height: calc(100% - var(--toolbar-width));
-  top: calc(var(--toolbar-width) + 2px);
+  height: calc(100% - var(--toolbar-width));
+  top: var(--toolbar-width);
   image-rendering: pixelated;
 }
 
