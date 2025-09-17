@@ -124,6 +124,11 @@ module .exports = class AnimationEditor extends Interface
       this .setup ();
    }
 
+   colorScheme (shouldUseDarkColors)
+   {
+      this .updateTracks ();
+   }
+
    isAnimation (node)
    {
       if (node .getTypeName () !== "Group")
@@ -386,14 +391,24 @@ module .exports = class AnimationEditor extends Interface
       const
          width        = this .tracks .width (),
          height       = this .tracks .height (),
-         context      = this .tracks .get (0) .getContext ("2d"),
+         context      = this .tracks [0] .getContext ("2d"),
          trackOffsets = this .memberList .getTrackOffsets ();
+
+      const lineColor = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-gray0");
 
       this .tracks
          .prop ("width",  width)
          .prop ("height", height);
 
-      context .strokeRect (75, 140, 150, 110);
-      context .fillRect (130, 190, 40, 60);
+      context .strokeStyle = lineColor;
+      context .lineWidth   = 2;
+
+      for (const offset of trackOffsets)
+      {
+         context .moveTo (0, offset .bottom);
+         context .lineTo (width, offset .bottom);
+      }
+
+      context .stroke ();
    }
 }

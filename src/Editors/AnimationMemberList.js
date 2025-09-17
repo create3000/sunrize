@@ -179,17 +179,16 @@ module .exports = class AnimationMembersList extends Interface
    getTrackOffsets ()
    {
       const
-         scrollTop  = this .#nodeList .scrollTop (),
          listTop    = this .#nodeList .offset () .top,
          listHeight = this .#nodeList .height (),
-         items      = this .#nodeList .find ("> ul > li > ul > li > .item"),
+         items      = this .#nodeList .find (".item"),
          offsets    = [ ];
 
       for (const element of items)
       {
          const
             item   = $(element),
-            top    = item .offset () .top - listTop - scrollTop,
+            top    = item .offset () .top - listTop + 10,
             bottom = top + item .height ();
 
          if (bottom < 0)
@@ -198,7 +197,7 @@ module .exports = class AnimationMembersList extends Interface
          if (top > listHeight)
             continue;
 
-         offsets .push ([top, bottom]);
+         offsets .push ({ top, bottom });
       }
 
       return offsets;
