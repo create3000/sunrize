@@ -3,6 +3,7 @@
 const
    $           = require ("jquery"),
    electron    = require ("electron"),
+   capitalize  = require ("capitalize"),
    X3D         = require ("../X3D"),
    Interface   = require ("../Application/Interface"),
    Splitter    = require ("../Controls/Splitter"),
@@ -20,6 +21,8 @@ module .exports = class AnimationEditor extends Interface
       super (`Sunrize.AnimationEditor.${element .attr ("id")}.`);
 
       this .animationEditor = element;
+      this .members         = new Map ();
+      this .interpolators   = [ ];
 
       this .verticalSplitter = $("<div></div>")
          .attr ("id", "animation-editor-content")
@@ -168,6 +171,7 @@ module .exports = class AnimationEditor extends Interface
       {
          // Show Animations List
 
+         this .members .clear ();
          this .memberList .clearNodes ();
          this .membersListElement .hide ();
          this .nodeListElement .show ();
@@ -176,6 +180,10 @@ module .exports = class AnimationEditor extends Interface
 
          this .animationName .val ("");
          this .animationName .attr ("disabled", "");
+
+         // Interpolators
+
+         this .interpolators .length = 0;
       }
    }
 
@@ -275,7 +283,29 @@ module .exports = class AnimationEditor extends Interface
       Editor .updateNamedNode (executionContext, executionContext .getUniqueName (`${name}Animation`), animation);
       Editor .updateNamedNode (executionContext, executionContext .getUniqueName (`${name}AnimationTimer`), timeSensor);
 
+      for (const interpolator of this .interpolators)
+      {
+         const name = this .getInterpolatorName (interpolator);
+
+         if (!name)
+            continue;
+
+         Editor .updateNamedNode (executionContext, executionContext .getUniqueName (`${name}Interpolator`), interpolator);
+      }
+
       Editor .undoManager .endUndo ();
+   }
+
+   getInterpolatorName (interpolator)
+   {
+      const destinationField = [... interpolator ._value_changed .getOutputRoutes ()] [0] ?.getDestinationField ();
+
+      if (!destinationField)
+         return;
+
+      const fieldName = capitalize (destinationField .replace (/^set_|_changed$/g, ""));
+
+      return `${this .animation .getName ()}${fieldName}Interpolator`;
    }
 
    addMembers ()
@@ -304,25 +334,25 @@ module .exports = class AnimationEditor extends Interface
 
    set_interpolators ()
    {
-      const members = new Map ();
-
       for (const node of this .animation ._children)
       {
-         const interpolatorNode = node .getValue ();
+         const interpolator = node .getValue ();
 
-         if (!interpolatorNode .getType () .some (type => this .#interpolatorTypes .has (type)))
+         if (!interpolator .getType () .some (type => this .#interpolatorTypes .has (type)))
             continue;
 
-         for (const route of interpolatorNode ._value_changed .getOutputRoutes ())
+         this .interpolators .push (interpolator);
+
+         for (const route of interpolator ._value_changed .getOutputRoutes ())
          {
             const
                node  = route .getDestinationNode (),
                field = node .getField (route .getDestinationField ());
 
-            members .set (node, field);
+            this .members .set (field, node);
          }
       }
 
-      this .memberList .addNodes (Array .from (members .keys ()));
+      this .memberList .addNodes (Array .from (this .members .values ()));
    }
 }
