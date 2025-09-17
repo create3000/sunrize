@@ -1105,7 +1105,7 @@ body.dark .ui-widget .library-list .component {
   width: 100%;
   height: var(--input-height);
   border: none;
-  background: none;
+  background-color: var(--background-color);
 }
 
 .animation-editor .tracks {
