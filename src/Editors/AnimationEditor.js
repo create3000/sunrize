@@ -267,7 +267,12 @@ module .exports = class AnimationEditor extends Interface
 
    set_animation_name ()
    {
-      this .animationName .val (this .animation .getName () .replace (/Animation(?:_\d+)?$/, ""));
+      this .animationName .val (this .getAnimationName ());
+   }
+
+   getAnimationName ()
+   {
+      return this .animation .getName () .replace (/Animation(?:_\d+)?$/, "");
    }
 
    renameAnimation (event)
@@ -283,29 +288,32 @@ module .exports = class AnimationEditor extends Interface
       Editor .updateNamedNode (executionContext, executionContext .getUniqueName (`${name}Animation`), animation);
       Editor .updateNamedNode (executionContext, executionContext .getUniqueName (`${name}AnimationTimer`), timeSensor);
 
-      for (const interpolator of this .interpolators)
-      {
-         const name = this .getInterpolatorName (interpolator);
+      // for (const interpolator of this .interpolators)
+      // {
+      //    const name = this .getInterpolatorName (interpolator);
 
-         if (!name)
-            continue;
+      //    if (!name)
+      //       continue;
 
-         Editor .updateNamedNode (executionContext, executionContext .getUniqueName (`${name}Interpolator`), interpolator);
-      }
+      //    Editor .updateNamedNode (executionContext, executionContext .getUniqueName (name), interpolator);
+      // }
 
       Editor .undoManager .endUndo ();
    }
 
    getInterpolatorName (interpolator)
    {
-      const destinationField = Array .from (interpolator ._value_changed .getOutputRoutes ()) [0] ?.getDestinationField ();
+      const route = Array .from (interpolator ._value_changed .getOutputRoutes ()) [0];
 
-      if (!destinationField)
+      if (!route)
          return;
 
-      const fieldName = capitalize (destinationField .replace (/^set_|_changed$/g, ""), true);
+      const
+         destinationNode  = route .getDestinationNode (),
+         destinationField = route .getDestinationField (),
+         fieldName        = capitalize (destinationField .replace (/^set_|_changed$/g, ""), true);
 
-      return `${this .animation .getName ()}${fieldName}Interpolator`;
+      return `${destinationNode .getName ()}${fieldName}Interpolator`;
    }
 
    addMembers ()
