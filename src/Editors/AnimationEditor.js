@@ -298,7 +298,7 @@ module .exports = class AnimationEditor extends Interface
 
    getInterpolatorName (interpolator)
    {
-      const destinationField = [... interpolator ._value_changed .getOutputRoutes ()] [0] ?.getDestinationField ();
+      const destinationField = Array .from (interpolator ._value_changed .getOutputRoutes ()) [0] ?.getDestinationField ();
 
       if (!destinationField)
          return;
