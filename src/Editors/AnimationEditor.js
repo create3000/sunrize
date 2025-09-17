@@ -111,7 +111,7 @@ module .exports = class AnimationEditor extends Interface
 
       // Lists
 
-      this .memberList = new MemberList (this .membersListElement, nodes => this .removeMember (nodes));
+      this .memberList = new MemberList (this .membersListElement, nodes => this .removeMembers (nodes));
 
       this .nodeList = new NodeList (this .nodeListElement, node => this .isAnimation (node), animation => this .setAnimation (animation));
 
@@ -339,7 +339,7 @@ module .exports = class AnimationEditor extends Interface
       this .requestUpdateTracks ();
    }
 
-   removeMember (nodes)
+   removeMembers (nodes)
    {
       this .requestUpdateTracks ();
    }
