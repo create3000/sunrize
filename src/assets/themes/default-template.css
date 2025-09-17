@@ -825,11 +825,11 @@ body.dark .ui-widget .library-list .component {
   outline: 1px solid var(--system-orange);
 } */
 
-.node-list.stripes > ul li:not(:has(li)):nth-child(odd) > .item {
+.node-list.alternating > ul li:not(:has(li)):nth-child(odd) > .item {
   background-color: var(--tint-color1);
 }
 
-.node-list.stripes > ul .item:hover {
+.node-list.alternating > ul .item:hover {
   background-color: var(--tint-color2) !important;
 }
 

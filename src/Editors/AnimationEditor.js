@@ -79,7 +79,7 @@ module .exports = class AnimationEditor extends Interface
       // Animations List
 
       this .nodeListElement = $("<div></div>")
-         .addClass (["node-list", "stripes"])
+         .addClass (["alternating", "node-list"])
          .appendTo (this .verticalSplitterLeft);
 
       this .membersListElement = $("<div></div>")
