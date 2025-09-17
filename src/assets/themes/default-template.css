@@ -799,7 +799,7 @@ body.dark .ui-widget .library-list .component {
   color: var(--system-orange);
 }
 
-.node-list > ul li:has(li) {
+.node-list.alternating > ul li:has(li) {
   border-bottom: 1px solid var(--tint-color2);
 }
 
