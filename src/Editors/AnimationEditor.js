@@ -186,10 +186,6 @@ module .exports = class AnimationEditor extends Interface
          this .animation .name_changed .addInterest ("set_animation_name", this);
 
          this .set_animation_name ();
-
-         // Tracks
-
-         this .updateTracks ();
       }
       else
       {
@@ -209,6 +205,10 @@ module .exports = class AnimationEditor extends Interface
 
          this .interpolators .length = 0;
       }
+
+      // Tracks
+
+      this .updateTracks ();
    }
 
    enableIcons (enabled)
@@ -444,31 +444,31 @@ module .exports = class AnimationEditor extends Interface
          }
       }
 
-      // // Outline
+      // Outline
 
-      // const
-      //    blue   = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-blue"),
-      //    orange = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-orange");
+      const
+         blue   = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-blue"),
+         orange = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-orange");
 
-      // for (const { item, top, bottom, height } of trackOffsets)
-      // {
-      //    if (!item .hasClass ("hover"))
-      //       continue;
+      for (const { item, top, bottom, height } of trackOffsets)
+      {
+         if (!item .is (".hover, .hover-tracks"))
+            continue;
 
-      //    context .strokeStyle = item .hasClass ("node") ? blue : orange;
+         context .strokeStyle = item .hasClass ("node") ? blue : orange;
 
-      //    context .beginPath ();
-      //    context .moveTo (0, top - 0.5);
-      //    context .lineTo (width, top - 0.5);
-      //    context .stroke ();
+         context .beginPath ();
+         context .moveTo (0, top - 0.5);
+         context .lineTo (width, top - 0.5);
+         context .stroke ();
 
-      //    const offset = item .hasClass ("node") ? Math .floor (item .closest ("li") .height ()) - height : 0;
+         const offset = item .hasClass ("node") ? Math .floor (item .closest ("li") .height ()) - height : 0;
 
-      //    context .beginPath ();
-      //    context .moveTo (0, bottom + offset + 1 + 0.5);
-      //    context .lineTo (width, bottom + offset + 1 + 0.5);
-      //    context .stroke ();
-      // }
+         context .beginPath ();
+         context .moveTo (0, bottom + offset + 1 + 0.5);
+         context .lineTo (width, bottom + offset + 1 + 0.5);
+         context .stroke ();
+      }
    }
 
    isHoverTrack (event, top, bottom)

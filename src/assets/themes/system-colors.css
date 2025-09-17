@@ -140,8 +140,8 @@ body {
     /* Special Colors */
 
     --sidebar-background-color: rgb(42, 50, 63);
-    --tint-color1: rgba(0, 0, 0, 0.2);
-    --tint-color2: rgba(0, 0, 0, 0.4);
+    --tint-color1: rgba(0, 0, 0, 0.3);
+    --tint-color2: rgba(0, 0, 0, 0.5);
   }
 }
 
