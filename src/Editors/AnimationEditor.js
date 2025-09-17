@@ -466,6 +466,40 @@ module .exports = class AnimationEditor extends Interface
 
    // Draw Function Handler
 
+   on_zoom_out ()
+   {
+      this .on_zoom (this .getWidth () / 2, "down");
+   }
+
+   on_zoom_in ()
+   {
+      this .on_zoom (this .getWidth () / 2, "up");
+   }
+
+   on_zoom (position, direction)
+   {
+      const fromFrame = (position - this .getTranslation ()) / this .getScale ();
+
+      switch (direction)
+      {
+         case "down": // Move backwards.
+         {
+            this .setScale (this .getScale () / this .SCROLL_FACTOR);
+            break;
+         }
+         case "up": // Move forwards.
+         {
+            this .setScale (this .getScale () * this .SCROLL_FACTOR);
+            break;
+         }
+      }
+
+      const toFrame = (position - this .getTranslation ()) / this .getScale ();
+      const offset  = (toFrame - fromFrame) * getScale ();
+
+      this .setTranslation (this .getTranslation () + offset);
+   }
+
    on_zoom_fit ()
    {
       const width = this .getWidth () - 2 * this .DEFAULT_TRANSLATION;
