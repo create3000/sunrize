@@ -68,7 +68,7 @@ module .exports = class AnimationMembersList extends Interface
             .text ("cancel")
             .on ("click", () => this .removeNodes ([node]));
 
-         $("<div></div>")
+         const item = $("<div></div>")
             .data ("i", i ++)
             .addClass (["node", "item"])
             .append ($("<img></img>") .addClass ("icon") .attr ("src", "../images/OutlineEditor/Node/X3DBaseNode.svg"))
@@ -78,6 +78,10 @@ module .exports = class AnimationMembersList extends Interface
             .append (document .createTextNode (" "))
             .append (removeIcon)
             .appendTo (listItem);
+
+         item
+            .on ("mouseenter", () => item .addClass ("hover"))
+            .on ("mouseleave", () => item .removeClass ("hover"));
 
          fieldList .appendTo (listItem);
 
@@ -133,7 +137,7 @@ module .exports = class AnimationMembersList extends Interface
             .text ("check")
             .on ("click", () => this .addKeyframe (node, field));
 
-         $("<div></div>")
+         const item = $("<div></div>")
             .data ("i", i ++ )
             .addClass (["field", "item"])
             .append (iconElement)
@@ -141,6 +145,10 @@ module .exports = class AnimationMembersList extends Interface
             .append (document .createTextNode (" "))
             .append (applyIcon)
             .appendTo (listItem);
+
+         item
+            .on ("mouseenter", () => item .addClass ("hover"))
+            .on ("mouseleave", () => item .removeClass ("hover"));
       }
    }
 
@@ -185,8 +193,8 @@ module .exports = class AnimationMembersList extends Interface
    getTrackOffsets ()
    {
       const
-         listTop    = this .#nodeList .offset () .top,
-         listHeight = this .#nodeList .height (),
+         listTop    = Math .floor (this .#nodeList .offset () .top),
+         listHeight = Math .floor (this .#nodeList .height ()),
          items      = this .#nodeList .find (".item"),
          offsets    = [ ];
 
@@ -194,8 +202,8 @@ module .exports = class AnimationMembersList extends Interface
       {
          const
             item   = $(element),
-            height = item .outerHeight (),
-            top    = item .offset () .top - listTop,
+            height = Math .floor (item .outerHeight ()),
+            top    = Math .floor (item .offset () .top) - listTop,
             bottom = top + height;
 
          if (bottom < 0)

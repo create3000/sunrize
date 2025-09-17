@@ -82,7 +82,7 @@ module .exports = class AnimationEditor extends Interface
       this .membersListElement = $("<div></div>")
          .addClass ("node-list")
          .appendTo (this .verticalSplitterLeft)
-         .on ("scroll", () => this .updateTracks ());
+         .on ("scroll mousemove", event => this .updateTracks (event));
 
       this .animationName = $("<input></input>")
          .addClass ("node-name")
@@ -386,7 +386,7 @@ module .exports = class AnimationEditor extends Interface
       return `${nodeName}${fieldName}Interpolator`;
    }
 
-   updateTracks ()
+   updateTracks (event)
    {
       const
          width        = this .tracks .width (),
@@ -412,15 +412,25 @@ module .exports = class AnimationEditor extends Interface
 
          context .fillRect (0, top, width, height);
 
-         if (item .hasClass ("node") && item .data ("i") > 0)
+         if (item .hasClass ("node") && item .data ("i"))
          {
-            context .strokeStyle = tint2;
+            context .fillStyle = tint2;
 
-            context .moveTo (0, Math .floor (top - 1) + 0.5);
-            context .lineTo (width, Math .floor (top - 1) + 0.5);
+            context .fillRect (0, top - 1, width, 1);
          }
       }
 
-      context .stroke ();
+      // for (const { item, top, bottom, height } of trackOffsets)
+      // {
+      //    if (!item .hasClass ("hover"))
+      //       continue;
+
+      //    context .fillStyle = item .hasClass ("node") ? blue : orange;
+
+      //    const offset = item .hasClass ("node") ? item .closest ("li") .height () - height : 0;
+
+      //    context .fillRect (0, top - 1, width, 1);
+      //    context .fillRect (0, bottom + offset,  width, 1);
+      // }
    }
 }
