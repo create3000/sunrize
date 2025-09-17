@@ -438,22 +438,21 @@ module .exports = class AnimationEditor extends Interface
 
          context .fillRect (0, top, width, height);
 
-         // Outline
+         // // Outline
 
-         context .strokeStyle = item .hasClass ("node") ? blue : orange;
+         // context .strokeStyle = item .hasClass ("node") ? blue : orange;
 
-         context .beginPath ();
-         context .moveTo (0, top - 0.5);
-         context .lineTo (width, top - 0.5);
-         context .stroke ();
+         // context .beginPath ();
+         // context .moveTo (0, top - 0.5);
+         // context .lineTo (width, top - 0.5);
+         // context .stroke ();
 
-         const offset = item .hasClass ("node") ? Math .floor (item .closest ("li") .height ()) - height : 0;
+         // const offset = item .hasClass ("node") ? Math .floor (item .closest ("li") .height ()) - height : 0;
 
-         context .beginPath ();
-         context .moveTo (0, bottom + offset + 1 + 0.5);
-         context .lineTo (width, bottom + offset + 1 + 0.5);
-         context .stroke ();
-
+         // context .beginPath ();
+         // context .moveTo (0, bottom + offset + 1 + 0.5);
+         // context .lineTo (width, bottom + offset + 1 + 0.5);
+         // context .stroke ();
       }
    }
 }
