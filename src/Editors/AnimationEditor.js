@@ -388,11 +388,6 @@ module .exports = class AnimationEditor extends Interface
 
    updateTracks ()
    {
-      console .log (this .tracks .offset () .top, this .tracks .height ());
-      console .log (this .membersListElement .offset () .top, this .membersListElement .height ());
-
-      this .tracks .height (this .membersListElement .height ());
-
       const
          width        = this .tracks .width (),
          height       = this .tracks .height (),
