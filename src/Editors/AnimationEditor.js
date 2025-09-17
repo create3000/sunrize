@@ -27,12 +27,14 @@ module .exports = class AnimationEditor extends Interface
       this .verticalSplitter = $("<div></div>")
          .attr ("id", "animation-editor-content")
          .addClass (["animation-editor-content", "vertical-splitter"])
-         .appendTo (this .animationEditor);
+         .appendTo (this .animationEditor)
+         .on ("mouseleave", () => this .updateTracks ());
 
       this .verticalSplitterLeft = $("<div></div>")
          .addClass ("vertical-splitter-left")
          .css ("width", "30%")
-         .appendTo (this .verticalSplitter);
+         .appendTo (this .verticalSplitter)
+         .on ("mouseleave", () => this .updateTracks ());
 
       this .verticalSplitterRight = $("<div></div>")
          .addClass ("vertical-splitter-right")
@@ -100,7 +102,8 @@ module .exports = class AnimationEditor extends Interface
 
       this .tracks = $("<canvas></canvas>")
          .addClass ("tracks")
-         .appendTo (this .verticalSplitterRight);
+         .appendTo (this .verticalSplitterRight)
+         .on ("mousemove", event => this .updateTracks (event));
 
       this .tracksResizer = new ResizeObserver (() => this .updateTracks ());
       this .tracksResizer .observe (this .verticalSplitterRight [0]);
@@ -386,7 +389,7 @@ module .exports = class AnimationEditor extends Interface
       return `${nodeName}${fieldName}Interpolator`;
    }
 
-   updateTracks ()
+   updateTracks (event)
    {
       const
          width        = this .tracks .width (),
@@ -414,7 +417,14 @@ module .exports = class AnimationEditor extends Interface
 
          // Track Tint
 
-         if (item .hasClass ("hover"))
+         const hover = this .isHoverTrack (event, top, bottom);
+
+         if (hover)
+            item .addClass ("hover-track");
+         else
+            item .removeClass ("hover-track");
+
+         if (item .is (".hover, .hover-tracks") || hover)
          {
             context .fillStyle = tint2;
 
@@ -459,5 +469,15 @@ module .exports = class AnimationEditor extends Interface
       //    context .lineTo (width, bottom + offset + 1 + 0.5);
       //    context .stroke ();
       // }
+   }
+
+   isHoverTrack (event, top, bottom)
+   {
+      if (!event)
+         return false;
+
+      const pointerY = event .pageY - this .tracks .offset () .top;
+
+      return pointerY > top && pointerY < bottom;
    }
 }

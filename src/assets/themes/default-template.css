@@ -830,8 +830,10 @@ body.dark .ui-widget .library-list .component {
   background-color: var(--tint-color1);
 }
 
-.node-list > ul .item:hover {
-  background-color: var(--tint-color2);
+.node-list > ul .item:hover,
+.node-list > ul .item.hover,
+.node-list > ul .item.hover-track {
+  background-color: var(--tint-color2) !important;
 }
 
 .node-list .icon {

@@ -195,8 +195,8 @@ module .exports = class AnimationMembersList extends Interface
    getTrackOffsets ()
    {
       const
-         listTop    = Math .floor (this .#nodeList .offset () .top),
-         listHeight = Math .floor (this .#nodeList .height ()),
+         listTop    = Math .round (this .#nodeList .offset () .top),
+         listHeight = Math .round (this .#nodeList .height ()),
          items      = this .#nodeList .find (".item"),
          offsets    = [ ];
 
@@ -204,8 +204,8 @@ module .exports = class AnimationMembersList extends Interface
       {
          const
             item   = $(element),
-            height = Math .floor (item .outerHeight ()),
-            top    = Math .floor (item .offset () .top) - listTop,
+            height = Math .round (item .outerHeight ()),
+            top    = Math .round (item .offset () .top) - listTop,
             bottom = top + height;
 
          if (bottom < 0)
