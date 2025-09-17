@@ -96,15 +96,20 @@ module .exports = class AnimationEditor extends Interface
          })
          .on ("keydown", event => this .renameAnimation (event));
 
-      this .memberList = new MemberList (this .membersListElement);
-
-      this .nodeList = new NodeList (this .nodeListElement, node => this .isAnimation (node), animation => this .setAnimation (animation));
-
       // Tracks
 
       this .tracks = $("<canvas></canvas>")
          .addClass ("tracks")
          .appendTo (this .verticalSplitterRight);
+
+      this .tracksResizer = new ResizeObserver (() => this .updateTracks ());
+      this .tracksResizer .observe (this .verticalSplitterRight [0]);
+
+      // Lists
+
+      this .memberList = new MemberList (this .membersListElement);
+
+      this .nodeList = new NodeList (this .nodeListElement, node => this .isAnimation (node), animation => this .setAnimation (animation));
 
       // Selection
 
@@ -173,6 +178,10 @@ module .exports = class AnimationEditor extends Interface
          this .animation .name_changed .addInterest ("set_animation_name", this);
 
          this .set_animation_name ();
+
+         // Tracks
+
+         this .updateTracks ();
       }
       else
       {
@@ -374,8 +383,17 @@ module .exports = class AnimationEditor extends Interface
 
    updateTracks ()
    {
-      const trackOffsets = this .memberList .getTrackOffsets ();
+      const
+         width        = this .tracks .width (),
+         height       = this .tracks .height (),
+         context      = this .tracks .get (0) .getContext ("2d"),
+         trackOffsets = this .memberList .getTrackOffsets ();
 
-      console .log (trackOffsets)
+      this .tracks
+         .prop ("width",  width)
+         .prop ("height", height);
+
+      context .strokeRect (75, 140, 150, 110);
+      context .fillRect (130, 190, 40, 60);
    }
 }
