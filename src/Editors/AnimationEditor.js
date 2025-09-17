@@ -303,7 +303,7 @@ module .exports = class AnimationEditor extends Interface
       if (!destinationField)
          return;
 
-      const fieldName = capitalize (destinationField .replace (/^set_|_changed$/g, ""));
+      const fieldName = capitalize (destinationField .replace (/^set_|_changed$/g, ""), true);
 
       return `${this .animation .getName ()}${fieldName}Interpolator`;
    }
