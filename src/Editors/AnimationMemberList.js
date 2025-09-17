@@ -176,6 +176,34 @@ module .exports = class AnimationMembersList extends Interface
       element .text (this .getName (node));
    }
 
+   getTrackOffsets ()
+   {
+      const
+         scrollTop  = this .#nodeList .scrollTop (),
+         listTop    = this .#nodeList .offset () .top,
+         listHeight = this .#nodeList .height (),
+         items      = this .#nodeList .find ("> ul > li > ul > li > .item"),
+         offsets    = [ ];
+
+      for (const element of items)
+      {
+         const
+            item   = $(element),
+            top    = item .offset () .top - listTop - scrollTop,
+            bottom = top + item .height ();
+
+         if (bottom < 0)
+            continue;
+
+         if (top > listHeight)
+            continue;
+
+         offsets .push ([top, bottom]);
+      }
+
+      return offsets;
+   }
+
    addKeyframe (node, field)
    {
 

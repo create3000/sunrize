@@ -368,6 +368,8 @@ module .exports = class AnimationEditor extends Interface
 
    updateTracks ()
    {
-      console .log (this .membersListElement .scrollTop ())
+      const trackOffsets = this .memberList .getTrackOffsets ();
+
+      console .log (trackOffsets)
    }
 }
