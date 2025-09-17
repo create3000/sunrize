@@ -112,7 +112,7 @@ module .exports = class ScriptEditor extends Interface
       this .hSplitter = new Splitter (this .verticalSplitterLeft, "horizontal");
 
       this .nodeListElement = $("<div></div>")
-         .addClass ("node-list")
+         .addClass (["node-list", "stripes"])
          .appendTo (this .horizontalSplitterTop);
 
       this .nodeName = $("<input></input>")

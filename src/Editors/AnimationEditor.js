@@ -78,7 +78,7 @@ module .exports = class AnimationEditor extends Interface
       // Animations List
 
       this .nodeListElement = $("<div></div>")
-         .addClass ("node-list")
+         .addClass (["node-list", "stripes"])
          .appendTo (this .verticalSplitterLeft);
 
       this .membersListElement = $("<div></div>")
@@ -102,7 +102,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .tracks = $("<canvas></canvas>")
          .addClass ("tracks")
-         .appendTo (this .verticalSplitterRight)
+         .prependTo (this .animationEditor)
          .on ("mousemove", event => this .updateTracks (event));
 
       this .tracksResizer = new ResizeObserver (() => this .updateTracks ());
@@ -444,6 +444,8 @@ module .exports = class AnimationEditor extends Interface
          }
       }
 
+      // // Outline
+
       // const
       //    blue   = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-blue"),
       //    orange = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-orange");
@@ -452,8 +454,6 @@ module .exports = class AnimationEditor extends Interface
       // {
       //    if (!item .hasClass ("hover"))
       //       continue;
-
-      //    // Outline
 
       //    context .strokeStyle = item .hasClass ("node") ? blue : orange;
 

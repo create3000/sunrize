@@ -210,7 +210,6 @@ tr.disabled ~ tr > td > div {
 
 .vertical-splitter-left,
 .vertical-splitter-right {
-  background-color: var(--background-color);
   position: absolute;
   box-sizing: border-box;
   top: 0;
@@ -619,7 +618,7 @@ body.light .qtip-tipsy {
 }
 
 .image-icon.arrow {
-  background-image: url(file:///Users/holger/Desktop/X_ITE/sunrize/src/assets/images/icons/arrow.svg);
+  background-image: url(../images/icons/arrow.svg);
 }
 
 .image-icon.straighten {
@@ -826,13 +825,11 @@ body.dark .ui-widget .library-list .component {
   outline: 1px solid var(--system-orange);
 } */
 
-.node-list > ul li:not(:has(li)):nth-child(odd) > .item {
+.node-list.stripes > ul li:not(:has(li)):nth-child(odd) > .item {
   background-color: var(--tint-color1);
 }
 
-.node-list > ul .item:hover,
-.node-list > ul .item.hover,
-.node-list > ul .item.hover-track {
+.node-list.stripes > ul .item:hover {
   background-color: var(--tint-color2) !important;
 }
 
@@ -1112,9 +1109,11 @@ body.dark .ui-widget .library-list .component {
 }
 
 .animation-editor .tracks {
+  position: absolute;
   display: block;
   width: 100%;
-  height: 100%;
+   height: calc(100% - var(--toolbar-width));
+  top: calc(var(--toolbar-width) + 2px);
   image-rendering: pixelated;
 }
 
