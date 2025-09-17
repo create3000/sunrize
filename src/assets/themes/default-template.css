@@ -830,7 +830,7 @@ body.dark .ui-widget .library-list .component {
   background-color: var(--tint-color1);
 }
 
-.node-list > ul li:not(:has(li)):hover > .item {
+.node-list > ul .item:hover {
   background-color: var(--tint-color2);
 }
 
