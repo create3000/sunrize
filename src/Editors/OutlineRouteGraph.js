@@ -5,10 +5,6 @@ const
    X3D         = require ("../X3D"),
    OutlineView = require ("./OutlineView");
 
-const
-   routeColor         = "#000000",
-   routeSelectedColor = "rgb(255, 69, 58)";
-
 module .exports = class OutlineRouteGraph extends OutlineView
 {
    constructor (element)
@@ -16,6 +12,13 @@ module .exports = class OutlineRouteGraph extends OutlineView
       super (element);
 
       this .selectedRoutes = new Set ();
+   }
+
+   colorScheme (shouldUseDarkColors)
+   {
+      super .colorScheme (shouldUseDarkColors);
+
+      this .requestUpdateRouteGraph ();
    }
 
    selectRoutes (type, event)
@@ -143,6 +146,10 @@ module .exports = class OutlineRouteGraph extends OutlineView
          parent  = canvas .parent (),
          context = canvas .get (0) .getContext ("2d");
 
+      const
+         routeColor         = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-gray1"),
+         routeSelectedColor = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-red");
+
       canvas .height (Math .ceil (parent .height ()));
 
       canvas .prop ("width",  canvas .width ());
@@ -221,6 +228,10 @@ module .exports = class OutlineRouteGraph extends OutlineView
          parent  = canvas .parent (),
          context = canvas .get (0) .getContext ("2d");
 
+      const
+         routeColor         = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-gray1"),
+         routeSelectedColor = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-red");
+
       canvas .height (Math .ceil (parent .height ()));
 
       canvas .prop ("width",  canvas .width ());
@@ -275,6 +286,10 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
    updateRouteCurves (canvases, fields)
    {
+      const
+         routeColor         = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-gray1"),
+         routeSelectedColor = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-red");
+
       // Scale canvases
 
       for (let i = 0, length = canvases .length - 1; i < length; ++ i)
