@@ -82,7 +82,7 @@ module .exports = class AnimationEditor extends Interface
       this .membersListElement = $("<div></div>")
          .addClass ("node-list")
          .appendTo (this .verticalSplitterLeft)
-         .on ("scroll mousemove", event => this .updateTracks (event));
+         .on ("scroll mousemove", () => this .updateTracks ());
 
       this .animationName = $("<input></input>")
          .addClass ("node-name")
@@ -386,7 +386,7 @@ module .exports = class AnimationEditor extends Interface
       return `${nodeName}${fieldName}Interpolator`;
    }
 
-   updateTracks (event)
+   updateTracks ()
    {
       const
          width        = this .tracks .width (),
@@ -394,43 +394,66 @@ module .exports = class AnimationEditor extends Interface
          context      = this .tracks [0] .getContext ("2d"),
          trackOffsets = this .memberList .getTrackOffsets ();
 
+      this .tracks
+         .prop ("width",  width)
+         .prop ("height", height);
+
       const
          blue   = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-blue"),
          orange = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-orange"),
          tint1  = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--tint-color1"),
          tint2  = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--tint-color2");
 
-      this .tracks
-         .prop ("width",  width)
-         .prop ("height", height);
-
       context .lineWidth = 1;
 
       for (const { item, top, bottom, height } of trackOffsets)
       {
+         // Track
+
          context .fillStyle = item .hasClass ("node") || item .data ("i") % 2 ? "transparent" : tint1;
 
          context .fillRect (0, top, width, height);
 
+         // Border
+
          if (item .hasClass ("node") && item .data ("i"))
          {
-            context .fillStyle = tint2;
+            context .strokeStyle = tint2;
 
-            context .fillRect (0, top - 1, width, 1);
+            context .beginPath ();
+            context .moveTo (0, top - 1 + 0.5);
+            context .lineTo (width, top - 1 + 0.5);
+            context .stroke ();
          }
       }
 
-      // for (const { item, top, bottom, height } of trackOffsets)
-      // {
-      //    if (!item .hasClass ("hover"))
-      //       continue;
+      for (const { item, top, bottom, height } of trackOffsets)
+      {
+         if (!item .hasClass ("hover"))
+            continue;
 
-      //    context .fillStyle = item .hasClass ("node") ? blue : orange;
+         // Track Tint
 
-      //    const offset = item .hasClass ("node") ? item .closest ("li") .height () - height : 0;
+         context .fillStyle = item .hasClass ("node") ? "transparent" : tint2;
 
-      //    context .fillRect (0, top - 1, width, 1);
-      //    context .fillRect (0, bottom + offset,  width, 1);
-      // }
+         context .fillRect (0, top, width, height);
+
+         // Outline
+
+         context .strokeStyle = item .hasClass ("node") ? blue : orange;
+
+         context .beginPath ();
+         context .moveTo (0, top - 0.5);
+         context .lineTo (width, top - 0.5);
+         context .stroke ();
+
+         const offset = item .hasClass ("node") ? Math .floor (item .closest ("li") .height ()) - height : 0;
+
+         context .beginPath ();
+         context .moveTo (0, bottom + offset + 1 + 0.5);
+         context .lineTo (width, bottom + offset + 1 + 0.5);
+         context .stroke ();
+
+      }
    }
 }
