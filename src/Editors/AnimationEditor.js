@@ -521,6 +521,8 @@ module .exports = class AnimationEditor extends Interface
       this .setTranslation (x - frame * this .DEFAULT_SCALE);
    }
 
+   // Update Tracks
+
    #updateTracksId = undefined;
 
    requestUpdateTracks ()
