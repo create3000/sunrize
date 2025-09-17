@@ -800,6 +800,10 @@ body.dark .ui-widget .library-list .component {
   color: var(--system-orange);
 }
 
+.node-list > ul li:has(li) {
+  border-bottom: 1px solid var(--tint-color2);
+}
+
 .node-list .item {
   margin: 0;
   padding: 5px 40px 5px 0;
