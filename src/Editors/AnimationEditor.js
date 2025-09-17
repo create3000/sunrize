@@ -100,6 +100,12 @@ module .exports = class AnimationEditor extends Interface
 
       this .nodeList = new NodeList (this .nodeListElement, node => this .isAnimation (node), animation => this .setAnimation (animation));
 
+      // Tracks
+
+      this .tracks = $("<canvas></canvas>")
+         .addClass ("tracks")
+         .appendTo (this .verticalSplitterRight);
+
       // Selection
 
       const selection = require ("../Application/Selection");
