@@ -63,13 +63,16 @@ module .exports = class NodeList extends Interface
             typeNameElement = $("<span></span>") .addClass ("type-name") .text (node .getTypeName ()),
             nameElement     = $("<span></span>") .addClass ("name") .text (this .getName (node));
 
-         $("<li></li>")
+         const listItem = $("<li></li>") .appendTo (this .list);
+
+         $("<div></div>")
+            .addClass ("item")
             .append ($("<img></img>") .addClass ("icon") .attr ("src", "../images/OutlineEditor/Node/X3DBaseNode.svg"))
             .append (typeNameElement)
             .append (document .createTextNode (" "))
             .append (nameElement)
             .on ("click", () => this .setNode (node))
-            .appendTo (this .list);
+            .appendTo (listItem);
 
          node .typeName_changed .addInterest ("set_typeName", this, typeNameElement, node);
          node .name_changed     .addInterest ("set_name",     this, nameElement,     node);

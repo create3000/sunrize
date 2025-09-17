@@ -786,37 +786,48 @@ body.dark .ui-widget .library-list .component {
 .node-list ul {
   margin: 0;
   padding: 0;
+  width: fit-content;
+  min-width: 100%;
   list-style-type: none;
 }
 
-.node-list li {
-  margin: 0;
-  padding: 3px 0 3px 10px;
-  white-space: nowrap;
-}
-
-.node-list i:not(:has(li)) {
-  padding-right: 10px;
-}
-
-.node-list > ul > li:not(:has(li)) {
-  cursor: pointer;
-}
-
 .node-list > ul {
+  padding: 1px 0;
   color: var(--system-blue);
-}
-
-.node-list > ul li:not(:has(li)):nth-child(odd) {
-  background-color: var(--tint-color1);
-}
-
-.node-list > ul li:not(:has(li)):hover {
-  background-color: var(--tint-color2);
 }
 
 .node-list > ul > li > ul {
   color: var(--system-orange);
+}
+
+.node-list .item {
+  margin: 0;
+  padding: 5px 40px 5px 0;
+  white-space: nowrap;
+}
+
+.node-list > ul > li > .item {
+  padding-left: 10px;
+}
+
+.node-list > ul > li > ul > li > .item {
+  padding-left: 20px;
+}
+
+.node-list > ul > li > .item:hover {
+  outline: 1px solid var(--system-blue);
+}
+
+.node-list > ul > li > ul > li > .item:hover {
+  outline: 1px solid var(--system-orange);
+}
+
+.node-list > ul li:not(:has(li)):nth-child(odd) > .item {
+  background-color: var(--tint-color1);
+}
+
+.node-list > ul li:not(:has(li)):hover > .item {
+  background-color: var(--tint-color2);
 }
 
 .node-list .icon {

@@ -56,22 +56,27 @@ module .exports = class AnimationMembersList extends Interface
             nameElement     = $("<span></span>") .addClass ("name") .text (this .getName (node)),
             fieldList       = $("<ul></ul>");
 
+         const listItem = $("<li></li>")
+            .attr ("node-id", node .getId ())
+            .appendTo (this .#list);
+
          const removeIcon = $("<span></span>")
             .addClass (["material-icons-outlined", "button"])
             .attr ("title", _("Remove member from animation."))
             .text ("cancel")
             .on ("click", () => this .removeNodes ([node]));
 
-         $("<li></li>")
-            .attr ("node-id", node .getId ())
+         $("<div></div>")
+            .addClass ("item")
             .append ($("<img></img>") .addClass ("icon") .attr ("src", "../images/OutlineEditor/Node/X3DBaseNode.svg"))
             .append (typeNameElement)
             .append (document .createTextNode (" "))
             .append (nameElement)
             .append (document .createTextNode (" "))
             .append (removeIcon)
-            .append (fieldList)
-            .appendTo (this .#list);
+            .appendTo (listItem);
+
+         fieldList .appendTo (listItem);
 
          this .createFieldElements (fieldList, node);
 
@@ -104,6 +109,10 @@ module .exports = class AnimationMembersList extends Interface
          if (!this .#fieldTypes .has (field .getType ()))
             continue;
 
+         const listItem = $("<li></li>")
+            .attr ("field-id", field .getId ())
+            .appendTo (fieldList);
+
          const iconElement = $("<img></img>")
             .attr ("title", field .getTypeName ())
             .addClass ("icon")
@@ -119,13 +128,13 @@ module .exports = class AnimationMembersList extends Interface
             .text ("check")
             .on ("click", () => this .addKeyframe (node, field));
 
-         $("<li></li>")
-            .attr ("field-id", field .getId ())
+         $("<div></div>")
+            .addClass ("item")
             .append (iconElement)
             .append (nameElement)
             .append (document .createTextNode (" "))
             .append (applyIcon)
-            .appendTo (fieldList);
+            .appendTo (listItem);
       }
    }
 
