@@ -288,15 +288,15 @@ module .exports = class AnimationEditor extends Interface
       Editor .updateNamedNode (executionContext, executionContext .getUniqueName (`${name}Animation`), animation);
       Editor .updateNamedNode (executionContext, executionContext .getUniqueName (`${name}AnimationTimer`), timeSensor);
 
-      // for (const interpolator of this .interpolators)
-      // {
-      //    const name = this .getInterpolatorName (interpolator);
+      for (const interpolator of this .interpolators)
+      {
+         const name = this .getInterpolatorName (interpolator);
 
-      //    if (!name)
-      //       continue;
+         if (!name)
+            continue;
 
-      //    Editor .updateNamedNode (executionContext, executionContext .getUniqueName (name), interpolator);
-      // }
+         Editor .updateNamedNode (executionContext, executionContext .getUniqueName (name), interpolator);
+      }
 
       Editor .undoManager .endUndo ();
    }
@@ -359,8 +359,9 @@ module .exports = class AnimationEditor extends Interface
       const
          destinationNode  = route .getDestinationNode (),
          destinationField = route .getDestinationField (),
+         nodeName         = destinationNode .getDisplayName () || "Unnamed",
          fieldName        = capitalize (destinationField .replace (/^set_|_changed$/g, ""), true);
 
-      return `${destinationNode .getName ()}${fieldName}Interpolator`;
+      return `${nodeName}${fieldName}Interpolator`;
    }
 }
