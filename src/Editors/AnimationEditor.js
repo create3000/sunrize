@@ -358,6 +358,11 @@ module .exports = class AnimationEditor extends Interface
 
    set_interpolators ()
    {
+      const oldMembers = Array .from (this .members .values ());
+
+      this .members .clear ();
+      this .interpolators .length = 0;
+
       for (const node of this .animation ._children)
       {
          const interpolator = node .getValue ();
@@ -377,7 +382,10 @@ module .exports = class AnimationEditor extends Interface
          }
       }
 
-      this .memberList .addNodes (Array .from (this .members .values ()));
+      const members = Array .from (this .members .values ());
+
+      this .memberList .addNodes (members);
+      this .memberList .removeNodes (oldMembers .filter (member => !members .includes (member)));
    }
 
    getInterpolatorName (interpolator)
