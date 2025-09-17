@@ -468,7 +468,7 @@ module .exports = class AnimationEditor extends Interface
       return Math .floor (this .verticalSplitterRight .width () - 20);
    }
 
-   // Draw Function Handler
+   // Draw Function Handlers
 
    on_zoom_out ()
    {
