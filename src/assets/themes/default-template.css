@@ -814,11 +814,11 @@ body.dark .ui-widget .library-list .component {
   padding-left: 20px;
 }
 
-.node-list > ul > li > .item:hover {
+.node-list > ul > li:has(> .item:hover) {
   outline: 1px solid var(--system-blue);
 }
 
-.node-list > ul > li > ul > li > .item:hover {
+.node-list > ul > li > ul > li:has(> .item:hover) {
   outline: 1px solid var(--system-orange);
 }
 
