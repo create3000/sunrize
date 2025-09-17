@@ -81,7 +81,8 @@ module .exports = class AnimationEditor extends Interface
 
       this .membersListElement = $("<div></div>")
          .addClass ("node-list")
-         .appendTo (this .verticalSplitterLeft);
+         .appendTo (this .verticalSplitterLeft)
+         .on ("scroll", () => this .updateTracks ());
 
       this .animationName = $("<input></input>")
          .addClass ("node-name")
@@ -363,5 +364,10 @@ module .exports = class AnimationEditor extends Interface
          fieldName        = capitalize (destinationField .replace (/^set_|_changed$/g, ""), true);
 
       return `${nodeName}${fieldName}Interpolator`;
+   }
+
+   updateTracks ()
+   {
+      console .log (this .membersListElement .scrollTop ())
    }
 }
