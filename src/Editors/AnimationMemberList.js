@@ -13,13 +13,14 @@ module .exports = class AnimationMembersList extends Interface
    #nodes;
    #executionContext;
 
-   constructor (element)
+   constructor (element, removeCallback)
    {
       super ("Sunrize.AnimationMembersList.");
 
-      this .#nodeList = element;
-      this .#list     = $("<ul></ul>") .appendTo (this .#nodeList);
-      this .#nodes    = [ ];
+      this .#nodeList      = element;
+      this .#list          = $("<ul></ul>") .appendTo (this .#nodeList);
+      this .#nodes         = [ ];
+      this .removeCallback = removeCallback;
 
       this .setup ();
    }
@@ -165,6 +166,8 @@ module .exports = class AnimationMembersList extends Interface
       }
 
       this .#nodes = this .#nodes .filter (node => !nodes .includes (node));
+
+      this .removeCallback (nodes);
    }
 
    getName (node)

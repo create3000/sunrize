@@ -111,7 +111,7 @@ module .exports = class AnimationEditor extends Interface
 
       // Lists
 
-      this .memberList = new MemberList (this .membersListElement);
+      this .memberList = new MemberList (this .membersListElement, nodes => this .removeMember (nodes));
 
       this .nodeList = new NodeList (this .nodeListElement, node => this .isAnimation (node), animation => this .setAnimation (animation));
 
@@ -335,11 +335,13 @@ module .exports = class AnimationEditor extends Interface
       const selection = require ("../Application/Selection");
 
       this .memberList .addNodes (selection .nodes);
+
+      this .requestUpdateTracks ();
    }
 
-   removeMember ()
+   removeMember (nodes)
    {
-
+      this .requestUpdateTracks ();
    }
 
    #interpolatorTypes = new Set ([
