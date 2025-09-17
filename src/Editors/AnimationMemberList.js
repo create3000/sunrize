@@ -125,11 +125,13 @@ module .exports = class AnimationMembersList extends Interface
          const iconElement = $("<img></img>")
             .attr ("title", field .getTypeName ())
             .addClass ("icon")
-            .attr ("src", `../images/OutlineEditor/Fields/${field .getTypeName()}.svg`);
+            .attr ("src", `../images/OutlineEditor/Fields/${field .getTypeName()}.svg`)
+            .on ("dblclick", () => this .addKeyframe (node, field));
 
          const nameElement = $("<span></span>")
             .addClass ("field-name")
-            .text (field .getName ());
+            .text (field .getName ())
+            .on ("dblclick", () => this .addKeyframe (node, field));
 
          const applyIcon = $("<span></span>")
             .addClass (["material-icons", "button", "off"])
