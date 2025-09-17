@@ -39,6 +39,7 @@ module .exports = class AnimationEditor extends Interface
       this .verticalSplitterRight = $("<div></div>")
          .addClass ("vertical-splitter-right")
          .css ("width", "70%")
+         .on ("mouseleave mousemove", event => this .updateTracks (event))
          .appendTo (this .verticalSplitter);
 
       this .vSplitter = new Splitter (this .verticalSplitter, "vertical");
@@ -102,8 +103,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .tracks = $("<canvas></canvas>")
          .addClass ("tracks")
-         .prependTo (this .animationEditor)
-         .on ("mousemove", event => this .updateTracks (event));
+         .prependTo (this .animationEditor);
 
       this .tracksResizer = new ResizeObserver (() => this .updateTracks ());
       this .tracksResizer .observe (this .verticalSplitterRight [0]);
