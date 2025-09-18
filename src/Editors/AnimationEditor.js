@@ -980,7 +980,7 @@ module .exports = class AnimationEditor extends Interface
 
 			for (let frame = firstFrame - (firstFrame % frameStep); frame < lastFrame; frame += frameStep)
 			{
-				const s = frame % frameFactor; // small
+				const s = frame % frameFactor; // size (large or small)
             const y = Math .floor (top + height * (s ? 0.75 : 0.5));
 				const x = Math .floor (timelineX + frame * this .getScale () + this .getTranslation ());
 
