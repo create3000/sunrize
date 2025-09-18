@@ -77,6 +77,41 @@ module .exports = class AnimationEditor extends Interface
          .appendTo (this .toolbar)
          .on ("click", () => this .closeAnimation ());
 
+      // Zoom toolbar
+
+      this .navigation = $("<div></div>")
+         .attr ("id", "animation-editor-navigation")
+         .addClass (["animation-editor-navigation", "toolbar", "vertical-toolbar"])
+         .appendTo (this .animationEditor);
+
+      this .zoomOutIcon = $("<span></span>")
+         .addClass ("material-icons")
+         .attr ("title", _("Zoom out."))
+         .text ("zoom_out")
+         .appendTo (this .navigation)
+         .on ("click", () => this .on_zoom_out ());
+
+      this .zoomInIcon = $("<span></span>")
+         .addClass ("material-icons")
+         .attr ("title", _("Zoom in."))
+         .text ("zoom_in")
+         .appendTo (this .navigation)
+         .on ("click", () => this .on_zoom_in ());
+
+      this .zoomFitIcon = $("<span></span>")
+         .addClass ("material-icons")
+         .attr ("title", _("Zoom in."))
+         .text ("fit_screen")
+         .appendTo (this .navigation)
+         .on ("click", () => this .on_zoom_fit ());
+
+      this .zoom100Icon = $("<span></span>")
+         .addClass ("material-icons")
+         .attr ("title", _("Zoom in."))
+         .text ("1x_mobiledata")
+         .appendTo (this .navigation)
+         .on ("click", () => this .on_zoom_100 ());
+
       // Animations List
 
       this .nodeListElement = $("<div></div>")
@@ -664,7 +699,8 @@ module .exports = class AnimationEditor extends Interface
       [5 / 100000,   [1000000,   5000000]],
       [5 / 1000000,  [10000000,  50000000]],
       [5 / 10000000, [100000000, 500000000]],
-   ];
+   ]
+   .reverse ();
 
    getFrameParams ()
    {
@@ -672,6 +708,8 @@ module .exports = class AnimationEditor extends Interface
       {
          return a < b [0];
       });
+
+      console .log (this .getScale (), index)
 
       return this .#params [index] ?.[1] ?? { frameStep: 1, frameFactor: 5 };
    }
