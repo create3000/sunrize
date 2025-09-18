@@ -602,8 +602,6 @@ module .exports = class AnimationEditor extends Interface
          tint1 = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--tint-color1"),
          tint2 = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--tint-color2");
 
-      context .lineWidth = 1;
-
       for (const [i, { item, top, bottom, height }] of trackOffsets .entries ())
       {
          // Track
@@ -619,6 +617,7 @@ module .exports = class AnimationEditor extends Interface
                const y = bottom + 0.5;
 
                context .strokeStyle = tint2;
+               context .lineWidth   = 1;
 
                context .beginPath ();
                context .moveTo (0, y);
@@ -629,7 +628,7 @@ module .exports = class AnimationEditor extends Interface
          else if (item .hasClass ("field"))
          {
             // Draw a bar.
-            
+
             context .fillStyle = tint1;
 
             context .fillRect (0, top, tracksWidth, height);
@@ -660,6 +659,8 @@ module .exports = class AnimationEditor extends Interface
 				const s = frame % frameFactor; // small
             const y = Math .floor (top + height * (s ? 0.75 : 0.5));
 				const x = Math .floor (tracksX + frame * this .getScale () + this .getTranslation ());
+
+            context .lineWidth = item .hasClass ("node") ? 3 : 1;
 
             context .beginPath ();
 				context .moveTo (x + 0.5, y);
