@@ -568,40 +568,13 @@ module .exports = class AnimationEditor extends Interface
 
    toggleAnimation ()
    {
-      // Determine range to play and frame where the animation should start.
-
-      if (!this .timeSensor ._isActive .getValue ())
-      {
-         const duration      = this .getDuration ();
-         const selectedRange = this .getSelectedRange ();
-
-         let currentFrame = this .getCurrentFrame ();
-         let firstFrame   = selectedRange [0];
-         let lastFrame    = selectedRange [1];
-
-         if (firstFrame === lastFrame)
-         {
-            firstFrame = 0;
-            lastFrame  = this .getDuration ();
-         }
-         else
-         {
-            currentFrame = X3D .Algorithm .clamp (currentFrame, firstFrame, lastFrame);
-         }
-
-         if (currentFrame >= lastFrame)
-            currentFrame = firstFrame;
-
-         this .timeSensor ._range = [currentFrame / duration, firstFrame / duration, lastFrame / duration];
-      }
-
       this .timeSensor ._stopTime = Date .now () / 1000;
 
-      if (!this .timeSensor ._isActive .getValue ())
-      {
-         this .timeSensor ._evenLive  = true;
-         this .timeSensor ._startTime = Date .now () / 1000;
-      }
+      if (this .timeSensor ._isActive .getValue ())
+         return;
+
+      this .timeSensor ._evenLive  = true;
+      this .timeSensor ._startTime = Date .now () / 1000;
    }
 
    getCurrentFrame ()
@@ -1028,7 +1001,7 @@ module .exports = class AnimationEditor extends Interface
       // Draw current frame cursor.
 
       const frame = this .getCurrentFrame ();
-      const x     = timelineX + frame * this .getScale () + this .getTranslation ();
+      const x     = Math .floor (timelineX + frame * this .getScale () + this .getTranslation ());
 
       context .lineWidth   = 3;
       context .strokeStyle = blue;
