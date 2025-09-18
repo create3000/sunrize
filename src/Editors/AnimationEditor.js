@@ -614,7 +614,7 @@ module .exports = class AnimationEditor extends Interface
 
             if (trackOffsets [i + 1] ?.item .hasClass ("node") ?? true)
             {
-               const y = bottom + 0.5;
+               const y = bottom - 0.5;
 
                context .strokeStyle = tint2;
                context .lineWidth   = 1;
