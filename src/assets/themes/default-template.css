@@ -553,6 +553,15 @@ body.light .qtip-tipsy {
   font-size: var(--font-size);
 }
 
+.horizontal-toolbar .input {
+  display: inline-block;
+  position: relative;
+  top: -3px;
+  margin: auto 5px;
+  font-size: var(--font-size);
+  border: 1px solid var(--text-color);
+}
+
 .horizontal-toolbar .separator {
   display: inline-block;
   margin: auto 10px;
@@ -588,10 +597,12 @@ body.light .qtip-tipsy {
 .horizontal-toolbar .material-icons.disabled,
 .horizontal-toolbar .material-symbols-outlined.disabled,
 .horizontal-toolbar .text.disabled,
+.horizontal-toolbar .input.disabled,
 .vertical-toolbar .material-icons.disabled,
 .vertical-toolbar .material-symbols-outlined.disabled {
   pointer-events: none;
   color: var(--system-gray3);
+  border-color: var(--system-gray3);
 }
 
 .horizontal-toolbar .right {

@@ -72,6 +72,38 @@ module .exports = class AnimationEditor extends Interface
 
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
+      this .firstFrameIcon = $("<span></span>")
+         .addClass ("material-icons")
+         .attr ("title", _("Go to first frame."))
+         .text ("first_page")
+         .appendTo (this .toolbar)
+         .on ("click", () => this .firstFrame ());
+
+      this .toggleAnimationIcon = $("<span></span>")
+         .addClass ("material-icons")
+         .attr ("title", _("Start animation."))
+         .text ("play_arrow")
+         .appendTo (this .toolbar)
+         .on ("click", () => this .toggleAnimation ());
+
+      this .lastFrameIcon = $("<span></span>")
+         .addClass ("material-icons")
+         .attr ("title", _("Go to last frame."))
+         .text ("last_page")
+         .appendTo (this .toolbar)
+         .on ("click", () => this .lastFrame ());
+
+      this .frameInput = $("<input></input>")
+         .addClass ("input")
+         .attr ("type", "number")
+         .attr ("step", 1)
+         .attr ("min", 0)
+         .attr ("max", 0)
+         .attr ("title", _("Current frame."))
+         .css ("width", "55px")
+         .appendTo (this .toolbar)
+         .on ("change input", () => this .setCurrentFrame (this .getCurrentFrame ()));
+
       this .timeElement = $("<span></span>")
          .addClass (["text", "right"])
          .attr ("title", _("Current frame time."))
@@ -80,7 +112,7 @@ module .exports = class AnimationEditor extends Interface
          .text (this .formatFrames (0, 10))
          .appendTo (this .toolbar);
 
-      // Zoom toolbar
+      // Navigation toolbar
 
       this .navigation = $("<div></div>")
          .attr ("id", "animation-editor-navigation")
@@ -234,7 +266,9 @@ module .exports = class AnimationEditor extends Interface
 
          this .set_animation_name ();
 
-         // Tracks
+         // Timeline
+
+         this .frameInput .attr ("max", this .getDuration ());
 
          this .zoomFit ();
       }
@@ -252,13 +286,18 @@ module .exports = class AnimationEditor extends Interface
          this .animationName .val ("");
          this .animationName .attr ("disabled", "");
 
+         // Timeline
+
+         this .frameInput .attr ("max", 0);
+
          // Interpolators
 
          this .interpolators .length = 0;
       }
 
-      // Tracks
+      // Timeline
 
+      this .setCurrentFrame (0);
       this .requestUpdateTracks ();
    }
 
@@ -266,6 +305,9 @@ module .exports = class AnimationEditor extends Interface
    {
       $([
          this .addMembersIcon,
+         this .firstFrameIcon,
+         this .toggleAnimationIcon,
+         this .lastFrameIcon,
          this .timeElement,
       ]
       .flatMap (object => [... object]))
@@ -333,6 +375,7 @@ module .exports = class AnimationEditor extends Interface
       Editor .undoManager .endUndo ();
 
       this .nodeList .setNode (animation);
+      this .frameInput .attr ("max", 10);
    }
 
    closeAnimation ()
@@ -450,6 +493,39 @@ module .exports = class AnimationEditor extends Interface
          fieldName        = capitalize (destinationField .replace (/^set_|_changed$/g, ""), true);
 
       return `${nodeName}${fieldName}Interpolator`;
+   }
+
+   // Player
+
+   firstFrame ()
+   {
+      this .setCurrentFrame (0);
+   }
+
+   lastFrame ()
+   {
+      this .setCurrentFrame (this .getDuration ());
+   }
+
+   toggleAnimation ()
+   {
+   }
+
+   getCurrentFrame ()
+   {
+      return parseInt (this .frameInput .val ());
+   }
+
+   setCurrentFrame (fame)
+   {
+      // Update interpolator fraction.
+
+      this .frameInput .val (fame);
+
+      const fraction = fame / this .getDuration ();
+
+      for (const interpolator of this .interpolators)
+         interpolator ._set_fraction = fraction;
    }
 
    formatFrames (frame, framesPerSecond)
