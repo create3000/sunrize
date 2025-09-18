@@ -622,12 +622,12 @@ module .exports = class AnimationEditor extends Interface
 
    zoomOut ()
    {
-      this .zoom ("out", this .getWidth () / 2, this .SCROLL_FACTOR);
+      this .zoom ("out", this .getTimelineWidth () / 2, this .SCROLL_FACTOR);
    }
 
    zoomIn ()
    {
-      this .zoom ("in", this .getWidth () / 2, this .SCROLL_FACTOR);
+      this .zoom ("in", this .getTimelineWidth () / 2, this .SCROLL_FACTOR);
    }
 
    zoom (direction, position, factor)
@@ -656,7 +656,7 @@ module .exports = class AnimationEditor extends Interface
 
    zoomFit ()
    {
-      const width = this .getWidth () - 2 * this .DEFAULT_TRANSLATION;
+      const width = this .getTimelineWidth () - 2 * this .DEFAULT_TRANSLATION;
 
       this .setScale (width / this .getDuration ());
       this .setTranslation (this .DEFAULT_TRANSLATION);
@@ -700,7 +700,7 @@ module .exports = class AnimationEditor extends Interface
 
    setTranslation (translation)
    {
-      const width = this .getWidth ();
+      const width = this .getTimelineWidth ();
       const max   = (width - this .DEFAULT_TRANSLATION) - (this .getDuration () * this .getScale ());
 
       translation = Math .max (translation, max);
@@ -725,18 +725,18 @@ module .exports = class AnimationEditor extends Interface
 
    /**
     *
-    * @returns {number} start of tracks area
+    * @returns {number} start of timeline area
     */
-   getX ()
+   getTimelineX ()
    {
-      return Math .floor (this .tracks .width () - this .getWidth () - this .TIMELINE_PADDING);
+      return Math .floor (this .tracks .width () - this .getTimelineWidth () - this .TIMELINE_PADDING);
    }
 
    /**
     *
-    * @returns {number} width of tracks area
+    * @returns {number} width of timeline area
     */
-   getWidth ()
+   getTimelineWidth ()
    {
       return Math .floor (this .verticalSplitterRight .width () - this .TIMELINE_PADDING * 2);
    }
@@ -753,7 +753,7 @@ module .exports = class AnimationEditor extends Interface
 
    updatePointer (event)
    {
-      this .pointerX = event .pageX - this .tracks .offset () .left - this .getX ();
+      this .pointerX = event .pageX - this .tracks .offset () .left - this .getTimelineX ();
       this .pointerY = event .pageY - this .tracks .offset () .top;
 
       this .requestUpdateTracks ();
@@ -818,10 +818,11 @@ module .exports = class AnimationEditor extends Interface
    updateTracks ()
    {
       const
-         context      = this .tracks [0] .getContext ("2d"),
-         tracksX      = this .getX (),
-         tracksWidth  = this .tracks .width (),
-         tracksHeight = this .tracks .height ();
+         context       = this .tracks [0] .getContext ("2d"),
+         timelineX     = this .getTimelineX (),
+         timelineWidth = this .getTimelineWidth (),
+         tracksWidth   = this .tracks .width (),
+         tracksHeight  = this .tracks .height ();
 
       context .clearRect (0, 0, tracksWidth, tracksHeight);
 
@@ -831,7 +832,7 @@ module .exports = class AnimationEditor extends Interface
       const
          trackOffsets = this .memberList .getTrackOffsets (),
          firstFrame   = Math .max (0, Math .floor (-this .getTranslation () / this .getScale ())),
-         lastFrame    = Math .min (this .getDuration (), Math .ceil ((tracksWidth - this .getTranslation ()) / this .getScale ())) + 1;
+         lastFrame    = Math .min (this .getDuration (), Math .ceil ((timelineWidth - this .getTranslation ()) / this .getScale ())) + 1;
 
 		const [frameStep, frameFactor] = this .getFrameParams ();
 
@@ -846,7 +847,7 @@ module .exports = class AnimationEditor extends Interface
 
       const clip = new Path2D ();
 
-      clip .rect (tracksX, 0, tracksWidth, tracksHeight);
+      clip .rect (timelineX, 0, timelineWidth, tracksHeight);
 
       for (const [i, { item, top, bottom, height }] of trackOffsets .entries ())
       {
@@ -909,7 +910,7 @@ module .exports = class AnimationEditor extends Interface
 			{
 				const s = frame % frameFactor; // small
             const y = Math .floor (top + height * (s ? 0.75 : 0.5));
-				const x = Math .floor (tracksX + frame * this .getScale () + this .getTranslation ());
+				const x = Math .floor (timelineX + frame * this .getScale () + this .getTranslation ());
 
             context .lineWidth = item .is (".main, .node") ? 3 : 1;
 
@@ -928,7 +929,7 @@ module .exports = class AnimationEditor extends Interface
       // Draw current frame cursor.
 
       const frame = this .getCurrentFrame ();
-      const x     = tracksX + Math .round (frame) * this .getScale () + this .getTranslation ();
+      const x     = timelineX + Math .round (frame) * this .getScale () + this .getTranslation ();
 
       context .lineWidth   = 3;
       context .strokeStyle = blue;
