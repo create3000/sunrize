@@ -92,7 +92,7 @@ module .exports = class AnimationEditor extends Interface
          .css ("transform", "scale(1.2)")
          .text ("zoom_out")
          .appendTo (this .navigation)
-         .on ("click", () => this .on_zoom_out ());
+         .on ("click", () => this .zoomOut ());
 
       this .zoomInIcon = $("<span></span>")
          .addClass ("material-icons")
@@ -100,7 +100,7 @@ module .exports = class AnimationEditor extends Interface
          .css ("transform", "scale(1.2)")
          .text ("zoom_in")
          .appendTo (this .navigation)
-         .on ("click", () => this .on_zoom_in ());
+         .on ("click", () => this .zoomIn ());
 
       this .zoomFitIcon = $("<span></span>")
          .addClass ("material-icons")
@@ -108,7 +108,7 @@ module .exports = class AnimationEditor extends Interface
          .css ("transform", "scale(1.2)")
          .text ("fit_screen")
          .appendTo (this .navigation)
-         .on ("click", () => this .on_zoom_fit ());
+         .on ("click", () => this .zoomFit ());
 
       this .zoom100Icon = $("<span></span>")
          .addClass ("material-icons")
@@ -116,7 +116,7 @@ module .exports = class AnimationEditor extends Interface
          .css ("transform", "scale(1.2)")
          .text ("1x_mobiledata")
          .appendTo (this .navigation)
-         .on ("click", () => this .on_zoom_100 ());
+         .on ("click", () => this .zoom100 ());
 
       // Animations List
 
@@ -231,7 +231,7 @@ module .exports = class AnimationEditor extends Interface
 
          // Tracks
 
-         this .on_zoom_fit ();
+         this .zoomFit ();
       }
       else
       {
@@ -513,7 +513,7 @@ module .exports = class AnimationEditor extends Interface
       return Math .floor (this .verticalSplitterRight .width () - 20);
    }
 
-   // Draw Function Handlers
+   // Navigation Function Handlers
 
    on_keydown (event)
    {
@@ -521,28 +521,38 @@ module .exports = class AnimationEditor extends Interface
       {
          case "-":
          {
-            this .on_zoom_out ();
+            this .zoomOut ();
             break;
          }
          case "+":
          {
-            this .on_zoom_in ();
+            this .zoomIn ();
+            break;
+         }
+         case "0":
+         {
+            this .zoomFit ();
+            break;
+         }
+         case "1":
+         {
+            this .zoom100 ();
             break;
          }
       }
    }
 
-   on_zoom_out ()
+   zoomOut ()
    {
-      this .on_zoom ("out", this .getWidth () / 2, this .SCROLL_FACTOR);
+      this .zoom ("out", this .getWidth () / 2, this .SCROLL_FACTOR);
    }
 
-   on_zoom_in ()
+   zoomIn ()
    {
-      this .on_zoom ("in", this .getWidth () / 2, this .SCROLL_FACTOR);
+      this .zoom ("in", this .getWidth () / 2, this .SCROLL_FACTOR);
    }
 
-   on_zoom (direction, position, factor)
+   zoom (direction, position, factor)
    {
       const fromFrame = (position - this .getTranslation ()) / this .getScale ();
 
@@ -566,7 +576,7 @@ module .exports = class AnimationEditor extends Interface
       this .setTranslation (this .getTranslation () + offset);
    }
 
-   on_zoom_fit ()
+   zoomFit ()
    {
       const width = this .getWidth () - 2 * this .DEFAULT_TRANSLATION;
 
@@ -574,7 +584,7 @@ module .exports = class AnimationEditor extends Interface
       this .setTranslation (this .DEFAULT_TRANSLATION);
    }
 
-   on_zoom_100 ()
+   zoom100 ()
    {
       const frame = 0; // frame input value
       const x     = frame * this .getScale () + this .getTranslation ();
