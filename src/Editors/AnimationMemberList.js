@@ -50,7 +50,7 @@ module .exports = class AnimationMembersList extends Interface
    {
       nodes = nodes .filter (node => !this .#nodes .includes (node));
 
-      let i = 0;
+      let i = this .#nodes .length;
 
       for (const node of nodes)
       {
