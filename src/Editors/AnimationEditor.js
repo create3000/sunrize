@@ -542,7 +542,7 @@ module .exports = class AnimationEditor extends Interface
       }
 
       const toFrame = (position - this .getTranslation ()) / this .getScale ();
-      const offset  = (toFrame - fromFrame) * getScale ();
+      const offset  = (toFrame - fromFrame) * this .getScale ();
 
       this .setTranslation (this .getTranslation () + offset);
    }
@@ -588,7 +588,7 @@ module .exports = class AnimationEditor extends Interface
          firstFrame = Math .max (0, Math .floor (-this .getTranslation () / this .getScale ())),
          lastFrame  = Math .min (this .getDuration (), Math .ceil ((tracksWidth - this .getTranslation ()) / this .getScale ())) + 1;
 
-		const { frameStep, frameFactor } = this .getFrameParams ();
+		const [frameStep, frameFactor] = this .getFrameParams ();
 
       this .tracks
          .prop ("width",  tracksWidth)
@@ -713,8 +713,6 @@ module .exports = class AnimationEditor extends Interface
          return a < b [0];
       });
 
-      console .log (this .getScale (), index)
-
-      return this .#params [index] ?.[1] ?? { frameStep: 1, frameFactor: 5 };
+      return this .#params [index] ?.[1] ?? [1, 5];
    }
 }
