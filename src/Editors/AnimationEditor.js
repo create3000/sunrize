@@ -508,6 +508,16 @@ module .exports = class AnimationEditor extends Interface
       this .setCurrentFrame (this .getDuration ());
    }
 
+   previousFrame ()
+   {
+      this .setCurrentFrame (Math .max (this .getCurrentFrame () - 1, 0));
+   }
+
+   nextFrame ()
+   {
+      this .setCurrentFrame (Math .min (this .getCurrentFrame () + 1, this .getDuration ()));
+   }
+
    toggleAnimation ()
    {
    }
@@ -558,6 +568,8 @@ module .exports = class AnimationEditor extends Interface
 
    on_keydown (event)
    {
+      console .log (event .key);
+
       switch (event .key)
       {
          case "-":
@@ -578,6 +590,26 @@ module .exports = class AnimationEditor extends Interface
          case "1":
          {
             this .zoom100 ();
+            break;
+         }
+         case "ArrowLeft":
+         {
+            this .previousFrame ();
+            break;
+         }
+         case "ArrowRight":
+         {
+            this .nextFrame ();
+            break;
+         }
+         case "ArrowDown":
+         {
+            this .firstFrame ();
+            break;
+         }
+         case "ArrowUp":
+         {
+            this .lastFrame ();
             break;
          }
       }
