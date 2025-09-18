@@ -672,9 +672,10 @@ module .exports = class AnimationEditor extends Interface
 
    // Timeline Properties
 
-   FRAME_SIZE          = 7;          // in pixel
-   DEFAULT_TRANSLATION = 8;          // in pixel
-   DEFAULT_SCALE       = 16;         // in pixel
+   TIMELINE_PADDING    = 10;         // in pixels
+   FRAME_SIZE          = 7;          // in pixels
+   DEFAULT_TRANSLATION = 8;          // in pixels
+   DEFAULT_SCALE       = 16;         // in pixels
    SCROLL_FACTOR       = 1 + 1 / 16; // something nice
 
    translation = 0;
@@ -726,7 +727,7 @@ module .exports = class AnimationEditor extends Interface
     */
    getX ()
    {
-      return Math .floor (this .tracks .width () - this .getWidth () - 11);
+      return Math .floor (this .tracks .width () - this .getWidth () - this .TIMELINE_PADDING);
    }
 
    /**
@@ -735,7 +736,7 @@ module .exports = class AnimationEditor extends Interface
     */
    getWidth ()
    {
-      return Math .floor (this .verticalSplitterRight .width () - 20);
+      return Math .floor (this .verticalSplitterRight .width () - this .TIMELINE_PADDING * 2);
    }
 
    // Update Tracks
