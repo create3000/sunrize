@@ -97,7 +97,7 @@ module .exports = class NodeList extends Interface
 
    getNodes ()
    {
-      return Array .from (this .executionContext .traverse (Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES), node => node instanceof X3D .SFNode ? node .getValue () : node);
+      return Array .from (this .executionContext .traverse (Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES), node => node instanceof X3D .SFNode ? node .getValue () .valueOf () : node .valueOf ());
    }
 
    getName (node)

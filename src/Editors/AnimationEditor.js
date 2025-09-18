@@ -568,7 +568,7 @@ module .exports = class AnimationEditor extends Interface
 
    on_keydown (event)
    {
-      console .log (event .key);
+      // console .log (event .key);
 
       switch (event .key)
       {
