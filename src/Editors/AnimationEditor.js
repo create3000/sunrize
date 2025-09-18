@@ -116,7 +116,7 @@ module .exports = class AnimationEditor extends Interface
          .appendTo (this .toolbar)
          .on ("click", () => this .toggleLoop ());
 
-      this .loopIcon = $("<span></span>")
+      this .propertiesIcon = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _("Edit animation properties."))
          .text ("access_time")
@@ -586,13 +586,16 @@ module .exports = class AnimationEditor extends Interface
 
    toggleAnimation ()
    {
-      this .timeSensor ._stopTime = Date .now () / 1000;
-
       if (this .timeSensor ._isActive .getValue ())
-         return;
-
-      this .timeSensor ._evenLive  = true;
-      this .timeSensor ._startTime = Date .now () / 1000;
+      {
+         this .timeSensor ._stopTime  = Date .now () / 1000;
+         this .timeSensor ._range [0] = this .getCurrentFrame () / this .getDuration ();
+      }
+      else
+      {
+         this .timeSensor ._startTime = Date .now () / 1000;
+         this .timeSensor ._evenLive  = true;
+      }
    }
 
    toggleLoop ()
@@ -788,7 +791,7 @@ module .exports = class AnimationEditor extends Interface
          interpolator ._set_fraction = fraction;
 
       if (this .timeSensor)
-         this .timeSensor ._range [0] = frame / this .getDuration ();
+         this .timeSensor ._range [0] = fraction;
 
       this .requestUpdateTracks ();
    }
