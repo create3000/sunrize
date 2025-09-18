@@ -234,6 +234,27 @@ module .exports = class AnimationEditor extends Interface
       this .animation ?._children    .removeInterest ("set_interpolators",  this);
       this .animation ?.name_changed .removeInterest ("set_animation_name", this);
 
+      if (this .timeSensor)
+      {
+         this .timeSensor ._fraction_changed .removeInterest ("set_fraction", this);
+
+         this .timeSensor ._isEvenLive = false;
+         this .timeSensor ._range      = [0, 0, 1];
+
+         if (this .timeSensor ._loop .getValue () && this .timeSensor ._isActive .getValue ())
+         {
+            this .timeSensor ._stopTime  = 0;
+            this .timeSensor ._startTime = 0;
+         }
+         else
+         {
+            this .timeSensor ._startTime = 0;
+            this .timeSensor ._.stopTime = 1;
+         }
+
+         this .timeSensor ._fraction_changed = 0;
+      }
+
       // Set
 
       this .animation = animation;
@@ -251,6 +272,14 @@ module .exports = class AnimationEditor extends Interface
 
          if (!this .timeSensor)
             this .nodeList .setNode (null);
+
+         this .timeSensor ._isActive         .addInterest ("set_active",   this);
+         this .timeSensor ._fraction_changed .addInterest ("set_fraction", this);
+
+         this .timeSensor ._isEvenLive    = true;
+         this .timeSensor ._cycleInterval = this .getDuration () / this .getFrameRate ();
+
+         this .set_active (this .timeSensor ._isActive);
 
          // Show Member List
 
@@ -279,6 +308,10 @@ module .exports = class AnimationEditor extends Interface
       }
       else
       {
+         // TimeSensor
+
+         this .timeSensor = null;
+
          // Show Animations List
 
          this .members .clear ();
@@ -525,6 +558,38 @@ module .exports = class AnimationEditor extends Interface
 
    toggleAnimation ()
    {
+      // Determine range to play and frame where the animation should start.
+
+      if (!this .timeSensor ._isActive .getValue ())
+      {
+         const duration      = this .getDuration ();
+         const selectedRange = this .getSelectedRange ();
+
+         let firstFrame    = selectedRange [0];
+         let lastFrame     = selectedRange [1];
+         let currentFrame  = this .getCurrentFrame ();
+
+         if (firstFrame === lastFrame)
+         {
+            firstFrame = 0;
+            lastFrame  = this .getDuration ();
+         }
+         else
+            currentFrame = X3D .Algorithm .clamp (currentFrame, firstFrame, lastFrame);
+
+         if (currentFrame >= lastFrame)
+            currentFrame = firstFrame;
+
+         this .timeSensor ._range = [currentFrame / duration, firstFrame / duration, lastFrame / duration];
+      }
+
+      this .timeSensor ._stopTime = Date .now () / 1000;
+
+      if (!this .timeSensor ._isActive .getValue ())
+      {
+         this .timeSensor ._isEvenLive = true;
+         this .timeSensor ._startTime  = Date .now () / 1000;
+      }
    }
 
    getCurrentFrame ()
@@ -567,6 +632,17 @@ module .exports = class AnimationEditor extends Interface
       const hours = String (time) .padStart (2, "0");
 
       return `${hours}:${minutes}:${seconds}:${frames}`;
+   }
+
+   set_active (active)
+   {
+      this .toggleAnimationIcon .text (active .getValue () ? "pause" : "play_arrow");
+   }
+
+   set_fraction (fraction)
+   {
+      this .frameInput .val (Math .floor (this .getDuration () * fraction .getValue ()));
+      this .requestUpdateTracks ();
    }
 
    // Navigation Function Handlers
@@ -764,6 +840,11 @@ module .exports = class AnimationEditor extends Interface
 	   const frame = Math .round ((pointerX - this .getTranslation ()) / this .getScale ());
 
       return X3D .Algorithm .clamp (frame, 0, this .getDuration ());
+   }
+
+   getSelectedRange ()
+   {
+      return [0, 0]
    }
 
    on_mousedown ()
