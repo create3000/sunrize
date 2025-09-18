@@ -76,7 +76,7 @@ module .exports = class AnimationEditor extends Interface
          .addClass (["text", "right"])
          .attr ("title", _("Current frame time."))
          .css ("top", "7px")
-         .css ("margin-right", "5px")
+         .css ("margin-right", "6px")
          .text (this .formatFrames (0, 10))
          .appendTo (this .toolbar);
 
