@@ -590,7 +590,12 @@ module .exports = class AnimationEditor extends Interface
 
    toggleLoop ()
    {
-      this .timeSensor ._loop = !this .timeSensor ._loop .getValue ();
+      const node = this .timeSensor;
+
+      Editor .setFieldValue (this .browser .currentScene, node, node ._loop, !node ._loop .getValue ());
+
+      if (node ._loop .getValue () && node ._startTime .getValue () >= node ._stopTime .getValue ())
+         node ._evenLive = true;
    }
 
    getCurrentFrame ()
