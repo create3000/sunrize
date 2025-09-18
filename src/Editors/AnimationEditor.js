@@ -38,9 +38,11 @@ module .exports = class AnimationEditor extends Interface
          .on ("mouseleave", () => this .updateTracks ());
 
       this .verticalSplitterRight = $("<div></div>")
+         .attr ("tabindex", 0)
          .addClass ("vertical-splitter-right")
          .css ("width", "70%")
          .on ("mouseleave mousemove", event => this .updateTracks (event))
+         .on ("keydown", event => this .on_keydown (event))
          .appendTo (this .verticalSplitter);
 
       this .vSplitter = new Splitter (this .verticalSplitter, "vertical");
@@ -513,30 +515,47 @@ module .exports = class AnimationEditor extends Interface
 
    // Draw Function Handlers
 
+   on_keydown (event)
+   {
+      switch (event .key)
+      {
+         case "-":
+         {
+            this .on_zoom_out ();
+            break;
+         }
+         case "+":
+         {
+            this .on_zoom_in ();
+            break;
+         }
+      }
+   }
+
    on_zoom_out ()
    {
-      this .on_zoom (this .getWidth () / 2, "down");
+      this .on_zoom ("out", this .getWidth () / 2, this .SCROLL_FACTOR);
    }
 
    on_zoom_in ()
    {
-      this .on_zoom (this .getWidth () / 2, "up");
+      this .on_zoom ("in", this .getWidth () / 2, this .SCROLL_FACTOR);
    }
 
-   on_zoom (position, direction)
+   on_zoom (direction, position, factor)
    {
       const fromFrame = (position - this .getTranslation ()) / this .getScale ();
 
       switch (direction)
       {
-         case "down": // Move backwards.
+         case "out": // Move backwards.
          {
-            this .setScale (this .getScale () / this .SCROLL_FACTOR);
+            this .setScale (this .getScale () / factor);
             break;
          }
-         case "up": // Move forwards.
+         case "in": // Move forwards.
          {
-            this .setScale (this .getScale () * this .SCROLL_FACTOR);
+            this .setScale (this .getScale () * factor);
             break;
          }
       }
