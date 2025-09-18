@@ -604,15 +604,38 @@ module .exports = class AnimationEditor extends Interface
 
       context .lineWidth = 1;
 
-      for (const { item, top, bottom, height } of trackOffsets)
+      for (const [i, { item, top, bottom, height }] of trackOffsets .entries ())
       {
          // Track
 
-         context .fillStyle = item .hasClass ("node") || item .data ("i") % 2 ? "transparent" : tint1;
+         const odd = item .data ("i") % 2;
 
-         context .fillRect (0, top, tracksWidth, height);
+         if (odd)
+         {
+            // Draw a line below last field.
 
-         // Track Tint
+            if (trackOffsets [i + 1] ?.item .hasClass ("node") ?? true)
+            {
+               const y = bottom + 0.5;
+
+               context .strokeStyle = tint2;
+
+               context .beginPath ();
+               context .moveTo (0, y);
+               context .lineTo (tracksWidth, y);
+               context .stroke ();
+            }
+         }
+         else if (item .hasClass ("field"))
+         {
+            // Draw a bar.
+            
+            context .fillStyle = tint1;
+
+            context .fillRect (0, top, tracksWidth, height);
+         }
+
+         // Highlight track on hover.
 
          const hover = this .isHoverTrack (event, top, bottom);
 
@@ -626,20 +649,6 @@ module .exports = class AnimationEditor extends Interface
             context .fillStyle = tint2;
 
             context .fillRect (0, top, tracksWidth, height);
-         }
-
-         // Node Border
-
-         if (item .hasClass ("node") && item .data ("i"))
-         {
-            const y = top + 1 + 0.5;
-
-            context .strokeStyle = tint2;
-
-            context .beginPath ();
-            context .moveTo (0, y);
-            context .lineTo (tracksWidth, y);
-            context .stroke ();
          }
 
 			// Draw vertical lines.
