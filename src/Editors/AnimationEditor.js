@@ -249,7 +249,7 @@ module .exports = class AnimationEditor extends Interface
          else
          {
             this .timeSensor ._startTime = 0;
-            this .timeSensor ._.stopTime = 1;
+            this .timeSensor ._stopTime = 1;
          }
 
          this .timeSensor ._fraction_changed = 0;
@@ -594,7 +594,8 @@ module .exports = class AnimationEditor extends Interface
       for (const interpolator of this .interpolators)
          interpolator ._set_fraction = fraction;
 
-      this .timeSensor ._range [0] = frame / this .getDuration ();
+      if (this .timeSensor)
+         this .timeSensor ._range [0] = frame / this .getDuration ();
 
       this .requestUpdateTracks ();
    }
@@ -884,6 +885,9 @@ module .exports = class AnimationEditor extends Interface
          .prop ("width",  tracksWidth)
          .prop ("height", tracksHeight);
 
+      this .timelineClip = new Path2D ();
+      this .timelineClip .rect (this .getTimelineX (), 0, this .getTimelineWidth (), tracksHeight);
+
       this .updateTracks ();
    }
 
@@ -917,10 +921,6 @@ module .exports = class AnimationEditor extends Interface
          tint1 = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--tint-color1"),
          tint2 = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--tint-color2");
 
-      const clip = new Path2D ();
-
-      clip .rect (timelineX, 0, timelineWidth, tracksHeight);
-
       for (const [i, { item, top, bottom, height }] of trackOffsets .entries ())
       {
          // Track
@@ -933,15 +933,9 @@ module .exports = class AnimationEditor extends Interface
 
             if (trackOffsets [i + 1] ?.item .hasClass ("node") ?? true)
             {
-               const y = bottom - 0.5;
+               context .fillStyle = tint2;
 
-               context .strokeStyle = tint2;
-               context .lineWidth   = 1;
-
-               context .beginPath ();
-               context .moveTo (0, y);
-               context .lineTo (tracksWidth, y);
-               context .stroke ();
+               context .fillRect (0, bottom - 1, tracksWidth, 1);
             }
          }
          else if (item .hasClass ("field"))
@@ -972,7 +966,7 @@ module .exports = class AnimationEditor extends Interface
          // Frames
 
          context .save ();
-         context .clip (clip);
+         context .clip (this .timelineClip);
 
 			// Draw vertical lines.
 
@@ -995,20 +989,17 @@ module .exports = class AnimationEditor extends Interface
          context .restore ();
       }
 
-      context .save ();
-      context .clip (clip);
-
       // Draw current frame cursor.
+
+      context .save ();
+      context .clip (this .timelineClip);
 
       const frame = this .getCurrentFrame ();
       const x     = Math .floor (timelineX + frame * this .getScale () + this .getTranslation ());
 
-      context .lineWidth   = 3;
-      context .strokeStyle = blue;
+      context .fillStyle = blue;
 
-      context .moveTo (x + 0.5, 0);
-      context .lineTo (x + 0.5, tracksHeight);
-      context .stroke ();
+      context .fillRect (x - 1, 0, 3, tracksHeight);
 
       context .restore ();
    }
