@@ -100,14 +100,14 @@ module .exports = class AnimationEditor extends Interface
 
       this .zoomFitIcon = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Zoom in."))
+         .attr ("title", _("Zoom fit animation in window."))
          .text ("fit_screen")
          .appendTo (this .navigation)
          .on ("click", () => this .on_zoom_fit ());
 
       this .zoom100Icon = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Zoom in."))
+         .attr ("title", _("Zoom 1:1."))
          .text ("1x_mobiledata")
          .appendTo (this .navigation)
          .on ("click", () => this .on_zoom_100 ());
