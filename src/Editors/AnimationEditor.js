@@ -652,7 +652,7 @@ module .exports = class AnimationEditor extends Interface
 
    set_fraction (fraction)
    {
-      const frame = Math .floor (this .getDuration () * fraction .getValue ());
+      const frame = Math .round (this .getDuration () * fraction .getValue ());
 
       this .frameInput .val (frame);
       this .timeElement .text (this .formatFrames (frame, this .getFrameRate ()));
