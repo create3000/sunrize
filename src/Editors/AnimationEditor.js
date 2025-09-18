@@ -42,7 +42,7 @@ module .exports = class AnimationEditor extends Interface
          .addClass ("vertical-splitter-right")
          .css ("width", "70%")
          .on ("mouseleave", () => this .clearPointer ())
-         .on ("mousemove", event => this .updatePointer (event))
+         .on ("mousedown mousemove wheel", event => this .updatePointer (event))
          .on ("mousedown", () => this .on_mousedown ())
          .on ("mouseup", () => this .on_mouseup ())
          .on ("mousemove", () => this .on_mousemove ())
@@ -606,7 +606,7 @@ module .exports = class AnimationEditor extends Interface
 
    getCurrentFrame ()
    {
-      return Math .round (parseFloat (this .frameInput .val ()));
+      return Math .round (this .frameInput .val ());
    }
 
    setCurrentFrame (frame)
@@ -1028,7 +1028,7 @@ module .exports = class AnimationEditor extends Interface
       // Draw current frame cursor.
 
       const frame = this .getCurrentFrame ();
-      const x     = timelineX + Math .round (frame) * this .getScale () + this .getTranslation ();
+      const x     = timelineX + frame * this .getScale () + this .getTranslation ();
 
       context .lineWidth   = 3;
       context .strokeStyle = blue;
