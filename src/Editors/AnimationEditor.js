@@ -470,7 +470,7 @@ module .exports = class AnimationEditor extends Interface
       return `${hours}:${minutes}:${seconds}:${frames}`;
    }
 
-   // Draw Properties
+   // Timeline Properties
 
    FRAME_SIZE          = 7;          // in pixel
    DEFAULT_TRANSLATION = 8;          // in pixel
