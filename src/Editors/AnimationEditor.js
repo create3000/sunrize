@@ -586,15 +586,13 @@ module .exports = class AnimationEditor extends Interface
 
    toggleAnimation ()
    {
+      this .timeSensor ._stopTime = Date .now () / 1000;
+
       if (this .timeSensor ._isActive .getValue ())
-      {
-         this .timeSensor ._stopTime = Date .now () / 1000;
-      }
-      else
-      {
-         this .timeSensor ._startTime = Date .now () / 1000;
-         this .timeSensor ._evenLive  = true;
-      }
+         return;
+
+      this .timeSensor ._evenLive  = true;
+      this .timeSensor ._startTime = Date .now () / 1000;
    }
 
    toggleLoop ()
