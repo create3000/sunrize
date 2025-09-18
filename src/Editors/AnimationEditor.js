@@ -632,11 +632,13 @@ module .exports = class AnimationEditor extends Interface
 
          if (item .hasClass ("node") && item .data ("i"))
          {
+            const y = top + 1 + 0.5;
+
             context .strokeStyle = tint2;
 
             context .beginPath ();
-            context .moveTo (0, top - 1 + 0.5);
-            context .lineTo (tracksWidth, top - 1 + 0.5);
+            context .moveTo (0, y);
+            context .lineTo (tracksWidth, y);
             context .stroke ();
          }
 
