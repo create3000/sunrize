@@ -610,29 +610,6 @@ module .exports = class AnimationEditor extends Interface
 
    }
 
-   getCurrentFrame ()
-   {
-      return Math .round (this .frameInput .val ());
-   }
-
-   setCurrentFrame (frame)
-   {
-      // Update interpolator fraction.
-
-      this .frameInput .val (frame);
-      this .timeElement .text (this .formatFrames (frame, this .getFrameRate ()));
-
-      const fraction = frame / this .getDuration ();
-
-      for (const interpolator of this .interpolators)
-         interpolator ._set_fraction = fraction;
-
-      if (this .timeSensor)
-         this .timeSensor ._range [0] = frame / this .getDuration ();
-
-      this .requestUpdateTracks ();
-   }
-
    formatFrames (frame, framesPerSecond)
    {
       let time = Math .floor (frame);
@@ -792,6 +769,29 @@ module .exports = class AnimationEditor extends Interface
 
    translation = 0;
    scale = 1;
+
+   getCurrentFrame ()
+   {
+      return X3D .Algorithm .clamp (Math .round (this .frameInput .val ()), 0, this .getDuration ());
+   }
+
+   setCurrentFrame (frame)
+   {
+      // Update interpolator fraction.
+
+      this .frameInput .val (frame);
+      this .timeElement .text (this .formatFrames (frame, this .getFrameRate ()));
+
+      const fraction = frame / this .getDuration ();
+
+      for (const interpolator of this .interpolators)
+         interpolator ._set_fraction = fraction;
+
+      if (this .timeSensor)
+         this .timeSensor ._range [0] = frame / this .getDuration ();
+
+      this .requestUpdateTracks ();
+   }
 
    getDuration ()
    {
