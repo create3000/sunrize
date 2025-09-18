@@ -238,8 +238,8 @@ module .exports = class AnimationEditor extends Interface
       {
          this .timeSensor ._fraction_changed .removeInterest ("set_fraction", this);
 
-         this .timeSensor ._isEvenLive = false;
-         this .timeSensor ._range      = [0, 0, 1];
+         this .timeSensor ._evenLive = false;
+         this .timeSensor ._range    = [0, 0, 1];
 
          if (this .timeSensor ._loop .getValue () && this .timeSensor ._isActive .getValue ())
          {
@@ -276,7 +276,7 @@ module .exports = class AnimationEditor extends Interface
          this .timeSensor ._isActive         .addInterest ("set_active",   this);
          this .timeSensor ._fraction_changed .addInterest ("set_fraction", this);
 
-         this .timeSensor ._isEvenLive    = true;
+         this .timeSensor ._evenLive      = true;
          this .timeSensor ._cycleInterval = this .getDuration () / this .getFrameRate ();
 
          this .set_active (this .timeSensor ._isActive);
@@ -575,9 +575,9 @@ module .exports = class AnimationEditor extends Interface
          const duration      = this .getDuration ();
          const selectedRange = this .getSelectedRange ();
 
-         let firstFrame    = selectedRange [0];
-         let lastFrame     = selectedRange [1];
-         let currentFrame  = this .getCurrentFrame ();
+         let currentFrame = this .getCurrentFrame ();
+         let firstFrame   = selectedRange [0];
+         let lastFrame    = selectedRange [1];
 
          if (firstFrame === lastFrame)
          {
@@ -585,7 +585,9 @@ module .exports = class AnimationEditor extends Interface
             lastFrame  = this .getDuration ();
          }
          else
+         {
             currentFrame = X3D .Algorithm .clamp (currentFrame, firstFrame, lastFrame);
+         }
 
          if (currentFrame >= lastFrame)
             currentFrame = firstFrame;
@@ -597,14 +599,14 @@ module .exports = class AnimationEditor extends Interface
 
       if (!this .timeSensor ._isActive .getValue ())
       {
-         this .timeSensor ._isEvenLive = true;
-         this .timeSensor ._startTime  = Date .now () / 1000;
+         this .timeSensor ._evenLive  = true;
+         this .timeSensor ._startTime = Date .now () / 1000;
       }
    }
 
    getCurrentFrame ()
    {
-      return parseInt (this .frameInput .val ());
+      return Math .round (parseFloat (this .frameInput .val ()));
    }
 
    setCurrentFrame (frame)
@@ -653,7 +655,11 @@ module .exports = class AnimationEditor extends Interface
 
    set_fraction (fraction)
    {
-      this .frameInput .val (Math .floor (this .getDuration () * fraction .getValue ()));
+      const frame = Math .floor (this .getDuration () * fraction .getValue ());
+
+      this .frameInput .val (frame);
+      this .timeElement .text (this .formatFrames (frame, this .getFrameRate ()));
+
       this .requestUpdateTracks ();
    }
 

@@ -2116,7 +2116,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       {
          Editor .setFieldValue (this .browser .currentScene, node, node ._startTime, Date .now () / 1000);
 
-         node ._isEvenLive = true;
+         node ._evenLive = true;
       }
    }
 
@@ -2146,7 +2146,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       Editor .setFieldValue (this .browser .currentScene, node, node ._loop, !node ._loop .getValue ());
 
       if (node ._loop .getValue () && node ._startTime .getValue () >= node ._stopTime .getValue ())
-         node ._isEvenLive = true;
+         node ._evenLive = true;
    }
 
    addBooleanField (button)
