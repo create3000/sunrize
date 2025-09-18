@@ -80,7 +80,7 @@ module .exports = class AnimationMembersList extends Interface
          .on ("click", () => this .#closeCallback ());
 
       const item = $("<div></div>")
-         .addClass (["node", "item"])
+         .addClass (["main", "item"])
          .append (typeNameElement)
          .append (document .createTextNode (" "))
          .append (nameElement)

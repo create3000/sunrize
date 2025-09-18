@@ -470,74 +470,6 @@ module .exports = class AnimationEditor extends Interface
       return `${hours}:${minutes}:${seconds}:${frames}`;
    }
 
-   // Timeline Properties
-
-   FRAME_SIZE          = 7;          // in pixel
-   DEFAULT_TRANSLATION = 8;          // in pixel
-   DEFAULT_SCALE       = 16;         // in pixel
-   SCROLL_FACTOR       = 1 + 1 / 16; // something nice
-
-   translation = 0;
-   scale = 1;
-
-   getDuration ()
-   {
-      return Math .max (this .animation ?.getMetaData ("Animation/duration", new X3D .SFInt32 (10)) ?? 10, 1);
-   }
-
-   getFrameRate ()
-   {
-      return Math .max (this .animation ?.getMetaData ("Animation/frameRate", new X3D .SFInt32 (10)) ?? 10, 1);
-   }
-
-   getTranslation ()
-   {
-      return this .translation;
-   }
-
-   setTranslation (translation)
-   {
-      const width = this .getWidth ();
-      const max   = (width - this .DEFAULT_TRANSLATION) - (this .getDuration () * this .getScale ());
-
-      translation = Math .max (translation, max);
-      translation = Math .min (translation, this .DEFAULT_TRANSLATION);
-
-      this .translation = translation;
-
-      this .requestUpdateTracks ();
-   }
-
-   getScale ()
-   {
-      return this .scale;
-   }
-
-   setScale (scale)
-   {
-      this .scale = scale;
-
-      this .requestUpdateTracks ();
-   }
-
-   /**
-    *
-    * @returns {number} start of tracks area
-    */
-   getX ()
-   {
-      return Math .floor (this .tracks .width () - this .getWidth () - 11);
-   }
-
-   /**
-    *
-    * @returns {number} width of tracks area
-    */
-   getWidth ()
-   {
-      return Math .floor (this .verticalSplitterRight .width () - 20);
-   }
-
    // Navigation Function Handlers
 
    on_keydown (event)
@@ -618,6 +550,74 @@ module .exports = class AnimationEditor extends Interface
       this .setTranslation (x - frame * this .DEFAULT_SCALE);
    }
 
+   // Timeline Properties
+
+   FRAME_SIZE          = 7;          // in pixel
+   DEFAULT_TRANSLATION = 8;          // in pixel
+   DEFAULT_SCALE       = 16;         // in pixel
+   SCROLL_FACTOR       = 1 + 1 / 16; // something nice
+
+   translation = 0;
+   scale = 1;
+
+   getDuration ()
+   {
+      return Math .max (this .animation ?.getMetaData ("Animation/duration", new X3D .SFInt32 (10)) ?? 10, 1);
+   }
+
+   getFrameRate ()
+   {
+      return Math .max (this .animation ?.getMetaData ("Animation/frameRate", new X3D .SFInt32 (10)) ?? 10, 1);
+   }
+
+   getTranslation ()
+   {
+      return this .translation;
+   }
+
+   setTranslation (translation)
+   {
+      const width = this .getWidth ();
+      const max   = (width - this .DEFAULT_TRANSLATION) - (this .getDuration () * this .getScale ());
+
+      translation = Math .max (translation, max);
+      translation = Math .min (translation, this .DEFAULT_TRANSLATION);
+
+      this .translation = translation;
+
+      this .requestUpdateTracks ();
+   }
+
+   getScale ()
+   {
+      return this .scale;
+   }
+
+   setScale (scale)
+   {
+      this .scale = scale;
+
+      this .requestUpdateTracks ();
+   }
+
+   /**
+    *
+    * @returns {number} start of tracks area
+    */
+   getX ()
+   {
+      return Math .floor (this .tracks .width () - this .getWidth () - 11);
+   }
+
+   /**
+    *
+    * @returns {number} width of tracks area
+    */
+   getWidth ()
+   {
+      return Math .floor (this .verticalSplitterRight .width () - 20);
+   }
+
    // Update Tracks
 
    #updateTracksId = undefined;
@@ -664,6 +664,7 @@ module .exports = class AnimationEditor extends Interface
 
       const
          blue   = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-blue"),
+         indigo = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-indigo"),
          orange = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-orange");
 
       const
@@ -676,7 +677,7 @@ module .exports = class AnimationEditor extends Interface
 
          const odd = item .data ("i") % 2;
 
-         if (odd)
+         if (odd || i === 0)
          {
             // Draw a line below last field.
 
@@ -720,7 +721,7 @@ module .exports = class AnimationEditor extends Interface
 
 			// Draw vertical lines.
 
-         context .strokeStyle = blue;
+         context .strokeStyle = item .hasClass ("main") ? indigo : blue;
 
 			for (let frame = firstFrame - (firstFrame % frameStep); frame < lastFrame; frame += frameStep)
 			{
@@ -728,7 +729,7 @@ module .exports = class AnimationEditor extends Interface
             const y = Math .floor (top + height * (s ? 0.75 : 0.5));
 				const x = Math .floor (tracksX + frame * this .getScale () + this .getTranslation ());
 
-            context .lineWidth = item .hasClass ("node") ? 3 : 1;
+            context .lineWidth = item .is (".main, .node") ? 3 : 1;
 
             context .beginPath ();
 				context .moveTo (x + 0.5, y);
