@@ -516,13 +516,14 @@ module .exports = class AnimationEditor extends Interface
       return parseInt (this .frameInput .val ());
    }
 
-   setCurrentFrame (fame)
+   setCurrentFrame (frame)
    {
       // Update interpolator fraction.
 
-      this .frameInput .val (fame);
+      this .frameInput .val (frame);
+      this .timeElement .text (this .formatFrames (frame, this .getFrameRate ()));
 
-      const fraction = fame / this .getDuration ();
+      const fraction = frame / this .getDuration ();
 
       for (const interpolator of this .interpolators)
          interpolator ._set_fraction = fraction;
@@ -530,16 +531,20 @@ module .exports = class AnimationEditor extends Interface
 
    formatFrames (frame, framesPerSecond)
    {
-      let time = frame;
+      let time = Math .floor (frame);
 
       const frames = String (time % framesPerSecond) .padStart (2, "0");
       time /= framesPerSecond;
+      time  = Math .floor (time);
 
       const seconds = String (time % 60) .padStart (2, "0");
       time /= 60;
+      time  = Math .floor (time);
+
 
       const minutes = String (time % 60) .padStart (2, "0");
       time /= 60;
+      time  = Math .floor (time);
 
       const hours = String (time) .padStart (2, "0");
 
