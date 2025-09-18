@@ -706,6 +706,9 @@ module .exports = class AnimationEditor extends Interface
       return pointerY > top && pointerY < bottom;
    }
 
+   /**
+    * Params for scaling steps of timeline.
+    */
    #params = Array .from ({ length: 7 }, (_, i) => Math .pow (10, i))
       .map (n => [5 / n, [n * 10, n * 50]])
       .reverse ();
