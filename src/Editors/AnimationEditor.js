@@ -588,8 +588,7 @@ module .exports = class AnimationEditor extends Interface
    {
       if (this .timeSensor ._isActive .getValue ())
       {
-         this .timeSensor ._stopTime  = Date .now () / 1000;
-         this .timeSensor ._range [0] = this .getCurrentFrame () / this .getDuration ();
+         this .timeSensor ._stopTime = Date .now () / 1000;
       }
       else
       {
@@ -645,6 +644,9 @@ module .exports = class AnimationEditor extends Interface
 
    set_active (active)
    {
+      if (!active .getValue ())
+         this .timeSensor ._range [0] = this .getCurrentFrame () / this .getDuration ();
+
       this .toggleAnimationIcon .text (active .getValue () ? "pause" : "play_arrow");
    }
 
