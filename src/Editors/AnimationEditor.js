@@ -694,17 +694,9 @@ module .exports = class AnimationEditor extends Interface
       return pointerY > top && pointerY < bottom;
    }
 
-   #params = [
-      [5 / 1,        [10,        50]],
-      [5 / 10,       [100,       500]],
-      [5 / 100,      [1000,      5000]],
-      [5 / 1000,     [10000,     50000]],
-      [5 / 10000,    [100000,    500000]],
-      [5 / 100000,   [1000000,   5000000]],
-      [5 / 1000000,  [10000000,  50000000]],
-      [5 / 10000000, [100000000, 500000000]],
-   ]
-   .reverse ();
+   #params = Array .from ({ length: 7 }, (_, i) => Math .pow (10, i))
+      .map (n => [5 / n, [n * 10, n * 50]])
+      .reverse ();
 
    getFrameParams ()
    {
