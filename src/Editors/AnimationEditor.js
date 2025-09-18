@@ -308,6 +308,7 @@ module .exports = class AnimationEditor extends Interface
          this .firstFrameIcon,
          this .toggleAnimationIcon,
          this .lastFrameIcon,
+         this .frameInput,
          this .timeElement,
       ]
       .flatMap (object => [... object]))
