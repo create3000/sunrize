@@ -538,12 +538,22 @@ module .exports = class AnimationEditor extends Interface
 
    firstFrame ()
    {
-      this .setCurrentFrame (0);
+      const selectedRange = this .getSelectedRange ();
+
+      if (selectedRange [0] === selectedRange [1])
+         this .setCurrentFrame (0);
+      else
+         this .setCurrentFrame (selectedRange [0]);
    }
 
    lastFrame ()
    {
-      this .setCurrentFrame (this .getDuration ());
+      const selectedRange = this .getSelectedRange ();
+
+      if (selectedRange [0] === selectedRange [1])
+         this .setCurrentFrame (this .getDuration ());
+      else
+         this .setCurrentFrame (selectedRange [1]);
    }
 
    previousFrame ()
@@ -608,6 +618,8 @@ module .exports = class AnimationEditor extends Interface
 
       for (const interpolator of this .interpolators)
          interpolator ._set_fraction = fraction;
+
+      this .timeSensor ._range [0] = frame / this .getDuration ();
 
       this .requestUpdateTracks ();
    }
