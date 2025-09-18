@@ -29,19 +29,23 @@ module .exports = class AnimationEditor extends Interface
          .attr ("id", "animation-editor-content")
          .addClass (["animation-editor-content", "vertical-splitter"])
          .appendTo (this .animationEditor)
-         .on ("mouseleave", () => this .updateTracks ());
+         .on ("mouseleave", () => this .requestUpdateTracks ());
 
       this .verticalSplitterLeft = $("<div></div>")
          .addClass ("vertical-splitter-left")
          .css ("width", "30%")
          .appendTo (this .verticalSplitter)
-         .on ("mouseleave", () => this .updateTracks ());
+         .on ("mouseleave", () => this .requestUpdateTracks ());
 
       this .verticalSplitterRight = $("<div></div>")
          .attr ("tabindex", 0)
          .addClass ("vertical-splitter-right")
          .css ("width", "70%")
-         .on ("mouseleave mousemove", event => this .updateTracks (event))
+         .on ("mouseleave", () => this .clearPointer ())
+         .on ("mousemove", event => this .updatePointer (event))
+         .on ("mousedown", () => this .on_mousedown ())
+         .on ("mouseup", () => this .on_mouseup ())
+         .on ("mousemove", () => this .on_mousemove ())
          .on ("keydown", event => this .on_keydown (event))
          .appendTo (this .verticalSplitter);
 
@@ -164,7 +168,7 @@ module .exports = class AnimationEditor extends Interface
       this .membersListElement = $("<div></div>")
          .addClass ("node-list")
          .appendTo (this .verticalSplitterLeft)
-         .on ("scroll mousemove", () => this .updateTracks ());
+         .on ("scroll mousemove", () => this .requestUpdateTracks ());
 
       this .animationName = $("<input></input>")
          .addClass ("node-name")
@@ -208,7 +212,7 @@ module .exports = class AnimationEditor extends Interface
 
    colorScheme (shouldUseDarkColors)
    {
-      this .updateTracks ();
+      this .requestUpdateTracks ();
    }
 
    isAnimation (node)
@@ -736,6 +740,49 @@ module .exports = class AnimationEditor extends Interface
 
    // Update Tracks
 
+   clearPointer ()
+   {
+      this .pointerX = -1;
+      this .pointerY = -1;
+
+      this .requestUpdateTracks ();
+   }
+
+   updatePointer (event)
+   {
+      this .pointerX = event .pageX - this .tracks .offset () .left - this .getX ();
+      this .pointerY = event .pageY - this .tracks .offset () .top;
+
+      this .requestUpdateTracks ();
+   }
+
+   getFrameFromPointer (pointerX)
+   {
+	   const frame = Math .round ((pointerX - this .getTranslation ()) / this .getScale ());
+
+      return X3D .Algorithm .clamp (frame, 0, this .getDuration ());
+   }
+
+   on_mousedown ()
+   {
+      this .mousedown = true;
+
+      this .setCurrentFrame (this .getFrameFromPointer (this .pointerX));
+   }
+
+   on_mouseup ()
+   {
+		this .mousedown = false;
+   }
+
+   on_mousemove ()
+   {
+      if (!this .mousedown)
+         return;
+
+      this .setCurrentFrame (this .getFrameFromPointer (this .pointerX));
+   }
+
    #updateTracksId = undefined;
 
    requestUpdateTracks ()
@@ -758,7 +805,7 @@ module .exports = class AnimationEditor extends Interface
       this .updateTracks ();
    }
 
-   updateTracks (event)
+   updateTracks ()
    {
       const
          context      = this .tracks [0] .getContext ("2d"),
@@ -821,7 +868,7 @@ module .exports = class AnimationEditor extends Interface
 
          // Highlight track on hover.
 
-         const hover = this .isHoverTrack (event, top, bottom);
+         const hover = this .pointerY > top && this .pointerY < bottom;
 
          if (hover)
             item .addClass ("hover-track");
@@ -865,16 +912,6 @@ module .exports = class AnimationEditor extends Interface
       context .moveTo (x + 0.5, 0);
       context .lineTo (x + 0.5, tracksHeight);
       context .stroke ();
-   }
-
-   isHoverTrack (event, top, bottom)
-   {
-      if (!event)
-         return false;
-
-      const pointerY = event .pageY - this .tracks .offset () .top;
-
-      return pointerY > top && pointerY < bottom;
    }
 
    /**
