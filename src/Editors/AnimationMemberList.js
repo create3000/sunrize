@@ -68,7 +68,7 @@ module .exports = class AnimationMembersList extends Interface
          nameElement     = $("<span></span>") .addClass ("name") .text ("My"),
          fieldList       = $("<ul></ul>");
 
-      this .name = nameElement;
+      this .animationName = nameElement;
 
       const listItem = $("<li></li>")
          .appendTo (this .#list);
@@ -95,9 +95,9 @@ module .exports = class AnimationMembersList extends Interface
       fieldList .appendTo (listItem);
    }
 
-   setName (name)
+   setAnimationName (name)
    {
-      this .name .text (name);
+      this .animationName .text (name);
    }
 
    clearNodes ()

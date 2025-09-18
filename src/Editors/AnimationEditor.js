@@ -427,7 +427,7 @@ module .exports = class AnimationEditor extends Interface
       const name = this .getAnimationName ();
 
       this .animationName .val (name);
-      this .memberList .setName (name);
+      this .memberList .setAnimationName (name);
    }
 
    getAnimationName ()
