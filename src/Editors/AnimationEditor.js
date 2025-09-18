@@ -147,12 +147,12 @@ module .exports = class AnimationEditor extends Interface
          .addClass ("tracks")
          .prependTo (this .animationEditor);
 
-      this .tracksResizer = new ResizeObserver (() => this .updateTracks ());
+      this .tracksResizer = new ResizeObserver (() => this .resizeTracks ());
       this .tracksResizer .observe (this .verticalSplitterRight [0]);
 
       // Lists
 
-      this .memberList = new MemberList (this .membersListElement, nodes => this .removeMembers (nodes));
+      this .memberList = new MemberList (this .membersListElement, nodes => this .removeMembers (nodes), () => this .closeAnimation ());
 
       this .nodeList = new NodeList (this .nodeListElement, node => this .isAnimation (node), animation => this .setAnimation (animation));
 
@@ -337,7 +337,10 @@ module .exports = class AnimationEditor extends Interface
 
    set_animation_name ()
    {
-      this .animationName .val (this .getAnimationName ());
+      const name = this .getAnimationName ();
+
+      this .animationName .val (name);
+      this .memberList .setName (name);
    }
 
    getAnimationName ()
@@ -399,7 +402,8 @@ module .exports = class AnimationEditor extends Interface
 
    set_interpolators ()
    {
-      const oldMembers = Array .from (this .members .values ());
+      this .memberList .saveScrollbars ();
+      this .memberList .removeNodes (Array .from (this .members .values ()));
 
       this .members .clear ();
       this .interpolators .length = 0;
@@ -423,10 +427,8 @@ module .exports = class AnimationEditor extends Interface
          }
       }
 
-      const members = Array .from (this .members .values ());
-
-      this .memberList .addNodes (members);
-      this .memberList .removeNodes (oldMembers .filter (member => !members .includes (member)));
+      this .memberList .addNodes (Array .from (this .members .values ()));
+      this .memberList .restoreScrollbars ();
    }
 
    getInterpolatorName (interpolator)
@@ -604,24 +606,38 @@ module .exports = class AnimationEditor extends Interface
       this .#updateTracksId = setTimeout (() => this .updateTracks ());
    }
 
-   updateTracks (event)
+   resizeTracks ()
    {
       const
-         tracksX      = this .getX (),
          tracksWidth  = this .tracks .width (),
-         tracksHeight = this .tracks .height (),
-         context      = this .tracks [0] .getContext ("2d"),
-         trackOffsets = this .memberList .getTrackOffsets ();
-
-      const
-         firstFrame = Math .max (0, Math .floor (-this .getTranslation () / this .getScale ())),
-         lastFrame  = Math .min (this .getDuration (), Math .ceil ((tracksWidth - this .getTranslation ()) / this .getScale ())) + 1;
-
-		const [frameStep, frameFactor] = this .getFrameParams ();
+         tracksHeight = this .tracks .height ();
 
       this .tracks
          .prop ("width",  tracksWidth)
          .prop ("height", tracksHeight);
+
+      this .updateTracks ();
+   }
+
+   updateTracks (event)
+   {
+      const
+         context      = this .tracks [0] .getContext ("2d"),
+         tracksX      = this .getX (),
+         tracksWidth  = this .tracks .width (),
+         tracksHeight = this .tracks .height ();
+
+      context .clearRect (0, 0, tracksWidth, tracksHeight);
+
+      if (!this .animation)
+         return;
+
+      const
+         trackOffsets = this .memberList .getTrackOffsets (),
+         firstFrame   = Math .max (0, Math .floor (-this .getTranslation () / this .getScale ())),
+         lastFrame    = Math .min (this .getDuration (), Math .ceil ((tracksWidth - this .getTranslation ()) / this .getScale ())) + 1;
+
+		const [frameStep, frameFactor] = this .getFrameParams ();
 
       const
          blue   = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-blue"),

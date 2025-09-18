@@ -11,19 +11,24 @@ module .exports = class AnimationMembersList extends Interface
    #nodeList;
    #list;
    #nodes;
-   #executionContext;
+   #removeCallback;
+   #closeCallback;
 
-   constructor (element, removeCallback)
+   constructor (element, removeCallback, closeCallback)
    {
       super ("Sunrize.AnimationMembersList.");
 
-      this .#nodeList      = element;
-      this .#list          = $("<ul></ul>") .appendTo (this .#nodeList);
-      this .#nodes         = [ ];
-      this .removeCallback = removeCallback;
+      this .#nodeList       = element;
+      this .#list           = $("<ul></ul>") .appendTo (this .#nodeList);
+      this .#nodes          = [ ];
+      this .#removeCallback = removeCallback;
+      this .#closeCallback  = closeCallback;
 
+      this .addMain ();
       this .setup ();
    }
+
+   #executionContext;
 
    configure ()
    {
@@ -39,6 +44,60 @@ module .exports = class AnimationMembersList extends Interface
    set_sceneGraph ()
    {
       this .removeNodes (this .#nodes .filter (node => !node .isLive ()));
+   }
+
+   #scrollTop;
+   #scrollLeft;
+
+   saveScrollbars ()
+   {
+      this .#scrollTop  = this .#nodeList .scrollTop ();
+      this .#scrollLeft = this .#nodeList .scrollLeft ();
+   }
+
+   restoreScrollbars ()
+   {
+      this .#nodeList .scrollTop (this .#scrollTop);
+      this .#nodeList .scrollLeft (this .#scrollLeft);
+   }
+
+   addMain ()
+   {
+      const
+         typeNameElement = $("<span></span>") .addClass ("type-name") .text (_("Animation")),
+         nameElement     = $("<span></span>") .addClass ("name") .text ("My"),
+         fieldList       = $("<ul></ul>");
+
+      this .name = nameElement;
+
+      const listItem = $("<li></li>")
+         .appendTo (this .#list);
+
+      const removeIcon = $("<span></span>")
+         .addClass (["material-icons-outlined", "button"])
+         .attr ("title", _("Close animation."))
+         .text ("cancel")
+         .on ("click", () => this .#closeCallback ());
+
+      const item = $("<div></div>")
+         .addClass (["node", "item"])
+         .append (typeNameElement)
+         .append (document .createTextNode (" "))
+         .append (nameElement)
+         .append (document .createTextNode (" "))
+         .append (removeIcon)
+         .appendTo (listItem);
+
+      item
+         .on ("mouseenter", () => item .addClass ("hover"))
+         .on ("mouseleave", () => item .removeClass ("hover"));
+
+      fieldList .appendTo (listItem);
+   }
+
+   setName (name)
+   {
+      this .name .text (name);
    }
 
    clearNodes ()
@@ -167,7 +226,7 @@ module .exports = class AnimationMembersList extends Interface
 
       this .#nodes = this .#nodes .filter (node => !nodes .includes (node));
 
-      this .removeCallback (nodes);
+      this .#removeCallback (nodes);
    }
 
    getName (node)
