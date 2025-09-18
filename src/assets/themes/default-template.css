@@ -559,7 +559,7 @@ body.light .qtip-tipsy {
   top: -3px;
   margin: auto 5px;
   font-size: var(--font-size);
-  border: 1px solid var(--text-color);
+  border: 1px solid var(--system-gray2);
 }
 
 .horizontal-toolbar .separator {
