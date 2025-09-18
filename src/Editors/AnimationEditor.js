@@ -798,14 +798,20 @@ module .exports = class AnimationEditor extends Interface
       this .requestUpdateTracks ();
    }
 
+   #defaultInteger = new X3D .SFInt32 ();
+
    getDuration ()
    {
-      return Math .max (this .animation ?.getMetaData ("Animation/duration", new X3D .SFInt32 (10)) ?? 10, 1);
+      this .#defaultInteger .setValue (10);
+
+      return Math .max (this .animation ?.getMetaData ("Animation/duration", this .#defaultInteger) ?? 10, 1);
    }
 
    getFrameRate ()
    {
-      return Math .max (this .animation ?.getMetaData ("Animation/frameRate", new X3D .SFInt32 (10)) ?? 10, 1);
+      this .#defaultInteger .setValue (10);
+
+      return Math .max (this .animation ?.getMetaData ("Animation/frameRate", this .#defaultInteger) ?? 10, 1);
    }
 
    getTranslation ()
