@@ -72,12 +72,13 @@ module .exports = class AnimationEditor extends Interface
 
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
-      this .closeAnimationIcon = $("<span></span>")
-         .addClass (["material-symbols-outlined", "right"])
+      this .timeElement = $("<span></span>")
+         .addClass (["text", "right"])
          .attr ("title", _("Close animation."))
-         .text ("close")
-         .appendTo (this .toolbar)
-         .on ("click", () => this .closeAnimation ());
+         .css ("top", "7px")
+         .css ("margin-right", "5px")
+         .text (this .formatFrames (0, 10))
+         .appendTo (this .toolbar);
 
       // Zoom toolbar
 
@@ -89,7 +90,7 @@ module .exports = class AnimationEditor extends Interface
       this .zoomOutIcon = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _("Zoom out."))
-         .css ("transform", "scale(1.2)")
+         .css ("transform", "scale(1.4)")
          .text ("zoom_out")
          .appendTo (this .navigation)
          .on ("click", () => this .zoomOut ());
@@ -97,7 +98,7 @@ module .exports = class AnimationEditor extends Interface
       this .zoomInIcon = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _("Zoom in."))
-         .css ("transform", "scale(1.2)")
+         .css ("transform", "scale(1.4)")
          .text ("zoom_in")
          .appendTo (this .navigation)
          .on ("click", () => this .zoomIn ());
@@ -105,7 +106,7 @@ module .exports = class AnimationEditor extends Interface
       this .zoomFitIcon = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _("Zoom fit animation in window."))
-         .css ("transform", "scale(1.2)")
+         .css ("transform", "scale(1.4)")
          .text ("fit_screen")
          .appendTo (this .navigation)
          .on ("click", () => this .zoomFit ());
@@ -113,7 +114,7 @@ module .exports = class AnimationEditor extends Interface
       this .zoom100Icon = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _("Zoom 1:1."))
-         .css ("transform", "scale(1.2)")
+         .css ("transform", "scale(1.4)")
          .text ("1x_mobiledata")
          .appendTo (this .navigation)
          .on ("click", () => this .zoom100 ());
@@ -261,7 +262,7 @@ module .exports = class AnimationEditor extends Interface
    {
       $([
          this .addMembersIcon,
-         this .closeAnimationIcon,
+         this .timeElement,
       ]
       .flatMap (object => [... object]))
       .removeClass (enabled ? "disabled" : [ ])
@@ -445,6 +446,24 @@ module .exports = class AnimationEditor extends Interface
          fieldName        = capitalize (destinationField .replace (/^set_|_changed$/g, ""), true);
 
       return `${nodeName}${fieldName}Interpolator`;
+   }
+
+   formatFrames (frame, framesPerSecond)
+   {
+      let time = frame;
+
+      const frames = String (time % framesPerSecond) .padStart (2, "0");
+      time /= framesPerSecond;
+
+      const seconds = String (time % 60) .padStart (2, "0");
+      time /= 60;
+
+      const minutes = String (time % 60) .padStart (2, "0");
+      time /= 60;
+
+      const hours = String (time) .padStart (2, "0");
+
+      return `${hours}:${minutes}:${seconds}:${frames}`;
    }
 
    // Draw Properties
