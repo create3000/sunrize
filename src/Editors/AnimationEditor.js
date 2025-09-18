@@ -87,6 +87,7 @@ module .exports = class AnimationEditor extends Interface
       this .zoomOutIcon = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _("Zoom out."))
+         .css ("transform", "scale(1.2)")
          .text ("zoom_out")
          .appendTo (this .navigation)
          .on ("click", () => this .on_zoom_out ());
@@ -94,6 +95,7 @@ module .exports = class AnimationEditor extends Interface
       this .zoomInIcon = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _("Zoom in."))
+         .css ("transform", "scale(1.2)")
          .text ("zoom_in")
          .appendTo (this .navigation)
          .on ("click", () => this .on_zoom_in ());
@@ -101,6 +103,7 @@ module .exports = class AnimationEditor extends Interface
       this .zoomFitIcon = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _("Zoom fit animation in window."))
+         .css ("transform", "scale(1.2)")
          .text ("fit_screen")
          .appendTo (this .navigation)
          .on ("click", () => this .on_zoom_fit ());
@@ -108,6 +111,7 @@ module .exports = class AnimationEditor extends Interface
       this .zoom100Icon = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _("Zoom 1:1."))
+         .css ("transform", "scale(1.2)")
          .text ("1x_mobiledata")
          .appendTo (this .navigation)
          .on ("click", () => this .on_zoom_100 ());
