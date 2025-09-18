@@ -544,8 +544,6 @@ body.light .qtip-tipsy {
 }
 
 .horizontal-toolbar .text {
-  user-select: none;
-  cursor: pointer;
   display: inline-block;
   position: relative;
   top: -2px;
