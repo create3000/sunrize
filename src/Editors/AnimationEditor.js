@@ -109,6 +109,13 @@ module .exports = class AnimationEditor extends Interface
          .appendTo (this .toolbar)
          .on ("change input", () => this .setCurrentFrame (this .getCurrentFrame ()));
 
+      this .loopIcon = $("<span></span>")
+         .addClass ("material-icons")
+         .attr ("title", _("Loop animation."))
+         .text ("loop")
+         .appendTo (this .toolbar)
+         .on ("click", () => this .toggleLoop ());
+
       this .timeElement = $("<span></span>")
          .addClass (["text", "right"])
          .attr ("title", _("Current frame time."))
@@ -236,6 +243,7 @@ module .exports = class AnimationEditor extends Interface
 
       if (this .timeSensor)
       {
+         this .timeSensor ._loop             .removeInterest ("set_loop",     this);
          this .timeSensor ._fraction_changed .removeInterest ("set_fraction", this);
 
          this .timeSensor ._evenLive = false;
@@ -273,12 +281,14 @@ module .exports = class AnimationEditor extends Interface
          if (!this .timeSensor)
             this .nodeList .setNode (null);
 
+         this .timeSensor ._loop             .addInterest ("set_loop",     this);
          this .timeSensor ._isActive         .addInterest ("set_active",   this);
          this .timeSensor ._fraction_changed .addInterest ("set_fraction", this);
 
          this .timeSensor ._evenLive      = true;
          this .timeSensor ._cycleInterval = this .getDuration () / this .getFrameRate ();
 
+         this .set_loop (this .timeSensor ._loop);
          this .set_active (this .timeSensor ._isActive);
 
          // Show Member List
@@ -347,6 +357,7 @@ module .exports = class AnimationEditor extends Interface
          this .toggleAnimationIcon,
          this .lastFrameIcon,
          this .frameInput,
+         this .loopIcon,
          this .timeElement,
       ]
       .flatMap (object => [... object]))
@@ -577,6 +588,11 @@ module .exports = class AnimationEditor extends Interface
       this .timeSensor ._startTime = Date .now () / 1000;
    }
 
+   toggleLoop ()
+   {
+      this .timeSensor ._loop = !this .timeSensor ._loop .getValue ();
+   }
+
    getCurrentFrame ()
    {
       return Math .round (this .frameInput .val ());
@@ -620,6 +636,14 @@ module .exports = class AnimationEditor extends Interface
       const hours = String (time) .padStart (2, "0");
 
       return `${hours}:${minutes}:${seconds}:${frames}`;
+   }
+
+   set_loop (loop)
+   {
+      if (loop .getValue ())
+         this .loopIcon .addClass ("active");
+      else
+         this .loopIcon .removeClass ("active");
    }
 
    set_active (active)
