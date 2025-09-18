@@ -718,7 +718,7 @@ module .exports = class AnimationEditor extends Interface
 
    setScale (scale)
    {
-      this .scale = scale;
+      this .scale = Math .min (scale, this .DEFAULT_SCALE);
 
       this .requestUpdateTracks ();
    }
@@ -844,6 +844,10 @@ module .exports = class AnimationEditor extends Interface
          tint1 = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--tint-color1"),
          tint2 = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--tint-color2");
 
+      const clip = new Path2D ();
+
+      clip .rect (tracksX, 0, tracksWidth, tracksHeight);
+
       for (const [i, { item, top, bottom, height }] of trackOffsets .entries ())
       {
          // Track
@@ -892,6 +896,11 @@ module .exports = class AnimationEditor extends Interface
             context .fillRect (0, top, tracksWidth, height);
          }
 
+         // Frames
+
+         context .save ();
+         context .clip (clip);
+
 			// Draw vertical lines.
 
          context .strokeStyle = item .hasClass ("main") ? indigo : blue;
@@ -909,7 +918,12 @@ module .exports = class AnimationEditor extends Interface
 				context .lineTo (x + 0.5, bottom);
             context .stroke ();
 			}
+
+         context .restore ();
       }
+
+      context .save ();
+      context .clip (clip);
 
       // Draw current frame cursor.
 
@@ -922,6 +936,8 @@ module .exports = class AnimationEditor extends Interface
       context .moveTo (x + 0.5, 0);
       context .lineTo (x + 0.5, tracksHeight);
       context .stroke ();
+
+      context .restore ();
    }
 
    /**
