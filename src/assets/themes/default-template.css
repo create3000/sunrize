@@ -543,6 +543,16 @@ body.light .qtip-tipsy {
   left: -1px;
 }
 
+.horizontal-toolbar .text {
+  user-select: none;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  top: -3px;
+  margin: auto 5px;
+  font-size: var(--font-size);
+}
+
 .horizontal-toolbar .separator {
   display: inline-block;
   margin: auto 10px;
@@ -577,6 +587,7 @@ body.light .qtip-tipsy {
 
 .horizontal-toolbar .material-icons.disabled,
 .horizontal-toolbar .material-symbols-outlined.disabled,
+.horizontal-toolbar .text.disabled,
 .vertical-toolbar .material-icons.disabled,
 .vertical-toolbar .material-symbols-outlined.disabled {
   pointer-events: none;
@@ -585,7 +596,6 @@ body.light .qtip-tipsy {
 
 .horizontal-toolbar .right {
   float: right;
-  margin-right: 3px;
 }
 
 .large-toolbar .material-icons {
@@ -1073,6 +1083,10 @@ body.dark .ui-widget .library-list .component {
 
 .animation-editor-toolbar {
   padding-left: 5px;
+}
+
+.animation-editor-navigation {
+  top: var(--toolbar-width);
 }
 
 .animation-editor .animation-editor-content {

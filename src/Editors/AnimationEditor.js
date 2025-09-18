@@ -74,7 +74,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .timeElement = $("<span></span>")
          .addClass (["text", "right"])
-         .attr ("title", _("Close animation."))
+         .attr ("title", _("Current frame time."))
          .css ("top", "7px")
          .css ("margin-right", "5px")
          .text (this .formatFrames (0, 10))
@@ -91,6 +91,7 @@ module .exports = class AnimationEditor extends Interface
          .addClass ("material-icons")
          .attr ("title", _("Zoom out."))
          .css ("transform", "scale(1.4)")
+         .css ("margin-bottom", "15px")
          .text ("zoom_out")
          .appendTo (this .navigation)
          .on ("click", () => this .zoomOut ());
@@ -99,6 +100,7 @@ module .exports = class AnimationEditor extends Interface
          .addClass ("material-icons")
          .attr ("title", _("Zoom in."))
          .css ("transform", "scale(1.4)")
+         .css ("margin-bottom", "15px")
          .text ("zoom_in")
          .appendTo (this .navigation)
          .on ("click", () => this .zoomIn ());
@@ -107,6 +109,7 @@ module .exports = class AnimationEditor extends Interface
          .addClass ("material-icons")
          .attr ("title", _("Zoom fit animation in window."))
          .css ("transform", "scale(1.4)")
+         .css ("margin-bottom", "15px")
          .text ("fit_screen")
          .appendTo (this .navigation)
          .on ("click", () => this .zoomFit ());
@@ -115,6 +118,7 @@ module .exports = class AnimationEditor extends Interface
          .addClass ("material-icons")
          .attr ("title", _("Zoom 1:1."))
          .css ("transform", "scale(1.4)")
+         .css ("margin-bottom", "15px")
          .text ("1x_mobiledata")
          .appendTo (this .navigation)
          .on ("click", () => this .zoom100 ());
