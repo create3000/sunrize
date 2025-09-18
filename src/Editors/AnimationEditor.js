@@ -46,6 +46,7 @@ module .exports = class AnimationEditor extends Interface
          .on ("mousedown", () => this .on_mousedown ())
          .on ("mouseup", () => this .on_mouseup ())
          .on ("mousemove", () => this .on_mousemove ())
+         .on ("wheel", event => this .on_wheel (event))
          .on ("keydown", event => this .on_keydown (event))
          .appendTo (this .verticalSplitter);
 
@@ -677,6 +678,7 @@ module .exports = class AnimationEditor extends Interface
    DEFAULT_TRANSLATION = 8;          // in pixels
    DEFAULT_SCALE       = 16;         // in pixels
    SCROLL_FACTOR       = 1 + 1 / 16; // something nice
+   WHEEL_SCROLL_FACTOR = 1 + 1 / 30; // something nice
 
    translation = 0;
    scale = 1;
@@ -782,6 +784,13 @@ module .exports = class AnimationEditor extends Interface
          return;
 
       this .setCurrentFrame (this .getFrameFromPointer (this .pointerX));
+   }
+
+   on_wheel (event)
+   {
+      const deltaY = event .originalEvent .deltaY;
+
+      this .zoom (deltaY < 0 ? "out" : "in", this .pointerX, this .WHEEL_SCROLL_FACTOR);
    }
 
    #updateTracksId = undefined;
