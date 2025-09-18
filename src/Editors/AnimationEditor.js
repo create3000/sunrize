@@ -576,12 +576,18 @@ module .exports = class AnimationEditor extends Interface
 
    previousFrame ()
    {
-      this .setCurrentFrame (Math .max (this .getCurrentFrame () - 1, 0));
+      if (this .getCurrentFrame () === 0)
+         this .lastFrame ();
+      else
+         this .setCurrentFrame (Math .max (this .getCurrentFrame () - 1, 0));
    }
 
    nextFrame ()
    {
-      this .setCurrentFrame (Math .min (this .getCurrentFrame () + 1, this .getDuration ()));
+      if (this .getCurrentFrame () === this .getDuration ())
+         this .firstFrame ()
+      else
+         this .setCurrentFrame (Math .min (this .getCurrentFrame () + 1, this .getDuration ()));
    }
 
    toggleAnimation ()
