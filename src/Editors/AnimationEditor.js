@@ -116,6 +116,13 @@ module .exports = class AnimationEditor extends Interface
          .appendTo (this .toolbar)
          .on ("click", () => this .toggleLoop ());
 
+      this .loopIcon = $("<span></span>")
+         .addClass ("material-icons")
+         .attr ("title", _("Edit animation properties."))
+         .text ("access_time")
+         .appendTo (this .toolbar)
+         .on ("click", () => this .showProperties ());
+
       this .timeElement = $("<span></span>")
          .addClass (["text", "right"])
          .attr ("title", _("Current frame time."))
@@ -596,6 +603,11 @@ module .exports = class AnimationEditor extends Interface
 
       if (node ._loop .getValue () && node ._startTime .getValue () >= node ._stopTime .getValue ())
          node ._evenLive = true;
+   }
+
+   showProperties ()
+   {
+
    }
 
    getCurrentFrame ()
