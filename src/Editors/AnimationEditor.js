@@ -745,6 +745,7 @@ module .exports = class AnimationEditor extends Interface
    FRAME_SIZE          = 7;          // in pixels
    DEFAULT_TRANSLATION = 8;          // in pixels
    DEFAULT_SCALE       = 16;         // in pixels
+   MIN_SCALE           = 128;        // in pixels
    SCROLL_FACTOR       = 1 + 1 / 16; // something nice
    WHEEL_SCROLL_FACTOR = 1 + 1 / 30; // something nice
 
@@ -786,7 +787,7 @@ module .exports = class AnimationEditor extends Interface
 
    setScale (scale)
    {
-      this .scale = Math .min (scale, this .DEFAULT_SCALE);
+      this .scale = Math .min (scale, this .MIN_SCALE);
 
       this .requestUpdateTracks ();
    }
