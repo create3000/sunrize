@@ -6,6 +6,7 @@ const
    url          = require ("url"),
    path         = require ("path"),
    fs           = require ("fs"),
+   os           = require ("os"),
    util         = require ("util"),
    Template     = require ("./Template"),
    LocalStorage = require ("node-localstorage") .LocalStorage,
@@ -35,9 +36,40 @@ module .exports = class Application
       if (process .platform === "win32")
          require ("update-electron-app") .updateElectronApp ({ updateInterval: "1 hour" });
 
+      if (process .platform === "win32")
+         this .associateWindowsFileTypes ();
+
       electron .app .commandLine .appendSwitch ("--enable-features", "OverlayScrollbar,ConversionMeasurement,AttributionReportingCrossAppWeb");
 
       return this .app = new Application ();
+   }
+
+   static associateWindowsFileTypes ()
+   {
+      const { spawn } = require ("child_process");
+
+      const
+         reg = fs .readFileSync (path .join (__dirname, "../assets/X3D.reg"), { encoding: "utf-8" }),
+         exe = path .resolve (path .join (os .homedir (), "/AppData/Local/sunrize/Sunrize X3D Editor.exe")),
+         out = reg .replaceAll ("SUNRIZE_EXE", exe .replaceAll ("\\", "\\\\")),
+         tmp = path .join (__dirname, "../assets/X3D.out.reg");
+
+      fs .writeFileSync (tmp, out);
+
+      const ls = spawn ("regedit", ["/s", tmp]);
+
+ls.stdout.on('data', (data) => {
+  console.log(`stdout: ${data}`);
+});
+
+ls.stderr.on('data', (data) => {
+  console.error(`stderr: ${data}`);
+});
+
+      ls .on ("close", (code) =>
+      {
+         fs .unlinkSync (tmp);
+      });
    }
 
    config            = new DataStorage (localStorage, "Sunrize.Application.");

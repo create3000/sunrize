@@ -15,19 +15,19 @@ Windows Registry Editor Version 5.00
 [HKEY_CLASSES_ROOT\Sunrize.X3D]
 @="Sunrize X3D XML File"
 [HKEY_CLASSES_ROOT\Sunrize.X3D\shell\open\command]
-@="\"SUNRIZE_EXE\" \"%1\""
+@="\"C:\\Users\\Holger Seelig\\AppData\\Local\\sunrize\\Sunrize X3D Editor.exe\" \"%1\""
 
 [HKEY_CLASSES_ROOT\Sunrize.X3DV]
 @="Sunrize X3D Classic VRML File"
 [HKEY_CLASSES_ROOT\Sunrize.X3DV\shell\open\command]
-@="\"SUNRIZE_EXE\" \"%1\""
+@="\"C:\\Users\\Holger Seelig\\AppData\\Local\\sunrize\\Sunrize X3D Editor.exe\" \"%1\""
 
 [HKEY_CLASSES_ROOT\Sunrize.X3DJ]
 @="Sunrize X3D JSON File"
 [HKEY_CLASSES_ROOT\Sunrize.X3DJ\shell\open\command]
-@="\"SUNRIZE_EXE\" \"%1\""
+@="\"C:\\Users\\Holger Seelig\\AppData\\Local\\sunrize\\Sunrize X3D Editor.exe\" \"%1\""
 
 [HKEY_CLASSES_ROOT\Sunrize.VRML]
 @="Sunrize VRML File"
 [HKEY_CLASSES_ROOT\Sunrize.VRML\shell\open\command]
-@="\"SUNRIZE_EXE\" \"%1\""
+@="\"C:\\Users\\Holger Seelig\\AppData\\Local\\sunrize\\Sunrize X3D Editor.exe\" \"%1\""
