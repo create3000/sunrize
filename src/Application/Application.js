@@ -928,7 +928,6 @@ module .exports = class Application
       window .on ("unmaximize",        () => this .onunmaximize ());
       window .on ("enter-full-screen", () => this .onenterfullscreen ());
       window .on ("leave-full-screen", () => this .onleavefullscreen ());
-      window .on ("blur",              () => this .onblur ());
       window .on ("close",        (event) => this .onclose (event));
 
       if (this .config .fullscreen)
@@ -1168,11 +1167,6 @@ module .exports = class Application
    {
       this .config .fullscreen = false;
       this .config .maximized  = false;
-   }
-
-   onblur ()
-   {
-      this .mainWindow .webContents .send ("save-if-needed");
    }
 
    onclose (event)

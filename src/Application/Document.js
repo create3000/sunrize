@@ -73,7 +73,6 @@ module .exports = class Document extends Interface
       electron .ipcRenderer .on ("save-file",        (event)           => this .saveFile ());
       electron .ipcRenderer .on ("save-file-as",     (event, filePath) => this .saveFileAs (filePath));
       electron .ipcRenderer .on ("save-copy-as",     (event, filePath) => this .saveCopyAs (filePath));
-      electron .ipcRenderer .on ("save-if-needed",   (event, filePath) => this .saveIfNeeded ());
       electron .ipcRenderer .on ("auto-save",        (event, value)    => this .autoSave = value);
       electron .ipcRenderer .on ("export-as",        (event, filePath) => this .exportAs (filePath));
       electron .ipcRenderer .on ("scene-properties", (event)           => require ("../Editors/SceneProperties") .open ());
@@ -539,12 +538,6 @@ Viewpoint {
       undoManager .undo ();
 
       this .filePath = oldFilePath;
-   }
-
-   saveIfNeeded ()
-   {
-      if (UndoManager .shared .saveNeeded)
-         this .registerAutoSave ();
    }
 
    get autoSave ()
