@@ -554,7 +554,7 @@ module .exports = class AnimationEditor extends Interface
       const
          destinationNode  = route .getDestinationNode (),
          destinationField = route .getDestinationField (),
-         nodeName         = destinationNode .getDisplayName () || "Unnamed",
+         nodeName         = destinationNode .getDisplayName (),
          fieldName        = capitalize (destinationField .replace (/^set_|_changed$/g, ""), true);
 
       return `${nodeName}${fieldName}Interpolator`;
@@ -585,7 +585,30 @@ module .exports = class AnimationEditor extends Interface
 
    getInterpolator (typeName, node, field)
    {
+      if (this .fields .has (field))
+      {
+         return this .fields .get (field);
+      }
+      else
+      {
+         const executionContext = this .animation .getExecutionContext ();
+         const interpolator     = executionContext .createNode (typeName, false);
 
+         interpolator .setup ();
+
+         this .fields .set (field, interpolator);
+         this .interpolators .push (interpolator);
+
+         Editor .appendValueToArray (executionContext, this .animation, this .animation ._children, interpolator);
+         Editor .addRoute (executionContext, this .timeSensor, "fraction_changed", interpolator, "set_fraction");
+         Editor .addRoute (executionContext, interpolator, "value_changed", node, field .getName ());
+
+         const name = this .getInterpolatorName (interpolator);
+
+         Editor .updateNamedNode (executionContext, executionContext .getUniqueName (name), interpolator);
+
+         return interpolator;
+      }
    }
 
    updateInterpolator (interpolator)
