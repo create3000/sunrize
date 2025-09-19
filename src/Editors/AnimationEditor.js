@@ -1106,11 +1106,11 @@ module .exports = class AnimationEditor extends Interface
 		{
          const frame = key [index];
          const x     = Math .floor (left + frame * this .getScale () + this .getTranslation ());
-			const x1    = x - (FRAME_SIZE / 2);
+			const x1    = x - (FRAME_SIZE / 2) + 0.5;
 
 			context .fillStyle = color;
 
-         context .fillRect (x1 + 0.5, bottom - FRAME_SIZE, FRAME_SIZE, FRAME_SIZE);
+         context .fillRect (x1, bottom - FRAME_SIZE, FRAME_SIZE, FRAME_SIZE);
 		}
    }
 
