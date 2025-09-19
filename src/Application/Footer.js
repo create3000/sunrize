@@ -16,11 +16,9 @@ module .exports = class Footer extends Tabs
 
    addTabs ()
    {
-      this .addTextTab ("console",       _("Console"))
-      this .addTextTab ("script-editor", _("Script Editor"))
-
-      if (process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT")
-         this .addTextTab ("animation-editor", _("Animation Editor"))
+      this .addTextTab ("console",          _("Console"))
+      this .addTextTab ("script-editor",    _("Script Editor"))
+      this .addTextTab ("animation-editor", _("Animation Editor"))
 
       this .console = new Console (this .getPanel ("console"))
    }
