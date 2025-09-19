@@ -18,7 +18,7 @@ module .exports = class AnimationEditor extends Interface
 {
    members       = [ ];
    interpolators = [ ];
-   fields        = new Map ();
+   fields        = new Map (); // [field, interpolator]
 
    constructor (element)
    {
