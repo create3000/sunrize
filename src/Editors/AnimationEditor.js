@@ -968,8 +968,6 @@ module .exports = class AnimationEditor extends Interface
    {
       const
          context      = this .tracks [0] .getContext ("2d"),
-         left         = this .getLeft (),
-         width        = this .getWidth (),
          tracksWidth  = this .tracks .width (),
          tracksHeight = this .tracks .height ();
 
@@ -979,9 +977,13 @@ module .exports = class AnimationEditor extends Interface
          return;
 
       const
+         left         = this .getLeft (),
+         width        = this .getWidth (),
+         translation  = this .getTranslation (),
+         scale        = this .getScale (),
          trackOffsets = this .memberList .getTrackOffsets (),
-         firstFrame   = Math .max (0, Math .floor (-this .getTranslation () / this .getScale ())),
-         lastFrame    = Math .min (this .getDuration (), Math .ceil ((width - this .getTranslation ()) / this .getScale ())) + 1;
+         firstFrame   = Math .max (0, Math .floor (-translation / scale)),
+         lastFrame    = Math .min (this .getDuration (), Math .ceil ((width - translation) / scale)) + 1;
 
 		const [frameStep, frameFactor] = this .getFrameParams ();
 
@@ -989,11 +991,9 @@ module .exports = class AnimationEditor extends Interface
          blue   = this .#style .getPropertyValue ("--system-blue"),
          indigo = this .#style .getPropertyValue ("--system-indigo"),
          orange = this .#style .getPropertyValue ("--system-orange"),
-         brown  = this .#style .getPropertyValue ("--system-brown");
-
-      const
-         tint1 = this .#style .getPropertyValue ("--tint-color1"),
-         tint2 = this .#style .getPropertyValue ("--tint-color2");
+         brown  = this .#style .getPropertyValue ("--system-brown"),
+         tint1  = this .#style .getPropertyValue ("--tint-color1"),
+         tint2  = this .#style .getPropertyValue ("--tint-color2");
 
       for (const [i, { item, top, bottom, height }] of trackOffsets .entries ())
       {
@@ -1050,7 +1050,7 @@ module .exports = class AnimationEditor extends Interface
 			{
 				const s = frame % frameFactor; // size (large or small)
             const y = Math .floor (top + height * (s ? 0.75 : 0.5));
-				const x = Math .floor (left + frame * this .getScale () + this .getTranslation ());
+				const x = Math .floor (left + frame * scale + translation);
 
             context .lineWidth = item .is (".main, .node") ? 3 : 1;
 
@@ -1076,7 +1076,7 @@ module .exports = class AnimationEditor extends Interface
          }
          else if (item .hasClass ("field"))
          {
-            this .drawKeyframes (context, item .data ("field"), firstFrame, lastFrame, left, bottom, orange);
+            this .drawKeyframes (context, item .data ("field"), firstFrame, lastFrame, bottom, orange);
          }
 
          context .restore ();
@@ -1088,7 +1088,7 @@ module .exports = class AnimationEditor extends Interface
       context .clip (this .timelineClip);
 
       const frame = this .getCurrentFrame ();
-      const x     = Math .floor (left + frame * this .getScale () + this .getTranslation ());
+      const x     = Math .floor (left + frame * scale + translation);
 
       context .fillStyle = blue;
 
@@ -1099,7 +1099,7 @@ module .exports = class AnimationEditor extends Interface
 
    #defaultIntegers = new X3D .MFInt32 ();
 
-   drawKeyframes (context, field, firstFrame, lastFrame, left, bottom, color)
+   drawKeyframes (context, field, firstFrame, lastFrame, bottom, color)
    {
       const interpolator = this .fields .get (field);
 
@@ -1109,6 +1109,11 @@ module .exports = class AnimationEditor extends Interface
       this .#defaultIntegers .length = 0;
 
       const
+         left        = this .getLeft (),
+         translation = this .getTranslation (),
+         scale       = this .getScale ();
+
+      const
 		   key   = interpolator .getMetaData ("Interpolator/key", this .#defaultIntegers),
 		   first = X3D. Algorithm .lowerBound (key, 0, key .length, firstFrame),
 		   last  = X3D. Algorithm .upperBound (key, 0, key .length, lastFrame);
@@ -1116,7 +1121,7 @@ module .exports = class AnimationEditor extends Interface
       for (let index = first; index < last; ++ index)
 		{
          const frame = key [index];
-         const x     = Math .floor (left + frame * this .getScale () + this .getTranslation ());
+         const x     = Math .floor (left + frame * scale + translation);
 			const x1    = x - (this .FRAME_SIZE / 2) + 0.5;
 
 			context .fillStyle = color;
