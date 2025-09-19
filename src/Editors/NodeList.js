@@ -9,7 +9,7 @@ const
 
 module .exports = class NodeList extends Interface
 {
-   constructor (element, filter = () => true, callback = Function .prototype)
+   constructor (element, { filter = () => true, callback = Function .prototype })
    {
       super ("Sunrize.NodeList.");
 

@@ -122,7 +122,11 @@ module .exports = class ScriptEditor extends Interface
          .appendTo (this .horizontalSplitterTop)
          .renameNodeInput (null);
 
-      this .nodeList = new NodeList (this .nodeListElement, node => node .getTypeName () .match (/^(?:Script|ShaderPart)$/), node => this .setNode (node));
+      this .nodeList = new NodeList (this .nodeListElement,
+      {
+         filter: node => node .getTypeName () .match (/^(?:Script|ShaderPart)$/),
+         callback: node => this .setNode (node),
+      });
 
       this .consoleElement = $("<div></div>")
          .attr ("id", "script-editor-console")

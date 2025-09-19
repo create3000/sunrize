@@ -14,7 +14,7 @@ module .exports = class AnimationMembersList extends Interface
    #removeCallback;
    #closeCallback;
 
-   constructor (element, removeCallback, closeCallback)
+   constructor (element, { removeCallback, closeCallback })
    {
       super ("Sunrize.AnimationMembersList.");
 
