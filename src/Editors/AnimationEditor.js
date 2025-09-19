@@ -295,8 +295,7 @@ module .exports = class AnimationEditor extends Interface
       {
          // TimeSensor
 
-         this .executionContext = this .animation .getExecutionContext ();
-         this .timeSensor       = this .animation ._children .find (node => node .getValue () .getType () .includes (X3D .X3DConstants .TimeSensor)) .getValue ();
+         this .timeSensor = this .animation ._children .find (node => node .getValue () .getType () .includes (X3D .X3DConstants .TimeSensor)) .getValue ();
 
          if (!this .timeSensor)
             return this .nodeList .setNode (null);
