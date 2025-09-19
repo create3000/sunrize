@@ -1099,6 +1099,7 @@ body.dark .ui-widget .library-list .component {
 }
 
 .animation-editor .vertical-splitter-right {
+  user-select: none;
   border-left: 1px solid var(--border-color);
 }
 
