@@ -3,18 +3,35 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\Software\Classes\.x3d]
 @="Sunrize.X3D"
 
+[HKEY_CURRENT_USER\Software\Classes\.x3dz]
+@="Sunrize.X3DZ"
+
 [HKEY_CURRENT_USER\Software\Classes\.x3dv]
 @="Sunrize.X3DV"
+
+[HKEY_CURRENT_USER\Software\Classes\.x3dvz]
+@="Sunrize.X3DVZ"
 
 [HKEY_CURRENT_USER\Software\Classes\.x3dj]
 @="Sunrize.X3DJ"
 
+[HKEY_CURRENT_USER\Software\Classes\.x3djz]
+@="Sunrize.X3DJZ"
+
 [HKEY_CURRENT_USER\Software\Classes\.wrl]
 @="Sunrize.VRML"
+
+[HKEY_CURRENT_USER\Software\Classes\.wrz]
+@="Sunrize.WRZ"
 
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.X3D]
 @="Sunrize X3D XML File"
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.X3D\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.X3DZ]
+@="Sunrize X3D XML File"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.X3DZ\shell\open\command]
 @="\"SUNRIZE_EXE\" \"%1\""
 
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.X3DV]
@@ -22,12 +39,27 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.X3DV\shell\open\command]
 @="\"SUNRIZE_EXE\" \"%1\""
 
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.X3DVZ]
+@="Sunrize X3D Classic VRML File"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.X3DVZ\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
+
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.X3DJ]
 @="Sunrize X3D JSON File"
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.X3DJ\shell\open\command]
 @="\"SUNRIZE_EXE\" \"%1\""
 
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.X3DJZ]
+@="Sunrize X3D JSON File"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.X3DJZ\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
+
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.VRML]
 @="Sunrize VRML File"
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.VRML\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.WRZ]
+@="Sunrize VRML File"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.WRZ\shell\open\command]
 @="\"SUNRIZE_EXE\" \"%1\""
