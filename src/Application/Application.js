@@ -52,8 +52,11 @@ module .exports = class Application
          reg = fs .readFileSync (path .join (__dirname, "../assets/X3D.reg"), { encoding: "utf-8" }),
          exe = path .resolve (path .join (os .homedir (), "/AppData/Local/sunrize/Sunrize X3D Editor.exe")),
          ico = path .join (path .dirname (exe), `app-${electron .app .getVersion ()}/resources/app/src/assets/images/icon.ico`),
-         out = reg .replaceAll ("SUNRIZE_EXE", exe .replaceAll ("\\", "\\\\")) .replaceAll ("SUNRIZE_ICO", ico .replaceAll ("\\", "\\\\")),
          tmp = path .join (__dirname, "../assets/X3D-out.reg");
+
+      const out = reg
+         .replaceAll ("SUNRIZE_EXE", exe .replaceAll ("\\", "\\\\"))
+         .replaceAll ("SUNRIZE_ICO", ico .replaceAll ("\\", "\\\\"));
 
       fs .writeFileSync (tmp, out);
 
