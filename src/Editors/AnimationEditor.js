@@ -211,6 +211,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .memberList = new MemberList (this .membersListElement,
       {
+         fields: this .fields,
          removeCallback: nodes => this .removeMembers (nodes),
          closeCallback: () => this .closeAnimation (),
       });

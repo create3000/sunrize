@@ -11,16 +11,18 @@ module .exports = class AnimationMembersList extends Interface
    #nodeList;
    #list;
    #nodes;
+   #fields;
    #removeCallback;
    #closeCallback;
 
-   constructor (element, { removeCallback, closeCallback })
+   constructor (element, { fields, removeCallback, closeCallback })
    {
       super ("Sunrize.AnimationMembersList.");
 
       this .#nodeList       = element;
       this .#list           = $("<ul></ul>") .appendTo (this .#nodeList);
       this .#nodes          = [ ];
+      this .#fields         = fields;
       this .#removeCallback = removeCallback;
       this .#closeCallback  = closeCallback;
 
@@ -116,7 +118,7 @@ module .exports = class AnimationMembersList extends Interface
          const
             typeNameElement = $("<span></span>") .addClass ("type-name") .text (node .getTypeName ()),
             nameElement     = $("<span></span>") .addClass ("name") .text (this .getName (node)),
-            fieldList       = $("<ul></ul>");
+            fieldList       = $("<ul></ul>") .data ("expanded", false);
 
          const listItem = $("<li></li>")
             .attr ("node-id", node .getId ())
@@ -124,9 +126,10 @@ module .exports = class AnimationMembersList extends Interface
 
          const expandIcon = $("<span></span>")
             .addClass (["material-icons-outlined", "button"])
+            .addClass (fieldList .data ("expanded") ? "on" : "off")
             .attr ("title", _("Toggle expand node."))
             .text ("expand_circle_down")
-            .on ("click", () => this .toggleExpand (node));
+            .on ("click", () => this .toggleExpand (expandIcon, fieldList, node));
 
          const removeIcon = $("<span></span>")
             .addClass (["material-icons-outlined", "button"])
@@ -177,10 +180,16 @@ module .exports = class AnimationMembersList extends Interface
 
    createFieldElements (fieldList, node)
    {
+      const expanded = fieldList .data ("expanded")
+         || node .getFields () .every (field => !this .#fields .has (field));
+
       let i = 0;
 
       for (const field of node .getFields ())
       {
+         if (!expanded && !this .#fields .has (field))
+            continue;
+
          if (!field .isInput ())
             continue;
 
@@ -222,6 +231,19 @@ module .exports = class AnimationMembersList extends Interface
             .on ("mouseenter", () => item .addClass ("hover"))
             .on ("mouseleave", () => item .removeClass ("hover"));
       }
+   }
+
+   toggleExpand (expandIcon, fieldList, node)
+   {
+      fieldList
+         .data ("expanded", !fieldList .data ("expanded"))
+         .empty ();
+
+      expandIcon
+         .removeClass (["on", "off"])
+         .addClass (fieldList .data ("expanded") ? "on" : "off");
+
+      this .createFieldElements (fieldList, node);
    }
 
    removeNodes (nodes)
