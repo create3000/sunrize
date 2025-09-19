@@ -38,9 +38,9 @@ module .exports = class AnimationEditor extends Interface
          .appendTo (this .verticalSplitter)
          .on ("mouseleave", () => this .requestDrawTracks ());
 
-      this .verticalSplitterRight = $("<div></div>")
+      this .timelineElement = $("<div></div>")
          .attr ("tabindex", 0)
-         .addClass ("vertical-splitter-right")
+         .addClass (["timeline", "vertical-splitter-right"])
          .css ("width", "70%")
          .on ("mouseleave", () => this .clearPointer ())
          .on ("mousedown mousemove wheel", event => this .updatePointer (event))
@@ -205,7 +205,7 @@ module .exports = class AnimationEditor extends Interface
          .prependTo (this .animationEditor);
 
       this .tracksResizer = new ResizeObserver (() => this .resizeTracks ());
-      this .tracksResizer .observe (this .verticalSplitterRight [0]);
+      this .tracksResizer .observe (this .timelineElement [0]);
 
       // Lists
 
@@ -881,7 +881,7 @@ module .exports = class AnimationEditor extends Interface
     */
    getWidth ()
    {
-      return Math .floor (this .verticalSplitterRight .width () - this .TIMELINE_PADDING * 2);
+      return Math .floor (this .timelineElement .width () - this .TIMELINE_PADDING * 2);
    }
 
    // Update Tracks
