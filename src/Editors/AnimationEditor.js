@@ -564,7 +564,38 @@ module .exports = class AnimationEditor extends Interface
 
    addKeyframe (node, field)
    {
-      console .log (node .getTypeName (), field .getName ());
+      const frame = this .getCurrentFrame ();
+
+      Editor .undoManager .beginUndo (_("Add Keyframe"));
+
+      switch (field .getType ())
+      {
+         case X3D .X3DConstants .SFColor:
+         {
+            const interpolator = this .getInterpolator ("ColorInterpolator", node, field);
+
+            this .addKeyframeToInterpolator (interpolator, field, frame);
+            this .updateInterpolator (interpolator);
+            break;
+         }
+      }
+
+      Editor .undoManager .endUndo ();
+   }
+
+   getInterpolator (typeName, node, field)
+   {
+
+   }
+
+   updateInterpolator (interpolator)
+   {
+
+   }
+
+   addKeyframeToInterpolator (interpolator, field, frame)
+   {
+
    }
 
    // Player
