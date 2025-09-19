@@ -680,28 +680,13 @@ module .exports = class AnimationEditor extends Interface
 
    on_keydown (event)
    {
-      // console .log (event .key);
+      console .log (event .key);
 
       switch (event .key)
       {
-         case "-":
+         case " ":
          {
-            this .zoomOut ();
-            break;
-         }
-         case "+":
-         {
-            this .zoomIn ();
-            break;
-         }
-         case "0":
-         {
-            this .zoomFit ();
-            break;
-         }
-         case "1":
-         {
-            this .zoom100 ();
+            this .toggleAnimation ();
             break;
          }
          case "ArrowLeft":
@@ -722,6 +707,26 @@ module .exports = class AnimationEditor extends Interface
          case "ArrowUp":
          {
             this .lastFrame ();
+            break;
+         }
+         case "-":
+         {
+            this .zoomOut ();
+            break;
+         }
+         case "+":
+         {
+            this .zoomIn ();
+            break;
+         }
+         case "0":
+         {
+            this .zoomFit ();
+            break;
+         }
+         case "1":
+         {
+            this .zoom100 ();
             break;
          }
       }
