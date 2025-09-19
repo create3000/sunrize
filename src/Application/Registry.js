@@ -2,7 +2,6 @@ const
    electron      = require ("electron"),
    path          = require ("path"),
    fs            = require ("fs"),
-   os            = require ("os"),
    child_process = require ("child_process");
 
 module .exports = class Registry
