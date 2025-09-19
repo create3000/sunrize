@@ -122,6 +122,12 @@ module .exports = class AnimationMembersList extends Interface
             .attr ("node-id", node .getId ())
             .appendTo (this .#list);
 
+         const expandIcon = $("<span></span>")
+            .addClass (["material-icons-outlined", "button"])
+            .attr ("title", _("Toggle expand node."))
+            .text ("expand_circle_down")
+            .on ("click", () => this .toggleExpand (node));
+
          const removeIcon = $("<span></span>")
             .addClass (["material-icons-outlined", "button"])
             .attr ("title", _("Remove member from animation."))
@@ -136,6 +142,8 @@ module .exports = class AnimationMembersList extends Interface
             .append (typeNameElement)
             .append (document .createTextNode (" "))
             .append (nameElement)
+            .append (document .createTextNode (" "))
+            .append (expandIcon)
             .append (document .createTextNode (" "))
             .append (removeIcon)
             .appendTo (listItem);
