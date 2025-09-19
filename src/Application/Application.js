@@ -55,8 +55,7 @@ module .exports = class Application
          tmp = path .join (__dirname, "../assets/X3D-out.reg");
 
       const out = reg
-         .replaceAll ("SUNRIZE_EXE", exe .replaceAll ("\\", "\\\\"))
-         .replaceAll ("SUNRIZE_ICO", ico .replaceAll ("\\", "\\\\"));
+         .replaceAll ("SUNRIZE_EXE", exe .replaceAll ("\\", "\\\\"));
 
       fs .writeFileSync (tmp, out);
 
