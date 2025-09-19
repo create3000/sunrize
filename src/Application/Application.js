@@ -51,20 +51,23 @@ module .exports = class Application
       const
          reg = fs .readFileSync (path .join (__dirname, "../assets/X3D.reg"), { encoding: "utf-8" }),
          exe = path .resolve (path .join (os .homedir (), "/AppData/Local/sunrize/Sunrize X3D Editor.exe")),
-         out = reg .replaceAll ("SUNRIZE_EXE", exe .replaceAll ("\\", "\\\\")),
-         tmp = path .join (__dirname, "../assets/X3D.out.reg");
+         ico = path .join (path .dirname (exe), `app-${electron .app .getVersion ()}/resources/app/src/assets/images/icon.ico`),
+         out = reg .replaceAll ("SUNRIZE_EXE", exe .replaceAll ("\\", "\\\\")) .replaceAll ("SUNRIZE_ICO", ico .replaceAll ("\\", "\\\\")),
+         tmp = path .join (__dirname, "../assets/X3D-out.reg");
 
       fs .writeFileSync (tmp, out);
 
-      const ls = spawn ("regedit", ["/s", tmp]);
+      const ls = spawn ("reg", ["import", tmp]);
 
-ls.stdout.on('data', (data) => {
-  console.log(`stdout: ${data}`);
-});
+      ls .stdout .on ('data', (data) =>
+      {
+         // console .log (`stdout: ${data}`);
+      });
 
-ls.stderr.on('data', (data) => {
-  console.error(`stderr: ${data}`);
-});
+      ls .stderr .on ('data', (data) =>
+      {
+         // console .error (`stderr: ${data}`);
+      });
 
       ls .on ("close", (code) =>
       {
