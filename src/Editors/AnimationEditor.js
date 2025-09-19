@@ -260,6 +260,7 @@ module .exports = class AnimationEditor extends Interface
       if (this .timeSensor)
       {
          this .timeSensor ._loop             .removeInterest ("set_loop",     this);
+         this .timeSensor ._isActive         .removeInterest ("set_active",   this);
          this .timeSensor ._fraction_changed .removeInterest ("set_fraction", this);
 
          this .timeSensor ._evenLive = false;
