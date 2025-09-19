@@ -27,55 +27,55 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.x3d]
 @="Sunrize X3D XML File"
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.x3d\DefaultIcon]
-@="\"SUNRIZE_EXE\",0"
+@="\"SUNRIZE_EXE,0\""
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.x3d\shell\open\command]
 @="\"SUNRIZE_EXE\" \"%1\""
 
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dz]
 @="Sunrize X3D XML File"
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dz\DefaultIcon]
-@="\"SUNRIZE_EXE\",0"
+@="\"SUNRIZE_EXE,0\""
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dz\shell\open\command]
 @="\"SUNRIZE_EXE\" \"%1\""
 
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dv]
 @="Sunrize X3D Classic VRML File"
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dv\DefaultIcon]
-@="\"SUNRIZE_EXE\",0"
+@="\"SUNRIZE_EXE,0\""
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dv\shell\open\command]
 @="\"SUNRIZE_EXE\" \"%1\""
 
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dvz]
 @="Sunrize X3D Classic VRML File"
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dvz\DefaultIcon]
-@="\"SUNRIZE_EXE\",0"
+@="\"SUNRIZE_EXE,0\""
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dvz\shell\open\command]
 @="\"SUNRIZE_EXE\" \"%1\""
 
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dj]
 @="Sunrize X3D JSON File"
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dj\DefaultIcon]
-@="\"SUNRIZE_EXE\",0"
+@="\"SUNRIZE_EXE,0\""
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dj\shell\open\command]
 @="\"SUNRIZE_EXE\" \"%1\""
 
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.x3djz]
 @="Sunrize X3D JSON File"
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.x3djz\DefaultIcon]
-@="\"SUNRIZE_EXE\",0"
+@="\"SUNRIZE_EXE,0\""
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.x3djz\shell\open\command]
 @="\"SUNRIZE_EXE\" \"%1\""
 
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.wrl]
 @="Sunrize VRML File"
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.wrl\DefaultIcon]
-@="\"SUNRIZE_EXE\",0"
+@="\"SUNRIZE_EXE,0\""
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.wrl\shell\open\command]
 @="\"SUNRIZE_EXE\" \"%1\""
 
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.wrz]
 @="Sunrize VRML File"
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.wrz\DefaultIcon]
-@="\"SUNRIZE_EXE\",0"
+@="\"SUNRIZE_EXE,0\""
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.wrz\shell\open\command]
 @="\"SUNRIZE_EXE\" \"%1\""
