@@ -65,6 +65,7 @@ module .exports = new class Tabs
 
       this .forwardToAllTabs ("browser-update");
       this .forwardToAllTabs ("auto-save");
+      this .forwardToAllTabs ("save-if-needed");
       this .forwardToActiveTab ("export-as");
 
       this .forwardToActiveTab ("save-file");
