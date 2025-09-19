@@ -421,6 +421,7 @@ module .exports = class AnimationEditor extends Interface
          timeSensor = executionContext .createNode ("TimeSensor", false);
 
       animation ._children .push (timeSensor);
+      timeSensor ._description = "NewAnimation";
 
       timeSensor .setup ();
       animation  .setup ();
@@ -468,6 +469,7 @@ module .exports = class AnimationEditor extends Interface
 
       Editor .updateNamedNode (executionContext, executionContext .getUniqueName (`${name}Animation`), animation);
       Editor .updateNamedNode (executionContext, executionContext .getUniqueName (`${name}AnimationTimer`), timeSensor);
+      Editor .setFieldValue (executionContext, timeSensor, timeSensor ._description, `${name}Animation`);
 
       for (const interpolator of this .interpolators)
       {
