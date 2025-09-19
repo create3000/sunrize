@@ -16,19 +16,23 @@ module .exports = class AnimationMembersList extends Interface
    #fields;
    #removeCallback;
    #closeCallback;
-   #addKeyframeCallback;
+   #addMainKeyframeCallback;
+   #addNodeKeyframeCallback;
+   #addFieldKeyframeCallback;
 
-   constructor (element, { fields, removeCallback, closeCallback, addKeyframeCallback })
+   constructor (element, { fields, removeCallback, closeCallback, addMainKeyframeCallback, addNodeKeyframeCallback, addFieldKeyframeCallback })
    {
       super ("Sunrize.AnimationMembersList.");
 
-      this .#nodeList            = element;
-      this .#list                = $("<ul></ul>") .appendTo (this .#nodeList);
-      this .#nodes               = [ ];
-      this .#fields              = fields;
-      this .#removeCallback      = removeCallback;
-      this .#closeCallback       = closeCallback;
-      this .#addKeyframeCallback = addKeyframeCallback;
+      this .#nodeList                 = element;
+      this .#list                     = $("<ul></ul>") .appendTo (this .#nodeList);
+      this .#nodes                    = [ ];
+      this .#fields                   = fields;
+      this .#removeCallback           = removeCallback;
+      this .#closeCallback            = closeCallback;
+      this .#addMainKeyframeCallback  = addMainKeyframeCallback;
+      this .#addNodeKeyframeCallback  = addNodeKeyframeCallback;
+      this .#addFieldKeyframeCallback = addFieldKeyframeCallback;
 
       this .addMain ();
       this .setup ();
@@ -216,18 +220,18 @@ module .exports = class AnimationMembersList extends Interface
             .attr ("title", field .getTypeName ())
             .addClass ("icon")
             .attr ("src", `../images/OutlineEditor/Fields/${field .getTypeName()}.svg`)
-            .on ("dblclick", () => this .addFieldKeyframe (node, field));
+            .on ("dblclick", () => this .addFieldKeyframeCallback (node, field));
 
          const nameElement = $("<span></span>")
             .addClass ("field-name")
             .text (field .getName ())
-            .on ("dblclick", () => this .addFieldKeyframe (node, field));
+            .on ("dblclick", () => this .addFieldKeyframeCallback (node, field));
 
          const applyIcon = $("<span></span>")
             .addClass (["material-icons", "button", "off"])
             .attr ("title", _("Add keyframe."))
             .text ("check_box")
-            .on ("click", () => this .addFieldKeyframe (node, field));
+            .on ("click", () => this .addFieldKeyframeCallback (node, field));
 
          const item = $("<div></div>")
             .data ("i", i ++ )
@@ -326,10 +330,5 @@ module .exports = class AnimationMembersList extends Interface
       }
 
       return offsets;
-   }
-
-   addFieldKeyframe (node, field)
-   {
-      this .#addKeyframeCallback (node, field);
    }
 };

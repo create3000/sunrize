@@ -214,7 +214,7 @@ module .exports = class AnimationEditor extends Interface
          fields: this .fields,
          removeCallback: nodes => this .removeMembers (nodes),
          closeCallback: () => this .closeAnimation (),
-         addKeyframeCallback: (node, field) => this .addKeyframe (node, field),
+         addFieldKeyframeCallback: (node, field) => this .addFieldKeyframe (node, field),
       });
 
       this .nodeList = new NodeList (this .nodeListElement,
@@ -562,7 +562,7 @@ module .exports = class AnimationEditor extends Interface
 
    // Interpolators
 
-   addKeyframe (node, field)
+   addFieldKeyframe (node, field)
    {
       const frame = this .getCurrentFrame ();
 
