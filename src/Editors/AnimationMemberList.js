@@ -127,7 +127,7 @@ module .exports = class AnimationMembersList extends Interface
          const expandIcon = $("<span></span>")
             .addClass (["material-icons-outlined", "button"])
             .addClass (fieldList .data ("expanded") ? "on" : "off")
-            .attr ("title", _("Toggle expand node."))
+            .attr ("title", _("Show all fields."))
             .text ("expand_circle_down")
             .on ("click", () => this .toggleExpand (expandIcon, fieldList, node));
 
