@@ -586,29 +586,25 @@ module .exports = class AnimationEditor extends Interface
    getInterpolator (typeName, node, field)
    {
       if (this .fields .has (field))
-      {
          return this .fields .get (field);
-      }
-      else
-      {
-         const executionContext = this .animation .getExecutionContext ();
-         const interpolator     = executionContext .createNode (typeName, false);
 
-         interpolator .setup ();
+      const executionContext = this .animation .getExecutionContext ();
+      const interpolator     = executionContext .createNode (typeName, false);
 
-         this .fields .set (field, interpolator);
-         this .interpolators .push (interpolator);
+      interpolator .setup ();
 
-         Editor .appendValueToArray (executionContext, this .animation, this .animation ._children, interpolator);
-         Editor .addRoute (executionContext, this .timeSensor, "fraction_changed", interpolator, "set_fraction");
-         Editor .addRoute (executionContext, interpolator, "value_changed", node, field .getName ());
+      this .fields .set (field, interpolator);
+      this .interpolators .push (interpolator);
 
-         const name = this .getInterpolatorName (interpolator);
+      Editor .appendValueToArray (executionContext, this .animation, this .animation ._children, interpolator);
+      Editor .addRoute (executionContext, this .timeSensor, "fraction_changed", interpolator, "set_fraction");
+      Editor .addRoute (executionContext, interpolator, "value_changed", node, field .getName ());
 
-         Editor .updateNamedNode (executionContext, executionContext .getUniqueName (name), interpolator);
+      const name = this .getInterpolatorName (interpolator);
 
-         return interpolator;
-      }
+      Editor .updateNamedNode (executionContext, executionContext .getUniqueName (name), interpolator);
+
+      return interpolator;
    }
 
    updateInterpolator (interpolator)
