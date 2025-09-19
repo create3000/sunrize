@@ -16,17 +16,19 @@ module .exports = class AnimationMembersList extends Interface
    #fields;
    #removeCallback;
    #closeCallback;
+   #addKeyframeCallback;
 
-   constructor (element, { fields, removeCallback, closeCallback })
+   constructor (element, { fields, removeCallback, closeCallback, addKeyframeCallback })
    {
       super ("Sunrize.AnimationMembersList.");
 
-      this .#nodeList       = element;
-      this .#list           = $("<ul></ul>") .appendTo (this .#nodeList);
-      this .#nodes          = [ ];
-      this .#fields         = fields;
-      this .#removeCallback = removeCallback;
-      this .#closeCallback  = closeCallback;
+      this .#nodeList            = element;
+      this .#list                = $("<ul></ul>") .appendTo (this .#nodeList);
+      this .#nodes               = [ ];
+      this .#fields              = fields;
+      this .#removeCallback      = removeCallback;
+      this .#closeCallback       = closeCallback;
+      this .#addKeyframeCallback = addKeyframeCallback;
 
       this .addMain ();
       this .setup ();
@@ -328,6 +330,6 @@ module .exports = class AnimationMembersList extends Interface
 
    addKeyframe (node, field)
    {
-
+      this .#addKeyframeCallback (node, field);
    }
 };

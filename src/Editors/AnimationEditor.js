@@ -214,6 +214,7 @@ module .exports = class AnimationEditor extends Interface
          fields: this .fields,
          removeCallback: nodes => this .removeMembers (nodes),
          closeCallback: () => this .closeAnimation (),
+         addKeyframeCallback: (node, field) => this .addKeyframe (node, field),
       });
 
       this .nodeList = new NodeList (this .nodeListElement,
@@ -557,6 +558,13 @@ module .exports = class AnimationEditor extends Interface
          fieldName        = capitalize (destinationField .replace (/^set_|_changed$/g, ""), true);
 
       return `${nodeName}${fieldName}Interpolator`;
+   }
+
+   // Interpolators
+
+   addKeyframe (node, field)
+   {
+      console .log (node .getTypeName (), field .getName ());
    }
 
    // Player
