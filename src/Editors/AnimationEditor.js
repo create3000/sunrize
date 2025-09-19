@@ -16,8 +16,9 @@ require ("../Bits/Validate");
 
 module .exports = class AnimationEditor extends Interface
 {
-   members       = new Map ();
+   members       = [ ];
    interpolators = [ ];
+   fields        = new Map ();
 
    constructor (element)
    {
@@ -29,13 +30,13 @@ module .exports = class AnimationEditor extends Interface
          .attr ("id", "animation-editor-content")
          .addClass (["animation-editor-content", "vertical-splitter"])
          .appendTo (this .animationEditor)
-         .on ("mouseleave", () => this .requestUpdateTracks ());
+         .on ("mouseleave", () => this .requestDrawTracks ());
 
       this .verticalSplitterLeft = $("<div></div>")
          .addClass ("vertical-splitter-left")
          .css ("width", "30%")
          .appendTo (this .verticalSplitter)
-         .on ("mouseleave", () => this .requestUpdateTracks ());
+         .on ("mouseleave", () => this .requestDrawTracks ());
 
       this .verticalSplitterRight = $("<div></div>")
          .attr ("tabindex", 0)
@@ -183,7 +184,7 @@ module .exports = class AnimationEditor extends Interface
       this .membersListElement = $("<div></div>")
          .addClass ("node-list")
          .appendTo (this .verticalSplitterLeft)
-         .on ("scroll mousemove", () => this .requestUpdateTracks ());
+         .on ("scroll mousemove", () => this .requestDrawTracks ());
 
       this .animationName = $("<input></input>")
          .addClass ("node-name")
@@ -227,7 +228,7 @@ module .exports = class AnimationEditor extends Interface
 
    colorScheme (shouldUseDarkColors)
    {
-      this .requestUpdateTracks ();
+      this .requestDrawTracks ();
    }
 
    isAnimation (node)
@@ -331,7 +332,7 @@ module .exports = class AnimationEditor extends Interface
 
          // Show Animations List
 
-         this .members .clear ();
+         this .members .length = 0;
          this .memberList .clearNodes ();
          this .membersListElement .hide ();
          this .nodeListElement .show ();
@@ -348,12 +349,13 @@ module .exports = class AnimationEditor extends Interface
          // Interpolators
 
          this .interpolators .length = 0;
+         this .fields .clear ();
       }
 
       // Timeline
 
       this .setCurrentFrame (0);
-      this .requestUpdateTracks ();
+      this .requestDrawTracks ();
    }
 
    enableIcons (enabled)
@@ -485,12 +487,12 @@ module .exports = class AnimationEditor extends Interface
 
       this .memberList .addNodes (selection .nodes);
 
-      this .requestUpdateTracks ();
+      this .requestDrawTracks ();
    }
 
    removeMembers (nodes)
    {
-      this .requestUpdateTracks ();
+      this .requestDrawTracks ();
    }
 
    #interpolatorTypes = new Set ([
@@ -508,10 +510,11 @@ module .exports = class AnimationEditor extends Interface
    set_interpolators ()
    {
       this .memberList .saveScrollbars ();
-      this .memberList .removeNodes (Array .from (this .members .values ()));
+      this .memberList .removeNodes (this .members);
 
-      this .members .clear ();
+      this .members .length = 0;
       this .interpolators .length = 0;
+      this .fields .clear ();
 
       for (const node of this .animation ._children)
       {
@@ -528,11 +531,12 @@ module .exports = class AnimationEditor extends Interface
                node  = route .getDestinationNode (),
                field = node .getField (route .getDestinationField ());
 
-            this .members .set (field, node);
+            this .members .push (node);
+            this .fields .set (field, interpolator);
          }
       }
 
-      this .memberList .addNodes (Array .from (this .members .values ()));
+      this .memberList .addNodes (this .members);
       this .memberList .restoreScrollbars ();
    }
 
@@ -661,7 +665,7 @@ module .exports = class AnimationEditor extends Interface
       this .frameInput .val (frame);
       this .timeElement .text (this .formatFrames (frame, this .getFrameRate ()));
 
-      this .requestUpdateTracks ();
+      this .requestDrawTracks ();
    }
 
    // Navigation Function Handlers
@@ -717,12 +721,12 @@ module .exports = class AnimationEditor extends Interface
 
    zoomOut ()
    {
-      this .zoom ("out", this .getTimelineWidth () / 2, this .SCROLL_FACTOR);
+      this .zoom ("out", this .getWidth () / 2, this .SCROLL_FACTOR);
    }
 
    zoomIn ()
    {
-      this .zoom ("in", this .getTimelineWidth () / 2, this .SCROLL_FACTOR);
+      this .zoom ("in", this .getWidth () / 2, this .SCROLL_FACTOR);
    }
 
    zoom (direction, position, factor)
@@ -751,7 +755,7 @@ module .exports = class AnimationEditor extends Interface
 
    zoomFit ()
    {
-      const width = this .getTimelineWidth () - 2 * this .DEFAULT_TRANSLATION;
+      const width = this .getWidth () - 2 * this .DEFAULT_TRANSLATION;
 
       this .setScale (width / this .getDuration ());
       this .setTranslation (this .DEFAULT_TRANSLATION);
@@ -772,7 +776,7 @@ module .exports = class AnimationEditor extends Interface
    FRAME_SIZE          = 7;          // in pixels
    DEFAULT_TRANSLATION = 8;          // in pixels
    DEFAULT_SCALE       = 16;         // in pixels
-   MIN_SCALE           = 256;        // in pixels
+   MIN_SCALE           = 128;        // in pixels
    SCROLL_FACTOR       = 1 + 1 / 16; // something nice
    WHEEL_SCROLL_FACTOR = 1 + 1 / 30; // something nice
 
@@ -799,7 +803,7 @@ module .exports = class AnimationEditor extends Interface
       if (this .timeSensor)
          this .timeSensor ._range [0] = fraction;
 
-      this .requestUpdateTracks ();
+      this .requestDrawTracks ();
    }
 
    #defaultInteger = new X3D .SFInt32 ();
@@ -825,7 +829,7 @@ module .exports = class AnimationEditor extends Interface
 
    setTranslation (translation)
    {
-      const width = this .getTimelineWidth ();
+      const width = this .getWidth ();
       const max   = (width - this .DEFAULT_TRANSLATION) - (this .getDuration () * this .getScale ());
 
       translation = Math .max (translation, max);
@@ -833,7 +837,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .translation = translation;
 
-      this .requestUpdateTracks ();
+      this .requestDrawTracks ();
    }
 
    getScale ()
@@ -845,23 +849,23 @@ module .exports = class AnimationEditor extends Interface
    {
       this .scale = Math .min (scale, this .MIN_SCALE);
 
-      this .requestUpdateTracks ();
+      this .requestDrawTracks ();
    }
 
    /**
     *
     * @returns {number} start of timeline area
     */
-   getTimelineX ()
+   getLeft ()
    {
-      return Math .floor (this .tracks .width () - this .getTimelineWidth () - this .TIMELINE_PADDING);
+      return Math .floor (this .tracks .width () - this .getWidth () - this .TIMELINE_PADDING);
    }
 
    /**
     *
     * @returns {number} width of timeline area
     */
-   getTimelineWidth ()
+   getWidth ()
    {
       return Math .floor (this .verticalSplitterRight .width () - this .TIMELINE_PADDING * 2);
    }
@@ -873,15 +877,15 @@ module .exports = class AnimationEditor extends Interface
       this .pointerX = -1;
       this .pointerY = -1;
 
-      this .requestUpdateTracks ();
+      this .requestDrawTracks ();
    }
 
    updatePointer (event)
    {
-      this .pointerX = event .pageX - this .tracks .offset () .left - this .getTimelineX ();
+      this .pointerX = event .pageX - this .tracks .offset () .left - this .getLeft ();
       this .pointerY = event .pageY - this .tracks .offset () .top;
 
-      this .requestUpdateTracks ();
+      this .requestDrawTracks ();
    }
 
    getFrameFromPointer (pointerX)
@@ -925,11 +929,11 @@ module .exports = class AnimationEditor extends Interface
 
    #updateTracksId = undefined;
 
-   requestUpdateTracks ()
+   requestDrawTracks ()
    {
       clearTimeout (this .#updateTracksId);
 
-      this .#updateTracksId = setTimeout (() => this .updateTracks ());
+      this .#updateTracksId = setTimeout (() => this .drawTracks ());
    }
 
    resizeTracks ()
@@ -943,19 +947,19 @@ module .exports = class AnimationEditor extends Interface
          .prop ("height", tracksHeight);
 
       this .timelineClip = new Path2D ();
-      this .timelineClip .rect (this .getTimelineX (), 0, this .getTimelineWidth (), tracksHeight);
+      this .timelineClip .rect (this .getLeft (), 0, this .getWidth (), tracksHeight);
 
-      this .updateTracks ();
+      this .drawTracks ();
    }
 
-   updateTracks ()
+   drawTracks ()
    {
       const
-         context       = this .tracks [0] .getContext ("2d"),
-         timelineX     = this .getTimelineX (),
-         timelineWidth = this .getTimelineWidth (),
-         tracksWidth   = this .tracks .width (),
-         tracksHeight  = this .tracks .height ();
+         context      = this .tracks [0] .getContext ("2d"),
+         left         = this .getLeft (),
+         width        = this .getWidth (),
+         tracksWidth  = this .tracks .width (),
+         tracksHeight = this .tracks .height ();
 
       context .clearRect (0, 0, tracksWidth, tracksHeight);
 
@@ -965,7 +969,7 @@ module .exports = class AnimationEditor extends Interface
       const
          trackOffsets = this .memberList .getTrackOffsets (),
          firstFrame   = Math .max (0, Math .floor (-this .getTranslation () / this .getScale ())),
-         lastFrame    = Math .min (this .getDuration (), Math .ceil ((timelineWidth - this .getTranslation ()) / this .getScale ())) + 1;
+         lastFrame    = Math .min (this .getDuration (), Math .ceil ((width - this .getTranslation ()) / this .getScale ())) + 1;
 
 		const [frameStep, frameFactor] = this .getFrameParams ();
 
@@ -1033,7 +1037,7 @@ module .exports = class AnimationEditor extends Interface
 			{
 				const s = frame % frameFactor; // size (large or small)
             const y = Math .floor (top + height * (s ? 0.75 : 0.5));
-				const x = Math .floor (timelineX + frame * this .getScale () + this .getTranslation ());
+				const x = Math .floor (left + frame * this .getScale () + this .getTranslation ());
 
             context .lineWidth = item .is (".main, .node") ? 3 : 1;
 
@@ -1042,6 +1046,25 @@ module .exports = class AnimationEditor extends Interface
 				context .lineTo (x + 0.5, bottom);
             context .stroke ();
 			}
+
+         // Draw keyframes.
+
+         if (item .hasClass ("main"))
+         {
+            for (const field of this .fields .keys ())
+               this .drawKeyframes (context, field, firstFrame, lastFrame, left, bottom, orange);
+         }
+         else if (item .hasClass ("node"))
+         {
+            const node = item .data ("node");
+
+            for (const field of node .getFields ())
+               this .drawKeyframes (context, field, firstFrame, lastFrame, left, bottom, orange);
+         }
+         else if (item .hasClass ("field"))
+         {
+            this .drawKeyframes (context, item .data ("field"), firstFrame, lastFrame, left, bottom, orange);
+         }
 
          context .restore ();
       }
@@ -1052,13 +1075,43 @@ module .exports = class AnimationEditor extends Interface
       context .clip (this .timelineClip);
 
       const frame = this .getCurrentFrame ();
-      const x     = Math .floor (timelineX + frame * this .getScale () + this .getTranslation ());
+      const x     = Math .floor (left + frame * this .getScale () + this .getTranslation ());
 
       context .fillStyle = blue;
 
       context .fillRect (x - 1, 0, 3, tracksHeight);
 
       context .restore ();
+   }
+
+   #defaultKey = new X3D .MFInt32 ();
+
+   drawKeyframes (context, field, firstFrame, lastFrame, left, bottom, color)
+   {
+      const
+         FRAME_SIZE   = 7,
+         interpolator = this .fields .get (field);
+
+      if (!interpolator)
+         return;
+
+      this .#defaultKey .length = 0;
+
+      const
+		   key   = interpolator .getMetaData ("Interpolator/key", this .#defaultKey),
+		   first = X3D. Algorithm .lowerBound (key, 0, key .length, firstFrame),
+		   last  = X3D. Algorithm .upperBound (key, 0, key .length, lastFrame);
+
+      for (let index = first; index < last; ++ index)
+		{
+         const frame = key [index];
+         const x     = Math .floor (left + frame * this .getScale () + this .getTranslation ());
+			const x1    = x - (FRAME_SIZE / 2);
+
+			context .fillStyle = color;
+
+         context .fillRect (x1 + 0.5, bottom - FRAME_SIZE, FRAME_SIZE, FRAME_SIZE);
+		}
    }
 
    /**

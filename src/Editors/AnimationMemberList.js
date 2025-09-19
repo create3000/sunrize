@@ -119,7 +119,6 @@ module .exports = class AnimationMembersList extends Interface
             fieldList       = $("<ul></ul>");
 
          const listItem = $("<li></li>")
-            .attr ("node-id", node .getId ())
             .appendTo (this .#list);
 
          const removeIcon = $("<span></span>")
@@ -131,6 +130,7 @@ module .exports = class AnimationMembersList extends Interface
          const item = $("<div></div>")
             .data ("i", i ++)
             .addClass (["node", "item"])
+            .data ("node", node)
             .append ($("<img></img>") .addClass ("icon") .attr ("src", "../images/OutlineEditor/Node/X3DBaseNode.svg"))
             .append (typeNameElement)
             .append (document .createTextNode (" "))
@@ -179,7 +179,6 @@ module .exports = class AnimationMembersList extends Interface
             continue;
 
          const listItem = $("<li></li>")
-            .attr ("field-id", field .getId ())
             .appendTo (fieldList);
 
          const iconElement = $("<img></img>")
@@ -202,6 +201,8 @@ module .exports = class AnimationMembersList extends Interface
          const item = $("<div></div>")
             .data ("i", i ++ )
             .addClass (["field", "item"])
+            .data ("node", node)
+            .data ("field", field)
             .append (iconElement)
             .append (nameElement)
             .append (document .createTextNode (" "))
