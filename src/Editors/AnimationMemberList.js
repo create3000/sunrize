@@ -84,6 +84,7 @@ module .exports = class AnimationMembersList extends Interface
          .on ("click", () => this .#closeCallback ());
 
       const item = $("<div></div>")
+            .attr ("type", "main")
          .addClass (["main", "item"])
          .append (typeNameElement)
          .append (document .createTextNode (" "))
@@ -148,6 +149,7 @@ module .exports = class AnimationMembersList extends Interface
 
          const item = $("<div></div>")
             .data ("i", i ++)
+            .attr ("type", "node")
             .addClass (["node", "item"])
             .data ("node", node)
             .append ($("<img></img>") .addClass ("icon") .attr ("src", "../images/OutlineEditor/Node/X3DBaseNode.svg"))
@@ -227,6 +229,7 @@ module .exports = class AnimationMembersList extends Interface
 
          const item = $("<div></div>")
             .data ("i", i ++ )
+            .attr ("type", "field")
             .addClass (["field", "item"])
             .data ("node", node)
             .data ("field", field)

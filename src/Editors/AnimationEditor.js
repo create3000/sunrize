@@ -1062,21 +1062,29 @@ module .exports = class AnimationEditor extends Interface
 
          // Draw keyframes.
 
-         if (item .hasClass ("main"))
+         switch (item .attr ("type"))
          {
-            for (const field of this .fields .keys ())
-               this .drawKeyframes (context, field, firstFrame, lastFrame, bottom, brown);
-         }
-         else if (item .hasClass ("node"))
-         {
-            const node = item .data ("node");
+            case "main":
+            {
+               for (const field of this .fields .keys ())
+                  this .drawKeyframes (context, field, firstFrame, lastFrame, bottom, brown);
 
-            for (const field of node .getFields ())
-               this .drawKeyframes (context, field, firstFrame, lastFrame, bottom, brown);
-         }
-         else if (item .hasClass ("field"))
-         {
-            this .drawKeyframes (context, item .data ("field"), firstFrame, lastFrame, bottom, orange);
+               break;
+            }
+            case "node":
+            {
+               const node = item .data ("node");
+
+               for (const field of node .getFields ())
+                  this .drawKeyframes (context, field, firstFrame, lastFrame, bottom, brown);
+
+               break;
+            }
+            case "field":
+            {
+               this .drawKeyframes (context, item .data ("field"), firstFrame, lastFrame, bottom, orange);
+               break;
+            }
          }
 
          context .restore ();
