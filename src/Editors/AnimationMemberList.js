@@ -6,6 +6,8 @@ const
    Interface = require ("../Application/Interface"),
    _         = require ("../Application/GetText");
 
+const _expanded = Symbol ();
+
 module .exports = class AnimationMembersList extends Interface
 {
    #nodeList;
@@ -97,6 +99,13 @@ module .exports = class AnimationMembersList extends Interface
       fieldList .appendTo (listItem);
    }
 
+   setAnimation (animation)
+   {
+      this .animation = animation;
+
+      this .animation [_expanded] ??= Symbol ();
+   }
+
    setAnimationName (name)
    {
       this .animationName .text (name);
@@ -118,7 +127,7 @@ module .exports = class AnimationMembersList extends Interface
          const
             typeNameElement = $("<span></span>") .addClass ("type-name") .text (node .getTypeName ()),
             nameElement     = $("<span></span>") .addClass ("name") .text (this .getName (node)),
-            fieldList       = $("<ul></ul>") .data ("expanded", false);
+            fieldList       = $("<ul></ul>");
 
          const listItem = $("<li></li>")
             .attr ("node-id", node .getId ())
@@ -126,7 +135,7 @@ module .exports = class AnimationMembersList extends Interface
 
          const expandIcon = $("<span></span>")
             .addClass (["material-icons-outlined", "button"])
-            .addClass (fieldList .data ("expanded") ? "on" : "off")
+            .addClass (node .getUserData (this .animation [_expanded]) ? "on" : "off")
             .attr ("title", _("Show all fields."))
             .text ("expand_circle_down")
             .on ("click", () => this .toggleExpand (expandIcon, fieldList, node));
@@ -180,7 +189,7 @@ module .exports = class AnimationMembersList extends Interface
 
    createFieldElements (fieldList, node)
    {
-      const expanded = fieldList .data ("expanded")
+      const expanded = node .getUserData (this .animation [_expanded])
          || node .getFields () .every (field => !this .#fields .has (field));
 
       let i = 0;
@@ -235,13 +244,13 @@ module .exports = class AnimationMembersList extends Interface
 
    toggleExpand (expandIcon, fieldList, node)
    {
-      fieldList
-         .data ("expanded", !fieldList .data ("expanded"))
-         .empty ();
+      node .setUserData (this .animation [_expanded], !node .getUserData (this .animation [_expanded]));
 
       expandIcon
          .removeClass (["on", "off"])
-         .addClass (fieldList .data ("expanded") ? "on" : "off");
+         .addClass (node .getUserData (this .animation [_expanded]) ? "on" : "off");
+
+      fieldList .empty ();
 
       this .createFieldElements (fieldList, node);
    }

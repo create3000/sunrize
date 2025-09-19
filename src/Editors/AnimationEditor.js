@@ -314,6 +314,7 @@ module .exports = class AnimationEditor extends Interface
 
          this .nodeListElement .hide ();
          this .membersListElement .show ();
+         this .memberList .setAnimation (this .animation);
 
          // Interpolators
 
@@ -337,14 +338,8 @@ module .exports = class AnimationEditor extends Interface
       }
       else
       {
-         // TimeSensor
-
-         this .timeSensor = null;
-
          // Show Animations List
 
-         this .members .length = 0;
-         this .memberList .clearNodes ();
          this .membersListElement .hide ();
          this .nodeListElement .show ();
 
@@ -356,11 +351,6 @@ module .exports = class AnimationEditor extends Interface
          // Timeline
 
          this .frameInput .attr ("max", 0);
-
-         // Interpolators
-
-         this .interpolators .length = 0;
-         this .fields .clear ();
       }
 
       // Timeline
