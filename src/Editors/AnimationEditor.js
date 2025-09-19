@@ -274,10 +274,11 @@ module .exports = class AnimationEditor extends Interface
          else
          {
             this .timeSensor ._startTime = 0;
-            this .timeSensor ._stopTime = 1;
+            this .timeSensor ._stopTime  = 1;
          }
 
-         this .timeSensor ._fraction_changed = 0;
+         for (const interpolator of this .interpolators)
+            interpolator ._set_fraction = 0;
       }
 
       // Set
