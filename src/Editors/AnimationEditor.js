@@ -1101,7 +1101,7 @@ module .exports = class AnimationEditor extends Interface
       context .restore ();
    }
 
-   #defaultKey = new X3D .MFInt32 ();
+   #defaultIntegers = new X3D .MFInt32 ();
 
    drawKeyframes (context, field, firstFrame, lastFrame, left, bottom, color)
    {
@@ -1112,10 +1112,10 @@ module .exports = class AnimationEditor extends Interface
       if (!interpolator)
          return;
 
-      this .#defaultKey .length = 0;
+      this .#defaultIntegers .length = 0;
 
       const
-		   key   = interpolator .getMetaData ("Interpolator/key", this .#defaultKey),
+		   key   = interpolator .getMetaData ("Interpolator/key", this .#defaultIntegers),
 		   first = X3D. Algorithm .lowerBound (key, 0, key .length, firstFrame),
 		   last  = X3D. Algorithm .upperBound (key, 0, key .length, lastFrame);
 
