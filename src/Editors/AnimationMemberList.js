@@ -119,6 +119,7 @@ module .exports = class AnimationMembersList extends Interface
             fieldList       = $("<ul></ul>");
 
          const listItem = $("<li></li>")
+            .attr ("node-id", node .getId ())
             .appendTo (this .#list);
 
          const removeIcon = $("<span></span>")
