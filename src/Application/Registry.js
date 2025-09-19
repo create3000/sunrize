@@ -1,8 +1,9 @@
 const
-   electron = require ("electron"),
-   path     = require ("path"),
-   fs       = require ("fs"),
-   os       = require ("os");
+   electron      = require ("electron"),
+   path          = require ("path"),
+   fs            = require ("fs"),
+   os            = require ("os"),
+   child_process = require ("child_process");
 
 module .exports = class Registry
 {
@@ -14,8 +15,6 @@ module .exports = class Registry
       if (!electron .app .isPackaged)
          return;
 
-      const { spawn } = require ("child_process");
-
       const
          exe = electron .app .getPath ("exe"),
          reg = fs .readFileSync (path .join (__dirname, "../assets/X3D.reg"), { encoding: "utf-8" }),
@@ -25,7 +24,7 @@ module .exports = class Registry
 
       fs .writeFileSync (tmp, out);
 
-      const ls = spawn ("reg", ["import", tmp]);
+      const ls = child_process .spawn ("reg", ["import", tmp]);
 
       ls .stdout .on ('data', (data) =>
       {
