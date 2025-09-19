@@ -222,7 +222,7 @@ module .exports = class AnimationMembersList extends Interface
          const applyIcon = $("<span></span>")
             .addClass (["material-icons", "button", "off"])
             .attr ("title", _("Add keyframe."))
-            .text ("check")
+            .text ("check_box")
             .on ("click", () => this .addKeyframe (node, field));
 
          const item = $("<div></div>")
