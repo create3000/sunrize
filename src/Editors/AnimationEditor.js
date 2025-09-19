@@ -566,7 +566,7 @@ module .exports = class AnimationEditor extends Interface
    {
       const frame = this .getCurrentFrame ();
 
-      Editor .undoManager .beginUndo (_("Add Keyframe"));
+      Editor .undoManager .beginUndo (_("Add Keyframe To »%s«"), this .animation .getDisplayName ());
 
       switch (field .getType ())
       {
