@@ -11,20 +11,17 @@ module .exports = class Registry
       if (process .platform !== "win32")
          return;
 
-      // if (!electron .app .isPackaged)
-      //    return;
-
-      console .log (electron .app .getAppPath ())
+      if (!electron .app .isPackaged)
+         return;
 
       const { spawn } = require ("child_process");
 
       const
+         exe = electron .app .getPath ("exe"),
          reg = fs .readFileSync (path .join (__dirname, "../assets/X3D.reg"), { encoding: "utf-8" }),
-         exe = path .resolve (path .join (os .homedir (), "/AppData/Local/sunrize/Sunrize X3D Editor.exe")),
-         tmp = path .join (__dirname, "../assets/X3D-out.reg");
+         tmp = path .join (__dirname, "../assets/X3D-tmp.reg");
 
-      const out = reg
-         .replaceAll ("SUNRIZE_EXE", exe .replaceAll ("\\", "\\\\"));
+      const out = reg .replaceAll ("SUNRIZE_EXE", exe .replaceAll ("\\", "\\\\"));
 
       fs .writeFileSync (tmp, out);
 
