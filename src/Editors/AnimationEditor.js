@@ -1065,14 +1065,14 @@ module .exports = class AnimationEditor extends Interface
          if (item .hasClass ("main"))
          {
             for (const field of this .fields .keys ())
-               this .drawKeyframes (context, field, firstFrame, lastFrame, left, bottom, brown);
+               this .drawKeyframes (context, field, firstFrame, lastFrame, bottom, brown);
          }
          else if (item .hasClass ("node"))
          {
             const node = item .data ("node");
 
             for (const field of node .getFields ())
-               this .drawKeyframes (context, field, firstFrame, lastFrame, left, bottom, brown);
+               this .drawKeyframes (context, field, firstFrame, lastFrame, bottom, brown);
          }
          else if (item .hasClass ("field"))
          {
