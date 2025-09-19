@@ -952,6 +952,8 @@ module .exports = class AnimationEditor extends Interface
       this .drawTracks ();
    }
 
+   #style = window .getComputedStyle ($("body") [0]);
+
    drawTracks ()
    {
       const
@@ -974,13 +976,13 @@ module .exports = class AnimationEditor extends Interface
 		const [frameStep, frameFactor] = this .getFrameParams ();
 
       const
-         blue   = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-blue"),
-         indigo = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-indigo"),
-         orange = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-orange");
+         blue   = this .#style .getPropertyValue ("--system-blue"),
+         indigo = this .#style .getPropertyValue ("--system-indigo"),
+         orange = this .#style .getPropertyValue ("--system-orange");
 
       const
-         tint1 = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--tint-color1"),
-         tint2 = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--tint-color2");
+         tint1 = this .#style .getPropertyValue ("--tint-color1"),
+         tint2 = this .#style .getPropertyValue ("--tint-color2");
 
       for (const [i, { item, top, bottom, height }] of trackOffsets .entries ())
       {
