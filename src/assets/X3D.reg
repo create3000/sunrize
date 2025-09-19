@@ -1,33 +1,81 @@
 Windows Registry Editor Version 5.00
 
-[HKEY_CLASSES_ROOT\.x3d]
-@="Sunrize.X3D"
+[HKEY_CURRENT_USER\Software\Classes\.x3d\OpenWithProgids]
+"Sunrize.x3d"=""
 
-[HKEY_CLASSES_ROOT\.x3dv]
-@="Sunrize.X3DV"
+[HKEY_CURRENT_USER\Software\Classes\.x3dz\OpenWithProgids]
+"Sunrize.x3dz"=""
 
-[HKEY_CLASSES_ROOT\.x3dj]
-@="Sunrize.X3DJ"
+[HKEY_CURRENT_USER\Software\Classes\.x3dv\OpenWithProgids]
+"Sunrize.x3dv"=""
 
-[HKEY_CLASSES_ROOT\.wrl]
-@="Sunrize.VRML"
+[HKEY_CURRENT_USER\Software\Classes\.x3dvz\OpenWithProgids]
+"Sunrize.x3dvz"=""
 
-[HKEY_CLASSES_ROOT\Sunrize.X3D]
+[HKEY_CURRENT_USER\Software\Classes\.x3dj\OpenWithProgids]
+"Sunrize.x3dj"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.x3djz\OpenWithProgids]
+"Sunrize.x3djz"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.wrl\OpenWithProgids]
+"Sunrize.wrl"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.wrz\OpenWithProgids]
+"Sunrize.wrz"=""
+
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3d]
 @="Sunrize X3D XML File"
-[HKEY_CLASSES_ROOT\Sunrize.X3D\shell\open\command]
-@="\"C:\\Path\\To\\Sunrize.exe\" \"%1\""
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3d\DefaultIcon]
+@="\"SUNRIZE_EXE\",0"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3d\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
 
-[HKEY_CLASSES_ROOT\Sunrize.X3DV]
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dz]
+@="Sunrize X3D XML File"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dz\DefaultIcon]
+@="\"SUNRIZE_EXE\",0"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dz\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dv]
 @="Sunrize X3D Classic VRML File"
-[HKEY_CLASSES_ROOT\Sunrize.X3DV\shell\open\command]
-@="\"C:\\Path\\To\\Sunrize.exe\" \"%1\""
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dv\DefaultIcon]
+@="\"SUNRIZE_EXE\",0"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dv\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
 
-[HKEY_CLASSES_ROOT\Sunrize.X3DJ]
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dvz]
+@="Sunrize X3D Classic VRML File"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dvz\DefaultIcon]
+@="\"SUNRIZE_EXE\",0"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dvz\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dj]
 @="Sunrize X3D JSON File"
-[HKEY_CLASSES_ROOT\Sunrize.X3DJ\shell\open\command]
-@="\"C:\\Path\\To\\Sunrize.exe\" \"%1\""
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dj\DefaultIcon]
+@="\"SUNRIZE_EXE\",0"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dj\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
 
-[HKEY_CLASSES_ROOT\Sunrize.VRML]
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3djz]
+@="Sunrize X3D JSON File"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3djz\DefaultIcon]
+@="\"SUNRIZE_EXE\",0"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3djz\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.wrl]
 @="Sunrize VRML File"
-[HKEY_CLASSES_ROOT\Sunrize.VRML\shell\open\command]
-@="\"C:\\Path\\To\\Sunrize.exe\" \"%1\""
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.wrl\DefaultIcon]
+@="\"SUNRIZE_EXE\",0"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.wrl\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.wrz]
+@="Sunrize VRML File"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.wrz\DefaultIcon]
+@="\"SUNRIZE_EXE\",0"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.wrz\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""

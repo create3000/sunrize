@@ -7,6 +7,7 @@ const
    path         = require ("path"),
    fs           = require ("fs"),
    util         = require ("util"),
+   Registry     = require ("./Registry"),
    Template     = require ("./Template"),
    LocalStorage = require ("node-localstorage") .LocalStorage,
    DataStorage  = require ("../Application/DataStorage"),
@@ -34,6 +35,8 @@ module .exports = class Application
 
       if (process .platform === "win32")
          require ("update-electron-app") .updateElectronApp ({ updateInterval: "1 hour" });
+
+      Registry .addWindowsFileTypes ();
 
       electron .app .commandLine .appendSwitch ("--enable-features", "OverlayScrollbar,ConversionMeasurement,AttributionReportingCrossAppWeb");
 
