@@ -658,6 +658,10 @@ module .exports = class AnimationEditor extends Interface
 
    toggleAnimation ()
    {
+      Editor .undoManager .saveNeeded = true;
+
+      require ("../Application/Window") .registerAutoSave ();
+
       this .timeSensor ._stopTime = Date .now () / 1000;
 
       if (this .timeSensor ._isActive .getValue ())
