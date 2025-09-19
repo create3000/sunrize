@@ -36,8 +36,7 @@ module .exports = class Application
       if (process .platform === "win32")
          require ("update-electron-app") .updateElectronApp ({ updateInterval: "1 hour" });
 
-      if (process .platform === "win32")
-         this .associateWindowsFileTypes ();
+      this .associateWindowsFileTypes ();
 
       electron .app .commandLine .appendSwitch ("--enable-features", "OverlayScrollbar,ConversionMeasurement,AttributionReportingCrossAppWeb");
 
@@ -46,12 +45,17 @@ module .exports = class Application
 
    static associateWindowsFileTypes ()
    {
+      if (process .platform !== "win32")
+         return;
+
+      // if (!electron .app .isPackaged)
+      //    return;
+
       const { spawn } = require ("child_process");
 
       const
          reg = fs .readFileSync (path .join (__dirname, "../assets/X3D.reg"), { encoding: "utf-8" }),
          exe = path .resolve (path .join (os .homedir (), "/AppData/Local/sunrize/Sunrize X3D Editor.exe")),
-         ico = path .join (path .dirname (exe), `app-${electron .app .getVersion ()}/resources/app/src/assets/images/icon.ico`),
          tmp = path .join (__dirname, "../assets/X3D-out.reg");
 
       const out = reg
