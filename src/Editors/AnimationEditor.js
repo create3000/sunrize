@@ -209,7 +209,7 @@ module .exports = class AnimationEditor extends Interface
 
       // Lists
 
-      this .memberList = new MemberList (this .membersListElement,
+      this .memberList = new MemberList (this, this .membersListElement,
       {
          fields: this .fields,
          removeCallback: nodes => this .removeMembers (nodes),
@@ -581,6 +581,8 @@ module .exports = class AnimationEditor extends Interface
       }
 
       Editor .undoManager .endUndo ();
+
+      this .requestDrawTracks ();
    }
 
    getInterpolator (typeName, node, field)

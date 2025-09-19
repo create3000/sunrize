@@ -10,6 +10,7 @@ const _expanded = Symbol ();
 
 module .exports = class AnimationMembersList extends Interface
 {
+   #editor;
    #nodeList;
    #list;
    #nodes;
@@ -20,10 +21,11 @@ module .exports = class AnimationMembersList extends Interface
    #addNodeKeyframeCallback;
    #addFieldKeyframeCallback;
 
-   constructor (element, { fields, removeCallback, closeCallback, addMainKeyframeCallback, addNodeKeyframeCallback, addFieldKeyframeCallback })
+   constructor (editor, element, { fields, removeCallback, closeCallback, addMainKeyframeCallback, addNodeKeyframeCallback, addFieldKeyframeCallback })
    {
       super ("Sunrize.AnimationMembersList.");
 
+      this .#editor                   = editor;
       this .#nodeList                 = element;
       this .#list                     = $("<ul></ul>") .appendTo (this .#nodeList);
       this .#nodes                    = [ ];
@@ -220,18 +222,18 @@ module .exports = class AnimationMembersList extends Interface
             .attr ("title", field .getTypeName ())
             .addClass ("icon")
             .attr ("src", `../images/OutlineEditor/Fields/${field .getTypeName()}.svg`)
-            .on ("dblclick", () => this .addFieldKeyframeCallback (node, field));
+            .on ("dblclick", () => this .#addFieldKeyframeCallback (node, field));
 
          const nameElement = $("<span></span>")
             .addClass ("field-name")
             .text (field .getName ())
-            .on ("dblclick", () => this .addFieldKeyframeCallback (node, field));
+            .on ("dblclick", () => this .#addFieldKeyframeCallback (node, field));
 
          const applyIcon = $("<span></span>")
             .addClass (["material-icons", "button", "off"])
             .attr ("title", _("Add keyframe."))
             .text ("check_box")
-            .on ("click", () => this .addFieldKeyframeCallback (node, field));
+            .on ("click", () => this .#addFieldKeyframeCallback (node, field));
 
          const item = $("<div></div>")
             .data ("i", i ++ )
@@ -262,6 +264,8 @@ module .exports = class AnimationMembersList extends Interface
       fieldList .empty ();
 
       this .createFieldElements (fieldList, node);
+
+      this .#editor .requestDrawTracks ();
    }
 
    removeNodes (nodes)
