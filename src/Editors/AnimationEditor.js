@@ -763,10 +763,8 @@ module .exports = class AnimationEditor extends Interface
 
    zoomFit ()
    {
-      const width = this .getWidth () - 2 * this .DEFAULT_TRANSLATION;
-
-      this .setScale (width / this .getDuration ());
-      this .setTranslation (this .DEFAULT_TRANSLATION);
+      this .setScale (this .getFitScale ());
+      this .setTranslation (0);
    }
 
    zoom100 ()
@@ -780,9 +778,8 @@ module .exports = class AnimationEditor extends Interface
 
    // Timeline Properties
 
-   TIMELINE_PADDING    = 10;         // in pixels
+   TIMELINE_PADDING    = 15;         // in pixels
    FRAME_SIZE          = 7;          // in pixels
-   DEFAULT_TRANSLATION = 8;          // in pixels
    DEFAULT_SCALE       = 16;         // in pixels
    MIN_SCALE           = 128;        // in pixels
    SCROLL_FACTOR       = 1 + 1 / 16; // something nice
@@ -838,10 +835,10 @@ module .exports = class AnimationEditor extends Interface
    setTranslation (translation)
    {
       const width = this .getWidth ();
-      const max   = (width - this .DEFAULT_TRANSLATION) - (this .getDuration () * this .getScale ());
+      const max   = width - (this .getDuration () * this .getScale ());
 
       translation = Math .max (translation, max);
-      translation = Math .min (translation, this .DEFAULT_TRANSLATION);
+      translation = Math .min (translation, 0);
 
       this .translation = translation;
 
@@ -855,9 +852,14 @@ module .exports = class AnimationEditor extends Interface
 
    setScale (scale)
    {
-      this .scale = Math .min (scale, this .MIN_SCALE);
+      this .scale = Math .max (Math .min (scale, this .MIN_SCALE), this .getFitScale ());
 
       this .requestDrawTracks ();
+   }
+
+   getFitScale ()
+   {
+      return this .getWidth () / this .getDuration ();
    }
 
    /**
@@ -935,15 +937,6 @@ module .exports = class AnimationEditor extends Interface
       this .zoom (deltaY < 0 ? "out" : "in", this .pointerX, this .WHEEL_SCROLL_FACTOR);
    }
 
-   #updateTracksId = undefined;
-
-   requestDrawTracks ()
-   {
-      clearTimeout (this .#updateTracksId);
-
-      this .#updateTracksId = setTimeout (() => this .drawTracks ());
-   }
-
    resizeTracks ()
    {
       const
@@ -955,9 +948,18 @@ module .exports = class AnimationEditor extends Interface
          .prop ("height", tracksHeight);
 
       this .timelineClip = new Path2D ();
-      this .timelineClip .rect (this .getLeft (), 0, this .getWidth (), tracksHeight);
+      this .timelineClip .rect (this .getLeft () - this .FRAME_SIZE, 0, this .getWidth () + this .FRAME_SIZE * 2, tracksHeight);
 
       this .drawTracks ();
+   }
+
+   #updateTracksId = undefined;
+
+   requestDrawTracks ()
+   {
+      clearTimeout (this .#updateTracksId);
+
+      this .#updateTracksId = setTimeout (() => this .drawTracks ());
    }
 
    #style = window .getComputedStyle ($("body") [0]);
@@ -1099,9 +1101,7 @@ module .exports = class AnimationEditor extends Interface
 
    drawKeyframes (context, field, firstFrame, lastFrame, left, bottom, color)
    {
-      const
-         FRAME_SIZE   = 7,
-         interpolator = this .fields .get (field);
+      const interpolator = this .fields .get (field);
 
       if (!interpolator)
          return;
@@ -1117,11 +1117,11 @@ module .exports = class AnimationEditor extends Interface
 		{
          const frame = key [index];
          const x     = Math .floor (left + frame * this .getScale () + this .getTranslation ());
-			const x1    = x - (FRAME_SIZE / 2) + 0.5;
+			const x1    = x - (this .FRAME_SIZE / 2) + 0.5;
 
 			context .fillStyle = color;
 
-         context .fillRect (x1, bottom - FRAME_SIZE, FRAME_SIZE, FRAME_SIZE);
+         context .fillRect (x1, bottom - this .FRAME_SIZE, this .FRAME_SIZE, this .FRAME_SIZE);
 		}
    }
 
