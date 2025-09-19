@@ -216,18 +216,18 @@ module .exports = class AnimationMembersList extends Interface
             .attr ("title", field .getTypeName ())
             .addClass ("icon")
             .attr ("src", `../images/OutlineEditor/Fields/${field .getTypeName()}.svg`)
-            .on ("dblclick", () => this .addKeyframe (node, field));
+            .on ("dblclick", () => this .addFieldKeyframe (node, field));
 
          const nameElement = $("<span></span>")
             .addClass ("field-name")
             .text (field .getName ())
-            .on ("dblclick", () => this .addKeyframe (node, field));
+            .on ("dblclick", () => this .addFieldKeyframe (node, field));
 
          const applyIcon = $("<span></span>")
             .addClass (["material-icons", "button", "off"])
             .attr ("title", _("Add keyframe."))
             .text ("check_box")
-            .on ("click", () => this .addKeyframe (node, field));
+            .on ("click", () => this .addFieldKeyframe (node, field));
 
          const item = $("<div></div>")
             .data ("i", i ++ )
@@ -328,7 +328,7 @@ module .exports = class AnimationMembersList extends Interface
       return offsets;
    }
 
-   addKeyframe (node, field)
+   addFieldKeyframe (node, field)
    {
       this .#addKeyframeCallback (node, field);
    }
