@@ -51,7 +51,6 @@ module .exports = new class Tabs
 
       electron .ipcRenderer .on ("open-files",     (event, urls)     => this .openTabs (urls));
       electron .ipcRenderer .on ("reload"        , (event)           => this .reloadTab ());
-      electron .ipcRenderer .on ("save-file",      (event)           => this .saveFile ());
       electron .ipcRenderer .on ("save-file-as",   (event, filePath) => this .saveFileAs (filePath));
       electron .ipcRenderer .on ("save-all-files", (event)           => this .saveAllFiles ());
       electron .ipcRenderer .on ("close-tab",      (event)           => this .tabs .getActiveTab () ?.close (true));
@@ -68,7 +67,7 @@ module .exports = new class Tabs
       this .forwardToAllTabs ("auto-save");
       this .forwardToActiveTab ("export-as");
 
-      this .forwardToActiveTab ("scene-properties");
+      this .forwardToActiveTab ("save-file");
       this .forwardToActiveTab ("save-copy-as");
       this .forwardToActiveTab ("scene-properties");
 
@@ -313,11 +312,6 @@ module .exports = new class Tabs
          this .openTabs ();
 
       this .saveTabs ();
-   }
-
-   saveFile ()
-   {
-      this .tabs .getActiveTab () .webview .send ("save-file", true);
    }
 
    saveFileAs (filePath)
