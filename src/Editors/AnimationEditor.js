@@ -978,7 +978,8 @@ module .exports = class AnimationEditor extends Interface
       const
          blue   = this .#style .getPropertyValue ("--system-blue"),
          indigo = this .#style .getPropertyValue ("--system-indigo"),
-         orange = this .#style .getPropertyValue ("--system-orange");
+         orange = this .#style .getPropertyValue ("--system-orange"),
+         brown  = this .#style .getPropertyValue ("--system-brown");
 
       const
          tint1 = this .#style .getPropertyValue ("--tint-color1"),
@@ -1054,14 +1055,14 @@ module .exports = class AnimationEditor extends Interface
          if (item .hasClass ("main"))
          {
             for (const field of this .fields .keys ())
-               this .drawKeyframes (context, field, firstFrame, lastFrame, left, bottom, orange);
+               this .drawKeyframes (context, field, firstFrame, lastFrame, left, bottom, brown);
          }
          else if (item .hasClass ("node"))
          {
             const node = item .data ("node");
 
             for (const field of node .getFields ())
-               this .drawKeyframes (context, field, firstFrame, lastFrame, left, bottom, orange);
+               this .drawKeyframes (context, field, firstFrame, lastFrame, left, bottom, brown);
          }
          else if (item .hasClass ("field"))
          {
