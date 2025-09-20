@@ -959,7 +959,7 @@ module .exports = class AnimationEditor extends Interface
       keyType  .length = key .length;
 
       const deleteCount = index === key .length || frame === key [index]
-         ? components
+         ? components * keySize
          : 0;
 
       key      .splice (index,  deleteCount, frame);
