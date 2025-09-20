@@ -748,6 +748,11 @@ module .exports = class AnimationEditor extends Interface
       this .registerRequestDrawTracks ();
    }
 
+   #vectors = new Map ([
+      [2, X3D .Vector2],
+      [3, X3D .Vector3],
+   ]);
+
    updateScalarInterpolator (interpolator)
    {
       this .resizeInterpolator (interpolator);
@@ -813,6 +818,7 @@ module .exports = class AnimationEditor extends Interface
                const currentKeys          = [ ];
                const currentKeyValues     = [ ];
                const currentKeyVelocities = [ ];
+               const Vector               = this .#vectors .get (components);
 
                for (; i < size; ++ i, iN += components)
                {
@@ -821,7 +827,7 @@ module .exports = class AnimationEditor extends Interface
                   // TODO: if ColorInterpolator use HSV values.
 
                   currentKeys      .push (key [i]);
-                  currentKeyValues .push (components === 1 ? value [0] : new X3D .Vector4 (... value));
+                  currentKeyValues .push (components === 1 ? value [0] : new Vector (... value));
 
                   if (currentKeys .length === 1)
                      continue;
