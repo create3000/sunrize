@@ -822,9 +822,10 @@ module .exports = class AnimationEditor extends Interface
 
                for (; i < size; ++ i, iN += components)
                {
-                  const value = this .getValue (keyValue, iN, components);
+                  let value = this .getValue (keyValue, iN, components);
 
-                  // TODO: if ColorInterpolator use HSV values.
+                  if (interpolator instanceof X3D .ColorInterpolator)
+                     value = new X3D .Color3 (... value) .getHSV ();
 
                   currentKeys      .push (key [i]);
                   currentKeyValues .push (components === 1 ? value [0] : new Vector (... value));
@@ -873,7 +874,11 @@ module .exports = class AnimationEditor extends Interface
                   for (let f = 0; f < framesN; ++ f)
                   {
                      const weight = f / frames;
-                     const value  = spline .interpolate (k, k + 1, weight, currentKeyValues);
+
+                     let value = spline .interpolate (k, k + 1, weight, currentKeyValues);
+
+                     if (interpolator instanceof X3D .ColorInterpolator)
+                        value = new X3D .Color3 () .setHSV (... value);
 
                      keys      .push (fraction + weight * distance);
                      keyValues .push (... (components === 1 ? [value] : value));
