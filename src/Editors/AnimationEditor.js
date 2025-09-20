@@ -695,7 +695,7 @@ module .exports = class AnimationEditor extends Interface
       Editor .updateNamedNode (executionContext, executionContext .getUniqueName (name), interpolator);
 
       Editor .undoManager .endUndo ();
-      
+
       return interpolator;
    }
 
@@ -802,7 +802,7 @@ module .exports = class AnimationEditor extends Interface
                break;
             }
             case "LINEAR":
-            case"SPLIT":
+            case "SPLIT":
             {
                keys      .push (fraction);
                keyValues .push (... value);
@@ -958,24 +958,13 @@ module .exports = class AnimationEditor extends Interface
       keyValue .length = key .length * components * keySize;
       keyType  .length = key .length;
 
-      // Set meta data
+      const deleteCount = index === key .length || frame === key [index]
+         ? components
+         : 0;
 
-      if (index === key .length || frame === key [index])
-      {
-         key     [index] = frame;
-         keyType [index] = type;
-
-         const length = components * keySize;
-
-         for (let i = 0; i < length; ++ i)
-            keyValue [indexN + i] = value [i];
-      }
-      else
-      {
-         key      .splice (index,  0, frame);
-         keyType  .splice (index,  0, type);
-         keyValue .splice (indexN, 0, ... value);
-      }
+      key      .splice (index,  deleteCount, frame);
+      keyType  .splice (index,  deleteCount, type);
+      keyValue .splice (indexN, deleteCount, ... (components === 1 ? [value] : value));
 
       Editor .setNodeMetaData (interpolator, "Interpolator/key",      key);
       Editor .setNodeMetaData (interpolator, "Interpolator/keyValue", keyValue);
