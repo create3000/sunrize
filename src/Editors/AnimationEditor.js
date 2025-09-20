@@ -745,6 +745,42 @@ module .exports = class AnimationEditor extends Interface
    {
       this .resizeInterpolator (interpolator);
 
+      const components = this .#components .get (interpolator .getType () .at (-1));
+      const key        = interpolator .getMetaData ("Interpolator/key",      new X3D .MFInt32 ());
+      const keyValue   = interpolator .getMetaData ("Interpolator/keyValue", new X3D .MFDouble ());
+      const keyType    = interpolator .getMetaData ("Interpolator/keyType",  new X3D .MFString ());
+
+      keyValue .length = key .length * components;
+      keyType  .length = key .length;
+
+      const size      = key .length;
+      const duration  = this .getDuration ();
+      const keys      = [ ];
+      const keyValues = [ ];
+
+      let i  = 0; // index in key
+      let iN = 0; // index in meta data keyValue
+
+      while (i < size)
+      {
+         if (key [i] < 0 || key [i] > duration)
+            continue;
+
+         const fraction = key [i] / duration;
+         const value    = keyValue [iN];
+
+         keys      .push (fraction);
+         keyValues .push (value);
+
+         ++ i;
+         iN += components;
+      }
+
+      const executionContext = interpolator .getExecutionContext ();
+
+      Editor .setFieldValue (executionContext, interpolator, interpolator ._key,      keys);
+      Editor .setFieldValue (executionContext, interpolator, interpolator ._keyValue, keyValues);
+
       this .registerRequestDrawTracks ();
    }
 
