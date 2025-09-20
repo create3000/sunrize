@@ -959,8 +959,8 @@ module .exports = class AnimationEditor extends Interface
       keyType  .length = key .length;
 
       const deleteCount = index === key .length || frame === key [index]
-         ? components * keySize
-         : 0;
+         ? components * keySize // update
+         : 0;                   // insert
 
       key      .splice (index,  deleteCount, frame);
       keyType  .splice (index,  deleteCount, type);
