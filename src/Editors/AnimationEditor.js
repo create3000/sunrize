@@ -738,6 +738,133 @@ module .exports = class AnimationEditor extends Interface
    {
       this .resizeInterpolator (interpolator);
 
+      const components = this .#components .get (interpolator .getType () .at (-1));
+      const key        = interpolator .getMetaData ("Interpolator/key",      new X3D .MFInt32 ());
+      const keyValue   = interpolator .getMetaData ("Interpolator/keyValue", new X3D .MFDouble ());
+      const keyType    = interpolator .getMetaData ("Interpolator/keyType",  new X3D .MFString ());
+
+      keyValue .length = key .length * components;
+      keyType  .length = key .length;
+
+      const size      = key .length;
+      const duration  = this .getDuration ();
+      const keys      = [ ];
+      const keyValues = [ ];
+
+      let i  = 0; // index in key
+      let iN = 0; // index in meta data keyValue
+
+      while (i < size)
+      {
+         if (key [i] < 0 || key [i] > duration)
+         {
+            ++ i;
+            continue;
+         }
+
+         const value    = this .getValue (keyValue, iN, components);
+         const fraction = key [i] / duration;
+
+         let iT = i;
+
+         if (keyType [iT] === "SPLIT" && iT + 1 < size)
+            ++ iT;
+
+         switch (keyType [iT])
+         {
+            case "CONSTANT":
+            {
+               keys      .push (fraction);
+               keyValues .push (... value);
+
+               if (key [i] < duration)
+               {
+                  const nextFraction = i === size - 1 ? 1 : key [i + 1] / duration;
+
+                  keys      .push (nextFraction);
+                  keyValues .push (... value);
+               }
+
+               break;
+            }
+            case "LINEAR":
+            case"SPLIT":
+            {
+               keys      .push (fraction);
+               keyValues .push (... value);
+               break;
+            }
+            case "SPLINE":
+            {
+               // std::vector <int32_t> keys;
+               // std::vector <Type>    keyValues;
+               // std::vector <Type>    keyVelocitys;
+
+               // for (; i < size; ++ i, iN += components)
+               // {
+               //    const auto value = getValue <Type> (keyValue, iN);
+
+               //    keys      .emplace_back (key [i]);
+               //    keyValues .emplace_back (value);
+
+               //    if (keys .size () === 1)
+               //       continue;
+
+               //    if (keyType [i] not_eq "SPLINE")
+               //       break;
+               // }
+
+               // if (keys .size () < 2)
+               // {
+               //    // This can happen if only the last frame is of type SPLINE.
+               //    interpolator .key ()      .emplace_back (fraction);
+               //    interpolator .keyValue () .emplace_back (value);
+               //    break;
+               // }
+
+               // //keyVelocitys .resize (keys .size (), Type ());
+
+               // const bool normalizeVelocity = false;
+               // const bool closed = keys .front () === 0 and keys .back () === duration and keyValues .front () === keyValues .back ();
+
+               // const math::catmull_rom_spline_interpolator <Type, double> spline (closed, keys, keyValues, keyVelocitys, normalizeVelocity);
+
+               // for (size_t k = 0, size = keys .size () - 1; k < size; ++ k)
+               // {
+               //    const int32_t frames   = keys [k + 1] - keys [k];
+               //    const double  fraction = keys [k] / (double) duration;
+               //    const double  distance = frames / (double) duration;
+               //    const auto    framesN  = k + 1 === size and i === key .size () ? frames + 1 : frames;
+
+               //    for (int32_t f = 0; f < framesN; ++ f)
+               //    {
+               //       const auto weight = f / (double) frames;
+               //       const auto value  = spline .interpolate (k, k + 1, weight, keyValues);
+
+               //       interpolator .key ()      .emplace_back (fraction + weight * distance);
+               //       interpolator .keyValue () .emplace_back (value);
+               //    }
+               // }
+
+               // if (i + 1 not_eq size)
+               // {
+               //    i  -= 1;
+               //    iN -= components;
+               // }
+
+               break;
+            }
+         }
+
+         i  += 1;
+         iN += components;
+      }
+
+      const executionContext = interpolator .getExecutionContext ();
+
+      Editor .setFieldValue (executionContext, interpolator, interpolator ._key,      keys);
+      Editor .setFieldValue (executionContext, interpolator, interpolator ._keyValue, keyValues);
+
       this .registerRequestDrawTracks ();
    }
 
@@ -746,6 +873,16 @@ module .exports = class AnimationEditor extends Interface
       this .resizeInterpolator (interpolator);
 
       this .registerRequestDrawTracks ();
+   }
+
+   getValue (keyValue, index, components)
+   {
+      const value = [ ];
+
+      for (let i = 0; i < components; ++ i)
+         value .push (keyValue [index + i]);
+
+      return value;
    }
 
    resizeInterpolator (interpolator)
@@ -795,7 +932,7 @@ module .exports = class AnimationEditor extends Interface
 
       // Set meta data
 
-      if (index == key .length || frame == key [index])
+      if (index === key .length || frame === key [index])
       {
          key     [index] = frame;
          keyType [index] = type;
