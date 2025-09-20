@@ -575,7 +575,7 @@ module .exports = class AnimationEditor extends Interface
          {
             const interpolator = this .getInterpolator ("ColorInterpolator", node, field);
 
-            this .addKeyframeToInterpolator (interpolator, frame, field, type);
+            this .addKeyframeToInterpolator (interpolator, frame, type, field);
             this .updateInterpolator (interpolator);
             break;
          }
@@ -626,7 +626,7 @@ module .exports = class AnimationEditor extends Interface
       [X3D .X3DConstants .CoordinateInterpolator,   3],
    ]);
 
-   addKeyframeToInterpolator (interpolator, frame, value, type)
+   addKeyframeToInterpolator (interpolator, frame, type, value)
    {
       const components = this .#components .get (interpolator .getType () .at (-1));
       const key        = interpolator .getMetaData ("Interpolator/key",      new X3D .MFInt32 ());
