@@ -673,7 +673,7 @@ module .exports = class AnimationEditor extends Interface
 
       Editor .undoManager .registerUndo (() =>
       {
-         this .requestDrawTracks ();
+         this .registerRequestDrawTracks ();
       });
 
       Editor .undoManager .endUndo ();
