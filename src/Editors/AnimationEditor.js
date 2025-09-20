@@ -561,6 +561,18 @@ module .exports = class AnimationEditor extends Interface
 
    // Interpolators
 
+   #components = new Map ([
+      [X3D .X3DConstants .BooleanSequencer,         1],
+      [X3D .X3DConstants .IntegerSequencer,         1],
+      [X3D .X3DConstants .ColorInterpolator,        3],
+      [X3D .X3DConstants .ScalarInterpolator,       1],
+      [X3D .X3DConstants .OrientationInterpolator,  4],
+      [X3D .X3DConstants .PositionInterpolator2D,   2],
+      [X3D .X3DConstants .PositionInterpolator,     3],
+      [X3D .X3DConstants .CoordinateInterpolator2D, 2],
+      [X3D .X3DConstants .CoordinateInterpolator,   3],
+   ]);
+
    addFieldKeyframe (node, field)
    {
       const
@@ -613,18 +625,6 @@ module .exports = class AnimationEditor extends Interface
 
       this .registerRequestDrawTracks ();
    }
-
-   #components = new Map ([
-      [X3D .X3DConstants .BooleanSequencer,         1],
-      [X3D .X3DConstants .IntegerSequencer,         1],
-      [X3D .X3DConstants .ColorInterpolator,        3],
-      [X3D .X3DConstants .ScalarInterpolator,       1],
-      [X3D .X3DConstants .OrientationInterpolator,  4],
-      [X3D .X3DConstants .PositionInterpolator2D,   2],
-      [X3D .X3DConstants .PositionInterpolator,     3],
-      [X3D .X3DConstants .CoordinateInterpolator2D, 2],
-      [X3D .X3DConstants .CoordinateInterpolator,   3],
-   ]);
 
    addKeyframeToInterpolator (interpolator, frame, type, value)
    {
