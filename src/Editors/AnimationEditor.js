@@ -570,9 +570,10 @@ module .exports = class AnimationEditor extends Interface
          destinationNode  = route .getDestinationNode (),
          destinationField = route .getDestinationField (),
          nodeName         = destinationNode .getDisplayName (),
-         fieldName        = capitalize (destinationField .replace (/^set_|_changed$/g, ""), true);
+         fieldName        = capitalize (destinationField .replace (/^set_|_changed$/g, ""), true),
+         typeName         = interpolator .getTypeName () .match (/(Sequencer|Interpolator)$/) [1];
 
-      return `${nodeName}${fieldName}Interpolator`;
+      return `${nodeName}${fieldName}${typeName}`;
    }
 
    // Interpolators
