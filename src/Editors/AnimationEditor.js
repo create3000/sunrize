@@ -520,6 +520,7 @@ module .exports = class AnimationEditor extends Interface
 		X3D .X3DConstants .PositionInterpolator,
 		X3D .X3DConstants .CoordinateInterpolator2D,
 		X3D .X3DConstants .CoordinateInterpolator,
+		X3D .X3DConstants .NormalInterpolator,
    ]);
 
    members       = new Set ();
@@ -588,6 +589,7 @@ module .exports = class AnimationEditor extends Interface
       [X3D .X3DConstants .SFVec3f,    "PositionInterpolator"],
       [X3D .X3DConstants .MFVec2f,    "CoordinateInterpolator2D"],
       [X3D .X3DConstants .MFVec3f,    "CoordinateInterpolator"],
+      // NormalInterpolator
    ]);
 
    #components = new Map ([
@@ -600,6 +602,7 @@ module .exports = class AnimationEditor extends Interface
       [X3D .X3DConstants .PositionInterpolator,     3],
       [X3D .X3DConstants .CoordinateInterpolator2D, 2],
       [X3D .X3DConstants .CoordinateInterpolator,   3],
+      [X3D .X3DConstants .NormalInterpolator,       3],
    ]);
 
    getKeyType ()
@@ -616,8 +619,11 @@ module .exports = class AnimationEditor extends Interface
    {
       Editor .undoManager .beginUndo (_("Add Keyframe To »%s«"), this .animation .getDisplayName ());
 
+      const typeName = node .getType () .includes (X3D .X3DConstants .Normal)
+            ? "NormalInterpolator"
+            : this .#interpolatorTypeNames .get (field .getType ());
+
       const
-         typeName     = this .#interpolatorTypeNames .get (field .getType ()),
          interpolator = this .getInterpolator (typeName, node, field),
          frame        = this .getCurrentFrame (),
          type         = this .getKeyType ();
@@ -736,6 +742,7 @@ module .exports = class AnimationEditor extends Interface
          }
          case X3D .X3DConstants .CoordinateInterpolator2D:
          case X3D .X3DConstants .CoordinateInterpolator:
+         case X3D .X3DConstants .NormalInterpolator:
          {
             this .updateArrayInterpolator (interpolator);
             break;
