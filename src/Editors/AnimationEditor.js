@@ -657,7 +657,9 @@ module .exports = class AnimationEditor extends Interface
 
             Editor .setNodeMetaData (interpolator, "Interpolator/keySize", keySize);
 
-            this .addKeyframeToInterpolator (interpolator, frame, type, field);
+            const value = Array .from (field) .flatMap (value => [... value]);
+
+            this .addKeyframeToInterpolator (interpolator, frame, type, value);
             break;
          }
       }
@@ -1106,6 +1108,11 @@ module .exports = class AnimationEditor extends Interface
          i  += 1;
          iN += components * keySize;
       }
+
+      const executionContext = interpolator .getExecutionContext ();
+
+      Editor .setFieldValue (executionContext, interpolator, interpolator ._key,      keys);
+      Editor .setFieldValue (executionContext, interpolator, interpolator ._keyValue, keyValues);
 
       this .registerRequestDrawTracks ();
    }
