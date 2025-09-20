@@ -674,6 +674,11 @@ module .exports = class AnimationEditor extends Interface
       if (this .fields .has (field))
          return this .fields .get (field);
 
+      if (typeName .includes ("Sequencer"))
+         Editor .addComponent (executionContext .getLocalScene (), "EventUtilities");
+      else if (typeName .includes ("Interpolator"))
+         Editor .addComponent (executionContext .getLocalScene (), "Interpolation");
+
       const executionContext = this .animation .getExecutionContext ();
       const interpolator     = executionContext .createNode (typeName, false);
 
