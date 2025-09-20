@@ -549,12 +549,12 @@ Viewpoint {
    {
       this .config .global .autoSave = value;
 
-      this .registerAutoSave ();
+      this .requestAutoSave ();
    }
 
    #saveTimeoutId = undefined;
 
-   registerAutoSave ()
+   requestAutoSave ()
    {
       if (!this .autoSave)
          return;
@@ -596,7 +596,7 @@ Viewpoint {
       this .updateMenu ();
 
       if (UndoManager .shared .saveNeeded)
-         this .registerAutoSave ();
+         this .requestAutoSave ();
 
       electron .ipcRenderer .sendToHost ("saved", !UndoManager .shared .saveNeeded);
    }

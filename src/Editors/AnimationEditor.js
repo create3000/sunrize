@@ -563,7 +563,9 @@ module .exports = class AnimationEditor extends Interface
 
    addFieldKeyframe (node, field)
    {
-      const frame = this .getCurrentFrame ();
+      const
+         frame = this .getCurrentFrame (),
+         type  = "LINEAR";
 
       Editor .undoManager .beginUndo (_("Add Keyframe To »%s«"), this .animation .getDisplayName ());
 
@@ -573,15 +575,13 @@ module .exports = class AnimationEditor extends Interface
          {
             const interpolator = this .getInterpolator ("ColorInterpolator", node, field);
 
-            this .addKeyframeToInterpolator (interpolator, field, frame);
+            this .addKeyframeToInterpolator (interpolator, frame, field, type);
             this .updateInterpolator (interpolator);
             break;
          }
       }
 
       Editor .undoManager .endUndo ();
-
-      this .requestDrawTracks ();
    }
 
    getInterpolator (typeName, node, field)
@@ -611,11 +611,72 @@ module .exports = class AnimationEditor extends Interface
    updateInterpolator (interpolator)
    {
 
+      this .registerRequestDrawTracks ();
    }
 
-   addKeyframeToInterpolator (interpolator, field, frame)
-   {
+   #components = new Map ([
+      [X3D .X3DConstants .BooleanSequencer,         1],
+      [X3D .X3DConstants .IntegerSequencer,         1],
+      [X3D .X3DConstants .ColorInterpolator,        3],
+      [X3D .X3DConstants .ScalarInterpolator,       1],
+      [X3D .X3DConstants .OrientationInterpolator,  4],
+      [X3D .X3DConstants .PositionInterpolator2D,   2],
+      [X3D .X3DConstants .PositionInterpolator,     3],
+      [X3D .X3DConstants .CoordinateInterpolator2D, 2],
+      [X3D .X3DConstants .CoordinateInterpolator,   3],
+   ]);
 
+   addKeyframeToInterpolator (interpolator, frame, value, type)
+   {
+      const components = this .#components .get (interpolator .getType () .at (-1));
+      const key        = interpolator .getMetaData ("Interpolator/key",      new X3D .MFInt32 ());
+      const keyValue   = interpolator .getMetaData ("Interpolator/keyValue", new X3D .MFDouble ());
+      const keyType    = interpolator .getMetaData ("Interpolator/keyType",  new X3D .MFString ());
+      const keySize    = interpolator .getMetaData ("Interpolator/keySize",  new X3D .SFInt32 (1));
+      const index      = X3D .Algorithm .lowerBound (key, 0, key .length, frame);
+      const indexN     = index * components * keySize;
+
+      keyValue .length = key .length * components * keySize;
+      keyType  .length = key .length;
+
+      // Set meta data
+
+      if (index == key .length || frame == key [index])
+      {
+         key     [index] = frame;
+         keyType [index] = type;
+
+         const length = components * keySize;
+
+         for (let i = 0; i < length; ++ i)
+            keyValue [indexN + i] = value [i];
+      }
+      else
+      {
+         key      .splice (index,  0, frame);
+         keyType  .splice (index,  0, type);
+         keyValue .splice (indexN, 0, ... value);
+      }
+
+      Editor .setNodeMetaData (interpolator, "Interpolator/key",      key);
+      Editor .setNodeMetaData (interpolator, "Interpolator/keyValue", keyValue);
+      Editor .setNodeMetaData (interpolator, "Interpolator/keyType",  keyType);
+
+      this .registerRequestDrawTracks ();
+   }
+
+   registerRequestDrawTracks ()
+   {
+      Editor .undoManager .beginUndo (_("Request Draw Tracks"));
+
+      this .requestDrawTracks ();
+
+      Editor .undoManager .registerUndo (() =>
+      {
+         this .requestDrawTracks ();
+      });
+
+      Editor .undoManager .endUndo ();
    }
 
    // Player
@@ -658,7 +719,7 @@ module .exports = class AnimationEditor extends Interface
 
    toggleAnimation ()
    {
-      require ("../Application/Window") .registerAutoSave ();
+      require ("../Application/Window") .requestAutoSave ();
 
       this .timeSensor ._stopTime = Date .now () / 1000;
 
