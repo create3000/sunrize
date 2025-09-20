@@ -644,8 +644,87 @@ module .exports = class AnimationEditor extends Interface
       return interpolator;
    }
 
+   updateInterpolators ()
+   {
+      for (const interpolator of this .interpolators)
+         this .updateInterpolator (interpolator)
+   }
+
    updateInterpolator (interpolator)
    {
+      switch (interpolator .getType () .at (-1))
+      {
+         case X3D .X3DConstants .BooleanSequencer:
+         case X3D .X3DConstants .IntegerSequencer:
+         {
+            this .updateSequencer (interpolator);
+            break;
+         }
+         case X3D .X3DConstants .ColorInterpolator:
+         case X3D .X3DConstants .ScalarInterpolator:
+         case X3D .X3DConstants .OrientationInterpolator:
+         case X3D .X3DConstants .PositionInterpolator2D:
+         case X3D .X3DConstants .PositionInterpolator:
+         {
+            this .updateScalarInterpolator (interpolator);
+            break;
+         }
+         case X3D .X3DConstants .CoordinateInterpolator2D:
+         case X3D .X3DConstants .CoordinateInterpolator:
+         {
+            this .updateArrayInterpolator (interpolator);
+            break;
+         }
+      }
+   }
+
+   updateSequencer (interpolator)
+   {
+      this .resizeInterpolator (interpolator);
+
+   }
+
+   updateScalarInterpolator (interpolator)
+   {
+      this .resizeInterpolator (interpolator);
+
+   }
+
+   updateArrayInterpolator (interpolator)
+   {
+      this .resizeInterpolator (interpolator);
+
+   }
+
+   resizeInterpolator (interpolator)
+   {
+      const components = this .#components .get (interpolator .getType () .at (-1));
+      const key        = interpolator .getMetaData ("Interpolator/key",      new X3D .MFInt32 ());
+      const keyValue   = interpolator .getMetaData ("Interpolator/keyValue", new X3D .MFDouble ());
+      const keyType    = interpolator .getMetaData ("Interpolator/keyType",  new X3D .MFString ());
+      const keySize    = interpolator .getMetaData ("Interpolator/keySize",  new X3D .SFInt32 (1));
+      const size       = X3D .Algorithm .upperBound (key, 0, key .length, this .getDuration ());
+      const sizeN      = size * components * keySize;
+
+      // Remove frames greater than duration.
+
+      key      .length = size;
+      keyValue .length = sizeN;
+      keyType  .length = size;
+
+      if (interpolator ._value_changed instanceof X3D .X3DArrayField)
+      {
+         // Handle Array Interpolators
+
+         if (!key .length)
+            keySize .setValue (0);
+      }
+
+      Editor .setNodeMetaData (interpolator, "Interpolator/key",      key);
+      Editor .setNodeMetaData (interpolator, "Interpolator/keyValue", keyValue);
+      Editor .setNodeMetaData (interpolator, "Interpolator/keyType",  keyType);
+      Editor .setNodeMetaData (interpolator, "Interpolator/keySize",  keySize);
+
       this .registerRequestDrawTracks ();
    }
 
