@@ -989,7 +989,7 @@ module .exports = class AnimationEditor extends Interface
 
          let iT = i;
 
-         if (keyType [iT] == "SPLIT" && iT + 1 < size)
+         if (keyType [iT] === "SPLIT" && iT + 1 < size)
             ++ iT;
 
          switch (keyType [iT])
@@ -1005,13 +1005,15 @@ module .exports = class AnimationEditor extends Interface
 
                if (key [i] < duration)
                {
-                  const nextFraction = (i == size - 1 ? 1 : key [i + 1] / duration);
+                  const nextFraction = (i === size - 1 ? 1 : key [i + 1] / duration);
 
                   keys .push (nextFraction);
 
                   for (let a = 0; a < length; a += components)
                      keyValues .push (this .getValue (keyValue, iN + a));
                }
+
+               break;
             }
             case "LINEAR":
             case "SPLIT":
@@ -1022,92 +1024,115 @@ module .exports = class AnimationEditor extends Interface
 
                for (let a = 0; a < length; a += components)
                   keyValues .push (... this .getValue (keyValue, iN + a, components));
+
+               break;
             }
             case "SPLINE":
             {
-               // const auto first = interpolator -> keyValue () .size ();
+               const first = keyValues .length;
 
-               // // Generate key.
+               // Generate key.
 
-               // std::vector <int32_t> currentKeys;
+               const currentKeys = [ ];
 
-               // for (; i < size; ++ i)
-               // {
-               //    currentKeys .emplace_back (key [i]);
+               for (; i < size; ++ i)
+               {
+                  currentKeys .push (key [i]);
 
-               //    if (currentKeys .size () == 1)
-               //       continue;
+                  if (currentKeys .length === 1)
+                     continue;
 
-               //    if (keyType [i] not_eq "SPLINE")
-               //       break;
-               // }
+                  if (keyType [i] !== "SPLINE")
+                     break;
+               }
 
-               // if (currentKeys .size () < 2)
-               // {
-               //    // This can happen if only the last frame is of type SPLINE.
-               //    keys .push (fraction);
+               if (currentKeys .length < 2)
+               {
+                  // This can happen if only the last frame is of type SPLINE.
 
-               //    for (size_t a = 0, size = components * keySize; a < size; a += components)
-               //       keyValues .push (getValue <Type> (keyValue, iN + a));
+                  const length = components * keySize;
 
-               //    break;
-               // }
+                  keys .push (fraction);
 
-               // for (size_t k = 0, size = currentKeys .size () - 1; k < size; ++ k)
-               // {
-               //    const int32_t frames   = currentKeys [k + 1] - currentKeys [k];
-               //    const double  fraction = currentKeys [k] / (double) duration;
-               //    const double  distance = frames / (double) duration;
-               //    const auto    framesN  = k + 1 == size and i == key .size () ? frames + 1 : frames;
+                  for (let a = 0; a < length; a += components)
+                     keyValues .push (... this .getValue (keyValue, iN + a, components));
 
-               //    for (int32_t f = 0; f < framesN; ++ f)
-               //    {
-               //       const auto weight = f / (double) frames;
+                  break;
+               }
 
-               //       keys .push (fraction + weight * distance);
-               //    }
-               // }
+               const length = currentKeys .length - 1;
 
-               // // Generate keyValue.
-               // for (int32_t a = 0; a < keySize; ++ a)
-               // {
-               //    std::vector <Type> keyValues;
-               //    std::vector <Type> keyVelocitys;
+               for (let k = 0; k < length; ++ k)
+               {
+                  const frames   = currentKeys [k + 1] - currentKeys [k];
+                  const fraction = currentKeys [k] / duration;
+                  const distance = frames / duration;
+                  const framesN  = k + 1 === length && i === key .length ? frames + 1 : frames;
 
-               //    for (size_t i = 0, aiN = iN + a * components; i < currentKeys .size (); ++ i, aiN += components * keySize)
-               //       keyValues .emplace_back (getValue <Type> (keyValue, aiN));
+                  for (let f = 0; f < framesN; ++ f)
+                  {
+                     const weight = f / frames;
 
-               //    //keyVelocitys .resize (currentKeys .size (), Type ());
+                     keys .push (fraction + weight * distance);
+                  }
+               }
 
-               //    const bool normalizeVelocity = false;
-               //    const bool closed = currentKeys .front () == 0 and currentKeys .back () == duration and keyValues .front () == keyValues .back ();
+               // Generate keyValue.
 
-               //    const math::catmull_rom_spline_interpolator <Type, double> spline (closed, currentKeys, keyValues, keyVelocitys, normalizeVelocity);
+               for (let a = 0; a < keySize; ++ a)
+               {
+                  const currentKeyValues     = [ ];
+                  const currentKeyVelocities = [ ];
+                  const Vector               = this .#vectors .get (components);
 
-               //    size_t totalFrames = 0;
+                  for (let i = 0, aiN = iN + a * components; i < currentKeys .length; ++ i, aiN += components * keySize)
+                     currentKeyValues .push (new Vector (... this .getValue (keyValue, aiN, components)));
 
-               //    for (size_t k = 0, size = currentKeys .size () - 1; k < size; ++ k)
-               //    {
-               //       const int32_t frames  = currentKeys [k + 1] - currentKeys [k];
-               //       const auto    framesN = k + 1 == size and i == key .size () ? frames + 1 : frames;
+                  // currentKeyVelocities .length = currentKeys .length;
 
-               //       for (int32_t f = 0; f < framesN; ++ f)
-               //       {
-               //          const auto weight = f / (double) frames;
-               //          const auto value  = spline .interpolate (k, k + 1, weight, keyValues);
-               //          const auto index  = first + a + (totalFrames + f) * keySize;
+                  const closed = currentKeys .at (0) === 0
+                     && currentKeys .at (-1) === duration
+                     && currentKeyValues .at (0) === currentKeyValues .at (-1); // Compare all of keySize
 
-               //          interpolator -> keyValue () .set1Value (index, value);
-               //       }
+                  const normalizeVelocity = false;
 
-               //       totalFrames += frames;
-               //    }
-               // }
+                  const spline = new X3D [`CatmullRomSplineInterpolator${components}`] ();
 
-               // if (i + 1 not_eq size)
-               //    i -= 1;
+                  spline .generate (closed,
+                                    currentKeys,
+                                    currentKeyValues,
+                                    currentKeyVelocities,
+                                    normalizeVelocity);
 
-               // iN += components * keySize * (currentKeys .size () - 2);
+                  const length = currentKeys .length - 1;
+
+                  let totalFrames = 0;
+
+                  for (let k = 0; k < length; ++ k)
+                  {
+                     const frames  = currentKeys [k + 1] - currentKeys [k];
+                     const framesN = frames + (k + 1 === length && i === key .length);
+
+                     for (let f = 0; f < framesN; ++ f)
+                     {
+                        const weight = f / frames;
+                        const value  = spline .interpolate (k, k + 1, weight, currentKeyValues);
+                        const index  = first + (a + (totalFrames + f) * keySize) * components;
+
+                        if (index >= keyValues .length)
+                           keyValues .length = index + 1;
+
+                        keyValues .splice (index, components, ... value);
+                     }
+
+                     totalFrames += frames;
+                  }
+               }
+
+               if (i + 1 !== size)
+                  i -= 1;
+
+               iN += components * keySize * (currentKeys .length - 2);
                break;
             }
          }
