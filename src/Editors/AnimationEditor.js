@@ -652,7 +652,7 @@ module .exports = class AnimationEditor extends Interface
 
             if (keySize .getValue () !== 0 && keySize .getValue () !== field .length)
             {
-               this .showArraySizeErrorDialog ();
+               this .showArraySizeErrorDialog (keySize .getValue ());
                break;
             }
 
@@ -833,9 +833,10 @@ module .exports = class AnimationEditor extends Interface
       Editor .undoManager .endUndo ();
    }
 
-   showArraySizeErrorDialog ()
+   showArraySizeErrorDialog (keySize)
    {
-
+      console .error (_(`The key size has changed!`));
+      console .error (_(`The number of values must remain consistent throughout the animation. Set size is ${keySize}.`));
    }
 
    // Player
