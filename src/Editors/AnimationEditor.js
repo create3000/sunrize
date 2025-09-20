@@ -1594,6 +1594,11 @@ module .exports = class AnimationEditor extends Interface
 
    on_mousedown ()
    {
+      $(document)
+         .on ("mousemove.AnimationEditor", event => this .updatePointer (event))
+         .on ("mouseup.AnimationEditor",   () => this .on_mouseup ())
+         .on ("mousemove.AnimationEditor", () => this .on_mousemove ());
+
       this .mousedown = true;
 
       this .setCurrentFrame (this .getFrameFromPointer (this .pointerX));
@@ -1601,6 +1606,8 @@ module .exports = class AnimationEditor extends Interface
 
    on_mouseup ()
    {
+      $(document) .off (".AnimationEditor");
+
 		this .mousedown = false;
    }
 
