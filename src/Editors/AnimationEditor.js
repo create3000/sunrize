@@ -553,6 +553,9 @@ module .exports = class AnimationEditor extends Interface
          }
       }
 
+      // DEBUG
+      this .updateInterpolators ();
+
       this .memberList .addNodes (this .members);
       this .memberList .restoreScrollbars ();
    }
@@ -801,61 +804,75 @@ module .exports = class AnimationEditor extends Interface
             }
             case "SPLINE":
             {
-               // std::vector <int32_t> keys;
-               // std::vector <Type>    keyValues;
-               // std::vector <Type>    keyVelocitys;
+               const currentKeys          = [ ];
+               const currentKeyValues     = [ ];
+               const currentKeyVelocities = [ ];
 
-               // for (; i < size; ++ i, iN += components)
-               // {
-               //    const auto value = getValue <Type> (keyValue, iN);
+               for (; i < size; ++ i, iN += components)
+               {
+                  const value = this .getValue (keyValue, iN, components);
 
-               //    keys      .emplace_back (key [i]);
-               //    keyValues .emplace_back (value);
+                  // TODO: if ColorInterpolator use HSV values.
 
-               //    if (keys .size () === 1)
-               //       continue;
+                  currentKeys      .push (key [i]);
+                  currentKeyValues .push (components === 1 ? value [0] : new X3D .Vector4 (... value));
 
-               //    if (keyType [i] not_eq "SPLINE")
-               //       break;
-               // }
+                  if (currentKeys .length === 1)
+                     continue;
 
-               // if (keys .size () < 2)
-               // {
-               //    // This can happen if only the last frame is of type SPLINE.
-               //    interpolator .key ()      .emplace_back (fraction);
-               //    interpolator .keyValue () .emplace_back (value);
-               //    break;
-               // }
+                  if (keyType [i] !== "SPLINE")
+                     break;
+               }
 
-               // //keyVelocitys .resize (keys .size (), Type ());
+               if (currentKeys .length < 2)
+               {
+                  // This can happen if only the last frame is of type SPLINE.
+                  keys      .push (fraction);
+                  keyValues .push (... value);
+                  break;
+               }
 
-               // const bool normalizeVelocity = false;
-               // const bool closed = keys .front () === 0 and keys .back () === duration and keyValues .front () === keyValues .back ();
+               // currentKeyVelocities .length = currentKeys .length;
 
-               // const math::catmull_rom_spline_interpolator <Type, double> spline (closed, keys, keyValues, keyVelocitys, normalizeVelocity);
+               const normalizeVelocity = false;
+               const closed = currentKeys .at (0) === 0
+                  && currentKeys .at (-1) === duration
+                  && currentKeyValues .at (0) === currentKeyValues .at (-1);
 
-               // for (size_t k = 0, size = keys .size () - 1; k < size; ++ k)
-               // {
-               //    const int32_t frames   = keys [k + 1] - keys [k];
-               //    const double  fraction = keys [k] / (double) duration;
-               //    const double  distance = frames / (double) duration;
-               //    const auto    framesN  = k + 1 === size and i === key .size () ? frames + 1 : frames;
+               const spline = interpolator ._value_changed instanceof X3D .SFRotation
+                  ? new X3D .SquadInterpolator ()
+                  : new X3D [`CatmullRomSplineInterpolator${components}`] ();
 
-               //    for (int32_t f = 0; f < framesN; ++ f)
-               //    {
-               //       const auto weight = f / (double) frames;
-               //       const auto value  = spline .interpolate (k, k + 1, weight, keyValues);
+               spline .generate (closed,
+                                 currentKeys,
+                                 currentKeyValues,
+                                 currentKeyVelocities,
+                                 normalizeVelocity);
 
-               //       interpolator .key ()      .emplace_back (fraction + weight * distance);
-               //       interpolator .keyValue () .emplace_back (value);
-               //    }
-               // }
+               const length = currentKeys .length - 1;
 
-               // if (i + 1 not_eq size)
-               // {
-               //    i  -= 1;
-               //    iN -= components;
-               // }
+               for (let k = 0; k < length; ++ k)
+               {
+                  const frames   = currentKeys [k + 1] - currentKeys [k];
+                  const fraction = currentKeys [k] / duration;
+                  const distance = frames / duration;
+                  const framesN  = frames + (k + 1 === length && i === key .length);
+
+                  for (let f = 0; f < framesN; ++ f)
+                  {
+                     const weight = f / frames;
+                     const value  = spline .interpolate (k, k + 1, weight, currentKeyValues);
+
+                     keys      .push (fraction + weight * distance);
+                     keyValues .push (... (components === 1 ? [value] : value));
+                  }
+               }
+
+               if (i + 1 !== size)
+               {
+                  i  -= 1;
+                  iN -= components;
+               }
 
                break;
             }
