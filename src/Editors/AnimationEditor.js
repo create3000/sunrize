@@ -16,10 +16,6 @@ require ("../Bits/Validate");
 
 module .exports = class AnimationEditor extends Interface
 {
-   members       = [ ];
-   interpolators = [ ];
-   fields        = new Map (); // [field, interpolator]
-
    constructor (element)
    {
       super (`Sunrize.AnimationEditor.${element .attr ("id")}.`);
@@ -525,14 +521,18 @@ module .exports = class AnimationEditor extends Interface
 		X3D .X3DConstants .CoordinateInterpolator,
    ]);
 
+   members       = new Set ();
+   fields        = new Map (); // [field, interpolator]
+   interpolators = [ ];
+
    set_interpolators ()
    {
       this .memberList .saveScrollbars ();
-      this .memberList .removeNodes (this .members);
+      this .memberList .removeNodes (Array .from (this .members .values ()));
 
-      this .members .length = 0;
-      this .interpolators .length = 0;
+      this .members .clear ();
       this .fields .clear ();
+      this .interpolators .length = 0;
 
       for (const node of this .animation ._children)
       {
@@ -549,12 +549,12 @@ module .exports = class AnimationEditor extends Interface
                node  = route .getDestinationNode (),
                field = node .getField (route .getDestinationField ());
 
-            this .members .push (node);
+            this .members .add (node);
             this .fields .set (field, interpolator);
          }
       }
 
-      this .memberList .addNodes (this .members);
+      this .memberList .addNodes (Array .from (this .members .values ()));
       this .memberList .restoreScrollbars ();
    }
 
