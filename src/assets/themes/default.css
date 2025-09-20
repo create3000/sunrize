@@ -548,7 +548,8 @@ body.light .qtip-tipsy {
   font-size: var(--font-size);
 }
 
-.horizontal-toolbar .input {
+.horizontal-toolbar .input,
+.horizontal-toolbar .select {
   display: inline-block;
   position: relative;
   top: -3px;
@@ -593,6 +594,7 @@ body.light .qtip-tipsy {
 .horizontal-toolbar .material-symbols-outlined.disabled,
 .horizontal-toolbar .text.disabled,
 .horizontal-toolbar .input.disabled,
+.horizontal-toolbar .select.disabled,
 .vertical-toolbar .material-icons.disabled,
 .vertical-toolbar .material-symbols-outlined.disabled {
   pointer-events: none;

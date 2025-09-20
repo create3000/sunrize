@@ -124,6 +124,18 @@ module .exports = class AnimationEditor extends Interface
          .appendTo (this .toolbar)
          .on ("click", () => this .showProperties ());
 
+      $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
+
+      this .keyTypeElement = $("<select></select>")
+         .addClass ("select")
+         .attr ("title", _("Set keyframe(s) type."))
+         .append ($("<option></option>") .text ("CONSTANT"))
+         .append ($("<option></option>") .text ("LINEAR") .attr ("selected", ""))
+         .append ($("<option></option>") .text ("SPLINE"))
+         .append ($("<option></option>") .text ("SPLIT"))
+         .appendTo (this .toolbar)
+         .on ("change", () => this .setKeyType ());
+
       this .timeElement = $("<span></span>")
          .addClass (["text", "right"])
          .attr ("title", _("Current frame time."))
@@ -368,6 +380,8 @@ module .exports = class AnimationEditor extends Interface
          this .lastFrameIcon,
          this .frameInput,
          this .loopIcon,
+         this .propertiesIcon,
+         this .keyTypeElement,
          this .timeElement,
       ]
       .flatMap (object => [... object]))
@@ -573,11 +587,21 @@ module .exports = class AnimationEditor extends Interface
       [X3D .X3DConstants .CoordinateInterpolator,   3],
    ]);
 
+   getKeyType ()
+   {
+      return this .keyTypeElement .val ();
+   }
+
+   setKeyType ()
+   {
+      console .log (this .getKeyType ());
+   }
+
    addFieldKeyframe (node, field)
    {
       const
          frame = this .getCurrentFrame (),
-         type  = "LINEAR";
+         type  = this .getKeyType ();
 
       Editor .undoManager .beginUndo (_("Add Keyframe To »%s«"), this .animation .getDisplayName ());
 
@@ -622,7 +646,6 @@ module .exports = class AnimationEditor extends Interface
 
    updateInterpolator (interpolator)
    {
-
       this .registerRequestDrawTracks ();
    }
 
