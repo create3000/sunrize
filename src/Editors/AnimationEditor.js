@@ -447,10 +447,11 @@ module .exports = class AnimationEditor extends Interface
       animation .setMetaData ("Animation/frameRate", new X3D .SFInt32 (10));
 
       Editor .insertValueIntoArray (executionContext, group, group ._children, 0, animation);
-      Editor .undoManager .endUndo ();
 
       this .nodeList .setNode (animation);
       this .frameInput .attr ("max", 10);
+
+      Editor .undoManager .endUndo ();
    }
 
    closeAnimation ()
@@ -476,10 +477,10 @@ module .exports = class AnimationEditor extends Interface
       if (event .key !== "Enter")
          return;
 
+      Editor .undoManager .beginUndo (_("Rename Animation"));
+
       const { executionContext, animation, timeSensor } = this;
       const name = this .animationName .val ();
-
-      Editor .undoManager .beginUndo (_("Rename Animation"));
 
       Editor .updateNamedNode (executionContext, executionContext .getUniqueName (`${name}Animation`), animation);
       Editor .updateNamedNode (executionContext, executionContext .getUniqueName (`${name}AnimationTimer`), timeSensor);
@@ -553,9 +554,6 @@ module .exports = class AnimationEditor extends Interface
          }
       }
 
-      // DEBUG
-      this .updateInterpolators ();
-
       this .memberList .addNodes (this .members);
       this .memberList .restoreScrollbars ();
    }
@@ -614,22 +612,20 @@ module .exports = class AnimationEditor extends Interface
 
    addFieldKeyframe (node, field)
    {
-      const
-         typeName = this .#interpolatorTypeNames .get (field .getType ()),
-         frame    = this .getCurrentFrame (),
-         type     = this .getKeyType ();
-
       Editor .undoManager .beginUndo (_("Add Keyframe To »%s«"), this .animation .getDisplayName ());
+
+      const
+         typeName     = this .#interpolatorTypeNames .get (field .getType ()),
+         interpolator = this .getInterpolator (typeName, node, field),
+         frame        = this .getCurrentFrame (),
+         type         = this .getKeyType ();
 
       switch (field .getType ())
       {
          case X3D .X3DConstants .SFBool:
          case X3D .X3DConstants .SFInt32:
          {
-            const interpolator = this .getInterpolator (typeName, node, field);
-
             this .addKeyframeToInterpolator (interpolator, frame, "CONSTANT", field);
-            this .updateInterpolator (interpolator);
             break;
          }
          case X3D .X3DConstants .SFColor:
@@ -638,17 +634,13 @@ module .exports = class AnimationEditor extends Interface
          case X3D .X3DConstants .SFVec2f:
          case X3D .X3DConstants .SFVec3f:
          {
-            const interpolator = this .getInterpolator (typeName, node, field);
-
             this .addKeyframeToInterpolator (interpolator, frame, type, field);
-            this .updateInterpolator (interpolator);
             break;
          }
          case X3D .X3DConstants .MFVec2f:
          case X3D .X3DConstants .MFVec3f:
          {
-            const interpolator = this .getInterpolator (typeName, node, field);
-            const keySize      = interpolator .getMetaData ("Interpolator/keySize", new X3D .SFInt32 ());
+            const keySize = interpolator .getMetaData ("Interpolator/keySize", new X3D .SFInt32 ());
 
             if (field .length === 0)
                break;
@@ -664,10 +656,11 @@ module .exports = class AnimationEditor extends Interface
             Editor .setNodeMetaData (interpolator, "Interpolator/keySize", keySize);
 
             this .addKeyframeToInterpolator (interpolator, frame, type, field);
-            this .updateInterpolator (interpolator);
             break;
          }
       }
+
+      this .updateInterpolator (interpolator);
 
       Editor .undoManager .endUndo ();
    }
@@ -677,13 +670,16 @@ module .exports = class AnimationEditor extends Interface
       if (this .fields .has (field))
          return this .fields .get (field);
 
+      Editor .undoManager .beginUndo (_("Create Interpolator"));
+
+      const executionContext = this .animation .getExecutionContext ();
+
       if (typeName .includes ("Sequencer"))
          Editor .addComponent (executionContext .getLocalScene (), "EventUtilities");
       else if (typeName .includes ("Interpolator"))
          Editor .addComponent (executionContext .getLocalScene (), "Interpolation");
 
-      const executionContext = this .animation .getExecutionContext ();
-      const interpolator     = executionContext .createNode (typeName, false);
+      const interpolator = executionContext .createNode (typeName, false);
 
       interpolator .setup ();
 
@@ -698,17 +694,25 @@ module .exports = class AnimationEditor extends Interface
 
       Editor .updateNamedNode (executionContext, executionContext .getUniqueName (name), interpolator);
 
+      Editor .undoManager .endUndo ();
+      
       return interpolator;
    }
 
    updateInterpolators ()
    {
+      Editor .undoManager .beginUndo (_("Update Interpolators"));
+
       for (const interpolator of this .interpolators)
          this .updateInterpolator (interpolator)
+
+      Editor .undoManager .endUndo ();
    }
 
    updateInterpolator (interpolator)
    {
+      Editor .undoManager .beginUndo (_("Update Interpolator"));
+
       switch (interpolator .getType () .at (-1))
       {
          case X3D .X3DConstants .BooleanSequencer:
@@ -733,6 +737,8 @@ module .exports = class AnimationEditor extends Interface
             break;
          }
       }
+
+      Editor .undoManager .endUndo ();
    }
 
    updateSequencer (interpolator)
