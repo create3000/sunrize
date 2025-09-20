@@ -840,6 +840,7 @@ module .exports = class AnimationEditor extends Interface
                if (currentKeys .length < 2)
                {
                   // This can happen if only the last frame is of type SPLINE.
+                  
                   keys      .push (fraction);
                   keyValues .push (... value);
                   break;
@@ -848,6 +849,7 @@ module .exports = class AnimationEditor extends Interface
                // currentKeyVelocities .length = currentKeys .length;
 
                const normalizeVelocity = false;
+
                const closed = currentKeys .at (0) === 0
                   && currentKeys .at (-1) === duration
                   && currentKeyValues .at (0) === currentKeyValues .at (-1);
