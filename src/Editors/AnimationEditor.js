@@ -714,7 +714,7 @@ module .exports = class AnimationEditor extends Interface
 
       if (interpolator ._value_changed instanceof X3D .X3DArrayField)
       {
-         // Handle Array Interpolators
+         // Handle array interpolators.
 
          if (!key .length)
             keySize .setValue (0);
