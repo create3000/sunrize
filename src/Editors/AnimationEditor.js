@@ -475,8 +475,9 @@ module .exports = class AnimationEditor extends Interface
 
       Editor .undoManager .beginUndo (_("Rename Animation"));
 
-      const { executionContext, animation, timeSensor } = this;
-      const name = this .animationName .val ();
+      const { animation, timeSensor } = this;
+      const executionContext = animation .getExecutionContext ();
+      const name             = this .animationName .val ();
 
       Editor .updateNamedNode (executionContext, executionContext .getUniqueName (`${name}Animation`), animation);
       Editor .updateNamedNode (executionContext, executionContext .getUniqueName (`${name}AnimationTimer`), timeSensor);
@@ -948,6 +949,162 @@ module .exports = class AnimationEditor extends Interface
    updateArrayInterpolator (interpolator)
    {
       this .resizeInterpolator (interpolator);
+
+      const components = this .#components .get (interpolator .getType () .at (-1));
+      const key        = interpolator .getMetaData ("Interpolator/key",      new X3D .MFInt32 ());
+      const keyValue   = interpolator .getMetaData ("Interpolator/keyValue", new X3D .MFDouble ());
+      const keyType    = interpolator .getMetaData ("Interpolator/keyType",  new X3D .MFString ());
+      const keySize    = interpolator .getMetaData ("Interpolator/keySize",  new X3D .SFInt32 ());
+
+      keyValue .length = key .length * components * keySize;
+      keyType  .length = key .length;
+
+      const size      = key .length;
+      const duration  = this .getDuration ();
+      const keys      = [ ];
+      const keyValues = [ ];
+
+      let i  = 0; // index in key
+      let iN = 0; // index in meta data keyValue
+
+      while (i < size)
+      {
+         if (key [i] < 0 && key [i] > duration)
+         {
+            ++ i;
+            continue;
+         }
+
+         const fraction = key [i] / duration;
+
+         let iT = i;
+
+         if (keyType [iT] == "SPLIT" && iT + 1 < size)
+            ++ iT;
+
+         switch (keyType [iT])
+         {
+            case "CONSTANT":
+            {
+               const length = components * keySize;
+
+               keys .push (fraction);
+
+               for (let a = 0; a < length; a += components)
+                  keyValues .push (... this .getValue (keyValue, iN + a, components));
+
+               if (key [i] < duration)
+               {
+                  const nextFraction = (i == size - 1 ? 1 : key [i + 1] / duration);
+
+                  keys .push (nextFraction);
+
+                  for (let a = 0; a < length; a += components)
+                     keyValues .push (this .getValue (keyValue, iN + a));
+               }
+            }
+            case "LINEAR":
+            case "SPLIT":
+            {
+               const length = components * keySize;
+
+               keys .push (fraction);
+
+               for (let a = 0; a < length; a += components)
+                  keyValues .push (... this .getValue (keyValue, iN + a, components));
+            }
+            case "SPLINE":
+            {
+               // const auto first = interpolator -> keyValue () .size ();
+
+               // // Generate key.
+
+               // std::vector <int32_t> currentKeys;
+
+               // for (; i < size; ++ i)
+               // {
+               //    currentKeys .emplace_back (key [i]);
+
+               //    if (currentKeys .size () == 1)
+               //       continue;
+
+               //    if (keyType [i] not_eq "SPLINE")
+               //       break;
+               // }
+
+               // if (currentKeys .size () < 2)
+               // {
+               //    // This can happen if only the last frame is of type SPLINE.
+               //    keys .push (fraction);
+
+               //    for (size_t a = 0, size = components * keySize; a < size; a += components)
+               //       keyValues .push (getValue <Type> (keyValue, iN + a));
+
+               //    break;
+               // }
+
+               // for (size_t k = 0, size = currentKeys .size () - 1; k < size; ++ k)
+               // {
+               //    const int32_t frames   = currentKeys [k + 1] - currentKeys [k];
+               //    const double  fraction = currentKeys [k] / (double) duration;
+               //    const double  distance = frames / (double) duration;
+               //    const auto    framesN  = k + 1 == size and i == key .size () ? frames + 1 : frames;
+
+               //    for (int32_t f = 0; f < framesN; ++ f)
+               //    {
+               //       const auto weight = f / (double) frames;
+
+               //       keys .push (fraction + weight * distance);
+               //    }
+               // }
+
+               // // Generate keyValue.
+               // for (int32_t a = 0; a < keySize; ++ a)
+               // {
+               //    std::vector <Type> keyValues;
+               //    std::vector <Type> keyVelocitys;
+
+               //    for (size_t i = 0, aiN = iN + a * components; i < currentKeys .size (); ++ i, aiN += components * keySize)
+               //       keyValues .emplace_back (getValue <Type> (keyValue, aiN));
+
+               //    //keyVelocitys .resize (currentKeys .size (), Type ());
+
+               //    const bool normalizeVelocity = false;
+               //    const bool closed = currentKeys .front () == 0 and currentKeys .back () == duration and keyValues .front () == keyValues .back ();
+
+               //    const math::catmull_rom_spline_interpolator <Type, double> spline (closed, currentKeys, keyValues, keyVelocitys, normalizeVelocity);
+
+               //    size_t totalFrames = 0;
+
+               //    for (size_t k = 0, size = currentKeys .size () - 1; k < size; ++ k)
+               //    {
+               //       const int32_t frames  = currentKeys [k + 1] - currentKeys [k];
+               //       const auto    framesN = k + 1 == size and i == key .size () ? frames + 1 : frames;
+
+               //       for (int32_t f = 0; f < framesN; ++ f)
+               //       {
+               //          const auto weight = f / (double) frames;
+               //          const auto value  = spline .interpolate (k, k + 1, weight, keyValues);
+               //          const auto index  = first + a + (totalFrames + f) * keySize;
+
+               //          interpolator -> keyValue () .set1Value (index, value);
+               //       }
+
+               //       totalFrames += frames;
+               //    }
+               // }
+
+               // if (i + 1 not_eq size)
+               //    i -= 1;
+
+               // iN += components * keySize * (currentKeys .size () - 2);
+               break;
+            }
+         }
+
+         i  += 1;
+         iN += components * keySize;
+      }
 
       this .registerRequestDrawTracks ();
    }
