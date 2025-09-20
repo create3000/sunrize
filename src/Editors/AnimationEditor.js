@@ -1208,8 +1208,8 @@ module .exports = class AnimationEditor extends Interface
          ? components * keySize // update
          : 0;                   // insert
 
-      key      .splice (index,  deleteCount, frame);
-      keyType  .splice (index,  deleteCount, type);
+      key      .splice (index,  deleteCount ? 1 : 0, frame);
+      keyType  .splice (index,  deleteCount ? 1 : 0, type);
       keyValue .splice (indexN, deleteCount, ... (components === 1 ? [value] : value));
 
       Editor .setNodeMetaData (interpolator, "Interpolator/key",      key);
