@@ -619,7 +619,7 @@ module .exports = class AnimationEditor extends Interface
    {
       Editor .undoManager .beginUndo (_("Add Keyframe To »%s«"), this .animation .getDisplayName ());
 
-      const typeName = node .getType () .includes (X3D .X3DConstants .Normal)
+      const typeName = node .getType () .includes (X3D .X3DConstants .Normal) && field .getName () === "vector"
             ? "NormalInterpolator"
             : this .#interpolatorTypeNames .get (field .getType ());
 
