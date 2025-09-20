@@ -897,7 +897,9 @@ module .exports = class AnimationEditor extends Interface
 
                const closed = currentKeys .at (0) === 0
                   && currentKeys .at (-1) === duration
-                  && currentKeyValues .at (0) === currentKeyValues .at (-1);
+                  && (components === 1
+                     ? currentKeyValues .at (0) === currentKeyValues .at (-1)
+                     : currentKeyValues .at (0) .equals (currentKeyValues .at (-1)));
 
                const normalizeVelocity = false;
 
@@ -1092,7 +1094,7 @@ module .exports = class AnimationEditor extends Interface
 
                   const closed = currentKeys .at (0) === 0
                      && currentKeys .at (-1) === duration
-                     && currentKeyValues .at (0) === currentKeyValues .at (-1);
+                     && currentKeyValues .at (0) .equals (currentKeyValues .at (-1));
 
                   const normalizeVelocity = false;
 
