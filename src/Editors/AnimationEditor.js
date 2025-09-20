@@ -220,7 +220,7 @@ module .exports = class AnimationEditor extends Interface
       this .memberList = new MemberList (this, this .membersListElement,
       {
          fields: this .fields,
-         removeCallback: nodes => this .removeMembers (nodes),
+         removeNodesCallback: nodes => this .removeMembers (nodes),
          closeCallback: () => this .closeAnimation (),
          addFieldKeyframeCallback: (node, field) => this .addFieldKeyframe (node, field),
       });
@@ -507,7 +507,22 @@ module .exports = class AnimationEditor extends Interface
 
    removeMembers (nodes)
    {
-      this .requestDrawTracks ();
+      Editor .undoManager .beginUndo ("Remove Member from Animation");
+
+      for (const node of nodes)
+      {
+         const
+            animation        = this .animation,
+            executionContext = animation .getExecutionContext (),
+            interpolators    = Array .from (node .getFields (), field => this .fields .get (field)),
+            children         = animation ._children .filter (node => !interpolators .includes (node .getValue ()));
+
+         Editor .setFieldValue (executionContext, animation, animation ._children, children);
+      }
+
+      this .registerRequestDrawTracks ();
+
+      Editor .undoManager .endUndo ();
    }
 
    #interpolatorTypes = new Set ([

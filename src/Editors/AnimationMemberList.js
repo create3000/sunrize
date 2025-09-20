@@ -15,13 +15,13 @@ module .exports = class AnimationMembersList extends Interface
    #list;
    #nodes;
    #fields;
-   #removeCallback;
+   #removeNodesCallback;
    #closeCallback;
    #addMainKeyframeCallback;
    #addNodeKeyframeCallback;
    #addFieldKeyframeCallback;
 
-   constructor (editor, element, { fields, removeCallback, closeCallback, addMainKeyframeCallback, addNodeKeyframeCallback, addFieldKeyframeCallback })
+   constructor (editor, element, { fields, removeNodesCallback, closeCallback, addMainKeyframeCallback, addNodeKeyframeCallback, addFieldKeyframeCallback })
    {
       super ("Sunrize.AnimationMembersList.");
 
@@ -30,7 +30,7 @@ module .exports = class AnimationMembersList extends Interface
       this .#list                     = $("<ul></ul>") .appendTo (this .#nodeList);
       this .#nodes                    = [ ];
       this .#fields                   = fields;
-      this .#removeCallback           = removeCallback;
+      this .#removeNodesCallback      = removeNodesCallback;
       this .#closeCallback            = closeCallback;
       this .#addMainKeyframeCallback  = addMainKeyframeCallback;
       this .#addNodeKeyframeCallback  = addNodeKeyframeCallback;
@@ -153,7 +153,8 @@ module .exports = class AnimationMembersList extends Interface
             .addClass (["material-icons-outlined", "button"])
             .attr ("title", _("Remove member from animation."))
             .text ("cancel")
-            .on ("click", () => this .removeNodes ([node]));
+            .on ("click", () => this .removeNodes ([node]))
+            .on ("click", () => this .#removeNodesCallback ([node]));
 
          const item = $("<div></div>")
             .data ("i", i ++)
@@ -279,8 +280,6 @@ module .exports = class AnimationMembersList extends Interface
       }
 
       this .#nodes = this .#nodes .filter (node => !nodes .includes (node));
-
-      this .#removeCallback (nodes);
    }
 
    getName (node)
