@@ -481,6 +481,7 @@ module .exports = class AnimationEditor extends Interface
       const executionContext = animation .getExecutionContext ();
       const name             = this .animationName .val ();
 
+      // Don't update description if manually set.
       if (!timeSensor ._description .getValue () || timeSensor ._description .getValue () === animation .getDisplayName ())
          Editor .setFieldValue (executionContext, timeSensor, timeSensor ._description, `${name}Animation`);
 
