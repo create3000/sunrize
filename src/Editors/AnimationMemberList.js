@@ -60,6 +60,8 @@ module .exports = class AnimationMembersList extends Interface
       this .removeNodes (this .#nodes .filter (node => !node .isLive ()));
    }
 
+   // Scrollbars Handling
+
    #scrollTop;
    #scrollLeft;
 
@@ -74,6 +76,29 @@ module .exports = class AnimationMembersList extends Interface
       this .#nodeList .scrollTop (this .#scrollTop);
       this .#nodeList .scrollLeft (this .#scrollLeft);
    }
+
+   // Animation Handling
+
+   setAnimation (animation, timeSensor)
+   {
+      this .#timeSensor ?._isPaused .removeInterest ("connectNodes", this);
+      this .#timeSensor ?._isActive .removeInterest ("connectNodes", this);
+
+      this .#animation  = animation;
+      this .#timeSensor = timeSensor;
+
+      this .#animation [_expanded] ??= Symbol ();
+
+      this .#timeSensor ._isPaused .addInterest ("connectNodes", this);
+      this .#timeSensor ._isActive .addInterest ("connectNodes", this);
+   }
+
+   setAnimationName (name)
+   {
+      this .animationName .text (name);
+   }
+
+   // List Elements Handling
 
    addMain ()
    {
@@ -108,25 +133,6 @@ module .exports = class AnimationMembersList extends Interface
          .on ("mouseleave", () => item .removeClass ("hover"));
 
       fieldList .appendTo (listItem);
-   }
-
-   setAnimation (animation, timeSensor)
-   {
-      this .#timeSensor ?._isPaused .removeInterest ("connectNodes", this);
-      this .#timeSensor ?._isActive .removeInterest ("connectNodes", this);
-
-      this .#animation  = animation;
-      this .#timeSensor = timeSensor;
-
-      this .#animation [_expanded] ??= Symbol ();
-
-      this .#timeSensor ._isPaused .addInterest ("connectNodes", this);
-      this .#timeSensor ._isActive .addInterest ("connectNodes", this);
-   }
-
-   setAnimationName (name)
-   {
-      this .animationName .text (name);
    }
 
    clearNodes ()
@@ -321,6 +327,8 @@ module .exports = class AnimationMembersList extends Interface
    {
       element .text (this .getName (node));
    }
+
+   // Timeline Handling
 
    getTrackOffsets ()
    {
