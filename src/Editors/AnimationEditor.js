@@ -322,7 +322,7 @@ module .exports = class AnimationEditor extends Interface
 
          this .nodeListElement .hide ();
          this .membersListElement .show ();
-         this .memberList .setAnimation (this .animation);
+         this .memberList .setAnimation (this .animation, this .timeSensor);
 
          // Interpolators
 
@@ -763,6 +763,8 @@ module .exports = class AnimationEditor extends Interface
             break;
          }
       }
+
+      interpolator ._set_fraction .addEvent ();
 
       Editor .undoManager .endUndo ();
    }

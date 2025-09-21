@@ -20,6 +20,8 @@ module .exports = class AnimationMembersList extends Interface
    #addMainKeyframeCallback;
    #addNodeKeyframeCallback;
    #addFieldKeyframeCallback;
+   #animation;
+   #timeSensor;
 
    constructor (editor, element, { fields, removeNodesCallback, closeCallback, addMainKeyframeCallback, addNodeKeyframeCallback, addFieldKeyframeCallback })
    {
@@ -108,11 +110,18 @@ module .exports = class AnimationMembersList extends Interface
       fieldList .appendTo (listItem);
    }
 
-   setAnimation (animation)
+   setAnimation (animation, timeSensor)
    {
-      this .animation = animation;
+      this .#timeSensor ?._isPaused .removeInterest ("connectNodes", this);
+      this .#timeSensor ?._isActive .removeInterest ("connectNodes", this);
 
-      this .animation [_expanded] ??= Symbol ();
+      this .#animation  = animation;
+      this .#timeSensor = timeSensor;
+
+      this .#animation [_expanded] ??= Symbol ();
+
+      this .#timeSensor ._isPaused .addInterest ("connectNodes", this);
+      this .#timeSensor ._isActive .addInterest ("connectNodes", this);
    }
 
    setAnimationName (name)
@@ -144,7 +153,7 @@ module .exports = class AnimationMembersList extends Interface
 
          const expandIcon = $("<span></span>")
             .addClass (["material-icons-outlined", "button"])
-            .addClass (node .getUserData (this .animation [_expanded]) ? "on" : "off")
+            .addClass (node .getUserData (this .#animation [_expanded]) ? "on" : "off")
             .attr ("title", _("Show all fields."))
             .text ("expand_circle_down")
             .on ("click", () => this .toggleExpand (expandIcon, fieldList, node));
@@ -200,7 +209,7 @@ module .exports = class AnimationMembersList extends Interface
 
    createFieldElements (fieldList, node)
    {
-      const expanded = node .getUserData (this .animation [_expanded])
+      const expanded = node .getUserData (this .#animation [_expanded])
          || node .getFields () .every (field => !this .#fields .has (field));
 
       let i = 0;
@@ -217,24 +226,26 @@ module .exports = class AnimationMembersList extends Interface
             continue;
 
          const listItem = $("<li></li>")
+            .attr ("node-id", node .getId ())
+            .attr ("field-id", field .getId ())
             .appendTo (fieldList);
 
          const iconElement = $("<img></img>")
             .attr ("title", field .getTypeName ())
             .addClass ("icon")
             .attr ("src", `../images/OutlineEditor/Fields/${field .getTypeName()}.svg`)
-            .on ("dblclick", () => this .#addFieldKeyframeCallback (node, field));
+            .on ("dblclick", () => this .addKeyframe (node, field));
 
          const nameElement = $("<span></span>")
             .addClass ("field-name")
             .text (field .getName ())
-            .on ("dblclick", () => this .#addFieldKeyframeCallback (node, field));
+            .on ("dblclick", () => this .addKeyframe (node, field));
 
          const applyIcon = $("<span></span>")
-            .addClass (["material-icons", "button", "off"])
+            .addClass (["apply", "material-icons", "button", "off"])
             .attr ("title", _("Add keyframe."))
             .text ("check_box")
-            .on ("click", () => this .#addFieldKeyframeCallback (node, field));
+            .on ("click", () => this .addKeyframe (node, field));
 
          const item = $("<div></div>")
             .data ("i", i ++ )
@@ -252,15 +263,17 @@ module .exports = class AnimationMembersList extends Interface
             .on ("mouseenter", () => item .addClass ("hover"))
             .on ("mouseleave", () => item .removeClass ("hover"));
       }
+
+      this .connectNode (node);
    }
 
    toggleExpand (expandIcon, fieldList, node)
    {
-      node .setUserData (this .animation [_expanded], !node .getUserData (this .animation [_expanded]));
+      node .setUserData (this .#animation [_expanded], !node .getUserData (this .#animation [_expanded]));
 
       expandIcon
          .removeClass (["on", "off"])
-         .addClass (node .getUserData (this .animation [_expanded]) ? "on" : "off");
+         .addClass (node .getUserData (this .#animation [_expanded]) ? "on" : "off");
 
       fieldList .empty ();
 
@@ -277,6 +290,8 @@ module .exports = class AnimationMembersList extends Interface
 
          node .typeName_changed .removeInterest ("set_typeName", this);
          node .name_changed     .removeInterest ("set_name",     this);
+
+         node .removeInterest ("checkFields", this);
       }
 
       this .#nodes = this .#nodes .filter (node => !nodes .includes (node));
@@ -333,5 +348,71 @@ module .exports = class AnimationMembersList extends Interface
       }
 
       return offsets;
+   }
+
+   // Apply Button Handling
+
+   addKeyframe (node, field)
+   {
+      this .#addFieldKeyframeCallback (node, field);
+      this .toggleApply (field, false);
+   }
+
+   connectNodes ()
+   {
+      this .removeApply ();
+
+      for (const node of this .#nodes)
+         this .connectNode (node);
+   }
+
+   connectNode (node)
+   {
+      if (this .#timeSensor ._isActive .getValue () && !this .#timeSensor ._isPaused .getValue ())
+      {
+         node .removeInterest ("checkFields", this);
+      }
+      else
+      {
+         node .addInterest ("checkFields", this);
+
+         this .checkFields (node);
+      }
+   }
+
+   checkFields (node)
+   {
+      for (const field of node .getFields ())
+      {
+         const interpolator = this .#editor .fields .get (field);
+
+         if (!interpolator)
+            continue;
+
+         this .toggleApply (field, !interpolator ._value_changed .equals (field))
+      }
+   }
+
+   removeApply ()
+   {
+      this .#nodeList .find (".apply")
+         .removeClass ("green")
+         .addClass ("off");
+   }
+
+   toggleApply (field, value)
+   {
+      if (value)
+      {
+         this .#nodeList .find (`[field-id=${field .getId ()}] > .item .apply`)
+            .removeClass ("off")
+            .addClass ("green");
+      }
+      else
+      {
+         this .#nodeList .find (`[field-id=${field .getId ()}] > .item .apply`)
+            .removeClass ("green")
+            .addClass ("off");
+      }
    }
 };
