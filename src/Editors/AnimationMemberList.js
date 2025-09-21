@@ -270,7 +270,7 @@ module .exports = class AnimationMembersList extends Interface
             .on ("mouseleave", () => item .removeClass ("hover"));
       }
 
-      this .connectNode (node);
+      this .connectNode (node, !this .isRunning ());
    }
 
    toggleExpand (expandIcon, fieldList, node)
@@ -297,7 +297,7 @@ module .exports = class AnimationMembersList extends Interface
          node .typeName_changed .removeInterest ("set_typeName", this);
          node .name_changed     .removeInterest ("set_name",     this);
 
-         node .removeInterest ("checkFields", this);
+         this .connectNode (node, false)
       }
 
       this .#nodes = this .#nodes .filter (node => !nodes .includes (node));
@@ -366,32 +366,36 @@ module .exports = class AnimationMembersList extends Interface
       this .toggleApply (field, false);
    }
 
-   connectNodes ()
+   isRunning ()
    {
-      this .removeApply ();
-
-      for (const node of this .#nodes)
-         this .connectNode (node);
+      return this .#timeSensor ._isActive .getValue () && !this .#timeSensor ._isPaused .getValue ()
    }
 
-   connectNode (node)
+   connectNodes ()
    {
-      if (this .#timeSensor ._isActive .getValue () && !this .#timeSensor ._isPaused .getValue ())
+      if (this .isRunning ())
       {
-         node .removeInterest ("checkFields", this);
+         this .removeApply ();
       }
       else
       {
-         node .addInterest ("checkFields", this);
-
-         this .checkFields ();
+         for (const node of this .#nodes)
+            this .connectNode (node, true);
       }
    }
 
-   checkFields ()
+   connectNode (node, connect)
    {
-      for (const [field, interpolator] of this .#editor .fields)
-         this .toggleApply (field, !interpolator ._value_changed .equals (field));
+      if (connect)
+      {
+         node .addInterest ("checkApply", this);
+
+         this .checkApply ();
+      }
+      else
+      {
+         node .removeInterest ("checkApply", this);
+      }
    }
 
    removeApply ()
@@ -399,6 +403,12 @@ module .exports = class AnimationMembersList extends Interface
       this .#nodeList .find (".apply")
          .removeClass ("green")
          .addClass ("off");
+   }
+
+   checkApply ()
+   {
+      for (const [field, interpolator] of this .#editor .fields)
+         this .toggleApply (field, !interpolator ._value_changed .equals (field));
    }
 
    toggleApply (field, value)
