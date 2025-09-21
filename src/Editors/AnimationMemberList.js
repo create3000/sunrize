@@ -384,21 +384,14 @@ module .exports = class AnimationMembersList extends Interface
       {
          node .addInterest ("checkFields", this);
 
-         this .checkFields (node);
+         this .checkFields ();
       }
    }
 
-   checkFields (node)
+   checkFields ()
    {
-      for (const field of node .getFields ())
-      {
-         const interpolator = this .#editor .fields .get (field);
-
-         if (!interpolator)
-            continue;
-
-         this .toggleApply (field, !interpolator ._value_changed .equals (field))
-      }
+      for (const [field, interpolator] of this .#editor .fields)
+         this .toggleApply (field, !interpolator ._value_changed .equals (field));
    }
 
    removeApply ()
