@@ -554,9 +554,6 @@ module .exports = class AnimationEditor extends Interface
       this .fields .clear ();
       this .interpolators .length = 0;
 
-      if (!this .animation ._children .find (node => node .getValue () .getType () .includes (X3D .X3DConstants .TimeSensor)))
-         return this .nodeList .setNode (null);
-
       for (const node of this .animation ._children)
       {
          const interpolator = node .getValue ();
