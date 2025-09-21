@@ -251,10 +251,13 @@ module .exports = class AnimationEditor extends Interface
 
    isAnimation (node)
    {
-      if (node .getTypeName () !== "Group")
+      if (!node .getType () .includes (X3D .X3DConstants .Group))
          return false;
 
       if (!node .hasMetaData ("Animation/duration"))
+         return false;
+
+      if (!node ._children .find (node => node .getValue () .getType () .includes (X3D .X3DConstants .TimeSensor)))
          return false;
 
       return true;
@@ -550,6 +553,9 @@ module .exports = class AnimationEditor extends Interface
       this .members .clear ();
       this .fields .clear ();
       this .interpolators .length = 0;
+
+      if (!this .animation ._children .find (node => node .getValue () .getType () .includes (X3D .X3DConstants .TimeSensor)))
+         return this .nodeList .setNode (null);
 
       for (const node of this .animation ._children)
       {
