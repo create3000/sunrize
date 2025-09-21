@@ -490,7 +490,7 @@ module .exports = class AnimationEditor extends Interface
       const { animation, timeSensor } = this;
       const executionContext = animation .getExecutionContext ();
       const name             = this .animationName .val ();
-      const oldDescription   = getAnimationName (animation);
+      const oldDescription   = getDescription (animation);
 
       Editor .updateNamedNode (executionContext, executionContext .getUniqueName (`${name}Animation`), animation);
       Editor .updateNamedNode (executionContext, executionContext .getUniqueName (`${name}AnimationTimer`), timeSensor);
