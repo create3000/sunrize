@@ -1394,7 +1394,7 @@ module .exports = class OutlineView extends Interface
          buttons .slice (-3) .forEach (button => button .hide ());
 
       if (!node ._isActive .getValue ())
-         node ._isEvenLive = false;
+         node ._evenLive = false;
    }
 
    isInParents (parent, node)
