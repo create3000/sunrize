@@ -480,13 +480,18 @@ module .exports = class AnimationEditor extends Interface
       const { animation, timeSensor } = this;
       const executionContext = animation .getExecutionContext ();
       const name             = this .animationName .val ();
-
-      // Don't update description if manually set.
-      if (!timeSensor ._description .getValue () || timeSensor ._description .getValue () === animation .getDisplayName ())
-         Editor .setFieldValue (executionContext, timeSensor, timeSensor ._description, `${name}Animation`);
+      const oldDescription   = animation .getDisplayName () .replace (/([A-Z][a-z])/g, " $1") .trim ();
 
       Editor .updateNamedNode (executionContext, executionContext .getUniqueName (`${name}Animation`), animation);
       Editor .updateNamedNode (executionContext, executionContext .getUniqueName (`${name}AnimationTimer`), timeSensor);
+
+      // Don't update description if manually set.
+      if (!timeSensor ._description .getValue () || timeSensor ._description .getValue () === oldDescription)
+      {
+         const description = animation .getDisplayName () .replace (/([A-Z][a-z])/g, " $1") .trim ();
+
+         Editor .setFieldValue (executionContext, timeSensor, timeSensor ._description, description);
+      }
 
       for (const interpolator of this .interpolators)
       {
