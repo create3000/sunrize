@@ -475,23 +475,29 @@ module .exports = class AnimationEditor extends Interface
       if (event .key !== "Enter")
          return;
 
+      const getDescription = (animation) =>
+      {
+         return animation .getDisplayName ()
+            .replace (/(\d+)/g, " $1")
+            .replace (/([A-Z]+[a-z\d ]+)/g, " $1")
+            .replace (/([A-Z][a-z]+)/g, " $1")
+            .replace (/\s+/g, " ")
+            .trim ();
+      }
+
       Editor .undoManager .beginUndo (_("Rename Animation"));
 
       const { animation, timeSensor } = this;
       const executionContext = animation .getExecutionContext ();
       const name             = this .animationName .val ();
-      const oldDescription   = animation .getDisplayName () .replace (/([A-Z][a-z])/g, " $1") .trim ();
+      const oldDescription   = getAnimationName (animation);
 
       Editor .updateNamedNode (executionContext, executionContext .getUniqueName (`${name}Animation`), animation);
       Editor .updateNamedNode (executionContext, executionContext .getUniqueName (`${name}AnimationTimer`), timeSensor);
 
       // Don't update description if manually set.
       if (!timeSensor ._description .getValue () || timeSensor ._description .getValue () === oldDescription)
-      {
-         const description = animation .getDisplayName () .replace (/([A-Z][a-z])/g, " $1") .trim ();
-
-         Editor .setFieldValue (executionContext, timeSensor, timeSensor ._description, description);
-      }
+         Editor .setFieldValue (executionContext, timeSensor, timeSensor ._description, getDescription (animation));
 
       for (const interpolator of this .interpolators)
       {
