@@ -1339,6 +1339,24 @@ module .exports = class AnimationEditor extends Interface
 
    }
 
+   updateRange ()
+   {
+      const selectedRange = this .getSelectedRange ();
+
+      if (selectedRange [0] === selectedRange [1])
+      {
+         this .timeSensor ._range [1] = 0;
+         this .timeSensor ._range [2] = 1;
+      }
+      else
+      {
+         const duration = this .getDuration ();
+
+         this .timeSensor ._range [1] = selectedRange [0] / duration;
+         this .timeSensor ._range [2] = selectedRange [1] / duration;
+      }
+   }
+
    formatFrames (frame, framesPerSecond)
    {
       let time = Math .floor (frame);
@@ -1690,6 +1708,7 @@ module .exports = class AnimationEditor extends Interface
                this .selectKeyframesInRange ();
             }
 
+            this .updateRange ();
             break;
          }
       }
