@@ -1643,7 +1643,7 @@ module .exports = class AnimationEditor extends Interface
             this .updatePointer (event);
             this .setCurrentFrame (this .getFrameFromPointer (this .pointer .x));
 
-            this .#selectedRange    = [this .getCurrentFrame (), this .getCurrentFrame ()];
+            this .selectedRange     = [this .getCurrentFrame (), this .getCurrentFrame ()];
             this .selectedKeyframes = this .pickKeyframes ();
             break;
          }
@@ -1675,11 +1675,20 @@ module .exports = class AnimationEditor extends Interface
          case 0:
          {
             this .updatePointer (event);
-            this .setCurrentFrame (this .getFrameFromPointer (this .pointer .x));
 
-			   this .#selectedRange [1] = this .getCurrentFrame ();
+            if (this .selectedKeyframes .length)
+            {
 
-            this .selectKeyframes ();
+            }
+            else
+            {
+               this .setCurrentFrame (this .getFrameFromPointer (this .pointer .x));
+
+               this .selectedRange [1] = this .getCurrentFrame ();
+
+               this .selectKeyframes ();
+            }
+
             break;
          }
       }
@@ -1770,19 +1779,19 @@ module .exports = class AnimationEditor extends Interface
 		}
    }
 
-   #selectedRange = [0, 0];
+   selectedRange = [0, 0];
 
    getSelectedRange ()
    {
-      if (this .#selectedRange [0] > this .#selectedRange [1])
+      if (this .selectedRange [0] > this .selectedRange [1])
       {
-         const tmp = this .#selectedRange [0];
+         const tmp = this .selectedRange [0];
 
-         this .#selectedRange [0] = this .#selectedRange [1];
-         this .#selectedRange [1] = tmp;
+         this .selectedRange [0] = this .selectedRange [1];
+         this .selectedRange [1] = tmp;
       }
 
-      return this .#selectedRange;
+      return this .selectedRange;
    }
 
    selectKeyframes ()
@@ -1852,7 +1861,7 @@ module .exports = class AnimationEditor extends Interface
 
       // Draw selection range.
 
-      const selectedRange = this .getSelectedRange ();
+      const selectedRange = this .selectedRange;
 
       if (selectedRange [0] !== selectedRange [1])
       {
