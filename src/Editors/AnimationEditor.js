@@ -1485,7 +1485,7 @@ module .exports = class AnimationEditor extends Interface
          }
          case "a":
          {
-            if (event .originalEvent .getModifierState ("Control"))
+            if (event .metaKey || event .ctrlKey)
             {
                this .selectedRange = [0, this .getDuration ()];
 
