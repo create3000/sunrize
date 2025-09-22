@@ -1888,6 +1888,9 @@ module .exports = class AnimationEditor extends Interface
 
       const selectedRange = this .getSelectedRange ();
 
+      if (selectedRange [0] === selectedRange [1])
+         return;
+
       for (const [field, interpolator] of this .fields)
       {
          const
@@ -1898,6 +1901,8 @@ module .exports = class AnimationEditor extends Interface
          for (let index = first; index < last; ++ index)
             this .selectedKeyframes .push ({ field, interpolator, index });
       }
+
+      this .requestDrawTracks ();
    }
 
    moveOrSelectKeyframes ()
