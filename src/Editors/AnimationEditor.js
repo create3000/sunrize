@@ -1275,22 +1275,22 @@ module .exports = class AnimationEditor extends Interface
 
    firstFrame ()
    {
-      const selectedRange = this .getSelectedRange ();
+      const selectionRange = this .getSelectionRange ();
 
-      if (selectedRange [0] === selectedRange [1])
+      if (selectionRange [0] === selectionRange [1])
          this .setCurrentFrame (0);
       else
-         this .setCurrentFrame (selectedRange [0]);
+         this .setCurrentFrame (selectionRange [0]);
    }
 
    lastFrame ()
    {
-      const selectedRange = this .getSelectedRange ();
+      const selectionRange = this .getSelectionRange ();
 
-      if (selectedRange [0] === selectedRange [1])
+      if (selectionRange [0] === selectionRange [1])
          this .setCurrentFrame (this .getDuration ());
       else
-         this .setCurrentFrame (selectedRange [1]);
+         this .setCurrentFrame (selectionRange [1]);
    }
 
    previousFrame ()
@@ -1339,9 +1339,9 @@ module .exports = class AnimationEditor extends Interface
 
    updateRange ()
    {
-      const selectedRange = this .getSelectedRange ();
+      const selectionRange = this .getSelectionRange ();
 
-      if (selectedRange [0] === selectedRange [1])
+      if (selectionRange [0] === selectionRange [1])
       {
          this .timeSensor ._range [1] = 0;
          this .timeSensor ._range [2] = 1;
@@ -1350,8 +1350,8 @@ module .exports = class AnimationEditor extends Interface
       {
          const duration = this .getDuration ();
 
-         this .timeSensor ._range [1] = selectedRange [0] / duration;
-         this .timeSensor ._range [2] = selectedRange [1] / duration;
+         this .timeSensor ._range [1] = selectionRange [0] / duration;
+         this .timeSensor ._range [2] = selectionRange [1] / duration;
       }
    }
 
@@ -1487,7 +1487,7 @@ module .exports = class AnimationEditor extends Interface
          {
             if (event .metaKey || event .ctrlKey)
             {
-               this .setSelectedRange (0, this .getDuration ());
+               this .setSelectionRange (0, this .getDuration ());
 
                event .preventDefault ();
                event .stopPropagation ();
@@ -1669,10 +1669,14 @@ module .exports = class AnimationEditor extends Interface
             this .updatePointer (event);
             this .setCurrentFrame (this .getFrameFromPointer (this .pointer .x));
             this .addAutoScroll ();
-            this .setSelectedRange (this .getCurrentFrame (), this .getCurrentFrame ());
 
             this .pickedKeyframes   = this .pickKeyframes ();
             this .selectedKeyframes = this .pickedKeyframes .slice ();
+
+            if (event .shiftKey)
+               this .expandSelectionRange (this .getCurrentFrame ());
+            else
+               this .setSelectionRange (this .getCurrentFrame (), this .getCurrentFrame ());
 
             this .timeSensor ._pauseTime = Date .now () / 1000;
             break;
@@ -1863,11 +1867,11 @@ module .exports = class AnimationEditor extends Interface
       }
    }
 
-   selectedRange = [0, 0];
+   selectionRange = [0, 0];
 
-   getSelectedRange ()
+   getSelectionRange ()
    {
-      const [a, b] = this .selectedRange;
+      const [a, b] = this .selectionRange;
 
       if (a < b)
          return [a, b];
@@ -1875,28 +1879,42 @@ module .exports = class AnimationEditor extends Interface
       return [b, a];
    }
 
-   setSelectedRange (start, end)
+   setSelectionRange (start, end)
    {
-      this .selectedRange = [start, end];
+      this .selectionRange = [start, end];
 
-      this .requestDrawTracks ();
+      this .selectKeyframesInRange ();
+   }
+
+   expandSelectionRange (frame)
+   {
+      const
+         selectionRange = this .getSelectionRange (),
+         middle         = (selectionRange [0] + selectionRange [1]) / 2;
+
+      if (frame < middle)
+         this .setSelectionRange (frame, selectionRange [1]);
+      else if (frame > middle)
+         this .setSelectionRange (selectionRange [0], frame);
+
+      this .selectKeyframesInRange ();
    }
 
    selectKeyframesInRange ()
    {
       this .selectedKeyframes .length = 0;
 
-      const selectedRange = this .getSelectedRange ();
+      const selectionRange = this .getSelectionRange ();
 
-      if (selectedRange [0] === selectedRange [1])
+      if (selectionRange [0] === selectionRange [1])
          return;
 
       for (const [field, interpolator] of this .fields)
       {
          const
             key   = interpolator .getMetaData ("Interpolator/key", this .#defaultIntegers),
-            first = X3D .Algorithm .lowerBound (key, 0, key .length, selectedRange [0]),
-            last  = X3D .Algorithm .upperBound (key, 0, key .length, selectedRange [1]);
+            first = X3D .Algorithm .lowerBound (key, 0, key .length, selectionRange [0]),
+            last  = X3D .Algorithm .upperBound (key, 0, key .length, selectionRange [1]);
 
          for (let index = first; index < last; ++ index)
             this .selectedKeyframes .push ({ field, interpolator, index });
@@ -1919,8 +1937,7 @@ module .exports = class AnimationEditor extends Interface
          // Select range.
 
          this .setCurrentFrame (this .getFrameFromPointer (this .pointer .x));
-
-         this .selectedRange [1] = this .getCurrentFrame ();
+         this .expandSelectionRange (this .getCurrentFrame ());
 
          this .selectKeyframesInRange ();
       }
@@ -1990,12 +2007,12 @@ module .exports = class AnimationEditor extends Interface
 
       // Draw selection range.
 
-      const selectedRange = this .getSelectedRange ();
+      const selectionRange = this .getSelectionRange ();
 
-      if (selectedRange [0] !== selectedRange [1])
+      if (selectionRange [0] !== selectionRange [1])
       {
-         const minFrame = X3D .Algorithm .clamp (selectedRange [0], firstFrame, lastFrame - 1);
-         const maxFrame = X3D .Algorithm .clamp (selectedRange [1], firstFrame, lastFrame - 1);
+         const minFrame = X3D .Algorithm .clamp (selectionRange [0], firstFrame, lastFrame - 1);
+         const maxFrame = X3D .Algorithm .clamp (selectionRange [1], firstFrame, lastFrame - 1);
          const x0       = left + minFrame * scale + translation;
          const x1       = left + maxFrame * scale + translation;
 
