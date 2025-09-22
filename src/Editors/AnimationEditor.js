@@ -1384,7 +1384,9 @@ module .exports = class AnimationEditor extends Interface
 
    async pasteKeyframes ()
    {
-      const json = $.try (JSON .parse (await navigator .clipboard .readText ()));
+      const
+         string = await navigator .clipboard .readText (),
+         json   = $.try (() => JSON .parse (string));
 
       if (!json)
          return;
@@ -2068,27 +2070,32 @@ module .exports = class AnimationEditor extends Interface
    #pickedKeyframes = [ ];
    #selectedKeyframes = [ ];
 
+   getPickedKeyframes ()
+   {
+      return this .#pickedKeyframes;
+   }
+
    setPickedKeyframes (pickedKeyframes)
    {
-      this .#pickedKeyframes = pickedKeyframes;
+      this .#pickedKeyframes = pickedKeyframes .slice ();
 
-      this .setSelectedKeyframes (this .#pickedKeyframes);
+      this .setSelectedKeyframes (pickedKeyframes);
    }
 
    togglePickedKeyframes (pickedKeyframes)
    {
       // Picked Keyframes
       {
-         const add = pickedKeyframes .filter (n => this .#pickedKeyframes .every (o => !this .equalKeyframe (n, o)));
+         const add = pickedKeyframes .filter (n => this .getPickedKeyframes () .every (o => !this .equalKeyframe (n, o)));
 
-         this .#pickedKeyframes = this .#pickedKeyframes
+         this .setPickedKeyframes (this .getPickedKeyframes ()
             .filter (o => !pickedKeyframes .some (n => this .equalKeyframe (n, o)))
-            .concat (add);
+            .concat (add));
       }
 
       // Selected Keyframes
       {
-         const add = pickedKeyframes .filter (n => this .#selectedKeyframes .every (o => !this .equalKeyframe (n, o)));
+         const add = pickedKeyframes .filter (n => this .getSelectedKeyframes () .every (o => !this .equalKeyframe (n, o)));
 
          this .setSelectedKeyframes (this .getSelectedKeyframes ()
             .filter (o => !pickedKeyframes .some (n => this .equalKeyframe (n, o)))
@@ -2101,11 +2108,6 @@ module .exports = class AnimationEditor extends Interface
       return a .field === b .field && a .index === b .index;
    }
 
-   getPickedKeyframes ()
-   {
-      return this .#pickedKeyframes;
-   }
-
    getSelectedKeyframes ()
    {
       return this .#selectedKeyframes;
@@ -2113,23 +2115,7 @@ module .exports = class AnimationEditor extends Interface
 
    setSelectedKeyframes (selectedKeyframes)
    {
-      if (true || selectedKeyframes .length)
-         Editor .undoManager .beginUndo (_("Select Keyframes"));
-      else
-         Editor .undoManager .beginUndo (_("Clear Select Keyframes"));
-
-      const oldSelectedKeyframes = this .#selectedKeyframes .slice ();
-
       this .#selectedKeyframes = selectedKeyframes .slice ();
-
-      Editor .undoManager .registerUndo (() =>
-      {
-         this .setSelectedKeyframes (oldSelectedKeyframes);
-      });
-
-      this .registerRequestDrawTimeline ();
-
-      Editor .undoManager .endUndo ();
    }
 
    #autoScrollId;
@@ -2197,12 +2183,14 @@ module .exports = class AnimationEditor extends Interface
 
    selectKeyframesInRange ()
    {
-      this .#selectedKeyframes .length = 0;
+      this .setSelectedKeyframes ([ ]);
 
       const selectionRange = this .getSelectionRange ();
 
       if (selectionRange [0] === selectionRange [1])
          return;
+
+      const selectedKeyframes = [ ];
 
       for (const [field, interpolator] of this .fields)
       {
@@ -2212,9 +2200,10 @@ module .exports = class AnimationEditor extends Interface
             last  = X3D .Algorithm .upperBound (key, 0, key .length, selectionRange [1]);
 
          for (let index = first; index < last; ++ index)
-            this .#selectedKeyframes .push ({ field, interpolator, index });
+            selectedKeyframes .push ({ field, interpolator, index });
       }
 
+      this .setSelectedKeyframes (selectedKeyframes);
       this .requestDrawTimeline ();
    }
 
