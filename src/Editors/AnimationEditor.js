@@ -857,6 +857,7 @@ module .exports = class AnimationEditor extends Interface
    #vectors = new Map ([
       [2, X3D .Vector2],
       [3, X3D .Vector3],
+      [4, X3D .Vector4],
    ]);
 
    updateScalarInterpolator (interpolator)
@@ -921,9 +922,9 @@ module .exports = class AnimationEditor extends Interface
             }
             case "SPLINE":
             {
-               const currentKeys          = [ ];
-               const currentKeyValues     = [ ];
-               const currentKeyVelocities = [ ];
+               const currentKeys          = interpolator ._key .create ();
+               const currentKeyValues     = interpolator ._keyValue .create ();
+               const currentKeyVelocities = interpolator ._keyValue .create ();
                const Vector               = this .#vectors .get (components);
 
                for (; i < size; ++ i, iN += components)
@@ -1094,7 +1095,7 @@ module .exports = class AnimationEditor extends Interface
 
                // Generate key.
 
-               const currentKeys = [ ];
+               const currentKeys = interpolator ._key .create ();
 
                for (; i < size; ++ i)
                {
@@ -1142,8 +1143,8 @@ module .exports = class AnimationEditor extends Interface
 
                for (let a = 0; a < keySize; ++ a)
                {
-                  const currentKeyValues     = [ ];
-                  const currentKeyVelocities = [ ];
+                  const currentKeyValues     = interpolator ._keyValue .create ();
+                  const currentKeyVelocities = interpolator ._keyValue .create ();
                   const Vector               = this .#vectors .get (components);
 
                   for (let i = 0, aiN = iN + a * components; i < currentKeys .length; ++ i, aiN += components * keySize)
