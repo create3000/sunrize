@@ -1351,13 +1351,68 @@ module .exports = class AnimationEditor extends Interface
 
    copyKeyframes ()
    {
-      const string = JSON .stringify (this .getSelectedKeyframes () .map (({ field, index }) => [field .getId (), index ]))
+      const string = JSON .stringify ({
+         "sunrize-keyframes": this .getSelectedKeyframes () .map (({ field, interpolator, index }) =>
+         {
+            const components = this .#components .get (interpolator .getType () .at (-1));
+            const key        = interpolator .getMetaData ("Interpolator/key",      new X3D .MFInt32 ());
+            const keyValue   = interpolator .getMetaData ("Interpolator/keyValue", new X3D .MFDouble ());
+            const keyType    = interpolator .getMetaData ("Interpolator/keyType",  new X3D .MFString ());
+            const keySize    = interpolator .getMetaData ("Interpolator/keySize",  new X3D .SFInt32 (1));
+            const indexN     = index * components * keySize;
+            const countN     = components * keySize;
 
-      navigator .clipboard .write ([new ClipboardItem ({ ["text/plain"]: string })]);
+            return {
+               field: field .getId (),
+               frame: key [index],
+               type: keyType [index],
+               value: Array .from (keyValue .slice (indexN, countN)),
+            };
+         }),
+      });
+
+      navigator .clipboard .writeText (string);
    }
 
-   pasteKeyframes ()
+   async pasteKeyframes ()
    {
+      try
+      {
+         const
+            json      = JSON .parse (await navigator .clipboard .readText ()),
+            keyframes = json ["sunrize-keyframes"];
+
+         if (!keyframes)
+            return;
+
+         Editor .undoManager .beginUndo (_("Paste Keyframes"));
+
+         const
+            currentFrame = this .getCurrentFrame (),
+            firstFrame   = keyframes .reduce ((p, c) => Math .min (p, c .frame), Number .POSITIVE_INFINITY);
+
+         for (const { field: id, frame, type, value } of keyframes)
+         {
+            for (const field of this .fields .keys ())
+            {
+               if (field .getId () !== id)
+                  continue;
+
+               const interpolator = this .fields .get (field);
+
+               if (!interpolator)
+                  continue;
+
+               this .addKeyframeToInterpolator (interpolator, frame - firstFrame + currentFrame, type, value);
+            }
+         }
+
+         Editor .undoManager .endUndo ();
+      }
+      catch (error)
+      {
+         console .error (error);
+      }
    }
 
    registerRequestDrawTimeline ()
