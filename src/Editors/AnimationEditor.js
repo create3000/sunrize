@@ -1791,10 +1791,9 @@ module .exports = class AnimationEditor extends Interface
       return [b, a];
    }
 
-   selectKeyframesInRange (add)
+   selectKeyframesInRange ()
    {
-      if (!add)
-         this .selectedKeyframes .length = 0;
+      this .selectedKeyframes .length = 0;
 
       const selectedRange = this .getSelectedRange ();
 
