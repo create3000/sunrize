@@ -1488,6 +1488,7 @@ module .exports = class AnimationEditor extends Interface
             if (event .metaKey || event .ctrlKey)
             {
                this .setSelectionRange (0, this .getDuration ());
+               this .selectKeyframesInRange ();
 
                event .preventDefault ();
                event .stopPropagation ();
@@ -1670,13 +1671,22 @@ module .exports = class AnimationEditor extends Interface
             this .setCurrentFrame (this .getFrameFromPointer (this .pointer .x));
             this .addAutoScroll ();
 
-            this .pickedKeyframes   = this .pickKeyframes ();
-            this .selectedKeyframes = this .pickedKeyframes .slice ();
+            const pickedKeyframes = this .pickKeyframes ();
 
-            if (event .shiftKey)
+            if (event .shiftKey && pickedKeyframes .length)
+            {
+               this .addPickedKeyframes (pickedKeyframes);
+            }
+            else if (event .shiftKey)
+            {
+               this .setPickedKeyframes ([ ]);
                this .expandSelectionRange (this .getCurrentFrame ());
+            }
             else
+            {
+               this .setPickedKeyframes (pickedKeyframes);
                this .setSelectionRange (this .getCurrentFrame (), this .getCurrentFrame ());
+            }
 
             this .timeSensor ._pauseTime = Date .now () / 1000;
             break;
@@ -1721,6 +1731,42 @@ module .exports = class AnimationEditor extends Interface
 
       this .updatePointer (event);
       this .zoom (deltaY < 0 ? "out" : "in", this .pointer .x, this .WHEEL_SCROLL_FACTOR);
+   }
+
+   updateCursor ()
+   {
+      if (this .pickKeyframes () .length)
+         this .timelineElement .addClass ("pointer");
+      else
+         this .timelineElement .removeClass ("pointer");
+   }
+
+   pointer = new X3D .Vector2 (-1, -1);
+
+   clearPointer ()
+   {
+      this .pointer .set (-1, -1);
+
+      this .requestDrawTracks ();
+   }
+
+   updatePointer (event)
+   {
+      const offset = this .tracks .offset ();
+
+      const x = event .pageX - offset .left - this .getLeft ();
+      const y = event .pageY - offset .top;
+
+      this .pointer .set (x, y);
+
+      this .requestDrawTracks ();
+   }
+
+   getFrameFromPointer (pointerX)
+   {
+	   const frame = Math .round ((pointerX - this .getTranslation ()) / this .getScale ());
+
+      return X3D .Algorithm .clamp (frame, 0, this .getDuration ());
    }
 
    pickKeyframes ()
@@ -1800,41 +1846,37 @@ module .exports = class AnimationEditor extends Interface
 		}
    }
 
-   pointer = new X3D .Vector2 (-1, -1);
-   selectedKeyframes = [ ];
+   #pickedKeyframes = [ ];
+   #selectedKeyframes = [ ];
 
-   clearPointer ()
+   setPickedKeyframes (pickedKeyframes)
    {
-      this .pointer .set (-1, -1);
-
-      this .requestDrawTracks ();
+      this .#pickedKeyframes   = pickedKeyframes;
+      this .#selectedKeyframes = this .#pickedKeyframes .slice ();
    }
 
-   updatePointer (event)
+   addPickedKeyframes (pickedKeyframes)
    {
-      const offset = this .tracks .offset ();
+      const add = pickedKeyframes .filter (n => this .#pickedKeyframes .every (o => !this .equalKeyframe (n, o)));
 
-      const x = event .pageX - offset .left - this .getLeft ();
-      const y = event .pageY - offset .top;
+      this .#pickedKeyframes .push (... add);
 
-      this .pointer .set (x, y);
-
-      this .requestDrawTracks ();
+      this .#selectedKeyframes = this .#pickedKeyframes .slice ();
    }
 
-   getFrameFromPointer (pointerX)
+   equalKeyframe (a, b)
    {
-	   const frame = Math .round ((pointerX - this .getTranslation ()) / this .getScale ());
-
-      return X3D .Algorithm .clamp (frame, 0, this .getDuration ());
+      return a .field === b .field && a .index === b .index;
    }
 
-   updateCursor ()
+   getPickedKeyframes ()
    {
-      if (this .pickKeyframes () .length)
-         this .timelineElement .addClass ("pointer");
-      else
-         this .timelineElement .removeClass ("pointer");
+      return this .#pickedKeyframes;
+   }
+
+   getSelectedKeyframes ()
+   {
+      return this .#selectedKeyframes;
    }
 
    #autoScrollId;
@@ -1883,7 +1925,7 @@ module .exports = class AnimationEditor extends Interface
    {
       this .#selectionRange = [start, end];
 
-      this .selectKeyframesInRange ();
+      this .requestDrawTracks ();
    }
 
    expandSelectionRange (frame)
@@ -1902,7 +1944,7 @@ module .exports = class AnimationEditor extends Interface
 
    selectKeyframesInRange ()
    {
-      this .selectedKeyframes .length = 0;
+      this .#selectedKeyframes .length = 0;
 
       const selectionRange = this .getSelectionRange ();
 
@@ -1917,7 +1959,7 @@ module .exports = class AnimationEditor extends Interface
             last  = X3D .Algorithm .upperBound (key, 0, key .length, selectionRange [1]);
 
          for (let index = first; index < last; ++ index)
-            this .selectedKeyframes .push ({ field, interpolator, index });
+            this .#selectedKeyframes .push ({ field, interpolator, index });
       }
 
       this .requestDrawTracks ();
@@ -1927,7 +1969,7 @@ module .exports = class AnimationEditor extends Interface
    {
       // Move keyframes or select range.
 
-      if (this .pickedKeyframes .length)
+      if (this .getPickedKeyframes () .length)
       {
          // Move keyframes.
 
@@ -2200,7 +2242,7 @@ module .exports = class AnimationEditor extends Interface
          translation = this .getTranslation (),
          scale       = this .getScale ();
 
-      for (const { field, interpolator, index } of this .selectedKeyframes)
+      for (const { field, interpolator, index } of this .getSelectedKeyframes ())
       {
          if (field !== currentField)
             continue;
