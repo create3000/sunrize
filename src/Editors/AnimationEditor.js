@@ -1289,6 +1289,8 @@ module .exports = class AnimationEditor extends Interface
       Editor .setNodeMetaData (interpolator, "Interpolator/keyType",  keyType);
 
       this .registerRequestDrawTimeline ();
+
+      return index;
    }
 
    removeKeyframes (keyframes)
@@ -1346,8 +1348,13 @@ module .exports = class AnimationEditor extends Interface
 
    cutKeyframes ()
    {
+      Editor .undoManager .beginUndo (_("Cut Keyframes"));
+
       this .copyKeyframes ();
       this .removeKeyframes (this .getSelectedKeyframes ());
+      this .setSelectedKeyframes ([ ]);
+
+      Editor .undoManager .endUndo ();
    }
 
    copyKeyframes ()
@@ -1377,20 +1384,24 @@ module .exports = class AnimationEditor extends Interface
 
    async pasteKeyframes ()
    {
+      const json = $.try (JSON .parse (await navigator .clipboard .readText ()));
+
+      if (!json)
+         return;
+
+      const keyframes = json ["sunrize-keyframes"];
+
+      if (!keyframes)
+         return;
+
       try
       {
-         const
-            json      = JSON .parse (await navigator .clipboard .readText ()),
-            keyframes = json ["sunrize-keyframes"];
-
-         if (!keyframes)
-            return;
-
          Editor .undoManager .beginUndo (_("Paste Keyframes"));
 
          const
-            currentFrame = this .getCurrentFrame (),
-            firstFrame   = keyframes .reduce ((p, c) => Math .min (p, c .frame), Number .POSITIVE_INFINITY);
+            currentFrame      = this .getCurrentFrame (),
+            firstFrame        = keyframes .reduce ((p, c) => Math .min (p, c .frame), Number .POSITIVE_INFINITY),
+            selectedKeyframes = [ ];
 
          for (const { field: id, frame, type, value } of keyframes)
          {
@@ -1404,15 +1415,22 @@ module .exports = class AnimationEditor extends Interface
                if (!interpolator)
                   continue;
 
-               this .addKeyframeToInterpolator (interpolator, frame - firstFrame + currentFrame, type, value);
+               const index = this .addKeyframeToInterpolator (interpolator, frame - firstFrame + currentFrame, type, value);
+
+               selectedKeyframes .push ({ field, interpolator, index });
             }
          }
 
-         Editor .undoManager .endUndo ();
+         this .setSelectedKeyframes (selectedKeyframes);
+         this .registerRequestDrawTimeline ();
       }
       catch (error)
       {
          console .error (error);
+      }
+      finally
+      {
+         Editor .undoManager .endUndo ();
       }
    }
 
@@ -2052,8 +2070,9 @@ module .exports = class AnimationEditor extends Interface
 
    setPickedKeyframes (pickedKeyframes)
    {
-      this .#pickedKeyframes   = pickedKeyframes;
-      this .#selectedKeyframes = this .#pickedKeyframes .slice ();
+      this .#pickedKeyframes = pickedKeyframes;
+
+      this .setSelectedKeyframes (this .#pickedKeyframes);
    }
 
    togglePickedKeyframes (pickedKeyframes)
@@ -2071,9 +2090,9 @@ module .exports = class AnimationEditor extends Interface
       {
          const add = pickedKeyframes .filter (n => this .#selectedKeyframes .every (o => !this .equalKeyframe (n, o)));
 
-         this .#selectedKeyframes = this .#selectedKeyframes
+         this .setSelectedKeyframes (this .getSelectedKeyframes ()
             .filter (o => !pickedKeyframes .some (n => this .equalKeyframe (n, o)))
-            .concat (add);
+            .concat (add));
       }
    }
 
@@ -2090,6 +2109,27 @@ module .exports = class AnimationEditor extends Interface
    getSelectedKeyframes ()
    {
       return this .#selectedKeyframes;
+   }
+
+   setSelectedKeyframes (selectedKeyframes)
+   {
+      if (true || selectedKeyframes .length)
+         Editor .undoManager .beginUndo (_("Select Keyframes"));
+      else
+         Editor .undoManager .beginUndo (_("Clear Select Keyframes"));
+
+      const oldSelectedKeyframes = this .#selectedKeyframes .slice ();
+
+      this .#selectedKeyframes = selectedKeyframes .slice ();
+
+      Editor .undoManager .registerUndo (() =>
+      {
+         this .setSelectedKeyframes (oldSelectedKeyframes);
+      });
+
+      this .registerRequestDrawTimeline ();
+
+      Editor .undoManager .endUndo ();
    }
 
    #autoScrollId;
