@@ -1287,7 +1287,7 @@ module .exports = class AnimationEditor extends Interface
       this .registerRequestDrawTimeline ();
    }
 
-   removeSelectedKeyframes ()
+   removeKeyframes (keyframes)
    {
       this .selectKeyframesInRange ();
    }
@@ -1295,7 +1295,7 @@ module .exports = class AnimationEditor extends Interface
    cutKeyframes ()
    {
       this .copyKeyframes ();
-      this .removeKeyframes ();
+      this .removeKeyframes (this .getSelectedKeyframes ());
    }
 
    copyKeyframes ()
