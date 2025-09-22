@@ -1627,21 +1627,6 @@ module .exports = class AnimationEditor extends Interface
       return X3D .Algorithm .clamp (frame, 0, this .getDuration ());
    }
 
-   #selectedRange = [0, 0];
-
-   getSelectedRange ()
-   {
-      if (this .#selectedRange [0] > this .#selectedRange [1])
-      {
-         const tmp = this .#selectedRange [0];
-
-         this .#selectedRange [0] = this .#selectedRange [1];
-         this .#selectedRange [1] = tmp;
-      }
-
-      return this .#selectedRange;
-   }
-
    on_mousedown (event)
    {
       $(document)
@@ -1658,6 +1643,7 @@ module .exports = class AnimationEditor extends Interface
             this .updatePointer (event);
             this .setCurrentFrame (this .getFrameFromPointer (this .pointer .x));
 
+            this .#selectedRange    = [this .getCurrentFrame (), this .getCurrentFrame ()];
             this .selectedKeyframes = this .pickKeyframes ();
             break;
          }
@@ -1690,6 +1676,10 @@ module .exports = class AnimationEditor extends Interface
          {
             this .updatePointer (event);
             this .setCurrentFrame (this .getFrameFromPointer (this .pointer .x));
+
+			   this .#selectedRange [1] = this .getCurrentFrame ();
+
+            this .selectKeyframes ();
             break;
          }
       }
@@ -1780,6 +1770,26 @@ module .exports = class AnimationEditor extends Interface
 		}
    }
 
+   #selectedRange = [0, 0];
+
+   getSelectedRange ()
+   {
+      if (this .#selectedRange [0] > this .#selectedRange [1])
+      {
+         const tmp = this .#selectedRange [0];
+
+         this .#selectedRange [0] = this .#selectedRange [1];
+         this .#selectedRange [1] = tmp;
+      }
+
+      return this .#selectedRange;
+   }
+
+   selectKeyframes ()
+   {
+
+   }
+
    resizeTracks ()
    {
       const
@@ -1836,8 +1846,27 @@ module .exports = class AnimationEditor extends Interface
          orange = this .#style .getPropertyValue ("--system-orange"),
          brown  = this .#style .getPropertyValue ("--system-brown"),
          red    = this .#style .getPropertyValue ("--system-red"),
+         range  = this .#style .getPropertyValue ("--selection-range"),
          tint1  = this .#style .getPropertyValue ("--tint-color1"),
          tint2  = this .#style .getPropertyValue ("--tint-color2");
+
+      // Draw selection range.
+
+      const selectedRange = this .getSelectedRange ();
+
+      if (selectedRange [0] !== selectedRange [1])
+      {
+         const minFrame = X3D .Algorithm .clamp (selectedRange [0], firstFrame, lastFrame - 1);
+         const maxFrame = X3D .Algorithm .clamp (selectedRange [1], firstFrame, lastFrame - 1);
+         const x0       = left + minFrame * scale + translation;
+         const x1       = left + maxFrame * scale + translation;
+
+         context .fillStyle = range;
+
+         context .fillRect (Math .min (x0, x1) - 1, 0, Math .abs (x1 - x0) + 3, tracksHeight);
+      }
+
+      // Draw all tracks.
 
       for (const [i, { item, top, bottom, height }] of trackOffsets .entries ())
       {
