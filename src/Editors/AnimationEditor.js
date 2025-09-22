@@ -2175,17 +2175,37 @@ module .exports = class AnimationEditor extends Interface
          {
             case "main":
             {
-               for (const field of this .fields .keys ())
-                  this .drawSelectedKeyframes (context, field, bottom - this .TRACK_PADDING, red);
+               const allSelected = Array .from (this .fields .keys ())
+                  .every (field => this .getSelectedKeyframes () .some (keyframe => field === keyframe .field));
+
+               if (allSelected)
+               {
+                  for (const field of this .fields .keys ())
+                  {
+                     this .drawSelectedKeyframes (context, field, bottom - this .TRACK_PADDING, red);
+                     break;
+                  }
+               }
 
                break;
             }
             case "node":
             {
-               const node = item .data ("node");
+               const
+                  node   = item .data ("node"),
+                  fields = node .getFields () .filter (field => this .fields .has (field));
 
-               for (const field of node .getFields ())
-                  this .drawSelectedKeyframes (context, field, bottom - this .TRACK_PADDING, red);
+               const allSelected = fields
+                  .every (field => this .getSelectedKeyframes () .some (keyframe => field === keyframe .field));
+
+               if (allSelected)
+               {
+                  for (const field of fields)
+                  {
+                     this .drawSelectedKeyframes (context, field, bottom - this .TRACK_PADDING, red);
+                     break;
+                  }
+               }
 
                break;
             }
