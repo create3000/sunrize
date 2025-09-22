@@ -1867,11 +1867,11 @@ module .exports = class AnimationEditor extends Interface
       }
    }
 
-   selectionRange = [0, 0];
+   #selectionRange = [0, 0];
 
    getSelectionRange ()
    {
-      const [a, b] = this .selectionRange;
+      const [a, b] = this .#selectionRange;
 
       if (a < b)
          return [a, b];
@@ -1881,7 +1881,7 @@ module .exports = class AnimationEditor extends Interface
 
    setSelectionRange (start, end)
    {
-      this .selectionRange = [start, end];
+      this .#selectionRange = [start, end];
 
       this .selectKeyframesInRange ();
    }
