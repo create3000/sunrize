@@ -39,10 +39,9 @@ module .exports = class AnimationEditor extends Interface
          .addClass (["timeline", "vertical-splitter-right"])
          .css ("width", "70%")
          .on ("mouseleave", () => this .clearPointer ())
-         .on ("mousedown mousemove wheel", event => this .updatePointer (event))
-         .on ("mousedown", () => this .on_mousedown ())
-         .on ("mouseup", () => this .on_mouseup ())
-         .on ("mousemove", () => this .on_mousemove ())
+         .on ("mousedown", event => this .on_mousedown (event))
+         .on ("mouseup", event => this .on_mouseup (event))
+         .on ("mousemove", event => this .on_mousemove (event))
          .on ("wheel", event => this .on_wheel (event))
          .on ("keydown", event => this .on_keydown (event))
          .appendTo (this .verticalSplitter);
@@ -1502,6 +1501,7 @@ module .exports = class AnimationEditor extends Interface
    SCROLL_FACTOR       = 1 + 1 / 16; // something nice
    WHEEL_SCROLL_FACTOR = 1 + 1 / 30; // something nice
 
+   pointer = new X3D .Vector2 (-1, -1);
    translation = 0;
    scale = 1;
 
@@ -1601,16 +1601,19 @@ module .exports = class AnimationEditor extends Interface
 
    clearPointer ()
    {
-      this .pointerX = -1;
-      this .pointerY = -1;
+      this .pointer .set (-1, -1);
 
       this .requestDrawTracks ();
    }
 
    updatePointer (event)
    {
-      this .pointerX = event .pageX - this .tracks .offset () .left - this .getLeft ();
-      this .pointerY = event .pageY - this .tracks .offset () .top;
+      const offset = this .tracks .offset ();
+
+      const x = event .pageX - offset .left - this .getLeft ();
+      const y = event .pageY - offset .top;
+
+      this .pointer .set (x, y);
 
       this .requestDrawTracks ();
    }
@@ -1622,43 +1625,165 @@ module .exports = class AnimationEditor extends Interface
       return X3D .Algorithm .clamp (frame, 0, this .getDuration ());
    }
 
+   // getPositionFromFrame (frame)
+   // {
+   //    const
+   //       left         = this .getLeft (),
+   //       translation  = this .getTranslation (),
+   //       scale        = this .getScale ();
+
+   //    return Math .floor (left + frame * scale + translation)
+   // }
+
+   // getFrameFromPosition (x, left = 0)
+   // {
+   //    const
+   //       translation = this .getTranslation (),
+   //       scale       = this .getScale ();
+
+   //    return Math .floor ((x - translation) / scale);
+   // }
+
    getSelectedRange ()
    {
       return [0, 0]
    }
 
-   on_mousedown ()
+   on_mousedown (event)
    {
       $(document)
          .on ("mousemove.AnimationEditor", event => this .updatePointer (event))
-         .on ("mouseup.AnimationEditor",   () => this .on_mouseup ())
-         .on ("mousemove.AnimationEditor", () => this .on_mousemove ());
+         .on ("mouseup.AnimationEditor",   event => this .on_mouseup (event))
+         .on ("mousemove.AnimationEditor", event => this .on_mousemove (event));
 
-      this .mousedown = true;
+      this .button = event .button;
 
-      this .setCurrentFrame (this .getFrameFromPointer (this .pointerX));
+      switch (this .button)
+      {
+         case 0:
+         {
+            this .updatePointer (event);
+            this .setCurrentFrame (this .getFrameFromPointer (this .pointer .x));
+            break;
+         }
+      }
    }
 
    on_mouseup ()
    {
       $(document) .off (".AnimationEditor");
 
-		this .mousedown = false;
+		this .button = undefined;
    }
 
-   on_mousemove ()
+   on_mousemove (event)
    {
-      if (!this .mousedown)
-         return;
+      switch (this .button)
+      {
+         case undefined:
+         {
+            this .updatePointer (event);
 
-      this .setCurrentFrame (this .getFrameFromPointer (this .pointerX));
+            if (this .pickKeyframes () .length)
+               this .timelineElement .addClass ("pointer");
+            else
+               this .timelineElement .removeClass ("pointer");
+
+            break;
+         }
+         case 0:
+         {
+            this .updatePointer (event);
+            this .setCurrentFrame (this .getFrameFromPointer (this .pointer .x));
+            break;
+         }
+      }
    }
 
    on_wheel (event)
    {
       const deltaY = event .originalEvent .deltaY;
 
-      this .zoom (deltaY < 0 ? "out" : "in", this .pointerX, this .WHEEL_SCROLL_FACTOR);
+      this .updatePointer (event);
+      this .zoom (deltaY < 0 ? "out" : "in", this .pointer .x, this .WHEEL_SCROLL_FACTOR);
+   }
+
+   pickKeyframes ()
+   {
+      const
+         width        = this .getWidth (),
+         translation  = this .getTranslation (),
+         scale        = this .getScale (),
+         trackOffsets = this .memberList .getTrackOffsets (),
+         firstFrame   = Math .max (0, Math .floor (-translation / scale)),
+         lastFrame    = Math .min (this .getDuration (), Math .ceil ((width - translation) / scale)) + 1,
+         keyframes    = [ ];
+
+      for (const { item, bottom } of trackOffsets .values ())
+      {
+         switch (item .attr ("type"))
+         {
+            case "main":
+            {
+               for (const field of this .fields .keys ())
+                  this .pickKeyframe (field, firstFrame, lastFrame, bottom, keyframes);
+
+               break;
+            }
+            case "node":
+            {
+               const node = item .data ("node");
+
+               for (const field of node .getFields ())
+                  this .pickKeyframe (field, firstFrame, lastFrame, bottom, keyframes);
+
+               break;
+            }
+            case "field":
+            {
+               this .pickKeyframe (item .data ("field"), firstFrame, lastFrame, bottom, keyframes);
+               break;
+            }
+         }
+      }
+
+      return keyframes;
+   }
+
+   #frameBox = new X3D .Box2 ();
+   #frameSize = new X3D .Vector2 (this .FRAME_SIZE, this .FRAME_SIZE);
+   #frameCenter = new X3D .Vector2 ();
+
+   pickKeyframe (field, firstFrame, lastFrame, bottom, keyframes)
+   {
+      const interpolator = this .fields .get (field);
+
+      if (!interpolator)
+         return;
+
+      this .#defaultIntegers .length = 0;
+
+      const
+         left        = this .getLeft (),
+         translation = this .getTranslation (),
+         scale       = this .getScale ();
+
+      const
+		   key   = interpolator .getMetaData ("Interpolator/key", this .#defaultIntegers),
+		   first = X3D. Algorithm .lowerBound (key, 0, key .length, firstFrame),
+		   last  = X3D. Algorithm .upperBound (key, 0, key .length, lastFrame);
+
+      for (let index = first; index < last; ++ index)
+		{
+         const frame = key [index];
+         const x     = Math .floor (frame * scale + translation);
+         const y     = bottom - (this .FRAME_SIZE / 2);
+
+         this .#frameBox .set (this .#frameSize, this .#frameCenter .set (x, y));
+
+         if (this .#frameBox .containsPoint (this .pointer))
+            keyframes .push ({ field, index });
+		}
    }
 
    resizeTracks ()

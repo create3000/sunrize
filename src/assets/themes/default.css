@@ -1105,6 +1105,10 @@ body.dark .ui-widget .library-list .component {
   border-left: 1px solid var(--border-color);
 }
 
+.animation-editor .pointer {
+  cursor: pointer;
+}
+
 .animation-editor .node-list {
   bottom: var(--input-height);
   border-bottom: 1px solid var(--border-color);
