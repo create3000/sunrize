@@ -1414,46 +1414,87 @@ module .exports = class AnimationEditor extends Interface
          case " ":
          {
             this .toggleAnimation ();
+
+            event .preventDefault ();
+            event .stopPropagation ();
             break;
          }
          case "ArrowLeft":
          {
             this .previousFrame ();
+
+            event .preventDefault ();
+            event .stopPropagation ();
             break;
          }
          case "ArrowRight":
          {
             this .nextFrame ();
+
+            event .preventDefault ();
+            event .stopPropagation ();
             break;
          }
          case "ArrowDown":
          {
             this .firstFrame ();
+
+            event .preventDefault ();
+            event .stopPropagation ();
             break;
          }
          case "ArrowUp":
          {
             this .lastFrame ();
+
+            event .preventDefault ();
+            event .stopPropagation ();
             break;
          }
          case "-":
          {
             this .zoomOut ();
+
+            event .preventDefault ();
+            event .stopPropagation ();
             break;
          }
          case "+":
          {
             this .zoomIn ();
+
+            event .preventDefault ();
+            event .stopPropagation ();
             break;
          }
          case "0":
          {
             this .zoomFit ();
+
+            event .preventDefault ();
+            event .stopPropagation ();
             break;
          }
          case "1":
          {
             this .zoom100 ();
+
+            event .preventDefault ();
+            event .stopPropagation ();
+            break;
+         }
+         case "a":
+         {
+            if (event .originalEvent .getModifierState ("Control"))
+            {
+               this .selectedRange = [0, this .getDuration ()];
+
+               this .requestDrawTracks ();
+
+               event .preventDefault ();
+               event .stopPropagation ();
+            }
+
             break;
          }
       }
