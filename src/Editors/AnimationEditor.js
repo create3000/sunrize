@@ -1266,18 +1266,18 @@ module .exports = class AnimationEditor extends Interface
       keyValue .length = key .length * components * keySize;
       keyType  .length = key .length;
 
-      const deleteCount = index === key .length || frame === key [index]
+      const deleteCountN = index === key .length || frame === key [index]
          ? components * keySize // update
          : 0;                   // insert
 
-      key     .splice (index, deleteCount ? 1 : 0, frame);
-      keyType .splice (index, deleteCount ? 1 : 0, type);
+      key     .splice (index, deleteCountN ? 1 : 0, frame);
+      keyType .splice (index, deleteCountN ? 1 : 0, type);
 
       // Use slice and concat instead of splice to support very large arrays.
 
       const
          before = keyValue .slice (0, indexN),
-         after  = keyValue .slice (indexN + deleteCount),
+         after  = keyValue .slice (indexN + deleteCountN),
          insert = new X3D .MFDouble ();
 
       insert .setValue (components === 1 ? [value] : Array .from (value));
@@ -1321,11 +1321,11 @@ module .exports = class AnimationEditor extends Interface
       keyValue .length = key .length * components * keySize;
       keyType  .length = key .length;
 
-      const deleteCount = components * keySize;
+      const deleteCountN = components * keySize;
 
       key      .splice (index, 1);
       keyType  .splice (index, 1);
-      keyValue .splice (indexN, deleteCount);
+      keyValue .splice (indexN, deleteCountN);
 
       Editor .setNodeMetaData (interpolator, "Interpolator/key",      key);
       Editor .setNodeMetaData (interpolator, "Interpolator/keyValue", keyValue);
