@@ -1353,7 +1353,7 @@ module .exports = class AnimationEditor extends Interface
    {
       const string = JSON .stringify (this .getSelectedKeyframes () .map (({ field, index }) => [field .getId (), index ]))
 
-      navigator. clipboard .write ([new ClipboardItem ({ ["sunrize/keyframes"]: string })]);
+      navigator .clipboard .write ([new ClipboardItem ({ ["text/plain"]: string })]);
    }
 
    pasteKeyframes ()
@@ -1621,7 +1621,7 @@ module .exports = class AnimationEditor extends Interface
          {
             if (event .metaKey || event .ctrlKey)
             {
-               this .cutKeyframes ();
+               this .copyKeyframes ();
 
                event .preventDefault ();
                event .stopPropagation ();
