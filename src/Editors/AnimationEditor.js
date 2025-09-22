@@ -1902,6 +1902,8 @@ module .exports = class AnimationEditor extends Interface
 
    #style = window .getComputedStyle ($("body") [0]);
 
+   TRACK_PADDING = 8;
+
    drawTracks ()
    {
       const
@@ -2013,8 +2015,8 @@ module .exports = class AnimationEditor extends Interface
             context .lineWidth = item .is (".main, .node") ? 3 : 1;
 
             context .beginPath ();
-				context .moveTo (x + 0.5, y);
-				context .lineTo (x + 0.5, bottom);
+				context .moveTo (x + 0.5, y - this .TRACK_PADDING);
+				context .lineTo (x + 0.5, bottom - this .TRACK_PADDING);
             context .stroke ();
 			}
 
@@ -2025,7 +2027,7 @@ module .exports = class AnimationEditor extends Interface
             case "main":
             {
                for (const field of this .fields .keys ())
-                  this .drawKeyframes (context, field, firstFrame, lastFrame, bottom, brown);
+                  this .drawKeyframes (context, field, firstFrame, lastFrame, bottom - this .TRACK_PADDING, brown);
 
                break;
             }
@@ -2034,13 +2036,13 @@ module .exports = class AnimationEditor extends Interface
                const node = item .data ("node");
 
                for (const field of node .getFields ())
-                  this .drawKeyframes (context, field, firstFrame, lastFrame, bottom, brown);
+                  this .drawKeyframes (context, field, firstFrame, lastFrame, bottom - this .TRACK_PADDING, brown);
 
                break;
             }
             case "field":
             {
-               this .drawKeyframes (context, item .data ("field"), firstFrame, lastFrame, bottom, orange);
+               this .drawKeyframes (context, item .data ("field"), firstFrame, lastFrame, bottom - this .TRACK_PADDING, orange);
                break;
             }
          }
@@ -2052,7 +2054,7 @@ module .exports = class AnimationEditor extends Interface
             case "main":
             {
                for (const field of this .fields .keys ())
-                  this .drawSelectedKeyframes (context, field, bottom, red);
+                  this .drawSelectedKeyframes (context, field, bottom - this .TRACK_PADDING, red);
 
                break;
             }
@@ -2061,13 +2063,13 @@ module .exports = class AnimationEditor extends Interface
                const node = item .data ("node");
 
                for (const field of node .getFields ())
-                  this .drawSelectedKeyframes (context, field, bottom, red);
+                  this .drawSelectedKeyframes (context, field, bottom - this .TRACK_PADDING, red);
 
                break;
             }
             case "field":
             {
-               this .drawSelectedKeyframes (context, item .data ("field"), bottom, red);
+               this .drawSelectedKeyframes (context, item .data ("field"), bottom - this .TRACK_PADDING, red);
                break;
             }
          }
