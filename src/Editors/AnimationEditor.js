@@ -691,7 +691,7 @@ module .exports = class AnimationEditor extends Interface
 
             Editor .setNodeMetaData (interpolator, "Interpolator/keySize", keySize);
 
-            const value = Array .from (field) .flatMap (value => [... value]);
+            const value = Array .from (field) .flatMap (value => Array .from (value));
 
             this .addKeyframeToInterpolator (interpolator, frame, type, value);
             break;
@@ -1242,7 +1242,7 @@ module .exports = class AnimationEditor extends Interface
 
       key      .splice (index,  deleteCount ? 1 : 0, frame);
       keyType  .splice (index,  deleteCount ? 1 : 0, type);
-      keyValue .splice (indexN, deleteCount, ... (components === 1 ? [value] : value));
+      keyValue .splice (indexN, deleteCount, ... (components === 1 ? [value] : value)); // TODO: value can be very big.
 
       Editor .setNodeMetaData (interpolator, "Interpolator/key",      key);
       Editor .setNodeMetaData (interpolator, "Interpolator/keyValue", keyValue);
