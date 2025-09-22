@@ -1782,7 +1782,7 @@ module .exports = class AnimationEditor extends Interface
          this .#frameBox .set (this .#frameSize, this .#frameCenter .set (x, y));
 
          if (this .#frameBox .containsPoint (this .pointer))
-            keyframes .push ({ field, index });
+            keyframes .push ({ field, interpolator, index });
 		}
    }
 
