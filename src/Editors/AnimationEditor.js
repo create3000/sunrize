@@ -1321,11 +1321,21 @@ module .exports = class AnimationEditor extends Interface
 
       key      .splice (index, 1);
       keyType  .splice (index, 1);
-      keyValue .splice (indexN, deleteCount)
+      keyValue .splice (indexN, deleteCount);
 
       Editor .setNodeMetaData (interpolator, "Interpolator/key",      key);
       Editor .setNodeMetaData (interpolator, "Interpolator/keyValue", keyValue);
       Editor .setNodeMetaData (interpolator, "Interpolator/keyType",  keyType);
+
+      if (!key .length)
+      {
+         const
+            animation        = this .animation,
+            executionContext = animation .getExecutionContext (),
+            children         = animation ._children .filter (node => node .getValue () !== interpolator);
+
+         Editor .setFieldValue (executionContext, animation, animation ._children, children);
+      }
 
       this .registerRequestDrawTimeline ();
    }
