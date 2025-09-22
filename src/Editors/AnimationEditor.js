@@ -1675,7 +1675,7 @@ module .exports = class AnimationEditor extends Interface
 
             if (event .shiftKey && pickedKeyframes .length)
             {
-               this .addPickedKeyframes (pickedKeyframes);
+               this .togglePickedKeyframes (pickedKeyframes);
             }
             else if (event .shiftKey)
             {
@@ -1855,11 +1855,13 @@ module .exports = class AnimationEditor extends Interface
       this .#selectedKeyframes = this .#pickedKeyframes .slice ();
    }
 
-   addPickedKeyframes (pickedKeyframes)
+   togglePickedKeyframes (pickedKeyframes)
    {
       const add = pickedKeyframes .filter (n => this .#pickedKeyframes .every (o => !this .equalKeyframe (n, o)));
 
-      this .#pickedKeyframes .push (... add);
+      this .#pickedKeyframes = this .#pickedKeyframes
+         .filter (o => !pickedKeyframes .some (n => this .equalKeyframe (n, o)))
+         .concat (add);
 
       this .#selectedKeyframes = this .#pickedKeyframes .slice ();
    }
