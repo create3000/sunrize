@@ -1644,7 +1644,8 @@ module .exports = class AnimationEditor extends Interface
             this .setCurrentFrame (this .getFrameFromPointer (this .pointer .x));
 
             this .selectedRange     = [this .getCurrentFrame (), this .getCurrentFrame ()];
-            this .selectedKeyframes = this .pickKeyframes ();
+            this .pickedKeyframes   = this .pickKeyframes ();
+            this .selectedKeyframes = this .pickedKeyframes .slice ();
             break;
          }
       }
@@ -1676,7 +1677,7 @@ module .exports = class AnimationEditor extends Interface
          {
             this .updatePointer (event);
 
-            if (this .selectedKeyframes .length && this .selectedRange [0] === this .selectedRange [1])
+            if (this .pickedKeyframes .length)
             {
 
             }
