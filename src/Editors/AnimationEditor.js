@@ -1232,7 +1232,6 @@ module .exports = class AnimationEditor extends Interface
       const keySize    = interpolator .getMetaData ("Interpolator/keySize",  new X3D .SFInt32 (1));
       const index      = X3D .Algorithm .lowerBound (key, 0, key .length, frame);
       const indexN     = index * components * keySize;
-      const insert     = new X3D .MFDouble ();
 
       keyValue .length = key .length * components * keySize;
       keyType  .length = key .length;
@@ -1248,7 +1247,8 @@ module .exports = class AnimationEditor extends Interface
 
       const
          before = keyValue .slice (0, indexN),
-         after  = keyValue .slice (indexN + deleteCount);
+         after  = keyValue .slice (indexN + deleteCount),
+         insert = new X3D .MFDouble ();
 
       insert .setValue (components === 1 ? [value] : value);
 
