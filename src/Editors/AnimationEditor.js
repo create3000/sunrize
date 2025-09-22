@@ -1501,7 +1501,6 @@ module .exports = class AnimationEditor extends Interface
    SCROLL_FACTOR       = 1 + 1 / 16; // something nice
    WHEEL_SCROLL_FACTOR = 1 + 1 / 30; // something nice
 
-   pointer = new X3D .Vector2 (-1, -1);
    translation = 0;
    scale = 1;
 
@@ -1599,6 +1598,9 @@ module .exports = class AnimationEditor extends Interface
 
    // Update Tracks
 
+   pointer = new X3D .Vector2 (-1, -1);
+   selectedKeyframes = [ ];
+
    clearPointer ()
    {
       this .pointer .set (-1, -1);
@@ -1625,28 +1627,19 @@ module .exports = class AnimationEditor extends Interface
       return X3D .Algorithm .clamp (frame, 0, this .getDuration ());
    }
 
-   // getPositionFromFrame (frame)
-   // {
-   //    const
-   //       left         = this .getLeft (),
-   //       translation  = this .getTranslation (),
-   //       scale        = this .getScale ();
-
-   //    return Math .floor (left + frame * scale + translation)
-   // }
-
-   // getFrameFromPosition (x, left = 0)
-   // {
-   //    const
-   //       translation = this .getTranslation (),
-   //       scale       = this .getScale ();
-
-   //    return Math .floor ((x - translation) / scale);
-   // }
+   #selectedRange = [0, 0];
 
    getSelectedRange ()
    {
-      return [0, 0]
+      if (this .#selectedRange [0] > this .#selectedRange [1])
+      {
+         const tmp = this .#selectedRange [0];
+
+         this .#selectedRange [0] = this .#selectedRange [1];
+         this .#selectedRange [1] = tmp;
+      }
+
+      return this .#selectedRange;
    }
 
    on_mousedown (event)
@@ -1664,6 +1657,8 @@ module .exports = class AnimationEditor extends Interface
          {
             this .updatePointer (event);
             this .setCurrentFrame (this .getFrameFromPointer (this .pointer .x));
+
+            this .selectedKeyframes = this .pickKeyframes ();
             break;
          }
       }
@@ -1840,6 +1835,7 @@ module .exports = class AnimationEditor extends Interface
          indigo = this .#style .getPropertyValue ("--system-indigo"),
          orange = this .#style .getPropertyValue ("--system-orange"),
          brown  = this .#style .getPropertyValue ("--system-brown"),
+         red    = this .#style .getPropertyValue ("--system-red"),
          tint1  = this .#style .getPropertyValue ("--tint-color1"),
          tint2  = this .#style .getPropertyValue ("--tint-color2");
 
@@ -1935,6 +1931,33 @@ module .exports = class AnimationEditor extends Interface
             }
          }
 
+         // Draw active keyframes.
+
+         switch (item .attr ("type"))
+         {
+            case "main":
+            {
+               for (const field of this .fields .keys ())
+                  this .drawSelectedKeyframes (context, field, bottom, red);
+
+               break;
+            }
+            case "node":
+            {
+               const node = item .data ("node");
+
+               for (const field of node .getFields ())
+                  this .drawSelectedKeyframes (context, field, bottom, red);
+
+               break;
+            }
+            case "field":
+            {
+               this .drawSelectedKeyframes (context, item .data ("field"), bottom, red);
+               break;
+            }
+         }
+
          context .restore ();
       }
 
@@ -1984,6 +2007,31 @@ module .exports = class AnimationEditor extends Interface
 
          context .fillRect (x1, bottom - this .FRAME_SIZE, this .FRAME_SIZE, this .FRAME_SIZE);
 		}
+   }
+
+   drawSelectedKeyframes (context, currentField, bottom, selectedColor)
+   {
+      const
+         left        = this .getLeft (),
+         translation = this .getTranslation (),
+         scale       = this .getScale ();
+
+      for (const { field, interpolator, index } of this .selectedKeyframes)
+      {
+         if (field !== currentField)
+            continue;
+
+         this .#defaultIntegers .length = 0;
+
+         const key   = interpolator .getMetaData ("Interpolator/key", this .#defaultIntegers);
+         const frame = key [index];
+         const x     = Math .floor (left + frame * scale + translation);
+         const x1    = x - (this .FRAME_SIZE / 2) + 0.5;
+
+         context .fillStyle = selectedColor;
+
+         context .fillRect (x1, bottom - this .FRAME_SIZE, this .FRAME_SIZE, this .FRAME_SIZE);
+      }
    }
 
    /**
