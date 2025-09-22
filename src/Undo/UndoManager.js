@@ -112,9 +112,9 @@ module .exports = class UndoManager
     *
     * @param  {...string} args description
     */
-   beginUndo (...args)
+   beginUndo (... args)
    {
-      this .undoStack .push (util .format (...args));
+      this .undoStack .push (util .format (... args));
    }
 
    endUndo ()

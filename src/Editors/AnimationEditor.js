@@ -221,7 +221,7 @@ module .exports = class AnimationEditor extends Interface
          fields: this .fields,
          removeNodesCallback: nodes => this .removeMembers (nodes),
          closeCallback: () => this .closeAnimation (),
-         addFieldKeyframeCallback: (node, field) => this .addFieldKeyframe (node, field),
+         addFieldKeyframeCallback: (node, field, typeName) => this .addFieldKeyframe (node, field, typeName),
       });
 
       this .nodeList = new NodeList (this .nodeListElement,
@@ -645,13 +645,11 @@ module .exports = class AnimationEditor extends Interface
       console .log (this .getKeyType ());
    }
 
-   addFieldKeyframe (node, field)
+   addFieldKeyframe (node, field, typeName)
    {
       Editor .undoManager .beginUndo (_("Add Keyframe To »%s«"), this .animation .getDisplayName ());
 
-      const typeName = node .getType () .includes (X3D .X3DConstants .Normal) && field .getName () === "vector"
-            ? "NormalInterpolator"
-            : this .#interpolatorTypeNames .get (field .getType ());
+      typeName ??= this .#interpolatorTypeNames .get (field .getType ());
 
       const
          interpolator = this .getInterpolator (typeName, node, field),

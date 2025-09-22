@@ -21,7 +21,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       element .on ("contextmenu", (event) => this .showContextMenu (event));
 
-      electron .ipcRenderer .on ("outline-editor", (event, key, ...args) => this [key] (...args));
+      electron .ipcRenderer .on ("outline-editor", (event, key, ... args) => this [key] (... args));
 
       electron .ipcRenderer .on ("transform-to-zero",   () => this .transformToZero ());
       electron .ipcRenderer .on ("remove-empty-groups", () => this .removeEmptyGroups ());

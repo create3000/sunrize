@@ -2,6 +2,7 @@
 
 const
    $         = require ("jquery"),
+   electron  = require ("electron"),
    X3D       = require ("../X3D"),
    Interface = require ("../Application/Interface"),
    _         = require ("../Application/GetText");
@@ -37,6 +38,8 @@ module .exports = class AnimationMembersList extends Interface
       this .#addMainKeyframeCallback  = addMainKeyframeCallback;
       this .#addNodeKeyframeCallback  = addNodeKeyframeCallback;
       this .#addFieldKeyframeCallback = addFieldKeyframeCallback;
+
+      electron .ipcRenderer .on ("animation-members-list", (event, key, ... args) => this [key] (... args));
 
       this .addMain ();
       this .setup ();
@@ -360,10 +363,39 @@ module .exports = class AnimationMembersList extends Interface
 
    // Apply Button Handling
 
+   #node;
+   #field;
+
    addKeyframe (node, field)
    {
-      this .#addFieldKeyframeCallback (node, field);
-      this .toggleApply (field, false);
+      this .#node  = node;
+      this .#field = field;
+
+      if (field .getType () === X3D .X3DConstants .MFVec3f && !this .#editor .fields .has (field))
+      {
+         const menu = [
+            {
+               label: _("CoordinateInterpolator"),
+               args: ["addKeyframeForType", "CoordinateInterpolator"],
+            },
+            {
+               label: _("NormalInterpolator"),
+               args: ["addKeyframeForType", "NormalInterpolator"],
+            },
+         ];
+
+         electron .ipcRenderer .send ("context-menu", "animation-members-list", menu);
+      }
+      else
+      {
+         this .addKeyframeForType ();
+      }
+   }
+
+   addKeyframeForType (typeName)
+   {
+      this .#addFieldKeyframeCallback (this .#node, this .#field, typeName);
+      this .toggleApply (this .#field, false);
    }
 
    isRunning ()

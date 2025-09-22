@@ -135,7 +135,7 @@ module .exports = class ScriptEditor extends Interface
 
       this .console = new Console (this .consoleElement);
 
-      electron .ipcRenderer .on ("script-editor", (event, key, ...args) => this [key] (...args));
+      electron .ipcRenderer .on ("script-editor", (event, key, ... args) => this [key] (... args));
 
       // Setup.
 
