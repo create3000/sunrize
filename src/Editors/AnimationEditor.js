@@ -1997,13 +1997,23 @@ module .exports = class AnimationEditor extends Interface
 
    togglePickedKeyframes (pickedKeyframes)
    {
-      const add = pickedKeyframes .filter (n => this .#pickedKeyframes .every (o => !this .equalKeyframe (n, o)));
+      // Picked Keyframes
+      {
+         const add = pickedKeyframes .filter (n => this .#pickedKeyframes .every (o => !this .equalKeyframe (n, o)));
 
-      this .#pickedKeyframes = this .#pickedKeyframes
-         .filter (o => !pickedKeyframes .some (n => this .equalKeyframe (n, o)))
-         .concat (add);
+         this .#pickedKeyframes = this .#pickedKeyframes
+            .filter (o => !pickedKeyframes .some (n => this .equalKeyframe (n, o)))
+            .concat (add);
+      }
 
-      this .#selectedKeyframes = this .#pickedKeyframes .slice ();
+      // Selected Keyframes
+      {
+         const add = pickedKeyframes .filter (n => this .#selectedKeyframes .every (o => !this .equalKeyframe (n, o)));
+
+         this .#selectedKeyframes = this .#selectedKeyframes
+            .filter (o => !pickedKeyframes .some (n => this .equalKeyframe (n, o)))
+            .concat (add);
+      }
    }
 
    equalKeyframe (a, b)
