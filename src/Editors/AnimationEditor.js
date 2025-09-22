@@ -1676,7 +1676,7 @@ module .exports = class AnimationEditor extends Interface
          {
             this .updatePointer (event);
 
-            if (this .selectedKeyframes .length)
+            if (this .selectedKeyframes .length && this .selectedRange [0] === this .selectedRange [1])
             {
 
             }
@@ -1686,7 +1686,7 @@ module .exports = class AnimationEditor extends Interface
 
                this .selectedRange [1] = this .getCurrentFrame ();
 
-               this .selectKeyframes ();
+               this .selectKeyframesInRange ();
             }
 
             break;
@@ -1763,8 +1763,8 @@ module .exports = class AnimationEditor extends Interface
 
       const
 		   key   = interpolator .getMetaData ("Interpolator/key", this .#defaultIntegers),
-		   first = X3D. Algorithm .lowerBound (key, 0, key .length, firstFrame),
-		   last  = X3D. Algorithm .upperBound (key, 0, key .length, lastFrame);
+		   first = X3D .Algorithm .lowerBound (key, 0, key .length, firstFrame),
+		   last  = X3D .Algorithm .upperBound (key, 0, key .length, lastFrame);
 
       for (let index = first; index < last; ++ index)
 		{
@@ -1783,20 +1783,31 @@ module .exports = class AnimationEditor extends Interface
 
    getSelectedRange ()
    {
-      if (this .selectedRange [0] > this .selectedRange [1])
-      {
-         const tmp = this .selectedRange [0];
+      const [a, b] = this .selectedRange;
 
-         this .selectedRange [0] = this .selectedRange [1];
-         this .selectedRange [1] = tmp;
-      }
+      if (a < b)
+         return [a, b];
 
-      return this .selectedRange;
+      return [b, a];
    }
 
-   selectKeyframes ()
+   selectKeyframesInRange (add)
    {
+      if (!add)
+         this .selectedKeyframes .length = 0;
 
+      const selectedRange = this .getSelectedRange ();
+
+      for (const [field, interpolator] of this .fields)
+      {
+         const
+            key   = interpolator .getMetaData ("Interpolator/key", this .#defaultIntegers),
+            first = X3D .Algorithm .lowerBound (key, 0, key .length, selectedRange [0]),
+            last  = X3D .Algorithm .upperBound (key, 0, key .length, selectedRange [1]);
+
+         for (let index = first; index < last; ++ index)
+            this .selectedKeyframes .push ({ field, interpolator, index });
+      }
    }
 
    resizeTracks ()
@@ -1861,7 +1872,7 @@ module .exports = class AnimationEditor extends Interface
 
       // Draw selection range.
 
-      const selectedRange = this .selectedRange;
+      const selectedRange = this .getSelectedRange ();
 
       if (selectedRange [0] !== selectedRange [1])
       {
@@ -2032,8 +2043,8 @@ module .exports = class AnimationEditor extends Interface
 
       const
 		   key   = interpolator .getMetaData ("Interpolator/key", this .#defaultIntegers),
-		   first = X3D. Algorithm .lowerBound (key, 0, key .length, firstFrame),
-		   last  = X3D. Algorithm .upperBound (key, 0, key .length, lastFrame);
+		   first = X3D .Algorithm .lowerBound (key, 0, key .length, firstFrame),
+		   last  = X3D .Algorithm .upperBound (key, 0, key .length, lastFrame);
 
       for (let index = first; index < last; ++ index)
 		{

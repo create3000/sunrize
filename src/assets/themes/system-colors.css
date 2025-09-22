@@ -30,7 +30,7 @@
     --selection-color: black;
     --selection-background-color: rgb(246, 196, 197);
     --scrollbar-thumb-color: rgba(0, 0, 0, 0.2);
-    --selection-range: rgba(0, 0, 0, 0.1);
+    --selection-range: rgba(0, 0, 0, 0.05);
   }
 
   /* TweakPanel colors */
@@ -93,7 +93,7 @@
     --selection-color: white;
     --selection-background-color: rgb(167, 118, 119);
     --scrollbar-thumb-color: rgba(255, 255, 255, 0.2);
-    --selection-range: rgba(255, 255, 255, 0.1);
+    --selection-range: rgba(255, 255, 255, 0.05);
   }
 
   /* TweakPanel colors */
