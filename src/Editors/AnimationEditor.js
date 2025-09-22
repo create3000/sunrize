@@ -1266,8 +1266,8 @@ module .exports = class AnimationEditor extends Interface
          ? components * keySize // update
          : 0;                   // insert
 
-      key     .splice (index,  deleteCount ? 1 : 0, frame);
-      keyType .splice (index,  deleteCount ? 1 : 0, type);
+      key     .splice (index, deleteCount ? 1 : 0, frame);
+      keyType .splice (index, deleteCount ? 1 : 0, type);
 
       // Use slice and concat instead of splice to support very large arrays.
 
@@ -1289,7 +1289,45 @@ module .exports = class AnimationEditor extends Interface
 
    removeKeyframes (keyframes)
    {
+      Editor .undoManager .beginUndo (_("Delete Keyframes"));
+
+      // Sort keyframes in descending order.
+      keyframes .sort (({ index: a }, { index: b }) => b - a);
+
+      for (const { interpolator, index } of keyframes)
+         this .removeKeyframeFromInterpolator (interpolator, index);
+
+      for (const interpolator of new Set (keyframes .map (({ interpolator }) => interpolator)))
+         this .updateInterpolator (interpolator);
+
       this .selectKeyframesInRange ();
+
+      Editor .undoManager .endUndo ();
+   }
+
+   removeKeyframeFromInterpolator (interpolator, index)
+   {
+      const components = this .#components .get (interpolator .getType () .at (-1));
+      const key        = interpolator .getMetaData ("Interpolator/key",      new X3D .MFInt32 ());
+      const keyValue   = interpolator .getMetaData ("Interpolator/keyValue", new X3D .MFDouble ());
+      const keyType    = interpolator .getMetaData ("Interpolator/keyType",  new X3D .MFString ());
+      const keySize    = interpolator .getMetaData ("Interpolator/keySize",  new X3D .SFInt32 (1));
+      const indexN     = index * components * keySize;
+
+      keyValue .length = key .length * components * keySize;
+      keyType  .length = key .length;
+
+      const deleteCount = components * keySize;
+
+      key      .splice (index, 1);
+      keyType  .splice (index, 1);
+      keyValue .splice (indexN, deleteCount)
+
+      Editor .setNodeMetaData (interpolator, "Interpolator/key",      key);
+      Editor .setNodeMetaData (interpolator, "Interpolator/keyValue", keyValue);
+      Editor .setNodeMetaData (interpolator, "Interpolator/keyType",  keyType);
+
+      this .registerRequestDrawTimeline ();
    }
 
    cutKeyframes ()
@@ -1300,7 +1338,7 @@ module .exports = class AnimationEditor extends Interface
 
    copyKeyframes ()
    {
-      this .removeKeyframes ();
+      this .removeKeyframes (this .getSelectedKeyframes ());
    }
 
    pasteKeyframes ()
@@ -2074,7 +2112,6 @@ module .exports = class AnimationEditor extends Interface
 
          this .setCurrentFrame (this .getFrameFromPointer (this .pointer .x));
          this .expandSelectionRange (this .getCurrentFrame ());
-
          this .selectKeyframesInRange ();
       }
    }
