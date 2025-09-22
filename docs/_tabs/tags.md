@@ -1,5 +1,7 @@
 ---
-layout: tags
-icon: fas fa-tags
+title: Forum
+date: 2022-09-22
+icon: fas fa-solid fa-user-tie
 order: 3
+redirect_to: https://github.com/create3000/x_ite/discussions
 ---
