@@ -1279,7 +1279,7 @@ module .exports = class AnimationEditor extends Interface
          after  = keyValue .slice (indexN + deleteCount),
          insert = new X3D .MFDouble ();
 
-      insert .setValue (components === 1 ? [value] : value);
+      insert .setValue (components === 1 ? [value] : Array .from (value));
 
       const newKeyValue = before .concat (insert) .concat (after);
 
@@ -1351,7 +1351,9 @@ module .exports = class AnimationEditor extends Interface
 
    copyKeyframes ()
    {
-      this .removeKeyframes (this .getSelectedKeyframes ());
+      const string = JSON .stringify (this .getSelectedKeyframes () .map (({ field, index }) => [field .getId (), index ]))
+
+      navigator. clipboard .write ([new ClipboardItem ({ ["sunrize/keyframes"]: string })]);
    }
 
    pasteKeyframes ()
