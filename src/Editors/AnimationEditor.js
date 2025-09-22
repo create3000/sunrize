@@ -426,6 +426,7 @@ module .exports = class AnimationEditor extends Interface
    }
 
    #groupingNodes = new Set ([
+      X3D .X3DConstants .X3DLayerNode,
       X3D .X3DConstants .X3DGroupingNode,
       X3D .X3DConstants .ViewpointGroup,
    ]);
@@ -433,7 +434,7 @@ module .exports = class AnimationEditor extends Interface
    isGroupingNodeLike (node)
    {
       if (!node)
-         return;
+         return true; // X3DScene
 
       if (node .getType () .some (type => this .#groupingNodes .has (type)))
          return true;
@@ -448,7 +449,9 @@ module .exports = class AnimationEditor extends Interface
       const
          selection        = require ("../Application/Selection"),
          group            = selection .nodes .at (-1),
-         executionContext = group .getExecutionContext ();
+         executionContext = group ?.getExecutionContext () ?? this .browser .currentScene,
+         node             = group ?? executionContext,
+         field            = group ?._children ?? executionContext ._rootNodes;
 
       Editor .addComponent (executionContext .getLocalScene (), "Grouping");
       Editor .addComponent (executionContext .getLocalScene (), "Time");
@@ -469,7 +472,7 @@ module .exports = class AnimationEditor extends Interface
       animation .setMetaData ("Animation/duration",  new X3D .SFInt32 (10));
       animation .setMetaData ("Animation/frameRate", new X3D .SFInt32 (10));
 
-      Editor .insertValueIntoArray (executionContext, group, group ._children, 0, animation);
+      Editor .insertValueIntoArray (executionContext, node, field, 0, animation);
 
       this .nodeList .setNode (animation);
       this .frameInput .attr ("max", 10);
