@@ -26,13 +26,13 @@ module .exports = class AnimationEditor extends Interface
          .attr ("id", "animation-editor-content")
          .addClass (["animation-editor-content", "vertical-splitter"])
          .appendTo (this .animationEditor)
-         .on ("mouseleave", () => this .requestDrawTracks ());
+         .on ("mouseleave", () => this .requestDrawTimeline ());
 
       this .verticalSplitterLeft = $("<div></div>")
          .addClass ("vertical-splitter-left")
          .css ("width", "30%")
          .appendTo (this .verticalSplitter)
-         .on ("mouseleave", () => this .requestDrawTracks ());
+         .on ("mouseleave", () => this .requestDrawTimeline ());
 
       this .timelineElement = $("<div></div>")
          .attr ("tabindex", 0)
@@ -70,6 +70,29 @@ module .exports = class AnimationEditor extends Interface
          .text ("add")
          .appendTo (this .toolbar)
          .on ("click", () => this .addMembers ());
+
+      $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
+
+      this .cutFrameIcon = $("<span></span>")
+         .addClass ("material-icons")
+         .attr ("title", _("Cut selected keyframes."))
+         .text ("content_cut")
+         .appendTo (this .toolbar)
+         .on ("click", () => this .cutKeyframes ());
+
+      this .copyFrameIcon = $("<span></span>")
+         .addClass ("material-icons")
+         .attr ("title", _("Copy selected keyframes."))
+         .text ("content_copy")
+         .appendTo (this .toolbar)
+         .on ("click", () => this .copyKeyframes ());
+
+      this .pasteFrameIcon = $("<span></span>")
+         .addClass ("material-icons")
+         .attr ("title", _("Paste keyframes at current frame."))
+         .text ("content_paste")
+         .appendTo (this .toolbar)
+         .on ("click", () => this .pasteKeyframes ());
 
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
@@ -191,7 +214,7 @@ module .exports = class AnimationEditor extends Interface
       this .membersListElement = $("<div></div>")
          .addClass ("node-list")
          .appendTo (this .verticalSplitterLeft)
-         .on ("scroll mousemove", () => this .requestDrawTracks ());
+         .on ("scroll mousemove", () => this .requestDrawTimeline ());
 
       this .animationName = $("<input></input>")
          .addClass ("node-name")
@@ -245,7 +268,7 @@ module .exports = class AnimationEditor extends Interface
 
    colorScheme (shouldUseDarkColors)
    {
-      this .requestDrawTracks ();
+      this .requestDrawTimeline ();
    }
 
    isAnimation (node)
@@ -365,13 +388,16 @@ module .exports = class AnimationEditor extends Interface
       // Timeline
 
       this .setCurrentFrame (0);
-      this .requestDrawTracks ();
+      this .requestDrawTimeline ();
    }
 
    enableIcons (enabled)
    {
       $([
          this .addMembersIcon,
+         this .cutFrameIcon,
+         this .copyFrameIcon,
+         this .pasteFrameIcon,
          this .firstFrameIcon,
          this .toggleAnimationIcon,
          this .lastFrameIcon,
@@ -517,7 +543,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .memberList .addNodes (selection .nodes);
 
-      this .requestDrawTracks ();
+      this .requestDrawTimeline ();
    }
 
    removeMembers (nodes)
@@ -535,7 +561,7 @@ module .exports = class AnimationEditor extends Interface
          Editor .setFieldValue (executionContext, animation, animation ._children, children);
       }
 
-      this .registerRequestDrawTracks ();
+      this .registerRequestDrawTimeline ();
 
       Editor .undoManager .endUndo ();
    }
@@ -822,7 +848,7 @@ module .exports = class AnimationEditor extends Interface
       Editor .setFieldValue (executionContext, interpolator, interpolator ._key,      keys);
       Editor .setFieldValue (executionContext, interpolator, interpolator ._keyValue, keyValues);
 
-      this .registerRequestDrawTracks ();
+      this .registerRequestDrawTimeline ();
    }
 
    #vectors = new Map ([
@@ -985,7 +1011,7 @@ module .exports = class AnimationEditor extends Interface
       Editor .setFieldValue (executionContext, interpolator, interpolator ._key,      keys);
       Editor .setFieldValue (executionContext, interpolator, interpolator ._keyValue, keyValues);
 
-      this .registerRequestDrawTracks ();
+      this .registerRequestDrawTimeline ();
    }
 
    updateArrayInterpolator (interpolator)
@@ -1178,7 +1204,7 @@ module .exports = class AnimationEditor extends Interface
       Editor .setFieldValue (executionContext, interpolator, interpolator ._key,      keys);
       Editor .setFieldValue (executionContext, interpolator, interpolator ._keyValue, keyValues);
 
-      this .registerRequestDrawTracks ();
+      this .registerRequestDrawTimeline ();
    }
 
    getValue (keyValue, index, components)
@@ -1220,7 +1246,7 @@ module .exports = class AnimationEditor extends Interface
       Editor .setNodeMetaData (interpolator, "Interpolator/keyType",  keyType);
       Editor .setNodeMetaData (interpolator, "Interpolator/keySize",  keySize);
 
-      this .registerRequestDrawTracks ();
+      this .registerRequestDrawTimeline ();
    }
 
    addKeyframeToInterpolator (interpolator, frame, type, value)
@@ -1258,18 +1284,38 @@ module .exports = class AnimationEditor extends Interface
       Editor .setNodeMetaData (interpolator, "Interpolator/keyValue", newKeyValue);
       Editor .setNodeMetaData (interpolator, "Interpolator/keyType",  keyType);
 
-      this .registerRequestDrawTracks ();
+      this .registerRequestDrawTimeline ();
    }
 
-   registerRequestDrawTracks ()
+   removeSelectedKeyframes ()
+   {
+      this .selectKeyframesInRange ();
+   }
+
+   cutKeyframes ()
+   {
+      this .copyKeyframes ();
+      this .removeKeyframes ();
+   }
+
+   copyKeyframes ()
+   {
+      this .removeKeyframes ();
+   }
+
+   pasteKeyframes ()
+   {
+   }
+
+   registerRequestDrawTimeline ()
    {
       Editor .undoManager .beginUndo (_("Request Draw Tracks"));
 
-      this .requestDrawTracks ();
+      this .requestDrawTimeline ();
 
       Editor .undoManager .registerUndo (() =>
       {
-         this .registerRequestDrawTracks ();
+         this .registerRequestDrawTimeline ();
       });
 
       Editor .undoManager .endUndo ();
@@ -1410,7 +1456,7 @@ module .exports = class AnimationEditor extends Interface
       this .frameInput .val (frame);
       this .timeElement .text (this .formatFrames (frame, this .getFrameRate ()));
 
-      this .requestDrawTracks ();
+      this .requestDrawTimeline ();
    }
 
    // Navigation Function Handlers
@@ -1506,6 +1552,42 @@ module .exports = class AnimationEditor extends Interface
 
             break;
          }
+         case "x":
+         {
+            if (event .metaKey || event .ctrlKey)
+            {
+               this .cutKeyframes ();
+
+               event .preventDefault ();
+               event .stopPropagation ();
+            }
+
+            break;
+         }
+         case "c":
+         {
+            if (event .metaKey || event .ctrlKey)
+            {
+               this .cutKeyframes ();
+
+               event .preventDefault ();
+               event .stopPropagation ();
+            }
+
+            break;
+         }
+         case "v":
+         {
+            if (event .metaKey || event .ctrlKey)
+            {
+               this .pasteKeyframes ();
+
+               event .preventDefault ();
+               event .stopPropagation ();
+            }
+
+            break;
+         }
       }
    }
 
@@ -1590,7 +1672,7 @@ module .exports = class AnimationEditor extends Interface
       if (this .timeSensor)
          this .timeSensor ._range [0] = fraction;
 
-      this .requestDrawTracks ();
+      this .requestDrawTimeline ();
    }
 
    #defaultInteger = new X3D .SFInt32 ();
@@ -1624,7 +1706,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .translation = translation;
 
-      this .requestDrawTracks ();
+      this .requestDrawTimeline ();
    }
 
    getScale ()
@@ -1636,7 +1718,7 @@ module .exports = class AnimationEditor extends Interface
    {
       this .scale = Math .max (Math .min (scale, this .MIN_SCALE), this .getFitScale ());
 
-      this .requestDrawTracks ();
+      this .requestDrawTimeline ();
    }
 
    getFitScale ()
@@ -1757,7 +1839,7 @@ module .exports = class AnimationEditor extends Interface
    {
       this .pointer .set (-1, -1);
 
-      this .requestDrawTracks ();
+      this .requestDrawTimeline ();
    }
 
    updatePointer (event)
@@ -1769,7 +1851,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .pointer .set (x, y);
 
-      this .requestDrawTracks ();
+      this .requestDrawTimeline ();
    }
 
    getFrameFromPointer (pointerX)
@@ -1937,7 +2019,7 @@ module .exports = class AnimationEditor extends Interface
    {
       this .#selectionRange = [start, end];
 
-      this .requestDrawTracks ();
+      this .requestDrawTimeline ();
    }
 
    expandSelectionRange (frame)
@@ -1974,7 +2056,7 @@ module .exports = class AnimationEditor extends Interface
             this .#selectedKeyframes .push ({ field, interpolator, index });
       }
 
-      this .requestDrawTracks ();
+      this .requestDrawTimeline ();
    }
 
    moveOrSelectKeyframes ()
@@ -2015,7 +2097,7 @@ module .exports = class AnimationEditor extends Interface
 
    #updateTracksId = undefined;
 
-   requestDrawTracks ()
+   requestDrawTimeline ()
    {
       clearTimeout (this .#updateTracksId);
 
