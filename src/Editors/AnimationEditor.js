@@ -1698,7 +1698,7 @@ module .exports = class AnimationEditor extends Interface
             case "main":
             {
                for (const field of this .fields .keys ())
-                  this .pickKeyframe (field, firstFrame, lastFrame, bottom, keyframes);
+                  this .pickKeyframe (field, firstFrame, lastFrame, bottom - this .TRACK_PADDING, keyframes);
 
                break;
             }
@@ -1707,19 +1707,54 @@ module .exports = class AnimationEditor extends Interface
                const node = item .data ("node");
 
                for (const field of node .getFields ())
-                  this .pickKeyframe (field, firstFrame, lastFrame, bottom, keyframes);
+                  this .pickKeyframe (field, firstFrame, lastFrame, bottom - this .TRACK_PADDING, keyframes);
 
                break;
             }
             case "field":
             {
-               this .pickKeyframe (item .data ("field"), firstFrame, lastFrame, bottom, keyframes);
+               this .pickKeyframe (item .data ("field"), firstFrame, lastFrame, bottom - this .TRACK_PADDING, keyframes);
                break;
             }
          }
       }
 
       return keyframes;
+   }
+
+   #frameBox = new X3D .Box2 ();
+   #frameSize = new X3D .Vector2 (this .FRAME_SIZE, this .FRAME_SIZE);
+   #frameCenter = new X3D .Vector2 ();
+
+   pickKeyframe (field, firstFrame, lastFrame, bottom, keyframes)
+   {
+      const interpolator = this .fields .get (field);
+
+      if (!interpolator)
+         return;
+
+      this .#defaultIntegers .length = 0;
+
+      const
+         translation = this .getTranslation (),
+         scale       = this .getScale ();
+
+      const
+		   key   = interpolator .getMetaData ("Interpolator/key", this .#defaultIntegers),
+		   first = X3D .Algorithm .lowerBound (key, 0, key .length, firstFrame),
+		   last  = X3D .Algorithm .upperBound (key, 0, key .length, lastFrame);
+
+      for (let index = first; index < last; ++ index)
+		{
+         const frame = key [index];
+         const x     = Math .floor (frame * scale + translation) + 0.5;
+         const y     = Math .floor (bottom - this .FRAME_SIZE / 2) + 0.5;
+
+         this .#frameBox .set (this .#frameSize, this .#frameCenter .set (x, y));
+
+         if (this .#frameBox .containsPoint (this .pointer))
+            keyframes .push ({ field, interpolator, index });
+		}
    }
 
    pointer = new X3D .Vector2 (-1, -1);
@@ -1749,41 +1784,6 @@ module .exports = class AnimationEditor extends Interface
 	   const frame = Math .round ((pointerX - this .getTranslation ()) / this .getScale ());
 
       return X3D .Algorithm .clamp (frame, 0, this .getDuration ());
-   }
-
-   #frameBox = new X3D .Box2 ();
-   #frameSize = new X3D .Vector2 (this .FRAME_SIZE, this .FRAME_SIZE);
-   #frameCenter = new X3D .Vector2 ();
-
-   pickKeyframe (field, firstFrame, lastFrame, bottom, keyframes)
-   {
-      const interpolator = this .fields .get (field);
-
-      if (!interpolator)
-         return;
-
-      this .#defaultIntegers .length = 0;
-
-      const
-         translation = this .getTranslation (),
-         scale       = this .getScale ();
-
-      const
-		   key   = interpolator .getMetaData ("Interpolator/key", this .#defaultIntegers),
-		   first = X3D .Algorithm .lowerBound (key, 0, key .length, firstFrame),
-		   last  = X3D .Algorithm .upperBound (key, 0, key .length, lastFrame);
-
-      for (let index = first; index < last; ++ index)
-		{
-         const frame = key [index];
-         const x     = Math .floor (frame * scale + translation);
-         const y     = bottom - (this .FRAME_SIZE / 2);
-
-         this .#frameBox .set (this .#frameSize, this .#frameCenter .set (x, y));
-
-         if (this .#frameBox .containsPoint (this .pointer))
-            keyframes .push ({ field, interpolator, index });
-		}
    }
 
    updateCursor ()
