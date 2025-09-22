@@ -1487,9 +1487,7 @@ module .exports = class AnimationEditor extends Interface
          {
             if (event .metaKey || event .ctrlKey)
             {
-               this .selectedRange = [0, this .getDuration ()];
-
-               this .requestDrawTracks ();
+               this .setSelectedRange (0, this .getDuration ());
 
                event .preventDefault ();
                event .stopPropagation ();
@@ -1671,8 +1669,8 @@ module .exports = class AnimationEditor extends Interface
             this .updatePointer (event);
             this .setCurrentFrame (this .getFrameFromPointer (this .pointer .x));
             this .addAutoScroll ();
+            this .setSelectedRange (this .getCurrentFrame (), this .getCurrentFrame ());
 
-            this .selectedRange     = [this .getCurrentFrame (), this .getCurrentFrame ()];
             this .pickedKeyframes   = this .pickKeyframes ();
             this .selectedKeyframes = this .pickedKeyframes .slice ();
 
@@ -1875,6 +1873,13 @@ module .exports = class AnimationEditor extends Interface
          return [a, b];
 
       return [b, a];
+   }
+
+   setSelectedRange (start, end)
+   {
+      this .selectedRange = [start, end];
+
+      this .requestDrawTracks ();
    }
 
    selectKeyframesInRange ()
