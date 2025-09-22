@@ -1863,7 +1863,7 @@ module .exports = class AnimationEditor extends Interface
          case 0:
          {
             this .updatePointer (event);
-            this .moveOrSelectKeyframes ();
+            this .moveOrSelectKeyframes (event);
             this .updateRange ();
             break;
          }
@@ -2122,7 +2122,7 @@ module .exports = class AnimationEditor extends Interface
       this .requestDrawTimeline ();
    }
 
-   moveOrSelectKeyframes ()
+   moveOrSelectKeyframes (event)
    {
       // Move keyframes or select range.
 
@@ -2136,7 +2136,12 @@ module .exports = class AnimationEditor extends Interface
          // Select range.
 
          this .setCurrentFrame (this .getFrameFromPointer (this .pointer .x));
-         this .expandSelectionRange (this .getCurrentFrame ());
+
+         if (event ?.shiftKey)
+            this .expandSelectionRange (this .getCurrentFrame ());
+         else
+            this .setSelectionRange (this .#selectionRange [0], this .getCurrentFrame ());
+
          this .selectKeyframesInRange ();
       }
    }
