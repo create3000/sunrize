@@ -1664,6 +1664,8 @@ module .exports = class AnimationEditor extends Interface
             this .selectedRange     = [this .getCurrentFrame (), this .getCurrentFrame ()];
             this .pickedKeyframes   = this .pickKeyframes ();
             this .selectedKeyframes = this .pickedKeyframes .slice ();
+
+            this .timeSensor ._pauseTime = Date .now () / 1000;
             break;
          }
       }
@@ -1674,6 +1676,8 @@ module .exports = class AnimationEditor extends Interface
       $(document) .off (".AnimationEditor");
 
 		this .button = undefined;
+
+      this .timeSensor ._resumeTime = Date .now () / 1000;
    }
 
    on_mousemove (event)
