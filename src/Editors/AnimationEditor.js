@@ -1764,7 +1764,6 @@ module .exports = class AnimationEditor extends Interface
       this .#defaultIntegers .length = 0;
 
       const
-         left        = this .getLeft (),
          translation = this .getTranslation (),
          scale       = this .getScale ();
 
