@@ -300,7 +300,7 @@ module .exports = class AnimationMembersList extends Interface
          node .typeName_changed .removeInterest ("set_typeName", this);
          node .name_changed     .removeInterest ("set_name",     this);
 
-         this .connectNode (node, false)
+         this .connectNode (node, false);
       }
 
       this .#nodes = this .#nodes .filter (node => !nodes .includes (node));
