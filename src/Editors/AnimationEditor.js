@@ -560,7 +560,7 @@ module .exports = class AnimationEditor extends Interface
    set_interpolators ()
    {
       this .memberList .saveScrollbars ();
-      this .memberList .removeNodes (Array .from (this .members .values ()));
+      this .memberList .clearNodes ();
 
       this .members .clear ();
       this .fields .clear ();
