@@ -1347,7 +1347,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .registerRequestDrawTimeline ();
 
-      return { interpolator, frame: frame [0], keyType: frameKeyType [0], value: Array .from (frameValue) };
+      return { interpolator, index, frame: frame [0], keyType: frameKeyType [0], value: Array .from (frameValue) };
    }
 
    cutKeyframes ()
@@ -1492,26 +1492,38 @@ module .exports = class AnimationEditor extends Interface
             break;
       }
 
-      const removed = [ ];
+      const
+         removed = [ ],
+         added   = [ ];
 
       // Sort keyframes in descending order.
-      keyframes .sort (({ index: a }, { index: b }) => b - a);
+      keyframes = keyframes
+         .sort (({ index: a }, { index: b }) => b - a)
+         .map (keyframe => Object .assign (keyframe, { keyframe }));
 
-      for (const { interpolator, index } of keyframes)
-         removed .push (this .removeKeyframeFromInterpolator (interpolator, index));
+      for (const { interpolator, index, keyframe } of keyframes)
+         removed .push (Object .assign (this .removeKeyframeFromInterpolator (interpolator, index), { keyframe }));
 
-      for (const { interpolator, frame, keyType, value } of removed)
+      // Sort keyframes in descending order.
+      removed .sort (({ index: a }, { index: b }) => a - b);
+
+      for (const { interpolator, frame, keyType, value, keyframe } of removed)
       {
          const newFrame = frame + distance;
 
          if (newFrame < 0 || newFrame > this .getDuration ())
             continue;
 
-         this .addKeyframeToInterpolator (interpolator, newFrame, keyType, value);
+         const index = this .addKeyframeToInterpolator (interpolator, newFrame, keyType, value);
+
+         added .push (Object .assign (keyframe, { index }));
       }
 
       for (const interpolator of new Set (keyframes .map (({ interpolator }) => interpolator)))
          this .updateInterpolator (interpolator);
+
+      this .registerClearSelectedKeyframes ();
+      this .setSelectedKeyframes (added);
 
       Editor .undoManager .endUndo ();
    }
@@ -1990,6 +2002,8 @@ module .exports = class AnimationEditor extends Interface
             if (!pickedKeyframes .length)
                this .setCurrentFrame (this .getFrameFromPointer (this .pointer .x));
 
+            this .startMovingFrame = this .getFrameFromPointer (this .pointer .x);
+
             if (event .shiftKey && pickedKeyframes .length)
             {
                this .togglePickedKeyframes (pickedKeyframes);
@@ -2011,8 +2025,6 @@ module .exports = class AnimationEditor extends Interface
                else
                {
                   this .setPickedKeyframes (this .getSelectedKeyframes ());
-
-                  this .startMovingFrame = this .getFrameFromPointer (this .pointer .x);
                }
             }
 
