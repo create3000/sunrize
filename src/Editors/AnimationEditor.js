@@ -290,6 +290,10 @@ module .exports = class AnimationEditor extends Interface
    {
       // Remove
 
+      this .setPickedKeyframes ([ ]);
+      this .setSelectedKeyframes ([ ]);
+      this .setSelectionRange (0, 0);
+
       this .animation ?._children    .removeInterest ("set_interpolators",  this);
       this .animation ?.name_changed .removeInterest ("set_animation_name", this);
 
@@ -317,10 +321,6 @@ module .exports = class AnimationEditor extends Interface
             interpolator ._set_fraction = 0;
       }
 
-      this .setPickedKeyframes ([ ]);
-      this .setSelectedKeyframes ([ ]);
-      this .setSelectionRange (0, 0);
-
       // Set
 
       this .animation = animation;
@@ -345,7 +345,7 @@ module .exports = class AnimationEditor extends Interface
 
          this .set_loop (this .timeSensor ._loop);
          this .set_active (this .timeSensor ._isActive);
-         
+
          this .updateRange ();
 
          // Show Member List
