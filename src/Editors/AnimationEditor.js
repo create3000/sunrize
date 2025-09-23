@@ -1327,9 +1327,9 @@ module .exports = class AnimationEditor extends Interface
 
       const deleteCountN = components * keySize;
 
-      key      .splice (index, 1);
-      keyType  .splice (index, 1);
-      keyValue .splice (indexN, deleteCountN);
+      const frame        = key      .splice (index, 1);
+      const frameKeyType = keyType  .splice (index, 1);
+      const frameValue   = keyValue .splice (indexN, deleteCountN);
 
       Editor .setNodeMetaData (interpolator, "Interpolator/key",      key);
       Editor .setNodeMetaData (interpolator, "Interpolator/keyValue", keyValue);
@@ -1346,6 +1346,8 @@ module .exports = class AnimationEditor extends Interface
       }
 
       this .registerRequestDrawTimeline ();
+
+      return { interpolator, frame: frame [0], keyType: frameKeyType [0], value: Array .from (frameValue) };
    }
 
    cutKeyframes ()
@@ -1472,6 +1474,44 @@ module .exports = class AnimationEditor extends Interface
 
       this .removeKeyframes (this .getSelectedKeyframes ());
       this .registerClearSelectedKeyframes ();
+
+      Editor .undoManager .endUndo ();
+   }
+
+   moveKeyframes (keyframes, distance)
+   {
+      switch (keyframes .length)
+      {
+         case 0:
+            return;
+         case 1:
+            Editor .undoManager .beginUndo (_("Move Keyframe"));
+            break;
+         default:
+            Editor .undoManager .beginUndo (_("Move Keyframes"));
+            break;
+      }
+
+      const removed = [ ];
+
+      // Sort keyframes in descending order.
+      keyframes .sort (({ index: a }, { index: b }) => b - a);
+
+      for (const { interpolator, index } of keyframes)
+         removed .push (this .removeKeyframeFromInterpolator (interpolator, index));
+
+      for (const { interpolator, frame, keyType, value } of removed)
+      {
+         const newFrame = frame + distance;
+
+         if (newFrame < 0 || newFrame > this .getDuration ())
+            continue;
+
+         this .addKeyframeToInterpolator (interpolator, newFrame, keyType, value);
+      }
+
+      for (const interpolator of new Set (keyframes .map (({ interpolator }) => interpolator)))
+         this .updateInterpolator (interpolator);
 
       Editor .undoManager .endUndo ();
    }
@@ -1927,6 +1967,8 @@ module .exports = class AnimationEditor extends Interface
 
    // Update Tracks
 
+   #button;
+
    on_mousedown (event)
    {
       $(document)
@@ -1934,9 +1976,9 @@ module .exports = class AnimationEditor extends Interface
          .on ("mouseup.AnimationEditor",   event => this .on_mouseup (event))
          .on ("mousemove.AnimationEditor", event => this .on_mousemove (event));
 
-      this .button = event .button;
+      this .#button = event .button;
 
-      switch (this .button)
+      switch (this .#button)
       {
          case 0:
          {
@@ -1969,6 +2011,8 @@ module .exports = class AnimationEditor extends Interface
                else
                {
                   this .setPickedKeyframes (this .getSelectedKeyframes ());
+
+                  this .startMovingFrame = this .getFrameFromPointer (this .pointer .x);
                }
             }
 
@@ -1982,19 +2026,20 @@ module .exports = class AnimationEditor extends Interface
    {
       $(document) .off (".AnimationEditor");
 
-		this .button = undefined;
-
       this .removeAutoScroll ();
 
-		if (this .#movingKeyframes .length)
-			this .moveKeyframes ();
+		if (this .#movingKeyframesOffset)
+		 	this .moveKeyframes (this .getSelectedKeyframes (), this .#movingKeyframesOffset);
+
+		this .#button                = undefined;
+      this .#movingKeyframesOffset = 0;
 
       this .timeSensor ._resumeTime = Date .now () / 1000;
    }
 
    on_mousemove (event)
    {
-      switch (this .button)
+      switch (this .#button)
       {
          case undefined:
          {
@@ -2135,7 +2180,7 @@ module .exports = class AnimationEditor extends Interface
 
    #pickedKeyframes = [ ];
    #selectedKeyframes = [ ];
-   #movingKeyframes = [ ];
+   #movingKeyframesOffset = 0;
 
    getPickedKeyframes ()
    {
@@ -2295,8 +2340,7 @@ module .exports = class AnimationEditor extends Interface
 
       if (this .getPickedKeyframes () .length)
       {
-         // Move keyframes.
-         console .log ()
+         this .#movingKeyframesOffset = this .getFrameFromPointer (this .pointer .x) - this .startMovingFrame;
       }
       else
       {
@@ -2485,7 +2529,7 @@ module .exports = class AnimationEditor extends Interface
             }
          }
 
-         // Draw active keyframes.
+         // Draw selected keyframes.
 
          switch (item .attr ("type"))
          {
@@ -2598,7 +2642,7 @@ module .exports = class AnimationEditor extends Interface
          this .#defaultIntegers .length = 0;
 
          const key   = interpolator .getMetaData ("Interpolator/key", this .#defaultIntegers);
-         const frame = key [index];
+         const frame = key [index] + this .#movingKeyframesOffset;
          const x     = Math .floor (left + frame * scale + translation);
          const x1    = x - (this .FRAME_SIZE / 2) + 0.5;
 
