@@ -822,10 +822,10 @@ module .exports = class AnimationEditor extends Interface
          case X3D .X3DConstants .MFVec2f:
          case X3D .X3DConstants .MFVec3f:
          {
-            const keySize = interpolator .getMetaData ("Interpolator/keySize", new X3D .SFInt32 ());
-
             if (field .length === 0)
                break;
+
+            const keySize = interpolator .getMetaData ("Interpolator/keySize", new X3D .SFInt32 ());
 
             if (keySize .getValue () !== 0 && keySize .getValue () !== field .length)
             {
