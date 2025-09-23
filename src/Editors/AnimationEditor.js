@@ -517,7 +517,7 @@ module .exports = class AnimationEditor extends Interface
       }
       else
       {
-         // Remove frames greater than duration.
+         // Remove keyframes greater than duration.
 
          for (const interpolator of this .interpolators)
          {
