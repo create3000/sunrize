@@ -1532,20 +1532,23 @@ module .exports = class AnimationEditor extends Interface
                if (newFrame > this .getDuration ())
                   continue;
 
-               const components = this .#components .get (interpolator .getType () .at (-1));
-               const keySize    = interpolator .getMetaData ("Interpolator/keySize", new X3D .SFInt32 ());
-
-               if (keySize .getValue () === 0)
+               if (interpolator ._value_changed instanceof X3D .X3DArrayField)
                {
-                  keySize .setValue (value .length / components);
+                  const components = this .#components .get (interpolator .getType () .at (-1));
+                  const keySize    = interpolator .getMetaData ("Interpolator/keySize", new X3D .SFInt32 ());
 
-                  Editor .setNodeMetaData (interpolator, "Interpolator/keySize", keySize);
+                  if (keySize .getValue () === 0)
+                  {
+                     keySize .setValue (value .length / components);
+
+                     Editor .setNodeMetaData (interpolator, "Interpolator/keySize", keySize);
+                  }
+
+                  const countN = components * keySize;
+
+                  if (value .length !== countN)
+                     continue;
                }
-
-               const countN = components * keySize;
-
-               if (value .length !== countN)
-                  continue;
 
                const index = this .addKeyframeToInterpolator (interpolator, newFrame, type, value);
 
@@ -1627,14 +1630,17 @@ module .exports = class AnimationEditor extends Interface
          if (newFrame < 0 || newFrame > this .getDuration ())
             continue;
 
-         const components = this .#components .get (interpolator .getType () .at (-1));
-         const keySize    = interpolator .getMetaData ("Interpolator/keySize", new X3D .SFInt32 ());
-
-         if (keySize .getValue () === 0)
+         if (interpolator ._value_changed instanceof X3D .X3DArrayField)
          {
-            keySize .setValue (value .length / components);
+            const components = this .#components .get (interpolator .getType () .at (-1));
+            const keySize    = interpolator .getMetaData ("Interpolator/keySize", new X3D .SFInt32 ());
 
-            Editor .setNodeMetaData (interpolator, "Interpolator/keySize", keySize);
+            if (keySize .getValue () === 0)
+            {
+               keySize .setValue (value .length / components);
+
+               Editor .setNodeMetaData (interpolator, "Interpolator/keySize", keySize);
+            }
          }
 
          const index = this .addKeyframeToInterpolator (interpolator, newFrame, keyType, value);
