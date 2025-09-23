@@ -676,7 +676,25 @@ module .exports = class AnimationEditor extends Interface
 
    setKeyType ()
    {
-      this .config .file .keyType = this .getKeyType ();
+      const value = this .getKeyType ();
+
+      this .config .file .keyType = value;
+
+      if (this .getSelectedKeyframes () .length)
+      {
+         Editor .undoManager .beginUndo (_("Change Key Type of Selected Keyframes"));
+
+         for (const { interpolator, index } of this .getSelectedKeyframes ())
+         {
+            const keyType = interpolator .getMetaData ("Interpolator/keyType", new X3D .MFString ());
+
+            keyType [index] = value;
+
+            Editor .setNodeMetaData (interpolator, "Interpolator/keyType", keyType);
+         }
+
+         Editor .undoManager .endUndo ();
+      }
    }
 
    updateKeyType ()
