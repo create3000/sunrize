@@ -1353,7 +1353,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .copyKeyframes ();
       this .removeKeyframes (this .getSelectedKeyframes ());
-      this .clearSelectedKeyframes ();
+      this .registerClearSelectedKeyframes ();
 
       Editor .undoManager .endUndo ();
    }
@@ -1431,7 +1431,7 @@ module .exports = class AnimationEditor extends Interface
             }
          }
 
-         this .clearSelectedKeyframes ();
+         this .registerClearSelectedKeyframes ();
          this .setSelectedKeyframes (selectedKeyframes);
          this .registerRequestDrawTimeline ();
       }
@@ -1450,7 +1450,7 @@ module .exports = class AnimationEditor extends Interface
       Editor .undoManager .beginUndo (_("Delete Keyframes"));
 
       this .removeKeyframes (this .getSelectedKeyframes ());
-      this .clearSelectedKeyframes ();
+      this .registerClearSelectedKeyframes ();
 
       Editor .undoManager .endUndo ();
    }
@@ -2149,7 +2149,7 @@ module .exports = class AnimationEditor extends Interface
       this .#selectedKeyframes = selectedKeyframes .slice ();
    }
 
-   clearSelectedKeyframes ()
+   registerClearSelectedKeyframes ()
    {
       Editor .undoManager .beginUndo (_("Clear Selected Keyframes"));
 
@@ -2157,7 +2157,7 @@ module .exports = class AnimationEditor extends Interface
 
       Editor .undoManager .registerUndo (() =>
       {
-         this .clearSelectedKeyframes ();
+         this .registerClearSelectedKeyframes ();
       });
 
       this .registerRequestDrawTimeline ();
