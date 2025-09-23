@@ -485,6 +485,14 @@ module .exports = class AnimationEditor extends Interface
       Editor .undoManager .endUndo ();
    }
 
+   resizeAnimation (newDuration, newFrameRate, scaleKeyframes)
+   {
+      this .config .file .scaleKeyframes = scaleKeyframes;
+
+      if (newDuration === this .getDuration () && newFrameRate === this .getFrameRate ())
+         return;
+   }
+
    closeAnimation ()
    {
       this .nodeList .setNode (null);
@@ -680,11 +688,15 @@ module .exports = class AnimationEditor extends Interface
 
       this .config .file .keyType = value;
 
-      if (this .getSelectedKeyframes () .length)
+      // Update interpolators.
+
+      const keyframes = this .getSelectedKeyframes ();
+
+      if (keyframes .length)
       {
          Editor .undoManager .beginUndo (_("Change Key Type of Selected Keyframes"));
 
-         for (const { interpolator, index } of this .getSelectedKeyframes ())
+         for (const { interpolator, index } of keyframes)
          {
             const keyType = interpolator .getMetaData ("Interpolator/keyType", new X3D .MFString ());
 
@@ -692,6 +704,9 @@ module .exports = class AnimationEditor extends Interface
 
             Editor .setNodeMetaData (interpolator, "Interpolator/keyType", keyType);
          }
+
+         for (const interpolator of new Set (keyframes .map (({ interpolator }) => interpolator)))
+            this .updateInterpolator (interpolator);
 
          Editor .undoManager .endUndo ();
       }
@@ -1659,7 +1674,9 @@ module .exports = class AnimationEditor extends Interface
 
    showProperties ()
    {
+      require ("../Controls/AnimationPropertiesPopover");
 
+      this .propertiesIcon .animationPropertiesPopover (this);
    }
 
    updateRange ()

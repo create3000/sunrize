@@ -452,6 +452,10 @@ body.light .qtip-tipsy {
   padding: 8px;
 }
 
+.qtip span {
+  display: block;
+}
+
 .qtip input,
 .qtip select,
 .qtip button {
@@ -460,18 +464,30 @@ body.light .qtip-tipsy {
   background: var(--background-color);
   border: 1px solid var(--system-gray7);
   filter: opacity(80%);
+  margin: 2px 0;
 }
 
-.qtip .qtip-content > div > * {
-  margin: 0.3em 0em;
+.qtip input[type=checkbox] {
+  display: inline-block;
+  width: auto;
+  margin: 3px 0 0 0;
+}
+
+.qtip label {
+  display: inline-block;
+  width: auto;
+  position: relative;
+  margin-left: 5px !important;
+  top: -2px;
+  margin: 3px 0 0 0;
 }
 
 .qtip .qtip-content > div:first-child {
-  margin-top: 0em;
+  margin-top: 0;
 }
 
 .qtip .qtip-content > div:last-child {
-  margin-bottom: 0em;
+  margin-bottom: 0;
 }
 
 .qtip select:hover,
