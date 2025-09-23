@@ -531,6 +531,8 @@ module .exports = class AnimationEditor extends Interface
             Editor .setNodeMetaData (interpolator, "Interpolator/keyValue", keyValue .slice (0, index));
             Editor .setNodeMetaData (interpolator, "Interpolator/keyType",  keyType  .slice (0, index));
          }
+
+         this .setCurrentFrame (Math .min (this .getCurrentFrame (), newDuration));
       }
 
       this .updateInterpolators ()
