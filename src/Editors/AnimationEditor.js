@@ -1438,6 +1438,16 @@ module .exports = class AnimationEditor extends Interface
       }
    }
 
+   deleteKeyframes ()
+   {
+      Editor .undoManager .beginUndo (_("Delete Keyframes"));
+
+      this .removeKeyframes (this .getSelectedKeyframes ());
+      this .clearSelectedKeyframes ();
+
+      Editor .undoManager .endUndo ();
+   }
+
    registerRequestDrawTimeline ()
    {
       Editor .undoManager .beginUndo (_("Request Draw Tracks"));
@@ -1594,7 +1604,7 @@ module .exports = class AnimationEditor extends Interface
 
    on_keydown (event)
    {
-      // console .log (event .key);
+      console .log (event .key);
 
       switch (event .key)
       {
@@ -1712,6 +1722,18 @@ module .exports = class AnimationEditor extends Interface
             if (event .metaKey || event .ctrlKey)
             {
                this .pasteKeyframes ();
+
+               event .preventDefault ();
+               event .stopPropagation ();
+            }
+
+            break;
+         }
+         case "Backspace":
+         {
+            if (event .metaKey || event .ctrlKey)
+            {
+               this .deleteKeyframes ();
 
                event .preventDefault ();
                event .stopPropagation ();
