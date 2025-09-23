@@ -1563,7 +1563,6 @@ module .exports = class AnimationEditor extends Interface
          this .registerClearSelectedKeyframes ();
          this .setSelectedKeyframes (selectedKeyframes);
          this .setSelectionRange (0, 0);
-         this .updateRange ();
          this .registerRequestDrawTimeline ();
       }
       catch (error)
@@ -1643,7 +1642,6 @@ module .exports = class AnimationEditor extends Interface
       this .registerClearSelectedKeyframes ();
       this .setSelectedKeyframes (added);
       this .setSelectionRange (0, 0);
-      this .updateRange ();
 
       Editor .undoManager .endUndo ();
    }
@@ -1738,6 +1736,9 @@ module .exports = class AnimationEditor extends Interface
 
    updateRange ()
    {
+      if (!this .timeSensor)
+         return;
+
       const selectionRange = this .getSelectionRange ();
 
       if (selectionRange [0] === selectionRange [1])
@@ -2199,7 +2200,6 @@ module .exports = class AnimationEditor extends Interface
          {
             this .updatePointer (event);
             this .moveOrSelectKeyframes (event);
-            this .updateRange ();
             break;
          }
       }
@@ -2441,6 +2441,7 @@ module .exports = class AnimationEditor extends Interface
    {
       this .#selectionRange = [start, end];
 
+      this .updateRange ();
       this .requestDrawTimeline ();
    }
 
