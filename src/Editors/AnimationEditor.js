@@ -681,8 +681,6 @@ module .exports = class AnimationEditor extends Interface
 
    updateKeyType ()
    {
-      // Key Type
-
       const keyTypes = {
          CONSTANT: 0,
          LINEAR: 0,
@@ -697,7 +695,8 @@ module .exports = class AnimationEditor extends Interface
          ++ keyTypes [keyType [index]];
       }
 
-      const keyType = Object .entries (keyTypes) .find (([key, value]) => value === this .#selectedKeyframes .length);
+      const keyType = Object .entries (keyTypes)
+         .find (([key, value]) => value === this .#selectedKeyframes .length);
 
       this .keyTypeElement .val (keyType ?.[0] ?? "MIXED");
    }
