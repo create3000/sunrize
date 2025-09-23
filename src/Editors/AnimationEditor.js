@@ -151,7 +151,7 @@ module .exports = class AnimationEditor extends Interface
          .append ($("<option></option>") .text ("LINEAR") .attr ("selected", ""))
          .append ($("<option></option>") .text ("SPLINE"))
          .append ($("<option></option>") .text ("SPLIT"))
-         .append ($("<option></option>") .text ("MIXED") .addClass ("mixed") .css ("display", "none"))
+         .append ($("<option></option>") .text ("MIXED") .hide ())
          .appendTo (this .toolbar)
          .on ("change", () => this .setKeyType ());
 
