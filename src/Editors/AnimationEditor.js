@@ -345,6 +345,8 @@ module .exports = class AnimationEditor extends Interface
 
          this .set_loop (this .timeSensor ._loop);
          this .set_active (this .timeSensor ._isActive);
+         
+         this .updateRange ();
 
          // Show Member List
 
@@ -370,7 +372,6 @@ module .exports = class AnimationEditor extends Interface
 
          this .frameInput .attr ("max", this .getDuration ());
 
-         this .updateRange ();
          this .zoomFit ();
       }
       else
