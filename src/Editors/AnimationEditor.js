@@ -536,7 +536,7 @@ module .exports = class AnimationEditor extends Interface
       }
 
       this .updateInterpolators ()
-      this .zoomFit ();
+      this .registerZoomFit ();
 
       Editor .undoManager .endUndo ();
    }
@@ -1975,6 +1975,20 @@ module .exports = class AnimationEditor extends Interface
    {
       this .setScale (this .getFitScale ());
       this .setTranslation (0);
+   }
+
+   registerZoomFit ()
+   {
+      Editor .undoManager .beginUndo (_("Zoom Fit"));
+
+      setTimeout (() => this .zoomFit ());
+
+      Editor .undoManager .registerUndo (() =>
+      {
+         this .registerZoomFit ();
+      });
+
+      Editor .undoManager .endUndo ();
    }
 
    zoom100 ()
