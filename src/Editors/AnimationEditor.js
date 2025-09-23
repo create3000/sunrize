@@ -1447,14 +1447,7 @@ module .exports = class AnimationEditor extends Interface
       Editor .setNodeMetaData (interpolator, "Interpolator/keyType",  keyType);
 
       if (!key .length)
-      {
-         const
-            animation        = this .animation,
-            executionContext = animation .getExecutionContext (),
-            children         = animation ._children .filter (node => node .getValue () !== interpolator);
-
-         Editor .setFieldValue (executionContext, animation, animation ._children, children);
-      }
+         Editor .removeNodeMetaData (interpolator, "Interpolator/keySize", new X3D .SFInt32 ());
 
       this .registerRequestDrawTimeline ();
 
@@ -1544,9 +1537,20 @@ module .exports = class AnimationEditor extends Interface
                   continue;
 
                const components = this .#components .get (interpolator .getType () .at (-1));
-               const keySize    = interpolator .getMetaData ("Interpolator/keySize", new X3D .SFInt32 (1));
+               const keySize    = interpolator .getMetaData ("Interpolator/keySize", new X3D .SFInt32 ());
 
-               if (value .length !== components * keySize)
+               if (keySize .getValue () === 0)
+               {
+                  keySize .setValue (value .length / components);
+
+                  Editor .setNodeMetaData (interpolator, "Interpolator/keySize", keySize);
+               }
+
+               const countN = components * keySize;
+
+               console .log (countN, value .length)
+
+               if (value .length !== countN)
                   continue;
 
                const index = this .addKeyframeToInterpolator (interpolator, newFrame, type, value);
@@ -1555,8 +1559,13 @@ module .exports = class AnimationEditor extends Interface
             }
          }
 
+         for (const interpolator of new Set (selectedKeyframes .map (({ interpolator }) => interpolator)))
+            this .updateInterpolator (interpolator);
+
          this .registerClearSelectedKeyframes ();
          this .setSelectedKeyframes (selectedKeyframes);
+         this .setSelectionRange (0, 0);
+         this .updateRange ();
          this .registerRequestDrawTimeline ();
       }
       catch (error)
@@ -1635,6 +1644,8 @@ module .exports = class AnimationEditor extends Interface
 
       this .registerClearSelectedKeyframes ();
       this .setSelectedKeyframes (added);
+      this .setSelectionRange (0, 0);
+      this .updateRange ();
 
       Editor .undoManager .endUndo ();
    }
