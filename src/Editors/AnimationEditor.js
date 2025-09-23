@@ -1039,9 +1039,9 @@ module .exports = class AnimationEditor extends Interface
             }
             case "SPLINE":
             {
-               const currentKeys          = interpolator ._key .create ();
-               const currentKeyValues     = interpolator ._keyValue .create ();
-               const currentKeyVelocities = interpolator ._keyValue .create ();
+               const currentKeys          = new X3D .MFFloat ();
+               const currentKeyValues     = components === 1 ? new X3D .MFFloat () : new X3D [`MFVec${components}f`] ();
+               const currentKeyVelocities = components === 1 ? new X3D .MFFloat () : new X3D [`MFVec${components}f`] ();
                const Vector               = this .#vectors .get (components);
 
                for (; i < size; ++ i, iN += components)
