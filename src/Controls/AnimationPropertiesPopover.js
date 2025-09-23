@@ -14,7 +14,7 @@ $.fn.animationPropertiesPopover = function (editor)
    const content = $("<div></div>");
 
    $("<span></span>")
-      .text (_("Duration (Number of Frames)"))
+      .text (_("Duration (Frames)"))
       .appendTo (content);
 
    const durationInput = $("<input></input>")
@@ -53,8 +53,8 @@ $.fn.animationPropertiesPopover = function (editor)
       .appendTo (content);
 
    const timeText = $("<span></span>")
-      .css ("margin-top", "5px")
-      .css ("margin-bottom", "5px")
+      .css ("margin-top", "2px")
+      .css ("margin-bottom", "4px")
       .appendTo (content);
 
    const applyButton = $("<button></button>")
