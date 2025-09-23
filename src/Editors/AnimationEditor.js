@@ -1354,18 +1354,12 @@ module .exports = class AnimationEditor extends Interface
       keyValue .length = sizeN;
       keyType  .length = size;
 
-      if (interpolator ._value_changed instanceof X3D .X3DArrayField)
-      {
-         // Handle array interpolators.
-
-         if (!key .length)
-            keySize .setValue (0);
-      }
-
       Editor .setNodeMetaData (interpolator, "Interpolator/key",      key);
       Editor .setNodeMetaData (interpolator, "Interpolator/keyValue", keyValue);
       Editor .setNodeMetaData (interpolator, "Interpolator/keyType",  keyType);
-      Editor .setNodeMetaData (interpolator, "Interpolator/keySize",  keySize);
+
+      if (key .length === 0)
+         Editor .removeNodeMetaData (interpolator, "Interpolator/keySize", new X3D .SFInt32 ());
 
       this .registerRequestDrawTimeline ();
    }
