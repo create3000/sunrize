@@ -1255,6 +1255,9 @@ module .exports = class AnimationEditor extends Interface
 
    addKeyframeToInterpolator (interpolator, frame, type, value)
    {
+      if (frame > this .getDuration ())
+         return;
+
       const components = this .#components .get (interpolator .getType () .at (-1));
       const key        = interpolator .getMetaData ("Interpolator/key",      new X3D .MFInt32 ());
       const keyValue   = interpolator .getMetaData ("Interpolator/keyValue", new X3D .MFDouble ());
