@@ -1306,8 +1306,6 @@ module .exports = class AnimationEditor extends Interface
       for (const interpolator of new Set (keyframes .map (({ interpolator }) => interpolator)))
          this .updateInterpolator (interpolator);
 
-      this .selectKeyframesInRange ();
-
       Editor .undoManager .endUndo ();
    }
 
@@ -1352,7 +1350,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .copyKeyframes ();
       this .removeKeyframes (this .getSelectedKeyframes ());
-      this .setSelectedKeyframes ([ ]);
+      this .clearSelectedKeyframes ();
 
       Editor .undoManager .endUndo ();
    }
@@ -1423,6 +1421,7 @@ module .exports = class AnimationEditor extends Interface
             }
          }
 
+         this .clearSelectedKeyframes ();
          this .setSelectedKeyframes (selectedKeyframes);
          this .registerRequestDrawTimeline ();
       }
@@ -2116,6 +2115,22 @@ module .exports = class AnimationEditor extends Interface
    setSelectedKeyframes (selectedKeyframes)
    {
       this .#selectedKeyframes = selectedKeyframes .slice ();
+   }
+
+   clearSelectedKeyframes ()
+   {
+      Editor .undoManager .beginUndo (_("Clear Selected Keyframes"));
+
+      this .setPickedKeyframes ([ ]);
+
+      Editor .undoManager .registerUndo (() =>
+      {
+         this .clearSelectedKeyframes ();
+      });
+
+      this .registerRequestDrawTimeline ();
+
+      Editor .undoManager .endUndo ();
    }
 
    #autoScrollId;
