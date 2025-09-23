@@ -151,6 +151,7 @@ module .exports = class AnimationEditor extends Interface
          .append ($("<option></option>") .text ("LINEAR") .attr ("selected", ""))
          .append ($("<option></option>") .text ("SPLINE"))
          .append ($("<option></option>") .text ("SPLIT"))
+         .append ($("<option></option>") .text ("MIXED") .addClass ("mixed") .css ("display", "none"))
          .appendTo (this .toolbar)
          .on ("change", () => this .setKeyType ());
 
@@ -676,6 +677,29 @@ module .exports = class AnimationEditor extends Interface
    setKeyType ()
    {
       console .log (this .getKeyType ());
+   }
+
+   updateKeyType ()
+   {
+      // Key Type
+
+      const keyTypes = {
+         CONSTANT: 0,
+         LINEAR: 0,
+         SPLINE: 0,
+         SPLIT: 0,
+      };
+
+      for (const { interpolator, index } of this .#selectedKeyframes)
+      {
+         const keyType = interpolator .getMetaData ("Interpolator/keyType", new X3D .MFString ());
+
+         ++ keyTypes [keyType [index]];
+      }
+
+      const keyType = Object .entries (keyTypes) .find (([key, value]) => value === this .#selectedKeyframes .length);
+
+      this .keyTypeElement .val (keyType ?.[0] ?? "MIXED");
    }
 
    addFieldKeyframe (node, field, typeName)
@@ -2238,6 +2262,8 @@ module .exports = class AnimationEditor extends Interface
    setSelectedKeyframes (selectedKeyframes)
    {
       this .#selectedKeyframes = selectedKeyframes .slice ();
+
+      this .updateKeyType ();
    }
 
    registerClearSelectedKeyframes ()
