@@ -1349,7 +1349,17 @@ module .exports = class AnimationEditor extends Interface
 
    cutKeyframes ()
    {
-      Editor .undoManager .beginUndo (_("Cut Keyframes"));
+      switch (this .getSelectedKeyframes () .length)
+      {
+         case 0:
+            return;
+         case 1:
+            Editor .undoManager .beginUndo (_("Cut Keyframe"));
+            break;
+         default:
+            Editor .undoManager .beginUndo (_("Cut Keyframes"));
+            break;
+      }
 
       this .copyKeyframes ();
       this .removeKeyframes (this .getSelectedKeyframes ());
@@ -1447,7 +1457,17 @@ module .exports = class AnimationEditor extends Interface
 
    deleteKeyframes ()
    {
-      Editor .undoManager .beginUndo (_("Delete Keyframes"));
+      switch (this .getSelectedKeyframes () .length)
+      {
+         case 0:
+            return;
+         case 1:
+            Editor .undoManager .beginUndo (_("Delete Keyframe"));
+            break;
+         default:
+            Editor .undoManager .beginUndo (_("Delete Keyframes"));
+            break;
+      }
 
       this .removeKeyframes (this .getSelectedKeyframes ());
       this .registerClearSelectedKeyframes ();
