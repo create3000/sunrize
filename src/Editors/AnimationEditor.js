@@ -117,6 +117,13 @@ module .exports = class AnimationEditor extends Interface
          .appendTo (this .toolbar)
          .on ("click", () => this .lastFrame ());
 
+      this .loopIcon = $("<span></span>")
+         .addClass ("material-icons")
+         .attr ("title", _("Loop animation."))
+         .text ("loop")
+         .appendTo (this .toolbar)
+         .on ("click", () => this .toggleLoop ());
+
       this .frameInput = $("<input></input>")
          .addClass ("input")
          .attr ("type", "number")
@@ -127,13 +134,6 @@ module .exports = class AnimationEditor extends Interface
          .css ("width", "55px")
          .appendTo (this .toolbar)
          .on ("change input", () => this .setCurrentFrame (this .getCurrentFrame ()));
-
-      this .loopIcon = $("<span></span>")
-         .addClass ("material-icons")
-         .attr ("title", _("Loop animation."))
-         .text ("loop")
-         .appendTo (this .toolbar)
-         .on ("click", () => this .toggleLoop ());
 
       this .propertiesIcon = $("<span></span>")
          .addClass ("material-icons")
@@ -406,8 +406,8 @@ module .exports = class AnimationEditor extends Interface
          this .firstFrameIcon,
          this .toggleAnimationIcon,
          this .lastFrameIcon,
-         this .frameInput,
          this .loopIcon,
+         this .frameInput,
          this .propertiesIcon,
          this .keyTypeElement,
          this .timeElement,
