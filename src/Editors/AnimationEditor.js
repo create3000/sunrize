@@ -1504,7 +1504,7 @@ module .exports = class AnimationEditor extends Interface
       for (const { interpolator, index, keyframe } of keyframes)
          removed .push (Object .assign (this .removeKeyframeFromInterpolator (interpolator, index), { keyframe }));
 
-      // Sort keyframes in descending order.
+      // Sort keyframes in ascending order.
       removed .sort (({ index: a }, { index: b }) => a - b);
 
       for (const { interpolator, frame, keyType, value, keyframe } of removed)
