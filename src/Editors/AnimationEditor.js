@@ -1633,6 +1633,16 @@ module .exports = class AnimationEditor extends Interface
          if (newFrame < 0 || newFrame > this .getDuration ())
             continue;
 
+         const components = this .#components .get (interpolator .getType () .at (-1));
+         const keySize    = interpolator .getMetaData ("Interpolator/keySize", new X3D .SFInt32 ());
+
+         if (keySize .getValue () === 0)
+         {
+            keySize .setValue (value .length / components);
+
+            Editor .setNodeMetaData (interpolator, "Interpolator/keySize", keySize);
+         }
+
          const index = this .addKeyframeToInterpolator (interpolator, newFrame, keyType, value);
 
          added .push (Object .assign (keyframe, { index }));
