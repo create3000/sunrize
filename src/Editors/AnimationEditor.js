@@ -370,6 +370,7 @@ module .exports = class AnimationEditor extends Interface
 
          this .frameInput .attr ("max", this .getDuration ());
 
+         this .updateRange ();
          this .zoomFit ();
       }
       else
