@@ -676,29 +676,36 @@ module .exports = class AnimationEditor extends Interface
 
    setKeyType ()
    {
-      console .log (this .getKeyType ());
+      this .config .file .keyType = this .getKeyType ();
    }
 
    updateKeyType ()
    {
-      const keyTypes = {
-         CONSTANT: 0,
-         LINEAR: 0,
-         SPLINE: 0,
-         SPLIT: 0,
-      };
-
-      for (const { interpolator, index } of this .#selectedKeyframes)
+      if (this .getSelectedKeyframes () .length)
       {
-         const keyType = interpolator .getMetaData ("Interpolator/keyType", new X3D .MFString ());
+         const keyTypes = {
+            CONSTANT: 0,
+            LINEAR: 0,
+            SPLINE: 0,
+            SPLIT: 0,
+         };
 
-         ++ keyTypes [keyType [index]];
+         for (const { interpolator, index } of this .getSelectedKeyframes ())
+         {
+            const keyType = interpolator .getMetaData ("Interpolator/keyType", new X3D .MFString ());
+
+            ++ keyTypes [keyType [index]];
+         }
+
+         const keyType = Object .entries (keyTypes)
+            .find (([key, value]) => value === this .getSelectedKeyframes () .length);
+
+         this .keyTypeElement .val (keyType ?.[0] ?? "MIXED");
       }
-
-      const keyType = Object .entries (keyTypes)
-         .find (([key, value]) => value === this .getSelectedKeyframes () .length);
-
-      this .keyTypeElement .val (keyType ?.[0] ?? "MIXED");
+      else
+      {
+         this .keyTypeElement .val (this .config .file .keyType ?? "LINEAR");
+      }
    }
 
    addFieldKeyframe (node, field, typeName)
