@@ -492,7 +492,7 @@ body.light .qtip-tipsy {
 
 .qtip select:hover,
 .qtip button:hover {
-  background-color: var(--system-gray4);
+  background-color: var(--system-gray8);
   color: var(--system-gray0);
 }
 
