@@ -1258,9 +1258,6 @@ module .exports = class AnimationEditor extends Interface
 
    addKeyframeToInterpolator (interpolator, frame, type, value)
    {
-      if (frame > this .getDuration ())
-         return;
-
       const components = this .#components .get (interpolator .getType () .at (-1));
       const key        = interpolator .getMetaData ("Interpolator/key",      new X3D .MFInt32 ());
       const keyValue   = interpolator .getMetaData ("Interpolator/keyValue", new X3D .MFDouble ());
@@ -1378,7 +1375,7 @@ module .exports = class AnimationEditor extends Interface
                field: field .getId (),
                frame: key [index],
                type: keyType [index],
-               value: Array .from (keyValue .slice (indexN, countN)),
+               value: Array .from (keyValue .slice (indexN, indexN + countN)),
             };
          }),
       });
@@ -1417,11 +1414,18 @@ module .exports = class AnimationEditor extends Interface
                   continue;
 
                const interpolator = this .fields .get (field);
+               const newFrame     = frame - firstFrame + currentFrame;
 
-               if (!interpolator)
+               if (newFrame > this .getDuration ())
                   continue;
 
-               const index = this .addKeyframeToInterpolator (interpolator, frame - firstFrame + currentFrame, type, value);
+               const components = this .#components .get (interpolator .getType () .at (-1));
+               const keySize    = interpolator .getMetaData ("Interpolator/keySize", new X3D .SFInt32 (1));
+
+               if (value .length !== components * keySize)
+                  continue;
+
+               const index = this .addKeyframeToInterpolator (interpolator, newFrame, type, value);
 
                selectedKeyframes .push ({ field, interpolator, index });
             }
@@ -1607,7 +1611,7 @@ module .exports = class AnimationEditor extends Interface
 
    on_keydown (event)
    {
-      console .log (event .key);
+      // console .log (event .key);
 
       switch (event .key)
       {
