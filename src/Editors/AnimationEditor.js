@@ -1893,8 +1893,16 @@ module .exports = class AnimationEditor extends Interface
          {
             if (event .metaKey || event .ctrlKey)
             {
-               this .setSelectionRange (0, this .getDuration ());
-               this .selectKeyframesInRange ();
+               if (event .shiftKey)
+               {
+                  this .setSelectedKeyframes ([ ]);
+                  this .setSelectionRange (0, 0);
+               }
+               else
+               {
+                  this .setSelectionRange (0, this .getDuration ());
+                  this .selectKeyframesInRange ();
+               }
 
                event .preventDefault ();
                event .stopPropagation ();
