@@ -317,6 +317,7 @@ module .exports = class AnimationEditor extends Interface
       }
 
       this .setPickedKeyframes ([ ]);
+      this .setSelectedKeyframes ([ ]);
       this .setSelectionRange (0, 0);
 
       // Set
@@ -1940,10 +1941,12 @@ module .exports = class AnimationEditor extends Interface
          case 0:
          {
             this .updatePointer (event);
-            this .setCurrentFrame (this .getFrameFromPointer (this .pointer .x));
             this .addAutoScroll ();
 
             const pickedKeyframes = this .pickKeyframes ();
+
+            if (!pickedKeyframes .length)
+               this .setCurrentFrame (this .getFrameFromPointer (this .pointer .x));
 
             if (event .shiftKey && pickedKeyframes .length)
             {
@@ -1952,12 +1955,21 @@ module .exports = class AnimationEditor extends Interface
             else if (event .shiftKey)
             {
                this .setPickedKeyframes ([ ]);
+               this .setSelectedKeyframes ([ ]);
                this .expandSelectionRange (this .getCurrentFrame ());
             }
             else
             {
-               this .setPickedKeyframes (pickedKeyframes);
-               this .setSelectionRange (this .getCurrentFrame (), this .getCurrentFrame ());
+               if (!pickedKeyframes .length || !pickedKeyframes .every (p => this .getSelectedKeyframes () .some (s => this .equalKeyframe (p, s))))
+               {
+                  this .setPickedKeyframes (pickedKeyframes);
+                  this .setSelectedKeyframes (pickedKeyframes);
+                  this .setSelectionRange (this .getCurrentFrame (), this .getCurrentFrame ());
+               }
+               else
+               {
+                  this .setPickedKeyframes (this .getSelectedKeyframes ());
+               }
             }
 
             this .timeSensor ._pauseTime = Date .now () / 1000;
@@ -1973,6 +1985,9 @@ module .exports = class AnimationEditor extends Interface
 		this .button = undefined;
 
       this .removeAutoScroll ();
+
+		if (this .#movingKeyframes .length)
+			this .moveKeyframes ();
 
       this .timeSensor ._resumeTime = Date .now () / 1000;
    }
@@ -2120,6 +2135,7 @@ module .exports = class AnimationEditor extends Interface
 
    #pickedKeyframes = [ ];
    #selectedKeyframes = [ ];
+   #movingKeyframes = [ ];
 
    getPickedKeyframes ()
    {
@@ -2129,8 +2145,6 @@ module .exports = class AnimationEditor extends Interface
    setPickedKeyframes (pickedKeyframes)
    {
       this .#pickedKeyframes = pickedKeyframes .slice ();
-
-      this .setSelectedKeyframes (pickedKeyframes);
    }
 
    togglePickedKeyframes (pickedKeyframes)
@@ -2174,6 +2188,7 @@ module .exports = class AnimationEditor extends Interface
       Editor .undoManager .beginUndo (_("Clear Selected Keyframes"));
 
       this .setPickedKeyframes ([ ]);
+      this .setSelectedKeyframes ([ ]);
 
       Editor .undoManager .registerUndo (() =>
       {
@@ -2281,7 +2296,7 @@ module .exports = class AnimationEditor extends Interface
       if (this .getPickedKeyframes () .length)
       {
          // Move keyframes.
-
+         console .log ()
       }
       else
       {
