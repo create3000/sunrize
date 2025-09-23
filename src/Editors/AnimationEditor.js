@@ -1901,7 +1901,6 @@ module .exports = class AnimationEditor extends Interface
                else
                {
                   this .setSelectionRange (0, this .getDuration ());
-                  this .selectKeyframesInRange ();
                }
 
                event .preventDefault ();
@@ -2455,6 +2454,7 @@ module .exports = class AnimationEditor extends Interface
    {
       this .#selectionRange = [start, end];
 
+      this .selectKeyframesInRange ();
       this .updateRange ();
       this .requestDrawTimeline ();
    }
@@ -2469,14 +2469,10 @@ module .exports = class AnimationEditor extends Interface
          this .setSelectionRange (frame, selectionRange [1]);
       else if (frame > middle)
          this .setSelectionRange (selectionRange [0], frame);
-
-      this .selectKeyframesInRange ();
    }
 
    selectKeyframesInRange ()
    {
-      this .setSelectedKeyframes ([ ]);
-
       const selectionRange = this .getSelectionRange ();
 
       if (selectionRange [0] === selectionRange [1])
@@ -2517,8 +2513,6 @@ module .exports = class AnimationEditor extends Interface
             this .expandSelectionRange (this .getCurrentFrame ());
          else
             this .setSelectionRange (this .#selectionRange [0], this .getCurrentFrame ());
-
-         this .selectKeyframesInRange ();
       }
    }
 
