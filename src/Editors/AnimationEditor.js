@@ -489,8 +489,54 @@ module .exports = class AnimationEditor extends Interface
    {
       this .config .file .scaleKeyframes = scaleKeyframes;
 
-      if (newDuration === this .getDuration () && newFrameRate === this .getFrameRate ())
+      const
+         duration  = this .getDuration (),
+         frameRate = this .getFrameRate ();
+
+      if (newDuration === duration && newFrameRate === frameRate)
          return;
+
+      Editor .undoManager .beginUndo (_("Resize Animation"));
+
+      Editor .setNodeMetaData (this .animation, "Animation/duration",  new X3D .SFInt32 (newDuration));
+      Editor .setNodeMetaData (this .animation, "Animation/frameRate", new X3D .SFInt32 (newFrameRate));
+
+      if (scaleKeyframes)
+      {
+         const scale = newDuration / duration;
+
+         for (const interpolator of this .interpolators)
+         {
+            const key = interpolator .getMetaData ("Interpolator/key", new X3D .MFInt32 ())
+               .map (value => value * scale);
+
+            Editor .setNodeMetaData (interpolator, "Interpolator/key", key);
+         }
+
+         this .setCurrentFrame (Math .floor (this .getCurrentFrame () * scale));
+      }
+      else
+      {
+         // Remove frames greater than duration.
+
+         for (const interpolator of this .interpolators)
+         {
+            const key      = interpolator .getMetaData ("Interpolator/key",      new X3D .MFInt32 ());
+            const keyValue = interpolator .getMetaData ("Interpolator/keyValue", new X3D .MFDouble ());
+            const keyType  = interpolator .getMetaData ("Interpolator/keyType",  new X3D .MFString ());
+
+            const index = X3D .Algorithm .upperBound (key, 0, key .length, newDuration);
+
+            Editor .setNodeMetaData (interpolator, "Interpolator/key",      key      .slice (0, index));
+            Editor .setNodeMetaData (interpolator, "Interpolator/keyValue", keyValue .slice (0, index));
+            Editor .setNodeMetaData (interpolator, "Interpolator/keyType",  keyType  .slice (0, index));
+         }
+      }
+
+      this .updateInterpolators ()
+      this .zoomFit ();
+
+      Editor .undoManager .endUndo ();
    }
 
    closeAnimation ()
