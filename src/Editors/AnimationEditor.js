@@ -1548,8 +1548,6 @@ module .exports = class AnimationEditor extends Interface
 
                const countN = components * keySize;
 
-               console .log (countN, value .length)
-
                if (value .length !== countN)
                   continue;
 
