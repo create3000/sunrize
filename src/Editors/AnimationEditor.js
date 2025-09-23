@@ -316,6 +316,9 @@ module .exports = class AnimationEditor extends Interface
             interpolator ._set_fraction = 0;
       }
 
+      this .setPickedKeyframes ([ ]);
+      this .setSelectionRange (0, 0);
+
       // Set
 
       this .animation = animation;
