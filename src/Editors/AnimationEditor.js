@@ -157,7 +157,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .timeElement = $("<span></span>")
          .addClass (["text", "right"])
-         .attr ("title", _("Current frame time."))
+         .attr ("title", _("Current frame time (hours:minutes:seconds:frames)."))
          .css ("top", "7px")
          .css ("margin-right", "6px")
          .text (this .formatFrames (0, 10))

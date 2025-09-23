@@ -1,9 +1,10 @@
 "use strict";
 
 const
-   X3D = require ("../X3D"),
-   $   = require ("jquery"),
-   _   = require ("../Application/GetText");
+   X3D  = require ("../X3D"),
+   util = require ("util"),
+   $    = require ("jquery"),
+   _    = require ("../Application/GetText");
 
 require ("./Popover");
 
@@ -14,7 +15,7 @@ $.fn.animationPropertiesPopover = function (editor)
    const content = $("<div></div>");
 
    $("<span></span>")
-      .text (_("Duration (Frames)"))
+      .text (_("Frames"))
       .appendTo (content);
 
    const durationInput = $("<input></input>")
@@ -53,6 +54,7 @@ $.fn.animationPropertiesPopover = function (editor)
       .appendTo (content);
 
    const timeText = $("<span></span>")
+      .attr ("title", _("Duration (hours:minutes:seconds:frames)."))
       .css ("margin-top", "2px")
       .css ("margin-bottom", "4px")
       .appendTo (content);
@@ -68,7 +70,7 @@ $.fn.animationPropertiesPopover = function (editor)
       const duration  = parseInt (durationInput .val ())
       const frameRate = parseInt (frameRateInput .val ());
 
-      timeText .text ("Time: " + editor .formatFrames (duration, frameRate));
+      timeText .text (util .format (_("Duration: %s"), editor .formatFrames (duration, frameRate)));
    }
 
    // Create tooltip.
