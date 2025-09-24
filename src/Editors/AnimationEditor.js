@@ -2038,7 +2038,9 @@ module .exports = class AnimationEditor extends Interface
 
    zoom100 ()
    {
-      const x = this .getPointerFromFrame (this .getCurrentFrame ());
+      const
+         frame = this .getCurrentFrame (),
+         x     = this .getPointerFromFrame (frame);
 
       this .setScale (this .DEFAULT_SCALE);
       this .setTranslation (x - frame * this .DEFAULT_SCALE);
