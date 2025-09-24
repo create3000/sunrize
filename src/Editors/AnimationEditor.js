@@ -405,6 +405,7 @@ module .exports = class AnimationEditor extends Interface
 
       // Timeline
 
+      this .setSelection (require ("../Application/Selection"));
       this .zoomFit ();
       this .setCurrentFrame (0);
       this .requestDrawTimeline ();
@@ -437,6 +438,9 @@ module .exports = class AnimationEditor extends Interface
          this .createAnimationIcon .removeClass ("disabled");
       else
          this .createAnimationIcon .addClass ("disabled");
+
+      if (!this .animation)
+         return;
 
       if (selection .nodes .at (-1))
          this .addMembersIcon .removeClass ("disabled");
