@@ -486,7 +486,7 @@ module .exports = class AnimationEditor extends Interface
          timeSensor = executionContext .createNode ("TimeSensor", false);
 
       animation ._children .push (timeSensor);
-      timeSensor ._description = "NewAnimation";
+      timeSensor ._description = "New Animation";
 
       timeSensor .setup ();
       animation  .setup ();
@@ -841,6 +841,16 @@ module .exports = class AnimationEditor extends Interface
          {
             if (keyType .match (/^(?:SPLINE|SPLIT)$/))
                return "LINEAR";
+
+            return keyType;
+         }
+         case X3D .X3DConstants .MFVec3f:
+         {
+            if (keyType .match (/^(?:SPLINE|SPLIT)$/))
+            {
+               if (this .fields .get (field) instanceof X3D .NormalInterpolator)
+                  return "LINEAR";
+            }
 
             return keyType;
          }
@@ -1262,7 +1272,7 @@ module .exports = class AnimationEditor extends Interface
                   keys .push (nextFraction);
 
                   for (let a = 0; a < length; a += components)
-                     keyValues .push (this .getValue (keyValue, iN + a));
+                     keyValues .push (... this .getValue (keyValue, iN + a, components));
                }
 
                break;
