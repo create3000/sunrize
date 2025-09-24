@@ -838,9 +838,9 @@ module .exports = class AnimationEditor extends Interface
    addKeyframes (keyframes)
    {
       if (keyframes .length === 1)
-         Editor .undoManager .beginUndo (_("Add Keyframe To »%s«"), this .animation .getDisplayName ());
+         Editor .undoManager .beginUndo (_("Add Keyframe to »%s«"), this .animation .getDisplayName ());
       else
-         Editor .undoManager .beginUndo (_("Add Keyframes To »%s«"), this .animation .getDisplayName ());
+         Editor .undoManager .beginUndo (_("Add Keyframes to »%s«"), this .animation .getDisplayName ());
 
       for (const { node, field, typeName } of keyframes)
          this .addKeyframe (node, field, typeName)
@@ -850,7 +850,7 @@ module .exports = class AnimationEditor extends Interface
 
    addKeyframe (node, field, typeName)
    {
-      Editor .undoManager .beginUndo (_("Add Keyframe To »%s«"), this .animation .getDisplayName ());
+      Editor .undoManager .beginUndo (_("Add Keyframe to »%s«"), this .animation .getDisplayName ());
 
       typeName ??= this .#interpolatorTypeNames .get (field .getType ());
 
