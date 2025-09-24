@@ -96,6 +96,11 @@ th, td,
   color: var(--text-color);
 }
 
+select option {
+  color: var(--text-color);
+  background: var(--background-color);
+}
+
 .ui-widget label {
   position: relative;
   top: -2px;
