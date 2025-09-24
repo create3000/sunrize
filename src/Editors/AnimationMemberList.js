@@ -118,7 +118,7 @@ module .exports = class AnimationMembersList extends Interface
 
       const applyButton = $("<span></span>")
          .addClass (["apply", "material-icons", "button", "off", "disabled"])
-         .attr ("title", _("Add keyframe."))
+         .attr ("title", _("Add keyframe(s)."))
          .text ("check_box")
          .on ("click", () => this .addKeyframesToMain ());
 
@@ -172,7 +172,7 @@ module .exports = class AnimationMembersList extends Interface
 
          const applyButton = $("<span></span>")
             .addClass (["apply", "material-icons", "button", "off", "disabled"])
-            .attr ("title", _("Add keyframe."))
+            .attr ("title", _("Add keyframe(s)."))
             .text ("check_box")
             .on ("click", () => this .addKeyframesToNode (node));
 
