@@ -1980,12 +1980,18 @@ module .exports = class AnimationEditor extends Interface
 
    zoomOut ()
    {
-      this .zoom ("out", this .getWidth () / 2, this .SCROLL_FACTOR);
+      const frame = this .getCurrentFrame ();
+      const x     = frame * this .getScale () + this .getTranslation ();
+
+      this .zoom ("out", x, this .SCROLL_FACTOR);
    }
 
    zoomIn ()
    {
-      this .zoom ("in", this .getWidth () / 2, this .SCROLL_FACTOR);
+      const frame = this .getCurrentFrame ();
+      const x     = frame * this .getScale () + this .getTranslation ();
+
+      this .zoom ("in", x, this .SCROLL_FACTOR);
    }
 
    zoom (direction, position, factor)
@@ -2034,7 +2040,7 @@ module .exports = class AnimationEditor extends Interface
 
    zoom100 ()
    {
-      const frame = 0; // frame input value
+      const frame = this .getCurrentFrame ();
       const x     = frame * this .getScale () + this .getTranslation ();
 
       this .setScale (this .DEFAULT_SCALE);
