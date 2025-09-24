@@ -223,7 +223,7 @@ module .exports = class AnimationEditor extends Interface
       this .membersListElement = $("<div></div>")
          .addClass ("node-list")
          .appendTo (this .verticalSplitterLeft)
-         .on ("scroll mousemove", () => this .requestDrawTimeline ());
+         .on ("scroll mousemove", () => this .drawTimeline ());
 
       this .animationName = $("<input></input>")
          .addClass ("node-name")
@@ -243,7 +243,7 @@ module .exports = class AnimationEditor extends Interface
          .addClass ("tracks")
          .prependTo (this .animationEditor);
 
-      this .tracksResizer = new ResizeObserver (() => this .resizeTracks ());
+      this .tracksResizer = new ResizeObserver (() => this .resizeTimeline ());
       this .tracksResizer .observe (this .timelineElement [0]);
 
       // Lists
@@ -2670,7 +2670,7 @@ module .exports = class AnimationEditor extends Interface
 
    /* Timeline Draw Handling */
 
-   resizeTracks ()
+   resizeTimeline ()
    {
       const
          tracksWidth  = this .tracks .width (),
@@ -2683,7 +2683,7 @@ module .exports = class AnimationEditor extends Interface
       this .timelineClip = new Path2D ();
       this .timelineClip .rect (this .getLeft () - this .FRAME_SIZE, 0, this .getWidth () + this .FRAME_SIZE * 2, tracksHeight);
 
-      this .drawTracks ();
+      this .drawTimeline ();
    }
 
    #updateTracksId = undefined;
@@ -2692,14 +2692,14 @@ module .exports = class AnimationEditor extends Interface
    {
       clearTimeout (this .#updateTracksId);
 
-      this .#updateTracksId = setTimeout (() => this .drawTracks ());
+      this .#updateTracksId = setTimeout (() => this .drawTimeline ());
    }
 
    #style = window .getComputedStyle ($("body") [0]);
 
    TRACK_PADDING = 8;
 
-   drawTracks ()
+   drawTimeline ()
    {
       const
          context      = this .tracks [0] .getContext ("2d"),
