@@ -758,11 +758,11 @@ module .exports = class AnimationEditor extends Interface
       {
          Editor .undoManager .beginUndo (_("Change Key Type of Selected Keyframes"));
 
-         for (const { interpolator, index } of keyframes)
+         for (const { field, interpolator, index } of keyframes)
          {
             const keyType = interpolator .getMetaData ("Interpolator/keyType", new X3D .MFString ());
 
-            keyType [index] = value;
+            keyType [index] = this .restrictKeyType (value, field);
 
             Editor .setNodeMetaData (interpolator, "Interpolator/keyType", keyType);
          }
@@ -825,16 +825,12 @@ module .exports = class AnimationEditor extends Interface
       const
          interpolator = this .getInterpolator (typeName, node, field),
          frame        = this .getCurrentFrame (),
-         type         = this .getKeyType ();
+         type         = this .restrictKeyType (this .getKeyType (), field);
 
       switch (field .getType ())
       {
          case X3D .X3DConstants .SFBool:
          case X3D .X3DConstants .SFInt32:
-         {
-            this .addKeyframeToInterpolator (interpolator, frame, "CONSTANT", field);
-            break;
-         }
          case X3D .X3DConstants .SFColor:
          case X3D .X3DConstants .SFFloat:
          case X3D .X3DConstants .SFRotation:
@@ -872,6 +868,29 @@ module .exports = class AnimationEditor extends Interface
       this .updateInterpolator (interpolator);
 
       Editor .undoManager .endUndo ();
+   }
+
+   restrictKeyType (keyType, field)
+   {
+      switch (field .getType ())
+      {
+         case X3D .X3DConstants .SFBool:
+         case X3D .X3DConstants .SFInt32:
+         {
+            return "CONSTANT";
+         }
+         case X3D .X3DConstants .SFColor:
+         {
+            if (keyType .match (/^(?:SPLINE|SPLIT)$/))
+               return "LINEAR";
+
+            return keyType;
+         }
+         default:
+         {
+            return keyType;
+         }
+      }
    }
 
    getInterpolator (typeName, node, field)
