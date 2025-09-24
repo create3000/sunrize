@@ -1734,7 +1734,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       sourceNode      = sourceNode .valueOf ();
       destinationNode = destinationNode .valueOf ();
 
-      undoManager .beginUndo (_("Add Route From %s »%s« TO %s »%s«"), sourceNode .getTypeName (), sourceField, destinationNode .getTypeName (), destinationField);
+      undoManager .beginUndo (_("Add Route from %s »%s« to %s »%s«"), sourceNode .getTypeName (), sourceField, destinationNode .getTypeName (), destinationField);
 
       try
       {
@@ -1796,7 +1796,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       sourceNode      = sourceNode .valueOf ();
       destinationNode = destinationNode .valueOf ();
 
-      undoManager .beginUndo (_("Delete Route From %s »%s« TO %s »%s«"), sourceNode .getTypeName (), sourceField, destinationNode .getTypeName (), destinationField);
+      undoManager .beginUndo (_("Delete Route from %s »%s« to %s »%s«"), sourceNode .getTypeName (), sourceField, destinationNode .getTypeName (), destinationField);
 
       executionContext .deleteRoute (sourceNode .valueOf (), sourceField, destinationNode .valueOf (), destinationField);
 
