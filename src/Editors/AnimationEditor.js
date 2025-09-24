@@ -1057,9 +1057,13 @@ module .exports = class AnimationEditor extends Interface
             }
             case "SPLINE":
             {
-               const currentKeys          = new X3D .MFFloat ();
-               const currentKeyValues     = components === 1 ? new X3D .MFFloat () : new X3D [`MFVec${components}f`] ();
-               const currentKeyVelocities = components === 1 ? new X3D .MFFloat () : new X3D [`MFVec${components}f`] ();
+               const currentKeys = new X3D .MFFloat ();
+
+               const currentKeyValues = interpolator instanceof X3D .OrientationInterpolator
+                  ? new X3D .MFRotation ()
+                  : components === 1 ? new X3D .MFFloat () : new X3D [`MFVec${components}f`] ();
+
+               const currentKeyVelocities = currentKeyValues .create ();
                const Vector               = this .#vectors .get (components);
 
                for (; i < size; ++ i, iN += components)
@@ -1098,7 +1102,7 @@ module .exports = class AnimationEditor extends Interface
 
                const normalizeVelocity = false;
 
-               const spline = interpolator ._value_changed instanceof X3D .SFRotation
+               const spline = interpolator instanceof X3D .OrientationInterpolator
                   ? new X3D .SquadInterpolator ()
                   : new X3D [`CatmullRomSplineInterpolator${components}`] ();
 
