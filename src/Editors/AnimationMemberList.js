@@ -305,7 +305,7 @@ module .exports = class AnimationMembersList extends Interface
 
       this .createFieldElements (fieldList, node);
 
-      this .#editor .requestDrawTracks ();
+      this .#editor .requestDrawTimeline ();
    }
 
    removeNodes (nodes)
