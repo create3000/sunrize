@@ -505,6 +505,9 @@ module .exports = class AnimationEditor extends Interface
       if (newDuration === duration && newFrameRate === frameRate)
          return;
 
+      if (newDuration < 1)
+         return;
+
       Editor .undoManager .beginUndo (_("Resize Animation"));
 
       Editor .setNodeMetaData (this .animation, "Animation/duration",  new X3D .SFInt32 (newDuration));
