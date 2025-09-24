@@ -1980,16 +1980,14 @@ module .exports = class AnimationEditor extends Interface
 
    zoomOut ()
    {
-      const frame = this .getCurrentFrame ();
-      const x     = frame * this .getScale () + this .getTranslation ();
+      const x = this .getPointerFromFrame (this .getCurrentFrame ());
 
       this .zoom ("out", x, this .SCROLL_FACTOR);
    }
 
    zoomIn ()
    {
-      const frame = this .getCurrentFrame ();
-      const x     = frame * this .getScale () + this .getTranslation ();
+      const x = this .getPointerFromFrame (this .getCurrentFrame ());
 
       this .zoom ("in", x, this .SCROLL_FACTOR);
    }
@@ -2040,8 +2038,7 @@ module .exports = class AnimationEditor extends Interface
 
    zoom100 ()
    {
-      const frame = this .getCurrentFrame ();
-      const x     = frame * this .getScale () + this .getTranslation ();
+      const x = this .getPointerFromFrame (this .getCurrentFrame ());
 
       this .setScale (this .DEFAULT_SCALE);
       this .setTranslation (x - frame * this .DEFAULT_SCALE);
@@ -2288,6 +2285,11 @@ module .exports = class AnimationEditor extends Interface
       return X3D .Algorithm .clamp (frame, 0, this .getDuration ());
    }
 
+   getPointerFromFrame (frame)
+   {
+      return frame * this .getScale () + this .getTranslation ();
+   }
+
    pickKeyframes ()
    {
       const
@@ -2355,7 +2357,7 @@ module .exports = class AnimationEditor extends Interface
       for (let index = first; index < last; ++ index)
 		{
          const frame = key [index];
-         const x     = Math .floor (frame * scale + translation) + 0.5;
+         const x     = Math .floor (this .getPointerFromFrame (frame)) + 0.5;
          const y     = Math .floor (bottom - this .FRAME_SIZE / 2) + 0.5;
 
          this .#frameBox .set (this .#frameSize, this .#frameCenter .set (x, y));
@@ -2751,7 +2753,7 @@ module .exports = class AnimationEditor extends Interface
 			{
 				const s = frame % frameFactor; // size (large or small)
             const y = Math .floor (top + height * (s ? 0.75 : 0.5));
-				const x = Math .floor (left + frame * scale + translation);
+				const x = Math .floor (left + this .getPointerFromFrame (frame));
 
             context .lineWidth = item .is (".main, .node") ? 3 : 1;
 
@@ -2844,7 +2846,7 @@ module .exports = class AnimationEditor extends Interface
       context .clip (this .timelineClip);
 
       const frame = this .getCurrentFrame ();
-      const x     = Math .floor (left + frame * scale + translation);
+      const x     = Math .floor (left + this .getPointerFromFrame (frame));
 
       context .fillStyle = blue;
 
@@ -2877,7 +2879,7 @@ module .exports = class AnimationEditor extends Interface
       for (let index = first; index < last; ++ index)
 		{
          const frame = key [index];
-         const x     = Math .floor (left + frame * scale + translation);
+         const x     = Math .floor (left + this .getPointerFromFrame (frame));
 			const x1    = x - (this .FRAME_SIZE / 2) + 0.5;
 
 			context .fillStyle = color;
@@ -2902,7 +2904,7 @@ module .exports = class AnimationEditor extends Interface
 
          const key   = interpolator .getMetaData ("Interpolator/key", this .#defaultIntegers);
          const frame = key [index] + this .#movingKeyframesOffset;
-         const x     = Math .floor (left + frame * scale + translation);
+         const x     = Math .floor (left + this .getPointerFromFrame (frame));
          const x1    = x - (this .FRAME_SIZE / 2) + 0.5;
 
          context .fillStyle = selectedColor;
