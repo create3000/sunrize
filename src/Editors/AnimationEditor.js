@@ -384,7 +384,8 @@ module .exports = class AnimationEditor extends Interface
       {
          // Show Animations List
 
-         this .memberList .clearNodes ();
+         this .set_interpolators ();
+
          this .membersListElement .hide ();
          this .nodeListElement .show ();
 
@@ -673,7 +674,7 @@ module .exports = class AnimationEditor extends Interface
       this .fields .clear ();
       this .interpolators .length = 0;
 
-      for (const node of this .animation ._children)
+      for (const node of this .animation ?._children ?? [ ])
       {
          const interpolator = node .getValue ();
 
