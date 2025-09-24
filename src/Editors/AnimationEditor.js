@@ -810,59 +810,66 @@ module .exports = class AnimationEditor extends Interface
       else
          Editor .undoManager .beginUndo (_("Add Keyframes To »%s«"), this .animation .getDisplayName ());
 
-      for (let { node, field, typeName } of keyframes)
+      for (const { node, field, typeName } of keyframes)
+         this .addKeyframe (node, field, typeName)
+
+      Editor .undoManager .endUndo ();
+   }
+
+   addKeyframe (node, field, typeName)
+   {
+      Editor .undoManager .beginUndo (_("Add Keyframe To »%s«"), this .animation .getDisplayName ());
+
+      typeName ??= this .#interpolatorTypeNames .get (field .getType ());
+
+      const
+         interpolator = this .getInterpolator (typeName, node, field),
+         frame        = this .getCurrentFrame (),
+         type         = this .getKeyType ();
+
+      switch (field .getType ())
       {
-         typeName ??= this .#interpolatorTypeNames .get (field .getType ());
-
-         const
-            interpolator = this .getInterpolator (typeName, node, field),
-            frame        = this .getCurrentFrame (),
-            type         = this .getKeyType ();
-
-         switch (field .getType ())
+         case X3D .X3DConstants .SFBool:
+         case X3D .X3DConstants .SFInt32:
          {
-            case X3D .X3DConstants .SFBool:
-            case X3D .X3DConstants .SFInt32:
-            {
-               this .addKeyframeToInterpolator (interpolator, frame, "CONSTANT", field);
-               break;
-            }
-            case X3D .X3DConstants .SFColor:
-            case X3D .X3DConstants .SFFloat:
-            case X3D .X3DConstants .SFRotation:
-            case X3D .X3DConstants .SFVec2f:
-            case X3D .X3DConstants .SFVec3f:
-            {
-               this .addKeyframeToInterpolator (interpolator, frame, type, field);
-               break;
-            }
-            case X3D .X3DConstants .MFVec2f:
-            case X3D .X3DConstants .MFVec3f:
-            {
-               if (field .length === 0)
-                  break;
-
-               const keySize = interpolator .getMetaData ("Interpolator/keySize", new X3D .SFInt32 ());
-
-               if (keySize .getValue () !== 0 && keySize .getValue () !== field .length)
-               {
-                  this .showArraySizeErrorDialog (keySize .getValue ());
-                  break;
-               }
-
-               keySize .setValue (field .length);
-
-               Editor .setNodeMetaData (interpolator, "Interpolator/keySize", keySize);
-
-               const value = Array .from (field) .flatMap (value => Array .from (value));
-
-               this .addKeyframeToInterpolator (interpolator, frame, type, value);
-               break;
-            }
+            this .addKeyframeToInterpolator (interpolator, frame, "CONSTANT", field);
+            break;
          }
+         case X3D .X3DConstants .SFColor:
+         case X3D .X3DConstants .SFFloat:
+         case X3D .X3DConstants .SFRotation:
+         case X3D .X3DConstants .SFVec2f:
+         case X3D .X3DConstants .SFVec3f:
+         {
+            this .addKeyframeToInterpolator (interpolator, frame, type, field);
+            break;
+         }
+         case X3D .X3DConstants .MFVec2f:
+         case X3D .X3DConstants .MFVec3f:
+         {
+            if (field .length === 0)
+               break;
 
-         this .updateInterpolator (interpolator);
+            const keySize = interpolator .getMetaData ("Interpolator/keySize", new X3D .SFInt32 ());
+
+            if (keySize .getValue () !== 0 && keySize .getValue () !== field .length)
+            {
+               this .showArraySizeErrorDialog (keySize .getValue ());
+               break;
+            }
+
+            keySize .setValue (field .length);
+
+            Editor .setNodeMetaData (interpolator, "Interpolator/keySize", keySize);
+
+            const value = Array .from (field) .flatMap (value => Array .from (value));
+
+            this .addKeyframeToInterpolator (interpolator, frame, type, value);
+            break;
+         }
       }
+
+      this .updateInterpolator (interpolator);
 
       Editor .undoManager .endUndo ();
    }
