@@ -2,6 +2,8 @@
 
 @media (prefers-color-scheme: light) {
   body {
+    color-scheme: light;
+
     /* Colors */
 
     --system-red: rgb(255, 56, 60);
@@ -65,6 +67,8 @@
 
 @media (prefers-color-scheme: dark) {
   body {
+    color-scheme: dark;
+
     /* Colors */
 
     --system-red: rgb(255, 66, 69);
