@@ -278,6 +278,7 @@ module .exports = class AnimationEditor extends Interface
    configure ()
    {
       this .config .file .setDefaultValues ({
+         scaleKeyframes: true,
          keyType: "LINEAR",
       });
 

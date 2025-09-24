@@ -45,7 +45,7 @@ $.fn.animationPropertiesPopover = function (editor)
       .attr ("id", "keyframe-scale")
       .appendTo (content);
 
-   if (editor .config .file .scaleKeyframes ?? true)
+   if (editor .config .file .scaleKeyframes)
       scaleInput .attr ("checked", "");
 
    const scaleLabel = $("<label></label>")
