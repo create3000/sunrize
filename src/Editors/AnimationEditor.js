@@ -663,6 +663,9 @@ module .exports = class AnimationEditor extends Interface
 
    set_interpolators ()
    {
+      for (const interpolator of this .interpolators)
+         interpolator ._value_changed .removeRouteCallback (this);
+
       this .memberList .saveScrollbars ();
       this .memberList .clearNodes ();
 
@@ -690,8 +693,13 @@ module .exports = class AnimationEditor extends Interface
          }
       }
 
+      for (const interpolator of this .interpolators)
+         interpolator ._value_changed .addRouteCallback (this, () => this .set_interpolators ());
+
       this .memberList .addNodes (Array .from (this .members .values ()));
       this .memberList .restoreScrollbars ();
+
+      this .requestDrawTimeline ();
    }
 
    getInterpolatorName (interpolator)
