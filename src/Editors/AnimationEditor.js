@@ -549,7 +549,7 @@ module .exports = class AnimationEditor extends Interface
 
       Editor .undoManager .endUndo ();
 
-      this .frameInput .attr ("max", this .getDuration ());
+      this .frameInput .attr ("max", newDuration);
    }
 
    closeAnimation ()
