@@ -348,8 +348,7 @@ module .exports = class AnimationEditor extends Interface
          this .timeSensor ._isActive         .addInterest ("set_active",   this);
          this .timeSensor ._fraction_changed .addInterest ("set_fraction", this);
 
-         this .timeSensor ._evenLive      = true;
-         this .timeSensor ._cycleInterval = this .getDuration () / this .getFrameRate ();
+         this .timeSensor ._evenLive = true;
 
          this .set_loop (this .timeSensor ._loop);
          this .set_active (this .timeSensor ._isActive);
