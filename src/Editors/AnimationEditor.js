@@ -312,8 +312,8 @@ module .exports = class AnimationEditor extends Interface
       this .setSelectedKeyframes ([ ]);
       this .setSelectionRange (0, 0);
 
-      this .animation ?._children    .removeInterest ("set_interpolators",  this);
-      this .animation ?.name_changed .removeInterest ("set_animation_name", this);
+      this .animation ?._children    .removeInterest ("updateMembers",       this);
+      this .animation ?.name_changed .removeInterest ("updateAnimationName", this);
 
       if (this .timeSensor)
       {
@@ -374,17 +374,17 @@ module .exports = class AnimationEditor extends Interface
 
          // Interpolators
 
-         this .animation ._children .addInterest ("set_interpolators", this);
+         this .animation ._children .addInterest ("updateMembers", this);
 
-         this .set_interpolators ();
+         this .updateMembers ();
 
          // Animation Name
 
          this .animationName .removeAttr ("disabled");
 
-         this .animation .name_changed .addInterest ("set_animation_name", this);
+         this .animation .name_changed .addInterest ("updateAnimationName", this);
 
-         this .set_animation_name ();
+         this .updateAnimationName ();
 
          // Timeline
 
@@ -394,7 +394,7 @@ module .exports = class AnimationEditor extends Interface
       {
          // Show Animations List
 
-         this .set_interpolators ();
+         this .updateMembers ();
 
          this .membersListElement .hide ();
          this .nodeListElement .show ();
@@ -577,7 +577,7 @@ module .exports = class AnimationEditor extends Interface
       this .nodeList .setNode (null);
    }
 
-   set_animation_name ()
+   updateAnimationName ()
    {
       const name = this .getAnimationName ();
 
@@ -678,7 +678,7 @@ module .exports = class AnimationEditor extends Interface
    fields        = new Map (); // [field, interpolator]
    interpolators = [ ];
 
-   set_interpolators ()
+   updateMembers ()
    {
       for (const interpolator of this .interpolators)
          interpolator ._value_changed .removeRouteCallback (this);
@@ -711,7 +711,7 @@ module .exports = class AnimationEditor extends Interface
       }
 
       for (const interpolator of this .interpolators)
-         interpolator ._value_changed .addRouteCallback (this, () => this .set_interpolators ());
+         interpolator ._value_changed .addRouteCallback (this, () => this .updateMembers ());
 
       this .memberList .addNodes (Array .from (this .members .values ()));
       this .memberList .restoreScrollbars ();
