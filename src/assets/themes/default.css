@@ -97,6 +97,8 @@ th, td,
 }
 
 select option {
+  font-family: var(--sans-serif);
+  font-size: var(--font-size);
   color: var(--text-color);
   background: var(--background-color);
 }
