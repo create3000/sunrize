@@ -46,6 +46,14 @@ module .exports = class AnimationEditor extends Interface
          .on ("keydown", event => this .on_keydown (event))
          .appendTo (this .verticalSplitter);
 
+      this .scrollbarElement = $("<div></div>")
+         .addClass ("scrollbar")
+         .css ("width", "100%")
+         .on ("mousedown", event => this .on_mousedown_scrollbar (event))
+         .on ("mouseup", event => this .on_mouseup_scrollbar (event))
+         .on ("mousemove", event => this .on_mousemove_scrollbar (event))
+         .appendTo (this .timelineElement);
+
       this .vSplitter = new Splitter (this .verticalSplitter, "vertical");
 
       // Toolbar
@@ -2095,6 +2103,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .translation = translation;
 
+      this .updateScrollbar ();
       this .requestDrawTimeline ();
    }
 
@@ -2107,6 +2116,7 @@ module .exports = class AnimationEditor extends Interface
    {
       this .scale = Math .max (Math .min (scale, this .MIN_SCALE), this .getFitScale ());
 
+      this .updateScrollbar ();
       this .requestDrawTimeline ();
    }
 
@@ -2521,6 +2531,69 @@ module .exports = class AnimationEditor extends Interface
             this .setSelectionRange (this .#selectionRange [0], this .getCurrentFrame ());
       }
    }
+
+   /* Scrollbar Handling */
+
+   #scrollButton;
+   #scrollStart;
+   #scrollLeft;
+
+   on_mousedown_scrollbar (event)
+   {
+      $(document)
+         .on ("mouseup.AnimationEditorScrollbar",   event => this .on_mouseup_scrollbar (event))
+         .on ("mousemove.AnimationEditorScrollbar", event => this .on_mousemove_scrollbar (event));
+
+      this .#scrollButton = event .button;
+      this .#scrollStart  = event .pageX;
+      this .#scrollLeft   = parseFloat (this .scrollbarElement .css ("left"));
+
+      event .preventDefault ();
+      event .stopPropagation ();
+   }
+
+   on_mouseup_scrollbar (event)
+   {
+      $(document) .off ("mouseup.AnimationEditorScrollbar");
+
+      this .#scrollButton = undefined;
+   }
+
+   on_mousemove_scrollbar (event)
+   {
+      if (this .#scrollButton === undefined)
+         return;
+
+      const
+         scale                = this .getScale (),
+         duration             = this .getDuration (),
+         width                = this .timelineElement .width (),
+         scrollbarTranslation = event .pageX - this .#scrollStart,
+         scrollbarMax         = width - this .scrollbarElement .width (),
+         scrollbarLeft        = X3D .Algorithm .clamp (this .#scrollLeft + scrollbarTranslation, 0, scrollbarMax),
+         translation          = -scrollbarLeft / width * duration * scale;
+
+      this .setTranslation (translation);
+
+      event .preventDefault ();
+      event .stopPropagation ();
+   }
+
+   updateScrollbar ()
+   {
+      const translation    = this .getTranslation ()
+      const scale          = this .getScale ();
+      const duration       = this .getDuration ();
+      const firstFrame     = Math .max (0, -translation / scale);
+      const scrollbarLeft  = firstFrame / duration * this .timelineElement .width ();
+      const scrollbarScale = this .getFitScale () / scale;
+
+      this .scrollbarElement
+         .css ("left", scrollbarLeft)
+         .css ("width", `${scrollbarScale * 100}%`);
+   }
+
+   /* Timeline Draw Handling */
 
    resizeTracks ()
    {

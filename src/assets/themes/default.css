@@ -37,8 +37,8 @@ body {
 /* Scrollbars */
 
 ::-webkit-scrollbar {
-  width: 14px;
-  height: 14px;
+  width: var(--scrollbar-width);
+  height: var(--scrollbar-width);
 }
 
 ::-webkit-scrollbar-track, /* Track */
@@ -1123,6 +1123,13 @@ body.dark .ui-widget .library-list .component {
 
 .animation-editor .pointer {
   cursor: pointer;
+}
+
+.animation-editor .scrollbar {
+  position: absolute;
+  bottom: 0;
+  height: var(--scrollbar-width);
+  background: var(--scrollbar-thumb-color);
 }
 
 .animation-editor .node-list {
