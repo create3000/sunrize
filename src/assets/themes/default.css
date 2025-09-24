@@ -894,6 +894,11 @@ body.dark .ui-widget .library-list .component {
   color: var(--system-gray0);
 }
 
+.node-list .button.disabled {
+  pointer-events: none;
+  color: var(--system-gray3);
+}
+
 /* Footer */
 
 #footer {

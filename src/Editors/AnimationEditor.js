@@ -253,7 +253,7 @@ module .exports = class AnimationEditor extends Interface
          fields: this .fields,
          removeNodesCallback: nodes => this .removeMembers (nodes),
          closeCallback: () => this .closeAnimation (),
-         addFieldKeyframeCallback: (node, field, typeName) => this .addFieldKeyframe (node, field, typeName),
+         addKeyframesCallback: keyframes => this .addKeyframes (keyframes),
       });
 
       this .nodeList = new NodeList (this .nodeListElement,
@@ -803,60 +803,66 @@ module .exports = class AnimationEditor extends Interface
       }
    }
 
-   addFieldKeyframe (node, field, typeName)
+   addKeyframes (keyframes)
    {
-      Editor .undoManager .beginUndo (_("Add Keyframe To »%s«"), this .animation .getDisplayName ());
+      if (keyframes .length === 1)
+         Editor .undoManager .beginUndo (_("Add Keyframe To »%s«"), this .animation .getDisplayName ());
+      else
+         Editor .undoManager .beginUndo (_("Add Keyframes To »%s«"), this .animation .getDisplayName ());
 
-      typeName ??= this .#interpolatorTypeNames .get (field .getType ());
-
-      const
-         interpolator = this .getInterpolator (typeName, node, field),
-         frame        = this .getCurrentFrame (),
-         type         = this .getKeyType ();
-
-      switch (field .getType ())
+      for (let { node, field, typeName } of keyframes)
       {
-         case X3D .X3DConstants .SFBool:
-         case X3D .X3DConstants .SFInt32:
-         {
-            this .addKeyframeToInterpolator (interpolator, frame, "CONSTANT", field);
-            break;
-         }
-         case X3D .X3DConstants .SFColor:
-         case X3D .X3DConstants .SFFloat:
-         case X3D .X3DConstants .SFRotation:
-         case X3D .X3DConstants .SFVec2f:
-         case X3D .X3DConstants .SFVec3f:
-         {
-            this .addKeyframeToInterpolator (interpolator, frame, type, field);
-            break;
-         }
-         case X3D .X3DConstants .MFVec2f:
-         case X3D .X3DConstants .MFVec3f:
-         {
-            if (field .length === 0)
-               break;
+         typeName ??= this .#interpolatorTypeNames .get (field .getType ());
 
-            const keySize = interpolator .getMetaData ("Interpolator/keySize", new X3D .SFInt32 ());
+         const
+            interpolator = this .getInterpolator (typeName, node, field),
+            frame        = this .getCurrentFrame (),
+            type         = this .getKeyType ();
 
-            if (keySize .getValue () !== 0 && keySize .getValue () !== field .length)
+         switch (field .getType ())
+         {
+            case X3D .X3DConstants .SFBool:
+            case X3D .X3DConstants .SFInt32:
             {
-               this .showArraySizeErrorDialog (keySize .getValue ());
+               this .addKeyframeToInterpolator (interpolator, frame, "CONSTANT", field);
                break;
             }
+            case X3D .X3DConstants .SFColor:
+            case X3D .X3DConstants .SFFloat:
+            case X3D .X3DConstants .SFRotation:
+            case X3D .X3DConstants .SFVec2f:
+            case X3D .X3DConstants .SFVec3f:
+            {
+               this .addKeyframeToInterpolator (interpolator, frame, type, field);
+               break;
+            }
+            case X3D .X3DConstants .MFVec2f:
+            case X3D .X3DConstants .MFVec3f:
+            {
+               if (field .length === 0)
+                  break;
 
-            keySize .setValue (field .length);
+               const keySize = interpolator .getMetaData ("Interpolator/keySize", new X3D .SFInt32 ());
 
-            Editor .setNodeMetaData (interpolator, "Interpolator/keySize", keySize);
+               if (keySize .getValue () !== 0 && keySize .getValue () !== field .length)
+               {
+                  this .showArraySizeErrorDialog (keySize .getValue ());
+                  break;
+               }
 
-            const value = Array .from (field) .flatMap (value => Array .from (value));
+               keySize .setValue (field .length);
 
-            this .addKeyframeToInterpolator (interpolator, frame, type, value);
-            break;
+               Editor .setNodeMetaData (interpolator, "Interpolator/keySize", keySize);
+
+               const value = Array .from (field) .flatMap (value => Array .from (value));
+
+               this .addKeyframeToInterpolator (interpolator, frame, type, value);
+               break;
+            }
          }
-      }
 
-      this .updateInterpolator (interpolator);
+         this .updateInterpolator (interpolator);
+      }
 
       Editor .undoManager .endUndo ();
    }
