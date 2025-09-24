@@ -1786,7 +1786,7 @@ module .exports = class AnimationEditor extends Interface
       }
       else
       {
-         if (this .getCurrentFrame () === selectionRange [0])
+         if (this .getCurrentFrame () <= selectionRange [0])
             this .lastFrame ();
          else
             this .setCurrentFrame (Math .max (this .getCurrentFrame () - 1, 0));
@@ -1806,7 +1806,7 @@ module .exports = class AnimationEditor extends Interface
       }
       else
       {
-         if (this .getCurrentFrame () === selectionRange [1])
+         if (this .getCurrentFrame () >= selectionRange [1])
             this .firstFrame ()
          else
             this .setCurrentFrame (Math .min (this .getCurrentFrame () + 1, this .getDuration ()));
