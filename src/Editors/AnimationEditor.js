@@ -2534,6 +2534,8 @@ module .exports = class AnimationEditor extends Interface
 
    /* Scrollbar Handling */
 
+   MIN_SCROLLBAR_SCALE = 0.05;
+
    #scrollButton;
    #scrollStart;
    #scrollLeft;
@@ -2568,10 +2570,11 @@ module .exports = class AnimationEditor extends Interface
          scale                = this .getScale (),
          duration             = this .getDuration (),
          width                = this .timelineElement .width (),
+         visibleFrames        = (width - this .TIMELINE_PADDING * 2) / scale,
          scrollbarTranslation = event .pageX - this .#scrollStart,
-         scrollbarMax         = width - this .scrollbarElement .width (),
-         scrollbarLeft        = X3D .Algorithm .clamp (this .#scrollLeft + scrollbarTranslation, 0, scrollbarMax),
-         translation          = -scrollbarLeft / width * duration * scale;
+         scrollbarWidth       = width - this .scrollbarElement .width (),
+         scrollbarLeft        = X3D .Algorithm .clamp (this .#scrollLeft + scrollbarTranslation, 0, scrollbarWidth),
+         translation          = -scrollbarLeft / scrollbarWidth * (duration - visibleFrames) * scale;
 
       this .setTranslation (translation);
 
@@ -2584,9 +2587,12 @@ module .exports = class AnimationEditor extends Interface
       const translation    = this .getTranslation ()
       const scale          = this .getScale ();
       const duration       = this .getDuration ();
+      const width          = this .timelineElement .width ();
       const firstFrame     = Math .max (0, -translation / scale);
-      const scrollbarLeft  = firstFrame / duration * this .timelineElement .width ();
-      const scrollbarScale = this .getFitScale () / scale;
+      const visibleFrames  = (width - this .TIMELINE_PADDING * 2) / scale;
+      const scrollbarScale = X3D .Algorithm .clamp (this .getFitScale () / scale, this .MIN_SCROLLBAR_SCALE, 1);
+      const scrollbarWidth = width - width * scrollbarScale;
+      const scrollbarLeft  = Math .max (firstFrame / (duration - visibleFrames) * scrollbarWidth, 0);
 
       this .scrollbarElement
          .css ("left", scrollbarLeft)
