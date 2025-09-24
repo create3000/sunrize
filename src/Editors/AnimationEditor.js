@@ -2590,7 +2590,8 @@ module .exports = class AnimationEditor extends Interface
          scrollbarLeft        = X3D .Algorithm .clamp (this .#scrollLeft + scrollbarTranslation, 0, scrollbarWidth),
          translation          = -scrollbarLeft / scrollbarWidth * (duration - visibleFrames) * scale;
 
-      this .setTranslation (translation);
+      if (scrollbarWidth)
+         this .setTranslation (translation);
 
       event .preventDefault ();
       event .stopPropagation ();
