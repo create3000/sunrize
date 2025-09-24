@@ -15,29 +15,17 @@ module .exports = class AnimationMembersList extends Interface
    #nodeList;
    #list;
    #nodes;
-   #fields;
-   #removeNodesCallback;
-   #closeCallback;
-   #addMainKeyframeCallback;
-   #addNodeKeyframeCallback;
-   #addKeyframesCallback;
    #animation;
    #timeSensor;
 
-   constructor (editor, element, { fields, removeNodesCallback, closeCallback, addMainKeyframeCallback, addNodeKeyframeCallback, addKeyframesCallback })
+   constructor (editor, element)
    {
       super ("Sunrize.AnimationMembersList.");
 
-      this .#editor                   = editor;
-      this .#nodeList                 = element;
-      this .#list                     = $("<ul></ul>") .appendTo (this .#nodeList);
-      this .#nodes                    = [ ];
-      this .#fields                   = fields;
-      this .#removeNodesCallback      = removeNodesCallback;
-      this .#closeCallback            = closeCallback;
-      this .#addMainKeyframeCallback  = addMainKeyframeCallback;
-      this .#addNodeKeyframeCallback  = addNodeKeyframeCallback;
-      this .#addKeyframesCallback     = addKeyframesCallback;
+      this .#editor   = editor;
+      this .#nodeList = element;
+      this .#list     = $("<ul></ul>") .appendTo (this .#nodeList);
+      this .#nodes    = [ ];
 
       electron .ipcRenderer .on ("animation-members-list", (event, key, ... args) => this [key] (... args));
 
@@ -126,7 +114,7 @@ module .exports = class AnimationMembersList extends Interface
          .addClass (["material-icons-outlined", "button"])
          .attr ("title", _("Close animation."))
          .text ("cancel")
-         .on ("click", () => this .#closeCallback ());
+         .on ("click", () => this .#editor .closeAnimation ());
 
       const item = $("<div></div>")
             .attr ("type", "main")
@@ -188,7 +176,7 @@ module .exports = class AnimationMembersList extends Interface
             .attr ("title", _("Remove member from animation."))
             .text ("cancel")
             .on ("click", () => this .removeNodes ([node]))
-            .on ("click", () => this .#removeNodesCallback ([node]));
+            .on ("click", () => this .#editor .removeMembers ([node]));
 
          const item = $("<div></div>")
             .data ("i", i ++)
@@ -237,13 +225,13 @@ module .exports = class AnimationMembersList extends Interface
    createFieldElements (fieldList, node)
    {
       const expanded = node .getUserData (this .#animation [_expanded])
-         || node .getFields () .every (field => !this .#fields .has (field));
+         || node .getFields () .every (field => !this .#editor .fields .has (field));
 
       let i = 0;
 
       for (const field of node .getFields ())
       {
-         if (!expanded && !this .#fields .has (field))
+         if (!expanded && !this .#editor .fields .has (field))
             continue;
 
          if (!field .isInput ())
@@ -400,7 +388,7 @@ module .exports = class AnimationMembersList extends Interface
          keyframes .push ({ node, field });
       }
 
-      this .#addKeyframesCallback (keyframes);
+      this .#editor .addKeyframes (keyframes);
 
       for (const { field } of keyframes)
          this .toggleApply (field, false);
@@ -424,7 +412,7 @@ module .exports = class AnimationMembersList extends Interface
          keyframes .push ({ node, field });
       }
 
-      this .#addKeyframesCallback (keyframes);
+      this .#editor .addKeyframes (keyframes);
 
       for (const { field } of keyframes)
          this .toggleApply (field, false);
@@ -461,7 +449,7 @@ module .exports = class AnimationMembersList extends Interface
 
    addKeyframeForType (typeName)
    {
-      this .#addKeyframesCallback ([{ node: this .#node, field: this .#field, typeName }]);
+      this .#editor .addKeyframes ([{ node: this .#node, field: this .#field, typeName }]);
       this .toggleApply (this .#field, false);
    }
 

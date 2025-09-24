@@ -248,13 +248,7 @@ module .exports = class AnimationEditor extends Interface
 
       // Lists
 
-      this .memberList = new MemberList (this, this .membersListElement,
-      {
-         fields: this .fields,
-         removeNodesCallback: nodes => this .removeMembers (nodes),
-         closeCallback: () => this .closeAnimation (),
-         addKeyframesCallback: keyframes => this .addKeyframes (keyframes),
-      });
+      this .memberList = new MemberList (this, this .membersListElement);
 
       this .nodeList = new NodeList (this .nodeListElement,
       {
