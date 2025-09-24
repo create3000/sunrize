@@ -762,7 +762,7 @@ module .exports = class AnimationEditor extends Interface
          {
             const keyType = interpolator .getMetaData ("Interpolator/keyType", new X3D .MFString ());
 
-            keyType [index] = this .restrictKeyType (value, field);
+            keyType [index] = this .restrictKeyType (field, value);
 
             Editor .setNodeMetaData (interpolator, "Interpolator/keyType", keyType);
          }
@@ -803,6 +803,29 @@ module .exports = class AnimationEditor extends Interface
       }
    }
 
+   restrictKeyType (field, keyType)
+   {
+      switch (field .getType ())
+      {
+         case X3D .X3DConstants .SFBool:
+         case X3D .X3DConstants .SFInt32:
+         {
+            return "CONSTANT";
+         }
+         case X3D .X3DConstants .SFColor:
+         {
+            if (keyType .match (/^(?:SPLINE|SPLIT)$/))
+               return "LINEAR";
+
+            return keyType;
+         }
+         default:
+         {
+            return keyType;
+         }
+      }
+   }
+
    addKeyframes (keyframes)
    {
       if (keyframes .length === 1)
@@ -825,7 +848,7 @@ module .exports = class AnimationEditor extends Interface
       const
          interpolator = this .getInterpolator (typeName, node, field),
          frame        = this .getCurrentFrame (),
-         type         = this .restrictKeyType (this .getKeyType (), field);
+         type         = this .restrictKeyType (field, this .getKeyType ());
 
       switch (field .getType ())
       {
@@ -868,29 +891,6 @@ module .exports = class AnimationEditor extends Interface
       this .updateInterpolator (interpolator);
 
       Editor .undoManager .endUndo ();
-   }
-
-   restrictKeyType (keyType, field)
-   {
-      switch (field .getType ())
-      {
-         case X3D .X3DConstants .SFBool:
-         case X3D .X3DConstants .SFInt32:
-         {
-            return "CONSTANT";
-         }
-         case X3D .X3DConstants .SFColor:
-         {
-            if (keyType .match (/^(?:SPLINE|SPLIT)$/))
-               return "LINEAR";
-
-            return keyType;
-         }
-         default:
-         {
-            return keyType;
-         }
-      }
    }
 
    getInterpolator (typeName, node, field)
