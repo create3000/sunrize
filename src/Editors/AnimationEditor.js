@@ -2548,7 +2548,7 @@ module .exports = class AnimationEditor extends Interface
 
    /* Scrollbar Handling */
 
-   MIN_SCROLLBAR_SCALE = 0.05;
+   MIN_SCROLLBAR_SCALE = 0.05; // in fractions
 
    #scrollButton;
    #scrollStart;
