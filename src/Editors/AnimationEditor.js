@@ -511,6 +511,12 @@ module .exports = class AnimationEditor extends Interface
 
       Editor .undoManager .beginUndo (_("Resize Animation"));
 
+      const
+         timeSensor       = this .timeSensor,
+         executionContext = timeSensor .getExecutionContext ()
+
+      Editor .setFieldValue (executionContext, timeSensor, timeSensor ._cycleInterval, newDuration / newFrameRate);
+
       Editor .setNodeMetaData (this .animation, "Animation/duration",  new X3D .SFInt32 (newDuration));
       Editor .setNodeMetaData (this .animation, "Animation/frameRate", new X3D .SFInt32 (newFrameRate));
 
