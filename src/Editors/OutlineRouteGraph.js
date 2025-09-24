@@ -18,8 +18,10 @@ module .exports = class OutlineRouteGraph extends OutlineView
    {
       super .colorScheme (shouldUseDarkColors);
 
-      this .routeColor         = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-gray0");
-      this .routeSelectedColor = window .getComputedStyle ($("body") [0]) .getPropertyValue ("--system-red");
+      const style = window .getComputedStyle ($("body") [0]);
+
+      this .routeColor         = style .getPropertyValue ("--system-gray0");
+      this .routeSelectedColor = style .getPropertyValue ("--system-red");
 
       this .requestUpdateRouteGraph ();
    }
