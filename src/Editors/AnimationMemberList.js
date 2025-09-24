@@ -117,7 +117,7 @@ module .exports = class AnimationMembersList extends Interface
          .appendTo (this .#list);
 
       const applyButton = $("<span></span>")
-         .addClass (["apply", "material-icons", "button", "off"])
+         .addClass (["apply", "material-icons", "button", "off", "disabled"])
          .attr ("title", _("Add keyframe."))
          .text ("check_box")
          .on ("click", () => this .addKeyframesToMain ());
@@ -171,7 +171,7 @@ module .exports = class AnimationMembersList extends Interface
             .appendTo (this .#list);
 
          const applyButton = $("<span></span>")
-            .addClass (["apply", "material-icons", "button", "off"])
+            .addClass (["apply", "material-icons", "button", "off", "disabled"])
             .attr ("title", _("Add keyframe."))
             .text ("check_box")
             .on ("click", () => this .addKeyframesToNode (node));
