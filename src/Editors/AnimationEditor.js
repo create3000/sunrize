@@ -2586,6 +2586,9 @@ module .exports = class AnimationEditor extends Interface
 
       // Draw selection range.
 
+      context .save ();
+      context .clip (this .timelineClip);
+
       const selectionRange = this .getSelectionRange ();
 
       if (selectionRange [0] !== selectionRange [1])
@@ -2599,6 +2602,8 @@ module .exports = class AnimationEditor extends Interface
 
          context .fillRect (Math .min (x0, x1) - 1, 0, Math .abs (x1 - x0) + 3, tracksHeight);
       }
+
+      context .restore ();
 
       // Draw all tracks.
 
