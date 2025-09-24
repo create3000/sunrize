@@ -1775,18 +1775,42 @@ module .exports = class AnimationEditor extends Interface
 
    previousFrame ()
    {
-      if (this .getCurrentFrame () === 0)
-         this .lastFrame ();
+      const selectionRange = this .getSelectionRange ();
+
+      if (selectionRange [0] === selectionRange [1])
+      {
+         if (this .getCurrentFrame () === 0)
+            this .lastFrame ();
+         else
+            this .setCurrentFrame (Math .max (this .getCurrentFrame () - 1, 0));
+      }
       else
-         this .setCurrentFrame (Math .max (this .getCurrentFrame () - 1, 0));
+      {
+         if (this .getCurrentFrame () === selectionRange [0])
+            this .lastFrame ();
+         else
+            this .setCurrentFrame (Math .max (this .getCurrentFrame () - 1, 0));
+      }
    }
 
    nextFrame ()
    {
-      if (this .getCurrentFrame () === this .getDuration ())
-         this .firstFrame ()
+      const selectionRange = this .getSelectionRange ();
+
+      if (selectionRange [0] === selectionRange [1])
+      {
+         if (this .getCurrentFrame () === this .getDuration ())
+            this .firstFrame ()
+         else
+            this .setCurrentFrame (Math .min (this .getCurrentFrame () + 1, this .getDuration ()));
+      }
       else
-         this .setCurrentFrame (Math .min (this .getCurrentFrame () + 1, this .getDuration ()));
+      {
+         if (this .getCurrentFrame () === selectionRange [1])
+            this .firstFrame ()
+         else
+            this .setCurrentFrame (Math .min (this .getCurrentFrame () + 1, this .getDuration ()));
+      }
    }
 
    toggleAnimation ()
