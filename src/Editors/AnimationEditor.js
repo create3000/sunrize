@@ -275,6 +275,15 @@ module .exports = class AnimationEditor extends Interface
       this .setup ();
    }
 
+   configure ()
+   {
+      this .config .file .setDefaultValues ({
+         keyType: "LINEAR",
+      });
+
+      this .keyTypeElement .val (this .config .file .keyType);
+   }
+
    colorScheme (shouldUseDarkColors)
    {
       this .requestDrawTimeline ();
@@ -814,7 +823,7 @@ module .exports = class AnimationEditor extends Interface
       }
       else
       {
-         this .keyTypeElement .val (this .config .file .keyType ?? "LINEAR");
+         this .keyTypeElement .val (this .config .file .keyType);
       }
    }
 
