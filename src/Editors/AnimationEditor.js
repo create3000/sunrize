@@ -379,8 +379,6 @@ module .exports = class AnimationEditor extends Interface
          // Timeline
 
          this .frameInput .attr ("max", this .getDuration ());
-
-         this .zoomFit ();
       }
       else
       {
@@ -402,6 +400,7 @@ module .exports = class AnimationEditor extends Interface
 
       // Timeline
 
+      this .zoomFit ();
       this .setCurrentFrame (0);
       this .requestDrawTimeline ();
    }
@@ -549,6 +548,8 @@ module .exports = class AnimationEditor extends Interface
       this .registerZoomFit ();
 
       Editor .undoManager .endUndo ();
+
+      this .frameInput .attr ("max", this .getDuration ());
    }
 
    closeAnimation ()
