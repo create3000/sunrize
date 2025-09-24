@@ -2243,7 +2243,7 @@ module .exports = class AnimationEditor extends Interface
       const deltaY = event .originalEvent .deltaY;
 
       this .updatePointer (event);
-      this .zoom (deltaY < 0 ? "out" : "in", this .pointer .x, this .WHEEL_SCROLL_FACTOR);
+      this .zoom (deltaY > 0 ? "out" : "in", this .pointer .x, this .WHEEL_SCROLL_FACTOR);
    }
 
    updateCursor ()
