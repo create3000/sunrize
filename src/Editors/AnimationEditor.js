@@ -2628,10 +2628,10 @@ module .exports = class AnimationEditor extends Interface
       const
          scale                = this .getScale (),
          duration             = this .getDuration (),
-         width                = this .timelineElement .width (),
-         visibleFrames        = (width - this .TIMELINE_PADDING * 2) / scale,
+         width                = this .getWidth (),
+         visibleFrames        = width / scale,
          scrollbarTranslation = event .pageX - this .#scrollStart,
-         scrollbarWidth       = width - this .scrollbarElement .width (),
+         scrollbarWidth       = this .timelineElement .width () - this .scrollbarElement .width (),
          scrollbarLeft        = X3D .Algorithm .clamp (this .#scrollLeft + scrollbarTranslation, 0, scrollbarWidth),
          translation          = -scrollbarLeft / scrollbarWidth * (duration - visibleFrames) * scale;
 
@@ -2644,19 +2644,28 @@ module .exports = class AnimationEditor extends Interface
 
    updateScrollbar ()
    {
-      const translation    = this .getTranslation ()
+      const translation    = this .getTranslation ();
       const scale          = this .getScale ();
       const duration       = this .getDuration ();
-      const width          = this .timelineElement .width ();
+      const width          = this .getWidth ();
       const firstFrame     = Math .max (0, -translation / scale);
-      const visibleFrames  = (width - this .TIMELINE_PADDING * 2) / scale;
+      const visibleFrames  = width / scale;
       const scrollbarScale = X3D .Algorithm .clamp (this .getFitScale () / scale, this .MIN_SCROLLBAR_SCALE, 1);
-      const scrollbarWidth = width - width * scrollbarScale;
+      const scrollbarWidth = this .timelineElement .width () - this .timelineElement .width () * scrollbarScale;
       const scrollbarLeft  = Math .max (firstFrame / (duration - visibleFrames) * scrollbarWidth, 0);
 
-      this .scrollbarElement
-         .css ("left", scrollbarLeft)
-         .css ("width", `${scrollbarScale * 100}%`);
+      if (duration === visibleFrames)
+      {
+         this .scrollbarElement
+            .css ("left", 0)
+            .css ("width", "100%");
+      }
+      else
+      {
+         this .scrollbarElement
+            .css ("left", scrollbarLeft)
+            .css ("width", `${scrollbarScale * 100}%`);
+      }
    }
 
    /* Timeline Draw Handling */
