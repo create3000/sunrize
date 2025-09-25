@@ -362,13 +362,11 @@ module .exports = class AnimationEditor extends Interface
 
          // Show Member List
 
+         this .animation ._children .addInterest ("updateMemberList", this);
+
          this .nodeListElement .hide ();
          this .membersListElement .show ();
          this .memberList .setAnimation (this .animation, this .timeSensor);
-
-         // Interpolators
-
-         this .animation ._children .addInterest ("updateMemberList", this);
 
          this .updateMemberList ();
 
