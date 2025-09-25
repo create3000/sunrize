@@ -306,7 +306,7 @@ module .exports = class AnimationEditor extends Interface
       this .setSelectedKeyframes ([ ]);
       this .setSelectionRange (0, 0);
 
-      this .animation ?._children    .removeInterest ("updateMembers",       this);
+      this .animation ?._children    .removeInterest ("updateMemberList",       this);
       this .animation ?.name_changed .removeInterest ("updateAnimationName", this);
 
       if (this .timeSensor)
@@ -368,9 +368,9 @@ module .exports = class AnimationEditor extends Interface
 
          // Interpolators
 
-         this .animation ._children .addInterest ("updateMembers", this);
+         this .animation ._children .addInterest ("updateMemberList", this);
 
-         this .updateMembers ();
+         this .updateMemberList ();
 
          // Animation Name
 
@@ -388,7 +388,7 @@ module .exports = class AnimationEditor extends Interface
       {
          // Show Animations List
 
-         this .updateMembers ();
+         this .updateMemberList ();
 
          this .membersListElement .hide ();
          this .nodeListElement .show ();
@@ -663,6 +663,7 @@ module .exports = class AnimationEditor extends Interface
       // Update member list.
 
       this .memberList .removeNodes (nodes);
+      this .updateMembers ();
 
       // Prevent losing members without interpolator.
 
@@ -686,22 +687,32 @@ module .exports = class AnimationEditor extends Interface
 
    members       = new Set ();
    fields        = new Map (); // [field, interpolator]
-   interpolators = [ ];
+   interpolators = new Set ();
 
-   updateMembers ()
+   updateMemberList ()
    {
       if (this .#changing)
          return;
 
-      for (const interpolator of this .interpolators)
-         interpolator ._value_changed .removeRouteCallback (this);
-
       this .memberList .saveScrollbars ();
       this .memberList .clearNodes ();
 
+      this .updateMembers ();
+
+      this .memberList .addNodes (Array .from (this .members));
+      this .memberList .restoreScrollbars ();
+
+      this .requestDrawTimeline ();
+   }
+
+   updateMembers ()
+   {
+      for (const interpolator of this .interpolators)
+         interpolator ._value_changed .removeRouteCallback (this);
+
       this .members .clear ();
       this .fields .clear ();
-      this .interpolators .length = 0;
+      this .interpolators .clear ();
 
       for (const node of this .animation ?._children ?? [ ])
       {
@@ -710,7 +721,7 @@ module .exports = class AnimationEditor extends Interface
          if (!interpolator .getType () .some (type => this .#interpolatorTypes .has (type)))
             continue;
 
-         this .interpolators .push (interpolator);
+         this .interpolators .add (interpolator);
 
          for (const route of interpolator ._value_changed .getOutputRoutes ())
          {
@@ -724,12 +735,7 @@ module .exports = class AnimationEditor extends Interface
       }
 
       for (const interpolator of this .interpolators)
-         interpolator ._value_changed .addRouteCallback (this, () => this .updateMembers ());
-
-      this .memberList .addNodes (Array .from (this .members .values ()));
-      this .memberList .restoreScrollbars ();
-
-      this .requestDrawTimeline ();
+         interpolator ._value_changed .addRouteCallback (this, () => this .updateMemberList ());
    }
 
    // Interpolators
@@ -945,7 +951,7 @@ module .exports = class AnimationEditor extends Interface
       interpolator .setup ();
 
       this .fields .set (field, interpolator);
-      this .interpolators .push (interpolator);
+      this .interpolators .add (interpolator);
 
       Editor .appendValueToArray (executionContext, this .animation, this .animation ._children, interpolator);
       Editor .addRoute (executionContext, this .timeSensor, "fraction_changed", interpolator, "set_fraction");
