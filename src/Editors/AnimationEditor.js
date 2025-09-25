@@ -496,7 +496,6 @@ module .exports = class AnimationEditor extends Interface
       Editor .insertValueIntoArray (executionContext, node, field, 0, animation);
 
       this .nodeList .setNode (animation);
-      this .frameInput .attr ("max", 10);
 
       Editor .undoManager .endUndo ();
    }
