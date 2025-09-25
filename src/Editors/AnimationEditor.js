@@ -689,22 +689,6 @@ module .exports = class AnimationEditor extends Interface
    fields        = new Map (); // [field, interpolator]
    interpolators = new Set ();
 
-   updateMemberList ()
-   {
-      if (this .#changing)
-         return;
-
-      this .memberList .saveScrollbars ();
-      this .memberList .clearNodes ();
-
-      this .updateMembers ();
-
-      this .memberList .addNodes (Array .from (this .members));
-      this .memberList .restoreScrollbars ();
-
-      this .requestDrawTimeline ();
-   }
-
    updateMembers ()
    {
       for (const interpolator of this .interpolators)
@@ -736,6 +720,22 @@ module .exports = class AnimationEditor extends Interface
 
       for (const interpolator of this .interpolators)
          interpolator ._value_changed .addRouteCallback (this, () => this .updateMemberList ());
+   }
+
+   updateMemberList ()
+   {
+      if (this .#changing)
+         return;
+
+      this .memberList .saveScrollbars ();
+      this .memberList .clearNodes ();
+
+      this .updateMembers ();
+
+      this .memberList .addNodes (Array .from (this .members));
+      this .memberList .restoreScrollbars ();
+
+      this .requestDrawTimeline ();
    }
 
    // Interpolators
