@@ -783,7 +783,7 @@ module .exports = class AnimationEditor extends Interface
          {
             const keyType = interpolator .getMetaData ("Interpolator/keyType", new X3D .MFString ());
 
-            keyType [index] = this .restrictKeyType (field, value);
+            keyType [index] = this .restrictKeyType (field, interpolator, value);
 
             Editor .setNodeMetaData (interpolator, "Interpolator/keyType", keyType);
          }
@@ -824,7 +824,7 @@ module .exports = class AnimationEditor extends Interface
       }
    }
 
-   restrictKeyType (field, keyType)
+   restrictKeyType (field, interpolator, keyType)
    {
       switch (field .getType ())
       {
@@ -844,7 +844,7 @@ module .exports = class AnimationEditor extends Interface
          {
             if (keyType .match (/^(?:SPLINE|SPLIT)$/))
             {
-               if (this .fields .get (field) instanceof X3D .NormalInterpolator)
+               if (interpolator instanceof X3D .NormalInterpolator)
                   return "LINEAR";
             }
 
@@ -879,7 +879,7 @@ module .exports = class AnimationEditor extends Interface
       const
          interpolator = this .getInterpolator (typeName, node, field),
          frame        = this .getCurrentFrame (),
-         type         = this .restrictKeyType (field, this .getKeyType ());
+         type         = this .restrictKeyType (field, interpolator, this .getKeyType ());
 
       switch (field .getType ())
       {
