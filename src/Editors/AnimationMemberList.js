@@ -164,9 +164,14 @@ module .exports = class AnimationMembersList extends Interface
             .text ("check_box")
             .on ("click", () => this .addKeyframesToNode (node));
 
+         const expanded = node .getUserData (this .#animation [_expanded])
+            || node .getFields () .every (field => !this .#editor .fields .has (field));
+
+         node .setUserData (this .#animation [_expanded], expanded);
+
          const expandButton = $("<span></span>")
             .addClass (["material-icons-outlined", "button"])
-            .addClass (node .getUserData (this .#animation [_expanded]) ? "on" : "off")
+            .addClass (expanded ? "on" : "off")
             .attr ("title", _("Show all fields."))
             .text ("expand_circle_down")
             .on ("click", () => this .toggleExpand (expandButton, fieldList, node));
@@ -226,6 +231,8 @@ module .exports = class AnimationMembersList extends Interface
    {
       const expanded = node .getUserData (this .#animation [_expanded])
          || node .getFields () .every (field => !this .#editor .fields .has (field));
+
+      node .setUserData (this .#animation [_expanded], expanded);
 
       let i = 0;
 
