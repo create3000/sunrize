@@ -659,6 +659,14 @@ module .exports = class AnimationEditor extends Interface
       this .registerRequestDrawTimeline ();
 
       Editor .undoManager .endUndo ();
+
+      this .memberList .removeNodes (nodes);
+
+      // Prevent losing members without interpolator.
+
+      this .#changing = true;
+
+      this .browser .nextFrame () .then (() => this .#changing = false);
    }
 
    #interpolatorTypes = new Set ([
