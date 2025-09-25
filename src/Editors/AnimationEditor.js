@@ -306,7 +306,7 @@ module .exports = class AnimationEditor extends Interface
       this .setSelectedKeyframes ([ ]);
       this .setSelectionRange (0, 0);
 
-      this .animation ?._children    .removeInterest ("updateMemberList",       this);
+      this .animation ?._children    .removeInterest ("updateMemberList",    this);
       this .animation ?.name_changed .removeInterest ("updateAnimationName", this);
 
       if (this .timeSensor)
