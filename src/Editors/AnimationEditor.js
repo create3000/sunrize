@@ -630,6 +630,8 @@ module .exports = class AnimationEditor extends Interface
       Editor .undoManager .endUndo ();
    }
 
+   // Members Handling
+
    addMembers ()
    {
       const selection = require ("../Application/Selection");
@@ -678,6 +680,9 @@ module .exports = class AnimationEditor extends Interface
 
    updateMembers ()
    {
+      if (this .#changing)
+         return;
+
       for (const interpolator of this .interpolators)
          interpolator ._value_changed .removeRouteCallback (this);
 
@@ -715,23 +720,6 @@ module .exports = class AnimationEditor extends Interface
       this .memberList .restoreScrollbars ();
 
       this .requestDrawTimeline ();
-   }
-
-   getInterpolatorName (interpolator)
-   {
-      const route = Array .from (interpolator ._value_changed .getOutputRoutes ()) [0];
-
-      if (!route)
-         return;
-
-      const
-         destinationNode  = route .getDestinationNode (),
-         destinationField = route .getDestinationField (),
-         nodeName         = destinationNode .getDisplayName (),
-         fieldName        = capitalize (destinationField .replace (/^set_|_changed$/g, ""), true),
-         typeName         = interpolator .getTypeName () .match (/(Sequencer|Interpolator)$/) [1];
-
-      return `${nodeName}${fieldName}${typeName}`;
    }
 
    // Interpolators
@@ -926,6 +914,8 @@ module .exports = class AnimationEditor extends Interface
       Editor .undoManager .endUndo ();
    }
 
+   #changing = false;
+
    getInterpolator (typeName, node, field)
    {
       if (this .fields .has (field))
@@ -957,7 +947,30 @@ module .exports = class AnimationEditor extends Interface
 
       Editor .undoManager .endUndo ();
 
+      // Prevent losing members without interpolator.
+
+      this .#changing = true;
+
+      this .browser .nextFrame () .then (() => this .#changing = false);
+
       return interpolator;
+   }
+
+   getInterpolatorName (interpolator)
+   {
+      const route = Array .from (interpolator ._value_changed .getOutputRoutes ()) [0];
+
+      if (!route)
+         return;
+
+      const
+         destinationNode  = route .getDestinationNode (),
+         destinationField = route .getDestinationField (),
+         nodeName         = destinationNode .getDisplayName (),
+         fieldName        = capitalize (destinationField .replace (/^set_|_changed$/g, ""), true),
+         typeName         = interpolator .getTypeName () .match (/(Sequencer|Interpolator)$/) [1];
+
+      return `${nodeName}${fieldName}${typeName}`;
    }
 
    updateInterpolators ()
