@@ -495,9 +495,10 @@ module .exports = class AnimationEditor extends Interface
 
       Editor .insertValueIntoArray (executionContext, node, field, 0, animation);
 
-      this .nodeList .setNode (animation);
-
       Editor .undoManager .endUndo ();
+
+      // Wait until NodeList knows animation, to have it restored after reload.
+      setTimeout (() => this .nodeList .setNode (animation));
    }
 
    resizeAnimation (newDuration, newFrameRate, scaleKeyframes)
