@@ -180,7 +180,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .zoomOutIcon = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Zoom out."))
+         .attr ("title", _("Zoom timeline out."))
          .css ("transform", "scale(1.4)")
          .css ("margin-bottom", "15px")
          .text ("zoom_out")
@@ -189,7 +189,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .zoomInIcon = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Zoom in."))
+         .attr ("title", _("Zoom timeline in."))
          .css ("transform", "scale(1.4)")
          .css ("margin-bottom", "15px")
          .text ("zoom_in")
@@ -198,7 +198,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .zoomFitIcon = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Zoom fit animation in window."))
+         .attr ("title", _("Zoom timeline to fit in window."))
          .css ("transform", "scale(1.4)")
          .css ("margin-bottom", "15px")
          .text ("fit_screen")
@@ -207,7 +207,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .zoom100Icon = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Zoom 1:1."))
+         .attr ("title", _("Default timeline zoom."))
          .css ("transform", "scale(1.4)")
          .css ("margin-bottom", "15px")
          .text ("1x_mobiledata")
@@ -2058,14 +2058,10 @@ module .exports = class AnimationEditor extends Interface
          }
          case "Backspace":
          {
-            if (event .metaKey || event .ctrlKey)
-            {
-               this .deleteKeyframes ();
+            this .deleteKeyframes ();
 
-               event .preventDefault ();
-               event .stopPropagation ();
-            }
-
+            event .preventDefault ();
+            event .stopPropagation ();
             break;
          }
       }
