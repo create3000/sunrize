@@ -9,19 +9,17 @@ const
 
 module .exports = class NodeList extends Interface
 {
-   constructor (element, filter = () => true, callback = Function .prototype)
+   constructor (element, { filter = () => true, callback = Function .prototype })
    {
       super ("Sunrize.NodeList.");
 
       this .nodeList         = element;
+      this .list             = $("<ul></ul>") .appendTo (this .nodeList);
       this .filter           = filter;
       this .callback         = callback;
       this .executionContext = null;
       this .node             = null;
       this .nodes            = [ ];
-
-      this .list = $("<ul></ul>")
-         .appendTo (this .nodeList);
 
       this .setup ();
    }
@@ -61,16 +59,23 @@ module .exports = class NodeList extends Interface
 
       for (const node of this .nodes)
       {
-         const listItem = $("<li></li>")
-            .append ($("<img></img>") .addClass ("icon") .attr ("src", "../images/OutlineEditor/Node/X3DBaseNode.svg"))
-            .append ($("<span></span>") .addClass ("type-name") .text (node .getTypeName ()))
-            .append (document .createTextNode (" "))
-            .append ($("<span></span>") .addClass ("name") .text (this .getName (node)))
-            .on ("click", () => this .setNode (node))
-            .appendTo (this .list);
+         const
+            typeNameElement = $("<span></span>") .addClass ("type-name") .text (node .getTypeName ()),
+            nameElement     = $("<span></span>") .addClass ("name") .text (this .getName (node));
 
-         node .typeName_changed .addInterest ("set_typeName", this, listItem, node);
-         node .name_changed     .addInterest ("set_name",     this, listItem, node);
+         const listItem = $("<li></li>") .appendTo (this .list);
+
+         $("<div></div>")
+            .addClass ("item")
+            .append ($("<img></img>") .addClass ("icon") .attr ("src", "../images/OutlineEditor/Node/X3DBaseNode.svg"))
+            .append (typeNameElement)
+            .append (document .createTextNode (" "))
+            .append (nameElement)
+            .on ("click", () => this .setNode (node))
+            .appendTo (listItem);
+
+         node .typeName_changed .addInterest ("set_typeName", this, typeNameElement, node);
+         node .name_changed     .addInterest ("set_name",     this, nameElement,     node);
       }
 
       this .nodeList .scrollTop (scrollTop);
@@ -92,7 +97,7 @@ module .exports = class NodeList extends Interface
 
    getNodes ()
    {
-      return Array .from (this .executionContext .traverse (Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES), node => node instanceof X3D .SFNode ? node .getValue () : node);
+      return Array .from (this .executionContext .traverse (Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES), node => node instanceof X3D .SFNode ? node .getValue () .valueOf () : node .valueOf ());
    }
 
    getName (node)
@@ -110,13 +115,13 @@ module .exports = class NodeList extends Interface
       return name;
    }
 
-   set_typeName (listItem, node)
+   set_typeName (element, node)
    {
-      listItem .find (".type-name") .text (node .getTypeName ());
+      element .text (node .getTypeName ());
    }
 
-   set_name (listItem, node)
+   set_name (element, node)
    {
-      listItem .find (".name") .text (node .getName ());
+      element .text (this .getName (node));
    }
 };

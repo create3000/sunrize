@@ -24,6 +24,7 @@ Sunrize aims to provide you with powerful tools to compose complex objects and c
    - [Imported and Exported Nodes](../imported-and-exported-nodes/)
 - [Snapping and Alignment](../snapping-and-alignment/)
 - [Using the Script Editor](../using-the-script-editor/)
+- [Animating Objects](../animating-objects/)
 
 It might also be of interest for you [how to navigate in a the scene](/x_ite/tutorials/how-to-navigate-in-a-scene/).
 

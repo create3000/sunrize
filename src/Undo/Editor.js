@@ -14,6 +14,11 @@ const
 module .exports = class Editor
 {
    /**
+    * Shard UndoManager
+    */
+   static get undoManager () { return UndoManager .shared; }
+
+   /**
     * X3D Id
     */
    static Id = /(?:^[^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*$|^$)/
@@ -1729,7 +1734,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       sourceNode      = sourceNode .valueOf ();
       destinationNode = destinationNode .valueOf ();
 
-      undoManager .beginUndo (_("Add Route From %s »%s« TO %s »%s«"), sourceNode .getTypeName (), sourceField, destinationNode .getTypeName (), destinationField);
+      undoManager .beginUndo (_("Add Route from %s »%s« to %s »%s«"), sourceNode .getTypeName (), sourceField, destinationNode .getTypeName (), destinationField);
 
       try
       {
@@ -1791,7 +1796,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       sourceNode      = sourceNode .valueOf ();
       destinationNode = destinationNode .valueOf ();
 
-      undoManager .beginUndo (_("Delete Route From %s »%s« TO %s »%s«"), sourceNode .getTypeName (), sourceField, destinationNode .getTypeName (), destinationField);
+      undoManager .beginUndo (_("Delete Route from %s »%s« to %s »%s«"), sourceNode .getTypeName (), sourceField, destinationNode .getTypeName (), destinationField);
 
       executionContext .deleteRoute (sourceNode .valueOf (), sourceField, destinationNode .valueOf (), destinationField);
 

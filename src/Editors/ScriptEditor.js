@@ -16,11 +16,11 @@ const
    monacoLoader = require ("monaco-editor/min/vs/loader.js"),
    _            = require ("../Application/GetText");
 
+require ("../Controls/RenameNodeInput");
+
 monacoLoader .require .config ({
    baseUrl: url .pathToFileURL (path .resolve (path .dirname (require .resolve ("monaco-editor/package.json")), "min")) + "/",
 });
-
-require ("../Controls/RenameNodeInput");
 
 module .exports = class ScriptEditor extends Interface
 {
@@ -112,16 +112,21 @@ module .exports = class ScriptEditor extends Interface
       this .hSplitter = new Splitter (this .verticalSplitterLeft, "horizontal");
 
       this .nodeListElement = $("<div></div>")
-         .addClass ("node-list")
+         .addClass (["alternating", "node-list"])
          .appendTo (this .horizontalSplitterTop);
 
       this .nodeName = $("<input></input>")
          .addClass ("node-name")
+         .attr ("title", _("Rename node."))
          .attr ("placeholder", _("Enter node name."))
          .appendTo (this .horizontalSplitterTop)
-         .renameNodeInput (null, null);
+         .renameNodeInput (null);
 
-      this .nodeList = new NodeList (this .nodeListElement, node => node .getTypeName () .match (/^(?:Script|ShaderPart)$/), node => this .setNode (node));
+      this .nodeList = new NodeList (this .nodeListElement,
+      {
+         filter: node => node .getTypeName () .match (/^(?:Script|ShaderPart)$/),
+         callback: node => this .setNode (node),
+      });
 
       this .consoleElement = $("<div></div>")
          .attr ("id", "script-editor-console")
@@ -130,7 +135,7 @@ module .exports = class ScriptEditor extends Interface
 
       this .console = new Console (this .consoleElement);
 
-      electron .ipcRenderer .on ("script-editor", (event, key, ...args) => this [key] (...args));
+      electron .ipcRenderer .on ("script-editor", (event, key, ... args) => this [key] (... args));
 
       // Setup.
 
@@ -233,7 +238,7 @@ module .exports = class ScriptEditor extends Interface
       }
       else
       {
-         this .nodeName .renameNodeInput (null, null);
+         this .nodeName .renameNodeInput (null);
          this .applyButton .hide ();
          this .monaco ?.detach ();
 

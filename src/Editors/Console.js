@@ -54,7 +54,7 @@ module .exports = class Console extends Interface
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
       this .textarea = $("<textarea></textarea>")
-         .attr ("placeholder", _("Evaluate JavaScript code here."))
+         .attr ("placeholder", _("Evaluate X3D Script code here, e.g. type `Browser.name`."))
          .attr ("tabindex", 0)
          .appendTo (this .input)
          .on ("keydown", event => this .onkeydown (event))

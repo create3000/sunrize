@@ -8,6 +8,11 @@ html {
 }
 
 body {
+  --input-height: 20px;
+  --scrollbar-width: 14px;
+}
+
+body {
   overflow: hidden;
   height: 100%;
   margin: 0;
@@ -37,8 +42,8 @@ body {
 /* Scrollbars */
 
 ::-webkit-scrollbar {
-  width: 14px;
-  height: 14px;
+  width: var(--scrollbar-width);
+  height: var(--scrollbar-width);
 }
 
 ::-webkit-scrollbar-track, /* Track */
@@ -94,6 +99,13 @@ th, td,
   font-family: var(--sans-serif);
   font-size: var(--font-size);
   color: var(--text-color);
+}
+
+select option {
+  font-family: var(--sans-serif);
+  font-size: var(--font-size);
+  color: var(--text-color);
+  background: var(--background-color);
 }
 
 .ui-widget label {
@@ -452,6 +464,10 @@ body.light .qtip-tipsy {
   padding: 8px;
 }
 
+.qtip span {
+  display: block;
+}
+
 .qtip input,
 .qtip select,
 .qtip button {
@@ -460,23 +476,35 @@ body.light .qtip-tipsy {
   background: var(--background-color);
   border: 1px solid var(--system-gray7);
   filter: opacity(80%);
+  margin: 2px 0;
 }
 
-.qtip .qtip-content > div > * {
-  margin: 0.3em 0em;
+.qtip input[type=checkbox] {
+  display: inline-block;
+  width: auto;
+  margin: 4px 0 0 0;
+}
+
+.qtip label {
+  display: inline-block;
+  width: auto;
+  position: relative;
+  margin-left: 5px !important;
+  top: -2px;
+  margin: 4px 0 0 0;
 }
 
 .qtip .qtip-content > div:first-child {
-  margin-top: 0em;
+  margin-top: 0;
 }
 
 .qtip .qtip-content > div:last-child {
-  margin-bottom: 0em;
+  margin-bottom: 0;
 }
 
 .qtip select:hover,
 .qtip button:hover {
-  background-color: var(--system-gray4);
+  background-color: var(--system-gray8);
   color: var(--system-gray0);
 }
 
@@ -548,7 +576,8 @@ body.light .qtip-tipsy {
   font-size: var(--font-size);
 }
 
-.horizontal-toolbar .input {
+.horizontal-toolbar .input,
+.horizontal-toolbar .select {
   display: inline-block;
   position: relative;
   top: -3px;
@@ -593,6 +622,7 @@ body.light .qtip-tipsy {
 .horizontal-toolbar .material-symbols-outlined.disabled,
 .horizontal-toolbar .text.disabled,
 .horizontal-toolbar .input.disabled,
+.horizontal-toolbar .select.disabled,
 .vertical-toolbar .material-icons.disabled,
 .vertical-toolbar .material-symbols-outlined.disabled {
   pointer-events: none;
@@ -876,6 +906,11 @@ body.dark .ui-widget .library-list .component {
   color: var(--system-gray0);
 }
 
+.node-list .button.disabled {
+  pointer-events: none;
+  color: var(--system-gray3);
+}
+
 /* Footer */
 
 #footer {
@@ -1025,8 +1060,6 @@ body.dark .ui-widget .library-list .component {
 /* Script Editor */
 
 .script-editor {
-  --input-height: 20px;
-
   box-sizing: border-box;
 }
 
@@ -1074,8 +1107,6 @@ body.dark .ui-widget .library-list .component {
 /* Animation Editor */
 
 .animation-editor {
-  --input-height: 20px;
-
   box-sizing: border-box;
 }
 
@@ -1101,6 +1132,17 @@ body.dark .ui-widget .library-list .component {
 .animation-editor .timeline {
   user-select: none;
   border-left: 1px solid var(--border-color);
+}
+
+.animation-editor .pointer {
+  cursor: pointer;
+}
+
+.animation-editor .scrollbar {
+  position: absolute;
+  bottom: 0;
+  height: var(--scrollbar-width);
+  background: var(--scrollbar-thumb-color);
 }
 
 .animation-editor .node-list {

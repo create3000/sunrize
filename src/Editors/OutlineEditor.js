@@ -21,7 +21,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       element .on ("contextmenu", (event) => this .showContextMenu (event));
 
-      electron .ipcRenderer .on ("outline-editor", (event, key, ...args) => this [key] (...args));
+      electron .ipcRenderer .on ("outline-editor", (event, key, ... args) => this [key] (... args));
 
       electron .ipcRenderer .on ("transform-to-zero",   () => this .transformToZero ());
       electron .ipcRenderer .on ("remove-empty-groups", () => this .removeEmptyGroups ());
@@ -1605,7 +1605,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    {
       const node = this .objects .get (nodeId);
 
-      UndoManager .shared .beginUndo (_("Determine Bounding Box From Scratch"));
+      UndoManager .shared .beginUndo (_("Determine Bounding Box from Scratch"));
 
       Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxSize,   new X3D .Vector3 (-1, -1, -1));
       Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxCenter, new X3D .Vector3 ());

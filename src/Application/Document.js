@@ -70,7 +70,7 @@ module .exports = class Document extends Interface
       // File Menu
 
       electron .ipcRenderer .on ("open-files",       (event, urls)     => this .loadURL (urls [0])); // DEBUG
-      electron .ipcRenderer .on ("save-file",        (event, force)    => this .saveFile (force));
+      electron .ipcRenderer .on ("save-file",        (event)           => this .saveFile ());
       electron .ipcRenderer .on ("save-file-as",     (event, filePath) => this .saveFileAs (filePath));
       electron .ipcRenderer .on ("save-copy-as",     (event, filePath) => this .saveCopyAs (filePath));
       electron .ipcRenderer .on ("auto-save",        (event, value)    => this .autoSave = value);
@@ -434,12 +434,9 @@ Viewpoint {
     *
     * @param {boolean} force force save
     */
-   saveFile (force = false)
+   saveFile ()
    {
       this .footer .scriptEditor ?.apply ();
-
-      if (!UndoManager .shared .saveNeeded && !force)
-         return;
 
       const scene = this .browser .currentScene;
 
@@ -515,7 +512,7 @@ Viewpoint {
 
       Editor .rewriteURLs (scene, scene, oldWorldURL, scene .worldURL);
 
-      this .saveFile (true);
+      this .saveFile ();
    }
 
    /**
@@ -536,7 +533,7 @@ Viewpoint {
 
       Editor .rewriteURLs (scene, scene, oldWorldURL, newWorldURL, undoManager);
 
-      this .saveFile (true);
+      this .saveFile ();
 
       undoManager .undo ();
 
@@ -552,19 +549,19 @@ Viewpoint {
    {
       this .config .global .autoSave = value;
 
-      this .registerAutoSave ();
+      this .requestAutoSave ();
    }
 
    #saveTimeoutId = undefined;
 
-   registerAutoSave ()
+   requestAutoSave ()
    {
       if (!this .autoSave)
          return;
 
       clearTimeout (this .#saveTimeoutId);
 
-      this .#saveTimeoutId = setTimeout (() => this .saveFile (false), 1000);
+      this .#saveTimeoutId = setTimeout (() => this .saveFile (), 1000);
    }
 
    exportAs (filePath)
@@ -574,7 +571,8 @@ Viewpoint {
 
    close ()
    {
-      this .saveFile (false);
+      if (UndoManager .shared .saveNeeded)
+         this .saveFile ();
 
       electron .ipcRenderer .sendToHost ("closed");
    }
@@ -598,7 +596,7 @@ Viewpoint {
       this .updateMenu ();
 
       if (UndoManager .shared .saveNeeded)
-         this .registerAutoSave ();
+         this .requestAutoSave ();
 
       electron .ipcRenderer .sendToHost ("saved", !UndoManager .shared .saveNeeded);
    }
