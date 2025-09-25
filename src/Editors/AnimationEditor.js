@@ -575,15 +575,10 @@ module .exports = class AnimationEditor extends Interface
 
    updateAnimationName ()
    {
-      const name = this .getAnimationName ();
+      const name = this .animation .getDisplayName ();
 
       this .animationName .val (name);
       this .memberList .setAnimationName (name);
-   }
-
-   getAnimationName ()
-   {
-      return this .animation .getDisplayName () .replace (/Animation$/, "");
    }
 
    renameAnimation (event)
@@ -605,11 +600,11 @@ module .exports = class AnimationEditor extends Interface
 
       const { animation, timeSensor } = this;
       const executionContext = animation .getExecutionContext ();
-      const name             = this .animationName .val () .replace (/Animation$/, "");
+      const name             = this .animationName .val ();
       const oldDescription   = getDescription (animation);
 
-      Editor .updateNamedNode (executionContext, executionContext .getUniqueName (`${name}Animation`), animation);
-      Editor .updateNamedNode (executionContext, executionContext .getUniqueName (`${name}AnimationTimer`), timeSensor);
+      Editor .updateNamedNode (executionContext, executionContext .getUniqueName (`${name}`), animation);
+      Editor .updateNamedNode (executionContext, executionContext .getUniqueName (`${name}Timer`), timeSensor);
 
       // Don't update description if manually set.
       if (!timeSensor ._description .getValue () || timeSensor ._description .getValue () === oldDescription)
