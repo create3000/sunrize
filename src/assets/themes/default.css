@@ -913,6 +913,7 @@ body.dark .ui-widget .library-list .component {
 
 .node-list .bold {
   font-weight: bold;
+  color: var(--system-brown);
 }
 
 /* Footer */

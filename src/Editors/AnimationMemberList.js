@@ -483,6 +483,8 @@ module .exports = class AnimationMembersList extends Interface
             if (!this .#editor .fields .has (field))
                continue;
 
+            const fieldItem = this .#list .find (`.field[field-id=${field .getId ()}] > .item`);
+
             keyframes .push ({ node, field });
          }
       }
@@ -594,6 +596,11 @@ module .exports = class AnimationMembersList extends Interface
             .removeClass ("green")
             .addClass ("off");
       }
+
+      if (this .#editor .fields .has (field))
+         fieldItem .find ("> .item") .addClass ("bold");
+      else
+         fieldItem .find ("> .item") .removeClass ("bold");
 
       // Update node.
 
