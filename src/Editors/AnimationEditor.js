@@ -857,19 +857,19 @@ module .exports = class AnimationEditor extends Interface
 
    addKeyframes (keyframes)
    {
-      // Create interpolators.
+      // // Create interpolators.
 
-      const count = keyframes .reduce ((p, { field }) => p + !this .fields .has (field), 0);
+      // const count = keyframes .reduce ((p, { field }) => p + !this .fields .has (field), 0);
 
-      if (count === 1)
-         Editor .undoManager .beginUndo (_("Add Interpolator to »%s«"), this .animation .getDisplayName ());
-      else
-         Editor .undoManager .beginUndo (_("Add Interpolators to »%s«"), this .animation .getDisplayName ());
+      // if (count === 1)
+      //    Editor .undoManager .beginUndo (_("Add Interpolator to »%s«"), this .animation .getDisplayName ());
+      // else
+      //    Editor .undoManager .beginUndo (_("Add Interpolators to »%s«"), this .animation .getDisplayName ());
 
-      for (const { node, field, typeName } of keyframes)
-         this .getInterpolator (node, field, typeName)
+      // for (const { node, field, typeName } of keyframes)
+      //    this .getInterpolator (node, field, typeName)
 
-      Editor .undoManager .endUndo ();
+      // Editor .undoManager .endUndo ();
 
       // Add keyframes.
 
