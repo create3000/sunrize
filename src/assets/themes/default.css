@@ -911,6 +911,10 @@ body.dark .ui-widget .library-list .component {
   color: var(--system-gray3);
 }
 
+.node-list .bold {
+  font-weight: bold;
+}
+
 /* Footer */
 
 #footer {

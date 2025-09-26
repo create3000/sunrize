@@ -273,6 +273,9 @@ module .exports = class AnimationMembersList extends Interface
             .on ("contextmenu", () => this .contextMenuForField (node, field))
             .appendTo (listItem);
 
+         if (this .#editor .fields .has (field))
+            item .addClass ("bold");
+
          item
             .on ("mouseenter", () => item .addClass ("hover"))
             .on ("mouseleave", () => item .removeClass ("hover"));
