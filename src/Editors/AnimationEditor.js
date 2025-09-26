@@ -857,13 +857,29 @@ module .exports = class AnimationEditor extends Interface
 
    addKeyframes (keyframes)
    {
+      // Create interpolators.
+
+      const count = keyframes .reduce ((p, { field }) => p + !this .fields .has (field), 0);
+
+      if (count === 1)
+         Editor .undoManager .beginUndo (_("Add Interpolator to »%s«"), this .animation .getDisplayName ());
+      else
+         Editor .undoManager .beginUndo (_("Add Interpolators to »%s«"), this .animation .getDisplayName ());
+
+      for (const { node, field, typeName } of keyframes)
+         this .getInterpolator (node, field, typeName)
+
+      Editor .undoManager .endUndo ();
+
+      // Add keyframes.
+
       if (keyframes .length === 1)
          Editor .undoManager .beginUndo (_("Add Keyframe to »%s«"), this .animation .getDisplayName ());
       else
          Editor .undoManager .beginUndo (_("Add Keyframes to »%s«"), this .animation .getDisplayName ());
 
       for (const { node, field, typeName } of keyframes)
-         this .addKeyframe (node, field, typeName)
+         this .addKeyframe (node, field, typeName);
 
       Editor .undoManager .endUndo ();
    }
@@ -872,10 +888,8 @@ module .exports = class AnimationEditor extends Interface
    {
       Editor .undoManager .beginUndo (_("Add Keyframe to »%s«"), this .animation .getDisplayName ());
 
-      typeName ??= this .#interpolatorTypeNames .get (field .getType ());
-
       const
-         interpolator = this .getInterpolator (typeName, node, field),
+         interpolator = this .getInterpolator (node, field, typeName),
          frame        = this .getCurrentFrame (),
          type         = this .restrictKeyType (field, interpolator, this .getKeyType ());
 
@@ -924,12 +938,14 @@ module .exports = class AnimationEditor extends Interface
 
    #changing = false;
 
-   getInterpolator (typeName, node, field)
+   getInterpolator (node, field, typeName)
    {
       if (this .fields .has (field))
          return this .fields .get (field);
 
-      Editor .undoManager .beginUndo (_("Create Interpolator"));
+      typeName ??= this .#interpolatorTypeNames .get (field .getType ());
+
+      Editor .undoManager .beginUndo (_("Add Interpolator"));
 
       const executionContext = this .animation .getExecutionContext ();
 
