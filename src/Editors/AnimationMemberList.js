@@ -176,13 +176,6 @@ module .exports = class AnimationMembersList extends Interface
             .text ("expand_circle_down")
             .on ("click", () => this .toggleExpand (expandButton, fieldList, node));
 
-         const removeButton = $("<span></span>")
-            .addClass (["material-icons-outlined", "button"])
-            .attr ("title", _("Remove member from animation."))
-            .text ("cancel")
-            .on ("click", () => this .removeNodes ([node]))
-            .on ("click", () => this .#editor .removeMembers ([node]));
-
          const item = $("<div></div>")
             .data ("i", i ++)
             .attr ("type", "node")
@@ -196,8 +189,7 @@ module .exports = class AnimationMembersList extends Interface
             .append (applyButton)
             .append (document .createTextNode (" "))
             .append (expandButton)
-            .append (document .createTextNode (" "))
-            .append (removeButton)
+            .on ("contextmenu", () => this .contextMenuForNode (node))
             .appendTo (listItem);
 
          item
@@ -278,6 +270,7 @@ module .exports = class AnimationMembersList extends Interface
             .append (nameElement)
             .append (document .createTextNode (" "))
             .append (applyButton)
+            .on ("contextmenu", () => this .contextMenuForField (node, field))
             .appendTo (listItem);
 
          item
@@ -286,21 +279,6 @@ module .exports = class AnimationMembersList extends Interface
       }
 
       this .connectNode (node, !this .isRunning ());
-   }
-
-   toggleExpand (expandButton, fieldList, node)
-   {
-      node .setUserData (this .#animation [_expanded], !node .getUserData (this .#animation [_expanded]));
-
-      expandButton
-         .removeClass (["on", "off"])
-         .addClass (node .getUserData (this .#animation [_expanded]) ? "on" : "off");
-
-      fieldList .empty ();
-
-      this .createFieldElements (fieldList, node);
-
-      this .#editor .requestDrawTimeline ();
    }
 
    removeNodes (nodes)
@@ -373,6 +351,60 @@ module .exports = class AnimationMembersList extends Interface
       }
 
       return offsets;
+   }
+
+   contextMenuForNode (node)
+   {
+      this .#node = node;
+
+      const menu = [
+         {
+            label: _("Remove Member from Animation"),
+            args: ["removeMember"],
+         },
+      ];
+
+      electron .ipcRenderer .send ("context-menu", "animation-members-list", menu);
+   }
+
+   removeMember ()
+   {
+      this .#editor .removeMembers ([this .#node]);
+   }
+
+   contextMenuForField (node, field)
+   {
+      this .#node  = node;
+      this .#field = field;
+
+      const menu = [
+         {
+            label: _("Remove Interpolator from Animation"),
+            args: ["removeInterpolator"],
+         },
+      ];
+
+      electron .ipcRenderer .send ("context-menu", "animation-members-list", menu);
+   }
+
+   removeInterpolator ()
+   {
+      this .#editor .removeInterpolator (this .#node, this .#field);
+   }
+
+   toggleExpand (expandButton, fieldList, node)
+   {
+      node .setUserData (this .#animation [_expanded], !node .getUserData (this .#animation [_expanded]));
+
+      expandButton
+         .removeClass (["on", "off"])
+         .addClass (node .getUserData (this .#animation [_expanded]) ? "on" : "off");
+
+      fieldList .empty ();
+
+      this .createFieldElements (fieldList, node);
+
+      this .#editor .requestDrawTimeline ();
    }
 
    // Apply Button Handling

@@ -997,6 +997,23 @@ module .exports = class AnimationEditor extends Interface
       return `${nodeName}${fieldName}${typeName}`;
    }
 
+   removeInterpolator (node, field)
+   {
+      Editor .undoManager .beginUndo ("Remove Interpolator from Animation");
+
+      const
+         animation        = this .animation,
+         executionContext = animation .getExecutionContext (),
+         interpolator     = this .fields .get (field),
+         children         = animation ._children .filter (node => node .getValue () !== interpolator);
+
+      Editor .setFieldValue (executionContext, animation, animation ._children, children);
+
+      this .registerRequestDrawTimeline ();
+
+      Editor .undoManager .endUndo ();
+   }
+
    updateInterpolators ()
    {
       Editor .undoManager .beginUndo (_("Update Interpolators"));
