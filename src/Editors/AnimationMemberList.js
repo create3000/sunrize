@@ -165,7 +165,7 @@ module .exports = class AnimationMembersList extends Interface
             .on ("click", () => this .addKeyframesToNode (node));
 
          const expanded = node .getUserData (this .#animation [_expanded])
-            || node .getFields () .every (field => !this .#editor .fields .has (field));
+            || !this .hasInterpolators (node);
 
          node .setUserData (this .#animation [_expanded], expanded);
 
@@ -230,7 +230,7 @@ module .exports = class AnimationMembersList extends Interface
    createFieldElements (fieldList, node)
    {
       const expanded = node .getUserData (this .#animation [_expanded])
-         || node .getFields () .every (field => !this .#editor .fields .has (field));
+         || !this .hasInterpolators (node);
 
       node .setUserData (this .#animation [_expanded], expanded);
 
@@ -316,6 +316,8 @@ module .exports = class AnimationMembersList extends Interface
       }
 
       this .#nodes = this .#nodes .filter (node => !nodes .includes (node));
+
+      this .checkApply ();
    }
 
    getName (node)
@@ -377,22 +379,38 @@ module .exports = class AnimationMembersList extends Interface
 
    addKeyframesToMain ()
    {
-      const
-         keyframes  = [ ],
-         fieldItems = this .#nodeList .find (`.field > .item`);
+      const keyframes  = [ ];
 
-      for (const element of fieldItems)
+      const mainItem = this .#list .find ("> .main");
+
+      if (mainItem .find (".apply.green") .length)
       {
-         const fieldItem = $(element);
+         const fieldItems = this .#list .find (`.field > .item`);
 
-         if (!fieldItem .find (".apply.green") .length)
-            continue;
+         for (const element of fieldItems)
+         {
+            const fieldItem = $(element);
 
-         const
-            node  = fieldItem .data ("node"),
-            field = fieldItem .data ("field");
+            if (!fieldItem .find (".apply.green") .length)
+               continue;
 
-         keyframes .push ({ node, field });
+            const
+               node  = fieldItem .data ("node"),
+               field = fieldItem .data ("field");
+
+            keyframes .push ({ node, field });
+         }
+      }
+      else
+      {
+         for (const field of this .#editor .fields .keys ())
+         {
+            const
+               fieldItem = this .#list .find (`.field[field-id=${field .getId ()}] > .item`),
+               node      = fieldItem .data ("node");
+
+            keyframes .push ({ node, field });
+         }
       }
 
       this .#editor .addKeyframes (keyframes);
@@ -403,20 +421,35 @@ module .exports = class AnimationMembersList extends Interface
 
    addKeyframesToNode (node)
    {
-      const
-         keyframes  = [ ],
-         fieldItems = this .#nodeList .find (`.field[node-id=${node.getId ()}] > .item`);
+      const keyframes = [ ];
 
-      for (const element of fieldItems)
+      const nodeItem = this .#list .find (`.node[node-id=${node .getId ()}]`);
+
+      if (nodeItem .find (".apply.green") .length)
       {
-         const fieldItem = $(element);
+         const fieldItems = this .#list .find (`.field[node-id=${node .getId ()}] > .item`);
 
-         if (!fieldItem .find (".apply.green") .length)
-            continue;
+         for (const element of fieldItems)
+         {
+            const fieldItem = $(element);
 
-         const field = fieldItem .data ("field");
+            if (!fieldItem .find (".apply.green") .length)
+               continue;
 
-         keyframes .push ({ node, field });
+            const field = fieldItem .data ("field");
+
+            keyframes .push ({ node, field });
+         }
+      }
+      else
+      {
+         for (const field of node .getFields ())
+         {
+            if (!this .#editor .fields .has (field))
+               continue;
+
+            keyframes .push ({ node, field });
+         }
       }
 
       this .#editor .addKeyframes (keyframes);
@@ -494,7 +527,7 @@ module .exports = class AnimationMembersList extends Interface
 
    removeApply ()
    {
-      this .#nodeList .find (".apply")
+      this .#list .find (".apply")
          .removeClass ("green")
          .addClass ("off");
    }
@@ -503,13 +536,16 @@ module .exports = class AnimationMembersList extends Interface
    {
       for (const [field, interpolator] of this .#editor .fields)
          this .toggleApply (field, !interpolator ._value_changed .equals (field));
+
+      if (!this .#editor .fields .size)
+         this .toggleMainApply ();
    }
 
    toggleApply (field, value)
    {
       // Update field.
 
-      const fieldItem = this .#nodeList .find (`[field-id=${field .getId ()}]`);
+      const fieldItem = this .#list .find (`[field-id=${field .getId ()}]`);
 
       if (value)
       {
@@ -536,16 +572,27 @@ module .exports = class AnimationMembersList extends Interface
       }
       else
       {
+         const enabled = this .hasInterpolators (nodeItem .find ("> .item") .data ("node"));
+
          nodeItem .find ("> .item .apply")
             .removeClass ("green")
-            .addClass (["off", "disabled"]);
+            .addClass ("off");
+
+         nodeItem .find ("> .item .apply")
+            .removeClass ("disabled")
+            .addClass (enabled ? [ ] : ["disabled"]);
       }
 
       // Update main.
 
+      this .toggleMainApply ();
+   }
+
+   toggleMainApply ()
+   {
       const mainItem = this .#list .find ("> .main");
 
-      if (this .#nodeList .find (".field .apply.green") .length)
+      if (this .#list .find (".field .apply.green") .length)
       {
          mainItem .find ("> .item .apply")
             .removeClass (["off", "disabled"])
@@ -553,9 +600,21 @@ module .exports = class AnimationMembersList extends Interface
       }
       else
       {
+         const enabled = Array .from (this .#list .find (".node > .item"), item => $(item))
+            .some (nodeItem => this .hasInterpolators (nodeItem .data ("node")));
+
          mainItem .find ("> .item .apply")
             .removeClass ("green")
-            .addClass (["off", "disabled"]);
+            .addClass ("off");
+
+         mainItem .find ("> .item .apply")
+            .removeClass ("disabled")
+            .addClass (enabled ? [ ] : ["disabled"]);
       }
+   }
+
+   hasInterpolators (node)
+   {
+      return node ?.getFields () .some (field => this .#editor .fields .has (field));
    }
 };
