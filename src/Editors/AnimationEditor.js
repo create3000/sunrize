@@ -2883,7 +2883,7 @@ module .exports = class AnimationEditor extends Interface
 
          // Highlight track on hover.
 
-         const hover = this .pointerY > top && this .pointerY < bottom;
+         const hover = this .pointer .y > top && this .pointer .y < bottom;
 
          if (hover)
             item .addClass ("hover-track");
