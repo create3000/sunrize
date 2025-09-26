@@ -720,11 +720,10 @@ module .exports = class AnimationEditor extends Interface
       if (this .#changing)
          return;
 
-      this .memberList .saveScrollbars ();
-      this .memberList .clearNodes ();
-
       this .updateMembers ();
 
+      this .memberList .saveScrollbars ();
+      this .memberList .clearNodes ();
       this .memberList .addNodes (Array .from (this .members));
       this .memberList .restoreScrollbars ();
 
