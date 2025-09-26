@@ -655,8 +655,8 @@ module .exports = class AnimationEditor extends Interface
 
       // Update member list.
 
-      this .memberList .removeNodes (nodes);
       this .updateMembers ();
+      this .memberList .removeNodes (nodes);
 
       // Prevent losing members without interpolator.
 
