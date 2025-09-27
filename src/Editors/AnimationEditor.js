@@ -2926,7 +2926,7 @@ module .exports = class AnimationEditor extends Interface
             case "main":
             {
                for (const field of this .fields .keys ())
-                  this .drawKeyframes (context, field, firstFrame, lastFrame, bottom - this .TRACK_PADDING, orange);
+                  this .drawKeyframes (context, field, firstFrame, lastFrame, bottom - this .TRACK_PADDING, brown);
 
                break;
             }
@@ -2935,13 +2935,13 @@ module .exports = class AnimationEditor extends Interface
                const node = item .data ("node");
 
                for (const field of node .getFields ())
-                  this .drawKeyframes (context, field, firstFrame, lastFrame, bottom - this .TRACK_PADDING, orange);
+                  this .drawKeyframes (context, field, firstFrame, lastFrame, bottom - this .TRACK_PADDING, brown);
 
                break;
             }
             case "field":
             {
-               this .drawKeyframes (context, item .data ("field"), firstFrame, lastFrame, bottom - this .TRACK_PADDING, brown);
+               this .drawKeyframes (context, item .data ("field"), firstFrame, lastFrame, bottom - this .TRACK_PADDING, orange);
                break;
             }
          }
