@@ -304,7 +304,7 @@ module .exports = class Application
                      click: () => this .mainWindow .webContents .send ("save-file"),
                   },
                   {
-                     label: _("Save As..."),
+                     label: _("Save as..."),
                      accelerator: "Shift+CmdOrCtrl+S",
                      click: async () =>
                      {
@@ -353,7 +353,7 @@ module .exports = class Application
                   ... exportPath ?
                   [
                      {
-                        label: util .format (_("Export As %s"), path .basename (exportPath)),
+                        label: util .format (_("Export as %s"), path .basename (exportPath)),
                         accelerator: "CmdOrCtrl+E",
                         click: () => this .mainWindow .webContents .send ("export-as", exportPath),
                      }
@@ -361,7 +361,7 @@ module .exports = class Application
                   :
                   [ ],
                   {
-                     label: _("Export As..."),
+                     label: _("Export as..."),
                      accelerator: "Shift+CmdOrCtrl+E",
                      click: async () =>
                      {
