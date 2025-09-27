@@ -11,6 +11,14 @@ function Collision (executionContext)
 
 Object .assign (Object .setPrototypeOf (Collision .prototype, X3D .Collision .prototype),
 {
+   initialize ()
+   {
+      X3D .Collision .prototype .initialize .call (this);
+
+      this ._proxy .addInterest ("set_tool_proxy__", this);
+
+      this .set_tool_proxy__ ();
+   },
    getProxyDisplay ()
    {
       return this .proxyDisplay;
@@ -21,21 +29,23 @@ Object .assign (Object .setPrototypeOf (Collision .prototype, X3D .Collision .pr
 
       this .set_collisionObjects__ ();
    },
-   set_proxy__ ()
+   set_tool_proxy__ ()
    {
-      this .pointingObjects .delete (this .proxyNode);
-      this .visibleObjects  .delete (this .proxyNode);
+      this .pointingObjects .delete (this .toolProxyNode);
+      this .visibleObjects  .delete (this .toolProxyNode);
 
-      X3D .Collision .prototype .set_proxy__ .call (this);
+      this .toolProxyNode = X3D .X3DCast (X3D .X3DConstants .X3DChildNode, this ._proxy);
+
+      this .set_collisionObjects__ ();
    },
    set_pointingObjects__ ()
    {
-      if (this .proxyNode)
+      if (this .toolProxyNode)
       {
          if (this .proxyDisplay)
-            this .pointingObjects .add (this .proxyNode);
+            this .pointingObjects .add (this .toolProxyNode);
          else
-            this .pointingObjects .delete (this .proxyNode);
+            this .pointingObjects .delete (this .toolProxyNode);
       }
 
       X3D .Collision .prototype .set_pointingObjects__ .call (this);
@@ -51,12 +61,12 @@ Object .assign (Object .setPrototypeOf (Collision .prototype, X3D .Collision .pr
    },
    set_visibleObjects__ ()
    {
-      if (this .proxyNode)
+      if (this .toolProxyNode)
       {
          if (this .proxyDisplay)
-            this .visibleObjects .add (this .proxyNode);
+            this .visibleObjects .add (this .toolProxyNode);
          else
-            this .visibleObjects .delete (this .proxyNode);
+            this .visibleObjects .delete (this .toolProxyNode);
       }
 
       X3D .Collision .prototype .set_visibleObjects__ .call (this);
