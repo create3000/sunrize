@@ -3135,7 +3135,7 @@ module .exports = class OutlineView extends Interface
       event .stopImmediatePropagation ();
 
       $("[data-hasqtip]") .qtip ?.("hide") .qtip ("destroy", true);
-      $(".show-preview.on") .removeClass ("on") .addClass ("off");
+      $("[action=show-preview].on") .removeClass ("on") .addClass ("off");
 
       if (on)
          return;
