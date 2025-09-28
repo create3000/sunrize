@@ -12,7 +12,8 @@ $.fn.animationPropertiesPopover = function (editor)
 {
    // Create content.
 
-   const content = $("<div></div>");
+   const content = $("<div></div>")
+      .css ("width", "200px");
 
    $("<span></span>")
       .text (_("Frames"))
@@ -35,6 +36,7 @@ $.fn.animationPropertiesPopover = function (editor)
       .attr ("type", "number")
       .attr ("step", 1)
       .attr ("min", 1)
+      .attr ("max", 60)
       .attr ("placeholder", _("Enter frame rate"))
       .val (editor .getFrameRate ())
       .on ("change input", updateTime)
