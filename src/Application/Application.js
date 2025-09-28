@@ -319,7 +319,7 @@ module .exports = class Application
                      },
                   },
                   {
-                     label: _("Save A Copy..."),
+                     label: _("Save a Copy..."),
                      click: async () =>
                      {
                         const response = await this .showSaveDialog ({ defaultPath: this .currentFile });
