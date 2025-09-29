@@ -620,6 +620,11 @@ html[platform=win32] .horizontal-toolbar .select {
   padding: 0px 6px 1px 6px;
 }
 
+html[platform=linux] .horizontal-toolbar .input,
+html[platform=linux] .horizontal-toolbar .select {
+  padding: 0px 6px 0px 6px;
+}
+
 .horizontal-toolbar .select {
   top: -2.5px;
 }
