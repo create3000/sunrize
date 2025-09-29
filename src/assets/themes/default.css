@@ -555,7 +555,8 @@ body.light .qtip-tipsy {
   width: var(--toolbar-width);
 }
 
-.horizontal-toolbar :where(.material-icons, .material-symbols-outlined) {
+.horizontal-toolbar .material-icons,
+.horizontal-toolbar .material-symbols-outlined {
   display: inline-block;
   margin: auto 5px;
   height: var(--icon-size);
@@ -564,7 +565,8 @@ body.light .qtip-tipsy {
   user-select: none;
 }
 
-.vertical-toolbar :where(.material-icon .material-symbols-outlined) {
+.vertical-toolbar .material-icons,
+.vertical-toolbar .material-symbols-outlined {
   display: block;
   margin: 10px auto;
   width: var(--icon-size);
@@ -598,7 +600,8 @@ body.light .qtip-tipsy {
   font-size: var(--font-size);
 }
 
-.horizontal-toolbar :where(.input, .select) {
+.horizontal-toolbar .input,
+.horizontal-toolbar .select {
   box-sizing: content-box;
   display: inline-block;
   position: relative;
@@ -612,11 +615,13 @@ body.light .qtip-tipsy {
   height: 16px;
 }
 
-html[platform=win32] .horizontal-toolbar :where(.input, .select) {
+html[platform=win32] .horizontal-toolbar .input,
+html[platform=win32] .horizontal-toolbar .select {
   padding: 0px 6px 1px 6px;
 }
 
-html[platform=linux] .horizontal-toolbar :where(.input, .select) {
+html[platform=linux] .horizontal-toolbar .input,
+html[platform=linux] .horizontal-toolbar .select {
   padding: 0px 6px 0px 6px;
 }
 
@@ -642,16 +647,27 @@ html[platform=linux] .horizontal-toolbar :where(.input, .select) {
   user-select: none;
 }
 
-.toolbar :where(.material-icons:hover, .material-symbols-outlined:hover) {
+.horizontal-toolbar .material-icons:hover,
+.horizontal-toolbar .material-symbols-outlined:hover,
+.vertical-toolbar .material-icons:hover,
+.vertical-toolbar .material-symbols-outlined:hover {
   color: var(--highlight-color);
 }
 
-.toolbar :where(.material-icons.active, .material-symbols-outlined.active) {
+.horizontal-toolbar .material-icons.active,
+.horizontal-toolbar .material-symbols-outlined.active,
+.vertical-toolbar .material-icons.active,
+.vertical-toolbar .material-symbols-outlined.active {
   color: var(--accent-color);
 }
 
-.toolbar :where(.material-icons.disabled, .material-symbols-outlined.disabled,
-                .text.disabled, .input.disabled, .select.disabled) {
+.horizontal-toolbar .material-icons.disabled,
+.horizontal-toolbar .material-symbols-outlined.disabled,
+.horizontal-toolbar .text.disabled,
+.horizontal-toolbar .input.disabled,
+.horizontal-toolbar .select.disabled,
+.vertical-toolbar .material-icons.disabled,
+.vertical-toolbar .material-symbols-outlined.disabled {
   pointer-events: none;
   color: var(--system-gray3);
   border-color: var(--system-gray3);
