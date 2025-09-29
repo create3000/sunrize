@@ -433,6 +433,7 @@ tr.disabled ~ tr > td > div {
 
 .qtip-tipsy.qtip {
   border: var(--qtip-border);
+  border-radius: 12px;
   background: var(--qtip-background-color);
   box-shadow: var(--qtip-shadow);
   backdrop-filter: none;
