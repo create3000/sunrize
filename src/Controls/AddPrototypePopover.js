@@ -55,7 +55,7 @@ $.fn.addPrototypePopover = function (executionContext, type)
                electron .shell .beep ();
                nameInput .highlight ();
             })
-            .on ("keydown.addPrototypePopover", event =>
+            .on ("keydown", event =>
             {
                if (event .key !== "Enter")
                   return;
