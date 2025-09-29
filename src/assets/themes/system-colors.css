@@ -197,7 +197,7 @@ body {
 
   --tool-backdrop-filter: blur(25px);
   --tool-background-color: rgba(208, 219, 231, 0.8); /* --sidebar-background-color */
-  --tool-border-radius: 6px;
+  --tool-border-radius: 12px;
   --tool-border: 1px solid var(--system-gray8);
   --tool-shadow: 3px 3px 9px rgba(0, 0, 0, 0.6);
 
@@ -243,4 +243,5 @@ body {
 
 body {
   --qtip-shadow: var(--tool-shadow);
+  --qtip-border-radius: 12px;
 }

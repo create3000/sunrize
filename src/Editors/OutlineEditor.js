@@ -627,7 +627,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                args: ["copyNodes"],
             },
             {
-               label: _("Copy Extern Prototype"),
+               label: _("Copy as Extern Prototype"),
                visible: !protoNode .isExternProto,
                enabled: executionContext instanceof X3D .X3DScene,
                args: ["copyExternPrototype"],
@@ -3114,7 +3114,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          {
             case "copy":
             {
-               UndoManager .shared .beginUndo (_("Copy Extern Proto »%s«"), sourceExternProto .getName ());
+               UndoManager .shared .beginUndo (_("Copy as Extern Proto »%s«"), sourceExternProto .getName ());
 
                await Editor .importX3D (destinationExecutionContext, await Editor .exportX3D (sourceExecutionContext, [sourceExternProto]));
 

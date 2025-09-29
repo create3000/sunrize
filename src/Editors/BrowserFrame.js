@@ -91,7 +91,7 @@ module .exports = new class BrowserFrame extends Dialog
 
    configure ()
    {
-      super .configure ({ size: [400, 127] });
+      super .configure ({ size: [388, 147] });
 
       this .connect (Editor .getWorldInfo (this .browser .currentScene));
       this .updateInputs ();

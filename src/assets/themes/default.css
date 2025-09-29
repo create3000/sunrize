@@ -433,7 +433,7 @@ tr.disabled ~ tr > td > div {
 
 .qtip-tipsy.qtip {
   border: var(--qtip-border);
-  border-radius: 12px;
+  border-radius: var(--qtip-border-radius);
   background: var(--qtip-background-color);
   box-shadow: var(--qtip-shadow);
   backdrop-filter: none;
@@ -710,6 +710,10 @@ body.dark .dialog ::placeholder {
   z-index: 3000 !important;
 }
 
+.dialog.ui-dialog .ui-dialog-content {
+  padding: 1rem;
+}
+
 .dialog.ui-dialog.ui-widget.ui-widget-content {
   cursor: move;
   backdrop-filter: var(--tool-backdrop-filter);
@@ -763,7 +767,7 @@ body.dark .dialog ::placeholder {
   user-select: none;
   position: absolute;
   overflow: scroll;
-  margin: 1rem 1rem 0.5rem 1rem;
+  margin: 1rem 1rem 0 1rem;
   inset: 75px 0 0 0;
 }
 

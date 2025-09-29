@@ -208,7 +208,7 @@ module .exports = new class SceneProperties extends Dialog
 
    configure ()
    {
-      super .configure ({ size: [600, 400] });
+      super .configure ({ size: [600, 388] });
 
       if (this .executionContext)
          this .onclose ();
