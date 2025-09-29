@@ -51,9 +51,10 @@ module .exports = new class BrowserFrame extends Dialog
 
       this .numerator = $("<input></input>")
          .attr ("type", "number")
+         .attr ("min", 1)
          .attr ("step", "1")
          .css ("width", "calc((100% - 20px) / 2)")
-         .on ("change", () => this .onchange ());
+         .on ("change input", () => this .onchange ());
 
       const slash = $("<span></span>")
          .css ({ "display": "inline-block", "width": "20px", "text-align": "center" })
@@ -61,9 +62,10 @@ module .exports = new class BrowserFrame extends Dialog
 
       this .denominator = $("<input></input>")
           .attr ("type", "number")
+         .attr ("min", 1)
           .attr ("step", "1")
           .css ("width", "calc((100% - 20px) / 2)")
-          .on ("change", () => this .onchange ());
+          .on ("change input", () => this .onchange ());
 
       $("<tr></tr>")
          .append ($("<th></th>")

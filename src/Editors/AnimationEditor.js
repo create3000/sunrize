@@ -139,7 +139,7 @@ module .exports = class AnimationEditor extends Interface
          .attr ("min", 0)
          .attr ("max", 0)
          .attr ("title", _("Current frame."))
-         .css ("width", "55px")
+         .css ("width", "65px")
          .appendTo (this .toolbar)
          .on ("change input", () => this .setCurrentFrame (this .getCurrentFrame ()));
 
@@ -166,7 +166,7 @@ module .exports = class AnimationEditor extends Interface
       this .timeElement = $("<span></span>")
          .addClass (["text", "right"])
          .attr ("title", _("Current frame time (hours:minutes:seconds:frames)."))
-         .css ("top", "7px")
+         .css ("top", "6.5px")
          .css ("margin-right", "6px")
          .text (this .formatFrames (0, 10))
          .appendTo (this .toolbar);

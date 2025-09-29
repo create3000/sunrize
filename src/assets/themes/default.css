@@ -467,13 +467,17 @@ body.light .qtip-tipsy {
 .qtip input,
 .qtip select,
 .qtip button {
+  box-sizing: border-box;
   display: block;
   width: 100%;
   background: var(--system-gray5);
   border: 1px solid var(--system-gray7);
+  border-radius: 12px;
   color: var(--system-gray0);
   filter: opacity(80%);
   margin: 2px 0;
+  padding: 2px 8px;
+  height: 24px;
 }
 
 .qtip ::placeholder {
@@ -491,7 +495,7 @@ body.light .qtip-tipsy {
   width: auto;
   position: relative;
   margin-left: 5px !important;
-  top: -2px;
+  top: -8px;
   margin: 4px 0 0 0;
 }
 
@@ -524,6 +528,7 @@ body.light .qtip-tipsy {
   top: 0;
   width: 100%;
   height: var(--toolbar-width);
+  white-space: nowrap;
 }
 
 .vertical-toolbar {
@@ -579,12 +584,19 @@ body.light .qtip-tipsy {
 
 .horizontal-toolbar .input,
 .horizontal-toolbar .select {
+  box-sizing: content-box;
   display: inline-block;
   position: relative;
-  top: -3px;
+  top: -4px;
   margin: auto 5px;
   font-size: var(--font-size);
   border: 1px solid var(--system-gray3);
+  border-radius: 9px;
+  padding: 0 3px;
+  height: 16px;
+}
+.horizontal-toolbar .select {
+  top: -3px;
 }
 
 .horizontal-toolbar .separator {
@@ -632,7 +644,8 @@ body.light .qtip-tipsy {
 }
 
 .horizontal-toolbar .right {
-  float: right;
+  position: absolute;
+  right: 0;
 }
 
 .large-toolbar .material-icons {
