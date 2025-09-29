@@ -496,19 +496,20 @@ body.light .qtip-tipsy {
 .qtip input[type=checkbox] {
   cursor: pointer;
   display: inline-block;
+  position: relative;
+  top: 1px;
+  margin: 4px 0;
   width: auto;
-  margin: 4px 0 0 0;
 }
 
 .qtip label {
   user-select: none;
   cursor: pointer;
   display: inline-block;
-  width: auto;
   position: relative;
-  margin-left: 5px !important;
-  top: -8px;
-  margin: 4px 0 0 0;
+  top: -7px;
+  margin-left: 5px;
+  width: auto;
 }
 
 .qtip .qtip-content > div:first-child {
