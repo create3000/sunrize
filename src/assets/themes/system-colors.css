@@ -201,8 +201,9 @@ body {
   --tool-border: 1px solid var(--system-gray8);
   --tool-shadow: 3px 3px 9px rgba(0, 0, 0, 0.6);
 
-  --preview-background-color: white;
-  --preview-border: 1px solid var(--system-gray6);
+  --qtip-background-color: white;
+  --qtip-border: 1px solid var(--system-gray6);
+  --qtip-highlight-color: black;
 
   --background-disabled: repeating-linear-gradient(
     -45deg,
@@ -234,13 +235,12 @@ body {
     --tool-border: 1px solid var(--system-gray2);
     --tool-shadow: 3px 3px 9px var(--system-gray8);
 
-    --preview-background-color: black;
-    --preview-border: 1px solid var(--system-gray4);
+    --qtip-background-color: black;
+    --qtip-border: 1px solid var(--system-gray4);
+    --qtip-highlight-color: white;
   }
 }
 
 body {
-  --qtip-background-color: var(--sidebar-background-color);
-  --qtip-border: var(--tool-border);
   --qtip-shadow: var(--tool-shadow);
 }

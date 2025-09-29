@@ -435,25 +435,20 @@ tr.disabled ~ tr > td > div {
   border: var(--qtip-border);
   background: var(--qtip-background-color);
   box-shadow: var(--qtip-shadow);
+  backdrop-filter: none;
 }
 
 .qtip-tipsy {
   color: var(--system-gray1);
+  text-shadow: none;
 }
 
 body.light .qtip-tipsy {
   color: black;
-  text-shadow: none;
 }
 
 .qtip-tipsy .qtip-tip {
   background: inherit !important;
-}
-
-.qtip-preview.qtip {
-  border: var(--preview-border);
-  background: var(--preview-background-color);
-  backdrop-filter: none;
 }
 
 .qtip-audio.qtip {
@@ -473,10 +468,15 @@ body.light .qtip-tipsy {
 .qtip button {
   display: block;
   width: 100%;
-  background: var(--background-color);
+  background: var(--system-gray5);
   border: 1px solid var(--system-gray7);
+  color: var(--system-gray0);
   filter: opacity(80%);
   margin: 2px 0;
+}
+
+.qtip ::placeholder {
+  color: var(--system-gray1);
 }
 
 .qtip input[type=checkbox] {
@@ -504,8 +504,8 @@ body.light .qtip-tipsy {
 
 .qtip select:hover,
 .qtip button:hover {
-  background-color: var(--system-gray8);
-  color: var(--system-gray0);
+  background-color: var(--system-gray4);
+  color: var(--qtip-highlight-color);
 }
 
 .qtip-wide {
