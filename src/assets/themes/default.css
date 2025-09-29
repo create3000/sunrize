@@ -101,6 +101,10 @@ th, td,
   color: var(--text-color);
 }
 
+select {
+  appearance: none;
+}
+
 select option {
   font-family: var(--sans-serif);
   font-size: var(--font-size);
@@ -472,7 +476,7 @@ body.light .qtip-tipsy {
   width: 100%;
   background: var(--system-gray5);
   border: 1px solid var(--system-gray7);
-  border-radius: 12px;
+  border-radius: 16px;
   color: var(--system-gray0);
   filter: opacity(80%);
   margin: 2px 0;
@@ -587,16 +591,16 @@ body.light .qtip-tipsy {
   box-sizing: content-box;
   display: inline-block;
   position: relative;
-  top: -4px;
+  top: -3px;
   margin: auto 5px;
   font-size: var(--font-size);
   border: 1px solid var(--system-gray3);
-  border-radius: 9px;
-  padding: 0 3px;
+  border-radius: 9.5px;
+  padding: 1px 6px 0 6px;
   height: 16px;
 }
 .horizontal-toolbar .select {
-  top: -3px;
+  top: -2.5px;
 }
 
 .horizontal-toolbar .separator {
