@@ -484,6 +484,8 @@ body.light .qtip-tipsy {
   margin: 2px 0;
   padding: 2px 8px;
   height: 24px;
+  font-family: var(--sans-serif);
+  font-size: var(--font-size);
 }
 
 .qtip ::placeholder {
