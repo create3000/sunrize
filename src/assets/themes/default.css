@@ -103,6 +103,7 @@ th, td,
 
 select {
   appearance: none;
+  cursor: pointer;
 }
 
 select option {
@@ -488,13 +489,20 @@ body.light .qtip-tipsy {
   color: var(--system-gray1);
 }
 
+.qtip button {
+  cursor: pointer;
+}
+
 .qtip input[type=checkbox] {
+  cursor: pointer;
   display: inline-block;
   width: auto;
   margin: 4px 0 0 0;
 }
 
 .qtip label {
+  user-select: none;
+  cursor: pointer;
   display: inline-block;
   width: auto;
   position: relative;
@@ -599,6 +607,7 @@ body.light .qtip-tipsy {
   padding: 1px 6px 0 6px;
   height: 16px;
 }
+
 .horizontal-toolbar .select {
   top: -2.5px;
 }
