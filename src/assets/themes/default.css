@@ -611,7 +611,7 @@ body.light .qtip-tipsy {
   font-size: var(--font-size);
   border: 1px solid var(--system-gray3);
   border-radius: 9.5px;
-  padding: 1px 6px 0 6px;
+  padding: 0px 6px 0px 6px;
   height: 16px;
 }
 
@@ -620,9 +620,9 @@ html[platform=win32] .horizontal-toolbar .select {
   padding: 0px 6px 1px 6px;
 }
 
-html[platform=linux] .horizontal-toolbar .input,
-html[platform=linux] .horizontal-toolbar .select {
-  padding: 0px 6px 0px 6px;
+html[platform=darwin] .horizontal-toolbar .input,
+html[platform=darwin] .horizontal-toolbar .select {
+  padding: 1px 6px 0 6px;
 }
 
 .horizontal-toolbar .select {
