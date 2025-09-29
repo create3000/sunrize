@@ -512,11 +512,15 @@ body.light .qtip-tipsy {
   width: auto;
 }
 
-.qtip .qtip-content > div:first-child {
+.qtip p {
+  margin: 8px 0;
+}
+
+.qtip .qtip-content > div :first-child {
   margin-top: 0;
 }
 
-.qtip .qtip-content > div:last-child {
+.qtip .qtip-content > div :last-child {
   margin-bottom: 0;
 }
 
