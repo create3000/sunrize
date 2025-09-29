@@ -55,9 +55,8 @@ module .exports = class Document extends Interface
     */
    async initialize ()
    {
-      $("body")
-         .attr ("platform", process .platform)
-         .addClass ("modal");
+      $("html") .attr ("platform", process .platform);
+      $("body") .addClass ("modal");
 
       // Actions
 

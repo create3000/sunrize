@@ -615,6 +615,11 @@ body.light .qtip-tipsy {
   height: 16px;
 }
 
+html[platform=win32] .horizontal-toolbar .input,
+html[platform=win32] .horizontal-toolbar .select {
+  padding: 0px 6px 1px 6px;
+}
+
 .horizontal-toolbar .select {
   top: -2.5px;
 }
