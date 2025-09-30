@@ -1164,7 +1164,14 @@ body.dark .ui-widget .library-list .component {
 }
 
 .animation-editor-toolbar {
+  container-type: inline-size;
   padding-left: 5px;
+}
+
+@container (max-width: 630px) {
+  .animation-editor-toolbar .right {
+    display: none;
+  }
 }
 
 .animation-editor-navigation {
