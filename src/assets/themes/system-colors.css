@@ -31,11 +31,24 @@
 
     --selection-color: black;
     --selection-background-color: rgb(246, 196, 197);
-    --scrollbar-thumb-color: rgba(0, 0, 0, 0.2);
     --selection-range: rgba(0, 0, 0, 0.05);
+    --scrollbar-thumb-color: rgba(0, 0, 0, 0.2);
+
+    /* Filter Colors */
+
+    --filter-system-red: invert(31%) sepia(82%) saturate(3000%) hue-rotate(344deg) brightness(115%) contrast(105%);
+    --filter-system-gray0: invert(36%) sepia(72%) saturate(11%) hue-rotate(222deg) brightness(95%) contrast(90%);
+    --filter-system-gray1: invert(63%) sepia(4%) saturate(334%) hue-rotate(201deg) brightness(89%) contrast(86%);
+
+    /* Special Colors */
+
+    --sidebar-background-color: rgb(208, 219, 231);
+    --tint-color1: rgba(255, 255, 255, 0.5);
+    --tint-color2: rgba(255, 255, 255, 1);
 
     /* TweakPanel colors */
 
+    --tp-base-border-radius: 12px;
     --tp-container-background-color: white;
     --tp-container-background-color-active: hsl(230, 7%, 90%);
     --tp-container-background-color-focus: hsl(230, 7%, 90%);
@@ -95,12 +108,28 @@
 
     --selection-color: white;
     --selection-background-color: rgb(167, 118, 119);
-    --scrollbar-thumb-color: rgba(255, 255, 255, 0.2);
     --selection-range: rgba(255, 255, 255, 0.05);
+    --scrollbar-thumb-color: rgba(255, 255, 255, 0.2);
+
+    /* Filter Colors */
+
+    --filter-system-red: invert(69%) sepia(59%) saturate(6315%) hue-rotate(336deg) brightness(99%) contrast(108%);
+    --filter-system-gray0: invert(97%) sepia(2%) saturate(509%) hue-rotate(200deg) brightness(84%) contrast(94%);
+    --filter-system-gray1: invert(72%) sepia(0%) saturate(6315%) hue-rotate(205deg) brightness(81%) contrast(62%);
+
+    /* Special Colors */
+
+    --sidebar-background-color: rgb(42, 50, 63);
+    --tint-color1: rgba(0, 0, 0, 0.2);
+    --tint-color2: rgba(0, 0, 0, 0.4);
 
     /* TweakPanel colors */
 
+    --tp-base-border-radius: 12px;
     --tp-container-background-color: black;
+    --tp-container-background-color-hover: black;
+    --tp-container-background-color-active: black;
+    --tp-container-background-color-focus: black;
     --tp-base-background-color: var(--system-gray7);
     --tp-input-background-color: rgba(187, 188, 196, 0.1);
     --tp-input-background-color-active: rgba(187, 188, 196, 0.25);
@@ -118,36 +147,6 @@
     --tp-monitor-background-color-focus: var(--tp-input-background-color-focus);
     --tp-monitor-background-color-hover: var(--tp-input-background-color-hover);
     --tp-monitor-foreground-color: var(--tp-input-foreground-color);
-  }
-}
-
-body {
-  /* Filter Colors */
-
-  --filter-system-red: invert(31%) sepia(82%) saturate(3000%) hue-rotate(344deg) brightness(115%) contrast(105%);
-  --filter-system-gray0: invert(36%) sepia(72%) saturate(11%) hue-rotate(222deg) brightness(95%) contrast(90%);
-  --filter-system-gray1: invert(63%) sepia(4%) saturate(334%) hue-rotate(201deg) brightness(89%) contrast(86%);
-
-  /* Special Colors */
-
-  --sidebar-background-color: rgb(208, 219, 231);
-  --tint-color1: rgba(255, 255, 255, 0.5);
-  --tint-color2: rgba(255, 255, 255, 1);
-}
-
-@media (prefers-color-scheme: dark) {
-  body {
-    /* Filter Colors */
-
-    --filter-system-red: invert(69%) sepia(59%) saturate(6315%) hue-rotate(336deg) brightness(99%) contrast(108%);
-    --filter-system-gray0: invert(97%) sepia(2%) saturate(509%) hue-rotate(200deg) brightness(84%) contrast(94%);
-    --filter-system-gray1: invert(72%) sepia(0%) saturate(6315%) hue-rotate(205deg) brightness(81%) contrast(62%);
-
-    /* Special Colors */
-
-    --sidebar-background-color: rgb(42, 50, 63);
-    --tint-color1: rgba(0, 0, 0, 0.2);
-    --tint-color2: rgba(0, 0, 0, 0.4);
   }
 }
 
@@ -201,17 +200,22 @@ body {
   --tool-border: 1px solid var(--system-gray8);
   --tool-shadow: 3px 3px 9px rgba(0, 0, 0, 0.6);
 
-  --qtip-background-color: white;
-  --qtip-border: 1px solid var(--system-gray6);
-  --qtip-highlight-color: black;
-
   --background-disabled: repeating-linear-gradient(
     -45deg,
     var(--tint-color1),
     var(--tint-color1) 10px,
     transparent 10px,
     transparent 20px
-  )
+  );
+
+  /*Qtip */
+
+  --qtip-shadow: var(--tool-shadow);
+  --qtip-border-radius: 12px;
+
+  --qtip-background-color: white;
+  --qtip-border: 1px solid var(--system-gray6);
+  --qtip-highlight-color: black;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -235,13 +239,10 @@ body {
     --tool-border: 1px solid var(--system-gray2);
     --tool-shadow: 3px 3px 9px var(--system-gray8);
 
+    /* Qtip */
+
     --qtip-background-color: black;
     --qtip-border: 1px solid var(--system-gray4);
     --qtip-highlight-color: white;
   }
-}
-
-body {
-  --qtip-shadow: var(--tool-shadow);
-  --qtip-border-radius: 12px;
 }
