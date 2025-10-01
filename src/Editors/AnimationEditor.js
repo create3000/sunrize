@@ -2321,10 +2321,7 @@ module .exports = class AnimationEditor extends Interface
 
             this .startMovingFrame = this .getFrameFromPointer (this .pointer .x);
 
-            if (!event .shiftKey && !pickedKeyframes .length)
-               this .clearSelectedKeyframes ();
-
-            if ((event .shiftKey || !this .getSelectedKeyframes () .length) && pickedKeyframes .length)
+            if (event .shiftKey && pickedKeyframes .length)
             {
                this .togglePickedKeyframes (pickedKeyframes);
             }
@@ -2563,13 +2560,6 @@ module .exports = class AnimationEditor extends Interface
       this .updateKeyType ();
    }
 
-   clearSelectedKeyframes ()
-   {
-      this .#selectedKeyframes = [ ];
-
-      this .updateKeyType ();
-   }
-
    registerClearSelectedKeyframes ()
    {
       Editor .undoManager .beginUndo (_("Clear Selected Keyframes"));
@@ -2633,9 +2623,7 @@ module .exports = class AnimationEditor extends Interface
    {
       this .#selectionRange = [start, end];
 
-      const frame = start === end
-         ? this .getCurrentFrame ()
-         : X3D .Algorithm .clamp (this .getCurrentFrame (), start, end);
+      const frame = X3D .Algorithm .clamp (this .getCurrentFrame (), start, end);
 
       this .setCurrentFrame (frame);
       this .updateRange ();
