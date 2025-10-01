@@ -2625,6 +2625,7 @@ module .exports = class AnimationEditor extends Interface
    {
       this .#selectionRange = [start, end];
 
+      this .setCurrentFrame (this .getCurrentFrame ());
       this .selectKeyframesInRange ();
       this .updateRange ();
       this .requestDrawTimeline ();
@@ -3067,7 +3068,6 @@ module .exports = class AnimationEditor extends Interface
          context .fillStyle = selectedColor;
 
          context .fillRect (x1, bottom - this .FRAME_SIZE, this .FRAME_SIZE, this .FRAME_SIZE);
-         break;
       }
    }
 
