@@ -2329,16 +2329,23 @@ module .exports = class AnimationEditor extends Interface
             {
                const frame = this .getFrameFromPointer (this .pointer .x);
 
+               this .timeSensor ._pauseTime = Date .now () / 1000;
+
+               this .setCurrentFrame (frame);
                this .setPickedKeyframes ([ ]);
                this .setSelectedKeyframes ([ ]);
                this .expandSelectionRange (frame);
             }
             else
             {
+               const frame = this .getFrameFromPointer (this .pointer .x);
+
+               this .timeSensor ._pauseTime = Date .now () / 1000;
+
+               this .setCurrentFrame (frame);
+               
                if (!pickedKeyframes .length || !pickedKeyframes .every (p => this .getSelectedKeyframes () .some (s => this .equalKeyframe (p, s))))
                {
-                  const frame = this .getFrameFromPointer (this .pointer .x);
-
                   this .setPickedKeyframes (pickedKeyframes);
                   this .setSelectedKeyframes (pickedKeyframes);
                   this .setSelectionRange (frame, frame);
@@ -2347,12 +2354,8 @@ module .exports = class AnimationEditor extends Interface
                {
                   this .setPickedKeyframes (this .getSelectedKeyframes ());
                }
-
-               this .timeSensor ._pauseTime = Date .now () / 1000;
-
-               this .setCurrentFrame (this .getFrameFromPointer (this .pointer .x));
             }
-            
+
             break;
          }
       }
