@@ -3067,6 +3067,7 @@ module .exports = class AnimationEditor extends Interface
          context .fillStyle = selectedColor;
 
          context .fillRect (x1, bottom - this .FRAME_SIZE, this .FRAME_SIZE, this .FRAME_SIZE);
+         break;
       }
    }
 
