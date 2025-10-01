@@ -214,7 +214,7 @@ body {
   --qtip-border-radius: 12px;
 
   --qtip-background-color: white;
-  --qtip-border: 1px solid var(--system-gray6);
+  --qtip-border: 1px solid var(--system-gray1);
   --qtip-highlight-color: black;
 }
 
