@@ -2347,8 +2347,6 @@ module .exports = class AnimationEditor extends Interface
                   this .setPickedKeyframes (this .getSelectedKeyframes ());
                }
             }
-
-            this .timeSensor ._pauseTime = Date .now () / 1000;
             break;
          }
       }
@@ -2383,6 +2381,8 @@ module .exports = class AnimationEditor extends Interface
          {
             this .updatePointer (event);
             this .moveOrSelectKeyframes (event);
+
+            this .timeSensor ._pauseTime = Date .now () / 1000;
             break;
          }
       }
