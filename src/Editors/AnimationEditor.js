@@ -2319,9 +2319,6 @@ module .exports = class AnimationEditor extends Interface
 
             const pickedKeyframes = this .pickKeyframes ();
 
-            if (!pickedKeyframes .length)
-               this .setCurrentFrame (this .getFrameFromPointer (this .pointer .x));
-
             this .startMovingFrame = this .getFrameFromPointer (this .pointer .x);
 
             if (event .shiftKey && pickedKeyframes .length)
@@ -2330,17 +2327,21 @@ module .exports = class AnimationEditor extends Interface
             }
             else if (event .shiftKey)
             {
+               const frame = this .getFrameFromPointer (this .pointer .x);
+
                this .setPickedKeyframes ([ ]);
                this .setSelectedKeyframes ([ ]);
-               this .expandSelectionRange (this .getCurrentFrame ());
+               this .expandSelectionRange (frame);
             }
             else
             {
                if (!pickedKeyframes .length || !pickedKeyframes .every (p => this .getSelectedKeyframes () .some (s => this .equalKeyframe (p, s))))
                {
+                  const frame = this .getFrameFromPointer (this .pointer .x);
+
                   this .setPickedKeyframes (pickedKeyframes);
                   this .setSelectedKeyframes (pickedKeyframes);
-                  this .setSelectionRange (this .getCurrentFrame (), this .getCurrentFrame ());
+                  this .setSelectionRange (frame, frame);
                }
                else
                {
@@ -2352,10 +2353,11 @@ module .exports = class AnimationEditor extends Interface
       }
    }
 
-   on_mouseup ()
+   on_mouseup (event)
    {
       $(document) .off (".AnimationEditor");
 
+      this .updatePointer (event);
       this .removeAutoScroll ();
 
 		if (this .#movingKeyframesOffset)
@@ -2421,9 +2423,9 @@ module .exports = class AnimationEditor extends Interface
       this .requestDrawTimeline ();
    }
 
-   getFrameFromPointer (pointerX)
+   getFrameFromPointer (x)
    {
-	   const frame = Math .round ((pointerX - this .getTranslation ()) / this .getScale ());
+	   const frame = Math .round ((x - this .getTranslation ()) / this .getScale ());
 
       return X3D .Algorithm .clamp (frame, 0, this .getDuration ());
    }
@@ -2621,9 +2623,11 @@ module .exports = class AnimationEditor extends Interface
    {
       this .#selectionRange = [start, end];
 
-      this .setCurrentFrame (this .getCurrentFrame ());
-      this .selectKeyframesInRange ();
+      const frame = X3D .Algorithm .clamp (this .getCurrentFrame (), start, end);
+
+      this .setCurrentFrame (frame);
       this .updateRange ();
+      this .selectKeyframesInRange ();
       this .requestDrawTimeline ();
    }
 
@@ -2667,20 +2671,20 @@ module .exports = class AnimationEditor extends Interface
    {
       // Move keyframes or select range.
 
+      const frame = this .getFrameFromPointer (this .pointer .x);
+
       if (this .getPickedKeyframes () .length)
       {
-         this .#movingKeyframesOffset = this .getFrameFromPointer (this .pointer .x) - this .startMovingFrame;
+         this .#movingKeyframesOffset = frame - this .startMovingFrame;
       }
       else
       {
          // Select range.
 
-         this .setCurrentFrame (this .getFrameFromPointer (this .pointer .x));
-
          if (event ?.shiftKey)
-            this .expandSelectionRange (this .getCurrentFrame ());
+            this .expandSelectionRange (frame);
          else
-            this .setSelectionRange (this .#selectionRange [0], this .getCurrentFrame ());
+            this .setSelectionRange (this .#selectionRange [0], frame);
       }
    }
 
@@ -3019,6 +3023,9 @@ module .exports = class AnimationEditor extends Interface
 
    drawSelectedKeyframes (context, fields, bottom, selectedColor)
    {
+      if (!this .getSelectedKeyframes () .length)
+         return;
+
       const
          left   = this .getLeft (),
          frames = this .#frames;
