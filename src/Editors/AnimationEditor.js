@@ -2493,10 +2493,6 @@ module .exports = class AnimationEditor extends Interface
       this .#defaultIntegers .length = 0;
 
       const
-         translation = this .getTranslation (),
-         scale       = this .getScale ();
-
-      const
 		   key   = interpolator .getMetaData ("Interpolator/key", this .#defaultIntegers),
 		   first = X3D .Algorithm .lowerBound (key, 0, key .length, firstFrame),
 		   last  = X3D .Algorithm .upperBound (key, 0, key .length, lastFrame);
@@ -2952,43 +2948,25 @@ module .exports = class AnimationEditor extends Interface
          {
             case "main":
             {
-               const allSelected = Array .from (this .fields .keys ())
-                  .every (field => this .getSelectedKeyframes () .some (keyframe => field === keyframe .field));
+               const fields = new Set (this .fields .keys ())
 
-               if (allSelected)
-               {
-                  for (const field of this .fields .keys ())
-                  {
-                     this .drawSelectedKeyframes (context, field, bottom - this .TRACK_PADDING, red);
-                     break;
-                  }
-               }
-
+               this .drawSelectedKeyframes (context, fields, bottom - this .TRACK_PADDING, red);
                break;
             }
             case "node":
             {
                const
                   node   = item .data ("node"),
-                  fields = node .getFields () .filter (field => this .fields .has (field));
+                  fields = new Set (node .getFields () .filter (field => this .fields .has (field)));
 
-               const allSelected = fields
-                  .every (field => this .getSelectedKeyframes () .some (keyframe => field === keyframe .field));
-
-               if (allSelected)
-               {
-                  for (const field of fields)
-                  {
-                     this .drawSelectedKeyframes (context, field, bottom - this .TRACK_PADDING, red);
-                     break;
-                  }
-               }
-
+               this .drawSelectedKeyframes (context, fields, bottom - this .TRACK_PADDING, red);
                break;
             }
             case "field":
             {
-               this .drawSelectedKeyframes (context, item .data ("field"), bottom - this .TRACK_PADDING, red);
+               const fields = new Set ([item .data ("field")]);
+
+               this .drawSelectedKeyframes (context, fields, bottom - this .TRACK_PADDING, red);
                break;
             }
          }
@@ -3022,10 +3000,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .#defaultIntegers .length = 0;
 
-      const
-         left        = this .getLeft (),
-         translation = this .getTranslation (),
-         scale       = this .getScale ();
+      const left = this .getLeft ();
 
       const
 		   key   = interpolator .getMetaData ("Interpolator/key", this .#defaultIntegers),
@@ -3044,16 +3019,20 @@ module .exports = class AnimationEditor extends Interface
 		}
    }
 
-   drawSelectedKeyframes (context, currentField, bottom, selectedColor)
+   drawSelectedKeyframes (context, fields, bottom, selectedColor)
    {
       const
-         left        = this .getLeft (),
-         translation = this .getTranslation (),
-         scale       = this .getScale ();
+         left = this .getLeft (),
+         map  = [ ];
 
       for (const { field, interpolator, index } of this .getSelectedKeyframes ())
       {
-         if (field !== currentField)
+         if (!fields .has (field))
+            continue
+
+         map [index] ??= 0;
+
+         if (++ map [index] < fields .size)
             continue;
 
          this .#defaultIntegers .length = 0;
