@@ -2323,7 +2323,10 @@ module .exports = class AnimationEditor extends Interface
 
             if (event .shiftKey && pickedKeyframes .length)
             {
+               const frame = this .getFrameFromPointer (this .pointer .x);
+
                this .togglePickedKeyframes (pickedKeyframes);
+               this .expandSelectionRange (frame);
             }
             else if (event .shiftKey)
             {
@@ -2343,7 +2346,7 @@ module .exports = class AnimationEditor extends Interface
                this .timeSensor ._pauseTime = Date .now () / 1000;
 
                this .setCurrentFrame (frame);
-               
+
                if (!pickedKeyframes .length || !pickedKeyframes .every (p => this .getSelectedKeyframes () .some (s => this .equalKeyframe (p, s))))
                {
                   this .setPickedKeyframes (pickedKeyframes);
