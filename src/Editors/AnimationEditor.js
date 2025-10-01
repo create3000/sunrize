@@ -2990,6 +2990,7 @@ module .exports = class AnimationEditor extends Interface
    }
 
    #defaultIntegers = new X3D .MFInt32 ();
+   #frames = [ ];
 
    drawKeyframes (context, field, firstFrame, lastFrame, bottom, color)
    {
@@ -3023,7 +3024,11 @@ module .exports = class AnimationEditor extends Interface
    {
       const
          left   = this .getLeft (),
-         frames = [ ];
+         frames = this .#frames;
+
+      frames .length = 0;
+
+      // Count keyframes to avoid overdrawing.
 
       for (const field of fields)
       {
@@ -3031,6 +3036,8 @@ module .exports = class AnimationEditor extends Interface
 
          if (!interpolator)
             continue;
+
+         this .#defaultIntegers .length = 0;
 
          const key = interpolator .getMetaData ("Interpolator/key", this .#defaultIntegers);
 
@@ -3040,6 +3047,8 @@ module .exports = class AnimationEditor extends Interface
             frames [frame] ++;
          }
       }
+
+      // Draw keyframes.
 
       for (const { field, interpolator, index } of this .getSelectedKeyframes ())
       {
