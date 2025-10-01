@@ -3042,10 +3042,7 @@ module .exports = class AnimationEditor extends Interface
          const key = interpolator .getMetaData ("Interpolator/key", this .#defaultIntegers);
 
          for (const frame of key)
-         {
-            frames [frame] ??= 0;
-            frames [frame] ++;
-         }
+            frames [frame] = (frames [frame] ?? 0) + 1;
       }
 
       // Draw keyframes.
