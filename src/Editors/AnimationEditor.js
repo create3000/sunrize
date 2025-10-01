@@ -2957,7 +2957,7 @@ module .exports = class AnimationEditor extends Interface
             {
                const
                   node   = item .data ("node"),
-                  fields = new Set (node .getFields () .filter (field => this .fields .has (field)));
+                  fields = new Set (node .getFields ());
 
                this .drawSelectedKeyframes (context, fields, bottom - this .TRACK_PADDING, red);
                break;
@@ -3022,25 +3022,41 @@ module .exports = class AnimationEditor extends Interface
    drawSelectedKeyframes (context, fields, bottom, selectedColor)
    {
       const
-         left = this .getLeft (),
-         map  = [ ];
+         left   = this .getLeft (),
+         frames = [ ];
+
+      for (const field of fields)
+      {
+         const interpolator = this .fields .get (field);
+
+         if (!interpolator)
+            continue;
+
+         const key = interpolator .getMetaData ("Interpolator/key", this .#defaultIntegers);
+
+         for (const frame of key)
+         {
+            frames [frame] ??= 0;
+            frames [frame] ++;
+         }
+      }
 
       for (const { field, interpolator, index } of this .getSelectedKeyframes ())
       {
          if (!fields .has (field))
             continue
 
-         map [index] ??= 0;
-
-         if (++ map [index] < fields .size)
-            continue;
-
          this .#defaultIntegers .length = 0;
 
          const key   = interpolator .getMetaData ("Interpolator/key", this .#defaultIntegers);
-         const frame = key [index] + this .#movingKeyframesOffset;
-         const x     = Math .floor (left + this .getPointerFromFrame (frame));
-         const x1    = x - (this .FRAME_SIZE / 2) + 0.5;
+         const frame = key [index];
+
+         if (-- frames [frame])
+            continue;
+
+         const moving = frame + this .#movingKeyframesOffset;
+         const x      = Math .floor (left + this .getPointerFromFrame (moving));
+         const x1     = x - (this .FRAME_SIZE / 2) + 0.5;
 
          context .fillStyle = selectedColor;
 
