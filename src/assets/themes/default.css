@@ -1698,8 +1698,12 @@ body.dark .ui-widget .library-list .component {
 
 .tp-dfwv {
   overflow: auto;
-  box-shadow: var(--tool-shadow);
+  box-shadow: var(--qtip-shadow);
   border-radius: var(--tp-base-border-radius);
+}
+
+.tp-rotv {
+  border: var(--qtip-border);
 }
 
 .tp-lblv_v {
