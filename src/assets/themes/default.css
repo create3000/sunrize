@@ -52,7 +52,7 @@ body {
   background-color: transparent;
 }
 
-/* Handle */
+/* Scrollbar Handle */
 :hover::-webkit-scrollbar-thumb {
   background-color: var(--scrollbar-thumb-color);
 }
@@ -70,6 +70,12 @@ body {
 
 :hover::-webkit-resizer {
   background-color: var(--scrollbar-thumb-color);
+}
+
+/* inputs */
+
+input[type=checkbox] {
+  accent-color: var(--system-green);
 }
 
 /* common */
