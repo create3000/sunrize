@@ -2323,10 +2323,7 @@ module .exports = class AnimationEditor extends Interface
 
             if (event .shiftKey && pickedKeyframes .length)
             {
-               const frame = this .getFrameFromPointer (this .pointer .x);
-
                this .togglePickedKeyframes (pickedKeyframes);
-               this .expandSelectionRange (frame);
             }
             else if (event .shiftKey)
             {
