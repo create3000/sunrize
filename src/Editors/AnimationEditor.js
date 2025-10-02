@@ -360,8 +360,6 @@ module .exports = class AnimationEditor extends Interface
          this .set_loop (this .timeSensor ._loop);
          this .set_active (this .timeSensor ._isActive);
 
-         this .updateRange ();
-
          // Show Member List
 
          this .animation ._children .addInterest ("updateMemberList", this);
@@ -1919,15 +1917,24 @@ module .exports = class AnimationEditor extends Interface
 
       if (selectionRange [0] === selectionRange [1])
       {
-         this .timeSensor ._range [1] = 0;
-         this .timeSensor ._range [2] = 1;
+         if (this .timeSensor ._range [1] !== 0 && this .timeSensor ._range [2] !== 1)
+         {
+            this .timeSensor ._range [1] = 0;
+            this .timeSensor ._range [2] = 1;
+         }
       }
       else
       {
-         const duration = this .getDuration ();
+         const
+            duration = this .getDuration (),
+            begin     = selectionRange [0] / duration,
+            end       = selectionRange [1] / duration;
 
-         this .timeSensor ._range [1] = selectionRange [0] / duration;
-         this .timeSensor ._range [2] = selectionRange [1] / duration;
+         if (this .timeSensor ._range [1] !== begin && this .timeSensor ._range [2] !== end)
+         {
+            this .timeSensor ._range [1] = begin;
+            this .timeSensor ._range [2] = end;
+         }
       }
    }
 
@@ -2322,7 +2329,7 @@ module .exports = class AnimationEditor extends Interface
 
             const pickedKeyframes = this .pickKeyframes ();
 
-            this .startMovingFrame = this .getFrameFromPointer (this .pointer .x);
+            this .startMovingFrame = this .getFrameFromPointer ();
 
             if (event .shiftKey && pickedKeyframes .length)
             {
@@ -2330,31 +2337,35 @@ module .exports = class AnimationEditor extends Interface
             }
             else if (event .shiftKey)
             {
-               const frame = this .getFrameFromPointer (this .pointer .x);
+               const frame = this .getFrameFromPointer ();
 
                this .timeSensor ._pauseTime = Date .now () / 1000;
 
-               this .setCurrentFrame (frame);
                this .setPickedKeyframes ([ ]);
                this .setSelectedKeyframes ([ ]);
                this .expandSelectionRange (frame);
             }
             else
             {
-               const frame = this .getFrameFromPointer (this .pointer .x);
-
                this .timeSensor ._pauseTime = Date .now () / 1000;
-
-               this .setCurrentFrame (frame);
 
                if (!pickedKeyframes .length || !pickedKeyframes .every (p => this .getSelectedKeyframes () .some (s => this .equalKeyframe (p, s))))
                {
+                  // There are not picked keyframes or an unselected keyframe is picked.
+
+                  const frame = this .getFrameFromPointer ();
+
+                  if (!pickedKeyframes .length)
+                     this .setCurrentFrame (frame);
+
                   this .setPickedKeyframes (pickedKeyframes);
                   this .setSelectedKeyframes (pickedKeyframes);
                   this .setSelectionRange (frame, frame);
                }
                else
                {
+                  // A selected keyframe is picked.
+
                   this .setPickedKeyframes (this .getSelectedKeyframes ());
                }
             }
@@ -2394,7 +2405,6 @@ module .exports = class AnimationEditor extends Interface
          {
             this .updatePointer (event);
             this .moveOrSelectKeyframes (event);
-            this .setCurrentFrame (this .getFrameFromPointer (this .pointer .x));
             break;
          }
       }
@@ -2437,7 +2447,7 @@ module .exports = class AnimationEditor extends Interface
       this .requestDrawTimeline ();
    }
 
-   getFrameFromPointer (x)
+   getFrameFromPointer (x = this .pointer .x)
    {
 	   const frame = Math .round ((x - this .getTranslation ()) / this .getScale ());
 
@@ -2638,7 +2648,7 @@ module .exports = class AnimationEditor extends Interface
       this .#selectionRange = [start, end];
 
       if (start !== end)
-         this .setCurrentFrame (X3D .Algorithm .clamp (this .getCurrentFrame (), start, end));
+         this .setCurrentFrame (this .getFrameFromPointer ());
 
       this .updateRange ();
       this .selectKeyframesInRange ();
@@ -2685,7 +2695,7 @@ module .exports = class AnimationEditor extends Interface
    {
       // Move keyframes or select range.
 
-      const frame = this .getFrameFromPointer (this .pointer .x);
+      const frame = this .getFrameFromPointer ();
 
       if (this .getPickedKeyframes () .length)
       {
