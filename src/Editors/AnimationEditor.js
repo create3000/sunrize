@@ -2645,10 +2645,10 @@ module .exports = class AnimationEditor extends Interface
 
    setSelectionRange (start, end)
    {
-      this .#selectionRange = [start, end];
-
-      if (start !== end)
+      if (start !== end || this .#selectionRange [0] !== this .#selectionRange [1])
          this .setCurrentFrame (this .getFrameFromPointer ());
+
+      this .#selectionRange = [start, end];
 
       this .updateRange ();
       this .selectKeyframesInRange ();

@@ -142,7 +142,7 @@ module .exports = class AnimationMembersList extends Interface
 
    addNodes (nodes)
    {
-      nodes = nodes .filter (node => !this .#nodes .includes (node));
+      nodes = nodes .map (node => node .valueOf ()) .filter (node => !this .#nodes .includes (node .valueOf ()));
 
       let i = this .#nodes .length;
 
@@ -286,7 +286,7 @@ module .exports = class AnimationMembersList extends Interface
 
    removeNodes (nodes)
    {
-      for (const node of nodes)
+      for (const node of nodes .map (node => node .valueOf ()))
       {
          this .#list .find (`li[node-id=${node .getId ()}]`) .remove ();
 
