@@ -705,9 +705,12 @@ module .exports = class AnimationEditor extends Interface
 
          for (const route of interpolator ._value_changed .getOutputRoutes ())
          {
-            const
-               node  = route .getDestinationNode (),
-               field = node .getField (route .getDestinationField ());
+            const node = route .getDestinationNode ();
+
+            if (!(node instanceof X3D .X3DNode))
+               continue;
+
+            const field = node .getField (route .getDestinationField ());
 
             this .members .add (node);
             this .fields .set (field, interpolator);
