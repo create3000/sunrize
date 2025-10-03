@@ -119,6 +119,7 @@ module .exports = new class SceneProperties extends Dialog
       this .units .table       = $("<table></table>") .appendTo (this .units);
       this .units .table .head = $("<thead></thead>") .appendTo (this .units .table);
       this .units .table .body = $("<tbody></tbody>") .appendTo (this .units .table);
+      this .units .table .foot = $("<tfoot></tfoot>") .appendTo (this .units .table);
 
       this .units .inputs = new Map (Units .map (unit => [unit .category,
       {
@@ -167,6 +168,12 @@ module .exports = new class SceneProperties extends Dialog
          .on ("change", event => this .changeUnitName (event));
 
       this .units .find ("input[category]") .on ("change", event => this .changeUnitValue (event));
+
+      $("<tr></tr>")
+         .append ($("<th></th>"))
+         .append ($("<th></th>"))
+         .append ($("<th></th>"))
+         .appendTo (this .units .table .foot);
 
       // Meta Data
 
