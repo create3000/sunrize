@@ -395,9 +395,9 @@ module .exports = new class SceneProperties extends Dialog
                   .css ("width", "unset")
                   .append ($("<span></span>")
                      .attr ("title", _("Remove key/value pair."))
-                     .css ("font-size", "inherit")
+                     .css ("font-size", "120%")
                      .addClass (["material-icons", "button"])
-                     .text ("delete")
+                     .text ("delete_forever")
                      .on ("click", (event) => this .removeMetaData (event, key))))
                .appendTo (this .metaData .table);
          }
