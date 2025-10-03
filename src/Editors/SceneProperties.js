@@ -10,6 +10,7 @@ const
    Editor      = require ("../Undo/Editor"),
    UndoManager = require ("../Undo/UndoManager"),
    _           = require ("../Application/GetText");
+const { height } = require("../Bits/X3DUOM");
 
 require ("../Fields");
 
@@ -222,7 +223,7 @@ module .exports = new class SceneProperties extends Dialog
 
       // World Info
 
-      this .worldInfo .table       = $("<table></table>") .appendTo (this .worldInfo);
+      this .worldInfo .table       = $("<table></table>") .height ("100%") .appendTo (this .worldInfo);
       this .worldInfo .table .body = $("<tbody></tbody>") .appendTo (this .worldInfo .table);
       this .worldInfo .inputs      = { };
 
@@ -232,9 +233,10 @@ module .exports = new class SceneProperties extends Dialog
          .on ("click", () => this .toggleWorldInfo ());
 
       this .worldInfo .inputs .title = $("<input></input>");
-      this .worldInfo .inputs .info  = $("<textarea></textarea>");
+      this .worldInfo .inputs .info  = $("<textarea></textarea>") .height ("100%") .css ("resize", "none");
 
       this .worldInfo .checkboxRow = $("<tr></tr>")
+         .height ("19.5px")
          .append ($("<th></th>") .css ("width", "20%"))
          .append ($("<td></td>")
             .append (this .worldInfo .inputs .checkbox)
@@ -242,6 +244,7 @@ module .exports = new class SceneProperties extends Dialog
          .appendTo (this .worldInfo .table .body);
 
       $("<tr></tr>")
+         .height ("19.5px")
          .append ($("<th></th>") .text (_("Title")))
          .append ($("<td></td>") .append (this .worldInfo .inputs .title))
          .appendTo (this .worldInfo .table .body);
