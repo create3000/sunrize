@@ -168,6 +168,19 @@ module .exports = new class SceneProperties extends Dialog
       this .metaData .table       = $("<table></table>") .addClass ("sticky-headers") .appendTo (this .metaData);
       this .metaData .table .head = $("<thead></thead>") .appendTo (this .metaData .table);
       this .metaData .table .body = $("<tbody></tbody>") .appendTo (this .metaData .table) .sortable ({
+         helper (event, tr)
+         {
+            const originals = tr .children ();
+            const helper    = tr .clone ();
+
+            helper .children () .each (function (index)
+            {
+               // Set helper cell sizes to match the original sizes
+               $(this) .width (originals .eq (index) .width ());
+            });
+
+            return helper;
+         },
          update: (event, ui) =>
          {
             this .changeMetaData ();
