@@ -180,8 +180,8 @@ module .exports = new class SceneProperties extends Dialog
                .css ("font-size", "inherit")
                .text ("sort_by_alpha"))
             .on ("click", (event) => this .sortMetaData (event)))
-         .append ($("<th></th>") .css ("width", "70%") .text (_("Value")))
-         .append ($("<th></th>") .css ("width", "5%"))
+         .append ($("<th></th>") .css ("width", "auto") .text (_("Value")))
+         .append ($("<th></th>") .css ("width", "15px"))
          .appendTo (this .metaData .table .head);
 
       // World Info
