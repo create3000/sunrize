@@ -177,7 +177,9 @@ module .exports = new class SceneProperties extends Dialog
             helper .children () .each (function (index)
             {
                // Set helper cell sizes to match the original sizes.
-               $(this) .width (originals .eq (index) .width ());
+               $(this)
+                  .width (originals .eq (index) .width ())
+                  .css ("padding-top", "2px");
             });
 
             return helper;
