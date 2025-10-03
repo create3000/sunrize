@@ -101,7 +101,7 @@ module .exports = new class SceneProperties extends Dialog
             .append (this .profileAndComponents .inputs .checkbox)
             .append ($("<label></label>")
                .attr ("for", "infer-profile-and-components-checkbox")
-               .text ("Infer Profile and Components from Source on Save")))
+               .text (_("Infer Profile and Components from Source on Save"))))
          .appendTo (this .profileAndComponents .table .body);
 
       $("<tr></tr>")
@@ -231,7 +231,7 @@ module .exports = new class SceneProperties extends Dialog
          .append ($("<th></th>") .css ("width", "20%"))
          .append ($("<td></td>")
             .append (this .worldInfo .inputs .checkbox)
-            .append ($("<label></label>") .attr ("for", "world-info-checkbox") .text ("World Info")))
+            .append ($("<label></label>") .attr ("for", "world-info-checkbox") .text (_("World Info"))))
          .appendTo (this .worldInfo .table .body);
 
       $("<tr></tr>")
