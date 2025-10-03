@@ -427,10 +427,9 @@ module .exports = new class SceneProperties extends Dialog
 
       this .metaData .table .body .empty ();
 
-      const metaData = Array .from (this .executionContext .getMetaDatas ());
-
-      if (this .config .file .sortMetaData)
-         metaData .sort ((a, b) => a [0] .localeCompare (b [0]));
+      const
+         metaData = Array .from (this .executionContext .getMetaDatas ()),
+         rows     = [ ];
 
       let index = 0;
 
@@ -438,7 +437,7 @@ module .exports = new class SceneProperties extends Dialog
       {
          for (const value of values)
          {
-            $("<tr></tr>")
+            const row = $("<tr></tr>")
                .attr ("index", index ++)
                .append ($("<td></td>")
                   .css ("width", "unset")
@@ -450,8 +449,8 @@ module .exports = new class SceneProperties extends Dialog
                .append ($("<td></td>")
                   .css ("width", "unset")
                   .append ($("<input></input>")
-                  .attr ("placeholder", _("Insert meta key here."))
-                  .val (key) .on ("change", (event) => this .changeMetaData (event, key))))
+                     .attr ("placeholder", _("Insert meta key here."))
+                     .val (key) .on ("change", (event) => this .changeMetaData (event, key))))
                .append ($("<td></td>")
                   .css ("width", "unset")
                   .append ($("<input></input>")
@@ -465,10 +464,25 @@ module .exports = new class SceneProperties extends Dialog
                      .css ("font-size", "120%")
                      .addClass (["material-icons", "button"])
                      .text ("delete_forever")
-                     .on ("click", (event) => this .removeMetaData (event, key))))
-               .appendTo (this .metaData .table .body);
+                     .on ("click", (event) => this .removeMetaData (event, key))));
+
+            rows .push (row);
          }
       }
+
+      if (this .config .file .sortMetaData)
+      {
+         rows .sort ((a, b) =>
+         {
+            const
+               keyA = $($(a) .find ("input") .get (0)) .val () ?? "",
+               keyB = $($(b) .find ("input") .get (0)) .val () ?? "";
+
+            return keyA .localeCompare (keyB);
+         });
+      }
+
+      this .metaData .table .body .append (rows);
 
       $("<tr></tr>")
          .append ($("<td></td>") .css ("width", "unset"))
@@ -493,7 +507,7 @@ module .exports = new class SceneProperties extends Dialog
    {
       let metaData = Array .from (this .metaData .table .find ("tr"));
 
-      if (oldKey)
+      if (arguments .length === 2)
       {
          const
             inputs = $(event .target) .closest ("tr") .find ("input"),
@@ -504,7 +518,7 @@ module .exports = new class SceneProperties extends Dialog
          else
             UndoManager .shared .beginUndo (_("Remove Meta Data »%s«"), oldKey);
 
-         metaData .sort ((a, b) => $(a) .attr ("index") - $(b) .attr ("index"))
+         metaData .sort ((a, b) => $(a) .attr ("index") - $(b) .attr ("index"));
       }
       else
       {
