@@ -782,6 +782,10 @@ body.dark .dialog ::placeholder {
   cursor: pointer;
 }
 
+.active {
+  color: var(--accent-color);
+}
+
 /* Library */
 
 .ui-widget .library-input {

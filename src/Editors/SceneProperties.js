@@ -170,7 +170,16 @@ module .exports = new class SceneProperties extends Dialog
       this .metaData .table .body = $("<tbody></tbody>") .appendTo (this .metaData .table);
 
       $("<tr></tr>")
-         .append ($("<th></th>") .css ("width", "25%") .text (_("Key")))
+         .append ($("<th></th>")
+            .addClass ("button")
+            .css ("width", "25%")
+            .append ($("<span></span>") .text (_("Key")))
+            .append ($("<span></span>")
+               .addClass ("material-icons")
+               .addClass (this .config .file .sortMetaData ? ["active"] : [ ])
+               .css ("font-size", "inherit")
+               .text ("sort_by_alpha"))
+            .on ("click", (event) => this .sortMetaData (event)))
          .append ($("<th></th>") .css ("width", "70%") .text (_("Value")))
          .append ($("<th></th>") .css ("width", "5%"))
          .appendTo (this .metaData .table .head);
@@ -210,6 +219,10 @@ module .exports = new class SceneProperties extends Dialog
    configure ()
    {
       super .configure ({ size: [600, 388] });
+
+      this .config .file .setDefaultValues ({
+         sortMetaData: false,
+      });
 
       if (this .executionContext)
          this .onclose ();
@@ -364,6 +377,22 @@ module .exports = new class SceneProperties extends Dialog
       Editor .updateUnit (this .executionContext, category, name .val (), conversionFactor .val ());
    }
 
+   sortMetaData (event)
+   {
+      event .preventDefault ();
+      event .stopPropagation ();
+
+      const th = $(event .target) .closest ("th");
+
+      this .config .file .sortMetaData = !this .config .file .sortMetaData;
+
+      th .find (".material-icons")
+         .removeClass ("active")
+         .addClass (this .config .file .sortMetaData ? ["active"] : [ ]);
+
+      this .updateMetaData ();
+   }
+
    updateMetaData ()
    {
       const
@@ -372,8 +401,10 @@ module .exports = new class SceneProperties extends Dialog
 
       this .metaData .table .body .empty ();
 
-      const metaData = Array .from (this .executionContext .getMetaDatas ())
-         .sort ((a, b) => Algorithm .cmp (a [0], b [0]));
+      const metaData = Array .from (this .executionContext .getMetaDatas ());
+
+      if (this .config .file .sortMetaData)
+         metaData .sort ((a, b) => Algorithm .cmp (a [0], b [0]));
 
       for (const [key, values] of metaData)
       {
@@ -426,7 +457,7 @@ module .exports = new class SceneProperties extends Dialog
          inputs = $(event .target) .closest ("tr") .find ("input"),
          key    = $(inputs .get (0));
 
-      if (key .val ())
+      if (key .val () .trim ())
          UndoManager .shared .beginUndo (_("Change Meta Data »%s«"), key .val ());
       else
          UndoManager .shared .beginUndo (_("Remove Meta Data »%s«"), oldKey);
@@ -438,10 +469,9 @@ module .exports = new class SceneProperties extends Dialog
             key    = $(inputs .get (0)),
             value  = $(inputs .get (1));
 
-         return [key .val (), value .val ()];
+         return [key .val () .trim (), value .val () .trim ()];
       })
-      .filter (([key]) => key)
-      .sort ((a, b) => Algorithm .cmp (a [0], b [0]));
+      .filter (([key]) => key);
 
       Editor .setMetaData (this .executionContext, metaData);
 
