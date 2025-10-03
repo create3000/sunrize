@@ -428,7 +428,9 @@ module .exports = new class SceneProperties extends Dialog
    {
       const
          scrollTop  = this .metaData .table .scrollTop (),
-         scrollLeft = this .metaData .table .scrollLeft ();
+         scrollLeft = this .metaData .table .scrollLeft (),
+         focusInput = this .metaData .table .body .find ("input:focus"),
+         focusRow   = focusInput .closest ("tr");
 
       this .metaData .table .body .empty ();
 
@@ -455,11 +457,13 @@ module .exports = new class SceneProperties extends Dialog
                .append ($("<td></td>")
                   .css ("width", "unset")
                   .append ($("<input></input>")
+                     .attr ("index", 0)
                      .attr ("placeholder", _("Insert meta key here."))
                      .val (key) .on ("change", (event) => this .changeMetaData (event, key))))
                .append ($("<td></td>")
                   .css ("width", "unset")
                   .append ($("<input></input>")
+                     .attr ("index", 1)
                      .attr ("placeholder", _("Insert meta value here."))
                      .val (value)
                      .on ("change", (event) => this .changeMetaData (event, key))))
@@ -489,6 +493,15 @@ module .exports = new class SceneProperties extends Dialog
       }
 
       this .metaData .table .body .append (rows);
+
+      if (focusInput .length)
+      {
+         const input = $(this .metaData .table .body
+            .find (`tr[index=${focusRow .attr ("index")}] input`)
+            .get (focusInput .attr ("index")));
+
+         input .focus ();
+      }
 
       $("<tr></tr>")
          .append ($("<td></td>") .css ("width", "unset"))
