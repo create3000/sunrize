@@ -141,16 +141,8 @@ tbody th {
   width: auto;
 }
 
-tbody td {
-  width: 100%;
-}
-
 tbody th th {
   min-width: unset;
-  width: unset;
-}
-
-tbody td td {
   width: unset;
 }
 
@@ -765,7 +757,6 @@ body.dark .dialog ::placeholder {
 }
 
 .dialog.ui-dialog.ui-widget.ui-widget-content {
-  cursor: move;
   backdrop-filter: var(--tool-backdrop-filter);
   background-color: var(--tool-background-color);
   border-radius: var(--tool-border-radius);
@@ -783,6 +774,10 @@ body.dark .dialog ::placeholder {
   cursor: pointer;
 }
 
+.scene-properties .drag {
+  cursor: move;
+}
+
 .scene-properties .active {
   color: var(--accent-color);
 }
@@ -790,10 +785,6 @@ body.dark .dialog ::placeholder {
 .scene-properties .disabled {
   cursor: inherit;
   color: var(--system-gray2);
-}
-
-.ui-sortable-placeholder td {
-  width: unset;
 }
 
 /* Library */
