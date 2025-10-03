@@ -170,8 +170,9 @@ module .exports = new class SceneProperties extends Dialog
       this .metaData .table .body = $("<tbody></tbody>") .appendTo (this .metaData .table);
 
       $("<tr></tr>")
-         .append ($("<th></th>") .css ("width", "30%") .text (_("Key")))
+         .append ($("<th></th>") .css ("width", "25%") .text (_("Key")))
          .append ($("<th></th>") .css ("width", "70%") .text (_("Value")))
+         .append ($("<th></th>") .css ("width", "5%"))
          .appendTo (this .metaData .table .head);
 
       // World Info
@@ -387,8 +388,17 @@ module .exports = new class SceneProperties extends Dialog
                .append ($("<td></td>")
                   .css ("width", "unset")
                   .append ($("<input></input>")
-                  .attr ("placeholder", _("Insert meta value here."))
-                  .val (value) .on ("change", (event) => this .changeMetaData (event, key))))
+                     .attr ("placeholder", _("Insert meta value here."))
+                     .val (value)
+                     .on ("change", (event) => this .changeMetaData (event, key))))
+               .append ($("<td></td>")
+                  .css ("width", "unset")
+                  .append ($("<span></span>")
+                     .attr ("title", _("Remove key/value pair."))
+                     .css ("font-size", "inherit")
+                     .addClass (["material-icons", "button"])
+                     .text ("delete")
+                     .on ("click", (event) => this .removeMetaData (event, key))))
                .appendTo (this .metaData .table);
          }
       }
@@ -397,13 +407,13 @@ module .exports = new class SceneProperties extends Dialog
          .append ($("<td></td>")
             .css ("width", "unset")
             .append ($("<input></input>")
-            .attr ("placeholder", _("Add new meta key."))
-            .on ("change", event => this .changeMetaData (event, ""))))
+               .attr ("placeholder", _("Add new meta key."))
+               .on ("change", event => this .changeMetaData (event, ""))))
          .append ($("<td></td>")
             .css ("width", "unset")
             .append ($("<input></input>")
-            .prop ("readonly", true)
-            .on ("change", event => this .changeMetaData (event, ""))))
+               .prop ("readonly", true)
+               .on ("change", event => this .changeMetaData (event, ""))))
          .appendTo (this .metaData .table);
 
       this .metaData .table .scrollTop (scrollTop);
@@ -436,6 +446,17 @@ module .exports = new class SceneProperties extends Dialog
       Editor .setMetaData (this .executionContext, metaData);
 
       UndoManager .shared .endUndo ();
+   }
+
+   removeMetaData (event, oldKey)
+   {
+      const
+         inputs = $(event .target) .closest ("tr") .find ("input"),
+         key    = $(inputs .get (0));
+
+      key .val ("");
+
+      this .changeMetaData (event, oldKey);
    }
 
    updateWorldInfo ()

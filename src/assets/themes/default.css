@@ -778,6 +778,10 @@ body.dark .dialog ::placeholder {
   overflow-y: auto;
 }
 
+.button {
+  cursor: pointer;
+}
+
 /* Library */
 
 .ui-widget .library-input {
