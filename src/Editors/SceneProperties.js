@@ -36,7 +36,7 @@ module .exports = new class SceneProperties extends Dialog
 
       this .tabs .addTextTab ("profile-and-components", _("Profile & Components"));
       this .tabs .addTextTab ("units",                  _("Units"));
-      this .tabs .addTextTab ("meta-data",              _("Meta Data"));
+      this .tabs .addTextTab ("meta-data",              _("Meta Statements"));
       this .tabs .addTextTab ("world-info",             _("World Info"));
 
       this .tabs .setup ();
