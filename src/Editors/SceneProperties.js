@@ -101,7 +101,7 @@ module .exports = new class SceneProperties extends Dialog
             .append (this .profileAndComponents .inputs .checkbox)
             .append ($("<label></label>")
                .attr ("for", "infer-profile-and-components-checkbox")
-               .text (_("Infer Profile and Components from Source on Save"))))
+               .text (_("Infer Profile and Components from Source when Saving"))))
          .appendTo (this .profileAndComponents .table .body);
 
       $("<tr></tr>")
