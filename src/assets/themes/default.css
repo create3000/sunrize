@@ -740,6 +740,10 @@ html[platform=darwin] .horizontal-toolbar .select {
   color: var(--system-gray2);
 }
 
+body.dark .dialog ::placeholder {
+  color: var(--system-gray2);
+}
+
 .dialog .tabs-panel {
   margin: 0.5em 1em;
 }
