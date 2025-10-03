@@ -779,12 +779,17 @@ body.dark .dialog ::placeholder {
   overflow-y: auto;
 }
 
-.button {
+.scene-properties .button {
   cursor: pointer;
 }
 
-.active {
+.scene-properties .active {
   color: var(--accent-color);
+}
+
+.scene-properties .disabled {
+  cursor: inherit;
+  color: var(--system-gray2);
 }
 
 .ui-sortable-placeholder td {

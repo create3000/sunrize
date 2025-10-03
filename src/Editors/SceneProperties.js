@@ -246,9 +246,7 @@ module .exports = new class SceneProperties extends Dialog
          sortMetaData: false,
       });
 
-      this .metaData .table .head .find (".sort-key")
-         .removeClass ("active")
-         .addClass (this .config .file .sortMetaData ? ["active"] : [ ])
+      this .updateMetaDataSort ()
 
       if (this .executionContext)
          this .onclose ();
@@ -408,15 +406,22 @@ module .exports = new class SceneProperties extends Dialog
       event .preventDefault ();
       event .stopPropagation ();
 
-      const th = $(event .target) .closest ("th");
-
       this .config .file .sortMetaData = !this .config .file .sortMetaData;
 
-      th .find (".sort-key")
-         .removeClass ("active")
-         .addClass (this .config .file .sortMetaData ? ["active"] : [ ]);
-
+      this .updateMetaDataSort ();
       this .updateMetaData ();
+   }
+
+   updateMetaDataSort ()
+   {
+      this .metaData .table .head .find (".sort-key")
+         .removeClass ("active")
+         .addClass (this .config .file .sortMetaData ? ["active"] : [ ])
+
+      if (this .config .file .sortMetaData)
+         this .metaData .table .body .sortable ("disable");
+      else
+         this .metaData .table .body .sortable ("enable");
    }
 
    updateMetaData ()
@@ -445,6 +450,7 @@ module .exports = new class SceneProperties extends Dialog
                      .attr ("title", _("Drag to move key/value pair."))
                      .css ("font-size", "120%")
                      .addClass (["material-icons", "button"])
+                     .addClass (this .config .file .sortMetaData ? ["disabled"] : [ ])
                      .text ("drag_handle")))
                .append ($("<td></td>")
                   .css ("width", "unset")
