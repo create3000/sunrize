@@ -195,7 +195,7 @@ body {
   /* Tools */
 
   --tool-backdrop-filter: blur(25px);
-  --tool-background-color: rgba(208, 219, 231, 0.8); /* --sidebar-background-color */
+  --tool-background-color: rgba(208, 219, 231, 0.5); /* --sidebar-background-color */
   --tool-border-radius: 12px;
   --tool-border: 1px solid var(--system-gray8);
   --tool-shadow: 3px 3px 9px rgba(0, 0, 0, 0.6);
@@ -235,7 +235,7 @@ body {
 
     /* Tools */
 
-    --tool-background-color: rgba(42, 50, 63, 0.8); /* --sidebar-background-color */
+    --tool-background-color: rgba(42, 50, 63, 0.6); /* --sidebar-background-color */
     --tool-border: 1px solid var(--system-gray2);
     --tool-shadow: 3px 3px 9px var(--system-gray8);
 
