@@ -454,14 +454,14 @@ Viewpoint {
 
       generator .push (`${pkg .productName} V${pkg .version}, ${pkg .homepage}`);
 
-      if (!scene .getMetaData ("created"))
-         scene .setMetaData ("created", new Date () .toUTCString ());
-
       if (!scene .getMetaData ("creator") ?.some (value => value .includes (this .fullname)))
          scene .addMetaData ("creator", this .fullname);
 
-      scene .setMetaData ("generator", generator);
+      if (!scene .getMetaData ("created"))
+         scene .setMetaData ("created", new Date () .toUTCString ());
+
       scene .setMetaData ("modified", new Date () .toUTCString ());
+      scene .setMetaData ("generator", generator);
 
       // Save source code.
 

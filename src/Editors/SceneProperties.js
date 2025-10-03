@@ -221,7 +221,7 @@ module .exports = new class SceneProperties extends Dialog
       this .worldInfo .inputs .info  = $("<textarea></textarea>");
 
       this .worldInfo .checkboxRow = $("<tr></tr>")
-         .append ($("<th></th>"))
+         .append ($("<th></th>") .css ("width", "20%"))
          .append ($("<td></td>")
             .append (this .worldInfo .inputs .checkbox)
             .append ($("<label></label>") .attr ("for", "world-info-checkbox") .text ("World Info")))
@@ -240,7 +240,7 @@ module .exports = new class SceneProperties extends Dialog
 
    configure ()
    {
-      super .configure ({ size: [600, 388] });
+      super .configure ({ size: [600, 400] });
 
       this .config .file .setDefaultValues ({
          sortMetaData: false,
