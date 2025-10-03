@@ -170,12 +170,13 @@ module .exports = new class SceneProperties extends Dialog
       this .metaData .table .body = $("<tbody></tbody>") .appendTo (this .metaData .table) .sortable ({
          helper (event, tr)
          {
-            const originals = tr .children ();
-            const helper    = tr .clone ();
+            const
+               originals = tr .children (),
+               helper    = tr .clone ();
 
             helper .children () .each (function (index)
             {
-               // Set helper cell sizes to match the original sizes
+               // Set helper cell sizes to match the original sizes.
                $(this) .width (originals .eq (index) .width ());
             });
 
@@ -196,7 +197,7 @@ module .exports = new class SceneProperties extends Dialog
             .append ($("<span></span>") .text (_("Key")))
             .append ($("<span></span>")
                .attr ("title", "Sort column alphabetically.")
-               .addClass ("material-icons")
+               .addClass (["material-icons", "sort-key"])
                .addClass (this .config .file .sortMetaData ? ["active"] : [ ])
                .css ("font-size", "inherit")
                .text ("sort_by_alpha"))
@@ -244,6 +245,10 @@ module .exports = new class SceneProperties extends Dialog
       this .config .file .setDefaultValues ({
          sortMetaData: false,
       });
+
+      this .metaData .table .head .find (".sort-key")
+         .removeClass ("active")
+         .addClass (this .config .file .sortMetaData ? ["active"] : [ ])
 
       if (this .executionContext)
          this .onclose ();
@@ -407,7 +412,7 @@ module .exports = new class SceneProperties extends Dialog
 
       this .config .file .sortMetaData = !this .config .file .sortMetaData;
 
-      th .find (".material-icons")
+      th .find (".sort-key")
          .removeClass ("active")
          .addClass (this .config .file .sortMetaData ? ["active"] : [ ]);
 
@@ -425,13 +430,16 @@ module .exports = new class SceneProperties extends Dialog
       const metaData = Array .from (this .executionContext .getMetaDatas ());
 
       if (this .config .file .sortMetaData)
-         metaData .sort ((a, b) => Algorithm .cmp (a [0], b [0]));
+         metaData .sort ((a, b) => a [0] .localeCompare (b [0]));
+
+      let index = 0;
 
       for (const [key, values] of metaData)
       {
          for (const value of values)
          {
             $("<tr></tr>")
+               .attr ("index", index ++)
                .append ($("<td></td>")
                   .css ("width", "unset")
                   .append ($("<span></span>")
@@ -483,6 +491,8 @@ module .exports = new class SceneProperties extends Dialog
 
    changeMetaData (event, oldKey)
    {
+      let metaData = Array .from (this .metaData .table .find ("tr"));
+
       if (oldKey)
       {
          const
@@ -493,13 +503,15 @@ module .exports = new class SceneProperties extends Dialog
             UndoManager .shared .beginUndo (_("Change Meta Data »%s«"), key);
          else
             UndoManager .shared .beginUndo (_("Remove Meta Data »%s«"), oldKey);
+
+         metaData .sort ((a, b) => $(a) .attr ("index") - $(b) .attr ("index"))
       }
       else
       {
          UndoManager .shared .beginUndo (_("Reorder Meta Data"));
       }
 
-      const metaData = Array .from (this .metaData .table .find ("tr")) .map (element =>
+      metaData = metaData .map (element =>
       {
          const
             inputs = $(element) .find ("input"),
