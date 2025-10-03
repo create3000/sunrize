@@ -167,14 +167,22 @@ module .exports = new class SceneProperties extends Dialog
 
       this .metaData .table       = $("<table></table>") .addClass ("sticky-headers") .appendTo (this .metaData);
       this .metaData .table .head = $("<thead></thead>") .appendTo (this .metaData .table);
-      this .metaData .table .body = $("<tbody></tbody>") .appendTo (this .metaData .table);
+      this .metaData .table .body = $("<tbody></tbody>") .appendTo (this .metaData .table) .sortable ({
+         update: (event, ui) =>
+         {
+            this .changeMetaData ();
+         },
+      });
+      this .metaData .table .foot = $("<tfoot></tfoot>") .appendTo (this .metaData .table);
 
       $("<tr></tr>")
+         .append ($("<th></th>") .css ("width", "15px"))
          .append ($("<th></th>")
             .addClass ("button")
             .css ("width", "25%")
             .append ($("<span></span>") .text (_("Key")))
             .append ($("<span></span>")
+               .attr ("title", "Sort column alphabetically.")
                .addClass ("material-icons")
                .addClass (this .config .file .sortMetaData ? ["active"] : [ ])
                .css ("font-size", "inherit")
@@ -413,6 +421,13 @@ module .exports = new class SceneProperties extends Dialog
             $("<tr></tr>")
                .append ($("<td></td>")
                   .css ("width", "unset")
+                  .append ($("<span></span>")
+                     .attr ("title", _("Drag to move item."))
+                     .css ("font-size", "120%")
+                     .addClass (["material-icons", "button"])
+                     .text ("drag_handle")))
+               .append ($("<td></td>")
+                  .css ("width", "unset")
                   .append ($("<input></input>")
                   .attr ("placeholder", _("Insert meta key here."))
                   .val (key) .on ("change", (event) => this .changeMetaData (event, key))))
@@ -430,11 +445,12 @@ module .exports = new class SceneProperties extends Dialog
                      .addClass (["material-icons", "button"])
                      .text ("delete_forever")
                      .on ("click", (event) => this .removeMetaData (event, key))))
-               .appendTo (this .metaData .table);
+               .appendTo (this .metaData .table .body);
          }
       }
 
       $("<tr></tr>")
+         .append ($("<td></td>") .css ("width", "unset"))
          .append ($("<td></td>")
             .css ("width", "unset")
             .append ($("<input></input>")
@@ -445,7 +461,8 @@ module .exports = new class SceneProperties extends Dialog
             .append ($("<input></input>")
                .prop ("readonly", true)
                .on ("change", event => this .changeMetaData (event, ""))))
-         .appendTo (this .metaData .table);
+         .append ($("<td></td>") .css ("width", "unset"))
+         .appendTo (this .metaData .table .foot .empty ());
 
       this .metaData .table .scrollTop (scrollTop);
       this .metaData .table .scrollLeft (scrollLeft);
@@ -453,14 +470,21 @@ module .exports = new class SceneProperties extends Dialog
 
    changeMetaData (event, oldKey)
    {
-      const
-         inputs = $(event .target) .closest ("tr") .find ("input"),
-         key    = $(inputs .get (0)) .val () ?.trim ();
+      if (oldKey)
+      {
+         const
+            inputs = $(event .target) .closest ("tr") .find ("input"),
+            key    = $(inputs .get (0)) .val () ?.trim ();
 
-      if (key)
-         UndoManager .shared .beginUndo (_("Change Meta Data »%s«"), key);
+         if (key)
+            UndoManager .shared .beginUndo (_("Change Meta Data »%s«"), key);
+         else
+            UndoManager .shared .beginUndo (_("Remove Meta Data »%s«"), oldKey);
+      }
       else
-         UndoManager .shared .beginUndo (_("Remove Meta Data »%s«"), oldKey);
+      {
+         UndoManager .shared .beginUndo (_("Reorder Meta Data"));
+      }
 
       const metaData = Array .from (this .metaData .table .find ("tr")) .map (element =>
       {

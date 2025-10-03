@@ -154,7 +154,8 @@ tbody td td {
   width: unset;
 }
 
-thead tr {
+thead tr,
+tfoot tr {
   background: var(--tint-color2);
 }
 
@@ -784,6 +785,10 @@ body.dark .dialog ::placeholder {
 
 .active {
   color: var(--accent-color);
+}
+
+.ui-sortable-placeholder td {
+  width: unset;
 }
 
 /* Library */
