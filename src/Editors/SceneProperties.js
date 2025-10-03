@@ -51,7 +51,7 @@ module .exports = new class SceneProperties extends Dialog
 
       // Profile And Components
 
-      this .profileAndComponents .table       = $("<table></table>") .appendTo (this .profileAndComponents);
+      this .profileAndComponents .table       = $("<table></table>") .appendTo (this .profileAndComponents) .height ("100%");
       this .profileAndComponents .table .body = $("<tbody></tbody>") .appendTo (this .profileAndComponents .table);
       this .profileAndComponents .inputs      = { };
 
@@ -63,7 +63,7 @@ module .exports = new class SceneProperties extends Dialog
       this .profileAndComponents .inputs .profile = $("<select></select>")
          .on ("change", () => this .changeProfile ());
 
-      this .profileAndComponents .components        = $("<div></div>") .css ({ "overflow-y": "auto", "height": "20em" });
+      this .profileAndComponents .components        = $("<div></div>") .css ({ "overflow-y": "auto" });
       this .profileAndComponents .components .table = $("<table></table>") .appendTo (this .profileAndComponents .components);
       this .profileAndComponents .components .body  = $("<tbody></tbody>") .appendTo (this .profileAndComponents .components .table);
 
