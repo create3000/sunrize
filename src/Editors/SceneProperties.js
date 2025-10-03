@@ -455,10 +455,10 @@ module .exports = new class SceneProperties extends Dialog
    {
       const
          inputs = $(event .target) .closest ("tr") .find ("input"),
-         key    = $(inputs .get (0));
+         key    = $(inputs .get (0)) .val () ?.trim ();
 
-      if (key .val () .trim ())
-         UndoManager .shared .beginUndo (_("Change Meta Data »%s«"), key .val ());
+      if (key)
+         UndoManager .shared .beginUndo (_("Change Meta Data »%s«"), key);
       else
          UndoManager .shared .beginUndo (_("Remove Meta Data »%s«"), oldKey);
 
@@ -469,7 +469,7 @@ module .exports = new class SceneProperties extends Dialog
             key    = $(inputs .get (0)),
             value  = $(inputs .get (1));
 
-         return [key .val () .trim (), value .val () .trim ()];
+         return [key .val () ?.trim (), value .val () ?.trim ()];
       })
       .filter (([key]) => key);
 
