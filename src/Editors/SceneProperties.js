@@ -79,16 +79,19 @@ module .exports = new class SceneProperties extends Dialog
       {
          $("<tr></tr>")
             .append ($("<td></td>")
+               .width ("15px")
                .append ($("<input></input>")
                   .attr ("type", "checkbox")
                   .attr ("component", component .name)
                   .on ("change", () => this .changeComponents ())))
             .append ($("<td></td>") .text (component .title))
-            .append ($("<td></td>") .append ($("<input></input>")
-               .attr ("component", component .name)
-               .attr ("level", component .level)
-               .val (component .level)
-               .on ("change", () => this .changeComponents ())))
+            .append ($("<td></td>")
+               .width ("15px")
+               .append ($("<input></input>")
+                  .attr ("component", component .name)
+                  .attr ("level", component .level)
+                  .val (component .level)
+                  .on ("change", () => this .changeComponents ())))
             .appendTo (this .profileAndComponents .components .body);
       }
 
