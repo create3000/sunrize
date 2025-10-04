@@ -97,6 +97,7 @@ module .exports = class Console extends Interface
    // Add strings to exclude here:
    excludes = [
       "The vm module of Node.js is unsupported",
+      "Uncaught TypeError: Cannot read properties of null (reading 'removeChild')",
       // "Invalid asm.js: Invalid member of stdlib",
    ];
 
