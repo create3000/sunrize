@@ -460,8 +460,8 @@ Viewpoint {
       if (!scene .getMetaData ("created"))
          scene .setMetaData ("created", new Date () .toUTCString ());
 
-      scene .setMetaData ("generator", generator);
       scene .setMetaData ("modified", new Date () .toUTCString ());
+      scene .setMetaData ("generator", generator);
 
       // Save source code.
 
