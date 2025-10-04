@@ -90,7 +90,7 @@
   "dependencies": {
     "capitalize": "^2.0.4",
     "console": "^0.7.2",
-    "electron": "^38.2.0",
+    "electron": "^38.2.1",
     "electron-prompt": "^1.7.0",
     "electron-squirrel-startup": "^1.0.1",
     "electron-tabs": "^1.0.4",
@@ -99,7 +99,7 @@
     "jquery-ui-dist": "^1.13.3",
     "jstree": "^3.3.17",
     "material-icons": "^1.13.14",
-    "material-symbols": "^0.36.1",
+    "material-symbols": "^0.36.2",
     "md5": "^2.3.0",
     "mime-types": "^3.0.1",
     "monaco-editor": "^0.53.0",
