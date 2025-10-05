@@ -815,17 +815,11 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static setMetaData (scene, entries, undoManager = UndoManager .shared)
    {
-      const oldEntries = [ ];
-
-      for (const [key, values] of scene .getMetaDatas ())
-      {
-         for (const value of values)
-            oldEntries .push ([key, value]);
-      }
+      const oldEntries = scene .getMetaDatas ();
 
       undoManager .beginUndo (_("Change Meta Data"));
 
-      for (const key of Array .from (scene .getMetaDatas () .keys ()))
+      for (const [key] of scene .getMetaDatas ())
          scene .removeMetaData (key);
 
       for (const [key, value] of entries)

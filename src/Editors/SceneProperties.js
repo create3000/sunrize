@@ -455,42 +455,37 @@ module .exports = new class SceneProperties extends Dialog
          metaData = Array .from (this .executionContext .getMetaDatas ()),
          rows     = [ ];
 
-      let index = 0;
-
-      for (const [key, values] of metaData)
+      for (const [index, [key, value]] of metaData .entries ())
       {
-         for (const value of values)
-         {
-            const row = $("<tr></tr>")
-               .attr ("index", index ++)
-               .append ($("<td></td>")
-                  .append ($("<span></span>")
-                     .attr ("title", _("Drag to move key/value pair."))
-                     .css ("font-size", "120%")
-                     .addClass (["material-icons", "button", "drag"])
-                     .addClass (this .config .file .sortMetaData ? ["disabled"] : [ ])
-                     .text ("drag_handle")))
-               .append ($("<td></td>")
-                  .append ($("<input></input>")
-                     .attr ("index", 0)
-                     .attr ("placeholder", _("Insert meta key here."))
-                     .val (key) .on ("change", (event) => this .changeMetaData (event, key))))
-               .append ($("<td></td>")
-                  .append ($("<input></input>")
-                     .attr ("index", 1)
-                     .attr ("placeholder", _("Insert meta value here."))
-                     .val (value)
-                     .on ("change", (event) => this .changeMetaData (event, key))))
-               .append ($("<td></td>")
-                  .append ($("<span></span>")
-                     .attr ("title", _("Delete key/value pair."))
-                     .css ("font-size", "120%")
-                     .addClass (["material-icons", "button"])
-                     .text ("delete_forever")
-                     .on ("click", (event) => this .removeMetaData (event, key))));
+         const row = $("<tr></tr>")
+            .attr ("index", index)
+            .append ($("<td></td>")
+               .append ($("<span></span>")
+                  .attr ("title", _("Drag to move key/value pair."))
+                  .css ("font-size", "120%")
+                  .addClass (["material-icons", "button", "drag"])
+                  .addClass (this .config .file .sortMetaData ? ["disabled"] : [ ])
+                  .text ("drag_handle")))
+            .append ($("<td></td>")
+               .append ($("<input></input>")
+                  .attr ("index", 0)
+                  .attr ("placeholder", _("Insert meta key here."))
+                  .val (key) .on ("change", (event) => this .changeMetaData (event, key))))
+            .append ($("<td></td>")
+               .append ($("<input></input>")
+                  .attr ("index", 1)
+                  .attr ("placeholder", _("Insert meta value here."))
+                  .val (value)
+                  .on ("change", (event) => this .changeMetaData (event, key))))
+            .append ($("<td></td>")
+               .append ($("<span></span>")
+                  .attr ("title", _("Delete key/value pair."))
+                  .css ("font-size", "120%")
+                  .addClass (["material-icons", "button"])
+                  .text ("delete_forever")
+                  .on ("click", (event) => this .removeMetaData (event, key))));
 
-            rows .push (row);
-         }
+         rows .push (row);
       }
 
       if (this .config .file .sortMetaData)
