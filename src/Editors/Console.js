@@ -66,6 +66,10 @@ module .exports = class Console extends Interface
          this .output .scrollTop (this .output .prop ("scrollHeight"));
       }
 
+      const pkg = require ("../../package.json");
+
+      console .log (`Welcome to ${pkg .productName} v${pkg .version}.`);
+
       electron .ipcRenderer .on ("console-message", this .addMessageCallback);
 
       this .setup ();
