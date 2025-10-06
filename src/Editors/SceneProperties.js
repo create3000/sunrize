@@ -508,7 +508,7 @@ module .exports = new class SceneProperties extends Dialog
             .find (`tr[index=${focusRow .attr ("index")}] input`)
             .get (focusInput .attr ("index")));
 
-         input .focus ();
+         input .trigger ("focus");
       }
 
       $("<tr></tr>")

@@ -452,7 +452,7 @@ Viewpoint {
          pkg       = require ("../../package.json"),
          generator = scene .getMetaData ("generator") ?.filter (value => !value .startsWith (pkg .productName)) ?? [ ];
 
-      generator .push (`${pkg .productName} V${pkg .version}, ${pkg .homepage}`);
+      generator .unshift (`${pkg .productName} V${pkg .version}, ${pkg .homepage}`);
 
       if (!scene .getMetaData ("creator") ?.some (value => value .includes (this .fullname)))
          scene .addMetaData ("creator", this .fullname);
