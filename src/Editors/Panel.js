@@ -316,7 +316,7 @@ module .exports = new class Panel extends Interface
 
       const
          fieldElement = concreteNode .find (`field[name="${field .getName ()}"]`),
-         options      = { };
+         options      = { format: value => this .format (field, value) };
 
       switch (field .getType ())
       {
@@ -464,6 +464,44 @@ module .exports = new class Panel extends Interface
 
             break;
          }
+      }
+   }
+
+   #float = new X3D .SFFloat ();
+   #double = new X3D .SFDouble ();
+
+   format (field, value)
+   {
+      switch (field .getType ())
+      {
+         case X3D .X3DConstants .SFColor:
+         case X3D .X3DConstants .SFColorRGBA:
+         case X3D .X3DConstants .SFFloat:
+         case X3D .X3DConstants .SFVec2f:
+         case X3D .X3DConstants .SFVec3f:
+         case X3D .X3DConstants .SFVec4f:
+         case X3D .X3DConstants .SFMatrix3f:
+         case X3D .X3DConstants .SFMatrix4f:
+         {
+            this .#float .setValue (value);
+
+            return this .#float .toString ();
+         }
+         case X3D .X3DConstants .SFDouble:
+         case X3D .X3DConstants .SFRotation:
+         case X3D .X3DConstants .SFTime:
+         case X3D .X3DConstants .SFVec2d:
+         case X3D .X3DConstants .SFVec3d:
+         case X3D .X3DConstants .SFVec4d:
+         case X3D .X3DConstants .SFMatrix3d:
+         case X3D .X3DConstants .SFMatrix4d:
+         {
+            this .#double .setValue (value);
+
+            return this .#double .toString ();
+         }
+         default:
+            return value;
       }
    }
 
