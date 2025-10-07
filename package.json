@@ -90,7 +90,7 @@
   "dependencies": {
     "capitalize": "^2.0.4",
     "console": "^0.7.2",
-    "electron": "^38.2.1",
+    "electron": "^38.2.2",
     "electron-prompt": "^1.7.0",
     "electron-squirrel-startup": "^1.0.1",
     "electron-tabs": "^1.0.4",
@@ -102,7 +102,7 @@
     "material-symbols": "^0.36.2",
     "md5": "^2.3.0",
     "mime-types": "^3.0.1",
-    "monaco-editor": "^0.53.0",
+    "monaco-editor": "^0.54.0",
     "node-localstorage": "^3.0.5",
     "qtip2": "^3.0.3",
     "spectrum-colorpicker2": "^2.0.10",
