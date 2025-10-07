@@ -378,7 +378,10 @@ module .exports = new class Panel extends Interface
                max      = fieldElement .attr ("maxInclusive") ?? fieldElement .attr ("maxExclusive");
 
             for (const key in field)
-               options [key] = { };
+               options [key] ??= { };
+
+            for (const key in field)
+               options [key] .format = options .format;
 
             if (min !== undefined)
             {
