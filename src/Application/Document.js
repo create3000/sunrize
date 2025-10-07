@@ -185,6 +185,10 @@ module .exports = class Document extends Interface
 
       // Restore
 
+      const pkg = require ("../../package.json");
+
+      console .info (`Welcome to ${pkg .productName} v${pkg .version}.`);
+
       await this .restoreFile ();
 
       if (!this .isInitialScene)

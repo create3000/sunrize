@@ -485,7 +485,6 @@ module .exports = new class Panel extends Interface
 
    format (field, value)
    {
-      console .log (field .getTypeName ())
       switch (field .getType ())
       {
          case X3D .X3DConstants .SFColor:
