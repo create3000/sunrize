@@ -3463,6 +3463,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
             Array .from (Traverse .traverse (nodesToRemove, Traverse .ROOT_NODES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY))
             .filter (object => object instanceof X3D .SFNode)
+            .filter (node => !(node .getValue () instanceof X3D .X3DImportedNodeProxy))
             .forEach (node => children .add (node .getValue () .valueOf ()));
 
             // Remove nodes still in scene graph.

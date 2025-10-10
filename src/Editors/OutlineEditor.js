@@ -84,7 +84,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       if (!element .is (".manually"))
          this .sceneGraph .find (".manually") .removeClass ("manually");
 
-      if (element .is (".externproto, .proto, .proto-scene, .node, .field") && !element .is (".manually"))
+      if (element .is (".externproto, .proto, .proto-scene, .node, .field, .imported-node, .exported-node") && !element .is (".manually"))
          this .selectPrimaryElement (element);
 
       const
@@ -2848,31 +2848,51 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const
          element = $(event .target) .closest (".field", this .sceneGraph),
          node    = this .getNode (element),
-         field   = this .getField (element)
+         field   = this .getField (element);
 
       if (node .canUserDefinedFields () && node .getUserDefinedFields () .has (field .getName ()))
       {
-         this .selectPrimaryElement (element)
+         this .selectPrimaryElement (element);
 
-         event .originalEvent .dataTransfer .setData ("sunrize/field", element .attr ("id"))
+         event .originalEvent .dataTransfer .setData ("sunrize/field", element .attr ("id"));
       }
       else
       {
-         event .preventDefault ()
+         event .preventDefault ();
+      }
+   }
+
+   onDragStartImportedNode (event)
+   {
+      const
+         element   = $(event .target) .closest (".imported-node", this .sceneGraph),
+         selected  = this .sceneGraph .find (".imported-node.manually"),
+         selection = selected .filter (element) .length ? selected : element,
+         ids       = selection .map (function () { return this .id }) .get ();
+
+      if (element .closest (".imported-nodes") .length)
+      {
+         event .preventDefault ();
+      }
+      else
+      {
+         this .selectPrimaryElement (element);
+
+         event .originalEvent .dataTransfer .setData ("sunrize/imported-node", ids .join (","));
       }
    }
 
    onDragEnter (event)
    {
-      event .preventDefault ()
-      event .stopPropagation ()
+      event .preventDefault ();
+      event .stopPropagation ();
 
-      event .originalEvent .dataTransfer .dropEffect = "none"
+      event .originalEvent .dataTransfer .dropEffect = "none";
 
       // Show drop indicator.
 
       const destinationElement = $(event .target) .closest ("li, .scene", this .sceneGraph)
-         .removeClass (["drag-before", "drag-into", "drag-after"])
+         .removeClass (["drag-before", "drag-into", "drag-after"]);
 
       if (this .isEditable (destinationElement))
       {
@@ -2883,44 +2903,54 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                sourceExecutionContextElement      = sourceElement .closest (".scene", this .sceneGraph),
                destinationExecutionContextElement = destinationElement .closest (".scene", this .sceneGraph),
                sourceExecutionContext             = this .getNode (sourceExecutionContextElement),
-               destinationExecutionContext        = this .getNode (destinationExecutionContextElement)
+               destinationExecutionContext        = this .getNode (destinationExecutionContextElement);
 
             if (sourceExecutionContext === destinationExecutionContext)
             {
                if (event .altKey)
-                  event .originalEvent .dataTransfer .dropEffect = "copy"
+                  event .originalEvent .dataTransfer .dropEffect = "copy";
                else
-                  event .originalEvent .dataTransfer .dropEffect = "move"
+                  event .originalEvent .dataTransfer .dropEffect = "move";
             }
             else
             {
-               event .originalEvent .dataTransfer .dropEffect = "copy"
+               event .originalEvent .dataTransfer .dropEffect = "copy";
             }
 
             if (destinationElement .is (".scene-graph"))
-               destinationElement .addClass ("drag-after")
+            {
+               destinationElement .addClass ("drag-after");
+            }
             else if (destinationElement .is (".scene, .externprotos"))
-               destinationElement .addClass ("drag-into")
+            {
+               destinationElement .addClass ("drag-into");
+            }
             else if (destinationElement .is (".externproto"))
             {
                const
                   item = destinationElement .find ("> .item"),
-                  y    = event .pageY - destinationElement .offset () .top
+                  y    = event .pageY - destinationElement .offset () .top;
 
                if (y < item .height () * 0.5)
-                  destinationElement .data ("drag-type", "drag-before")
+               {
+                  destinationElement .data ("drag-type", "drag-before");
+               }
                else if (y > destinationElement .height () - item .height () * 0.5)
-                  destinationElement .data ("drag-type", "drag-after")
+               {
+                  destinationElement .data ("drag-type", "drag-after");
+               }
                else
                {
-                  destinationElement .data ("drag-type", "")
-                  event .originalEvent .dataTransfer .dropEffect = "none"
+                  destinationElement .data ("drag-type", "");
+                  event .originalEvent .dataTransfer .dropEffect = "none";
                }
 
-               item .addClass (destinationElement .data ("drag-type"))
+               item .addClass (destinationElement .data ("drag-type"));
             }
             else
-               event .originalEvent .dataTransfer .dropEffect = "none"
+            {
+               event .originalEvent .dataTransfer .dropEffect = "none";
+            }
          }
          else if (event .originalEvent .dataTransfer .types .includes ("sunrize/proto"))
          {
@@ -2929,13 +2959,13 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                sourceExecutionContextElement      = sourceElement .closest (".scene", this .sceneGraph),
                destinationExecutionContextElement = destinationElement .closest (".scene", this .sceneGraph),
                sourceExecutionContext             = this .getNode (sourceExecutionContextElement),
-               destinationExecutionContext        = this .getNode (destinationExecutionContextElement)
+               destinationExecutionContext        = this .getNode (destinationExecutionContextElement);
 
             if (sourceExecutionContext === destinationExecutionContext)
             {
                if (event .altKey)
                {
-                  event .originalEvent .dataTransfer .dropEffect = "copy"
+                  event .originalEvent .dataTransfer .dropEffect = "copy";
                }
                else
                {
@@ -2943,9 +2973,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                      sourceIndex       = parseInt (sourceElement .attr ("index")),
                      destinationIndex  = destinationElement .hasClass ("proto") ? parseInt (destinationElement .attr ("index")) : destinationExecutionContext .protos .length,
                      sourceProto       = this .getNode (sourceElement),
-                     destinationProtos = destinationExecutionContext .protos
+                     destinationProtos = destinationExecutionContext .protos;
 
-                  event .originalEvent .dataTransfer .dropEffect = "move"
+                  event .originalEvent .dataTransfer .dropEffect = "move";
 
                   if (sourceIndex == destinationIndex || sourceIndex + 1 == destinationIndex)
                   { }
@@ -2955,8 +2985,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                      {
                         if (Editor .protoIsUsedInProto (sourceProto, destinationProtos [i]))
                         {
-                           event .originalEvent .dataTransfer .dropEffect = "none"
-                           break
+                           event .originalEvent .dataTransfer .dropEffect = "none";
+                           break;
                         }
                      }
                   }
@@ -2966,8 +2996,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                      {
                         if (Editor .protoIsUsedInProto (destinationProtos [i], sourceProto))
                         {
-                           event .originalEvent .dataTransfer .dropEffect = "none"
-                           break
+                           event .originalEvent .dataTransfer .dropEffect = "none";
+                           break;
                         }
                      }
                   }
@@ -2975,74 +3005,106 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             }
             else
             {
-               event .originalEvent .dataTransfer .dropEffect = "copy"
+               event .originalEvent .dataTransfer .dropEffect = "copy";
             }
 
             if (event .originalEvent .dataTransfer .dropEffect !== "none")
             {
                if (destinationElement .is (".scene-graph"))
-                  destinationElement .addClass ("drag-after")
+               {
+                  destinationElement .addClass ("drag-after");
+               }
                else if (destinationElement .is (".scene, .protos"))
-                  destinationElement .addClass ("drag-into")
+               {
+                  destinationElement .addClass ("drag-into");
+               }
                else if (destinationElement .is (".proto"))
                {
                   const
                      item = destinationElement .find ("> .item"),
-                     y    = event .pageY - destinationElement .offset () .top
+                     y    = event .pageY - destinationElement .offset () .top;
 
                   if (y < item .height () * 0.5)
-                     destinationElement .data ("drag-type", "drag-before")
+                  {
+                     destinationElement .data ("drag-type", "drag-before");
+                  }
                   else if (y > destinationElement .height () - item .height () * 0.5)
-                     destinationElement .data ("drag-type", "drag-after")
+                  {
+                     destinationElement .data ("drag-type", "drag-after");
+                  }
                   else
                   {
-                     destinationElement .data ("drag-type", "")
-                     event .originalEvent .dataTransfer .dropEffect = "none"
+                     destinationElement .data ("drag-type", "");
+                     event .originalEvent .dataTransfer .dropEffect = "none";
                   }
 
-                  item .addClass (destinationElement .data ("drag-type"))
+                  item .addClass (destinationElement .data ("drag-type"));
                }
                else
-                  event .originalEvent .dataTransfer .dropEffect = "none"
+               {
+                  event .originalEvent .dataTransfer .dropEffect = "none";
+               }
             }
          }
-         else if (event .originalEvent .dataTransfer .types .includes ("sunrize/nodes"))
+         else if (event .originalEvent .dataTransfer .types .includes ("sunrize/nodes") ||
+                  event .originalEvent .dataTransfer .types .includes ("sunrize/imported-node"))
          {
-            if (event .altKey)
-               event .originalEvent .dataTransfer .dropEffect = "copy"
-            else if (event .ctrlKey)
-               event .originalEvent .dataTransfer .dropEffect = "link"
-            else
-               event .originalEvent .dataTransfer .dropEffect = "move"
+            const
+               isImportedNode                     = event .originalEvent .dataTransfer .types .includes ("sunrize/imported-node"),
+               sourceElement                      = this .sceneGraph .find (".primary"),
+               sourceExecutionContextElement      = sourceElement .closest (".scene", this .sceneGraph),
+               destinationExecutionContextElement = destinationElement .closest (".scene", this .sceneGraph),
+               sourceExecutionContext             = this .getNode (sourceExecutionContextElement),
+               destinationExecutionContext        = this .getNode (destinationExecutionContextElement);
 
-            if (destinationElement .is (".scene-graph"))
-               destinationElement .addClass ("drag-after")
-            else if (destinationElement .is (".scene, .root-nodes, .field[type-name*=Node]"))
-               destinationElement .addClass ("drag-into")
-            else if (destinationElement .is (".node"))
+            if (isImportedNode && sourceExecutionContext !== destinationExecutionContext)
             {
-               const
-                  item = destinationElement .find ("> .item"),
-                  y    = event .pageY - destinationElement .offset () .top
+               event .originalEvent .dataTransfer .dropEffect = "none";
+            }
+            else
+            {
+               if (event .altKey)
+                  event .originalEvent .dataTransfer .dropEffect = isImportedNode ? "link" : "copy";
+               else if (event .ctrlKey)
+                  event .originalEvent .dataTransfer .dropEffect = "link";
+               else
+                  event .originalEvent .dataTransfer .dropEffect = "move";
 
-               if (y < item .height () * 0.25)
+               if (destinationElement .is (".scene-graph"))
                {
-                  destinationElement .data ("drag-type", "drag-before")
-                  destinationElement .addClass ("drag-before")
+                  destinationElement .addClass ("drag-after");
                }
-               else if (y > destinationElement .height () - item .height () * 0.25)
+               else if (destinationElement .is (".scene, .root-nodes, .field[type-name*=Node]"))
                {
-                  destinationElement .data ("drag-type", "drag-after")
-                  destinationElement .addClass ("drag-after")
+                  destinationElement .addClass ("drag-into");
+               }
+               else if (destinationElement .is (".node"))
+               {
+                  const
+                     item = destinationElement .find ("> .item"),
+                     y    = event .pageY - destinationElement .offset () .top;
+
+                  if (y < item .height () * 0.25)
+                  {
+                     destinationElement .data ("drag-type", "drag-before");
+                     destinationElement .addClass ("drag-before");
+                  }
+                  else if (y > destinationElement .height () - item .height () * 0.25)
+                  {
+                     destinationElement .data ("drag-type", "drag-after");
+                     destinationElement .addClass ("drag-after");
+                  }
+                  else
+                  {
+                     destinationElement .data ("drag-type", "drag-into");
+                     destinationElement .addClass ("drag-into");
+                  }
                }
                else
                {
-                  destinationElement .data ("drag-type", "drag-into")
-                  destinationElement .addClass ("drag-into")
+                  event .originalEvent .dataTransfer .dropEffect = "none";
                }
             }
-            else
-               event .originalEvent .dataTransfer .dropEffect = "none"
          }
          else if (event .originalEvent .dataTransfer .types .includes ("sunrize/field"))
          {
@@ -3050,41 +3112,41 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             {
                const
                   sourceElement = this .sceneGraph .find (".primary"),
-                  sourceNode    = this .getNode (sourceElement)
+                  sourceNode    = this .getNode (sourceElement);
 
                const
                   destinationNode  = this .getNode (destinationElement),
                   destinationField = this .getField (destinationElement),
-                  userDefined      = destinationNode .getUserDefinedFields () .has (destinationField .getName ())
+                  userDefined      = destinationNode .getUserDefinedFields () .has (destinationField .getName ());
 
                if (destinationNode === sourceNode && userDefined)
                {
-                  event .originalEvent .dataTransfer .dropEffect = "move"
+                  event .originalEvent .dataTransfer .dropEffect = "move";
 
                   const
                      item = destinationElement .find ("> .item"),
-                     y    = event .pageY - destinationElement .offset () .top
+                     y    = event .pageY - destinationElement .offset () .top;
 
                   if (y < item .height () * 0.5)
                   {
-                     destinationElement .data ("drag-type", "drag-before")
-                     destinationElement .addClass ("drag-before")
+                     destinationElement .data ("drag-type", "drag-before");
+                     destinationElement .addClass ("drag-before");
                   }
                   else if (y > destinationElement .height () - item .height () * 0.5)
                   {
-                     destinationElement .data ("drag-type", "drag-after")
-                     destinationElement .addClass ("drag-after")
+                     destinationElement .data ("drag-type", "drag-after");
+                     destinationElement .addClass ("drag-after");
                   }
                   else
                   {
-                     event .originalEvent .dataTransfer .dropEffect = "none"
+                     event .originalEvent .dataTransfer .dropEffect = "none";
                   }
                }
             }
          }
       }
 
-      destinationElement .data ("dropEffect", event .originalEvent .dataTransfer .dropEffect)
+      destinationElement .data ("dropEffect", event .originalEvent .dataTransfer .dropEffect);
    }
 
    onDragLeave (event)
@@ -3253,9 +3315,12 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             }
          }
       }
-      else if (event .originalEvent .dataTransfer .types .includes ("sunrize/nodes"))
+      else if (event .originalEvent .dataTransfer .types .includes ("sunrize/nodes") ||
+               event .originalEvent .dataTransfer .types .includes ("sunrize/imported-node"))
       {
-         const sourceElementsIds = event .originalEvent .dataTransfer .getData ("sunrize/nodes") .split (",");
+         const sourceElementsIds = event .originalEvent .dataTransfer .types .includes ("sunrize/imported-node")
+            ? event .originalEvent .dataTransfer .getData ("sunrize/imported-node") .split (",")
+            : event .originalEvent .dataTransfer .getData ("sunrize/nodes") .split (",");
 
          const
             destinationElement                 = $(event .target) .closest ("li, .scene", this .sceneGraph),
@@ -3430,14 +3495,17 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             if (destinationElement .data ("dropEffect") ?.match (/copy|move/))
             {
-               if (sourceNode ?.getType () .some (type => this .transformLikeNodes .has (type)))
+               if (!(sourceNode instanceof X3D .X3DImportedNodeProxy))
                {
-                  const
-                     sourceModelMatrix      = this .getModelMatrix (sourceElement),
-                     destinationModelMatrix = this .getModelMatrix (destinationParentNodeElement);
+                  if (sourceNode ?.getType () .some (type => this .transformLikeNodes .has (type)))
+                  {
+                     const
+                        sourceModelMatrix      = this .getModelMatrix (sourceElement),
+                        destinationModelMatrix = this .getModelMatrix (destinationParentNodeElement);
 
-                  destinationModelMatrix .inverse () .multLeft (sourceModelMatrix);
-                  Editor .setMatrixWithCenter (sourceNode, destinationModelMatrix);
+                     destinationModelMatrix .inverse () .multLeft (sourceModelMatrix);
+                     Editor .setMatrixWithCenter (sourceNode, destinationModelMatrix);
+                  }
                }
             }
 

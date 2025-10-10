@@ -281,9 +281,13 @@ module .exports = class OutlineView extends Interface
                .attr ("draggable", "true")
                .on ("dragstart", this .onDragStartNode .bind (this));
          }
+
+         child .find (".imported-node > .item")
+            .attr ("draggable", "true")
+            .on ("dragstart", this .onDragStartImportedNode .bind (this));
       }
 
-      child .find (".externproto .name, .externproto .icon, .proto .name, .proto .icon, .node .name, .node .icon")
+      child .find (":is(.externproto, .proto, .node, .imported-node, .exported-node) :where(.name, .icon)")
          .on ("click", this .selectNode .bind (this))
          .on ("mouseenter", this .updateNodeTitle .bind (this));
 
@@ -554,8 +558,8 @@ module .exports = class OutlineView extends Interface
          .text ("Imported Nodes")
          .appendTo (ul);
 
-      for (const importedNode of importedNodes)
-         ul .append (this .createImportedNodeElement ("imported-node", parent, scene, importedNode));
+      for (const [index, importedNode] of importedNodes .entries ())
+         ul .append (this .createImportedNodeElement ("imported-node", parent, scene, importedNode, index));
 
       // Added to prevent bug, that last route is not drawn right.
       $("<li></li>")
@@ -973,7 +977,7 @@ module .exports = class OutlineView extends Interface
    createNodeElement (type, parent, node, index)
    {
       if (node instanceof X3D .X3DImportedNodeProxy)
-         return this .createImportedNodeElement ("imported-node", parent, node .getExecutionContext (), node .getImportedNode ());
+         return this .createImportedNodeElement ("imported-node", parent, node .getExecutionContext (), node, index);
 
       if (node)
       {
@@ -1407,8 +1411,18 @@ module .exports = class OutlineView extends Interface
 
    #importedNodeSymbol = Symbol ();
 
-   createImportedNodeElement (type, parent, scene, importedNode)
+   createImportedNodeElement (type, parent, scene, importedNode, index)
    {
+      let proxy = null;
+
+      if (importedNode instanceof X3D .X3DImportedNodeProxy)
+      {
+         proxy        = importedNode;
+         importedNode = importedNode .getImportedNode ();
+
+         this .objects .set (proxy .getId (), proxy);
+      }
+
       importedNode .getInlineNode () .getLoadState () .addFieldCallback (this .#importedNodeSymbol, this .updateScene .bind (this, parent, scene));
 
       try
@@ -1421,7 +1435,8 @@ module .exports = class OutlineView extends Interface
          const child = $("<li></li>")
             .addClass (type)
             .attr ("imported-node-id", importedNode .getId ())
-            .attr ("node-id", importedNode .getExportedNode () .getId ());
+            .attr ("node-id", proxy ?.getId () ?? importedNode .getExportedNode () .getId ())
+            .attr ("index", index);
 
          // Icon
 
@@ -3464,13 +3479,13 @@ module .exports = class OutlineView extends Interface
       this .clearConnectors ();
 
       const
-         element = $(event .currentTarget) .closest (".node, .externproto, .proto"),
+         element = $(event .currentTarget) .closest (".node, .externproto, .proto, .imported-node, .exported-node"),
          add     = event .shiftKey || event .metaKey;
 
       if (element .hasClass ("node"))
          this .selectNodeElement (element, { add, target: true });
 
-      else if (element .is (".externproto, .proto"))
+      else if (element .is (".externproto, .proto, .imported-node, .exported-node"))
          this .selectPrimaryElement (element, add);
    }
 
@@ -3850,6 +3865,8 @@ module .exports = class OutlineView extends Interface
    onDragStartNode (event) { }
 
    onDragStartField (event) { }
+
+   onDragStartImportedNode (event) { }
 
    onDragEnter (event) { }
 

@@ -1347,6 +1347,16 @@ body.dark .ui-widget .library-list .component {
   outline: 1px solid var(--system-orange);
 }
 
+.tree-view .jstree-node.manually.imported-node,
+.tree-view .jstree-node.manually.exported-node {
+  outline: 1px dashed var(--system-brown);
+}
+
+.tree-view .jstree-node.primary.imported-node,
+.tree-view .jstree-node.manually.exported-node {
+    outline: 1px solid var(--system-brown);
+}
+
 .tree-view .no-select {
   user-select: none;
 }
