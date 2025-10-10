@@ -245,8 +245,6 @@ module .exports = class Editor
          importedNodes  = executionContext .importedNodes .copy (),
          tempScene      = await browser .createScene (browser .getProfile ("Core"));
 
-      undoManager .beginUndo (_("Import X3D"));
-
       scene .setProfile (browser .getProfile ("Full"));
       scene .updateComponent (browser .getComponent ("X_ITE"));
 
@@ -281,6 +279,8 @@ module .exports = class Editor
       }
 
       // Undo.
+
+      undoManager .beginUndo (_("Import X3D"));
 
       undoManager .registerUndo (() =>
       {
