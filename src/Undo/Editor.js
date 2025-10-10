@@ -243,6 +243,8 @@ module .exports = class Editor
          rootNodes      = executionContext .rootNodes .copy (),
          tempScene      = await browser .createScene (browser .getProfile ("Core"));
 
+      undoManager .beginUndo (_("Import X3D"));
+
       scene .setProfile (browser .getProfile ("Full"));
       scene .updateComponent (browser .getComponent ("X_ITE"));
 
@@ -257,6 +259,10 @@ module .exports = class Editor
       catch (error)
       {
          console .error (error);
+
+         // TODO: Handle X3DImportedNodeProxy in exportX3D.
+         const nodes = executionContext .rootNodes .splice (rootNodes .length - executionContext .rootNodes .length);
+
          return [ ];
       }
       finally
@@ -270,8 +276,6 @@ module .exports = class Editor
       }
 
       // Undo.
-
-      undoManager .beginUndo (_("Import X3D"));
 
       undoManager .registerUndo (() =>
       {
