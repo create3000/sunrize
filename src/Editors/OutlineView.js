@@ -1433,7 +1433,7 @@ module .exports = class OutlineView extends Interface
          // Node
 
          const child = $("<li></li>")
-            .addClass (type)
+            .addClass ([type, proxy ? "proxy" : ""])
             .attr ("imported-node-id", importedNode .getId ())
             .attr ("node-id", proxy ?.getId () ?? importedNode .getExportedNode () .getId ())
             .attr ("index", index);

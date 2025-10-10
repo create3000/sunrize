@@ -584,7 +584,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       else if (element .is (".imported-node"))
       {
-         const importedNode = this .objects .get (parseInt (element .attr ("imported-node-id")));
+         const
+            node         = this .objects .get (parseInt (element .attr ("node-id"))),
+            importedNode = this .objects .get (parseInt (element .attr ("imported-node-id")));
 
          var menu = [
             {
@@ -601,6 +603,13 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                label: _("Add Clone"),
                visible: importedNode .getExecutionContext () .getLocalScene () === this .executionContext,
                args: ["addImportedNodeClone", element .attr ("id")],
+            },
+            { type: "separator" },
+            {
+               label: _("Delete"),
+               visible: importedNode .getExecutionContext () .getLocalScene () === this .executionContext && node instanceof X3D .X3DImportedNodeProxy,
+               accelerator: "CmdOrCtrl+Backspace",
+               args: ["deleteNodes"],
             },
          ];
       }
@@ -1033,8 +1042,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    deleteNodes ()
    {
       const
-         primary   = $(".node.primary"),
-         selected  = this .sceneGraph .find (".node.manually"),
+         primary   = $(".node.primary, .imported-node.proxy.primary"),
+         selected  = this .sceneGraph .find (".node.manually, .imported-node.proxy.manually"),
          selection = !primary .length || selected .filter (primary) .length ? selected : primary,
          ids       = selection .map (function () { return this .id }) .get ();
 
