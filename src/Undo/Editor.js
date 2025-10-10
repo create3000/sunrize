@@ -262,7 +262,7 @@ module .exports = class Editor
       {
          console .error (error);
 
-         executionContext .externprotos . assign (externprotos);
+         executionContext .externprotos  .assign (externprotos);
          executionContext .protos        .assign (protos);
          executionContext .rootNodes     .splice (rootNodes .length);
          executionContext .namedNodes    .assign (namedNodes);
