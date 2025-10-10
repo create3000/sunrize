@@ -886,8 +886,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    async cutNodes ()
    {
       const
-         primary     = $(".node.primary, .proto.primary, .externproto.primary"),
-         selected    = this .sceneGraph .find (".node.manually, .proto.manually, .externproto.manually"),
+         primary     = $(":is(.node, .proto, .externproto).primary"),
+         selected    = this .sceneGraph .find (":is(.node, .proto, .externproto).manually"),
          selection   = selected .filter (primary) .length ? selected : primary,
          ids         = selection .map (function () { return this .id }) .get (),
          elements    = ids .map (id => $(`#${id}`)),
@@ -904,8 +904,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    async copyNodes (deselect)
    {
       const
-         primary     = $(".node.primary, .proto.primary, .externproto.primary"),
-         selected    = this .sceneGraph .find (".node.manually, .proto.manually, .externproto.manually"),
+         primary     = $(":is(.node, .proto, .externproto).primary"),
+         selected    = this .sceneGraph .find (":is(.node, .proto, .externproto).manually"),
          selection   = selected .filter (primary) .length ? selected : primary,
          ids         = selection .map (function () { return this .id }) .get (),
          elements    = ids .map (id => $(`#${id}`)),
