@@ -505,7 +505,7 @@ module .exports = class OutlineView extends Interface
       let index = 0;
 
       for (const rootNode of scene .rootNodes)
-         ul .append (this .createNodeElement ("node", parent, rootNode ? rootNode .getValue () : null, index ++));
+         ul .append (this .createNodeElement ("node", parent, rootNode ?.getValue (), index ++));
 
       // Added to prevent bug, that last route is not drawn right.
       $("<li></li>")
@@ -976,8 +976,12 @@ module .exports = class OutlineView extends Interface
 
    createNodeElement (type, parent, node, index)
    {
-      if (node instanceof X3D .X3DImportedNodeProxy)
-         return this .createImportedNodeElement ("imported-node", parent, node .getExecutionContext (), node, index);
+      const
+         executionContext = this .getNode (parent .closest (".scene")),
+         localNode        = executionContext .getLocalizedNode (node);
+
+      if (localNode instanceof X3D .X3DImportedNode)
+         return this .createImportedNodeElement ("imported-node", parent, executionContext, localNode .getProxyNode (), index);
 
       if (node)
       {
