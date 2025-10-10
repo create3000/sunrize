@@ -238,9 +238,11 @@ module .exports = class Editor
          scene          = executionContext .getLocalScene (),
          profile        = scene .getProfile (),
          x_ite          = scene .hasComponent ("X_ITE"),
-         externprotos   = new Map (Array .from (executionContext .externprotos, p => [p .getName (), p])),
-         protos         = new Map (Array .from (executionContext .protos,       p => [p .getName (), p])),
+         externprotos   = executionContext .externprotos .copy (),
+         protos         = executionContext .protos .copy (),
          rootNodes      = executionContext .rootNodes .copy (),
+         namedNodes     = executionContext .namedNodes .copy (),
+         importedNodes  = executionContext .importedNodes .copy (),
          tempScene      = await browser .createScene (browser .getProfile ("Core"));
 
       undoManager .beginUndo (_("Import X3D"));
@@ -260,8 +262,11 @@ module .exports = class Editor
       {
          console .error (error);
 
-         // TODO: Handle X3DImportedNodeProxy in exportX3D.
-         const nodes = executionContext .rootNodes .splice (rootNodes .length - executionContext .rootNodes .length);
+         executionContext .externprotos . assign (externprotos);
+         executionContext .protos        .assign (protos);
+         executionContext .rootNodes     .splice (rootNodes .length);
+         executionContext .namedNodes    .assign (namedNodes);
+         executionContext .importedNodes .assign (importedNodes);
 
          return [ ];
       }
