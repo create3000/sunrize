@@ -972,6 +972,9 @@ module .exports = class OutlineView extends Interface
 
    createNodeElement (type, parent, node, index)
    {
+      if (node instanceof X3D .X3DImportedNodeProxy)
+         return this .createImportedNodeElement ("imported-node", parent, node .getScene (), node .getImportedNode ());
+
       if (node)
       {
          if (!node .isInitialized ())

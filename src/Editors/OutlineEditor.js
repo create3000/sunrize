@@ -597,6 +597,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                visible: importedNode .getExecutionContext () .getLocalScene () === this .executionContext,
                args: ["removeImportedNode", element .attr ("id")],
             },
+            {
+               label: _("Add Clone"),
+               visible: importedNode .getExecutionContext () .getLocalScene () === this .executionContext,
+               args: ["addImportedNodeClone", element .attr ("id")],
+            },
          ];
       }
 
@@ -853,6 +858,20 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          importedNode = this .objects .get (parseInt (element .attr ("imported-node-id")));
 
       Editor .removeImportedNode (importedNode .getExecutionContext (), importedNode .getImportedName ());
+   }
+
+   addImportedNodeClone (id)
+   {
+      const
+         element          = $(`#${id}`),
+         importedNode     = this .objects .get (parseInt (element .attr ("imported-node-id"))),
+         executionContext = importedNode .getExecutionContext ();
+
+      UndoManager .shared .beginUndo (_("Add Clone of Imported Node »%s«"), importedNode .getImportedName ());
+
+      Editor .appendValueToArray (executionContext, executionContext, executionContext .rootNodes, importedNode .getProxyNode ());
+
+      UndoManager .shared .endUndo ();
    }
 
    async cutNodes ()
