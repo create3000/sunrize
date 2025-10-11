@@ -1130,9 +1130,6 @@ module .exports = class OutlineView extends Interface
             }
             case X3D .X3DConstants .X3DLayerNode:
             {
-               if (node .getExecutionContext () !== this .executionContext)
-                  continue;
-
                buttons .push ($("<span></span>")
                   .attr ("order", "3")
                   .attr ("title", _("Activate layer."))
@@ -1162,9 +1159,6 @@ module .exports = class OutlineView extends Interface
             }
             case X3D .X3DConstants .X3DTimeDependentNode:
             {
-               if (node .getExecutionContext () !== this .executionContext)
-                  continue;
-
                node ._enabled  .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
                node ._isActive .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
                node ._isPaused .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
@@ -1481,10 +1475,10 @@ module .exports = class OutlineView extends Interface
    updateImportedNodeName (importedNode)
    {
       const nodeAsName = this .sceneGraph
-         .find (`.imported-node[imported-node-id=${importedNode .getId ()}]`)
+         .find (`.imported-node[imported-node-id="${importedNode .getId ()}"]`)
          .find ("> .item .node-as-name");
 
-      nodeAsName .find ("as-name") .text (importedNode .getImportedName ());
+      nodeAsName .find (".as-name") .text (importedNode .getImportedName ());
 
       if (importedNode .getExportedName () === importedNode .getImportedName ())
          nodeAsName .hide ();
@@ -2973,9 +2967,7 @@ module .exports = class OutlineView extends Interface
             return;
 
          // If node is somewhere else, don't disconnect.
-         if (Array .from (this .sceneGraph .find (`.node[node-id="${node .getId ()}"],
-            .imported-node[node-id="${node .getId ()}"],
-            .exported-node[node-id="${node .getId ()}"]`))
+         if (Array .from (this .sceneGraph .find (`:is(.node, .imported-node, .exported-node)[node-id="${node .getId ()}"]`))
             .some (s => !$(s) .closest (element) .length))
          {
             return;
