@@ -3427,10 +3427,10 @@ module .exports = class OutlineView extends Interface
          element = $(event .currentTarget) .closest (".node, .externproto, .proto, .imported-node"),
          add     = event .shiftKey || event .metaKey;
 
-      if (element .is (".node, .imported-node"))
+      if (element .is (".node"))
          this .selectNodeElement (element, { add, target: true });
 
-      else if (element .is (".externproto, .proto"))
+      else if (element .is (".externproto, .proto, .imported-node"))
          this .selectPrimaryElement (element, add);
    }
 
@@ -3438,7 +3438,7 @@ module .exports = class OutlineView extends Interface
 
    selectNodeElement (element, { add = false, target = false } = { })
    {
-      if (!element .is (".node, .imported-node.proxy"))
+      if (!element .is (".node"))
          return;
 
       if (!this .isEditable (element))
@@ -3450,7 +3450,7 @@ module .exports = class OutlineView extends Interface
          selected         = element .hasClass ("manually"),
          selectedElements = this .sceneGraph .find (".primary, .selected"),
          node             = this .getNode (element),
-         elements         = $(`:is(.node, .imported-node)[node-id='${node ?.getId ()}']`);
+         elements         = $(`.node[node-id='${node ?.getId ()}']`);
 
       selectedElements .removeClass ("primary");
 
