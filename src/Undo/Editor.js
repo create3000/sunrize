@@ -3444,13 +3444,13 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
             Array .from (Traverse .traverse (nodesToRemove, Traverse .ROOT_NODES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY))
             .filter (object => object instanceof X3D .SFNode)
-            .forEach (node => children .add (node .getValue ()));
+            .forEach (node => children .add (node .getValue () .valueOf ()));
 
             // Remove nodes still in scene graph.
 
             Array .from (Traverse .traverse (executionContext, Traverse .ROOT_NODES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY))
             .filter (object => object instanceof X3D .SFNode)
-            .forEach (node => children .delete (node .getValue ()));
+            .forEach (node => children .delete (node .getValue () .valueOf ()));
 
             if (children .size === 0)
                continue;
