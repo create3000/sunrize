@@ -962,6 +962,12 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       undoManager .beginUndo (_("Remove Imported Node »%s«"), importedName);
 
+      for (const parent of Array .from (importedNode .getProxyNode () .getParents ()))
+      {
+         if (parent instanceof X3D .SFNode)
+            this .#removeImportedNodeProxy (executionContext, importedName, parent, undoManager);
+      }
+
       executionContext .removeImportedNode (importedName);
 
       undoManager .registerUndo (() =>
@@ -983,6 +989,34 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       });
 
       this .requestUpdateInstances (executionContext, undoManager);
+
+      undoManager .endUndo ();
+   }
+
+   static #removeImportedNodeProxy (executionContext, importedName, parent, undoManager)
+   {
+      undoManager .beginUndo (_("Remove Imported Node Proxy"));
+
+      parent .setValue (null);
+
+      undoManager .registerUndo (() =>
+      {
+         this .#restoreImportedNodeProxy (executionContext, importedName, parent, undoManager);
+      });
+
+      undoManager .endUndo ();
+   }
+
+   static #restoreImportedNodeProxy (executionContext, importedName, parent, undoManager)
+   {
+      undoManager .beginUndo (_("Restore Imported Node Proxy"));
+
+      parent .setValue (executionContext .getImportedNodes () .get (importedName) .getProxyNode ());
+
+      undoManager .registerUndo (() =>
+      {
+         this .#removeImportedNodeProxy (executionContext, importedName, parent, undoManager);
+      });
 
       undoManager .endUndo ();
    }
@@ -3489,15 +3523,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                for (const importedNode of Array .from (executionContext .getImportedNodes ()))
                {
                   if (importedNode .getInlineNode () .valueOf () === node)
-                  {
-                     for (const parent of new Set (importedNode .getProxyNode () .getParents ()))
-                     {
-                        if (parent instanceof X3D .SFNode)
-                           this .setFieldValue (executionContext, executionContext, parent, null, undoManager);
-                     }
-
                      this .removeImportedNode (executionContext, importedNode .getImportedName (), undoManager);
-                  }
                }
 
                // Remove exported nodes.

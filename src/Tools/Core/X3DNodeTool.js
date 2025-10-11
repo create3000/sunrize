@@ -100,7 +100,7 @@ class X3DNodeTool extends X3DBaseTool
 
    replaceNode (node, replacement)
    {
-      for (const parent of new Set (node .getParents ()))
+      for (const parent of Array .from (node .getParents ()))
       {
          if (parent instanceof X3D .SFNode)
             parent .setValue (replacement);
