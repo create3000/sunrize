@@ -3424,13 +3424,13 @@ module .exports = class OutlineView extends Interface
       this .clearConnectors ();
 
       const
-         element = $(event .currentTarget) .closest (".node, .externproto, .proto, .imported-node"),
+         element = $(event .currentTarget) .closest (".node, .externproto, .proto, .imported-node, .exported-node"),
          add     = event .shiftKey || event .metaKey;
 
       if (element .is (".node"))
          this .selectNodeElement (element, { add, target: true });
 
-      else if (element .is (".externproto, .proto, .imported-node"))
+      else if (element .is (".externproto, .proto, .imported-node, .exported-node"))
          this .selectPrimaryElement (element, add);
    }
 

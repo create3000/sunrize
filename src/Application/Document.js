@@ -324,8 +324,8 @@ module .exports = class Document extends Interface
 
       const activeElement = this .activeElement;
 
-      if (activeElement .is ("input"))
-         return activeElement .attr ("type") === undefined || activeElement .attr ("type") === "text";
+      if (activeElement .is ("input:not([type]), input[type=text]"))
+         return true;
 
       if (activeElement .is ("textarea"))
          return true;
