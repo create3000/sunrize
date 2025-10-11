@@ -918,38 +918,10 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       undoManager .beginUndo (_("Update Imported Node »%s«"), importedName);
 
-      executionContext .updateImportedNode (inlineNode .valueOf (), exportedName, importedName);
-
-      if (oldImportedName && oldImportedName !== importedName)
-      {
-         const
-            oldImportedNode = executionContext .getImportedNodes () .get (oldImportedName),
-            newImportedNode = executionContext .getImportedNodes () .get (importedName);
-
-         const routes = executionContext .getRoutes () .filter (route =>
-         {
-            if (route .sourceNode === oldImportedNode)
-               return true;
-
-            if (route .destinationNode === oldImportedNode)
-               return true;
-
-            return false;
-         });
-
-         executionContext .removeImportedNode (oldImportedName);
-
-         for (let { sourceNode, sourceField, destinationNode, destinationField } of routes)
-         {
-            if (sourceNode === oldImportedNode)
-               sourceNode = newImportedNode;
-
-            if (destinationNode === oldImportedNode)
-               destinationNode = newImportedNode;
-
-            executionContext .addRoute (sourceNode, sourceField, destinationNode, destinationField);
-         }
-      }
+      if (oldImportedName)
+         executionContext .renameImportedNode (oldImportedName, importedName);
+      else
+         executionContext .updateImportedNode (inlineNode .valueOf (), exportedName, importedName);
 
       undoManager .registerUndo (() =>
       {
@@ -3472,7 +3444,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
             Array .from (Traverse .traverse (nodesToRemove, Traverse .ROOT_NODES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY))
             .filter (object => object instanceof X3D .SFNode)
-            .filter (node => !(node .getValue () instanceof X3D .X3DImportedNodeProxy))
             .forEach (node => children .add (node .getValue () .valueOf ()));
 
             // Remove nodes still in scene graph.
@@ -3488,6 +3459,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
             for (const node of children)
             {
+               if (executionContext .getLocalizedNode (node) instanceof X3D .X3DImportedNode)
+                  continue;
+
                // Rebind X3DBindableNode nodes.
 
                if (node .getType () .includes (X3D .X3DConstants .X3DBindableNode))

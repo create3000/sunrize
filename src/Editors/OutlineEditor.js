@@ -9,6 +9,7 @@ const
    mime              = require ("../Bits/MimeTypes"),
    X3D               = require ("../X3D"),
    OutlineRouteGraph = require ("./OutlineRouteGraph"),
+   Traverse          = require ("x3d-traverse") (X3D),
    Editor            = require ("../Undo/Editor"),
    UndoManager       = require ("../Undo/UndoManager"),
    _                 = require ("../Application/GetText");
@@ -84,7 +85,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       if (!element .is (".manually"))
          this .sceneGraph .find (".manually") .removeClass ("manually");
 
-      if (element .is (".externproto, .proto, .proto-scene, .node, .field, .imported-node, .exported-node") && !element .is (".manually"))
+      if (element .is (".externproto, .proto, .proto-scene, .node, .field, .imported-node.proxy") && !element .is (".manually"))
          this .selectPrimaryElement (element);
 
       const
@@ -586,28 +587,29 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       {
          const
             node         = this .objects .get (parseInt (element .attr ("node-id"))),
-            importedNode = this .objects .get (parseInt (element .attr ("imported-node-id")));
+            importedNode = this .objects .get (parseInt (element .attr ("imported-node-id"))),
+            local        = importedNode .getExecutionContext () .getLocalScene () === this .executionContext;
 
          var menu = [
             {
                label: _("Edit Imported Node..."),
-               visible: importedNode .getExecutionContext () .getLocalScene () === this .executionContext,
+               visible: local,
                args: ["editImportedNode", element .attr ("id")],
             },
             {
                label: _("Remove Imported Node"),
-               visible: importedNode .getExecutionContext () .getLocalScene () === this .executionContext,
+               visible: local && !node .getCloneCount (),
                args: ["removeImportedNode", element .attr ("id")],
             },
             {
                label: _("Add Clone"),
-               visible: importedNode .getExecutionContext () .getLocalScene () === this .executionContext,
+               visible: local,
                args: ["addImportedNodeClone", element .attr ("id")],
             },
             { type: "separator" },
             {
                label: _("Delete"),
-               visible: importedNode .getExecutionContext () .getLocalScene () === this .executionContext && node instanceof X3D .X3DImportedNodeProxy,
+               visible: local && !element .closest (".imported-nodes") .length,
                accelerator: "CmdOrCtrl+Backspace",
                args: ["deleteNodes"],
             },

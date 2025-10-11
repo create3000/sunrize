@@ -559,7 +559,7 @@ module .exports = class OutlineView extends Interface
          .appendTo (ul);
 
       for (const [index, importedNode] of importedNodes .entries ())
-         ul .append (this .createImportedNodeElement ("imported-node", parent, scene, importedNode, index));
+         ul .append (this .createImportedNodeElement (["imported-node"], parent, scene, importedNode .getProxyNode (), index));
 
       // Added to prevent bug, that last route is not drawn right.
       $("<li></li>")
@@ -977,7 +977,7 @@ module .exports = class OutlineView extends Interface
    createNodeElement (type, parent, node, index)
    {
       if (node instanceof X3D .X3DImportedNodeProxy)
-         return this .createImportedNodeElement ("imported-node", parent, node .getExecutionContext (), node, index);
+         return this .createImportedNodeElement (["imported-node", "proxy"], parent, node .getExecutionContext (), node, index);
 
       if (node)
       {
@@ -1411,120 +1411,98 @@ module .exports = class OutlineView extends Interface
 
    #importedNodeSymbol = Symbol ();
 
-   createImportedNodeElement (type, parent, scene, importedNode, index)
+   createImportedNodeElement (type, parent, scene, node, index)
    {
-      let proxy = null;
+      const importedNode = node .getImportedNode ();
 
-      if (importedNode instanceof X3D .X3DImportedNodeProxy)
+      node .name_changed .addFieldCallback (this .#importedNodeSymbol, this .updateImportedNodeName .bind (this, importedNode));
+
+      importedNode .getInlineNode () .getLoadState () .addFieldCallback (this .#importedNodeSymbol, this .updateScene .bind (this, parent .closest (".scene"), scene));
+
+      this .objects .set (node .getId (),         node);
+      this .objects .set (importedNode .getId (), importedNode);
+
+      // Node
+
+      const classes = type;
+
+      if ($.try (() => importedNode .getExportedNode ()))
       {
-         proxy        = importedNode;
-         importedNode = importedNode .getImportedNode ();
+         const selection = require ("../Application/Selection");
 
-         this .objects .set (proxy .getId (), proxy);
+         if (selection .has (node))
+            classes .push ("selected");
+      }
+      else
+      {
+         classes .push ("no-expand");
       }
 
-      importedNode .getInlineNode () .getLoadState () .addFieldCallback (this .#importedNodeSymbol, this .updateScene .bind (this, parent, scene));
+      const child = $("<li></li>")
+         .addClass (classes)
+         .attr ("node-id", node .getId ())
+         .attr ("imported-node-id", importedNode .getId ())
+         .attr ("index", index);
 
-      try
-      {
-         this .objects .set (importedNode .getId (), importedNode);
-         this .objects .set (importedNode .getExportedNode () .getId (), importedNode .getExportedNode ());
+      // Icon
 
-         // Node
+      const icon = $("<img></img>")
+         .addClass ("icon")
+         .attr ("src", `../images/OutlineEditor/Node/${this .nodeIcons .get (type [0])}.svg`)
+         .appendTo (child);
 
-         const child = $("<li></li>")
-            .addClass ([type, proxy ? "proxy" : ""])
-            .attr ("imported-node-id", importedNode .getId ())
-            .attr ("node-id", proxy ?.getId () ?? importedNode .getExportedNode () .getId ())
-            .attr ("index", index);
+      // Name
 
-         // Icon
+      const name = $("<div></div>")
+         .addClass ("name")
+         .appendTo (child);
 
-         const icon = $("<img></img>")
-            .addClass ("icon")
-            .attr ("src", `../images/OutlineEditor/Node/${this .nodeIcons .get (type)}.svg`)
-            .appendTo (child);
+      $("<span></span>")
+         .addClass ("node-type-name")
+         .text (node .getTypeName ())
+         .appendTo (name);
 
-         // Name
+      name .append (document .createTextNode (" "));
 
-         const name = $("<div></div>")
-            .addClass ("name")
-            .appendTo (child);
+      $("<span></span>")
+         .addClass ("node-name")
+         .text (importedNode .getExportedName ())
+         .appendTo (name);
 
-         $("<span></span>")
-            .addClass ("node-type-name")
-            .text (importedNode .getExportedNode () .getTypeName ())
-            .appendTo (name);
+      const nodeAsName = $("<span></span>")
+         .addClass ("node-as-name")
+         .append (document .createTextNode (" "))
+         .append ($("<span></span>") .addClass ("as") .text ("AS"))
+         .append (document .createTextNode (" "))
+         .append ($("<span></span>") .addClass ("as-name") .text (importedNode .getImportedName ()))
+         .appendTo (name);
 
-         name .append (document .createTextNode (" "));
+      if (importedNode .getExportedName () === importedNode .getImportedName ())
+         nodeAsName .hide ();
 
-         $("<span></span>")
-            .addClass ("node-name")
-            .text (importedNode .getExportedName ())
-            .appendTo (name);
+      // Add buttons to name.
 
-         if (importedNode .getExportedName () !== importedNode .getImportedName ())
-         {
-            name
-               .append (document .createTextNode (" "))
-               .append ($("<span></span>") .addClass ("as") .text ("AS"))
-               .append (document .createTextNode (" "))
-               .append ($("<span></span>") .addClass ("as-name") .text (importedNode .getImportedName ()));
-         }
+      this .addNodeButtons (this .getNode (parent), node, name);
 
-         // Add buttons to name.
+      // Append empty tree to enable expander.
 
-         this .addNodeButtons (this .getNode (parent), importedNode .getExportedNode (), name);
+      $("<ul><li></li></ul>") .appendTo (child);
 
-         // Append empty tree to enable expander.
+      return child;
+   }
 
-         $("<ul><li></li></ul>") .appendTo (child);
+   updateImportedNodeName (importedNode)
+   {
+      const nodeAsName = this .sceneGraph
+         .find (`.imported-node[imported-node-id=${importedNode .getId ()}]`)
+         .find ("> .item .node-as-name");
 
-         return child;
-      }
-      catch
-      {
-         this .objects .set (importedNode .getId (), importedNode);
+      nodeAsName .find ("as-name") .text (importedNode .getImportedName ());
 
-         // Node
-
-         const child = $("<li></li>")
-            .addClass ([type, proxy ? "proxy" : ""])
-            .attr ("imported-node-id", importedNode .getId ())
-            .attr ("index", index);
-
-         if (proxy)
-            child .attr ("node-id", proxy .getId ());
-
-         // Icon
-
-         const icon = $("<img></img>")
-            .addClass ("icon")
-            .attr ("src", `../images/OutlineEditor/Node/${this .nodeIcons .get (type)}.svg`)
-            .appendTo (child);
-
-         // Name
-
-         const name = $("<div></div>")
-            .addClass ("name")
-            .appendTo (child);
-
-         $("<span></span>")
-            .addClass ("node-name")
-            .text (importedNode .getExportedName ())
-            .appendTo (name);
-
-         if (importedNode .getExportedName () !== importedNode .getImportedName ())
-         {
-            name
-               .append (document .createTextNode (" "))
-               .append ($("<span></span>") .addClass ("as") .text ("AS"))
-               .append (document .createTextNode (" "))
-               .append ($("<span></span>") .addClass ("as-name") .text (importedNode .getImportedName ()));
-         }
-
-         return child;
-      }
+      if (importedNode .getExportedName () === importedNode .getImportedName ())
+         nodeAsName .hide ();
+      else
+         nodeAsName .show ();
    }
 
    #exportedNodeSymbol = Symbol ();
@@ -3483,19 +3461,19 @@ module .exports = class OutlineView extends Interface
       this .clearConnectors ();
 
       const
-         element = $(event .currentTarget) .closest (".node, .externproto, .proto, .imported-node, .exported-node"),
+         element = $(event .currentTarget) .closest (".node, .externproto, .proto, .imported-node"),
          add     = event .shiftKey || event .metaKey;
 
-      if (element .hasClass ("node"))
+      if (element .is (".node, .imported-node"))
          this .selectNodeElement (element, { add, target: true });
 
-      else if (element .is (".externproto, .proto, .imported-node, .exported-node"))
+      else if (element .is (".externproto, .proto"))
          this .selectPrimaryElement (element, add);
    }
 
    selectNodeElement (element, { add = false, target = false } = { })
    {
-      if (!element .hasClass ("node"))
+      if (!element .is (".node, .imported-node.proxy"))
          return;
 
       if (!this .isEditable (element))
@@ -3507,7 +3485,7 @@ module .exports = class OutlineView extends Interface
          selected         = element .hasClass ("manually"),
          selectedElements = this .sceneGraph .find (".primary, .selected"),
          node             = this .getNode (element),
-         elements         = $(`.node[node-id=${node ?.getId ()}]`),
+         elements         = $(`:is(.node, .imported-node)[node-id='${node ?.getId ()}']`),
          changed          = new Map (selection .nodes .map (node => [node, node .getTool ()]));
 
       if (node)

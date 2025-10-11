@@ -110,6 +110,6 @@
     "tweakpane": "^3.1.10",
     "update-electron-app": "^3.1.1",
     "x_ite": "^12.1.1",
-    "x3d-traverse": "^1.0.14"
+    "x3d-traverse": "^1.0.15"
   }
 }
