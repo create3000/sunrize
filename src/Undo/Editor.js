@@ -3489,7 +3489,15 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                for (const importedNode of Array .from (executionContext .getImportedNodes ()))
                {
                   if (importedNode .getInlineNode () .valueOf () === node)
+                  {
+                     for (const parent of new Set (importedNode .getProxyNode () .getParents ()))
+                     {
+                        if (parent instanceof X3D .SFNode)
+                           this .setFieldValue (executionContext, executionContext, parent, null, undoManager);
+                     }
+
                      this .removeImportedNode (executionContext, importedNode .getImportedName (), undoManager);
+                  }
                }
 
                // Remove exported nodes.
