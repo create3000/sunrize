@@ -244,11 +244,11 @@ module .exports = class Console extends Interface
 
       try
       {
-         console .debug (String (this .scriptNode .evaluate (text)));
+         console .debug (this .scriptNode .evaluate (text));
       }
       catch (error)
       {
-         console .error (`${error .name}: ${error .message}`);
+         console .error (error);
       }
 
       this .textarea .val ("");
