@@ -85,7 +85,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       if (!element .is (".manually"))
          this .sceneGraph .find (".manually") .removeClass ("manually");
 
-      if (element .is (".externproto, .proto, .proto-scene, .node, .field, .imported-node, .exported-node") && !element .is (".manually"))
+      if (element .is (":is(.externproto, .proto, .proto-scene, .node, .field, .imported-node, .exported-node):not(.manually)"))
          this .selectPrimaryElement (element);
 
       const
