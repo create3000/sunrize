@@ -14,8 +14,7 @@ const
 
 const
    _expanded     = Symbol (),
-   _fullExpanded = Symbol (),
-   _changing     = Symbol ();
+   _fullExpanded = Symbol ();
 
 module .exports = class OutlineView extends Interface
 {
@@ -519,15 +518,8 @@ module .exports = class OutlineView extends Interface
 
    updateSceneRootNodes (parent, scene, type, func)
    {
-      const nodes = scene .rootNodes .getValue () .filter (node => node .getValue () ?.getUserData (_changing));
-
-      if (nodes .length)
-      {
-         this .browser .nextFrame ()
-            .then (() => nodes .forEach (node => node .setUserData (_changing, false)));
-
+      if (this .#changing)
          return;
-      }
 
       this .updateSceneSubtree (parent, scene, type, func);
    }
@@ -1000,8 +992,6 @@ module .exports = class OutlineView extends Interface
 
          this .objects .set (node .getId (), node .valueOf ());
 
-         node .setUserData (_changing, false);
-
          // These fields are observed and must never be disconnected, because clones would also lose connection.
 
          node .typeName_changed .addFieldCallback (this .#nodeSymbol, this .updateNodeTypeName .bind (this, node));
@@ -1418,8 +1408,6 @@ module .exports = class OutlineView extends Interface
 
       this .objects .set (node .getId (),         node);
       this .objects .set (importedNode .getId (), importedNode);
-
-      node .setUserData (_changing, false);
 
       // Node
 
@@ -2033,35 +2021,8 @@ module .exports = class OutlineView extends Interface
       if (!parent .prop ("isConnected"))
          return;
 
-      switch (field .getType ())
-      {
-         case X3D .X3DConstants .SFNode:
-         {
-            const node = field .getValue ();
-
-            if (!node ?.getUserData (_changing))
-               break;
-
-            this .browser .nextFrame ()
-               .then (() => node .setUserData (_changing, false));
-
-            return;
-         }
-         case X3D .X3DConstants .MFNode:
-         {
-            const nodes = field .getValue () .filter (node => node .getValue () ?.getUserData (_changing));
-
-            if (nodes .length)
-            {
-               this .browser .nextFrame ()
-                  .then (() => nodes .forEach (node => node .setUserData (_changing, false)));
-
-               return;
-            }
-
-            break;
-         }
-      }
+      if (this .#changing)
+         return;
 
       this .saveScrollPositions ();
 
@@ -3231,14 +3192,18 @@ module .exports = class OutlineView extends Interface
          node .getTool () .setSelected (element .hasClass ("selected"));
       }
 
-      node .setUserData (_changing, true);
-
       this .sceneGraph .find (`.node[node-id=${node .getId ()}],
          .imported-node[node-id=${node .getId ()}],
          .exported-node[node-id=${node .getId ()}]`)
          .find ("> .item [action=toggle-tool]")
          .removeClass (["on", "off"])
          .addClass (tool ? "off" : "on");
+
+      // Prevent update tree view.
+
+      this .#changing = true;
+
+      this .browser .nextFrame () .then (() => this .#changing = false);
    }
 
    proxyDisplay (event)
@@ -3469,6 +3434,8 @@ module .exports = class OutlineView extends Interface
          this .selectPrimaryElement (element, add);
    }
 
+   #changing = false;
+
    selectNodeElement (element, { add = false, target = false } = { })
    {
       if (!element .is (".node, .imported-node.proxy"))
@@ -3483,11 +3450,7 @@ module .exports = class OutlineView extends Interface
          selected         = element .hasClass ("manually"),
          selectedElements = this .sceneGraph .find (".primary, .selected"),
          node             = this .getNode (element),
-         elements         = $(`:is(.node, .imported-node)[node-id='${node ?.getId ()}']`),
-         changed          = new Map (selection .nodes .map (node => [node, node .getTool ()]));
-
-      if (node)
-         changed .set (node .valueOf (), node .getTool ());
+         elements         = $(`:is(.node, .imported-node)[node-id='${node ?.getId ()}']`);
 
       selectedElements .removeClass ("primary");
 
@@ -3539,11 +3502,11 @@ module .exports = class OutlineView extends Interface
          hierarchy .set (node);
       }
 
-      for (const [node, tool] of changed)
-      {
-         if (node .getTool () !== tool)
-            node .setUserData (_changing, true);
-      }
+      // Prevent update tree view.
+
+      this .#changing = true;
+
+      this .browser .nextFrame () .then (() => this .#changing = false);
    }
 
    selectPrimaryElement (element, add = false)

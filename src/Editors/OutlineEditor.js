@@ -3083,7 +3083,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                {
                   destinationElement .addClass ("drag-into");
                }
-               else if (destinationElement .is (".node"))
+               else if (destinationElement .is (".node, .imported-node.proxy"))
                {
                   const
                      item = destinationElement .find ("> .item"),
