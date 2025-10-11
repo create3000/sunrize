@@ -1056,8 +1056,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       else
          return;
 
-      const nodes = [ ];
-
       for (const id of ids .reverse ())
       {
          const
@@ -1080,11 +1078,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                Editor .removeValueFromArray (executionContext, parentNode, parentField, index);
                break;
          }
-
-         nodes .push (node);
       }
-
-      Editor .removeNodesFromExecutionContextIfNecessary (this .executionContext, nodes);
 
       UndoManager .shared .endUndo ();
    }

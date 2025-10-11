@@ -519,15 +519,12 @@ module .exports = class OutlineView extends Interface
 
    updateSceneRootNodes (parent, scene, type, func)
    {
-      for (const node of scene .rootNodes)
+      const nodes = scene .rootNodes .getValue () .filter (node => node .getValue () ?.getUserData (_changing));
+
+      if (nodes .length)
       {
-         if (!node ?.getNodeUserData (_changing))
-            continue;
-
-         const nodes = Array .from (scene .rootNodes);
-
          this .browser .nextFrame ()
-            .then (() => nodes .forEach (node => node ?.setNodeUserData (_changing, false)));
+            .then (() => nodes .forEach (node => node .setUserData (_changing, false)));
 
          return;
       }
@@ -1422,6 +1419,8 @@ module .exports = class OutlineView extends Interface
       this .objects .set (node .getId (),         node);
       this .objects .set (importedNode .getId (), importedNode);
 
+      node .setUserData (_changing, false);
+
       // Node
 
       const classes = type;
@@ -2038,25 +2037,24 @@ module .exports = class OutlineView extends Interface
       {
          case X3D .X3DConstants .SFNode:
          {
-            if (!field .getValue () || !field .getNodeUserData (_changing))
+            const node = field .getValue ();
+
+            if (!node ?.getUserData (_changing))
                break;
 
             this .browser .nextFrame ()
-               .then (() => field .setNodeUserData (_changing, false));
+               .then (() => node .setUserData (_changing, false));
 
             return;
          }
          case X3D .X3DConstants .MFNode:
          {
-            for (const node of field)
+            const nodes = field .getValue () .filter (node => node .getValue () ?.getUserData (_changing));
+
+            if (nodes .length)
             {
-               if (!node ?.getNodeUserData (_changing))
-                  continue;
-
-               const nodes = Array .from (field);
-
                this .browser .nextFrame ()
-                  .then (() => nodes .forEach (node => node ?.setNodeUserData (_changing, false)));
+                  .then (() => nodes .forEach (node => node .setUserData (_changing, false)));
 
                return;
             }

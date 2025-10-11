@@ -2938,7 +2938,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       switch (field .getType ())
       {
          case X3D .X3DConstants .SFNode:
-            this .removeNodesFromExecutionContextIfNecessary (executionContext, [oldValue], undoManager);
+            this .removeNodesFromExecutionContextIfNecessary (executionContext, new X3D .MFNode (oldValue), undoManager);
             break;
          case X3D .X3DConstants .MFNode:
             this .removeNodesFromExecutionContextIfNecessary (executionContext, oldValue, undoManager);
@@ -3428,8 +3428,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       const nodesToRemove = this .#nodesToRemove .get (executionContext);
 
-      for (const node of nodes .filter (node => node))
-         nodesToRemove .push (node .valueOf ());
+      for (const node of nodes .getValue () .filter (node => node))
+         nodesToRemove .push (node);
 
       if (undoManager .defer ("removeNodesFromExecutionContextIfNecessary"))
          return;
@@ -3444,13 +3444,13 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
             Array .from (Traverse .traverse (nodesToRemove, Traverse .ROOT_NODES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY))
             .filter (object => object instanceof X3D .SFNode)
-            .forEach (node => children .add (node .getValue () .valueOf ()));
+            .forEach (node => children .add (node .getValue ()));
 
             // Remove nodes still in scene graph.
 
             Array .from (Traverse .traverse (executionContext, Traverse .ROOT_NODES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY))
             .filter (object => object instanceof X3D .SFNode)
-            .forEach (node => children .delete (node .getValue () .valueOf ()));
+            .forEach (node => children .delete (node .getValue ()));
 
             if (children .size === 0)
                continue;
