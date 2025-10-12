@@ -948,7 +948,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          importedNode = executionContext .getImportedNodes () .get (importedName),
          inlineNode   = importedNode .getInlineNode (),
          exportedName = importedNode .getExportedName (),
-         proxy        = importedNode .getProxyNode ();
+         exportedNode = importedNode .getExportedNode ();
 
       const routes = executionContext .getRoutes () .filter (route =>
       {
@@ -971,7 +971,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
          for (const index of Array .from (field .keys ()) .reverse ())
          {
-            if (field .getValue () [index] .getValue () === proxy)
+            if (field [index] .getValue () === exportedNode)
                this .removeValueFromArray (executionContext, node, field, index, undoManager);
          }
       }
@@ -989,7 +989,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                case X3D .X3DConstants .SFNode:
                {
-                  if (field .getValue () === proxy)
+                  if (field .getValue () === exportedNode)
                      this .setFieldValue (executionContext, node, field, null, undoManager);
 
                   break;
@@ -998,7 +998,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                {
                   for (const index of Array .from (field .keys ()) .reverse ())
                   {
-                     if (field .getValue () [index] .getValue () === proxy)
+                     if (field [index] .getValue () === exportedNode)
                         this .removeValueFromArray (executionContext, node, field, index, undoManager);
                   }
 

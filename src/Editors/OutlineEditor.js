@@ -880,7 +880,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       UndoManager .shared .beginUndo (_("Add Clone of Imported Node »%s«"), importedNode .getImportedName ());
 
-      Editor .appendValueToArray (executionContext, executionContext, executionContext .rootNodes, importedNode .getProxyNode ());
+      Editor .appendValueToArray (executionContext, executionContext, executionContext .rootNodes, importedNode .getExportedNode ());
 
       UndoManager .shared .endUndo ();
    }

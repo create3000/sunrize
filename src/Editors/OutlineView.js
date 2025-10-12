@@ -503,8 +503,8 @@ module .exports = class OutlineView extends Interface
 
       let index = 0;
 
-      for (const rootNode of scene .rootNodes .getValue ())
-         ul .append (this .createNodeElement ("node", parent, rootNode .getValue (), index ++));
+      for (const rootNode of scene .rootNodes)
+         ul .append (this .createNodeElement ("node", parent, rootNode ?.getValue (), index ++));
 
       // Added to prevent bug, that last route is not drawn right.
       $("<li></li>")
@@ -548,7 +548,7 @@ module .exports = class OutlineView extends Interface
          .appendTo (ul);
 
       for (const [index, importedNode] of importedNodes .entries ())
-         ul .append (this .createImportedNodeElement (["imported-node"], parent, scene, importedNode .getProxyNode (), index));
+         ul .append (this .createImportedNodeElement (["imported-node"], parent, scene, importedNode .getExportedNode (), index));
 
       // Added to prevent bug, that last route is not drawn right.
       $("<li></li>")
@@ -1418,7 +1418,7 @@ module .exports = class OutlineView extends Interface
 
       const classes = type;
 
-      if ($.try (() => importedNode .getExportedNode ()))
+      if (importedNode .getExportedNode () .getSharedNode ())
       {
          const selection = require ("../Application/Selection");
 
@@ -2141,7 +2141,7 @@ module .exports = class OutlineView extends Interface
 
       let index = 0;
 
-      for (const node of field .getValue ())
+      for (const node of field)
          ul .append (this .createNodeElement ("node", parent, node .getValue (), index ++));
 
       // Make jsTree.
