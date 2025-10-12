@@ -1405,6 +1405,8 @@ module .exports = class OutlineView extends Interface
       if (!importedNode)
          return this .createNodeElement ("node", parent, null, index);
 
+      // These fields are observed and must never be disconnected, because clones would also lose connection.
+
       node .name_changed .addFieldCallback (this .#importedNodeSymbol, this .updateImportedNodeName .bind (this, importedNode));
 
       importedNode .getInlineNode () .getLoadState () .addFieldCallback (this .#importedNodeSymbol, this .updateScene .bind (this, parent .closest (".scene"), scene));
@@ -1503,6 +1505,8 @@ module .exports = class OutlineView extends Interface
 
       this .objects .set (exportedNode .getId (), exportedNode);
       this .objects .set (node .getId (), node .valueOf ());
+
+      // These fields are observed and must never be disconnected, because clones would also lose connection.
 
       node .typeName_changed .addFieldCallback (this .#exportedNodeSymbol, this .updateNodeTypeName     .bind (this, node));
       node .name_changed     .addFieldCallback (this .#exportedNodeSymbol, this .updateExportedNodeName .bind (this, exportedNode));
@@ -2982,10 +2986,6 @@ module .exports = class OutlineView extends Interface
             return;
          }
 
-         node .typeName_changed .removeFieldCallback (this .#nodeSymbol);
-         node .name_changed     .removeFieldCallback (this .#nodeSymbol);
-         node .parents_changed  .removeFieldCallback (this .#nodeSymbol);
-
          for (const type of node .getType ())
          {
             switch (type)
@@ -3010,16 +3010,6 @@ module .exports = class OutlineView extends Interface
                }
             }
          }
-      });
-
-      element .find (".exported-node") .each ((i, e) =>
-      {
-         const
-            child = $(e),
-            node  = this .getNode (child);
-
-         node .typeName_changed .removeFieldCallback (this .#exportedNodeSymbol);
-         node .name_changed     .removeFieldCallback (this .#exportedNodeSymbol);
       });
 
       element .find (".field, .special") .each ((i, e) =>
