@@ -1402,6 +1402,9 @@ module .exports = class OutlineView extends Interface
    {
       const importedNode = node .getImportedNode ();
 
+      if (!importedNode)
+         return this .createNodeElement ("node", parent, null, index);
+
       node .name_changed .addFieldCallback (this .#importedNodeSymbol, this .updateImportedNodeName .bind (this, importedNode));
 
       importedNode .getInlineNode () .getLoadState () .addFieldCallback (this .#importedNodeSymbol, this .updateScene .bind (this, parent .closest (".scene"), scene));

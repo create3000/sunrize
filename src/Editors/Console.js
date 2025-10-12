@@ -244,7 +244,7 @@ module .exports = class Console extends Interface
 
       try
       {
-         console .log (this .scriptNode .evaluate (text));
+         console .debug (this .scriptNode .evaluate (text));
       }
       catch (error)
       {

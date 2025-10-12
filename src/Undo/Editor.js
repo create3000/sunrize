@@ -947,7 +947,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       const
          importedNode = executionContext .getImportedNodes () .get (importedName),
          inlineNode   = importedNode .getInlineNode (),
-         exportedName = importedNode .getExportedName ();
+         exportedName = importedNode .getExportedName (),
+         proxy        = importedNode .getProxyNode ();
 
       const routes = executionContext .getRoutes () .filter (route =>
       {
@@ -962,10 +963,49 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       undoManager .beginUndo (_("Remove Imported Node »%s«"), importedName);
 
-      for (const parent of Array .from (importedNode .getProxyNode () .getParents ()))
+      // RootNodes:
       {
-         if (parent instanceof X3D .SFNode)
-            this .#removeImportedNodeProxy (executionContext, importedName, parent, undoManager);
+         const
+            node  = executionContext,
+            field = executionContext .rootNodes;
+
+         for (const index of Array .from (field .keys ()) .reverse ())
+         {
+            if (field .getValue () [index] .getValue () === proxy)
+               this .removeValueFromArray (executionContext, node, field, index, undoManager);
+         }
+      }
+
+      for (const object of executionContext .traverse (Traverse .ROOT_NODES))
+      {
+         if (!(object instanceof X3D .SFNode))
+            continue;
+
+         const node = object .getValue ();
+
+         for (const field of node .getFields ())
+         {
+            switch (field .getType ())
+            {
+               case X3D .X3DConstants .SFNode:
+               {
+                  if (field .getValue () === proxy)
+                     this .setFieldValue (executionContext, node, field, null, undoManager);
+
+                  break;
+               }
+               case X3D .X3DConstants .MFNode:
+               {
+                  for (const index of Array .from (field .keys ()) .reverse ())
+                  {
+                     if (field .getValue () [index] .getValue () === proxy)
+                        this .removeValueFromArray (executionContext, node, field, index, undoManager);
+                  }
+
+                  break;
+               }
+            }
+         }
       }
 
       executionContext .removeImportedNode (importedName);
@@ -989,34 +1029,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       });
 
       this .requestUpdateInstances (executionContext, undoManager);
-
-      undoManager .endUndo ();
-   }
-
-   static #removeImportedNodeProxy (executionContext, importedName, parent, undoManager)
-   {
-      undoManager .beginUndo (_("Remove Imported Node Proxy"));
-
-      parent .setValue (null);
-
-      undoManager .registerUndo (() =>
-      {
-         this .#restoreImportedNodeProxy (executionContext, importedName, parent, undoManager);
-      });
-
-      undoManager .endUndo ();
-   }
-
-   static #restoreImportedNodeProxy (executionContext, importedName, parent, undoManager)
-   {
-      undoManager .beginUndo (_("Restore Imported Node Proxy"));
-
-      parent .setValue (executionContext .getImportedNodes () .get (importedName) .getProxyNode ());
-
-      undoManager .registerUndo (() =>
-      {
-         this .#removeImportedNodeProxy (executionContext, importedName, parent, undoManager);
-      });
 
       undoManager .endUndo ();
    }
@@ -2898,6 +2910,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       const
          instance  = node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance),
          name      = field .getName (),
+         oldValue  = field .copy (),
          auxiliary = field .create ();
 
       auxiliary .setUnit (field .getUnit ());
@@ -2908,8 +2921,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          field .addEvent ();
          return;
       }
-
-      const oldValue = field .copy ()
 
       if (node .getDisplayName ())
          undoManager .beginUndo (_("Change Field »%s« of Node %s »%s«"), field .getName (), node .getTypeName (), node .getDisplayName ());
@@ -2947,24 +2958,29 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       const
          instance  = node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance),
          name      = field .getName (),
-         auxiliary = field .create ();
+         oldValue  = field .copy ();
 
-      auxiliary .setValue (value);
+      if (!(value instanceof X3D .X3DField))
+      {
+         const auxiliary = field .create ();
 
-      if (auxiliary .equals (field))
+         auxiliary .setValue (value);
+
+         value = auxiliary;
+      }
+
+      if (value .equals (field))
       {
          field .addEvent ();
          return;
       }
-
-      const oldValue = field .copy ();
 
       if (node .getDisplayName ())
          undoManager .beginUndo (_("Change Field »%s« of Node %s »%s«"), field .getName (), node .getTypeName (), node .getDisplayName ());
       else
          undoManager .beginUndo (_("Change Field »%s« of Node %s"), field .getName (), node .getTypeName ());
 
-      field .assign (auxiliary);
+      field .assign (value);
 
       if (node .isDefaultValue (field))
          field .setModificationTime (0);
@@ -3052,7 +3068,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     * @param {number} index
     * @param {UndoManager} undoManager
     */
-   static removeValueFromArray (executionContext, node, field, index, undoManager = UndoManager .shared)
+   static removeValueFromArray (executionContext, node, field, index, undoManager = UndoManager .shared, xxx)
    {
       node  = node .valueOf ();
       field = typeof field === "string" ? node .getField (field) : field;
@@ -3511,7 +3527,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
                // Remove named nodes.
 
-               if (node .getName ())
+               if (node .getName () && node .getExecutionContext () === executionContext)
                   this .removeNamedNode (executionContext, node, undoManager);
 
                // Remove routes.
