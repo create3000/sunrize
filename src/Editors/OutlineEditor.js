@@ -500,18 +500,15 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             { type: "separator" },
             {
                label: _("Cut"),
+               visible: local && element .hasClass ("proxy"),
                accelerator: "CmdOrCtrl+X",
                args: ["cutNodes"],
             },
             {
                label: _("Copy"),
+               visible: local && element .hasClass ("proxy"),
                accelerator: "CmdOrCtrl+C",
                args: ["copyNodes"],
-            },
-            {
-               label: _("Paste"),
-               accelerator: "CmdOrCtrl+V",
-               args: ["pasteNodes", element .attr ("id"), executionContext .getId (), node .getId ()],
             },
             {
                label: _("Delete"),
@@ -522,7 +519,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             { type: "separator" },
          ];
 
-         if (element .hasClass ("proxy") && innerNode .getType () .includes (X3D .X3DConstants .X3DChildNode))
+         if (local && element .hasClass ("proxy") && innerNode .getType () .includes (X3D .X3DConstants .X3DChildNode))
             this .addChildNodeMenu (menu, element, parentNodeElement, executionContext, node);
       }
 
@@ -605,7 +602,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             {
                label: _("Paste"),
                accelerator: "CmdOrCtrl+V",
-               args: ["pasteNodes", element .attr ("id"), executionContext .getId ()],
+               args: ["pasteNodes", element .attr ("id"), executionContext .getId (), undefined, undefined, true],
             },
          ];
       }
@@ -993,11 +990,14 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       scene .dispose ();
    }
 
-   async pasteNodes (id, executionContextId, nodeId, fieldId)
+   async pasteNodes (id, executionContextId, nodeId, fieldId, deselect)
    {
       // try
       {
          // if there is a selected field or node, update nodeId and fieldId.
+
+         if (deselect)
+            this .deselectAll ();
 
          const
             primary                 = $(".primary"),
