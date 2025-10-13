@@ -3069,7 +3069,7 @@ module .exports = class OutlineView extends Interface
          this .selectNodeElement ($(element), { add: true });
    }
 
-   deselectAll ()
+   deselectAll ({ target = true } = { })
    {
       const
          selection = require ("../Application/Selection"),
@@ -3079,7 +3079,15 @@ module .exports = class OutlineView extends Interface
       nodes .removeClass (["primary", "manually", "selected"]);
 
       selection .clear ();
-      hierarchy .clear ();
+
+      if (target)
+         hierarchy .clear ();
+
+      // Prevent update tree view.
+
+      this .#changing = true;
+
+      this .browser .nextFrame () .then (() => this .#changing = false);
    }
 
    showPreview (event)
@@ -3432,7 +3440,7 @@ module .exports = class OutlineView extends Interface
          this .selectNodeElement (element, { add, target: true });
 
       else if (element .is (".externproto, .proto, .imported-node, .exported-node"))
-         this .selectPrimaryElement (element, add);
+         this .selectPrimaryElement (element, { add, target: true });
    }
 
    #changing = false;
@@ -3510,17 +3518,30 @@ module .exports = class OutlineView extends Interface
       this .browser .nextFrame () .then (() => this .#changing = false);
    }
 
-   selectPrimaryElement (element, add = false)
+   selectPrimaryElement (element, { add = false, target = false } = { })
    {
       if (!this .isEditable (element))
          return;
 
+      const
+         hierarchy = require ("../Application/Hierarchy"),
+         node      = this .getNode (element);
+
       if (!add)
+      {
+         this .deselectAll ({ target: false });
+
          this .sceneGraph .find (".manually") .removeClass ("manually");
+      }
 
       this .sceneGraph .find (".primary") .removeClass ("primary");
 
       element .addClass (["primary", "manually"]);
+
+      if (target)
+         hierarchy .target (node);
+
+      hierarchy .add (node);
    }
 
    selectField (event)

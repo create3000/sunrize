@@ -180,10 +180,17 @@ module .exports = class Dashboard extends Interface
       for (const node of nodes)
          outlineEditor .expandTo (node, { expandObject: true, expandAll: true });
 
-      const elements = nodes .map (node => outlineEditor .sceneGraph .find (`.node[node-id=${node .getId ()}]`));
+      const elements = nodes .map (node => outlineEditor .sceneGraph
+         .find (`:is(.node, .imported-node.proxy)[node-id="${node .getId ()}"]`));
 
       for (const [i, element] of elements .entries ())
-         outlineEditor .selectNodeElement (element, { add: i > 0 });
+      {
+         if (element .is (".node"))
+            outlineEditor .selectNodeElement (element, { add: i > 0 });
+
+         else if (element .is (".imported-node.proxy"))
+            outlineEditor .selectPrimaryElement (element, { add: i > 0 });
+      }
 
       // Scroll element into view.
       // Hide scrollbars during scroll to prevent overlay issue.
