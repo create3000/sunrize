@@ -925,7 +925,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       UndoManager .shared .endUndo ();
    }
 
-   async copyNodes (deselect = true)
+   async copyNodes ()
    {
       const
          primary     = $(":is(.node, .proto, .externproto, .imported-node.proxy).primary"),
@@ -957,9 +957,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       navigator .clipboard .writeText (x3dSyntax);
 
       undoManager .undo ();
-
-      if (deselect)
-         this .deselectAll ();
    }
 
    async copyExternPrototype ()
@@ -1000,14 +997,14 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             this .deselectAll ();
 
          const
-            primary                 = $(".primary"),
+            primary                 = $(".node.primary"),
             executionContextElement = primary .closest (".scene", this .sceneGraph),
             executionContext        = this .objects .get (executionContextId) ?? this .getNode (executionContextElement) ?? this .executionContext,
             targetNode              = this .objects .get (nodeId) ?? this .getNode (primary),
             targetField             = this .objects .get (fieldId) ?? this .getField (primary),
             numRootNodes            = executionContext .rootNodes .length,
             x3dSyntax               = await navigator .clipboard .readText (),
-            destinationModelMatrix  = nodeId !== undefined ? this .getModelMatrix ($(`.node[node-id=${nodeId}]`)) : new X3D .Matrix4 ();
+            destinationModelMatrix  = this .getModelMatrix ($(`.node[node-id=${targetNode ?.getId ()}]`));
 
          UndoManager .shared .beginUndo (_("Paste Nodes"));
 

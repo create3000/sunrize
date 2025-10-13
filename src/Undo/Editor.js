@@ -1180,30 +1180,30 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static setProtoDeclarations (executionContext, protos, undoManager = UndoManager .shared)
    {
-      const oldProtos = new Map (Array .from (executionContext .protos, p => [p .getName (), p]))
+      const oldProtos = new Map (Array .from (executionContext .protos, p => [p .getName (), p]));
 
-      undoManager .beginUndo (_("Update Proto Declarations"))
+      undoManager .beginUndo (_("Update Proto Declarations"));
 
       for (const name of oldProtos .keys ())
-         executionContext .removeProtoDeclaration (name)
+         executionContext .removeProtoDeclaration (name);
 
-      if (Array .isArray (protos))
+      if (Array .isArray (protos) || protos instanceof X3D .X3DInfoArray)
       {
          for (const proto of protos)
-            executionContext .updateProtoDeclaration (proto .getName (), proto)
+            executionContext .updateProtoDeclaration (proto .getName (), proto);
       }
       else
       {
          for (const [name, proto] of protos)
-            executionContext .updateProtoDeclaration (name, proto)
+            executionContext .updateProtoDeclaration (name, proto);
       }
 
       undoManager .registerUndo (() =>
       {
-         this .setProtoDeclarations (executionContext, oldProtos, undoManager)
+         this .setProtoDeclarations (executionContext, oldProtos, undoManager);
       });
 
-      this .requestUpdateInstances (executionContext, undoManager)
+      this .requestUpdateInstances (executionContext, undoManager);
 
       undoManager .endUndo ();
    }
@@ -1373,7 +1373,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       for (const name of oldExternProtos .keys ())
          executionContext .removeExternProtoDeclaration (name);
 
-      if (Array .isArray (externprotos))
+      if (Array .isArray (externprotos) || externprotos instanceof X3D .X3DInfoArray)
       {
          for (const externproto of externprotos)
             executionContext .updateExternProtoDeclaration (externproto .getName (), externproto);
