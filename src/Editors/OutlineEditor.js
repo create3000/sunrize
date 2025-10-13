@@ -258,119 +258,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             ];
 
             if (innerNode .getType () .includes (X3D .X3DConstants .X3DChildNode))
-            {
-               menu .push ({
-                  label: _("Add Parent Group"),
-                  submenu: [
-                     {
-                        label: "Transform",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "Transform", "children"],
-                     },
-                     {
-                        label: "Group",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "Group", "children"],
-                     },
-                     {
-                        label: "StaticGroup",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "StaticGroup", "children"],
-                     },
-                     {
-                        label: "Switch",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "Switch", "children"],
-                     },
-                     { type: "separator" },
-                     {
-                        label: "Billboard",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "Billboard", "children"],
-                     },
-                     {
-                        label: "Collision",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "Collision", "children"],
-                     },
-                     {
-                        label: "LOD",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "LOD", "children"],
-                     },
-                     {
-                        label: "ViewpointGroup",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "ViewpointGroup", "children"],
-                     },
-                     { type: "separator" },
-                     {
-                        label: "Anchor",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "Anchor", "children"],
-                     },
-                     { type: "separator" },
-                     {
-                        label: "LayoutLayer",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layout", "LayoutLayer", "children"],
-                     },
-                     {
-                        label: "ScreenGroup",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layout", "ScreenGroup", "children"],
-                     },
-                     { type: "separator" },
-                     {
-                        label: "GeoTransform",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Geospatial", "GeoTransform", "children"],
-                     },
-                     {
-                        label: "GeoLocation",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Geospatial", "GeoLocation", "children"],
-                     },
-                     { type: "separator" },
-                     {
-                        label: "CADLayer",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADLayer", "children"],
-                     },
-                     {
-                        label: "CADAssembly",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADAssembly", "children"],
-                     },
-                     {
-                        label: "CADPart",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADPart", "children"],
-                     },
-                     {
-                        label: "CADFace",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADFace", "shape"],
-                     },
-                     { type: "separator" },
-                     {
-                        label: "LayerSet",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layering", "LayerSet", "layers"],
-                     },
-                     {
-                        label: "Layer",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layering", "Layer", "children"],
-                     },
-                     {
-                        label: "Viewport",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layering", "Viewport", "children"],
-                     },
-                     { type: "separator" },
-                     {
-                        label: "PickableGroup",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Picking", "PickableGroup", "children"],
-                     },
-                     { type: "separator" },
-                     {
-                        label: "CollidableOffset",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "RigidBodyPhysics", "CollidableOffset", "collidable"],
-                     },
-                     {
-                        label: "CollidableShape",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "RigidBodyPhysics", "CollidableShape", "shape"],
-                     },
-                  ],
-               },
-               {
-                  label: _("Remove Parent"),
-                  enabled: parentNodeElement .hasClass ("node"),
-                  args: ["removeParent", element .attr ("id"), executionContext .getId (), node .getId ()],
-               },
-               { type: "separator" });
-            }
+               this .addChildNodeMenu (menu, element, parentNodeElement, executionContext, node);
 
             for (const type of node .getType () .toReversed ())
             {
@@ -586,9 +474,12 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       else if (element .is (".imported-node"))
       {
          const
-            node         = this .objects .get (parseInt (element .attr ("node-id"))),
-            importedNode = this .objects .get (parseInt (element .attr ("imported-node-id"))),
-            local        = importedNode .getExecutionContext () .getLocalScene () === this .executionContext;
+            parentFieldElement = element .closest (".field, .scene", this .sceneGraph),
+            parentNodeElement  = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
+            node               = this .objects .get (parseInt (element .attr ("node-id"))),
+            innerNode          = $.try (() => node .getInnerNode ()) ?? node,
+            importedNode       = this .objects .get (parseInt (element .attr ("imported-node-id"))),
+            local              = importedNode .getExecutionContext () .getLocalScene () === this .executionContext;
 
          var menu = [
             {
@@ -609,11 +500,15 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             { type: "separator" },
             {
                label: _("Delete"),
-               visible: local && !element .closest (".imported-nodes") .length,
+               visible: local && element .hasClass ("proxy"),
                accelerator: "CmdOrCtrl+Backspace",
                args: ["deleteNodes"],
             },
+            { type: "separator" },
          ];
+
+         if (element .hasClass ("proxy") && innerNode .getType () .includes (X3D .X3DConstants .X3DChildNode))
+            this .addChildNodeMenu (menu, element, parentNodeElement, executionContext, node);
       }
 
       else if (element .is (".externproto, .proto"))
@@ -705,6 +600,121 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       }
 
       electron .ipcRenderer .send ("context-menu", "outline-editor", menu);
+   }
+
+   addChildNodeMenu (menu, element, parentNodeElement, executionContext, node)
+   {
+      menu .push ({
+         label: _("Add Parent Group"),
+         submenu: [
+            {
+               label: "Transform",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "Transform", "children"],
+            },
+            {
+               label: "Group",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "Group", "children"],
+            },
+            {
+               label: "StaticGroup",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "StaticGroup", "children"],
+            },
+            {
+               label: "Switch",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "Switch", "children"],
+            },
+            { type: "separator" },
+            {
+               label: "Billboard",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "Billboard", "children"],
+            },
+            {
+               label: "Collision",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "Collision", "children"],
+            },
+            {
+               label: "LOD",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "LOD", "children"],
+            },
+            {
+               label: "ViewpointGroup",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "ViewpointGroup", "children"],
+            },
+            { type: "separator" },
+            {
+               label: "Anchor",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "Anchor", "children"],
+            },
+            { type: "separator" },
+            {
+               label: "LayoutLayer",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layout", "LayoutLayer", "children"],
+            },
+            {
+               label: "ScreenGroup",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layout", "ScreenGroup", "children"],
+            },
+            { type: "separator" },
+            {
+               label: "GeoTransform",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Geospatial", "GeoTransform", "children"],
+            },
+            {
+               label: "GeoLocation",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Geospatial", "GeoLocation", "children"],
+            },
+            { type: "separator" },
+            {
+               label: "CADLayer",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADLayer", "children"],
+            },
+            {
+               label: "CADAssembly",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADAssembly", "children"],
+            },
+            {
+               label: "CADPart",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADPart", "children"],
+            },
+            {
+               label: "CADFace",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADFace", "shape"],
+            },
+            { type: "separator" },
+            {
+               label: "LayerSet",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layering", "LayerSet", "layers"],
+            },
+            {
+               label: "Layer",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layering", "Layer", "children"],
+            },
+            {
+               label: "Viewport",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layering", "Viewport", "children"],
+            },
+            { type: "separator" },
+            {
+               label: "PickableGroup",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Picking", "PickableGroup", "children"],
+            },
+            { type: "separator" },
+            {
+               label: "CollidableOffset",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "RigidBodyPhysics", "CollidableOffset", "collidable"],
+            },
+            {
+               label: "CollidableShape",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "RigidBodyPhysics", "CollidableShape", "shape"],
+            },
+         ],
+      },
+      {
+         label: _("Remove Parent"),
+         enabled: parentNodeElement .hasClass ("node"),
+         args: ["removeParent", element .attr ("id"), executionContext .getId (), node .getId ()],
+      },
+      { type: "separator" });
    }
 
    addUserDefinedField (id, executionContextId, nodeId, fieldId)
@@ -1178,8 +1188,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       if (field .getType () === X3D .X3DConstants .MFNode)
       {
          const
-            selectedNodes          = Array .from (this .sceneGraph .find (".node.manually,.node.primary"), e => this .getNode ($(e))),
-            selectedElements       = Array .from (this .sceneGraph .find (".node.manually"), e => $(e)),
+            selectedNodes          = Array .from (this .sceneGraph .find (":is(.node, .imported-node.proxy):is(.manually,.primary)"), e => this .getNode ($(e))),
+            selectedElements       = Array .from (this .sceneGraph .find (":is(.node, .imported-node.proxy).manually"), e => $(e)),
             destinationModelMatrix = this .getModelMatrix (parentNodeElement);
 
          // Add other selected nodes.
