@@ -1300,12 +1300,12 @@ module .exports = class OutlineView extends Interface
 
    updateCloneCount (node)
    {
-      const cloneCount = node .getCloneCount ?.() ?? 0
+      const cloneCount = node .getCloneCount ?.() ?? 0;
 
       this .sceneGraph
-         .find (`.node[node-id=${node .getId ()}]`)
+         .find (`:is(.node, .imported-node)[node-id="${node .getId ()}"]`)
          .find ("> .item .clone-count")
-         .text (cloneCount > 1 ? `[${cloneCount}]` : "")
+         .text (cloneCount > 1 ? `[${cloneCount}]` : "");
    }
 
    updateActiveLayer ()
@@ -1407,7 +1407,8 @@ module .exports = class OutlineView extends Interface
 
       // These fields are observed and must never be disconnected, because clones would also lose connection.
 
-      node .name_changed .addFieldCallback (this .#importedNodeSymbol, this .updateImportedNodeName .bind (this, importedNode));
+      node .name_changed    .addFieldCallback (this .#importedNodeSymbol, this .updateImportedNodeName .bind (this, importedNode));
+      node .parents_changed .addFieldCallback (this .#nodeSymbol, this .updateCloneCount .bind (this, node));
 
       importedNode .getInlineNode () .getLoadState () .addFieldCallback (this .#importedNodeSymbol, this .updateScene .bind (this, parent .closest (".scene"), scene));
 
@@ -1471,6 +1472,15 @@ module .exports = class OutlineView extends Interface
 
       if (importedNode .getExportedName () === importedNode .getImportedName ())
          nodeAsName .hide ();
+
+      name .append (document .createTextNode (" "));
+
+      const cloneCount = node .getCloneCount ?.() ?? 0
+
+      $("<span></span>")
+         .addClass ("clone-count")
+         .text (cloneCount > 1 ? `[${cloneCount}]` : "")
+         .appendTo (name);
 
       // Add buttons to name.
 
