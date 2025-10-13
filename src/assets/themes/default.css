@@ -1415,8 +1415,8 @@ body.dark .ui-widget .library-list .component {
 
 /* make drag & drop work */
 .scene-graph .last {
-  height: 2px;
   overflow: hidden;
+  height: 2px;
 }
 
 .scene-graph .last .item *:not(.route-curves-wrapper, .route-curves) {
