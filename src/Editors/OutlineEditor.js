@@ -922,13 +922,13 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       UndoManager .shared .beginUndo (nodes .length === 1 ? _("Cut %d Node") : _("Cut %d Nodes"), nodes .length);
 
-      await this .copyNodes ();
+      await this .copyNodes (false);
       await this .deleteNodes ();
 
       UndoManager .shared .endUndo ();
    }
 
-   async copyNodes ()
+   async copyNodes (deselect = true)
    {
       const
          primary     = $(":is(.node, .proto, .externproto, .imported-node.proxy).primary"),
@@ -961,7 +961,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       undoManager .undo ();
 
-      this .deselectAll ();
+      if (deselect)
+         this .deselectAll ();
    }
 
    async copyExternPrototype ()
