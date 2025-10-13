@@ -875,14 +875,15 @@ body.dark .ui-widget .library-list .component {
 }
 
 .library-list.materials .icon {
+  --padding: 5%;
   box-sizing: border-box;
   float: left;
   width: calc(100% / 6);
   height: auto;
   aspect-ratio: 1 / 1;
-  padding: 0.5em;
-  background-position: 0.5em 0.5em;
-  background-size: calc(100% - 1em) auto;
+  padding: var(--padding);
+  background-size: calc(100% - 2 * var(--padding)) auto;
+  background-position: 50%;
 }
 
 .library-list.materials .text {
