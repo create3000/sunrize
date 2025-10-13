@@ -36,8 +36,8 @@ module .exports = new class Hierarchy extends Interface
    }
 
    #targetTypes = new Set ([
-      X3D .X3DConstants .X3DShapeNode,
       X3D .X3DConstants .Inline,
+      X3D .X3DConstants .X3DShapeNode,
    ]);
 
    target (node)
@@ -70,10 +70,17 @@ module .exports = new class Hierarchy extends Interface
 
             const node = object .getValue () .valueOf ();
 
-            if (!node .getType () .some (type => this .#targetTypes .has (type)))
+            if (!node .getType () .some (type => this .#targetTypes .has (type)) &&
+                !(node instanceof X3D .X3DImportedNodeProxy))
+            {
                continue;
+            }
 
-            targets .push (node .getGeometry ?.() ?.valueOf () ?? node);
+            const target = node .getType () .includes (X3D .X3DConstants .X3DShapeNode)
+               ? node .getGeometry () ?.valueOf () ?? node
+               : node;
+
+            targets .push (target);
          }
 
          for (const hierarchy of this .#find (targets))

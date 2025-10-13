@@ -3855,13 +3855,6 @@ module .exports = class OutlineView extends Interface
       }
    }
 
-   static objectClasses = {
-      "X3DExternProtoDeclaration": "externproto",
-      "X3DProtoDeclaration": "proto",
-      "X3DScene": "scene",
-      "X3DExecutionContext": "scene",
-   };
-
    expandHierarchy (hierarchy, parent, parentObject)
    {
       let object = hierarchy .shift ();
@@ -3911,9 +3904,10 @@ module .exports = class OutlineView extends Interface
          }
          default: // X3DBaseNode
          {
-            const
-               objectClass = OutlineView .objectClasses [object .getTypeName ()] || "node",
-               element     = parent .find (`.${objectClass}[node-id=${object .getId ()}]`);
+            const element = parent .find (`:is(.node, .imported-node.proxy, .externproto, .proto, .scene)[node-id="${object .getId ()}"]`);
+
+            if (!element .length)
+               break;
 
             element .jstree ("open_node", element);
 
