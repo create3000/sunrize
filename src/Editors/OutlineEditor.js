@@ -1051,6 +1051,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
          UndoManager .shared .endUndo ();
 
+         // Expand to pasted nodes and select them.
+
          await this .browser .nextFrame ();
 
          this .deselectAll ();
