@@ -189,7 +189,7 @@ module .exports = class Dashboard extends Interface
             outlineEditor .selectNodeElement (element, { add: i > 0 });
 
          else if (element .is (".imported-node.proxy"))
-            outlineEditor .selectPrimaryElement (element, { add: i > 0 });
+            outlineEditor .selectPrimaryElement (element, { add: i > 0, deselect: true });
       }
 
       // Scroll element into view.
