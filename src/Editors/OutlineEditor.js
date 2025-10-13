@@ -993,11 +993,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       {
          // if there is a selected field or node, update nodeId and fieldId.
 
-         if (deselect)
-            this .deselectAll ();
-
          const
-            primary                 = $(".node.primary"),
+            primary                 = deselect ? $("") : $(".node.primary"),
             executionContextElement = primary .closest (".scene", this .sceneGraph),
             executionContext        = this .objects .get (executionContextId) ?? this .getNode (executionContextElement) ?? this .executionContext,
             targetNode              = this .objects .get (nodeId) ?? this .getNode (primary),
