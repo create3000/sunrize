@@ -635,7 +635,7 @@ Viewpoint {
       if (this .activeElementIsMonacoEditor ())
          return;
 
-      this .sidebar .outlineEditor .copyNodes (true);
+      this .sidebar .outlineEditor .copyNodes ();
       return false;
    }
 

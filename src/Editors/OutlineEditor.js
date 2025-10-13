@@ -499,6 +499,21 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             },
             { type: "separator" },
             {
+               label: _("Cut"),
+               accelerator: "CmdOrCtrl+X",
+               args: ["cutNodes"],
+            },
+            {
+               label: _("Copy"),
+               accelerator: "CmdOrCtrl+C",
+               args: ["copyNodes"],
+            },
+            {
+               label: _("Paste"),
+               accelerator: "CmdOrCtrl+V",
+               args: ["pasteNodes", element .attr ("id"), executionContext .getId (), node .getId ()],
+            },
+            {
                label: _("Delete"),
                visible: local && element .hasClass ("proxy"),
                accelerator: "CmdOrCtrl+Backspace",
@@ -913,11 +928,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       UndoManager .shared .endUndo ();
    }
 
-   async copyNodes (deselect)
+   async copyNodes ()
    {
       const
-         primary     = $(":is(.node, .proto, .externproto).primary"),
-         selected    = this .sceneGraph .find (":is(.node, .proto, .externproto).manually"),
+         primary     = $(":is(.node, .proto, .externproto, .imported-node.proxy).primary"),
+         selected    = this .sceneGraph .find (":is(.node, .proto, .externproto, .imported-node.proxy).manually"),
          selection   = selected .filter (primary) .length ? selected : primary,
          ids         = selection .map (function () { return this .id }) .get (),
          elements    = ids .map (id => $(`#${id}`)),
@@ -946,8 +961,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       undoManager .undo ();
 
-      if (deselect)
-         this .deselectAll ();
+      this .deselectAll ();
    }
 
    async copyExternPrototype ()
