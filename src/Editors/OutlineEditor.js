@@ -1053,8 +1053,13 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
          await this .browser .nextFrame ();
 
+         this .deselectAll ();
+
          for (const node of nodes)
+         {
             this .expandTo (node);
+            this .selectNodeElement ($(`.node[node-id="${node .getId ()}"]`), { add: true });
+         }
       }
       // catch (error)
       // {
