@@ -840,6 +840,7 @@ body.dark .dialog ::placeholder {
   font-size: var(--small-font-size);
   border-bottom: 1px solid var(--system-gray1);
   color: var(--system-gray1);
+  clear: both;
 }
 
 body.dark .ui-widget .library-list .component {
@@ -866,6 +867,23 @@ body.dark .ui-widget .library-list .component {
 }
 
 .ui-widget .library-list .hidden {
+  display: none;
+}
+
+.ui-widget .library-list.materials .component {
+  padding-top: 1em;
+}
+
+.library-list.materials .icon {
+  float: left;
+  width: calc(100% / 6);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  background-size: 100% auto;
+  padding: 0;
+}
+
+.library-list.materials .text {
   display: none;
 }
 

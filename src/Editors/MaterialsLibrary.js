@@ -26,7 +26,7 @@ module .exports = class Materials extends LibraryPane
 
       this .#list = $("<ul></ul>")
          .appendTo (this .output)
-         .addClass ("library-list");
+         .addClass (["library-list", "materials"]);
 
       const
          canvas  = $("<x3d-canvas preserveDrawingBuffer='true' xrSessionMode='NONE'></x3d-canvas>"),
@@ -51,9 +51,11 @@ module .exports = class Materials extends LibraryPane
 
             nodes .push ($("<li></li>")
                .addClass (["node", "icon"])
-               .text (`${group .getNodeName ()} ${c + 1}`)
                .attr ("group", g)
                .attr ("child", c)
+               .append ($("<span></span>")
+                  .addClass ("text")
+                  .text (`${group .getNodeName ()} ${c + 1}`))
                .appendTo (this .#list)
                .on ("dblclick", () => this .importX3D (material .getNodeName (), material .toXMLString ())));
          }
@@ -65,7 +67,7 @@ module .exports = class Materials extends LibraryPane
          .css ({ "position": "absolute", "visibility": "hidden" })
          .prependTo ($("body"));
 
-      await browser .resize (25, 25);
+      await browser .resize (256, 256);
       await browser .replaceWorld (scene);
 
       for (const element of Array .from (this .output .find (".node"), e => $(e)))
