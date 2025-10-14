@@ -3518,7 +3518,7 @@ module .exports = class OutlineView extends Interface
       this .browser .nextFrame () .then (() => this .#changing = false);
    }
 
-   selectPrimaryElement (element, { add = false, target = false, deselect = false } = { })
+   selectPrimaryElement (element, { add = false, target = false } = { })
    {
       if (!this .isEditable (element))
          return;
@@ -3528,12 +3528,7 @@ module .exports = class OutlineView extends Interface
          node      = this .getNode (element);
 
       if (!add)
-      {
-         if (deselect)
-            this .deselectAll ({ target: false });
-
          this .sceneGraph .find (".manually") .removeClass ("manually");
-      }
 
       this .sceneGraph .find (".primary") .removeClass ("primary");
 

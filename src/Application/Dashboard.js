@@ -183,13 +183,15 @@ module .exports = class Dashboard extends Interface
       const elements = nodes .map (node => outlineEditor .sceneGraph
          .find (`:is(.node, .imported-node.proxy)[node-id="${node .getId ()}"]`));
 
-      for (const [i, element] of elements .entries ())
+      outlineEditor .deselectAll ({ target: false });
+
+      for (const element of elements)
       {
          if (element .is (".node"))
-            outlineEditor .selectNodeElement (element, { add: i > 0 });
+            outlineEditor .selectNodeElement (element, { add: true });
 
          else if (element .is (".imported-node.proxy"))
-            outlineEditor .selectPrimaryElement (element, { add: i > 0, deselect: true });
+            outlineEditor .selectPrimaryElement (element, { add: true });
       }
 
       // Scroll element into view.
