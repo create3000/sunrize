@@ -64,7 +64,7 @@ module .exports = class Console extends Interface
 
       this .searchCaseSensitiveButton = $("<div></div>")
          .addClass (["codicon", "codicon-case-sensitive", "console-search-button"])
-         .on ("click", () => this .searchCaseSensitive (this .config .file .searchCaseSensitive = !this .config .file .searchCaseSensitive))
+         .on ("click", () => this .searchCaseSensitive (!this .config .file .searchCaseSensitive))
          .appendTo (this .searchInputElements);
 
       this .searchStatus = $("<div></div>")
@@ -127,6 +127,8 @@ module .exports = class Console extends Interface
       this .historyIndex = this .history .length;
 
       this .searchCaseSensitive ();
+
+      this .output .scrollTop (this .output .prop ("scrollHeight"));
    }
 
    async set_browser_initialized ()
@@ -152,11 +154,6 @@ module .exports = class Console extends Interface
 
    addMessage (event, level, sourceId, line, message)
    {
-      function merge (elements)
-      {
-         return $($.map (elements, element => element .get ()));
-      }
-
       if (this .excludes .some (exclude => message .includes (exclude)))
          return;
 
@@ -164,8 +161,12 @@ module .exports = class Console extends Interface
          classes = [this .logLevels [level] ?? "log", this .logClasses [level]],
          title   = sourceId ? `${sourceId}:${line}`: "";
 
-      const text = merge (message .split ("\n")
-         .map (line => $("<p></p>") .addClass (classes) .attr ("title", title) .text (line)));
+      const text = $(message .split ("\n")
+         .map (line => $("<p></p>")
+            .addClass (classes)
+            .attr ("title", title)
+            .text (line)
+            .get (0)));
 
       if (this .messageTime && performance .now () - this .messageTime > 1000)
          this .output .append ($("<p></p>") .addClass ("splitter"));
@@ -348,8 +349,10 @@ module .exports = class Console extends Interface
       this .searchNext ();
    }
 
-   searchCaseSensitive ()
+   searchCaseSensitive (value = this .config .file .searchCaseSensitive)
    {
+      this .config .file .searchCaseSensitive = value;
+
       if (this .config .file .searchCaseSensitive)
          this .searchCaseSensitiveButton .addClass ("active");
       else

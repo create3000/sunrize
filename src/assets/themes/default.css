@@ -1149,7 +1149,7 @@ body.dark .ui-widget .library-list .component {
   position: absolute;
   top: 0px;
   right: 30px;
-  width: 400px;
+  width: 300px;
   height: 33px;
   padding: 0 4px;
   background: var(--background-color);
