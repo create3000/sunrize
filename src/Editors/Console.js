@@ -57,10 +57,19 @@ module .exports = class Console extends Interface
          .on ("keydown", event => this .searchNextKey (event))
          .appendTo (this .search);
 
+      this .searchInputElements = $("<div></div>")
+         .addClass ("console-search-input-elements")
+         .appendTo (this .search);
+
+      this .searchCaseSensitiveButton = $("<div></div>")
+         .addClass (["codicon", "codicon-case-sensitive", "console-search-button"])
+         .on ("click", () => this .searchCaseSensitive (this .config .file .searchCaseSensitive = !this .config .file .searchCaseSensitive))
+         .appendTo (this .searchInputElements);
+
       this .searchStatus = $("<div></div>")
          .addClass ("console-search-status")
          .text ("No results")
-         .appendTo (this .search);
+         .appendTo (this .searchInputElements);
 
       this .searchPreviousButton = $("<div></div>")
          .addClass (["search-previous", "codicon", "codicon-arrow-up", "disabled"])
@@ -111,10 +120,12 @@ module .exports = class Console extends Interface
    {
       super .configure ();
 
-      this .config .file .setDefaultValues ({ history: [ ] });
+      this .config .file .setDefaultValues ({ history: [ ], searchCaseSensitive: false });
 
       this .history      = this .config .file .history .slice (-this .HISTORY_MAX);
       this .historyIndex = this .history .length;
+
+      this .searchCaseSensitive ();
    }
 
    async set_browser_initialized ()
@@ -308,12 +319,14 @@ module .exports = class Console extends Interface
 
    searchString ()
    {
-      const string = this .searchInput .val () .toLowerCase ();
+      const
+         toString = this .searchCaseSensitiveButton .hasClass ("active") ? "toString" : "toLowerCase",
+         string   = this .searchInput .val () [toString] ();
 
       if (string)
       {
          this .foundElements = Array .from (this .output .children (), element => $(element))
-            .filter (element => element .text () .toLowerCase () .includes (string));
+            .filter (element => element .text () [toString] () .includes (string));
       }
       else
       {
@@ -332,6 +345,16 @@ module .exports = class Console extends Interface
          return;
 
       this .searchNext ();
+   }
+
+   searchCaseSensitive ()
+   {
+      if (this .config .file .searchCaseSensitive)
+         this .searchCaseSensitiveButton .addClass ("active");
+      else
+         this .searchCaseSensitiveButton .removeClass ("active");
+
+      this .searchString ();
    }
 
    searchPrevious ()
@@ -374,7 +397,7 @@ module .exports = class Console extends Interface
          this .searchNextButton     .addClass ("disabled");
       }
 
-      this .searchInput .css ("padding-right", this .searchStatus .width () + 12);
+      this .searchInput .css ("padding-right", this .searchInputElements .width () + 12);
    }
 
    outputKey (event)

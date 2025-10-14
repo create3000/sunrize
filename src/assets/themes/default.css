@@ -1171,11 +1171,25 @@ body.dark .ui-widget .library-list .component {
   outline: 1px solid var(--system-blue);
 }
 
-.console-search-status {
+.console-search-input-elements {
   box-sizing: border-box;
   position: absolute;
-  top: 9px;
+  top: 8.5px;
   right: 65px;
+  white-space: nowrap;
+}
+
+.console-search-input-elements > * {
+  display: inline-block;
+}
+
+.console-search-status {
+  position: relative;
+  top: -3.5px;
+}
+
+.console-search-button {
+  padding: 0 3px;
 }
 
 .console-search :is(.search-previous, .search-next) {
