@@ -1196,6 +1196,10 @@ body.dark .ui-widget .library-list .component {
   right: 5px;
 }
 
+.console-output .selected {
+  background: var(--system-gray5);
+}
+
 /* Script Editor */
 
 .script-editor {

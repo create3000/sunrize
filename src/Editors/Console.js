@@ -45,12 +45,13 @@ module .exports = class Console extends Interface
          .attr ("type", "text")
          .attr ("placeholder", _("Find"))
          .addClass ("console-search-input")
-         .on ("input change", () => this .searchString ())
+         .on ("input", () => this .searchString ())
+         .on ("keydown", event => this .searchNextKey (event))
          .appendTo (this .search);
 
       this .searchStatus = $("<div></div>")
          .addClass ("console-search-status")
-         .text ("No Results")
+         .text ("No results")
          .appendTo (this .search);
 
       this .searchPreviousButton = $("<div></div>")
@@ -132,13 +133,20 @@ module .exports = class Console extends Interface
 
    addMessage (event, level, sourceId, line, message)
    {
+      function merge (elements)
+      {
+         return $($.map (elements, element => element .get ()));
+      }
+
       if (this .excludes .some (exclude => message .includes (exclude)))
          return;
 
       const
          classes = [this .logLevels [level] ?? "log", this .logClasses [level]],
-         title   = sourceId ? `${sourceId}:${line}`: "",
-         text    = $("<p></p>") .addClass (classes) .attr ("title", title) .text (message);
+         title   = sourceId ? `${sourceId}:${line}`: "";
+
+      const text = merge (message .split ("\n")
+         .map (line => $("<p></p>") .addClass (classes) .attr ("title", title) .text (line)));
 
       if (this .messageTime && performance .now () - this .messageTime > 1000)
          this .output .append ($("<p></p>") .addClass ("splitter"));
@@ -300,6 +308,17 @@ module .exports = class Console extends Interface
       this .updateCurrentElement (0);
    }
 
+   searchNextKey (event)
+   {
+      if (event .key !== "Enter")
+         return;
+
+      if (!this .foundElements .length)
+         return;
+
+      this .searchNext ();
+   }
+
    searchPrevious ()
    {
       this .updateCurrentElement (this .currentElement - 1);
@@ -320,6 +339,8 @@ module .exports = class Console extends Interface
 
       this .currentElement = value;
 
+      this .output .find (".selected") .removeClass ("selected");
+
       if (this .foundElements .length)
       {
          const element = this .foundElements [this .currentElement];
@@ -329,10 +350,12 @@ module .exports = class Console extends Interface
          this .searchStatus .text (`${this .currentElement + 1} / ${this .foundElements .length}`);
          this .searchPreviousButton .removeClass ("disabled");
          this .searchNextButton     .removeClass ("disabled");
+
+         element .addClass ("selected");
       }
       else
       {
-         this .searchStatus .text (`No Results`);
+         this .searchStatus .text (`No results`);
          this .searchPreviousButton .addClass ("disabled");
          this .searchNextButton     .addClass ("disabled");
       }
