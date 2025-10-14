@@ -401,7 +401,7 @@ module .exports = class Console extends Interface
          this .searchNextButton     .addClass ("disabled");
       }
 
-      this .searchInput .css ("padding-right", this .searchInputElements .width () + 12);
+      this .searchInput .css ("padding-right", this .searchInputElements .width () + 6);
    }
 
    outputKey (event)
