@@ -133,7 +133,7 @@ module .exports = class ScriptEditor extends Interface
          .addClass ("console")
          .appendTo (this .horizontalSplitterBottom);
 
-      this .console = new Console (this .consoleElement);
+      this .console = new Console (this .consoleElement, { search: false });
 
       electron .ipcRenderer .on ("script-editor", (event, key, ... args) => this [key] (... args));
 

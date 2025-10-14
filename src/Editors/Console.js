@@ -21,7 +21,7 @@ module .exports = class Console extends Interface
 
    logClasses = ["", "", "filled", "filled"];
 
-   constructor (element)
+   constructor (element, { search = true } = { })
    {
       super (`Sunrize.Console.${element .attr ("id")}.`);
 
@@ -31,11 +31,19 @@ module .exports = class Console extends Interface
       this .history            = [ ];
       this .addMessageCallback = this .addMessage .bind (this);
 
-      this .console   = element;
-      this .left      = $("<div></div>") .addClass ("console-left") .appendTo (this .console);
-      this .toolbar   = $("<div></div>") .addClass (["toolbar", "vertical-toolbar", "console-toolbar"]) .appendTo (this .console);
-      this .output    = $("<div></div>") .addClass (["console-output", "output"]) .attr ("tabindex", 0) .appendTo (this .left);
-      this .input     = $("<div></div>") .addClass ("console-input") .appendTo (this .left);
+      this .console = element;
+      this .left    = $("<div></div>") .addClass ("console-left") .appendTo (this .console);
+      this .toolbar = $("<div></div>") .addClass (["toolbar", "vertical-toolbar", "console-toolbar"]) .appendTo (this .console);
+
+      this .output = $("<div></div>")
+         .addClass (["console-output", "output"])
+         .attr ("tabindex", 0)
+         .on ("keydown", event => this .outputKey (event))
+         .appendTo (this .left);
+
+      this .input = $("<div></div>")
+         .addClass ("console-input")
+         .appendTo (this .left);
 
       this .search = $("<div></div>")
          .addClass ("console-search")
@@ -55,14 +63,12 @@ module .exports = class Console extends Interface
          .appendTo (this .search);
 
       this .searchPreviousButton = $("<div></div>")
-         .addClass (["material-icons", "search-previous", "disabled"])
-         .text ("arrow_upward")
+         .addClass (["search-previous", "codicon", "codicon-arrow-up", "disabled"])
          .on ("click", () => this .searchPrevious ())
          .appendTo (this .search);
 
       this .searchNextButton = $("<div></div>")
-         .addClass (["material-icons", "search-next", "disabled"])
-         .text ("arrow_downward")
+         .addClass (["search-next", "codicon", "codicon-arrow-down", "disabled"])
          .on ("click", () => this .searchNext ())
          .appendTo (this .search);
 
@@ -97,6 +103,7 @@ module .exports = class Console extends Interface
 
       electron .ipcRenderer .on ("console-message", this .addMessageCallback);
 
+      this .toggleSearch (search);
       this .setup ();
    }
 
@@ -291,6 +298,14 @@ module .exports = class Console extends Interface
       this .textarea .val ("");
    }
 
+   toggleSearch (visible)
+   {
+      if (visible)
+         this .search .show ();
+      else
+         this .search .hide ();
+   }
+
    searchString ()
    {
       const string = this .searchInput .val () .toLowerCase ();
@@ -360,5 +375,24 @@ module .exports = class Console extends Interface
       }
 
       this .searchInput .css ("padding-right", this .searchStatus .width () + 12);
+   }
+
+   outputKey (event)
+   {
+      switch (event .key)
+      {
+         case "f":
+         {
+            if (event .ctrlKey || event .metaKey)
+            {
+               this .searchInput .val (window .getSelection () .toString ());
+               this .searchInput .trigger ("select");
+
+               this .searchString ();
+            }
+
+            break;
+         }
+      }
    }
 };

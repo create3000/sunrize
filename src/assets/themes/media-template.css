@@ -1,6 +1,7 @@
 @import url(../../node_modules/material-icons/iconfont/material-icons.css);
 @import url(../../node_modules/material-symbols/index.css);
 @import url(../../node_modules/spectrum-colorpicker2/dist/spectrum.css);
+@import url(../../node_modules/@vscode/codicons/dist/codicon.css);
 @import url(system-colors.css);
 
 .image-icon.hand {
