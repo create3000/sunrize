@@ -59,7 +59,7 @@ module .exports = class Console extends Interface
          .attr ("placeholder", _("Find"))
          .addClass ("console-search-input")
          .on ("input", () => this .searchString ())
-         .on ("keydown", event => this .searchNextKey (event))
+         .on ("keydown", event => this .searchKey (event))
          .appendTo (this .search);
 
       this .searchInputElements = $("<div></div>")
@@ -344,15 +344,23 @@ module .exports = class Console extends Interface
       this .updateCurrentElement (0);
    }
 
-   searchNextKey (event)
+   searchKey (event)
    {
-      if (event .key !== "Enter")
-         return;
+      switch (event .key)
+      {
+         case "Enter":
+         {
+            if (!this .foundElements .length)
+               break;
 
-      if (!this .foundElements .length)
-         return;
+            if (event .shiftKey)
+               this .searchPrevious ();
+            else
+               this .searchNext ();
 
-      this .searchNext ();
+            break;
+         }
+      }
    }
 
    searchCaseSensitive (value = this .config .file .searchCaseSensitive)
