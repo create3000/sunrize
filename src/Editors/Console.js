@@ -74,11 +74,13 @@ module .exports = class Console extends Interface
 
       this .searchPreviousButton = $("<div></div>")
          .addClass (["search-previous", "codicon", "codicon-arrow-up", "disabled"])
+         .attr ("tabindex", 0)
          .on ("click", () => this .searchPrevious ())
          .appendTo (this .search);
 
       this .searchNextButton = $("<div></div>")
          .addClass (["search-next", "codicon", "codicon-arrow-down", "disabled"])
+         .attr ("tabindex", 0)
          .on ("click", () => this .searchNext ())
          .appendTo (this .search);
 
