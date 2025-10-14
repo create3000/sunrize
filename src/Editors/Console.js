@@ -5,6 +5,7 @@ const
    $         = require ("jquery"),
    electron  = require ("electron"),
    Interface = require ("../Application/Interface"),
+   util      = require ("util"),
    _         = require ("../Application/GetText");
 
 module .exports = class Console extends Interface
@@ -386,7 +387,7 @@ module .exports = class Console extends Interface
          element .addClass ("selected");
          element .get (0) .scrollIntoView ({ block: "center", inline: "start", behavior: "smooth" });
 
-         this .searchStatus .text (`${this .currentElement + 1} of ${this .foundElements .length}`);
+         this .searchStatus .text (util .format (_("%d of %d"), this .currentElement + 1, this .foundElements .length));
          this .searchPreviousButton .removeClass ("disabled");
          this .searchNextButton     .removeClass ("disabled");
       }
