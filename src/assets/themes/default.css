@@ -1186,6 +1186,7 @@ body.dark .ui-widget .library-list .component {
 .console-search-status {
   position: relative;
   top: -3.5px;
+  margin-left: 2px;
 }
 
 .console-search-button {
