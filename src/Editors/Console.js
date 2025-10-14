@@ -345,13 +345,12 @@ module .exports = class Console extends Interface
       {
          const element = this .foundElements [this .currentElement];
 
+         element .addClass ("selected");
          element .get (0) .scrollIntoView ({ block: "center", inline: "start", behavior: "smooth" });
 
          this .searchStatus .text (`${this .currentElement + 1} / ${this .foundElements .length}`);
          this .searchPreviousButton .removeClass ("disabled");
          this .searchNextButton     .removeClass ("disabled");
-
-         element .addClass ("selected");
       }
       else
       {
