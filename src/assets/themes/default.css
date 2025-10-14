@@ -1200,6 +1200,7 @@ body.dark .ui-widget .library-list .component {
   top: 5px;
   font-size: 16px;
   padding: 3px 2px;
+  padding-left: 1px;
   border-radius: 3px;
 }
 
