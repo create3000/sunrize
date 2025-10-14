@@ -239,23 +239,20 @@ tr.disabled ~ tr > td > div {
   width: 35%;
 }
 
-.vertical-splitter-left > .ui-resizable-e {
+.ui-resizable-e,
+.ui-resizable-w {
   cursor: col-resize;
-}
-
-.vertical-splitter-left > .ui-resizable-e > div {
-  position: relative;
-  left: 0px;
   width: 4px;
-  height: 100%;
 }
 
-.vertical-splitter-left > .ui-resizable-e:hover > div {
+.ui-resizable-w:hover,
+.ui-resizable-e:hover {
   animation: highlight-splitter 1000ms ease-out;
   animation-fill-mode: forwards;
 }
 
-.vertical-splitter-left > .ui-resizable-e:active > div {
+.ui-resizable-e:active,
+.ui-resizable-e:active {
   background-color: var(--accent-color);
 }
 
@@ -301,31 +298,26 @@ tr.disabled ~ tr > td > div {
   height: 40%;
 }
 
-.horizontal-splitter-top > .ui-resizable-s {
-  cursor: row-resize;
-}
-
-.horizontal-splitter-top > .ui-resizable-s > div {
-  position: relative;
-  top: 1px;
-  height: 4px;
-}
-
-.horizontal-splitter-top > .ui-resizable-s:hover > div {
-  animation: highlight-splitter 1000ms ease-out;
-  animation-fill-mode: forwards;
-}
-
-.horizontal-splitter-top > .ui-resizable-s:active > div {
-  background-color: var(--accent-color);
-}
-
 #horizontal-splitter > .horizontal-splitter-top {
   height: 60%;
 }
 
 #horizontal-splitter > .horizontal-splitter-bottom {
   height: 40%;
+}
+
+.ui-resizable-s {
+  cursor: row-resize;
+  height: 4px;
+}
+
+.ui-resizable-s:hover {
+  animation: highlight-splitter 1000ms ease-out;
+  animation-fill-mode: forwards;
+}
+
+.ui-resizable-s:active {
+  background-color: var(--accent-color);
 }
 
 /* Tabs */

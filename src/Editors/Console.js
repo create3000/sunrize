@@ -50,6 +50,10 @@ module .exports = class Console extends Interface
          .addClass ("console-search")
          .appendTo (this .left);
 
+      this .search .resizable({
+         handles: "w",
+      });
+
       this .searchInput = $("<input></input>")
          .attr ("type", "text")
          .attr ("placeholder", _("Find"))
