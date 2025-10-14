@@ -37,28 +37,56 @@ module .exports = class Console extends Interface
       this .output    = $("<div></div>") .addClass (["console-output", "output"]) .attr ("tabindex", 0) .appendTo (this .left);
       this .input     = $("<div></div>") .addClass ("console-input") .appendTo (this .left);
 
+      this .search = $("<div></div>")
+         .addClass ("console-search")
+         .appendTo (this .left);
+
+      this .searchInput = $("<input></input>")
+         .attr ("type", "text")
+         .attr ("placeholder", _("Find"))
+         .addClass ("console-search-input")
+         .on ("input change", () => this .searchString ())
+         .appendTo (this .search);
+
+      this .searchStatus = $("<div></div>")
+         .addClass ("console-search-status")
+         .text ("No Results")
+         .appendTo (this .search);
+
+      this .searchPreviousButton = $("<div></div>")
+         .addClass (["material-icons", "search-previous", "disabled"])
+         .text ("arrow_upward")
+         .on ("click", () => this .searchPrevious ())
+         .appendTo (this .search);
+
+      this .searchNextButton = $("<div></div>")
+         .addClass (["material-icons", "search-next", "disabled"])
+         .text ("arrow_downward")
+         .on ("click", () => this .searchNext ())
+         .appendTo (this .search);
+
       this .suspendButton = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _("Suspend console output."))
          .text ("cancel")
-         .appendTo (this .toolbar)
-         .on ("click", () => this .setSuspendConsole (!this .suspendConsole));
+         .on ("click", () => this .setSuspendConsole (!this .suspendConsole))
+         .appendTo (this .toolbar);
 
       this .clearButton = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _("Clear console."))
          .text ("delete_forever")
-         .appendTo (this .toolbar)
-         .on ("click", () => this .clearConsole ());
+         .on ("click", () => this .clearConsole ())
+         .appendTo (this .toolbar);
 
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
       this .textarea = $("<textarea></textarea>")
          .attr ("placeholder", _("Evaluate X3D Script code here, e.g. type `Browser.name`."))
          .attr ("tabindex", 0)
-         .appendTo (this .input)
          .on ("keydown", event => this .onkeydown (event))
-         .on ("keyup", event => this .onkeyup (event));
+         .on ("keyup", event => this .onkeyup (event))
+         .appendTo (this .input);
 
       if (this .console .attr ("id") !== "console")
       {
@@ -98,6 +126,7 @@ module .exports = class Console extends Interface
    excludes = [
       "The vm module of Node.js is unsupported",
       "Uncaught TypeError: Cannot read properties of null (reading 'removeChild')",
+      "aria-hidden",
       // "Invalid asm.js: Invalid member of stdlib",
    ];
 
@@ -252,5 +281,62 @@ module .exports = class Console extends Interface
       }
 
       this .textarea .val ("");
+   }
+
+   searchString ()
+   {
+      const string = this .searchInput .val () .toLowerCase ();
+
+      if (string)
+      {
+         this .foundElements = Array .from (this .output .children (), element => $(element))
+            .filter (element => element .text () .toLowerCase () .includes (string));
+      }
+      else
+      {
+         this .foundElements = [ ];
+      }
+
+      this .updateCurrentElement (0);
+   }
+
+   searchPrevious ()
+   {
+      this .updateCurrentElement (this .currentElement - 1);
+   }
+
+   searchNext ()
+   {
+      this .updateCurrentElement (this .currentElement + 1);
+   }
+
+   updateCurrentElement (value)
+   {
+      if (value < 0)
+         value = this .foundElements .length - 1;
+
+      if (value >= this .foundElements .length)
+         value = 0;
+
+      this .currentElement = value;
+
+      if (this .foundElements .length)
+      {
+         const element = this .foundElements [this .currentElement];
+
+         element .get (0) .scrollIntoView ({ behavior: "smooth" });
+
+         this .searchStatus .text (`${this .currentElement + 1} / ${this .foundElements .length}`);
+         this .searchPreviousButton .removeClass ("disabled");
+         this .searchNextButton     .removeClass ("disabled");
+      }
+      else
+      {
+         this .searchStatus .text (`No Results`);
+         this .searchPreviousButton .addClass ("disabled");
+         this .searchNextButton     .addClass ("disabled");
+      }
+
+      this .searchInput .css ("padding-right", this .searchStatus .width () + 12);
    }
 };

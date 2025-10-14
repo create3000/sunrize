@@ -646,27 +646,22 @@ html[platform=darwin] .horizontal-toolbar .select {
   user-select: none;
 }
 
-.horizontal-toolbar .material-icons:hover,
-.horizontal-toolbar .material-symbols-outlined:hover,
-.vertical-toolbar .material-icons:hover,
-.vertical-toolbar .material-symbols-outlined:hover {
+.material-icons:hover,
+.material-symbols-outlined:hover {
   color: var(--highlight-color);
 }
 
-.horizontal-toolbar .material-icons.active,
-.horizontal-toolbar .material-symbols-outlined.active,
-.vertical-toolbar .material-icons.active,
-.vertical-toolbar .material-symbols-outlined.active {
+.material-icons.active,
+.material-symbols-outlined.active {
   color: var(--accent-color);
 }
 
-.horizontal-toolbar .material-icons.disabled,
-.horizontal-toolbar .material-symbols-outlined.disabled,
+.material-icons.disabled,
+.material-symbols-outlined.disabled,
 .horizontal-toolbar .text.disabled,
 .horizontal-toolbar .input.disabled,
 .horizontal-toolbar .select.disabled,
-.vertical-toolbar .material-icons.disabled,
-.vertical-toolbar .material-symbols-outlined.disabled {
+.vertical-toolbar .material-icons.disabled {
   pointer-events: none;
   color: var(--system-gray3);
   border-color: var(--system-gray3);
@@ -1144,6 +1139,61 @@ body.dark .ui-widget .library-list .component {
   background-color: transparent;
   color: var(--text-color);
   resize: none;
+}
+
+.console-search {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0px;
+  right: 30px;
+  width: 400px;
+  height: 33px;
+  padding: 0 4px;
+  background: var(--background-color);
+  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.36);
+}
+
+.console-search-input {
+  box-sizing: border-box;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 59px;
+  padding: 2px 6px;
+  height: 23px;
+  background: var(--system-gray5);
+}
+
+.console-search-input:focus {
+  outline: 1px solid var(--system-blue);
+}
+
+.console-search-status {
+  box-sizing: border-box;
+  position: absolute;
+  top: 9px;
+  right: 65px;
+}
+
+.console-search :is(.search-previous, .search-next) {
+  user-select: none;
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  font-size: 16px;
+  padding: 3px 5px;
+}
+
+.console-search :is(.search-previous, .search-next):hover {
+  background-color: var(--system-gray5);
+}
+
+.console-search .search-previous {
+  right: 30px;
+}
+
+.console-search .search-next {
+  right: 5px;
 }
 
 /* Script Editor */
