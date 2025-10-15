@@ -217,6 +217,8 @@ module .exports = class Console extends Interface
 
       this .output .append (text);
       this .output .scrollTop (this .output .prop ("scrollHeight"));
+
+      this .searchString ();
    }
 
    setSuspendConsole (value)
@@ -344,13 +346,21 @@ module .exports = class Console extends Interface
       this .config .file .searchWidget = visible;
 
       if (visible)
+      {
          this .search .show ();
+         this .searchInput .trigger ("focus");
+      }
       else
+      {
          this .search .hide ();
+      }
    }
 
    searchString ()
    {
+      if (this .search .is (":hidden"))
+         return;
+
       const
          toString = this .searchCaseSensitiveButton .hasClass ("active") ? "toString" : "toLowerCase",
          string   = this .searchInput .val () [toString] ();
