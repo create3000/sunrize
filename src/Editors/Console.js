@@ -54,27 +54,27 @@ module .exports = class Console extends Interface
          handles: "w",
       });
 
+      this .searchInputElements = $("<div></div>")
+         .addClass ("console-search-input-elements")
+         .appendTo (this .search);
+
       this .searchInput = $("<input></input>")
          .attr ("type", "text")
          .attr ("placeholder", _("Find"))
          .addClass ("console-search-input")
          .on ("input", () => this .searchString ())
          .on ("keydown", event => this .searchKey (event))
-         .appendTo (this .search);
-
-      this .searchInputElements = $("<div></div>")
-         .addClass ("console-search-input-elements")
-         .appendTo (this .search);
+         .appendTo (this .searchInputElements);
 
       this .searchCaseSensitiveButton = $("<div></div>")
-         .addClass (["codicon", "codicon-case-sensitive", "console-search-button"])
+         .addClass (["codicon", "codicon-case-sensitive", "console-search-case-sensitive"])
          .on ("click", () => this .searchCaseSensitive (!this .config .file .searchCaseSensitive))
          .appendTo (this .searchInputElements);
 
       this .searchStatus = $("<div></div>")
          .addClass ("console-search-status")
          .text ("No results")
-         .appendTo (this .searchInputElements);
+         .appendTo (this .search);
 
       this .searchPreviousButton = $("<div></div>")
          .addClass (["search-previous", "codicon", "codicon-arrow-up", "disabled"])
@@ -414,8 +414,6 @@ module .exports = class Console extends Interface
          this .searchPreviousButton .addClass ("disabled");
          this .searchNextButton     .addClass ("disabled");
       }
-
-      this .searchInput .css ("padding-right", this .searchInputElements .width () + 6);
    }
 
    outputKey (event)
