@@ -1137,6 +1137,8 @@ body.dark .ui-widget .library-list .component {
 }
 
 .console-search {
+  --accent-color: var(--system-blue);
+  
   box-sizing: border-box;
   position: absolute;
   top: 0px;
