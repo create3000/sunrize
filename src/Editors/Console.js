@@ -52,6 +52,7 @@ module .exports = class Console extends Interface
 
       this .search .resizable({
          handles: "w",
+         minWidth: 285,
       });
 
       this .searchInputElements = $("<div></div>")
