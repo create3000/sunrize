@@ -22,7 +22,7 @@ module .exports = class Console extends Interface
 
    logClasses = ["", "", "filled", "filled"];
 
-   constructor (element, { search = true } = { })
+   constructor (element)
    {
       super (`Sunrize.Console.${element .attr ("id")}.`);
 
@@ -46,9 +46,12 @@ module .exports = class Console extends Interface
          .addClass ("console-input")
          .appendTo (this .left);
 
+      // Search Widget
+
       this .search = $("<div></div>")
          .addClass ("console-search")
-         .appendTo (this .left);
+         .appendTo (this .left)
+         .hide ();
 
       this .search .resizable({
          handles: "w",
@@ -89,6 +92,18 @@ module .exports = class Console extends Interface
          .on ("click", () => this .searchNext ())
          .appendTo (this .search);
 
+      // Toolbar
+
+      this .searchButton = $("<span></span>")
+         .addClass ("material-icons")
+         .css ("transform", "scale(1.2)")
+         .attr ("title", _("Show search widget."))
+         .text ("search")
+         .on ("click", () => this .toggleSearch (!this .config .file .searchWidget))
+         .appendTo (this .toolbar);
+
+      $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
+
       this .suspendButton = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _("Suspend console output."))
@@ -105,6 +120,8 @@ module .exports = class Console extends Interface
 
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
+      // Input
+
       this .textarea = $("<textarea></textarea>")
          .attr ("placeholder", _("Evaluate X3D Script code here, e.g. type `Browser.name`."))
          .attr ("tabindex", 0)
@@ -120,7 +137,6 @@ module .exports = class Console extends Interface
 
       electron .ipcRenderer .on ("console-message", this .addMessageCallback);
 
-      this .toggleSearch (search);
       this .setup ();
    }
 
@@ -128,11 +144,16 @@ module .exports = class Console extends Interface
    {
       super .configure ();
 
-      this .config .file .setDefaultValues ({ history: [ ], searchCaseSensitive: false });
+      this .config .file .setDefaultValues ({
+         history: [ ],
+         searchWidget: false,
+         searchCaseSensitive: false,
+      });
 
       this .history      = this .config .file .history .slice (-this .HISTORY_MAX);
       this .historyIndex = this .history .length;
 
+      this .toggleSearch (this .config .file .searchWidget);
       this .searchCaseSensitive ();
 
       this .output .scrollTop (this .output .prop ("scrollHeight"));
@@ -320,6 +341,8 @@ module .exports = class Console extends Interface
 
    toggleSearch (visible)
    {
+      this .config .file .searchWidget = visible;
+
       if (visible)
          this .search .show ();
       else
@@ -404,6 +427,7 @@ module .exports = class Console extends Interface
 
          element .addClass ("selected");
          element .get (0) .scrollIntoView ({ block: "center", inline: "start", behavior: "smooth" });
+         $(window) .scrollTop (0);
 
          this .searchStatus .text (util .format (_("%d of %d"), this .currentElement + 1, this .foundElements .length));
          this .searchPreviousButton .removeClass ("disabled");
@@ -428,6 +452,7 @@ module .exports = class Console extends Interface
                this .searchInput .val (window .getSelection () .toString ());
                this .searchInput .trigger ("select");
 
+               this .toggleSearch (true);
                this .searchString ();
             }
 
