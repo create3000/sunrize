@@ -1183,6 +1183,10 @@ body.dark .ui-widget .library-list .component {
   border-radius: 2px;
 }
 
+.console-search-case-sensitive:hover {
+  background-color: var(--system-gray3);
+}
+
 .console-search-case-sensitive.active {
   outline: 1px solid color-mix(in srgb, var(--system-blue), transparent 30%);
   background: color-mix(in srgb, var(--system-blue), transparent 70%);
