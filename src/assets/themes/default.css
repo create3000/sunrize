@@ -1183,9 +1183,9 @@ body.dark .ui-widget .library-list .component {
 }
 
 .console-search-case-sensitive.active {
-  outline: 1px solid var(--system-blue);
-  color: var(--system-gray0);
+  outline: 1px solid color-mix(in srgb, var(--system-blue), transparent 30%);
   background: color-mix(in srgb, var(--system-blue), transparent 70%);
+  color: var(--system-gray0);
 }
 
 .console-search-status {
