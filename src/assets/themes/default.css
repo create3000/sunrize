@@ -727,7 +727,7 @@ html[platform=darwin] .horizontal-toolbar .select {
 /* Dialog */
 
 .dialog ::placeholder {
-  color: var(--system-gray2);
+  color: var(--system-gray1);
 }
 
 body.dark .dialog ::placeholder {
