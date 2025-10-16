@@ -355,14 +355,12 @@ module .exports = class Console extends Interface
       else
       {
          this .search .hide ();
+         this .output .find (".selected") .removeClass ("selected");
       }
    }
 
    searchString ()
    {
-      if (this .search .is (":hidden"))
-         return;
-
       this .foundElements = [ ];
 
       this .findElements (this .output .children (), 0, true);
