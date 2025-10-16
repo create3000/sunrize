@@ -1219,8 +1219,12 @@ body.dark .ui-widget .library-list .component {
   outline: 1px solid var(--system-blue);
 }
 
-.console-output .selected {
+body.dark .console-output .selected {
   background: var(--system-gray5);
+}
+
+body.light .console-output .selected {
+  background: color-mix(in srgb, var(--system-yellow), white 80%);
 }
 
 /* Script Editor */
