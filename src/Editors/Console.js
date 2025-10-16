@@ -199,6 +199,8 @@ module .exports = class Console extends Interface
       if (this .messageTime && performance .now () - this .messageTime > 1000)
          this .output .append ($("<p></p>") .addClass ("splitter"));
 
+      this .findElements (text, this .currentElement, false);
+
       this .messageTime = performance .now ();
 
       const
@@ -217,8 +219,6 @@ module .exports = class Console extends Interface
 
       this .output .append (text);
       this .output .scrollTop (this .output .prop ("scrollHeight"));
-
-      this .searchString ();
    }
 
    setSuspendConsole (value)
@@ -349,6 +349,8 @@ module .exports = class Console extends Interface
       {
          this .search .show ();
          this .searchInput .trigger ("focus");
+
+         this .searchString ();
       }
       else
       {
@@ -361,21 +363,24 @@ module .exports = class Console extends Interface
       if (this .search .is (":hidden"))
          return;
 
+      this .foundElements = [ ];
+
+      this .findElements (this .output .children (), 0, true);
+   }
+
+   findElements (elements, currentElement, scroll)
+   {
       const
          toString = this .searchCaseSensitiveButton .hasClass ("active") ? "toString" : "toLowerCase",
          string   = this .searchInput .val () [toString] ();
 
-      if (string)
-      {
-         this .foundElements = Array .from (this .output .children (), element => $(element))
-            .filter (element => element .text () [toString] () .includes (string));
-      }
-      else
-      {
-         this .foundElements = [ ];
-      }
+      if (!string)
+         return;
 
-      this .updateCurrentElement (0);
+      this .foundElements = this .foundElements .concat (Array .from (elements, element => $(element))
+         .filter (element => element .text () [toString] () .includes (string)));
+
+      this .updateCurrentElement (currentElement, scroll);
    }
 
    searchKey (event)
@@ -419,7 +424,7 @@ module .exports = class Console extends Interface
       this .updateCurrentElement (this .currentElement + 1);
    }
 
-   updateCurrentElement (value)
+   updateCurrentElement (value, scroll = true)
    {
       if (value < 0)
          value = this .foundElements .length - 1;
@@ -436,8 +441,12 @@ module .exports = class Console extends Interface
          const element = this .foundElements [this .currentElement];
 
          element .addClass ("selected");
-         element .get (0) .scrollIntoView ({ block: "center", inline: "start", behavior: "smooth" });
-         $(window) .scrollTop (0);
+
+         if (scroll)
+         {
+            element .get (0) .scrollIntoView ({ block: "center", inline: "start", behavior: "smooth" });
+            $(window) .scrollTop (0);
+         }
 
          this .searchStatus .text (util .format (_("%d of %d"), this .currentElement + 1, this .foundElements .length));
          this .searchPreviousButton .removeClass ("disabled");
@@ -463,7 +472,6 @@ module .exports = class Console extends Interface
                this .searchInput .trigger ("select");
 
                this .toggleSearch (true);
-               this .searchString ();
             }
 
             break;
