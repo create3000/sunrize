@@ -1163,7 +1163,7 @@ body.dark .ui-widget .library-list .component {
   display: block;
   margin: 5px 0px;
   padding: 2px 6px;
-  padding-right: 28px;
+  padding-right: 30px;
   width: 100%;
   height: 23px;
   background: var(--system-gray5);
@@ -1177,6 +1177,11 @@ body.dark .ui-widget .library-list .component {
   position: absolute;
   right: 7px;
   top: 9px;
+  border-radius: 2px;
+}
+
+.console-search-case-sensitive.active {
+  outline: 1px solid var(--system-blue);
 }
 
 .console-search-status {
