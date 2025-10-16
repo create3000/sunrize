@@ -1178,11 +1178,14 @@ body.dark .ui-widget .library-list .component {
   position: absolute;
   right: 7px;
   top: 9px;
+  padding: 0 1px;
   border-radius: 2px;
 }
 
 .console-search-case-sensitive.active {
   outline: 1px solid var(--system-blue);
+  color: var(--system-gray0);
+  background: color-mix(in srgb, var(--system-blue), transparent 70%);
 }
 
 .console-search-status {
