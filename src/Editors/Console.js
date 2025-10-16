@@ -412,6 +412,8 @@ module .exports = class Console extends Interface
       else
          this .searchCaseSensitiveButton .removeClass ("active");
 
+      this .searchInput .trigger ("focus");
+
       this .searchString ();
    }
 
