@@ -245,6 +245,7 @@ module .exports = class Console extends Interface
 
       this .output .empty ();
       this .addMessage (null, "info", __filename, 0, `Console cleared at ${new Date () .toLocaleTimeString ()}.`);
+      this .searchString ();
    }
 
    onkeydown (event)
