@@ -1011,6 +1011,7 @@ body.dark .ui-widget .library-list .component {
 }
 
 .console-left {
+  overflow: hidden;
   position: absolute;
   box-sizing: border-box;
   left: 0;
