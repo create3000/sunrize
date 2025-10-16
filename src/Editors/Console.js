@@ -199,8 +199,6 @@ module .exports = class Console extends Interface
       if (this .messageTime && performance .now () - this .messageTime > 1000)
          this .output .append ($("<p></p>") .addClass ("splitter"));
 
-      this .findElements (text, this .currentElement, false);
-
       this .messageTime = performance .now ();
 
       const
@@ -219,6 +217,8 @@ module .exports = class Console extends Interface
 
       this .output .append (text);
       this .output .scrollTop (this .output .prop ("scrollHeight"));
+
+      this .findElements (text, this .currentElement, false);
    }
 
    setSuspendConsole (value)
