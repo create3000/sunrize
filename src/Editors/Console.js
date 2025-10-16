@@ -368,6 +368,9 @@ module .exports = class Console extends Interface
 
    findElements (elements, currentElement, scroll)
    {
+      if (this .search .is (":hidden"))
+         return;
+
       const
          toString = this .searchCaseSensitiveButton .hasClass ("active") ? "toString" : "toLowerCase",
          string   = this .searchInput .val () [toString] ();
