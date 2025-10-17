@@ -351,6 +351,7 @@ module .exports = class Console extends Interface
 
       if (visible)
       {
+         this .searchButton .addClass ("active");
          this .search .show ();
          this .searchInput .trigger ("focus");
 
@@ -358,6 +359,7 @@ module .exports = class Console extends Interface
       }
       else
       {
+         this .searchButton .removeClass ("active");
          this .search .hide ();
          this .output .find (".selected") .removeClass ("selected");
       }
