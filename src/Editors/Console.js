@@ -180,6 +180,7 @@ module .exports = class Console extends Interface
       "The vm module of Node.js is unsupported",
       "Uncaught TypeError: Cannot read properties of null (reading 'removeChild')",
       "aria-hidden",
+      "<line>",
       // "Invalid asm.js: Invalid member of stdlib",
    ];
 
