@@ -108,7 +108,7 @@ module .exports = class Console extends Interface
       this .suspendButton = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _("Suspend console output."))
-         .text ("cancel")
+         .text ("pause_circle")
          .on ("click", () => this .setSuspendConsole (!this .suspendConsole))
          .appendTo (this .toolbar);
 
