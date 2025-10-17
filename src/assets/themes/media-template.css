@@ -2,12 +2,3 @@
 @import url(../../node_modules/material-symbols/index.css);
 @import url(../../node_modules/spectrum-colorpicker2/dist/spectrum.css);
 @import url(../../node_modules/@vscode/codicons/dist/codicon.css);
-@import url(system-colors.css);
-
-.image-icon.hand {
-  background-image: url(../images/icons/hand.svg);
-}
-
-.image-icon.arrow {
-  background-image: url(../images/icons/arrow.svg);
-}
