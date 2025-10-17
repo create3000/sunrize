@@ -56,6 +56,7 @@ module .exports = class Console extends Interface
       this .search .resizable({
          handles: "w",
          minWidth: 285,
+         resize: () => this .config .file .searchWidth = this .search .width (),
       });
 
       this .searchInputElements = $("<div></div>")
@@ -99,7 +100,7 @@ module .exports = class Console extends Interface
          .css ("transform", "scale(1.2)")
          .attr ("title", _("Show search widget."))
          .text ("search")
-         .on ("click", () => this .toggleSearch (!this .config .file .searchWidget))
+         .on ("click", () => this .toggleSearch (!this .config .file .search))
          .appendTo (this .toolbar);
 
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
@@ -146,17 +147,19 @@ module .exports = class Console extends Interface
 
       this .config .file .setDefaultValues ({
          history: [ ],
-         searchWidget: false,
+         search: false,
+         searchWidth: 285,
          searchCaseSensitive: false,
       });
 
       this .history      = this .config .file .history .slice (-this .HISTORY_MAX);
       this .historyIndex = this .history .length;
 
-      this .toggleSearch (this .config .file .searchWidget);
-      this .searchCaseSensitive ();
-
       this .output .scrollTop (this .output .prop ("scrollHeight"));
+
+      this .search .width (this .config .file .searchWidth);
+      this .toggleSearch (this .config .file .search);
+      this .searchCaseSensitive ();
    }
 
    async set_browser_initialized ()
@@ -344,7 +347,7 @@ module .exports = class Console extends Interface
 
    toggleSearch (visible)
    {
-      this .config .file .searchWidget = visible;
+      this .config .file .search = visible;
 
       if (visible)
       {
