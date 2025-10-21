@@ -345,7 +345,7 @@ tr.disabled ~ tr > td > div {
   height: var(--tabs-height);
   width: 100%;
   background: inherit;
-  z-index: 2000;
+  z-index: 200;
 }
 
 .ui-tabs.top > .ui-tabs-nav {
@@ -748,7 +748,7 @@ body.dark .dialog ::placeholder {
 }
 
 .dialog.ui-dialog {
-  z-index: 3000 !important;
+  z-index: 2000 !important;
 }
 
 .dialog.ui-dialog .ui-dialog-content {
