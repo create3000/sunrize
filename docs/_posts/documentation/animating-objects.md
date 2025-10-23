@@ -27,9 +27,9 @@ The Keyframe Animator Animation toolbar has the following options:
 - **Open animation** opens an existing animation.
 - **Add member** adds a new member to an animation. An animation can contain one or more members. A member is like the cast member of a play. It could consist of one object (such as a bouncing ball), or it could consist of a number of grouped objects, such as a jack-in-the-box or a spinning top. Each member has its own timeline.
 - **Remove animation, member or interpolator** removes the whole animation, a member from an animation or only one interpolator depending on the selection (master, member or field) within the member tree view. Note, however, that this option does not remove the trigger sensor for the animation.
-- **Cutting:** Choose cut (or press <kbd>Ctrl-x</kbd> or *Delete*) to cut selected keyframes.
-- **Copying:** Choose copy (or press <kbd>Ctrl-c</kbd>) to copy selected keyframes.
-- **Paste** overlay at current time (<kbd>Ctrl-v</kbd>) pastes the selected keys at the current time. If the keys land at the same time as existing keys, the pasted keys replace the existing keys. If there is no new key to replace an existing key, the existing key is preserved (that is, you'll have a mixture of old and new keys).
+- **Cutting:** Choose cut (or press <kbd>Ctrl</kbd>+<kbd>x</kbd> or *Delete*) to cut selected keyframes.
+- **Copying:** Choose copy (or press <kbd>Ctrl</kbd>+<kbd>c</kbd>) to copy selected keyframes.
+- **Paste** overlay at current time (<kbd>Ctrl</kbd>+<kbd>v</kbd>) pastes the selected keys at the current time. If the keys land at the same time as existing keys, the pasted keys replace the existing keys. If there is no new key to replace an existing key, the existing key is preserved (that is, you'll have a mixture of old and new keys).
 - **First frame** lets you jump to the first frame.
 - **Play/Pause** plays the selected range or the whole animation starting at the current frame.
 - **Last frame** lets you jump to the last frame.

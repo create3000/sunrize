@@ -27,8 +27,8 @@ Use for the Snap Source:
 
 1. Activate and place the Snap Target and the Snap Source (if you decide to use it).
 2. Select the object you want to move to the target (click the object). Don't forget this step! If you don't select the object, it won't move to the target. If the Snap Source is activated, it will move to the Snap Target without the object.
-3. Choose *Layout > Move Selection to Snap Target* or press <kbd>Ctrl-or-Cmd+m</kbd> to move the selected object to the target. You can also choose one of the other options under Layout; these include Center Snap Target in Selection and Move Selection Center to Snap Target.
-4. If you want, put away the Snap Target and Snap Source by rechoosing *Layout > Activate Snap Target / Source* or click the right mouse button over empty space to put away the Snap Target, and *Alt-or-Option* click right over empty space to put away the Snap Source.
+3. Choose *Layout > Move Selection to Snap Target* or press <kbd>Ctrl-or-Cmd</kbd>+<kbd>m</kbd> to move the selected object to the target. You can also choose one of the other options under Layout; these include Center Snap Target in Selection and Move Selection Center to Snap Target.
+4. If you want, put away the Snap Target and Snap Source by rechoosing *Layout > Activate Snap Target / Source* or click the right mouse button over empty space to put away the Snap Target, and <kbd>Alt-or-Option</kbd> click right over empty space to put away the Snap Source.
 
 ### Activating and Placing
 
@@ -51,7 +51,7 @@ Other ways to place the Snap Target include:
 
 Use *Layout > Activate Snap Target*:
 
-Drag target to object. Select object to move, press <kbd>Ctrl-or-Cmd+m</kbd> to move selection to target, or choose *Layout > Move Selection to Snap Target*. Also choose *Layout > Activate Snap Source* to activate the Source snap target. Activate *Layout > Grid Layout Tool* - to scale to the same measurement as as other object. Good for making even walls or boxes.
+Drag target to object. Select object to move, press <kbd>Ctrl-or-Cmd</kbd>+<kbd>m</kbd> to move selection to target, or choose *Layout > Move Selection to Snap Target*. Also choose *Layout > Activate Snap Source* to activate the Source snap target. Activate *Layout > Grid Layout Tool* - to scale to the same measurement as as other object. Good for making even walls or boxes.
 
 *Layout > Show Grid Tool Options in Panel* -- set tolerances for how close to the snap target the manipulator must be before snapping occurs. For example, adjust the rotation tolerance to a larger number to make snapping occur when the rotation is further from a 90 degree rotation increment.
 
@@ -59,10 +59,10 @@ Drag target to object. Select object to move, press <kbd>Ctrl-or-Cmd+m</kbd> to 
 
 - Place yellow Snap Target = *click right* on object; also drag to place.
 - Put away Snap Target = *click right* over background.
-- Place green Snap Source = *Alt-or-Option click right*; also drag to place.
-- Put away Snap Source = *Alt-or-Option click right* over background.
-- Move selection to snap target = <kbd>Ctrl-or-Cmd+m</kbd>
-- Move selection center to snap target = <kbd>Shift+Ctrl-or-Cmd+m</kbd>
+- Place green Snap Source = <kbd>Alt-or-Option</kbd> and *click right*; also drag to place.
+- Put away Snap Source = <kbd>Alt-or-Option</kbd> and *click right* over background.
+- Move selection to snap target = <kbd>Ctrl-or-Cmd</kbd>+<kbd>m</kbd>
+- Move selection center to snap target = <kbd>Shift+Ctrl-or-Cmd</kbd>+<kbd>m</kbd>
 
 ## Align to Grid
 
