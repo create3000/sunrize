@@ -3661,7 +3661,6 @@ module .exports = class OutlineView extends Interface
       // Update route graph.
 
       this .requestUpdateRouteGraph ();
-      this .updateQtips ();
    }
 
    isEditable (parent)
