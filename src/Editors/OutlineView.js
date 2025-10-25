@@ -368,6 +368,7 @@ module .exports = class OutlineView extends Interface
    expandSceneSubtreeComplete (specialElements, elements)
    {
       this .requestUpdateRouteGraph ();
+      this .updateQtips ();
 
       // Reopen externprotos, protos, imported, exported nodes.
 
@@ -846,7 +847,8 @@ module .exports = class OutlineView extends Interface
 
    expandNodeComplete (protos, scenes, elements)
    {
-      this .requestUpdateRouteGraph ()
+      this .requestUpdateRouteGraph ();
+      this .updateQtips ();
 
       // Auto expand SFNodes
 
@@ -854,12 +856,12 @@ module .exports = class OutlineView extends Interface
       {
          const
             element = $(e),
-            field   = this .getField (element)
+            field   = this .getField (element);
 
          if (field .getValue ())
          {
-            element .data ("auto-expand", true)
-            element .jstree ("open_node", element)
+            element .data ("auto-expand", true);
+            element .jstree ("open_node", element);
          }
       }
 
@@ -869,12 +871,12 @@ module .exports = class OutlineView extends Interface
       {
          const
             element = $(e),
-            field   = this .getField (element)
+            field   = this .getField (element);
 
          if (field .length && field .length <= this .autoExpandMaxChildren)
          {
-            element .data ("auto-expand", true)
-            element .jstree ("open_node", element)
+            element .data ("auto-expand", true);
+            element .jstree ("open_node", element);
          }
       }
 
@@ -884,11 +886,11 @@ module .exports = class OutlineView extends Interface
       {
          const
             element = $(e),
-            node    = this .getNode (element)
+            node    = this .getNode (element);
 
          if (node .getUserData (_expanded) && element .jstree ("is_closed", element))
          {
-            element .jstree ("open_node", element)
+            element .jstree ("open_node", element);
          }
       }
 
@@ -898,12 +900,12 @@ module .exports = class OutlineView extends Interface
       {
          const
             element = $(e),
-            scene   = this .getNode (element)
+            scene   = this .getNode (element);
 
          if (scene .getUserData (_expanded) && element .jstree ("is_closed", element))
          {
-            element .data ("auto-expand", true)
-            element .jstree ("open_node", element)
+            element .data ("auto-expand", true);
+            element .jstree ("open_node", element);
          }
       }
 
@@ -913,12 +915,12 @@ module .exports = class OutlineView extends Interface
       {
          const
             element = $(e),
-            field   = this .getField (element)
+            field   = this .getField (element);
 
          if (field .getUserData (_expanded) && element .jstree ("is_closed", element))
          {
-            element .data ("auto-expand", true)
-            element .jstree ("open_node", element)
+            element .data ("auto-expand", true);
+            element .jstree ("open_node", element);
          }
       }
    }
@@ -2218,6 +2220,7 @@ module .exports = class OutlineView extends Interface
       }
 
       this .requestUpdateRouteGraph ();
+      this .updateQtips ();
    }
 
    expandSFNode (parent, node, field, type, full)
@@ -2299,6 +2302,7 @@ module .exports = class OutlineView extends Interface
       }
 
       this .requestUpdateRouteGraph ();
+      this .updateQtips ();
    }
 
    nodeIcons = new Map ([
@@ -2390,7 +2394,9 @@ module .exports = class OutlineView extends Interface
       // Expand children.
 
       child .show ();
+
       this .requestUpdateRouteGraph ();
+      this .updateQtips ();
    }
 
    onkeydownField (input, event)
@@ -2495,8 +2501,10 @@ module .exports = class OutlineView extends Interface
 
       // Expand children.
 
-      child .show ()
-      this .requestUpdateRouteGraph ()
+      child .show ();
+
+      this .requestUpdateRouteGraph ();
+      this .updateQtips ();
    }
 
    onkeydownArrayField (textarea, event)
@@ -2905,6 +2913,7 @@ module .exports = class OutlineView extends Interface
          element .jstree ("open_node", element);
 
       this .requestUpdateRouteGraph ();
+      this .updateQtips ();
    }
 
    removeSubtree (element)
@@ -3652,6 +3661,7 @@ module .exports = class OutlineView extends Interface
       // Update route graph.
 
       this .requestUpdateRouteGraph ();
+      this .updateQtips ();
    }
 
    isEditable (parent)
@@ -3716,6 +3726,7 @@ module .exports = class OutlineView extends Interface
    onresize ()
    {
       this .requestUpdateRouteGraph ();
+      this .updateQtips ();
    }
 
    addFieldButtons (parent, child, node)
@@ -3817,6 +3828,11 @@ module .exports = class OutlineView extends Interface
    requestUpdateRouteGraph ()
    {
       // Update route graph.
+   }
+
+   updateQtips ()
+   {
+      this .sceneGraph .find ("[data-hasqtip]") .qtip ?.("reposition");
    }
 
    onDragStartExternProto () { }
