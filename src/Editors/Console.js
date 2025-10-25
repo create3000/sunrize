@@ -124,7 +124,7 @@ module .exports = class Console extends Interface
       // Input
 
       this .textarea = $("<textarea></textarea>")
-         .attr ("placeholder", _("Evaluate X3D Script code here, e.g. type `Browser.name`."))
+         .attr ("placeholder", _("Evaluate Script node code here, e.g. type `Browser.name`."))
          .attr ("tabindex", 0)
          .on ("keydown", event => this .onkeydown (event))
          .on ("keyup", event => this .onkeyup (event))
