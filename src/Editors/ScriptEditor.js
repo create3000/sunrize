@@ -362,6 +362,7 @@ module .exports = class ScriptEditor extends Interface
             declare const X3DField: typeof X3D. X3DField;
             declare const X3DArrayField: typeof X3D. X3DArrayField;
             ${Array .from (this .browser .fieldTypes)
+               .filter (type => !this .#internalTypes .has (type .type))
                .map (type => `declare const ${type .typeName}: typeof X3D .${type .typeName};`)
                .join ("\n")}
             declare const TRUE: true;
@@ -369,8 +370,8 @@ module .exports = class ScriptEditor extends Interface
             declare const NULL: null;
             declare function print (... args: any []): void;
             ${fields .join ("\n")};
-         `},
-      ]);
+         `,
+      }]);
    }
 
    editors = new Map ();
