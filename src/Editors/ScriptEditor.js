@@ -139,8 +139,8 @@ module .exports = class ScriptEditor extends Interface
 
       // Setup.
 
-      this .setup ();
       this .addLanguages ();
+      this .setup ();
    }
 
    getMonaco ()
@@ -342,7 +342,7 @@ module .exports = class ScriptEditor extends Interface
          this .node ._loadState .removeFieldCallback (this);
 
          for (const field of this .node .getUserDefinedFields ())
-            field .removeInterest ("setDeclarations", this);
+            field .removeInterest ("updateDeclarations", this);
 
          switch (this .node .getTypeName ())
          {
@@ -431,7 +431,7 @@ module .exports = class ScriptEditor extends Interface
 
    #declarations;
 
-   setDeclarations (monaco)
+   updateDeclarations (monaco)
    {
       if (!this .node .getType () .includes (X3D .X3DConstants .Script))
          return;
@@ -581,11 +581,11 @@ module .exports = class ScriptEditor extends Interface
 
       editor .viewState = editor .saveViewState ();
 
-      editor .onDidFocusEditorWidget (() => this .setDeclarations (monaco));
+      editor .onDidFocusEditorWidget (() => this .updateDeclarations (monaco));
       editor .onDidBlurEditorWidget (() => this .apply ());
       editor .onKeyDown (event => this .onKeyDown (event));
 
-      element .on ("mouseenter", () => this .setDeclarations (monaco));
+      element .on ("mouseenter", () => this .updateDeclarations (monaco));
       element .on ("contextmenu", () => this .showContextMenu ());
 
       // this .debugFindActions (editor)
@@ -969,13 +969,13 @@ main ()
             case X3D .X3DConstants .SFNode:
             case X3D .X3DConstants .MFNode:
             {
-               field .addInterest ("setDeclarations", this, monaco);
+               field .addInterest ("updateDeclarations", this, monaco);
                break;
             }
          }
       }
 
-      this .setDeclarations (monaco);
+      this .updateDeclarations (monaco);
    }
 
    toggleDirectOutput ()
