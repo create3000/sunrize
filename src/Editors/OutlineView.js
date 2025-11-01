@@ -1864,7 +1864,7 @@ module .exports = class OutlineView extends Interface
    {
       const
          name    = $(event .currentTarget),
-         element = $(event .currentTarget) .closest (".externproto, .proto, .node, .special", this .sceneGraph),
+         element = name .closest (".externproto, .proto, .node, .imported-node, .exported-node", this .sceneGraph),
          node    = this .objects .get (parseInt (element .attr ("node-id")));
 
       // Handle NULL node element.
@@ -1880,7 +1880,7 @@ module .exports = class OutlineView extends Interface
    {
       const
          name         = $(event .currentTarget),
-         element      = $(event .currentTarget) .closest (".field, .special", this .sceneGraph),
+         element      = name .closest (".field, .special", this .sceneGraph),
          node         = this .objects .get (parseInt (element .attr ("node-id"))),
          field        = this .objects .get (parseInt (element .attr ("field-id"))),
          fieldElement = X3DUOM .find (`ConcreteNode[name="${node .getTypeName ()}"] field[name="${field .getName ()}"]`);
