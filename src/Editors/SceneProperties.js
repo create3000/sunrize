@@ -486,18 +486,25 @@ module .exports = new class SceneProperties extends Dialog
                   .text ("delete_forever")
                   .on ("click", (event) => this .removeMetaData (event, key))));
 
-         if (value .match (/^https?:\/\//))
+         // Add Open Link in Browser button if matches a link somewhere in value.
          {
-            const column = row .find ("input[index=1]") .parent ();
+            const
+               http  = /(https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))/,
+               match = value .match (http);
 
-            $("<span></span>")
-               .addClass ("open-link")
-               .attr ("title", _("Open link in browser."))
-               .css ("font-size", "120%")
-               .addClass (["material-icons", "button"])
-               .text ("call_missed_outgoing")
-               .appendTo (column)
-               .on ("click", () => electron .shell .openExternal (value));
+            if (match)
+            {
+               const column = row .find ("input[index=1]") .parent ();
+
+               $("<span></span>")
+                  .addClass ("open-link")
+                  .attr ("title", _("Open link in browser."))
+                  .css ("font-size", "120%")
+                  .addClass (["material-icons", "button"])
+                  .text ("call_missed_outgoing")
+                  .appendTo (column)
+                  .on ("click", () => electron .shell .openExternal (match [1]));
+            }
          }
 
          rows .push (row);
