@@ -150,6 +150,7 @@ tbody th th {
 thead tr,
 tfoot tr {
   background: var(--tint-color2);
+  backdrop-filter: var(--tool-backdrop-filter);
 }
 
 tbody tr:nth-child(odd) {
