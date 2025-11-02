@@ -786,6 +786,14 @@ body.dark .dialog ::placeholder {
   color: var(--system-gray2);
 }
 
+.scene-properties td.meta-value {
+  display: flex;
+}
+
+.scene-properties .open-link {
+  padding-left: 4px;
+}
+
 /* Library */
 
 .ui-widget .library-input {

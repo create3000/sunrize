@@ -2,6 +2,7 @@
 
 const
    $           = require ("jquery"),
+   electron    = require ("electron"),
    capitalize  = require ("capitalize"),
    Dialog      = require ("../Controls/Dialog"),
    Tabs        = require ("../Controls/Tabs"),
@@ -10,7 +11,6 @@ const
    Editor      = require ("../Undo/Editor"),
    UndoManager = require ("../Undo/UndoManager"),
    _           = require ("../Application/GetText");
-const { height } = require("../Bits/X3DUOM");
 
 require ("../Fields");
 
@@ -472,6 +472,7 @@ module .exports = new class SceneProperties extends Dialog
                   .attr ("placeholder", _("Insert meta key here."))
                   .val (key) .on ("change", (event) => this .changeMetaData (event, key))))
             .append ($("<td></td>")
+               .addClass ("meta-value")
                .append ($("<input></input>")
                   .attr ("index", 1)
                   .attr ("placeholder", _("Insert meta value here."))
@@ -484,6 +485,20 @@ module .exports = new class SceneProperties extends Dialog
                   .addClass (["material-icons", "button"])
                   .text ("delete_forever")
                   .on ("click", (event) => this .removeMetaData (event, key))));
+
+         if (value .match (/^https?:\/\//))
+         {
+            const column = row .find ("input[index=1]") .parent ();
+
+            $("<span></span>")
+               .addClass ("open-link")
+               .attr ("title", _("Open link in browser."))
+               .css ("font-size", "120%")
+               .addClass (["material-icons", "button"])
+               .text ("call_missed_outgoing")
+               .appendTo (column)
+               .on ("click", () => electron .shell .openExternal (value));
+         }
 
          rows .push (row);
       }
