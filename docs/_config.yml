@@ -22,7 +22,7 @@ description: >- # used by seo meta and the atom feed
   Sunrize — A Multi-Platform X3D Editor
 
 x3d_latest_version: 4.0 # x3d latest version
-version: 1.11.3
+version: 1.11.4
 
 # Fill in the protocol & hostname for your site.
 # e.g. 'https://username.github.io', note that it does not end with a '/'.
