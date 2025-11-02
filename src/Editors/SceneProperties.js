@@ -486,7 +486,7 @@ module .exports = new class SceneProperties extends Dialog
                   .text ("delete_forever")
                   .on ("click", (event) => this .removeMetaData (event, key))));
 
-         // Add Open Link in Browser button if matches a link somewhere in value.
+         // Add Open Link in Browser button if it matches a link somewhere in value.
          {
             const
                http  = /(https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))/,
