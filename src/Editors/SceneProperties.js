@@ -501,7 +501,7 @@ module .exports = new class SceneProperties extends Dialog
                   .attr ("title", _("Open link in browser."))
                   .css ("font-size", "120%")
                   .addClass (["material-icons", "button"])
-                  .text ("call_missed_outgoing")
+                  .text ("open_in_new")
                   .appendTo (column)
                   .on ("click", () => electron .shell .openExternal (match [1]));
             }
