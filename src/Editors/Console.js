@@ -193,12 +193,10 @@ module .exports = class Console extends Interface
          classes = [this .logLevels [level] ?? "log", this .logClasses [level]],
          title   = sourceId ? `${sourceId}:${line}`: "";
 
-      const text = $(message .split ("\n")
-         .map (line => $("<p></p>")
-            .addClass (classes)
-            .attr ("title", title)
-            .text (line)
-            .get (0)));
+      const text = $("<p></p>")
+         .addClass (classes)
+         .attr ("title", title)
+         .text (message);
 
       if (this .messageTime && performance .now () - this .messageTime > 1000)
          this .output .append ($("<p></p>") .addClass ("splitter"));
@@ -211,9 +209,9 @@ module .exports = class Console extends Interface
 
       if (last .hasClass (this .logLevels [level]))
       {
-         last .css ("margin-bottom", "0");
-         text .css ("margin-top",    "0");
+         last .css ("margin-bottom", "0px");
          last .css ("border-bottom", "none");
+         text .css ("margin-top",    "0px");
          text .css ("border-top",    "none");
       }
 
