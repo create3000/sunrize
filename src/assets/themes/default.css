@@ -93,7 +93,7 @@ input[type=checkbox] {
   color: var(--system-yellow);
 }
 
- .read-only :is(x3d-canvas, .toolbar, .outline-editor) {
+ .read-only :is(x3d-canvas, .toolbar, .dialog, .outline-editor) {
   pointer-events: none;
 }
 
