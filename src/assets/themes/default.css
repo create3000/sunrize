@@ -1056,6 +1056,7 @@ body.dark .ui-widget .library-list .component {
 
 .console-output p {
   margin: 0;
+  padding: 0px 2px;
 }
 
 .console-output p.splitter {
@@ -1097,6 +1098,7 @@ body.dark .ui-widget .library-list .component {
   position: absolute;
   display: block;
   z-index: -1;
+  left: 0px;
   width: 100%;
   height: 100%;
   filter: brightness(2) opacity(60%);
