@@ -55,8 +55,9 @@ module .exports = class Document extends Interface
     */
    async initialize ()
    {
-      $("html") .attr ("platform", process .platform);
-      $("body") .addClass ("modal");
+      $("html")
+         .attr ("platform", process .platform)
+         .addClass ("read-only");
 
       // Actions
 
@@ -192,7 +193,7 @@ module .exports = class Document extends Interface
       await this .restoreFile ();
 
       if (!this .isInitialScene)
-         $("body") .removeClass ("modal");
+         $("html") .removeClass ("read-only");
    }
 
    configure ()
