@@ -498,7 +498,7 @@ module .exports = new class SceneProperties extends Dialog
 
                $("<span></span>")
                   .addClass ("open-link")
-                  .attr ("title", _("Open link in browser."))
+                  .attr ("title", _("Open link in web browser."))
                   .css ("font-size", "120%")
                   .addClass (["material-icons", "button"])
                   .text ("open_in_new")
