@@ -209,10 +209,13 @@ module .exports = class Console extends Interface
 
       if (last .hasClass (this .logLevels [level]))
       {
-         last .css ("margin-bottom", "0px");
-         last .css ("border-bottom", "none");
-         text .css ("margin-top",    "0px");
-         text .css ("border-top",    "none");
+         last
+            .css ("margin-bottom", "0px")
+            .css ("border-bottom", "none");
+
+         text
+            .css ("margin-top", "0px")
+            .css ("border-top", "none");
       }
 
       children .slice (0, Math .max (children .length - this .CONSOLE_MAX, 0)) .remove ();
