@@ -11,21 +11,12 @@ const
 module .exports = class Console extends Interface
 {
    HISTORY_MAX = 100;
-   CONSOLE_MAX = 1000;
-
-   logLevels = [
-      "debug",
-      "log",
-      "warn",
-      "error",
-   ];
 
    constructor (element)
    {
       super (`Sunrize.Console.${element .attr ("id")}.`);
 
       this .suspendConsole     = false;
-      this .messageTime        = 0;
       this .historyIndex       = 0;
       this .history            = [ ];
       this .addMessageCallback = this .addMessage .bind (this);
@@ -173,6 +164,8 @@ module .exports = class Console extends Interface
       this .scriptNode .setup ();
    }
 
+   CONSOLE_MAX = 1000;
+
    // Add strings to exclude here:
    excludes = [
       "The vm module of Node.js is unsupported",
@@ -180,6 +173,15 @@ module .exports = class Console extends Interface
       "aria-hidden",
       "<line>",
       // "Invalid asm.js: Invalid member of stdlib",
+   ];
+
+   messageTime = 0;
+
+   logLevels = [
+      "debug",
+      "log",
+      "warn",
+      "error",
    ];
 
    addMessage (event, level, sourceId, line, message)
@@ -201,10 +203,7 @@ module .exports = class Console extends Interface
 
       this .messageTime = performance .now ();
 
-      const children = this .output .children ();
-
-      children .slice (0, Math .max (children .length - this .CONSOLE_MAX, 0)) .remove ();
-
+      this .output .children (`:not(:nth-last-child(-n+${this .CONSOLE_MAX}))`) .remove ();
       this .output .append (text);
       this .output .scrollTop (this .output .prop ("scrollHeight"));
 
