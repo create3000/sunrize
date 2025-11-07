@@ -198,7 +198,7 @@ module .exports = class Console extends Interface
          .attr ("title", title)
          .text (message);
 
-      if (this .messageTime && performance .now () - this .messageTime > 1000)
+      if (performance .now () - this .messageTime > 1000)
          this .output .append ($("<p></p>") .addClass ("splitter"));
 
       this .messageTime = performance .now ();
@@ -209,13 +209,8 @@ module .exports = class Console extends Interface
 
       if (last .hasClass (this .logLevels [level]))
       {
-         last
-            .css ("margin-bottom", "0px")
-            .css ("border-bottom", "none");
-
-         text
-            .css ("margin-top", "0px")
-            .css ("border-top", "none");
+         last .css ("border-bottom", "none");
+         text .css ("border-top",    "none");
       }
 
       children .slice (0, Math .max (children .length - this .CONSOLE_MAX, 0)) .remove ();

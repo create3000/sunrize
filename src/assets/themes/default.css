@@ -1032,7 +1032,7 @@ body.dark .ui-widget .library-list .component {
   overflow: hidden;
   position: absolute;
   box-sizing: border-box;
-  left: 0;
+  left: 0px;
   right: var(--toolbar-width);
   height: 100%;
 }
@@ -1041,7 +1041,7 @@ body.dark .ui-widget .library-list .component {
   position: absolute;
   box-sizing: border-box;
   overflow-y: scroll;
-  top: 0;
+  top: 0px;
   border-right: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
   padding: 5px;
@@ -1055,15 +1055,18 @@ body.dark .ui-widget .library-list .component {
 }
 
 .console-output p {
-  margin: 0;
+  margin: 0px;
   padding: 0px 2px;
 }
 
 .console-output p.splitter {
-  margin-top: 5px;
+  margin: 5px 0px;
   border-top: 1px solid var(--system-gray3);
-  margin-bottom: 5px;
   padding: 0px;
+}
+
+.console-output p.splitter:first-child {
+  display: none;
 }
 
 .console-output p.debug {
@@ -1089,8 +1092,7 @@ body.dark .ui-widget .library-list .component {
 .console-output p.filled {
   position: relative;
   z-index: 0;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 5px 0px;
   color: black;
 }
 
