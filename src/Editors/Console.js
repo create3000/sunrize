@@ -20,8 +20,6 @@ module .exports = class Console extends Interface
       "error",
    ];
 
-   logClasses = ["", "", "filled", "filled"];
-
    constructor (element)
    {
       super (`Sunrize.Console.${element .attr ("id")}.`);
@@ -190,7 +188,7 @@ module .exports = class Console extends Interface
          return;
 
       const
-         classes = [this .logLevels [level] ?? "log", this .logClasses [level]],
+         classes = [this .logLevels [level] ?? "log"],
          title   = sourceId ? `${sourceId}:${line}`: "";
 
       const text = $("<p></p>")
@@ -203,15 +201,7 @@ module .exports = class Console extends Interface
 
       this .messageTime = performance .now ();
 
-      const
-         children = this .output .children (),
-         last     = children .last ();
-
-      if (last .hasClass (this .logLevels [level]))
-      {
-         last .css ("border-bottom", "none");
-         text .css ("border-top",    "none");
-      }
+      const children = this .output .children ();
 
       children .slice (0, Math .max (children .length - this .CONSOLE_MAX, 0)) .remove ();
 
