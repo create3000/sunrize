@@ -1119,14 +1119,14 @@ body.dark .ui-widget .library-list .component {
   background-color: var(--system-red);
 }
 
-#console p.warn + p.warn,
-#console p.error + p.error {
-  border-top: none;
-}
-
 #console p.warn:has(+ p.warn),
 #console p.error:has(+ p.error) {
   border-bottom: none;
+}
+
+#console p.warn + p.warn,
+#console p.error + p.error {
+  border-top: none;
 }
 
 .console-output p.splitter {
