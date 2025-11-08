@@ -189,13 +189,9 @@ module .exports = class Console extends Interface
       if (this .excludes .some (exclude => message .includes (exclude)))
          return;
 
-      const
-         classes = [this .logLevels [level] ?? "log"],
-         title   = sourceId ? `${sourceId}:${line}`: "";
-
       const text = $("<p></p>")
-         .addClass (classes)
-         .attr ("title", title)
+         .addClass (this .logLevels [level] ?? "log")
+         .attr ("title", sourceId ? `${sourceId}:${line}`: "")
          .text (message);
 
       if (performance .now () - this .messageTime > 1000)
