@@ -1105,7 +1105,7 @@ body.dark .ui-widget .library-list .component {
 }
 
 .console-output p.warn:before {
-  background-color: color-mix(in srgb, color-mix(in srgb, var(--system-yellow), white 50%), black 30%);
+  background-color: color-mix(in srgb, color-mix(in srgb, var(--system-yellow), white 50%), transparent 30%);
 }
 
 .console-output p.error {
@@ -1115,7 +1115,7 @@ body.dark .ui-widget .library-list .component {
 }
 
 .console-output p.error:before {
-  background-color: color-mix(in srgb, color-mix(in srgb, var(--system-red), white 50%), black 30%);
+  background-color: color-mix(in srgb, color-mix(in srgb, var(--system-red), white 50%), transparent 30%);
 }
 
 #console p.warn:has(+ p.warn),
