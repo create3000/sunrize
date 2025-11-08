@@ -1118,14 +1118,19 @@ body.dark .ui-widget .library-list .component {
   background-color: color-mix(in srgb, color-mix(in srgb, var(--system-red), white 50%), transparent 30%);
 }
 
-#console p.warn:has(+ p.warn),
-#console p.error:has(+ p.error) {
+.console-output p.warn:has(+ p.warn),
+.console-output p.error:has(+ p.error) {
   border-bottom: none;
 }
 
-#console p.warn + p.warn,
-#console p.error + p.error {
+.console-output p.warn + p.warn,
+.console-output p.error + p.error {
   border-top: none;
+}
+
+.console-output p.warn:not(:has(+ p.warn)),
+.console-output p.error:not(:has(+ p.error)) {
+  margin-bottom: 2px;
 }
 
 .console-output p.splitter {
