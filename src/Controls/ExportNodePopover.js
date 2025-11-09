@@ -23,7 +23,7 @@ $.fn.exportNodePopover = function (node, oldExportedName, oldDescription = "")
 
    const nameInput = $("<input></input>")
       .attr ("placeholder", _("Enter exported name"))
-      .val (oldExportedName ?? scene .getUniqueExportName (node .getName ()))
+      .val (oldExportedName || scene .getUniqueExportName (node .getName ()))
       .appendTo (content);
 
    $("<span></span>")
