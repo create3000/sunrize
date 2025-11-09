@@ -1986,7 +1986,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       node = node .valueOf ();
 
-      undoManager .beginUndo (_("Update Fields of Node %s"), node .getTypeName ());
+      undoManager .beginUndo (_("Update Field %s of Node %s"), field .getName (), node .getTypeName ());
 
       if (name !== field .getName ())
          this .#renameField (executionContext, node, field, name, undoManager);
