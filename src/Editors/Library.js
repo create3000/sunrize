@@ -27,7 +27,7 @@ module .exports = new class Library extends Dialog
 
    configure ()
    {
-      super .configure ({ size: [600, 400] });
+      super .configure ({ size: [600, 400], minSize: [400, 300] });
 
       // Set default config values.
 

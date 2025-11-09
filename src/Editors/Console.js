@@ -5,60 +5,119 @@ const
    $         = require ("jquery"),
    electron  = require ("electron"),
    Interface = require ("../Application/Interface"),
+   util      = require ("util"),
    _         = require ("../Application/GetText");
 
 module .exports = class Console extends Interface
 {
    HISTORY_MAX = 100;
-   CONSOLE_MAX = 1000;
-
-   logLevels = [
-      "debug",
-      "log",
-      "warn",
-      "error",
-   ];
-
-   logClasses = ["", "", "filled", "filled"];
 
    constructor (element)
    {
       super (`Sunrize.Console.${element .attr ("id")}.`);
 
       this .suspendConsole     = false;
-      this .messageTime        = 0;
       this .historyIndex       = 0;
       this .history            = [ ];
       this .addMessageCallback = this .addMessage .bind (this);
 
-      this .console   = element;
-      this .left      = $("<div></div>") .addClass ("console-left") .appendTo (this .console);
-      this .toolbar   = $("<div></div>") .addClass (["toolbar", "vertical-toolbar", "console-toolbar"]) .appendTo (this .console);
-      this .output    = $("<div></div>") .addClass (["console-output", "output"]) .attr ("tabindex", 0) .appendTo (this .left);
-      this .input     = $("<div></div>") .addClass ("console-input") .appendTo (this .left);
+      this .console = element;
+      this .left    = $("<div></div>") .addClass ("console-left") .appendTo (this .console);
+      this .toolbar = $("<div></div>") .addClass (["toolbar", "vertical-toolbar", "console-toolbar"]) .appendTo (this .console);
+
+      this .output = $("<div></div>")
+         .addClass (["console-output", "output"])
+         .attr ("tabindex", 0)
+         .on ("keydown", event => this .outputKey (event))
+         .appendTo (this .left);
+
+      this .input = $("<div></div>")
+         .addClass ("console-input")
+         .appendTo (this .left);
+
+      // Search Widget
+
+      this .search = $("<div></div>")
+         .addClass ("console-search")
+         .appendTo (this .left)
+         .hide ();
+
+      this .search .resizable({
+         handles: "w",
+         minWidth: 285,
+         resize: () => this .config .file .searchWidth = this .search .width (),
+      });
+
+      this .searchInputElements = $("<div></div>")
+         .addClass ("console-search-input-elements")
+         .appendTo (this .search);
+
+      this .searchInput = $("<input></input>")
+         .attr ("type", "text")
+         .attr ("placeholder", _("Find"))
+         .addClass ("console-search-input")
+         .on ("input", () => this .searchString ())
+         .on ("keydown", event => this .searchKey (event))
+         .appendTo (this .searchInputElements);
+
+      this .searchCaseSensitiveButton = $("<div></div>")
+         .addClass (["codicon", "codicon-case-sensitive", "console-search-case-sensitive"])
+         .on ("click", () => this .searchCaseSensitive (!this .config .file .searchCaseSensitive))
+         .appendTo (this .searchInputElements);
+
+      this .searchStatus = $("<div></div>")
+         .addClass ("console-search-status")
+         .text ("No results")
+         .appendTo (this .search);
+
+      this .searchPreviousButton = $("<div></div>")
+         .addClass (["search-previous", "codicon", "codicon-arrow-up", "disabled"])
+         .attr ("tabindex", 0)
+         .on ("click", () => this .searchPrevious ())
+         .appendTo (this .search);
+
+      this .searchNextButton = $("<div></div>")
+         .addClass (["search-next", "codicon", "codicon-arrow-down", "disabled"])
+         .attr ("tabindex", 0)
+         .on ("click", () => this .searchNext ())
+         .appendTo (this .search);
+
+      // Toolbar
+
+      this .searchButton = $("<span></span>")
+         .addClass ("material-icons")
+         .css ("transform", "scale(1.2)")
+         .attr ("title", _("Show search widget."))
+         .text ("search")
+         .on ("click", () => this .toggleSearch (!this .config .file .search))
+         .appendTo (this .toolbar);
+
+      $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
       this .suspendButton = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _("Suspend console output."))
-         .text ("cancel")
-         .appendTo (this .toolbar)
-         .on ("click", () => this .setSuspendConsole (!this .suspendConsole));
+         .text ("pause_circle")
+         .on ("click", () => this .setSuspendConsole (!this .suspendConsole))
+         .appendTo (this .toolbar);
 
       this .clearButton = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _("Clear console."))
          .text ("delete_forever")
-         .appendTo (this .toolbar)
-         .on ("click", () => this .clearConsole ());
+         .on ("click", () => this .clearConsole ())
+         .appendTo (this .toolbar);
 
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
+      // Input
+
       this .textarea = $("<textarea></textarea>")
-         .attr ("placeholder", _("Evaluate JavaScript code here."))
+         .attr ("placeholder", _("Evaluate Script node code here, e.g. type `Browser.name`."))
          .attr ("tabindex", 0)
-         .appendTo (this .input)
          .on ("keydown", event => this .onkeydown (event))
-         .on ("keyup", event => this .onkeyup (event));
+         .on ("keyup", event => this .onkeyup (event))
+         .appendTo (this .input);
 
       if (this .console .attr ("id") !== "console")
       {
@@ -75,10 +134,21 @@ module .exports = class Console extends Interface
    {
       super .configure ();
 
-      this .config .file .setDefaultValues ({ history: [ ] });
+      this .config .file .setDefaultValues ({
+         history: [ ],
+         search: false,
+         searchWidth: 285,
+         searchCaseSensitive: false,
+      });
 
       this .history      = this .config .file .history .slice (-this .HISTORY_MAX);
       this .historyIndex = this .history .length;
+
+      this .output .scrollTop (this .output .prop ("scrollHeight"));
+
+      this .search .width (this .config .file .searchWidth);
+      this .toggleSearch (this .config .file .search);
+      this .searchCaseSensitive ();
    }
 
    async set_browser_initialized ()
@@ -94,10 +164,24 @@ module .exports = class Console extends Interface
       this .scriptNode .setup ();
    }
 
+   CONSOLE_MAX = 1000;
+
    // Add strings to exclude here:
    excludes = [
       "The vm module of Node.js is unsupported",
+      "Uncaught TypeError: Cannot read properties of null (reading 'removeChild')",
+      "aria-hidden",
+      "<line>",
       // "Invalid asm.js: Invalid member of stdlib",
+   ];
+
+   messageTime = 0;
+
+   logLevels = [
+      "debug",
+      "log",
+      "warn",
+      "error",
    ];
 
    addMessage (event, level, sourceId, line, message)
@@ -105,32 +189,21 @@ module .exports = class Console extends Interface
       if (this .excludes .some (exclude => message .includes (exclude)))
          return;
 
-      const
-         classes = [this .logLevels [level] ?? "log", this .logClasses [level]],
-         title   = sourceId ? `${sourceId}:${line}`: "",
-         text    = $("<p></p>") .addClass (classes) .attr ("title", title) .text (message);
+      const text = $("<p></p>")
+         .addClass (this .logLevels [level] ?? "log")
+         .attr ("title", sourceId ? `${sourceId}:${line}`: "")
+         .text (message);
 
-      if (this .messageTime && performance .now () - this .messageTime > 1000)
+      if (performance .now () - this .messageTime > 1000)
          this .output .append ($("<p></p>") .addClass ("splitter"));
 
       this .messageTime = performance .now ();
 
-      const
-         children = this .output .children (),
-         last     = children .last ();
-
-      if (last .hasClass (this .logLevels [level]))
-      {
-         last .css ("margin-bottom", "0");
-         text .css ("margin-top",    "0");
-         last .css ("border-bottom", "none");
-         text .css ("border-top",    "none");
-      }
-
-      children .slice (0, Math .max (children .length - this .CONSOLE_MAX, 0)) .remove ();
-
+      this .output .children (`:not(:nth-last-child(-n+${this .CONSOLE_MAX}))`) .remove ();
       this .output .append (text);
       this .output .scrollTop (this .output .prop ("scrollHeight"));
+
+      this .findElements (text, this .currentElement, false);
    }
 
    setSuspendConsole (value)
@@ -157,6 +230,7 @@ module .exports = class Console extends Interface
 
       this .output .empty ();
       this .addMessage (null, "info", __filename, 0, `Console cleared at ${new Date () .toLocaleTimeString ()}.`);
+      this .searchString ();
    }
 
    onkeydown (event)
@@ -243,13 +317,156 @@ module .exports = class Console extends Interface
 
       try
       {
-         console .debug (String (this .scriptNode .evaluate (text)));
+         console .debug (this .scriptNode .evaluate (text));
       }
       catch (error)
       {
-         console .error (`${error .name}: ${error .message}`);
+         console .error (error);
       }
 
       this .textarea .val ("");
+   }
+
+   toggleSearch (visible)
+   {
+      this .config .file .search = visible;
+
+      if (visible)
+      {
+         this .searchButton .addClass ("active");
+         this .search .show ();
+         this .searchInput .trigger ("focus");
+
+         this .searchString ();
+      }
+      else
+      {
+         this .searchButton .removeClass ("active");
+         this .search .hide ();
+         this .output .find (".selected") .removeClass ("selected");
+      }
+   }
+
+   searchString ()
+   {
+      this .foundElements = [ ];
+
+      this .findElements (this .output .children (), 0, true);
+   }
+
+   findElements (elements, currentElement, scroll)
+   {
+      if (this .search .is (":hidden"))
+         return;
+
+      const
+         toString = this .searchCaseSensitiveButton .hasClass ("active") ? "toString" : "toLowerCase",
+         string   = this .searchInput .val () [toString] ();
+
+      if (!string)
+         return;
+
+      this .foundElements = this .foundElements .concat (Array .from (elements, element => $(element))
+         .filter (element => element .text () [toString] () .includes (string)));
+
+      this .updateCurrentElement (currentElement, scroll);
+   }
+
+   searchKey (event)
+   {
+      switch (event .key)
+      {
+         case "Enter":
+         {
+            if (!this .foundElements .length)
+               break;
+
+            if (event .shiftKey)
+               this .searchPrevious ();
+            else
+               this .searchNext ();
+
+            break;
+         }
+      }
+   }
+
+   searchCaseSensitive (value = this .config .file .searchCaseSensitive)
+   {
+      this .config .file .searchCaseSensitive = value;
+
+      if (this .config .file .searchCaseSensitive)
+         this .searchCaseSensitiveButton .addClass ("active");
+      else
+         this .searchCaseSensitiveButton .removeClass ("active");
+
+      this .searchInput .trigger ("focus");
+
+      this .searchString ();
+   }
+
+   searchPrevious ()
+   {
+      this .updateCurrentElement (this .currentElement - 1);
+   }
+
+   searchNext ()
+   {
+      this .updateCurrentElement (this .currentElement + 1);
+   }
+
+   updateCurrentElement (value, scroll = true)
+   {
+      if (value < 0)
+         value = this .foundElements .length - 1;
+
+      if (value >= this .foundElements .length)
+         value = 0;
+
+      this .currentElement = value;
+
+      this .output .find (".selected") .removeClass ("selected");
+
+      if (this .foundElements .length)
+      {
+         const element = this .foundElements [this .currentElement];
+
+         element .addClass ("selected");
+
+         if (scroll)
+         {
+            element .get (0) .scrollIntoView ({ block: "center", inline: "start", behavior: "smooth" });
+            $(window) .scrollTop (0);
+         }
+
+         this .searchStatus .text (util .format (_("%d of %d"), this .currentElement + 1, this .foundElements .length));
+         this .searchPreviousButton .removeClass ("disabled");
+         this .searchNextButton     .removeClass ("disabled");
+      }
+      else
+      {
+         this .searchStatus .text (`No results`);
+         this .searchPreviousButton .addClass ("disabled");
+         this .searchNextButton     .addClass ("disabled");
+      }
+   }
+
+   outputKey (event)
+   {
+      switch (event .key)
+      {
+         case "f":
+         {
+            if (event .ctrlKey || event .metaKey)
+            {
+               this .searchInput .val (window .getSelection () .toString ());
+               this .searchInput .trigger ("select");
+
+               this .toggleSearch (true);
+            }
+
+            break;
+         }
+      }
    }
 };

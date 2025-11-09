@@ -7,12 +7,29 @@
   <body>
     <tab-group sortable="true">
       <style>
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track, /* Track */
+::-webkit-scrollbar-thumb:window-inactive, /* Handle */
+::-webkit-scrollbar-corner { /* Corner */
+  background-color: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb-color);
+}
+
 .etabs .nav {
   height: var(--window-tabs-height);
   background: var(--background-color);
   box-shadow: none;
   border: none;
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
   white-space: nowrap;
 }
 

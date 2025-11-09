@@ -129,55 +129,55 @@ Shaders are written in OpenGL Shading Language (GLSL), a high-level shading lang
 
 ### Open, Import, Save
 
-- New = ***Ctrl/Command+n***
-- Open = ***Ctrl/Command+o***
-- Save = ***Ctrl/Command+s***
-- Save As = ***Ctrl/Command+Shift+s***
-- Quit = ***Ctrl+q***
+- New = <kbd>Ctrl-or-Cmd</kbd>+<kbd>n</kbd>
+- Open = <kbd>Ctrl-or-Cmd</kbd>+<kbd>o</kbd>
+- Save = <kbd>Ctrl-or-Cmd</kbd>+<kbd>s</kbd>
+- Save As = <kbd>Shift</kbd>+<kbd>Ctrl-or-Cmd</kbd>+<kbd>s</kbd>
+- Quit = <kbd>Ctrl-or-Cmd</kbd>+<kbd>1</kbd>
 
 ### Examiner Viewer
 
 - Rotate camera around objects in scene = ***Click-drag***
-- Pan to slide camera left, right, up, down = ***Click-middle-drag***
+- Pan to slide camera left, right, up, down = ***Click-middle-drag*** or <kbd>Alt-or-Option</kbd> and ***click-drag***
 - Dolly = ***Scroll***
 
 ### Walk Viewer
 
 - Move forward or back, turn left or right = ***Click-drag***
-- Look around = ***Ctrl/Command-drag***
-- Pan to slide camera left, right, up, down = ***Click-middle-drag***
+- Look around = <kbd>Ctrl-or-Cmd</kbd> and ***drag***
+- Pan to slide camera left, right, up, down = ***Click-middle-drag*** or <kbd>Alt-or-Option</kbd> and ***click-drag***
 - Tilt up or down = ***Scroll***
-- Move faster = ***Shift-click-drag***
+- Move faster = <kbd>Shift</kbd> and ***click-drag***
 
 ### Plane Viewer
 
 - Dolly = ***Scroll***
-- Pan = ***Click-middle-drag***
+- Pan = ***Click-middle-drag*** or <kbd>Alt-or-Option</kbd> and ***click-drag***
 
 ### Edit
 
-- Undo = ***Ctrl/Command+z***
-- Redo = ***Ctrl/Command+Shift+z***
-- Cut = ***Ctrl/Command+x***
-- Copy = ***Ctrl/Command+c***
-- Paste = ***Ctrl/Command+v***
-- Delete = ***Delete***
+- Undo = <kbd>Ctrl-or-Cmd</kbd>+<kbd>z</kbd>
+- Redo = <kbd>Shift+Ctrl-or-Cmd</kbd>+<kbd>z</kbd>
+- Cut = <kbd>Ctrl-or-Cmd</kbd>+<kbd>x</kbd>
+- Copy = <kbd>Ctrl-or-Cmd</kbd>+<kbd>c</kbd>
+- Paste = <kbd>Ctrl-or-Cmd</kbd>+<kbd>v</kbd>
+- Delete = <kbd>Ctrl-or-Cmd</kbd>+<kbd>Delete</kbd>
 
 ### Select &amp; Group
 
-- Select all = ***Ctrl/Command+a***
-- Deselect all = ***Ctrl/Command+Shift+a***
-- Select multiple = ***Shift-click***
+- Select all = <kbd>Ctrl-or-Cmd</kbd>+<kbd>a</kbd>
+- Deselect all = <kbd>Shift+Ctrl-or-Cmd</kbd>+<kbd>a</kbd>
+- Select multiple = <kbd>Shift</kbd> and ***click***
 
 ### Transform Tool
 
 - Switch between Translate Tool, Rotate Tool, and Scale Tool = ***double click Transform Tool handles***
-- Snap to predefined angles = ***Shift-drag rotation handles***
+- Snap to predefined angles = <kbd>Shift</kbd> and ***drag rotation handles***
 
 #### Move (drag arrow handles of manipulator)
 
 - Move along one axis = ***drag arrow handles***
-- Move in plane of surface = ***Alt-or-Option-drag arrow handles***
+- Move in plane of surface = <kbd>Alt-or-Option</kbd> and ***drag arrow handles***
 
 #### Rotate (drag circle handles of manipulator)
 
@@ -185,26 +185,26 @@ Shaders are written in OpenGL Shading Language (GLSL), a high-level shading lang
 
 #### Resize (drag corner boxes of manipulator)
 
-- Uniform scale = ***drag corner handles or Shift-drag axes handles***
-- Uniform scale from one corner = ***Alt-or-Option-drag corner handles***
+- Uniform scale = ***drag corner handles*** or <kbd>Shift</kbd> and ***drag axes handles***
+- Uniform scale from one corner = <kbd>Alt-or-Option</kbd> and ***drag corner handles***
 - Squish &amp; stretch = ***drag axis handles***
-- Squish &amp; stretch from one side = ***Alt-or-Option-drag axis handles***
+- Squish &amp; stretch from one side = <kbd>Alt-or-Option</kbd> and ***drag axis handles***
 
 ### Outline Editor
 
-- Fully expand node = ***Shift-click node expander arrow***
+- Fully expand node = <kbd>Shift</kbd> and ***click node expander arrow***
 - Select node = ***click node name***
 
 #### Wiring Routes
 
 - Create a route = ***Click on two mating connectors***
-- Remove a route = ***Ctrl/Command-click on connector***
+- Remove a route = <kbd>Ctrl-or-Cmd</kbd> and ***click on connector***
 - Follow a route = ***Click small circle next to connector***
-- View info about route = ***Shift-click field expander arrow***
+- View info about route = <kbd>Shift</kbd> and ***click field expander arrow***
 
 ## Abbreviations
 
-- ***Ctrl/Command+Shift+u*** means to press at the same time the Ctrl/Command, Shift, and u keys on your keyboard. Keys
+- <kbd>Shift</kbd>+<kbd>Ctrl-or-Cmd</kbd>+<kbd>u</kbd> means to press at the same time the <kbd>Shift</kbd>, <kbd>Ctrl-or-Cmd</kbd>, and <kbd>u</kbd> keys on your keyboard. Keys
   always appear in italics.
 - ***Click*** means to quickly press and release the left mouse button.
 - ***Click-middle*** means to quickly press and release the middle mouse button.

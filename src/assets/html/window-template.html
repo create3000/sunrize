@@ -4,7 +4,6 @@
     <link rel="stylesheet" type="text/css" href="../node_modules/jquery-ui-dist/jquery-ui.min.css"/>
     <link rel="stylesheet" type="text/css" href="../node_modules/qtip2/dist/jquery.qtip.min.css"/>
     <link rel="stylesheet" type="text/css" href="../themes/default.css"/>
-    <link rel="stylesheet" data-name="vs/editor/editor.main" href="../node_modules/monaco-editor/min/vs/editor/editor.main.css">
   </head>
   <body>
     <div id="vertical-splitter" class="vertical-splitter">
@@ -15,11 +14,11 @@
               <div id="browser-frame">
                 <x3d-canvas
                     id="browser"
-                    debug="true"
                     cache="false"
+                    contextMenu="false"
+                    debug="true"
                     preserveDrawingBuffer="true"
                     splashScreen="false"
-                    contextMenu="false"
                     xrSessionMode="NONE"></x3d-canvas>
               </div>
               <div id="secondary-toolbar" class="toolbar vertical-toolbar large-toolbar secondary-toolbar"></div>

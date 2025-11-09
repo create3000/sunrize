@@ -56,8 +56,14 @@
               <connect nodeField='scale' protoField='size'/>
               <connect nodeField='visible' protoField='selected'/>
             </IS>
-            <Group
-                bboxSize='1 1 1'/>
+            <Shape>
+                <Appearance>
+                  <UnlitMaterial
+                      transparency='1'/>
+                </Appearance>
+                <Box
+                    size='1 1 1'/>
+              </Shape>
           </Transform>
         </Collision>
         <Script DEF='Tool'

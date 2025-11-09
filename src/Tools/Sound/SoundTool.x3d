@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
-<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
   <head>
     <component name='Layout' level='2'/>
     <component name='PointingDeviceSensor' level='1'/>
@@ -10,12 +10,14 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Thu, 18 Feb 2016 08:47:54 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.6.7, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.8.27, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Sound/SoundTool.x3d'/>
-    <meta name='modified' content='Tue, 26 Mar 2024 12:03:37 GMT'/>
+    <meta name='modified' content='Sat, 30 Aug 2025 10:42:22 GMT'/>
   </head>
   <Scene>
-    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'></ExternProtoDeclare>
+    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
+      <field accessType='inputOutput' type='SFBool' name='instanced'/>
+    </ExternProtoDeclare>
     <ExternProtoDeclare name='BooleanSwitch' url='"../Grouping/BooleanSwitch.x3d"'>
       <field accessType='inputOutput' type='SFBool' name='whichChoice'/>
       <field accessType='inputOutput' type='SFBool' name='visible'/>
@@ -85,7 +87,7 @@
                   rotation='-1 0 0 90'>
                 <ProtoInstance name='BooleanSwitch'>
                   <fieldValue name='children'>
-                    <Shape DEF='_14'
+                    <Shape
                         castShadow='false'>
                       <Appearance>
                         <LineProperties DEF='_5'
@@ -101,7 +103,7 @@
                             point='0 1 0, 4.68652e-17 0.92388 -0.382683, -0.224936 0.92388 -0.309597, -0.363954 0.92388 -0.118256, -0.363954 0.92388 0.118256, -0.224936 0.92388 0.309597, -9.37304e-17 0.92388 0.382683, 0.224936 0.92388 0.309597, 0.363954 0.92388 0.118256, 0.363954 0.92388 -0.118256, 0.224936 0.92388 -0.309597, 8.65956e-17 0.707107 -0.707107, -0.415627 0.707107 -0.572061, -0.672499 0.707107 -0.218508, -0.672499 0.707107 0.218508, -0.415627 0.707107 0.572061, -1.73191e-16 0.707107 0.707107, 0.415627 0.707107 0.572061, 0.672499 0.707107 0.218508, 0.672499 0.707107 -0.218508, 0.415627 0.707107 -0.572061, 1.13143e-16 0.382683 -0.92388, -0.543043 0.382683 -0.747434, -0.878662 0.382683 -0.285494, -0.878662 0.382683 0.285494, -0.543043 0.382683 0.747434, -2.26285e-16 0.382683 0.92388, 0.543043 0.382683 0.747434, 0.878662 0.382683 0.285494, 0.878662 0.382683 -0.285494, 0.543043 0.382683 -0.747434, 1.22465e-16 6.12323e-17 -1, -0.587785 6.12323e-17 -0.809017, -0.951057 6.12323e-17 -0.309017, -0.951057 6.12323e-17 0.309017, -0.587785 6.12323e-17 0.809017, -2.44929e-16 6.12323e-17 1, 0.587785 6.12323e-17 0.809017, 0.951057 6.12323e-17 0.309017, 0.951057 6.12323e-17 -0.309017, 0.587785 6.12323e-17 -0.809017, 1.13143e-16 -0.382683 -0.92388, -0.543043 -0.382683 -0.747434, -0.878662 -0.382683 -0.285494, -0.878662 -0.382683 0.285494, -0.543043 -0.382683 0.747434, -2.26285e-16 -0.382683 0.92388, 0.543043 -0.382683 0.747434, 0.878662 -0.382683 0.285494, 0.878662 -0.382683 -0.285494, 0.543043 -0.382683 -0.747434, 8.65956e-17 -0.707107 -0.707107, -0.415627 -0.707107 -0.572061, -0.672499 -0.707107 -0.218508, -0.672499 -0.707107 0.218508, -0.415627 -0.707107 0.572061, -1.73191e-16 -0.707107 0.707107, 0.415627 -0.707107 0.572061, 0.672499 -0.707107 0.218508, 0.672499 -0.707107 -0.218508, 0.415627 -0.707107 -0.572061, 4.68652e-17 -0.92388 -0.382683, -0.224936 -0.92388 -0.309597, -0.363954 -0.92388 -0.118256, -0.363954 -0.92388 0.118256, -0.224936 -0.92388 0.309597, -9.37304e-17 -0.92388 0.382683, 0.224936 -0.92388 0.309597, 0.363954 -0.92388 0.118256, 0.363954 -0.92388 -0.118256, 0.224936 -0.92388 -0.309597, 0 -1 0'/>
                       </IndexedLineSet>
                     </Shape>
-                    <Shape DEF='_7'
+                    <Shape
                         castShadow='false'>
                       <Appearance>
                         <LineProperties USE='_5'/>
@@ -186,8 +188,14 @@
                   rotation='0 1 0 90'
                   visible='false'>
                 <ScreenGroup>
-                  <Group DEF='_26'
-                      bboxSize='30 30 30'/>
+                  <Shape DEF='_26'>
+                    <Appearance>
+                      <UnlitMaterial DEF='_111'
+                          transparency='1'/>
+                    </Appearance>
+                    <Box
+                        size='30 30 30'/>
+                  </Shape>
                 </ScreenGroup>
               </Transform>
             </Group>
@@ -206,7 +214,7 @@
                   rotation='0 1 0 -90'
                   visible='false'>
                 <ScreenGroup>
-                  <Group USE='_26'/>
+                  <Shape USE='_26'/>
                 </ScreenGroup>
               </Transform>
             </Group>
@@ -236,7 +244,7 @@
                   rotation='1 0 0 -90'
                   visible='false'>
                 <ScreenGroup>
-                  <Group USE='_26'/>
+                  <Shape USE='_26'/>
                 </ScreenGroup>
               </Transform>
             </Group>
@@ -255,7 +263,7 @@
                   rotation='1 0 0 90'
                   visible='false'>
                 <ScreenGroup>
-                  <Group USE='_26'/>
+                  <Shape USE='_26'/>
                 </ScreenGroup>
               </Transform>
             </Group>
@@ -266,8 +274,13 @@
               <connect nodeField='visible' protoField='selected'/>
             </IS>
             <ScreenGroup>
-              <Group
-                  bboxSize='60 60 60'/>
+              <Shape>
+                <Appearance>
+                  <UnlitMaterial USE='_111'/>
+                </Appearance>
+                <Box
+                    size='60 60 60'/>
+              </Shape>
             </ScreenGroup>
           </Transform>
         </Collision>

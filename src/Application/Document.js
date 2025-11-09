@@ -55,7 +55,9 @@ module .exports = class Document extends Interface
     */
    async initialize ()
    {
-      $("body") .addClass ("modal");
+      $("html")
+         .attr ("platform", process .platform)
+         .addClass ("read-only");
 
       // Actions
 
@@ -70,7 +72,7 @@ module .exports = class Document extends Interface
       // File Menu
 
       electron .ipcRenderer .on ("open-files",       (event, urls)     => this .loadURL (urls [0])); // DEBUG
-      electron .ipcRenderer .on ("save-file",        (event, force)    => this .saveFile (force));
+      electron .ipcRenderer .on ("save-file",        (event)           => this .saveFile ());
       electron .ipcRenderer .on ("save-file-as",     (event, filePath) => this .saveFileAs (filePath));
       electron .ipcRenderer .on ("save-copy-as",     (event, filePath) => this .saveCopyAs (filePath));
       electron .ipcRenderer .on ("auto-save",        (event, value)    => this .autoSave = value);
@@ -184,10 +186,14 @@ module .exports = class Document extends Interface
 
       // Restore
 
+      const pkg = require ("../../package.json");
+
+      console .info (`Welcome to ${pkg .productName} v${pkg .version}.`);
+
       await this .restoreFile ();
 
       if (!this .isInitialScene)
-         $("body") .removeClass ("modal");
+         $("html") .removeClass ("read-only");
    }
 
    configure ()
@@ -272,7 +278,35 @@ module .exports = class Document extends Interface
    {
       this .activeElement = document .activeElement ? $(document .activeElement) : null;
 
+      if (this .activeElement ?.is ("input, textarea"))
+      {
+         this .activeElement
+            .off ("contextmenu.Document")
+            .on ("contextmenu.Document", () => this .showContextMenu ());
+      }
+
       electron .ipcRenderer .send ("update-menu", this .updateEditMenu ({ }));
+   }
+
+   async showContextMenu ()
+   {
+      await $.sleep ();
+
+      if (this .activeElementIsMonacoEditor ())
+         return;
+
+      const menu = [
+         { role: "undo", accelerator: "CmdOrCtrl+Z" },
+         { role: "redo", accelerator: "Shift+CmdOrCtrl+Z" },
+         { type: "separator" },
+         { role: "cut", accelerator: "CmdOrCtrl+X" },
+         { role: "copy", accelerator: "CmdOrCtrl+C" },
+         { role: "paste", accelerator: "CmdOrCtrl+P" },
+         { type: "separator" },
+         { role: "selectAll", accelerator: "CmdOrCtrl+A" },
+      ];
+
+      electron .ipcRenderer .send ("context-menu", "default-context-menu", menu);
    }
 
    updateEditMenu (menu)
@@ -291,8 +325,8 @@ module .exports = class Document extends Interface
 
       const activeElement = this .activeElement;
 
-      if (activeElement .is ("input"))
-         return activeElement .attr ("type") === undefined || activeElement .attr ("type") === "text";
+      if (activeElement .is ("input:not([type]), input[type=text]"))
+         return true;
 
       if (activeElement .is ("textarea"))
          return true;
@@ -312,6 +346,9 @@ module .exports = class Document extends Interface
          return false;
 
       if (!this .activeElement .closest (".monaco-editor") .length)
+         return false;
+
+      if (this .activeElement .closest (".ibwrapper") .length)
          return false;
 
       return true;
@@ -403,12 +440,9 @@ Viewpoint {
     *
     * @param {boolean} force force save
     */
-   saveFile (force = false)
+   saveFile ()
    {
       this .footer .scriptEditor ?.apply ();
-
-      if (!UndoManager .shared .saveNeeded && !force)
-         return;
 
       const scene = this .browser .currentScene;
 
@@ -423,16 +457,16 @@ Viewpoint {
          pkg       = require ("../../package.json"),
          generator = scene .getMetaData ("generator") ?.filter (value => !value .startsWith (pkg .productName)) ?? [ ];
 
-      generator .push (`${pkg .productName} V${pkg .version}, ${pkg .homepage}`);
-
-      if (!scene .getMetaData ("created"))
-         scene .setMetaData ("created", new Date () .toUTCString ());
+      generator .unshift (`${pkg .productName} V${pkg .version}, ${pkg .homepage}`);
 
       if (!scene .getMetaData ("creator") ?.some (value => value .includes (this .fullname)))
          scene .addMetaData ("creator", this .fullname);
 
-      scene .setMetaData ("generator", generator);
+      if (!scene .getMetaData ("created"))
+         scene .setMetaData ("created", new Date () .toUTCString ());
+
       scene .setMetaData ("modified", new Date () .toUTCString ());
+      scene .setMetaData ("generator", generator);
 
       // Save source code.
 
@@ -484,7 +518,7 @@ Viewpoint {
 
       Editor .rewriteURLs (scene, scene, oldWorldURL, scene .worldURL);
 
-      this .saveFile (true);
+      this .saveFile ();
    }
 
    /**
@@ -505,7 +539,7 @@ Viewpoint {
 
       Editor .rewriteURLs (scene, scene, oldWorldURL, newWorldURL, undoManager);
 
-      this .saveFile (true);
+      this .saveFile ();
 
       undoManager .undo ();
 
@@ -521,19 +555,19 @@ Viewpoint {
    {
       this .config .global .autoSave = value;
 
-      this .registerAutoSave ();
+      this .requestAutoSave ();
    }
 
    #saveTimeoutId = undefined;
 
-   registerAutoSave ()
+   requestAutoSave ()
    {
       if (!this .autoSave)
          return;
 
       clearTimeout (this .#saveTimeoutId);
 
-      this .#saveTimeoutId = setTimeout (() => this .saveFile (false), 1000);
+      this .#saveTimeoutId = setTimeout (() => this .saveFile (), 1000);
    }
 
    exportAs (filePath)
@@ -543,7 +577,8 @@ Viewpoint {
 
    close ()
    {
-      this .saveFile (false);
+      if (UndoManager .shared .saveNeeded)
+         this .saveFile ();
 
       electron .ipcRenderer .sendToHost ("closed");
    }
@@ -567,7 +602,7 @@ Viewpoint {
       this .updateMenu ();
 
       if (UndoManager .shared .saveNeeded)
-         this .registerAutoSave ();
+         this .requestAutoSave ();
 
       electron .ipcRenderer .sendToHost ("saved", !UndoManager .shared .saveNeeded);
    }
@@ -586,6 +621,9 @@ Viewpoint {
       if (this .activeElementIsInputOrOutput ())
          return;
 
+      if (this .activeElementIsMonacoEditor ())
+         return;
+
       this .sidebar .outlineEditor .cutNodes ();
       return false;
    }
@@ -595,13 +633,19 @@ Viewpoint {
       if (this .activeElementIsInputOrOutput ())
          return;
 
-      this .sidebar .outlineEditor .copyNodes (true);
+      if (this .activeElementIsMonacoEditor ())
+         return;
+
+      this .sidebar .outlineEditor .copyNodes ();
       return false;
    }
 
    paste ()
    {
       if (this .activeElementIsInputOrOutput ())
+         return;
+
+      if (this .activeElementIsMonacoEditor ())
          return;
 
       this .sidebar .outlineEditor .pasteNodes ();

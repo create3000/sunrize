@@ -20,6 +20,10 @@ body {
   background: var(--system-gray4);
 }
 
+:focus {
+  outline: none;
+}
+
 #label {
   font-size: 80% !important;
 }
@@ -30,8 +34,12 @@ input {
   color: var(--text-color) !important;
 }
 
+input:focus {
+  border-color: var(--accent-color) !important;
+}
+
 #ok {
-  background-color: var(--system-red) !important;
+  background-color: var(--accent-color) !important;
 }
 
 #cancel {

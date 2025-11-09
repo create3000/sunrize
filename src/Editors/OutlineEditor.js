@@ -9,6 +9,7 @@ const
    mime              = require ("../Bits/MimeTypes"),
    X3D               = require ("../X3D"),
    OutlineRouteGraph = require ("./OutlineRouteGraph"),
+   Traverse          = require ("x3d-traverse") (X3D),
    Editor            = require ("../Undo/Editor"),
    UndoManager       = require ("../Undo/UndoManager"),
    _                 = require ("../Application/GetText");
@@ -21,7 +22,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       element .on ("contextmenu", (event) => this .showContextMenu (event));
 
-      electron .ipcRenderer .on ("outline-editor", (event, key, ...args) => this [key] (...args));
+      electron .ipcRenderer .on ("outline-editor", (event, key, ... args) => this [key] (... args));
 
       electron .ipcRenderer .on ("transform-to-zero",   () => this .transformToZero ());
       electron .ipcRenderer .on ("remove-empty-groups", () => this .removeEmptyGroups ());
@@ -84,7 +85,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       if (!element .is (".manually"))
          this .sceneGraph .find (".manually") .removeClass ("manually");
 
-      if (element .is (".externproto, .proto, .proto-scene, .node, .field") && !element .is (".manually"))
+      if (element .is (":is(.externproto, .proto, .proto-scene, .node, .field, .imported-node, .exported-node):not(.manually)"))
          this .selectPrimaryElement (element);
 
       const
@@ -151,6 +152,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             { type: "separator" },
             {
                label: _("Paste"),
+               accelerator: "CmdOrCtrl+V",
                visible: field .getType () === X3D .X3DConstants .SFNode || field .getType () === X3D .X3DConstants .MFNode,
                args: ["pasteNodes", element .attr ("id"), executionContext .getId (), node .getId (), field .getId ()],
             },
@@ -223,18 +225,22 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                { type: "separator" },
                {
                   label: _("Cut"),
+                  accelerator: "CmdOrCtrl+X",
                   args: ["cutNodes"],
                },
                {
                   label: _("Copy"),
+                  accelerator: "CmdOrCtrl+C",
                   args: ["copyNodes"],
                },
                {
                   label: _("Paste"),
+                  accelerator: "CmdOrCtrl+V",
                   args: ["pasteNodes", element .attr ("id"), executionContext .getId (), node .getId ()],
                },
                {
                   label: _("Delete"),
+                  accelerator: "CmdOrCtrl+Backspace",
                   args: ["deleteNodes"],
                },
                {
@@ -252,119 +258,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             ];
 
             if (innerNode .getType () .includes (X3D .X3DConstants .X3DChildNode))
-            {
-               menu .push ({
-                  label: _("Add Parent Group"),
-                  submenu: [
-                     {
-                        label: "Transform",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "Transform", "children"],
-                     },
-                     {
-                        label: "Group",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "Group", "children"],
-                     },
-                     {
-                        label: "StaticGroup",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "StaticGroup", "children"],
-                     },
-                     {
-                        label: "Switch",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "Switch", "children"],
-                     },
-                     { type: "separator" },
-                     {
-                        label: "Billboard",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "Billboard", "children"],
-                     },
-                     {
-                        label: "Collision",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "Collision", "children"],
-                     },
-                     {
-                        label: "LOD",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "LOD", "children"],
-                     },
-                     {
-                        label: "ViewpointGroup",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "ViewpointGroup", "children"],
-                     },
-                     { type: "separator" },
-                     {
-                        label: "Anchor",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "Anchor", "children"],
-                     },
-                     { type: "separator" },
-                     {
-                        label: "LayoutLayer",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layout", "LayoutLayer", "children"],
-                     },
-                     {
-                        label: "ScreenGroup",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layout", "ScreenGroup", "children"],
-                     },
-                     { type: "separator" },
-                     {
-                        label: "GeoTransform",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Geospatial", "GeoTransform", "children"],
-                     },
-                     {
-                        label: "GeoLocation",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Geospatial", "GeoLocation", "children"],
-                     },
-                     { type: "separator" },
-                     {
-                        label: "CADLayer",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADLayer", "children"],
-                     },
-                     {
-                        label: "CADAssembly",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADAssembly", "children"],
-                     },
-                     {
-                        label: "CADPart",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADPart", "children"],
-                     },
-                     {
-                        label: "CADFace",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADFace", "shape"],
-                     },
-                     { type: "separator" },
-                     {
-                        label: "LayerSet",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layering", "LayerSet", "layers"],
-                     },
-                     {
-                        label: "Layer",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layering", "Layer", "children"],
-                     },
-                     {
-                        label: "Viewport",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layering", "Viewport", "children"],
-                     },
-                     { type: "separator" },
-                     {
-                        label: "PickableGroup",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Picking", "PickableGroup", "children"],
-                     },
-                     { type: "separator" },
-                     {
-                        label: "CollidableOffset",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "RigidBodyPhysics", "CollidableOffset", "collidable"],
-                     },
-                     {
-                        label: "CollidableShape",
-                        args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "RigidBodyPhysics", "CollidableShape", "shape"],
-                     },
-                  ],
-               },
-               {
-                  label: _("Remove Parent"),
-                  enabled: parentNodeElement .hasClass ("node"),
-                  args: ["removeParent", element .attr ("id"), executionContext .getId (), node .getId ()],
-               },
-               { type: "separator" });
-            }
+               this .addChildNodeMenu (menu, element, parentNodeElement, executionContext, node);
 
             for (const type of node .getType () .toReversed ())
             {
@@ -537,14 +431,17 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             var menu = [
                {
                   label: _("Cut"),
+                  accelerator: "CmdOrCtrl+X",
                   args: ["cutNodes"],
                },
                {
                   label: _("Copy"),
+                  accelerator: "CmdOrCtrl+C",
                   args: ["copyNodes"],
                },
                {
                   label: _("Delete"),
+                  accelerator: "CmdOrCtrl+Backspace",
                   args: ["deleteNodes"],
                },
             ];
@@ -576,20 +473,54 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       else if (element .is (".imported-node"))
       {
-         const importedNode = this .objects .get (parseInt (element .attr ("imported-node-id")));
+         const
+            parentFieldElement = element .closest (".field, .scene", this .sceneGraph),
+            parentNodeElement  = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
+            node               = this .objects .get (parseInt (element .attr ("node-id"))),
+            innerNode          = $.try (() => node .getInnerNode ()) ?? node,
+            importedNode       = this .objects .get (parseInt (element .attr ("imported-node-id"))),
+            local              = importedNode .getExecutionContext () .getLocalScene () === this .executionContext;
 
          var menu = [
             {
                label: _("Edit Imported Node..."),
-               visible: importedNode .getExecutionContext () .getLocalScene () === this .executionContext,
+               visible: local,
                args: ["editImportedNode", element .attr ("id")],
             },
             {
                label: _("Remove Imported Node"),
-               visible: importedNode .getExecutionContext () .getLocalScene () === this .executionContext,
+               visible: local && !node .getCloneCount (),
                args: ["removeImportedNode", element .attr ("id")],
             },
+            {
+               label: _("Add Clone"),
+               visible: local,
+               args: ["addImportedNodeClone", element .attr ("id")],
+            },
+            { type: "separator" },
+            {
+               label: _("Cut"),
+               visible: local && element .hasClass ("proxy"),
+               accelerator: "CmdOrCtrl+X",
+               args: ["cutNodes"],
+            },
+            {
+               label: _("Copy"),
+               visible: local && element .hasClass ("proxy"),
+               accelerator: "CmdOrCtrl+C",
+               args: ["copyNodes"],
+            },
+            {
+               label: _("Delete"),
+               visible: local && element .hasClass ("proxy"),
+               accelerator: "CmdOrCtrl+Backspace",
+               args: ["deleteNodes"],
+            },
+            { type: "separator" },
          ];
+
+         if (local && element .hasClass ("proxy") && innerNode .getType () .includes (X3D .X3DConstants .X3DChildNode))
+            this .addChildNodeMenu (menu, element, parentNodeElement, executionContext, node);
       }
 
       else if (element .is (".externproto, .proto"))
@@ -619,7 +550,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                args: ["copyNodes"],
             },
             {
-               label: _("Copy Extern Prototype"),
+               label: _("Copy as Extern Prototype"),
                visible: !protoNode .isExternProto,
                enabled: executionContext instanceof X3D .X3DScene,
                args: ["copyExternPrototype"],
@@ -670,7 +601,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             },
             {
                label: _("Paste"),
-               args: ["pasteNodes", element .attr ("id"), executionContext .getId ()],
+               accelerator: "CmdOrCtrl+V",
+               args: ["pasteNodes", element .attr ("id"), executionContext .getId (), undefined, undefined, true],
             },
          ];
       }
@@ -680,6 +612,121 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       }
 
       electron .ipcRenderer .send ("context-menu", "outline-editor", menu);
+   }
+
+   addChildNodeMenu (menu, element, parentNodeElement, executionContext, node)
+   {
+      menu .push ({
+         label: _("Add Parent Group"),
+         submenu: [
+            {
+               label: "Transform",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "Transform", "children"],
+            },
+            {
+               label: "Group",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "Group", "children"],
+            },
+            {
+               label: "StaticGroup",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "StaticGroup", "children"],
+            },
+            {
+               label: "Switch",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "Switch", "children"],
+            },
+            { type: "separator" },
+            {
+               label: "Billboard",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "Billboard", "children"],
+            },
+            {
+               label: "Collision",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "Collision", "children"],
+            },
+            {
+               label: "LOD",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "LOD", "children"],
+            },
+            {
+               label: "ViewpointGroup",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "ViewpointGroup", "children"],
+            },
+            { type: "separator" },
+            {
+               label: "Anchor",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Navigation", "Anchor", "children"],
+            },
+            { type: "separator" },
+            {
+               label: "LayoutLayer",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layout", "LayoutLayer", "children"],
+            },
+            {
+               label: "ScreenGroup",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layout", "ScreenGroup", "children"],
+            },
+            { type: "separator" },
+            {
+               label: "GeoTransform",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Geospatial", "GeoTransform", "children"],
+            },
+            {
+               label: "GeoLocation",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Geospatial", "GeoLocation", "children"],
+            },
+            { type: "separator" },
+            {
+               label: "CADLayer",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADLayer", "children"],
+            },
+            {
+               label: "CADAssembly",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADAssembly", "children"],
+            },
+            {
+               label: "CADPart",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADPart", "children"],
+            },
+            {
+               label: "CADFace",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "CADGeometry", "CADFace", "shape"],
+            },
+            { type: "separator" },
+            {
+               label: "LayerSet",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layering", "LayerSet", "layers"],
+            },
+            {
+               label: "Layer",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layering", "Layer", "children"],
+            },
+            {
+               label: "Viewport",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layering", "Viewport", "children"],
+            },
+            { type: "separator" },
+            {
+               label: "PickableGroup",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Picking", "PickableGroup", "children"],
+            },
+            { type: "separator" },
+            {
+               label: "CollidableOffset",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "RigidBodyPhysics", "CollidableOffset", "collidable"],
+            },
+            {
+               label: "CollidableShape",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "RigidBodyPhysics", "CollidableShape", "shape"],
+            },
+         ],
+      },
+      {
+         label: _("Remove Parent"),
+         enabled: parentNodeElement .hasClass ("node"),
+         args: ["removeParent", element .attr ("id"), executionContext .getId (), node .getId ()],
+      },
+      { type: "separator" });
    }
 
    addUserDefinedField (id, executionContextId, nodeId, fieldId)
@@ -846,11 +893,25 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       Editor .removeImportedNode (importedNode .getExecutionContext (), importedNode .getImportedName ());
    }
 
+   addImportedNodeClone (id)
+   {
+      const
+         element          = $(`#${id}`),
+         importedNode     = this .objects .get (parseInt (element .attr ("imported-node-id"))),
+         executionContext = importedNode .getExecutionContext ();
+
+      UndoManager .shared .beginUndo (_("Add Clone of Imported Node »%s«"), importedNode .getImportedName ());
+
+      Editor .appendValueToArray (executionContext, executionContext, executionContext .rootNodes, importedNode .getExportedNode ());
+
+      UndoManager .shared .endUndo ();
+   }
+
    async cutNodes ()
    {
       const
-         primary     = $(".node.primary, .proto.primary, .externproto.primary"),
-         selected    = this .sceneGraph .find (".node.manually, .proto.manually, .externproto.manually"),
+         primary     = $(":is(.node, .proto, .externproto).primary"),
+         selected    = this .sceneGraph .find (":is(.node, .proto, .externproto).manually"),
          selection   = selected .filter (primary) .length ? selected : primary,
          ids         = selection .map (function () { return this .id }) .get (),
          elements    = ids .map (id => $(`#${id}`)),
@@ -858,17 +919,17 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       UndoManager .shared .beginUndo (nodes .length === 1 ? _("Cut %d Node") : _("Cut %d Nodes"), nodes .length);
 
-      await this .copyNodes ();
+      await this .copyNodes (false);
       await this .deleteNodes ();
 
       UndoManager .shared .endUndo ();
    }
 
-   async copyNodes (deselect)
+   async copyNodes ()
    {
       const
-         primary     = $(".node.primary, .proto.primary, .externproto.primary"),
-         selected    = this .sceneGraph .find (".node.manually, .proto.manually, .externproto.manually"),
+         primary     = $(":is(.node, .proto, .externproto, .imported-node.proxy).primary"),
+         selected    = this .sceneGraph .find (":is(.node, .proto, .externproto, .imported-node.proxy).manually"),
          selection   = selected .filter (primary) .length ? selected : primary,
          ids         = selection .map (function () { return this .id }) .get (),
          elements    = ids .map (id => $(`#${id}`)),
@@ -896,9 +957,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       navigator .clipboard .writeText (x3dSyntax);
 
       undoManager .undo ();
-
-      if (deselect)
-         this .deselectAll ();
    }
 
    async copyExternPrototype ()
@@ -929,21 +987,21 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       scene .dispose ();
    }
 
-   async pasteNodes (id, executionContextId, nodeId, fieldId)
+   async pasteNodes (id, executionContextId, nodeId, fieldId, deselect)
    {
       // try
       {
          // if there is a selected field or node, update nodeId and fieldId.
 
          const
-            primary                 = $(".primary"),
+            primary                 = deselect ? $("") : $(".node.primary"),
             executionContextElement = primary .closest (".scene", this .sceneGraph),
             executionContext        = this .objects .get (executionContextId) ?? this .getNode (executionContextElement) ?? this .executionContext,
             targetNode              = this .objects .get (nodeId) ?? this .getNode (primary),
             targetField             = this .objects .get (fieldId) ?? this .getField (primary),
             numRootNodes            = executionContext .rootNodes .length,
             x3dSyntax               = await navigator .clipboard .readText (),
-            destinationModelMatrix  = nodeId !== undefined ? this .getModelMatrix ($(`.node[node-id=${nodeId}]`)) : new X3D .Matrix4 ();
+            destinationModelMatrix  = this .getModelMatrix ($(`.node[node-id=${targetNode ?.getId ()}]`));
 
          UndoManager .shared .beginUndo (_("Paste Nodes"));
 
@@ -990,10 +1048,17 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
          UndoManager .shared .endUndo ();
 
+         // Expand to pasted nodes and select them.
+
          await this .browser .nextFrame ();
 
+         this .deselectAll ();
+
          for (const node of nodes)
+         {
             this .expandTo (node);
+            this .selectNodeElement ($(`.node[node-id="${node .getId ()}"]`), { add: true });
+         }
       }
       // catch (error)
       // {
@@ -1005,8 +1070,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    deleteNodes ()
    {
       const
-         primary   = $(".node.primary"),
-         selected  = this .sceneGraph .find (".node.manually"),
+         primary   = $(".node.primary, .imported-node.proxy.primary"),
+         selected  = this .sceneGraph .find (".node.manually, .imported-node.proxy.manually"),
          selection = !primary .length || selected .filter (primary) .length ? selected : primary,
          ids       = selection .map (function () { return this .id }) .get ();
 
@@ -1016,8 +1081,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          UndoManager .shared .beginUndo (_("Delete Node %s"), this .getNode ($(`#${ids [0]}`)) ?.getTypeName () ?? "NULL");
       else
          return;
-
-      const nodes = [ ];
 
       for (const id of ids .reverse ())
       {
@@ -1041,11 +1104,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                Editor .removeValueFromArray (executionContext, parentNode, parentField, index);
                break;
          }
-
-         nodes .push (node);
       }
-
-      Editor .removeNodesFromExecutionContextIfNecessary (this .executionContext, nodes);
 
       UndoManager .shared .endUndo ();
    }
@@ -1145,8 +1204,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       if (field .getType () === X3D .X3DConstants .MFNode)
       {
          const
-            selectedNodes          = Array .from (this .sceneGraph .find (".node.manually,.node.primary"), e => this .getNode ($(e))),
-            selectedElements       = Array .from (this .sceneGraph .find (".node.manually"), e => $(e)),
+            selectedNodes          = Array .from (this .sceneGraph .find (":is(.node, .imported-node.proxy):is(.manually,.primary)"), e => this .getNode ($(e))),
+            selectedElements       = Array .from (this .sceneGraph .find (":is(.node, .imported-node.proxy).manually"), e => $(e)),
             destinationModelMatrix = this .getModelMatrix (parentNodeElement);
 
          // Add other selected nodes.
@@ -1596,7 +1655,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    {
       const node = this .objects .get (nodeId);
 
-      UndoManager .shared .beginUndo (_("Determine Bounding Box From Scratch"));
+      UndoManager .shared .beginUndo (_("Determine Bounding Box from Scratch"));
 
       Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxSize,   new X3D .Vector3 (-1, -1, -1));
       Editor .setFieldValue (node .getExecutionContext (), node, node ._bboxCenter, new X3D .Vector3 ());
@@ -2107,7 +2166,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       {
          Editor .setFieldValue (this .browser .currentScene, node, node ._startTime, Date .now () / 1000);
 
-         node ._isEvenLive = true;
+         node ._evenLive = true;
       }
    }
 
@@ -2137,7 +2196,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       Editor .setFieldValue (this .browser .currentScene, node, node ._loop, !node ._loop .getValue ());
 
       if (node ._loop .getValue () && node ._startTime .getValue () >= node ._stopTime .getValue ())
-         node ._isEvenLive = true;
+         node ._evenLive = true;
    }
 
    addBooleanField (button)
@@ -2820,31 +2879,51 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const
          element = $(event .target) .closest (".field", this .sceneGraph),
          node    = this .getNode (element),
-         field   = this .getField (element)
+         field   = this .getField (element);
 
       if (node .canUserDefinedFields () && node .getUserDefinedFields () .has (field .getName ()))
       {
-         this .selectPrimaryElement (element)
+         this .selectPrimaryElement (element);
 
-         event .originalEvent .dataTransfer .setData ("sunrize/field", element .attr ("id"))
+         event .originalEvent .dataTransfer .setData ("sunrize/field", element .attr ("id"));
       }
       else
       {
-         event .preventDefault ()
+         event .preventDefault ();
+      }
+   }
+
+   onDragStartImportedNode (event)
+   {
+      const
+         element   = $(event .target) .closest (".imported-node", this .sceneGraph),
+         selected  = this .sceneGraph .find (".imported-node.manually"),
+         selection = selected .filter (element) .length ? selected : element,
+         ids       = selection .map (function () { return this .id }) .get ();
+
+      if (element .closest (".imported-nodes") .length)
+      {
+         event .preventDefault ();
+      }
+      else
+      {
+         this .selectPrimaryElement (element);
+
+         event .originalEvent .dataTransfer .setData ("sunrize/imported-node", ids .join (","));
       }
    }
 
    onDragEnter (event)
    {
-      event .preventDefault ()
-      event .stopPropagation ()
+      event .preventDefault ();
+      event .stopPropagation ();
 
-      event .originalEvent .dataTransfer .dropEffect = "none"
+      event .originalEvent .dataTransfer .dropEffect = "none";
 
       // Show drop indicator.
 
       const destinationElement = $(event .target) .closest ("li, .scene", this .sceneGraph)
-         .removeClass (["drag-before", "drag-into", "drag-after"])
+         .removeClass (["drag-before", "drag-into", "drag-after"]);
 
       if (this .isEditable (destinationElement))
       {
@@ -2855,44 +2934,54 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                sourceExecutionContextElement      = sourceElement .closest (".scene", this .sceneGraph),
                destinationExecutionContextElement = destinationElement .closest (".scene", this .sceneGraph),
                sourceExecutionContext             = this .getNode (sourceExecutionContextElement),
-               destinationExecutionContext        = this .getNode (destinationExecutionContextElement)
+               destinationExecutionContext        = this .getNode (destinationExecutionContextElement);
 
             if (sourceExecutionContext === destinationExecutionContext)
             {
                if (event .altKey)
-                  event .originalEvent .dataTransfer .dropEffect = "copy"
+                  event .originalEvent .dataTransfer .dropEffect = "copy";
                else
-                  event .originalEvent .dataTransfer .dropEffect = "move"
+                  event .originalEvent .dataTransfer .dropEffect = "move";
             }
             else
             {
-               event .originalEvent .dataTransfer .dropEffect = "copy"
+               event .originalEvent .dataTransfer .dropEffect = "copy";
             }
 
             if (destinationElement .is (".scene-graph"))
-               destinationElement .addClass ("drag-after")
+            {
+               destinationElement .addClass ("drag-after");
+            }
             else if (destinationElement .is (".scene, .externprotos"))
-               destinationElement .addClass ("drag-into")
+            {
+               destinationElement .addClass ("drag-into");
+            }
             else if (destinationElement .is (".externproto"))
             {
                const
                   item = destinationElement .find ("> .item"),
-                  y    = event .pageY - destinationElement .offset () .top
+                  y    = event .pageY - destinationElement .offset () .top;
 
                if (y < item .height () * 0.5)
-                  destinationElement .data ("drag-type", "drag-before")
+               {
+                  destinationElement .data ("drag-type", "drag-before");
+               }
                else if (y > destinationElement .height () - item .height () * 0.5)
-                  destinationElement .data ("drag-type", "drag-after")
+               {
+                  destinationElement .data ("drag-type", "drag-after");
+               }
                else
                {
-                  destinationElement .data ("drag-type", "")
-                  event .originalEvent .dataTransfer .dropEffect = "none"
+                  destinationElement .data ("drag-type", "");
+                  event .originalEvent .dataTransfer .dropEffect = "none";
                }
 
-               item .addClass (destinationElement .data ("drag-type"))
+               item .addClass (destinationElement .data ("drag-type"));
             }
             else
-               event .originalEvent .dataTransfer .dropEffect = "none"
+            {
+               event .originalEvent .dataTransfer .dropEffect = "none";
+            }
          }
          else if (event .originalEvent .dataTransfer .types .includes ("sunrize/proto"))
          {
@@ -2901,13 +2990,13 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                sourceExecutionContextElement      = sourceElement .closest (".scene", this .sceneGraph),
                destinationExecutionContextElement = destinationElement .closest (".scene", this .sceneGraph),
                sourceExecutionContext             = this .getNode (sourceExecutionContextElement),
-               destinationExecutionContext        = this .getNode (destinationExecutionContextElement)
+               destinationExecutionContext        = this .getNode (destinationExecutionContextElement);
 
             if (sourceExecutionContext === destinationExecutionContext)
             {
                if (event .altKey)
                {
-                  event .originalEvent .dataTransfer .dropEffect = "copy"
+                  event .originalEvent .dataTransfer .dropEffect = "copy";
                }
                else
                {
@@ -2915,9 +3004,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                      sourceIndex       = parseInt (sourceElement .attr ("index")),
                      destinationIndex  = destinationElement .hasClass ("proto") ? parseInt (destinationElement .attr ("index")) : destinationExecutionContext .protos .length,
                      sourceProto       = this .getNode (sourceElement),
-                     destinationProtos = destinationExecutionContext .protos
+                     destinationProtos = destinationExecutionContext .protos;
 
-                  event .originalEvent .dataTransfer .dropEffect = "move"
+                  event .originalEvent .dataTransfer .dropEffect = "move";
 
                   if (sourceIndex == destinationIndex || sourceIndex + 1 == destinationIndex)
                   { }
@@ -2927,8 +3016,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                      {
                         if (Editor .protoIsUsedInProto (sourceProto, destinationProtos [i]))
                         {
-                           event .originalEvent .dataTransfer .dropEffect = "none"
-                           break
+                           event .originalEvent .dataTransfer .dropEffect = "none";
+                           break;
                         }
                      }
                   }
@@ -2938,8 +3027,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                      {
                         if (Editor .protoIsUsedInProto (destinationProtos [i], sourceProto))
                         {
-                           event .originalEvent .dataTransfer .dropEffect = "none"
-                           break
+                           event .originalEvent .dataTransfer .dropEffect = "none";
+                           break;
                         }
                      }
                   }
@@ -2947,74 +3036,106 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             }
             else
             {
-               event .originalEvent .dataTransfer .dropEffect = "copy"
+               event .originalEvent .dataTransfer .dropEffect = "copy";
             }
 
             if (event .originalEvent .dataTransfer .dropEffect !== "none")
             {
                if (destinationElement .is (".scene-graph"))
-                  destinationElement .addClass ("drag-after")
+               {
+                  destinationElement .addClass ("drag-after");
+               }
                else if (destinationElement .is (".scene, .protos"))
-                  destinationElement .addClass ("drag-into")
+               {
+                  destinationElement .addClass ("drag-into");
+               }
                else if (destinationElement .is (".proto"))
                {
                   const
                      item = destinationElement .find ("> .item"),
-                     y    = event .pageY - destinationElement .offset () .top
+                     y    = event .pageY - destinationElement .offset () .top;
 
                   if (y < item .height () * 0.5)
-                     destinationElement .data ("drag-type", "drag-before")
+                  {
+                     destinationElement .data ("drag-type", "drag-before");
+                  }
                   else if (y > destinationElement .height () - item .height () * 0.5)
-                     destinationElement .data ("drag-type", "drag-after")
+                  {
+                     destinationElement .data ("drag-type", "drag-after");
+                  }
                   else
                   {
-                     destinationElement .data ("drag-type", "")
-                     event .originalEvent .dataTransfer .dropEffect = "none"
+                     destinationElement .data ("drag-type", "");
+                     event .originalEvent .dataTransfer .dropEffect = "none";
                   }
 
-                  item .addClass (destinationElement .data ("drag-type"))
+                  item .addClass (destinationElement .data ("drag-type"));
                }
                else
-                  event .originalEvent .dataTransfer .dropEffect = "none"
+               {
+                  event .originalEvent .dataTransfer .dropEffect = "none";
+               }
             }
          }
-         else if (event .originalEvent .dataTransfer .types .includes ("sunrize/nodes"))
+         else if (event .originalEvent .dataTransfer .types .includes ("sunrize/nodes") ||
+                  event .originalEvent .dataTransfer .types .includes ("sunrize/imported-node"))
          {
-            if (event .altKey)
-               event .originalEvent .dataTransfer .dropEffect = "copy"
-            else if (event .ctrlKey)
-               event .originalEvent .dataTransfer .dropEffect = "link"
-            else
-               event .originalEvent .dataTransfer .dropEffect = "move"
+            const
+               isImportedNode                     = event .originalEvent .dataTransfer .types .includes ("sunrize/imported-node"),
+               sourceElement                      = this .sceneGraph .find (".primary"),
+               sourceExecutionContextElement      = sourceElement .closest (".scene", this .sceneGraph),
+               destinationExecutionContextElement = destinationElement .closest (".scene", this .sceneGraph),
+               sourceExecutionContext             = this .getNode (sourceExecutionContextElement),
+               destinationExecutionContext        = this .getNode (destinationExecutionContextElement);
 
-            if (destinationElement .is (".scene-graph"))
-               destinationElement .addClass ("drag-after")
-            else if (destinationElement .is (".scene, .root-nodes, .field[type-name*=Node]"))
-               destinationElement .addClass ("drag-into")
-            else if (destinationElement .is (".node"))
+            if (isImportedNode && sourceExecutionContext !== destinationExecutionContext)
             {
-               const
-                  item = destinationElement .find ("> .item"),
-                  y    = event .pageY - destinationElement .offset () .top
+               event .originalEvent .dataTransfer .dropEffect = "none";
+            }
+            else
+            {
+               if (event .altKey)
+                  event .originalEvent .dataTransfer .dropEffect = isImportedNode ? "link" : "copy";
+               else if (event .ctrlKey)
+                  event .originalEvent .dataTransfer .dropEffect = "link";
+               else
+                  event .originalEvent .dataTransfer .dropEffect = "move";
 
-               if (y < item .height () * 0.25)
+               if (destinationElement .is (".scene-graph"))
                {
-                  destinationElement .data ("drag-type", "drag-before")
-                  destinationElement .addClass ("drag-before")
+                  destinationElement .addClass ("drag-after");
                }
-               else if (y > destinationElement .height () - item .height () * 0.25)
+               else if (destinationElement .is (".scene, .root-nodes, .field[type-name*=Node]"))
                {
-                  destinationElement .data ("drag-type", "drag-after")
-                  destinationElement .addClass ("drag-after")
+                  destinationElement .addClass ("drag-into");
+               }
+               else if (destinationElement .is (".node, .imported-node.proxy"))
+               {
+                  const
+                     item = destinationElement .find ("> .item"),
+                     y    = event .pageY - destinationElement .offset () .top;
+
+                  if (y < item .height () * 0.25)
+                  {
+                     destinationElement .data ("drag-type", "drag-before");
+                     destinationElement .addClass ("drag-before");
+                  }
+                  else if (y > destinationElement .height () - item .height () * 0.25)
+                  {
+                     destinationElement .data ("drag-type", "drag-after");
+                     destinationElement .addClass ("drag-after");
+                  }
+                  else
+                  {
+                     destinationElement .data ("drag-type", "drag-into");
+                     destinationElement .addClass ("drag-into");
+                  }
                }
                else
                {
-                  destinationElement .data ("drag-type", "drag-into")
-                  destinationElement .addClass ("drag-into")
+                  event .originalEvent .dataTransfer .dropEffect = "none";
                }
             }
-            else
-               event .originalEvent .dataTransfer .dropEffect = "none"
          }
          else if (event .originalEvent .dataTransfer .types .includes ("sunrize/field"))
          {
@@ -3022,41 +3143,41 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             {
                const
                   sourceElement = this .sceneGraph .find (".primary"),
-                  sourceNode    = this .getNode (sourceElement)
+                  sourceNode    = this .getNode (sourceElement);
 
                const
                   destinationNode  = this .getNode (destinationElement),
                   destinationField = this .getField (destinationElement),
-                  userDefined      = destinationNode .getUserDefinedFields () .has (destinationField .getName ())
+                  userDefined      = destinationNode .getUserDefinedFields () .has (destinationField .getName ());
 
                if (destinationNode === sourceNode && userDefined)
                {
-                  event .originalEvent .dataTransfer .dropEffect = "move"
+                  event .originalEvent .dataTransfer .dropEffect = "move";
 
                   const
                      item = destinationElement .find ("> .item"),
-                     y    = event .pageY - destinationElement .offset () .top
+                     y    = event .pageY - destinationElement .offset () .top;
 
                   if (y < item .height () * 0.5)
                   {
-                     destinationElement .data ("drag-type", "drag-before")
-                     destinationElement .addClass ("drag-before")
+                     destinationElement .data ("drag-type", "drag-before");
+                     destinationElement .addClass ("drag-before");
                   }
                   else if (y > destinationElement .height () - item .height () * 0.5)
                   {
-                     destinationElement .data ("drag-type", "drag-after")
-                     destinationElement .addClass ("drag-after")
+                     destinationElement .data ("drag-type", "drag-after");
+                     destinationElement .addClass ("drag-after");
                   }
                   else
                   {
-                     event .originalEvent .dataTransfer .dropEffect = "none"
+                     event .originalEvent .dataTransfer .dropEffect = "none";
                   }
                }
             }
          }
       }
 
-      destinationElement .data ("dropEffect", event .originalEvent .dataTransfer .dropEffect)
+      destinationElement .data ("dropEffect", event .originalEvent .dataTransfer .dropEffect);
    }
 
    onDragLeave (event)
@@ -3105,7 +3226,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          {
             case "copy":
             {
-               UndoManager .shared .beginUndo (_("Copy Extern Proto »%s«"), sourceExternProto .getName ());
+               UndoManager .shared .beginUndo (_("Copy as Extern Proto »%s«"), sourceExternProto .getName ());
 
                await Editor .importX3D (destinationExecutionContext, await Editor .exportX3D (sourceExecutionContext, [sourceExternProto]));
 
@@ -3225,9 +3346,12 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             }
          }
       }
-      else if (event .originalEvent .dataTransfer .types .includes ("sunrize/nodes"))
+      else if (event .originalEvent .dataTransfer .types .includes ("sunrize/nodes") ||
+               event .originalEvent .dataTransfer .types .includes ("sunrize/imported-node"))
       {
-         const sourceElementsIds = event .originalEvent .dataTransfer .getData ("sunrize/nodes") .split (",");
+         const sourceElementsIds = event .originalEvent .dataTransfer .types .includes ("sunrize/imported-node")
+            ? event .originalEvent .dataTransfer .getData ("sunrize/imported-node") .split (",")
+            : event .originalEvent .dataTransfer .getData ("sunrize/nodes") .split (",");
 
          const
             destinationElement                 = $(event .target) .closest ("li, .scene", this .sceneGraph),
@@ -3402,14 +3526,17 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             if (destinationElement .data ("dropEffect") ?.match (/copy|move/))
             {
-               if (sourceNode ?.getType () .some (type => this .transformLikeNodes .has (type)))
+               if (!(sourceNode instanceof X3D .X3DImportedNodeProxy))
                {
-                  const
-                     sourceModelMatrix      = this .getModelMatrix (sourceElement),
-                     destinationModelMatrix = this .getModelMatrix (destinationParentNodeElement);
+                  if (sourceNode ?.getType () .some (type => this .transformLikeNodes .has (type)))
+                  {
+                     const
+                        sourceModelMatrix      = this .getModelMatrix (sourceElement),
+                        destinationModelMatrix = this .getModelMatrix (destinationParentNodeElement);
 
-                  destinationModelMatrix .inverse () .multLeft (sourceModelMatrix);
-                  Editor .setMatrixWithCenter (sourceNode, destinationModelMatrix);
+                     destinationModelMatrix .inverse () .multLeft (sourceModelMatrix);
+                     Editor .setMatrixWithCenter (sourceNode, destinationModelMatrix);
+                  }
                }
             }
 

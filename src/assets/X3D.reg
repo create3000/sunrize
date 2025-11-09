@@ -1,0 +1,141 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Classes\.x3d\OpenWithProgids]
+"Sunrize.x3d"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.x3dz\OpenWithProgids]
+"Sunrize.x3dz"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.x3dv\OpenWithProgids]
+"Sunrize.x3dv"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.x3dvz\OpenWithProgids]
+"Sunrize.x3dvz"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.x3dj\OpenWithProgids]
+"Sunrize.x3dj"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.x3djz\OpenWithProgids]
+"Sunrize.x3djz"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.wrl\OpenWithProgids]
+"Sunrize.wrl"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.wrz\OpenWithProgids]
+"Sunrize.wrz"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.gltf\OpenWithProgids]
+"Sunrize.gltf"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.glb\OpenWithProgids]
+"Sunrize.glb"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.obj\OpenWithProgids]
+"Sunrize.obj"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.stl\OpenWithProgids]
+"Sunrize.stl"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.ply\OpenWithProgids]
+"Sunrize.ply"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.svg\OpenWithProgids]
+"Sunrize.svg"=""
+
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3d]
+@="X3D XML Model"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3d\DefaultIcon]
+@="\"SUNRIZE_EXE\",0"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3d\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dz]
+@="X3D XML Model"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dz\DefaultIcon]
+@="\"SUNRIZE_EXE\",0"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dz\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dv]
+@="X3D VRML Model"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dv\DefaultIcon]
+@="\"SUNRIZE_EXE\",0"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dv\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dvz]
+@="X3D VRML Model"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dvz\DefaultIcon]
+@="\"SUNRIZE_EXE\",0"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dvz\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dj]
+@="X3D JSON Model"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dj\DefaultIcon]
+@="\"SUNRIZE_EXE\",0"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3dj\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3djz]
+@="X3D JSON Model"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3djz\DefaultIcon]
+@="\"SUNRIZE_EXE\",0"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.x3djz\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.wrl]
+@="VRML Model"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.wrl\DefaultIcon]
+@="\"SUNRIZE_EXE\",0"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.wrl\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.wrz]
+@="VRML Model"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.wrz\DefaultIcon]
+@="\"SUNRIZE_EXE\",0"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.wrz\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.gltf]
+@="glTF Model"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.gltf\DefaultIcon]
+@="\"SUNRIZE_EXE\",0"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.gltf\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.glb]
+@="glTF Model"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.glb\DefaultIcon]
+@="\"SUNRIZE_EXE\",0"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.glb\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.obj]
+@="Wavefront OBJ Model"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.obj\DefaultIcon]
+@="\"SUNRIZE_EXE\",0"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.obj\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.stl]
+@="Stereolithography Model"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.stl\DefaultIcon]
+@="\"SUNRIZE_EXE\",0"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.stl\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.ply]
+@="Polygon File Format"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.ply\DefaultIcon]
+@="\"SUNRIZE_EXE\",0"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.ply\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.svg]
+@="Scalable Vector Graphics"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.svg\DefaultIcon]
+@="\"SUNRIZE_EXE\",0"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.svg\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""

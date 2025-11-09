@@ -7,6 +7,7 @@ const
    path         = require ("path"),
    fs           = require ("fs"),
    util         = require ("util"),
+   Registry     = require ("./Registry"),
    Template     = require ("./Template"),
    LocalStorage = require ("node-localstorage") .LocalStorage,
    DataStorage  = require ("../Application/DataStorage"),
@@ -16,11 +17,7 @@ const localStorage = new LocalStorage (path .join (electron .app .getPath ("user
 
 module .exports = class Application
 {
-   config            = new DataStorage (localStorage, "Sunrize.Application.");
-   receivedFiles     = [ ];
-   mainMenu          = [ ];
-   openLocationValue = "";
-   exportPath        = new Map ();
+   static app;
 
    static run ()
    {
@@ -37,12 +34,20 @@ module .exports = class Application
       }
 
       if (process .platform === "win32")
-         require ("update-electron-app") .updateElectronApp ();
+         require ("update-electron-app") .updateElectronApp ({ updateInterval: "1 hour" });
+
+      Registry .addWindowsFileTypes ();
 
       electron .app .commandLine .appendSwitch ("--enable-features", "OverlayScrollbar,ConversionMeasurement,AttributionReportingCrossAppWeb");
 
-      return new Application ();
+      return this .app = new Application ();
    }
+
+   config            = new DataStorage (localStorage, "Sunrize.Application.");
+   receivedFiles     = [ ];
+   mainMenu          = [ ];
+   openLocationValue = "";
+   exportPath        = new Map ();
 
    constructor ()
    {
@@ -73,7 +78,7 @@ module .exports = class Application
 
       Template .create (path .join (__dirname, "../assets/html/application-template.html"));
       Template .create (path .join (__dirname, "../assets/html/window-template.html"));
-      Template .create (path .join (__dirname, "../assets/themes/default-template.css"));
+      Template .create (path .join (__dirname, "../assets/themes/media-template.css"));
       Template .create (path .join (__dirname, "../assets/themes/prompt-template.css"));
 
       this .setup ();
@@ -112,11 +117,6 @@ module .exports = class Application
             .filter (filePath => fs .existsSync (filePath) && fs .lstatSync (filePath) .isFile ())
             .map (filePath => url .pathToFileURL (filePath) .href));
       });
-   }
-
-   get applicationShouldQuitAfterLastWindowClosed ()
-   {
-      return true || process .platform !== "darwin" || process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT";
    }
 
    get title ()
@@ -288,7 +288,7 @@ module .exports = class Application
                   },
                   { type: "separator" },
                   {
-                     label: _("Enable Browser Update on Load"),
+                     label: _("Make Browser Live (Play) on Load"),
                      type: "checkbox",
                      checked: this .config .browserUpdate,
                      click: () =>
@@ -304,7 +304,7 @@ module .exports = class Application
                      click: () => this .mainWindow .webContents .send ("save-file"),
                   },
                   {
-                     label: _("Save As..."),
+                     label: _("Save as..."),
                      accelerator: "Shift+CmdOrCtrl+S",
                      click: async () =>
                      {
@@ -319,7 +319,7 @@ module .exports = class Application
                      },
                   },
                   {
-                     label: _("Save A Copy..."),
+                     label: _("Save a Copy..."),
                      click: async () =>
                      {
                         const response = await this .showSaveDialog ({ defaultPath: this .currentFile });
@@ -353,7 +353,7 @@ module .exports = class Application
                   ... exportPath ?
                   [
                      {
-                        label: util .format (_("Export As %s"), path .basename (exportPath)),
+                        label: util .format (_("Export as %s"), path .basename (exportPath)),
                         accelerator: "CmdOrCtrl+E",
                         click: () => this .mainWindow .webContents .send ("export-as", exportPath),
                      }
@@ -361,7 +361,7 @@ module .exports = class Application
                   :
                   [ ],
                   {
-                     label: _("Export As..."),
+                     label: _("Export as..."),
                      accelerator: "Shift+CmdOrCtrl+E",
                      click: async () =>
                      {
@@ -387,9 +387,14 @@ module .exports = class Application
                   },
                   { type: "separator" },
                   {
-                     label: _("Close"),
+                     label: _("Close Tab"),
                      accelerator: "CmdOrCtrl+W",
-                     click: () => this .mainWindow .webContents .send ("close"),
+                     click: () => this .mainWindow .webContents .send ("close-tab"),
+                  },
+                  {
+                     label: _("Close All Tabs"),
+                     accelerator: "Option+CmdOrCtrl+W",
+                     click: () => this .mainWindow .webContents .send ("close-all-tabs"),
                   },
                   ... process .platform === "darwin" ?
                   [ ]
@@ -427,22 +432,49 @@ module .exports = class Application
                      { type: "separator" },
                      { role: "selectAll" },
                   ],
+               ]
+            }
+            : this .menuOptions .monacoEditor ?
+            {
+               role: "editMenu",
+               submenu: [
+                  {
+                     label: _("Undo"),
+                     accelerator: "CmdOrCtrl+Z",
+                     click: () => this .mainWindow .webContents .send ("script-editor", "triggerEvent", "keyboard", "undo", null),
+                  },
+                  {
+                     label: _("Redo"),
+                     accelerator: "CmdOrCtrl+Shift+Z",
+                     click: () => this .mainWindow .webContents .send ("script-editor", "triggerEvent", "keyboard", "redo", null),
+                  },
+                  { type: "separator" },
+                  {
+                     role: "cut",
+                     click: () => this .mainWindow .webContents .send ("script-editor", "cutOrCopy", "cut"),
+                  },
+                  {
+                     role: "copy",
+                     click: () => this .mainWindow .webContents .send ("script-editor", "cutOrCopy", "copy"),
+                  },
+                  {
+                     role: "paste",
+                     click: () => this .mainWindow .webContents .send ("script-editor", "paste"),
+                  },
                   { type: "separator" },
                   {
                      label: _("Toggle Line Comment"),
                      accelerator: process .platform === "darwin" ? "CmdOrCtrl+Shift+7" : "CmdOrCtrl+#",
-                     enabled: this .menuOptions .monacoEditor,
                      click: () => this .mainWindow .webContents .send ("script-editor", "runAction", "editor.action.commentLine"),
                   },
                   {
                      label: _("Toggle Block Comment"),
                      accelerator: "Alt+Shift+A",
-                     enabled: this .menuOptions .monacoEditor,
                      click: () => this .mainWindow .webContents .send ("script-editor", "runAction", "editor.action.blockComment"),
                   },
                ]
             }
-            :
+            : // Outline Editor, Browser
             {
                role: "editMenu",
                submenu: [
@@ -459,15 +491,9 @@ module .exports = class Application
                      click: () => this .mainWindow .webContents .send ("redo"),
                   },
                   { type: "separator" },
-                  {
-                     role: "cut",
-                  },
-                  {
-                     role: "copy",
-                  },
-                  {
-                     role: "paste",
-                  },
+                  { role: "cut" },
+                  { role: "copy" },
+                  { role: "paste" },
                   {
                      label: _("Delete"),
                      accelerator: "CmdOrCtrl+Backspace",
@@ -902,7 +928,6 @@ module .exports = class Application
       window .on ("unmaximize",        () => this .onunmaximize ());
       window .on ("enter-full-screen", () => this .onenterfullscreen ());
       window .on ("leave-full-screen", () => this .onleavefullscreen ());
-      window .on ("blur",              () => this .onblur ());
       window .on ("close",        (event) => this .onclose (event));
 
       if (this .config .fullscreen)
@@ -935,7 +960,7 @@ module .exports = class Application
       {
          if (menuItem .submenu)
             this .addMenuItemHandlers (id, menuItem .submenu);
-         else
+         else if (menuItem .args)
             menuItem .click = () => this .mainWindow .webContents .send (id, ... menuItem .args);
       }
 
@@ -1144,11 +1169,6 @@ module .exports = class Application
       this .config .maximized  = false;
    }
 
-   onblur ()
-   {
-      this .mainWindow .webContents .send ("save-all-files");
-   }
-
    onclose (event)
    {
       if (!this .mainWindow .closing)
@@ -1169,9 +1189,6 @@ module .exports = class Application
 
    quit ()
    {
-      if (!this .applicationShouldQuitAfterLastWindowClosed)
-         return;
-
       Template .removeAll ();
       electron .app .quit ();
    }

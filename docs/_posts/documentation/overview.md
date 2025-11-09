@@ -24,6 +24,7 @@ Sunrize aims to provide you with powerful tools to compose complex objects and c
    - [Imported and Exported Nodes](../imported-and-exported-nodes/)
 - [Snapping and Alignment](../snapping-and-alignment/)
 - [Using the Script Editor](../using-the-script-editor/)
+- [Animating Objects](../animating-objects/)
 
 It might also be of interest for you [how to navigate in a the scene](/x_ite/tutorials/how-to-navigate-in-a-scene/).
 
@@ -31,7 +32,7 @@ It might also be of interest for you [how to navigate in a the scene](/x_ite/tut
 
 Choose *File > Save* means to choose Save from the File pull-down menu.
 
-*Ctrl-u* means to press the *Ctrl* key and the *u* key at the same time.
+<kbd>Ctrl</kbd>+<kbd>u</kbd> means to press the <kbd>Ctrl</kbd> key and the <kbd>u</kbd> key at the same time.
 
 To *click* means to quickly press and release the left mouse button.
 

@@ -14,8 +14,7 @@ const
 
 const
    _expanded     = Symbol (),
-   _fullExpanded = Symbol (),
-   _changing     = Symbol ();
+   _fullExpanded = Symbol ();
 
 module .exports = class OutlineView extends Interface
 {
@@ -281,9 +280,13 @@ module .exports = class OutlineView extends Interface
                .attr ("draggable", "true")
                .on ("dragstart", this .onDragStartNode .bind (this));
          }
+
+         child .find (".imported-node > .item")
+            .attr ("draggable", "true")
+            .on ("dragstart", this .onDragStartImportedNode .bind (this));
       }
 
-      child .find (".externproto .name, .externproto .icon, .proto .name, .proto .icon, .node .name, .node .icon")
+      child .find (":is(.externproto, .proto, .node, .imported-node, .exported-node) :where(.name, .icon)")
          .on ("click", this .selectNode .bind (this))
          .on ("mouseenter", this .updateNodeTitle .bind (this));
 
@@ -365,6 +368,7 @@ module .exports = class OutlineView extends Interface
    expandSceneSubtreeComplete (specialElements, elements)
    {
       this .requestUpdateRouteGraph ();
+      this .updateQtips ();
 
       // Reopen externprotos, protos, imported, exported nodes.
 
@@ -501,7 +505,7 @@ module .exports = class OutlineView extends Interface
       let index = 0;
 
       for (const rootNode of scene .rootNodes)
-         ul .append (this .createNodeElement ("node", parent, rootNode ? rootNode .getValue () : null, index ++));
+         ul .append (this .createNodeElement ("node", parent, rootNode ?.getValue (), index ++));
 
       // Added to prevent bug, that last route is not drawn right.
       $("<li></li>")
@@ -515,18 +519,8 @@ module .exports = class OutlineView extends Interface
 
    updateSceneRootNodes (parent, scene, type, func)
    {
-      for (const node of scene .rootNodes)
-      {
-         if (!node ?.getNodeUserData (_changing))
-            continue;
-
-         const nodes = Array .from (scene .rootNodes);
-
-         this .browser .nextFrame ()
-            .then (() => nodes .forEach (node => node ?.setNodeUserData (_changing, false)));
-
+      if (this .#changing)
          return;
-      }
 
       this .updateSceneSubtree (parent, scene, type, func);
    }
@@ -554,8 +548,8 @@ module .exports = class OutlineView extends Interface
          .text ("Imported Nodes")
          .appendTo (ul);
 
-      for (const importedNode of importedNodes)
-         ul .append (this .createImportedNodeElement ("imported-node", parent, scene, importedNode));
+      for (const [index, importedNode] of importedNodes .entries ())
+         ul .append (this .createImportedNodeElement (["imported-node"], parent, scene, importedNode .getExportedNode (), index));
 
       // Added to prevent bug, that last route is not drawn right.
       $("<li></li>")
@@ -853,7 +847,8 @@ module .exports = class OutlineView extends Interface
 
    expandNodeComplete (protos, scenes, elements)
    {
-      this .requestUpdateRouteGraph ()
+      this .requestUpdateRouteGraph ();
+      this .updateQtips ();
 
       // Auto expand SFNodes
 
@@ -861,12 +856,12 @@ module .exports = class OutlineView extends Interface
       {
          const
             element = $(e),
-            field   = this .getField (element)
+            field   = this .getField (element);
 
          if (field .getValue ())
          {
-            element .data ("auto-expand", true)
-            element .jstree ("open_node", element)
+            element .data ("auto-expand", true);
+            element .jstree ("open_node", element);
          }
       }
 
@@ -876,12 +871,12 @@ module .exports = class OutlineView extends Interface
       {
          const
             element = $(e),
-            field   = this .getField (element)
+            field   = this .getField (element);
 
          if (field .length && field .length <= this .autoExpandMaxChildren)
          {
-            element .data ("auto-expand", true)
-            element .jstree ("open_node", element)
+            element .data ("auto-expand", true);
+            element .jstree ("open_node", element);
          }
       }
 
@@ -891,11 +886,11 @@ module .exports = class OutlineView extends Interface
       {
          const
             element = $(e),
-            node    = this .getNode (element)
+            node    = this .getNode (element);
 
          if (node .getUserData (_expanded) && element .jstree ("is_closed", element))
          {
-            element .jstree ("open_node", element)
+            element .jstree ("open_node", element);
          }
       }
 
@@ -905,12 +900,12 @@ module .exports = class OutlineView extends Interface
       {
          const
             element = $(e),
-            scene   = this .getNode (element)
+            scene   = this .getNode (element);
 
          if (scene .getUserData (_expanded) && element .jstree ("is_closed", element))
          {
-            element .data ("auto-expand", true)
-            element .jstree ("open_node", element)
+            element .data ("auto-expand", true);
+            element .jstree ("open_node", element);
          }
       }
 
@@ -920,12 +915,12 @@ module .exports = class OutlineView extends Interface
       {
          const
             element = $(e),
-            field   = this .getField (element)
+            field   = this .getField (element);
 
          if (field .getUserData (_expanded) && element .jstree ("is_closed", element))
          {
-            element .data ("auto-expand", true)
-            element .jstree ("open_node", element)
+            element .data ("auto-expand", true);
+            element .jstree ("open_node", element);
          }
       }
    }
@@ -972,6 +967,9 @@ module .exports = class OutlineView extends Interface
 
    createNodeElement (type, parent, node, index)
    {
+      if (node instanceof X3D .X3DImportedNodeProxy)
+         return this .createImportedNodeElement (["imported-node", "proxy"], parent, node .getExecutionContext (), node, index);
+
       if (node)
       {
          if (!node .isInitialized ())
@@ -995,8 +993,6 @@ module .exports = class OutlineView extends Interface
          }
 
          this .objects .set (node .getId (), node .valueOf ());
-
-         node .setUserData (_changing, false);
 
          // These fields are observed and must never be disconnected, because clones would also lose connection.
 
@@ -1306,12 +1302,12 @@ module .exports = class OutlineView extends Interface
 
    updateCloneCount (node)
    {
-      const cloneCount = node .getCloneCount ?.() ?? 0
+      const cloneCount = node .getCloneCount ?.() ?? 0;
 
       this .sceneGraph
-         .find (`.node[node-id=${node .getId ()}]`)
+         .find (`:is(.node, .imported-node)[node-id="${node .getId ()}"]`)
          .find ("> .item .clone-count")
-         .text (cloneCount > 1 ? `[${cloneCount}]` : "")
+         .text (cloneCount > 1 ? `[${cloneCount}]` : "");
    }
 
    updateActiveLayer ()
@@ -1394,7 +1390,7 @@ module .exports = class OutlineView extends Interface
          buttons .slice (-3) .forEach (button => button .hide ());
 
       if (!node ._isActive .getValue ())
-         node ._isEvenLive = false;
+         node ._evenLive = false;
    }
 
    isInParents (parent, node)
@@ -1404,107 +1400,114 @@ module .exports = class OutlineView extends Interface
 
    #importedNodeSymbol = Symbol ();
 
-   createImportedNodeElement (type, parent, scene, importedNode)
+   createImportedNodeElement (type, parent, scene, node, index)
    {
-      importedNode .getInlineNode () .getLoadState () .addFieldCallback (this .#importedNodeSymbol, this .updateScene .bind (this, parent, scene));
+      const importedNode = node .getImportedNode ();
 
-      try
+      if (!importedNode)
+         return this .createNodeElement ("node", parent, null, index);
+
+      // These fields are observed and must never be disconnected, because clones would also lose connection.
+
+      node .name_changed    .addFieldCallback (this .#importedNodeSymbol, this .updateImportedNodeName .bind (this, importedNode));
+      node .parents_changed .addFieldCallback (this .#nodeSymbol, this .updateCloneCount .bind (this, node));
+
+      importedNode .getInlineNode () .getLoadState () .addFieldCallback (this .#importedNodeSymbol, this .updateScene .bind (this, parent .closest (".scene"), scene));
+
+      this .objects .set (node .getId (),         node);
+      this .objects .set (importedNode .getId (), importedNode);
+
+      // Node
+
+      const classes = type;
+
+      if (importedNode .getExportedNode () .getSharedNode ())
       {
-         this .objects .set (importedNode .getId (), importedNode);
-         this .objects .set (importedNode .getExportedNode () .getId (), importedNode .getExportedNode ());
+         const selection = require ("../Application/Selection");
 
-         // Node
-
-         const child = $("<li></li>")
-            .addClass (type)
-            .attr ("imported-node-id", importedNode .getId ())
-            .attr ("node-id", importedNode .getExportedNode () .getId ())
-            .attr ("title", importedNode .getDescription ());
-
-         // Icon
-
-         const icon = $("<img></img>")
-            .addClass ("icon")
-            .attr ("src", `../images/OutlineEditor/Node/${this .nodeIcons .get (type)}.svg`)
-            .appendTo (child);
-
-         // Name
-
-         const name = $("<div></div>")
-            .addClass ("name")
-            .appendTo (child);
-
-         $("<span></span>")
-            .addClass ("node-type-name")
-            .text (importedNode .getExportedNode () .getTypeName ())
-            .appendTo (name);
-
-         name .append (document .createTextNode (" "));
-
-         $("<span></span>")
-            .addClass ("node-name")
-            .text (importedNode .getExportedName ())
-            .appendTo (name);
-
-         if (importedNode .getExportedName () !== importedNode .getImportedName ())
-         {
-            name
-               .append (document .createTextNode (" "))
-               .append ($("<span></span>") .addClass ("as") .text ("AS"))
-               .append (document .createTextNode (" "))
-               .append ($("<span></span>") .addClass ("as-name") .text (importedNode .getImportedName ()));
-         }
-
-         // Add buttons to name.
-
-         this .addNodeButtons (this .getNode (parent), importedNode .getExportedNode (), name);
-
-         // Append empty tree to enable expander.
-
-         $("<ul><li></li></ul>") .appendTo (child);
-
-         return child;
+         if (selection .has (node))
+            classes .push ("selected");
       }
-      catch
+      else
       {
-         this .objects .set (importedNode .getId (), importedNode);
-
-         // Node
-
-         const child = $("<li></li>")
-            .addClass ([type, "no-expand"])
-            .attr ("imported-node-id", importedNode .getId ())
-            .attr ("title", importedNode .getDescription ());
-
-         // Icon
-
-         const icon = $("<img></img>")
-            .addClass ("icon")
-            .attr ("src", `../images/OutlineEditor/Node/${this .nodeIcons .get (type)}.svg`)
-            .appendTo (child);
-
-         // Name
-
-         const name = $("<div></div>")
-            .addClass ("name")
-            .appendTo (child);
-
-         $("<span></span>")
-            .addClass ("node-name")
-            .text (importedNode .getExportedName ())
-            .appendTo (name);
-
-         if (importedNode .getExportedName () !== importedNode .getImportedName ())
-         {
-            name
-               .append (document .createTextNode (" "))
-               .append ($("<span></span>") .addClass ("as") .text ("AS"))
-               .append (document .createTextNode (" "))
-               .append ($("<span></span>") .addClass ("as-name") .text (importedNode .getImportedName ()));
-         }
-
-         return child;
+         classes .push ("no-expand");
       }
+
+      const child = $("<li></li>")
+         .addClass (classes)
+         .attr ("node-id", node .getId ())
+         .attr ("imported-node-id", importedNode .getId ())
+         .attr ("index", index)
+         .attr ("title", importedNode .getDescription ());
+
+      // Icon
+
+      const icon = $("<img></img>")
+         .addClass ("icon")
+         .attr ("src", `../images/OutlineEditor/Node/${this .nodeIcons .get (type [0])}.svg`)
+         .appendTo (child);
+
+      // Name
+
+      const name = $("<div></div>")
+         .addClass ("name")
+         .appendTo (child);
+
+      $("<span></span>")
+         .addClass ("node-type-name")
+         .text (node .getTypeName ())
+         .appendTo (name);
+
+      name .append (document .createTextNode (" "));
+
+      $("<span></span>")
+         .addClass ("node-name")
+         .text (importedNode .getExportedName ())
+         .appendTo (name);
+
+      const nodeAsName = $("<span></span>")
+         .addClass ("node-as-name")
+         .append (document .createTextNode (" "))
+         .append ($("<span></span>") .addClass ("as") .text ("AS"))
+         .append (document .createTextNode (" "))
+         .append ($("<span></span>") .addClass ("as-name") .text (importedNode .getImportedName ()))
+         .appendTo (name);
+
+      if (importedNode .getExportedName () === importedNode .getImportedName ())
+         nodeAsName .hide ();
+
+      name .append (document .createTextNode (" "));
+
+      const cloneCount = node .getCloneCount ?.() ?? 0
+
+      $("<span></span>")
+         .addClass ("clone-count")
+         .text (cloneCount > 1 ? `[${cloneCount}]` : "")
+         .appendTo (name);
+
+      // Add buttons to name.
+
+      this .addNodeButtons (this .getNode (parent), node, name);
+
+      // Append empty tree to enable expander.
+
+      $("<ul><li></li></ul>") .appendTo (child);
+
+      return child;
+   }
+
+   updateImportedNodeName (importedNode)
+   {
+      const nodeAsName = this .sceneGraph
+         .find (`.imported-node[imported-node-id="${importedNode .getId ()}"]`)
+         .find ("> .item .node-as-name");
+
+      nodeAsName .find (".as-name") .text (importedNode .getImportedName ());
+
+      if (importedNode .getExportedName () === importedNode .getImportedName ())
+         nodeAsName .hide ();
+      else
+         nodeAsName .show ();
    }
 
    #exportedNodeSymbol = Symbol ();
@@ -1515,6 +1518,8 @@ module .exports = class OutlineView extends Interface
 
       this .objects .set (exportedNode .getId (), exportedNode);
       this .objects .set (node .getId (), node .valueOf ());
+
+      // These fields are observed and must never be disconnected, because clones would also lose connection.
 
       node .typeName_changed .addFieldCallback (this .#exportedNodeSymbol, this .updateNodeTypeName     .bind (this, node));
       node .name_changed     .addFieldCallback (this .#exportedNodeSymbol, this .updateExportedNodeName .bind (this, exportedNode));
@@ -1719,7 +1724,7 @@ module .exports = class OutlineView extends Interface
                   .addClass ("input-selector") .appendTo (map);
 
                const inputRoutesSelector = $("<area></area>")
-                  .attr ("title", _("Select routes."))
+                  .attr ("title", _("Select route(s)."))
                   .attr ("shape", "rect")
                   .attr ("coords", "20,0,28,7")
                   .addClass ("input-routes-selector") .appendTo (map);
@@ -1739,7 +1744,7 @@ module .exports = class OutlineView extends Interface
                   .addClass ("output-selector") .appendTo (map);
 
                const outputRoutesSelector = $("<area></area>")
-                  .attr ("title", _("Select routes."))
+                  .attr ("title", _("Select route(s)."))
                   .attr ("shape", "rect")
                   .attr ("coords", "20,5,28,12")
                   .addClass ("output-routes-selector")
@@ -1768,7 +1773,7 @@ module .exports = class OutlineView extends Interface
                   .appendTo (map);
 
                const inputRoutesSelector = $("<area></area>")
-                  .attr ("title", _("Select routes."))
+                  .attr ("title", _("Select route(s)."))
                   .attr ("shape", "rect")
                   .attr ("coords", "34,0,42,7")
                   .addClass ("input-routes-selector")
@@ -1778,7 +1783,7 @@ module .exports = class OutlineView extends Interface
                   inputRoutesSelector .attr ("href", "#");
 
                const outputRoutesSelector = $("<area></area>")
-                  .attr ("title", _("Select routes."))
+                  .attr ("title", _("Select route(s)."))
                   .attr ("shape", "rect")
                   .addClass ("output-routes-selector")
                   .appendTo (map);
@@ -1861,7 +1866,7 @@ module .exports = class OutlineView extends Interface
    {
       const
          name    = $(event .currentTarget),
-         element = $(event .currentTarget) .closest (".externproto, .proto, .node, .special", this .sceneGraph),
+         element = name .closest (".externproto, .proto, .node, .imported-node, .exported-node", this .sceneGraph),
          node    = this .objects .get (parseInt (element .attr ("node-id")));
 
       // Handle NULL node element.
@@ -1877,7 +1882,7 @@ module .exports = class OutlineView extends Interface
    {
       const
          name         = $(event .currentTarget),
-         element      = $(event .currentTarget) .closest (".field, .special", this .sceneGraph),
+         element      = name .closest (".field, .special", this .sceneGraph),
          node         = this .objects .get (parseInt (element .attr ("node-id"))),
          field        = this .objects .get (parseInt (element .attr ("field-id"))),
          fieldElement = X3DUOM .find (`ConcreteNode[name="${node .getTypeName ()}"] field[name="${field .getName ()}"]`);
@@ -2037,36 +2042,8 @@ module .exports = class OutlineView extends Interface
       if (!parent .prop ("isConnected"))
          return;
 
-      switch (field .getType ())
-      {
-         case X3D .X3DConstants .SFNode:
-         {
-            if (!field .getValue () || !field .getNodeUserData (_changing))
-               break;
-
-            this .browser .nextFrame ()
-               .then (() => field .setNodeUserData (_changing, false));
-
-            return;
-         }
-         case X3D .X3DConstants .MFNode:
-         {
-            for (const node of field)
-            {
-               if (!node ?.getNodeUserData (_changing))
-                  continue;
-
-               const nodes = Array .from (field);
-
-               this .browser .nextFrame ()
-                  .then (() => nodes .forEach (node => node ?.setNodeUserData (_changing, false)));
-
-               return;
-            }
-
-            break;
-         }
-      }
+      if (this .#changing)
+         return;
 
       this .saveScrollPositions ();
 
@@ -2179,7 +2156,7 @@ module .exports = class OutlineView extends Interface
       let index = 0;
 
       for (const node of field)
-         ul .append (this .createNodeElement ("node", parent, node ?.getValue (), index ++));
+         ul .append (this .createNodeElement ("node", parent, node .getValue (), index ++));
 
       // Make jsTree.
 
@@ -2245,6 +2222,7 @@ module .exports = class OutlineView extends Interface
       }
 
       this .requestUpdateRouteGraph ();
+      this .updateQtips ();
    }
 
    expandSFNode (parent, node, field, type, full)
@@ -2326,6 +2304,7 @@ module .exports = class OutlineView extends Interface
       }
 
       this .requestUpdateRouteGraph ();
+      this .updateQtips ();
    }
 
    nodeIcons = new Map ([
@@ -2362,7 +2341,7 @@ module .exports = class OutlineView extends Interface
 
       $("<div></div>")
          .addClass (type + "-value-container")
-         .append ($("<input></input>") .attr ("type", "text"))
+         .append ($("<input></input>") .attr ("type", "text") .attr ("lang", "en"))
          .appendTo (li);
 
       // Make jsTree.
@@ -2417,7 +2396,9 @@ module .exports = class OutlineView extends Interface
       // Expand children.
 
       child .show ();
+
       this .requestUpdateRouteGraph ();
+      this .updateQtips ();
    }
 
    onkeydownField (input, event)
@@ -2470,7 +2451,7 @@ module .exports = class OutlineView extends Interface
 
       $("<div></div>")
          .addClass (type + "-value-container")
-         .append ($("<textarea></textarea>"))
+         .append ($("<textarea></textarea>") .attr ("lang", "en"))
          .appendTo (li)
 
       // Make jsTree.
@@ -2522,8 +2503,10 @@ module .exports = class OutlineView extends Interface
 
       // Expand children.
 
-      child .show ()
-      this .requestUpdateRouteGraph ()
+      child .show ();
+
+      this .requestUpdateRouteGraph ();
+      this .updateQtips ();
    }
 
    onkeydownArrayField (textarea, event)
@@ -2932,6 +2915,7 @@ module .exports = class OutlineView extends Interface
          element .jstree ("open_node", element);
 
       this .requestUpdateRouteGraph ();
+      this .updateQtips ();
    }
 
    removeSubtree (element)
@@ -3017,17 +3001,11 @@ module .exports = class OutlineView extends Interface
             return;
 
          // If node is somewhere else, don't disconnect.
-         if (Array .from (this .sceneGraph .find (`.node[node-id="${node .getId ()}"],
-            .imported-node[node-id="${node .getId ()}"],
-            .exported-node[node-id="${node .getId ()}"]`))
+         if (Array .from (this .sceneGraph .find (`:is(.node, .imported-node, .exported-node)[node-id="${node .getId ()}"]`))
             .some (s => !$(s) .closest (element) .length))
          {
             return;
          }
-
-         node .typeName_changed .removeFieldCallback (this .#nodeSymbol);
-         node .name_changed     .removeFieldCallback (this .#nodeSymbol);
-         node .parents_changed  .removeFieldCallback (this .#nodeSymbol);
 
          for (const type of node .getType ())
          {
@@ -3053,16 +3031,6 @@ module .exports = class OutlineView extends Interface
                }
             }
          }
-      });
-
-      element .find (".exported-node") .each ((i, e) =>
-      {
-         const
-            child = $(e),
-            node  = this .getNode (child);
-
-         node .typeName_changed .removeFieldCallback (this .#exportedNodeSymbol);
-         node .name_changed     .removeFieldCallback (this .#exportedNodeSymbol);
       });
 
       element .find (".field, .special") .each ((i, e) =>
@@ -3112,7 +3080,7 @@ module .exports = class OutlineView extends Interface
          this .selectNodeElement ($(element), { add: true });
    }
 
-   deselectAll ()
+   deselectAll ({ target = true } = { })
    {
       const
          selection = require ("../Application/Selection"),
@@ -3122,7 +3090,15 @@ module .exports = class OutlineView extends Interface
       nodes .removeClass (["primary", "manually", "selected"]);
 
       selection .clear ();
-      hierarchy .clear ();
+
+      if (target)
+         hierarchy .clear ();
+
+      // Prevent update tree view.
+
+      this .#changing = true;
+
+      this .browser .nextFrame () .then (() => this .#changing = false);
    }
 
    showPreview (event)
@@ -3138,7 +3114,7 @@ module .exports = class OutlineView extends Interface
       event .stopImmediatePropagation ();
 
       $("[data-hasqtip]") .qtip ?.("hide") .qtip ("destroy", true);
-      $(".show-preview.on") .removeClass ("on") .addClass ("off");
+      $("[action=show-preview].on") .removeClass ("on") .addClass ("off");
 
       if (on)
          return;
@@ -3236,14 +3212,18 @@ module .exports = class OutlineView extends Interface
          node .getTool () .setSelected (element .hasClass ("selected"));
       }
 
-      node .setUserData (_changing, true);
-
       this .sceneGraph .find (`.node[node-id=${node .getId ()}],
          .imported-node[node-id=${node .getId ()}],
          .exported-node[node-id=${node .getId ()}]`)
          .find ("> .item [action=toggle-tool]")
          .removeClass (["on", "off"])
          .addClass (tool ? "off" : "on");
+
+      // Prevent update tree view.
+
+      this .#changing = true;
+
+      this .browser .nextFrame () .then (() => this .#changing = false);
    }
 
    proxyDisplay (event)
@@ -3464,19 +3444,21 @@ module .exports = class OutlineView extends Interface
       this .clearConnectors ();
 
       const
-         element = $(event .currentTarget) .closest (".node, .externproto, .proto"),
+         element = $(event .currentTarget) .closest (".node, .externproto, .proto, .imported-node, .exported-node"),
          add     = event .shiftKey || event .metaKey;
 
-      if (element .hasClass ("node"))
+      if (element .is (".node"))
          this .selectNodeElement (element, { add, target: true });
 
-      else if (element .is (".externproto, .proto"))
-         this .selectPrimaryElement (element, add);
+      else if (element .is (".externproto, .proto, .imported-node, .exported-node"))
+         this .selectPrimaryElement (element, { add, target: true });
    }
+
+   #changing = false;
 
    selectNodeElement (element, { add = false, target = false } = { })
    {
-      if (!element .hasClass ("node"))
+      if (!element .is (".node"))
          return;
 
       if (!this .isEditable (element))
@@ -3488,11 +3470,7 @@ module .exports = class OutlineView extends Interface
          selected         = element .hasClass ("manually"),
          selectedElements = this .sceneGraph .find (".primary, .selected"),
          node             = this .getNode (element),
-         elements         = $(`.node[node-id=${node ?.getId ()}]`),
-         changed          = new Map (selection .nodes .map (node => [node, node .getTool ()]));
-
-      if (node)
-         changed .set (node .valueOf (), node .getTool ());
+         elements         = $(`.node[node-id='${node ?.getId ()}']`);
 
       selectedElements .removeClass ("primary");
 
@@ -3544,17 +3522,21 @@ module .exports = class OutlineView extends Interface
          hierarchy .set (node);
       }
 
-      for (const [node, tool] of changed)
-      {
-         if (node .getTool () !== tool)
-            node .setUserData (_changing, true);
-      }
+      // Prevent update tree view.
+
+      this .#changing = true;
+
+      this .browser .nextFrame () .then (() => this .#changing = false);
    }
 
-   selectPrimaryElement (element, add = false)
+   selectPrimaryElement (element, { add = false, target = false } = { })
    {
       if (!this .isEditable (element))
          return;
+
+      const
+         hierarchy = require ("../Application/Hierarchy"),
+         node      = this .getNode (element);
 
       if (!add)
          this .sceneGraph .find (".manually") .removeClass ("manually");
@@ -3562,6 +3544,11 @@ module .exports = class OutlineView extends Interface
       this .sceneGraph .find (".primary") .removeClass ("primary");
 
       element .addClass (["primary", "manually"]);
+
+      if (target)
+         hierarchy .target (node);
+
+      hierarchy .add (node);
    }
 
    selectField (event)
@@ -3740,6 +3727,7 @@ module .exports = class OutlineView extends Interface
    onresize ()
    {
       this .requestUpdateRouteGraph ();
+      this .updateQtips ();
    }
 
    addFieldButtons (parent, child, node)
@@ -3830,7 +3818,7 @@ module .exports = class OutlineView extends Interface
 
    selectRoutes (type, event)
    {
-      // Select routes.
+      // Select route(s).
    }
 
    selectSingleRoute (type, event)
@@ -3843,6 +3831,11 @@ module .exports = class OutlineView extends Interface
       // Update route graph.
    }
 
+   updateQtips ()
+   {
+      this .sceneGraph .find ("[data-hasqtip]") .qtip ?.("reposition");
+   }
+
    onDragStartExternProto () { }
 
    onDragStartProto () { }
@@ -3850,6 +3843,8 @@ module .exports = class OutlineView extends Interface
    onDragStartNode (event) { }
 
    onDragStartField (event) { }
+
+   onDragStartImportedNode (event) { }
 
    onDragEnter (event) { }
 
@@ -3893,13 +3888,6 @@ module .exports = class OutlineView extends Interface
             break;
       }
    }
-
-   static objectClasses = {
-      "X3DExternProtoDeclaration": "externproto",
-      "X3DProtoDeclaration": "proto",
-      "X3DScene": "scene",
-      "X3DExecutionContext": "scene",
-   };
 
    expandHierarchy (hierarchy, parent, parentObject)
    {
@@ -3950,9 +3938,10 @@ module .exports = class OutlineView extends Interface
          }
          default: // X3DBaseNode
          {
-            const
-               objectClass = OutlineView .objectClasses [object .getTypeName ()] || "node",
-               element     = parent .find (`.${objectClass}[node-id=${object .getId ()}]`);
+            const element = parent .find (`:is(.node, .imported-node.proxy, .externproto, .proto, .scene)[node-id="${object .getId ()}"]`);
+
+            if (!element .length)
+               break;
 
             element .jstree ("open_node", element);
 

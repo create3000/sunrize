@@ -1,26 +1,26 @@
 "use strict";
 
 const
-   $           = require ("jquery"),
-   electron    = require ("electron"),
-   path        = require ("path"),
-   url         = require ("url"),
-   fs          = require ("fs"),
-   X3D         = require ("../X3D"),
-   Interface   = require ("../Application/Interface"),
-   Splitter    = require ("../Controls/Splitter"),
-   NodeList    = require ("./NodeList"),
-   Console     = require ("./Console"),
-   Editor      = require ("../Undo/Editor"),
-   UndoManager = require ("../Undo/UndoManager"),
-   monaco      = require ("monaco-editor/min/vs/loader.js"),
-   _           = require ("../Application/GetText");
-
-monaco .require .config ({
-   baseUrl: url .pathToFileURL (path .resolve (path .dirname (require .resolve ("monaco-editor/package.json")), "min")) + "/",
-});
+   $            = require ("jquery"),
+   electron     = require ("electron"),
+   path         = require ("path"),
+   url          = require ("url"),
+   fs           = require ("fs"),
+   X3D          = require ("../X3D"),
+   Interface    = require ("../Application/Interface"),
+   Splitter     = require ("../Controls/Splitter"),
+   NodeList     = require ("./NodeList"),
+   Console      = require ("./Console"),
+   Editor       = require ("../Undo/Editor"),
+   UndoManager  = require ("../Undo/UndoManager"),
+   monacoLoader = require ("monaco-editor/min/vs/loader.js"),
+   _            = require ("../Application/GetText");
 
 require ("../Controls/RenameNodeInput");
+
+monacoLoader .require .config ({
+   baseUrl: url .pathToFileURL (path .resolve (path .dirname (require .resolve ("monaco-editor/package.json")), "min")) + "/",
+});
 
 module .exports = class ScriptEditor extends Interface
 {
@@ -112,16 +112,21 @@ module .exports = class ScriptEditor extends Interface
       this .hSplitter = new Splitter (this .verticalSplitterLeft, "horizontal");
 
       this .nodeListElement = $("<div></div>")
-         .addClass ("node-list")
+         .addClass (["alternating", "node-list"])
          .appendTo (this .horizontalSplitterTop);
 
       this .nodeName = $("<input></input>")
          .addClass ("node-name")
+         .attr ("title", _("Rename node."))
          .attr ("placeholder", _("Enter node name."))
          .appendTo (this .horizontalSplitterTop)
-         .renameNodeInput (null, null);
+         .renameNodeInput (null);
 
-      this .nodeList = new NodeList (this .nodeListElement, node => node .getTypeName () .match (/^(?:Script|ShaderPart)$/), node => this .setNode (node));
+      this .nodeList = new NodeList (this .nodeListElement,
+      {
+         filter: node => node .getTypeName () .match (/^(?:Script|ShaderPart)$/),
+         callback: node => this .setNode (node),
+      });
 
       this .consoleElement = $("<div></div>")
          .attr ("id", "script-editor-console")
@@ -130,19 +135,199 @@ module .exports = class ScriptEditor extends Interface
 
       this .console = new Console (this .consoleElement);
 
-      electron .ipcRenderer .on ("script-editor", (event, key, ...args) => this [key] (...args));
+      electron .ipcRenderer .on ("script-editor", (event, key, ... args) => this [key] (... args));
 
       // Setup.
 
+      this .addLanguages ();
       this .setup ();
    }
 
-   colorScheme (shouldUseDarkColors)
+   getMonaco ()
    {
-      monaco .require (["vs/editor/editor.main"], monaco =>
+      return new Promise (resolve =>
       {
-         monaco .editor .setTheme (shouldUseDarkColors ? "vs-dark" : "vs-light");
+         monacoLoader .require (["vs/editor/editor.main"], ({ m: monaco }) => resolve (monaco));
       });
+   }
+
+   async colorScheme (shouldUseDarkColors)
+   {
+      const monaco = await this .getMonaco ();
+
+      monaco .editor .setTheme (shouldUseDarkColors ? "vs-dark" : "vs-light");
+   }
+
+   async addLanguages ()
+   {
+      const monaco = await this .getMonaco ();
+
+      const conf = {
+         comments: {
+            lineComment: '//',
+            blockComment: ['/*', '*/']
+         },
+         brackets: [
+            ['{', '}'],
+            ['[', ']'],
+            ['(', ')']
+         ],
+         autoClosingPairs: [
+            { open: '[', close: ']' },
+            { open: '{', close: '}' },
+            { open: '(', close: ')' },
+            { open: "'", close: "'", notIn: ['string', 'comment'] },
+            { open: '"', close: '"', notIn: ['string'] }
+         ],
+         surroundingPairs: [
+            { open: '{', close: '}' },
+            { open: '[', close: ']' },
+            { open: '(', close: ')' },
+            { open: '"', close: '"' },
+            { open: "'", close: "'" }
+         ]
+      };
+
+      const keywords = [
+         'const', 'uniform', 'break', 'continue',
+         'do', 'for', 'while', 'if', 'else', 'switch', 'case', 'in', 'out', 'inout', 'true', 'false',
+         'invariant', 'discard', 'return', 'sampler2D', 'samplerCube', 'sampler3D', 'struct',
+         'radians', 'degrees', 'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'pow', 'sinh', 'cosh', 'tanh', 'asinh', 'acosh', 'atanh',
+         'exp', 'log', 'exp2', 'log2', 'sqrt', 'inversesqrt', 'abs', 'sign', 'floor', 'ceil', 'round', 'roundEven', 'trunc', 'fract', 'mod', 'modf',
+         'min', 'max', 'clamp', 'mix', 'step', 'smoothstep', 'length', 'distance', 'dot', 'cross ',
+         'determinant', 'inverse', 'normalize', 'faceforward', 'reflect', 'refract', 'matrixCompMult', 'outerProduct', 'transpose', 'lessThan ',
+         'lessThanEqual', 'greaterThan', 'greaterThanEqual', 'equal', 'notEqual', 'any', 'all', 'not', 'packUnorm2x16', 'unpackUnorm2x16', 'packSnorm2x16', 'unpackSnorm2x16', 'packHalf2x16', 'unpackHalf2x16',
+         'dFdx', 'dFdy', 'fwidth', 'textureSize', 'texture', 'textureProj', 'textureLod', 'textureGrad', 'texelFetch', 'texelFetchOffset',
+         'textureProjLod', 'textureLodOffset', 'textureGradOffset', 'textureProjLodOffset', 'textureProjGrad', 'intBitsToFloat', 'uintBitsToFloat', 'floatBitsToInt', 'floatBitsToUint', 'isnan', 'isinf',
+         'vec2', 'vec3', 'vec4', 'ivec2', 'ivec3', 'ivec4', 'uvec2', 'uvec3', 'uvec4', 'bvec2', 'bvec3', 'bvec4',
+         'mat2', 'mat3', 'mat2x2', 'mat2x3', 'mat2x4', 'mat3x2', 'mat3x3', 'mat3x4', 'mat4x2', 'mat4x3', 'mat4x4', 'mat4',
+         'float', 'int', 'uint', 'void', 'bool',
+      ];
+
+      const language = {
+         tokenPostfix: '.glsl',
+         // Set defaultToken to invalid to see what you do not tokenize yet
+         defaultToken: 'invalid',
+         keywords,
+         operators: [
+            '=',
+            '>',
+            '<',
+            '!',
+            '~',
+            '?',
+            ':',
+            '==',
+            '<=',
+            '>=',
+            '!=',
+            '&&',
+            '||',
+            '++',
+            '--',
+            '+',
+            '-',
+            '*',
+            '/',
+            '&',
+            '|',
+            '^',
+            '%',
+            '<<',
+            '>>',
+            '>>>',
+            '+=',
+            '-=',
+            '*=',
+            '/=',
+            '&=',
+            '|=',
+            '^=',
+            '%=',
+            '<<=',
+            '>>=',
+            '>>>='
+         ],
+         symbols: /[=><!~?:&|+\-*\/\^%]+/,
+         escapes: /\\(?:[abfnrtv\\"']|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
+         integersuffix: /([uU](ll|LL|l|L)|(ll|LL|l|L)?[uU]?)/,
+         floatsuffix: /[fFlL]?/,
+         encoding: /u|u8|U|L/,
+
+         tokenizer: {
+            root: [
+               // identifiers and keywords
+               [
+               /[a-zA-Z_]\w*/,
+               {
+                  cases: {
+                     '@keywords': { token: 'keyword.$0' },
+                     '@default': 'identifier'
+                  }
+               }
+               ],
+
+               // Preprocessor directive (#define)
+               [/^\s*#\s*\w+/, 'keyword.directive'],
+
+               // Version
+               [/#version\s+\d+\s+es/, 'keyword.directive'],
+
+               // whitespace
+               { include: '@whitespace' },
+
+               // delimiters and operators
+               [/[{}()\[\]]/, '@brackets'],
+               [/@symbols/, {
+               cases: {
+                  '@operators': 'operator',
+                  '@default': ''
+               }
+               }],
+
+               // numbers
+               [/\d*\d+[eE]([\-+]?\d+)?(@floatsuffix)/, 'number.float'],
+               [/\d*\.\d+([eE][\-+]?\d+)?(@floatsuffix)/, 'number.float'],
+               [/0[xX][0-9a-fA-F']*[0-9a-fA-F](@integersuffix)/, 'number.hex'],
+               [/0[0-7']*[0-7](@integersuffix)/, 'number.octal'],
+               [/0[bB][0-1']*[0-1](@integersuffix)/, 'number.binary'],
+               [/\d[\d']*\d(@integersuffix)/, 'number'],
+               [/\d(@integersuffix)/, 'number'],
+
+               // delimiter: after number because of .\d floats
+               [/[;,.]/, 'delimiter']
+            ],
+
+            comment: [
+               [/[^\/*]+/, 'comment'],
+               [/\/\*/, 'comment', '@push'],
+               ['\\*/', 'comment', '@pop'],
+               [/[\/*]/, 'comment']
+            ],
+
+            // Does it have strings?
+            string: [
+               [/[^\\"]+/, 'string'],
+               [/@escapes/, 'string.escape'],
+               [/\\./, 'string.escape.invalid'],
+               [/"/, {
+               token: 'string.quote',
+               bracket: '@close',
+               next: '@pop'
+               }]
+            ],
+
+            whitespace: [
+               [/[ \t\r\n]+/, 'white'],
+               [/\/\*/, 'comment', '@comment'],
+               [/\/\/.*$/, 'comment']
+            ]
+         }
+      };
+
+      monaco .languages .register ({ id: "glsl" });
+      monaco .languages .setMonarchTokensProvider ("glsl", language);
+      monaco .languages .setLanguageConfiguration ("glsl", conf);
    }
 
    async setNode (node)
@@ -157,7 +342,7 @@ module .exports = class ScriptEditor extends Interface
          this .node ._loadState .removeFieldCallback (this);
 
          for (const field of this .node .getUserDefinedFields ())
-            field .removeInterest ("setDeclarations", this);
+            field .removeInterest ("updateDeclarations", this);
 
          switch (this .node .getTypeName ())
          {
@@ -226,7 +411,7 @@ module .exports = class ScriptEditor extends Interface
       }
       else
       {
-         this .nodeName .renameNodeInput (null, null);
+         this .nodeName .renameNodeInput (null);
          this .applyButton .hide ();
          this .monaco ?.detach ();
 
@@ -246,7 +431,7 @@ module .exports = class ScriptEditor extends Interface
 
    #declarations;
 
-   setDeclarations (monaco)
+   updateDeclarations (monaco)
    {
       if (!this .node .getType () .includes (X3D .X3DConstants .Script))
          return;
@@ -350,6 +535,7 @@ module .exports = class ScriptEditor extends Interface
             declare const X3DField: typeof X3D. X3DField;
             declare const X3DArrayField: typeof X3D. X3DArrayField;
             ${Array .from (this .browser .fieldTypes)
+               .filter (type => !this .#internalTypes .has (type .type))
                .map (type => `declare const ${type .typeName}: typeof X3D .${type .typeName};`)
                .join ("\n")}
             declare const TRUE: true;
@@ -357,85 +543,103 @@ module .exports = class ScriptEditor extends Interface
             declare const NULL: null;
             declare function print (... args: any []): void;
             ${fields .join ("\n")};
-         `},
-      ]);
+         `,
+      }]);
    }
 
    editors = new Map ();
 
    languages = {
       "Script": "javascript",
-      "ShaderPart": "c",
+      "ShaderPart": "glsl",
    };
 
-   getEditor (node)
+   async getEditor (node)
    {
-      return new Promise ((resolve, reject) =>
-      {
-         if (this .editors .has (node))
-         {
-            resolve (this .editors .get (node));
-         }
-         else
-         {
-            monaco .require (["vs/editor/editor.main"], monaco =>
-            {
-               const element = $("<div></div>")
-                  .addClass ("script-editor-monaco")
-                  .appendTo (this .verticalSplitterRight);
+      if (!this .editors .has (node))
+         this .editors .set (node, await this .createEditor (node));
 
-               self .MonacoEnvironment =
-               {
-                  getWorkerUrl (moduleId, label)
-                  {
-                     return url .pathToFileURL (require .resolve ("monaco-editor/min/vs/base/worker/workerMain.js"));
-                  },
-               };
-
-               const editor = monaco .editor .create (element .get (0),
-               {
-                  language: this .languages [node .getTypeName ()],
-                  contextmenu: false,
-                  automaticLayout: true,
-                  wordWrap: "on",
-                  wrappingIndent: "indent",
-                  minimap: { enabled: false },
-                  bracketPairColorization: { enabled: true },
-               });
-
-               editor .onDidFocusEditorWidget (() => this .setDeclarations (monaco));
-               editor .onDidBlurEditorWidget (() => this .apply ());
-
-               editor .onKeyDown ((event) =>
-               {
-                  const { keyCode, ctrlKey, metaKey } = event;
-
-                  if (keyCode === 52 && (metaKey || ctrlKey))
-                  {
-                     event .preventDefault ();
-                     this .paste ();
-                  }
-               });
-
-               editor .viewState = editor .saveViewState ();
-
-               element .on ("mouseenter", () => this .setDeclarations (monaco))
-               element .on ("contextmenu", () => this .showContextMenu ());
-               element .detach ();
-
-               // this .debugFindActions (editor)
-               this .editors .set (node, { element, editor, monaco });
-
-               // Return editor.
-
-               resolve (this .editors .get (node));
-            });
-         }
-      });
+      return this .editors .get (node);
    }
 
-   showContextMenu ()
+   async createEditor (node)
    {
+      const
+         monaco  = await this .getMonaco (),
+         element = $("<div></div>") .addClass ("script-editor-monaco");
+
+      const editor = monaco .editor .create (element .get (0),
+      {
+         language: this .languages [node .getTypeName ()],
+         contextmenu: false,
+         automaticLayout: true,
+         wordWrap: "on",
+         wrappingIndent: "indent",
+         minimap: { enabled: false },
+         bracketPairColorization: { enabled: true },
+      });
+
+      editor .viewState = editor .saveViewState ();
+
+      editor .onDidFocusEditorWidget (() => this .updateDeclarations (monaco));
+      editor .onDidBlurEditorWidget (() => this .apply ());
+      editor .onKeyDown (event => this .onKeyDown (event));
+
+      element .on ("mouseenter", () => this .updateDeclarations (monaco));
+      element .on ("contextmenu", () => this .showContextMenu ());
+
+      // this .debugFindActions (editor)
+      return { element, editor, monaco };
+   }
+
+   onKeyDown (event)
+   {
+      const { keyCode, ctrlKey, metaKey } = event;
+
+      switch (keyCode)
+      {
+         case 33: // c
+         {
+            if (!(metaKey || ctrlKey))
+               break;
+
+            event .preventDefault ();
+            event .stopPropagation ();
+            this .cutOrCopy ("copy");
+            break;
+         }
+         case 52: // v
+         {
+            if (!(metaKey || ctrlKey))
+               break;
+
+            event .preventDefault ();
+            event .stopPropagation ();
+            this .paste ();
+            break;
+         }
+         case 54: // x
+         {
+            if (!(metaKey || ctrlKey))
+               break;
+
+            event .preventDefault ();
+            event .stopPropagation ();
+            this .cutOrCopy ("cut");
+            break;
+         }
+      }
+   }
+
+   async showContextMenu ()
+   {
+      await $.sleep ();
+
+      const app = require ("../Application/Window");
+
+      if (!app .activeElementIsMonacoEditor ())
+         return;
+
       const menu = [
          // {
          //    label: _("Go to Definition"),
@@ -478,14 +682,17 @@ module .exports = class ScriptEditor extends Interface
          { type: "separator" },
          {
             label: _("Cut"),
-            args: ["cutOrCopy", true],
+            accelerator: "CmdOrCtrl+X",
+            args: ["cutOrCopy", "cut"],
          },
          {
             label: _("Copy"),
-            args: ["cutOrCopy", false],
+            accelerator: "CmdOrCtrl+C",
+            args: ["cutOrCopy", "copy"],
          },
          {
             label: _("Paste"),
+            accelerator: "CmdOrCtrl+V",
             args: ["paste"],
          },
          { type: "separator" },
@@ -502,6 +709,16 @@ module .exports = class ScriptEditor extends Interface
    {
       this .editor .getAction (id) .run ();
    }
+
+   triggerEvent (... args)
+   {
+      this .editor .trigger (... args);
+   }
+
+   // execCommand (command)
+   // {
+   //    document .execCommand (command);
+   // }
 
    debugFindActions (editor = this .editor)
    {
@@ -552,12 +769,7 @@ module .exports = class ScriptEditor extends Interface
       }
    }
 
-   // execCommand (command)
-   // {
-   //    document .execCommand (command);
-   // }
-
-   cutOrCopy (cut)
+   cutOrCopy (type)
    {
       this .editor .focus ();
 
@@ -576,7 +788,7 @@ module .exports = class ScriptEditor extends Interface
       // Set the clipboard contents.
       navigator .clipboard .writeText (data || "");
 
-      if (!cut)
+      if (type === "copy")
          return;
 
       // This is a cut operation, so replace the selection with an empty string.
@@ -757,13 +969,13 @@ main ()
             case X3D .X3DConstants .SFNode:
             case X3D .X3DConstants .MFNode:
             {
-               field .addInterest ("setDeclarations", this, monaco);
+               field .addInterest ("updateDeclarations", this, monaco);
                break;
             }
          }
       }
 
-      this .setDeclarations (monaco);
+      this .updateDeclarations (monaco);
    }
 
    toggleDirectOutput ()

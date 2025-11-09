@@ -1,9 +1,10 @@
 "use strict";
 
-if (process .argv .length > 2)
-{
-   process .argv = process .argv .concat (JSON .parse (atob (process .argv .pop ())));
-   process .chdir (process .argv .pop ());
-}
+// Restore cwd.
 
-const app = require ("./Application/Application") .run ();
+if (process .argv .at (-2) === "--cwd")
+   process .chdir (process .argv .at (-1));
+
+// Run application.
+
+require ("./Application/Application") .run ();

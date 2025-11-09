@@ -40,7 +40,7 @@ $.fn.addPrototypePopover = function (executionContext, type)
       .appendTo (content);
 
    const nameInput = $("<input></input>")
-      .attr ("placeholder", _("Enter name"))
+      .attr ("placeholder", _("Enter a name"))
       .appendTo (content);
 
    // Create tooltip.
@@ -55,7 +55,7 @@ $.fn.addPrototypePopover = function (executionContext, type)
                electron .shell .beep ();
                nameInput .highlight ();
             })
-            .on ("keydown.addPrototypePopover", event =>
+            .on ("keydown", event =>
             {
                if (event .key !== "Enter")
                   return;

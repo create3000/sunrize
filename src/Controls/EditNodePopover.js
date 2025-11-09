@@ -19,7 +19,7 @@ $.fn.editNodePopover = function (node)
       .appendTo (content);
 
    const nameInput = $("<input></input>")
-      .attr ("placeholder", _("Enter name"))
+      .attr ("placeholder", _("Enter a name"))
       .appendTo (content);
 
    if (node instanceof X3D .X3DProtoDeclaration)

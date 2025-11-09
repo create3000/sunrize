@@ -2,6 +2,7 @@
 
 const
    $           = require ("jquery"),
+   electron    = require ("electron"),
    capitalize  = require ("capitalize"),
    Dialog      = require ("../Controls/Dialog"),
    Tabs        = require ("../Controls/Tabs"),
@@ -36,7 +37,7 @@ module .exports = new class SceneProperties extends Dialog
 
       this .tabs .addTextTab ("profile-and-components", _("Profile & Components"));
       this .tabs .addTextTab ("units",                  _("Units"));
-      this .tabs .addTextTab ("meta-data",              _("Meta Data"));
+      this .tabs .addTextTab ("meta-data",              _("Meta Statements"));
       this .tabs .addTextTab ("world-info",             _("World Info"));
 
       this .tabs .setup ();
@@ -51,7 +52,7 @@ module .exports = new class SceneProperties extends Dialog
 
       // Profile And Components
 
-      this .profileAndComponents .table       = $("<table></table>") .appendTo (this .profileAndComponents);
+      this .profileAndComponents .table       = $("<table></table>") .appendTo (this .profileAndComponents) .height ("100%");
       this .profileAndComponents .table .body = $("<tbody></tbody>") .appendTo (this .profileAndComponents .table);
       this .profileAndComponents .inputs      = { };
 
@@ -63,7 +64,7 @@ module .exports = new class SceneProperties extends Dialog
       this .profileAndComponents .inputs .profile = $("<select></select>")
          .on ("change", () => this .changeProfile ());
 
-      this .profileAndComponents .components        = $("<div></div>") .css ({ "overflow-y": "auto", "height": "20em" });
+      this .profileAndComponents .components        = $("<div></div>") .css ({ "overflow-y": "auto" });
       this .profileAndComponents .components .table = $("<table></table>") .appendTo (this .profileAndComponents .components);
       this .profileAndComponents .components .body  = $("<tbody></tbody>") .appendTo (this .profileAndComponents .components .table);
 
@@ -79,16 +80,19 @@ module .exports = new class SceneProperties extends Dialog
       {
          $("<tr></tr>")
             .append ($("<td></td>")
+               .width ("15px")
                .append ($("<input></input>")
                   .attr ("type", "checkbox")
                   .attr ("component", component .name)
                   .on ("change", () => this .changeComponents ())))
             .append ($("<td></td>") .text (component .title))
-            .append ($("<td></td>") .append ($("<input></input>")
-               .attr ("component", component .name)
-               .attr ("level", component .level)
-               .val (component .level)
-               .on ("change", () => this .changeComponents ())))
+            .append ($("<td></td>")
+               .width ("15px")
+               .append ($("<input></input>")
+                  .attr ("component", component .name)
+                  .attr ("level", component .level)
+                  .val (component .level)
+                  .on ("change", () => this .changeComponents ())))
             .appendTo (this .profileAndComponents .components .body);
       }
 
@@ -96,7 +100,9 @@ module .exports = new class SceneProperties extends Dialog
          .append ($("<th></th>"))
          .append ($("<td></td>")
             .append (this .profileAndComponents .inputs .checkbox)
-            .append ($("<label></label>") .attr ("for", "infer-profile-and-components-checkbox") .text ("Infer Profile and Components from Source")))
+            .append ($("<label></label>")
+               .attr ("for", "infer-profile-and-components-checkbox")
+               .text (_("Infer Profile and Components from Source when Saving"))))
          .appendTo (this .profileAndComponents .table .body);
 
       $("<tr></tr>")
@@ -114,6 +120,7 @@ module .exports = new class SceneProperties extends Dialog
       this .units .table       = $("<table></table>") .appendTo (this .units);
       this .units .table .head = $("<thead></thead>") .appendTo (this .units .table);
       this .units .table .body = $("<tbody></tbody>") .appendTo (this .units .table);
+      this .units .table .foot = $("<tfoot></tfoot>") .appendTo (this .units .table);
 
       this .units .inputs = new Map (Units .map (unit => [unit .category,
       {
@@ -163,20 +170,60 @@ module .exports = new class SceneProperties extends Dialog
 
       this .units .find ("input[category]") .on ("change", event => this .changeUnitValue (event));
 
+      $("<tr></tr>")
+         .append ($("<th></th>"))
+         .append ($("<th></th>"))
+         .append ($("<th></th>"))
+         .appendTo (this .units .table .foot);
+
       // Meta Data
 
       this .metaData .table       = $("<table></table>") .addClass ("sticky-headers") .appendTo (this .metaData);
       this .metaData .table .head = $("<thead></thead>") .appendTo (this .metaData .table);
-      this .metaData .table .body = $("<tbody></tbody>") .appendTo (this .metaData .table);
+      this .metaData .table .body = $("<tbody></tbody>") .appendTo (this .metaData .table) .sortable ({
+         helper (event, tr)
+         {
+            const
+               originals = tr .children (),
+               helper    = tr .clone ();
+
+            helper .children () .each (function (index)
+            {
+               // Set helper cell sizes to match the original sizes.
+               $(this)
+                  .width (originals .eq (index) .width ())
+                  .css ("padding-top", "2px");
+            });
+
+            return helper;
+         },
+         update: (event, ui) =>
+         {
+            this .changeMetaData ();
+         },
+      });
+      this .metaData .table .foot = $("<tfoot></tfoot>") .appendTo (this .metaData .table);
 
       $("<tr></tr>")
-         .append ($("<th></th>") .css ("width", "30%") .text (_("Key")))
-         .append ($("<th></th>") .css ("width", "70%") .text (_("Value")))
+         .append ($("<th></th>") .css ("width", "15px"))
+         .append ($("<th></th>")
+            .addClass ("button")
+            .css ("width", "25%")
+            .append ($("<span></span>") .text (_("Key")))
+            .append ($("<span></span>")
+               .attr ("title", "Sort column alphabetically.")
+               .addClass (["material-icons", "sort-key"])
+               .addClass (this .config .file .sortMetaData ? ["active"] : [ ])
+               .css ("font-size", "inherit")
+               .text ("sort_by_alpha"))
+            .on ("click", (event) => this .sortMetaData (event)))
+         .append ($("<th></th>") .css ("width", "auto") .text (_("Value")))
+         .append ($("<th></th>") .css ("width", "15px"))
          .appendTo (this .metaData .table .head);
 
       // World Info
 
-      this .worldInfo .table       = $("<table></table>") .appendTo (this .worldInfo);
+      this .worldInfo .table       = $("<table></table>") .height ("100%") .appendTo (this .worldInfo);
       this .worldInfo .table .body = $("<tbody></tbody>") .appendTo (this .worldInfo .table);
       this .worldInfo .inputs      = { };
 
@@ -186,16 +233,18 @@ module .exports = new class SceneProperties extends Dialog
          .on ("click", () => this .toggleWorldInfo ());
 
       this .worldInfo .inputs .title = $("<input></input>");
-      this .worldInfo .inputs .info  = $("<textarea></textarea>");
+      this .worldInfo .inputs .info  = $("<textarea></textarea>") .height ("100%") .css ("resize", "none");
 
       this .worldInfo .checkboxRow = $("<tr></tr>")
-         .append ($("<th></th>"))
+         .height ("19.5px")
+         .append ($("<th></th>") .css ("width", "20%"))
          .append ($("<td></td>")
             .append (this .worldInfo .inputs .checkbox)
-            .append ($("<label></label>") .attr ("for", "world-info-checkbox") .text ("World Info")))
+            .append ($("<label></label>") .attr ("for", "world-info-checkbox") .text (_("World Info"))))
          .appendTo (this .worldInfo .table .body);
 
       $("<tr></tr>")
+         .height ("19.5px")
          .append ($("<th></th>") .text (_("Title")))
          .append ($("<td></td>") .append (this .worldInfo .inputs .title))
          .appendTo (this .worldInfo .table .body);
@@ -209,6 +258,12 @@ module .exports = new class SceneProperties extends Dialog
    configure ()
    {
       super .configure ({ size: [600, 400] });
+
+      this .config .file .setDefaultValues ({
+         sortMetaData: false,
+      });
+
+      this .updateMetaDataSort ()
 
       if (this .executionContext)
          this .onclose ();
@@ -227,9 +282,9 @@ module .exports = new class SceneProperties extends Dialog
 
       this .executionContext .getWorldInfos () .addInterest ("updateWorldInfo", this);
 
-      const window = require ("../Application/Window");
+      const app = require ("../Application/Window");
 
-      this .profileAndComponents .inputs .checkbox .prop ("checked", window .config .file .inferProfileAndComponents);
+      this .profileAndComponents .inputs .checkbox .prop ("checked", app .config .file .inferProfileAndComponents);
 
       this .toggleInferProfileAndComponents ();
       this .updateProfile ();
@@ -251,9 +306,9 @@ module .exports = new class SceneProperties extends Dialog
 
    toggleInferProfileAndComponents ()
    {
-      const window = require ("../Application/Window");
+      const app = require ("../Application/Window");
 
-      window .config .file .inferProfileAndComponents = this .profileAndComponents .inputs .checkbox .prop ("checked");
+      app .config .file .inferProfileAndComponents = this .profileAndComponents .inputs .checkbox .prop ("checked");
 
       if (this .profileAndComponents .inputs .checkbox .prop ("checked"))
          this .profileAndComponents .checkboxRow .addClass ("disabled");
@@ -363,48 +418,133 @@ module .exports = new class SceneProperties extends Dialog
       Editor .updateUnit (this .executionContext, category, name .val (), conversionFactor .val ());
    }
 
+   sortMetaData (event)
+   {
+      event .preventDefault ();
+      event .stopPropagation ();
+
+      this .config .file .sortMetaData = !this .config .file .sortMetaData;
+
+      this .updateMetaDataSort ();
+      this .updateMetaData ();
+   }
+
+   updateMetaDataSort ()
+   {
+      this .metaData .table .head .find (".sort-key")
+         .removeClass ("active")
+         .addClass (this .config .file .sortMetaData ? ["active"] : [ ])
+
+      if (this .config .file .sortMetaData)
+         this .metaData .table .body .sortable ("disable");
+      else
+         this .metaData .table .body .sortable ("enable");
+   }
+
    updateMetaData ()
    {
       const
          scrollTop  = this .metaData .table .scrollTop (),
-         scrollLeft = this .metaData .table .scrollLeft ();
+         scrollLeft = this .metaData .table .scrollLeft (),
+         focusInput = this .metaData .table .body .find ("input:focus"),
+         focusRow   = focusInput .closest ("tr");
 
       this .metaData .table .body .empty ();
 
-      const metaData = Array .from (this .executionContext .getMetaDatas ())
-         .sort ((a, b) => Algorithm .cmp (a [0], b [0]));
+      const
+         metaData = Array .from (this .executionContext .getMetaDatas ()),
+         rows     = [ ];
 
-      for (const [key, values] of metaData)
+      for (const [index, [key, value]] of metaData .entries ())
       {
-         for (const value of values)
-         {
-            $("<tr></tr>")
-               .append ($("<td></td>")
-                  .css ("width", "unset")
-                  .append ($("<input></input>")
+         const row = $("<tr></tr>")
+            .attr ("index", index)
+            .append ($("<td></td>")
+               .append ($("<span></span>")
+                  .attr ("title", _("Drag to move key/value pair."))
+                  .css ("font-size", "120%")
+                  .addClass (["material-icons", "button", "drag"])
+                  .addClass (this .config .file .sortMetaData ? ["disabled"] : [ ])
+                  .text ("drag_handle")))
+            .append ($("<td></td>")
+               .append ($("<input></input>")
+                  .attr ("index", 0)
                   .attr ("placeholder", _("Insert meta key here."))
                   .val (key) .on ("change", (event) => this .changeMetaData (event, key))))
-               .append ($("<td></td>")
-                  .css ("width", "unset")
-                  .append ($("<input></input>")
+            .append ($("<td></td>")
+               .addClass ("meta-value")
+               .append ($("<input></input>")
+                  .attr ("index", 1)
                   .attr ("placeholder", _("Insert meta value here."))
-                  .val (value) .on ("change", (event) => this .changeMetaData (event, key))))
-               .appendTo (this .metaData .table);
+                  .val (value)
+                  .on ("change", (event) => this .changeMetaData (event, key))))
+            .append ($("<td></td>")
+               .append ($("<span></span>")
+                  .attr ("title", _("Delete key/value pair."))
+                  .css ("font-size", "120%")
+                  .addClass (["material-icons", "button"])
+                  .text ("delete_forever")
+                  .on ("click", (event) => this .removeMetaData (event, key))));
+
+         // Add Open Link in Browser button if it matches a link somewhere in value.
+         {
+            const
+               http  = /(https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))/,
+               match = value .match (http);
+
+            if (match)
+            {
+               const column = row .find ("input[index=1]") .parent ();
+
+               $("<span></span>")
+                  .addClass ("open-link")
+                  .attr ("title", _("Open link in web browser."))
+                  .css ("font-size", "120%")
+                  .addClass (["material-icons", "button"])
+                  .text ("open_in_new")
+                  .appendTo (column)
+                  .on ("click", () => electron .shell .openExternal (match [1]));
+            }
          }
+
+         rows .push (row);
+      }
+
+      if (this .config .file .sortMetaData)
+      {
+         rows .sort ((a, b) =>
+         {
+            const
+               keyA = $($(a) .find ("input") .get (0)) .val () ?? "",
+               keyB = $($(b) .find ("input") .get (0)) .val () ?? "";
+
+            return keyA .localeCompare (keyB);
+         });
+      }
+
+      this .metaData .table .body .append (rows);
+
+      if (focusInput .length)
+      {
+         const input = $(this .metaData .table .body
+            .find (`tr[index=${focusRow .attr ("index")}] input`)
+            .get (focusInput .attr ("index")));
+
+         input .trigger ("focus");
       }
 
       $("<tr></tr>")
+         .append ($("<td></td>"))
          .append ($("<td></td>")
-            .css ("width", "unset")
             .append ($("<input></input>")
-            .attr ("placeholder", _("Add new meta key."))
-            .on ("change", event => this .changeMetaData (event, ""))))
+               .attr ("placeholder", _("Add new meta key."))
+               .on ("change", event => this .changeMetaData (event, ""))))
          .append ($("<td></td>")
-            .css ("width", "unset")
             .append ($("<input></input>")
-            .prop ("readonly", true)
-            .on ("change", event => this .changeMetaData (event, ""))))
-         .appendTo (this .metaData .table);
+               .prop ("readonly", true)
+               .on ("change", event => this .changeMetaData (event, ""))))
+         .append ($("<td></td>"))
+         .appendTo (this .metaData .table .foot .empty ());
 
       this .metaData .table .scrollTop (scrollTop);
       this .metaData .table .scrollLeft (scrollLeft);
@@ -412,30 +552,51 @@ module .exports = new class SceneProperties extends Dialog
 
    changeMetaData (event, oldKey)
    {
-      const
-         inputs = $(event .target) .closest ("tr") .find ("input"),
-         key    = $(inputs .get (0));
+      let metaData = Array .from (this .metaData .table .find ("tr"));
 
-      if (key .val ())
-         UndoManager .shared .beginUndo (_("Change Meta Data »%s«"), key .val ());
+      if (arguments .length === 2)
+      {
+         const
+            inputs = $(event .target) .closest ("tr") .find ("input"),
+            key    = $(inputs .get (0)) .val () ?.trim ();
+
+         if (key)
+            UndoManager .shared .beginUndo (_("Change Meta Data »%s«"), key);
+         else
+            UndoManager .shared .beginUndo (_("Remove Meta Data »%s«"), oldKey);
+
+         metaData .sort ((a, b) => $(a) .attr ("index") - $(b) .attr ("index"));
+      }
       else
-         UndoManager .shared .beginUndo (_("Remove Meta Data »%s«"), oldKey);
+      {
+         UndoManager .shared .beginUndo (_("Reorder Meta Data"));
+      }
 
-      const metaData = Array .from (this .metaData .table .find ("tr")) .map (element =>
+      metaData = metaData .map (element =>
       {
          const
             inputs = $(element) .find ("input"),
             key    = $(inputs .get (0)),
             value  = $(inputs .get (1));
 
-         return [key .val (), value .val ()];
+         return [key .val () ?.trim (), value .val () ?.trim ()];
       })
-      .filter (([key]) => key)
-      .sort ((a, b) => Algorithm .cmp (a [0], b [0]));
+      .filter (([key]) => key);
 
       Editor .setMetaData (this .executionContext, metaData);
 
       UndoManager .shared .endUndo ();
+   }
+
+   removeMetaData (event, oldKey)
+   {
+      const
+         inputs = $(event .target) .closest ("tr") .find ("input"),
+         key    = $(inputs .get (0));
+
+      key .val ("");
+
+      this .changeMetaData (event, oldKey);
    }
 
    updateWorldInfo ()

@@ -92,7 +92,7 @@ module .exports = class Dashboard extends Interface
 
       this .showPanelsButton = $("<span></span>")
          .addClass (["material-symbols-outlined"])
-         .attr ("title", _("Toggle visibility of Panel."))
+         .attr ("title", _("Show Node Panel."))
          .text ("edit_note")
          .appendTo (this .toolbar)
          .on ("click", () => this .togglePanel (!this .config .file .panel));
@@ -180,10 +180,19 @@ module .exports = class Dashboard extends Interface
       for (const node of nodes)
          outlineEditor .expandTo (node, { expandObject: true, expandAll: true });
 
-      const elements = nodes .map (node => outlineEditor .sceneGraph .find (`.node[node-id=${node .getId ()}]`));
+      const elements = nodes .map (node => outlineEditor .sceneGraph
+         .find (`:is(.node, .imported-node.proxy)[node-id="${node .getId ()}"]`));
 
-      for (const [i, element] of elements .entries ())
-         outlineEditor .selectNodeElement (element, { add: i > 0 });
+      outlineEditor .deselectAll ({ target: false });
+
+      for (const element of elements)
+      {
+         if (element .is (".node"))
+            outlineEditor .selectNodeElement (element, { add: true });
+
+         else if (element .is (".imported-node.proxy"))
+            outlineEditor .selectPrimaryElement (element, { add: true });
+      }
 
       // Scroll element into view.
       // Hide scrollbars during scroll to prevent overlay issue.

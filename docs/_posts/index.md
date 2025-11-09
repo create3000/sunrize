@@ -12,11 +12,18 @@ permalink: /
 
 ## Introduction
 
-Sunrize is an easy-to-use editor for X3D files that is based on the [X_ITE](/x_ite/) framework. The Outline Editor allows for intuitive scene editing, while the Script Editor provides comprehensive editing of [Script](/x_ite/components/scripting/script/) and [ComposedShader](/x_ite/components/shaders/composedshader/) nodes.
+Sunrize is an easy-to-use editor for X3D files, built on top of the [X_ITE](/x_ite/) framework. It provides an intuitive interface for creating, editing, and previewing interactive 3D scenes directly in the browser. With support for the full [X3D standard](https://www.web3d.org/standards) and X_ITE’s advanced rendering features, Sunrize makes it simple to experiment with nodes, materials, and animations while immediately seeing the results in real time.
 
-![Image of Sunrize Editor](/assets/img/sunrize.avif)
+![Image of Sunrize Editor](/assets/img/sunrize-light.avif){: .light }
+![Image of Sunrize Editor](/assets/img/sunrize-dark.avif){: .dark }
 
 [<i class="fa-solid fa-heart"></i> Support us on Patreon](https://patreon.com/X_ITE){: .patreon }
+
+## Installer Packages
+
+The latest builds of Sunrize are available as installer packages on the [Sunrize Releases](https://github.com/create3000/sunrize/releases) page on GitHub. From there, you can download precompiled binaries, but currently only for Windows.
+
+[<i class="fa-brands fa-windows"></i><br>Windows](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/Sunrize.X3D.Editor-{{ site.version }}.Setup.exe){: download="" .platform .w-25 }
 
 ## Run from Console
 

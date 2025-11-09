@@ -60,4 +60,4 @@ If you *Shift*-click the expander arrow before the field type image, the routes 
 
 ## Removing a Route
 
-To remove a route, hold down the *Ctrl/Command* key and click the input/output connector (containing a triangle).
+To remove a route, hold down the <kbd>Ctrl-or-Cmd</kbd> key and click the input/output connector (containing a triangle).

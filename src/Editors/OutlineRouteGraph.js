@@ -5,10 +5,6 @@ const
    X3D         = require ("../X3D"),
    OutlineView = require ("./OutlineView");
 
-const
-   routeColor         = "#000000",
-   routeSelectedColor = "rgb(255, 69, 58)";
-
 module .exports = class OutlineRouteGraph extends OutlineView
 {
    constructor (element)
@@ -16,6 +12,18 @@ module .exports = class OutlineRouteGraph extends OutlineView
       super (element);
 
       this .selectedRoutes = new Set ();
+   }
+
+   colorScheme (shouldUseDarkColors)
+   {
+      super .colorScheme (shouldUseDarkColors);
+
+      const style = window .getComputedStyle ($("body") [0]);
+
+      this .routeColor         = style .getPropertyValue ("--system-gray0");
+      this .routeSelectedColor = style .getPropertyValue ("--system-red");
+
+      this .requestUpdateRouteGraph ();
    }
 
    selectRoutes (type, event)
@@ -143,6 +151,8 @@ module .exports = class OutlineRouteGraph extends OutlineView
          parent  = canvas .parent (),
          context = canvas .get (0) .getContext ("2d");
 
+      const { routeColor, routeSelectedColor } = this;
+
       canvas .height (Math .ceil (parent .height ()));
 
       canvas .prop ("width",  canvas .width ());
@@ -221,6 +231,8 @@ module .exports = class OutlineRouteGraph extends OutlineView
          parent  = canvas .parent (),
          context = canvas .get (0) .getContext ("2d");
 
+      const { routeColor, routeSelectedColor } = this;
+
       canvas .height (Math .ceil (parent .height ()));
 
       canvas .prop ("width",  canvas .width ());
@@ -275,6 +287,8 @@ module .exports = class OutlineRouteGraph extends OutlineView
 
    updateRouteCurves (canvases, fields)
    {
+      const { routeColor, routeSelectedColor } = this;
+
       // Scale canvases
 
       for (let i = 0, length = canvases .length - 1; i < length; ++ i)

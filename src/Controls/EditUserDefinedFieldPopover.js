@@ -97,7 +97,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
       .appendTo (content);
 
    const nameInput = $("<input></input>")
-      .attr ("placeholder", _("Enter name"))
+      .attr ("placeholder", _("Enter a name"))
       .appendTo (content);
 
    if (field instanceof X3D .X3DField)

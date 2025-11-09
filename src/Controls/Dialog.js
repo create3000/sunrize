@@ -47,9 +47,12 @@ module .exports = class Dialog extends Interface
    {
       // Set default config values.
 
+      defaults .minSize ??= defaults .size;
+
       this .config .file .setDefaultValues (Object .assign ({
          position: undefined,
          size: [400, 250],
+         minSize: [400, 250],
       },
       defaults));
    }
@@ -58,8 +61,8 @@ module .exports = class Dialog extends Interface
    {
       this .element .dialog ({
          position: { ... this .config .file .position, of: $("body") },
-         minWidth: this .config .file .getDefaultValue ("size") [0],
-         minHeight: this .config .file .getDefaultValue ("size") [1],
+         minWidth: this .config .file .minSize [0],
+         minHeight: this .config .file .minSize [1],
          width: this .config .file .size [0],
          height: this .config .file .size [1],
       })

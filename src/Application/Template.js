@@ -22,8 +22,8 @@ class Template
 
       const file = fs .readFileSync (template)
          .toString ()
-         .replace (/(url\()(.*?)(\))/sg, Template .resolve .bind (null, template))
-         .replace (/(href=")(.*?)(")/sg, Template .resolve .bind (null, template));
+         .replace (/(url\()(.*?)(\))/sg, (... args) => this .resolve (template, ... args))
+         .replace (/(href=")(.*?)(")/sg, (... args) => this .resolve (template, ... args));
 
       fs .writeFileSync (filename, file);
       fs .utimesSync (dirname, stats .atime, stats .mtime);

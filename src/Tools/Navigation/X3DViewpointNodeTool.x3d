@@ -8,9 +8,9 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Sun, 03 Aug 2014 03:06:41 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.7.57, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.8.27, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Navigation/X3DViewpointNodeTool.x3d'/>
-    <meta name='modified' content='Mon, 10 Mar 2025 10:43:15 GMT'/>
+    <meta name='modified' content='Sat, 30 Aug 2025 10:36:12 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -152,8 +152,14 @@
               <connect nodeField='visible' protoField='selected'/>
             </IS>
             <ScreenGroup>
-              <Group
-                  bboxSize='60 60 60'/>
+              <Shape>
+                <Appearance>
+                  <UnlitMaterial
+                      transparency='1'/>
+                </Appearance>
+                <Box
+                    size='60 60 60'/>
+              </Shape>
             </ScreenGroup>
           </Transform>
         </Collision>
