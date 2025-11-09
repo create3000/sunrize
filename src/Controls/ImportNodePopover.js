@@ -23,7 +23,7 @@ $.fn.importNodePopover = function (inlineNode, exportedName, oldImportedName)
 
    const nameInput = $("<input></input>")
       .attr ("placeholder", _("Enter imported name"))
-      .val (oldImportedName ?? executionContext .getUniqueImportName (exportedName))
+      .val (oldImportedName || executionContext .getUniqueImportName (exportedName))
       .appendTo (content);
 
    // Create tooltip.
