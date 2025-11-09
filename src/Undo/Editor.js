@@ -1986,98 +1986,126 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       node = node .valueOf ();
 
-      const
-         oldAccessType = field .getAccessType (),
-         oldName       = field .getName (),
-         fields        = Array .from (node .getUserDefinedFields ());
-
       undoManager .beginUndo (_("Update Fields of Node %s"), node .getTypeName ());
+
+      if (name !== field .getName ())
+         this .#renameField (executionContext, node, field, name, undoManager);
+
+      if (accessType !== field .getAccessType ())
+         this .#changeAccessType (executionContext, node, field, accessType, undoManager);
+
+      undoManager .endUndo ();
+   }
+
+   static #renameField (executionContext, node, field, name, undoManager = UndoManager .shared)
+   {
+      node = node .valueOf ();
+
+      const
+         oldName      = field .getName (),
+         fields       = Array .from (node .getUserDefinedFields ()),
+         inputRoutes  = Array .from (field .getInputRoutes ()),
+         outputRoutes = Array .from (field .getOutputRoutes ());
+
+      undoManager .beginUndo (_("Rename Field"));
+
+      for (const route of inputRoutes)
+         route .getExecutionContext () .deleteRoute (route);
+
+      for (const route of outputRoutes)
+         route .getExecutionContext () .deleteRoute (route);
 
       for (const field of fields)
          node .removeUserDefinedField (field .getName ());
 
-      field .setAccessType (accessType);
       field .setName (name);
 
       for (const field of fields)
          node .addUserDefinedField (field .getAccessType (), field .getName (), field);
 
-      if (accessType !== oldAccessType)
+      if (field .isInput ())
       {
-         if (node instanceof X3D .X3DProtoDeclaration)
+         for (const route of inputRoutes)
+            route .getExecutionContext () .addRoute (route .sourceNode, route .sourceField, route .destinationNode, name);
+      }
+
+      if (field .isOutput ())
+      {
+         for (const route of outputRoutes)
+            route .getExecutionContext () .addRoute (route .sourceNode, name, route .destinationNode, route .destinationField);
+      }
+
+      undoManager .registerUndo (() =>
+      {
+         this .#renameField (executionContext, node, field, oldName, undoManager);
+      });
+
+      this .requestUpdateInstances (node, undoManager);
+
+      undoManager .endUndo ();
+   }
+
+   static #changeAccessType (executionContext, node, field, accessType, undoManager = UndoManager .shared)
+   {
+      node = node .valueOf ();
+
+      const
+         oldAccessType = field .getAccessType (),
+         fields        = Array .from (node .getUserDefinedFields ());
+
+      undoManager .beginUndo (_("Change AccessType"));
+
+      for (const field of fields)
+         node .removeUserDefinedField (field .getName ());
+
+      field .setAccessType (accessType);
+
+      for (const field of fields)
+         node .addUserDefinedField (field .getAccessType (), field .getName (), field);
+
+      if (node instanceof X3D .X3DProtoDeclaration)
+      {
+         const
+            proto        = node,
+            updatedField = field;
+
+         for (const object of proto .traverse (Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES))
          {
-            const
-               proto        = node,
-               updatedField = field;
+            if (!(object instanceof X3D .SFNode))
+               continue;
 
-            for (const object of proto .traverse (Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES))
+            const node = object .getValue ();
+
+            for (const field of node .getFields ())
             {
-               if (!(object instanceof X3D .SFNode))
-                  continue;
+               // Remove references.
 
-               const node = object .getValue ();
-
-               for (const field of node .getFields ())
+               if (field .getReferences () .has (updatedField))
                {
-                  // Remove references.
-
-                  if (field .getReferences () .has (updatedField))
-                  {
-                     if (!updatedField .isReference (field .getAccessType ()))
-                        this .removeReference (proto, updatedField, node, field, undoManager);
-                  }
+                  if (!updatedField .isReference (field .getAccessType ()))
+                     this .removeReference (proto, updatedField, node, field, undoManager);
                }
             }
-
-            // Remove routes.
-
-            for (const object of executionContext .traverse (Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES))
-            {
-               if (!(object instanceof X3D .SFNode))
-                  continue;
-
-               const node = object .getValue ();
-
-               if (!node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance))
-                  continue;
-
-               if (node .getProtoNode () !== proto)
-                  continue;
-
-               const field = node .getField (oldName);
-
-               if (!updatedField .isInput ())
-               {
-                  for (const route of field .getInputRoutes ())
-                  {
-                     this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager);
-                  }
-               }
-
-               if (!updatedField .isOutput ())
-               {
-                  for (const route of field .getOutputRoutes ())
-                  {
-                     this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager);
-                  }
-               }
-            }
-
-            this .updateInstances (proto, undoManager);
          }
-         else
+
+         // Remove routes.
+
+         for (const object of executionContext .traverse (Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES))
          {
-            // Remove References.
+            if (!(object instanceof X3D .SFNode))
+               continue;
 
-            for (const reference of field .getReferences ())
-            {
-               if (!reference .isReference (field .getAccessType ()))
-                  this .removeReference (proto, reference, node, field, undoManager);
-            }
+            const node = object .getValue ();
 
-            // Remove routes.
+            if (!node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance))
+               continue;
 
-            if (!field .isInput ())
+            if (node .getProtoNode () !== proto)
+               continue;
+
+            const field = node .getField (oldName);
+
+            if (!updatedField .isInput ())
             {
                for (const route of field .getInputRoutes ())
                {
@@ -2085,7 +2113,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                }
             }
 
-            if (!field .isOutput ())
+            if (!updatedField .isOutput ())
             {
                for (const route of field .getOutputRoutes ())
                {
@@ -2093,11 +2121,46 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                }
             }
          }
+
+         this .updateInstances (proto, undoManager);
+      }
+      else
+      {
+         const
+            references   = Array .from (field .getReferences ()),
+            inputRoutes  = Array .from (field .getInputRoutes ()),
+            outputRoutes = Array .from (field .getOutputRoutes ());
+
+         // Remove References.
+
+         for (const reference of references)
+         {
+            if (!reference .isReference (field .getAccessType ()))
+               this .removeReference (proto, reference, node, field, undoManager);
+         }
+
+         // Remove routes.
+
+         if (!field .isInput ())
+         {
+            for (const route of inputRoutes)
+            {
+               this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager);
+            }
+         }
+
+         if (!field .isOutput ())
+         {
+            for (const route of outputRoutes)
+            {
+               this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager);
+            }
+         }
       }
 
       undoManager .registerUndo (() =>
       {
-         this .updateUserDefinedField (executionContext, node, field, oldAccessType, oldName, undoManager);
+         this .#changeAccessType (executionContext, node, field, oldAccessType, undoManager);
       });
 
       this .requestUpdateInstances (node, undoManager);
