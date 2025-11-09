@@ -909,12 +909,21 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       inlineNode = inlineNode .valueOf ();
 
+      const oldDescription = executionContext .getImportedNodes () .get (oldImportedName) ?.getDescription ();
+
       undoManager .beginUndo (_("Update Imported Node »%s«"), importedName);
 
       if (oldImportedName)
-         executionContext .renameImportedNode (oldImportedName, importedName);
+      {
+         if (importedName !== oldImportedName)
+            executionContext .renameImportedNode (oldImportedName, importedName);
+
+         executionContext .getImportedNodes () .get (importedName) .setDescription (description);
+      }
       else
+      {
          executionContext .updateImportedNode (inlineNode .valueOf (), exportedName, importedName, description);
+      }
 
       undoManager .registerUndo (() =>
       {
@@ -1042,10 +1051,17 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       const oldDescription = scene .getExportedNodes () .get (oldExportedName) ?.getDescription () ?? "";
 
-      if (oldExportedName)
-         scene .removeExportedNode (oldExportedName);
+      if (exportedName === oldExportedName)
+      {
+         scene .getExportedNodes () .get (exportedName) ?.setDescription (description);
+      }
+      else
+      {
+         if (oldExportedName)
+            scene .removeExportedNode (oldExportedName);
 
-      scene .updateExportedNode (exportedName, node, description);
+         scene .updateExportedNode (exportedName, node, description);
+      }
 
       undoManager .registerUndo (() =>
       {

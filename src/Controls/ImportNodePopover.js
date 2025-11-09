@@ -66,11 +66,10 @@ $.fn.importNodePopover = function (inlineNode, exportedName, oldImportedName, ol
                if (!nameInput .val ())
                   return;
 
-               if (oldImportedName && oldImportedName === nameInput .val ())
-                  return;
-
                const
-                  importedName = executionContext .getUniqueImportName (nameInput .val ()),
+                  importedName = nameInput .val () !== oldImportedName
+                     ? executionContext .getUniqueImportName (nameInput .val ())
+                     : oldImportedName,
                   description  = descriptionInput .val ();
 
                Editor .updateImportedNode (executionContext, inlineNode, exportedName, importedName, oldImportedName, description);

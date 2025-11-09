@@ -66,11 +66,10 @@ $.fn.exportNodePopover = function (node, oldExportedName, oldDescription = "")
                if (!nameInput .val ())
                   return;
 
-               if (oldExportedName && oldExportedName === nameInput .val ())
-                  return;
-
                const
-                  exportedName = scene .getUniqueExportName (nameInput .val ()),
+                  exportedName = nameInput .val () !== oldExportedName
+                     ? scene .getUniqueExportName (nameInput .val ())
+                     : oldExportedName,
                   description  = descriptionInput .val ();
 
                Editor .updateExportedNode (scene, exportedName, oldExportedName, node, description);
