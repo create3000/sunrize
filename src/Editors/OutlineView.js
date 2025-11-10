@@ -2154,7 +2154,7 @@ module .exports = class OutlineView extends Interface
       let index = 0;
 
       for (const node of field)
-         ul .append (this .createNodeElement ("node", parent, node .getValue (), index ++));
+         ul .append (this .createNodeElement ("node", parent, node ?.getValue (), index ++));
 
       // Make jsTree.
 
