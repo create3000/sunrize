@@ -2787,31 +2787,29 @@ module .exports = class OutlineView extends Interface
 
    nodeCloseClones (element)
    {
-      let id = parseInt (element .attr ("node-id"));
+      const ids = [parseInt (element .attr ("node-id"))];
 
       if (this .getNode (element) instanceof X3D .X3DImportedNodeProxy)
-         id = $.try (() => this .getNode (element) .getInnerNode () .getId ()) ?? id;
-
-      const opened = this .sceneGraph .find (`:is(.node, .imported-node, .exported-node)[node-id="${id}"]`);
-
-      opened .each (function (key, value)
       {
-         if (value !== element .get (0))
-            $(value) .jstree ("close_node", value);
-      });
+         // Close nodes.
 
-      // Close imported nodes.#
-
-      const executionContext = this .getNode (element) .getScene () ?.getScene ()
-         ?? this .executionContext;
-
-      const importedNode = executionContext .importedNodes
-         .find (importedNode => $.try (() => importedNode .getExportedNode () .getInnerNode () .getId ()) === id);
-
-      if (importedNode)
+         ids .push ($.try (() => this .getNode (element) .getInnerNode () .getId ()));
+      }
+      else
       {
-         const id = importedNode .getExportedNode () .getId ();
+         // Close imported nodes.
 
+         const executionContext = this .getNode (element) .getScene () ?.getScene ()
+            ?? this .executionContext;
+
+         const importedNode = executionContext .importedNodes
+            .find (importedNode => $.try (() => importedNode .getExportedNode () .getInnerNode () .getId ()) === ids [0]);
+
+         ids .push (importedNode ?.getExportedNode () .getId ());
+      }
+
+      for (const id of ids .filter (id => id !== undefined))
+      {
          const opened = this .sceneGraph .find (`:is(.node, .imported-node, .exported-node)[node-id="${id}"]`);
 
          opened .each (function (key, value)
