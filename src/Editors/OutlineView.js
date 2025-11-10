@@ -2787,15 +2787,38 @@ module .exports = class OutlineView extends Interface
 
    nodeCloseClones (element)
    {
-      const opened = this .sceneGraph .find (`.node[node-id=${element .attr ("node-id")}],
-         .imported-node[node-id=${element .attr ("node-id")}],
-         .exported-node[node-id=${element .attr ("node-id")}]`);
+      let id = parseInt (element .attr ("node-id"));
+
+      if (this .getNode (element) instanceof X3D .X3DImportedNodeProxy)
+      {
+         id = $.try (() => this .getNode (element) .getInnerNode () .getId ()) ?? id;
+      }
+      else
+      {
+         const importedNode = this .executionContext .importedNodes
+            .find (importedNode => $.try (() => importedNode .getExportedNode () .getInnerNode () .getId ()) === id);
+
+         if (importedNode)
+         {
+            const id = importedNode .getExportedNode () .getId ();
+
+            const opened = this .sceneGraph .find (`:is(.node, .imported-node, .exported-node)[node-id="${id}"]`);
+
+            opened .each (function (key, value)
+            {
+               if (value !== element .get (0))
+                  $(value) .jstree ("close_node", value);
+            });
+         }
+      }
+
+      const opened = this .sceneGraph .find (`:is(.node, .imported-node, .exported-node)[node-id="${id}"]`);
 
       opened .each (function (key, value)
       {
          if (value !== element .get (0))
             $(value) .jstree ("close_node", value);
-      })
+      });
    }
 
    fieldBeforeOpen (event, leaf)
