@@ -2808,7 +2808,7 @@ module .exports = class OutlineView extends Interface
          ids .push (importedNode ?.getExportedNode () .getId ());
       }
 
-      for (const id of ids .filter (id => id !== undefined))
+      for (const id of ids)
       {
          const opened = this .sceneGraph .find (`:is(.node, .imported-node, .exported-node)[node-id="${id}"]`);
 
