@@ -2800,9 +2800,9 @@ module .exports = class OutlineView extends Interface
             $(value) .jstree ("close_node", value);
       });
 
-      // Close imported nodes.
+      // Close imported nodes.#
 
-      const executionContext = this .getNode (element .closest (".scene", this .sceneGraph)) .getScene ()
+      const executionContext = this .getNode (element) .getScene () ?.getScene ()
          ?? this .executionContext;
 
       const importedNode = executionContext .importedNodes
