@@ -2802,7 +2802,9 @@ module .exports = class OutlineView extends Interface
 
       // Close imported nodes.
 
-      const importedNode = this .executionContext .importedNodes
+      const executionContext = this .getNode (element .closest (".scene", this .sceneGraph));
+
+      const importedNode = executionContext .importedNodes
          .find (importedNode => $.try (() => importedNode .getExportedNode () .getInnerNode () .getId ()) === id);
 
       if (importedNode)
