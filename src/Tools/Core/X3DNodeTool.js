@@ -220,6 +220,9 @@ class X3DNodeTool extends X3DBaseTool
 
       for (const tool of this .#tools)
       {
+         if (!this [tool])
+            continue;
+         
          for (const node of Traverse .traverse (this [tool], Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES))
          {
             nodesToDispose .push (node instanceof X3D .SFNode ? node .getValue () : node);
