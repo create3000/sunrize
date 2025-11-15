@@ -1054,11 +1054,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
          this .deselectAll ();
 
-         for (const node of nodes)
+         for (const node of nodes .filter (node => node))
          {
-            if (!node)
-               continue;
-
             this .expandTo (node);
             this .selectNodeElement ($(`.node[node-id="${node .getId ()}"]`), { add: true });
          }
