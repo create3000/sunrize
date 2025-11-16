@@ -468,6 +468,8 @@ module .exports = class Editor
 body {
   display: flex;
   flex-direction: column;
+  margin: 0px;
+  padding: 0px;
   height: 100vh;
   background-color: rgb(27, 27, 30);
   color: rgb(108, 110, 113);
@@ -475,12 +477,14 @@ body {
 
 body > * {
   flex: 0 0 auto;
+  padding: 0px 1rem;
 }
 
 x3d-canvas {
-   flex: 1 1 auto;
-   width: 100%;
-   height: 100%;
+  flex: 1 1 auto;
+  padding: 0px;
+  width: 100%;
+  height: 100%;
 }
 
 a {
