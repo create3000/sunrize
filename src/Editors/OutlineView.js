@@ -2156,7 +2156,7 @@ module .exports = class OutlineView extends Interface
       let index = 0;
 
       for (const node of field)
-         ul .append (this .createNodeElement ("node", parent, node .getValue (), index ++));
+         ul .append (this .createNodeElement ("node", parent, node ?.getValue (), index ++));
 
       // Make jsTree.
 
@@ -2789,15 +2789,37 @@ module .exports = class OutlineView extends Interface
 
    nodeCloseClones (element)
    {
-      const opened = this .sceneGraph .find (`.node[node-id=${element .attr ("node-id")}],
-         .imported-node[node-id=${element .attr ("node-id")}],
-         .exported-node[node-id=${element .attr ("node-id")}]`);
+      const ids = [parseInt (element .attr ("node-id"))];
 
-      opened .each (function (key, value)
+      if (this .getNode (element) instanceof X3D .X3DImportedNodeProxy)
       {
-         if (value !== element .get (0))
-            $(value) .jstree ("close_node", value);
-      })
+         // Close nodes.
+
+         ids .push ($.try (() => this .getNode (element) .getInnerNode () .getId ()));
+      }
+      else
+      {
+         // Close imported nodes.
+
+         const executionContext = this .getNode (element) .getScene () ?.getScene ()
+            ?? this .executionContext;
+
+         const importedNode = executionContext .importedNodes
+            .find (importedNode => $.try (() => importedNode .getExportedNode () .getInnerNode () .getId ()) === ids [0]);
+
+         ids .push (importedNode ?.getExportedNode () .getId ());
+      }
+
+      for (const id of ids)
+      {
+         const opened = this .sceneGraph .find (`:is(.node, .imported-node, .exported-node)[node-id="${id}"]`);
+
+         opened .each (function (key, value)
+         {
+            if (value !== element .get (0))
+               $(value) .jstree ("close_node", value);
+         });
+      }
    }
 
    fieldBeforeOpen (event, leaf)

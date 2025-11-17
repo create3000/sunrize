@@ -1,7 +1,7 @@
 {
   "name": "sunrize",
   "productName": "Sunrize X3D Editor",
-  "version": "1.11.5",
+  "version": "1.11.8",
   "description": "A Multi-Platform X3D Editor",
   "main": "src/main.js",
   "bin": {
@@ -88,10 +88,10 @@
     "shell-tools": "^1.1.9"
   },
   "dependencies": {
-    "@vscode/codicons": "^0.0.41",
+    "@vscode/codicons": "^0.0.42",
     "capitalize": "^2.0.4",
     "console": "^0.7.2",
-    "electron": "^39.1.1",
+    "electron": "^39.2.1",
     "electron-prompt": "^1.7.0",
     "electron-squirrel-startup": "^1.0.1",
     "electron-tabs": "^1.0.4",
@@ -100,7 +100,7 @@
     "jquery-ui-dist": "^1.13.3",
     "jstree": "^3.3.17",
     "material-icons": "^1.13.14",
-    "material-symbols": "^0.39.1",
+    "material-symbols": "^0.39.3",
     "md5": "^2.3.0",
     "mime-types": "^3.0.1",
     "monaco-editor": "^0.54.0",
@@ -110,7 +110,7 @@
     "string-similarity": "^4.0.4",
     "tweakpane": "^3.1.10",
     "update-electron-app": "^3.1.1",
-    "x_ite": "^12.1.5",
+    "x_ite": "^12.1.8",
     "x3d-traverse": "^1.0.22"
   }
 }
