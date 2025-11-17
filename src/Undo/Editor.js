@@ -467,8 +467,6 @@ module .exports = class Editor
     <style>
 @media (prefers-color-scheme: light) {
   :root {
-    color-scheme: light;
-
     --text-color: rgb(42, 42, 42);
     --background-color: white;
     --link-color: rgb(0, 86, 178);
@@ -478,8 +476,6 @@ module .exports = class Editor
 
 @media (prefers-color-scheme: dark) {
   :root {
-    color-scheme: dark;
-
     --text-color: rgb(175, 176, 177);
     --background-color: rgb(27, 27, 30);
     --link-color: rgb(82, 108, 150);
