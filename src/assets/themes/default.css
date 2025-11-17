@@ -4,6 +4,7 @@
 @import url(system-colors.css);
 
 html {
+  color-scheme: light dark;
   overflow: hidden;
   height: 100%;
 }

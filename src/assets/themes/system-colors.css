@@ -2,8 +2,6 @@
 
 @media (prefers-color-scheme: light) {
   :root {
-    color-scheme: light;
-
     /* Colors */
 
     --system-red: rgb(255, 56, 60);
@@ -79,8 +77,6 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    color-scheme: dark;
-
     /* Colors */
 
     --system-red: rgb(255, 66, 69);
