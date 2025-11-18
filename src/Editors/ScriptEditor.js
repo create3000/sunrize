@@ -307,13 +307,15 @@ module .exports = class ScriptEditor extends Interface
 
          tokenizer: {
             root: [
-               // identifiers and keywords
+               // data:mime-type,
+               [/data:x-shader\/x-(?:vertex|fragment),/, 'regexp'],
 
                // x3d_SpecialVariable
                [/x3d_\w+/, 'string'],
 
-               [
-               /[a-zA-Z_]\w*/,
+               // identifiers and keywords
+
+               [/[a-zA-Z_]\w*/,
                {
                   cases: {
                      '@keywords': { token: 'keyword.$0' },
@@ -323,8 +325,7 @@ module .exports = class ScriptEditor extends Interface
                      '@builtin': { token: 'regexp' },
                      '@default': 'identifier',
                   }
-               }
-               ],
+               }],
 
                // Preprocessor directive (#define)
                [/^\s*#\s*\w+/, 'keyword.directive'],
@@ -337,11 +338,12 @@ module .exports = class ScriptEditor extends Interface
 
                // delimiters and operators
                [/[{}()\[\]]/, '@brackets'],
-               [/@symbols/, {
-               cases: {
-                  '@operators': 'operator',
-                  '@default': ''
-               }
+               [/@symbols/,
+               {
+                  cases: {
+                     '@operators': 'operator',
+                     '@default': ''
+                  }
                }],
 
                // numbers
