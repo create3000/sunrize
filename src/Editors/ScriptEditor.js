@@ -193,6 +193,7 @@ module .exports = class ScriptEditor extends Interface
          'do', 'for', 'while', 'if', 'else', 'switch', 'case', 'in', 'out', 'inout',
          'invariant', 'discard', 'return', 'struct',
          'precision', 'lowp', 'mediump', 'highp',
+         'smooth', 'flat',
       ];
 
       const types = [
