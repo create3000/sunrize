@@ -323,18 +323,6 @@ module .exports = class ScriptEditor extends Interface
                [/[\/*]/, 'comment']
             ],
 
-            // Does it have strings?
-            string: [
-               [/[^\\"]+/, 'string'],
-               [/@escapes/, 'string.escape'],
-               [/\\./, 'string.escape.invalid'],
-               [/"/, {
-               token: 'string.quote',
-               bracket: '@close',
-               next: '@pop'
-               }]
-            ],
-
             whitespace: [
                [/[ \t\r\n]+/, 'white'],
                [/\/\*/, 'comment', '@comment'],
