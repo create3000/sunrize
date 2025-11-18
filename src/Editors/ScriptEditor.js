@@ -189,33 +189,19 @@ module .exports = class ScriptEditor extends Interface
       };
 
       const keywords = [
-         'const', 'uniform', 'break', 'continue',
-         'do', 'for', 'while', 'if', 'else', 'switch', 'case', 'in', 'out', 'inout',
-         'invariant', 'discard', 'return', 'struct',
-         'precision', 'lowp', 'mediump', 'highp',
-         'smooth', 'flat',
+         'break', 'case', 'const', 'continue', 'discard', 'do', 'else', 'flat', 'highp', 'if', 'in', 'inout', 'invariant', 'lowp', 'mediump', 'out', 'precision', 'return', 'smooth', 'struct', 'switch', 'uniform', 'while', 'for',
       ];
 
       const types = [
-         'sampler2D', 'samplerCube', 'sampler3D',
-         'vec2', 'vec3', 'vec4', 'ivec2', 'ivec3', 'ivec4', 'uvec2', 'uvec3', 'uvec4', 'bvec2', 'bvec3', 'bvec4',
-         'mat2', 'mat3', 'mat2x2', 'mat2x3', 'mat2x4', 'mat3x2', 'mat3x3', 'mat3x4', 'mat4x2', 'mat4x3', 'mat4x4', 'mat4',
-         'float', 'int', 'uint', 'void', 'bool',
+         'bool', 'bvec2', 'bvec3', 'bvec4', 'float', 'int', 'ivec2', 'ivec3', 'ivec4', 'mat2', 'mat2x2', 'mat2x3', 'mat2x4', 'mat3', 'mat3x2', 'mat3x3', 'mat3x4', 'mat4', 'mat4x2', 'mat4x3', 'mat4x4', 'sampler2D', 'sampler3D', 'samplerCube', 'uint', 'uvec2', 'uvec3', 'uvec4', 'vec2', 'vec3', 'vec4', 'void',
       ];
 
       const functions = [
-         'radians', 'degrees', 'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'pow', 'sinh', 'cosh', 'tanh', 'asinh', 'acosh', 'atanh',
-         'exp', 'log', 'exp2', 'log2', 'sqrt', 'inversesqrt', 'abs', 'sign', 'floor', 'ceil', 'round', 'roundEven', 'trunc', 'fract', 'mod', 'modf',
-         'min', 'max', 'clamp', 'mix', 'step', 'smoothstep', 'length', 'distance', 'dot', 'cross ',
-         'determinant', 'inverse', 'normalize', 'faceforward', 'reflect', 'refract', 'matrixCompMult', 'outerProduct', 'transpose', 'lessThan ',
-         'lessThanEqual', 'greaterThan', 'greaterThanEqual', 'equal', 'notEqual', 'any', 'all', 'not', 'packUnorm2x16', 'unpackUnorm2x16', 'packSnorm2x16', 'unpackSnorm2x16', 'packHalf2x16', 'unpackHalf2x16',
-         'dFdx', 'dFdy', 'fwidth', 'textureSize', 'texture', 'textureProj', 'textureLod', 'textureGrad', 'texelFetch', 'texelFetchOffset',
-         'textureProjLod', 'textureLodOffset', 'textureGradOffset', 'textureProjLodOffset', 'textureProjGrad', 'intBitsToFloat', 'uintBitsToFloat', 'floatBitsToInt', 'floatBitsToUint', 'isnan', 'isinf',
-         'main',
+         'abs', 'acos', 'acosh', 'all', 'any', 'asin', 'asinh', 'atan', 'atanh', 'ceil', 'clamp', 'cos', 'cosh', 'cross ', 'degrees', 'determinant', 'dFdx', 'dFdy', 'distance', 'dot', 'equal', 'exp', 'exp2', 'faceforward', 'floatBitsToInt', 'floatBitsToUint', 'floor', 'fract', 'fwidth', 'greaterThan', 'greaterThanEqual', 'intBitsToFloat', 'inverse', 'inversesqrt', 'isinf', 'isnan', 'length', 'lessThan ', 'lessThanEqual', 'log', 'log2', 'main', 'matrixCompMult', 'max', 'min', 'mix', 'mod', 'modf', 'normalize', 'not', 'notEqual', 'outerProduct', 'packUnorm2x16', 'pow', 'radians', 'reflect', 'refract', 'round', 'roundEven', 'sign', 'sin', 'sinh', 'smoothstep', 'sqrt', 'step', 'tan', 'tanh', 'texelFetch', 'texelFetchOffset', 'texture', 'textureGrad', 'textureGradOffset', 'textureLod', 'textureLodOffset', 'textureProj', 'textureProjGrad', 'textureProjLod', 'textureProjLodOffset', 'textureSize', 'transpose', 'trunc', 'uintBitsToFloat',
       ];
 
       const constants = [
-         'true', 'false',
+         'false', 'true',
       ];
 
       const builtin = [
