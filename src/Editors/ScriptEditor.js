@@ -308,7 +308,7 @@ module .exports = class ScriptEditor extends Interface
          tokenizer: {
             root: [
                // data:mime-type,
-               [/data:x-shader\/x-(?:vertex|fragment),/, 'regexp'],
+               [/data:x-shader\/x-(?:vertex|fragment),/, 'string'],
 
                // x3d_SpecialVariable
                [/x3d_\w+/, 'keyword'],
