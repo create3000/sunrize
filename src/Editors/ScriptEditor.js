@@ -311,7 +311,7 @@ module .exports = class ScriptEditor extends Interface
                [/data:x-shader\/x-(?:vertex|fragment),/, 'regexp'],
 
                // x3d_SpecialVariable
-               [/x3d_\w+/, 'string'],
+               [/x3d_\w+/, 'keyword'],
 
                // identifiers and keywords
 
