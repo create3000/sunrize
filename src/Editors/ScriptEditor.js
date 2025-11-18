@@ -327,11 +327,11 @@ module .exports = class ScriptEditor extends Interface
                   }
                }],
 
-               // Preprocessor directive (#define)
-               [/^\s*#\s*\w+/, 'keyword.directive'],
-
                // Version
                [/#version\s+\d+\s+es/, 'keyword.directive'],
+
+               // Preprocessor directive (#define)
+               [/^\s*#\s*\w+/, 'keyword.directive'],
 
                // whitespace
                { include: '@whitespace' },
