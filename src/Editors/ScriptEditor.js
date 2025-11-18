@@ -280,7 +280,7 @@ module .exports = class ScriptEditor extends Interface
                // identifiers and keywords
 
                // x3d_SpecialVariable
-               [/x3d_\w+/, 'regexp'],
+               [/x3d_\w+/, 'string'],
 
                [
                /[a-zA-Z_]\w*/,
@@ -289,7 +289,7 @@ module .exports = class ScriptEditor extends Interface
                      '@keywords': { token: 'keyword.$0' },
                      '@types': { token: 'type.identifier' },
                      '@functions': { token: 'attribute.name' },
-                     '@constants': { token: 'keyword' },
+                     '@constants': { token: 'constant' },
                      '@builtin': { token: 'regexp' },
                      '@default': 'identifier',
                   }
