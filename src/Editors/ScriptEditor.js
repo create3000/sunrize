@@ -190,8 +190,19 @@ module .exports = class ScriptEditor extends Interface
 
       const keywords = [
          'const', 'uniform', 'break', 'continue',
-         'do', 'for', 'while', 'if', 'else', 'switch', 'case', 'in', 'out', 'inout', 'true', 'false',
-         'invariant', 'discard', 'return', 'sampler2D', 'samplerCube', 'sampler3D', 'struct',
+         'do', 'for', 'while', 'if', 'else', 'switch', 'case', 'in', 'out', 'inout',
+         'invariant', 'discard', 'return', 'struct',
+         'precision', 'lowp', 'mediump', 'highp',
+      ];
+
+      const types = [
+         'sampler2D', 'samplerCube', 'sampler3D',
+         'vec2', 'vec3', 'vec4', 'ivec2', 'ivec3', 'ivec4', 'uvec2', 'uvec3', 'uvec4', 'bvec2', 'bvec3', 'bvec4',
+         'mat2', 'mat3', 'mat2x2', 'mat2x3', 'mat2x4', 'mat3x2', 'mat3x3', 'mat3x4', 'mat4x2', 'mat4x3', 'mat4x4', 'mat4',
+         'float', 'int', 'uint', 'void', 'bool',
+      ];
+
+      const functions = [
          'radians', 'degrees', 'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'pow', 'sinh', 'cosh', 'tanh', 'asinh', 'acosh', 'atanh',
          'exp', 'log', 'exp2', 'log2', 'sqrt', 'inversesqrt', 'abs', 'sign', 'floor', 'ceil', 'round', 'roundEven', 'trunc', 'fract', 'mod', 'modf',
          'min', 'max', 'clamp', 'mix', 'step', 'smoothstep', 'length', 'distance', 'dot', 'cross ',
@@ -199,9 +210,15 @@ module .exports = class ScriptEditor extends Interface
          'lessThanEqual', 'greaterThan', 'greaterThanEqual', 'equal', 'notEqual', 'any', 'all', 'not', 'packUnorm2x16', 'unpackUnorm2x16', 'packSnorm2x16', 'unpackSnorm2x16', 'packHalf2x16', 'unpackHalf2x16',
          'dFdx', 'dFdy', 'fwidth', 'textureSize', 'texture', 'textureProj', 'textureLod', 'textureGrad', 'texelFetch', 'texelFetchOffset',
          'textureProjLod', 'textureLodOffset', 'textureGradOffset', 'textureProjLodOffset', 'textureProjGrad', 'intBitsToFloat', 'uintBitsToFloat', 'floatBitsToInt', 'floatBitsToUint', 'isnan', 'isinf',
-         'vec2', 'vec3', 'vec4', 'ivec2', 'ivec3', 'ivec4', 'uvec2', 'uvec3', 'uvec4', 'bvec2', 'bvec3', 'bvec4',
-         'mat2', 'mat3', 'mat2x2', 'mat2x3', 'mat2x4', 'mat3x2', 'mat3x3', 'mat3x4', 'mat4x2', 'mat4x3', 'mat4x4', 'mat4',
-         'float', 'int', 'uint', 'void', 'bool',
+         'main',
+      ];
+
+      const constants = [
+         'true', 'false',
+      ];
+
+      const builtin = [
+         'gl_Position', 'gl_PointCoord', 'gl_PointSize', 'gl_FragDepth', 'gl_FragColor',
       ];
 
       const language = {
@@ -209,6 +226,10 @@ module .exports = class ScriptEditor extends Interface
          // Set defaultToken to invalid to see what you do not tokenize yet
          defaultToken: 'invalid',
          keywords,
+         types,
+         functions,
+         constants,
+         builtin,
          operators: [
             '=',
             '>',
@@ -257,12 +278,20 @@ module .exports = class ScriptEditor extends Interface
          tokenizer: {
             root: [
                // identifiers and keywords
+
+               // x3d_SpecialVariable
+               [/x3d_\w+/, 'regexp'],
+
                [
                /[a-zA-Z_]\w*/,
                {
                   cases: {
                      '@keywords': { token: 'keyword.$0' },
-                     '@default': 'identifier'
+                     '@types': { token: 'type.identifier' },
+                     '@functions': { token: 'attribute.name' },
+                     '@constants': { token: 'keyword' },
+                     '@builtin': { token: 'regexp' },
+                     '@default': 'identifier',
                   }
                }
                ],
