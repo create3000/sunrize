@@ -204,7 +204,7 @@ module .exports = class ScriptEditor extends Interface
          'false', 'true',
       ];
 
-      const builtin = [
+      const builtins = [
          'gl_ClipDistance', 'gl_CullDistance', 'gl_FragCoord', 'gl_FragDepth', 'gl_FrontFacing', 'gl_GlobalInvocationID', 'gl_HelperInvocation', 'gl_InstanceID', 'gl_InvocationID', 'gl_Layer', 'gl_LocalInvocationID', 'gl_LocalInvocationIndex', 'gl_NumSamples', 'gl_NumWorkGroups', 'gl_PatchVerticesIn', 'gl_PointCoord', 'gl_PointSize', 'gl_Position', 'gl_PrimitiveID', 'gl_PrimitiveIDIn', 'gl_SampleID', 'gl_SampleMask', 'gl_SampleMaskIn', 'gl_SamplePosition', 'gl_TessCoord', 'gl_TessLevelInner', 'gl_TessLevelOuter', 'gl_VertexID', 'gl_ViewportIndex', 'gl_WorkGroupID', 'gl_WorkGroupSize',
       ];
 
@@ -216,7 +216,7 @@ module .exports = class ScriptEditor extends Interface
          types,
          functions,
          constants,
-         builtin,
+         builtins,
          operators: [
             '=',
             '>',
@@ -279,7 +279,7 @@ module .exports = class ScriptEditor extends Interface
                      '@types': { token: 'type.identifier' },
                      '@functions': { token: 'attribute.name' },
                      '@constants': { token: 'constant' },
-                     '@builtin': { token: 'regexp' },
+                     '@builtins': { token: 'regexp' },
                      '@default': 'identifier',
                   }
                }],
