@@ -189,7 +189,7 @@ module .exports = class ScriptEditor extends Interface
       };
 
       const keywords = [
-         'break', 'case', 'const', 'continue', 'discard', 'do', 'else', 'flat', 'highp', 'if', 'in', 'inout', 'invariant', 'lowp', 'mediump', 'out', 'precision', 'return', 'smooth', 'struct', 'switch', 'uniform', 'while', 'for',
+         'break', 'case', 'const', 'continue', 'discard', 'do', 'else', 'flat', 'for', 'highp', 'if', 'in', 'inout', 'invariant', 'lowp', 'mediump', 'out', 'precision', 'return', 'smooth', 'struct', 'switch', 'uniform', 'while',
       ];
 
       const types = [
