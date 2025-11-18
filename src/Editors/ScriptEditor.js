@@ -218,7 +218,37 @@ module .exports = class ScriptEditor extends Interface
       ];
 
       const builtin = [
-         'gl_Position', 'gl_PointCoord', 'gl_PointSize', 'gl_FragDepth', 'gl_FragColor',
+         'gl_ClipDistance',
+         'gl_CullDistance',
+         'gl_FragCoord',
+         'gl_FragDepth',
+         'gl_FrontFacing',
+         'gl_GlobalInvocationID',
+         'gl_HelperInvocation',
+         'gl_InstanceID',
+         'gl_InvocationID',
+         'gl_Layer',
+         'gl_LocalInvocationID',
+         'gl_LocalInvocationIndex',
+         'gl_NumSamples',
+         'gl_NumWorkGroups',
+         'gl_PatchVerticesIn',
+         'gl_PointCoord',
+         'gl_PointSize',
+         'gl_Position',
+         'gl_PrimitiveID',
+         'gl_PrimitiveIDIn',
+         'gl_SampleID',
+         'gl_SampleMask',
+         'gl_SampleMaskIn',
+         'gl_SamplePosition',
+         'gl_TessCoord',
+         'gl_TessLevelInner',
+         'gl_TessLevelOuter',
+         'gl_VertexID',
+         'gl_ViewportIndex',
+         'gl_WorkGroupID',
+         'gl_WorkGroupSize',
       ];
 
       const language = {
