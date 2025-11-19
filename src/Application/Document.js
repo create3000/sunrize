@@ -80,6 +80,8 @@ module .exports = class Document extends Interface
       electron .ipcRenderer .on ("scene-properties", (event)           => require ("../Editors/SceneProperties") .open ());
       electron .ipcRenderer .on ("close",            (event)           => this .close ());
 
+      $(window) .on ("beforeunload", () => this .close ());
+
       // Edit Menu
 
       electron .ipcRenderer .on ("undo", () => this .undo ());
@@ -577,6 +579,8 @@ Viewpoint {
 
    close ()
    {
+      this .footer .scriptEditor ?.apply ();
+
       if (UndoManager .shared .saveNeeded)
          this .saveFile ();
 
