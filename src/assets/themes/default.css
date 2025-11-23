@@ -1320,6 +1320,18 @@ body.light .console-output .selected {
   inset: 0;
 }
 
+/* monaco editor */
+
+.monaco-editor,
+.monaco-editor * {
+  all: revert;
+}
+
+/* Hide monaco tooltips. */
+.context-view.monaco-component {
+  display: none;
+}
+
 /* Animation Editor */
 
 .animation-editor {
@@ -1912,16 +1924,4 @@ body.light .console-output .selected {
 /* check mark */
 .tp-ckbv_w svg path {
   stroke: var(--system-green) !important;
-}
-
-/* monaco editor */
-
-.monaco-editor,
-.monaco-editor * {
-  all: revert;
-}
-
-/* Fix stange tooltip with placehoder in Find widget */
-.context-view.monaco-component {
-  display: none;
 }
