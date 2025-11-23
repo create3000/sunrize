@@ -147,7 +147,7 @@ module .exports = class ScriptEditor extends Interface
    {
       return new Promise (resolve =>
       {
-         monacoLoader .require (["vs/editor/editor.main"], ({ m: monaco }) => resolve (monaco));
+         monacoLoader .require (["vs/editor/editor.main"], monaco => resolve (monaco));
       });
    }
 
