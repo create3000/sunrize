@@ -106,6 +106,23 @@ DEF Sunny Background {
    },
    {
       componentInfo: { name: "EnvironmentalEffects" },
+      typeName: "Background Sunset",
+      x3dSyntax: `
+DEF Sunset Background {
+   skyAngle [
+      0.8, 1.2, 1.5, 1.55, 1.5708
+   ]
+   skyColor [
+      0.0196078 0.0196078 0.0196078, 0.054902 0.0705882 0.0862745, 0.203922 0.243137 0.313726, 0.541176 0.462745 0.435294, 0.745098 0.541176 0.376471, 0.890196 0.537255 0.172549
+   ]
+   groundColor [
+      0 0 0
+   ]
+}
+`
+   },
+   {
+      componentInfo: { name: "EnvironmentalEffects" },
       typeName: "Background Transparent",
       x3dSyntax: `
 DEF Transparent Background {
