@@ -1687,9 +1687,9 @@ module .exports = class OutlineView extends Interface
             case X3D .X3DConstants .SFBool:
             {
                $("<img></img>")
-                  .addClass (["boolean-out-button", "field-button", "button"])
+                  .addClass (["boolean-out-button", "field-button"])
                   .attr ("src", `../images/OutlineEditor/Values/${field .getValue () ? "TRUE" : "FALSE"}-out.svg`)
-                  .attr ("title", _("Toggle value."))
+                  .attr ("title", _("State of value."))
                   .appendTo (child);
 
                field .addFieldCallback (this .#fieldButtonSymbol, this .updateBoolean .bind (this, parent, node, field));
