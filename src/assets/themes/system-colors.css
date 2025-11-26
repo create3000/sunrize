@@ -2,8 +2,6 @@
 
 @media (prefers-color-scheme: light) {
   :root {
-    color-scheme: light;
-
     /* Colors */
 
     --system-red: rgb(255, 56, 60);
@@ -43,8 +41,8 @@
     /* Special Colors */
 
     --sidebar-background-color: rgb(208, 219, 231);
-    --tint-color1: rgba(255, 255, 255, 0.5);
-    --tint-color2: rgba(255, 255, 255, 1);
+    --tint-color1: rgba(255, 255, 255, 0.4);
+    --tint-color2: rgba(255, 255, 255, 0.6);
 
     /* TweakPanel colors */
 
@@ -79,8 +77,6 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    color-scheme: dark;
-
     /* Colors */
 
     --system-red: rgb(255, 66, 69);

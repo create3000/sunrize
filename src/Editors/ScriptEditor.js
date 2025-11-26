@@ -147,7 +147,7 @@ module .exports = class ScriptEditor extends Interface
    {
       return new Promise (resolve =>
       {
-         monacoLoader .require (["vs/editor/editor.main"], ({ m: monaco }) => resolve (monaco));
+         monacoLoader .require (["vs/editor/editor.main"], resolve);
       });
    }
 
@@ -189,19 +189,23 @@ module .exports = class ScriptEditor extends Interface
       };
 
       const keywords = [
-         'const', 'uniform', 'break', 'continue',
-         'do', 'for', 'while', 'if', 'else', 'switch', 'case', 'in', 'out', 'inout', 'true', 'false',
-         'invariant', 'discard', 'return', 'sampler2D', 'samplerCube', 'sampler3D', 'struct',
-         'radians', 'degrees', 'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'pow', 'sinh', 'cosh', 'tanh', 'asinh', 'acosh', 'atanh',
-         'exp', 'log', 'exp2', 'log2', 'sqrt', 'inversesqrt', 'abs', 'sign', 'floor', 'ceil', 'round', 'roundEven', 'trunc', 'fract', 'mod', 'modf',
-         'min', 'max', 'clamp', 'mix', 'step', 'smoothstep', 'length', 'distance', 'dot', 'cross ',
-         'determinant', 'inverse', 'normalize', 'faceforward', 'reflect', 'refract', 'matrixCompMult', 'outerProduct', 'transpose', 'lessThan ',
-         'lessThanEqual', 'greaterThan', 'greaterThanEqual', 'equal', 'notEqual', 'any', 'all', 'not', 'packUnorm2x16', 'unpackUnorm2x16', 'packSnorm2x16', 'unpackSnorm2x16', 'packHalf2x16', 'unpackHalf2x16',
-         'dFdx', 'dFdy', 'fwidth', 'textureSize', 'texture', 'textureProj', 'textureLod', 'textureGrad', 'texelFetch', 'texelFetchOffset',
-         'textureProjLod', 'textureLodOffset', 'textureGradOffset', 'textureProjLodOffset', 'textureProjGrad', 'intBitsToFloat', 'uintBitsToFloat', 'floatBitsToInt', 'floatBitsToUint', 'isnan', 'isinf',
-         'vec2', 'vec3', 'vec4', 'ivec2', 'ivec3', 'ivec4', 'uvec2', 'uvec3', 'uvec4', 'bvec2', 'bvec3', 'bvec4',
-         'mat2', 'mat3', 'mat2x2', 'mat2x3', 'mat2x4', 'mat3x2', 'mat3x3', 'mat3x4', 'mat4x2', 'mat4x3', 'mat4x4', 'mat4',
-         'float', 'int', 'uint', 'void', 'bool',
+         'break', 'case', 'const', 'continue', 'discard', 'do', 'else', 'flat', 'for', 'highp', 'if', 'in', 'inout', 'invariant', 'lowp', 'mediump', 'out', 'precision', 'return', 'smooth', 'struct', 'switch', 'uniform', 'while',
+      ];
+
+      const types = [
+         'bool', 'bvec2', 'bvec3', 'bvec4', 'float', 'int', 'ivec2', 'ivec3', 'ivec4', 'mat2', 'mat2x2', 'mat2x3', 'mat2x4', 'mat3', 'mat3x2', 'mat3x3', 'mat3x4', 'mat4', 'mat4x2', 'mat4x3', 'mat4x4', 'sampler2D', 'sampler3D', 'samplerCube', 'uint', 'uvec2', 'uvec3', 'uvec4', 'vec2', 'vec3', 'vec4', 'void',
+      ];
+
+      const functions = [
+         'abs', 'acos', 'acosh', 'all', 'any', 'asin', 'asinh', 'atan', 'atanh', 'ceil', 'clamp', 'cos', 'cosh', 'cross ', 'degrees', 'determinant', 'dFdx', 'dFdy', 'distance', 'dot', 'equal', 'exp', 'exp2', 'faceforward', 'floatBitsToInt', 'floatBitsToUint', 'floor', 'fract', 'fwidth', 'greaterThan', 'greaterThanEqual', 'intBitsToFloat', 'inverse', 'inversesqrt', 'isinf', 'isnan', 'length', 'lessThan ', 'lessThanEqual', 'log', 'log2', 'main', 'matrixCompMult', 'max', 'min', 'mix', 'mod', 'modf', 'normalize', 'not', 'notEqual', 'outerProduct', 'packUnorm2x16', 'pow', 'radians', 'reflect', 'refract', 'round', 'roundEven', 'sign', 'sin', 'sinh', 'smoothstep', 'sqrt', 'step', 'tan', 'tanh', 'texelFetch', 'texelFetchOffset', 'texture', 'textureGrad', 'textureGradOffset', 'textureLod', 'textureLodOffset', 'textureProj', 'textureProjGrad', 'textureProjLod', 'textureProjLodOffset', 'textureSize', 'transpose', 'trunc', 'uintBitsToFloat',
+      ];
+
+      const constants = [
+         'false', 'true',
+      ];
+
+      const builtins = [
+         'gl_ClipDistance', 'gl_CullDistance', 'gl_FragCoord', 'gl_FragDepth', 'gl_FrontFacing', 'gl_GlobalInvocationID', 'gl_HelperInvocation', 'gl_InstanceID', 'gl_InvocationID', 'gl_Layer', 'gl_LocalInvocationID', 'gl_LocalInvocationIndex', 'gl_NumSamples', 'gl_NumWorkGroups', 'gl_PatchVerticesIn', 'gl_PointCoord', 'gl_PointSize', 'gl_Position', 'gl_PrimitiveID', 'gl_PrimitiveIDIn', 'gl_SampleID', 'gl_SampleMask', 'gl_SampleMaskIn', 'gl_SamplePosition', 'gl_TessCoord', 'gl_TessLevelInner', 'gl_TessLevelOuter', 'gl_VertexID', 'gl_ViewportIndex', 'gl_WorkGroupID', 'gl_WorkGroupSize',
       ];
 
       const language = {
@@ -209,6 +213,10 @@ module .exports = class ScriptEditor extends Interface
          // Set defaultToken to invalid to see what you do not tokenize yet
          defaultToken: 'invalid',
          keywords,
+         types,
+         functions,
+         constants,
+         builtins,
          operators: [
             '=',
             '>',
@@ -256,33 +264,43 @@ module .exports = class ScriptEditor extends Interface
 
          tokenizer: {
             root: [
+               // data:mime-type,
+               [/data:x-shader\/x-(?:vertex|fragment),/, 'string'],
+
+               // x3d_SpecialVariable
+               [/x3d_\w+/, 'keyword'],
+
                // identifiers and keywords
-               [
-               /[a-zA-Z_]\w*/,
+
+               [/[a-zA-Z_]\w*/,
                {
                   cases: {
                      '@keywords': { token: 'keyword.$0' },
-                     '@default': 'identifier'
+                     '@types': { token: 'type.identifier' },
+                     '@functions': { token: 'attribute.name' },
+                     '@constants': { token: 'constant' },
+                     '@builtins': { token: 'regexp' },
+                     '@default': 'identifier',
                   }
-               }
-               ],
-
-               // Preprocessor directive (#define)
-               [/^\s*#\s*\w+/, 'keyword.directive'],
+               }],
 
                // Version
                [/#version\s+\d+\s+es/, 'keyword.directive'],
+
+               // Preprocessor directive (#define)
+               [/^\s*#\s*\w+/, 'keyword.directive'],
 
                // whitespace
                { include: '@whitespace' },
 
                // delimiters and operators
                [/[{}()\[\]]/, '@brackets'],
-               [/@symbols/, {
-               cases: {
-                  '@operators': 'operator',
-                  '@default': ''
-               }
+               [/@symbols/,
+               {
+                  cases: {
+                     '@operators': 'operator',
+                     '@default': ''
+                  }
                }],
 
                // numbers
@@ -303,18 +321,6 @@ module .exports = class ScriptEditor extends Interface
                [/\/\*/, 'comment', '@push'],
                ['\\*/', 'comment', '@pop'],
                [/[\/*]/, 'comment']
-            ],
-
-            // Does it have strings?
-            string: [
-               [/[^\\"]+/, 'string'],
-               [/@escapes/, 'string.escape'],
-               [/\\./, 'string.escape.invalid'],
-               [/"/, {
-               token: 'string.quote',
-               bracket: '@close',
-               next: '@pop'
-               }]
             ],
 
             whitespace: [

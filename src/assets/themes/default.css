@@ -4,6 +4,7 @@
 @import url(system-colors.css);
 
 html {
+  color-scheme: light dark;
   overflow: hidden;
   height: 100%;
 }
@@ -1319,6 +1320,18 @@ body.light .console-output .selected {
   inset: 0;
 }
 
+/* monaco editor */
+
+.monaco-editor,
+.monaco-editor * {
+  all: revert;
+}
+
+/* Hide monaco tooltips. */
+.context-view.monaco-component {
+  display: none;
+}
+
 /* Animation Editor */
 
 .animation-editor {
@@ -1604,7 +1617,7 @@ body.light .console-output .selected {
   color: var(--system-brown);
 }
 
-.scene-graph .exported-node > .item .boolean-button {
+.scene-graph .exported-node > .item :is(.boolean-button, .boolean-out-button) {
   top: 2px
 }
 
@@ -1631,6 +1644,14 @@ body.light .console-output .selected {
   position: relative;
   margin-left: 10px;
   width: 28px;
+  height: 12px;
+  top: 4px;
+}
+
+.scene-graph .boolean-out-button {
+  position: relative;
+  margin-left: 10px;
+  width: 12px;
   height: 12px;
   top: 4px;
 }
@@ -1911,16 +1932,4 @@ body.light .console-output .selected {
 /* check mark */
 .tp-ckbv_w svg path {
   stroke: var(--system-green) !important;
-}
-
-/* monaco editor */
-
-.monaco-editor,
-.monaco-editor * {
-  all: revert;
-}
-
-/* Fix stange tooltip with placehoder in Find widget */
-.context-view.monaco-component {
-  display: none;
 }
