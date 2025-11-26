@@ -24,17 +24,17 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="26.354658"
-     inkscape:cx="13.375245"
-     inkscape:cy="4.7619666"
+     inkscape:cx="5.2931819"
+     inkscape:cy="3.7754237"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="true"
-     inkscape:window-width="1472"
+     inkscape:window-width="976"
      inkscape:window-height="840"
      inkscape:window-x="0"
      inkscape:window-y="34"
-     inkscape:window-maximized="1"
+     inkscape:window-maximized="0"
      units="px"
      inkscape:object-nodes="true"
      inkscape:snap-bbox="true"
@@ -68,10 +68,17 @@
      inkscape:groupmode="layer"
      id="layer1">
     <circle
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.265;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.265;stroke-dasharray:none;stroke-opacity:1"
        id="path1"
        cx="1.5875001"
        cy="1.5875001"
        r="1.455" />
+    <ellipse
+       ry="0.92604178"
+       rx="0.92604172"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path890"
+       cx="1.5875001"
+       cy="1.5875001" />
   </g>
 </svg>
