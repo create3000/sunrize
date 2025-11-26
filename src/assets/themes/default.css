@@ -1617,7 +1617,7 @@ body.light .console-output .selected {
   color: var(--system-brown);
 }
 
-.scene-graph .exported-node > .item .boolean-button {
+.scene-graph .exported-node > .item :is(.boolean-button, .boolean-out-button) {
   top: 2px
 }
 
@@ -1644,6 +1644,14 @@ body.light .console-output .selected {
   position: relative;
   margin-left: 10px;
   width: 28px;
+  height: 12px;
+  top: 4px;
+}
+
+.scene-graph .boolean-out-button {
+  position: relative;
+  margin-left: 10px;
+  width: 12px;
   height: 12px;
   top: 4px;
 }

@@ -1633,7 +1633,7 @@ module .exports = class OutlineView extends Interface
             case X3D .X3DConstants .SFBool:
             {
                $("<img></img>")
-                  .addClass (["boolean-button", "field-button", "button",])
+                  .addClass (["boolean-button", "field-button", "button"])
                   .attr ("src", `../images/OutlineEditor/Values/${field .getValue () ? "TRUE" : "FALSE"}.svg`)
                   .attr ("title", _("Toggle value."))
                   .appendTo (child);
@@ -1645,7 +1645,7 @@ module .exports = class OutlineView extends Interface
             case X3D .X3DConstants .SFColorRGBA:
             {
                $("<div></div>")
-                  .addClass (["color-button", "field-button", "button",])
+                  .addClass (["color-button", "field-button", "button"])
                   .attr ("title", _("Open color picker."))
                   .css ("background-color", this .getColorFromField (node, field))
                   .appendTo (child);
@@ -1656,7 +1656,7 @@ module .exports = class OutlineView extends Interface
             case X3D .X3DConstants .SFTime:
             {
                $("<img></img>")
-                  .addClass (["time-button", "field-button", "button",])
+                  .addClass (["time-button", "field-button", "button"])
                   .attr ("src", `../images/OutlineEditor/Values/Bell.svg`)
                   .attr ("title", _("Set current time."))
                   .appendTo (child);
@@ -1680,7 +1680,23 @@ module .exports = class OutlineView extends Interface
                break;
          }
       }
+      else if (field .isOutput ())
+      {
+         switch (field .getType ())
+         {
+            case X3D .X3DConstants .SFBool:
+            {
+               $("<img></img>")
+                  .addClass (["boolean-out-button", "field-button", "button"])
+                  .attr ("src", `../images/OutlineEditor/Values/${field .getValue () ? "TRUE" : "FALSE"}-out.svg`)
+                  .attr ("title", _("Toggle value."))
+                  .appendTo (child);
 
+               field .addFieldCallback (this .#fieldButtonSymbol, this .updateBoolean .bind (this, parent, node, field));
+               break;
+            }
+         }
+      }
 
       // Access type
 
@@ -1943,8 +1959,16 @@ module .exports = class OutlineView extends Interface
 
    updateBoolean (parent, node, field)
    {
-      parent .find (`.field[field-id=${field .getId ()}] > .item .boolean-button`)
-         .attr ("src", `../images/OutlineEditor/Values/${field .getValue () ? "TRUE" : "FALSE"}.svg`)
+      if (field .isInitializable ())
+      {
+         parent .find (`.field[field-id=${field .getId ()}] > .item .boolean-button`)
+            .attr ("src", `../images/OutlineEditor/Values/${field .getValue () ? "TRUE" : "FALSE"}.svg`)
+      }
+      else if (field .isOutput ())
+      {
+         parent .find (`.field[field-id=${field .getId ()}] > .item .boolean-out-button`)
+            .attr ("src", `../images/OutlineEditor/Values/${field .getValue () ? "TRUE" : "FALSE"}-out.svg`)
+      }
    }
 
    updateColor (parent, node, field)
