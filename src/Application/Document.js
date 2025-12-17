@@ -1234,7 +1234,7 @@ Viewpoint {
       if (event .key !== " ")
          return;
 
-      if (this .browser .getKeyDeviceSensorNodes () .size)
+      if (this .browser .getKeyDeviceSensorNodes () .size && this .browser .isLive ())
          return;
 
       const
