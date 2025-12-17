@@ -1238,16 +1238,17 @@ Viewpoint {
          activeLayer = this .browser .getActiveLayer (),
          viewpoints  = activeLayer .getViewpoints () .get ();
 
+      if (viewpoints .length <= 1)
+         return;
+
       const menu = [
-         viewpoints .length
-         ? {
+         {
             label: _("Viewpoints"),
             submenu: viewpoints .filter ((_, index) => index > 0) .map ((viewpointNode, index) => ({
                label: `${viewpointNode ._description .getValue () || viewpointNode .getDisplayName () || `VP${index + 1}}`}`,
                args: ["bindViewpoint", index + 1],
             })),
-         }
-         : { },
+         },
       ];
 
       electron .ipcRenderer .send ("context-menu", "document", menu);
