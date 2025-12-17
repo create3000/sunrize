@@ -67,8 +67,6 @@ module .exports = class Document extends Interface
          .on ("focusin",  () => this .onfocus ())
          .on ("focusout", () => this .onfocus ());
 
-      $(window) .on ("keydown", event => this .onkeydown (event));
-
       // File Menu
 
       electron .ipcRenderer .on ("open-files",       (event, urls)     => this .loadURL (urls [0])); // DEBUG
@@ -93,10 +91,6 @@ module .exports = class Document extends Interface
          .on ("paste", () => this .paste ());
 
       electron .ipcRenderer .on ("delete", () => this .delete ());
-
-      // Selection Menu
-
-      electron .ipcRenderer .on ("select-all", () => this .selectAll ());
 
       // View Menu
 
@@ -168,10 +162,10 @@ module .exports = class Document extends Interface
       // Connect for Snap Target and Snap Source.
 
       $(this .browser .element)
-         .on ("mousedown",   event => this .onmousedown (event))
-         .on ("mouseup",     event => this .onsnaptool (event))
-         .on ("mouseup",     event => this .onselect (event))
-         .on ("contextmenu", event => this .showBrowserContextMenu (event));
+         .on ("mousedown", event => this .onmousedown (event))
+         .on ("mouseup",   event => this .onsnaptool (event))
+         .on ("mouseup",   event => this .onselect (event))
+         .on ("keydown",   event => this .showBrowserContextMenu (event));
 
       electron .ipcRenderer .on ("document", (event, key, ... args) => this [key] (... args));
 
@@ -357,28 +351,6 @@ module .exports = class Document extends Interface
          return false;
 
       return true;
-   }
-
-   // Menu Accelerators
-
-   onkeydown (event)
-   {
-      switch (event .key)
-      {
-         case "a":
-         {
-            if (this .activeElementIsInputOrOutput ())
-               break;
-
-            if (ActionKeys .value === ActionKeys .CommandOrControl)
-            {
-               this .selectAll ();
-               return false;
-            }
-
-            break;
-         }
-      }
    }
 
    /*
@@ -662,15 +634,6 @@ Viewpoint {
    delete ()
    {
       this .sidebar .outlineEditor .deleteNodes ();
-   }
-
-   /*
-    * Selection Menu
-    */
-
-   selectAll ()
-   {
-      this .sidebar .outlineEditor .selectAll ();
    }
 
    /*
@@ -1268,11 +1231,7 @@ Viewpoint {
 
    showBrowserContextMenu (event)
    {
-      const pointer = this .browser .getPointerFromEvent (event);
-
-      // Select or deselect.
-
-      if (this .browser .touch (... pointer))
+      if (event .key !== " ")
          return;
 
       const
