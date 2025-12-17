@@ -168,10 +168,10 @@ module .exports = class Document extends Interface
       // Connect for Snap Target and Snap Source.
 
       $(this .browser .element)
-         .on ("mousedown", event => this .onmousedown (event))
-         .on ("mouseup",   event => this .onsnaptool (event))
-         .on ("mouseup",   event => this .onselect (event))
-         .on ("mouseup",   event => this .showBrowserContextMenu (event));
+         .on ("mousedown",   event => this .onmousedown (event))
+         .on ("mouseup",     event => this .onsnaptool (event))
+         .on ("mouseup",     event => this .onselect (event))
+         .on ("contextmenu", event => this .showBrowserContextMenu (event));
 
       electron .ipcRenderer .on ("document", (event, key, ... args) => this [key] (... args));
 
@@ -250,50 +250,6 @@ module .exports = class Document extends Interface
       // Run activate.
 
       this .activate ();
-   }
-
-   showBrowserContextMenu (event)
-   {
-      if (event .button !== 2)
-         return;
-
-      const pointer = this .browser .getPointerFromEvent (event);
-
-      // Select or deselect.
-
-      if (this .browser .touch (... pointer))
-         return;
-
-      const
-         activeLayer = this .browser .getActiveLayer (),
-         viewpoints  = activeLayer .getViewpoints () .get ();
-
-      const menu = [
-         viewpoints .length
-         ? {
-            label: _("Viewpoints"),
-            submenu: viewpoints .filter ((_, index) => index > 0) .map ((viewpointNode, index) => ({
-               label: `${viewpointNode ._description .getValue () || viewpointNode .getDisplayName () || `VP${index + 1}}`}`,
-               args: ["bindViewpoint", index + 1],
-            })),
-         }
-         : { },
-      ];
-
-      electron .ipcRenderer .send ("context-menu", "document", menu);
-   }
-
-   bindViewpoint (index)
-   {
-      const
-         activeLayer   = this .browser .getActiveLayer (),
-         viewpoints    = activeLayer .getViewpoints () .get (),
-         viewpointNode = viewpoints [index];
-
-      if (!viewpointNode)
-         return;
-
-      viewpointNode ._set_bind = true;
    }
 
    /**
@@ -1304,5 +1260,50 @@ Viewpoint {
    {
       menu .SnapTarget = this .#snapTarget ?._visible .getValue () ?? false;
       menu .SnapSource = this .#snapSource ?._visible .getValue () ?? false;
+   }
+
+   /**
+    * Context Menu
+    */
+
+   showBrowserContextMenu (event)
+   {
+      const pointer = this .browser .getPointerFromEvent (event);
+
+      // Select or deselect.
+
+      if (this .browser .touch (... pointer))
+         return;
+
+      const
+         activeLayer = this .browser .getActiveLayer (),
+         viewpoints  = activeLayer .getViewpoints () .get ();
+
+      const menu = [
+         viewpoints .length
+         ? {
+            label: _("Viewpoints"),
+            submenu: viewpoints .filter ((_, index) => index > 0) .map ((viewpointNode, index) => ({
+               label: `${viewpointNode ._description .getValue () || viewpointNode .getDisplayName () || `VP${index + 1}}`}`,
+               args: ["bindViewpoint", index + 1],
+            })),
+         }
+         : { },
+      ];
+
+      electron .ipcRenderer .send ("context-menu", "document", menu);
+   }
+
+   bindViewpoint (index)
+   {
+      const
+         activeLayer   = this .browser .getActiveLayer (),
+         viewpoints    = activeLayer .getViewpoints () .get (),
+         viewpointNode = viewpoints [index];
+
+      if (!viewpointNode)
+         return;
+
+      viewpointNode ._set_bind = true;
    }
 };
