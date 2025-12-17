@@ -1234,12 +1234,12 @@ Viewpoint {
       if (event .key !== " ")
          return;
 
+      if (this .browser .getKeyDeviceSensorNodes () .size)
+         return;
+
       const
          activeLayer = this .browser .getActiveLayer (),
          viewpoints  = activeLayer .getViewpoints () .get ();
-
-      if (viewpoints .length <= 1)
-         return;
 
       const menu = [
          {
