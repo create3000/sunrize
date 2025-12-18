@@ -42,7 +42,7 @@ Other ways to place the Snap Target include:
 
 Other ways to place the Snap Source include:
 
-- <kbd>Shift</kbd>+<kbd>Option</kbd> and *click right* over an object's surface or over its manipulator.
+- <kbd>Shift</kbd>+<kbd>Alt-or-Option</kbd> and *click right* over an object's surface or over its manipulator.
 
 2. If necessary, reposition the Snap Target or Snap Source by dragging its arrow. If you have trouble getting the Snap Target to follow the cursor, try dragging while pressing the right mouse button and hold down <kbd>Shift</kbd>. This ensures that the target remains at the cursor and makes repositioning the target easier.
 
