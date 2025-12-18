@@ -38,10 +38,13 @@ To activate and place the Snap Target and Snap Source:
 
 Other ways to place the Snap Target include:
 
-- *Click right* over an object's surface or over its manipulator.
-  - Other ways to place the Snap Source include: *Ctrl-click right* over an object's surface or over its manipulator.
+- <kbd>Shift</kbd> and *click right* over an object's surface or over its manipulator.
 
-2. If necessary, reposition the Snap Target or Snap Source by dragging its arrow. If you have trouble getting the Snap Target to follow the cursor, try dragging while pressing the right mouse button. This ensures that the target remains at the cursor and makes repositioning the target easier.
+Other ways to place the Snap Source include:
+
+- <kbd>Shift</kbd>+<kbd>Option</kbd> and *click right* over an object's surface or over its manipulator.
+
+2. If necessary, reposition the Snap Target or Snap Source by dragging its arrow. If you have trouble getting the Snap Target to follow the cursor, try dragging while pressing the right mouse button and hold down <kbd>Shift</kbd>. This ensures that the target remains at the cursor and makes repositioning the target easier.
 
 ### Tips
 
@@ -57,10 +60,10 @@ Drag target to object. Select object to move, press <kbd>Ctrl-or-Cmd</kbd>+<kbd>
 
 ### Keys & Shortcuts
 
-- Place yellow Snap Target = *click right* on object; also drag to place.
-- Put away Snap Target = *click right* over background.
-- Place green Snap Source = <kbd>Alt-or-Option</kbd> and *click right*; also drag to place.
-- Put away Snap Source = <kbd>Alt-or-Option</kbd> and *click right* over background.
+- Place yellow Snap Target = <kbd>Shift</kbd> and *click right* on object; also drag to place.
+- Put away Snap Target = <kbd>Shift</kbd> and *click right* over background.
+- Place green Snap Source = <kbd>Shift</kbd>+<kbd>Alt-or-Option</kbd> and *click right*; also drag to place.
+- Put away Snap Source = <kbd>Shift</kbd>+<kbd>Alt-or-Option</kbd> and *click right* over background.
 - Move selection to snap target = <kbd>Ctrl-or-Cmd</kbd>+<kbd>m</kbd>
 - Move selection center to snap target = <kbd>Shift+Ctrl-or-Cmd</kbd>+<kbd>m</kbd>
 

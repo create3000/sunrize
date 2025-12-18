@@ -7,6 +7,8 @@ const
 
 class SnapTarget extends X3DSnapNodeTool
 {
+   toolModifiers = ActionKeys .Shift;
+
    #transformTools = [ ];
    #changing       = Symbol ();
 

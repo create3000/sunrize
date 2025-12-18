@@ -162,10 +162,10 @@ module .exports = class Document extends Interface
       // Connect for Snap Target and Snap Source.
 
       $(this .browser .element)
-         .on ("mousedown", event => this .onmousedown (event))
-         .on ("mouseup",   event => this .onsnaptool (event))
-         .on ("mouseup",   event => this .onselect (event))
-         .on ("keydown",   event => this .showBrowserContextMenu (event));
+         .on ("mousedown",   event => this .onmousedown (event))
+         .on ("mouseup",     event => this .onsnaptool (event))
+         .on ("mouseup",     event => this .onselect (event))
+         .on ("contextmenu", event => this .showBrowserContextMenu (event));
 
       electron .ipcRenderer .on ("document", (event, key, ... args) => this [key] (... args));
 
@@ -993,7 +993,7 @@ Viewpoint {
          {
             switch (ActionKeys .value)
             {
-               case ActionKeys .None:
+               case ActionKeys .Shift:
                {
                   if (this .#snapTarget ?._visible .getValue ())
                      break;
@@ -1005,7 +1005,7 @@ Viewpoint {
                   this .#snapTarget .onmousedown (event, true);
                   break;
                }
-               case ActionKeys .Option:
+               case ActionKeys .Shift | ActionKeys .Option:
                {
                   if (this .#snapSource ?._visible .getValue ())
                      break;
@@ -1231,10 +1231,7 @@ Viewpoint {
 
    showBrowserContextMenu (event)
    {
-      if (event .key !== " ")
-         return;
-
-      if (this .browser .getKeyDeviceSensorNodes () .size && this .browser .isLive ())
+      if (event .shiftKey || event .ctrlKey || event .metaKey)
          return;
 
       const
