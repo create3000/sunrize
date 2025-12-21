@@ -7,7 +7,7 @@ const
 
 class SnapSource extends X3DSnapNodeTool
 {
-   toolModifiers = ActionKeys .Option;
+   toolModifiers = ActionKeys .Shift | ActionKeys .Option;
 
    async initializeTool ()
    {

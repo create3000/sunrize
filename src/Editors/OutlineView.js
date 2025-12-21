@@ -54,6 +54,7 @@ module .exports = class OutlineView extends Interface
       this .browser .getBrowserOptions () ._ColorSpace .addInterest ("updateSceneGraph", this);
       this .browser ._activeLayer .addInterest ("updateActiveLayer", this);
 
+      electron .ipcRenderer .on ("select-all",              () => this .selectAll ());
       electron .ipcRenderer .on ("deselect-all",            () => this .deselectAll ());
       electron .ipcRenderer .on ("hide-unselected-objects", () => this .hideUnselectedObjects ());
       electron .ipcRenderer .on ("show-selected-objects",   () => this .showSelectedObjects ());

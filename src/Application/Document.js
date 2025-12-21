@@ -94,10 +94,6 @@ module .exports = class Document extends Interface
 
       electron .ipcRenderer .on ("delete", () => this .delete ());
 
-      // Selection Menu
-
-      electron .ipcRenderer .on ("select-all", () => this .selectAll ());
-
       // View Menu
 
       electron .ipcRenderer .on ("primitive-quality",              (event, value) => this .setPrimitiveQuality (value));
@@ -168,9 +164,12 @@ module .exports = class Document extends Interface
       // Connect for Snap Target and Snap Source.
 
       $(this .browser .element)
-         .on ("mousedown", event => this .onmousedown (event))
-         .on ("mouseup",   event => this .onsnaptool (event))
-         .on ("mouseup",   event => this .onselect (event));
+         .on ("mousedown",   event => this .onmousedown (event))
+         .on ("mouseup",     event => this .onsnaptool (event))
+         .on ("mouseup",     event => this .onselect (event))
+         .on ("contextmenu", event => this .showBrowserContextMenu (event));
+
+      electron .ipcRenderer .on ("document", (event, key, ... args) => this [key] (... args));
 
       // Load components.
 
@@ -356,7 +355,7 @@ module .exports = class Document extends Interface
       return true;
    }
 
-   // Menu Accelerators
+   // Menu Accelerators Fix for Windows.
 
    onkeydown (event)
    {
@@ -367,9 +366,9 @@ module .exports = class Document extends Interface
             if (this .activeElementIsInputOrOutput ())
                break;
 
-            if (ActionKeys .value === ActionKeys .CommandOrControl)
+            if (event .ctrlKey)
             {
-               this .selectAll ();
+               this .sidebar .outlineEditor .selectAll ();
                return false;
             }
 
@@ -659,15 +658,6 @@ Viewpoint {
    delete ()
    {
       this .sidebar .outlineEditor .deleteNodes ();
-   }
-
-   /*
-    * Selection Menu
-    */
-
-   selectAll ()
-   {
-      this .sidebar .outlineEditor .selectAll ();
    }
 
    /*
@@ -1027,7 +1017,7 @@ Viewpoint {
          {
             switch (ActionKeys .value)
             {
-               case ActionKeys .None:
+               case ActionKeys .Shift:
                {
                   if (this .#snapTarget ?._visible .getValue ())
                      break;
@@ -1039,7 +1029,7 @@ Viewpoint {
                   this .#snapTarget .onmousedown (event, true);
                   break;
                }
-               case ActionKeys .Option:
+               case ActionKeys .Shift | ActionKeys .Option:
                {
                   if (this .#snapSource ?._visible .getValue ())
                      break;
@@ -1086,10 +1076,6 @@ Viewpoint {
 
       if (this .#pointer .distance (pointer) > this .browser .getRenderingProperty ("ContentScale"))
          return;
-
-      // Stop event propagation.
-
-      event .preventDefault ();
 
       // Select or deselect.
 
@@ -1261,5 +1247,44 @@ Viewpoint {
    {
       menu .SnapTarget = this .#snapTarget ?._visible .getValue () ?? false;
       menu .SnapSource = this .#snapSource ?._visible .getValue () ?? false;
+   }
+
+   /**
+    * Context Menu
+    */
+
+   showBrowserContextMenu (event)
+   {
+      if (event .shiftKey || event .ctrlKey || event .metaKey)
+         return;
+
+      const
+         activeLayer = this .browser .getActiveLayer (),
+         viewpoints  = activeLayer .getViewpoints () .get ();
+
+      const menu = [
+         {
+            label: _("Viewpoints"),
+            submenu: viewpoints .filter ((_, index) => index > 0) .map ((viewpointNode, index) => ({
+               label: `${viewpointNode ._description .getValue () || viewpointNode .getDisplayName () || `VP${index + 1}}`}`,
+               args: ["bindViewpoint", index + 1],
+            })),
+         },
+      ];
+
+      electron .ipcRenderer .send ("context-menu", "document", menu);
+   }
+
+   bindViewpoint (index)
+   {
+      const
+         activeLayer   = this .browser .getActiveLayer (),
+         viewpoints    = activeLayer .getViewpoints () .get (),
+         viewpointNode = viewpoints [index];
+
+      if (!viewpointNode)
+         return;
+
+      viewpointNode ._set_bind = true;
    }
 };

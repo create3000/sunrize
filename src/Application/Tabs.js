@@ -108,6 +108,7 @@ module .exports = new class Tabs
       this .forwardToActiveTab ("move-selection-to-snap-target");
       this .forwardToActiveTab ("move-selection-center-to-snap-target");
 
+      this .forwardToActiveTab ("document");
       this .forwardToActiveTab ("script-editor");
       this .forwardToActiveTab ("animation-members-list");
       this .forwardToActiveTab ("outline-editor");
