@@ -67,6 +67,8 @@ module .exports = class Document extends Interface
          .on ("focusin",  () => this .onfocus ())
          .on ("focusout", () => this .onfocus ());
 
+      $(window) .on ("keydown", event => this .onkeydown (event));
+
       // File Menu
 
       electron .ipcRenderer .on ("open-files",       (event, urls)     => this .loadURL (urls [0])); // DEBUG
@@ -351,6 +353,28 @@ module .exports = class Document extends Interface
          return false;
 
       return true;
+   }
+
+   // Menu Accelerators Fix for Windows.
+
+   onkeydown (event)
+   {
+      switch (event .key)
+      {
+         case "a":
+         {
+            if (this .activeElementIsInputOrOutput ())
+               break;
+
+            if (event .ctrlKey)
+            {
+               this .selectAll ();
+               return false;
+            }
+
+            break;
+         }
+      }
    }
 
    /*
