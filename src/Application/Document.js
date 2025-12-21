@@ -368,7 +368,7 @@ module .exports = class Document extends Interface
 
             if (event .ctrlKey)
             {
-               this .selectAll ();
+               this .sidebar .outlineEditor .deselectAll ();
                return false;
             }
 
