@@ -2,7 +2,7 @@
 <!-- X3D Unified Object Model (X3DUOM) X3dUnifiedObjectModel-4.0.xml -->
 <!-- Online at https://www.web3d.org/specifications/X3dUnifiedObjectModel-4.0.xml -->
 <!-- This file contains a listing of all abstract and concrete nodes in version 4.0 of X3D -->
-<!-- Generated 2025-10-07-07:00 11:59:45.8550027-07:00 -->
+<!-- Generated 2025-12-26-08:00 00:42:29.2674537-08:00 -->
 <X3dUnifiedObjectModel xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
                        version="4.0"
                        xsd:noNamespaceSchemaLocation="X3dUnifiedObjectModel.xsd">
@@ -2213,6 +2213,7 @@
                       index="83"
                       default="0.0044 1.6209 0.0236"
                       parent="vc1"
+                      parentLOA2="vc2"
                       loa="1"
                       documentation="https://en.wikipedia.org/wiki/Skull"/>
          <enumeration value="l_eyelid_joint"
@@ -3684,6 +3685,7 @@
          <enumeration value="createParticles"/>
          <enumeration value="cryptoSystem"/>
          <enumeration value="cryptoKeyID"/>
+         <enumeration value="curve"/>
          <enumeration value="cutOffAngle"/>
          <enumeration value="cycleInterval"/>
          <enumeration value="data"/>
@@ -4751,7 +4753,7 @@
                       appinfo="X3D version 3.3 approved by ISO in 2013 as International Standard (IS). Backwards compatibility maintained with versions 3.0, 3.1 and 3.2."
                       documentation="https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/X3D.html"/>
          <enumeration value="4.0"
-                      appinfo="X3D version 4.0 under final development by Web3D Consortium. Backwards compatibility maintained with versions 3.0, 3.1, 3.2 and 3.3."
+                      appinfo="X3D version 4.0 approved by ISO in 2023 as International Standard (IS). Backwards compatibility maintained with versions 3.0, 3.1, 3.2 and 3.3."
                       documentation="https://www.web3d.org/x3d4"/>
       </SimpleType>
    </SimpleTypeEnumerations>
@@ -19250,7 +19252,7 @@
       </ConcreteNode>
       <ConcreteNode name="GeoLocation">
          <InterfaceDefinition specificationUrl="https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/geospatial.html#GeoLocation"
-                              appinfo="GeoLocation positions a regular X3D model onto earth's surface.">
+                              appinfo="GeoLocation positions a regular X3D model onto the earth's surface.">
             <componentInfo name="Geospatial" level="1"/>
             <Inheritance baseType="X3DGroupingNode"/>
             <field name="addChildren"
@@ -22018,6 +22020,7 @@
                             index="83"
                             default="0.0044 1.6209 0.0236"
                             parent="vc1"
+                            parentLOA2="vc2"
                             loa="1"
                             documentation="https://en.wikipedia.org/wiki/Skull"/>
                <enumeration value="l_eyelid_joint"
@@ -43144,7 +43147,7 @@
                             appinfo="X3D version 3.3 approved by ISO in 2013 as International Standard (IS). Backwards compatibility maintained with versions 3.0, 3.1 and 3.2."
                             documentation="https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/X3D.html"/>
                <enumeration value="4.0"
-                            appinfo="X3D version 4.0 under final development by Web3D Consortium. Backwards compatibility maintained with versions 3.0, 3.1, 3.2 and 3.3."
+                            appinfo="X3D version 4.0 approved by ISO in 2023 as International Standard (IS). Backwards compatibility maintained with versions 3.0, 3.1, 3.2 and 3.3."
                             documentation="https://www.web3d.org/x3d4"/>
             </field>
             <ContentModel>
