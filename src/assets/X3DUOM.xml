@@ -2,7 +2,7 @@
 <!-- X3D Unified Object Model (X3DUOM) X3dUnifiedObjectModel-4.0.xml -->
 <!-- Online at https://www.web3d.org/specifications/X3dUnifiedObjectModel-4.0.xml -->
 <!-- This file contains a listing of all abstract and concrete nodes in version 4.0 of X3D -->
-<!-- Generated 2025-12-26-08:00 00:42:29.2674537-08:00 -->
+<!-- Generated 2026-01-11-08:00 18:46:39.528322-08:00 -->
 <X3dUnifiedObjectModel xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
                        version="4.0"
                        xsd:noNamespaceSchemaLocation="X3dUnifiedObjectModel.xsd">
@@ -748,7 +748,7 @@
                   documentation="https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/geospatial.html#Specifyingaspatialreference"/>
       <SimpleType name="glossaryChoices"
                   baseType="xs:NMTOKEN"
-                  appinfo="Glossary terms are defined in X3D Architecture: Extensible 3D (X3D), ISO/IEC 19775-1:2023, 3 Definitions, acronyms, and abbreviations."
+                  appinfo="Glossary terms are defined in X3D Architecture: Extensible 3D (X3D), ISO/IEC 19775-1:2023, 3 Definitions, acronyms, and abbreviations. # hash tags indicate linkable terms."
                   documentation="https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/glossary.html">
          <enumeration value="activate"
                       appinfo="cause a #sensorNode to generate an isActive #event"/>
@@ -10420,7 +10420,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="AcousticProperties"
-                   description="Single contained acousticProperties node that can specify additional acoustic attributes applied to associated surface geometry.">
+                   description="Optional single contained acousticProperties node that can specify additional acoustic attributes applied to associated surface geometry.">
                <componentInfo name="Shape" level="5"/>
             </field>
             <field name="alphaCutoff"
@@ -10453,13 +10453,13 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DMaterialNode"
-                   description="Single contained Material, PhysicalMaterial or UnlitMaterial node that can specify visual attributes for lighting response (color types, transparency, etc."/>
+                   description="Optional single contained Material, PhysicalMaterial or UnlitMaterial node that can specify visual attributes for lighting response (color types, transparency, etc."/>
             <field name="fillProperties"
                    type="SFNode"
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="FillProperties"
-                   description="Single contained FillProperties node that can specify additional visual attributes applied to polygonal areas of corresponding geometry, on top of whatever other appearance is already defined.">
+                   description="Optional single contained FillProperties node that can specify additional visual attributes applied to polygonal areas of corresponding geometry, on top of whatever other appearance is already defined.">
                <componentInfo name="Shape" level="3"/>
             </field>
             <field name="IS"
@@ -10473,7 +10473,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="LineProperties"
-                   description="Single contained LineProperties node that can specify additional visual attributes applied to corresponding line geometry.">
+                   description="Optional single contained LineProperties node that can specify additional visual attributes applied to corresponding line geometry.">
                <componentInfo name="Shape" level="2"/>
             </field>
             <field name="material"
@@ -10481,7 +10481,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DMaterialNode"
-                   description="Single contained Material, PhysicalMaterial, TwoSidedMaterial (deprecated), or UnlitMaterial node that can specify visual attributes for lighting response (color types, transparency, etc."/>
+                   description="Optional single contained Material, PhysicalMaterial, TwoSidedMaterial (deprecated), or UnlitMaterial node that can specify visual attributes for lighting response (color types, transparency, etc."/>
             <field name="metadata"
                    type="SFNode"
                    accessType="inputOutput"
@@ -10494,7 +10494,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="PointProperties"
-                   description="Single contained PointProperties node that can specify additional visual attributes applied to corresponding point geometry.">
+                   description="Optional single contained PointProperties node that can specify additional visual attributes applied to corresponding point geometry.">
                <componentInfo name="Shape" level="5"/>
             </field>
             <field name="shaders"
@@ -10509,13 +10509,13 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DTextureNode"
-                   description="Single contained texture node (ImageTexture, MovieTexture, PixelTexture, MultiTexture) that maps image(s) to surface geometry."/>
+                   description="Optional single contained texture node (ImageTexture, MovieTexture, PixelTexture, MultiTexture) that maps image(s) to surface geometry."/>
             <field name="textureTransform"
                    type="SFNode"
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DTextureTransformNode"
-                   description="Single contained TextureTransform node that defines 2D transformation applied to texture coordinates.">
+                   description="Optional single contained TextureTransform node that defines 2D transformation applied to texture coordinates.">
                <componentInfo name="Shape" level="2"/>
             </field>
             <field name="DEF"
@@ -11626,13 +11626,13 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DComposableVolumeRenderStyleNode"
-                   description="Single contained X3DComposableVolumeRenderStyleNode node that defines specific rendering technique for data in the voxels field, and the result is blended with parent VolumeData or SegmentedVoliumeData node."/>
+                   description="Optional single contained X3DComposableVolumeRenderStyleNode node that defines specific rendering technique for data in the voxels field, and the result is blended with parent VolumeData or SegmentedVoliumeData node."/>
             <field name="voxels"
                    type="SFNode"
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DTexture3DNode"
-                   description="Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides second set of raw voxel information utilized by corresponding rendering styles."/>
+                   description="Optional single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides second set of raw voxel information utilized by corresponding rendering styles."/>
             <field name="weightConstant1"
                    type="SFFloat"
                    accessType="inputOutput"
@@ -12096,7 +12096,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DGeometryNode"
-                   description="Single contained geometry node provides the geometry used for each particle when the parent ParticleSystem node has geometryType=GEOMETRY."/>
+                   description="Optional single contained geometry node provides the geometry used for each particle when the parent ParticleSystem node has geometryType=GEOMETRY."/>
             <field name="IS"
                    type="SFNode"
                    accessType="inputOutput"
@@ -14607,7 +14607,7 @@
                    accessType="initializeOnly"
                    default="NULL"
                    acceptableNodeTypes="TextureProperties"
-                   description="Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."/>
+                   description="Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."/>
             <field name="topTexture"
                    synonym="top"
                    type="SFNode"
@@ -14799,7 +14799,7 @@
                    default="NULL"
                    acceptableNodeTypes="TextureProperties"
                    inheritedFrom="X3DTexture3DNode"
-                   description="Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."/>
+                   description="Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."/>
             <field name="DEF"
                    type="SFString"
                    accessType="inputOutput"
@@ -17345,7 +17345,7 @@
                    type="MFNode"
                    accessType="inputOutput"
                    acceptableNodeTypes="X3DVertexAttributeNode"
-                   description="Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders."/>
+                   description="Optional single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders."/>
             <field name="ccw"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -17358,7 +17358,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DColorNode"
-                   description="Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorPerVertex field."/>
+                   description="Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorPerVertex field."/>
             <field name="colorPerVertex"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -17375,7 +17375,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="FogCoordinate"
-                   description="Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry."/>
+                   description="Optional single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry."/>
             <field name="height"
                    type="MFFloat"
                    accessType="initializeOnly"
@@ -17398,7 +17398,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DNormalNode"
-                   description="Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field."/>
+                   description="Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field."/>
             <field name="normalPerVertex"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -17418,7 +17418,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DSingleTextureCoordinateNode"
-                   description="Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry."/>
+                   description="Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry."/>
             <field name="xDimension"
                    type="SFInt32"
                    accessType="initializeOnly"
@@ -18973,7 +18973,7 @@
                    accessType="initializeOnly"
                    default="NULL"
                    acceptableNodeTypes="TextureProperties"
-                   description="Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."/>
+                   description="Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."/>
             <field name="update"
                    type="SFString"
                    accessType="inputOutput"
@@ -19033,7 +19033,7 @@
                    accessType="initializeOnly"
                    default="NULL"
                    acceptableNodeTypes="GeoOrigin"
-                   description="Single contained GeoOrigin node that can specify a local coordinate frame for extended precision."/>
+                   description="Optional single contained GeoOrigin node that can specify a local coordinate frame for extended precision."/>
             <field name="geoSystem"
                    type="MFString"
                    accessType="initializeOnly"
@@ -19109,7 +19109,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DColorNode"
-                   description="Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorPerVertex field."/>
+                   description="Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorPerVertex field."/>
             <field name="colorPerVertex"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -19131,7 +19131,7 @@
                    accessType="initializeOnly"
                    default="NULL"
                    acceptableNodeTypes="GeoOrigin"
-                   description="Single contained GeoOrigin node that can specify a local coordinate frame for extended precision."/>
+                   description="Optional single contained GeoOrigin node that can specify a local coordinate frame for extended precision."/>
             <field name="geoSystem"
                    type="MFString"
                    accessType="initializeOnly"
@@ -19162,7 +19162,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DNormalNode"
-                   description="Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field."/>
+                   description="Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field."/>
             <field name="normalPerVertex"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -19182,7 +19182,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DSingleTextureCoordinateNode"
-                   description="Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry."/>
+                   description="Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry."/>
             <field name="xDimension"
                    type="SFInt32"
                    accessType="initializeOnly"
@@ -19297,7 +19297,7 @@
                    accessType="initializeOnly"
                    default="NULL"
                    acceptableNodeTypes="GeoOrigin"
-                   description="Single contained GeoOrigin node that can specify a local coordinate frame for extended precision."/>
+                   description="Optional single contained GeoOrigin node that can specify a local coordinate frame for extended precision."/>
             <field name="geoSystem"
                    type="MFString"
                    accessType="initializeOnly"
@@ -19433,7 +19433,7 @@
                    accessType="initializeOnly"
                    default="NULL"
                    acceptableNodeTypes="GeoOrigin"
-                   description="Single contained GeoOrigin node that can specify a local coordinate frame for extended precision."/>
+                   description="Optional single contained GeoOrigin node that can specify a local coordinate frame for extended precision."/>
             <field name="geoSystem"
                    type="MFString"
                    accessType="initializeOnly"
@@ -19705,7 +19705,7 @@
                    accessType="initializeOnly"
                    default="NULL"
                    acceptableNodeTypes="GeoOrigin"
-                   description="Single contained GeoOrigin node that can specify a local coordinate frame for extended precision."/>
+                   description="Optional single contained GeoOrigin node that can specify a local coordinate frame for extended precision."/>
             <field name="geoSystem"
                    type="MFString"
                    accessType="initializeOnly"
@@ -19831,7 +19831,7 @@
                    accessType="initializeOnly"
                    default="NULL"
                    acceptableNodeTypes="GeoOrigin"
-                   description="Single contained GeoOrigin node that can specify a local coordinate frame for extended precision."/>
+                   description="Optional single contained GeoOrigin node that can specify a local coordinate frame for extended precision."/>
             <field name="geoSystem"
                    type="MFString"
                    accessType="initializeOnly"
@@ -19929,7 +19929,7 @@
                    accessType="initializeOnly"
                    default="NULL"
                    acceptableNodeTypes="GeoOrigin"
-                   description="Single contained GeoOrigin node that can specify a local coordinate frame for extended precision."/>
+                   description="Optional single contained GeoOrigin node that can specify a local coordinate frame for extended precision."/>
             <field name="geoSystem"
                    type="MFString"
                    accessType="initializeOnly"
@@ -20064,7 +20064,7 @@
                    accessType="initializeOnly"
                    default="NULL"
                    acceptableNodeTypes="GeoOrigin"
-                   description="Single contained GeoOrigin node that can specify a local coordinate frame for extended precision."/>
+                   description="Optional single contained GeoOrigin node that can specify a local coordinate frame for extended precision."/>
             <field name="geoSystem"
                    type="MFString"
                    accessType="initializeOnly"
@@ -20196,7 +20196,7 @@
                    accessType="initializeOnly"
                    default="NULL"
                    acceptableNodeTypes="GeoOrigin"
-                   description="Single contained GeoOrigin node that can specify a local coordinate frame for extended precision."/>
+                   description="Optional single contained GeoOrigin node that can specify a local coordinate frame for extended precision."/>
             <field name="geoSystem"
                    type="MFString"
                    accessType="initializeOnly"
@@ -24522,7 +24522,7 @@
                    accessType="initializeOnly"
                    default="NULL"
                    acceptableNodeTypes="TextureProperties"
-                   description="Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."/>
+                   description="Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."/>
             <field name="url"
                    type="MFString"
                    accessType="inputOutput"
@@ -24629,7 +24629,7 @@
                    default="NULL"
                    acceptableNodeTypes="TextureProperties"
                    inheritedFrom="X3DTexture2DNode"
-                   description="Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."/>
+                   description="Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."/>
             <field name="url"
                    type="MFString"
                    accessType="inputOutput"
@@ -24742,7 +24742,7 @@
                    default="NULL"
                    acceptableNodeTypes="TextureProperties"
                    inheritedFrom="X3DTexture3DNode"
-                   description="Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."/>
+                   description="Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."/>
             <field name="url"
                    type="MFString"
                    accessType="inputOutput"
@@ -24797,7 +24797,7 @@
                    accessType="inputOutput"
                    acceptableNodeTypes="X3DVertexAttributeNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders."/>
+                   description="Optional single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders."/>
             <field name="ccw"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -24810,7 +24810,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DColorNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields."/>
+                   description="Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields."/>
             <field name="colorIndex"
                    type="MFInt32"
                    accessType="initializeOnly"
@@ -24835,7 +24835,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DCoordinateNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values."/>
+                   description="Optional single contained Coordinate or CoordinateDouble node that can specify a list of vertex values."/>
             <field name="coordIndex"
                    type="MFInt32"
                    accessType="initializeOnly"
@@ -24855,7 +24855,7 @@
                    default="NULL"
                    acceptableNodeTypes="FogCoordinate"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry."/>
+                   description="Optional single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry."/>
             <field name="IS"
                    type="SFNode"
                    accessType="inputOutput"
@@ -24875,7 +24875,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DNormalNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field."/>
+                   description="Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field."/>
             <field name="normalIndex"
                    type="MFInt32"
                    accessType="initializeOnly"
@@ -24925,7 +24925,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DSingleTextureCoordinateNode|MultiTextureCoordinate"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry."/>
+                   description="Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry."/>
             <field name="texCoordIndex"
                    type="MFInt32"
                    accessType="initializeOnly"
@@ -24978,13 +24978,13 @@
                    type="MFNode"
                    accessType="inputOutput"
                    acceptableNodeTypes="X3DVertexAttributeNode"
-                   description="Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders."/>
+                   description="Optional single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders."/>
             <field name="color"
                    type="SFNode"
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DColorNode"
-                   description="Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields."/>
+                   description="Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields."/>
             <field name="colorIndex"
                    type="MFInt32"
                    accessType="initializeOnly"
@@ -25000,7 +25000,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DCoordinateNode"
-                   description="Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values."/>
+                   description="Optional single contained Coordinate or CoordinateDouble node that can specify a list of vertex values."/>
             <field name="coordIndex"
                    type="MFInt32"
                    accessType="initializeOnly"
@@ -25011,7 +25011,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="FogCoordinate"
-                   description="Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry."/>
+                   description="Optional single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry."/>
             <field name="IS"
                    type="SFNode"
                    accessType="inputOutput"
@@ -25030,7 +25030,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DNormalNode"
-                   description="Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field."/>
+                   description="Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field."/>
             <field name="set_colorIndex"
                    type="MFInt32"
                    accessType="inputOnly"
@@ -25091,7 +25091,7 @@
                    accessType="inputOutput"
                    acceptableNodeTypes="X3DVertexAttributeNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders."/>
+                   description="Optional single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders."/>
             <field name="ccw"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -25104,7 +25104,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DColorNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields."/>
+                   description="Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields."/>
             <field name="colorPerVertex"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -25117,14 +25117,14 @@
                    default="NULL"
                    acceptableNodeTypes="X3DCoordinateNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values."/>
+                   description="Optional single contained Coordinate or CoordinateDouble node that can specify a list of vertex values."/>
             <field name="fogCoord"
                    type="SFNode"
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="FogCoordinate"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry."/>
+                   description="Optional single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry."/>
             <field name="index"
                    type="MFInt32"
                    accessType="initializeOnly"
@@ -25149,7 +25149,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DNormalNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field."/>
+                   description="Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field."/>
             <field name="normalPerVertex"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -25173,7 +25173,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DSingleTextureCoordinateNode|MultiTextureCoordinate"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry."/>
+                   description="Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry."/>
             <field name="DEF"
                    type="SFString"
                    accessType="inputOutput"
@@ -25222,7 +25222,7 @@
                    accessType="inputOutput"
                    acceptableNodeTypes="X3DVertexAttributeNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders."/>
+                   description="Optional single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders."/>
             <field name="ccw"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -25235,7 +25235,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DColorNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields."/>
+                   description="Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields."/>
             <field name="colorPerVertex"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -25248,14 +25248,14 @@
                    default="NULL"
                    acceptableNodeTypes="X3DCoordinateNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values."/>
+                   description="Optional single contained Coordinate or CoordinateDouble node that can specify a list of vertex values."/>
             <field name="fogCoord"
                    type="SFNode"
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="FogCoordinate"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry."/>
+                   description="Optional single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry."/>
             <field name="index"
                    type="MFInt32"
                    accessType="initializeOnly"
@@ -25280,7 +25280,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DNormalNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field."/>
+                   description="Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field."/>
             <field name="normalPerVertex"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -25304,7 +25304,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DSingleTextureCoordinateNode|MultiTextureCoordinate"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry."/>
+                   description="Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry."/>
             <field name="DEF"
                    type="SFString"
                    accessType="inputOutput"
@@ -25353,7 +25353,7 @@
                    accessType="inputOutput"
                    acceptableNodeTypes="X3DVertexAttributeNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders."/>
+                   description="Optional single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders."/>
             <field name="ccw"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -25366,7 +25366,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DColorNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields."/>
+                   description="Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields."/>
             <field name="colorPerVertex"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -25379,14 +25379,14 @@
                    default="NULL"
                    acceptableNodeTypes="X3DCoordinateNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values."/>
+                   description="Optional single contained Coordinate or CoordinateDouble node that can specify a list of vertex values."/>
             <field name="fogCoord"
                    type="SFNode"
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="FogCoordinate"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry."/>
+                   description="Optional single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry."/>
             <field name="index"
                    type="MFInt32"
                    accessType="initializeOnly"
@@ -25411,7 +25411,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DNormalNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field."/>
+                   description="Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field."/>
             <field name="normalPerVertex"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -25435,7 +25435,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DSingleTextureCoordinateNode|MultiTextureCoordinate"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry."/>
+                   description="Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry."/>
             <field name="DEF"
                    type="SFString"
                    accessType="inputOutput"
@@ -25484,7 +25484,7 @@
                    accessType="inputOutput"
                    acceptableNodeTypes="X3DVertexAttributeNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders."/>
+                   description="Optional single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders."/>
             <field name="ccw"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -25497,7 +25497,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DColorNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields."/>
+                   description="Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields."/>
             <field name="colorPerVertex"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -25510,14 +25510,14 @@
                    default="NULL"
                    acceptableNodeTypes="X3DCoordinateNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values."/>
+                   description="Optional single contained Coordinate or CoordinateDouble node that can specify a list of vertex values."/>
             <field name="fogCoord"
                    type="SFNode"
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="FogCoordinate"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry."/>
+                   description="Optional single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry."/>
             <field name="index"
                    type="MFInt32"
                    accessType="initializeOnly"
@@ -25542,7 +25542,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DNormalNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field."/>
+                   description="Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field."/>
             <field name="normalPerVertex"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -25566,7 +25566,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DSingleTextureCoordinateNode|MultiTextureCoordinate"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry."/>
+                   description="Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry."/>
             <field name="DEF"
                    type="SFString"
                    accessType="inputOutput"
@@ -25910,7 +25910,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DTexture3DNode"
-                   description="Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides explicit per-voxel gradient direction information for determining surface boundaries, rather than having it implicitly calculated by the implementation."/>
+                   description="Optional single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides explicit per-voxel gradient direction information for determining surface boundaries, rather than having it implicitly calculated by the implementation."/>
             <field name="IS"
                    type="SFNode"
                    accessType="inputOutput"
@@ -25950,7 +25950,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DTexture3DNode"
-                   description="Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides raw voxel information utilized by corresponding rendering styles."/>
+                   description="Optional single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides raw voxel information utilized by corresponding rendering styles."/>
             <field name="DEF"
                    type="SFString"
                    accessType="inputOutput"
@@ -26885,25 +26885,25 @@
                    type="MFNode"
                    accessType="inputOutput"
                    acceptableNodeTypes="X3DVertexAttributeNode"
-                   description="Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders."/>
+                   description="Optional single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders."/>
             <field name="color"
                    type="SFNode"
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DColorNode"
-                   description="Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields."/>
+                   description="Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields."/>
             <field name="coord"
                    type="SFNode"
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DCoordinateNode"
-                   description="Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values."/>
+                   description="Optional single contained Coordinate or CoordinateDouble node that can specify a list of vertex values."/>
             <field name="fogCoord"
                    type="SFNode"
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="FogCoordinate"
-                   description="Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry."/>
+                   description="Optional single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry."/>
             <field name="IS"
                    type="SFNode"
                    accessType="inputOutput"
@@ -26922,7 +26922,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DNormalNode"
-                   description="Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field."/>
+                   description="Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field."/>
             <field name="vertexCount"
                    type="MFInt32"
                    accessType="inputOutput"
@@ -28600,7 +28600,7 @@
                    accessType="initializeOnly"
                    default="NULL"
                    acceptableNodeTypes="TextureProperties"
-                   description="Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."/>
+                   description="Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."/>
             <field name="url"
                    type="MFString"
                    accessType="inputOutput"
@@ -28900,6 +28900,8 @@
             <ContentModel>
                <GroupContentModel name="ChildContentModelCore" minOccurs="0"/>
                <NodeContentModel name="TextureTransform"/>
+               <NodeContentModel name="TextureTransform3D"/>
+               <NodeContentModel name="TextureTransformMatrix3D"/>
                <NodeContentModel name="ProtoInstance"/>
             </ContentModel>
          </InterfaceDefinition>
@@ -29045,7 +29047,7 @@
       </ConcreteNode>
       <ConcreteNode name="Normal">
          <InterfaceDefinition specificationUrl="https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/rendering.html#Normal"
-                              appinfo="Normal defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node, or else to a parent ElevationGrid node.">
+                              appinfo="Normal defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate | CoordinateDouble node, or else to a parent ElevationGrid node.">
             <componentInfo name="Rendering" level="2"/>
             <Inheritance baseType="X3DNormalNode"/>
             <field name="IS"
@@ -29188,7 +29190,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="Coordinate|CoordinateDouble"
-                   description="Single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions."/>
+                   description="Optional single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions."/>
             <field name="IS"
                    type="SFNode"
                    accessType="inputOutput"
@@ -29354,7 +29356,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="Coordinate|CoordinateDouble"
-                   description="Single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions."/>
+                   description="Optional single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions."/>
             <field name="IS"
                    type="SFNode"
                    accessType="inputOutput"
@@ -29440,7 +29442,7 @@
                    default="NULL"
                    acceptableNodeTypes="Coordinate|CoordinateDouble"
                    inheritedFrom="X3DNurbsSurfaceGeometryNode"
-                   description="Single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions."/>
+                   description="Optional single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions."/>
             <field name="IS"
                    type="SFNode"
                    accessType="inputOutput"
@@ -29466,7 +29468,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DSingleTextureCoordinateNode|NurbsTextureCoordinate"
                    inheritedFrom="X3DNurbsSurfaceGeometryNode"
-                   description="Single contained NurbsTextureCoordinate, TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry."/>
+                   description="Optional single contained NurbsTextureCoordinate, TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry."/>
             <field name="uClosed"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -29587,7 +29589,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="Coordinate|CoordinateDouble"
-                   description="Single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions."/>
+                   description="Optional single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions."/>
             <field name="IS"
                    type="SFNode"
                    accessType="inputOutput"
@@ -29775,7 +29777,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="Coordinate|CoordinateDouble"
-                   description="Single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions."/>
+                   description="Optional single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions."/>
             <field name="IS"
                    type="SFNode"
                    accessType="inputOutput"
@@ -30142,7 +30144,7 @@
                    default="NULL"
                    acceptableNodeTypes="Coordinate|CoordinateDouble"
                    inheritedFrom="X3DNurbsSurfaceGeometryNode"
-                   description="Single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions."/>
+                   description="Optional single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions."/>
             <field name="IS"
                    type="SFNode"
                    accessType="inputOutput"
@@ -30172,7 +30174,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DSingleTextureCoordinateNode|NurbsTextureCoordinate"
                    inheritedFrom="X3DNurbsSurfaceGeometryNode"
-                   description="Single contained NurbsTextureCoordinate, TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry."/>
+                   description="Optional single contained NurbsTextureCoordinate, TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry."/>
             <field name="trimmingContour"
                    type="MFNode"
                    accessType="inputOutput"
@@ -31076,7 +31078,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DGeometryNode"
-                   description="Single contained geometry node provides geometry used for each particle when geometryType=GEOMETRY.">
+                   description="Optional single contained geometry node provides geometry used for each particle when geometryType=GEOMETRY.">
                <componentInfo name="ParticleSystems" level="3"/>
             </field>
             <field name="geometryType"
@@ -31660,7 +31662,7 @@
                    default="NULL"
                    acceptableNodeTypes="TextureProperties"
                    inheritedFrom="X3DTexture2DNode"
-                   description="Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."/>
+                   description="Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."/>
             <field name="DEF"
                    type="SFString"
                    accessType="inputOutput"
@@ -31750,7 +31752,7 @@
                    default="NULL"
                    acceptableNodeTypes="TextureProperties"
                    inheritedFrom="X3DTexture3DNode"
-                   description="Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."/>
+                   description="Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."/>
             <field name="DEF"
                    type="SFString"
                    accessType="inputOutput"
@@ -32360,25 +32362,25 @@
                    type="MFNode"
                    accessType="inputOutput"
                    acceptableNodeTypes="X3DVertexAttributeNode"
-                   description="Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders."/>
+                   description="Optional single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders."/>
             <field name="color"
                    type="SFNode"
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DColorNode"
-                   description="Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields."/>
+                   description="Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields."/>
             <field name="coord"
                    type="SFNode"
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DCoordinateNode"
-                   description="Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values."/>
+                   description="Optional single contained Coordinate or CoordinateDouble node that can specify a list of vertex values."/>
             <field name="fogCoord"
                    type="SFNode"
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="FogCoordinate"
-                   description="Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry."/>
+                   description="Optional single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry."/>
             <field name="IS"
                    type="SFNode"
                    accessType="inputOutput"
@@ -32397,7 +32399,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DNormalNode"
-                   description="Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations."/>
+                   description="Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations."/>
             <field name="DEF"
                    type="SFString"
                    accessType="inputOutput"
@@ -33685,7 +33687,7 @@
                    accessType="inputOutput"
                    acceptableNodeTypes="X3DVertexAttributeNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders."/>
+                   description="Optional single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders."/>
             <field name="ccw"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -33698,7 +33700,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DColorNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields."/>
+                   description="Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields."/>
             <field name="colorPerVertex"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -33711,14 +33713,14 @@
                    default="NULL"
                    acceptableNodeTypes="X3DCoordinateNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values."/>
+                   description="Optional single contained Coordinate or CoordinateDouble node that can specify a list of vertex values."/>
             <field name="fogCoord"
                    type="SFNode"
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="FogCoordinate"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry."/>
+                   description="Optional single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry."/>
             <field name="IS"
                    type="SFNode"
                    accessType="inputOutput"
@@ -33738,7 +33740,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DNormalNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field."/>
+                   description="Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field."/>
             <field name="normalPerVertex"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -33757,7 +33759,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DSingleTextureCoordinateNode|MultiTextureCoordinate"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry."/>
+                   description="Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry."/>
             <field name="DEF"
                    type="SFString"
                    accessType="inputOutput"
@@ -35113,7 +35115,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DTexture3DNode"
-                   description="Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) holds component texture that provides corresponding segment identifier."/>
+                   description="Optional single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) holds component texture that provides corresponding segment identifier."/>
             <field name="visible"
                    type="SFBool"
                    accessType="inputOutput"
@@ -35125,7 +35127,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DTexture3DNode"
-                   description="Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides raw voxel information utilized by corresponding rendering styles."/>
+                   description="Optional single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides raw voxel information utilized by corresponding rendering styles."/>
             <field name="DEF"
                    type="SFString"
                    accessType="inputOutput"
@@ -35484,7 +35486,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DAppearanceNode"
                    inheritedFrom="X3DShapeNode"
-                   description="Single contained Appearance node that can specify visual attributes (such as material, texture, fillProperties and lineProperties) applied to corresponding geometry."/>
+                   description="Optional single contained Appearance node that can specify visual attributes (such as material, texture, fillProperties and lineProperties) applied to corresponding geometry."/>
             <field name="bboxCenter"
                    type="SFVec3f"
                    accessType="initializeOnly"
@@ -35516,7 +35518,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DGeometryNode"
                    inheritedFrom="X3DShapeNode"
-                   description="Single contained geometry node that is rendered according to corresponding appearance."/>
+                   description="Optional single contained geometry node that is rendered according to corresponding appearance."/>
             <field name="IS"
                    type="SFNode"
                    accessType="inputOutput"
@@ -38547,7 +38549,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DTexture2DNode"
                    inheritedFrom="X3DTextureProjectorNode"
-                   description="Single contained texture node (ImageTexture, MovieTexture, PixelTexture, MultiTexture) that maps image(s) to surface geometry."/>
+                   description="Optional single contained texture node (ImageTexture, MovieTexture, PixelTexture, MultiTexture) that maps image(s) to surface geometry."/>
             <field name="upVector"
                    type="SFVec3f"
                    accessType="inputOutput"
@@ -38710,7 +38712,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DTexture2DNode"
                    inheritedFrom="X3DTextureProjectorNode"
-                   description="Single contained texture node (ImageTexture, MovieTexture, PixelTexture, MultiTexture) that maps image(s) to surface geometry."/>
+                   description="Optional single contained texture node (ImageTexture, MovieTexture, PixelTexture, MultiTexture) that maps image(s) to surface geometry."/>
             <field name="upVector"
                    type="SFVec3f"
                    accessType="inputOutput"
@@ -40114,7 +40116,7 @@
                    accessType="inputOutput"
                    acceptableNodeTypes="X3DVertexAttributeNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders."/>
+                   description="Optional single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders."/>
             <field name="ccw"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -40127,7 +40129,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DColorNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields."/>
+                   description="Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields."/>
             <field name="colorPerVertex"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -40140,7 +40142,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DCoordinateNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values."/>
+                   description="Optional single contained Coordinate or CoordinateDouble node that can specify a list of vertex values."/>
             <field name="fanCount"
                    type="MFInt32"
                    accessType="inputOutput"
@@ -40152,7 +40154,7 @@
                    default="NULL"
                    acceptableNodeTypes="FogCoordinate"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry."/>
+                   description="Optional single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry."/>
             <field name="IS"
                    type="SFNode"
                    accessType="inputOutput"
@@ -40172,7 +40174,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DNormalNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field."/>
+                   description="Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field."/>
             <field name="normalPerVertex"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -40191,7 +40193,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DSingleTextureCoordinateNode|MultiTextureCoordinate"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry."/>
+                   description="Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry."/>
             <field name="DEF"
                    type="SFString"
                    accessType="inputOutput"
@@ -40240,7 +40242,7 @@
                    accessType="inputOutput"
                    acceptableNodeTypes="X3DVertexAttributeNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders."/>
+                   description="Optional single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders."/>
             <field name="ccw"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -40253,7 +40255,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DColorNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields."/>
+                   description="Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields."/>
             <field name="colorPerVertex"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -40266,14 +40268,14 @@
                    default="NULL"
                    acceptableNodeTypes="X3DCoordinateNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values."/>
+                   description="Optional single contained Coordinate or CoordinateDouble node that can specify a list of vertex values."/>
             <field name="fogCoord"
                    type="SFNode"
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="FogCoordinate"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry."/>
+                   description="Optional single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry."/>
             <field name="IS"
                    type="SFNode"
                    accessType="inputOutput"
@@ -40293,7 +40295,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DNormalNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field."/>
+                   description="Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field."/>
             <field name="normalPerVertex"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -40312,7 +40314,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DSingleTextureCoordinateNode|MultiTextureCoordinate"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry."/>
+                   description="Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry."/>
             <field name="DEF"
                    type="SFString"
                    accessType="inputOutput"
@@ -40423,7 +40425,7 @@
                    accessType="inputOutput"
                    acceptableNodeTypes="X3DVertexAttributeNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders."/>
+                   description="Optional single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders."/>
             <field name="ccw"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -40436,7 +40438,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DColorNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields."/>
+                   description="Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields."/>
             <field name="colorPerVertex"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -40449,14 +40451,14 @@
                    default="NULL"
                    acceptableNodeTypes="X3DCoordinateNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values."/>
+                   description="Optional single contained Coordinate or CoordinateDouble node that can specify a list of vertex values."/>
             <field name="fogCoord"
                    type="SFNode"
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="FogCoordinate"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry."/>
+                   description="Optional single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry."/>
             <field name="IS"
                    type="SFNode"
                    accessType="inputOutput"
@@ -40476,7 +40478,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DNormalNode"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field."/>
+                   description="Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field."/>
             <field name="normalPerVertex"
                    type="SFBool"
                    accessType="initializeOnly"
@@ -40500,7 +40502,7 @@
                    default="NULL"
                    acceptableNodeTypes="X3DSingleTextureCoordinateNode|MultiTextureCoordinate"
                    inheritedFrom="X3DComposedGeometryNode"
-                   description="Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry."/>
+                   description="Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry."/>
             <field name="DEF"
                    type="SFString"
                    accessType="inputOutput"
@@ -41402,7 +41404,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DVolumeRenderStyleNode"
-                   description="Single contained X3DVolumeRenderStyleNode node that defines specific rendering technique for this volumetric object."/>
+                   description="Optional single contained X3DVolumeRenderStyleNode node that defines specific rendering technique for this volumetric object."/>
             <field name="visible"
                    type="SFBool"
                    accessType="inputOutput"
@@ -41414,7 +41416,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="X3DTexture3DNode"
-                   description="Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides raw voxel information utilized by corresponding rendering styles."/>
+                   description="Optional single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides raw voxel information utilized by corresponding rendering styles."/>
             <field name="DEF"
                    type="SFString"
                    accessType="inputOutput"
