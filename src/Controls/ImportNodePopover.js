@@ -9,7 +9,7 @@ const
 require ("./Popover");
 require ("../Bits/Validate");
 
-$.fn.importNodePopover = function (inlineNode, exportedName, oldImportedName)
+$.fn.importNodePopover = function (inlineNode, exportedName, oldImportedName, oldDescription = "")
 {
    // Create content.
 
@@ -18,7 +18,7 @@ $.fn.importNodePopover = function (inlineNode, exportedName, oldImportedName)
    const content = $("<div></div>");
 
    $("<span></span>")
-      .text (_("Name"))
+      .text ("Imported Name")
       .appendTo (content);
 
    const nameInput = $("<input></input>")
@@ -26,19 +26,35 @@ $.fn.importNodePopover = function (inlineNode, exportedName, oldImportedName)
       .val (oldImportedName || executionContext .getUniqueImportName (exportedName))
       .appendTo (content);
 
+   $("<span></span>")
+      .text ("Description")
+      .appendTo (content);
+
+   const descriptionInput = $("<input></input>")
+      .attr ("placeholder", _("Enter description"))
+      .val (oldDescription)
+      .appendTo (content);
+
    // Create tooltip.
 
    const tooltip = this .popover ({
       content: content,
+      extension:
+      {
+         wide: true,
+      },
       events: {
          show: (event, api) =>
          {
+            $(nameInput) .add (descriptionInput) .off ();
+
             nameInput .off () .validate (Editor .Id, () =>
             {
                electron .shell .beep ();
                nameInput .highlight ();
-            })
-            .on ("keydown.importNodePopover", event =>
+            });
+
+            $(nameInput) .add (descriptionInput) .on ("keydown.importNodePopover", event =>
             {
                if (event .key !== "Enter")
                   return;
@@ -50,12 +66,13 @@ $.fn.importNodePopover = function (inlineNode, exportedName, oldImportedName)
                if (!nameInput .val ())
                   return;
 
-               if (oldImportedName && oldImportedName === nameInput .val ())
-                  return;
+               const
+                  importedName = nameInput .val () !== oldImportedName
+                     ? executionContext .getUniqueImportName (nameInput .val ())
+                     : oldImportedName,
+                  description  = descriptionInput .val ();
 
-               const importedName = executionContext .getUniqueImportName (nameInput .val ());
-
-               Editor .updateImportedNode (executionContext, inlineNode, exportedName, importedName, oldImportedName);
+               Editor .updateImportedNode (executionContext, inlineNode, exportedName, importedName, oldImportedName, description);
             });
 
             setTimeout (() => nameInput .trigger ("select"), 1);

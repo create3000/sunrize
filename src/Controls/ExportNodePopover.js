@@ -9,7 +9,7 @@ const
 require ("./Popover");
 require ("../Bits/Validate");
 
-$.fn.exportNodePopover = function (node, oldExportedName)
+$.fn.exportNodePopover = function (node, oldExportedName, oldDescription = "")
 {
    // Create content.
 
@@ -18,7 +18,7 @@ $.fn.exportNodePopover = function (node, oldExportedName)
    const content = $("<div></div>");
 
    $("<span></span>")
-      .text (_("Name"))
+      .text ("Exported Name")
       .appendTo (content);
 
    const nameInput = $("<input></input>")
@@ -26,19 +26,35 @@ $.fn.exportNodePopover = function (node, oldExportedName)
       .val (oldExportedName || scene .getUniqueExportName (node .getName ()))
       .appendTo (content);
 
+   $("<span></span>")
+      .text ("Description")
+      .appendTo (content);
+
+   const descriptionInput = $("<input></input>")
+      .attr ("placeholder", _("Enter description"))
+      .val (oldDescription)
+      .appendTo (content);
+
    // Create tooltip.
 
    const tooltip = this .popover ({
       content: content,
+      extension:
+      {
+         wide: true,
+      },
       events: {
          show: (event, api) =>
          {
-            nameInput .off () .validate (Editor .Id, () =>
+            $(nameInput) .add (descriptionInput) .off ();
+
+            nameInput .validate (Editor .Id, () =>
             {
                electron .shell .beep ();
                nameInput .highlight ();
-            })
-            .on ("keydown.exportNodePopover", event =>
+            });
+
+            $(nameInput) .add (descriptionInput) .on ("keydown.exportNodePopover", event =>
             {
                if (event .key !== "Enter")
                   return;
@@ -50,12 +66,13 @@ $.fn.exportNodePopover = function (node, oldExportedName)
                if (!nameInput .val ())
                   return;
 
-               if (oldExportedName && oldExportedName === nameInput .val ())
-                  return;
+               const
+                  exportedName = nameInput .val () !== oldExportedName
+                     ? scene .getUniqueExportName (nameInput .val ())
+                     : oldExportedName,
+                  description  = descriptionInput .val ();
 
-               const exportedName = scene .getUniqueExportName (nameInput .val ());
-
-               Editor .updateExportedNode (scene, exportedName, oldExportedName, node);
+               Editor .updateExportedNode (scene, exportedName, oldExportedName, node, description);
             });
 
             setTimeout (() => nameInput .trigger ("select"), 1);

@@ -1438,7 +1438,8 @@ module .exports = class OutlineView extends Interface
          .addClass (classes)
          .attr ("node-id", node .getId ())
          .attr ("imported-node-id", importedNode .getId ())
-         .attr ("index", index);
+         .attr ("index", index)
+         .attr ("title", importedNode .getDescription ());
 
       // Icon
 
@@ -1529,7 +1530,8 @@ module .exports = class OutlineView extends Interface
       const child = $("<li></li>")
          .addClass (type)
          .attr ("exported-node-id", exportedNode .getId ())
-         .attr ("node-id", node .getId ());
+         .attr ("node-id", node .getId ())
+         .attr ("title", exportedNode .getDescription ());
 
       // Icon
 
@@ -1577,7 +1579,7 @@ module .exports = class OutlineView extends Interface
    }
 
    static connectorId = 0;
-   static urlFields   = new Set (["url", "frontUrl", "backUrl", "leftUrl", "rightUrl", "topUrl", "bottomUrl", "family"]);
+   static urlFields   = new Set (["url", "frontUrl", "backUrl", "leftUrl", "rightUrl", "topUrl", "bottomUrl"]);
 
    #fieldSymbol       = Symbol ();
    #fieldButtonSymbol = Symbol ();

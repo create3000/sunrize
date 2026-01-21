@@ -849,7 +849,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          element      = $(`#${id}`),
          exportedNode = this .objects .get (parseInt (element .attr ("exported-node-id")));
 
-      element .find ("> .item") .exportNodePopover (exportedNode .getLocalNode (), exportedNode .getExportedName ());
+      element .find ("> .item") .exportNodePopover (exportedNode .getLocalNode (), exportedNode .getExportedName (), exportedNode .getDescription ());
    }
 
    removeExportedNode (id)
@@ -870,7 +870,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          exportedNode = this .objects .get (parseInt (element .attr ("exported-node-id"))),
          inlineNode   = this .getNode (element .closest (".node", this .sceneGraph));
 
-      element .find ("> .item") .importNodePopover (inlineNode, exportedNode .getExportedName ());
+      element .find ("> .item") .importNodePopover (inlineNode, exportedNode .getExportedName (), "", exportedNode .getDescription ());
    }
 
    editImportedNode (id)
@@ -881,7 +881,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          element      = $(`#${id}`),
          importedNode = this .objects .get (parseInt (element .attr ("imported-node-id")));
 
-      element .find ("> .item") .importNodePopover (importedNode .getInlineNode (), importedNode .getExportedName (), importedNode .getImportedName ());
+      element .find ("> .item") .importNodePopover (importedNode .getInlineNode (), importedNode .getExportedName (), importedNode .getImportedName (), importedNode .getDescription ());
    }
 
    removeImportedNode (id)
