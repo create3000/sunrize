@@ -196,7 +196,7 @@ module .exports = class Editor
       scene .setProfile (browser .getProfile ("Core"));
 
       for (const name of componentNames)
-         scene .addComponent (browser .getComponent (name));
+         scene .updateComponent (browser .getComponent (name));
 
       // Add nodes.
 
@@ -755,9 +755,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static setComponents (scene, components, undoManager = UndoManager .shared)
    {
-      const
-         browser       = scene .getBrowser (),
-         oldComponents = Array .from (scene .getComponents ());
+      const oldComponents = Array .from (scene .getComponents ());
 
       undoManager .beginUndo (_("Set Components of Scene"));
 
@@ -793,7 +791,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       undoManager .beginUndo (_("Add Component %s"), name);
 
-      scene .addComponent (browser .getComponent (name));
+      scene .updateComponent (browser .getComponent (name));
 
       undoManager .registerUndo (() =>
       {

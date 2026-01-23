@@ -45,8 +45,8 @@ class VideoParser extends X3D .X3DParser
 
       scene .setEncoding ("VIDEO");
       scene .setProfile (browser .getProfile ("Interchange"));
-      scene .addComponent (browser .getComponent ("Geometry2D", 1));
-      scene .addComponent (browser .getComponent ("Sound", 1));
+      scene .updateComponent (browser .getComponent ("Geometry2D", 1));
+      scene .updateComponent (browser .getComponent ("Sound", 1));
 
       await this .loadComponents ();
 
