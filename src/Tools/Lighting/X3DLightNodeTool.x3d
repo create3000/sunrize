@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V2.0.0, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Lighting/X3DLightNodeTool.x3d'/>
-    <meta name='modified' content='Sat, 31 Jan 2026 12:40:55 GMT'/>
+    <meta name='modified' content='Sat, 31 Jan 2026 23:04:56 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -195,7 +195,7 @@
                       <Shape DEF='Sphere_1'
                           castShadow='false'>
                         <Appearance USE='_10'/>
-                        <Sphere/>
+                        <Sphere USE='_2'/>
                       </Shape>
                       <Transform DEF='Rays_2'
                           scale='2 2 2'>
