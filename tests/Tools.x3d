@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
-<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.1//EN" "https://www.web3d.org/specifications/x3d-4.1.dtd">
+<X3D profile='Interchange' version='4.1' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.1.xsd'>
   <head>
     <component name='CADGeometry' level='2'/>
+    <component name='CubeMapTexturing' level='3'/>
     <component name='EnvironmentalSensor' level='3'/>
     <component name='Geospatial' level='2'/>
     <component name='HAnim' level='3'/>
@@ -14,9 +15,9 @@
     <meta name='created' content='Fri, 11 Aug 2023 21:33:17 GMT'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.7.17, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V2.0.0, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/tests/Tools.x3d'/>
-    <meta name='modified' content='Sun, 08 Sep 2024 11:10:25 GMT'/>
+    <meta name='modified' content='Sat, 31 Jan 2026 12:48:24 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='Test'>
@@ -83,13 +84,27 @@
       <DirectionalLight
           global='true'
           color='0.8 0 0'
-          direction='0 1 0'/>
+          direction='0 1 0'>
+        <MetadataSet DEF='DirectionalLight' containerField='metadata'
+            name='DirectionalLight'
+            reference='https://create3000.github.io/sunrize/'>
+          <MetadataFloat DEF='location'
+              name='location'
+              reference='https://create3000.github.io/sunrize/'
+              value='0, 0, 0'/>
+        </MetadataSet>
+      </DirectionalLight>
       <SpotLight
           color='0.4352941 0.6588235 0.8627451'
           location='0 -2 0'
           direction='1 0 0'
           beamWidth='57.29578'
           cutOffAngle='85.94367'/>
+      <EnvironmentLight
+          origin='3 0 0'>
+        <ImageCubeMapTexture containerField='specularTexture'
+            url='"https://cdn.jsdelivr.net/npm/x3d-image@2.2.0/src/images/cannon-exterior.avif"'/>
+      </EnvironmentLight>
     </Group>
     <Group DEF='Viewpoints'>
       <Viewpoint
@@ -103,6 +118,7 @@
     <Group DEF='TextureProjectors'>
       <TextureProjector
           location='0 1 0'
+          upVector='0 0 1'
           nearDistance='1'
           farDistance='10'>
         <PixelTexture DEF='_2'
@@ -112,6 +128,7 @@
       </TextureProjector>
       <TextureProjectorParallel
           location='0 -1 0'
+          upVector='0 0 1'
           nearDistance='1'
           farDistance='10'>
         <PixelTexture USE='_2'/>
