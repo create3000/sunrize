@@ -185,9 +185,9 @@ class SnapTarget extends X3DSnapNodeTool
          index2 = (index0 + 2) % 3;
 
       const axes = [
-         absoluteMatrix .X_AXIS .copy (),
-         absoluteMatrix .Y_AXIS .copy (),
-         absoluteMatrix .Z_AXIS .copy (),
+         absoluteMatrix .xAxis .copy (),
+         absoluteMatrix .yAxis .copy (),
+         absoluteMatrix .zAxis .copy (),
       ]; // Rotation axis, equates to grid normal.
 
       const

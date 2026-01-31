@@ -2585,9 +2585,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       {
          const
             bboxMatrix = subBBoxes [0] .matrix,
-            bboxXAxes  = bboxMatrix .X_AXIS .norm () ? bboxMatrix .X_AXIS : X3D .Vector3 .X_AXIS,
-            bboxYAxes  = bboxMatrix .Y_AXIS .norm () ? bboxMatrix .Y_AXIS : X3D .Vector3 .Y_AXIS,
-            bboxZAxes  = bboxMatrix .Z_AXIS .norm () ? bboxMatrix .Z_AXIS : X3D .Vector3 .Z_AXIS;
+            bboxXAxes  = bboxMatrix .xAxis .norm () ? bboxMatrix .xAxis : X3D .Vector3 .X_AXIS,
+            bboxYAxes  = bboxMatrix .yAxis .norm () ? bboxMatrix .yAxis : X3D .Vector3 .Y_AXIS,
+            bboxZAxes  = bboxMatrix .zAxis .norm () ? bboxMatrix .zAxis : X3D .Vector3 .Z_AXIS;
 
          const axes = [
             bboxXAxes .copy (),            // right

@@ -148,11 +148,12 @@ module .exports = class OutlineView extends Interface
    {
       this .onDemandToolNodes = new Set ([
          X3D .X3DConstants .DirectionalLight,
+         X3D .X3DConstants .EnvironmentLight,
          X3D .X3DConstants .ListenerPointSource,
          X3D .X3DConstants .PointLight,
-         X3D .X3DConstants .SpotLight,
          X3D .X3DConstants .Sound,
          X3D .X3DConstants .SpatialSound,
+         X3D .X3DConstants .SpotLight,
          X3D .X3DConstants .ViewpointGroup,
          X3D .X3DConstants .X3DEnvironmentalSensorNode,
          X3D .X3DConstants .X3DTextureProjectorNode,

@@ -220,22 +220,22 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
          index2 = (index0 + 2) % 3;
 
       const y = [
-         absoluteMatrix .X_AXIS .copy (),
-         absoluteMatrix .Y_AXIS .copy (),
-         absoluteMatrix .Z_AXIS .copy (),
+         absoluteMatrix .xAxis .copy (),
+         absoluteMatrix .yAxis .copy (),
+         absoluteMatrix .zAxis .copy (),
       ]; // Rotation axis, equates to grid normal
 
       const z = [
-         absoluteMatrix .Y_AXIS .copy (),
-         absoluteMatrix .Z_AXIS .copy (),
-         absoluteMatrix .Y_AXIS .copy (),
+         absoluteMatrix .yAxis .copy (),
+         absoluteMatrix .zAxis .copy (),
+         absoluteMatrix .yAxis .copy (),
       ]; // Axis which snaps, later transformed to grid space
 
       const gridMatrix = this .getGridMatrix ();
 
       const
          Y         = y [index1] .copy () .cross (y [index2]) .normalize (), // Normal of rotation plane
-         X         = gridMatrix .Y_AXIS .copy () .cross (Y), // Intersection between both planes
+         X         = gridMatrix .yAxis .copy () .cross (Y), // Intersection between both planes
          Z         = X .copy () .cross (Y), // Front vector
          gridPlane = gridMatrix .submatrix .copy ();
 
@@ -245,7 +245,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 
       // If X or Z are near 0 then Y is collinear to the y-axis.
 
-      if (1 - Math .abs (gridMatrix .Y_AXIS .normalize () .dot (Y)) < 1e-6)
+      if (1 - Math .abs (gridMatrix .yAxis .normalize () .dot (Y)) < 1e-6)
       {
          rotationPlane = new X3D .Matrix3 ();
          gridRotation  = new X3D .Matrix3 ();
