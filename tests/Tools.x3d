@@ -17,7 +17,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V2.0.1, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/tests/Tools.x3d'/>
-    <meta name='modified' content='Sun, 01 Feb 2026 10:34:18 GMT'/>
+    <meta name='modified' content='Sun, 01 Feb 2026 18:58:14 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='Test'>
@@ -43,11 +43,11 @@
           center='0 -2 0'/>
     </Group>
     <Group DEF='Grouping'>
-      <Group DEF='_1'
+      <Group DEF='_3'
           bboxSize='1 1 1'/>
       <Transform
           center='3.138767 0 0'>
-        <Group USE='_1'/>
+        <Group USE='_3'/>
       </Transform>
       <StaticGroup
           bboxSize='1 1 1'/>
@@ -56,16 +56,18 @@
     </Group>
     <Group DEF='HAnim'>
       <HAnimHumanoid>
-        <Group USE='_1' containerField='skin'/>
+        <Group USE='_3' containerField='skin'/>
       </HAnimHumanoid>
       <HAnimJoint>
-        <Group USE='_1'/>
+        <HAnimJoint
+            translation='-2 0 0'
+            bboxSize='1 1 1'/>
       </HAnimJoint>
       <HAnimSegment>
-        <Group USE='_1'/>
+        <Group USE='_3'/>
       </HAnimSegment>
       <HAnimSite>
-        <Group USE='_1'/>
+        <Group USE='_3'/>
       </HAnimSite>
     </Group>
     <LayerSet
