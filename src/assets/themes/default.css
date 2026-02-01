@@ -750,7 +750,7 @@ body.dark .dialog ::placeholder {
 }
 
 .dialog.ui-dialog {
-  z-index: 2000 !important;
+  z-index: 4000 !important;
 }
 
 .dialog.ui-dialog .ui-dialog-content {
