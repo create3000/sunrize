@@ -15,15 +15,17 @@
     <meta name='created' content='Fri, 11 Aug 2023 21:33:17 GMT'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V2.0.0, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V2.0.1, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/tests/Tools.x3d'/>
-    <meta name='modified' content='Sat, 31 Jan 2026 12:48:24 GMT'/>
+    <meta name='modified' content='Sun, 01 Feb 2026 10:34:18 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='Test'>
       <ProtoBody>
-        <Transform
-            bboxSize='1 1 1'/>
+        <Transform>
+          <Group
+              bboxSize='1 1 1'/>
+        </Transform>
       </ProtoBody>
     </ProtoDeclare>
     <Viewpoint/>
