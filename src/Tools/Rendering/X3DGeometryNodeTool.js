@@ -47,6 +47,19 @@ class X3DGeometryNodeTool extends X3DNodeTool
 
       this .tool .linesCoord .point = points;
    }
+
+   traverseBefore (type, renderObject)
+   {
+      this .node .traverseBefore ?.(type, renderObject);
+   }
+
+   traverseAfter (type, renderObject)
+   {
+      if (this .isNodeTraversable (type))
+         this .node .traverseAfter ?.(type, renderObject);
+
+      this .traverse (type, renderObject);
+   }
 }
 
 module .exports = X3DGeometryNodeTool;

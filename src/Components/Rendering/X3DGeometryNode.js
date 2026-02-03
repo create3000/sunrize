@@ -160,6 +160,7 @@ Object .assign (X3D .X3DGeometryNode .prototype,
       geometry ._tangent  .getValue () ?.setup ();
       geometry ._normal   .getValue () ?.setup ();
       geometry ._coord    .getValue () ?.setup ();
+
       geometry .setup ();
 
       return geometry;

@@ -35,7 +35,7 @@ class AngleGridTool extends X3DGridNodeTool
       if (Math .abs (snapAngle - angle) > Math .abs (this .tool .snapDistance * phi) || this .tool .dimension [1] === 0)
          snapAngle = angle;
 
-      const snapPolar = X3D .Complex .Polar (snapRadius, snapAngle);
+      const snapPolar = X3D .Complex .fromPolar (snapRadius, snapAngle);
 
       translation .x = snapPolar .real;
       translation .z = snapPolar .imag;
