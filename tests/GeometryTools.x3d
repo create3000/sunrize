@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
-<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.1//EN" "https://www.web3d.org/specifications/x3d-4.1.dtd">
+<X3D profile='Interchange' version='4.1' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.1.xsd'>
   <head>
     <component name='Geometry2D' level='2'/>
+    <component name='Layout' level='2'/>
+    <component name='Text' level='2'/>
     <meta name='created' content='Tue, 28 Nov 2023 18:23:35 GMT'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.7.63, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Wed, 09 Apr 2025 18:33:01 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V2.0.1, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Wed, 04 Feb 2026 00:04:57 GMT'/>
   </head>
   <Scene>
     <Viewpoint
@@ -61,7 +63,8 @@
           <Material/>
         </Appearance>
         <Cone
-            height='1'/>
+            height='0.9664815'
+            solid='false'/>
       </Shape>
     </Transform>
     <Transform DEF='Cone_1'
@@ -155,7 +158,7 @@
           <Material/>
         </Appearance>
         <Rectangle2D
-            size='1 1'/>
+            size='1.797968 1.797968'/>
       </Shape>
     </Transform>
     <Transform DEF='Circle2D_1'
@@ -246,17 +249,27 @@
             outerRadius='0.6523092'/>
       </Shape>
     </Transform>
-    <Transform DEF='Polypoint2D'
-        translation='9.693389 -2.482184 0'
-        scale='0.4200323 0.4200323 0.4200323'>
+    <Transform DEF='PointSet_1'
+        translation='7.536604 -2.315353 0'>
       <Shape>
-        <Appearance>
+        <Appearance DEF='_1'>
           <PointProperties
               pointSizeScaleFactor='5'
               pointSizeMinValue='5'
               pointSizeMaxValue='5'/>
           <UnlitMaterial/>
         </Appearance>
+        <PointSet>
+          <Coordinate
+              point='1 1 0, -1 1 0, -1 -1 0, 1 -1 0'/>
+        </PointSet>
+      </Shape>
+    </Transform>
+    <Transform DEF='Polypoint2D'
+        translation='9.693389 -2.482184 0'
+        scale='0.4200323 0.4200323 0.4200323'>
+      <Shape>
+        <Appearance USE='_1'/>
         <Polypoint2D
             point='0 0, 1 1, 2 0, 3 2, 4 0'/>
       </Shape>
@@ -270,6 +283,43 @@
         </Appearance>
         <TriangleSet2D
             vertices='0 0, 2 0, 1 1, 2 0, 4 0, 3 2'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='Text'
+        translation='-6.057673 -4.730484 0'>
+      <Shape>
+        <Appearance>
+          <Material/>
+        </Appearance>
+        <Text
+            string='"3D Text"'>
+          <FontStyle/>
+        </Text>
+      </Shape>
+    </Transform>
+    <Transform DEF='ScreenText_1'
+        translation='0 -4.485565 0'>
+      <Shape>
+        <Appearance>
+          <Material/>
+        </Appearance>
+        <Text
+            string='"3D Text"'>
+          <ScreenFontStyle/>
+        </Text>
+      </Shape>
+    </Transform>
+    <Transform DEF='IndexedLineSet_1'
+        translation='17.37386 -1.974626 0'>
+      <Shape>
+        <Appearance>
+          <UnlitMaterial/>
+        </Appearance>
+        <IndexedLineSet
+            coordIndex='0, 1, 2, 3, 0, -1'>
+          <Coordinate
+              point='1 1 0, -1 1 0, -1 -1 0, 1 -1 0'/>
+        </IndexedLineSet>
       </Shape>
     </Transform>
   </Scene>
