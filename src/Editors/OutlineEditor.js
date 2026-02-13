@@ -1431,7 +1431,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       // Add undo step.
 
-      UndoManager .shared .beginUndo (_("Update Image from File"));
+      UndoManager .shared .beginUndo (_("Negate Normals"));
 
       Editor .setFieldValue (executionContext, normalNode, normalNode ._vector, normals);
 
