@@ -351,6 +351,15 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
                      continue;
                   }
+                  case X3D .X3DConstants .Normal:
+                  {
+                     menu .push ({
+                        label: _("Negate Normals"),
+                        args: ["negateNormals", element .attr ("id"), executionContext .getId (), node .getId ()],
+                     });
+
+                     continue;
+                  }
                   case X3D .X3DConstants .X3DPrototypeInstance:
                   {
                      if (!$.try (() => node .getInnerNode ()))
@@ -1409,6 +1418,22 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       UndoManager .shared .beginUndo (_("Update Image from File"));
 
       Editor .setFieldValue (executionContext, pixelTextureNode, pixelTextureNode ._image, image);
+
+      UndoManager .shared .endUndo ();
+   }
+
+   async negateNormals (id, executionContextId, nodeId)
+   {
+      const
+         executionContext = this .objects .get (executionContextId),
+         normalNode       = this .objects .get (nodeId),
+         normals          = normalNode ._vector .map (v => v .negate ());
+
+      // Add undo step.
+
+      UndoManager .shared .beginUndo (_("Update Image from File"));
+
+      Editor .setFieldValue (executionContext, normalNode, normalNode ._vector, normals);
 
       UndoManager .shared .endUndo ();
    }
