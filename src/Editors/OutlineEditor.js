@@ -354,8 +354,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                   case X3D .X3DConstants .Normal:
                   {
                      menu .push ({
-                        label: _("Negate Normals"),
-                        args: ["negateNormals", element .attr ("id"), executionContext .getId (), node .getId ()],
+                        label: _("Negate Normal Vectors"),
+                        args: ["negateNormalVectors", element .attr ("id"), executionContext .getId (), node .getId ()],
                      });
 
                      continue;
@@ -1422,7 +1422,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       UndoManager .shared .endUndo ();
    }
 
-   async negateNormals (id, executionContextId, nodeId)
+   async negateNormalVectors (id, executionContextId, nodeId)
    {
       const
          executionContext = this .objects .get (executionContextId),
@@ -1431,7 +1431,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       // Add undo step.
 
-      UndoManager .shared .beginUndo (_("Negate Normals"));
+      UndoManager .shared .beginUndo (_("Negate Normal Vectors"));
 
       Editor .setFieldValue (executionContext, normalNode, normalNode ._vector, normals);
 
