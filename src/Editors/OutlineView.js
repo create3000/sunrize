@@ -1917,6 +1917,37 @@ module .exports = class OutlineView extends Interface
       if (description)
          title += `Description:\n\n${description}`;
 
+      for (const type of node .getType () .toReversed ())
+      {
+         switch (type)
+         {
+            case X3D .X3DConstants .X3DGeometryNode:
+            {
+               const numVertices = node .getVertices () .length / 4;
+
+               title += "\n\n";
+
+               switch (node .getGeometryType ())
+               {
+                  case 0:
+                     title += `Number of Points: ${(numVertices) .toLocaleString (_.locale)}`;
+                     break
+                  case 1:
+                     title += `Number of Lines: ${(numVertices / 2) .toLocaleString (_.locale)}`;
+                     break
+                  case 2:
+                  case 3:
+                     title += `Number of Triangles: ${(numVertices / 3) .toLocaleString (_.locale)}`;
+                     break
+               }
+
+               continue;
+            }
+            default:
+               continue;
+         }
+      }
+
       return title;
    }
 
