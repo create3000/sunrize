@@ -675,16 +675,19 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static getUsedComponents (scene)
    {
-      const components = new Set ();
+      const components = new Map ();
 
       for (const object of scene .traverse (Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES | Traverse .PROTOTYPE_INSTANCES))
       {
          if (!(object instanceof X3D .SFNode))
             continue;
 
-         const node = object .getValue ();
+         const
+            node          = object .getValue (),
+            componentInfo = node .getComponentInfo ();
 
-         components .add (node .getComponentInfo () .name);
+         if (components .get (componentInfo .name) ?? 0 < componentInfo .level)
+            components .set (componentInfo .name, componentInfo .level);
       }
 
       return components;
@@ -694,13 +697,23 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       const profiles = ["Interactive", "Interchange", "Immersive", "Full"] .map (name =>
       {
-         return { profile: browser .getProfile (name), components: new Set (usedComponents) };
+         return { profile: browser .getProfile (name), components: new Map (usedComponents) };
       });
 
-      profiles .forEach (object =>
+      profiles .forEach (({ profile, components }) =>
       {
-         for (const component of object .profile .components)
-            object .components .delete (component .name);
+         for (const component of profile .components)
+         {
+            const level = components .get (component .name);
+
+            if (level === undefined)
+               continue;
+
+            if (level > component .level)
+               continue;
+
+            components .delete (component .name);
+         }
       });
 
       const min = profiles .reduce ((min, object) =>
@@ -716,7 +729,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       return {
          profile: min .object .profile,
-         components: Array .from (min .object .components) .sort () .map (name => browser .getSupportedComponents () .get (name)),
+         components: Array .from (min .object .components .keys ())
+            .sort ()
+            .map (name => browser .getComponent (name)),
       };
    }
 
