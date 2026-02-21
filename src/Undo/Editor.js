@@ -616,6 +616,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             }
          }
 
+         if (node ._url .equals (newURL))
+            return;
+
          const uniqueURL = new X3D .MFString (... new Set (newURL));
 
          this .setFieldValue (executionContext, node, node ._url, uniqueURL, undoManager);
