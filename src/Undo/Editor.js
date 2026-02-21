@@ -727,8 +727,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          ]) .size;
 
          return min .count < count ? min : {
-            count: count,
-            object: object,
+            count,
+            object,
          };
       },
       { count: Number .POSITIVE_INFINITY });
