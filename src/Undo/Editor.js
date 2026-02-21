@@ -698,7 +698,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
    static getProfileAndComponentsFromUsedComponents (browser, usedComponents)
    {
-      const profiles = ["Core", "Interchange", "Interactive", "Immersive", "Full"] .map (name =>
+      const profiles = ["Interchange", "Interactive", "Immersive", "Full"] .map (name =>
       {
          return { profile: browser .getProfile (name), components: new Map (usedComponents) };
       });
