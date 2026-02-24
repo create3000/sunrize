@@ -737,7 +737,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          profile: min .object .profile,
          components: Array .from (min .object .components .keys ())
             .sort ()
-            .map (name => browser .getComponent (name)),
+            .map (name => browser .getComponent (name, min .object .components .get (name))),
       };
    }
 
