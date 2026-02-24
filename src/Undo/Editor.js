@@ -719,7 +719,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          }
       });
 
-      const min = profiles .reduce ((min, object) =>
+      const { object } = profiles .reduce ((min, object) =>
       {
          const count = new Set ([
             ... [... object .profile .components] .map (component => component .name),
@@ -734,10 +734,10 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       { count: Number .POSITIVE_INFINITY });
 
       return {
-         profile: min .object .profile,
-         components: Array .from (min .object .components .keys ())
+         profile: object .profile,
+         components: Array .from (object .components .keys ())
             .sort ()
-            .map (name => browser .getComponent (name, min .object .components .get (name))),
+            .map (name => browser .getComponent (name, object .components .get (name))),
       };
    }
 
