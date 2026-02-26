@@ -123,16 +123,31 @@ module .exports = class Materials extends LibraryPane
 
    convertPhongToPBR (phong)
    {
-      const
+      let
          baseColor         = phong .diffuseColor,
          specularIntensity = Math .max (... phong .specularColor),
          metallic          = Math .min (Math .max ((specularIntensity - 0.04) / (1.0 - 0.04), 0), 1),
-         roughness         = Math .sqrt (1 / (phong .shininess + 1));
+         roughness         = Math .sqrt (1 / (phong .shininess + 1)),
+         transparency      = phong .transparency,
+         extensions        = "";
+
+      if (transparency)
+      {
+         metallic  *= 0.4 * (1 - transparency);
+         roughness *= 0.4 * (1 - transparency);
+
+         extensions += `TransmissionMaterialExtension {
+            transmission ${transparency ** (1/3)}
+         }\n`;
+      }
 
       return `DEF ${phong .getNodeName ()} PhysicalMaterial {
          baseColor ${baseColor}
          metallic ${metallic}
          roughness ${roughness}
+         extensions [
+            ${extensions}
+         ]
       }`;
    }
 };
