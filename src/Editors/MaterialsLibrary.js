@@ -116,6 +116,21 @@ module .exports = class Materials extends LibraryPane
    {
       const pbr = this .#pbrButton .is (":checked");
 
-      this .importX3D (material .getNodeName (), material .toXMLString ());
+      this .importX3D (material .getNodeName (), pbr ? this .convertPhongToPBR (material) : material .toXMLString ());
+   }
+
+   convertPhongToPBR (phong)
+   {
+      const
+         baseColor     = phong .diffuseColor,
+         roughness     = Math. sqrt (1 / (phong .shininess + 1)),
+         specIntensity = Math .max (... phong .specularColor),
+         metallic      = Math .min (Math .max ((specIntensity - 0.04) / (1.0 - 0.04), 0), 1);
+
+      return `DEF ${phong .getNodeName ()} PhysicalMaterial {
+         baseColor ${baseColor}
+         metallic ${metallic}
+         roughness ${roughness}
+      }`;
    }
 };
