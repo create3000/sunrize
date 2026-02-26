@@ -122,10 +122,10 @@ module .exports = class Materials extends LibraryPane
    convertPhongToPBR (phong)
    {
       const
-         baseColor     = phong .diffuseColor,
-         roughness     = Math. sqrt (1 / (phong .shininess + 1)),
-         specIntensity = Math .max (... phong .specularColor),
-         metallic      = Math .min (Math .max ((specIntensity - 0.04) / (1.0 - 0.04), 0), 1);
+         baseColor         = phong .diffuseColor,
+         specularIntensity = Math .max (... phong .specularColor),
+         metallic          = Math .min (Math .max ((specularIntensity - 0.04) / (1.0 - 0.04), 0), 1),
+         roughness         = Math. sqrt (1 / (phong .shininess + 1));
 
       return `DEF ${phong .getNodeName ()} PhysicalMaterial {
          baseColor ${baseColor}
