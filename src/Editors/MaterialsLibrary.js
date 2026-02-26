@@ -33,6 +33,23 @@ module .exports = class Materials extends LibraryPane
          browser = canvas .prop ("browser"),
          scene   = await browser .createX3DFromURL (new X3D .MFString (`file://${__dirname}/Materials.x3d`));
 
+      const buttons = $("<li></li>")
+         .appendTo (this .#list);
+
+      // Buttons
+
+      $("<input></input>")
+         .attr ("type", "checkbox")
+         .attr ("id", "use-physical-material")
+         .appendTo (buttons);
+
+      $("<label></label>")
+         .attr ("for", "use-physical-material")
+         .text ("Create Physical Material")
+         .appendTo (buttons);
+
+      // Materials
+
       const
          materials = scene .getExportedNode ("Materials"),
          viewpoint = scene .getExportedNode ("Viewpoint"),
