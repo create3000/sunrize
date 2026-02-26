@@ -11,6 +11,7 @@ module .exports = class Materials extends LibraryPane
    description = "Materials";
 
    #list;
+   #pbrButton;
 
    async update ()
    {
@@ -38,7 +39,7 @@ module .exports = class Materials extends LibraryPane
 
       // Buttons
 
-      $("<input></input>")
+      this .#pbrButton = $("<input></input>")
          .attr ("type", "checkbox")
          .attr ("id", "use-physical-material")
          .appendTo (buttons);
@@ -74,7 +75,7 @@ module .exports = class Materials extends LibraryPane
                   .addClass ("text")
                   .text (`${group .getNodeName ()} ${c + 1}`))
                .appendTo (this .#list)
-               .on ("dblclick", () => this .importX3D (material .getNodeName (), material .toXMLString ())));
+               .on ("dblclick", () => this .importMaterial (material)));
          }
       }
 
@@ -109,5 +110,12 @@ module .exports = class Materials extends LibraryPane
 
       browser .dispose ();
       canvas .remove ();
+   }
+
+   importMaterial (material)
+   {
+      const pbr = this .#pbrButton .is (":checked");
+
+      this .importX3D (material .getNodeName (), material .toXMLString ());
    }
 };
