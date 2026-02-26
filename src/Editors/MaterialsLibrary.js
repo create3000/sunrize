@@ -42,6 +42,8 @@ module .exports = class Materials extends LibraryPane
       this .#pbrButton = $("<input></input>")
          .attr ("type", "checkbox")
          .attr ("id", "use-physical-material")
+         .prop ("checked", this .config .global .convertToPBR)
+         .on ("change", () => this .config .global .convertToPBR = this .#pbrButton .is (":checked"))
          .appendTo (buttons);
 
       $("<label></label>")
@@ -125,7 +127,7 @@ module .exports = class Materials extends LibraryPane
          baseColor         = phong .diffuseColor,
          specularIntensity = Math .max (... phong .specularColor),
          metallic          = Math .min (Math .max ((specularIntensity - 0.04) / (1.0 - 0.04), 0), 1),
-         roughness         = Math. sqrt (1 / (phong .shininess + 1));
+         roughness         = Math .sqrt (1 / (phong .shininess + 1));
 
       return `DEF ${phong .getNodeName ()} PhysicalMaterial {
          baseColor ${baseColor}
