@@ -136,7 +136,8 @@ module .exports = class Materials extends LibraryPane
       if (specularColor .some (Boolean))
       {
          extensions += `SpecularMaterialExtension {
-            specularColor ${specularColor .map (c => c * 10)}
+            specularColor ${specularColor}
+            specularStrength 10
          }\n`;
       }
 
