@@ -150,7 +150,6 @@ module .exports = class Materials extends LibraryPane
 
       if (transparency)
       {
-
          const transmissionMaterial = executionContext .createNode ("TransmissionMaterialExtension");
 
          transmissionMaterial .transmission = transmission;
