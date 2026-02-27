@@ -446,7 +446,7 @@ DEF ScreenText Transform {
       componentInfo: { name: "Lighting" },
       typeName: "EnvironmentLight Cannon Exterior",
       x3dSyntax: `
-EnvironmentLight {
+DEF CannonExterior EnvironmentLight {
    specularTexture ImageCubeMapTexture {
       url "https://cdn.jsdelivr.net/npm/x3d-image@2.2.0/src/images/cannon-exterior.avif"
    }
@@ -457,7 +457,7 @@ EnvironmentLight {
       componentInfo: { name: "Lighting" },
       typeName: "EnvironmentLight Helipad",
       x3dSyntax: `
-EnvironmentLight {
+DEF Helipad EnvironmentLight {
    specularTexture ImageCubeMapTexture {
       url "https://cdn.jsdelivr.net/npm/x3d-image@2.2.0/src/images/helipad.avif"
    }
@@ -468,7 +468,7 @@ EnvironmentLight {
       componentInfo: { name: "Lighting" },
       typeName: "EnvironmentLight Footprint Court",
       x3dSyntax: `
-EnvironmentLight {
+DEF FootprintCourt EnvironmentLight {
    specularTexture ImageCubeMapTexture {
       url "https://cdn.jsdelivr.net/npm/x3d-image@2.2.0/src/images/footprint-court.avif"
    }
