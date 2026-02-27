@@ -131,6 +131,7 @@ module .exports = class Materials extends LibraryPane
          roughness         = Math .sqrt (1 / (phong .shininess + 1)),
          emissiveColor     = phong .emissiveColor .sRGBToLinear (),
          transparency      = phong .transparency,
+         transmission      = transparency ** (1/3),
          extensions        = "";
 
       if (specularColor .some (Boolean))
@@ -146,7 +147,7 @@ module .exports = class Materials extends LibraryPane
          roughness *= 0.5 * (1 - transparency);
 
          extensions += `TransmissionMaterialExtension {
-            transmission ${transparency ** (1/3)}
+            transmission ${transmission}
          }\n`;
       }
 
