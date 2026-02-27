@@ -34,6 +34,8 @@ module .exports = class Materials extends LibraryPane
          browser = canvas .prop ("browser"),
          scene   = await browser .createX3DFromURL (new X3D .MFString (`file://${__dirname}/Materials.x3d`));
 
+      scene .addComponent (browser .getComponent ("X_ITE"));
+
       const buttons = $("<li></li>")
          .appendTo (this .#list);
 
@@ -114,16 +116,19 @@ module .exports = class Materials extends LibraryPane
       canvas .remove ();
    }
 
-   importMaterial (material)
+   importMaterial (phong)
    {
-      const pbr = this .#pbrButton .is (":checked");
+      const
+         pbr      = this .#pbrButton .is (":checked"),
+         material = pbr ? this .convertPhongToPBR (phong .getValue () .getExecutionContext (), phong) : phong;
 
-      this .importX3D (material .getNodeName (), pbr ? this .convertPhongToPBR (material) : material .toXMLString ());
+      this .importX3D (material .getNodeName (), material .toXMLString ());
    }
 
-   convertPhongToPBR (phong)
+   convertPhongToPBR (executionContext, phong)
    {
       let
+         physical          = executionContext .createNode ("PhysicalMaterial"),
          baseColor         = phong .diffuseColor .sRGBToLinear (),
          specularColor     = [... phong .specularColor .sRGBToLinear ()],
          specularIntensity = Math .max (... specularColor),
@@ -131,34 +136,35 @@ module .exports = class Materials extends LibraryPane
          roughness         = Math .sqrt (1 / (phong .shininess + 1)),
          emissiveColor     = phong .emissiveColor .sRGBToLinear (),
          transparency      = phong .transparency,
-         transmission      = transparency ** (1/3),
-         extensions        = "";
+         transmission      = transparency ** (1/3);
 
       if (specularColor .some (Boolean))
       {
-         extensions += `SpecularMaterialExtension {
-            specularColor ${specularColor}
-            specularStrength 10
-         }\n`;
+         const specularMaterial = executionContext .createNode ("SpecularMaterialExtension");
+
+         specularMaterial .specularColor    = specularColor;
+         specularMaterial .specularStrength = 10;
+
+         physical .extensions .push (specularMaterial);
       }
 
       if (transparency)
       {
-         roughness *= 0.5 * (1 - transparency);
 
-         extensions += `TransmissionMaterialExtension {
-            transmission ${transmission}
-         }\n`;
+         const transmissionMaterial = executionContext .createNode ("TransmissionMaterialExtension");
+
+         transmissionMaterial .transmission = transmission;
+
+         physical .extensions .push (transmissionMaterial);
+
+         roughness *= 0.5 * (1 - transparency);
       }
 
-      return `DEF ${phong .getNodeName ()} PhysicalMaterial {
-         baseColor ${baseColor}
-         metallic ${metallic}
-         roughness ${roughness}
-         emissiveColor ${emissiveColor}
-         extensions [
-            ${extensions}
-         ]
-      }`;
+      physical .baseColor     = baseColor;
+      physical .metallic      = metallic;
+      physical .roughness     = roughness;
+      physical .emissiveColor = emissiveColor;
+
+      return physical;
    }
 };
