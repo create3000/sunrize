@@ -125,14 +125,16 @@ module .exports = class Materials extends LibraryPane
    {
       let
          baseColor         = phong .diffuseColor .sRGBToLinear (),
-         specularIntensity = Math .max (... phong .specularColor .sRGBToLinear ()),
+         specularColor     = phong .specularColor .sRGBToLinear (),
+         specularIntensity = Math .max (... specularColor),
          metallic          = Math .min (Math .max ((specularIntensity - 0.04) / (1.0 - 0.04), 0), 1),
          roughness         = Math .sqrt (1 / (phong .shininess + 1)),
+         emissiveColor     = phong .emissiveColor .sRGBToLinear (),
          transparency      = phong .transparency,
          extensions        = "";
 
       extensions += `SpecularMaterialExtension {
-         specularColor ${phong .specularColor .sRGBToLinear ()}
+         specularColor ${specularColor}
       }\n`;
 
       if (transparency)
@@ -149,6 +151,7 @@ module .exports = class Materials extends LibraryPane
          baseColor ${baseColor}
          metallic ${metallic}
          roughness ${roughness}
+         emissiveColor ${emissiveColor}
          extensions [
             ${extensions}
          ]
