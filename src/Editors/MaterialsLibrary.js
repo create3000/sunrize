@@ -124,17 +124,21 @@ module .exports = class Materials extends LibraryPane
    convertPhongToPBR (phong)
    {
       let
-         baseColor         = phong .diffuseColor,
-         specularIntensity = Math .max (... phong .specularColor),
+         baseColor         = phong .diffuseColor .sRGBToLinear (),
+         specularIntensity = Math .max (... phong .specularColor .sRGBToLinear ()),
          metallic          = Math .min (Math .max ((specularIntensity - 0.04) / (1.0 - 0.04), 0), 1),
          roughness         = Math .sqrt (1 / (phong .shininess + 1)),
          transparency      = phong .transparency,
          extensions        = "";
 
+      extensions += `SpecularMaterialExtension {
+         specularColor ${phong .specularColor .sRGBToLinear ()}
+      }\n`;
+
       if (transparency)
       {
-         metallic  *= 0.4 * (1 - transparency);
-         roughness *= 0.4 * (1 - transparency);
+         metallic  *= 0.5 * (1 - transparency);
+         roughness *= 0.5 * (1 - transparency);
 
          extensions += `TransmissionMaterialExtension {
             transmission ${transparency ** (1/3)}
