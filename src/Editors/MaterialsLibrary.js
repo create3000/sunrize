@@ -3,7 +3,8 @@
 const
    $           = require ("jquery"),
    X3D         = require ("../X3D"),
-   LibraryPane = require ("./LibraryPane");
+   LibraryPane = require ("./LibraryPane"),
+   _           = require ("../Application/GetText");
 
 module .exports = class Materials extends LibraryPane
 {
@@ -42,6 +43,7 @@ module .exports = class Materials extends LibraryPane
       // Buttons
 
       this .#pbrButton = $("<input></input>")
+         .attr ("title", _("Requires an EnvironmentLight."))
          .attr ("type", "checkbox")
          .attr ("id", "use-physical-material")
          .prop ("checked", this .config .global .convertToPBR)
@@ -49,8 +51,9 @@ module .exports = class Materials extends LibraryPane
          .appendTo (buttons);
 
       $("<label></label>")
+         .attr ("title", _("Requires an EnvironmentLight."))
          .attr ("for", "use-physical-material")
-         .text ("Create Physical Material")
+         .text (_("Create Physical Material"))
          .appendTo (buttons);
 
       // Materials
