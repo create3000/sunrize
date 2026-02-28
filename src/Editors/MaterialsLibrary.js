@@ -76,6 +76,7 @@ module .exports = class Materials extends LibraryPane
 
             nodes .push ($("<li></li>")
                .addClass (["node", "icon"])
+               .attr ("title", material .getNodeDisplayName ())
                .attr ("group", g)
                .attr ("child", c)
                .append ($("<span></span>")
@@ -192,7 +193,7 @@ module .exports = class Materials extends LibraryPane
 
          physical .extensions .push (specularMaterial);
 
-         metallic   = 0.1;
+         metallic  *= 0.1;
          roughness *= 0.5;
       }
 
