@@ -138,7 +138,7 @@ module .exports = class Materials extends LibraryPane
          transparency      = phong .transparency,
          transmission      = transparency ** (1/3);
 
-      if (specularColor .some (Boolean))
+      if (specularColor .some (Boolean) && phong .shininess)
       {
          const specularMaterial = executionContext .createNode ("SpecularMaterialExtension");
 
