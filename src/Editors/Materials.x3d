@@ -8,7 +8,7 @@
     <meta name='created' content='Thu, 04 Jul 2024 10:54:01 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V2.0.4, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sat, 28 Feb 2026 21:16:23 GMT'/>
+    <meta name='modified' content='Sat, 28 Feb 2026 21:33:44 GMT'/>
   </head>
   <Scene>
     <Background
@@ -20,7 +20,7 @@
     </Viewpoint>
     <EnvironmentLight DEF='CannonExterior'>
       <ImageCubeMapTexture containerField='specularTexture'
-          url='"https://cdn.jsdelivr.net/npm/x3d-image@2.2.0/src/images/cannon-exterior.avif"'/>
+          url='"CannonExterior.avif"'/>
     </EnvironmentLight>
     <Switch DEF='Materials'
         whichChoice='0'>

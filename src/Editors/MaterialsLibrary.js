@@ -3,7 +3,8 @@
 const
    $           = require ("jquery"),
    X3D         = require ("../X3D"),
-   LibraryPane = require ("./LibraryPane");
+   LibraryPane = require ("./LibraryPane"),
+   _           = require ("../Application/GetText");
 
 module .exports = class Materials extends LibraryPane
 {
@@ -43,6 +44,7 @@ module .exports = class Materials extends LibraryPane
          .appendTo (this .#list);
 
       this .#physicalButton = $("<input></input>")
+         .attr ("title", _("Requires an EnvironmentLight node."))
          .attr ("type", "checkbox")
          .attr ("id", "use-physical-material")
          .prop ("checked", this .config .global .convertToPhysical)
@@ -50,8 +52,9 @@ module .exports = class Materials extends LibraryPane
          .appendTo (buttons);
 
       $("<label></label>")
+         .attr ("title", _("Requires an EnvironmentLight node."))
          .attr ("for", "use-physical-material")
-         .text ("Create Physical Material")
+         .text (_("Create Physical Material"))
          .appendTo (buttons);
 
       // Materials
@@ -79,7 +82,7 @@ module .exports = class Materials extends LibraryPane
                   .addClass ("text")
                   .text (`${group .getNodeName ()} ${c + 1}`))
                .appendTo (this .#list)
-               .on ("dblclick", () => this .importMaterial (material .getNodeName ())));
+               .on ("click", () => this .importMaterial (material .getNodeName ())));
          }
       }
 
@@ -180,14 +183,17 @@ module .exports = class Materials extends LibraryPane
          transparency      = phong .transparency,
          transmission      = transparency ** (1/3);
 
-      if ([... specularColor] .some (Boolean) && phong .shininess)
+      if ([... specularColor] .some (Boolean) && roughness)
       {
          const specularMaterial = executionContext .createNode ("SpecularMaterialExtension");
 
          specularMaterial .specularColor    = specularColor;
-         specularMaterial .specularStrength = 10 * phong .shininess;
+         specularMaterial .specularStrength = 10 * roughness;
 
          physical .extensions .push (specularMaterial);
+
+         metallic   = 0.1;
+         roughness *= 0.5;
       }
 
       if (transparency)
