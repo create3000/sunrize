@@ -2,38 +2,36 @@
 <!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.1//EN" "https://www.web3d.org/specifications/x3d-4.1.dtd">
 <X3D profile='Interchange' version='4.1' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.1.xsd'>
   <head>
-    <component name='CubeMapTexturing' level='2'/>
-    <component name='Grouping' level='2'/>
-    <component name='Lighting' level='3'/>
+    <component name='X_ITE' level='1'/>
     <meta name='created' content='Thu, 04 Jul 2024 10:54:01 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V2.0.4, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sat, 28 Feb 2026 21:16:23 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.7.4, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Thu, 04 Jul 2024 15:40:12 GMT'/>
   </head>
   <Scene>
     <Background
         transparency='1'/>
     <Viewpoint DEF='Viewpoint'
-        position='0 0 20.62705'>
+        position='-5 5 2.65'>
       <NavigationInfo containerField='navigationInfo'
           transitionType='"TELEPORT"'/>
     </Viewpoint>
-    <EnvironmentLight DEF='CannonExterior'>
-      <ImageCubeMapTexture containerField='specularTexture'
-          url='"https://cdn.jsdelivr.net/npm/x3d-image@2.2.0/src/images/cannon-exterior.avif"'/>
-    </EnvironmentLight>
     <Switch DEF='Materials'
         whichChoice='0'>
-      <Switch DEF='Artdeco'>
+      <Switch DEF='Artdeco'
+          whichChoice='0'>
         <Transform
             translation='-5 5 0'>
           <Shape>
             <Appearance>
-              <Material DEF='Artdeco1'
-                  ambientIntensity='0.0706087'
-                  diffuseColor='0.282435 0.0851587 0.134462'
-                  specularColor='0.276305 0.11431 0.139857'
-                  shininess='0.127273'/>
+              <PhysicalMaterial DEF='Artdeco1'
+                  baseColor='0.06194706 0.004431021 0.01210372'
+                  metallic='0.009910216'
+                  roughness='0.872727'>
+                <SpecularMaterialExtension
+                    specularColor='0.05902762 0.008468087 0.01319791'
+                    specularStrength='1.27273'/>
+              </PhysicalMaterial>
             </Appearance>
             <Sphere DEF='_1'/>
           </Shape>

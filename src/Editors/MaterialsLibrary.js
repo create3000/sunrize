@@ -3,16 +3,18 @@
 const
    $           = require ("jquery"),
    X3D         = require ("../X3D"),
-   LibraryPane = require ("./LibraryPane"),
-   _           = require ("../Application/GetText");
+   LibraryPane = require ("./LibraryPane");
 
 module .exports = class Materials extends LibraryPane
 {
    id          = "MATERIALS";
    description = "Materials";
 
+   #scene;
    #list;
-   #pbrButton;
+   #physicalButton;
+   #cancelRendering;
+   #rendering;
 
    async update ()
    {
@@ -35,32 +37,27 @@ module .exports = class Materials extends LibraryPane
          browser = canvas .prop ("browser"),
          scene   = await browser .createX3DFromURL (new X3D .MFString (`file://${__dirname}/Materials.x3d`));
 
-      scene .addComponent (browser .getComponent ("X_ITE"));
+      // Buttons
 
       const buttons = $("<li></li>")
          .appendTo (this .#list);
 
-      // Buttons
-
-      this .#pbrButton = $("<input></input>")
-         .attr ("title", _("Requires an EnvironmentLight."))
+      this .#physicalButton = $("<input></input>")
          .attr ("type", "checkbox")
          .attr ("id", "use-physical-material")
-         .prop ("checked", this .config .global .convertToPBR)
-         .on ("change", () => this .config .global .convertToPBR = this .#pbrButton .is (":checked"))
+         .prop ("checked", this .config .global .convertToPhysical)
+         .on ("change", () => this .#rendering = this .onChangeMaterials ())
          .appendTo (buttons);
 
       $("<label></label>")
-         .attr ("title", _("Requires an EnvironmentLight."))
          .attr ("for", "use-physical-material")
-         .text (_("Create Physical Material"))
+         .text ("Create Physical Material")
          .appendTo (buttons);
 
       // Materials
 
       const
          materials = scene .getExportedNode ("Materials"),
-         viewpoint = scene .getExportedNode ("Viewpoint"),
          nodes     = [ ];
 
       for (const [g, group] of materials .children .entries ())
@@ -82,9 +79,45 @@ module .exports = class Materials extends LibraryPane
                   .addClass ("text")
                   .text (`${group .getNodeName ()} ${c + 1}`))
                .appendTo (this .#list)
-               .on ("dblclick", () => this .importMaterial (material)));
+               .on ("dblclick", () => this .importMaterial (material .getNodeName ())));
          }
       }
+
+      browser .dispose ();
+      canvas .remove ();
+
+      this .#rendering = this .onChangeMaterials ();
+   }
+
+   importMaterial (name)
+   {
+      const material = this .#scene .getNamedNode (name);
+
+      this .importX3D (material .getNodeName (), material .toXMLString ());
+   }
+
+   async onChangeMaterials ()
+   {
+      this .#cancelRendering = true;
+
+      await this .#rendering;
+
+      this .#cancelRendering = false;
+
+      this .config .global .convertToPhysical = this .#physicalButton .is (":checked");
+
+      const
+         canvas  = $("<x3d-canvas preserveDrawingBuffer='true' xrSessionMode='NONE'></x3d-canvas>"),
+         browser = canvas .prop ("browser"),
+         scene   = await browser .createX3DFromURL (new X3D .MFString (`file://${__dirname}/Materials.x3d`));
+
+      scene .addComponent (browser .getComponent ("X_ITE"));
+
+      this .#scene = scene;
+
+      const
+         materials = scene .getExportedNode ("Materials"),
+         viewpoint = scene .getExportedNode ("Viewpoint");
 
       // Create icons.
 
@@ -97,11 +130,26 @@ module .exports = class Materials extends LibraryPane
 
       for (const element of Array .from (this .output .find (".node"), e => $(e)))
       {
+         if (this .#cancelRendering)
+            break;
+
          const
-            group   = element .attr ("group"),
-            child   = element .attr ("child"),
-            section = materials .children [group],
-            node    = section .children [child];
+            group      = element .attr ("group"),
+            child      = element .attr ("child"),
+            section    = materials .children [group],
+            node       = section .children [child],
+            appearance = node .children [0] .appearance;
+
+         if (this .config .global .convertToPhysical)
+         {
+            const material = this .convertPhongToPhysical (scene, appearance .material);
+
+            scene .updateNamedNode (appearance .material .getNodeName (), material);
+
+            appearance .material = material;
+         }
+
+         // console .log (appearance .material .getNodeName ());
 
          materials .whichChoice = group;
          section   .whichChoice = child;
@@ -119,21 +167,12 @@ module .exports = class Materials extends LibraryPane
       canvas .remove ();
    }
 
-   importMaterial (phong)
-   {
-      const
-         pbr      = this .#pbrButton .is (":checked"),
-         material = pbr ? this .convertPhongToPBR (phong .getValue () .getExecutionContext (), phong) : phong;
-
-      this .importX3D (material .getNodeName (), material .toXMLString ());
-   }
-
-   convertPhongToPBR (executionContext, phong)
+   convertPhongToPhysical (executionContext, phong)
    {
       let
          physical          = executionContext .createNode ("PhysicalMaterial"),
          baseColor         = phong .diffuseColor .sRGBToLinear (),
-         specularColor     = [... phong .specularColor .sRGBToLinear ()],
+         specularColor     = phong .specularColor .sRGBToLinear (),
          specularIntensity = Math .max (... specularColor),
          metallic          = Math .min (Math .max ((specularIntensity - 0.04) / (1.0 - 0.04), 0), 1) * 0.5,
          roughness         = 1 - phong .shininess,
@@ -141,7 +180,7 @@ module .exports = class Materials extends LibraryPane
          transparency      = phong .transparency,
          transmission      = transparency ** (1/3);
 
-      if (specularColor .some (Boolean) && phong .shininess)
+      if ([... specularColor] .some (Boolean) && phong .shininess)
       {
          const specularMaterial = executionContext .createNode ("SpecularMaterialExtension");
 
