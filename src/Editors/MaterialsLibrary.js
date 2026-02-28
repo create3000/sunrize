@@ -133,7 +133,7 @@ module .exports = class Materials extends LibraryPane
          specularColor     = [... phong .specularColor .sRGBToLinear ()],
          specularIntensity = Math .max (... specularColor),
          metallic          = Math .min (Math .max ((specularIntensity - 0.04) / (1.0 - 0.04), 0), 1) * 0.5,
-         roughness         = Math .sqrt (1 / (phong .shininess + 1)),
+         roughness         = 1 - phong .shininess,
          emissiveColor     = phong .emissiveColor .sRGBToLinear (),
          transparency      = phong .transparency,
          transmission      = transparency ** (1/3);
@@ -143,7 +143,7 @@ module .exports = class Materials extends LibraryPane
          const specularMaterial = executionContext .createNode ("SpecularMaterialExtension");
 
          specularMaterial .specularColor    = specularColor;
-         specularMaterial .specularStrength = 10;
+         specularMaterial .specularStrength = 10 * phong .shininess;
 
          physical .extensions .push (specularMaterial);
       }
