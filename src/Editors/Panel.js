@@ -29,7 +29,10 @@ module .exports = new class Panel extends Interface
          "top": "unset",
       });
 
-      this .container .on ("mousedown", event => this .onmousedown (event));
+      this .container
+         .on ("mouseenter", event => this .onmouseenter (event))
+         .on ("mouseleave", event => this .onmouseleave (event))
+         .on ("mousedown",  event => this .onmousedown (event));
 
       this .browser .getBrowserOptions () ._ColorSpace .addFieldCallback ("Panel", () => this .updateNode ());
 
@@ -63,6 +66,16 @@ module .exports = new class Panel extends Interface
       this .selection .removeInterest (this);
 
       this .container .hide (300, () => this .removeNode (this .node));
+   }
+
+   onmouseenter ()
+   {
+      this .focussed = true;
+   }
+
+   onmouseleave ()
+   {
+      this .focussed = false;
    }
 
    onmousedown (event)
@@ -652,6 +665,9 @@ module .exports = new class Panel extends Interface
          scene            = this .browser .currentScene,
          executionContext = node .getExecutionContext (),
          category         = field .getUnit ();
+
+      if (!(this .focussed || this .container .find (":focus") .length))
+         return;
 
       this .changing = true;
 
