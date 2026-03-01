@@ -70,12 +70,12 @@ module .exports = new class Panel extends Interface
 
    onmouseenter ()
    {
-      this .focussed = true;
+      this .hovered = true;
    }
 
    onmouseleave ()
    {
-      this .focussed = false;
+      this .hovered = false;
    }
 
    onmousedown (event)
@@ -666,7 +666,7 @@ module .exports = new class Panel extends Interface
          executionContext = node .getExecutionContext (),
          category         = field .getUnit ();
 
-      if (!(this .focussed || this .container .find (":focus") .length))
+      if (!(this .hovered || this .container .find (":focus") .length))
          return;
 
       this .changing = true;
