@@ -416,10 +416,7 @@ module .exports = new class Panel extends Interface
             field .addFieldCallback (this, () =>
             {
                if (this .changing)
-               {
-                  this .changing = false;
                   return;
-               }
 
                this .refresh (parameter, node, field);
                input .refresh ();
@@ -481,10 +478,7 @@ module .exports = new class Panel extends Interface
             field .addFieldCallback (this, () =>
             {
                if (this .changing)
-               {
-                  this .changing = false;
                   return;
-               }
 
                this .refresh (parameter, node, field);
                textarea .val (parameter [field .getName ()]);
@@ -660,6 +654,8 @@ module .exports = new class Panel extends Interface
          category         = field .getUnit ();
 
       this .changing = true;
+
+      this .browser .nextFrame () .then (() => this .changing = false);
 
       switch (field .getType ())
       {
