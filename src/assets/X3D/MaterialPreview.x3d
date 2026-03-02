@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
-<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.1//EN" "https://www.web3d.org/specifications/x3d-4.1.dtd">
+<X3D profile='Interchange' version='4.1' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.1.xsd'>
   <head>
-    <component name='Geometry2D' level='2'/>
+    <component name='CubeMapTexturing' level='2'/>
+    <component name='Geometry2D' level='1'/>
     <component name='Layering' level='1'/>
-    <component name='Layout' level='2'/>
+    <component name='Layout' level='1'/>
     <component name='PointingDeviceSensor' level='1'/>
     <component name='Scripting' level='1'/>
     <meta name='created' content='Thu, 10 Jul 2014 17:28:33 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.7.6, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 19 Jul 2024 18:04:50 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V2.0.6, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Mon, 02 Mar 2026 11:28:07 GMT'/>
   </head>
   <Scene>
     <LayerSet
@@ -44,6 +45,10 @@
             position='0 0 3'>
           <NavigationInfo USE='_1' containerField='navigationInfo'/>
         </Viewpoint>
+        <EnvironmentLight DEF='CannonExterior_1'>
+          <ImageCubeMapTexture containerField='specularTexture'
+              url='"CannonExterior.avif"'/>
+        </EnvironmentLight>
         <DirectionalLight
             ambientIntensity='0.4'/>
         <Group DEF='Models'>

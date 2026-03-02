@@ -36,7 +36,7 @@ module .exports = class MaterialsLibrary extends LibraryPane
       const
          canvas  = $("<x3d-canvas preserveDrawingBuffer='true' xrSessionMode='NONE'></x3d-canvas>"),
          browser = canvas .prop ("browser"),
-         scene   = await browser .createX3DFromURL (new X3D .MFString (`file://${__dirname}/Materials.x3d`));
+         scene   = await browser .createX3DFromURL (new X3D .MFString (`file://${__dirname}/../assets/X3D/Materials.x3d`));
 
       // Buttons
 
@@ -113,7 +113,7 @@ module .exports = class MaterialsLibrary extends LibraryPane
       const
          canvas  = $("<x3d-canvas preserveDrawingBuffer='true' xrSessionMode='NONE'></x3d-canvas>"),
          browser = canvas .prop ("browser"),
-         scene   = await browser .createX3DFromURL (new X3D .MFString (`file://${__dirname}/Materials.x3d`));
+         scene   = await browser .createX3DFromURL (new X3D .MFString (`file://${__dirname}/../assets/X3D/Materials.x3d`));
 
       this .#scene = scene;
 
