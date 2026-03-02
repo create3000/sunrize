@@ -2551,7 +2551,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       return Math .abs (target - value) < epsilon;
    }
 
-   static convertPhongToPhysical (executionContext, phong)
+   static convertPhongToPhysical (executionContext, phong, undoManager = UndoManager .shared)
    {
       let
          browser           = executionContext .getBrowser (),
@@ -2567,8 +2567,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       if ([... specularColor] .some (Boolean) && roughness)
       {
-         if (!executionContext .hasComponent ("X_ITE"))
-            executionContext .addComponent (browser .getComponent ("X_ITE"));
+         if (undoManager && !executionContext .hasComponent ("X_ITE"))
+            this .addComponent (executionContext, browser .getComponent ("X_ITE"), undoManager);
 
          const specularMaterial = executionContext .createNode ("SpecularMaterialExtension");
 
@@ -2583,8 +2583,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       if (transparency)
       {
-         if (!executionContext .hasComponent ("X_ITE"))
-            executionContext .addComponent (browser .getComponent ("X_ITE"));
+         if (undoManager && !executionContext .hasComponent ("X_ITE"))
+            this .addComponent (executionContext, browser .getComponent ("X_ITE"), undoManager);
 
          const transmissionMaterial = executionContext .createNode ("TransmissionMaterialExtension");
 

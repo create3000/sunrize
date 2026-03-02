@@ -116,6 +116,8 @@ module .exports = class MaterialsLibrary extends LibraryPane
          browser = canvas .prop ("browser"),
          scene   = await browser .createX3DFromURL (new X3D .MFString (`file://${__dirname}/../assets/X3D/Materials.x3d`));
 
+      scene .addComponent (browser .getComponent ("X_ITE"));
+
       this .#scene = scene;
 
       const
@@ -145,7 +147,7 @@ module .exports = class MaterialsLibrary extends LibraryPane
 
          if (this .config .global .convertToPhysical)
          {
-            const material = Editor .convertPhongToPhysical (scene, appearance .material);
+            const material = Editor .convertPhongToPhysical (scene, appearance .material, null);
 
             scene .updateNamedNode (appearance .material .getNodeName (), material);
 
