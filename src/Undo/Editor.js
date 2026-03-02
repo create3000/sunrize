@@ -2551,6 +2551,58 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       return Math .abs (target - value) < epsilon;
    }
 
+   static convertPhongToPhysical (executionContext, phong)
+   {
+      let
+         browser           = executionContext .getBrowser (),
+         physical          = executionContext .createNode ("PhysicalMaterial"),
+         baseColor         = phong .diffuseColor .sRGBToLinear (),
+         specularColor     = phong .specularColor .sRGBToLinear (),
+         specularIntensity = Math .max (... specularColor),
+         metallic          = Math .min (Math .max ((specularIntensity - 0.04) / (1.0 - 0.04), 0), 1) * 0.5,
+         roughness         = 1 - phong .shininess,
+         emissiveColor     = phong .emissiveColor .sRGBToLinear (),
+         transparency      = phong .transparency,
+         transmission      = transparency ** (1/3);
+
+      if ([... specularColor] .some (Boolean) && roughness)
+      {
+         if (!executionContext .hasComponent ("X_ITE"))
+            executionContext .addComponent (browser .getComponent ("X_ITE"));
+
+         const specularMaterial = executionContext .createNode ("SpecularMaterialExtension");
+
+         specularMaterial .specularColor    = specularColor;
+         specularMaterial .specularStrength = 10 * roughness;
+
+         physical .extensions .push (specularMaterial);
+
+         metallic  *= 0.1;
+         roughness *= 0.5;
+      }
+
+      if (transparency)
+      {
+         if (!executionContext .hasComponent ("X_ITE"))
+            executionContext .addComponent (browser .getComponent ("X_ITE"));
+
+         const transmissionMaterial = executionContext .createNode ("TransmissionMaterialExtension");
+
+         transmissionMaterial .transmission = transmission;
+
+         physical .extensions .push (transmissionMaterial);
+
+         roughness *= 0.5 * (1 - transparency);
+      }
+
+      physical .baseColor     = baseColor;
+      physical .metallic      = metallic;
+      physical .roughness     = roughness;
+      physical .emissiveColor = emissiveColor;
+
+      return physical;
+   }
+
    static moveViewpoint (viewpointNode, position, orientation, centerOfRotation, fieldOfView, undoManager = UndoManager .shared)
    {
       viewpointNode = viewpointNode .valueOf ();

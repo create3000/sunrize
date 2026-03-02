@@ -1450,10 +1450,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    convertToPhysicalMaterial (id, executionContextId, nodeId)
    {
       const
-         MaterialsLibrary     = require ("./MaterialsLibrary"),
          executionContext     = this .objects .get (executionContextId),
          materialNode         = this .objects .get (nodeId),
-         physicalMaterialNode = MaterialsLibrary .convertPhongToPhysical (executionContext, new X3D .SFNode (materialNode));
+         physicalMaterialNode = Editor .convertPhongToPhysical (executionContext, new X3D .SFNode (materialNode));
 
       // Add undo step.
 
