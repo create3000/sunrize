@@ -6,7 +6,7 @@ const
    LibraryPane = require ("./LibraryPane"),
    _           = require ("../Application/GetText");
 
-module .exports = class Materials extends LibraryPane
+module .exports = class MaterialsLibrary extends LibraryPane
 {
    id          = "MATERIALS";
    description = "Materials";
@@ -115,8 +115,6 @@ module .exports = class Materials extends LibraryPane
          browser = canvas .prop ("browser"),
          scene   = await browser .createX3DFromURL (new X3D .MFString (`file://${__dirname}/Materials.x3d`));
 
-      scene .addComponent (browser .getComponent ("X_ITE"));
-
       this .#scene = scene;
 
       const
@@ -146,7 +144,7 @@ module .exports = class Materials extends LibraryPane
 
          if (this .config .global .convertToPhysical)
          {
-            const material = this .convertPhongToPhysical (scene, appearance .material);
+            const material = MaterialsLibrary .convertPhongToPhysical (scene, appearance .material);
 
             scene .updateNamedNode (appearance .material .getNodeName (), material);
 
@@ -171,9 +169,10 @@ module .exports = class Materials extends LibraryPane
       canvas .remove ();
    }
 
-   convertPhongToPhysical (executionContext, phong)
+   static convertPhongToPhysical (executionContext, phong)
    {
       let
+         browser           = executionContext .getBrowser (),
          physical          = executionContext .createNode ("PhysicalMaterial"),
          baseColor         = phong .diffuseColor .sRGBToLinear (),
          specularColor     = phong .specularColor .sRGBToLinear (),
@@ -186,6 +185,9 @@ module .exports = class Materials extends LibraryPane
 
       if ([... specularColor] .some (Boolean) && roughness)
       {
+         if (!executionContext .hasComponent ("X_ITE"))
+            executionContext .addComponent (browser .getComponent ("X_ITE"));
+
          const specularMaterial = executionContext .createNode ("SpecularMaterialExtension");
 
          specularMaterial .specularColor    = specularColor;
@@ -199,6 +201,9 @@ module .exports = class Materials extends LibraryPane
 
       if (transparency)
       {
+         if (!executionContext .hasComponent ("X_ITE"))
+            executionContext .addComponent (browser .getComponent ("X_ITE"));
+
          const transmissionMaterial = executionContext .createNode ("TransmissionMaterialExtension");
 
          transmissionMaterial .transmission = transmission;

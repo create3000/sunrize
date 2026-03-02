@@ -360,6 +360,15 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
                      continue;
                   }
+                  case X3D .X3DConstants .Material:
+                  {
+                     menu .push ({
+                        label: _("Convert Node to PhysicalMaterial"),
+                        args: ["convertToPhysicalMaterial", element .attr ("id"), executionContext .getId (), node .getId ()],
+                     });
+
+                     continue;
+                  }
                   case X3D .X3DConstants .X3DPrototypeInstance:
                   {
                      if (!$.try (() => node .getInnerNode ()))
@@ -1434,6 +1443,26 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       UndoManager .shared .beginUndo (_("Negate Normal Vectors"));
 
       Editor .setFieldValue (executionContext, normalNode, normalNode ._vector, normals);
+
+      UndoManager .shared .endUndo ();
+   }
+
+   convertToPhysicalMaterial (id, executionContextId, nodeId)
+   {
+      const
+         MaterialsLibrary     = require ("./MaterialsLibrary"),
+         executionContext     = this .objects .get (executionContextId),
+         materialNode         = this .objects .get (nodeId),
+         physicalMaterialNode = MaterialsLibrary .convertPhongToPhysical (executionContext, new X3D .SFNode (materialNode));
+
+      // Add undo step.
+
+      UndoManager .shared .beginUndo (_("Convert Node to PhysicalMaterial"));
+
+      if (materialNode .getName ())
+         Editor .updateNamedNode (executionContext, materialNode .getName (), physicalMaterialNode);
+
+      Editor .replaceAllOccurrences (executionContext, materialNode, physicalMaterialNode);
 
       UndoManager .shared .endUndo ();
    }
