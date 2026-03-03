@@ -345,6 +345,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                         label: _("Open InlineGeometry Scene in New Tab"),
                         enabled: node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE,
                         args: ["openFileInNewTab", node .getInternalScene () ?.worldURL],
+                     },
+                     {
+                        label: _("Fold InlineGeometry Back into Scene"),
+                        enabled: node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE && !!node .getGeometry (),
+                        args: ["foldInlineGeometryBackIntoScene", element .attr ("id"), executionContext .getId (), node .getId ()],
                      });
 
                      continue;
@@ -1555,8 +1560,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       const
          rootNodes     = executionContext .rootNodes .copy (),
-         nodesToImport = [... inlineNode .getInternalScene () .rootNodes] .map (node => node .getValue ()),
-         x3dSyntax     = await Editor .exportX3D (inlineNode .getInternalScene (), nodesToImport, { importedNodes: true }),
+         nodesToExport = [... inlineNode .getInternalScene () .rootNodes] .map (node => node .getValue ()),
+         x3dSyntax     = await Editor .exportX3D (inlineNode .getInternalScene (), nodesToExport, { importedNodes: true }),
          nodes         = await Editor .importX3D (executionContext, x3dSyntax);
 
       // Remove imported nodes from root nodes.
@@ -1599,6 +1604,36 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       await this .browser .nextFrame ();
 
       this .expandTo (childNode, { expandObject: true });
+   }
+
+   async foldInlineGeometryBackIntoScene (id, executionContextId, nodeId)
+   {
+      const
+         executionContext   = this .objects .get (executionContextId),
+         inlineGeometryNode = this .objects .get (nodeId);
+
+      UndoManager .shared .beginUndo (_("Fold InlineGeometry Back into Scene"));
+
+      const
+         rootNodes     = executionContext .rootNodes .copy (),
+         nodesToExport = [inlineGeometryNode .getGeometry ()],
+         x3dSyntax     = await Editor .exportX3D (inlineGeometryNode .getInternalScene (), nodesToExport),
+         nodes         = await Editor .importX3D (executionContext, x3dSyntax),
+         geometryNode  = nodes [0];
+
+      // Remove imported nodes from root nodes.
+
+      Editor .setFieldValue (executionContext, executionContext, executionContext .rootNodes, rootNodes);
+
+      // Insert InlineGeometry node.
+
+      Editor .replaceAllOccurrences (executionContext, inlineGeometryNode, geometryNode);
+
+      UndoManager .shared .endUndo ();
+
+      await this .browser .nextFrame ();
+
+      this .expandTo (geometryNode, { expandObject: true });
    }
 
    protocolToMimeType = new Map ([
