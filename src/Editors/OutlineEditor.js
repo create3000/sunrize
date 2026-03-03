@@ -305,6 +305,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                         });
                      }
 
+                     menu .push ({
+                        label: _("Convert Node to InlineGeometry..."),
+                        args: ["convertNodeToInlineFile", element .attr ("id"), executionContext .getId (), node .getId (), "InlineGeometry"],
+                     });
+
                      continue;
                   }
                   case X3D .X3DConstants .ImageTexture:
@@ -398,7 +403,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                   {
                      menu .push ({
                         label: _("Convert Node to Inline File..."),
-                        args: ["convertNodeToInlineFile", element .attr ("id"), executionContext .getId (), node .getId ()],
+                        args: ["convertNodeToInlineFile", element .attr ("id"), executionContext .getId (), node .getId (), "Inline"],
                      });
 
                      continue;
@@ -1746,7 +1751,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       UndoManager .shared .endUndo ();
    }
 
-   async convertNodeToInlineFile (id, executionContextId, nodeId)
+   async convertNodeToInlineFile (id, executionContextId, nodeId, typeName)
    {
       const
          executionContext = this .objects .get (executionContextId),
@@ -1768,7 +1773,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       await Editor .addComponent (executionContext, "Networking");
 
-      const inlineNode = executionContext .createNode ("Inline") .getValue ();
+      const inlineNode = executionContext .createNode (typeName) .getValue ();
 
       inlineNode ._url = [Editor .relativePath (executionContext, response .filePath)];
 
