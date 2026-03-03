@@ -334,6 +334,16 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
                      continue;
                   }
+                  case X3D .X3DConstants .InlineGeometry:
+                  {
+                     menu .push ({
+                        label: _("Open InlineGeometry Scene in New Tab"),
+                        enabled: node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE,
+                        args: ["openFileInNewTab", node .getInternalScene () ?.worldURL],
+                     });
+
+                     continue;
+                  }
                   case X3D .X3DConstants .PixelTexture:
                   {
                      menu .push ({
