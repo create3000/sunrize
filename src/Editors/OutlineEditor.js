@@ -305,10 +305,13 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                         });
                      }
 
-                     menu .push ({
-                        label: _("Convert Node to InlineGeometry..."),
-                        args: ["convertNodeToInlineFile", element .attr ("id"), executionContext .getId (), node .getId (), "InlineGeometry"],
-                     });
+                     if (!node .getType () .includes (X3D .X3DConstants .InlineGeometry))
+                     {
+                        menu .push ({
+                           label: _("Convert Node to InlineGeometry..."),
+                           args: ["convertNodeToInlineFile", element .attr ("id"), executionContext .getId (), node .getId (), "InlineGeometry"],
+                        });
+                     }
 
                      continue;
                   }
@@ -1798,7 +1801,15 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       if (response .canceled)
          return;
 
-      UndoManager .shared .beginUndo (_("Convert Node to Inline File"));
+      switch (typeName)
+      {
+         case "Inline":
+            UndoManager .shared .beginUndo (_("Convert Node to Inline File"));
+            break;
+         case "InlineGeometry":
+            UndoManager .shared .beginUndo (_("Convert Node to InlineGeometry"));
+            break;
+      }
 
       // Create inline file.
 
