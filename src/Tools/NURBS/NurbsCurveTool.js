@@ -2,9 +2,9 @@
 
 const
    X3DParametricGeometryNodeTool = require ("./X3DParametricGeometryNodeTool"),
-   X3DLineGeometryNodeTool       = require ("../Rendering/X3DLineGeometryNodeTool");
+   X3DGeometryNodeTool           = require ("../Rendering/X3DGeometryNodeTool");
 
-class NurbsCurveTool extends X3DParametricGeometryNodeTool (X3DLineGeometryNodeTool)
+class NurbsCurveTool extends X3DParametricGeometryNodeTool (X3DGeometryNodeTool)
 {
    async initializeTool ()
    {

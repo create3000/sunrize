@@ -1,7 +1,7 @@
 "use strict";
 
-const X3DLineGeometryNodeTool = require ("../Rendering/X3DLineGeometryNodeTool");
+const X3DGeometryNodeTool = require ("../Rendering/X3DGeometryNodeTool");
 
-class Polyline2DTool extends X3DLineGeometryNodeTool { }
+class Polyline2DTool extends X3DGeometryNodeTool { }
 
 module .exports = Polyline2DTool;

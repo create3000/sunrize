@@ -1,7 +1,7 @@
 "use strict";
 
-const X3DPointGeometryNodeTool = require ("./X3DPointGeometryNodeTool");
+const X3DGeometryNodeTool = require ("./X3DGeometryNodeTool");
 
-class PointSetTool extends X3DPointGeometryNodeTool { }
+class PointSetTool extends X3DGeometryNodeTool { }
 
 module .exports = PointSetTool;

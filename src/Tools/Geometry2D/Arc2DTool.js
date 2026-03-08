@@ -1,12 +1,12 @@
 "use strict";
 
 const
-   X3DLineGeometryNodeTool = require ("../Rendering/X3DLineGeometryNodeTool"),
-   ToolColors              = require ("../Core/ToolColors"),
-   X3D                     = require ("../../X3D"),
-   _                       = require ("../../Application/GetText");
+   X3DGeometryNodeTool = require ("../Rendering/X3DGeometryNodeTool"),
+   ToolColors          = require ("../Core/ToolColors"),
+   X3D                 = require ("../../X3D"),
+   _                   = require ("../../Application/GetText");
 
-class Arc2DTool extends X3DLineGeometryNodeTool
+class Arc2DTool extends X3DGeometryNodeTool
 {
    #transformNode = null;
    #changing      = false;

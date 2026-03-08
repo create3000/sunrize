@@ -1,7 +1,7 @@
 "use strict";
 
-const X3DLineGeometryNodeTool = require ("./X3DLineGeometryNodeTool");
+const X3DGeometryNodeTool = require ("./X3DGeometryNodeTool");
 
-class LineSetTool extends X3DLineGeometryNodeTool { }
+class LineSetTool extends X3DGeometryNodeTool { }
 
 module .exports = LineSetTool;

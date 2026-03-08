@@ -13,20 +13,6 @@ class X3DGeometryNodeTool extends X3DNodeTool
       this .tool .linesColor  = ToolColors .BLUE;
       this .tool .pointsColor = ToolColors .BLUE;
 
-      switch (this .getGeometryType ())
-      {
-         case 0:
-         case 1:
-            this .tool .pointsDisplay = true;
-            this .tool .linesDisplay  = false;
-            break;
-         case 2:
-         case 3:
-            this .tool .pointsDisplay = false;
-            this .tool .linesDisplay  = true;
-            break
-      }
-
       if (type === "CUSTOM")
          return;
 
@@ -47,21 +33,43 @@ class X3DGeometryNodeTool extends X3DNodeTool
 
    set_toolRebuildGeometry ()
    {
-      const
-         points    = this .node .getVertices () .filter ((_, i) => i % 4 < 3),
-         numPoints = points .length / 3;
-
-      if (numPoints !== this .tool .linesCoord .point .length)
+      switch (this .getGeometryType ())
       {
-         const coordIndex = [ ];
+         case 0:
+         case 1:
+         {
+            this .tool .pointsDisplay = true;
+            this .tool .linesDisplay  = false;
 
-         for (let i = 0; i < numPoints; i += 3)
-            coordIndex .push (i, i + 1, i + 2, i, -1);
+            const points = this .node .getVertices () .filter ((_, i) => i % 4 < 3);
 
-         this .tool .set_linesCoordIndex = coordIndex;
+            this .tool .pointsCoord .point = points;
+            break;
+         }
+         case 2:
+         case 3:
+         {
+            this .tool .pointsDisplay = false;
+            this .tool .linesDisplay  = true;
+
+            const
+               points    = this .node .getVertices () .filter ((_, i) => i % 4 < 3),
+               numPoints = points .length / 3;
+
+            if (numPoints !== this .tool .linesCoord .point .length)
+            {
+               const coordIndex = [ ];
+
+               for (let i = 0; i < numPoints; i += 3)
+                  coordIndex .push (i, i + 1, i + 2, i, -1);
+
+               this .tool .set_linesCoordIndex = coordIndex;
+            }
+
+            this .tool .linesCoord .point = points;
+            break;
+         }
       }
-
-      this .tool .linesCoord .point = points;
    }
 
    traverseBefore (type, renderObject)
