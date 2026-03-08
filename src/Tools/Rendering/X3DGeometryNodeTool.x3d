@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
-<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.1//EN" "https://www.web3d.org/specifications/x3d-4.1.dtd">
+<X3D profile='Interchange' version='4.1' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.1.xsd'>
   <head>
+    <component name='Core' level='2'/>
+    <component name='Shaders' level='1'/>
     <component name='X_ITE' level='1'/>
     <meta name='created' content='Tue, 28 Nov 2023 21:59:27 GMT'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.7.1, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sat, 29 Jun 2024 10:51:34 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V2.0.7, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Sun, 08 Mar 2026 11:17:29 GMT'/>
   </head>
   <Scene>
-    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'/>
+    <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
+      <field accessType='inputOutput' type='SFBool' name='instanced'/>
+    </ExternProtoDeclare>
     <ProtoDeclare name='X3DGeometryNodeTool'>
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
@@ -22,6 +26,10 @@
         <field accessType='inputOutput' type='SFColor' name='linesColor' value='1 1 1'/>
         <field accessType='inputOnly' type='MFInt32' name='set_linesCoordIndex'/>
         <field accessType='inputOutput' type='SFNode' name='linesCoord'/>
+        <field accessType='inputOutput' type='SFBool' name='pointsDisplay'/>
+        <field accessType='inputOutput' type='SFFloat' name='pointSize' value='5'/>
+        <field accessType='inputOutput' type='SFColor' name='pointsColor' value='1 1 1'/>
+        <field accessType='inputOutput' type='SFNode' name='pointsCoord'/>
         <field accessType='inputOnly' type='MFNode' name='addChildren'/>
         <field accessType='inputOnly' type='MFNode' name='removeChildren'/>
       </ProtoInterface>
@@ -51,8 +59,8 @@
                     <connect nodeField='emissiveColor' protoField='linesColor'/>
                   </IS>
                 </Material>
-                <ProtoInstance name='ToolShader' DEF='_999' containerField='shaders'/>
-                <DepthMode
+                <ProtoInstance name='ToolShader' DEF='_1' containerField='shaders'/>
+                <DepthMode DEF='_2'
                     polygonOffset='-1 -1'/>
               </Appearance>
               <IndexedLineSet>
@@ -61,6 +69,33 @@
                   <connect nodeField='coord' protoField='linesCoord'/>
                 </IS>
               </IndexedLineSet>
+            </Shape>
+            <Shape DEF='Lines'>
+              <IS>
+                <connect nodeField='visible' protoField='pointsDisplay'/>
+              </IS>
+              <Appearance>
+                <PointProperties>
+                  <IS>
+                    <connect nodeField='pointSizeScaleFactor' protoField='pointSize'/>
+                    <connect nodeField='pointSizeMinValue' protoField='pointSize'/>
+                    <connect nodeField='pointSizeMaxValue' protoField='pointSize'/>
+                  </IS>
+                </PointProperties>
+                <Material
+                    diffuseColor='0 0 0'>
+                  <IS>
+                    <connect nodeField='emissiveColor' protoField='pointsColor'/>
+                  </IS>
+                </Material>
+                <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
+                <DepthMode USE='_2'/>
+              </Appearance>
+              <PointSet>
+                <IS>
+                  <connect nodeField='coord' protoField='pointsCoord'/>
+                </IS>
+              </PointSet>
             </Shape>
           </Transform>
         </Group>

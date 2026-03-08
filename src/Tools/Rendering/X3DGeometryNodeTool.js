@@ -10,14 +10,30 @@ class X3DGeometryNodeTool extends X3DNodeTool
    {
       await super .loadTool ("tool", __dirname, "X3DGeometryNodeTool.x3d");
 
-      this .tool .linesColor = ToolColors .BLUE;
+      this .tool .linesColor  = ToolColors .BLUE;
+      this .tool .pointsColor = ToolColors .BLUE;
+
+      switch (this .getGeometryType ())
+      {
+         case 0:
+         case 1:
+            this .tool .pointsDisplay = true;
+            this .tool .linesDisplay  = false;
+            break;
+         case 2:
+         case 3:
+            this .tool .pointsDisplay = false;
+            this .tool .linesDisplay  = true;
+            break
+      }
 
       if (type === "CUSTOM")
          return;
 
       this .node ._rebuild .addInterest ("set_toolRebuildGeometry", this);
 
-      this .tool .linesCoord = this .getToolScene () .createNode ("CoordinateDouble");
+      this .tool .linesCoord  = this .getToolScene () .createNode ("CoordinateDouble");
+      this .tool .pointsCoord = this .getToolScene () .createNode ("CoordinateDouble");
 
       this .set_toolRebuildGeometry ();
    }
