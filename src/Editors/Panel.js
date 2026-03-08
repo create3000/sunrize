@@ -482,9 +482,16 @@ module .exports = new class Panel extends Interface
             if (tooMuchValues)
                break;
 
-            const textarea = $(input .element) .find ("textarea") .removeAttr ("readonly");
+            const
+               original = $(input .element) .find ("textarea"),
+               textarea = $("<textarea></textarea>");
 
-            textarea .on ("focusout", () => this .onchange (node, field, textarea .val ()));
+            textarea
+               .attr ("class", original .attr ("class"))
+               .val (parameter [field .getName ()])
+               .on ("focusout", () => this .onchange (node, field, textarea .val ()));
+
+            original .replaceWith (textarea);
 
             field .addFieldCallback (this, () =>
             {

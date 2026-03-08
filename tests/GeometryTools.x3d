@@ -11,7 +11,7 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V2.0.7, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 08 Mar 2026 20:37:27 GMT'/>
+    <meta name='modified' content='Sun, 08 Mar 2026 20:47:59 GMT'/>
   </head>
   <Scene>
     <Viewpoint
@@ -255,7 +255,7 @@
     <Transform DEF='PointSet_1'
         translation='7.536604 -2.315353 0'>
       <Shape>
-        <Appearance DEF='_1'>
+        <Appearance DEF='_2'>
           <PointProperties
               pointSizeScaleFactor='5'
               pointSizeMinValue='5'
@@ -272,7 +272,7 @@
         translation='9.693389 -2.482184 0'
         scale='0.4200323 0.4200323 0.4200323'>
       <Shape>
-        <Appearance USE='_1'/>
+        <Appearance USE='_2'/>
         <Polypoint2D
             point='0 0, 1 1, 2 0, 3 2, 4 0'/>
       </Shape>
