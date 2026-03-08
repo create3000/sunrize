@@ -29,7 +29,7 @@ module .exports = new class Panel extends Interface
          "top": "unset",
       });
 
-      this .container .on ("mousedown",  event => this .onmousedown (event));
+      this .container .get (0) .addEventListener ("mousedown", event => this .onmousedown (event), true);
 
       this .browser .getBrowserOptions () ._ColorSpace .addFieldCallback ("Panel", () => this .updateNode ());
 
