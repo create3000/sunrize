@@ -11,7 +11,7 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V2.0.7, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 08 Mar 2026 19:47:55 GMT'/>
+    <meta name='modified' content='Sun, 08 Mar 2026 20:30:21 GMT'/>
   </head>
   <Scene>
     <Viewpoint
@@ -332,7 +332,7 @@
           <UnlitMaterial/>
         </Appearance>
         <NurbsCurve
-            closed='true'
+            tessellation='16'
             knot='0, 0, 0, 0.25, 0.25, 0.5, 0.5, 0.75, 0.75, 1, 1, 1'
             weight='1, 0.7071, 1, 0.7071, 1, 0.7071, 1, 0.7071, 1'>
           <CoordinateDouble containerField='controlPoint'

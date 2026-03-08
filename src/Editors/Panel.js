@@ -79,6 +79,17 @@ module .exports = new class Panel extends Interface
       $(document) .off (".Panel");
 
       this .mousedown = false;
+
+      if (!this .original)
+         return;
+
+      const { executionContext, node, field, previous } = this .original;
+      const value = field .copy ();
+
+      field .assign (previous);
+      this .assign (executionContext, node, field, value);
+
+      this .original = null;
    }
 
    onmousemove (event)
@@ -786,7 +797,12 @@ module .exports = new class Panel extends Interface
    {
       if (this .mousedown)
       {
-         this .original ??= field .copy ();
+         this .original ??= {
+            executionContext,
+            node,
+            field: field,
+            previous: field .copy (),
+         };
 
          field .setValue (value);
 
@@ -794,11 +810,6 @@ module .exports = new class Panel extends Interface
       }
       else
       {
-         if (this .original)
-            field .assign (this .original);
-
-         this .original = null;
-
          Editor .setFieldValue (executionContext, node, field, value);
       }
    }
