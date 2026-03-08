@@ -5,17 +5,19 @@
     <component name='Geometry2D' level='1'/>
     <component name='Geometry3D' level='3'/>
     <component name='Layout' level='2'/>
+    <component name='NURBS' level='1'/>
     <component name='Text' level='1'/>
     <meta name='created' content='Tue, 28 Nov 2023 18:23:35 GMT'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V2.0.7, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 08 Mar 2026 17:17:50 GMT'/>
+    <meta name='modified' content='Sun, 08 Mar 2026 19:47:55 GMT'/>
   </head>
   <Scene>
     <Viewpoint
-        position='7.441267 0.826218 21.13446'
-        centerOfRotation='7.441268 0.826218 0'/>
+        position='8.658568 0.2809315 24.1063'
+        orientation='-0.997383148781396 0.0722768271560055 0.00170727360677893 0.0473658981625392'
+        centerOfRotation='8.576025 -0.8587531 0'/>
     <Transform DEF='Box_1'
         translation='-4.5 0 0'>
       <Shape>
@@ -321,6 +323,21 @@
           <Coordinate
               point='1 1 0, -1 1 0, -1 -1 0, 1 -1 0'/>
         </IndexedLineSet>
+      </Shape>
+    </Transform>
+    <Transform DEF='NurbsCircle2D'
+        translation='22.20972 2.035847 0'>
+      <Shape>
+        <Appearance>
+          <UnlitMaterial/>
+        </Appearance>
+        <NurbsCurve
+            closed='true'
+            knot='0, 0, 0, 0.25, 0.25, 0.5, 0.5, 0.75, 0.75, 1, 1, 1'
+            weight='1, 0.7071, 1, 0.7071, 1, 0.7071, 1, 0.7071, 1'>
+          <CoordinateDouble containerField='controlPoint'
+              point='1 0 0, 0.7071 -0.7071 0, 0 -1 0, -0.7071 -0.7071 0, -1 0 0, -0.7071 0.7071 0, 0 1 0, 0.7071 0.7071 0, 1 0 0'/>
+        </NurbsCurve>
       </Shape>
     </Transform>
   </Scene>

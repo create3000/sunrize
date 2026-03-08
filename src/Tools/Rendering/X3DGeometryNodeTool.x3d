@@ -9,7 +9,7 @@
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V2.0.7, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 08 Mar 2026 11:17:29 GMT'/>
+    <meta name='modified' content='Sun, 08 Mar 2026 19:34:05 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -43,7 +43,7 @@
             <IS>
               <connect nodeField='scale' protoField='size'/>
             </IS>
-            <Shape>
+            <Shape DEF='Lines'>
               <IS>
                 <connect nodeField='visible' protoField='linesDisplay'/>
               </IS>
@@ -70,7 +70,7 @@
                 </IS>
               </IndexedLineSet>
             </Shape>
-            <Shape DEF='Lines'>
+            <Shape DEF='Points'>
               <IS>
                 <connect nodeField='visible' protoField='pointsDisplay'/>
               </IS>
