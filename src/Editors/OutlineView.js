@@ -1921,6 +1921,18 @@ module .exports = class OutlineView extends Interface
       {
          switch (type)
          {
+            case X3D .X3DConstants .X3DBoundedObject:
+            {
+               const
+                  bbox       = node .getBBox (new X3D .Box3 ()),
+                  bboxSize   = new X3D .SFVec3f (bbox .size),
+                  bboxCenter = new X3D .SFVec3f (bbox .center);
+
+               title += "\n\n";
+               title += `BBox Size: ${bboxSize}\n`;
+               title += `BBox Center: ${bboxCenter}`;
+               continue;
+            }
             case X3D .X3DConstants .X3DGeometryNode:
             {
                const numVertices = node .getVertices () .length / 4;
