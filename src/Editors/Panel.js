@@ -139,8 +139,12 @@ module .exports = new class Panel extends Interface
       const concreteNode = X3DUOM .find (`ConcreteNode[name="${node .getTypeName ()}"]`);
 
       this .browser .currentScene .units .addInterest ("updateNode", this);
-      node .getPredefinedFields ()       .addInterest ("updateNode", this);
-      node .getUserDefinedFields ()      .addInterest ("updateNode", this);
+
+      if (node .getType () .includes (X3D .X3DConstants .X3DBoundedObject))
+         this .browser .currentScene .bbox_changed .addInterest ("refreshBBox", this);
+
+      node .getPredefinedFields ()  .addInterest ("updateNode", this);
+      node .getUserDefinedFields () .addInterest ("updateNode", this);
 
       this .addBlades (node, concreteNode);
 
@@ -217,9 +221,11 @@ module .exports = new class Panel extends Interface
 
       // Disconnect interests.
 
-      this .browser .currentScene .units .removeInterest ("updateNode", this);
-      node .getPredefinedFields ()       .removeInterest ("updateNode", this);
-      node .getUserDefinedFields ()      .removeInterest ("updateNode", this);
+      this .browser .currentScene .units        .removeInterest ("updateNode", this);
+      this .browser .currentScene .bbox_changed .removeInterest ("refreshBBox", this);
+
+      node .getPredefinedFields ()  .removeInterest ("updateNode", this);
+      node .getUserDefinedFields () .removeInterest ("updateNode", this);
 
       for (const field of node .getFields ())
          field .removeFieldCallback (this);
@@ -314,6 +320,29 @@ module .exports = new class Panel extends Interface
             folder .addSeparator ();
          else
             this .addInput (folder, parameter, node, node .getField (name), concreteNode);
+      }
+
+      if (title === "X3DBoundedObject")
+      {
+         this .bbox = {
+            calculatedSize: { x: 0, y: 0, z: 0 },
+            calculatedCenter: { x: 0, y: 0, z: 0 },
+            bboxSizeInput: null,
+            bboxCenterInput: null,
+         };
+
+         folder .addSeparator ();
+
+         this .bbox .bboxSizeInput   = folder .addInput (this .bbox, "calculatedSize", { });
+         this .bbox .bboxCenterInput = folder .addInput (this .bbox, "calculatedCenter", { });
+
+         $(this .bbox .bboxSizeInput   .element) .find ("input") .attr ("readonly", "");
+         $(this .bbox .bboxCenterInput .element) .find ("input") .attr ("readonly", "");
+
+         $(this .bbox .bboxSizeInput   .element) .find (".tp-txtv_k") .detach ();
+         $(this .bbox .bboxCenterInput .element) .find (".tp-txtv_k") .detach ();
+
+         this .refreshBBox ();
       }
 
       if (!folder .children .length)
@@ -819,6 +848,29 @@ module .exports = new class Panel extends Interface
       {
          Editor .setFieldValue (executionContext, node, field, value);
       }
+   }
+
+   #box = new X3D .Box3 ();
+   #vector = new X3D .SFVec3f ();
+
+   refreshBBox ()
+   {
+      const bbox = this .node .getBBox (this .#box);
+
+      this .#vector .setValue (bbox .size);
+      this .#vector .setName ("calculatedSize");
+      this .#vector .setUnit ("length");
+
+      this .refresh (this .bbox, this .node, this .#vector)
+
+      this .#vector .setValue (bbox .center);
+      this .#vector .setName ("calculatedCenter");
+      this .#vector .setUnit ("length");
+
+      this .refresh (this .bbox, this .node, this .#vector)
+
+      this .bbox .bboxSizeInput   .refresh ();
+      this .bbox .bboxCenterInput .refresh ();
    }
 
    getNodeTitle (node, nodeElement)
