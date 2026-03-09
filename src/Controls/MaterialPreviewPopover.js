@@ -38,26 +38,15 @@ $.fn.materialPreviewPopover = async function (node)
 
    const
       appearanceNode = browser .currentScene .getExportedNode ("Appearance"),
-      previewNode    = node .copy (scene);
+      nodesToExport = [node],
+      x3dSyntax     = await Editor .exportX3D (browser .currentScene, nodesToExport),
+      nodes         = await Editor .importX3D (scene, x3dSyntax),
+      previewNode   = nodes [0];
 
    // Assign material node.
 
    for (const field of previewNode .getFields ())
-   {
-      switch (field .getType ())
-      {
-         case X3D .X3DConstants .SFNode:
-            field .setValue (null);
-            break
-         case X3D .X3DConstants .MFNode:
-            field .length = 0;
-            break;
-         default:
-            field .addReference (node .getField (field .getName ()));
-            field .removeFieldInterest (node .getField (field .getName ()));
-            break;
-      }
-   }
+      field .addReference (node .getField (field .getName ()));
 
    previewNode .setup ();
 
@@ -90,16 +79,7 @@ $.fn.materialPreviewPopover = async function (node)
             field = backPreviewNode .getField (name),
             back  = `back${name [0] .toUpperCase ()}${name .slice (1)}`;
 
-         switch (field .getType ())
-         {
-            case X3D .X3DConstants .SFNode:
-            case X3D .X3DConstants .MFNode:
-               break;
-            default:
-               field .addReference (node .getField (back));
-               field .removeFieldInterest (node .getField (back));
-               break;
-         }
+         field .addReference (node .getField (back));
       }
 
       appearanceNode .material = backPreviewNode;
