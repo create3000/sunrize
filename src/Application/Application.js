@@ -527,15 +527,6 @@ module .exports = class Application
                      label: _("Show All Objects"),
                      click: () => this .mainWindow .webContents .send ("show-all-objects"),
                   },
-                  { type: "separator" },
-                  {
-                     label: _("Transform to Zero"),
-                     click: () => this .mainWindow .webContents .send ("transform-to-zero"),
-                  },
-                  {
-                     label: _("Remove Empty Groups"),
-                     click: () => this .mainWindow .webContents .send ("remove-empty-groups"),
-                  },
                ],
             },
             {

@@ -24,9 +24,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       electron .ipcRenderer .on ("outline-editor", (event, key, ... args) => this [key] (... args));
 
-      electron .ipcRenderer .on ("transform-to-zero",   () => this .transformToZero ());
-      electron .ipcRenderer .on ("remove-empty-groups", () => this .removeEmptyGroups ());
-
       this .setup ();
    }
 
@@ -52,26 +49,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          X3D .X3DConstants .HAnimHumanoid,
          X3D .X3DConstants .X3DTransformNode,
       ]);
-   }
-
-   transformToZero ()
-   {
-      const
-         selection = this .sceneGraph .find (".node.primary, .node.manually"),
-         ids       = selection .map (function () { return this .id }) .get (),
-         nodes     = ids .length ? ids .map (id => this .getNode ($(`#${id}`))) : this .executionContext .rootNodes;
-
-      Editor .transformToZero (this .executionContext, nodes);
-   }
-
-   removeEmptyGroups ()
-   {
-      const
-         selection = this .sceneGraph .find (".node.primary, .node.manually"),
-         ids       = selection .map (function () { return this .id }) .get (),
-         nodes     = ids .length ? ids .map (id => this .getNode ($(`#${id}`))) : this .executionContext .rootNodes;
-
-      Editor .removeEmptyGroups (this .executionContext, nodes);
    }
 
    showContextMenu (event)
@@ -430,6 +407,15 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                            args: ["removeCustomBoundingBox", element .attr ("id"), executionContext .getId (), node .getId ()],
                         });
                      }
+
+                     continue;
+                  }
+                  case X3D .X3DConstants .X3DTransformNode:
+                  {
+                     menu .push ({
+                        label: _("Transform to Zero"),
+                        args: ["transformToZero", element .attr ("id"), executionContext .getId (), node .getId ()],
+                     });
 
                      continue;
                   }
@@ -1351,6 +1337,25 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       }
 
       UndoManager .shared .endUndo ();
+   }
+
+   transformToZero (id, executionContextId, nodeId)
+   {
+      const
+         executionContext = this .objects .get (executionContextId),
+         transformNode    = this .objects .get (nodeId);
+
+      Editor .transformToZero (executionContext, [transformNode]);
+   }
+
+   removeEmptyGroups ()
+   {
+      const
+         selection = this .sceneGraph .find (".node.primary, .node.manually"),
+         ids       = selection .map (function () { return this .id }) .get (),
+         nodes     = ids .length ? ids .map (id => this .getNode ($(`#${id}`))) : this .executionContext .rootNodes;
+
+      Editor .removeEmptyGroups (this .executionContext, nodes);
    }
 
    convertImageTextureToPixelTexture (id, executionContextId, nodeId)
