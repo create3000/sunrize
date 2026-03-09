@@ -37,27 +37,22 @@ $.fn.materialPreviewPopover = async function (node)
    // Create material node.
 
    const
-      appearanceNode = browser .currentScene .getExportedNode ("Appearance"),
-      nodesToExport = [node],
-      x3dSyntax     = await Editor .exportX3D (node .getExecutionContext (), nodesToExport),
+      x3dSyntax     = await Editor .exportX3D (node .getExecutionContext (), [node]),
       nodes         = await Editor .importX3D (scene, x3dSyntax),
-      previewNode   = nodes [0];
+      previewNode   = nodes [0],
+      appearanceNode = browser .currentScene .getExportedNode ("Appearance");
 
    // Assign material node.
 
    for (const field of previewNode .getFields ())
-   {
       connect (field, node .getField (field .getName ()));
-   }
 
    for (const [i, extension] of previewNode ._extensions ?.entries () ?? [ ])
    {
       const original = node ._extensions [i] .getValue ();
 
       for (const field of extension .getValue () .getFields ())
-      {
          connect (field, original .getField (field .getName ()));
-      }
    }
 
    previewNode .setup ();
@@ -138,7 +133,8 @@ function connect (field, original)
       case X3D .X3DConstants .MFNode:
          break;
       default:
-         field .addReference (original);
+         original .addFieldInterest (field);
+         field .assign (original);
          break;
    }
 }

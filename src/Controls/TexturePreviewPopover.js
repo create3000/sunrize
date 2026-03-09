@@ -69,18 +69,7 @@ $.fn.texturePreviewPopover = async function (node)
    // Assign texture node.
 
    for (const field of previewNode .getFields ())
-   {
-      switch (field .getType ())
-      {
-         case X3D .X3DConstants .SFNode:
-         case X3D .X3DConstants .MFNode:
-            break;
-         default:
-            field .addReference (node .getField (field .getName ()));
-            field .removeFieldInterest (node .getField (field .getName ()));
-            break;
-      }
-   }
+      connect (field, node .getField (field .getName ()));
 
    appearanceNode .texture = previewNode;
 
@@ -194,3 +183,16 @@ $.fn.texturePreviewPopover = async function (node)
    return this;
 };
 
+function connect (field, original)
+{
+   switch (field .getType ())
+   {
+      case X3D .X3DConstants .SFNode:
+      case X3D .X3DConstants .MFNode:
+         break;
+      default:
+         original .addFieldInterest (field);
+         field .assign (original);
+         break;
+   }
+}
