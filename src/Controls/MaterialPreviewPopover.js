@@ -47,14 +47,16 @@ $.fn.materialPreviewPopover = async function (node)
 
    for (const field of previewNode .getFields ())
    {
-      switch (field .getType ())
+      connect (field, node .getField (field .getName ()));
+   }
+
+   for (const [i, extension] of previewNode ._extensions ?.entries () ?? [ ])
+   {
+      const original = node ._extensions [i] .getValue ();
+
+      for (const field of extension .getValue () .getFields ())
       {
-         case X3D .X3DConstants .SFNode:
-         case X3D .X3DConstants .MFNode:
-            break;
-         default:
-            field .addReference (node .getField (field .getName ()));
-            break;
+         connect (field, original .getField (field .getName ()));
       }
    }
 
@@ -89,15 +91,7 @@ $.fn.materialPreviewPopover = async function (node)
             field = backPreviewNode .getField (name),
             back  = `back${name [0] .toUpperCase ()}${name .slice (1)}`;
 
-         switch (field .getType ())
-         {
-            case X3D .X3DConstants .SFNode:
-            case X3D .X3DConstants .MFNode:
-               break;
-            default:
-               field .addReference (node .getField (back));
-               break;
-         }
+         connect (field, node .getField (back));
       }
 
       appearanceNode .material = backPreviewNode;
@@ -117,6 +111,9 @@ $.fn.materialPreviewPopover = async function (node)
       events: {
          hide: (event, api) =>
          {
+            for (const extension of Array .from (previewNode ._extensions ?? [ ]))
+               extension .dispose ();
+
             previewNode      .dispose ();
             backPreviewNode ?.dispose ();
             browser          .dispose ();
@@ -133,3 +130,15 @@ $.fn.materialPreviewPopover = async function (node)
    return this;
 };
 
+function connect (field, original)
+{
+   switch (field .getType ())
+   {
+      case X3D .X3DConstants .SFNode:
+      case X3D .X3DConstants .MFNode:
+         break;
+      default:
+         field .addReference (original);
+         break;
+   }
+}
