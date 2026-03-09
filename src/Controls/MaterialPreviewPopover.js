@@ -39,7 +39,7 @@ $.fn.materialPreviewPopover = async function (node)
    const
       appearanceNode = browser .currentScene .getExportedNode ("Appearance"),
       nodesToExport = [node],
-      x3dSyntax     = await Editor .exportX3D (browser .currentScene, nodesToExport),
+      x3dSyntax     = await Editor .exportX3D (node .getExecutionContext (), nodesToExport),
       nodes         = await Editor .importX3D (scene, x3dSyntax),
       previewNode   = nodes [0];
 
