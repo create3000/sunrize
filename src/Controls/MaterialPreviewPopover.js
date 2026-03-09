@@ -46,7 +46,17 @@ $.fn.materialPreviewPopover = async function (node)
    // Assign material node.
 
    for (const field of previewNode .getFields ())
-      field .addReference (node .getField (field .getName ()));
+   {
+      switch (field .getType ())
+      {
+         case X3D .X3DConstants .SFNode:
+         case X3D .X3DConstants .MFNode:
+            break;
+         default:
+            field .addReference (node .getField (field .getName ()));
+            break;
+      }
+   }
 
    previewNode .setup ();
 
@@ -79,7 +89,15 @@ $.fn.materialPreviewPopover = async function (node)
             field = backPreviewNode .getField (name),
             back  = `back${name [0] .toUpperCase ()}${name .slice (1)}`;
 
-         field .addReference (node .getField (back));
+         switch (field .getType ())
+         {
+            case X3D .X3DConstants .SFNode:
+            case X3D .X3DConstants .MFNode:
+               break;
+            default:
+               field .addReference (node .getField (back));
+               break;
+         }
       }
 
       appearanceNode .material = backPreviewNode;
