@@ -543,7 +543,7 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .MFVec4d:
          case X3D .X3DConstants .MFVec4f:
          {
-            const tooMuchValues = (field instanceof X3D .X3DArrayField) && field .length >= 10_000;
+            const tooMuchValues = (field instanceof X3D .X3DArrayField) && field .length >= 1_000;
 
             if (tooMuchValues)
                parameter [field .getName ()] = util .format (_("%s values"), field .length .toLocaleString (_.locale));
