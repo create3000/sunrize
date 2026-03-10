@@ -61,7 +61,7 @@ module .exports = new class Library extends Dialog
             .addClass ("library-button")
             .data ("type", pane .id)
             .text (_(pane .description))
-            .on ("dblclick", () => this .button (button));
+            .on ("click", () => this .button (button));
       }
 
       // Output
