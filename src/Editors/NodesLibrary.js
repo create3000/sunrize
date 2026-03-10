@@ -77,7 +77,7 @@ module .exports = class NodesLibrary extends LibraryPane
                .text (node .typeName)
                .attr ("componentName", node .componentInfo .name)
                .appendTo (this .#list)
-               .on ("click", () => this .createNode (node .typeName, node .componentInfo .name));
+               .on ("dblclick", () => this .createNode (node .typeName, node .componentInfo .name));
          }
       }
 
@@ -97,7 +97,7 @@ module .exports = class NodesLibrary extends LibraryPane
                .addClass ("node")
                .text (proto .name)
                .appendTo (this .#list)
-               .on ("click", () => this .createProto (proto));
+               .on ("dblclick", () => this .createProto (proto));
          }
       }
 
@@ -123,7 +123,7 @@ module .exports = class NodesLibrary extends LibraryPane
             .text (node .typeName)
             .attr ("componentName", node .componentInfo .name)
             .appendTo (this .#list)
-            .on ("click", () => this .createNode (node .typeName, node .componentInfo .name));
+            .on ("dblclick", () => this .createNode (node .typeName, node .componentInfo .name));
       }
    }
 

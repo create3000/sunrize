@@ -61,7 +61,7 @@ module .exports = new class Library extends Dialog
             .addClass ("library-button")
             .data ("type", pane .id)
             .text (_(pane .description))
-            .on ("click", () => this .button (button));
+            .on ("dblclick", () => this .button (button));
       }
 
       // Output
@@ -188,7 +188,7 @@ module .exports = new class Library extends Dialog
       const node = nodes .find (node => node .text () .toLowerCase () === input)
          ?? nodes .sort ((a, b) => a .data ("similarity") - b .data ("similarity")) .at (-1);
 
-      node .trigger ("click");
+      node .trigger ("dblclick");
    }
 
    update ()

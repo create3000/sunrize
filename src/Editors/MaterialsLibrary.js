@@ -84,7 +84,7 @@ module .exports = class MaterialsLibrary extends LibraryPane
                   .addClass ("text")
                   .text (`${group .getNodeName ()} ${c + 1}`))
                .appendTo (this .#list)
-               .on ("click", () => this .importMaterial (material .getNodeName ())));
+               .on ("dblclick", () => this .importMaterial (material .getNodeName ())));
          }
       }
 

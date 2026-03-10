@@ -67,7 +67,7 @@ module .exports = class PrimitivesLibrary extends LibraryPane
                .addClass ("node")
                .text (typeName)
                .appendTo (this .#list)
-               .on ("click", () => this .createRecentNode (nodes, typeName));
+               .on ("dblclick", () => this .createRecentNode (nodes, typeName));
          }
       }
 
@@ -91,7 +91,7 @@ module .exports = class PrimitivesLibrary extends LibraryPane
             .addClass ("node")
             .text (node .typeName)
             .appendTo (this .#list)
-            .on ("click", () => this .createNode (node));
+            .on ("dblclick", () => this .createNode (node));
       }
    }
 
