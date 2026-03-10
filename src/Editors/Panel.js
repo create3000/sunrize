@@ -140,11 +140,25 @@ module .exports = new class Panel extends Interface
 
       this .browser .currentScene .units .addInterest ("updateNode", this);
 
-      if (node .getType () .includes (X3D .X3DConstants .X3DBoundedObject))
-         this .browser .currentScene .bbox_changed .addInterest ("refreshBBox", this);
-
       node .getPredefinedFields ()  .addInterest ("updateNode", this);
       node .getUserDefinedFields () .addInterest ("updateNode", this);
+
+      for (const type of node .getType () .toReversed ())
+      {
+         switch (type)
+         {
+            case X3D .X3DConstants .X3DBoundedObject:
+            {
+               this .browser .currentScene .bbox_changed .addInterest ("refreshBBox", this);
+               break;
+            }
+            case X3D .X3DConstants .X3DGeometryNode:
+            {
+               node ._rebuild .addInterest ("refreshGeometry", this);
+               break;
+            }
+         }
+      }
 
       this .addBlades (node, concreteNode);
 
@@ -221,11 +235,27 @@ module .exports = new class Panel extends Interface
 
       // Disconnect interests.
 
-      this .browser .currentScene .units        .removeInterest ("updateNode", this);
-      this .browser .currentScene .bbox_changed .removeInterest ("refreshBBox", this);
+      this .browser .currentScene .units .removeInterest ("updateNode", this);
 
       node .getPredefinedFields ()  .removeInterest ("updateNode", this);
       node .getUserDefinedFields () .removeInterest ("updateNode", this);
+
+      for (const type of node .getType () .toReversed ())
+      {
+         switch (type)
+         {
+            case X3D .X3DConstants .X3DBoundedObject:
+            {
+               this .browser .currentScene .bbox_changed .removeInterest ("refreshBBox", this);
+               break;
+            }
+            case X3D .X3DConstants .X3DGeometryNode:
+            {
+               node ._rebuild .removeInterest ("refreshGeometry", this);
+               break;
+            }
+         }
+      }
 
       for (const field of node .getFields ())
          field .removeFieldCallback (this);
@@ -322,27 +352,50 @@ module .exports = new class Panel extends Interface
             this .addInput (folder, parameter, node, node .getField (name), concreteNode);
       }
 
-      if (title === "X3DBoundedObject")
+      switch (title)
       {
-         this .bbox = {
-            calculatedSize: { x: 0, y: 0, z: 0 },
-            calculatedCenter: { x: 0, y: 0, z: 0 },
-            bboxSizeInput: null,
-            bboxCenterInput: null,
-         };
+         case "X3DBoundedObject":
+         {
+            this .bbox = {
+               calculatedSize: { x: 0, y: 0, z: 0 },
+               calculatedCenter: { x: 0, y: 0, z: 0 },
+               bboxSizeInput: null,
+               bboxCenterInput: null,
+            };
 
-         folder .addSeparator ();
+            folder .addSeparator ();
 
-         this .bbox .bboxSizeInput   = folder .addInput (this .bbox, "calculatedSize", { });
-         this .bbox .bboxCenterInput = folder .addInput (this .bbox, "calculatedCenter", { });
+            this .bbox .bboxSizeInput   = folder .addInput (this .bbox, "calculatedSize", { });
+            this .bbox .bboxCenterInput = folder .addInput (this .bbox, "calculatedCenter", { });
 
-         $(this .bbox .bboxSizeInput   .element) .find ("input") .attr ("readonly", "");
-         $(this .bbox .bboxCenterInput .element) .find ("input") .attr ("readonly", "");
+            $(this .bbox .bboxSizeInput   .element) .find ("input") .attr ("readonly", "");
+            $(this .bbox .bboxCenterInput .element) .find ("input") .attr ("readonly", "");
 
-         $(this .bbox .bboxSizeInput   .element) .find (".tp-txtv_k") .detach ();
-         $(this .bbox .bboxCenterInput .element) .find (".tp-txtv_k") .detach ();
+            $(this .bbox .bboxSizeInput   .element) .find (".tp-txtv_k") .detach ();
+            $(this .bbox .bboxCenterInput .element) .find (".tp-txtv_k") .detach ();
 
-         this .refreshBBox ();
+            this .refreshBBox ();
+            break;
+         }
+         case "X3DGeometryNode":
+         {
+            switch (node .getGeometryType ())
+            {
+               case 0:
+                  this .numPrimitives .monitor = folder .addMonitor (this .numPrimitives, "numberOfPoints", { });
+                  break
+               case 1:
+                  this .numPrimitives .monitor = folder .addMonitor (this .numPrimitives, "numberOfLines", { });
+                  break
+               case 2:
+               case 3:
+                  this .numPrimitives .monitor = folder .addMonitor (this .numPrimitives, "numberOfTriangles", { });
+                  break
+            }
+
+            this .refreshGeometry ();
+            break;
+         }
       }
 
       if (!folder .children .length)
@@ -871,6 +924,34 @@ module .exports = new class Panel extends Interface
 
       this .bbox .bboxSizeInput   .refresh ();
       this .bbox .bboxCenterInput .refresh ();
+   }
+
+   numPrimitives = {
+      numberOfPoints: "0",
+      numberOfLines: "0",
+      numberOfTriangles: "0",
+      monitor: null,
+   }
+
+   refreshGeometry ()
+   {
+      const numVertices = this .node .getVertices () .length / 4;
+
+      switch (this .node .getGeometryType ())
+      {
+         case 0:
+            this .numPrimitives .numberOfPoints = (numVertices) .toLocaleString (_.locale);
+            break
+         case 1:
+            this .numPrimitives .numberOfLines = (numVertices / 2) .toLocaleString (_.locale);
+            break
+         case 2:
+         case 3:
+            this .numPrimitives .numberOfTriangles = (numVertices / 3) .toLocaleString (_.locale);
+            break
+      }
+
+      this .numPrimitives .monitor .refresh ();
    }
 
    getNodeTitle (node, nodeElement)
