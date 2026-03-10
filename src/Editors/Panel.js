@@ -552,7 +552,7 @@ module .exports = new class Panel extends Interface
 
             const input = folder .addMonitor (parameter, field .getName (),
             {
-               multiline: true,
+               multiline: !tooMuchValues,
                lineCount: tooMuchValues ? 1 : 2,
             });
 
