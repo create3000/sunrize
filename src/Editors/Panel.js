@@ -356,29 +356,29 @@ module .exports = new class Panel extends Interface
       {
          case "X3DBoundedObject":
          {
-            this .bbox = {
-               calculatedSize: { x: 0, y: 0, z: 0 },
-               calculatedCenter: { x: 0, y: 0, z: 0 },
-               bboxSizeInput: null,
-               bboxCenterInput: null,
-            };
-
             folder .addSeparator ();
 
-            this .bbox .bboxSizeInput   = folder .addInput (this .bbox, "calculatedSize", { });
-            this .bbox .bboxCenterInput = folder .addInput (this .bbox, "calculatedCenter", { });
+            const options = { format: value => this .format (this .#vector, value) };
+
+            for (const key in this .#vector)
+               options [key] = { format: options .format };
+
+            this .refreshBBox ();
+
+            this .bbox .bboxSizeInput   = folder .addInput (this .bbox, "calculatedSize",   options);
+            this .bbox .bboxCenterInput = folder .addInput (this .bbox, "calculatedCenter", options);
 
             $(this .bbox .bboxSizeInput   .element) .find ("input") .attr ("readonly", "");
             $(this .bbox .bboxCenterInput .element) .find ("input") .attr ("readonly", "");
 
             $(this .bbox .bboxSizeInput   .element) .find (".tp-txtv_k") .detach ();
             $(this .bbox .bboxCenterInput .element) .find (".tp-txtv_k") .detach ();
-
-            this .refreshBBox ();
             break;
          }
          case "X3DGeometryNode":
          {
+            this .refreshGeometry ();
+
             switch (node .getGeometryType ())
             {
                case 0:
@@ -393,7 +393,6 @@ module .exports = new class Panel extends Interface
                   break
             }
 
-            this .refreshGeometry ();
             break;
          }
       }
@@ -906,6 +905,13 @@ module .exports = new class Panel extends Interface
    #box = new X3D .Box3 ();
    #vector = new X3D .SFVec3f ();
 
+   bbox = {
+      calculatedSize: { },
+      calculatedCenter: { },
+      bboxSizeInput: null,
+      bboxCenterInput: null,
+   };
+
    refreshBBox ()
    {
       const bbox = this .node .getBBox (this .#box);
@@ -922,8 +928,8 @@ module .exports = new class Panel extends Interface
 
       this .refresh (this .bbox, this .node, this .#vector)
 
-      this .bbox .bboxSizeInput   .refresh ();
-      this .bbox .bboxCenterInput .refresh ();
+      this .bbox .bboxSizeInput   ?.refresh ();
+      this .bbox .bboxCenterInput ?.refresh ();
    }
 
    numPrimitives = {
@@ -951,7 +957,7 @@ module .exports = new class Panel extends Interface
             break
       }
 
-      this .numPrimitives .monitor .refresh ();
+      this .numPrimitives .monitor ?.refresh ();
    }
 
    getNodeTitle (node, nodeElement)
