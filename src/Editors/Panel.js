@@ -345,12 +345,7 @@ module .exports = new class Panel extends Interface
       const parameter = { };
 
       for (const name of fields)
-      {
-         if (name .match (/^-+$/))
-            folder .addBlade ({ view: "separator" });
-         else
-            this .addBinding (folder, parameter, node, node .getField (name), concreteNode);
-      }
+         this .addBinding (folder, parameter, node, node .getField (name), concreteNode);
 
       switch (title)
       {
@@ -452,6 +447,10 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .SFDouble:
          case X3D .X3DConstants .SFFloat:
          case X3D .X3DConstants .SFInt32:
+         case X3D .X3DConstants .SFMatrix3d:
+         case X3D .X3DConstants .SFMatrix3f:
+         case X3D .X3DConstants .SFMatrix4d:
+         case X3D .X3DConstants .SFMatrix4f:
          case X3D .X3DConstants .SFRotation:
          case X3D .X3DConstants .SFString:
          case X3D .X3DConstants .SFTime:
@@ -500,10 +499,6 @@ module .exports = new class Panel extends Interface
             break;
          }
          case X3D .X3DConstants .SFImage:
-         case X3D .X3DConstants .SFMatrix3d:
-         case X3D .X3DConstants .SFMatrix3f:
-         case X3D .X3DConstants .SFMatrix4d:
-         case X3D .X3DConstants .SFMatrix4f:
          case X3D .X3DConstants .MFBool:
          case X3D .X3DConstants .MFColor:
          case X3D .X3DConstants .MFColorRGBA:
