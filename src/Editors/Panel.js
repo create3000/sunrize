@@ -736,7 +736,7 @@ module .exports = new class Panel extends Interface
          executionContext = node .getExecutionContext (),
          category         = field .getUnit ();
 
-      if (!(this .mousedown || this .container .find (":focus") .length))
+      if (!(this .mousedown || this .container .find (":focus") .is ("input, textarea")))
          return;
 
       this .changing = true;
