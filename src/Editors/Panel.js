@@ -357,6 +357,9 @@ module .exports = new class Panel extends Interface
                format: value => this .format (this .#vector, value),
             };
 
+            for (const key in this .#vector)
+               options [key] = { format: options .format };
+
             this .refreshBBox ();
 
             this .bbox .bboxSizeInput   = folder .addBinding (this .bbox, "calculatedSize",   options);
@@ -467,11 +470,27 @@ module .exports = new class Panel extends Interface
                min      = fieldElement .attr ("minInclusive") ?? fieldElement .attr ("minExclusive"),
                max      = fieldElement .attr ("maxInclusive") ?? fieldElement .attr ("maxExclusive");
 
+            for (const key in field)
+               options [key] ??= { };
+
+            for (const key in field)
+               options [key] .format = options .format;
+
             if (min !== undefined)
+            {
                options .min = scene .toUnit (category, parseFloat (min));
 
+               for (const key in field)
+                  options [key] .min = options .min;
+            }
+
             if (max !== undefined)
+            {
                options .max = scene .toUnit (category, parseFloat (max));
+
+               for (const key in field)
+                  options [key] .max = options .max;
+            }
 
             this .refresh (parameter, node, field);
 
@@ -731,7 +750,7 @@ module .exports = new class Panel extends Interface
          executionContext = node .getExecutionContext (),
          category         = field .getUnit ();
 
-      if (!(this .mousedown || this .container .find (":focus") .is ("input, textarea")))
+      if (!(this .mousedown || this .container .find (":focus") .is ("input, textarea, select")))
          return;
 
       this .changing = true;
