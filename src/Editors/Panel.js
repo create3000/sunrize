@@ -347,26 +347,25 @@ module .exports = new class Panel extends Interface
       for (const name of fields)
       {
          if (name .match (/^-+$/))
-            folder .addSeparator ();
+            folder .addBlade ({ view: "separator" });
          else
-            this .addInput (folder, parameter, node, node .getField (name), concreteNode);
+            this .addBinding (folder, parameter, node, node .getField (name), concreteNode);
       }
 
       switch (title)
       {
          case "X3DBoundedObject":
          {
-            folder .addSeparator ();
+            folder .addBlade ({ view: "separator" });
 
-            const options = { format: value => this .format (this .#vector, value) };
-
-            for (const key in this .#vector)
-               options [key] = { format: options .format };
+            const options = {
+               format: value => this .format (this .#vector, value),
+            };
 
             this .refreshBBox ();
 
-            this .bbox .bboxSizeInput   = folder .addInput (this .bbox, "calculatedSize",   options);
-            this .bbox .bboxCenterInput = folder .addInput (this .bbox, "calculatedCenter", options);
+            this .bbox .bboxSizeInput   = folder .addBinding (this .bbox, "calculatedSize",   options);
+            this .bbox .bboxCenterInput = folder .addBinding (this .bbox, "calculatedCenter", options);
 
             $(this .bbox .bboxSizeInput   .element) .find ("input") .attr ("readonly", "");
             $(this .bbox .bboxCenterInput .element) .find ("input") .attr ("readonly", "");
@@ -382,14 +381,14 @@ module .exports = new class Panel extends Interface
             switch (node .getGeometryType ())
             {
                case 0:
-                  this .numPrimitives .monitor = folder .addMonitor (this .numPrimitives, "numberOfPoints", { });
+                  this .numPrimitives .monitor = folder .addBinding (this .numPrimitives, "numberOfPoints", { readonly: true });
                   break
                case 1:
-                  this .numPrimitives .monitor = folder .addMonitor (this .numPrimitives, "numberOfLines", { });
+                  this .numPrimitives .monitor = folder .addBinding (this .numPrimitives, "numberOfLines", { readonly: true });
                   break
                case 2:
                case 3:
-                  this .numPrimitives .monitor = folder .addMonitor (this .numPrimitives, "numberOfTriangles", { });
+                  this .numPrimitives .monitor = folder .addBinding (this .numPrimitives, "numberOfTriangles", { readonly: true });
                   break
             }
 
@@ -401,7 +400,7 @@ module .exports = new class Panel extends Interface
          folder .dispose ();
    }
 
-   addInput (folder, parameter, node, field, concreteNode)
+   addBinding (folder, parameter, node, field, concreteNode)
    {
       if (!field .isInitializable ())
          return;
@@ -469,31 +468,15 @@ module .exports = new class Panel extends Interface
                min      = fieldElement .attr ("minInclusive") ?? fieldElement .attr ("minExclusive"),
                max      = fieldElement .attr ("maxInclusive") ?? fieldElement .attr ("maxExclusive");
 
-            for (const key in field)
-               options [key] ??= { };
-
-            for (const key in field)
-               options [key] .format = options .format;
-
             if (min !== undefined)
-            {
                options .min = scene .toUnit (category, parseFloat (min));
 
-               for (const key in field)
-                  options [key] .min = options .min;
-            }
-
             if (max !== undefined)
-            {
                options .max = scene .toUnit (category, parseFloat (max));
-
-               for (const key in field)
-                  options [key] .max = options .max;
-            }
 
             this .refresh (parameter, node, field);
 
-            const input = $.try (() => folder .addInput (parameter, field .getName (), options));
+            const input = $.try (() => folder .addBinding (parameter, field .getName (), options));
 
             if (!input)
                break;
@@ -549,10 +532,11 @@ module .exports = new class Panel extends Interface
             else
                this .refresh (parameter, node, field);
 
-            const input = folder .addMonitor (parameter, field .getName (),
+            const input = folder .addBinding (parameter, field .getName (),
             {
+               readonly: true,
                multiline: !tooMuchValues,
-               lineCount: tooMuchValues ? 1 : 2,
+               rows: tooMuchValues ? 1 : 3,
             });
 
             $(input .element) .on ("mouseenter", () =>
