@@ -1266,6 +1266,8 @@ Viewpoint {
          {
             label: _("Viewpoints"),
             submenu: viewpoints .filter ((_, index) => index > 0) .map ((viewpointNode, index) => ({
+               type: "radio",
+               checked: viewpointNode ._isBound .getValue (),
                label: `${viewpointNode ._description .getValue () || viewpointNode .getDisplayName () || `VP${index + 1}}`}`,
                args: ["bindViewpoint", index + 1],
             })),
