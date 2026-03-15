@@ -576,13 +576,15 @@ module .exports = class ScriptEditor extends Interface
 
       const editor = monaco .editor .create (element .get (0),
       {
-         language: this .languages [node .getTypeName ()],
-         contextmenu: false,
          automaticLayout: true,
+         bracketPairColorization: { enabled: true },
+         contextmenu: false,
+         detectIndentation: true,
+         language: this .languages [node .getTypeName ()],
+         minimap: { enabled: false },
+         tabSize: 3,
          wordWrap: "on",
          wrappingIndent: "indent",
-         minimap: { enabled: false },
-         bracketPairColorization: { enabled: true },
       });
 
       editor .viewState = editor .saveViewState ();
