@@ -937,7 +937,11 @@ main ()
          value  = this .node ._url .toSpliced (0, 1, Editor .encodeURI (string));
 
       if (!this .node ._url .equals (value))
+      {
+         this .node ._url .addFieldCallback (this, () => this .node ._url .addFieldCallback (this, this .set_url .bind (this)));
+
          Editor .setFieldValue (this .node .getExecutionContext (), this .node, this .node ._url, value);
+      }
 
       if (!force)
          return;
