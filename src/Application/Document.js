@@ -578,7 +578,7 @@ Viewpoint {
 
    close ()
    {
-      this .footer .scriptEditor ?.apply ();
+      this .footer .scriptEditor ?.apply (false);
 
       if (UndoManager .shared .saveNeeded)
          this .saveFile ();

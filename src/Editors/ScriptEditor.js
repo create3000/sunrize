@@ -588,7 +588,7 @@ module .exports = class ScriptEditor extends Interface
       editor .viewState = editor .saveViewState ();
 
       editor .onDidFocusEditorWidget (() => this .updateDeclarations (monaco));
-      editor .onDidBlurEditorWidget (() => this .apply ());
+      editor .onDidBlurEditorWidget (() => this .apply (false));
       editor .onKeyDown (event => this .onKeyDown (event));
 
       element .on ("mouseenter", () => this .updateDeclarations (monaco));
@@ -924,7 +924,7 @@ main ()
       this .nodeList .setNode (nodes [0] ._parts [0] .getValue ());
    }
 
-   apply ()
+   apply (force = true)
    {
       if (!this .node)
          return;
@@ -936,10 +936,13 @@ main ()
          string = this .editor .getModel () .getValue (),
          value  = this .node ._url .toSpliced (0, 1, Editor .encodeURI (string));
 
-      this .node ._url .addFieldCallback (this, () => this .node ._url .addFieldCallback (this, this .set_url .bind (this)));
-
       if (!this .node ._url .equals (value))
          Editor .setFieldValue (this .node .getExecutionContext (), this .node, this .node ._url, value);
+
+      if (!force)
+         return;
+
+      this .node ._url .addFieldCallback (this, () => this .node ._url .addFieldCallback (this, this .set_url .bind (this)));
 
       this .node ._url = value;
 
