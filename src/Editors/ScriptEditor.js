@@ -936,12 +936,14 @@ main ()
          string = this .editor .getModel () .getValue (),
          value  = this .node ._url .toSpliced (0, 1, Editor .encodeURI (string));
 
-      if (this .node ._url .equals (value))
-         return;
-
       this .node ._url .addFieldCallback (this, () => this .node ._url .addFieldCallback (this, this .set_url .bind (this)));
 
-      Editor .setFieldValue (this .node .getExecutionContext (), this .node, this .node ._url, value);
+      if (!this .node ._url .equals (value))
+         Editor .setFieldValue (this .node .getExecutionContext (), this .node, this .node ._url, value);
+
+      this .node ._url = value;
+
+      Editor .requestUpdateInstances (this .node);
    }
 
    set_url ()
