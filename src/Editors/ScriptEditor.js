@@ -74,7 +74,7 @@ module .exports = class ScriptEditor extends Interface
          .attr ("title", _("Apply script source to node."))
          .text ("check_circle")
          .appendTo (this .toolbar)
-         .on ("click", () => this .apply ());
+         .on ("click", () => this .apply (true));
 
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
@@ -588,7 +588,7 @@ module .exports = class ScriptEditor extends Interface
       editor .viewState = editor .saveViewState ();
 
       editor .onDidFocusEditorWidget (() => this .updateDeclarations (monaco));
-      editor .onDidBlurEditorWidget (() => this .apply (false));
+      editor .onDidBlurEditorWidget (() => this .apply ());
       editor .onKeyDown (event => this .onKeyDown (event));
 
       element .on ("mouseenter", () => this .updateDeclarations (monaco));
@@ -924,7 +924,7 @@ main ()
       this .nodeList .setNode (nodes [0] ._parts [0] .getValue ());
    }
 
-   apply (force = true)
+   apply (force)
    {
       if (!this .node)
          return;
