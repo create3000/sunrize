@@ -30,6 +30,9 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\Software\Classes\.glb\OpenWithProgids]
 "Sunrize.glb"=""
 
+[HKEY_CURRENT_USER\Software\Classes\.vrm\OpenWithProgids]
+"Sunrize.vrm"=""
+
 [HKEY_CURRENT_USER\Software\Classes\.obj\OpenWithProgids]
 "Sunrize.obj"=""
 
@@ -110,6 +113,13 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.glb\DefaultIcon]
 @="\"SUNRIZE_EXE\",0"
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.glb\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.vrm]
+@="VRM Model"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.vrm\DefaultIcon]
+@="\"SUNRIZE_EXE\",0"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.vrm\shell\open\command]
 @="\"SUNRIZE_EXE\" \"%1\""
 
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.obj]

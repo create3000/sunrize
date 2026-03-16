@@ -260,6 +260,24 @@
     <dict>
       <key>CFBundleTypeExtensions</key>
       <array>
+        <string>vrm</string>
+      </array>
+      <key>CFBundleTypeMIMETypes</key>
+      <array>
+        <string>model/vrm</string>
+      </array>
+      <key>CFBundleTypeName</key>
+      <string>VRM Model</string>
+      <key>CFBundleTypeRole</key>
+      <string>Editor</string>
+      <key>LSHandlerRank</key>
+      <string>Alternate</string>
+      <key>LSIsAppleDefaultForType</key>
+      <true/>
+    </dict>
+    <dict>
+      <key>CFBundleTypeExtensions</key>
+      <array>
         <string>obj</string>
         <string>OBJ</string>
       </array>
