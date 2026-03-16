@@ -33,8 +33,7 @@ module .exports = class Application
          return;
       }
 
-      if (process .platform === "win32")
-         require ("update-electron-app") .updateElectronApp ({ updateInterval: "1 hour" });
+      require ("update-electron-app") .updateElectronApp ({ updateInterval: "1 hour" });
 
       Registry .addWindowsFileTypes ();
 
