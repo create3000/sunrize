@@ -189,6 +189,12 @@ module .exports = class NodesLibrary extends LibraryPane
       {
          switch (type)
          {
+            case X3D .X3DConstants .ElevationGrid:
+            {
+               node .xDimension = 10;
+               node .zDimension = 10;
+               break;
+            }
             case X3D .X3DConstants .X3DEnvironmentalSensorNode:
             {
                node .size = new X3D .SFVec3f (2, 2, 2);
