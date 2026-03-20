@@ -175,11 +175,27 @@ module .exports = class NodesLibrary extends LibraryPane
 
       const node = this .executionContext .createNode (typeName);
 
+      this .initializeNode (node);
       this .addNode (node);
 
       UndoManager .shared .endUndo ();
 
       await this .expandToAndSelectNode (node .getValue ());
+   }
+
+   initializeNode (node)
+   {
+      for (const type of node .getNodeType () .reverse ())
+      {
+         switch (type)
+         {
+            case X3D .X3DConstants .X3DEnvironmentalSensorNode:
+            {
+               node .size = new X3D .SFVec3f (2, 2, 2);
+               break;
+            }
+         }
+      }
    }
 
    async createProto (proto)
