@@ -2129,6 +2129,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       node = node .valueOf ();
 
       const
+         fieldName     = field .getName (),
          oldAccessType = field .getAccessType (),
          fields        = Array .from (node .getUserDefinedFields ());
 
@@ -2182,7 +2183,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             if (node .getProtoNode () !== proto)
                continue;
 
-            const field = node .getField (oldName);
+            const field = node .getField (fieldName);
 
             if (!updatedField .isInput ())
             {
