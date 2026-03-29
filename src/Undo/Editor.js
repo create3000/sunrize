@@ -303,8 +303,8 @@ module .exports = class Editor
 
       const
          nodes               = [... executionContext .rootNodes] .slice (rootNodes .length) .map (n => n ?.getValue ()),
-         newExternProtos     = [... executionContext .externprotos] .slice (externprotos .size),
-         newProtos           = [... executionContext .protos] .slice (protos .size),
+         newExternProtos     = [... executionContext .externprotos] .slice (externprotos .length),
+         newProtos           = [... executionContext .protos] .slice (protos .length),
          updatedExternProtos = new Map (),
          updatedProtos       = new Map (),
          removedProtoNodes   = new Set ();
