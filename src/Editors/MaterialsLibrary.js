@@ -60,9 +60,7 @@ module .exports = class MaterialsLibrary extends LibraryPane
 
       // Materials
 
-      const
-         materials = scene .getExportedNode ("Materials"),
-         nodes     = [ ];
+      const materials = scene .getExportedNode ("Materials");
 
       for (const [g, group] of materials .children .entries ())
       {
@@ -75,7 +73,7 @@ module .exports = class MaterialsLibrary extends LibraryPane
          {
             const material = node .children [0] .appearance .material;
 
-            nodes .push ($("<li></li>")
+            $("<li></li>")
                .addClass (["node", "icon"])
                .attr ("title", material .getNodeDisplayName ())
                .attr ("group", g)
@@ -84,7 +82,7 @@ module .exports = class MaterialsLibrary extends LibraryPane
                   .addClass ("text")
                   .text (`${group .getNodeName ()} ${c + 1}`))
                .appendTo (this .#list)
-               .on ("dblclick", () => this .importMaterial (material .getNodeName ())));
+               .on ("dblclick", () => this .importMaterial (material .getNodeName ()));
          }
       }
 
