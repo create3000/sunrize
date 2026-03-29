@@ -117,7 +117,7 @@ class X3DNodeTool extends X3DBaseTool
          {
             // X3DLayerNodeTool and X3DPrototypeInstanceTool have no own tool.
 
-            if (!this [tool])
+            if (!$(() => this [tool] ?.getValue () .getInnerNode ()))
                continue;
 
             this .#innerNodes .push (this [tool] .getValue () .getInnerNode ());
