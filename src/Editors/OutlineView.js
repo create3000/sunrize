@@ -2852,7 +2852,7 @@ module .exports = class OutlineView extends Interface
       {
          // Close nodes.
 
-         ids .push ($.try (() => this .getNode (element) .getInnerNode () .getId ()));
+         ids .push (this .getNode (element) .getInnerNode () ?.getId ());
       }
       else
       {
@@ -2862,7 +2862,7 @@ module .exports = class OutlineView extends Interface
             ?? this .executionContext;
 
          const importedNode = executionContext .importedNodes
-            .find (importedNode => $.try (() => importedNode .getExportedNode () .getInnerNode () .getId ()) === ids [0]);
+            .find (importedNode => importedNode .getExportedNode () .getInnerNode () ?.getId () === ids [0]);
 
          ids .push (importedNode ?.getExportedNode () .getId ());
       }
