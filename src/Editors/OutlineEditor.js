@@ -328,7 +328,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                      },
                      {
                         label: _("Fold InlineGeometry Back into Scene"),
-                        enabled: node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE && !!node .getGeometry (),
+                        enabled: node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE && !!$.try (() => node .getInnerNode ()),
                         args: ["foldInlineGeometryBackIntoScene", element .attr ("id"), executionContext .getId (), node .getId ()],
                      });
 
@@ -1624,7 +1624,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       const
          rootNodes     = executionContext .rootNodes .copy (),
-         nodesToExport = [inlineGeometryNode .getGeometry ()],
+         nodesToExport = [inlineGeometryNode .getInnerNode ()],
          x3dSyntax     = await Editor .exportX3D (inlineGeometryNode .getInternalScene (), nodesToExport),
          nodes         = await Editor .importX3D (executionContext, x3dSyntax),
          geometryNode  = nodes [0];
