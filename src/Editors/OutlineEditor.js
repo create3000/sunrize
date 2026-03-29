@@ -9,7 +9,6 @@ const
    mime              = require ("../Bits/MimeTypes"),
    X3D               = require ("../X3D"),
    OutlineRouteGraph = require ("./OutlineRouteGraph"),
-   Traverse          = require ("x3d-traverse") (X3D),
    Editor            = require ("../Undo/Editor"),
    UndoManager       = require ("../Undo/UndoManager"),
    _                 = require ("../Application/GetText");
