@@ -508,9 +508,9 @@ module .exports = class ScriptEditor extends Interface
 
                break;
             }
-
-            return string;
          }
+
+         return string;
       });
 
       monaco .languages .typescript .javascriptDefaults .setExtraLibs ([
