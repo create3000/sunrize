@@ -2842,7 +2842,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       for (const node of nodes)
       {
          const
-            innerNode     = node .getInnerNode (),
+            innerNode     = $.try (() => node .getInnerNode ()),
             modelMatrices = this .getModelMatrices (executionContext, layerNode, node, false);
 
          if (!innerNode)

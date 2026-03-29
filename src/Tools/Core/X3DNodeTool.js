@@ -109,21 +109,26 @@ class X3DNodeTool extends X3DBaseTool
 
    async setupTool ()
    {
-      await this .initializeTool ();
-
-      for (const tool of this .#tools)
+      try
       {
-         // X3DLayerNodeTool and X3DPrototypeInstanceTool have no own tool.
+         await this .initializeTool ();
 
-         const innerNode = this [tool] ?.getValue () .getInnerNode ();
+         for (const tool of this .#tools)
+         {
+            // X3DLayerNodeTool and X3DPrototypeInstanceTool have no own tool.
 
-         if (!innerNode)
-            continue;
+            if (!this [tool])
+               continue;
 
-         this .#innerNodes .push (innerNode);
+            this .#innerNodes .push (this [tool] .getValue () .getInnerNode ());
 
-         if (this [tool] .hasOwnProperty ("selected"))
-            this [tool] .selected = this .#selected;
+            if (this [tool] .hasOwnProperty ("selected"))
+               this [tool] .selected = this .#selected;
+         }
+      }
+      catch (error)
+      {
+         console .error (error);
       }
    }
 

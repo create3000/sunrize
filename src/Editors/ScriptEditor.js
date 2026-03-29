@@ -504,12 +504,13 @@ module .exports = class ScriptEditor extends Interface
             default:
             {
                string += this .#internalTypes .get (field .getType ()) ?? `X3D .${field .getTypeName ()}`;
+               string += ";";
 
                break;
             }
-         }
 
-         return string;
+            return string;
+         }
       });
 
       monaco .languages .typescript .javascriptDefaults .setExtraLibs ([

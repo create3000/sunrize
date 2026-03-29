@@ -175,12 +175,13 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             },
          ];
       }
+
       else if (element .is (".node"))
       {
          const
             parentFieldElement = element .closest (".field, .scene", this .sceneGraph),
             parentNodeElement  = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
-            innerNode          = node .getInnerNode () ?? node;
+            innerNode          = $.try (() => node .getInnerNode ()) ?? node;
 
          if (node)
          {
@@ -327,7 +328,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                      },
                      {
                         label: _("Fold InlineGeometry Back into Scene"),
-                        enabled: node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE && !! node .getInnerNode (),
+                        enabled: node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE && !!$.try (() => node .getInnerNode ()),
                         args: ["foldInlineGeometryBackIntoScene", element .attr ("id"), executionContext .getId (), node .getId ()],
                      });
 
@@ -370,7 +371,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                   }
                   case X3D .X3DConstants .X3DPrototypeInstance:
                   {
-                     if (!node .getInnerNode ())
+                     if (!$.try (() => node .getInnerNode ()))
                         continue;
 
                      menu .push ({
@@ -473,6 +474,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             ];
          }
       }
+
       else if (element .is (".exported-node"))
       {
          const exportedNode = this .objects .get (parseInt (element .attr ("exported-node-id")));
@@ -502,7 +504,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             parentFieldElement = element .closest (".field, .scene", this .sceneGraph),
             parentNodeElement  = parentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
             node               = this .objects .get (parseInt (element .attr ("node-id"))),
-            innerNode          = node .getInnerNode () ?? node,
+            innerNode          = $.try (() => node .getInnerNode ()) ?? node,
             importedNode       = this .objects .get (parseInt (element .attr ("imported-node-id"))),
             local              = importedNode .getExecutionContext () .getLocalScene () === this .executionContext;
 
@@ -1038,7 +1040,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                continue;
 
             const
-               containerField = node .getInnerNode () ?.getContainerField () ?? node .getContainerField (),
+               containerField = $.try (() => node .getInnerNode () .getContainerField ()) ?? node .getContainerField (),
                field          = targetField ?? $.try (() => targetNode ?.getField (containerField));
 
             if (!field)
@@ -3569,7 +3571,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                   if (destinationParentNode === sourceNode)
                      continue;
 
-                  const containerField = sourceNode ?.getInnerNode () ?.getContainerField ()
+                  const containerField = $.try (() => sourceNode .getInnerNode () .getContainerField ())
                      ?? sourceNode ?.getContainerField ();
 
                   if (containerField)
