@@ -370,7 +370,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                   }
                   case X3D .X3DConstants .X3DPrototypeInstance:
                   {
-                     if (node .getInnerNode ())
+                     if (!node .getInnerNode ())
                         continue;
 
                      menu .push ({
