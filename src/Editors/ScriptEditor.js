@@ -487,6 +487,8 @@ module .exports = class ScriptEditor extends Interface
                   string += `X3D .${field .getNodeTypeName ()}Proxy;`;
                else
                   string += `X3D .SFNode | null;`;
+
+               break;
             }
             case X3D .X3DConstants .MFNode:
             {
@@ -496,15 +498,18 @@ module .exports = class ScriptEditor extends Interface
                   string += `X3D .MFNode <${types .join ("|")}|null>;`;
                else
                   string += `X3D .MFNode;`;
+
+               break;
             }
             default:
             {
                string += this .#internalTypes .get (field .getType ()) ?? `X3D .${field .getTypeName ()}`;
-               string += "";"";
-            }
 
-            return string;
+               break;
+            }
          }
+
+         return string;
       });
 
       monaco .languages .typescript .javascriptDefaults .setExtraLibs ([

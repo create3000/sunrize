@@ -754,8 +754,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       if ((profile && oldProfile && profile .name === oldProfile .name) || (profile === oldProfile))
          return;
 
-      const browser = scene .getBrowser ();
-
       undoManager .beginUndo (_("Set Profile to »%s«"), profile ? profile .title : "Full");
 
       scene .setProfile (profile);

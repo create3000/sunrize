@@ -175,7 +175,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             },
          ];
       }
-
       else if (element .is (".node"))
       {
          const
@@ -474,7 +473,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             ];
          }
       }
-
       else if (element .is (".exported-node"))
       {
          const exportedNode = this .objects .get (parseInt (element .attr ("exported-node-id")));
@@ -1036,8 +1034,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
          for (const node of nodes)
          {
+            if (!node)
+               continue;
+
             const
-               containerField = node .getInnerNode () ?.getContainerField () ?? node ?.getContainerField (),
+               containerField = node .getInnerNode () ?.getContainerField () ?? node .getContainerField (),
                field          = targetField ?? $.try (() => targetNode ?.getField (containerField));
 
             if (!field)
@@ -1045,7 +1046,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             // Adjust matrix.
 
-            if (node ?.getType () .some (type => this .transformLikeNodes .has (type)))
+            if (node .getType () .some (type => this .transformLikeNodes .has (type)))
             {
                const
                   sourceModelMatrix = node .getMatrix (),
@@ -1113,7 +1114,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       {
          const
             element                 = $(`#${id}`),
-            node                    = this .getNode (element),
             parentFieldElement      = element .closest (".field, .scene", this .sceneGraph),
             parentNodeElement       = parentFieldElement .closest (".node, .scene, .proto", this .sceneGraph),
             parentNode              = this .getNode (parentNodeElement),
@@ -3569,7 +3569,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                   if (destinationParentNode === sourceNode)
                      continue;
 
-                  const containerField = sourceNode .getInnerNode () ?.getContainerField ()
+                  const containerField = sourceNode ?.getInnerNode () ?.getContainerField ()
                      ?? sourceNode ?.getContainerField ();
 
                   if (containerField)
