@@ -1,19 +1,19 @@
 {
-    // See https://go.microsoft.com/fwlink/?LinkId=733558
-    // for the documentation about the tasks.json format
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "Open Sunrize",
-            "type": "shell",
-            "command": "npm run development",
-            "problemMatcher": [],
-        },
-        {
-            "label": "Make X_ITE for Sunrize",
-            "type": "shell",
-            "command": "npm run make-x_ite-for-sunrize",
-            "problemMatcher": []
-        }
-    ]
+   // See https://go.microsoft.com/fwlink/?LinkId=733558
+   // for the documentation about the tasks.json format
+   "version": "2.0.0",
+   "tasks": [
+      {
+        "label": "Open Sunrize",
+        "type": "shell",
+        "command": "npm run development",
+        "problemMatcher": [],
+      },
+      {
+        "label": "Make X_ITE for Sunrize",
+        "type": "shell",
+        "command": "npm run make-x_ite-for-sunrize",
+        "problemMatcher": []
+      }
+   ]
 }
