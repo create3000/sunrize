@@ -1094,7 +1094,7 @@ module .exports = class OutlineView extends Interface
 
       if (!(node .getExecutionContext () .getOuterNode () instanceof X3D .X3DProtoDeclaration))
       {
-         if (node .setHidden)
+         if (node ._hidden)
          {
             buttons .push ($("<span></span>")
                .attr ("order", "0")
@@ -3101,8 +3101,7 @@ module .exports = class OutlineView extends Interface
             return;
          }
 
-         if (node .setHidden)
-            node ._hidden .removeFieldCallback (this .#updateNodeVisibilitySymbol);
+         node ._hidden ?.removeFieldCallback (this .#updateNodeVisibilitySymbol);
 
          for (const type of node .getType ())
          {
