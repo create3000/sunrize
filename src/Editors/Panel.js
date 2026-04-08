@@ -376,7 +376,7 @@ module .exports = new class Panel extends Interface
          {
             this .refreshGeometry ();
 
-            switch (node .getGeometryType ())
+            switch (($.try (() => node .getInnerNode ()) ?? node) .getGeometryType ())
             {
                case 0:
                   this .numPrimitives .monitor = folder .addBinding (this .numPrimitives, "numberOfPoints", { readonly: true });
@@ -939,9 +939,11 @@ module .exports = new class Panel extends Interface
 
    refreshGeometry ()
    {
-      const numVertices = this .node .getVertices () .length / 4;
+      const
+         node        = $.try (() => this .node .getInnerNode ()) ?? this .node,
+         numVertices = node .getVertices () .length / 4;
 
-      switch (this .node .getGeometryType ())
+      switch (node .getGeometryType ())
       {
          case 0:
             this .numPrimitives .numberOfPoints = (numVertices) .toLocaleString (_.locale);
