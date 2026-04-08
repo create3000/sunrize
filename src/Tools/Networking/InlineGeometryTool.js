@@ -33,6 +33,8 @@ class InlineGeometryTool extends X3DGeometryNodeTool
    {
       try
       {
+         this .node ._loadState .removeInterest ("set_toolLoadState", this);
+
          this .node .getInnerNode () .removeTool ();
       }
       catch
