@@ -2,7 +2,7 @@
 <!-- X3D Unified Object Model (X3DUOM) X3dUnifiedObjectModel-4.0.xml -->
 <!-- Online at https://www.web3d.org/specifications/X3dUnifiedObjectModel-4.0.xml -->
 <!-- This file contains a listing of all abstract and concrete nodes in version 4.0 of X3D -->
-<!-- Generated 2026-01-11-08:00 18:46:39.528322-08:00 -->
+<!-- Generated 2026-04-20-07:00 12:13:25.5799648-07:00 -->
 <X3dUnifiedObjectModel xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
                        version="4.0"
                        xsd:noNamespaceSchemaLocation="X3dUnifiedObjectModel.xsd">
@@ -11429,7 +11429,7 @@
                    accessType="inputOutput"
                    default="0"
                    minInclusive="0"
-                   description="The detune field forms a compound field together with playbackRate that together determine a computedPlaybackRate value."/>
+                   description="The detune field, measured in cents, modulates the speed at which the the audio stream is rendered."/>
             <field name="elapsedTime"
                    type="SFTime"
                    accessType="outputOnly"
@@ -12293,7 +12293,7 @@
                    accessType="inputOutput"
                    default="0"
                    minInclusive="0"
-                   description="The detune field forms a compound field together with playbackRate that together determine a computedPlaybackRate value."/>
+                   description="The detune field, measured in cents, modulates the speed at which the the audio stream is rendered."/>
             <field name="elapsedTime"
                    type="SFTime"
                    accessType="outputOnly"
@@ -18215,7 +18215,7 @@
       </ConcreteNode>
       <ConcreteNode name="FillProperties">
          <InterfaceDefinition specificationUrl="https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/shape.html#FillProperties"
-                              appinfo="FillProperties indicates whether appearance is filled or hatched for associated geometry nodes inside the same Shape.">
+                              appinfo="FillProperties indicates whether appearance is filled or hatched for associated geometry inside the same Shape.">
             <componentInfo name="Shape" level="3"/>
             <Inheritance baseType="X3DAppearanceChildNode"/>
             <field name="filled"
@@ -22713,7 +22713,7 @@
                    accessType="inputOutput"
                    default="NULL"
                    acceptableNodeTypes="Coordinate|CoordinateDouble"
-                   description="the coord field is used for HAnimSegment objects that have deformable meshes and shall contain coordinates referenced from the IndexedFaceSet for the paarent HAnimSegment object."/>
+                   description="the coord field is used for HAnimSegment objects that have deformable meshes and shall contain coordinates referenced from the IndexedFaceSet for the parent HAnimSegment object."/>
             <field name="description"
                    type="SFString"
                    accessType="inputOutput"
@@ -26784,7 +26784,7 @@
       </ConcreteNode>
       <ConcreteNode name="LineProperties">
          <InterfaceDefinition specificationUrl="https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/shape.html#LineProperties"
-                              appinfo="LineProperties allows precise fine-grained control over the rendering style of lines and edges for associated geometry nodes inside the same Shape.">
+                              appinfo="LineProperties allows precise fine-grained control over the rendering style of lines and edges for associated geometry inside the same Shape.">
             <componentInfo name="Shape" level="2"/>
             <Inheritance baseType="X3DAppearanceChildNode"/>
             <field name="applied"
@@ -27410,7 +27410,7 @@
       </ConcreteNode>
       <ConcreteNode name="Material">
          <InterfaceDefinition specificationUrl="https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/shape.html#Material"
-                              appinfo="Material specifies surface rendering properties for associated geometry nodes.">
+                              appinfo="Material specifies surface rendering properties for associated geometry.">
             <componentInfo name="Shape" level="1"/>
             <Inheritance baseType="X3DOneSidedMaterialNode"/>
             <field name="ambientIntensity"
@@ -30770,7 +30770,7 @@
                    accessType="inputOutput"
                    default="0"
                    minInclusive="0"
-                   description="The detune ffield is an a-rate AudioParam representing detuning of oscillation in cents (though the AudioParam returned is read-only, the value it represents is not)."/>
+                   description="The detune field, measured in cents, modulates the speed at which the the audio stream is rendered."/>
             <field name="elapsedTime"
                    type="SFTime"
                    accessType="outputOnly"
@@ -31321,7 +31321,7 @@
       </ConcreteNode>
       <ConcreteNode name="PhysicalMaterial">
          <InterfaceDefinition specificationUrl="https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/shape.html#PhysicalMaterial"
-                              appinfo="PhysicalMaterial specifies surface rendering properties for associated geometry nodes.">
+                              appinfo="PhysicalMaterial specifies Physically Based Rendering (PBR) properties for associated geometry.">
             <componentInfo name="Shape" level="2"/>
             <Inheritance baseType="X3DOneSidedMaterialNode"/>
             <field name="baseColor"
@@ -37441,7 +37441,7 @@
       </ConcreteNode>
       <ConcreteNode name="StringSensor">
          <InterfaceDefinition specificationUrl="https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/keyDeviceSensor.html#StringSensor"
-                              appinfo="StringSensor generates events as the user presses keys on the keyboard.">
+                              appinfo="StringSensor generates events as the user enters strings on the keyboard.">
             <componentInfo name="KeyDeviceSensor" level="2"/>
             <Inheritance baseType="X3DKeyDeviceSensorNode"/>
             <field name="deletionAllowed"
@@ -38449,7 +38449,7 @@
                    accessType="outputOnly"
                    minExclusive="0"
                    inheritedFrom="X3DTextureProjectorNode"
-                   description="aspectRatio is the ratio of width and height that is projected."/>
+                   description="aspectRatio is the ratio of width and height that is projected, reported as output event when contained image is loaded."/>
             <field name="color"
                    type="SFColor"
                    accessType="inputOutput"
@@ -38475,7 +38475,7 @@
                    default="-1"
                    minInclusive="-1"
                    inheritedFrom="X3DTextureProjectorNode"
-                   description="maximum distance necessary for texture display."/>
+                   description="maximum distance necessary for texture display, -1 if unconstrained."/>
             <field name="fieldOfView"
                    type="SFFloat"
                    accessType="inputOutput"
@@ -38521,7 +38521,7 @@
                    default="-1"
                    minInclusive="-1"
                    inheritedFrom="X3DTextureProjectorNode"
-                   description="minimum distance necessary for texture display."/>
+                   description="minimum distance necessary for texture display, -1 if unconstrained."/>
             <field name="on"
                    type="SFBool"
                    accessType="inputOutput"
@@ -38555,7 +38555,7 @@
                    accessType="inputOutput"
                    default="0 1 0"
                    inheritedFrom="X3DTextureProjectorNode"
-                   description="upVector describes the roll of the camera by defining which direction is up for camera orientation."/>
+                   description="upVector describes camera orientation by defining which direction is up."/>
             <field name="DEF"
                    type="SFString"
                    accessType="inputOutput"
@@ -38614,7 +38614,7 @@
                    accessType="outputOnly"
                    minExclusive="0"
                    inheritedFrom="X3DTextureProjectorNode"
-                   description="aspectRatio is the ratio of width and height that is projected."/>
+                   description="aspectRatio is the ratio of width and height that is projected, reported as output event when contained image is loaded."/>
             <field name="color"
                    type="SFColor"
                    accessType="inputOutput"
@@ -38640,7 +38640,7 @@
                    default="-1"
                    minInclusive="-1"
                    inheritedFrom="X3DTextureProjectorNode"
-                   description="maximum distance necessary for texture display."/>
+                   description="maximum distance necessary for texture display, -1 if unconstrained."/>
             <field name="fieldOfView"
                    type="SFVec4f"
                    accessType="inputOutput"
@@ -38684,7 +38684,7 @@
                    default="-1"
                    minInclusive="-1"
                    inheritedFrom="X3DTextureProjectorNode"
-                   description="minimum distance necessary for texture display."/>
+                   description="minimum distance necessary for texture display, -1 if unconstrained."/>
             <field name="on"
                    type="SFBool"
                    accessType="inputOutput"
@@ -38718,7 +38718,7 @@
                    accessType="inputOutput"
                    default="0 1 0"
                    inheritedFrom="X3DTextureProjectorNode"
-                   description="upVector describes the roll of the camera by defining which direction is up for camera orientation."/>
+                   description="upVector describes camera orientation by defining which direction is up."/>
             <field name="DEF"
                    type="SFString"
                    accessType="inputOutput"
@@ -38981,7 +38981,7 @@
                    type="SFFloat"
                    accessType="inputOutput"
                    default="0"
-                   description="single rotation angle of texture about center (opposite effect appears on geometry)."/>
+                   description="Single rotation angle of texture about center (opposite effect appears on geometry)."/>
             <field name="scale"
                    type="SFVec2f"
                    accessType="inputOutput"
@@ -40543,7 +40543,7 @@
       </ConcreteNode>
       <ConcreteNode name="TwoSidedMaterial">
          <InterfaceDefinition specificationUrl="https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/shape.html#TwoSidedMaterial"
-                              appinfo="TwoSidedMaterial specifies surface rendering properties for associated geometry nodes, for outer (front) and inner (back) sides of polygons.">
+                              appinfo="TwoSidedMaterial specifies surface rendering properties for associated geometry, for outer (front) and inner (back) sides of polygons.">
             <componentInfo name="Shape" level="4"/>
             <Inheritance baseType="X3DMaterialNode"/>
             <field name="ambientIntensity"
@@ -40830,7 +40830,7 @@
       </ConcreteNode>
       <ConcreteNode name="UnlitMaterial">
          <InterfaceDefinition specificationUrl="https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/shape.html#UnlitMaterial"
-                              appinfo="UnlitMaterial specifies surface rendering properties for associated geometry nodes.">
+                              appinfo="UnlitMaterial specifies surface rendering properties for associated geometry that is unaffected by scene lighting.">
             <componentInfo name="Shape" level="1"/>
             <Inheritance baseType="X3DOneSidedMaterialNode"/>
             <field name="emissiveColor"
