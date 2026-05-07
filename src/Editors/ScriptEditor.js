@@ -327,7 +327,7 @@ module .exports = class ScriptEditor extends Interface
                [/[ \t\r\n]+/, "white"],
                [/\/\*/, "comment", "@comment"],
                [/\/\/.*$/, "comment"],
-            ]
+            ],
          }
       };
 
