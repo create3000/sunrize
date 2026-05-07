@@ -165,26 +165,26 @@ module .exports = class ScriptEditor extends Interface
       const conf = {
          comments: {
             lineComment: "//",
-            blockComment: ["/*", "*/"]
+            blockComment: ["/*", "*/"],
          },
          brackets: [
             ["{", "}"],
             ["[", "]"],
-            ["(", ")"]
+            ["(", ")"],
          ],
          autoClosingPairs: [
             { open: "[", close: "]" },
             { open: "{", close: "}" },
             { open: "(", close: ")" },
             { open: "'", close: "'", notIn: ["string", "comment"] },
-            { open: '"', close: '"', notIn: ["string"] }
+            { open: '"', close: '"', notIn: ["string"] },
          ],
          surroundingPairs: [
             { open: "{", close: "}" },
             { open: "[", close: "]" },
             { open: "(", close: ")" },
             { open: '"', close: '"' },
-            { open: "'", close: "'" }
+            { open: "'", close: "'" },
          ]
       };
 
@@ -254,7 +254,7 @@ module .exports = class ScriptEditor extends Interface
             "%=",
             "<<=",
             ">>=",
-            ">>>="
+            ">>>=",
          ],
          symbols: /[=><!~?:&|+\-*\/\^%]+/,
          escapes: /\\(?:[abfnrtv\\"']|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
