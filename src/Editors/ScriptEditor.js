@@ -164,97 +164,97 @@ module .exports = class ScriptEditor extends Interface
 
       const conf = {
          comments: {
-            lineComment: '//',
-            blockComment: ['/*', '*/']
+            lineComment: "//",
+            blockComment: ["/*", "*/"]
          },
          brackets: [
-            ['{', '}'],
-            ['[', ']'],
-            ['(', ')']
+            ["{", "}"],
+            ["[", "]"],
+            ["(", ")"]
          ],
          autoClosingPairs: [
-            { open: '[', close: ']' },
-            { open: '{', close: '}' },
-            { open: '(', close: ')' },
-            { open: "'", close: "'", notIn: ['string', 'comment'] },
-            { open: '"', close: '"', notIn: ['string'] }
+            { open: "[", close: "]" },
+            { open: "{", close: "}" },
+            { open: "(", close: ")" },
+            { open: "'", close: "'", notIn: ["string", "comment"] },
+            { open: '"', close: '"', notIn: ["string"] }
          ],
          surroundingPairs: [
-            { open: '{', close: '}' },
-            { open: '[', close: ']' },
-            { open: '(', close: ')' },
+            { open: "{", close: "}" },
+            { open: "[", close: "]" },
+            { open: "(", close: ")" },
             { open: '"', close: '"' },
             { open: "'", close: "'" }
          ]
       };
 
       const keywords = [
-         'break', 'case', 'const', 'continue', 'discard', 'do', 'else', 'flat', 'for', 'highp', 'if', 'in', 'inout', 'invariant', 'lowp', 'mediump', 'out', 'precision', 'return', 'smooth', 'struct', 'switch', 'uniform', 'while',
+         "break", "case", "const", "continue", "discard", "do", "else", "flat", "for", "highp", "if", "in", "inout", "invariant", "lowp", "mediump", "out", "precision", "return", "smooth", "struct", "switch", "uniform", "while",
       ];
 
       const types = [
-         'bool', 'bvec2', 'bvec3', 'bvec4', 'float', 'int', 'ivec2', 'ivec3', 'ivec4', 'mat2', 'mat2x2', 'mat2x3', 'mat2x4', 'mat3', 'mat3x2', 'mat3x3', 'mat3x4', 'mat4', 'mat4x2', 'mat4x3', 'mat4x4', 'sampler2D', 'sampler3D', 'samplerCube', 'uint', 'uvec2', 'uvec3', 'uvec4', 'vec2', 'vec3', 'vec4', 'void',
+         "bool", "bvec2", "bvec3", "bvec4", "float", "int", "ivec2", "ivec3", "ivec4", "mat2", "mat2x2", "mat2x3", "mat2x4", "mat3", "mat3x2", "mat3x3", "mat3x4", "mat4", "mat4x2", "mat4x3", "mat4x4", "sampler2D", "sampler3D", "samplerCube", "uint", "uvec2", "uvec3", "uvec4", "vec2", "vec3", "vec4", "void",
       ];
 
       const functions = [
-         'abs', 'acos', 'acosh', 'all', 'any', 'asin', 'asinh', 'atan', 'atanh', 'ceil', 'clamp', 'cos', 'cosh', 'cross ', 'degrees', 'determinant', 'dFdx', 'dFdy', 'distance', 'dot', 'equal', 'exp', 'exp2', 'faceforward', 'floatBitsToInt', 'floatBitsToUint', 'floor', 'fract', 'fwidth', 'greaterThan', 'greaterThanEqual', 'intBitsToFloat', 'inverse', 'inversesqrt', 'isinf', 'isnan', 'length', 'lessThan ', 'lessThanEqual', 'log', 'log2', 'main', 'matrixCompMult', 'max', 'min', 'mix', 'mod', 'modf', 'normalize', 'not', 'notEqual', 'outerProduct', 'packUnorm2x16', 'pow', 'radians', 'reflect', 'refract', 'round', 'roundEven', 'sign', 'sin', 'sinh', 'smoothstep', 'sqrt', 'step', 'tan', 'tanh', 'texelFetch', 'texelFetchOffset', 'texture', 'textureGrad', 'textureGradOffset', 'textureLod', 'textureLodOffset', 'textureProj', 'textureProjGrad', 'textureProjLod', 'textureProjLodOffset', 'textureSize', 'transpose', 'trunc', 'uintBitsToFloat',
+         "abs", "acos", "acosh", "all", "any", "asin", "asinh", "atan", "atanh", "ceil", "clamp", "cos", "cosh", "cross ", "degrees", "determinant", "dFdx", "dFdy", "distance", "dot", "equal", "exp", "exp2", "faceforward", "floatBitsToInt", "floatBitsToUint", "floor", "fract", "fwidth", "greaterThan", "greaterThanEqual", "intBitsToFloat", "inverse", "inversesqrt", "isinf", "isnan", "length", "lessThan ", "lessThanEqual", "log", "log2", "main", "matrixCompMult", "max", "min", "mix", "mod", "modf", "normalize", "not", "notEqual", "outerProduct", "packUnorm2x16", "pow", "radians", "reflect", "refract", "round", "roundEven", "sign", "sin", "sinh", "smoothstep", "sqrt", "step", "tan", "tanh", "texelFetch", "texelFetchOffset", "texture", "textureGrad", "textureGradOffset", "textureLod", "textureLodOffset", "textureProj", "textureProjGrad", "textureProjLod", "textureProjLodOffset", "textureSize", "transpose", "trunc", "uintBitsToFloat",
       ];
 
       const constants = [
-         'false', 'true',
+         "false", "true",
       ];
 
       const builtins = [
-         'gl_ClipDistance', 'gl_CullDistance', 'gl_FragCoord', 'gl_FragDepth', 'gl_FrontFacing', 'gl_GlobalInvocationID', 'gl_HelperInvocation', 'gl_InstanceID', 'gl_InvocationID', 'gl_Layer', 'gl_LocalInvocationID', 'gl_LocalInvocationIndex', 'gl_NumSamples', 'gl_NumWorkGroups', 'gl_PatchVerticesIn', 'gl_PointCoord', 'gl_PointSize', 'gl_Position', 'gl_PrimitiveID', 'gl_PrimitiveIDIn', 'gl_SampleID', 'gl_SampleMask', 'gl_SampleMaskIn', 'gl_SamplePosition', 'gl_TessCoord', 'gl_TessLevelInner', 'gl_TessLevelOuter', 'gl_VertexID', 'gl_ViewportIndex', 'gl_WorkGroupID', 'gl_WorkGroupSize',
+         "gl_ClipDistance", "gl_CullDistance", "gl_FragCoord", "gl_FragDepth", "gl_FrontFacing", "gl_GlobalInvocationID", "gl_HelperInvocation", "gl_InstanceID", "gl_InvocationID", "gl_Layer", "gl_LocalInvocationID", "gl_LocalInvocationIndex", "gl_NumSamples", "gl_NumWorkGroups", "gl_PatchVerticesIn", "gl_PointCoord", "gl_PointSize", "gl_Position", "gl_PrimitiveID", "gl_PrimitiveIDIn", "gl_SampleID", "gl_SampleMask", "gl_SampleMaskIn", "gl_SamplePosition", "gl_TessCoord", "gl_TessLevelInner", "gl_TessLevelOuter", "gl_VertexID", "gl_ViewportIndex", "gl_WorkGroupID", "gl_WorkGroupSize",
       ];
 
       const language = {
-         tokenPostfix: '.glsl',
+         tokenPostfix: ".glsl",
          // Set defaultToken to invalid to see what you do not tokenize yet
-         defaultToken: 'invalid',
+         defaultToken: "invalid",
          keywords,
          types,
          functions,
          constants,
          builtins,
          operators: [
-            '=',
-            '>',
-            '<',
-            '!',
-            '~',
-            '?',
-            ':',
-            '==',
-            '<=',
-            '>=',
-            '!=',
-            '&&',
-            '||',
-            '++',
-            '--',
-            '+',
-            '-',
-            '*',
-            '/',
-            '&',
-            '|',
-            '^',
-            '%',
-            '<<',
-            '>>',
-            '>>>',
-            '+=',
-            '-=',
-            '*=',
-            '/=',
-            '&=',
-            '|=',
-            '^=',
-            '%=',
-            '<<=',
-            '>>=',
-            '>>>='
+            "=",
+            ">",
+            "<",
+            "!",
+            "~",
+            "?",
+            ":",
+            "==",
+            "<=",
+            ">=",
+            "!=",
+            "&&",
+            "||",
+            "++",
+            "--",
+            "+",
+            "-",
+            "*",
+            "/",
+            "&",
+            "|",
+            "^",
+            "%",
+            "<<",
+            ">>",
+            ">>>",
+            "+=",
+            "-=",
+            "*=",
+            "/=",
+            "&=",
+            "|=",
+            "^=",
+            "%=",
+            "<<=",
+            ">>=",
+            ">>>="
          ],
          symbols: /[=><!~?:&|+\-*\/\^%]+/,
          escapes: /\\(?:[abfnrtv\\"']|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
@@ -265,73 +265,73 @@ module .exports = class ScriptEditor extends Interface
          tokenizer: {
             root: [
                // data:mime-type,
-               [/data:x-shader\/x-(?:vertex|fragment),/, 'string'],
+               [/data:x-shader\/x-(?:vertex|fragment),/, "string"],
 
                // x3d_SpecialVariable
-               [/x3d_\w+/, 'keyword'],
+               [/x3d_\w+/, "keyword"],
 
                // identifiers and keywords
 
                [/[a-zA-Z_]\w*/,
                {
                   cases: {
-                     '@keywords': { token: 'keyword.$0' },
-                     '@types': { token: 'type.identifier' },
-                     '@functions': { token: 'attribute.name' },
-                     '@constants': { token: 'constant' },
-                     '@builtins': { token: 'regexp' },
-                     '@default': 'identifier',
+                     "@keywords": { token: "keyword.$0" },
+                     "@types": { token: "type.identifier" },
+                     "@functions": { token: "attribute.name" },
+                     "@constants": { token: "constant" },
+                     "@builtins": { token: "regexp" },
+                     "@default": "identifier",
                   }
                }],
 
                // Version
-               [/#version\s+\d+\s+es/, 'keyword.directive'],
+               [/#version\s+\d+\s+es/, "keyword.directive"],
 
                // Preprocessor directive (#define)
-               [/^\s*#\s*\w+/, 'keyword.directive'],
+               [/^\s*#\s*\w+/, "keyword.directive"],
 
                // whitespace
-               { include: '@whitespace' },
+               { include: "@whitespace" },
 
                // delimiters and operators
-               [/[{}()\[\]]/, '@brackets'],
+               [/[{}()\[\]]/, "@brackets"],
                [/@symbols/,
                {
                   cases: {
-                     '@operators': 'operator',
-                     '@default': ''
+                     "@operators": "operator",
+                     "@default": "",
                   }
                }],
 
                // numbers
-               [/\d*\d+[eE]([\-+]?\d+)?(@floatsuffix)/, 'number.float'],
-               [/\d*\.\d+([eE][\-+]?\d+)?(@floatsuffix)/, 'number.float'],
-               [/0[xX][0-9a-fA-F']*[0-9a-fA-F](@integersuffix)/, 'number.hex'],
-               [/0[0-7']*[0-7](@integersuffix)/, 'number.octal'],
-               [/0[bB][0-1']*[0-1](@integersuffix)/, 'number.binary'],
-               [/\d[\d']*\d(@integersuffix)/, 'number'],
-               [/\d(@integersuffix)/, 'number'],
+               [/\d*\d+[eE]([\-+]?\d+)?(@floatsuffix)/, "number.float"],
+               [/\d*\.\d+([eE][\-+]?\d+)?(@floatsuffix)/, "number.float"],
+               [/0[xX][0-9a-fA-F']*[0-9a-fA-F](@integersuffix)/, "number.hex"],
+               [/0[0-7']*[0-7](@integersuffix)/, "number.octal"],
+               [/0[bB][0-1']*[0-1](@integersuffix)/, "number.binary"],
+               [/\d[\d']*\d(@integersuffix)/, "number"],
+               [/\d(@integersuffix)/, "number"],
 
                // delimiter: after number because of .\d floats
-               [/[;,.]/, 'delimiter']
+               [/[;,.]/, "delimiter"],
             ],
 
             comment: [
-               [/[^\/*]+/, 'comment'],
-               [/\/\*/, 'comment', '@push'],
-               ['\\*/', 'comment', '@pop'],
-               [/[\/*]/, 'comment']
+               [/[^\/*]+/, "comment"],
+               [/\/\*/, "comment", "@push"],
+               ["\\*/", "comment", "@pop"],
+               [/[\/*]/, "comment"],
             ],
 
             whitespace: [
-               [/[ \t\r\n]+/, 'white'],
-               [/\/\*/, 'comment', '@comment'],
-               [/\/\/.*$/, 'comment']
+               [/[ \t\r\n]+/, "white"],
+               [/\/\*/, "comment", "@comment"],
+               [/\/\/.*$/, "comment"],
             ]
          }
       };
 
-      monaco .languages .register ({ id: "glsl" });
+      monaco .languages .register ({ id: "glsl", mimetypes: ["x-shader/x-vertex", "x-shader/x-fragment"] });
       monaco .languages .setMonarchTokensProvider ("glsl", language);
       monaco .languages .setLanguageConfiguration ("glsl", conf);
    }
