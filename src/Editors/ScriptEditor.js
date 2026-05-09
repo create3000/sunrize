@@ -870,6 +870,8 @@ function set_field (value, time)
    print (time, value);
 }
 "
+
+directOutput TRUE
 }
       `);
 
