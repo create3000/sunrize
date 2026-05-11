@@ -321,14 +321,14 @@ function eventsProcessed ()
 
    if (layoutDisplay)
    {
-      const { x, y, z, w } = layoutRectangle;
+      const [x, y, w, h] = layoutRectangle;
 
       // BBox
 
-      rectangle .point = new MFVec3f (new SFVec3f (x - z / 2, y + w / 2, 0),
-                                      new SFVec3f (x - z / 2, y - w / 2, 0),
-                                      new SFVec3f (x + z / 2, y - w / 2, 0),
-                                      new SFVec3f (x + z / 2, y + w / 2, 0));
+      rectangle .point = new MFVec3f (new SFVec3f (x - w / 2, y + h / 2, 0),
+                                      new SFVec3f (x - w / 2, y - h / 2, 0),
+                                      new SFVec3f (x + w / 2, y - h / 2, 0),
+                                      new SFVec3f (x + w / 2, y + h / 2, 0));
    }
 }
 ]]>
