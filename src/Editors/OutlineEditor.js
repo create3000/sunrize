@@ -689,6 +689,10 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layout", "LayoutLayer", "children"],
             },
             {
+               label: "LayoutGroup",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layout", "LayoutGroup", "children"],
+            },
+            {
                label: "ScreenGroup",
                args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Layout", "ScreenGroup", "children"],
             },
