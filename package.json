@@ -1,7 +1,7 @@
 {
   "name": "sunrize",
   "productName": "Sunrize X3D Editor",
-  "version": "2.0.17",
+  "version": "2.1.0",
   "description": "Sunrize — A Multi-Platform X3D Editor",
   "main": "src/main.js",
   "bin": {
@@ -93,7 +93,7 @@
     "@vscode/codicons": "^0.0.45",
     "capitalize": "^2.0.4",
     "console": "^0.7.2",
-    "electron": "^42.0.0",
+    "electron": "^42.0.1",
     "electron-prompt": "^1.7.0",
     "electron-squirrel-startup": "^1.0.1",
     "electron-tabs": "^1.0.4",
