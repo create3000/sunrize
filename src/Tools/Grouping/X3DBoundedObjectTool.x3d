@@ -293,39 +293,39 @@ function initialize ()
 
 function eventsProcessed ()
 {
-   const bboxSize1_2 = bboxSize .divide (2);
+   const { x, y, z } = bboxSize .divide (2);
 
    // Axes
 
-   axes .point = new MFVec3f (new SFVec3f (-bboxSize1_2 .x, 0, 0),
-                              new SFVec3f ( bboxSize1_2 .x, 0, 0),
-                              new SFVec3f (0, -bboxSize1_2 .y, 0),
-                              new SFVec3f (0,  bboxSize1_2 .y, 0),
-                              new SFVec3f (0, 0, -bboxSize1_2 .z),
-                              new SFVec3f (0, 0,  bboxSize1_2 .z));
+   axes .point = new MFVec3f (new SFVec3f (-x, 0, 0),
+                              new SFVec3f ( x, 0, 0),
+                              new SFVec3f (0, -y, 0),
+                              new SFVec3f (0,  y, 0),
+                              new SFVec3f (0, 0, -z),
+                              new SFVec3f (0, 0,  z));
 
 
    // BBox
 
-   bbox .point = new MFVec3f (new SFVec3f (-bboxSize1_2 .x,  bboxSize1_2 .y,  bboxSize1_2 .z),
-                              new SFVec3f (-bboxSize1_2 .x, -bboxSize1_2 .y,  bboxSize1_2 .z),
-                              new SFVec3f ( bboxSize1_2 .x, -bboxSize1_2 .y,  bboxSize1_2 .z),
-                              new SFVec3f ( bboxSize1_2 .x,  bboxSize1_2 .y,  bboxSize1_2 .z),
-                              new SFVec3f (-bboxSize1_2 .x,  bboxSize1_2 .y, -bboxSize1_2 .z),
-                              new SFVec3f (-bboxSize1_2 .x, -bboxSize1_2 .y, -bboxSize1_2 .z),
-                              new SFVec3f ( bboxSize1_2 .x, -bboxSize1_2 .y, -bboxSize1_2 .z),
-                              new SFVec3f ( bboxSize1_2 .x,  bboxSize1_2 .y, -bboxSize1_2 .z));
+   bbox .point = new MFVec3f (new SFVec3f (-x,  y,  z),
+                              new SFVec3f (-x, -y,  z),
+                              new SFVec3f ( x, -y,  z),
+                              new SFVec3f ( x,  y,  z),
+                              new SFVec3f (-x,  y, -z),
+                              new SFVec3f (-x, -y, -z),
+                              new SFVec3f ( x, -y, -z),
+                              new SFVec3f ( x,  y, -z));
 
    if (rectangleDisplay)
    {
-      const bboxSize1_2 = rectangleSize .divide (2);
+      const { x, y } = rectangleSize .divide (2);
 
       // BBox
 
-      rectangle .point = new MFVec3f (new SFVec3f (-bboxSize1_2 .x,  bboxSize1_2 .y,  0),
-                                      new SFVec3f (-bboxSize1_2 .x, -bboxSize1_2 .y,  0),
-                                      new SFVec3f ( bboxSize1_2 .x, -bboxSize1_2 .y,  0),
-                                      new SFVec3f ( bboxSize1_2 .x,  bboxSize1_2 .y,  0));
+      rectangle .point = new MFVec3f (new SFVec3f (-x,  y, 0),
+                                      new SFVec3f (-x, -y, 0),
+                                      new SFVec3f ( x, -y, 0),
+                                      new SFVec3f ( x,  y, 0));
    }
 }
 ]]>
@@ -365,14 +365,14 @@ function eventsProcessed ()
 {
    // Position the arrows.
 
-   const bboxSize1_2 = bboxSize .divide (2);
+   const { x, y, z } = bboxSize .divide (2);
 
-   xBack  .translation = new SFVec3f (-bboxSize1_2 .x, 0, 0);
-   xFront .translation = new SFVec3f ( bboxSize1_2 .x, 0, 0);
-   yBack  .translation = new SFVec3f (0, -bboxSize1_2 .y, 0);
-   yFront .translation = new SFVec3f (0,  bboxSize1_2 .y, 0);
-   zBack  .translation = new SFVec3f (0, 0, -bboxSize1_2 .z);
-   zFront .translation = new SFVec3f (0, 0,  bboxSize1_2 .z);
+   xBack  .translation = new SFVec3f (-x, 0, 0);
+   xFront .translation = new SFVec3f ( x, 0, 0);
+   yBack  .translation = new SFVec3f (0, -y, 0);
+   yFront .translation = new SFVec3f (0,  y, 0);
+   zBack  .translation = new SFVec3f (0, 0, -z);
+   zFront .translation = new SFVec3f (0, 0,  z);
 }
 ]]>
         </Script>

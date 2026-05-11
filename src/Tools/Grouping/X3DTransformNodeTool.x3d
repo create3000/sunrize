@@ -847,29 +847,29 @@ function initialize ()
 
 function eventsProcessed ()
 {
-   const bboxSize1_2 = bboxSize .divide (2);
+   const { x, y, z } = bboxSize .divide (2);
 
    // Axes
 
    axes .point = new MFVec3f (new SFVec3f (),
-                              new SFVec3f ( bboxSize1_2 .x, 0, 0),
-                              new SFVec3f (-bboxSize1_2 .x, 0, 0),
-                              new SFVec3f (0,  bboxSize1_2 .y, 0),
-                              new SFVec3f (0, -bboxSize1_2 .y, 0),
-                              new SFVec3f (0, 0,  bboxSize1_2 .z),
-                              new SFVec3f (0, 0, -bboxSize1_2 .z));
+                              new SFVec3f ( x, 0, 0),
+                              new SFVec3f (-x, 0, 0),
+                              new SFVec3f (0,  y, 0),
+                              new SFVec3f (0, -y, 0),
+                              new SFVec3f (0, 0,  z),
+                              new SFVec3f (0, 0, -z));
 
 
    // BBox
 
-   bbox .point = new MFVec3f (new SFVec3f (-bboxSize1_2 .x,  bboxSize1_2 .y,  bboxSize1_2 .z),
-                              new SFVec3f (-bboxSize1_2 .x, -bboxSize1_2 .y,  bboxSize1_2 .z),
-                              new SFVec3f ( bboxSize1_2 .x, -bboxSize1_2 .y,  bboxSize1_2 .z),
-                              new SFVec3f ( bboxSize1_2 .x,  bboxSize1_2 .y,  bboxSize1_2 .z),
-                              new SFVec3f (-bboxSize1_2 .x,  bboxSize1_2 .y, -bboxSize1_2 .z),
-                              new SFVec3f (-bboxSize1_2 .x, -bboxSize1_2 .y, -bboxSize1_2 .z),
-                              new SFVec3f ( bboxSize1_2 .x, -bboxSize1_2 .y, -bboxSize1_2 .z),
-                              new SFVec3f ( bboxSize1_2 .x,  bboxSize1_2 .y, -bboxSize1_2 .z));
+   bbox .point = new MFVec3f (new SFVec3f (-x,  y,  z),
+                              new SFVec3f (-x, -y,  z),
+                              new SFVec3f ( x, -y,  z),
+                              new SFVec3f ( x,  y,  z),
+                              new SFVec3f (-x,  y, -z),
+                              new SFVec3f (-x, -y, -z),
+                              new SFVec3f ( x, -y, -z),
+                              new SFVec3f ( x,  y, -z));
 }
 ]]>
         </Script>
@@ -959,27 +959,27 @@ function set_bboxSize ()
 {
    // Position the axis handles.
 
-   const bboxSize1_2 = bboxSize .divide (2);
+   const { x, y, z } = bboxSize .divide (2);
 
-   axisHandles [0] .translation = new SFVec3f (bboxSize1_2 .x, 0, 0);
-   axisHandles [1] .translation = new SFVec3f (0, bboxSize1_2 .y, 0);
-   axisHandles [2] .translation = new SFVec3f (0, 0, bboxSize1_2 .z);
+   axisHandles [0] .translation = new SFVec3f (x, 0, 0);
+   axisHandles [1] .translation = new SFVec3f (0, y, 0);
+   axisHandles [2] .translation = new SFVec3f (0, 0, z);
 
-   axisHandles [3] .translation = new SFVec3f (-bboxSize1_2 .x, 0, 0);
-   axisHandles [4] .translation = new SFVec3f (0, -bboxSize1_2 .y, 0);
-   axisHandles [5] .translation = new SFVec3f (0, 0, -bboxSize1_2 .z);
+   axisHandles [3] .translation = new SFVec3f (-x, 0, 0);
+   axisHandles [4] .translation = new SFVec3f (0, -y, 0);
+   axisHandles [5] .translation = new SFVec3f (0, 0, -z);
 
    // Position uniform scale handles and set axis rotation of corresponding sensor.
 
-   scaleHandles [0] .translation = new SFVec3f ( bboxSize1_2 .x,  bboxSize1_2 .y,  bboxSize1_2 .z);
-   scaleHandles [1] .translation = new SFVec3f (-bboxSize1_2 .x,  bboxSize1_2 .y,  bboxSize1_2 .z);
-   scaleHandles [2] .translation = new SFVec3f (-bboxSize1_2 .x, -bboxSize1_2 .y,  bboxSize1_2 .z);
-   scaleHandles [3] .translation = new SFVec3f ( bboxSize1_2 .x, -bboxSize1_2 .y,  bboxSize1_2 .z);
+   scaleHandles [0] .translation = new SFVec3f ( x,  y,  z);
+   scaleHandles [1] .translation = new SFVec3f (-x,  y,  z);
+   scaleHandles [2] .translation = new SFVec3f (-x, -y,  z);
+   scaleHandles [3] .translation = new SFVec3f ( x, -y,  z);
 
-   scaleHandles [4] .translation = new SFVec3f ( bboxSize1_2 .x,  bboxSize1_2 .y, -bboxSize1_2 .z);
-   scaleHandles [5] .translation = new SFVec3f (-bboxSize1_2 .x,  bboxSize1_2 .y, -bboxSize1_2 .z);
-   scaleHandles [6] .translation = new SFVec3f (-bboxSize1_2 .x, -bboxSize1_2 .y, -bboxSize1_2 .z);
-   scaleHandles [7] .translation = new SFVec3f ( bboxSize1_2 .x, -bboxSize1_2 .y, -bboxSize1_2 .z);
+   scaleHandles [4] .translation = new SFVec3f ( x,  y, -z);
+   scaleHandles [5] .translation = new SFVec3f (-x,  y, -z);
+   scaleHandles [6] .translation = new SFVec3f (-x, -y, -z);
+   scaleHandles [7] .translation = new SFVec3f ( x, -y, -z);
 
    for (let i = 0; i < 8; ++ i)
       scaleSensors [i] .axisRotation = new SFRotation (xAxis, scaleHandles [i] .translation);
