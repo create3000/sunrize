@@ -852,12 +852,12 @@ function eventsProcessed ()
    // Axes
 
    axes .point = new MFVec3f (new SFVec3f (),
-                              new SFVec3f ( x, 0, 0),
-                              new SFVec3f (-x, 0, 0),
-                              new SFVec3f (0,  y, 0),
-                              new SFVec3f (0, -y, 0),
-                              new SFVec3f (0, 0,  z),
-                              new SFVec3f (0, 0, -z));
+                              new SFVec3f ( x,  0,  0),
+                              new SFVec3f (-x,  0,  0),
+                              new SFVec3f ( 0,  y,  0),
+                              new SFVec3f ( 0, -y,  0),
+                              new SFVec3f ( 0,  0,  z),
+                              new SFVec3f ( 0,  0, -z));
 
 
    // BBox
