@@ -9,13 +9,6 @@ class LayoutGroupTool extends X3DBoundedObjectTool
 {
    toolBBoxColor = ToolColors .DARK_GREEN;
 
-   async initializeTool ()
-   {
-      await super .initializeTool ();
-
-      this .tool .layoutDisplay = true;
-   }
-
    #scale = new X3D .Vector3 ();
    #rectangleScale = new X3D .Vector4 ();
    #rectangle = new X3D .Vector4 ();
@@ -26,6 +19,9 @@ class LayoutGroupTool extends X3DBoundedObjectTool
       {
          if (this .layoutNode)
          {
+            if (!this .tool .layoutDisplay)
+               this .tool .layoutDisplay = true;
+
             renderObject .modelViewMatrix .get () .get (null, null, this .#scale);
 
             this .layoutNode .push (type, renderObject);
@@ -41,10 +37,8 @@ class LayoutGroupTool extends X3DBoundedObjectTool
          }
          else
          {
-            const rectangle = this .#rectangle .set ();
-
-            if (!this .tool .layoutRectangle .getValue () .equals (rectangle))
-               this .tool .layoutRectangle = rectangle;
+            if (this .tool .layoutDisplay)
+               this .tool .layoutDisplay = false;
          }
       }
 
