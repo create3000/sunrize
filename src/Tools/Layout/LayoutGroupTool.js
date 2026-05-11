@@ -16,20 +16,6 @@ class LayoutGroupTool extends X3DBoundedObjectTool
       this .tool .layoutDisplay = true;
    }
 
-   #defaultLayoutNode;
-
-   getDefaultLayout ()
-   {
-      return this .#defaultLayoutNode ??= (() =>
-      {
-         const layoutNode = new X3D .Layout (this .getExecutionContext ());
-
-         layoutNode .setup ();
-
-         return layoutNode;
-      })();
-   }
-
    #scale = new X3D .Vector3 ();
    #rectangleScale = new X3D .Vector4 ();
    #rectangle = new X3D .Vector4 ();
@@ -38,20 +24,28 @@ class LayoutGroupTool extends X3DBoundedObjectTool
    {
       if (this .tool)
       {
-         const layoutNode = this .layoutNode ?? this .getDefaultLayout ();
+         if (this .layoutNode)
+         {
+            renderObject .modelViewMatrix .get () .get (null, null, this .#scale);
 
-         renderObject .modelViewMatrix .get () .get (null, null, this .#scale);
+            this .layoutNode .push (type, renderObject);
 
-         layoutNode .push (type, renderObject);
+            const rectangle = this .#rectangle
+               .assign (renderObject .getLayoutRectangles () .at (-1))
+               .divVec (this .#rectangleScale .set (this .#scale .x, this .#scale .y, this .#scale .x, this .#scale .y));
 
-         const rectangle = this .#rectangle
-            .assign (renderObject .getLayoutRectangles () .at (-1))
-            .divVec (this .#rectangleScale .set (this .#scale .x, this .#scale .y, this .#scale .x, this .#scale .y));
+            if (!this .tool .layoutRectangle .getValue () .equals (rectangle))
+               this .tool .layoutRectangle = rectangle;
 
-         if (!this .tool .layoutRectangle .getValue () .equals (rectangle))
-            this .tool .layoutRectangle = rectangle;
+            this .layoutNode .pop (type, renderObject);
+         }
+         else
+         {
+            const rectangle = this .#rectangle .set ();
 
-         layoutNode .pop (type, renderObject);
+            if (!this .tool .layoutRectangle .getValue () .equals (rectangle))
+               this .tool .layoutRectangle = rectangle;
+         }
       }
 
       super .traverse (type, renderObject);
