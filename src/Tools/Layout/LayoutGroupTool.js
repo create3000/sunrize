@@ -16,6 +16,20 @@ class LayoutGroupTool extends X3DBoundedObjectTool
       this .tool .layoutDisplay = true;
    }
 
+   #defaultLayoutNode;
+
+   getDefaultLayout ()
+   {
+      return this .#defaultLayoutNode ??= (() =>
+      {
+         const layoutNode = new X3D .Layout (this .getExecutionContext ());
+
+         layoutNode .setup ();
+
+         return layoutNode;
+      })();
+   }
+
    #scale = new X3D .Vector3 ();
    #rectangleScale = new X3D .Vector4 ();
    #rectangle = new X3D .Vector4 ();
@@ -24,9 +38,11 @@ class LayoutGroupTool extends X3DBoundedObjectTool
    {
       if (this .tool)
       {
+         const layoutNode = this .layoutNode ?? this .getDefaultLayout ();
+
          renderObject .modelViewMatrix .get () .get (null, null, this .#scale);
 
-         this .layoutNode ?.push (type, renderObject);
+         layoutNode .push (type, renderObject);
 
          const rectangle = this .#rectangle
             .assign (renderObject .getLayoutRectangles () .at (-1))
@@ -35,7 +51,7 @@ class LayoutGroupTool extends X3DBoundedObjectTool
          if (!this .tool .layoutRectangle .getValue () .equals (rectangle))
             this .tool .layoutRectangle = rectangle;
 
-         this .layoutNode ?.pop (type, renderObject);
+         layoutNode .pop (type, renderObject);
       }
 
       super .traverse (type, renderObject);
