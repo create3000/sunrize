@@ -425,7 +425,7 @@ function initialize ()
 
 function eventsProcessed ()
 {
-   if (vector .x === 0 && vector .y === 0 && vector .z === 0)
+   if (vector .equals (SFVec3f .ZERO))
    {
       inline .visible = false;
    }
