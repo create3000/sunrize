@@ -23,12 +23,13 @@ class LayoutGroupTool extends X3DBoundedObjectTool
                this .tool .layoutDisplay = true;
 
             renderObject .modelViewMatrix .get () .get (null, null, this .#scale);
+            this .#rectangleScale .set (this .#scale .x, this .#scale .y, this .#scale .x, this .#scale .y);
 
             this .layoutNode .push (type, renderObject);
 
             const rectangle = this .#rectangle
                .assign (renderObject .getLayoutRectangles () .at (-1))
-               .divVec (this .#rectangleScale .set (this .#scale .x, this .#scale .y, this .#scale .x, this .#scale .y));
+               .divVec (this .#rectangleScale);
 
             if (!this .tool .layoutRectangle .getValue () .equals (rectangle))
                this .tool .layoutRectangle = rectangle;
