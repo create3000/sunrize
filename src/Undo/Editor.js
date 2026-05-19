@@ -2495,11 +2495,11 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          scale            = new X3D .Vector3 (1, 1, 1),
          scaleOrientation = new X3D .Rotation4 ();
 
-      matrix .get (translation,
-                   rotation,
-                   scale,
-                   scaleOrientation,
-                   center);
+      matrix .getTransform (translation,
+                            rotation,
+                            scale,
+                            scaleOrientation,
+                            center);
 
       this .roundToIntegerIfAlmostEqual (translation);
       this .roundToIntegerIfAlmostEqual (rotation);
@@ -2682,7 +2682,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             center      = (moveCenter ? bboxCenter .copy () : (sourcePosition ?.copy () ?? bboxCenter .copy () .add (axis))) .subtract (modelMatrices [0] .origin),
             translation = targetPosition .copy () .subtract (center),
             rotation    = new X3D .Rotation4 (sourceNormal ?? axis, targetNormal .copy () .negate ()),
-            snapMatrix  = new X3D .Matrix4 () .set (translation, rotation, null, null, center);
+            snapMatrix  = new X3D .Matrix4 () .setTransform (translation, rotation, null, null, center);
 
          const
             invModelMatrix        = modelMatrices [0] .copy () .inverse (),
@@ -3395,7 +3395,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                const rotation = new X3D .Rotation4 ();
 
-               modelMatrix .get (null, rotation);
+               modelMatrix .getTransform (null, rotation);
 
                const
                   position         = modelMatrix .multVecMatrix (node .getPosition () .copy ()),
@@ -3413,7 +3413,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                const rotation = new X3D .Rotation4 ();
 
-               modelMatrix .get (null, rotation);
+               modelMatrix .getTransform (null, rotation);
 
                const
                   position    = modelMatrix .multVecMatrix (node ._position .getValue () .copy ()),
@@ -3440,7 +3440,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
                const rotation = new X3D .Rotation4 ();
 
-               modelMatrix .get (null, rotation);
+               modelMatrix .getTransform (null, rotation);
 
                if (node ._direction)
                {
@@ -3464,7 +3464,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             }
             case X3D .X3DConstants .X3DEnvironmentalSensorNode:
             {
-               const matrix = new X3D .Matrix4 () .set (node ._center .getValue (), null, node ._size .getValue ());
+               const matrix = new X3D .Matrix4 ()
+                  .setTransform (node ._center .getValue (), null, node ._size .getValue ());
 
                modelMatrix .multLeft (matrix);
 
@@ -3472,7 +3473,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   center = new X3D .Vector3 (),
                   size   = new X3D .Vector3 ();
 
-               modelMatrix .get (center, null, size);
+               modelMatrix .getTransform (center, null, size);
 
                this .roundToIntegerIfAlmostEqual (center);
                this .roundToIntegerIfAlmostEqual (size);

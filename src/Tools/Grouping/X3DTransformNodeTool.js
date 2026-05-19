@@ -189,7 +189,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
          scale            = new X3D .Vector3 (1, 1, 1),
          scaleOrientation = new X3D .Rotation4 ();
 
-      matrix .get (translation, rotation, scale, scaleOrientation);
+      matrix .getTransform (translation, rotation, scale, scaleOrientation);
 
       if (!this .tool .tools .includes ("TRANSLATE"))
          translation .set (0, 0, 0);
@@ -203,7 +203,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
          scaleOrientation .set (0, 0, 1, 0);
       }
 
-      matrix .set (translation, rotation, scale, scaleOrientation);
+      matrix .setTransform (translation, rotation, scale, scaleOrientation);
 
       if (keepCenter)
          this .setMatrixKeepCenter (matrix);
@@ -230,7 +230,7 @@ class X3DTransformNodeTool extends X3DChildNodeTool
          scale            = new X3D .Vector3 (1, 1, 1),
          scaleOrientation = new X3D .Rotation4 ();
 
-      matrix .get (translation, rotation, scale, scaleOrientation, center);
+      matrix .getTransform (translation, rotation, scale, scaleOrientation, center);
 
       this ._translation      = translation;
       this ._rotation         = rotation;
@@ -243,11 +243,11 @@ class X3DTransformNodeTool extends X3DChildNodeTool
    {
       const matrix = new X3D .Matrix4 ();
 
-      matrix .set (this ._translation .getValue (),
-                   this ._rotation .getValue (),
-                   this ._scale .getValue (),
-                   this ._scaleOrientation .getValue (),
-                   this ._center .getValue ());
+      matrix .setTransform (this ._translation .getValue (),
+                            this ._rotation .getValue (),
+                            this ._scale .getValue (),
+                            this ._scaleOrientation .getValue (),
+                            this ._center .getValue ());
 
       return matrix;
    }

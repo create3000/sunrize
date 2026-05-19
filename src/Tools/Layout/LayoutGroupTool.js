@@ -22,7 +22,7 @@ class LayoutGroupTool extends X3DBoundedObjectTool
             if (!this .tool .layoutDisplay)
                this .tool .layoutDisplay = true;
 
-            renderObject .modelViewMatrix .get () .get (null, null, this .#scale);
+            renderObject .modelViewMatrix .get () .getTransform (null, null, this .#scale);
             this .#rectangleScale .set (this .#scale .x, this .#scale .y, this .#scale .x, this .#scale .y);
 
             this .layoutNode .push (type, renderObject);
