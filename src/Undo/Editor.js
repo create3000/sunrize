@@ -2682,7 +2682,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             center      = (moveCenter ? bboxCenter .copy () : (sourcePosition ?.copy () ?? bboxCenter .copy () .add (axis))) .subtract (modelMatrices [0] .origin),
             translation = targetPosition .copy () .subtract (center),
             rotation    = new X3D .Rotation4 (sourceNormal ?? axis, targetNormal .copy () .negate ()),
-            snapMatrix  = new X3D .Matrix4 () .setTransform (translation, rotation, null, null, center);
+            snapMatrix  = X3D .Matrix4 .fromTransform (translation, rotation, null, null, center);
 
          const
             invModelMatrix        = modelMatrices [0] .copy () .inverse (),
@@ -3464,8 +3464,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             }
             case X3D .X3DConstants .X3DEnvironmentalSensorNode:
             {
-               const matrix = new X3D .Matrix4 ()
-                  .setTransform (node ._center .getValue (), null, node ._size .getValue ());
+               const matrix = X3D .Matrix4
+                  .fromTransform (node ._center .getValue (), null, node ._size .getValue ());
 
                modelMatrix .multLeft (matrix);
 

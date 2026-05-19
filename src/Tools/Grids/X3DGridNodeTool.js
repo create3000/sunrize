@@ -185,7 +185,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
          invGridMatrix = gridMatrix .copy () .inverse ();
 
       const
-         snapMatrix    = new X3D .Matrix4 () .setTransform (gridMatrix .multVecMatrix (this .getSnapPosition (invGridMatrix .multVecMatrix (position .copy ()), true)) .subtract (position)),
+         snapMatrix    = X3D .Matrix4 .fromTransform (gridMatrix .multVecMatrix (this .getSnapPosition (invGridMatrix .multVecMatrix (position .copy ()), true)) .subtract (position)),
          currentMatrix = absoluteMatrix .multRight (snapMatrix) .multRight (transformTool .getModelMatrix () .copy () .inverse ());
 
       transformTool .setUserData (this .#changing, true);
@@ -261,12 +261,12 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
             invModelMatrix .multDirMatrix (snapVector .copy ())
          );
 
-      const currentMatrix = new X3D .Matrix4 ()
-         .setTransform (transformTool ._translation      .getValue (),
-                        transformTool ._rotation         .getValue () .copy () .multRight (snapRotation),
-                        transformTool ._scale            .getValue (),
-                        transformTool ._scaleOrientation .getValue (),
-                        transformTool ._center           .getValue ());
+      const currentMatrix = X3D .Matrix4
+          .fromTransform (transformTool ._translation      .getValue (),
+                          transformTool ._rotation         .getValue () .copy () .multRight (snapRotation),
+                          transformTool ._scale            .getValue (),
+                          transformTool ._scaleOrientation .getValue (),
+                          transformTool ._center           .getValue ());
 
       transformTool .setUserData (this .#changing, true);
 
@@ -515,8 +515,8 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
       if (transformTool .tool .scaleMode === "SCALE_FROM_OPPOSITE_HANDLE")
          distanceFromCenter .subtract (offset);
 
-      const translation = new X3D .Matrix4 ()
-         .setTransform (distanceFromCenter .subtract (scaleMatrix .multDirMatrix (distanceFromCenter .copy ())));
+      const translation = X3D .Matrix4
+         .fromTransform (distanceFromCenter .subtract (scaleMatrix .multDirMatrix (distanceFromCenter .copy ())));
 
       return translation;
    }
@@ -528,8 +528,8 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
    {
       const tool = this .tool;
 
-      return new X3D .Matrix4 ()
-         .setTransform (tool .translation .getValue (), tool .rotation .getValue (), tool .scale .getValue ());
+      return X3D .Matrix4
+         .fromTransform (tool .translation .getValue (), tool .rotation .getValue (), tool .scale .getValue ());
    }
 }
 

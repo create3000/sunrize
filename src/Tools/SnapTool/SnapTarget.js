@@ -146,7 +146,7 @@ class SnapTarget extends X3DSnapNodeTool
       // Snap translation.
 
       const
-         snapMatrix    = new X3D .Matrix4 () .setTransform (snapTranslation),
+         snapMatrix    = X3D .Matrix4 .fromTransform (snapTranslation),
          currentMatrix = absoluteMatrix .multRight (snapMatrix) .multRight (transformTool .getModelMatrix () .copy () .inverse ());
 
       transformTool .setUserData (this .#changing, true);
@@ -258,12 +258,12 @@ class SnapTarget extends X3DSnapNodeTool
 
       // Snap rotation.
 
-      const currentMatrix = new X3D .Matrix4 ()
-         .setTransform (transformTool ._translation      .getValue (),
-                        transformTool ._rotation         .getValue () .copy () .multRight (snapRotation),
-                        transformTool ._scale            .getValue (),
-                        transformTool ._scaleOrientation .getValue (),
-                        transformTool ._center           .getValue ());
+      const currentMatrix = X3D .Matrix4
+         .fromTransform (transformTool ._translation      .getValue (),
+                         transformTool ._rotation         .getValue () .copy () .multRight (snapRotation),
+                         transformTool ._scale            .getValue (),
+                         transformTool ._scaleOrientation .getValue (),
+                         transformTool ._center           .getValue ());
 
       transformTool .setUserData (this .#changing, true);
 
@@ -402,7 +402,7 @@ class SnapTarget extends X3DSnapNodeTool
 
             const
                center     = subAABBox .center,
-               snapMatrix = new X3D .Matrix4 () .setTransform (null, null, snapScale, null, center);
+               snapMatrix = X3D .Matrix4 .fromTransform (null, null, snapScale, null, center);
 
             snapMatrix .multRight (transformTool .getCurrentMatrix ());
 
@@ -443,7 +443,7 @@ class SnapTarget extends X3DSnapNodeTool
             const
                subAABBoxAxes = subAABBox .getAxes (SnapTarget .#axes),
                center        = subAABBoxAxes [axis] .multiply (-sgn) .add (subAABBox .center),
-               snapMatrix    = new X3D .Matrix4 () .setTransform (null, null, snapScale, null, center);
+               snapMatrix    = X3D .Matrix4 .fromTransform (null, null, snapScale, null, center);
 
             snapMatrix .multRight (transformTool .getCurrentMatrix ());
 
@@ -546,7 +546,7 @@ class SnapTarget extends X3DSnapNodeTool
             const
                snapScale  = new X3D .Vector3 (aRatio, aRatio, aRatio),
                center     = subAABBox .center,
-               snapMatrix = new X3D .Matrix4 () .setTransform (null, null, snapScale, null, center);
+               snapMatrix = X3D .Matrix4 .fromTransform (null, null, snapScale, null, center);
 
             snapMatrix .multRight (transformTool .getCurrentMatrix ());
 
@@ -606,7 +606,7 @@ class SnapTarget extends X3DSnapNodeTool
                snapScale       = new X3D .Vector3 (aRatio, aRatio, aRatio),
                subAABBoxPoints = subAABBox .getPoints (SnapTarget .#points),
                center          = subAABBoxPoints [SnapTarget .#oppositePoints [handle]],
-               snapMatrix      = new X3D .Matrix4 () .setTransform (null, null, snapScale, null, center);
+               snapMatrix      = X3D .Matrix4 .fromTransform (null, null, snapScale, null, center);
 
             snapMatrix .multRight (transformTool .getCurrentMatrix ());
 

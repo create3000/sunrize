@@ -1715,7 +1715,7 @@ function scaleTransform (value, centerOffset)
    }
 
    const scaleMatrix = new SFMatrix4f ();
-   scaleMatrix .setTransform (new SFVec3f (), new SFRotation (), value);
+   scaleMatrix .setTransform (null, null, value);
 
    const
       scaledMatrix = initialMatrix .multLeft (scaleMatrix),

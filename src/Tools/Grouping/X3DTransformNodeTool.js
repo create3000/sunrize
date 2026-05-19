@@ -241,13 +241,12 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
    getCurrentMatrix ()
    {
-      const matrix = new X3D .Matrix4 ();
-
-      matrix .setTransform (this ._translation .getValue (),
-                            this ._rotation .getValue (),
-                            this ._scale .getValue (),
-                            this ._scaleOrientation .getValue (),
-                            this ._center .getValue ());
+      const matrix = X3D .Matrix4
+         .fromTransform (this ._translation .getValue (),
+                         this ._rotation .getValue (),
+                         this ._scale .getValue (),
+                         this ._scaleOrientation .getValue (),
+                         this ._center .getValue ());
 
       return matrix;
    }
