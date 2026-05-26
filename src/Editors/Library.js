@@ -7,7 +7,7 @@ const
    Dialog           = require ("../Controls/Dialog"),
    Editor           = require ("../Undo/Editor"),
    UndoManager      = require ("../Undo/UndoManager"),
-   Traverse         = require ("x3d-traverse") (X3D),
+   Traverse         = require ("x3d-traverse"),
    _                = require ("../Application/GetText");
 
 module .exports = new class Library extends Dialog

@@ -1,7 +1,7 @@
 const
    X3D       = require ("../X3D"),
    Interface = require ("./Interface"),
-   Traverse  = require ("x3d-traverse") (X3D);
+   Traverse  = require ("x3d-traverse");
 
 module .exports = new class Hierarchy extends Interface
 {

@@ -7,7 +7,7 @@ const
    fs          = require ("fs"),
    zlib        = require ("zlib"),
    X3D         = require ("../X3D"),
-   Traverse    = require ("x3d-traverse") (X3D),
+   Traverse    = require ("x3d-traverse"),
    UndoManager = require ("./UndoManager"),
    _           = require ("../Application/GetText")
 

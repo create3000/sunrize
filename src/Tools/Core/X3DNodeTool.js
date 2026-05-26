@@ -5,7 +5,7 @@ const
    X3D         = require ("../../X3D"),
    Editor      = require ("../../Undo/Editor"),
    UndoManager = require ("../../Undo/UndoManager"),
-   Traverse    = require ("x3d-traverse") (X3D),
+   Traverse    = require ("x3d-traverse"),
    path        = require ("path"),
    url         = require ("url"),
    _           = require ("../../Application/GetText");
