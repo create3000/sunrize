@@ -15,8 +15,8 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
    {
       await super .initializeTool (... args);
 
-      this .tool .getField ("visible") .addReference (this ._visible);
-      this .tool .getField ("translation") .setUnit ("length");
+      this .tool .getValue () .getField ("visible") .addReference (this ._visible);
+      this .tool .getValue () .getField ("translation") .setUnit ("length");
 
       for (const field of this .tool .getValue () .getFields ())
       {

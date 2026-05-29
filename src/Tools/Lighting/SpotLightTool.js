@@ -8,10 +8,10 @@ class SpotLightTool extends X3DLightNodeTool
    {
       await super .initializeTool ();
 
-      this .tool .getField ("location")    .addReference (this .node ._location);
-      this .tool .getField ("direction")   .addReference (this .node ._direction);
-      this .tool .getField ("beamWidth")   .addReference (this .node ._beamWidth);
-      this .tool .getField ("cutOffAngle") .addReference (this .node ._cutOffAngle);
+      this .tool .getValue () .getField ("location")    .addReference (this .node ._location);
+      this .tool .getValue () .getField ("direction")   .addReference (this .node ._direction);
+      this .tool .getValue () .getField ("beamWidth")   .addReference (this .node ._beamWidth);
+      this .tool .getValue () .getField ("cutOffAngle") .addReference (this .node ._cutOffAngle);
 
       this .tool .type = 2;
    }

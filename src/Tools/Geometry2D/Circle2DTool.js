@@ -25,7 +25,7 @@ class Circle2DTool extends X3DGeometryNodeTool
       this .#transformNode = transformNode;
 
       transformNode .scale .addInterest ("set_scale", this);
-      transformTool .getField ("isActive") .addInterest ("handleUndo", this);
+      transformTool .getValue () .getField ("isActive") .addInterest ("handleUndo", this);
 
       groupNode     .bboxSize      = new X3D .Vector3 (2, 2, 0);
       transformNode .children      = [groupNode];

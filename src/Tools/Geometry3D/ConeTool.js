@@ -26,7 +26,7 @@ class ConeTool extends X3DGeometryNodeTool
 
       transformNode .scale .addInterest ("set_scale", this);
       transformNode .scale .addFieldInterest (this .tool .size);
-      transformTool .getField ("isActive") .addInterest ("handleUndo", this);
+      transformTool .getValue () .getField ("isActive") .addInterest ("handleUndo", this);
 
       groupNode     .bboxSize      = new X3D .Vector3 (2, 2, 2);
       transformNode .children      = [groupNode];

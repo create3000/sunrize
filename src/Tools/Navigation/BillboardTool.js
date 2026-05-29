@@ -12,7 +12,7 @@ class BillboardTool extends X3DBoundedObjectTool
    {
       await super .initializeTool ();
 
-      this .tool .getField ("axisOfRotation") .addReference (this .node ._axisOfRotation);
+      this .tool .getValue () .getField ("axisOfRotation") .addReference (this .node ._axisOfRotation);
 
       this .tool .centerDisplay = true;
    }

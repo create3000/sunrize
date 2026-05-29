@@ -12,7 +12,7 @@ class LODTool extends X3DBoundedObjectTool
    {
       await super .initializeTool ();
 
-      this .tool .getField ("center") .addReference (this .node ._center);
+      this .tool .getValue () .getField ("center") .addReference (this .node ._center);
 
       this .tool .centerDisplay = true;
    }

@@ -8,8 +8,8 @@ class ViewpointTool extends X3DViewpointNodeTool
    {
       await super .initializeTool ();
 
-      this .tool .getField ("position")    .addReference (this .node ._position);
-      this .tool .getField ("orientation") .addReference (this .node ._orientation);
+      this .tool .getValue () .getField ("position")    .addReference (this .node ._position);
+      this .tool .getValue () .getField ("orientation") .addReference (this .node ._orientation);
    }
 }
 

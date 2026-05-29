@@ -10,10 +10,10 @@ class ListenerPointSourceTool extends X3DChildNodeTool
    {
       await super .loadTool ("tool", __dirname, "ListenerPointSourceTool.x3d");
 
-      this .tool .getField ("position")    .addReference (this .node ._position);
-      this .tool .getField ("orientation") .addReference (this .node ._orientation);
+      this .tool .getValue () .getField ("position")    .addReference (this .node ._position);
+      this .tool .getValue () .getField ("orientation") .addReference (this .node ._orientation);
 
-      this .tool .getField ("isActive") .addInterest ("handleUndo", this);
+      this .tool .getValue () .getField ("isActive") .addInterest ("handleUndo", this);
    }
 
    beginUndo ()

@@ -16,7 +16,7 @@ const X3DParametricGeometryNodeTool = Base => class extends Base
       this .parametricGeometryNodeTool .hullColor         = ToolColors .LIGHT_GREY;
       this .parametricGeometryNodeTool .controlPointColor = ToolColors .DARK_BLUE;
 
-      this .parametricGeometryNodeTool .getField ("controlPoint") .addReference (this .node ._controlPoint);
+      this .parametricGeometryNodeTool .getValue () .getField ("controlPoint") .addReference (this .node ._controlPoint);
 
       this .addExternalNode (this .node ._controlPoint);
    }

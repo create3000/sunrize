@@ -12,14 +12,14 @@ class SoundTool extends X3DChildNodeTool
    {
       await super .loadTool ("tool", __dirname, "SoundTool.x3d");
 
-      this .tool .getField ("location")  .addReference (this .node ._location);
-      this .tool .getField ("direction") .addReference (this .node ._direction);
-      this .tool .getField ("minBack")   .addReference (this .node ._minBack);
-      this .tool .getField ("minFront")  .addReference (this .node ._minFront);
-      this .tool .getField ("maxBack")   .addReference (this .node ._maxBack);
-      this .tool .getField ("maxFront")  .addReference (this .node ._maxFront);
+      this .tool .getValue () .getField ("location")  .addReference (this .node ._location);
+      this .tool .getValue () .getField ("direction") .addReference (this .node ._direction);
+      this .tool .getValue () .getField ("minBack")   .addReference (this .node ._minBack);
+      this .tool .getValue () .getField ("minFront")  .addReference (this .node ._minFront);
+      this .tool .getValue () .getField ("maxBack")   .addReference (this .node ._maxBack);
+      this .tool .getValue () .getField ("maxFront")  .addReference (this .node ._maxFront);
 
-      this .tool .getField ("isActive") .addInterest ("handleUndo", this);
+      this .tool .getValue () .getField ("isActive") .addInterest ("handleUndo", this);
    }
 
    beginUndo ()

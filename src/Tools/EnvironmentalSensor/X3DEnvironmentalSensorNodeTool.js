@@ -10,10 +10,10 @@ class X3DEnvironmentalSensorNodeTool extends X3DChildNodeTool
    {
       await super .loadTool ("tool", __dirname, "X3DEnvironmentalSensorNodeTool.x3d");
 
-      this .tool .getField ("size")   .addReference (this .node ._size);
-      this .tool .getField ("center") .addReference (this .node ._center);
+      this .tool .getValue () .getField ("size")   .addReference (this .node ._size);
+      this .tool .getValue () .getField ("center") .addReference (this .node ._center);
 
-      this .tool .getField ("isActive") .addInterest ("handleUndo", this);
+      this .tool .getValue () .getField ("isActive") .addInterest ("handleUndo", this);
 
       this .tool .boxColor = this .toolBoxColor;
    }

@@ -8,8 +8,8 @@ class EnvironmentLightTool extends X3DLightNodeTool
    {
       await super .initializeTool ();
 
-      this .tool .getField ("location") .addReference (this .node ._origin);
-      this .tool .getField ("rotation") .addReference (this .node ._rotation);
+      this .tool .getValue () .getField ("location") .addReference (this .node ._origin);
+      this .tool .getValue () .getField ("rotation") .addReference (this .node ._rotation);
 
       this .tool .type = 3;
    }

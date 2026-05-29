@@ -10,8 +10,8 @@ class X3DNurbsSurfaceGeometryNodeTool extends X3DParametricGeometryNodeTool (X3D
    {
       await super .initializeTool ();
 
-      this .parametricGeometryNodeTool .getField ("uDimension") .addReference (this .node ._uDimension);
-      this .parametricGeometryNodeTool .getField ("vDimension") .addReference (this .node ._vDimension);
+      this .parametricGeometryNodeTool .getValue () .getField ("uDimension") .addReference (this .node ._uDimension);
+      this .parametricGeometryNodeTool .getValue () .getField ("vDimension") .addReference (this .node ._vDimension);
 
       this .set_toolRebuildParametricGeometry ();
    }

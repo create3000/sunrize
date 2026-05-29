@@ -10,13 +10,13 @@ class X3DTextureProjectorNodeTool extends X3DChildNodeTool
    {
       await super .loadTool ("tool", __dirname, "X3DTextureProjectorNodeTool.x3d");
 
-      this .tool .getField ("on")        .addReference (this .node ._on);
-      this .tool .getField ("location")  .addReference (this .node ._location);
-      this .tool .getField ("direction") .addReference (this .node ._direction);
-      this .tool .getField ("upVector")  .addReference (this .node ._upVector);
-      this .tool .getField ("texture")   .addReference (this .node ._texture);
+      this .tool .getValue () .getField ("on")        .addReference (this .node ._on);
+      this .tool .getValue () .getField ("location")  .addReference (this .node ._location);
+      this .tool .getValue () .getField ("direction") .addReference (this .node ._direction);
+      this .tool .getValue () .getField ("upVector")  .addReference (this .node ._upVector);
+      this .tool .getValue () .getField ("texture")   .addReference (this .node ._texture);
 
-      this .tool .getField ("isActive") .addInterest ("handleUndo", this);
+      this .tool .getValue () .getField ("isActive") .addInterest ("handleUndo", this);
 
       this .addExternalNode (this .node ._texture);
    }

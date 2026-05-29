@@ -892,7 +892,7 @@ Viewpoint {
          tool = await grid .getToolInstance ();
 
       grid ._visible .addInterest ("updateMenu", this);
-      tool .getField ("isActive") .addInterest ("handleUndoForGrid", this, typeName);
+      tool .getValue () .getField ("isActive") .addInterest ("handleUndoForGrid", this, typeName);
 
       UndoManager .shared .beginUndo (_ ("Change Visibility of %s"), typeName);
 

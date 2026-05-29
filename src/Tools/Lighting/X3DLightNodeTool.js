@@ -10,11 +10,11 @@ class X3DLightNodeTool extends X3DChildNodeTool
    {
       await super .loadTool ("tool", __dirname, "X3DLightNodeTool.x3d");
 
-      this .tool .getField ("on")        .addReference (this .node ._on);
-      this .tool .getField ("color")     .addReference (this .node ._color);
-      this .tool .getField ("intensity") .addReference (this .node ._intensity);
+      this .tool .getValue () .getField ("on")        .addReference (this .node ._on);
+      this .tool .getValue () .getField ("color")     .addReference (this .node ._color);
+      this .tool .getValue () .getField ("intensity") .addReference (this .node ._intensity);
 
-      this .tool .getField ("isActive") .addInterest ("handleUndo", this);
+      this .tool .getValue () .getField ("isActive") .addInterest ("handleUndo", this);
    }
 
    isBoundedObject ()

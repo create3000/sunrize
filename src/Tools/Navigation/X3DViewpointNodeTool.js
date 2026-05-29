@@ -12,9 +12,9 @@ class X3DViewpointNodeTool extends X3DChildNodeTool
    {
       await super .loadTool ("tool", __dirname, "X3DViewpointNodeTool.x3d");
 
-      this .tool .getField ("isActive") .addInterest ("handleUndo", this);
+      this .tool .getValue () .getField ("isActive") .addInterest ("handleUndo", this);
 
-      this .node ._isBound .addFieldInterest (this .tool .getField ("bound"));
+      this .node ._isBound .addFieldInterest (this .tool .getValue () .getField ("bound"));
 
       this .tool .type  = this .toolType;
       this .tool .bound = this .node ._isBound;
@@ -22,7 +22,7 @@ class X3DViewpointNodeTool extends X3DChildNodeTool
 
    disposeTool ()
    {
-      this .node ._isBound .removeFieldInterest (this .tool .getField ("bound"));
+      this .node ._isBound .removeFieldInterest (this .tool .getValue () .getField ("bound"));
 
       super .disposeTool ();
    }

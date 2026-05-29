@@ -8,7 +8,7 @@ class PointLightTool extends X3DLightNodeTool
    {
       await super .initializeTool ();
 
-      this .tool .getField ("location") .addReference (this .node ._location);
+      this .tool .getValue () .getField ("location") .addReference (this .node ._location);
 
       this .tool .type = 1;
    }

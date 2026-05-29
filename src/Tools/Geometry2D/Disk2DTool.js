@@ -29,8 +29,8 @@ class Disk2DTool extends X3DGeometryNodeTool
          this .#outerRadiusTransformNode = transformNode;
 
          transformNode .scale .addInterest ("set_outerRadiusScale", this);
-         transformTool .getField ("isActive") .addInterest ("handleUndo", this);
-         transformTool .getField ("isActive") .addInterest ("set_outerRadiusActive", this);
+         transformTool .getValue () .getField ("isActive") .addInterest ("handleUndo", this);
+         transformTool .getValue () .getField ("isActive") .addInterest ("set_outerRadiusActive", this);
 
          groupNode     .bboxSize      = new X3D .Vector3 (2, 2, 0);
          transformNode .children      = [groupNode];
@@ -64,8 +64,8 @@ class Disk2DTool extends X3DGeometryNodeTool
          this .#innerRadiusTransformNode = transformNode;
 
          transformNode .scale .addInterest ("set_innerRadiusScale", this);
-         transformTool .getField ("isActive") .addInterest ("handleUndo", this);
-         transformTool .getField ("isActive") .addInterest ("set_innerRadiusActive", this);
+         transformTool .getValue () .getField ("isActive") .addInterest ("handleUndo", this);
+         transformTool .getValue () .getField ("isActive") .addInterest ("set_innerRadiusActive", this);
 
          groupNode     .bboxSize      = new X3D .Vector3 (2, 2, 0);
          transformNode .children      = [groupNode];
