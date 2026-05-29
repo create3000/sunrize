@@ -2516,7 +2516,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          case "Cylinder":
          case "Sphere":
          {
-            toolNode .getTransformTool () .tool .getField ("active") .setValue (true);
+            toolNode .getTransformTool () .tool .getValue () .getField ("active") .setValue (true);
             break;
          }
          case "Disk2D":
@@ -2524,13 +2524,13 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             if (field .getName () === "innerRadius")
             {
                toolNode .tool .group = `${node .getTypeName ()}.innerRadius`;
-               toolNode .getInnerRadiusTransformTool () .tool .getField ("active") .setValue (true);
+               toolNode .getInnerRadiusTransformTool () .tool .getValue () .getField ("active") .setValue (true);
             }
 
             if (field .getName () === "outerRadius")
             {
                toolNode .tool .group = `${node .getTypeName ()}.outerRadius`;
-               toolNode .getOuterRadiusTransformTool () .tool .getField ("active") .setValue (true);
+               toolNode .getOuterRadiusTransformTool () .tool .getValue () .getField ("active") .setValue (true);
             }
 
             break;
@@ -2543,9 +2543,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             const innerTool = toolNode .tool .transformTool ?.getValue () .getTool ();
 
             if (innerTool)
-               innerTool .tool .getField ("active") .setValue (true);
+               innerTool .tool .getValue () .getField ("active") .setValue (true);
             else
-               toolNode .tool .getField ("active") .setValue (true);
+               toolNode .tool .getValue () .getField ("active") .setValue (true);
 
             break;
          }
@@ -2580,7 +2580,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
                toolNode .getTransformTool () .transformGroups ();
                toolNode .handleUndo (new X3D .SFBool ());
-               toolNode .getTransformTool () .tool .getField ("active") .setValue (false);
+               toolNode .getTransformTool () .tool .getValue () .getField ("active") .setValue (false);
 
                UndoManager .shared .endUndo ();
             });
@@ -2602,10 +2602,10 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                toolNode .handleUndo (new X3D .SFBool ());
 
                if (field .getName () === "innerRadius")
-                  toolNode .getInnerRadiusTransformTool () .tool .getField ("active") .setValue (false);
+                  toolNode .getInnerRadiusTransformTool () .tool .getValue () .getField ("active") .setValue (false);
 
                if (field .getName () === "outerRadius")
-                  toolNode .getOuterRadiusTransformTool () .tool .getField ("active") .setValue (false);
+                  toolNode .getOuterRadiusTransformTool () .tool .getValue () .getField ("active") .setValue (false);
 
                UndoManager .shared .endUndo ();
             });
@@ -2629,7 +2629,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
                   innerTool .transformGroups ();
                   toolNode .handleUndo (new X3D .SFBool ());
-                  innerTool .tool .getField ("active") .setValue (false);
+                  innerTool .tool .getValue () .getField ("active") .setValue (false);
 
                   UndoManager .shared .endUndo ();
                });
@@ -2640,7 +2640,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
                toolNode .transformGroups ();
                toolNode .handleUndo (new X3D .SFBool ());
-               toolNode .tool .getField ("active") .setValue (true);
+               toolNode .tool .getValue () .getField ("active") .setValue (true);
 
                UndoManager .shared .endUndo ();
             }
