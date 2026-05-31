@@ -8,7 +8,7 @@ module .exports = class ToolColors
    static YELLOW = new X3D .Color3 (1, 1, 0.35);             // Switch
    static LILA   = new X3D .Color3 (0.7, 0.35, 1);           // Anchor
    static PINK   = new X3D .Color3 (1, 0.35, 0.7);           // Billboard
-   static VIOLET = new X3D .Color3 (0.5, 0.175, 0.35);       //
+   static VIOLET = new X3D .Color3 (0.5, 0.175, 0.35);       // GaussianSplats
    static RED    = new X3D .Color3 (1, 0.35, 0.35);          // Collision
    static CYAN   = new X3D .Color3 (0.35, 1, 1);             // LOD
 

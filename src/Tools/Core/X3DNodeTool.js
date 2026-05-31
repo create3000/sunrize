@@ -480,7 +480,7 @@ class X3DNodeTool extends X3DBaseTool
    traverse (type, renderObject = this .node)
    {
       if (this .isNodeTraversable (type))
-         this .node .traverse ?.(type, renderObject);
+         this .node .getInnerNode () .traverse ?.(type, renderObject);
 
       switch (type)
       {

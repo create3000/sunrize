@@ -18,28 +18,30 @@ class X3DChildNodeTool extends X3DNodeTool
 
    isNodeTraversable (type)
    {
-      if (!this .node .isVisible ())
+      const innerNode = this .node .getInnerNode ();
+
+      if (!innerNode .isVisible ())
          return false;
 
       switch (type)
       {
          case X3D .TraverseType .POINTER:
-            return this .node .isPointingObject ();
+            return innerNode .isPointingObject ();
 
          case X3D .TraverseType .CAMERA:
-            return this .node .isCameraObject ();
+            return innerNode .isCameraObject ();
 
          case X3D .TraverseType .PICKING:
-            return this .node .isPickableObject ();
+            return innerNode .isPickableObject ();
 
          case X3D .TraverseType .COLLISION:
-            return this .node .isCollisionObject ();
+            return innerNode .isCollisionObject ();
 
          case X3D .TraverseType .SHADOW:
-            return this .node .isShadowObject ();
+            return innerNode .isShadowObject ();
 
          case X3D .TraverseType .DISPLAY:
-            return this .node .isVisibleObject ();
+            return innerNode .isVisibleObject ();
       }
    }
 }
