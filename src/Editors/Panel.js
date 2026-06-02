@@ -668,7 +668,7 @@ module .exports = new class Panel extends Interface
          {
             field = this .linearToSRGB (node, field);
 
-            // Proceed with next case:
+            // falls through
          }
          case X3D .X3DConstants .SFVec2d:
          case X3D .X3DConstants .SFVec2f:

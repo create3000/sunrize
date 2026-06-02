@@ -381,7 +381,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                      if (node .getInnerNode () .getType () .includes (X3D .X3DConstants .X3DChildNode))
                         continue;
 
-                     // Proceed with next case:
+                     // falls through
                   }
                   case X3D .X3DConstants .X3DChildNode:
                   {

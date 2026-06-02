@@ -3990,7 +3990,7 @@ module .exports = class OutlineView extends Interface
          case object instanceof X3D .SFNode:
          {
             object = object .getValue ();
-            // Proceed with next case:
+            // falls through
          }
          default: // X3DBaseNode
          {
