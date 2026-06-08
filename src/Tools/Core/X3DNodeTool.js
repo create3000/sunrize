@@ -397,7 +397,7 @@ class X3DNodeTool extends X3DBaseTool
          }
          catch
          {
-            this .#initialValues .set (name, this .tool .getField (name) .copy ());
+            this .#initialValues .set (name, this .tool .getValue () .getField (name) .copy ());
          }
       }
    }
@@ -429,7 +429,7 @@ class X3DNodeTool extends X3DBaseTool
          }
          catch
          {
-            const value = this .tool .getField (name) .copy ();
+            const value = this .tool .getValue () .getField (name) .copy ();
 
             switch (value .getType ())
             {
