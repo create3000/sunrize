@@ -21,7 +21,7 @@ class InlineGeometryTool extends X3DGeometryNodeTool
       {
          this .#tool = this .node .getInnerNode () .addTool ();
 
-         this .#tool .toolPointingEnabled = false;
+         this .#tool .toolPointing = false;
       }
       catch
       {

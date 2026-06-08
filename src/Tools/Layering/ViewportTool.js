@@ -7,6 +7,7 @@ const
 class ViewportTool extends X3DBoundedObjectTool
 {
    toolBBoxColor = ToolColors .DARK_GREEN;
+   nodePush = true;
 }
 
 module .exports = ViewportTool;

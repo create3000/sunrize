@@ -7,8 +7,8 @@ const
 
 class X3DSnapNodeTool extends X3DActiveLayerNodeTool
 {
-   toolModifiers       = ActionKeys .None;
-   toolPointingEnabled = false;
+   toolModifiers = ActionKeys .None;
+   toolPointing  = false;
 
    async initializeTool ()
    {

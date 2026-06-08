@@ -470,7 +470,8 @@ class X3DNodeTool extends X3DBaseTool
       return bbox;
    }
 
-   toolPointingEnabled = true;
+   toolPointing = true;
+   nodePush = false;
 
    isNodeTraversable (type)
    {
@@ -486,12 +487,15 @@ class X3DNodeTool extends X3DBaseTool
       {
          case X3D .TraverseType .POINTER:
          {
-            if (this .toolPointingEnabled)
+            if (this .toolPointing)
                break;
 
             return;
          }
       }
+
+      if (this .nodePush)
+         this .node .push (renderObject);
 
       renderObject .getHAnimNode () .push (null);
       renderObject .getSensors ()   .push (X3DNodeTool .#sensors);
@@ -501,6 +505,9 @@ class X3DNodeTool extends X3DBaseTool
 
       renderObject .getSensors ()   .pop ();
       renderObject .getHAnimNode () .pop ();
+
+      if (this .nodePush)
+         this .node .pop (renderObject);
    }
 
    // Destruction
