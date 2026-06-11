@@ -159,7 +159,8 @@
               <connect nodeField='visible' protoField='selected'/>
             </IS>
             <ScreenGroup>
-              <Shape>
+              <Shape
+                  castShadow='false'>
                 <Appearance>
                   <UnlitMaterial
                       transparency='1'/>

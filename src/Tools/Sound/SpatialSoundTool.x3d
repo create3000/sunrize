@@ -181,7 +181,8 @@ function eventsProcessed ()
                 rotation='1 0 0 90'>
               <ProtoInstance name='BooleanSwitch'>
                 <fieldValue name='children'>
-                  <Shape>
+                  <Shape
+                      castShadow='false'>
                     <Appearance>
                       <LineProperties DEF='_5'
                           linewidthScaleFactor='1'/>
@@ -198,7 +199,8 @@ function eventsProcessed ()
                       </IS>
                     </ProtoInstance>
                   </Shape>
-                  <Shape>
+                  <Shape
+                      castShadow='false'>
                     <Appearance>
                       <LineProperties USE='_5'/>
                       <Material
@@ -218,7 +220,8 @@ function eventsProcessed ()
                 rotation='1 0 0 90'>
               <ProtoInstance name='BooleanSwitch'>
                 <fieldValue name='children'>
-                  <Shape>
+                  <Shape
+                      castShadow='false'>
                     <Appearance>
                       <LineProperties USE='_5'/>
                       <Material
@@ -234,7 +237,8 @@ function eventsProcessed ()
                       </IS>
                     </ProtoInstance>
                   </Shape>
-                  <Shape>
+                  <Shape
+                      castShadow='false'>
                     <Appearance>
                       <LineProperties USE='_5'/>
                       <Material
@@ -257,7 +261,8 @@ function eventsProcessed ()
               <connect nodeField='visible' protoField='selected'/>
             </IS>
             <ScreenGroup>
-              <Shape>
+              <Shape
+                  castShadow='false'>
                 <Appearance>
                   <UnlitMaterial
                       transparency='1'/>

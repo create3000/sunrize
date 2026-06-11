@@ -188,7 +188,8 @@
                   rotation='0 1 0 90'
                   visible='false'>
                 <ScreenGroup>
-                  <Shape DEF='_26'>
+                  <Shape DEF='_26'
+                      castShadow='false'>
                     <Appearance>
                       <UnlitMaterial DEF='_111'
                           transparency='1'/>
@@ -274,7 +275,8 @@
               <connect nodeField='visible' protoField='selected'/>
             </IS>
             <ScreenGroup>
-              <Shape>
+              <Shape
+                  castShadow='false'>
                 <Appearance>
                   <UnlitMaterial USE='_111'/>
                 </Appearance>

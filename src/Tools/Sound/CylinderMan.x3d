@@ -40,7 +40,8 @@
         center='0 -6.490559 5.900146'>
       <Transform
           scale='6.75 4.5 4.5'>
-        <Shape DEF='_1'>
+        <Shape DEF='_1'
+            castShadow='false'>
           <Appearance>
             <Material
                 diffuseColor='0.2666667 0.2666667 0.2666667'

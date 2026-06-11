@@ -43,7 +43,8 @@
             <IS>
               <connect nodeField='scale' protoField='size'/>
             </IS>
-            <Shape DEF='Lines'>
+            <Shape DEF='Lines'
+                castShadow='false'>
               <IS>
                 <connect nodeField='visible' protoField='linesDisplay'/>
               </IS>
@@ -70,7 +71,8 @@
                 </IS>
               </IndexedLineSet>
             </Shape>
-            <Shape DEF='Points'>
+            <Shape DEF='Points'
+                castShadow='false'>
               <IS>
                 <connect nodeField='visible' protoField='pointsDisplay'/>
               </IS>

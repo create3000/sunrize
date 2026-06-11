@@ -28,7 +28,8 @@
       </ProtoInterface>
       <ProtoBody>
         <Group>
-          <Shape DEF='Hull'>
+          <Shape DEF='Hull'
+              castShadow='false'>
             <Appearance>
               <LineProperties
                   linetype='3'
@@ -48,7 +49,8 @@
               </IS>
             </IndexedLineSet>
           </Shape>
-          <Shape DEF='ControlPoints'>
+          <Shape DEF='ControlPoints'
+              castShadow='false'>
             <Appearance>
               <PointProperties
                   pointSizeScaleFactor='5'

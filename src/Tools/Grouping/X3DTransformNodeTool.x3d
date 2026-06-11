@@ -720,7 +720,8 @@
                     <connect nodeField='translation' protoField='center'/>
                   </IS>
                   <ScreenGroup>
-                    <Shape>
+                    <Shape
+                        castShadow='false'>
                       <Appearance>
                         <UnlitMaterial
                             transparency='1'/>

@@ -60,7 +60,9 @@
                 <Coordinate DEF='HexagonCoord'/>
               </IndexedFaceSet>
             </Shape>
-            <Shape DEF='MajorGrid'>
+            <Shape DEF='MajorGrid'
+                pointerEvents='false'
+                castShadow='false'>
               <Appearance>
                 <Material DEF='MajorMaterial'
                     diffuseColor='0 0 0'>

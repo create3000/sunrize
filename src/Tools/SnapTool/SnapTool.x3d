@@ -33,7 +33,8 @@
               <Transform DEF='Cone'
                   translation='0 60 0'
                   scale='6 9 6'>
-                <Shape>
+                <Shape
+                    castShadow='false'>
                   <Appearance DEF='_3'>
                     <Material DEF='TargetMaterial'
                         diffuseColor='0.8 0.8 0.16'/>
@@ -45,14 +46,16 @@
               <Transform DEF='Cylinder'
                   translation='0 30 0'
                   scale='2 30 2'>
-                <Shape>
+                <Shape
+                    castShadow='false'>
                   <Appearance USE='_3'/>
                   <Cylinder/>
                 </Shape>
               </Transform>
               <Transform DEF='Sphere'
                   scale='6 6 6'>
-                <Shape>
+                <Shape
+                    castShadow='false'>
                   <Appearance USE='_3'/>
                   <Sphere/>
                 </Shape>
@@ -60,7 +63,8 @@
               <Transform DEF='Grid_4'
                   translation='0 1 0'
                   scale='12 1 12'>
-                <Shape>
+                <Shape
+                    castShadow='false'>
                   <IndexedLineSet
                       colorPerVertex='false'
                       colorIndex='0, 1, 2'
