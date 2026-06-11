@@ -235,7 +235,7 @@ class SnapTarget extends X3DSnapNodeTool
                from           = invModelMatrix .multDirMatrix (distance1a < distance1b ? axis1 : axis1 .negate ()),
                to             = invModelMatrix .multDirMatrix (snapVector);
 
-            snapRotation .setFromToVec (from, to);
+            snapRotation .setVectors (from, to);
          }
       }
       else
@@ -247,7 +247,7 @@ class SnapTarget extends X3DSnapNodeTool
                from           = invModelMatrix .multDirMatrix (distance2a < distance2b ? axis2 : axis2 .negate ()),
                to             = invModelMatrix .multDirMatrix (snapVector);
 
-            snapRotation .setFromToVec (from, to);
+            snapRotation .setVectors (from, to);
          }
       }
 
