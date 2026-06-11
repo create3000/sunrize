@@ -105,7 +105,7 @@
     "jquery-ui-dist": "^1.13.3",
     "jstree": "^3.3.17",
     "material-icons": "^1.13.14",
-    "material-symbols": "^0.44.12",
+    "material-symbols": "^0.45.0",
     "md5": "^2.3.0",
     "mime-types": "^3.0.2",
     "monaco-editor": "^0.55.1",
@@ -116,7 +116,7 @@
     "tweakpane": "^4.0.5",
     "update-electron-app": "^3.2.0",
     "x_ite": "^15.1.2",
-    "x_ite-off-parser": "^1.0.6",
+    "x_ite-off-parser": "^1.0.7",
     "x3d-traverse": "^2.0.1"
   }
 }
