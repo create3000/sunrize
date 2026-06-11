@@ -256,7 +256,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
          vectorOnGrid   = rotationPlane .copy () .inverse () .multRight (gridRotation) .multRight (gridPlane .copy () .inverse ()) .multVecMatrix (vectorToSnap .copy ()) .normalize (), // Vector inside grid space.
          snapVector     = rotationPlane .multVecMatrix (gridRotation .copy () .inverse () .multVecMatrix (gridPlane .multVecMatrix (this .getSnapPosition (vectorOnGrid .copy (), false)))),
          invModelMatrix = transformTool .getModelMatrix () .copy () .inverse (),
-         snapRotation   = new X3D .Rotation4 (
+         snapRotation   = X3D .Rotation4 .fromVectors (
             invModelMatrix .multDirMatrix (vectorToSnap .copy ()),
             invModelMatrix .multDirMatrix (snapVector .copy ())
          );
