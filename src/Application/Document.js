@@ -18,6 +18,7 @@ const
    ImageParser        = require ("../Parser/ImageParser"),
    VideoParser        = require ("../Parser/VideoParser"),
    AudioParser        = require ("../Parser/AudioParser"),
+   SPZParser          = require ("x_ite-spz-parser"),
    OffParser          = require ("x_ite-off-parser"),
    _                  = require ("./GetText");
 
