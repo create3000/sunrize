@@ -88,7 +88,7 @@
     "@electron-forge/maker-zip": "^7.11.2",
     "@electron-forge/publisher-github": "^7.11.2",
     "@eslint/js": "^10.0.1",
-    "eslint": "^10.4.1",
+    "eslint": "^10.5.0",
     "globals": "^17.6.0",
     "shell-tools": "^1.1.9"
   },
@@ -117,7 +117,7 @@
     "update-electron-app": "^3.2.0",
     "x_ite": "^15.1.2",
     "x_ite-off-parser": "^1.0.7",
-    "x_ite-spz-parser": "^1.0.7",
+    "x_ite-spz-parser": "^1.0.8",
     "x3d-traverse": "^2.0.1"
   }
 }
