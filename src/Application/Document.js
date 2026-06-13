@@ -330,7 +330,7 @@ module .exports = class Document extends Interface
 
       const activeElement = this .activeElement;
 
-      if (activeElement .is ("input:is(not([type]),[type=text],[type=number],[type=url])"))
+      if (activeElement .is ("input:is(:not([type]),[type=text],[type=number],[type=url])"))
          return true;
 
       if (activeElement .is ("textarea"))

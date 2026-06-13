@@ -2413,7 +2413,7 @@ module .exports = class OutlineView extends Interface
 
       $("<div></div>")
          .addClass (type + "-value-container")
-         .append ($("<input></input>") .attr ("type", "text") .attr ("lang", "en"))
+         .append ($("<input></input>") .attr ("lang", "en"))
          .appendTo (li);
 
       // Make jsTree.
