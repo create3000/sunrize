@@ -40,7 +40,7 @@ module .exports = new class BrowserFrame extends Dialog
          .attr ("min", 1)
          .attr ("step", "1")
          .css ("width", "calc((100% - 20px) / 2)")
-         .on ("change input", () => this .onsize ());
+         .on ("change", () => this .onsize ());
 
       const x = $("<span></span>")
          .css ({ "display": "inline-block", "width": "20px", "text-align": "center" })
@@ -51,7 +51,7 @@ module .exports = new class BrowserFrame extends Dialog
          .attr ("min", 1)
           .attr ("step", "1")
           .css ("width", "calc((100% - 20px) / 2)")
-          .on ("change input", () => this .onsize ());
+          .on ("change", () => this .onsize ());
 
       $("<tr></tr>")
          .append ($("<th></th>")
@@ -81,7 +81,7 @@ module .exports = new class BrowserFrame extends Dialog
          .attr ("min", 1)
          .attr ("step", "1")
          .css ("width", "calc((100% - 20px) / 2)")
-         .on ("change input", () => this .onchange ());
+         .on ("change", () => this .onchange ());
 
       const slash = $("<span></span>")
          .css ({ "display": "inline-block", "width": "20px", "text-align": "center" })
@@ -92,7 +92,7 @@ module .exports = new class BrowserFrame extends Dialog
          .attr ("min", 1)
           .attr ("step", "1")
           .css ("width", "calc((100% - 20px) / 2)")
-          .on ("change input", () => this .onchange ());
+          .on ("change", () => this .onchange ());
 
       $("<tr></tr>")
          .append ($("<th></th>")
