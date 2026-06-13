@@ -1797,9 +1797,9 @@ body.light .console-output .selected {
   resize: vertical;
 }
 
-.scene-graph .field-value input[disabled],
-.scene-graph .field-value textarea[disabled],
-.scene-graph .special-value textarea[disabled] {
+.scene-graph .field-value input:is([disabled],[readonly]),
+.scene-graph .field-value textarea:is([disabled],[readonly]),
+.scene-graph .special-value textarea:is([disabled],[readonly]) {
   background: var(--background-disabled);
 }
 

@@ -2460,7 +2460,7 @@ module .exports = class OutlineView extends Interface
       }
       else
       {
-         input .attr ("disabled", "disabled");
+         input .attr ("readonly", "");
       }
 
       this .connectField (input, node, field, false);

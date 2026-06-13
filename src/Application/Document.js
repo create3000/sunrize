@@ -323,12 +323,14 @@ module .exports = class Document extends Interface
 
    activeElementIsInputOrOutput ()
    {
+      // console .log (this .activeElement ?.prop ("nodeName"))
+
       if (!this .activeElement)
          return false;
 
       const activeElement = this .activeElement;
 
-      if (activeElement .is ("input:not([type]), input[type=text], input[type=number]"))
+      if (activeElement .is ("input:is(not([type]),[type=text],[type=number],[type=url])"))
          return true;
 
       if (activeElement .is ("textarea"))
