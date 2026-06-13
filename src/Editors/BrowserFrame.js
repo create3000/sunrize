@@ -35,6 +35,33 @@ module .exports = new class BrowserFrame extends Dialog
             .text (_("Browser Frame")))
          .appendTo (this .table .header);
 
+      this .width = $("<input></input>")
+         .attr ("type", "number")
+         .attr ("min", 1)
+         .attr ("step", "1")
+         .css ("width", "calc((100% - 20px) / 2)")
+         .on ("change input", () => this .onsize ());
+
+      const x = $("<span></span>")
+         .css ({ "display": "inline-block", "width": "20px", "text-align": "center" })
+         .text ("✕");
+
+      this .height = $("<input></input>")
+          .attr ("type", "number")
+         .attr ("min", 1)
+          .attr ("step", "1")
+          .css ("width", "calc((100% - 20px) / 2)")
+          .on ("change input", () => this .onsize ());
+
+      $("<tr></tr>")
+         .append ($("<th></th>")
+            .text (_("Surface Size")))
+         .append ($("<td></td>")
+            .append (this .width)
+            .append (x)
+            .append (this .height))
+         .appendTo (this .table .body);
+
       this .fixedSize = $("<input></input>")
          .attr ("id", "browser-frame-fixed-size")
          .attr ("type", "checkbox")
@@ -86,14 +113,16 @@ module .exports = new class BrowserFrame extends Dialog
          .append ($("<td></td>") .append (this .backgroundColor))
          .appendTo (this .table .body);
 
-      this .resizeObserver = new ResizeObserver (() => this .onresize ());
+      this .paneObserver = new ResizeObserver (() => this .updateSize ());
+      this .paneObserver .observe ($("#browser-pane") [0]);
 
-      this .resizeObserver .observe ($("#browser-frame") [0]);
+      this .frameObserver = new ResizeObserver (() => this .onresize ());
+      this .frameObserver .observe ($("#browser-frame") [0]);
    }
 
    configure ()
    {
-      super .configure ({ size: [388, 147] });
+      super .configure ({ size: [388, 175] });
 
       this .connect (Editor .getWorldInfo (this .browser .currentScene));
       this .updateInputs ();
@@ -115,10 +144,18 @@ module .exports = new class BrowserFrame extends Dialog
          [numerator = 1, denominator = 1] = worldInfoNode ?.getMetaData ("Sunrize/BrowserFrame/aspectRatio") ?? [ ],
          [backgroundColor = ""]           = worldInfoNode ?.getMetaData ("Sunrize/BrowserFrame/backgroundColor") ?? [ ];
 
+      this .updateSize ();
+
       this .fixedSize .prop ("checked", fixedSize);
       this .numerator .val (numerator);
       this .denominator .val (denominator);
       this .backgroundColor .val (backgroundColor);
+   }
+
+   updateSize ()
+   {
+      this .width .val ($("#browser-pane") .width ());
+      this .height .val ($("#browser-pane") .height ());
    }
 
    onchange ()
@@ -170,5 +207,13 @@ module .exports = new class BrowserFrame extends Dialog
       }
 
       element .css ("background-color", `${backgroundColor}` .replace (/\b(?:transparent|unset|initial)\b/g, ""));
+   }
+
+   onsize ()
+   {
+      const document = require ("../Application/Window");
+
+      document .verticalSplitter   .position = this .width  .val () / $("body") .width ();
+      document .horizontalSplitter .position = this .height .val () / $("body") .height ();
    }
 };
