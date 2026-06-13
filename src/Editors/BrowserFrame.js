@@ -55,7 +55,7 @@ module .exports = new class BrowserFrame extends Dialog
 
       $("<tr></tr>")
          .append ($("<th></th>")
-            .text (_("Surface Size")))
+            .text (_("Size")))
          .append ($("<td></td>")
             .append (this .width)
             .append (x)
