@@ -1038,7 +1038,7 @@ module .exports = class Application
          },
          {
             name: _("Images"),
-            extensions: ["png", "jpg", "jpeg", "gif", "webp", "ktx2"],
+            extensions: ["png", "jpg", "jpeg", "gif", "webp", "avif", "ktx2"],
          },
          {
             name: _("Video"),
