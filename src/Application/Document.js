@@ -18,10 +18,11 @@ const
    ImageParser        = require ("../Parser/ImageParser"),
    VideoParser        = require ("../Parser/VideoParser"),
    AudioParser        = require ("../Parser/AudioParser"),
-   SPZParser123       = require ("x_ite-spz-parser/x_ite-spz-parser-123.js"),
-   SPZParser4         = require ("x_ite-spz-parser/x_ite-spz-parser-4.js"),
-   OffParser          = require ("x_ite-off-parser"),
    _                  = require ("./GetText");
+
+require ("x_ite-spz-parser/x_ite-spz-parser-123.js");
+require ("x_ite-spz-parser/x_ite-spz-parser-4.js");
+require ("x_ite-off-parser");
 
 module .exports = class Document extends Interface
 {
