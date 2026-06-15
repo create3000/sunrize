@@ -1034,7 +1034,7 @@ module .exports = class Application
          },
          {
             name: _("Audio"),
-            extensions: ["mp3", "wav", "oga", "ogg"],
+            extensions: ["mp3", "mp4", "m4a", "aac", "wav", "webm", "oga", "ogg"],
          },
          {
             name: _("Images"),
