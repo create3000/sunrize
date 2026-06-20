@@ -3105,10 +3105,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       auxiliary .fromString (string, executionContext);
 
       if (auxiliary .equals (field))
-      {
-         field .addEvent ();
          return;
-      }
 
       if (node .getDisplayName ())
          undoManager .beginUndo (_("Change Field »%s« of Node %s »%s«"), field .getName (), node .getTypeName (), node .getDisplayName ());
@@ -3152,16 +3149,14 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       {
          const auxiliary = field .create ();
 
+         auxiliary .setUnit (field .getUnit ());
          auxiliary .setValue (value);
 
          value = auxiliary;
       }
 
       if (value .equals (field))
-      {
-         field .addEvent ();
          return;
-      }
 
       if (node .getDisplayName ())
          undoManager .beginUndo (_("Change Field »%s« of Node %s »%s«"), field .getName (), node .getTypeName (), node .getDisplayName ());
