@@ -36,24 +36,22 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
       .appendTo (content);
 
    const single = $("<optgroup></optgroup>")
-      .attr ("label", "Single Fields");
+      .attr ("label", "Single Fields")
+      .appendTo (typeNameMenu);
 
    Object .keys (X3D .Fields)
       .filter (typeName => typeName .startsWith ("SF"))
       .sort ()
       .forEach (typeName => single .append ($("<option></option>") .text (typeName)))
 
-   single .appendTo (typeNameMenu);
-
    const multi = $("<optgroup></optgroup>")
-      .attr ("label", "Multi Fields");
+      .attr ("label", "Multi Fields")
+      .appendTo (typeNameMenu);
 
    Object .keys (X3D .Fields)
       .filter (typeName => typeName .startsWith ("MF"))
       .sort ()
       .forEach (typeName => multi .append ($("<option></option>") .text (typeName)))
-
-   multi .appendTo (typeNameMenu);
 
    const accessTypeMenu = $("<select></select>")
       .append ($("<option></option>") .text ("initializeOnly"))
