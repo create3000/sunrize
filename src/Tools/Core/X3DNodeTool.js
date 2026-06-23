@@ -412,6 +412,7 @@ class X3DNodeTool extends X3DBaseTool
 
             switch (value .getType ())
             {
+               case X3D .X3DConstants .SFQuaternion:
                case X3D .X3DConstants .SFRotation:
                case X3D .X3DConstants .SFVec2d:
                case X3D .X3DConstants .SFVec2f:
@@ -433,6 +434,7 @@ class X3DNodeTool extends X3DBaseTool
 
             switch (value .getType ())
             {
+               case X3D .X3DConstants .SFQuaternion:
                case X3D .X3DConstants .SFRotation:
                case X3D .X3DConstants .SFVec2d:
                case X3D .X3DConstants .SFVec2f:

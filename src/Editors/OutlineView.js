@@ -2165,6 +2165,7 @@ module .exports = class OutlineView extends Interface
          case X3D .X3DConstants .SFMatrix3f:
          case X3D .X3DConstants .SFMatrix4d:
          case X3D .X3DConstants .SFMatrix4f:
+         case X3D .X3DConstants .SFQuaternion:
          case X3D .X3DConstants .SFRotation:
          case X3D .X3DConstants .SFString:
          case X3D .X3DConstants .SFTime:
@@ -2189,6 +2190,7 @@ module .exports = class OutlineView extends Interface
          case X3D .X3DConstants .MFMatrix3f:
          case X3D .X3DConstants .MFMatrix4d:
          case X3D .X3DConstants .MFMatrix4f:
+         case X3D .X3DConstants .MFQuaternion:
          case X3D .X3DConstants .MFRotation:
          case X3D .X3DConstants .MFString:
          case X3D .X3DConstants .MFTime:
