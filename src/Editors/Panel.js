@@ -454,6 +454,7 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .SFMatrix3f:
          case X3D .X3DConstants .SFMatrix4d:
          case X3D .X3DConstants .SFMatrix4f:
+         case X3D .X3DConstants .SFQuaternion:
          case X3D .X3DConstants .SFRotation:
          case X3D .X3DConstants .SFString:
          case X3D .X3DConstants .SFTime:
@@ -529,6 +530,7 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .MFMatrix3f:
          case X3D .X3DConstants .MFMatrix4d:
          case X3D .X3DConstants .MFMatrix4f:
+         case X3D .X3DConstants .MFQuaternion:
          case X3D .X3DConstants .MFRotation:
          case X3D .X3DConstants .MFString:
          case X3D .X3DConstants .MFTime:
@@ -609,6 +611,7 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .SFDouble:
          case X3D .X3DConstants .SFMatrix3d:
          case X3D .X3DConstants .SFMatrix4d:
+         case X3D .X3DConstants .SFQuaternion:
          case X3D .X3DConstants .SFRotation:
          case X3D .X3DConstants .SFTime:
          case X3D .X3DConstants .SFVec2d:
@@ -670,6 +673,7 @@ module .exports = new class Panel extends Interface
 
             // falls through
          }
+         case X3D .X3DConstants .SFQuaternion:
          case X3D .X3DConstants .SFVec2d:
          case X3D .X3DConstants .SFVec2f:
          case X3D .X3DConstants .SFVec3d:
@@ -715,6 +719,7 @@ module .exports = new class Panel extends Interface
          }
          case X3D .X3DConstants .MFColor:
          case X3D .X3DConstants .MFColorRGBA:
+         case X3D .X3DConstants .MFQuaternion:
          case X3D .X3DConstants .MFRotation:
          case X3D .X3DConstants .MFVec2d:
          case X3D .X3DConstants .MFVec2f:
@@ -816,6 +821,7 @@ module .exports = new class Panel extends Interface
             this .assign (executionContext, node, field, value);
             break;
          }
+         case X3D .X3DConstants .SFQuaternion:
          case X3D .X3DConstants .SFVec4d:
          case X3D .X3DConstants .SFVec4f:
          {
@@ -855,6 +861,7 @@ module .exports = new class Panel extends Interface
          case X3D .X3DConstants .MFMatrix3f:
          case X3D .X3DConstants .MFMatrix4d:
          case X3D .X3DConstants .MFMatrix4f:
+         case X3D .X3DConstants .MFQuaternion:
          case X3D .X3DConstants .MFRotation:
          case X3D .X3DConstants .MFString:
          case X3D .X3DConstants .MFTime:
