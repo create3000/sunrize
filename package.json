@@ -37,6 +37,7 @@
   },
   "keywords": [
     "3D",
+    "3DGS",
     "editor",
     "electron",
     "GLB",
@@ -46,6 +47,8 @@
     "node",
     "npx",
     "PLY",
+    "SOG",
+    "SPZ",
     "STL",
     "SVG",
     "VRM",
@@ -120,5 +123,10 @@
     "x_ite-sog-parser": "^2.0.0",
     "x_ite-spz-parser": "^2.0.0",
     "x3d-traverse": "^2.0.1"
+  },
+  "allowScripts": {
+    "electron-winstaller@5.4.1": true,
+    "fs-xattr@0.3.1": true,
+    "macos-alias@0.2.12": true
   }
 }
