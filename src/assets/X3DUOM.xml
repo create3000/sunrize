@@ -2,8 +2,8 @@
 <!-- X3D Unified Object Model (X3DUOM) X3dUnifiedObjectModel-4.1.xml -->
 <!-- Online at https://www.web3d.org/specifications/X3dUnifiedObjectModel-4.1.xml -->
 <!-- This file contains a listing of all abstract and concrete nodes in version 4.1 of X3D -->
-<!-- Generated 2026-06-17-07:00 18:19:27.7000684-07:00 -->
-<X3dUnifiedObjectModel xmlns:xsd="https://www.w3.org/2001/XMLSchema-instance"
+<!-- Generated 2026-06-21-07:00 21:40:54.6369714-07:00 -->
+<X3dUnifiedObjectModel xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
                        version="4.1"
                        xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/X3dUnifiedObjectModel.xsd">
    <SimpleTypeEnumerations>
@@ -66,15 +66,15 @@
          <enumeration value="&#34;BOUNCE&#34;" appinfo="The bounce field value is used."/>
          <enumeration value="&#34;USER_FRICTION&#34;"
                       appinfo="The system will normally calculate the friction direction vector that is perpendicular to the contact normal. This setting indicates that the user-supplied value in this contact should be used."/>
-         <enumeration value="&#34;FRICTION_COEFFICIENT-2&#34;"
+         <enumeration value="&#34;FRICTION_COEFFICIENT_2&#34;"
                       appinfo="Apply frictionCoefficients values"/>
          <enumeration value="&#34;ERROR_REDUCTION&#34;" appinfo="Apply softnessErrorCorrection value"/>
          <enumeration value="&#34;CONSTANT_FORCE&#34;" appinfo="Apply softnessConstantForceMix value"/>
-         <enumeration value="&#34;SPEED-1&#34;" appinfo="Apply first component of surfaceSpeed array"/>
-         <enumeration value="&#34;SPEED-2&#34;"
+         <enumeration value="&#34;SPEED_1&#34;" appinfo="Apply first component of surfaceSpeed array"/>
+         <enumeration value="&#34;SPEED_2&#34;"
                       appinfo="Apply second component of surfaceSpeed array"/>
-         <enumeration value="&#34;SLIP-1&#34;" appinfo="Apply first component of slipFactors array"/>
-         <enumeration value="&#34;SLIP-2&#34;" appinfo="Apply second component of slipFactors array"/>
+         <enumeration value="&#34;SLIP_1&#34;" appinfo="Apply first component of slipFactors array"/>
+         <enumeration value="&#34;SLIP_2&#34;" appinfo="Apply second component of slipFactors array"/>
       </SimpleType>
       <SimpleType name="bboxSizeType"
                   baseType="SFVec3f"
@@ -601,6 +601,9 @@
          <enumeration value="MFInt32" appinfo="Multiple Field (list) 32-bit integer"/>
          <enumeration value="SFNode" appinfo="Single Field (singleton) node"/>
          <enumeration value="MFNode" appinfo="Multiple Field (list) nodes"/>
+         <enumeration value="SFQuaternion"
+                      appinfo="Single Field (singleton) quaternion value"/>
+         <enumeration value="MFQuaternion" appinfo="Multiple Field (list) quaternion values"/>
          <enumeration value="SFRotation"
                       appinfo="Single Field (singleton) rotation value using 3-tuple axis, radian angle"/>
          <enumeration value="MFRotation"
@@ -5070,9 +5073,9 @@
          </InterfaceDefinition>
       </FieldType>
       <FieldType type="SFQuaternion"
-                 tupleSize="1"
+                 tupleSize="4"
                  isArray="false"
-                 defaultValue="0.0 0.0 0.0 1.0"
+                 defaultValue="0.0 0.0 0.0 0.0"
                  regex="\s*(([+-]?((0|[1-9][0-9]*)(\.[0-9]*)?|\.[0-9]+)([Ee][+-]?[0-9]+)?)\s+){3}([+-]?((0|[1-9][0-9]*)(\.[0-9]*)?|\.[0-9]+)([Ee][+-]?[0-9]+)?)\s*">
          <InterfaceDefinition specificationUrl="https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/fieldTypes.html#SFQuaternionAndMFQuaternion"
                               appinfo="SFQuaternion is a 4-tuple set of double-precision floating-point values, specifying a 3D homogeneous vector. Warning: comma characters within singleton values do not pass strict XML validation.">
@@ -5080,7 +5083,7 @@
          </InterfaceDefinition>
       </FieldType>
       <FieldType type="MFQuaternion"
-                 tupleSize="1"
+                 tupleSize="4"
                  isArray="true"
                  defaultValue=""
                  regex="\s*((([+-]?((0|[1-9][0-9]*)(\.[0-9]*)?|\.[0-9]+)([Ee][+-]?[0-9]+)?)\s+){3}([+-]?((0|[1-9][0-9]*)(\.[0-9]*)?|\.[0-9]+)([Ee][+-]?[0-9]+)?)\s*,?\s*)*">
@@ -5112,7 +5115,7 @@
       <FieldType type="SFString"
                  tupleSize="1"
                  isArray="false"
-                 defaultValue="SRGB_REC709_DISPLAY"
+                 defaultValue=""
                  regex="(\s|\S)*">
          <InterfaceDefinition specificationUrl="https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/fieldTypes.html#SFStringAndMFString"
                               appinfo="SFString defines a single string encoded with the UTF-8 universal character set.">
@@ -13974,18 +13977,18 @@
                <enumeration value="&#34;BOUNCE&#34;" appinfo="The bounce field value is used."/>
                <enumeration value="&#34;USER_FRICTION&#34;"
                             appinfo="The system will normally calculate the friction direction vector that is perpendicular to the contact normal. This setting indicates that the user-supplied value in this contact should be used."/>
-               <enumeration value="&#34;FRICTION_COEFFICIENT-2&#34;"
+               <enumeration value="&#34;FRICTION_COEFFICIENT_2&#34;"
                             appinfo="Apply frictionCoefficients values."/>
                <enumeration value="&#34;ERROR_REDUCTION&#34;"
                             appinfo="Apply softnessErrorCorrection value."/>
                <enumeration value="&#34;CONSTANT_FORCE&#34;"
                             appinfo="Apply softnessConstantForceMix value."/>
-               <enumeration value="&#34;SPEED-1&#34;"
+               <enumeration value="&#34;SPEED_1&#34;"
                             appinfo="Apply first component of surfaceSpeed array."/>
-               <enumeration value="&#34;SPEED-2&#34;"
+               <enumeration value="&#34;SPEED_2&#34;"
                             appinfo="Apply second component of surfaceSpeed array."/>
-               <enumeration value="&#34;SLIP-1&#34;" appinfo="Apply first component of slipFactors array."/>
-               <enumeration value="&#34;SLIP-2&#34;" appinfo="Apply second component of slipFactors array."/>
+               <enumeration value="&#34;SLIP_1&#34;" appinfo="Apply first component of slipFactors array."/>
+               <enumeration value="&#34;SLIP_2&#34;" appinfo="Apply second component of slipFactors array."/>
             </field>
             <field name="bboxCenter"
                    type="SFVec3f"
@@ -15275,18 +15278,18 @@
                <enumeration value="&#34;BOUNCE&#34;" appinfo="The bounce field value is used."/>
                <enumeration value="&#34;USER_FRICTION&#34;"
                             appinfo="The system will normally calculate the friction direction vector that is perpendicular to the contact normal. This setting indicates that the user-supplied value in this contact should be used."/>
-               <enumeration value="&#34;FRICTION_COEFFICIENT-2&#34;"
+               <enumeration value="&#34;FRICTION_COEFFICIENT_2&#34;"
                             appinfo="Apply frictionCoefficients values."/>
                <enumeration value="&#34;ERROR_REDUCTION&#34;"
                             appinfo="Apply softnessErrorCorrection value."/>
                <enumeration value="&#34;CONSTANT_FORCE&#34;"
                             appinfo="Apply softnessConstantForceMix value."/>
-               <enumeration value="&#34;SPEED-1&#34;"
+               <enumeration value="&#34;SPEED_1&#34;"
                             appinfo="Apply first component of surfaceSpeed array."/>
-               <enumeration value="&#34;SPEED-2&#34;"
+               <enumeration value="&#34;SPEED_2&#34;"
                             appinfo="Apply second component of surfaceSpeed array."/>
-               <enumeration value="&#34;SLIP-1&#34;" appinfo="Apply first component of slipFactors array."/>
-               <enumeration value="&#34;SLIP-2&#34;" appinfo="Apply second component of slipFactors array."/>
+               <enumeration value="&#34;SLIP_1&#34;" appinfo="Apply first component of slipFactors array."/>
+               <enumeration value="&#34;SLIP_2&#34;" appinfo="Apply second component of slipFactors array."/>
             </field>
             <field name="body1"
                    type="SFNode"
@@ -18893,19 +18896,9 @@
                    inheritedFrom="X3DUrlObject"
                    description="Author-provided prose that describes intended purpose of the url asset."/>
             <field name="family"
-                   type="MFString"
+                   type="SFString"
                    accessType="inputOutput"
-                   additionalEnumerationValuesAllowed="true"
-                   simpleType="fontFamilyValues"
-                   baseType="MFString"
-                   description="Array of quoted font family names in preference order, browsers use the first supported family.">
-               <enumeration value="&#34;SANS&#34;"
-                            appinfo="default font family for sans-serif font such as Helvetica."/>
-               <enumeration value="&#34;SERIF&#34;"
-                            appinfo="default font family for serif font such as Times-Roman."/>
-               <enumeration value="&#34;TYPEWRITER&#34;"
-                            appinfo="default font family for a fixed-pitch font such as Courier."/>
-            </field>
+                   description="The family field provides an identifying alias for the font in the associated file, if that file only contains a single font family (possibly with multiple styles)."/>
             <field name="IS"
                    type="SFNode"
                    accessType="inputOutput"
@@ -19409,7 +19402,7 @@
                    type="SFBool"
                    accessType="inputOutput"
                    default="true"
-                   description="indicates whether this instanced shape is a target for pointer events, if FALSE then it is ignored during pointer picking."/>
+                   description="indicates whether this GaussianSplats node is a target for pointer events, if FALSE then it is ignored during pointer picking."/>
             <field name="positions"
                    type="MFVec3f"
                    accessType="inputOutput"
@@ -31903,11 +31896,6 @@
                    default="true"
                    inheritedFrom="X3DShapeNode"
                    description="The castShadow field defines whether this Shape casts shadows as produced by lighting nodes."/>
-            <field name="castShadow"
-                   type="SFBool"
-                   accessType="inputOutput"
-                   default="true"
-                   description="The castShadow field defines whether this Shape casts shadows as produced by lighting nodes."/>
             <field name="color"
                    synonym="colorRamp"
                    type="SFNode"
@@ -35044,17 +35032,6 @@
                    acceptableNodeTypes="TextureProperties"
                    inheritedFrom="X3DTexture2DNode"
                    description="Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."/>
-            <field name="update"
-                   type="SFString"
-                   accessType="inputOutput"
-                   default="NONE"
-                   additionalEnumerationValuesAllowed="false"
-                   simpleType="generatedCubeMapTextureUpdateChoices"
-                   baseType="xs:NMTOKEN">
-               <enumeration value="NONE" appinfo="no further texture updates are rendered."/>
-               <enumeration value="NEXT_FRAME_ONLY" appinfo="render texture once at end of frame."/>
-               <enumeration value="ALWAYS" appinfo="texture to be rendered every frame."/>
-            </field>
             <field name="updateInterval"
                    type="SFTime"
                    accessType="inputOutput"
@@ -43534,6 +43511,9 @@
                <enumeration value="MFInt32" appinfo="Multiple Field (list) 32-bit integer."/>
                <enumeration value="SFNode" appinfo="Single Field (singleton) node."/>
                <enumeration value="MFNode" appinfo="Multiple Field (list) nodes."/>
+               <enumeration value="SFQuaternion"
+                            appinfo="Single Field (singleton) quaternion value."/>
+               <enumeration value="MFQuaternion" appinfo="Multiple Field (list) quaternion values."/>
                <enumeration value="SFRotation"
                             appinfo="Single Field (singleton) rotation value using 3-tuple axis, radian angle."/>
                <enumeration value="MFRotation"
