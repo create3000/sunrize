@@ -338,7 +338,7 @@ module .exports = new class Panel extends Interface
 
       // Update expanded state of folder.
 
-      folder .on ("fold", () => this .config .global [`${title}.expanded`] = folder .expanded)
+      folder .on ("fold", () => this .config .global [`${title}.expanded`] = folder .expanded);
 
       // Add fields.
 
@@ -380,14 +380,14 @@ module .exports = new class Panel extends Interface
             {
                case 0:
                   this .numPrimitives .monitor = folder .addBinding (this .numPrimitives, "numberOfPoints", { readonly: true });
-                  break
+                  break;
                case 1:
                   this .numPrimitives .monitor = folder .addBinding (this .numPrimitives, "numberOfLines", { readonly: true });
-                  break
+                  break;
                case 2:
                case 3:
                   this .numPrimitives .monitor = folder .addBinding (this .numPrimitives, "numberOfTriangles", { readonly: true });
-                  break
+                  break;
             }
 
             break;
@@ -925,13 +925,13 @@ module .exports = new class Panel extends Interface
       this .#vector .setName ("calculatedSize");
       this .#vector .setUnit ("length");
 
-      this .refresh (this .bbox, this .node, this .#vector)
+      this .refresh (this .bbox, this .node, this .#vector);
 
       this .#vector .setValue (bbox .center);
       this .#vector .setName ("calculatedCenter");
       this .#vector .setUnit ("length");
 
-      this .refresh (this .bbox, this .node, this .#vector)
+      this .refresh (this .bbox, this .node, this .#vector);
 
       this .bbox .bboxSizeInput   ?.refresh ();
       this .bbox .bboxCenterInput ?.refresh ();
@@ -942,7 +942,7 @@ module .exports = new class Panel extends Interface
       numberOfLines: "0",
       numberOfTriangles: "0",
       monitor: null,
-   }
+   };
 
    refreshGeometry ()
    {
@@ -954,14 +954,14 @@ module .exports = new class Panel extends Interface
       {
          case 0:
             this .numPrimitives .numberOfPoints = (numVertices) .toLocaleString (_.locale);
-            break
+            break;
          case 1:
             this .numPrimitives .numberOfLines = (numVertices / 2) .toLocaleString (_.locale);
-            break
+            break;
          case 2:
          case 3:
             this .numPrimitives .numberOfTriangles = (numVertices / 3) .toLocaleString (_.locale);
-            break
+            break;
       }
 
       this .numPrimitives .monitor ?.refresh ();

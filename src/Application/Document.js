@@ -278,7 +278,7 @@ module .exports = class Document extends Interface
 
    // Active (Focused) Element
 
-   activeElement = null
+   activeElement = null;
 
    onfocus ()
    {

@@ -39,7 +39,7 @@ const handler =
    {
       return Object .getPrototypeOf (target .node);
    },
-}
+};
 
 class X3DBaseTool
 {

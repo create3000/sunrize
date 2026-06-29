@@ -150,7 +150,7 @@ module .exports = new class Library extends Dialog
             if (element .hasClass ("component"))
             {
                if (hidden === nodes)
-                  element .addClass ("hidden")
+                  element .addClass ("hidden");
                else
                   element .removeClass ("hidden");
 
@@ -265,4 +265,4 @@ module .exports = new class Library extends Dialog
       outlineEditor .expandTo (node);
       outlineEditor .selectNodeElement ($(`.node[node-id=${node .getId ()}]`), { target: true });
    }
-}
+};

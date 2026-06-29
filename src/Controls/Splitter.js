@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const
    $         = require ("jquery"),
@@ -109,4 +109,4 @@ module .exports = class Splitter extends Interface
 
       this .splitter .trigger ("position");
    }
-}
+};

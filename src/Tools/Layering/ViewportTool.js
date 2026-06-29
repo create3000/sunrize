@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const
    X3DBoundedObjectTool = require ("../Grouping/X3DBoundedObjectTool"),

@@ -65,7 +65,7 @@ $.fn.editNodePopover = function (node)
                   return;
 
                api .toggle (false);
-            })
+            });
 
             setTimeout (() => nameInput .trigger ("select"), 1);
          },

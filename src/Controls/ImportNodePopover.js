@@ -78,7 +78,7 @@ $.fn.importNodePopover = function (inlineNode, exportedName, oldImportedName, ol
             setTimeout (() => nameInput .trigger ("select"), 1);
          },
       },
-   })
+   });
 
    return this;
 };

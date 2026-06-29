@@ -611,7 +611,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                enabled: !(protoNode .isExternProto && executionContext .protos .get (protoNode .getName ())),
                args: ["addInstance", element .attr ("id"), executionContext .getId (), protoNode .getId ()],
             },
-         ]
+         ];
       }
 
       else if (element .is ("#outline-editor, .proto-scene, .description.externprotos, .description.protos, .description.root-nodes, .description.empty-scene"))
@@ -802,9 +802,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          proto      = this .objects .get (protoId),
          protoField = this .objects .get (protoFieldId),
          node       = this .objects .get (nodeId),
-         field      = this .objects .get (fieldId)
+         field      = this .objects .get (fieldId);
 
-      Editor .addReference (proto, protoField, node, field)
+      Editor .addReference (proto, protoField, node, field);
    }
 
    removeReference (protoId, protoFieldId, nodeId, fieldId)
@@ -813,9 +813,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          proto      = this .objects .get (protoId),
          protoField = this .objects .get (protoFieldId),
          node       = this .objects .get (nodeId),
-         field      = this .objects .get (fieldId)
+         field      = this .objects .get (fieldId);
 
-      Editor .removeReference (proto, protoField, node, field)
+      Editor .removeReference (proto, protoField, node, field);
    }
 
    resetToDefaultValue (id, executionContextId, nodeId, fieldId)
@@ -943,7 +943,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          primary     = $(":is(.node, .proto, .externproto).primary"),
          selected    = this .sceneGraph .find (":is(.node, .proto, .externproto).manually"),
          selection   = selected .filter (primary) .length ? selected : primary,
-         ids         = selection .map (function () { return this .id }) .get (),
+         ids         = selection .map (function () { return this .id; }) .get (),
          elements    = ids .map (id => $(`#${id}`)),
          nodes       = elements .map (element => this .getNode ($(element)));
 
@@ -961,7 +961,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          primary     = $(":is(.node, .proto, .externproto, .imported-node.proxy).primary"),
          selected    = this .sceneGraph .find (":is(.node, .proto, .externproto, .imported-node.proxy).manually"),
          selection   = selected .filter (primary) .length ? selected : primary,
-         ids         = selection .map (function () { return this .id }) .get (),
+         ids         = selection .map (function () { return this .id; }) .get (),
          elements    = ids .map (id => $(`#${id}`)),
          nodes       = elements .map (element => this .getNode ($(element))),
          undoManager = new UndoManager ();
@@ -1106,7 +1106,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          primary   = $(".node.primary, .imported-node.proxy.primary"),
          selected  = this .sceneGraph .find (".node.manually, .imported-node.proxy.manually"),
          selection = !primary .length || selected .filter (primary) .length ? selected : primary,
-         ids       = selection .map (function () { return this .id }) .get ();
+         ids       = selection .map (function () { return this .id; }) .get ();
 
       if (ids .length > 1)
          UndoManager .shared .beginUndo (_("Delete %s Nodes"), ids .length);
@@ -1357,7 +1357,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    {
       const
          selection = this .sceneGraph .find (".node.primary, .node.manually"),
-         ids       = selection .map (function () { return this .id }) .get (),
+         ids       = selection .map (function () { return this .id; }) .get (),
          nodes     = ids .length ? ids .map (id => this .getNode ($(`#${id}`))) : this .executionContext .rootNodes;
 
       Editor .removeEmptyGroups (this .executionContext, nodes);
@@ -1490,7 +1490,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       UndoManager .shared .beginUndo (_("Convert Node to PhysicalMaterial"));
 
-      const physicalMaterialNode = Editor .convertPhongToPhysical (executionContext, new X3D .SFNode (materialNode))
+      const physicalMaterialNode = Editor .convertPhongToPhysical (executionContext, new X3D .SFNode (materialNode));
 
       if (materialNode .getName ())
          Editor .updateNamedNode (executionContext, materialNode .getName (), physicalMaterialNode);
@@ -2686,25 +2686,25 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          element          = $(event .currentTarget) .closest (".field", this .sceneGraph),
          field            = this .getField (element),
          sceneElement     = element .closest (".scene"),
-         executionContext = this .getNode (sceneElement)
+         executionContext = this .getNode (sceneElement);
 
       if (!this .isEditable (element .parent ()))
-         return
+         return;
 
       if (this .connector)
       {
          if (this .connector .type === type)
-            return
+            return;
 
          if (this .connector .executionContext !== executionContext)
-            return
+            return;
 
          if (this .connector .field .getType () !== field .getType ())
-            return
+            return;
       }
 
       element .find ("> .item .access-type img.active." + type)
-         .addClass ("activated")
+         .addClass ("activated");
    }
 
    hoverOutConnector (type, event)
@@ -2713,44 +2713,44 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       const
          element = $(event .currentTarget) .closest (".field", this .sceneGraph),
-         field   = this .getField (element)
+         field   = this .getField (element);
 
       if (!this .isEditable (element .parent ()))
-         return
+         return;
 
       if (this .connector)
       {
          if (this .connector .type === type)
          {
             if (this .connector .field === field)
-               return
+               return;
          }
       }
 
       element .find ("> .item .access-type img.active." + type)
-         .removeClass ("activated")
+         .removeClass ("activated");
    }
 
    hoverInSingleConnector (type, event)
    {
-      const element = $(event .currentTarget) .closest (".route", this .sceneGraph)
+      const element = $(event .currentTarget) .closest (".route", this .sceneGraph);
 
       if (!this .isEditable (element .parent ()))
-         return
+         return;
 
       element .find (".access-type img")
-         .addClass ("activated")
+         .addClass ("activated");
    }
 
    hoverOutSingleConnector (type, event)
    {
-      const element = $(event .currentTarget) .closest (".route", this .sceneGraph)
+      const element = $(event .currentTarget) .closest (".route", this .sceneGraph);
 
       if (!this .isEditable (element .parent ()))
-         return
+         return;
 
       element .find (".access-type img")
-         .removeClass ("activated")
+         .removeClass ("activated");
    }
 
    selectConnector (type, event)
@@ -2780,7 +2780,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                {
                   case 0:
                   {
-                     break
+                     break;
                   }
                   case 1:
                   {
@@ -2801,7 +2801,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                   }
                }
 
-               break
+               break;
             }
             case "output":
             {
@@ -2811,7 +2811,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                {
                   case 0:
                   {
-                     break
+                     break;
                   }
                   case 1:
                   {
@@ -2877,7 +2877,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                   this .connector = { type, executionContext, node, field, element };
                }
 
-               break
+               break;
             }
             case "output":
             {
@@ -2941,7 +2941,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       {
          case "input":
          {
-            const route = this .getRoute (element, field .getInputRoutes ())
+            const route = this .getRoute (element, field .getInputRoutes ());
 
             Editor .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField);
             break;
@@ -2966,7 +2966,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          element   = $(event .target) .closest (".externproto", this .sceneGraph),
          selected  = this .sceneGraph .find (".externproto.manually"),
          selection = selected .filter (element) .length ? selected : element,
-         ids       = selection .map (function () { return this .id }) .get ();
+         ids       = selection .map (function () { return this .id; }) .get ();
 
       this .selectPrimaryElement (element);
 
@@ -2979,7 +2979,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          element   = $(event .target) .closest (".proto", this .sceneGraph),
          selected  = this .sceneGraph .find (".proto.manually"),
          selection = selected .filter (element) .length ? selected : element,
-         ids       = selection .map (function () { return this .id }) .get ();
+         ids       = selection .map (function () { return this .id; }) .get ();
 
       this .selectPrimaryElement (element);
 
@@ -2992,7 +2992,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          element   = $(event .target) .closest (".node", this .sceneGraph),
          selected  = this .sceneGraph .find (".node.manually"),
          selection = selected .filter (element) .length ? selected : element,
-         ids       = selection .map (function () { return this .id }) .get ();
+         ids       = selection .map (function () { return this .id; }) .get ();
 
       this .selectPrimaryElement (element);
 
@@ -3024,7 +3024,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          element   = $(event .target) .closest (".imported-node", this .sceneGraph),
          selected  = this .sceneGraph .find (".imported-node.manually"),
          selection = selected .filter (element) .length ? selected : element,
-         ids       = selection .map (function () { return this .id }) .get ();
+         ids       = selection .map (function () { return this .id; }) .get ();
 
       if (element .closest (".imported-nodes") .length)
       {
@@ -3706,7 +3706,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             destinationElement = $(event .target) .closest (".field", this .sceneGraph),
             destinationField   = this .getField (destinationElement);
 
-         let destinationIndex = sourceFields .indexOf (destinationField)
+         let destinationIndex = sourceFields .indexOf (destinationField);
 
          if (destinationElement .data ("drag-type") ==="drag-after")
             ++ destinationIndex;
@@ -3779,4 +3779,4 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       return modelMatrix;
    }
-}
+};

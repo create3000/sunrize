@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const
    $           = require ("jquery"),
@@ -9,7 +9,7 @@ const
    X3D         = require ("../X3D"),
    Traverse    = require ("x3d-traverse"),
    UndoManager = require ("./UndoManager"),
-   _           = require ("../Application/GetText")
+   _           = require ("../Application/GetText");
 
 module .exports = class Editor
 {
@@ -21,7 +21,7 @@ module .exports = class Editor
    /**
     * X3D Id
     */
-   static Id = /(?:^[^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*$|^$)/
+   static Id = /(?:^[^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*$|^$)/;
 
    /**
     *
@@ -83,7 +83,7 @@ module .exports = class Editor
 
       // Determine protos.
 
-      const protoNodes = new Set ()
+      const protoNodes = new Set ();
 
       for (const object of Traverse .traverse (objects, Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES | Traverse .PROTOTYPE_INSTANCES))
       {
@@ -436,19 +436,19 @@ module .exports = class Editor
       {
          case ".x3d":
          default:
-            return scene .toXMLString ()
+            return scene .toXMLString ();
          case ".x3dz":
-            return zlib .gzipSync (scene .toXMLString ({ style: "CLEAN" }))
+            return zlib .gzipSync (scene .toXMLString ({ style: "CLEAN" }));
          case ".x3dv":
-            return scene .toVRMLString ()
+            return scene .toVRMLString ();
          case ".x3dvz":
-            return zlib .gzipSync (scene .toVRMLString ({ style: "CLEAN" }))
+            return zlib .gzipSync (scene .toVRMLString ({ style: "CLEAN" }));
          case ".x3dj":
-            return scene .toJSONString ()
+            return scene .toJSONString ();
          case ".x3djz":
-            return zlib .gzipSync (scene .toJSONString ({ style: "CLEAN" }))
+            return zlib .gzipSync (scene .toJSONString ({ style: "CLEAN" }));
          case ".html":
-            return this .getHTML (scene)
+            return this .getHTML (scene);
       }
    }
 
@@ -535,7 +535,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     <p>Made with <a href="https://create3000.github.io/sunrize/" target="_blank">Sunrize X3D Editor</a>. If local files are not loaded <a href="https://create3000.github.io/x_ite/setup-a-localhost-server">consider setup a localhost server</a> or use <a href="https://create3000.github.io/x_ite/dom-integration">DOM integration methods</a>.</p>
   </body>
 </html>
-`
+`;
    }
 
    static absoluteURL = new RegExp ("^(?:[a-z]+:|//)", "i");
@@ -550,7 +550,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static rewriteURLs (executionContext, objects, oldWorldURL, newWorldURL, undoManager = UndoManager .shared)
    {
-      undoManager .beginUndo (_("Rewrite URLs"))
+      undoManager .beginUndo (_("Rewrite URLs"));
 
       for (const object of Traverse .traverse (objects, Traverse .EXTERNPROTO_DECLARATIONS | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES))
       {
@@ -637,19 +637,19 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    static isParentContext (parentContext, childContext)
    {
       if (parentContext === childContext)
-         return false
+         return false;
 
-      let executionContext = childContext
+      let executionContext = childContext;
 
       while (!(executionContext instanceof X3D .X3DScene))
       {
          if (executionContext === parentContext)
-            return true
+            return true;
 
-         executionContext = executionContext .getExecutionContext ()
+         executionContext = executionContext .getExecutionContext ();
       }
 
-      return executionContext === parentContext
+      return executionContext === parentContext;
    }
 
    /**
@@ -860,15 +860,15 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       const
          unit                = scene .getUnit (category),
          oldName             = unit .name,
-         oldConversionFactor = unit .conversionFactor
+         oldConversionFactor = unit .conversionFactor;
 
-      undoManager .beginUndo (_("Update Unit Category »%s«"), category)
+      undoManager .beginUndo (_("Update Unit Category »%s«"), category);
 
-      scene .updateUnit (category, name, conversionFactor)
+      scene .updateUnit (category, name, conversionFactor);
 
       undoManager .registerUndo (() =>
       {
-         this .updateUnit (scene, category, oldName, oldConversionFactor, undoManager)
+         this .updateUnit (scene, category, oldName, oldConversionFactor, undoManager);
       });
 
       undoManager .endUndo ();
@@ -1179,23 +1179,23 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    {
       const
          oldProtos = new Map (Array .from (executionContext .protos, p => [p .getName (), p])),
-         proto     = new X3D .X3DProtoDeclaration (executionContext)
+         proto     = new X3D .X3DProtoDeclaration (executionContext);
 
-      undoManager .beginUndo (_("Add Proto Declaration »%s«"), name)
+      undoManager .beginUndo (_("Add Proto Declaration »%s«"), name);
 
-      proto .setup ()
-      executionContext .updateProtoDeclaration (name, proto)
+      proto .setup ();
+      executionContext .updateProtoDeclaration (name, proto);
 
       undoManager .registerUndo (() =>
       {
-         this .setProtoDeclarations (executionContext, oldProtos, undoManager)
+         this .setProtoDeclarations (executionContext, oldProtos, undoManager);
       });
 
-      this .requestUpdateInstances (executionContext, undoManager)
+      this .requestUpdateInstances (executionContext, undoManager);
 
       undoManager .endUndo ();
 
-      return proto
+      return proto;
    }
 
    /**
@@ -1207,21 +1207,21 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static updateProtoDeclaration (executionContext, name, proto, undoManager = UndoManager .shared)
    {
-      const oldName = proto .getName ()
+      const oldName = proto .getName ();
 
-      undoManager .beginUndo (_("Update Proto Declaration »%s«"), name)
+      undoManager .beginUndo (_("Update Proto Declaration »%s«"), name);
 
-      executionContext .updateProtoDeclaration (name, proto)
+      executionContext .updateProtoDeclaration (name, proto);
 
       undoManager .registerUndo (() =>
       {
          if (oldName)
-            this .updateProtoDeclaration (executionContext, oldName, proto, undoManager)
+            this .updateProtoDeclaration (executionContext, oldName, proto, undoManager);
          else
-            this .removeProtoDeclaration (executionContext, name, undoManager)
+            this .removeProtoDeclaration (executionContext, name, undoManager);
       });
 
-      this .requestUpdateInstances (executionContext, undoManager)
+      this .requestUpdateInstances (executionContext, undoManager);
 
       undoManager .endUndo ();
    }
@@ -1234,18 +1234,18 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static removeProtoDeclaration (executionContext, name, undoManager = UndoManager .shared)
    {
-      const oldProtos = new Map (Array .from (executionContext .protos, p => [p .getName (), p]))
+      const oldProtos = new Map (Array .from (executionContext .protos, p => [p .getName (), p]));
 
-      undoManager .beginUndo (_("Remove Proto Declaration »%s«"), name)
+      undoManager .beginUndo (_("Remove Proto Declaration »%s«"), name);
 
-      executionContext .removeProtoDeclaration (name)
+      executionContext .removeProtoDeclaration (name);
 
       undoManager .registerUndo (() =>
       {
-         this .setProtoDeclarations (executionContext, oldProtos, undoManager)
+         this .setProtoDeclarations (executionContext, oldProtos, undoManager);
       });
 
-      this .requestUpdateInstances (executionContext, undoManager)
+      this .requestUpdateInstances (executionContext, undoManager);
 
       undoManager .endUndo ();
    }
@@ -1541,39 +1541,39 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static getNextAvailableProtoNode (executionContext, protoNode)
    {
-      const name = protoNode instanceof X3D .X3DProtoDeclarationNode ? protoNode .getName () : protoNode
+      const name = protoNode instanceof X3D .X3DProtoDeclarationNode ? protoNode .getName () : protoNode;
 
       if (protoNode instanceof X3D .X3DProtoDeclaration)
       {
-         const externproto = executionContext .externprotos .get (name)
+         const externproto = executionContext .externprotos .get (name);
 
          if (externproto)
-            return externproto
+            return externproto;
       }
 
-      const proto = executionContext .getOuterNode ()
+      const proto = executionContext .getOuterNode ();
 
       if (!(proto instanceof X3D .X3DProtoDeclaration))
-         return null
+         return null;
 
-      executionContext = proto .getExecutionContext ()
+      executionContext = proto .getExecutionContext ();
 
-      const index = executionContext .protos .indexOf (proto)
+      const index = executionContext .protos .indexOf (proto);
 
       for (let i = 0; i < index; ++ i)
       {
-         const proto = executionContext .protos [i]
+         const proto = executionContext .protos [i];
 
          if (proto .getName () === name)
-            return proto
+            return proto;
       }
 
-      const externproto = executionContext .externprotos .get (name)
+      const externproto = executionContext .externprotos .get (name);
 
       if (externproto)
-         return externproto
+         return externproto;
 
-      return this .getNextAvailableProtoNode (executionContext, name)
+      return this .getNextAvailableProtoNode (executionContext, name);
    }
 
    /**
@@ -2422,22 +2422,22 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    static addReference (proto, protoField, node, field, undoManager = UndoManager .shared)
    {
       node  = node .valueOf ();
-      field = typeof field === "string" ? node .getField (field) : field
+      field = typeof field === "string" ? node .getField (field) : field;
 
       const
          instance = node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance),
-         name     = field .getName ()
+         name     = field .getName ();
 
-      undoManager .beginUndo (_("Add Reference from »%s« to »%s«"), protoField .getName (), field .getName ())
+      undoManager .beginUndo (_("Add Reference from »%s« to »%s«"), protoField .getName (), field .getName ());
 
-      field .addReference (protoField)
+      field .addReference (protoField);
 
       undoManager .registerUndo (() =>
       {
-         this .removeReference (proto, protoField, node, instance ? name : field, undoManager)
+         this .removeReference (proto, protoField, node, instance ? name : field, undoManager);
       });
 
-      this .requestUpdateInstances (proto, undoManager)
+      this .requestUpdateInstances (proto, undoManager);
 
       undoManager .endUndo ();
    }
@@ -2452,22 +2452,22 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    static removeReference (proto, protoField, node, field, undoManager = UndoManager .shared)
    {
       node  = node .valueOf ();
-      field = typeof field === "string" ? node .getField (field) : field
+      field = typeof field === "string" ? node .getField (field) : field;
 
       const
          instance = node .getType () .includes (X3D .X3DConstants .X3DPrototypeInstance),
-         name     = field .getName ()
+         name     = field .getName ();
 
-      undoManager .beginUndo (_("Remove Reference from »%s« to »%s«"), protoField .getName (), field .getName ())
+      undoManager .beginUndo (_("Remove Reference from »%s« to »%s«"), protoField .getName (), field .getName ());
 
-      field .removeReference (protoField)
+      field .removeReference (protoField);
 
       undoManager .registerUndo (() =>
       {
-         this .addReference (proto, protoField, node, instance ? name : field, undoManager)
+         this .addReference (proto, protoField, node, instance ? name : field, undoManager);
       });
 
-      this .requestUpdateInstances (proto, undoManager)
+      this .requestUpdateInstances (proto, undoManager);
 
       undoManager .endUndo ();
    }
@@ -3032,7 +3032,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       {
          const
             node   = object instanceof X3D .SFNode ? object .getValue () : object,
-            fields = node instanceof X3D .X3DExecutionContext ? [node .getRootNodes ()] : node .getFields ()
+            fields = node instanceof X3D .X3DExecutionContext ? [node .getRootNodes ()] : node .getFields ();
 
          for (const field of fields)
          {

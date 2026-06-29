@@ -114,4 +114,4 @@ module .exports = new class ActionKeys
       for (const callback of this .#interests .values ())
          callback (this .value);
    }
-}
+};

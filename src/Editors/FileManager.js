@@ -1,18 +1,18 @@
-"use strict"
+"use strict";
 
 const
-   Interface = require ("../Application/Interface")
+   Interface = require ("../Application/Interface");
 
 module .exports = class FileManager extends Interface
 {
    constructor (element)
    {
-      super (`Sunrize.FileManager.${element .attr ("id")}.`)
+      super (`Sunrize.FileManager.${element .attr ("id")}.`);
 
-      this .fileManager = element
+      this .fileManager = element;
 
-      this .fileManager .text ("File Manager")
+      this .fileManager .text ("File Manager");
 
-      this .setup ()
+      this .setup ();
    }
-}
+};

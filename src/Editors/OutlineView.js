@@ -566,82 +566,82 @@ module .exports = class OutlineView extends Interface
    expandSceneExportedNodes (parent, scene)
    {
       if (!(scene instanceof X3D .X3DScene))
-         return $("<div></div>")
+         return $("<div></div>");
 
       const child = $("<div></div>")
-         .addClass (["exported-nodes", "subtree"])
+         .addClass (["exported-nodes", "subtree"]);
 
-      scene .exportedNodes .addInterest ("updateSceneSubtree", this, parent, scene, "exported-nodes", "expandSceneExportedNodes")
+      scene .exportedNodes .addInterest ("updateSceneSubtree", this, parent, scene, "exported-nodes", "expandSceneExportedNodes");
 
       if (!scene .exportedNodes .length)
-         return child .appendTo (parent)
+         return child .appendTo (parent);
 
       const exportedNodes = Array .from (scene .exportedNodes) .sort ((a, b) =>
       {
-         return this .naturalCompare (a .getExportedName (), b .getExportedName ())
+         return this .naturalCompare (a .getExportedName (), b .getExportedName ());
       })
       .sort ((a, b) =>
       {
-         return this .naturalCompare (a .getLocalNode () .getTypeName (), b .getLocalNode () .getTypeName ())
-      })
+         return this .naturalCompare (a .getLocalNode () .getTypeName (), b .getLocalNode () .getTypeName ());
+      });
 
       const ul = $("<ul></ul>")
-         .appendTo (child)
+         .appendTo (child);
 
       $("<li></li>")
          .addClass (["exported-nodes", "description", "no-select"])
          .text ("Exported Nodes")
-         .appendTo (ul)
+         .appendTo (ul);
 
       for (const exportedNode of exportedNodes)
       {
-         ul .append (this .createExportedNodeElement ("exported-node", parent, exportedNode) .prop ("outerHTML"))
+         ul .append (this .createExportedNodeElement ("exported-node", parent, exportedNode) .prop ("outerHTML"));
       }
 
       // Added to prevent bug, that last route is not drawn right.
       $("<li></li>")
          .addClass (["last", "no-select"])
-         .appendTo (ul)
+         .appendTo (ul);
 
-      this .connectSceneSubtree (parent, child)
+      this .connectSceneSubtree (parent, child);
 
-      return child
+      return child;
    }
 
    createSceneElement (scene, typeName, classes)
    {
-      this .objects .set (scene .getId (), scene)
+      this .objects .set (scene .getId (), scene);
 
       // Scene
 
       const child = $("<li></li>")
          .addClass ("scene")
          .addClass (classes)
-         .attr ("node-id", scene .getId ())
+         .attr ("node-id", scene .getId ());
 
       // Icon
 
       const icon = $("<img></img>")
          .addClass ("icon")
          .attr ("src", "../images/OutlineEditor/Node/X3DExecutionContext.svg")
-         .appendTo (child)
+         .appendTo (child);
 
       // Name
 
       const name = $("<div></div>")
          .addClass ("name")
-         .appendTo (child)
+         .appendTo (child);
 
       $("<span></span>")
          .addClass ("field-name")
          .text (typeName)
-         .appendTo (name)
+         .appendTo (name);
 
       // Append empty tree to enable expander.
 
-      $("<ul><li></li></ul>") .appendTo (child)
+      $("<ul><li></li></ul>") .appendTo (child);
 
-      return child
+      return child;
    }
 
    updateNode (parent, node, full)
@@ -765,7 +765,7 @@ module .exports = class OutlineView extends Interface
 
          if (node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE && this .expandInlineNodes && node .getType () .includes (X3D .X3DConstants .Inline))
          {
-            ul .append (this .createSceneElement (node .getInternalScene (), "Scene", "internal-scene"))
+            ul .append (this .createSceneElement (node .getInternalScene (), "Scene", "internal-scene"));
          }
          else
          {
@@ -804,7 +804,7 @@ module .exports = class OutlineView extends Interface
          .find (".item") .append ("<div class=\"route-curves-wrapper\"><canvas class=\"route-curves\"></canvas></div>");
 
       child .find (".field .name, .field .icon, .special .name, .special .icon")
-         .on ("click", this .selectField .bind (this))
+         .on ("click", this .selectField .bind (this));
 
       child .find (".field .name, .special .name")
          .on ("mouseenter", this .updateFieldTitle .bind (this));
@@ -1059,7 +1059,7 @@ module .exports = class OutlineView extends Interface
 
          name .append (document .createTextNode (" "));
 
-         const cloneCount = node .getCloneCount ?.() ?? 0
+         const cloneCount = node .getCloneCount ?.() ?? 0;
 
          $("<span></span>")
             .addClass ("clone-count")
@@ -1265,7 +1265,7 @@ module .exports = class OutlineView extends Interface
          }
       }
 
-      buttons .sort ((a, b) => a .attr ("order") - b .attr ("order"))
+      buttons .sort ((a, b) => a .attr ("order") - b .attr ("order"));
 
       for (const button of buttons)
       {
@@ -1279,7 +1279,7 @@ module .exports = class OutlineView extends Interface
       this .sceneGraph
          .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}]`)
          .find ("> .item .node-type-name")
-         .text (node .getTypeName ())
+         .text (node .getTypeName ());
    }
 
    updateNodeName (node)
@@ -1287,7 +1287,7 @@ module .exports = class OutlineView extends Interface
       this .sceneGraph
          .find (`.node[node-id=${node .getId ()}], .exported-node[node-id=${node .getId ()}]`)
          .find ("> .item .node-name")
-         .text (node .getDisplayName ())
+         .text (node .getDisplayName ());
    }
 
    updateExportedNodeName (exportedNode)
@@ -1495,7 +1495,7 @@ module .exports = class OutlineView extends Interface
 
       name .append (document .createTextNode (" "));
 
-      const cloneCount = node .getCloneCount ?.() ?? 0
+      const cloneCount = node .getCloneCount ?.() ?? 0;
 
       $("<span></span>")
          .addClass ("clone-count")
@@ -1946,14 +1946,14 @@ module .exports = class OutlineView extends Interface
                {
                   case 0:
                      title += `Number of Points: ${(numVertices) .toLocaleString (_.locale)}`;
-                     break
+                     break;
                   case 1:
                      title += `Number of Lines: ${(numVertices / 2) .toLocaleString (_.locale)}`;
-                     break
+                     break;
                   case 2:
                   case 3:
                      title += `Number of Triangles: ${(numVertices / 3) .toLocaleString (_.locale)}`;
-                     break
+                     break;
                }
 
                continue;
@@ -1999,12 +1999,12 @@ module .exports = class OutlineView extends Interface
 
    updateReferences (parent, node, field)
    {
-      const element = parent .find (`.field[field-id=${field .getId ()}]`)
+      const element = parent .find (`.field[field-id=${field .getId ()}]`);
 
       if (field .getReferences () .size)
-         element .addClass ("references")
+         element .addClass ("references");
       else
-         element .removeClass ("references")
+         element .removeClass ("references");
    }
 
    updateBoolean (parent, node, field)
@@ -2012,19 +2012,19 @@ module .exports = class OutlineView extends Interface
       if (field .isInitializable ())
       {
          parent .find (`.field[field-id=${field .getId ()}] > .item .boolean-button`)
-            .attr ("src", `../images/OutlineEditor/Values/${field .getValue () ? "TRUE" : "FALSE"}.svg`)
+            .attr ("src", `../images/OutlineEditor/Values/${field .getValue () ? "TRUE" : "FALSE"}.svg`);
       }
       else if (field .isOutput ())
       {
          parent .find (`.field[field-id=${field .getId ()}] > .item .boolean-out-button`)
-            .attr ("src", `../images/OutlineEditor/Values/${field .getValue () ? "TRUE" : "FALSE"}-out.svg`)
+            .attr ("src", `../images/OutlineEditor/Values/${field .getValue () ? "TRUE" : "FALSE"}-out.svg`);
       }
    }
 
    updateColor (parent, node, field)
    {
       parent .find (`.field[field-id=${field .getId ()}] > .item .color-button`)
-         .css ("background-color", this .getColorFromField (node, field))
+         .css ("background-color", this .getColorFromField (node, field));
    }
 
    getColorFromField (node, field, colorSpace = this .browser .getBrowserOption ("ColorSpace"))
@@ -2059,31 +2059,31 @@ module .exports = class OutlineView extends Interface
          {
             case "input":
             {
-               return "../images/OutlineEditor/AccessTypes/inputOnly.active.png"
+               return "../images/OutlineEditor/AccessTypes/inputOnly.active.png";
             }
             case "output":
             {
-               return "../images/OutlineEditor/AccessTypes/outputOnly.active.png"
+               return "../images/OutlineEditor/AccessTypes/outputOnly.active.png";
             }
          }
       }
       else
       {
-         let accessTypeImage = this .accessTypes [field .getAccessType ()]
+         let accessTypeImage = this .accessTypes [field .getAccessType ()];
 
          if (field .isInput ())
          {
             switch (field .getInputRoutes () .size)
             {
                case 0:
-                  accessTypeImage += ".0"
-                  break
+                  accessTypeImage += ".0";
+                  break;
                case 1:
-                  accessTypeImage += ".1"
-                  break
+                  accessTypeImage += ".1";
+                  break;
                default:
-                  accessTypeImage += ".2"
-                  break
+                  accessTypeImage += ".2";
+                  break;
             }
          }
 
@@ -2092,20 +2092,20 @@ module .exports = class OutlineView extends Interface
             switch (field .getOutputRoutes () .size)
             {
                case 0:
-                  accessTypeImage += ".0"
-                  break
+                  accessTypeImage += ".0";
+                  break;
                case 1:
-                  accessTypeImage += ".1"
-                  break
+                  accessTypeImage += ".1";
+                  break;
                default:
-                  accessTypeImage += ".2"
-                  break
+                  accessTypeImage += ".2";
+                  break;
             }
          }
 
-         accessTypeImage = "../images/OutlineEditor/AccessTypes/" + accessTypeImage + ".png"
+         accessTypeImage = "../images/OutlineEditor/AccessTypes/" + accessTypeImage + ".png";
 
-         return accessTypeImage
+         return accessTypeImage;
       }
    }
 
@@ -2478,12 +2478,12 @@ module .exports = class OutlineView extends Interface
    onkeydownField (input, event)
    {
       if (event .key === "Enter")
-         input .blur ()
+         input .blur ();
    }
 
    disconnectField (field)
    {
-      field .removeFieldCallback (this .#fieldSymbol)
+      field .removeFieldCallback (this .#fieldSymbol);
    }
 
    #fieldValueSymbol = Symbol ();
@@ -2493,9 +2493,9 @@ module .exports = class OutlineView extends Interface
       field .addFieldCallback (this .#fieldValueSymbol, () =>
       {
          if (field .getType () === X3D .X3DConstants .SFString)
-            input .val (field .getValue ())
+            input .val (field .getValue ());
          else
-            input .val (field .toString ({ scene: node .getExecutionContext () }))
+            input .val (field .toString ({ scene: node .getExecutionContext () }));
       });
 
       if (assign)
@@ -2509,24 +2509,24 @@ module .exports = class OutlineView extends Interface
       // Generate tree.
 
       const child = $("<div></div>")
-         .addClass ("subtree")
+         .addClass ("subtree");
 
       const ul = $("<ul></ul>")
-         .appendTo (child)
+         .appendTo (child);
 
       if (full)
-         ul .append (this .createRouteElements (node, field))
+         ul .append (this .createRouteElements (node, field));
 
       const li = $("<li></li>")
          .addClass (type + "-value no-expand")
          .attr ("node-id", node .getId ())
          .attr ("field-id", field .getId ())
-         .appendTo (ul)
+         .appendTo (ul);
 
       $("<div></div>")
          .addClass (type + "-value-container")
          .append ($("<textarea></textarea>"))
-         .appendTo (li)
+         .appendTo (li);
 
       // Make jsTree.
 
@@ -2534,46 +2534,46 @@ module .exports = class OutlineView extends Interface
          .jstree ()
          .off ("keypress.jstree dblclick.jstree")
          .appendTo (parent)
-         .hide ()
+         .hide ();
 
       child
          .removeAttr ("tabindex")
          .find (".jstree-anchor > *")
-            .unwrap ()
+            .unwrap ();
 
       child .find (".jstree-ocl")
          .addClass ("material-icons")
          .text ("arrow_right")
          .on ("click", this .selectExpander .bind (this))
-         .on ("dblclick", this .activateExpander .bind (this))
+         .on ("dblclick", this .activateExpander .bind (this));
 
       child .find (".jstree-node")
          .wrapInner ("<div class=\"item no-select\"/>")
-         .find (".item") .append ("<div class=\"route-curves-wrapper\"><canvas class=\"route-curves\"></canvas></div>")
+         .find (".item") .append ("<div class=\"route-curves-wrapper\"><canvas class=\"route-curves\"></canvas></div>");
 
       this .connectFieldActions (child);
 
       // Textarea
 
-      const textarea = child .find ("textarea")
+      const textarea = child .find ("textarea");
 
-      this .setTextAreaTabs (textarea)
-      this .setTextArea (textarea, node, field)
+      this .setTextAreaTabs (textarea);
+      this .setTextArea (textarea, node, field);
 
-      textarea .on ("mouseenter", this .updateFieldTitle .bind (this))
+      textarea .on ("mouseenter", this .updateFieldTitle .bind (this));
 
       if ((field .isInput () || field .isInitializable ()) && this .isEditable (parent))
       {
-         textarea .on ("keydown",  this .onkeydownArrayField .bind (this, textarea))
-         textarea .on ("focusin",  this .disconnectField .bind (this, field))
-         textarea .on ("focusout", this .connectArrayField .bind (this, textarea, node, field, true))
+         textarea .on ("keydown",  this .onkeydownArrayField .bind (this, textarea));
+         textarea .on ("focusin",  this .disconnectField .bind (this, field));
+         textarea .on ("focusout", this .connectArrayField .bind (this, textarea, node, field, true));
       }
       else
       {
-         textarea .attr ("disabled", "disabled")
+         textarea .attr ("disabled", "disabled");
       }
 
-      this .connectArrayField (textarea, node, field, false)
+      this .connectArrayField (textarea, node, field, false);
 
       // Expand children.
 
@@ -2586,34 +2586,34 @@ module .exports = class OutlineView extends Interface
    onkeydownArrayField (textarea, event)
    {
       if ((event .ctrlKey || event .metaKey) && event .key === "Enter")
-         textarea .blur ()
+         textarea .blur ();
    }
 
    connectArrayField (textarea, node, field, assign)
    {
-      field .addFieldCallback (this .#fieldValueSymbol, this .setTextArea .bind (this, textarea, node, field))
+      field .addFieldCallback (this .#fieldValueSymbol, this .setTextArea .bind (this, textarea, node, field));
 
       if (assign)
-         this .onArrayFieldEdited (textarea, node, field)
+         this .onArrayFieldEdited (textarea, node, field);
    }
 
    onArrayFieldEdited (textarea, node, field) { }
 
    createRouteElements (node, field)
    {
-      const elements = [ ]
+      const elements = [ ];
 
       field .getInputRoutes () .forEach ((route) =>
       {
-         elements .push (this .createRouteElement ("input", node, field, route) .get (0))
-      })
+         elements .push (this .createRouteElement ("input", node, field, route) .get (0));
+      });
 
       field .getOutputRoutes () .forEach ((route) =>
       {
-         elements .push (this .createRouteElement ("output", node, field, route) .get (0))
-      })
+         elements .push (this .createRouteElement ("output", node, field, route) .get (0));
+      });
 
-      return $(elements)
+      return $(elements);
    }
 
    createRouteElement (type, node, field, route)
@@ -2763,23 +2763,23 @@ module .exports = class OutlineView extends Interface
       textarea .on ("keydown", (event) =>
       {
          if (event .key !== "Tab")
-            return
+            return;
 
          // Tab was pressed, get caret position/selection.
          const
             start = textarea .prop ("selectionStart"),
-            end   = textarea .prop ("selectionEnd")
+            end   = textarea .prop ("selectionEnd");
 
          // Set textarea value to: text before caret + tab + text after caret.
-         textarea .val (textarea .val () .substring (0, start) + "\t" + textarea .val () .substring (end))
+         textarea .val (textarea .val () .substring (0, start) + "\t" + textarea .val () .substring (end));
 
          // Put caret at right position again.
-         textarea .prop ("selectionStart", start + 1)
-         textarea .prop ("selectionEnd",   start + 1)
+         textarea .prop ("selectionStart", start + 1);
+         textarea .prop ("selectionEnd",   start + 1);
 
          // Prevent the focus lose.
-         return false
-      })
+         return false;
+      });
    }
 
    setTextArea (textarea, node, field)
@@ -2814,7 +2814,7 @@ module .exports = class OutlineView extends Interface
          case X3D .X3DConstants .MFString:
          {
             textarea .val (field .getValue () .map (value => value .toString ()) .join (",\n"));
-            break
+            break;
          }
          default:
          {
@@ -3404,7 +3404,7 @@ module .exports = class OutlineView extends Interface
          .addClass (parent .getEditChild () !== node ? "on" : "off");
 
       if (parent .getEditChild () === node)
-         parent .setEditChild (null)
+         parent .setEditChild (null);
       else
          parent .setEditChild (node);
    }
@@ -3449,7 +3449,7 @@ module .exports = class OutlineView extends Interface
 
    showSelectedObjects ()
    {
-      const selection = require ("../Application/Selection")
+      const selection = require ("../Application/Selection");
 
       for (const object of Traverse .traverse (selection .nodes .length ? selection .nodes : this .executionContext, Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES))
       {
@@ -4063,7 +4063,7 @@ module .exports = class OutlineView extends Interface
          this .saveExpandedNodes (element .find ("> div > ul > li"), path, expanded);
 
          path .pop ();
-      })
+      });
 
       return expanded;
    }
@@ -4106,6 +4106,6 @@ module .exports = class OutlineView extends Interface
          }
 
          path .pop ();
-      })
+      });
    }
-}
+};

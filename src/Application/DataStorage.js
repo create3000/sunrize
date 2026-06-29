@@ -75,7 +75,7 @@ const handler =
 
       return Object .getOwnPropertyDescriptor (storage, namespace + key);
    },
-}
+};
 
 module .exports = class DataStorage
 {

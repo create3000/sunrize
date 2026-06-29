@@ -216,7 +216,7 @@ class X3DNodeTool extends X3DBaseTool
       X3DNodeTool .tools .delete (this);
       X3DNodeTool .processToolInterests ();
 
-      const nodesToDispose = [ ]
+      const nodesToDispose = [ ];
 
       for (const tool of this .#tools)
       {

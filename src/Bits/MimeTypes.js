@@ -4,7 +4,7 @@ mime .add = function (mimeType, extensions)
 {
    this .types [extensions [0]] = mimeType;
    this .extensions [mimeType]  = extensions;
-}
+};
 
 mime .add ("image/jpeg",          ["jpg"]);
 mime .add ("image/ktx2",          ["ktx2"]);

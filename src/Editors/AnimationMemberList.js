@@ -530,7 +530,7 @@ module .exports = class AnimationMembersList extends Interface
 
    isRunning ()
    {
-      return this .#timeSensor ._isActive .getValue () && !this .#timeSensor ._isPaused .getValue ()
+      return this .#timeSensor ._isActive .getValue () && !this .#timeSensor ._isPaused .getValue ();
    }
 
    connectNodes ()

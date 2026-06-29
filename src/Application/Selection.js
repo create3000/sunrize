@@ -137,4 +137,4 @@ module .exports = new class Selection extends Interface
       for (const callback of this .#interest .values ())
          callback (this .nodes);
    }
-}
+};

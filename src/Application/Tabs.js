@@ -139,7 +139,7 @@ module .exports = new class Tabs
             config [key] = undefined;
 
          return false;
-      })
+      });
 
       for (const fileURL of openTabs .filter (fileURL => !fileURL .startsWith ("id:")))
          electron .ipcRenderer .send ("add-recent-location", fileURL);
@@ -227,7 +227,7 @@ module .exports = new class Tabs
       if (activate)
       {
          const tab = this .getTabs () .find (tab => urls .includes (tab .url))
-            ?? this .tabs .getTabByPosition (this .tabs .getTabs () .length - 1)
+            ?? this .tabs .getTabByPosition (this .tabs .getTabs () .length - 1);
 
          tab .activate ();
       }

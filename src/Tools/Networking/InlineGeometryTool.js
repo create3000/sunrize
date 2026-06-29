@@ -8,7 +8,7 @@ class InlineGeometryTool extends X3DGeometryNodeTool
 
    constructor (node)
    {
-      super (node)
+      super (node);
 
       node ._loadState .addInterest ("set_toolLoadState", this);
 

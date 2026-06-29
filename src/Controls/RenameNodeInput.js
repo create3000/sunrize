@@ -113,7 +113,7 @@ $.fn.renameNodeInput = function (node)
          else
             Editor .removeNamedNode (executionContext, node);
       }
-   })
+   });
 
    return this;
 };

@@ -78,7 +78,7 @@ $.fn.exportNodePopover = function (node, oldExportedName, oldDescription = "")
             setTimeout (() => nameInput .trigger ("select"), 1);
          },
       },
-   })
+   });
 
    return this;
 };

@@ -520,7 +520,7 @@ module .exports = class AnimationEditor extends Interface
 
       const
          timeSensor       = this .timeSensor,
-         executionContext = timeSensor .getExecutionContext ()
+         executionContext = timeSensor .getExecutionContext ();
 
       Editor .setFieldValue (executionContext, timeSensor, timeSensor ._cycleInterval, newDuration / newFrameRate);
 
@@ -561,7 +561,7 @@ module .exports = class AnimationEditor extends Interface
          this .setCurrentFrame (Math .min (this .getCurrentFrame (), newDuration));
       }
 
-      this .updateInterpolators ()
+      this .updateInterpolators ();
       this .registerZoomFit ();
 
       Editor .undoManager .endUndo ();
@@ -595,7 +595,7 @@ module .exports = class AnimationEditor extends Interface
             .replace (/([A-Z][a-z]+)/g, " $1")
             .replace (/\s+/g, " ")
             .trim ();
-      }
+      };
 
       Editor .undoManager .beginUndo (_("Rename Animation"));
 
@@ -873,7 +873,7 @@ module .exports = class AnimationEditor extends Interface
          Editor .undoManager .beginUndo (_("Add Interpolators to »%s«"), this .animation .getDisplayName ());
 
       for (const { node, field, typeName } of keyframes)
-         this .getInterpolator (node, field, typeName)
+         this .getInterpolator (node, field, typeName);
 
       Editor .undoManager .endUndo ();
 
@@ -1025,7 +1025,7 @@ module .exports = class AnimationEditor extends Interface
       Editor .undoManager .beginUndo (_("Update Interpolators"));
 
       for (const interpolator of this .interpolators)
-         this .updateInterpolator (interpolator)
+         this .updateInterpolator (interpolator);
 
       Editor .undoManager .endUndo ();
    }
@@ -1868,14 +1868,14 @@ module .exports = class AnimationEditor extends Interface
       if (selectionRange [0] === selectionRange [1])
       {
          if (this .getCurrentFrame () === this .getDuration ())
-            this .firstFrame ()
+            this .firstFrame ();
          else
             this .setCurrentFrame (Math .min (this .getCurrentFrame () + 1, this .getDuration ()));
       }
       else
       {
          if (this .getCurrentFrame () >= selectionRange [1])
-            this .firstFrame ()
+            this .firstFrame ();
          else
             this .setCurrentFrame (Math .min (this .getCurrentFrame () + 1, this .getDuration ()));
       }
@@ -2976,7 +2976,7 @@ module .exports = class AnimationEditor extends Interface
          {
             case "main":
             {
-               const fields = new Set (this .fields .keys ())
+               const fields = new Set (this .fields .keys ());
 
                this .drawSelectedKeyframes (context, fields, bottom - this .TRACK_PADDING, red);
                break;
@@ -3081,7 +3081,7 @@ module .exports = class AnimationEditor extends Interface
       for (const { field, interpolator, index } of this .getSelectedKeyframes ())
       {
          if (!fields .has (field))
-            continue
+            continue;
 
          this .#defaultIntegers .length = 0;
 
@@ -3117,4 +3117,4 @@ module .exports = class AnimationEditor extends Interface
 
       return this .#params [index] ?.[1] ?? [1, 5];
    }
-}
+};

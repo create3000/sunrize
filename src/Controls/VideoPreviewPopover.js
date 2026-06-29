@@ -49,17 +49,17 @@ $.fn.videoPreviewPopover = async function (node)
       {
          case X3D .X3DConstants .NOT_STARTED_STATE:
          {
-            sizes .text (_("Loading not started."))
+            sizes .text (_("Loading not started."));
             break;
          }
          case X3D .X3DConstants .IN_PROGRESS_STATE:
          {
-            sizes .text (_("Loading in progress."))
+            sizes .text (_("Loading in progress."));
             break;
          }
          case X3D .X3DConstants .FAILED_STATE:
          {
-            sizes .text (_("Loading failed."))
+            sizes .text (_("Loading failed."));
             break;
          }
          case X3D .X3DConstants .COMPLETE_STATE:

@@ -1,8 +1,8 @@
-"use strict"
+"use strict";
 
 const
    $         = require ("jquery"),
-   Interface = require ("../Application/Interface")
+   Interface = require ("../Application/Interface");
 
 module .exports = class Dialog extends Interface
 {

@@ -53,7 +53,7 @@ module .exports = class UndoManager
       if (this .undoIndex < 0)
          this .undoLabel = _("Undo");
       else
-         this .undoLabel = util .format (_("Undo %s"), this .undoList [this .undoIndex] .description)
+         this .undoLabel = util .format (_("Undo %s"), this .undoList [this .undoIndex] .description);
 
       this .redoLabel = util .format (_("Redo %s"), undoItem .description);
 

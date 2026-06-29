@@ -1,12 +1,12 @@
-"use strict"
+"use strict";
 
 const
    X3DBoundedObjectTool = require ("../Grouping/X3DBoundedObjectTool"),
-   ToolColors           = require ("../Core/ToolColors")
+   ToolColors           = require ("../Core/ToolColors");
 
 class CADFaceTool extends X3DBoundedObjectTool
 {
-   toolBBoxColor = ToolColors .BROWN
+   toolBBoxColor = ToolColors .BROWN;
 }
 
-module .exports = CADFaceTool
+module .exports = CADFaceTool;

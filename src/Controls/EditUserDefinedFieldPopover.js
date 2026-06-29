@@ -253,5 +253,5 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
    }
 
    return this;
-}
+};
 

@@ -1,54 +1,54 @@
-"use strict"
+"use strict";
 
 const
    $         = require ("jquery"),
-   Interface = require ("../Application/Interface")
+   Interface = require ("../Application/Interface");
 
 module .exports = class Tabs extends Interface
 {
    constructor (element, orientation)
    {
-      super (`Sunrize.Tabs.${element .attr ("id")}.`)
+      super (`Sunrize.Tabs.${element .attr ("id")}.`);
 
-      this .element     = element
-      this .orientation = orientation
-      this .tabs        = $("<ul></ul>") .appendTo (this .element)
+      this .element     = element;
+      this .orientation = orientation;
+      this .tabs        = $("<ul></ul>") .appendTo (this .element);
    }
 
    initialize ()
    {
-      this .addTabs ()
+      this .addTabs ();
 
-      this .element .tabs ()
-      this .element .tabs ("option", "classes.ui-tabs", this .orientation)
-      this .element .on ("tabsactivate", () => this .tabActivated ())
+      this .element .tabs ();
+      this .element .tabs ("option", "classes.ui-tabs", this .orientation);
+      this .element .on ("tabsactivate", () => this .tabActivated ());
    }
 
    addTabs () { }
 
    configure (defaults = { })
    {
-      this .config .file .setDefaultValues (Object .assign ({ active: 0 }, defaults))
+      this .config .file .setDefaultValues (Object .assign ({ active: 0 }, defaults));
 
       if (this .element .tabs ("option", "active") === this .config .file .active)
-         this .tabActivated ()
+         this .tabActivated ();
       else
-         this .element .tabs ("option", "active", this .config .file .active)
+         this .element .tabs ("option", "active", this .config .file .active);
    }
 
    tabActivated ()
    {
       const
          active = this .element .tabs ("option", "active"),
-         panel  = $(this .element .find (`.tabs-panel`) .get (active))
+         panel  = $(this .element .find (`.tabs-panel`) .get (active));
 
-      this .config .file .active = active
+      this .config .file .active = active;
 
       if (panel .data ("Tabs.initialized"))
-         return
+         return;
 
-      panel .data ("Tabs.initialized", true)
-      this .initTab (panel)
+      panel .data ("Tabs.initialized", true);
+      this .initTab (panel);
    }
 
    addTextTab (id, title)
@@ -58,9 +58,9 @@ module .exports = class Tabs extends Interface
             .attr ("href", `#${id}-tab`)
             .attr ("title", title)
             .text (title))
-         .appendTo (this .tabs)
+         .appendTo (this .tabs);
 
-      this .addPanel (id)
+      this .addPanel (id);
    }
 
    addIconTab (id, icon, title)
@@ -72,9 +72,9 @@ module .exports = class Tabs extends Interface
             .append ($("<span></span>")
                .addClass ("material-icons")
                .text (icon)))
-         .appendTo (this .tabs)
+         .appendTo (this .tabs);
 
-      this .addPanel (id)
+      this .addPanel (id);
    }
 
    addPanel (id)
@@ -84,13 +84,13 @@ module .exports = class Tabs extends Interface
          .append ($("<div></div>")
             .attr ("id", id)
             .addClass (["tabs-panel", id]))
-         .appendTo (this .element)
+         .appendTo (this .element);
    }
 
    getPanel (id)
    {
-      return this .element .find (`.tabs-panel.${id}`)
+      return this .element .find (`.tabs-panel.${id}`);
    }
 
    initTab (panel) { }
-}
+};

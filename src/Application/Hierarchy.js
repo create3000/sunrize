@@ -274,4 +274,4 @@ module .exports = new class Hierarchy extends Interface
       for (const callback of this .#interest .values ())
          callback (this .nodes);
    }
-}
+};

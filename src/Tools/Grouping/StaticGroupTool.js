@@ -1,12 +1,12 @@
-"use strict"
+"use strict";
 
 const
    X3DBoundedObjectTool = require ("./X3DBoundedObjectTool"),
-   ToolColors           = require ("../Core/ToolColors")
+   ToolColors           = require ("../Core/ToolColors");
 
 class StaticGroupTool extends X3DBoundedObjectTool
 {
-   toolBBoxColor = ToolColors .DARK_GREY
+   toolBBoxColor = ToolColors .DARK_GREY;
 }
 
-module .exports = StaticGroupTool
+module .exports = StaticGroupTool;

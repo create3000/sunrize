@@ -8,7 +8,7 @@ class X3DPrototypeInstanceTool extends X3DNodeTool
 
    constructor (node)
    {
-      super (node)
+      super (node);
 
       node .getBody () .rootNodes .addInterest ("set_toolRootNodes", this);
 

@@ -154,17 +154,17 @@ module .exports = new class SceneProperties extends Dialog
          .on ("click", function ()
          {
             if (!$(this) .val ())
-               return
+               return;
 
-            $(this) .attr ("placeholder", $(this) .val ())
-            $(this) .val ("")
+            $(this) .attr ("placeholder", $(this) .val ());
+            $(this) .val ("");
          })
          .on ("mouseleave", function ()
          {
             if ($(this) .val ())
-               return
+               return;
 
-            $(this) .val ($(this) .attr ("placeholder"))
+            $(this) .val ($(this) .attr ("placeholder"));
          })
          .on ("change", event => this .changeUnitName (event));
 
@@ -263,7 +263,7 @@ module .exports = new class SceneProperties extends Dialog
          sortMetaData: false,
       });
 
-      this .updateMetaDataSort ()
+      this .updateMetaDataSort ();
 
       if (this .executionContext)
          this .onclose ();
@@ -433,7 +433,7 @@ module .exports = new class SceneProperties extends Dialog
    {
       this .metaData .table .head .find (".sort-key")
          .removeClass ("active")
-         .addClass (this .config .file .sortMetaData ? ["active"] : [ ])
+         .addClass (this .config .file .sortMetaData ? ["active"] : [ ]);
 
       if (this .config .file .sortMetaData)
          this .metaData .table .body .sortable ("disable");

@@ -178,7 +178,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
                context .stroke ();
             }
 
-            break
+            break;
          }
          case X3D .X3DConstants .outputOnly:
          {
@@ -192,7 +192,7 @@ module .exports = class OutlineRouteGraph extends OutlineView
                context .stroke ();
             }
 
-            break
+            break;
          }
          case X3D .X3DConstants .inputOutput:
          {

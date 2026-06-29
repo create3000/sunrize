@@ -402,7 +402,7 @@ module .exports = class ScriptEditor extends Interface
 
                this .set_directOutput ();
                this .set_mustEvaluate ();
-               break
+               break;
             }
             case "ShaderPart":
             {

@@ -69,7 +69,7 @@ $.fn.animationPropertiesPopover = function (editor)
 
    function updateTime ()
    {
-      const duration  = parseInt (durationInput .val ())
+      const duration  = parseInt (durationInput .val ());
       const frameRate = parseInt (frameRateInput .val ());
 
       timeText .text (util .format (_("Duration: %s"), editor .formatFrames (duration, frameRate)));
@@ -93,13 +93,13 @@ $.fn.animationPropertiesPopover = function (editor)
 
                applyButton .trigger ("click");
                api .toggle (false);
-            })
+            });
 
             applyButton .on ("click", (event) =>
             {
                api .toggle (false);
                editor .resizeAnimation (parseInt (durationInput .val ()), parseInt (frameRateInput .val ()), scaleInput .prop ("checked"));
-            })
+            });
          },
       },
    });
