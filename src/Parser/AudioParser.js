@@ -66,7 +66,7 @@ class AudioParser extends X3D .X3DParser
 
       const
          worldURL = new URL (scene .worldURL),
-         name     = worldURL .pathname .match (/([^\/]+)\.[^.]+$/);
+         name     = worldURL .pathname .match (/([^/]+)\.[^.]+$/);
 
       if (name)
       {

@@ -256,7 +256,7 @@ module .exports = class ScriptEditor extends Interface
             ">>=",
             ">>>=",
          ],
-         symbols: /[=><!~?:&|+\-*\/\^%]+/,
+         symbols: /[=><!~?:&|+\-*/^%]+/,
          escapes: /\\(?:[abfnrtv\\"']|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
          integersuffix: /([uU](ll|LL|l|L)|(ll|LL|l|L)?[uU]?)/,
          floatsuffix: /[fFlL]?/,
@@ -294,7 +294,7 @@ module .exports = class ScriptEditor extends Interface
                { include: "@whitespace" },
 
                // delimiters and operators
-               [/[{}()\[\]]/, "@brackets"],
+               [/[{}()[\]]/, "@brackets"],
                [/@symbols/,
                {
                   cases: {
@@ -304,8 +304,8 @@ module .exports = class ScriptEditor extends Interface
                }],
 
                // numbers
-               [/\d*\d+[eE]([\-+]?\d+)?(@floatsuffix)/, "number.float"],
-               [/\d*\.\d+([eE][\-+]?\d+)?(@floatsuffix)/, "number.float"],
+               [/\d*\d+[eE]([-+]?\d+)?(@floatsuffix)/, "number.float"],
+               [/\d*\.\d+([eE][-+]?\d+)?(@floatsuffix)/, "number.float"],
                [/0[xX][0-9a-fA-F']*[0-9a-fA-F](@integersuffix)/, "number.hex"],
                [/0[0-7']*[0-7](@integersuffix)/, "number.octal"],
                [/0[bB][0-1']*[0-1](@integersuffix)/, "number.binary"],
@@ -317,10 +317,10 @@ module .exports = class ScriptEditor extends Interface
             ],
 
             comment: [
-               [/[^\/*]+/, "comment"],
+               [/[^/*]+/, "comment"],
                [/\/\*/, "comment", "@push"],
                ["\\*/", "comment", "@pop"],
-               [/[\/*]/, "comment"],
+               [/[/*]/, "comment"],
             ],
 
             whitespace: [

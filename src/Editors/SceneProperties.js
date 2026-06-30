@@ -489,7 +489,7 @@ module .exports = new class SceneProperties extends Dialog
          // Add Open Link in Browser button if it matches a link somewhere in value.
          {
             const
-               http  = /(https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))/,
+               http  = /(https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*))/,
                match = value .match (http);
 
             if (match)
