@@ -99,7 +99,7 @@
     "@vscode/codicons": "^0.0.45",
     "capitalize": "^2.0.4",
     "console": "^0.7.2",
-    "electron": "43.0.0-beta.3",
+    "electron": "43.0.0",
     "electron-prompt": "^1.7.0",
     "electron-squirrel-startup": "^1.0.1",
     "electron-tabs": "^1.0.4",
@@ -125,8 +125,8 @@
     "x3d-traverse": "^2.0.1"
   },
   "allowScripts": {
-    "electron-winstaller@5.4.1": true,
     "fs-xattr@0.3.1": true,
-    "macos-alias@0.2.12": true
+    "macos-alias@0.2.12": true,
+    "electron-winstaller@5.4.3": true
   }
 }
