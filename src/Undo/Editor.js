@@ -2860,7 +2860,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                {
                   case X3D .X3DConstants .DirectionalLight:
                      return new X3D .Box3 (X3D .Vector3 .ONE, innerNode .getMetaData ("DirectionalLight/location", new X3D .Vector3 ()))
-                        .multLeft (new X3D .Matrix4 () .setRotation (X3D .Rotation4 .fromVectors (X3D .Vector3 .Z_AXIS, innerNode ._direction .getValue ())))
+                        .multLeft (X3D .Matrix4 .fromRotation (X3D .Rotation4 .fromVectors (X3D .Vector3 .Z_AXIS, innerNode ._direction .getValue ())))
                         .multRight (modelMatrix);
                   case X3D .X3DConstants .PointLight:
                      return new X3D .Box3 (X3D .Vector3 .ONE, innerNode ._location .getValue ())
@@ -2869,7 +2869,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   case X3D .X3DConstants .Sound:
                   case X3D .X3DConstants .X3DTextureProjectorNode:
                      return new X3D .Box3 (X3D .Vector3 .ONE, innerNode ._location .getValue ())
-                        .multLeft (new X3D .Matrix4 () .setRotation (X3D .Rotation4 .fromVectors (X3D .Vector3 .Z_AXIS, innerNode ._direction .getValue ())))
+                        .multLeft (X3D .Matrix4 .fromRotation (X3D .Rotation4 .fromVectors (X3D .Vector3 .Z_AXIS, innerNode ._direction .getValue ())))
                         .multRight (modelMatrix);
                   case X3D .X3DConstants .X3DBoundedObject:
                      return innerNode .getBBox (new X3D .Box3 ()) .multRight (modelMatrix);
@@ -2881,7 +2881,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                         .multRight (modelMatrix);
                   case X3D .X3DConstants .X3DViewpointNode:
                      return new X3D .Box3 (X3D .Vector3 .ONE, innerNode ._position .getValue ())
-                        .multLeft (new X3D .Matrix4 () .setRotation (innerNode ._orientation .getValue ()))
+                        .multLeft (X3D .Matrix4 .fromRotation (innerNode ._orientation .getValue ()))
                         .multRight (modelMatrix);
                   case X3D .X3DConstants .X3DLayerNode:
                      return innerNode .getBBox (new X3D .Box3 ());
