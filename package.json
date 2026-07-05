@@ -108,7 +108,7 @@
     "jquery-ui-dist": "^1.13.3",
     "jstree": "^3.3.17",
     "material-icons": "^1.13.14",
-    "material-symbols": "^0.45.4",
+    "material-symbols": "^0.45.5",
     "md5": "^2.3.0",
     "mime-types": "^3.0.2",
     "monaco-editor": "^0.55.1",
@@ -127,6 +127,6 @@
   "allowScripts": {
     "fs-xattr@0.3.1": true,
     "macos-alias@0.2.12": true,
-    "electron-winstaller@5.4.3": true
+    "electron-winstaller@5.4.4": true
   }
 }
