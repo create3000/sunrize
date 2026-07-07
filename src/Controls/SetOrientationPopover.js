@@ -27,6 +27,9 @@ $.fn.setOrientationPopover = function (executionContext, textureProjectorNode)
 
    const tooltip = this .popover ({
       content: content,
+      extension: {
+         wide: true,
+      },
       events: {
          show: (event, api) =>
          {
