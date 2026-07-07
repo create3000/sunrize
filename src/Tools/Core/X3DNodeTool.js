@@ -223,18 +223,14 @@ class X3DNodeTool extends X3DBaseTool
          if (!this [tool])
             continue;
 
-         for (const node of Traverse .traverse (this [tool], Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES))
-         {
+         for (const node of Traverse .traverse (this [tool], Traverse .ROOT_NODES | Traverse .PROTOTYPE_INSTANCES))
             nodesToDispose .add (node instanceof X3D .SFNode ? node .getValue () : node);
-         }
       }
 
       for (const externalNode of this .#externalNodes)
       {
-         for (const node of Traverse .traverse (externalNode, Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES))
-         {
+         for (const node of Traverse .traverse (externalNode, Traverse .ROOT_NODES | Traverse .PROTOTYPE_INSTANCES))
             nodesToDispose .delete (node instanceof X3D .SFNode ? node .getValue () : node);
-         }
       }
 
       for (const node of nodesToDispose)
