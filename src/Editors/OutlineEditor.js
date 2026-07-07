@@ -409,6 +409,15 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
                      continue;
                   }
+                  case X3D .X3DConstants .X3DTextureProjectorNode:
+                  {
+                     menu .push ({
+                        label: _("Set Orientation..."),
+                        args: ["setOrientation", element .attr ("id"), executionContext .getId (), node .getId ()],
+                     });
+
+                     continue;
+                  }
                   case X3D .X3DConstants .X3DTransformNode:
                   {
                      menu .push ({
@@ -1342,6 +1351,18 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       }
 
       UndoManager .shared .endUndo ();
+   }
+
+   setOrientation (id, executionContextId, nodeId)
+   {
+      const
+         element              = $(`#${id}`),
+         executionContext     = this .objects .get (executionContextId),
+         textureProjectorNode = this .objects .get (nodeId);
+
+      require ("../Controls/SetOrientationPopover");
+
+      element .find ("> .item") .setOrientationPopover (executionContext, textureProjectorNode);
    }
 
    transformToZero (id, executionContextId, nodeId)
