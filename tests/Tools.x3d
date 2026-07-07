@@ -3,21 +3,23 @@
 <X3D profile='Interchange' version='4.1' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.1.xsd'>
   <head>
     <component name='CADGeometry' level='2'/>
-    <component name='CubeMapTexturing' level='3'/>
-    <component name='EnvironmentalSensor' level='3'/>
-    <component name='Geospatial' level='2'/>
-    <component name='HAnim' level='3'/>
+    <component name='CubeMapTexturing' level='2'/>
+    <component name='EnvironmentalSensor' level='2'/>
+    <component name='Geospatial' level='1'/>
+    <component name='HAnim' level='1'/>
     <component name='Layering' level='1'/>
-    <component name='Layout' level='2'/>
-    <component name='Sound' level='3'/>
+    <component name='Layout' level='1'/>
+    <component name='Lighting' level='3'/>
+    <component name='Navigation' level='3'/>
+    <component name='Sound' level='2'/>
     <component name='TextureProjection' level='2'/>
     <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
     <meta name='created' content='Fri, 11 Aug 2023 21:33:17 GMT'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V2.0.1, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V2.1.11, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/tests/Tools.x3d'/>
-    <meta name='modified' content='Sun, 01 Feb 2026 18:58:14 GMT'/>
+    <meta name='modified' content='Tue, 07 Jul 2026 15:08:34 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='Test'>
@@ -53,6 +55,9 @@
           bboxSize='1 1 1'/>
       <Switch
           bboxSize='1 1 1'/>
+      <Billboard>
+        <Group USE='_3'/>
+      </Billboard>
     </Group>
     <Group DEF='HAnim'>
       <HAnimHumanoid>
