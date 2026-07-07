@@ -216,7 +216,7 @@ class X3DNodeTool extends X3DBaseTool
       X3DNodeTool .tools .delete (this);
       X3DNodeTool .processToolInterests ();
 
-      const nodesToDispose = [ ];
+      const nodesToDispose = new Set ();
 
       for (const tool of this .#tools)
       {
@@ -225,11 +225,19 @@ class X3DNodeTool extends X3DBaseTool
 
          for (const node of Traverse .traverse (this [tool], Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES))
          {
-            nodesToDispose .push (node instanceof X3D .SFNode ? node .getValue () : node);
+            nodesToDispose .add (node instanceof X3D .SFNode ? node .getValue () : node);
          }
       }
 
-      for (const node of nodesToDispose .filter (node => !this .#externalNodes .has (node)))
+      for (const externalNode of this .#externalNodes)
+      {
+         for (const node of Traverse .traverse (externalNode, Traverse .ROOT_NODES | Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES))
+         {
+            nodesToDispose .delete (node instanceof X3D .SFNode ? node .getValue () : node);
+         }
+      }
+
+      for (const node of nodesToDispose)
          node .dispose ();
 
       for (const field of this .#externalNodes .values ())
