@@ -120,7 +120,7 @@
     "update-electron-app": "^3.3.0",
     "x_ite": "^15.1.12",
     "x_ite-off-parser": "^1.2.4",
-    "x_ite-sog-parser": "^2.0.0",
+    "x_ite-sog-parser": "^2.0.1",
     "x_ite-spz-parser": "^2.0.0",
     "x3d-traverse": "^2.0.1"
   },
