@@ -2205,24 +2205,27 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       }
       else // Script node
       {
-         const
-            proto        = node .getExecutionContext () .getOuterNode (),
-            references   = Array .from (field .getReferences ()),
-            inputRoutes  = Array .from (field .getInputRoutes ()),
-            outputRoutes = Array .from (field .getOutputRoutes ());
-
          // Remove References.
 
-         for (const reference of references)
+         const proto = executionContext .getOuterNode ();
+
+         if (proto instanceof X3D .X3DProtoDeclaration)
          {
-            if (!reference .isReference (field .getAccessType ()))
-               this .removeReference (proto, reference, node, field, undoManager);
+            const references = Array .from (field .getReferences ());
+
+            for (const reference of references)
+            {
+               if (!reference .isReference (field .getAccessType ()))
+                  this .removeReference (proto, reference, node, field, undoManager);
+            }
          }
 
          // Remove routes.
 
          if (!field .isInput ())
          {
+            const inputRoutes = Array .from (field .getInputRoutes ());
+
             for (const route of inputRoutes)
             {
                this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager);
@@ -2231,6 +2234,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
          if (!field .isOutput ())
          {
+            const outputRoutes = Array .from (field .getOutputRoutes ());
+
             for (const route of outputRoutes)
             {
                this .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField, undoManager);
