@@ -2203,9 +2203,10 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
          this .updateInstances (proto, undoManager);
       }
-      else
+      else // Script node
       {
          const
+            proto        = node .getExecutionContext () .getOuterNode (),
             references   = Array .from (field .getReferences ()),
             inputRoutes  = Array .from (field .getInputRoutes ()),
             outputRoutes = Array .from (field .getOutputRoutes ());

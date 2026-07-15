@@ -110,7 +110,9 @@ Object .assign (X3D .Extrusion .prototype,
 
       // Caps
 
-      let min = max = this ._crossSection [0];
+      let
+         min = this ._crossSection [0],
+         max = min;
 
       for (let c = 1; c < numCrossSections; ++ c)
       {
