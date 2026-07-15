@@ -3257,7 +3257,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     * @param {number} index
     * @param {UndoManager} undoManager
     */
-   static removeValueFromArray (executionContext, node, field, index, undoManager = UndoManager .shared, xxx)
+   static removeValueFromArray (executionContext, node, field, index, undoManager = UndoManager .shared)
    {
       node  = node .valueOf ();
       field = typeof field === "string" ? node .getField (field) : field;
