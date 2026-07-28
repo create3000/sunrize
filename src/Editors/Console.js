@@ -275,7 +275,7 @@ module .exports = class Console extends Interface
       }
    }
 
-   onkeyup (event)
+   onkeyup ()
    {
       this .adjustTextAreaHeight ();
    }
