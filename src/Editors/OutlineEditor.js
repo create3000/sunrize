@@ -1749,16 +1749,17 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
          const
             fileURL  = new URL (url, executionContext .getWorldURL ()),
-            response = await fetch (fileURL),
-            mimeType = mime .lookup (fileURL .pathname)
-               || response .headers .get ("content-type") ?.replace (/;.*$/, "")
-               || "application/octet-stream";
+            response = await fetch (fileURL);
 
          // console .log (fileURL .href);
          // console .log (response .ok);
 
          if (!response .ok)
             continue;
+
+         const mimeType = mime .lookup (fileURL .pathname)
+               || response .headers .get ("content-type") ?.replace (/;.*$/, "")
+               || "application/octet-stream";
 
          const buffer = Buffer .from (await response .arrayBuffer ());
 
