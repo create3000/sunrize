@@ -1740,39 +1740,46 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    {
       const
          executionContext = this .objects .get (executionContextId),
-         urlObject        = this .objects .get (nodeId),
-         index            = urlObject ._url .findIndex (fileURL => !fileURL .match (/^\s*(?:data|ecmascript|javascript|vrmlscript):/s)),
-         fileURL          = new URL (urlObject ._url [index], executionContext .getWorldURL ());
+         urlObject        = this .objects .get (nodeId);
 
-      const
-         response = await fetch (fileURL),
-         mimeType = mime .lookup (fileURL .pathname)
-            || response .headers .get ("content-type") ?.replace (/;.*$/, "")
-            || "application/octet-stream";
+      for (const url of urlObject ._url)
+      {
+         if (url .match (/^\s*(?:data|ecmascript|javascript|vrmlscript):/s))
+            continue;
 
-      // console .log (mimeType)
+         const
+            fileURL  = new URL (url, executionContext .getWorldURL ()),
+            response = await fetch (fileURL),
+            mimeType = mime .lookup (fileURL .pathname)
+               || response .headers .get ("content-type") ?.replace (/;.*$/, "")
+               || "application/octet-stream";
 
-      if (!response .ok)
-         return;
+         // console .log (fileURL .href);
+         // console .log (response .ok);
 
-      const buffer = Buffer .from (await response .arrayBuffer ());
+         if (!response .ok)
+            continue;
 
-      // Add undo step.
+         const buffer = Buffer .from (await response .arrayBuffer ());
 
-      const value = urlObject ._url .copy ();
+         // Add undo step.
 
-      if (this .mimeTypeToProtocol .has (mimeType))
-         value [index] = `${this .mimeTypeToProtocol .get (mimeType)}${buffer .toString ('utf8')}`;
-      else if (this .textTypes .has (mimeType))
-         value [index] = encodeURI (`data:${mimeType},${buffer .toString ('utf8')}`);
-      else
-         value [index] = `data:${mimeType};base64,${buffer .toString ('base64')}`;
+         const value = urlObject ._url .copy ();
 
-      UndoManager .shared .beginUndo (_("Embed External Resource as Data URL"));
+         if (this .mimeTypeToProtocol .has (mimeType))
+            value .unshift (`${this .mimeTypeToProtocol .get (mimeType)}${buffer .toString ('utf8')}`);
+         else if (this .textTypes .has (mimeType))
+            value .unshift (encodeURI (`data:${mimeType},${buffer .toString ('utf8')}`));
+         else
+            value .unshift (`data:${mimeType};base64,${buffer .toString ('base64')}`);
 
-      Editor .setFieldValue (executionContext, urlObject, urlObject ._url, value);
+         UndoManager .shared .beginUndo (_("Embed External Resource as Data URL"));
 
-      UndoManager .shared .endUndo ();
+         Editor .setFieldValue (executionContext, urlObject, urlObject ._url, value);
+
+         UndoManager .shared .endUndo ();
+         break;
+      }
    }
 
    moveViewpointToUserPosition (id, executionContextId, nodeId)
