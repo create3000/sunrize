@@ -2,7 +2,7 @@
 <!-- X3D Unified Object Model (X3DUOM) X3dUnifiedObjectModel-4.1.xml -->
 <!-- Online at https://www.web3d.org/specifications/X3dUnifiedObjectModel-4.1.xml -->
 <!-- This file contains a listing of all abstract and concrete nodes in version 4.1 of X3D -->
-<!-- Generated 2026-06-21-07:00 21:40:54.6369714-07:00 -->
+<!-- Generated 2026-07-31-07:00 09:58:34.0502464-07:00 -->
 <X3dUnifiedObjectModel xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
                        version="4.1"
                        xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/X3dUnifiedObjectModel.xsd">
@@ -4382,34 +4382,34 @@
                   appinfo="multiTextureFunctionValues are supported enumeration values for the MultiTexture node function attribute, one per each texture. An empty string indicates no function is applied. Multiple optional values, but cannot be extended."
                   documentation="https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/texturing.html#t-ValuesForFunctionField">
          <enumeration value="&#34;COMPLEMENT&#34;" appinfo="Invert argument x as (1 - x)"/>
-         <enumeration value="&#34;ALPHAREPLICATE&#34;"
-                      appinfo="Replicate alpha information to all color channels before operation completes."/>
+         <enumeration value="&#34;ALPHA_REPLICATE&#34;"
+                      appinfo="Replicate alpha information to all color channels before operation completes. (previously no underscore in X3D 3.0-4.0)"/>
          <enumeration value="&#34;&#34;"
                       appinfo="No function is applied - empty SFString is allowed value within MFString array"/>
       </SimpleType>
       <SimpleType name="multiTextureModeValues"
                   baseType="MFString"
-                  appinfo="multiTextureModeValues are supported enumeration values for the MultiTexture mode attribute, one per each texture. Multiple optional values, but cannot be extended."
+                  appinfo="multiTextureModeValues are supported enumeration values for the MultiTexture mode attribute, one per each texture. Multiple optional values, but cannot be extended. (previously no underscores in X3D 3.0-4.0)"
                   documentation="https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/texturing.html#t-MultitextureModes">
          <enumeration value="&#34;ADD&#34;"/>
-         <enumeration value="&#34;ADDSIGNED&#34;"/>
-         <enumeration value="&#34;ADDSIGNED2X&#34;"/>
-         <enumeration value="&#34;ADDSMOOTH&#34;"/>
-         <enumeration value="&#34;BLENDCURRENTALPHA&#34;"/>
-         <enumeration value="&#34;BLENDDIFFUSEALPHA&#34;"/>
-         <enumeration value="&#34;BLENDFACTORALPHA&#34;"/>
-         <enumeration value="&#34;BLENDTEXTUREALPHA&#34;"/>
-         <enumeration value="&#34;DOTPRODUCT3&#34;"/>
+         <enumeration value="&#34;ADD_SIGNED&#34;"/>
+         <enumeration value="&#34;ADD_SIGNED_2X&#34;"/>
+         <enumeration value="&#34;ADD_SMOOTH&#34;"/>
+         <enumeration value="&#34;BLEND_CURRENT_ALPHA&#34;"/>
+         <enumeration value="&#34;BLEND_DIFFUSE_ALPHA&#34;"/>
+         <enumeration value="&#34;BLEND_FACTOR_ALPHA&#34;"/>
+         <enumeration value="&#34;BLEND_TEXTURE_ALPHA&#34;"/>
+         <enumeration value="&#34;DOT_PRODUCT_3&#34;"/>
          <enumeration value="&#34;MODULATE&#34;"/>
-         <enumeration value="&#34;MODULATE2X&#34;"/>
-         <enumeration value="&#34;MODULATE4X&#34;"/>
-         <enumeration value="&#34;MODULATEALPHA_ADDCOLOR&#34;"/>
-         <enumeration value="&#34;MODULATEINVALPHA_ADDCOLOR&#34;"/>
-         <enumeration value="&#34;MODULATEINVCOLOR_ADDALPHA&#34;"/>
+         <enumeration value="&#34;MODULATE_2X&#34;"/>
+         <enumeration value="&#34;MODULATE_4X&#34;"/>
+         <enumeration value="&#34;MODULATE_ALPHA_ADD_COLOR&#34;"/>
+         <enumeration value="&#34;MODULATE_INV_ALPHA_ADD_COLOR&#34;"/>
+         <enumeration value="&#34;MODULATE_INV_COLOR_ADD_ALPHA&#34;"/>
          <enumeration value="&#34;OFF&#34;"/>
          <enumeration value="&#34;REPLACE&#34;"/>
-         <enumeration value="&#34;SELECTARG1&#34;"/>
-         <enumeration value="&#34;SELECTARG2&#34;"/>
+         <enumeration value="&#34;SELECT_ARG1&#34;"/>
+         <enumeration value="&#34;SELECT_ARG2&#34;"/>
          <enumeration value="&#34;SUBTRACT&#34;"/>
       </SimpleType>
       <SimpleType name="multiTextureSourceValues"
@@ -4722,24 +4722,25 @@
                   documentation="https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/texturing.html#t-Texturecoordgeneration">
          <enumeration value="SPHERE"
                       appinfo="Creates texture coordinates for a spherical environment"/>
-         <enumeration value="CAMERASPACENORMAL"
-                      appinfo="Use vertex normal, transformed to camera space, as input texture coordinates"/>
-         <enumeration value="CAMERASPACEPOSITION"
-                      appinfo="Use vertex position, transformed to camera space, as input texture coordinates"/>
-         <enumeration value="CAMERASPACEREFLECTIONVECTOR"
-                      appinfo="Use reflection vector, transformed to camera space, as input texture coordinates"/>
-         <enumeration value="SPHERE-LOCAL" appinfo="Sphere mapping but in local coordinates"/>
+         <enumeration value="CAMERA_SPACE_NORMAL"
+                      appinfo="Use vertex normal, transformed to camera space, as input texture coordinates. (previously no underscores in X3D 3.0-4.0)"/>
+         <enumeration value="CAMERA_SPACE_POSITION"
+                      appinfo="Use vertex position, transformed to camera space, as input texture coordinates. (previously no underscores in X3D 3.0-4.0)"/>
+         <enumeration value="CAMERA_SPACE_REFLECTION_VECTOR"
+                      appinfo="Use reflection vector, transformed to camera space, as input texture coordinates. (previously no underscores in X3D 3.0-4.0)"/>
+         <enumeration value="SPHERE_LOCAL"
+                      appinfo="Sphere mapping but in local coordinates. (previously hypenated in X3D 3.0-4.0)"/>
          <enumeration value="COORD" appinfo="Use vertex coordinates"/>
-         <enumeration value="COORD-EYE"
-                      appinfo="Use vertex coordinates transformed to camera space"/>
+         <enumeration value="COORD_EYE"
+                      appinfo="Use vertex coordinates transformed to camera space. (previously hypenated in X3D 3.0-4.0)"/>
          <enumeration value="NOISE"
                       appinfo="Apply Perlin solid noise function on vertex coordinates"/>
-         <enumeration value="NOISE-EYE"
-                      appinfo="Apply Perlin solid noise function on vertex coordinates transformed to camera space"/>
-         <enumeration value="SPHERE-REFLECT"
-                      appinfo="similar to CAMERASPACEREFLECTIONVECTOR with optional index of refraction"/>
-         <enumeration value="SPHERE-REFLECT-LOCAL"
-                      appinfo="Similar to SPHERE-REFLECT transformed to camera space"/>
+         <enumeration value="NOISE_EYE"
+                      appinfo="Apply Perlin solid noise function on vertex coordinates transformed to camera space. (previously hypenated in X3D 3.0-4.0)"/>
+         <enumeration value="SPHERE_REFLECT"
+                      appinfo="similar to CAMERA_SPACE_REFLECTION_VECTOR with optional index of refraction. (previously hypenated in X3D 3.0-4.0)"/>
+         <enumeration value="SPHERE_REFLECT_LOCAL"
+                      appinfo="Similar to SPHERE_REFLECT transformed to camera space. (previously hypenated in X3D 3.0-4.0)"/>
       </SimpleType>
       <SimpleType name="textureMagnificationModeChoices"
                   baseType="xs:NMTOKEN"
@@ -19393,7 +19394,7 @@
             <field name="opacities"
                    type="MFFloat"
                    accessType="inputOutput"
-                   description="The opacity of a Gaussian splat is defined by the opacities field."/>
+                   description="The opacities field defines the opacity of each individual Gaussian splat."/>
             <field name="orientations"
                    type="MFQuaternion"
                    accessType="inputOutput"
@@ -27953,7 +27954,7 @@
       </ConcreteNode>
       <ConcreteNode name="LoadSensor">
          <InterfaceDefinition specificationUrl="https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/networking.html#LoadSensor"
-                              appinfo="LoadSensor generates events as watchList child nodes are either loaded or fail to load.">
+                              appinfo="LoadSensor generates events as children (watchList in X3Dv3) child nodes are either loaded or fail to load.">
             <componentInfo name="Networking" level="3"/>
             <Inheritance baseType="X3DNetworkSensorNode"/>
             <field name="children"
@@ -27987,7 +27988,7 @@
             <field name="isLoaded"
                    type="SFBool"
                    accessType="outputOnly"
-                   description="Notify when all watchList child nodes are loaded, or at least one has failed."/>
+                   description="Notify when all children/watchList child nodes are loaded, or at least one has failed."/>
             <field name="loadTime"
                    type="SFTime"
                    accessType="outputOnly"
@@ -28889,7 +28890,7 @@
                    type="MFNode"
                    accessType="inputOutput"
                    acceptableNodeTypes="X3DMetadataObject"
-                   description="The value field provides a list of X3DMetadataObject nodes whose meaning is determined by the name field."/>
+                   description="The value field provides a list of X3DMetadataObject nodes whose meaning is each determined by their respective name field."/>
             <field name="DEF"
                    type="SFString"
                    accessType="inputOutput"
@@ -29525,8 +29526,8 @@
                    baseType="MFString"
                    description="function operators COMPLEMENT or ALPHAREPLICATE can be applied after the mode blending operation.">
                <enumeration value="&#34;COMPLEMENT&#34;" appinfo="Invert argument x as (1 - x)."/>
-               <enumeration value="&#34;ALPHAREPLICATE&#34;"
-                            appinfo="Replicate alpha information to all color channels before operation completes."/>
+               <enumeration value="&#34;ALPHA_REPLICATE&#34;"
+                            appinfo="Replicate alpha information to all color channels before operation completes. (previously no underscore in X3D 3.0-4.0)."/>
                <enumeration value="&#34;&#34;"
                             appinfo="No function is applied - empty SFString is allowed value within MFString array."/>
             </field>
@@ -29551,24 +29552,24 @@
                    baseType="MFString"
                    description="mode field indicates the type of blending operation, both for color and for alpha channel.">
                <enumeration value="&#34;ADD&#34;"/>
-               <enumeration value="&#34;ADDSIGNED&#34;"/>
-               <enumeration value="&#34;ADDSIGNED2X&#34;"/>
-               <enumeration value="&#34;ADDSMOOTH&#34;"/>
-               <enumeration value="&#34;BLENDCURRENTALPHA&#34;"/>
-               <enumeration value="&#34;BLENDDIFFUSEALPHA&#34;"/>
-               <enumeration value="&#34;BLENDFACTORALPHA&#34;"/>
-               <enumeration value="&#34;BLENDTEXTUREALPHA&#34;"/>
-               <enumeration value="&#34;DOTPRODUCT3&#34;"/>
+               <enumeration value="&#34;ADD_SIGNED&#34;"/>
+               <enumeration value="&#34;ADD_SIGNED_2X&#34;"/>
+               <enumeration value="&#34;ADD_SMOOTH&#34;"/>
+               <enumeration value="&#34;BLEND_CURRENT_ALPHA&#34;"/>
+               <enumeration value="&#34;BLEND_DIFFUSE_ALPHA&#34;"/>
+               <enumeration value="&#34;BLEND_FACTOR_ALPHA&#34;"/>
+               <enumeration value="&#34;BLEND_TEXTURE_ALPHA&#34;"/>
+               <enumeration value="&#34;DOT_PRODUCT_3&#34;"/>
                <enumeration value="&#34;MODULATE&#34;"/>
-               <enumeration value="&#34;MODULATE2X&#34;"/>
-               <enumeration value="&#34;MODULATE4X&#34;"/>
-               <enumeration value="&#34;MODULATEALPHA_ADDCOLOR&#34;"/>
-               <enumeration value="&#34;MODULATEINVALPHA_ADDCOLOR&#34;"/>
-               <enumeration value="&#34;MODULATEINVCOLOR_ADDALPHA&#34;"/>
+               <enumeration value="&#34;MODULATE_2X&#34;"/>
+               <enumeration value="&#34;MODULATE_4X&#34;"/>
+               <enumeration value="&#34;MODULATE_ALPHA_ADD_COLOR&#34;"/>
+               <enumeration value="&#34;MODULATE_INV_ALPHA_ADD_COLOR&#34;"/>
+               <enumeration value="&#34;MODULATE_INV_COLOR_ADD_ALPHA&#34;"/>
                <enumeration value="&#34;OFF&#34;"/>
                <enumeration value="&#34;REPLACE&#34;"/>
-               <enumeration value="&#34;SELECTARG1&#34;"/>
-               <enumeration value="&#34;SELECTARG2&#34;"/>
+               <enumeration value="&#34;SELECT_ARG1&#34;"/>
+               <enumeration value="&#34;SELECT_ARG2&#34;"/>
                <enumeration value="&#34;SUBTRACT&#34;"/>
             </field>
             <field name="source"
@@ -39422,24 +39423,25 @@
                    description="parameter field defines the algorithm used to compute texture coordinates.">
                <enumeration value="SPHERE"
                             appinfo="Creates texture coordinates for a spherical environment."/>
-               <enumeration value="CAMERASPACENORMAL"
-                            appinfo="Use vertex normal, transformed to camera space, as input texture coordinates."/>
-               <enumeration value="CAMERASPACEPOSITION"
-                            appinfo="Use vertex position, transformed to camera space, as input texture coordinates."/>
-               <enumeration value="CAMERASPACEREFLECTIONVECTOR"
-                            appinfo="Use reflection vector, transformed to camera space, as input texture coordinates."/>
-               <enumeration value="SPHERE-LOCAL" appinfo="Sphere mapping but in local coordinates."/>
+               <enumeration value="CAMERA_SPACE_NORMAL"
+                            appinfo="Use vertex normal, transformed to camera space, as input texture coordinates. (previously no underscores in X3D 3.0-4.0)."/>
+               <enumeration value="CAMERA_SPACE_POSITION"
+                            appinfo="Use vertex position, transformed to camera space, as input texture coordinates. (previously no underscores in X3D 3.0-4.0)."/>
+               <enumeration value="CAMERA_SPACE_REFLECTION_VECTOR"
+                            appinfo="Use reflection vector, transformed to camera space, as input texture coordinates. (previously no underscores in X3D 3.0-4.0)."/>
+               <enumeration value="SPHERE_LOCAL"
+                            appinfo="Sphere mapping but in local coordinates. (previously hypenated in X3D 3.0-4.0)."/>
                <enumeration value="COORD" appinfo="Use vertex coordinates."/>
-               <enumeration value="COORD-EYE"
-                            appinfo="Use vertex coordinates transformed to camera space."/>
+               <enumeration value="COORD_EYE"
+                            appinfo="Use vertex coordinates transformed to camera space. (previously hypenated in X3D 3.0-4.0)."/>
                <enumeration value="NOISE"
                             appinfo="Apply Perlin solid noise function on vertex coordinates."/>
-               <enumeration value="NOISE-EYE"
-                            appinfo="Apply Perlin solid noise function on vertex coordinates transformed to camera space."/>
-               <enumeration value="SPHERE-REFLECT"
-                            appinfo="similar to CAMERASPACEREFLECTIONVECTOR with optional index of refraction."/>
-               <enumeration value="SPHERE-REFLECT-LOCAL"
-                            appinfo="Similar to SPHERE-REFLECT transformed to camera space."/>
+               <enumeration value="NOISE_EYE"
+                            appinfo="Apply Perlin solid noise function on vertex coordinates transformed to camera space. (previously hypenated in X3D 3.0-4.0)."/>
+               <enumeration value="SPHERE_REFLECT"
+                            appinfo="similar to CAMERA_SPACE_REFLECTION_VECTOR with optional index of refraction. (previously hypenated in X3D 3.0-4.0)."/>
+               <enumeration value="SPHERE_REFLECT_LOCAL"
+                            appinfo="Similar to SPHERE_REFLECT transformed to camera space. (previously hypenated in X3D 3.0-4.0)."/>
             </field>
             <field name="parameter"
                    type="MFFloat"
@@ -43936,7 +43938,7 @@
       </Statement>
       <Statement name="ProtoDeclare">
          <InterfaceDefinition specificationUrl="https://www.web3d.org/documents/specifications/19776-1/V3.3/Part01/concepts.html#PrototypeAndFieldDeclarationSyntax"
-                              appinfo="ProtoDeclare defines new Prototype nodes. Nested ProtoDeclares and ProtoInstances are allowed by the specification.">
+                              appinfo="ProtoDeclare defines new Prototype nodes. Nested ProtoDeclares and ProtoInstances are allowed by the X3D Architecture specification.">
             <componentInfo name="Core" level="2"/>
             <field name="appinfo"
                    type="SFString"
