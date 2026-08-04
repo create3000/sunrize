@@ -92,14 +92,14 @@
     "@electron-forge/publisher-github": "^7.11.2",
     "@eslint/js": "^10.0.1",
     "eslint": "^10.8.0",
-    "globals": "^17.8.0",
+    "globals": "^17.9.0",
     "shell-tools": "^1.1.9"
   },
   "dependencies": {
     "@vscode/codicons": "^0.0.45",
     "capitalize": "^2.0.4",
     "console": "^0.7.2",
-    "electron": "^43.2.0",
+    "electron": "^43.3.0",
     "electron-prompt": "^1.7.0",
     "electron-squirrel-startup": "^1.0.1",
     "electron-tabs": "^1.0.4",
