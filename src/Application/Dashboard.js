@@ -234,7 +234,7 @@ module .exports = class Dashboard extends Interface
             viewpointNode    = this .browser .getActiveViewpoint (),
             straighten       = this .browser .getBrowserOption ("StraightenHorizon");
 
-         const [values, bbox] = Editor .getModelMatricesAndBBoxes (executionContext, layerNode, nodes);
+         const [, bbox] = Editor .getModelMatricesAndBBoxes (executionContext, layerNode, nodes);
 
          viewpointNode .lookAtBBox (layerNode, bbox, 1, straighten);
       }
