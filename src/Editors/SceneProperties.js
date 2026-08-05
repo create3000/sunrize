@@ -37,7 +37,7 @@ module .exports = new class SceneProperties extends Dialog
 
       this .tabs .addTextTab ("profile-and-components", _("Profile & Components"));
       this .tabs .addTextTab ("units",                  _("Units"));
-      this .tabs .addTextTab ("meta-data",              _("Metadata"));
+      this .tabs .addTextTab ("meta-data",              _("Meta Data"));
       this .tabs .addTextTab ("world-info",             _("World Info"));
 
       this .tabs .setup ();
@@ -191,7 +191,7 @@ module .exports = new class SceneProperties extends Dialog
             .append (this .commonMetaData)
             .append ($("<label></label>")
                .attr ("for", "common-metadata")
-               .text (_("Add Common MetaData when Saving"))))
+               .text (_("Add Common Meta Data when Saving"))))
          .appendTo (this .metaDataOptions .body);
 
       this .metaData .table       = $("<table></table>") .addClass ("sticky-headers") .appendTo (this .metaData);
