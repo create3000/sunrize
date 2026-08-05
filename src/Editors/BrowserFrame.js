@@ -1,12 +1,9 @@
 "use strict";
 
 const
-   $           = require ("jquery"),
-   X3D         = require ("../X3D"),
-   Dialog      = require ("../Controls/Dialog"),
-   Editor      = require ("../Undo/Editor"),
-   UndoManager = require ("../Undo/UndoManager"),
-   _           = require ("../Application/GetText");
+   $      = require ("jquery"),
+   Dialog = require ("../Controls/Dialog"),
+   _      = require ("../Application/GetText");
 
 module .exports = new class BrowserFrame extends Dialog
 {
@@ -124,25 +121,24 @@ module .exports = new class BrowserFrame extends Dialog
    {
       super .configure ({ size: [388, 175] });
 
-      this .connect (Editor .getWorldInfo (this .browser .currentScene));
+      this .config .file .setDefaultValues ({
+         fixedSize: false,
+         numerator: 1,
+         denominator: 1,
+         backgroundColor: "",
+      });
+
       this .updateInputs ();
       this .onresize ();
-   }
-
-   connect (worldInfoNode)
-   {
-      worldInfoNode ?.addMetaDataCallback (this, "Sunrize/BrowserFrame/fixedSize",       () => this .updateInputs ());
-      worldInfoNode ?.addMetaDataCallback (this, "Sunrize/BrowserFrame/aspectRatio",     () => this .updateInputs ());
-      worldInfoNode ?.addMetaDataCallback (this, "Sunrize/BrowserFrame/backgroundColor", () => this .updateInputs ());
    }
 
    updateInputs ()
    {
       const
-         worldInfoNode                    = Editor .getWorldInfo (this .browser .currentScene),
-         [fixedSize = false]              = worldInfoNode ?.getMetaData ("Sunrize/BrowserFrame/fixedSize") ?? [ ],
-         [numerator = 1, denominator = 1] = worldInfoNode ?.getMetaData ("Sunrize/BrowserFrame/aspectRatio") ?? [ ],
-         [backgroundColor = ""]           = worldInfoNode ?.getMetaData ("Sunrize/BrowserFrame/backgroundColor") ?? [ ];
+         fixedSize       = this .config .file .fixedSize,
+         numerator       = this .config .file .numerator,
+         denominator     = this .config .file .denominator,
+         backgroundColor = this .config .file .backgroundColor;
 
       this .updateSize ();
 
@@ -160,22 +156,12 @@ module .exports = new class BrowserFrame extends Dialog
 
    onchange ()
    {
-      const
-         worldInfoNode   = Editor .getWorldInfo (this .browser .currentScene, true),
-         fixedSize       = new X3D .SFBool (this .fixedSize .prop ("checked")),
-         aspectRatio     = new X3D .MFDouble (this .numerator .val (), this .denominator .val ()),
-         backgroundColor = new X3D .SFString (this .backgroundColor .val ());
+      this .config .file .fixedSize       = this .fixedSize .prop ("checked");
+      this .config .file .numerator       = this .numerator .val ();
+      this .config .file .denominator     = this .denominator .val ();
+      this .config .file .backgroundColor = this .backgroundColor .val ();
 
-      this .connect (worldInfoNode);
-
-      UndoManager .shared .beginUndo (_("Change Browser Frame"));
-
-      Editor .setNodeMetaData (worldInfoNode, "Sunrize/BrowserFrame/fixedSize",       fixedSize);
-      Editor .setNodeMetaData (worldInfoNode, "Sunrize/BrowserFrame/aspectRatio",     aspectRatio);
-      Editor .setNodeMetaData (worldInfoNode, "Sunrize/BrowserFrame/backgroundColor", backgroundColor);
-      Editor .deferFunction (() => this .onresize ());
-
-      UndoManager .shared .endUndo ();
+      this .onresize ();
    }
 
    /**
@@ -184,13 +170,13 @@ module .exports = new class BrowserFrame extends Dialog
    onresize ()
    {
       const
-         worldInfoNode                    = Editor .getWorldInfo (this .browser .currentScene),
-         [fixedSize = false]              = worldInfoNode ?.getMetaData ("Sunrize/BrowserFrame/fixedSize") ?? [ ],
-         [numerator = 1, denominator = 1] = worldInfoNode ?.getMetaData ("Sunrize/BrowserFrame/aspectRatio") ?? [ ],
-         [backgroundColor = ""]           = worldInfoNode ?.getMetaData ("Sunrize/BrowserFrame/backgroundColor") ?? [ ],
-         aspectRatio                      = numerator / denominator,
-         frameAspectRatio                 = $("#browser-frame") .width () / $("#browser-frame") .height (),
-         element                          = $(this .browser .element);
+         fixedSize        = this .config .file .fixedSize,
+         numerator        = this .config .file .numerator,
+         denominator      = this .config .file .denominator,
+         backgroundColor  = this .config .file .backgroundColor,
+         aspectRatio      = numerator / denominator,
+         frameAspectRatio = $("#browser-frame") .width () / $("#browser-frame") .height (),
+         element          = $(this .browser .element);
 
       if (fixedSize && aspectRatio)
       {
