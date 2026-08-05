@@ -205,6 +205,7 @@ module .exports = class Document extends Interface
    configure ()
    {
       this .config .file .setDefaultValues ({
+         commonMetaData: true,
          inferProfileAndComponents: true,
          primitiveQuality: "MEDIUM",
          textureQuality: "MEDIUM",
@@ -459,22 +460,25 @@ Viewpoint {
       if (this .config .file .inferProfileAndComponents ?? true)
          Editor .inferProfileAndComponents (scene, new UndoManager ());
 
-      // Add default meta data.
+      // Add common meta data.
 
-      const
-         pkg       = require ("../../package.json"),
-         generator = scene .getMetaData ("generator") ?.filter (value => !value .startsWith (pkg .productName)) ?? [ ];
+      if (this .config .file .commonMetaData ?? true)
+      {
+         const
+            pkg       = require ("../../package.json"),
+            generator = scene .getMetaData ("generator") ?.filter (value => !value .startsWith (pkg .productName)) ?? [ ];
 
-      generator .unshift (`${pkg .productName} V${pkg .version}, ${pkg .homepage}`);
+         generator .unshift (`${pkg .productName} V${pkg .version}, ${pkg .homepage}`);
 
-      if (!scene .getMetaData ("creator") ?.some (value => value .includes (this .fullname)))
-         scene .addMetaData ("creator", this .fullname);
+         if (!scene .getMetaData ("creator") ?.some (value => value .includes (this .fullname)))
+            scene .addMetaData ("creator", this .fullname);
 
-      if (!scene .getMetaData ("created"))
-         scene .setMetaData ("created", new Date () .toUTCString ());
+         if (!scene .getMetaData ("created"))
+            scene .setMetaData ("created", new Date () .toUTCString ());
 
-      scene .setMetaData ("modified", new Date () .toUTCString ());
-      scene .setMetaData ("generator", generator);
+         scene .setMetaData ("modified", new Date () .toUTCString ());
+         scene .setMetaData ("generator", generator);
+      }
 
       // Save source code.
 

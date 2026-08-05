@@ -178,6 +178,22 @@ module .exports = new class SceneProperties extends Dialog
 
       // Meta Data
 
+      this .metaDataOptions = $("<table></table>") .appendTo (this .metaData);
+      this .metaDataOptions .body = $("<tbody></tbody>") .appendTo (this .metaDataOptions);
+
+      this .commonMetaData = $("<input></input>")
+         .attr ("id", "common-metadata")
+         .attr ("type", "checkbox")
+         .on ("click", () => this .toggleCommonMetaData ());
+
+      $("<tr></tr>")
+         .append ($("<td></td>")
+            .append (this .commonMetaData)
+            .append ($("<label></label>")
+               .attr ("for", "common-metadata")
+               .text (_("Add Common MetaData when Saving"))))
+         .appendTo (this .metaDataOptions .body);
+
       this .metaData .table       = $("<table></table>") .addClass ("sticky-headers") .appendTo (this .metaData);
       this .metaData .table .head = $("<thead></thead>") .appendTo (this .metaData .table);
       this .metaData .table .body = $("<tbody></tbody>") .appendTo (this .metaData .table) .sortable ({
@@ -285,6 +301,7 @@ module .exports = new class SceneProperties extends Dialog
       const app = require ("../Application/Window");
 
       this .profileAndComponents .inputs .checkbox .prop ("checked", app .config .file .inferProfileAndComponents);
+      this .commonMetaData .prop ("checked", app .config .file .commonMetaData);
 
       this .toggleInferProfileAndComponents ();
       this .updateProfile ();
@@ -416,6 +433,13 @@ module .exports = new class SceneProperties extends Dialog
          conversionFactor = this .units .inputs .get (category) .conversionFactor;
 
       Editor .updateUnit (this .executionContext, category, name .val (), conversionFactor .val ());
+   }
+
+   toggleCommonMetaData ()
+   {
+      const app = require ("../Application/Window");
+
+      app .config .file .commonMetaData = this .commonMetaData .prop ("checked");
    }
 
    sortMetaData (event)
