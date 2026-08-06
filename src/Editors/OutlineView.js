@@ -657,6 +657,11 @@ module .exports = class OutlineView extends Interface
       this .restoreScrollPositions ();
    }
 
+   #inlineNodes = new Set ([
+      X3D .X3DConstants .Inline,
+      X3D .X3DConstants .InlineGeometry,
+   ]);
+
    #updateNodeSymbol = Symbol ();
 
    expandNode (parent, node, full)
@@ -754,7 +759,7 @@ module .exports = class OutlineView extends Interface
       {
          // X3DUrlObject
 
-         if (node .getType () .includes (X3D .X3DConstants .Inline))
+         if (node .getType () .some (type => this .#inlineNodes .has (type)))
          {
             node .getLoadState () .addFieldCallback (this .#updateNodeSymbol, this .updateNode .bind (this, parent, node, full));
          }
@@ -763,9 +768,9 @@ module .exports = class OutlineView extends Interface
             node .getLoadState () .addFieldCallback (this .#updateNodeSymbol, this .updateFieldLoadState .bind (this, node));
          }
 
-         if (node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE && this .expandInlineNodes && node .getType () .includes (X3D .X3DConstants .Inline))
+         if (node .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE && this .expandInlineNodes && node .getType () .some (type => this .#inlineNodes .has (type)))
          {
-            ul .append (this .createSceneElement (node .getInternalScene (), "Scene", "internal-scene"));
+            ul .append (this .createSceneElement (node .getInternalScene (), "Scene", ["internal-scene", node .getTypeName ()]));
          }
          else
          {
@@ -1210,7 +1215,7 @@ module .exports = class OutlineView extends Interface
             {
                if (node .getExecutionContext () .getOuterNode () instanceof X3D .X3DProtoDeclaration)
                {
-                  if (!node .getType () .includes (X3D .X3DConstants .Inline))
+                  if (!node .getType () .some (type => this .#inlineNodes .has (type)))
                      continue;
                }
 
