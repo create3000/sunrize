@@ -1106,7 +1106,7 @@ Viewpoint {
          tool         = geometryTool ?? shapeNode .getExecutionContext () .getOuterNode () ?.getTool (),
          node         = tool ?? shapeNode .getExecutionContext () .getOuterNode () ?? shapeNode;
 
-      outlineEditor .expandTo (node, { expandObject: true, expandAll: true });
+      outlineEditor .expandTo (node, { expandObject: true, expandInlineNodes: true, expandAll: true });
 
       let elements = outlineEditor .sceneGraph .find (`.node[node-id=${node .getId ()}]`);
 
@@ -1134,10 +1134,7 @@ Viewpoint {
       else
       {
          while (!outlineEditor .isEditable (elements))
-         {
-            elements .jstree ("close_node", elements);
             elements = elements .parent () .closest (".node, .scene", outlineEditor .sceneGraph);
-         }
 
          elements = Array .from (elements);
       }

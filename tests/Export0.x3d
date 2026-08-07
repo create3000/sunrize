@@ -5,7 +5,7 @@
     <component name='Networking' level='2'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='created' content='Fri, 07 Aug 2026 06:29:48 GMT'/>
-    <meta name='modified' content='Fri, 07 Aug 2026 06:35:56 GMT'/>
+    <meta name='modified' content='Fri, 07 Aug 2026 08:41:55 GMT'/>
     <meta name='generator' content='Sunrize X3D Editor V2.1.18, https://create3000.github.io/sunrize/'/>
   </head>
   <Scene>
@@ -27,35 +27,7 @@
         description='Initial View'
         position='0 12 0'
         orientation='-1 0 0 1.5707963267949'/>
-    <Transform DEF='Cylinder'
-        translation='-2 0 0'
-        rotation='-1 0 0 1.5707963267949'>
-      <Shape>
-        <Appearance>
-          <Material
-              diffuseColor='0.5607843 0.8078431 0'/>
-        </Appearance>
-        <Cylinder/>
-      </Shape>
-    </Transform>
-    <Transform DEF='Pyramid'
-        translation='2 0 0'
-        rotation='1 0 0 4.71238898038469'>
-      <Shape>
-        <Appearance>
-          <Material
-              diffuseColor='0.5607843 0.8078431 0'/>
-        </Appearance>
-        <IndexedFaceSet
-            coordIndex='3, 2, 1, 0, -1, 0, 1, 4, -1, 1, 2, 4, -1, 2, 3, 4, -1, 3, 0, 4, -1'>
-          <Coordinate
-              point='-1 -0.8660254 1, 1 -0.8660254 1, 1 -0.8660254 -1, -1 -0.8660254 -1, 0 0.8660254 0'/>
-        </IndexedFaceSet>
-      </Shape>
-    </Transform>
     <Inline
         url='"Export1.x3d"'/>
-    <EXPORT localDEF='Cylinder'/>
-    <EXPORT localDEF='Pyramid'/>
   </Scene>
 </X3D>
