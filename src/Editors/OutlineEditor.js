@@ -500,7 +500,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             },
             {
                label: _("Import Node..."),
-               visible: executionContext !== this .executionContext && !element .closest (".instance-scene, .InlineGeometry.internal-scene") .length,
+               visible: executionContext !== this .executionContext && !element .closest (".instance-scene, .InlineGeometry.internal-scene") .length && !element .closest (".internal-scene") .parent () .closest (".internal-scene") .length,
                args: ["addImportedNode", element .attr ("id")],
             },
          ];
