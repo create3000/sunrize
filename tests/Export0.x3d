@@ -5,7 +5,7 @@
     <component name='Networking' level='2'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='created' content='Fri, 07 Aug 2026 06:29:48 GMT'/>
-    <meta name='modified' content='Fri, 07 Aug 2026 08:41:55 GMT'/>
+    <meta name='modified' content='Fri, 07 Aug 2026 08:45:05 GMT'/>
     <meta name='generator' content='Sunrize X3D Editor V2.1.18, https://create3000.github.io/sunrize/'/>
   </head>
   <Scene>
@@ -27,7 +27,9 @@
         description='Initial View'
         position='0 12 0'
         orientation='-1 0 0 1.5707963267949'/>
-    <Inline
+    <Inline DEF='_1'
         url='"Export1.x3d"'/>
+    <IMPORT inlineDEF='_1' importedDEF='Cylinder'/>
+    <IMPORT inlineDEF='_1' importedDEF='Pyramid'/>
   </Scene>
 </X3D>
