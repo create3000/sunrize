@@ -3418,7 +3418,7 @@ module .exports = class OutlineView extends Interface
    {
       // Hide all X3DShapeNode nodes and show all other nodes.
 
-      for (const object of this .executionContext .traverse (Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES))
+      for (const object of this .executionContext .traverse (Traverse .INLINE_SCENE | Traverse .INLINE_GEOMETRY_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES))
       {
          if (!(object instanceof X3D .SFNode))
             continue;
@@ -3435,7 +3435,7 @@ module .exports = class OutlineView extends Interface
 
       const selection = require ("../Application/Selection");
 
-      for (const object of Traverse .traverse (selection .nodes, Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES))
+      for (const object of Traverse .traverse (selection .nodes, Traverse .INLINE_SCENE | Traverse .INLINE_GEOMETRY_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES))
       {
          if (!(object instanceof X3D .SFNode))
             continue;
@@ -3456,7 +3456,7 @@ module .exports = class OutlineView extends Interface
    {
       const selection = require ("../Application/Selection");
 
-      for (const object of Traverse .traverse (selection .nodes .length ? selection .nodes : this .executionContext, Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES))
+      for (const object of Traverse .traverse (selection .nodes .length ? selection .nodes : this .executionContext, Traverse .INLINE_SCENE | Traverse .INLINE_GEOMETRY_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES))
       {
          if (!(object instanceof X3D .SFNode))
             continue;
@@ -3472,7 +3472,7 @@ module .exports = class OutlineView extends Interface
 
    showAllObjects ()
    {
-      for (const object of this .executionContext .traverse (Traverse .INLINE_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES))
+      for (const object of this .executionContext .traverse (Traverse .INLINE_SCENE | Traverse .INLINE_GEOMETRY_SCENE | Traverse .PROTOTYPE_INSTANCES | Traverse .PROTO_DECLARATIONS | Traverse .PROTO_DECLARATION_BODY | Traverse .ROOT_NODES))
       {
          if (!(object instanceof X3D .SFNode))
             continue;
