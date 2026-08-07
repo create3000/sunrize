@@ -122,11 +122,11 @@
     "x_ite-off-parser": "^1.2.4",
     "x_ite-sog-parser": "^2.0.1",
     "x_ite-spz-parser": "^2.0.0",
-    "x3d-traverse": "^2.0.1"
+    "x3d-traverse": "^2.1.0"
   },
   "allowScripts": {
+    "electron-winstaller@5.4.4": true,
     "fs-xattr@0.3.1": true,
-    "macos-alias@0.2.12": true,
-    "electron-winstaller@5.4.4": true
+    "macos-alias@0.2.12": true
   }
 }
