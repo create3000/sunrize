@@ -236,7 +236,7 @@ module .exports = class Dashboard extends Interface
 
          const [, bbox] = Editor .getModelMatricesAndBBoxes (executionContext, layerNode, nodes);
 
-         viewpointNode .lookAtBBox (layerNode, bbox, 1, straighten);
+         viewpointNode .lookAtBBox ({ layerNode, bbox, straighten });
       }
       else
       {
