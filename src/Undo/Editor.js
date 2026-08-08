@@ -2623,7 +2623,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          oldCenterOfRotation = viewpointNode .getCenterOfRotation () .copy (),
          oldFieldOfView      = viewpointNode .getFieldOfView ();
 
-      viewpointNode .resetUserOffsets ();
+      viewpointNode .resetUserOffsets (false);
       viewpointNode .setPosition (position);
       viewpointNode .setOrientation (orientation);
       viewpointNode .setCenterOfRotation (centerOfRotation);

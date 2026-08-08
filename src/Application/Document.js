@@ -2,7 +2,6 @@
 
 const
    $ = window .jQuery = require ("jquery"),
-   $ui                = require ("jquery-ui-dist/jquery-ui"),
    electron           = require ("electron"),
    fs                 = require ("fs"),
    path               = require ("path"),
@@ -20,6 +19,7 @@ const
    AudioParser        = require ("../Parser/AudioParser"),
    _                  = require ("./GetText");
 
+require ("jquery-ui-dist/jquery-ui");
 require ("x_ite-sog-parser");
 require ("x_ite-spz-parser/x_ite-spz-parser-123.js");
 require ("x_ite-spz-parser/x_ite-spz-parser-4.js");
