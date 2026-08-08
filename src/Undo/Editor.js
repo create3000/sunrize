@@ -2623,11 +2623,11 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          oldCenterOfRotation = viewpointNode .getCenterOfRotation () .copy (),
          oldFieldOfView      = viewpointNode .getFieldOfView ();
 
-      viewpointNode .resetUserOffsets (false);
       viewpointNode .setPosition (position);
       viewpointNode .setOrientation (orientation);
       viewpointNode .setCenterOfRotation (centerOfRotation);
       viewpointNode .setFieldOfView (fieldOfView);
+      viewpointNode .resetUserOffsets ();
 
       undoManager .registerUndo (() =>
       {
