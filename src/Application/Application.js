@@ -534,12 +534,9 @@ module .exports = class Application
                label: _("View"),
                submenu: [
                   {
-                     role: "reload",
+                     label: _("Reload"),
                      visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
-                  },
-                  {
-                     role: "forceReload",
-                     visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
+                     click: () => this .mainWindow .reload (),
                   },
                   {
                      role: "toggleDevTools",
