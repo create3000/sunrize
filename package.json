@@ -92,7 +92,7 @@
     "@electron-forge/publisher-github": "^7.11.2",
     "@eslint/js": "^10.0.1",
     "eslint": "^10.8.1",
-    "globals": "^17.9.0",
+    "globals": "^17.11.0",
     "shell-tools": "^1.1.9"
   },
   "dependencies": {
