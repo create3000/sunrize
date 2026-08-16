@@ -2,7 +2,7 @@
 <!-- X3D Unified Object Model (X3DUOM) X3dUnifiedObjectModel-4.1.xml -->
 <!-- Online at https://www.web3d.org/specifications/X3dUnifiedObjectModel-4.1.xml -->
 <!-- This file contains a listing of all abstract and concrete nodes in version 4.1 of X3D -->
-<!-- Generated 2026-08-03-07:00 20:53:19.0788767-07:00 -->
+<!-- Generated 2026-08-12-07:00 17:00:03.4836953-07:00 -->
 <X3dUnifiedObjectModel xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
                        version="4.1"
                        xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/X3dUnifiedObjectModel.xsd">
@@ -699,7 +699,7 @@
       <SimpleType name="geoMetadataSummaryKeyValues"
                   baseType="xs:NMTOKEN"
                   appinfo="The enumeration keys for the GeoMetadata summary field. This list is unbounded, additional enumeration values are allowed."
-                  documentation="https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geodata.html#t-keywordsandvalues">
+                  documentation="https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/geospatial.html#t-keywordsandvalues">
          <enumeration value="title"
                       appinfo="A name to succinctly identify the dataset to user. For example, &#34;San Francisco, California&#34;."/>
          <enumeration value="description"
@@ -4145,11 +4145,11 @@
                   appinfo="intersectionTypeValues are supported enumeration values for X3DPickSensorNode type intersectionType field. This list is unbounded, additional enumeration values are allowed."
                   documentation="https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/picking.html#X3DPickSensorNode">
          <enumeration value="BOUNDS"
-                      appinfo="TODO undefined in X3D specification"
-                      documentation="https://www.web3d.org/member-only/mantis/view.php?id=1294"/>
+                      appinfo="When testing intersections, BOUNDS indicates that the pickingGeometry is intersected with the bounding box of the pickable object"
+                      documentation="https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/picking.html#X3DPickSensorNode"/>
          <enumeration value="GEOMETRY"
-                      appinfo="TODO undefined in X3D specification"
-                      documentation="https://www.web3d.org/member-only/mantis/view.php?id=1294"/>
+                      appinfo="When testing intersections, GEOMETRY indicates that the pickingGeometry is intersected with the geometry of the pickable object"
+                      documentation="https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/picking.html#X3DPickSensorNode"/>
       </SimpleType>
       <SimpleType name="justifyChoices"
                   baseType="MFString"
@@ -7766,11 +7766,11 @@
                    simpleType="intersectionTypeValues"
                    baseType="xs:NMTOKEN">
                <enumeration value="BOUNDS"
-                            appinfo="TODO undefined in X3D specification."
-                            documentation="https://www.web3d.org/member-only/mantis/view.php?id=1294"/>
+                            appinfo="When testing intersections, BOUNDS indicates that the pickingGeometry is intersected with the bounding box of the pickable object."
+                            documentation="https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/picking.html#X3DPickSensorNode"/>
                <enumeration value="GEOMETRY"
-                            appinfo="TODO undefined in X3D specification."
-                            documentation="https://www.web3d.org/member-only/mantis/view.php?id=1294"/>
+                            appinfo="When testing intersections, GEOMETRY indicates that the pickingGeometry is intersected with the geometry of the pickable object."
+                            documentation="https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/picking.html#X3DPickSensorNode"/>
             </field>
             <field name="IS"
                    type="SFNode"
@@ -27486,11 +27486,11 @@
                    baseType="xs:NMTOKEN"
                    description="intersectionType specifies precision of the collision computation.">
                <enumeration value="BOUNDS"
-                            appinfo="TODO undefined in X3D specification."
-                            documentation="https://www.web3d.org/member-only/mantis/view.php?id=1294"/>
+                            appinfo="When testing intersections, BOUNDS indicates that the pickingGeometry is intersected with the bounding box of the pickable object."
+                            documentation="https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/picking.html#X3DPickSensorNode"/>
                <enumeration value="GEOMETRY"
-                            appinfo="TODO undefined in X3D specification."
-                            documentation="https://www.web3d.org/member-only/mantis/view.php?id=1294"/>
+                            appinfo="When testing intersections, GEOMETRY indicates that the pickingGeometry is intersected with the geometry of the pickable object."
+                            documentation="https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/picking.html#X3DPickSensorNode"/>
             </field>
             <field name="IS"
                    type="SFNode"
@@ -32997,11 +32997,11 @@
                    baseType="xs:NMTOKEN"
                    description="intersectionType specifies precision of the collision computation.">
                <enumeration value="BOUNDS"
-                            appinfo="TODO undefined in X3D specification."
-                            documentation="https://www.web3d.org/member-only/mantis/view.php?id=1294"/>
+                            appinfo="When testing intersections, BOUNDS indicates that the pickingGeometry is intersected with the bounding box of the pickable object."
+                            documentation="https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/picking.html#X3DPickSensorNode"/>
                <enumeration value="GEOMETRY"
-                            appinfo="TODO undefined in X3D specification."
-                            documentation="https://www.web3d.org/member-only/mantis/view.php?id=1294"/>
+                            appinfo="When testing intersections, GEOMETRY indicates that the pickingGeometry is intersected with the geometry of the pickable object."
+                            documentation="https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/picking.html#X3DPickSensorNode"/>
             </field>
             <field name="IS"
                    type="SFNode"
@@ -34061,11 +34061,11 @@
                    baseType="xs:NMTOKEN"
                    description="intersectionType specifies precision of the collision computation.">
                <enumeration value="BOUNDS"
-                            appinfo="TODO undefined in X3D specification."
-                            documentation="https://www.web3d.org/member-only/mantis/view.php?id=1294"/>
+                            appinfo="When testing intersections, BOUNDS indicates that the pickingGeometry is intersected with the bounding box of the pickable object."
+                            documentation="https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/picking.html#X3DPickSensorNode"/>
                <enumeration value="GEOMETRY"
-                            appinfo="TODO undefined in X3D specification."
-                            documentation="https://www.web3d.org/member-only/mantis/view.php?id=1294"/>
+                            appinfo="When testing intersections, GEOMETRY indicates that the pickingGeometry is intersected with the geometry of the pickable object."
+                            documentation="https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/picking.html#X3DPickSensorNode"/>
             </field>
             <field name="IS"
                    type="SFNode"
@@ -42675,11 +42675,11 @@
                    baseType="xs:NMTOKEN"
                    description="intersectionType specifies precision of the collision computation.">
                <enumeration value="BOUNDS"
-                            appinfo="TODO undefined in X3D specification."
-                            documentation="https://www.web3d.org/member-only/mantis/view.php?id=1294"/>
+                            appinfo="When testing intersections, BOUNDS indicates that the pickingGeometry is intersected with the bounding box of the pickable object."
+                            documentation="https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/picking.html#X3DPickSensorNode"/>
                <enumeration value="GEOMETRY"
-                            appinfo="TODO undefined in X3D specification."
-                            documentation="https://www.web3d.org/member-only/mantis/view.php?id=1294"/>
+                            appinfo="When testing intersections, GEOMETRY indicates that the pickingGeometry is intersected with the geometry of the pickable object."
+                            documentation="https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/picking.html#X3DPickSensorNode"/>
             </field>
             <field name="IS"
                    type="SFNode"
