@@ -54,8 +54,8 @@ module .exports = class NodeList extends Interface
          .filter (this .filter);
 
       // this .nodes = this .nodes
-      //    .sort ((a, b) => Algorithm .cmp (this .getName (a), this .getName (b)))
-      //    .sort ((a, b) => Algorithm .cmp (a .getTypeName (), b .getTypeName ()))
+      //    .sort ((a, b) => this .getName (a) .localeCompare (this .getName (b), "en"))
+      //    .sort ((a, b) => a .getTypeName () .localeCompare (b .getTypeName (), "en"));
 
       for (const node of this .nodes)
       {
