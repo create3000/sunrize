@@ -9,7 +9,13 @@
         "command": "npm run development",
         "problemMatcher": [],
         "runOptions": {
-            "runOn": "folderOpen",
+          "runOn": "folderOpen",
+        },
+        "windows": {
+          "command": "exit 0"
+        },
+        "linux": {
+          "command": "exit 0"
         }
       },
       {
