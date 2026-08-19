@@ -8,6 +8,9 @@
         "type": "shell",
         "command": "npm run development",
         "problemMatcher": [],
+        "runOptions": {
+            "runOn": "folderOpen",
+        }
       },
       {
         "label": "Make X_ITE for Sunrize",
