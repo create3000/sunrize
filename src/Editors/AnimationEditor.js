@@ -279,7 +279,7 @@ module .exports = class AnimationEditor extends Interface
       this .keyTypeElement .val (this .config .file .keyType);
    }
 
-   colorScheme (shouldUseDarkColors)
+   colorScheme (/* shouldUseDarkColors */)
    {
       this .requestDrawTimeline ();
    }
@@ -822,7 +822,7 @@ module .exports = class AnimationEditor extends Interface
          }
 
          const keyType = Object .entries (keyTypes)
-            .find (([key, value]) => value === this .getSelectedKeyframes () .length);
+            .find (([, value]) => value === this .getSelectedKeyframes () .length);
 
          this .keyTypeElement .val (keyType ?.[0] ?? "MIXED");
       }
@@ -2741,7 +2741,7 @@ module .exports = class AnimationEditor extends Interface
       event .stopPropagation ();
    }
 
-   on_mouseup_scrollbar (event)
+   on_mouseup_scrollbar ()
    {
       $(document) .off ("mouseup.AnimationEditorScrollbar");
 
