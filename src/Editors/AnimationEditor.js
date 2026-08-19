@@ -425,6 +425,10 @@ module .exports = class AnimationEditor extends Interface
          this .propertiesIcon,
          this .keyTypeElement,
          this .timeElement,
+         this .zoomOutIcon,
+         this .zoomInIcon,
+         this .zoomFitIcon,
+         this .zoom100Icon,
       ]
       .flatMap (object => [... object]))
       .removeClass (enabled ? "disabled" : [ ])
