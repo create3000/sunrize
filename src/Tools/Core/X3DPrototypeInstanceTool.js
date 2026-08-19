@@ -10,6 +10,7 @@ class X3DPrototypeInstanceTool extends X3DNodeTool
    {
       super (node);
 
+      node .getProtoNode () ._updateInstances .addInterest ("set_toolRootNodes", this);
       node .getBody () .rootNodes .addInterest ("set_toolRootNodes", this);
 
       this .set_toolRootNodes ();
@@ -33,6 +34,7 @@ class X3DPrototypeInstanceTool extends X3DNodeTool
    {
       try
       {
+         this .node .getProtoNode () ._updateInstances .removeInterest ("set_toolRootNodes", this);
          this .node .getBody () .rootNodes .removeInterest ("set_toolRootNodes", this);
 
          this .node .getInnerNode () .removeTool ();
