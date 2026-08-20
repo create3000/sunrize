@@ -1913,6 +1913,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     *
     * @param {X3DBrowser} browser
     * @param {UndoManager} undoManager
+    * @returns X3DNode | null
     */
    static getLayerConfigNode (browser, create = false, undoManager = UndoManager .shared)
    {
