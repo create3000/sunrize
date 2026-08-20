@@ -583,10 +583,8 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   newURL .push (encodeURI (relativePath));
                   continue;
                }
-               catch (error)
-               {
-                  // console .log (error)
-               }
+               catch
+               { }
 
                newURL .push (fileURL);
             }
@@ -2202,8 +2200,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                }
             }
          }
-
-         this .updateInstances (proto, undoManager);
       }
       else // Script node
       {
@@ -2244,6 +2240,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             }
          }
       }
+
+      if (node instanceof X3D .X3DProtoDeclaration)
+         this .updateInstances (node, undoManager);
 
       undoManager .registerUndo (() =>
       {
@@ -2363,8 +2362,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   }
                }
             }
-
-            this .updateInstances (proto, undoManager);
          }
          else
          {
@@ -2407,6 +2404,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       for (const field of fields)
          node .addUserDefinedField (field .getAccessType (), field .getName (), field);
+
+      if (node instanceof X3D .X3DProtoDeclaration)
+         this .updateInstances (node, undoManager);
 
       //
 
