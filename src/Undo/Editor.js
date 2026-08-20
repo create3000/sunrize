@@ -1947,8 +1947,11 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             if (node .name !== "Sunrize")
                continue;
 
-            if (!node .getValue () [this .#configNode] ?._metadata .getValue ())
-               node .getValue () [this .#configNode] = null;
+            if (node .getValue () [this .#configNode])
+            {
+               if (!node .getValue () [this .#configNode] ._metadata .getValue ())
+                  node .getValue () [this .#configNode] ._metadata = node;
+            }
 
             return node .getValue () [this .#configNode] ??= (() =>
             {
