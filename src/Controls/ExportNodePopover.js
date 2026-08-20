@@ -23,6 +23,7 @@ $.fn.exportNodePopover = function (node, oldExportedName, oldDescription = "")
 
    const nameInput = $("<input></input>")
       .attr ("placeholder", _("Enter exported name"))
+      .attr ("spellcheck", "true")
       .val (oldExportedName || scene .getUniqueExportName (node .getName ()))
       .appendTo (content);
 
@@ -32,6 +33,7 @@ $.fn.exportNodePopover = function (node, oldExportedName, oldDescription = "")
 
    const descriptionInput = $("<input></input>")
       .attr ("placeholder", _("Enter description"))
+      .attr ("spellcheck", "true")
       .val (oldDescription)
       .appendTo (content);
 

@@ -66,6 +66,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
 
    const nameInput = $("<input></input>")
       .attr ("placeholder", _("Enter a name"))
+      .attr ("spellcheck", "true")
       .appendTo (content);
 
    if (field instanceof X3D .X3DField)
@@ -89,6 +90,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
       $("<input></input>")
          .addClass ("appinfo")
          .attr ("placeholder", _("Enter application information"))
+         .attr ("spellcheck", "true")
          .val (field .getAppInfo ())
          .appendTo (content);
 
@@ -99,6 +101,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
       $("<input></input>")
          .addClass ("documentation")
          .attr ("placeholder", _("Enter documentation"))
+         .attr ("spellcheck", "true")
          .val (field .getDocumentation ())
          .appendTo (content);
    }

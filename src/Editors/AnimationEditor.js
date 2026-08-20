@@ -229,6 +229,7 @@ module .exports = class AnimationEditor extends Interface
          .addClass ("node-name")
          .attr ("title", _("Rename animation."))
          .attr ("placeholder", _("Enter animation name."))
+         .attr ("spellcheck", "true")
          .appendTo (this .verticalSplitterLeft)
          .validate (Editor .Id, () =>
          {

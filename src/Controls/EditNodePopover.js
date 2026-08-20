@@ -20,6 +20,7 @@ $.fn.editNodePopover = function (node)
 
    const nameInput = $("<input></input>")
       .attr ("placeholder", _("Enter a name"))
+      .attr ("spellcheck", "true")
       .appendTo (content);
 
    if (node instanceof X3D .X3DProtoDeclaration)
@@ -31,6 +32,7 @@ $.fn.editNodePopover = function (node)
       $("<input></input>")
          .addClass ("appinfo")
          .attr ("placeholder", _("Enter application information"))
+         .attr ("spellcheck", "true")
          .val (node .getAppInfo ())
          .appendTo (content);
 
@@ -41,6 +43,7 @@ $.fn.editNodePopover = function (node)
       $("<input></input>")
          .addClass ("documentation")
          .attr ("placeholder", _("Enter documentation"))
+         .attr ("spellcheck", "true")
          .val (node .getDocumentation ())
          .appendTo (content);
    }

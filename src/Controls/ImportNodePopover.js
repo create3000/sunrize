@@ -23,6 +23,7 @@ $.fn.importNodePopover = function (inlineNode, exportedName, oldImportedName, ol
 
    const nameInput = $("<input></input>")
       .attr ("placeholder", _("Enter imported name"))
+      .attr ("spellcheck", "true")
       .val (oldImportedName || executionContext .getUniqueImportName (exportedName))
       .appendTo (content);
 
@@ -32,6 +33,7 @@ $.fn.importNodePopover = function (inlineNode, exportedName, oldImportedName, ol
 
    const descriptionInput = $("<input></input>")
       .attr ("placeholder", _("Enter description"))
+      .attr ("spellcheck", "true")
       .val (oldDescription)
       .appendTo (content);
 

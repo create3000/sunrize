@@ -119,6 +119,7 @@ module .exports = class ScriptEditor extends Interface
          .addClass ("node-name")
          .attr ("title", _("Rename node."))
          .attr ("placeholder", _("Enter node name."))
+         .attr ("spellcheck", "true")
          .appendTo (this .horizontalSplitterTop)
          .renameNodeInput (null);
 

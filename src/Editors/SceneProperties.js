@@ -248,8 +248,8 @@ module .exports = new class SceneProperties extends Dialog
          .attr ("type", "checkbox")
          .on ("click", () => this .toggleWorldInfo ());
 
-      this .worldInfo .inputs .title = $("<input></input>");
-      this .worldInfo .inputs .info  = $("<textarea></textarea>") .height ("100%") .css ("resize", "none");
+      this .worldInfo .inputs .title = $("<input></input>") .attr ("spellcheck", "true");
+      this .worldInfo .inputs .info  = $("<textarea></textarea>") .attr ("spellcheck", "true") .height ("100%") .css ("resize", "none");
 
       this .worldInfo .checkboxRow = $("<tr></tr>")
          .height ("19.5px")
@@ -494,12 +494,14 @@ module .exports = new class SceneProperties extends Dialog
                .append ($("<input></input>")
                   .attr ("index", 0)
                   .attr ("placeholder", _("Insert meta key here."))
+                  .attr ("spellcheck", "true")
                   .val (key) .on ("change", (event) => this .changeMetaData (event, key))))
             .append ($("<td></td>")
                .addClass ("meta-value")
                .append ($("<input></input>")
                   .attr ("index", 1)
                   .attr ("placeholder", _("Insert meta value here."))
+                  .attr ("spellcheck", "true")
                   .val (value)
                   .on ("change", (event) => this .changeMetaData (event, key))))
             .append ($("<td></td>")
@@ -562,10 +564,12 @@ module .exports = new class SceneProperties extends Dialog
          .append ($("<td></td>")
             .append ($("<input></input>")
                .attr ("placeholder", _("Add new meta key."))
+               .attr ("spellcheck", "true")
                .on ("change", event => this .changeMetaData (event, ""))))
          .append ($("<td></td>")
             .append ($("<input></input>")
                .prop ("readonly", true)
+               .attr ("spellcheck", "true")
                .on ("change", event => this .changeMetaData (event, ""))))
          .append ($("<td></td>"))
          .appendTo (this .metaData .table .foot .empty ());

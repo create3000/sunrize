@@ -41,6 +41,7 @@ $.fn.addPrototypePopover = function (executionContext, type)
 
    const nameInput = $("<input></input>")
       .attr ("placeholder", _("Enter a name"))
+      .attr ("spellcheck", "true")
       .appendTo (content);
 
    // Create tooltip.
