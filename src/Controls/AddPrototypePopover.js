@@ -46,7 +46,7 @@ $.fn.addPrototypePopover = function (executionContext, type)
 
    // Create tooltip.
 
-   const tooltip = this .popover ({
+   this .popover ({
       content: content,
       events: {
          show (event, api)

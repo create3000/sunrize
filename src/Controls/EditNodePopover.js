@@ -53,7 +53,7 @@ $.fn.editNodePopover = function (node)
 
    // Create tooltip.
 
-   const tooltip = this .popover ({
+   this .popover ({
       content: content,
       extension:
       {

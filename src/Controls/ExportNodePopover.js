@@ -39,7 +39,7 @@ $.fn.exportNodePopover = function (node, oldExportedName, oldDescription = "")
 
    // Create tooltip.
 
-   const tooltip = this .popover ({
+   this .popover ({
       content: content,
       extension:
       {

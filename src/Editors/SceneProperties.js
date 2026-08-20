@@ -213,7 +213,7 @@ module .exports = new class SceneProperties extends Dialog
 
             return helper;
          },
-         update: (event, ui) =>
+         update: (/* event, ui */) =>
          {
             this .changeMetaData ();
          },

@@ -1,7 +1,6 @@
 "use strict";
 
 const
-   X3D  = require ("../X3D"),
    util = require ("util"),
    $    = require ("jquery"),
    _    = require ("../Application/GetText");
@@ -50,7 +49,7 @@ $.fn.animationPropertiesPopover = function (editor)
    if (editor .config .file .scaleKeyframes)
       scaleInput .attr ("checked", "");
 
-   const scaleLabel = $("<label></label>")
+   $("<label></label>")
       .attr ("for", "keyframe-scale")
       .text (_("Scale Keyframes"))
       .appendTo (content);
@@ -77,7 +76,7 @@ $.fn.animationPropertiesPopover = function (editor)
 
    // Create tooltip.
 
-   const tooltip = this .popover ({
+   this .popover ({
       position: {
          my: "bottom right",
          at: "top left",
@@ -95,7 +94,7 @@ $.fn.animationPropertiesPopover = function (editor)
                api .toggle (false);
             });
 
-            applyButton .on ("click", (event) =>
+            applyButton .on ("click", (/* event */) =>
             {
                api .toggle (false);
                editor .resizeAnimation (parseInt (durationInput .val ()), parseInt (frameRateInput .val ()), scaleInput .prop ("checked"));

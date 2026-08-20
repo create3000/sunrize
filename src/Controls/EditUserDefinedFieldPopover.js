@@ -132,7 +132,7 @@ $.fn.editUserDefinedFieldPopover = function (executionContext, node, field = -1)
          wide: field instanceof X3D .X3DField,
       },
       events: {
-         show (event, api)
+         show (/* event, api */)
          {
             nameInput .off () .validate (Editor .Id, () =>
             {

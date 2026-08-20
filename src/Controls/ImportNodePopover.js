@@ -39,7 +39,7 @@ $.fn.importNodePopover = function (inlineNode, exportedName, oldImportedName, ol
 
    // Create tooltip.
 
-   const tooltip = this .popover ({
+   this .popover ({
       content: content,
       extension:
       {
