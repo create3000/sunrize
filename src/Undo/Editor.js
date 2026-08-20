@@ -2025,6 +2025,72 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    /**
     *
     * @param {X3DExecutionContext} executionContext
+    * @param {X3DNode} node
+    * @param {string} path
+    * @param {X3DField} value
+    * @param {UndoManager} undoManager
+    */
+   static setNodeMetaData (node, path, value, undoManager = UndoManager .shared)
+   {
+      node = node .valueOf ();
+
+      const
+         hasValue = node .hasMetaData (path),
+         oldValue = node .getMetaData (path, value .create ());
+
+      undoManager .beginUndo (_("Change Metadata of Node %s"), node .getTypeName ());
+
+      node .setMetaData (path, value);
+
+      undoManager .registerUndo (() =>
+      {
+         if (hasValue)
+            this .setNodeMetaData (node, path, oldValue, undoManager);
+         else
+            this .removeNodeMetaData (node, path, oldValue, undoManager);
+      });
+
+      this .requestUpdateInstances (node, undoManager);
+
+      undoManager .endUndo ();
+   }
+
+   /**
+    *
+    * @param {X3DExecutionContext} executionContext
+    * @param {X3DNode} node
+    * @param {string} path
+    * @param {X3DField} type
+    * @param {UndoManager} undoManager
+    */
+   static removeNodeMetaData (node, path, type, undoManager = UndoManager .shared)
+   {
+      node = node .valueOf ();
+
+      const hasValue = node .hasMetaData (path);
+
+      if (!hasValue)
+         return;
+
+      const oldValue = node .getMetaData (path, type .create ());
+
+      undoManager .beginUndo (_("Change Metadata of Node %s"), node .getTypeName ());
+
+      node .removeMetaData (path);
+
+      undoManager .registerUndo (() =>
+      {
+         this .setNodeMetaData (node, path, oldValue, undoManager);
+      });
+
+      this .requestUpdateInstances (node, undoManager);
+
+      undoManager .endUndo ();
+   }
+
+   /**
+    *
+    * @param {X3DExecutionContext} executionContext
     * @param {UndoManager} undoManager
     * @returns {WorldInfo}
     */
@@ -3045,72 +3111,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       }
 
       return modelMatrices;
-   }
-
-   /**
-    *
-    * @param {X3DExecutionContext} executionContext
-    * @param {X3DNode} node
-    * @param {string} path
-    * @param {X3DField} value
-    * @param {UndoManager} undoManager
-    */
-   static setNodeMetaData (node, path, value, undoManager = UndoManager .shared)
-   {
-      node = node .valueOf ();
-
-      const
-         hasValue = node .hasMetaData (path),
-         oldValue = node .getMetaData (path, value .create ());
-
-      undoManager .beginUndo (_("Change Metadata of Node %s"), node .getTypeName ());
-
-      node .setMetaData (path, value);
-
-      undoManager .registerUndo (() =>
-      {
-         if (hasValue)
-            this .setNodeMetaData (node, path, oldValue, undoManager);
-         else
-            this .removeNodeMetaData (node, path, oldValue, undoManager);
-      });
-
-      this .requestUpdateInstances (node, undoManager);
-
-      undoManager .endUndo ();
-   }
-
-   /**
-    *
-    * @param {X3DExecutionContext} executionContext
-    * @param {X3DNode} node
-    * @param {string} path
-    * @param {X3DField} type
-    * @param {UndoManager} undoManager
-    */
-   static removeNodeMetaData (node, path, type, undoManager = UndoManager .shared)
-   {
-      node = node .valueOf ();
-
-      const hasValue = node .hasMetaData (path);
-
-      if (!hasValue)
-         return;
-
-      const oldValue = node .getMetaData (path, type .create ());
-
-      undoManager .beginUndo (_("Change Metadata of Node %s"), node .getTypeName ());
-
-      node .removeMetaData (path);
-
-      undoManager .registerUndo (() =>
-      {
-         this .setNodeMetaData (node, path, oldValue, undoManager);
-      });
-
-      this .requestUpdateInstances (node, undoManager);
-
-      undoManager .endUndo ();
    }
 
    /**
