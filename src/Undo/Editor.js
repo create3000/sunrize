@@ -1958,12 +1958,12 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                // Move legacy Sunrize MetadataSet to first root node.
                if (!executionContext .rootNodes .includes (node))
                {
+                  this .insertValueIntoArray (executionContext, executionContext, executionContext .rootNodes, 0, node, undoManager);
+
                   for (const worldInfoNode of Array .from (executionContext .getWorldInfos ()) .filter (({metadata}) => metadata === node))
                   {
                      this .setFieldValue (executionContext, worldInfoNode .getValue (), worldInfoNode .getValue () ._metadata, null, undoManager);
                   }
-
-                  this .insertValueIntoArray (executionContext, executionContext, executionContext .rootNodes, 0, node, undoManager);
                }
 
                return configNode;
