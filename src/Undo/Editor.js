@@ -1923,8 +1923,6 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       return browser .getActiveLayer ();
    }
 
-   static #configNode = Symbol ();
-
    /**
     *
     * @param {X3DExecutionContext} executionContext
@@ -1932,97 +1930,13 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static getConfigNode (executionContext, create = false, undoManager = UndoManager .shared)
    {
-      const worldInfoMetadata = Array .from (executionContext .getWorldInfos (), ({metadata})=> metadata);
-
-      for (const nodes of [executionContext .rootNodes, worldInfoMetadata])
-      {
-         for (const node of nodes)
-         {
-            if (!node)
-               continue;
-
-            if (!node .getNodeType () .includes (X3D .X3DConstants .MetadataSet))
-               continue;
-
-            if (node .name !== "Sunrize")
-               continue;
-
-            if (node .getValue () [this .#configNode])
-            {
-               if (!node .getValue () [this .#configNode] ._metadata .getValue ())
-                  node .getValue () [this .#configNode] ._metadata = node;
-            }
-
-            return node .getValue () [this .#configNode] ??= (() =>
-            {
-               const configNode = executionContext .createNode ("MetadataSet", false);
-
-               configNode .setPrivate (true);
-               configNode ._metadata = node;
-
-               configNode .setup ();
-
-               // Move legacy Sunrize MetadataSet in WorldInfo to first root node.
-               this .#moveLegacyConfigNode (executionContext, node, undoManager);
-
-               return configNode;
-            })();
-         }
-      }
+      if (executionContext .getWorldInfos () .length)
+         return executionContext .getWorldInfos () .at (-1) .getValue ();
 
       if (create)
-         return this .addConfigNode (executionContext, null, undoManager);
+         return this .addWorldInfo (executionContext, undoManager);
 
       return null;
-   }
-
-   /**
-    *
-    * @param {X3DExecutionContext} executionContext
-    * @param {UndoManager} undoManager
-    * @returns {WorldInfo}
-    */
-   static addConfigNode (executionContext, layerNode, undoManager = UndoManager .shared)
-   {
-      const
-         configNode = executionContext .createNode ("MetadataSet", false),
-         node       = executionContext .createNode ("MetadataSet");
-
-      node .name      = "Sunrize";
-      node .reference = require ("../../package.json") .homepage;
-
-      configNode .setPrivate (true);
-      configNode ._metadata = node;
-
-      configNode .setup ();
-
-      undoManager .beginUndo (_("Add Configuration Node"));
-
-      this .updateNamedNode (executionContext, "Sunrize", node, undoManager);
-      this .insertValueIntoArray (executionContext, executionContext, executionContext .rootNodes, 0, node, undoManager);
-
-      undoManager .endUndo ();
-
-      return node .getValue () [this .#configNode] = configNode;
-   }
-
-   static #moveLegacyConfigNode (executionContext, node, undoManager)
-   {
-      // Move legacy Sunrize MetadataSet in WorldInfo to first root node.
-
-      if (executionContext .rootNodes .includes (node))
-         return;
-
-      undoManager .beginUndo (_("Move Sunrize Configuration to Root Nodes"));
-
-      this .insertValueIntoArray (executionContext, executionContext, executionContext .rootNodes, 0, node, undoManager);
-
-      for (const worldInfoNode of Array .from (executionContext .getWorldInfos ()) .filter (({metadata}) => metadata === node))
-      {
-         this .setFieldValue (executionContext, worldInfoNode .getValue (), worldInfoNode .getValue () ._metadata, null, undoManager);
-      }
-
-      undoManager .endUndo ();
    }
 
    /**
@@ -2108,13 +2022,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       undoManager .beginUndo (_("Add WorldInfo Node"));
 
-      let position = executionContext .rootNodes
-         .findIndex (node => !node .getNodeType () .includes (X3D .X3DConstants .X3DMetadataObject));
-
-      if (position === -1)
-         position = 0;
-
-      this .insertValueIntoArray (executionContext, executionContext, executionContext .rootNodes, position, worldInfoNode, undoManager);
+      this .insertValueIntoArray (executionContext, executionContext, executionContext .rootNodes, 0, worldInfoNode, undoManager);
 
       undoManager .endUndo ();
 
