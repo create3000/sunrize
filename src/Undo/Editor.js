@@ -1947,6 +1947,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             if (node .name !== "Sunrize")
                continue;
 
+            if (!node .getValue () [this .#configNode] ?._metadata .getValue ())
+               node .getValue () [this .#configNode] = null;
+
             return node .getValue () [this .#configNode] ??= (() =>
             {
                const configNode = executionContext .createNode ("MetadataSet", false);
