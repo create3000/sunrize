@@ -1943,7 +1943,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             if (!(node .getNodeType () .includes (X3D .X3DConstants .MetadataSet) && node .name .match (/^(?:Sunrize|Titania)$/)))
                continue;
 
-            return node .getValue () [this .#configNode] ?? (() =>
+            return node .getValue () [this .#configNode] ??= (() =>
             {
                const configNode = executionContext .createNode ("MetadataSet", false);
 
@@ -1952,7 +1952,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
                configNode .setup ();
 
-               return node .getValue () [this .#configNode] = configNode;
+               return configNode;
             })();
          }
       }
