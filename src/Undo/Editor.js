@@ -1916,7 +1916,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static getLayerConfigNode (browser, create = false, undoManager = UndoManager .shared)
    {
-      if (browser .getActiveLayer () === browser .getWorld () .getLayerSet () .getLayer0 () || !browser .getActiveLayer ())
+      if (browser .getActiveLayer () === browser .getWorld () .getLayerSet () .getLayer0 ())
          return this .getConfigNode (browser .currentScene, create, undoManager);
 
       return browser .getActiveLayer ();

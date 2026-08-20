@@ -99,7 +99,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
       {
          const configNode = Editor .getLayerConfigNode (this .getBrowser (), true);
 
-         configNode .setMetaData (path, field);
+         configNode ?.setMetaData (path, field);
       }
    }
 
