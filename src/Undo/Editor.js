@@ -2035,7 +2035,11 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       undoManager .beginUndo (_("Add WorldInfo Node"));
 
-      const position = executionContext .rootNodes [0] ?.getNodeType () .includes (X3D .X3DConstants .X3DMetadataObject) ? 1 : 0;
+      let position = executionContext .rootNodes
+         .findIndex (node => !node .getNodeType () .includes (X3D .X3DConstants .X3DMetadataObject));
+
+      if (position === -1)
+         position = 0;
 
       this .insertValueIntoArray (executionContext, executionContext, executionContext .rootNodes, position, worldInfoNode, undoManager);
 
