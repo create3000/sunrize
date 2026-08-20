@@ -62,7 +62,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
       if (!this .toolLayerNode)
          return;
 
-      const configNode = Editor .getConfigNode (this .getBrowser ());
+      const configNode = Editor .getLayerConfigNode (this .getBrowser ());
 
       for (const field of this .tool .getValue () .getFields ())
       {
@@ -91,13 +91,13 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
 
       if (field .equals (this .tool .getFieldDefinition (field .getName ()) .getValue ()))
       {
-         const configNode = Editor .getConfigNode (this .getBrowser ());
+         const configNode = Editor .getLayerConfigNode (this .getBrowser ());
 
          configNode ?.removeMetaData (path);
       }
       else
       {
-         const configNode = Editor .getConfigNode (this .getBrowser (), true);
+         const configNode = Editor .getLayerConfigNode (this .getBrowser (), true);
 
          configNode .setMetaData (path, field);
       }

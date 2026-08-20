@@ -124,25 +124,25 @@ module .exports = new class BrowserFrame extends Dialog
    {
       super .configure ({ size: [388, 175] });
 
-      this .connect (Editor .getWorldInfo (this .browser .currentScene));
+      this .connect (Editor .getConfigNode (this .browser .currentScene));
       this .updateInputs ();
       this .onresize ();
    }
 
-   connect (worldInfoNode)
+   connect (configNode)
    {
-      worldInfoNode ?.addMetaDataCallback (this, "Sunrize/BrowserFrame/fixedSize",       () => this .updateInputs ());
-      worldInfoNode ?.addMetaDataCallback (this, "Sunrize/BrowserFrame/aspectRatio",     () => this .updateInputs ());
-      worldInfoNode ?.addMetaDataCallback (this, "Sunrize/BrowserFrame/backgroundColor", () => this .updateInputs ());
+      configNode ?.addMetaDataCallback (this, "Sunrize/BrowserFrame/fixedSize",       () => this .updateInputs ());
+      configNode ?.addMetaDataCallback (this, "Sunrize/BrowserFrame/aspectRatio",     () => this .updateInputs ());
+      configNode ?.addMetaDataCallback (this, "Sunrize/BrowserFrame/backgroundColor", () => this .updateInputs ());
    }
 
    updateInputs ()
    {
       const
-         worldInfoNode                    = Editor .getWorldInfo (this .browser .currentScene),
-         [fixedSize = false]              = worldInfoNode ?.getMetaData ("Sunrize/BrowserFrame/fixedSize") ?? [ ],
-         [numerator = 1, denominator = 1] = worldInfoNode ?.getMetaData ("Sunrize/BrowserFrame/aspectRatio") ?? [ ],
-         [backgroundColor = ""]           = worldInfoNode ?.getMetaData ("Sunrize/BrowserFrame/backgroundColor") ?? [ ];
+         configNode                       = Editor .getConfigNode (this .browser .currentScene),
+         [fixedSize = false]              = configNode ?.getMetaData ("Sunrize/BrowserFrame/fixedSize") ?? [ ],
+         [numerator = 1, denominator = 1] = configNode ?.getMetaData ("Sunrize/BrowserFrame/aspectRatio") ?? [ ],
+         [backgroundColor = ""]           = configNode ?.getMetaData ("Sunrize/BrowserFrame/backgroundColor") ?? [ ];
 
       this .updateSize ();
 
@@ -161,18 +161,18 @@ module .exports = new class BrowserFrame extends Dialog
    onchange ()
    {
       const
-         worldInfoNode   = Editor .getWorldInfo (this .browser .currentScene, true),
+         configNode      = Editor .getConfigNode (this .browser .currentScene, true),
          fixedSize       = new X3D .SFBool (this .fixedSize .prop ("checked")),
          aspectRatio     = new X3D .MFDouble (this .numerator .val (), this .denominator .val ()),
          backgroundColor = new X3D .SFString (this .backgroundColor .val ());
 
-      this .connect (worldInfoNode);
+      this .connect (configNode);
 
       UndoManager .shared .beginUndo (_("Change Browser Frame"));
 
-      Editor .setNodeMetaData (worldInfoNode, "Sunrize/BrowserFrame/fixedSize",       fixedSize);
-      Editor .setNodeMetaData (worldInfoNode, "Sunrize/BrowserFrame/aspectRatio",     aspectRatio);
-      Editor .setNodeMetaData (worldInfoNode, "Sunrize/BrowserFrame/backgroundColor", backgroundColor);
+      Editor .setNodeMetaData (configNode, "Sunrize/BrowserFrame/fixedSize",       fixedSize);
+      Editor .setNodeMetaData (configNode, "Sunrize/BrowserFrame/aspectRatio",     aspectRatio);
+      Editor .setNodeMetaData (configNode, "Sunrize/BrowserFrame/backgroundColor", backgroundColor);
       Editor .deferFunction (() => this .onresize ());
 
       UndoManager .shared .endUndo ();
@@ -184,10 +184,10 @@ module .exports = new class BrowserFrame extends Dialog
    onresize ()
    {
       const
-         worldInfoNode                    = Editor .getWorldInfo (this .browser .currentScene),
-         [fixedSize = false]              = worldInfoNode ?.getMetaData ("Sunrize/BrowserFrame/fixedSize") ?? [ ],
-         [numerator = 1, denominator = 1] = worldInfoNode ?.getMetaData ("Sunrize/BrowserFrame/aspectRatio") ?? [ ],
-         [backgroundColor = ""]           = worldInfoNode ?.getMetaData ("Sunrize/BrowserFrame/backgroundColor") ?? [ ],
+         configNode                       = Editor .getConfigNode (this .browser .currentScene),
+         [fixedSize = false]              = configNode ?.getMetaData ("Sunrize/BrowserFrame/fixedSize") ?? [ ],
+         [numerator = 1, denominator = 1] = configNode ?.getMetaData ("Sunrize/BrowserFrame/aspectRatio") ?? [ ],
+         [backgroundColor = ""]           = configNode ?.getMetaData ("Sunrize/BrowserFrame/backgroundColor") ?? [ ],
          aspectRatio                      = numerator / denominator,
          frameAspectRatio                 = $("#browser-frame") .width () / $("#browser-frame") .height (),
          element                          = $(this .browser .element);

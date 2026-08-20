@@ -1914,27 +1914,83 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     * @param {X3DBrowser} browser
     * @param {UndoManager} undoManager
     */
-   static getConfigNode (browser, create = false, undoManager = UndoManager .shared)
+   static getLayerConfigNode (browser, create = false, undoManager = UndoManager .shared)
    {
-      return browser .getActiveLayer () === browser .getWorld () .getLayerSet () .getLayer0 ()
-         ? this .getWorldInfo (browser .currentScene, create, undoManager)
-         : browser .getActiveLayer ();
+      if (browser .getActiveLayer () === browser .getWorld () .getLayerSet () .getLayer0 ())
+         return this .getConfigNode (browser .currentScene, create, undoManager);
+
+      return browser .getActiveLayer ();
    }
+
+   static #configNode = Symbol ();
 
    /**
     *
     * @param {X3DExecutionContext} executionContext
     * @param {UndoManager} undoManager
     */
-   static getWorldInfo (executionContext, create = false, undoManager = UndoManager .shared)
+   static getConfigNode (executionContext, create = false, undoManager = UndoManager .shared)
    {
-      if (executionContext .getWorldInfos () .length)
-         return executionContext .getWorldInfos () .at (-1) .getValue ();
+      const worldInfoMetadata = Array .from (executionContext .getWorldInfos (), worldInfoNode => worldInfoNode .metadata);
+
+      for (const nodes of [executionContext .rootNodes, worldInfoMetadata])
+      {
+         for (const node of nodes)
+         {
+            if (!node)
+               continue;
+
+            if (!(node .getNodeType () .includes (X3D .X3DConstants .MetadataSet) && node .name .match (/^(?:Sunrize|Titania)$/)))
+               continue;
+
+            return node .getValue () [this .#configNode] ?? (() =>
+            {
+               const configNode = executionContext .createNode ("MetadataSet", false);
+
+               configNode .setPrivate (true);
+               configNode ._metadata = node;
+
+               configNode .setup ();
+
+               return node .getValue () [this .#configNode] = configNode;
+            })();
+         }
+      }
 
       if (create)
-         return this .addWorldInfo (executionContext, undoManager);
+         return this .addConfigNode (executionContext, null, undoManager);
 
       return null;
+   }
+
+   /**
+    *
+    * @param {X3DExecutionContext} executionContext
+    * @param {UndoManager} undoManager
+    * @returns {WorldInfo}
+    */
+   static addConfigNode (executionContext, layerNode, undoManager = UndoManager .shared)
+   {
+      const
+         configNode = executionContext .createNode ("MetadataSet", false),
+         node       = executionContext .createNode ("MetadataSet");
+
+      node .name      = "Sunrize";
+      node .reference = require ("../../package.json") .homepage;
+
+      configNode .setPrivate (true);
+      configNode ._metadata = node;
+
+      configNode .setup ();
+
+      undoManager .beginUndo (_("Add Configuration Node"));
+
+      this .updateNamedNode (executionContext, "Sunrize", node, undoManager);
+      this .insertValueIntoArray (executionContext, executionContext, executionContext .rootNodes, 0, node, undoManager);
+
+      undoManager .endUndo ();
+
+      return node .getValue () [this .#configNode] = configNode;
    }
 
    /**
@@ -1954,7 +2010,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       undoManager .beginUndo (_("Add WorldInfo Node"));
 
-      this .insertValueIntoArray (executionContext, executionContext, executionContext .rootNodes, 0, worldInfoNode, undoManager);
+      const position = executionContext .rootNodes [0] ?.getNodeType () .includes (X3D .X3DConstants .X3DMetadataObject) ? 1 : 0;
+
+      this .insertValueIntoArray (executionContext, executionContext, executionContext .rootNodes, position, worldInfoNode, undoManager);
 
       undoManager .endUndo ();
 

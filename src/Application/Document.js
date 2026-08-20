@@ -881,7 +881,7 @@ Viewpoint {
 
    toggleGrids ()
    {
-      const configNode = Editor .getConfigNode (this .browser);
+      const configNode = Editor .getLayerConfigNode (this .browser);
 
       for (const typeName of Document .#Grids)
       {
