@@ -1931,7 +1931,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static getConfigNode (executionContext, create = false, undoManager = UndoManager .shared)
    {
-      const worldInfoMetadata = Array .from (executionContext .getWorldInfos (), worldInfoNode => worldInfoNode .metadata);
+      const worldInfoMetadata = Array .from (executionContext .getWorldInfos (), ({metadata})=> metadata);
 
       for (const nodes of [executionContext .rootNodes, worldInfoMetadata])
       {
@@ -1943,7 +1943,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             if (!node .getNodeType () .includes (X3D .X3DConstants .MetadataSet))
                continue;
 
-            if (!node .name .match (/^(?:Sunrize|Titania)$/))
+            if (node .name !== "Sunrize")
                continue;
 
             return node .getValue () [this .#configNode] ??= (() =>
