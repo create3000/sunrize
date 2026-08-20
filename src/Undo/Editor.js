@@ -1940,7 +1940,10 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             if (!node)
                continue;
 
-            if (!(node .getNodeType () .includes (X3D .X3DConstants .MetadataSet) && node .name .match (/^(?:Sunrize|Titania)$/)))
+            if (!node .getNodeType () .includes (X3D .X3DConstants .MetadataSet))
+               continue;
+
+            if (!node .name .match (/^(?:Sunrize|Titania)$/))
                continue;
 
             return node .getValue () [this .#configNode] ??= (() =>
