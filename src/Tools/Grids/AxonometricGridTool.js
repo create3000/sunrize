@@ -93,7 +93,7 @@ class AxonometricGridTool extends X3DGridNodeTool
       return p;
    }
 
-   getSnapPositionWithNormal (position, direction)
+   getSnapPositionWithNormal (position)
    {
       return position;
    }

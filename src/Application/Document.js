@@ -77,13 +77,13 @@ module .exports = class Document extends Interface
       // File Menu
 
       electron .ipcRenderer .on ("open-files",       (event, urls)     => this .loadURL (urls [0])); // DEBUG
-      electron .ipcRenderer .on ("save-file",        (event)           => this .saveFile ());
+      electron .ipcRenderer .on ("save-file",        ()                => this .saveFile ());
       electron .ipcRenderer .on ("save-file-as",     (event, filePath) => this .saveFileAs (filePath));
       electron .ipcRenderer .on ("save-copy-as",     (event, filePath) => this .saveCopyAs (filePath));
       electron .ipcRenderer .on ("auto-save",        (event, value)    => this .autoSave = value);
       electron .ipcRenderer .on ("export-as",        (event, filePath) => this .exportAs (filePath));
-      electron .ipcRenderer .on ("scene-properties", (event)           => require ("../Editors/SceneProperties") .open ());
-      electron .ipcRenderer .on ("close",            (event)           => this .close ());
+      electron .ipcRenderer .on ("scene-properties", ()                => require ("../Editors/SceneProperties") .open ());
+      electron .ipcRenderer .on ("close",            ()                => this .close ());
 
       $(window) .on ("beforeunload", () => this .close ());
 
@@ -111,7 +111,7 @@ module .exports = class Document extends Interface
       electron .ipcRenderer .on ("mute",                           (event, value) => this .setMute (value));
       electron .ipcRenderer .on ("display-rubberband",             (event, value) => this .setDisplayRubberband (value));
       electron .ipcRenderer .on ("display-timings",                (event, value) => this .setDisplayTimings (value));
-      electron .ipcRenderer .on ("show-library",                   (event)        => this .showLibrary ());
+      electron .ipcRenderer .on ("show-library",                   ()             => this .showLibrary ());
 
       // Layout Menu
 
@@ -439,7 +439,7 @@ Viewpoint {
 
          this .browser .currentScene .setSpecificationVersion (X3D .LATEST_VERSION);
       }
-      catch (error)
+      catch
       {
          // console .error (error);
       }
@@ -908,7 +908,7 @@ Viewpoint {
 
       if (visible)
       {
-         for (const [typeName, grid] of this .#grids)
+         for (const [, grid] of this .#grids)
          {
             if (undo)
                Editor .setFieldValue (this .browser .currentScene, grid .tool .getValue (), grid ._visible, false);
@@ -1185,7 +1185,7 @@ Viewpoint {
          executionContext = this .browser .currentScene,
          layerNode        = this .browser .getActiveLayer (),
          nodes            = selection .nodes,
-         [values, bbox]   = Editor .getModelMatricesAndBBoxes (executionContext, layerNode, nodes);
+         [, bbox]         = Editor .getModelMatricesAndBBoxes (executionContext, layerNode, nodes);
 
       if (!bbox .size .norm ())
          return;
