@@ -1955,7 +1955,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
                configNode .setup ();
 
-               // Move legacy Sunrize MetadataSet to first root node.
+               // Move legacy Sunrize MetadataSet in WorldInfo to first root node.
                if (!executionContext .rootNodes .includes (node))
                {
                   this .insertValueIntoArray (executionContext, executionContext, executionContext .rootNodes, 0, node, undoManager);
