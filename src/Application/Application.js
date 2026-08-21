@@ -934,10 +934,13 @@ module .exports = class Application
          this .createWindow ();
    }
 
-   contextMenu (id, menu)
+   contextMenu (id, menuConfig)
    {
-      electron .Menu .buildFromTemplate (this .addMenuItemHandlers (id, this .filterSeparators (menu)))
-         .popup ({ window: this .mainWindow });
+      const menu = electron .Menu .buildFromTemplate (this .addMenuItemHandlers (id, this .filterSeparators (menuConfig)));
+
+      menu .on ("menu-will-close", () => this .mainWindow .webContents .send (`${id}-close`));
+
+      menu .popup ({ window: this .mainWindow });
    }
 
    addMenuItemHandlers (id, menu)

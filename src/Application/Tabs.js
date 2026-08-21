@@ -54,6 +54,7 @@ module .exports = new class Tabs
       // Actions
 
       electron .ipcRenderer .on ("tabs-menu", (event, key, ... args) => this [key] (... args));
+      electron .ipcRenderer .on ("tabs-menu-close", () => this .tabs .getActiveTab () ?.webview .focus ());
 
       electron .ipcRenderer .on ("open-files",     (event, urls) => this .openTabs (urls));
       electron .ipcRenderer .on ("reload"        , () => this .reloadTab ());
@@ -65,9 +66,7 @@ module .exports = new class Tabs
 
       electron .ipcRenderer .on ("toggle-developer-tools", () => this .tabs .getActiveTab () .webview .openDevTools ());
 
-      $(window)
-         .on ("click", () => this .tabs .getActiveTab () ?.webview .focus ())
-         .on ("beforeunload", () => this .close ());
+      $(window) .on ("beforeunload", () => this .close ());
 
       // Forward Actions
 
