@@ -49,7 +49,7 @@ module .exports = new class Tabs
 
       // Actions
 
-      electron .ipcRenderer .on ("tabs", (event, key, ... args) => this [key] (... args));
+      electron .ipcRenderer .on ("tabs-menu", (event, key, ... args) => this [key] (... args));
 
       electron .ipcRenderer .on ("open-files",     (event, urls)     => this .openTabs (urls));
       electron .ipcRenderer .on ("reload"        , (event)           => this .reloadTab ());
@@ -309,7 +309,7 @@ module .exports = new class Tabs
          },
       ];
 
-      electron .ipcRenderer .send ("context-menu", "tabs", menu);
+      electron .ipcRenderer .send ("context-menu", "tabs-menu", menu);
    }
 
    menuReloadTab (position)
