@@ -41,7 +41,8 @@
 
 .etabs .tab {
   background: var(--window-tabs-background-color);
-  border-color: var(--border-color) !important;
+  border: 1px solid var(--border-color) !important;
+  transition: border 500ms;
   padding: 4px 3px !important;
   color: var(--window-tabs-text-color);
   font-family: var(--sans-serif);
@@ -50,6 +51,11 @@
 
 .etabs .tab:first-child {
   border-left: 0;
+}
+
+.etabs .tab:focus {
+  border: 1px solid var(--system-blue) !important;
+  transition: border 500ms;
 }
 
 .etabs .tab.active {

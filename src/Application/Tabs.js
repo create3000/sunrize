@@ -65,7 +65,9 @@ module .exports = new class Tabs
 
       electron .ipcRenderer .on ("toggle-developer-tools", () => this .tabs .getActiveTab () .webview .openDevTools ());
 
-      $(window) .on ("beforeunload", () => this .close ());
+      $(window)
+         .on ("click", () => this .tabs .getActiveTab () ?.webview .focus ())
+         .on ("beforeunload", () => this .close ());
 
       // Forward Actions
 
@@ -189,6 +191,8 @@ module .exports = new class Tabs
 
          this .setTabURL (tab, fileURL);
 
+         $(tab .element) .attr ("tabindex", 0);
+
          // Tab Context Menu
 
          $(tab .element) .on ("contextmenu", () => this .showContextMenu (tab));
@@ -280,6 +284,8 @@ module .exports = new class Tabs
 
    showContextMenu (tab)
    {
+      $(tab .element) .trigger ("focus");
+
       const menu = [
          {
             label: tab .url .startsWith ("file:") ? _("Copy Path") : _("Copy URL"),
