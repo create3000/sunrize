@@ -69,7 +69,6 @@ module .exports = new class Tabs
       // Actions
 
       electron .ipcRenderer .on ("tabs-menu", (event, key, ... args) => this [key] (... args));
-      electron .ipcRenderer .on ("tabs-menu-will-close", () => this .tabs .getActiveTab () ?.webview .focus ());
 
       electron .ipcRenderer .on ("open-files",     (event, urls) => this .openTabs (urls));
       electron .ipcRenderer .on ("reload"        , () => this .reloadTab ());
@@ -387,6 +386,22 @@ module .exports = new class Tabs
       ];
 
       electron .ipcRenderer .send ("context-menu", "tabs-menu", menu);
+
+      // Remove tab focus if menu gets closed.
+
+      const removeTabFocus = () =>
+      {
+         setTimeout (() =>
+         {
+            if ($(tab .element) .is (":focus"))
+               tab .webview .focus ();
+         },
+         100);
+
+         electron .ipcRenderer .off ("tabs-menu-will-close", removeTabFocus);
+      };
+
+      electron .ipcRenderer .on ("tabs-menu-will-close", removeTabFocus);
    }
 
    menuCopyURL (position)
