@@ -269,6 +269,8 @@ module .exports = new class Tabs
       this .saveTabs ();
    }
 
+   // Context Menu
+
    showContextMenu (tab)
    {
       const menu = [
@@ -289,20 +291,19 @@ module .exports = new class Tabs
    {
       const tab = this .tabs .getTabByPosition (position);
 
-      if (tab)
-         this .reloadTab (tab);
+      this .reloadTab (tab);
    }
 
    menuToggleMuteTab (position)
    {
       const tab = this .tabs .getTabByPosition (position);
 
-      tab ?.webview .send ("mute", !tab .mute);
+      tab .webview .send ("mute", !tab .mute);
    }
 
    menuCloseTab (position)
    {
-      this .tabs .getTabByPosition (position) ?.close (true);
+      this .tabs .getTabByPosition (position) .close (true);
    }
 
    menuCloseOtherTabs (position)
@@ -316,7 +317,7 @@ module .exports = new class Tabs
          if (i === position)
             continue;
 
-         this .tabs .getTabByPosition (i) ?.close (true);
+         this .tabs .getTabByPosition (i) .close (true);
       }
    }
 
@@ -329,6 +330,8 @@ module .exports = new class Tabs
       else
          navigator .clipboard .writeText (tab .url);
    }
+
+   // Tab Handling
 
    getTabs ()
    {
