@@ -326,10 +326,12 @@ module .exports = new class Tabs
             submenu: [
                {
                   label: _("Move to Start"),
+                  enabled: tab .getPosition () !== 0,
                   args: ["menuMoveTabToStart", tab .getPosition ()],
                },
                {
                   label: _("Move to End"),
+                  enabled: tab .getPosition () !== this .getTabs () .length - 1,
                   args: ["menuMoveTabToEnd", tab .getPosition ()],
                },
             ],
