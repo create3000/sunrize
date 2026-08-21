@@ -207,11 +207,14 @@ module .exports = new class Tabs
          tab .on ("closing", (tab, abort) => this .tabClosing (tab, abort));
          tab .on ("close", (tab) => this .tabClose (tab));
 
-         tab .closeButton = $(tab .element) .find (".tab-close");
+         tab .closeButton = $(tab .element) .find (".tab-close")
+            .addClass ("material-symbols-outlined")
+            .text ("close")
+            .on ("click", () => tab .close (true));
 
          // Audio Button
 
-         tab .audioButton = $(`<span></span>`)
+         tab .audioButton = $("<span></span>")
             .addClass (["tab-audio", "material-symbols-outlined"])
             .text ("volume_up")
             .on ("click", () => tab .webview .send ("mute", !tab .mute));
@@ -220,7 +223,7 @@ module .exports = new class Tabs
 
          // Pin Button
 
-         tab .pinButton = $(`<span></span>`)
+         tab .pinButton = $("<span></span>")
             .addClass (["tab-pin", "material-symbols-outlined"])
             .text ("keep");
 

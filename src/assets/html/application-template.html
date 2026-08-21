@@ -79,7 +79,7 @@
 
 .etabs .tab-audio,
 .etabs .tab-pin,
-.etabs .tab-close button {
+.etabs .tab-close {
   position: relative;
   appearance: none;
   border: none;
@@ -89,17 +89,13 @@
   top: 0px;
 }
 
-.etabs .tab-close button {
-  top: -1px;
-}
-
 .etabs .buttons:hover button {
   background: none;
 }
 
 .etabs .buttons button:hover,
 .etabs .tab-audio:hover,
-.etabs .tab-close button:hover {
+.etabs .tab-close:hover {
   color: var(--system-gray0);
 }
 
@@ -112,17 +108,18 @@
   display: none !important;
 }
 
-.etabs .tab-close button {
+.etabs .tab-close {
   visibility: hidden;
 }
 
-.etabs .tab.active .tab-close button,
-.etabs .tab:hover .tab-close button {
+.etabs .tab.active .tab-close,
+.etabs .tab:hover .tab-close {
   visibility: visible;
 }
 
 .etabs .tab-audio {
-  margin-left: 8px;
+  margin-left: 4px;
+  margin-right: -4px;
 }
 
 .etabs .tab-pin,
