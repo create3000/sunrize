@@ -203,16 +203,22 @@ module .exports = new class Tabs
          tab .on ("closing", (tab, abort) => this .tabClosing (tab, abort));
          tab .on ("close", (tab) => this .tabClose (tab));
 
+         tab .closeButton = $(tab .element) .find (".tab-close");
+
          // Audio Button
 
-         const close = $(tab .element) .find (".tab-close");
-
-         tab .audio = $(`<span></span>`)
+         tab .audioButton = $(`<span></span>`)
             .addClass (["tab-audio", "material-symbols-outlined"])
             .text ("volume_up")
             .on ("click", () => tab .webview .send ("mute", !tab .mute));
 
-         close .before (tab .audio);
+         tab .closeButton .before (tab .audioButton);
+
+         tab .pinButton = $(`<span></span>`)
+            .addClass (["tab-pin", "material-symbols-outlined"])
+            .text ("keep");
+
+         tab .closeButton .before (tab .pinButton);
 
          // Events
 
@@ -279,8 +285,12 @@ module .exports = new class Tabs
             args: ["menuReloadTab", tab .getPosition ()],
          },
          {
+            label: tab .pinButton .is (":visible") ? _("Unpin Tab") : _("Pin Tab"),
+            args: ["menuPinTab", tab .getPosition ()],
+         },
+         {
             label: tab .mute ? _("Unmute Tab") : _("Mute Tab"),
-            visible: tab .audio .is (":visible"),
+            visible: tab .audioButton .is (":visible"),
             args: ["menuToggleMuteTab", tab .getPosition ()],
          },
          { type: "separator" },
@@ -319,6 +329,22 @@ module .exports = new class Tabs
       this .reloadTab (tab);
    }
 
+   menuPinTab (position)
+   {
+      const tab = this .tabs .getTabByPosition (position);
+
+      if (tab .pinButton .is (":visible"))
+      {
+         tab .pinButton .hide ();
+         tab .closeButton .show ();
+      }
+      else
+      {
+         tab .pinButton .show ();
+         tab .closeButton .hide ();
+      }
+   }
+
    menuToggleMuteTab (position)
    {
       const tab = this .tabs .getTabByPosition (position);
@@ -339,10 +365,15 @@ module .exports = new class Tabs
 
       for (let i = length - 1; i >= 0; -- i)
       {
+         const tab = this .tabs .getTabByPosition (i);
+
          if (i === position)
             continue;
 
-         this .tabs .getTabByPosition (i) .close (true);
+         if (tab .pinButton .is (":visible"))
+            continue;
+
+         tab .close (true);
       }
    }
 
@@ -416,9 +447,9 @@ module .exports = new class Tabs
    toggleAudio (tab, audio)
    {
       if (audio)
-         tab .audio .show ();
+         tab .audioButton .show ();
       else
-         tab .audio .hide ();
+         tab .audioButton .hide ();
    }
 
    toggleMute (tab, mute)
@@ -426,9 +457,9 @@ module .exports = new class Tabs
       tab .mute = mute;
 
       if (mute)
-         tab .audio .text ("volume_mute");
+         tab .audioButton .text ("volume_mute");
       else
-         tab .audio .text ("volume_up");
+         tab .audioButton .text ("volume_up");
    }
 
    tabClosing (tab, abort)
