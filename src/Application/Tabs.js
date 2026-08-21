@@ -199,7 +199,6 @@ module .exports = new class Tabs
             },
             visible: true,
             active: false,
-            iconURL: this .icons .get ("UNKNOWN"),
          });
 
          $(tab .element) .attr ("tabindex", 0);
@@ -215,6 +214,10 @@ module .exports = new class Tabs
          // Tab Context Menu
 
          $(tab .element) .on ("contextmenu", () => this .showContextMenu (tab));
+
+         // Tab Icon
+
+         tab .setIcon (this .getIcon (config .encoding ?? "UNKNOWN"));
 
          // Close Button
 
@@ -263,7 +266,8 @@ module .exports = new class Tabs
             {
                case "scene-encoding":
                {
-                  tab .setIcon (this .icons .get (event .args [0]) ?? this .icons .get ("OTHERS"));
+                  config .encoding = event .args [0];
+                  tab .setIcon (this .getIcon (event .args [0]));
                   break;
                }
                case "focus":
@@ -305,6 +309,11 @@ module .exports = new class Tabs
       }
 
       this .saveTabs ();
+   }
+
+   getIcon (encoding)
+   {
+      return this .icons .get (encoding) ?? this .icons .get ("OTHERS");
    }
 
    // Context Menu
