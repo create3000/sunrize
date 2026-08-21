@@ -214,11 +214,17 @@ module .exports = new class Tabs
 
          tab .closeButton .before (tab .audioButton);
 
+         // Pin Button
+
          tab .pinButton = $(`<span></span>`)
             .addClass (["tab-pin", "material-symbols-outlined"])
             .text ("keep");
 
          tab .closeButton .before (tab .pinButton);
+
+         const config = this .config .addNameSpace (`${md5 (tab .url)}.`);
+
+         this .menuPinTab (tab .getPosition (), !config .pinned);
 
          // Events
 
@@ -329,17 +335,23 @@ module .exports = new class Tabs
       this .reloadTab (tab);
    }
 
-   menuPinTab (position)
+   menuPinTab (position, pinned)
    {
-      const tab = this .tabs .getTabByPosition (position);
+      const
+         tab    = this .tabs .getTabByPosition (position),
+         config = this .config .addNameSpace (`${md5 (tab .url)}.`);
 
-      if (tab .pinButton .is (":visible"))
+      if (pinned ?? tab .pinButton .is (":visible"))
       {
+         config .pinned = false;
+
          tab .pinButton .hide ();
          tab .closeButton .show ();
       }
       else
       {
+         config .pinned = true;
+
          tab .pinButton .show ();
          tab .closeButton .hide ();
       }
