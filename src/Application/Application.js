@@ -745,7 +745,7 @@ module .exports = class Application
                   },
                   { type: "separator" },
                   {
-                     label: _("Toggle Full Screen"),
+                     label: this .config .fullscreen ? _("Leave Full Screen") : _("Full Screen"),
                      accelerator: process .platform === "darwin" ? "Command+Control+F" : "F11",
                      click: () => this .mainWindow .setFullScreen (!this .config .fullscreen),
                   },
@@ -1147,12 +1147,16 @@ module .exports = class Application
    onenterfullscreen ()
    {
       this .config .fullscreen = true;
+
+      this .updateMenu ();
    }
 
    onleavefullscreen ()
    {
       this .config .fullscreen = false;
       this .config .maximized  = false;
+
+      this .updateMenu ();
    }
 
    onclose (event)
