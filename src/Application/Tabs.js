@@ -49,6 +49,8 @@ module .exports = new class Tabs
 
       // Actions
 
+      electron .ipcRenderer .on ("tabs", (event, key, ... args) => this [key] (... args));
+
       electron .ipcRenderer .on ("open-files",     (event, urls)     => this .openTabs (urls));
       electron .ipcRenderer .on ("reload"        , (event)           => this .reloadTab ());
       electron .ipcRenderer .on ("save-file-as",   (event, filePath) => this .saveFileAs (filePath));
@@ -167,6 +169,8 @@ module .exports = new class Tabs
 
       for (let fileURL of urls)
       {
+         // Make Tab URL
+
          if (fileURL && this .tabs .getTabs () .some (tab => tab .url === fileURL))
             continue;
 
@@ -174,6 +178,8 @@ module .exports = new class Tabs
             fileURL = `id:${md5 (Math .random ())}`;
 
          src .searchParams .set ("url", fileURL);
+
+         // Create Tab
 
          const tab = this .tabs .addTab ({
             src: src,
@@ -188,10 +194,11 @@ module .exports = new class Tabs
 
          this .setTabURL (tab, fileURL);
 
-         tab .webview .addEventListener ("console-message", (event) =>
-         {
-            tab .webview .send ("console-message", event .level, event .sourceId, event .line, event .message);
-         });
+         // Tab Context Menu
+
+         $(tab .element) .on ("contextmenu", () => this .showContextMenu (tab));
+
+         // Close Button
 
          tab .on ("closing", (tab, abort) => this .tabClosing (tab, abort));
          tab .on ("close", (tab) => this .tabClose (tab));
@@ -208,6 +215,14 @@ module .exports = new class Tabs
          close .before (tab .audio);
 
          // Events
+
+         tab .webview .addEventListener ("dom-ready", () =>
+         {
+            tab .domReady = true;
+
+            if (this .tabs .getActiveTab () === tab)
+               tab .webview .send ("activate");
+         });
 
          tab .webview .addEventListener ("ipc-message", (event, value) =>
          {
@@ -237,12 +252,9 @@ module .exports = new class Tabs
             }
          });
 
-         tab .webview .addEventListener ("dom-ready", () =>
+         tab .webview .addEventListener ("console-message", (event) =>
          {
-            tab .domReady = true;
-
-            if (this .tabs .getActiveTab () === tab)
-               tab .webview .send ("activate");
+            tab .webview .send ("console-message", event .level, event .sourceId, event .line, event .message);
          });
       }
 
@@ -257,17 +269,62 @@ module .exports = new class Tabs
       this .saveTabs ();
    }
 
-   reloadTab ()
+   showContextMenu (tab)
+   {
+      const menu = [
+         { label: _("Reload Tab"), args: ["menuReloadTab", tab .getPosition ()] },
+         { label: tab .mute ? _("Unmute Tab") : _("Mute Tab"), visible: tab .audio .is (":visible"), args: ["menuToggleMuteTab", tab .getPosition ()] },
+         { type: "separator" },
+         { label: _("Close Tab"), args: ["menuCloseTab", tab .getPosition ()] },
+         { label: _("Close Other Tabs"), args: ["menuCloseOtherTabs", tab .getPosition ()] },
+         { label: _("Close All"), args: ["menuCloseOtherTabs", -1] },
+         { type: "separator" },
+         { label: _("Copy URL"), visible: !tab .url .startsWith ("id:"), args: ["menuCopyURL", tab .getPosition ()] },
+      ];
+
+      electron .ipcRenderer .send ("context-menu", "tabs", menu);
+   }
+
+   menuReloadTab (position)
+   {
+      const tab = this .tabs .getTabByPosition (position);
+
+      if (tab)
+         this .reloadTab (tab);
+   }
+
+   menuToggleMuteTab (position)
+   {
+      const tab = this .tabs .getTabByPosition (position);
+
+      tab ?.webview .send ("mute", !tab .mute);
+   }
+
+   menuCloseTab (position)
+   {
+      this .tabs .getTabByPosition (position) ?.close (true);
+   }
+
+   menuCloseOtherTabs (position)
    {
       const
-         tab = this .tabs .getActiveTab (),
-         src = url .pathToFileURL (path .join (__dirname, "../assets/html/window.html"));
+         tabs   = this .getTabs (),
+         length = tabs .length;
 
-      src .searchParams .set ("url", tab .url);
+      for (let i = length - 1; i >= 0; -- i)
+      {
+         if (i === position)
+            continue;
 
-      tab .webview .src = src;
+         this .tabs .getTabByPosition (i) ?.close (true);
+      }
+   }
 
-      this .setTabURL (tab, tab .url, true);
+   menuCopyURL (position)
+   {
+      const tab = this .tabs .getTabByPosition (position);
+
+      navigator .clipboard .writeText (tab .url);
    }
 
    getTabs ()
@@ -276,6 +333,17 @@ module .exports = new class Tabs
 
       return this .tabs .getTabs ()
          .sort ((a, b) => cmp (a .getPosition (), b .getPosition ()));
+   }
+
+   reloadTab (tab = this .tabs .getActiveTab ())
+   {
+      const src = url .pathToFileURL (path .join (__dirname, "../assets/html/window.html"));
+
+      src .searchParams .set ("url", tab .url);
+
+      tab .webview .src = src;
+
+      this .setTabURL (tab, tab .url, true);
    }
 
    getTabByURL (fileURL)
