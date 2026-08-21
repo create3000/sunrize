@@ -422,7 +422,9 @@ module .exports = new class Tabs
 
    menuCloseTab (position)
    {
-      this .tabs .getTabByPosition (position) .close (true);
+      const tab = this .tabs .getTabByPosition (position);
+
+      tab .close (true);
    }
 
    menuCloseOtherTabs (position)
