@@ -290,6 +290,17 @@ module .exports = new class Tabs
    {
       const menu = [
          {
+            label: tab .url .startsWith ("file:") ? _("Copy Path") : _("Copy URL"),
+            visible: !tab .url .startsWith ("id:"),
+            args: ["menuCopyURL", tab .getPosition ()],
+         },
+         {
+            label: process .platform === "darwin" ? _("Reveal in Finder") : _("Reveal in File Explorer"),
+            visible: tab .url .startsWith ("file:"),
+            args: ["menuShowItemInFolder", tab .getPosition ()],
+         },
+         { type: "separator" },
+         {
             label: _("Reload Tab"),
             args: ["menuReloadTab", tab .getPosition ()],
          },
@@ -301,24 +312,6 @@ module .exports = new class Tabs
             label: tab .mute ? _("Unmute Tab") : _("Mute Tab"),
             visible: tab .audioButton .is (":visible"),
             args: ["menuToggleMuteTab", tab .getPosition ()],
-         },
-         { type: "separator" },
-         {
-            label: _("Close Tab"),
-            args: ["menuCloseTab", tab .getPosition ()],
-         },
-         {
-            label: _("Close Other Tabs"),
-            args: ["menuCloseOtherTabs", tab .getPosition ()],
-         },
-         {
-            label: _("Close All"),
-            args: ["menuCloseOtherTabs", -1],
-         },
-         {
-            label: _("Reopen Closed Tab"),
-            visible: this .config .closedTabs .length,
-            args: ["menuReopenClosedTab"],
          },
          { type: "separator" },
          {
@@ -338,18 +331,42 @@ module .exports = new class Tabs
          },
          { type: "separator" },
          {
-            label: tab .url .startsWith ("file:") ? _("Copy Path") : _("Copy URL"),
-            visible: !tab .url .startsWith ("id:"),
-            args: ["menuCopyURL", tab .getPosition ()],
+            label: _("Close Tab"),
+            args: ["menuCloseTab", tab .getPosition ()],
          },
          {
-            label: process .platform === "darwin" ? _("Reveal in Finder") : _("Reveal in File Explorer"),
-            visible: tab .url .startsWith ("file:"),
-            args: ["menuShowItemInFolder", tab .getPosition ()],
+            label: _("Close Other Tabs"),
+            args: ["menuCloseOtherTabs", tab .getPosition ()],
+         },
+         {
+            label: _("Close All"),
+            args: ["menuCloseOtherTabs", -1],
+         },
+         {
+            label: _("Reopen Closed Tab"),
+            visible: this .config .closedTabs .length,
+            args: ["menuReopenClosedTab"],
          },
       ];
 
       electron .ipcRenderer .send ("context-menu", "tabs-menu", menu);
+   }
+
+   menuCopyURL (position)
+   {
+      const tab = this .tabs .getTabByPosition (position);
+
+      if (tab .url .startsWith ("file:"))
+         navigator .clipboard .writeText (url .fileURLToPath (tab .url));
+      else
+         navigator .clipboard .writeText (tab .url);
+   }
+
+   menuShowItemInFolder (position)
+   {
+      const tab = this .tabs .getTabByPosition (position);
+
+      electron .shell .showItemInFolder (url .fileURLToPath (tab .url));
    }
 
    menuReloadTab (position)
@@ -379,6 +396,20 @@ module .exports = new class Tabs
          tab .pinButton .hide ();
          tab .closeButton .show ();
       }
+   }
+
+   menuMoveTabToStart (position)
+   {
+      const tab = this .tabs .getTabByPosition (position);
+
+      tab .setPosition (0);
+   }
+
+   menuMoveTabToEnd (position)
+   {
+      const tab = this .tabs .getTabByPosition (position);
+
+      tab .setPosition (this .getTabs () .length);
    }
 
    menuToggleMuteTab (position)
@@ -423,37 +454,6 @@ module .exports = new class Tabs
 
       if (closedTab)
          this .openTabs ([closedTab]);
-   }
-
-   menuMoveTabToStart (position)
-   {
-      const tab = this .tabs .getTabByPosition (position);
-
-      tab .setPosition (0);
-   }
-
-   menuMoveTabToEnd (position)
-   {
-      const tab = this .tabs .getTabByPosition (position);
-
-      tab .setPosition (this .getTabs () .length);
-   }
-
-   menuCopyURL (position)
-   {
-      const tab = this .tabs .getTabByPosition (position);
-
-      if (tab .url .startsWith ("file:"))
-         navigator .clipboard .writeText (url .fileURLToPath (tab .url));
-      else
-         navigator .clipboard .writeText (tab .url);
-   }
-
-   menuShowItemInFolder (position)
-   {
-      const tab = this .tabs .getTabByPosition (position);
-
-      electron .shell .showItemInFolder (url .fileURLToPath (tab .url));
    }
 
    // Tab Handling
