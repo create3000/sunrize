@@ -29,6 +29,24 @@
   background-color: var(--scrollbar-thumb-color);
 }
 
+.etabs::before {
+  z-index: 1000;
+  content: "";
+  position: relative;
+  display: block;
+  height: 1px;
+  width: 100%;
+  box-shadow: var(--tabs-shadow);
+}
+
+.etabs .buttons {
+  border-color: var(--border-color);
+}
+
+.etabs .buttons:hover button {
+  background: none;
+}
+
 .etabs .nav {
   height: var(--window-tabs-height);
   background: var(--background-color);
@@ -42,11 +60,11 @@
 .etabs .tab {
   background: var(--window-tabs-background-color);
   border: 1px solid var(--border-color) !important;
-  padding: 4px 3px !important;
+  padding: 4px 5px !important;
   color: var(--window-tabs-text-color);
   font-family: var(--sans-serif);
   box-shadow: none;
-  transition: border 200ms;
+  transition: border 200ms, background-color 200ms, color 200ms;
 }
 
 .etabs .tab:first-child {
@@ -63,18 +81,8 @@
   color: var(--window-tabs-highlight-color);
 }
 
-.etabs::before {
-  z-index: 1000;
-  content: "";
-  position: relative;
-  display: block;
-  height: 1px;
-  width: 100%;
-  box-shadow: var(--tabs-shadow);
-}
-
-.etabs .buttons {
-  border-color: var(--border-color);
+.etabs .tab-title {
+  margin-left: 5px;
 }
 
 .etabs .tab-audio,
@@ -87,10 +95,6 @@
   color: var(--system-gray1);
   font-size: 18px;
   top: 0px;
-}
-
-.etabs .buttons:hover button {
-  background: none;
 }
 
 .etabs .buttons button:hover,
@@ -118,13 +122,13 @@
 }
 
 .etabs .tab-audio {
-  margin-left: 4px;
-  margin-right: -4px;
+  margin-right: -3px;
 }
 
+.etabs .tab-audio,
 .etabs .tab-pin,
 .etabs .tab-close {
-  margin-left: 4px;
+  margin-left: 5px;
 }
 
 .etabs .tab-pin {
