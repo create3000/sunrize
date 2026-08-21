@@ -167,8 +167,6 @@ module .exports = class Document extends Interface
       this .browser ._audio       .addInterest ("toggleAudio", this);
       this .browser ._activeLayer .addInterest ("toggleGrids", this);
 
-      this .toggleAudio ();
-
       // Connect for Snap Target and Snap Source.
 
       $(this .browser .element)
@@ -217,9 +215,9 @@ module .exports = class Document extends Interface
          toneMapping: "NONE",
          orderIndependentTransparency: false,
          logarithmicDepthBuffer: false,
-         mute: false,
          rubberband: true,
          timings: false,
+         mute: false,
       });
 
       this .fileSaveFileTypeWarning = false;
@@ -233,9 +231,9 @@ module .exports = class Document extends Interface
       this .setToneMapping                  (this .config .file .toneMapping);
       this .setOrderIndependentTransparency (this .config .file .orderIndependentTransparency);
       this .setLogarithmicDepthBuffer       (this .config .file .logarithmicDepthBuffer);
-      this .setMute                         (this .config .file .mute);
       this .setDisplayRubberband            (this .config .file .rubberband);
       this .setDisplayTimings               (this .config .file .timings);
+      this .setMute                         (this .config .file .mute);
 
       // Configure grids.
 
