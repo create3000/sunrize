@@ -279,7 +279,7 @@ module .exports = new class Tabs
          { label: _("Close Other Tabs"), args: ["menuCloseOtherTabs", tab .getPosition ()] },
          { label: _("Close All"), args: ["menuCloseOtherTabs", -1] },
          { type: "separator" },
-         { label: _("Copy URL"), visible: !tab .url .startsWith ("id:"), args: ["menuCopyURL", tab .getPosition ()] },
+         { label: tab .url .startsWith ("file:") ? _("Copy Path") : _("Copy URL"), visible: !tab .url .startsWith ("id:"), args: ["menuCopyURL", tab .getPosition ()] },
       ];
 
       electron .ipcRenderer .send ("context-menu", "tabs", menu);
@@ -324,7 +324,10 @@ module .exports = new class Tabs
    {
       const tab = this .tabs .getTabByPosition (position);
 
-      navigator .clipboard .writeText (tab .url);
+      if (tab .url .startsWith ("file:"))
+         navigator .clipboard .writeText (url .fileURLToPath (tab .url));
+      else
+         navigator .clipboard .writeText (tab .url);
    }
 
    getTabs ()
