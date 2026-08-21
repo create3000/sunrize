@@ -201,8 +201,6 @@ module .exports = new class Tabs
             active: false,
          });
 
-         $(tab .element) .attr ("tabindex", 0);
-
          this .setTabURL (tab, fileURL);
 
          const config = this .getTabConfig (tab);
@@ -213,7 +211,9 @@ module .exports = new class Tabs
 
          // Tab Context Menu
 
-         $(tab .element) .on ("contextmenu", () => this .showContextMenu (tab));
+         $(tab .element)
+            .attr ("tabindex", 0)
+            .on ("contextmenu", () => this .showContextMenu (tab));
 
          // Tab Icon
 
