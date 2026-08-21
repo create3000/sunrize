@@ -439,13 +439,19 @@ module .exports = new class Tabs
    menuReopenClosedTab ()
    {
       const
-         closedTabs = this .config .closedTabs,
-         closedTab  = closedTabs .pop ();
+         closedTabs   = this .config .closedTabs,
+         closedTabURL = closedTabs .pop ();
 
       this .config .closedTabs = closedTabs;
 
-      if (closedTab)
-         this .openTabs ([closedTab]);
+      if (closedTabURL .startsWith ("file:"))
+      {
+         if (!fs .existsSync (url .fileURLToPath (closedTabURL)))
+            return this .menuReopenClosedTab (); // Try next.
+      }
+
+      if (closedTabURL)
+         this .openTabs ([closedTabURL]);
    }
 
    // Tab Handling
