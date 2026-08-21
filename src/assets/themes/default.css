@@ -1485,6 +1485,11 @@ body.light .console-output .selected {
   color: inherit;
 }
 
+.tree-view .jstree-node {
+  outline: 1px solid transparent;
+  transition: outline 200ms;
+}
+
 .tree-view .jstree-node.selected {
   background-color: var(--tint-color1);
 }
@@ -1500,7 +1505,7 @@ body.light .console-output .selected {
 
 .tree-view .jstree-node.primary.externproto,
 .tree-view .jstree-node.primary.proto {
-    outline: 1px solid var(--system-indigo);
+  outline: 1px solid var(--system-indigo);
 }
 
 .tree-view .jstree-node.primary.node {
