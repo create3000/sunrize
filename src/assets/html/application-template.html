@@ -91,13 +91,21 @@
   position: relative;
   appearance: none;
   border: none;
+  border-radius: 4px;
   background: none;
-  color: var(--system-gray1);
+  color: var(--window-tabs-text-color);
   font-size: 18px;
   top: 0px;
 }
 
-.etabs .buttons button:hover,
+@media (prefers-color-scheme: light) {
+  .etabs .tab-audio:hover,
+  .etabs .tab-pin:hover,
+  .etabs .tab-close:hover {
+    background-color: var(--system-gray4);
+  }
+}
+
 .etabs .tab-audio:hover,
 .etabs .tab-close:hover {
   color: var(--system-gray0);
