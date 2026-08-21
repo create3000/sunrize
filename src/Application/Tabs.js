@@ -274,14 +274,39 @@ module .exports = new class Tabs
    showContextMenu (tab)
    {
       const menu = [
-         { label: _("Reload Tab"), args: ["menuReloadTab", tab .getPosition ()] },
-         { label: tab .mute ? _("Unmute Tab") : _("Mute Tab"), visible: tab .audio .is (":visible"), args: ["menuToggleMuteTab", tab .getPosition ()] },
+         {
+            label: _("Reload Tab"),
+            args: ["menuReloadTab", tab .getPosition ()],
+         },
+         {
+            label: tab .mute ? _("Unmute Tab") : _("Mute Tab"),
+            visible: tab .audio .is (":visible"),
+            args: ["menuToggleMuteTab", tab .getPosition ()],
+         },
          { type: "separator" },
-         { label: _("Close Tab"), args: ["menuCloseTab", tab .getPosition ()] },
-         { label: _("Close Other Tabs"), args: ["menuCloseOtherTabs", tab .getPosition ()] },
-         { label: _("Close All"), args: ["menuCloseOtherTabs", -1] },
+         {
+            label: _("Close Tab"),
+            args: ["menuCloseTab", tab .getPosition ()],
+         },
+         {
+            label: _("Close Other Tabs"),
+            args: ["menuCloseOtherTabs", tab .getPosition ()],
+         },
+         {
+            label: _("Close All"),
+            args: ["menuCloseOtherTabs", -1],
+         },
          { type: "separator" },
-         { label: tab .url .startsWith ("file:") ? _("Copy Path") : _("Copy URL"), visible: !tab .url .startsWith ("id:"), args: ["menuCopyURL", tab .getPosition ()] },
+         {
+            label: tab .url .startsWith ("file:") ? _("Copy Path") : _("Copy URL"),
+            visible: !tab .url .startsWith ("id:"),
+            args: ["menuCopyURL", tab .getPosition ()],
+         },
+         {
+            label: process .platform === "darwin" ? _("Reveal in Finder") : _("Reveal in File Explorer"),
+            visible: tab .url .startsWith ("file:"),
+            args: ["menuShowItemInFolder", tab .getPosition ()],
+         },
       ];
 
       electron .ipcRenderer .send ("context-menu", "tabs", menu);
@@ -329,6 +354,13 @@ module .exports = new class Tabs
          navigator .clipboard .writeText (url .fileURLToPath (tab .url));
       else
          navigator .clipboard .writeText (tab .url);
+   }
+
+   menuShowItemInFolder (position)
+   {
+      const tab = this .tabs .getTabByPosition (position);
+
+      electron .shell .showItemInFolder (url .fileURLToPath (tab .url));
    }
 
    // Tab Handling
