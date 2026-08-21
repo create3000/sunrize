@@ -192,6 +192,12 @@ module .exports = new class Tabs
 
          $(tab .element) .attr ("tabindex", 0);
 
+         const config = this .getTabConfig (tab);
+
+         config .setDefaultValues ({
+            pinned: false,
+         });
+
          // Tab Context Menu
 
          $(tab .element) .on ("contextmenu", () => this .showContextMenu (tab));
@@ -219,8 +225,6 @@ module .exports = new class Tabs
             .text ("keep");
 
          tab .closeButton .before (tab .pinButton);
-
-         const config = this .getTabConfig (tab);
 
          this .menuPinTab (tab .getPosition (), config .pinned);
 
