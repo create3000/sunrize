@@ -93,9 +93,10 @@
 
 .etabs .tab-audio,
 .etabs .tab-pin,
-.etabs .tab-close {
-  position: relative;
+.etabs .tab-close,
+.etabs .tab-close button {
   appearance: none;
+  position: relative;
   border: none;
   border-radius: 4px;
   background: none;
@@ -107,13 +108,15 @@
 @media (prefers-color-scheme: light) {
   .etabs .tab-audio:hover,
   .etabs .tab-pin:hover,
-  .etabs .tab-close:hover {
+  .etabs .tab-close:hover,
+  .etabs .tab-close:hover button {
     background-color: var(--system-gray4);
   }
 }
 
 .etabs .tab-audio:hover,
-.etabs .tab-close:hover {
+.etabs .tab-close:hover,
+.etabs .tab-close:hover button {
   color: var(--system-gray0);
 }
 

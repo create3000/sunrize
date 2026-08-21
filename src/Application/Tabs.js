@@ -1,5 +1,7 @@
 "use strict";
 
+// Icons from https://github.com/jesseweed/seti-ui
+
 const
    $           = require ("jquery"),
    electron    = require ("electron"),
@@ -224,10 +226,11 @@ module .exports = new class Tabs
          tab .on ("closing", (tab, abort) => this .tabClosing (tab, abort));
          tab .on ("close", (tab) => this .tabClose (tab));
 
-         tab .closeButton = $(tab .element) .find (".tab-close")
+         tab .closeButton = $(tab .element) .find (".tab-close");
+
+         tab .closeButton .find ("button")
             .addClass ("material-symbols-outlined")
-            .text ("close")
-            .on ("click", () => tab .close (true));
+            .text ("close");
 
          // Audio Button
 
