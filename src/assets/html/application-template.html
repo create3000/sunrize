@@ -29,22 +29,8 @@
   background-color: var(--scrollbar-thumb-color);
 }
 
-.etabs::before {
-  z-index: 1000;
-  content: "";
-  position: relative;
-  display: block;
-  height: 1px;
-  width: 100%;
-  box-shadow: var(--tabs-shadow);
-}
-
 .etabs .buttons {
-  border-color: var(--border-color);
-}
-
-.etabs .buttons:hover button {
-  background: none;
+  display: none;
 }
 
 .etabs .nav {
@@ -58,8 +44,9 @@
 }
 
 .etabs .tab {
-  background: var(--window-tabs-background-color);
-  border: 1px solid var(--border-color) !important;
+  background: none;
+  border: 1px solid transparent !important;
+  border-radius: 32px;
   padding: 4px 5px !important;
   color: var(--window-tabs-text-color);
   font-family: var(--sans-serif);
@@ -67,18 +54,18 @@
   transition: border 200ms, background-color 200ms, color 200ms;
 }
 
-.etabs .tab:first-child {
-  border-left: 0;
+.etabs .tab:hover,
+.etabs .tab.active {
+  background: var(--window-tabs-background-color);
+  border: 1px solid var(--border-color) !important;
+}
+
+.etabs .tab.active {
+  color: var(--window-tabs-highlight-color);
 }
 
 .etabs .tab:focus {
   border: 1px solid var(--system-blue) !important;
-}
-
-.etabs .tab.active {
-  z-index: 1100;
-  background: var(--background-color);
-  color: var(--window-tabs-highlight-color);
 }
 
 .etabs .tab-icon {
@@ -128,12 +115,12 @@
   display: none !important;
 }
 
-.etabs .tab-close {
+.etabs .tab-close button {
   visibility: hidden;
 }
 
-.etabs .tab.active .tab-close,
-.etabs .tab:hover .tab-close {
+.etabs .tab.active .tab-close button,
+.etabs .tab:hover .tab-close button {
   visibility: visible;
 }
 
