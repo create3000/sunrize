@@ -745,7 +745,10 @@ module .exports = class Application
                   },
                   { type: "separator" },
                   {
-                     role: "togglefullscreen",
+                     label: _("Toggle Full Screen"),
+                     accelerator: "F11",
+                     visible: process.platform === "win32",
+                     click: () => this .mainWindow .setFullScreen (!this .config .fullscreen),
                   },
                ],
             },
