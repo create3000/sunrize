@@ -443,6 +443,8 @@ Viewpoint {
          await this .#replaceWorld .call (this .browser, scene);
 
          this .browser .currentScene .setSpecificationVersion (X3D .LATEST_VERSION);
+
+         electron .ipcRenderer .sendToHost ("scene-encoding", scene .encoding);
       }
       catch
       {
