@@ -224,8 +224,10 @@ module .exports = new class Tabs
          // Pin Button
 
          tab .pinButton = $("<span></span>")
-            .addClass (["tab-pin", "material-symbols-outlined"])
-            .text ("keep");
+            .addClass ("tab-pin")
+            .append ($("<span></span>")
+               .addClass ("material-symbols-outlined")
+               .text ("keep"));
 
          tab .closeButton .before (tab .pinButton);
 
