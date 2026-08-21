@@ -314,6 +314,20 @@ module .exports = new class Tabs
          },
          { type: "separator" },
          {
+            label: _("Move Tab"),
+            submenu: [
+               {
+                  label: _("Move to Start"),
+                  args: ["menuMoveTabToStart", tab .getPosition ()],
+               },
+               {
+                  label: _("Move to End"),
+                  args: ["menuMoveTabToEnd", tab .getPosition ()],
+               },
+            ],
+         },
+         { type: "separator" },
+         {
             label: tab .url .startsWith ("file:") ? _("Copy Path") : _("Copy URL"),
             visible: !tab .url .startsWith ("id:"),
             args: ["menuCopyURL", tab .getPosition ()],
@@ -387,6 +401,20 @@ module .exports = new class Tabs
 
          tab .close (true);
       }
+   }
+
+   menuMoveTabToStart (position)
+   {
+      const tab = this .tabs .getTabByPosition (position);
+
+      tab .setPosition (0);
+   }
+
+   menuMoveTabToEnd (position)
+   {
+      const tab = this .tabs .getTabByPosition (position);
+
+      tab .setPosition (this .getTabs () .length);
    }
 
    menuCopyURL (position)
@@ -530,7 +558,12 @@ module .exports = new class Tabs
    closeAllTabs ()
    {
       for (const tab of this .tabs .getTabs ())
+      {
+         if (tab .pinButton .is (":visible"))
+            continue;
+
          tab .close (true);
+      }
    }
 
    close ()
