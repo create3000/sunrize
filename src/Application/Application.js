@@ -746,8 +746,7 @@ module .exports = class Application
                   { type: "separator" },
                   {
                      label: _("Toggle Full Screen"),
-                     accelerator: "F11",
-                     visible: process.platform === "win32",
+                     accelerator: process .platform === "darwin" ? "Command+Control+F" : "F11",
                      click: () => this .mainWindow .setFullScreen (!this .config .fullscreen),
                   },
                ],
