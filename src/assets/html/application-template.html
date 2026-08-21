@@ -7,6 +7,12 @@
   <body>
     <tab-group sortable="true">
       <style>
+@import url(../themes/media.css);
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+}
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -66,14 +72,37 @@
   border-color: var(--border-color);
 }
 
-.etabs .buttons:hover button,
-.etabs .tab-close button:hover {
+.etabs .tab-audio,
+.etabs .tab-close button {
+  position: relative;
+  appearance: none;
+  border: none;
+  background: none;
+  color: var(--system-gray1);
+  font-size: 18px;
+  top: 0px;
+}
+
+.etabs .tab-close button {
+  top: -1px;
+}
+
+.etabs .buttons:hover button {
   background: none;
 }
 
 .etabs .buttons button:hover,
-.etabs .tab-close:hover button {
+.etabs .tab-audio:hover,
+.etabs .tab-close button:hover {
   color: var(--system-gray0);
+}
+
+.etabs .tab-audio {
+  display: none;
+}
+
+.etabs .tab:not(.active) .tab-audio {
+  display: none !important;
 }
 
 .etabs .tab-close button {
@@ -83,6 +112,10 @@
 .etabs .tab.active .tab-close button,
 .etabs .tab:hover .tab-close button {
   visibility: visible;
+}
+
+.etabs .tab-audio {
+  margin-left: 8px;
 }
 
 .etabs .tab-close {

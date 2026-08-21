@@ -724,12 +724,6 @@ module .exports = class Application
                   },
                   { type: "separator" },
                   {
-                     label: _("Mute Audio"),
-                     type: "checkbox",
-                     checked: this .menuOptions .mute,
-                     click: () => this .mainWindow .webContents .send ("mute", !this .menuOptions .mute),
-                  },
-                  {
                      label: _("Display Rubberband"),
                      type: "checkbox",
                      checked: this .menuOptions .rubberband,

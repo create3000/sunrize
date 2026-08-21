@@ -67,6 +67,7 @@ module .exports = class Document extends Interface
       // Actions
 
       electron .ipcRenderer .on ("activate", () => this .activate ());
+      electron .ipcRenderer .on ("mute", (event, value) => this .setMute (value));
 
       $(window)
          .on ("focusin",  () => this .onfocus ())
@@ -108,7 +109,6 @@ module .exports = class Document extends Interface
       electron .ipcRenderer .on ("tone-mapping",                   (event, value) => this .setToneMapping (value));
       electron .ipcRenderer .on ("order-independent-transparency", (event, value) => this .setOrderIndependentTransparency (value));
       electron .ipcRenderer .on ("logarithmic-depth-buffer",       (event, value) => this .setLogarithmicDepthBuffer (value));
-      electron .ipcRenderer .on ("mute",                           (event, value) => this .setMute (value));
       electron .ipcRenderer .on ("display-rubberband",             (event, value) => this .setDisplayRubberband (value));
       electron .ipcRenderer .on ("display-timings",                (event, value) => this .setDisplayTimings (value));
       electron .ipcRenderer .on ("show-library",                   ()             => this .showLibrary ());
@@ -164,7 +164,10 @@ module .exports = class Document extends Interface
 
       // Connect browser events.
 
+      this .browser ._audio       .addInterest ("toggleAudio", this);
       this .browser ._activeLayer .addInterest ("toggleGrids", this);
+
+      this .toggleAudio ();
 
       // Connect for Snap Target and Snap Source.
 
@@ -798,23 +801,6 @@ Viewpoint {
     *
     * @param {boolean} value
     */
-   setMute (value)
-   {
-      this .browser .setBrowserOption ("Mute", value);
-      this .browser .setDescription (`Mute: ${value ? "on" : "off"}`);
-   }
-
-   set_Mute ()
-   {
-      this .config .file .mute = this .browser .getBrowserOption ("Mute");
-
-      this .updateMenu ();
-   }
-
-   /**
-    *
-    * @param {boolean} value
-    */
    setDisplayRubberband (value)
    {
       this .browser .setBrowserOption ("Rubberband", value);
@@ -1296,5 +1282,27 @@ Viewpoint {
          return;
 
       viewpointNode ._set_bind = true;
+   }
+
+   toggleAudio ()
+   {
+      electron .ipcRenderer .sendToHost ("audio", this .browser ._audio .getValue ());
+   }
+
+   /**
+    *
+    * @param {boolean} value
+    */
+   setMute (value)
+   {
+      this .browser .setBrowserOption ("Mute", value);
+      this .browser .setDescription (`Mute: ${value ? "on" : "off"}`);
+   }
+
+   set_Mute ()
+   {
+      this .config .file .mute = this .browser .getBrowserOption ("Mute");
+
+      electron .ipcRenderer .sendToHost ("mute", this .browser .getBrowserOption ("Mute"));
    }
 };

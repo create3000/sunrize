@@ -94,7 +94,6 @@ module .exports = new class Tabs
       this .forwardToActiveTab ("tone-mapping");
       this .forwardToActiveTab ("order-independent-transparency");
       this .forwardToActiveTab ("logarithmic-depth-buffer");
-      this .forwardToActiveTab ("mute");
       this .forwardToActiveTab ("display-rubberband");
       this .forwardToActiveTab ("display-timings");
       this .forwardToActiveTab ("show-library");
@@ -197,6 +196,19 @@ module .exports = new class Tabs
          tab .on ("closing", (tab, abort) => this .tabClosing (tab, abort));
          tab .on ("close", (tab) => this .tabClose (tab));
 
+         // Audio Button
+
+         const close = $(tab .element) .find (".tab-close");
+
+         tab .audio = $(`<span></span>`)
+            .addClass (["tab-audio", "material-symbols-outlined"])
+            .text ("volume_up")
+            .on ("click", () => tab .webview .send ("mute", !tab .mute));
+
+         close .before (tab .audio);
+
+         // Events
+
          tab .webview .addEventListener ("ipc-message", (event, value) =>
          {
             switch (event .channel)
@@ -210,6 +222,16 @@ module .exports = new class Tabs
                case "saved":
                {
                   this .setTabURL (tab, tab .url, ... event .args);
+                  break;
+               }
+               case "audio":
+               {
+                  this .toggleAudio (tab, ... event .args);
+                  break;
+               }
+               case "mute":
+               {
+                  this .toggleMute (tab, ... event .args);
                   break;
                }
             }
@@ -283,6 +305,24 @@ module .exports = new class Tabs
 
       this .config .openTabs  = urls;
       this .config .activeTab = tabs .length ? this .tabs .getActiveTab () .url : undefined;
+   }
+
+   toggleAudio (tab, audio)
+   {
+      if (audio)
+         tab .audio .show ();
+      else
+         tab .audio .hide ();
+   }
+
+   toggleMute (tab, mute)
+   {
+      tab .mute = mute;
+
+      if (mute)
+         tab .audio .text ("volume_mute");
+      else
+         tab .audio .text ("volume_up");
    }
 
    tabClosing (tab, abort)
