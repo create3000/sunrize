@@ -125,8 +125,6 @@ module .exports = new class Tabs
 
    restoreTabs (activeTab)
    {
-      const config = new DataStorage (localStorage, "Sunrize.");
-
       const openTabs = this .config .openTabs .filter (fileURL =>
       {
          if (!fileURL .startsWith ("file:"))
@@ -134,13 +132,6 @@ module .exports = new class Tabs
 
          if (fs .existsSync (url .fileURLToPath (fileURL)))
             return true;
-
-         // Delete keys of deleted file.
-
-         const hash = `.${md5 (fileURL)}.`;
-
-         for (const key of Object .keys (config) .filter (key => key .includes (hash)))
-            config [key] = undefined;
 
          return false;
       });
