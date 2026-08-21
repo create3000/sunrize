@@ -222,7 +222,7 @@ module .exports = new class Tabs
 
          tab .closeButton .before (tab .pinButton);
 
-         const config = this .config .addNameSpace (`${md5 (tab .url)}.`);
+         const config = this .getTabConfig (tab);
 
          this .menuPinTab (tab .getPosition (), !config .pinned);
 
@@ -339,7 +339,7 @@ module .exports = new class Tabs
    {
       const
          tab    = this .tabs .getTabByPosition (position),
-         config = this .config .addNameSpace (`${md5 (tab .url)}.`);
+         config = this .getTabConfig (tab);
 
       if (pinned ?? tab .pinButton .is (":visible"))
       {
@@ -414,6 +414,11 @@ module .exports = new class Tabs
 
       return this .tabs .getTabs ()
          .sort ((a, b) => cmp (a .getPosition (), b .getPosition ()));
+   }
+
+   getTabConfig (tab)
+   {
+      return new DataStorage (localStorage, `Sunrize.${md5 (tab .url)}.`);
    }
 
    reloadTab (tab = this .tabs .getActiveTab ())
