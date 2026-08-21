@@ -539,8 +539,9 @@ module .exports = class Application
                      click: () => this .mainWindow .reload (),
                   },
                   {
-                     role: "toggleDevTools",
+                     label: _("Toggle Developer Tools"),
                      visible: process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT",
+                     click: () => this .mainWindow .webContents .openDevTools (),
                   },
                   {
                      label: _("Reload Tab"),
