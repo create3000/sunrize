@@ -3,14 +3,15 @@
 const
    $           = require ("jquery"),
    electron    = require ("electron"),
-   TabGroup    = require ("electron-tabs"),
    DataStorage = require ("./DataStorage"),
    url         = require ("url"),
    path        = require ("path"),
    fs          = require ("fs"),
    md5         = require ("md5"),
-   CSS         = require ("./CSS"),
    _           = require ("./GetText");
+
+require ("electron-tabs");
+require ("./CSS");
 
 module .exports = new class Tabs
 {
@@ -48,21 +49,21 @@ module .exports = new class Tabs
          this .saveTabs ();
       });
 
-      this .tabs .on ("tab-removed", (tab) => this .saveTabs ());
+      this .tabs .on ("tab-removed", () => this .saveTabs ());
 
       // Actions
 
       electron .ipcRenderer .on ("tabs-menu", (event, key, ... args) => this [key] (... args));
 
-      electron .ipcRenderer .on ("open-files",     (event, urls)     => this .openTabs (urls));
-      electron .ipcRenderer .on ("reload"        , (event)           => this .reloadTab ());
+      electron .ipcRenderer .on ("open-files",     (event, urls) => this .openTabs (urls));
+      electron .ipcRenderer .on ("reload"        , () => this .reloadTab ());
       electron .ipcRenderer .on ("save-file-as",   (event, filePath) => this .saveFileAs (filePath));
-      electron .ipcRenderer .on ("save-all-files", (event)           => this .saveAllFiles ());
-      electron .ipcRenderer .on ("close-tab",      (event)           => this .tabs .getActiveTab () ?.close (true));
-      electron .ipcRenderer .on ("close-all-tabs", (event)           => this .closeAllTabs ());
-      electron .ipcRenderer .on ("quit",           (event)           => this .quit ());
+      electron .ipcRenderer .on ("save-all-files", () => this .saveAllFiles ());
+      electron .ipcRenderer .on ("close-tab",      () => this .tabs .getActiveTab () ?.close (true));
+      electron .ipcRenderer .on ("close-all-tabs", () => this .closeAllTabs ());
+      electron .ipcRenderer .on ("quit",           () => this .quit ());
 
-      electron .ipcRenderer .on ("toggle-developer-tools", (event) => this .tabs .getActiveTab () .webview .openDevTools ());
+      electron .ipcRenderer .on ("toggle-developer-tools", () => this .tabs .getActiveTab () .webview .openDevTools ());
 
       $(window) .on ("beforeunload", () => this .close ());
 
@@ -230,7 +231,7 @@ module .exports = new class Tabs
                tab .webview .send ("activate");
          });
 
-         tab .webview .addEventListener ("ipc-message", (event, value) =>
+         tab .webview .addEventListener ("ipc-message", event =>
          {
             switch (event .channel)
             {
@@ -520,7 +521,7 @@ module .exports = new class Tabs
          tab .audioButton .text ("volume_up");
    }
 
-   tabClosing (tab, abort)
+   tabClosing (tab)
    {
       tab .webview .send ("close");
 
