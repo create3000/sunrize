@@ -43,6 +43,20 @@
   white-space: nowrap;
 }
 
+.etabs .tab:not(.active, :hover, :focus)::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: -3px;
+  width: 0px;
+  height: 12px;
+  border-left: 1px solid var(--tab-separator-color);
+}
+
+.etabs .tab:is(.active, :hover, :focus) + .tab::before {
+  display: none;
+}
+
 .etabs .tab {
   background: none;
   border: 1px solid transparent !important;
