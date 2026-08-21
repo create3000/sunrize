@@ -20,7 +20,8 @@ module .exports = new class Tabs
    config = new DataStorage (localStorage, "Sunrize.Application.");
 
    icons = new Map ([
-      ["DEFAULT", "../images/seti/default.svg"],
+      ["UNKNOWN", "../images/seti/default.svg"],
+      ["OTHERS", "../images/seti/others.svg"],
       ["XML", "../images/seti/html.svg"],
       ["VRML", "../images/seti/text.svg"],
       ["JSON", "../images/seti/json.svg"],
@@ -198,7 +199,7 @@ module .exports = new class Tabs
             },
             visible: true,
             active: false,
-            iconURL: this .icons .get ("DEFAULT"),
+            iconURL: this .icons .get ("UNKNOWN"),
          });
 
          $(tab .element) .attr ("tabindex", 0);
@@ -262,7 +263,7 @@ module .exports = new class Tabs
             {
                case "scene-encoding":
                {
-                  tab .setIcon (this .icons .get (event .args [0]) ?? this .icons .get ("DEFAULT"));
+                  tab .setIcon (this .icons .get (event .args [0]) ?? this .icons .get ("OTHERS"));
                   break;
                }
                case "focus":
