@@ -310,7 +310,7 @@ module .exports = new class Tabs
          },
          {
             label: tab .mute ? _("Unmute Tab") : _("Mute Tab"),
-            visible: tab .audioButton .is (":visible"),
+            enabled: tab .audioButton .is (":visible"),
             args: ["menuToggleMuteTab", tab .getPosition ()],
          },
          { type: "separator" },
@@ -344,7 +344,7 @@ module .exports = new class Tabs
          },
          {
             label: _("Reopen Closed Tab"),
-            visible: this .config .closedTabs .length,
+            enabled: this .config .closedTabs .length,
             args: ["menuReopenClosedTab"],
          },
       ];
