@@ -188,9 +188,9 @@ module .exports = new class Tabs
             active: false,
          });
 
-         this .setTabURL (tab, fileURL);
-
          $(tab .element) .attr ("tabindex", 0);
+
+         this .setTabURL (tab, fileURL);
 
          const config = this .getTabConfig (tab);
 
