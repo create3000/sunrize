@@ -166,7 +166,7 @@ module .exports = class Interface
 
       filePath ??= this .filePath ?? this .fileId ?? this .browser .getWorldURL ();
 
-      return global .addNameSpace (md5 (filePath) + ".");
+      return global .addNameSpace (`${md5 (filePath)}.`);
    }
 
    /**

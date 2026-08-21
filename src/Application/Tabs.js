@@ -418,7 +418,7 @@ module .exports = new class Tabs
 
    getTabConfig (tab)
    {
-      return new DataStorage (localStorage, `Sunrize.${md5 (tab .url)}.`);
+      return new DataStorage (localStorage, `Sunrize.Tabs.${md5 (tab .url)}.`);
    }
 
    reloadTab (tab = this .tabs .getActiveTab ())
