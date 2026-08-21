@@ -27,6 +27,9 @@ module .exports = new class Tabs
          scrollLeft: 0,
       });
 
+      // Reset closed tabs.
+      this .config .closedTabs = [ ];
+
       $(() => this .initialize ());
    }
 
@@ -224,7 +227,7 @@ module .exports = new class Tabs
 
          const config = this .getTabConfig (tab);
 
-         this .menuPinTab (tab .getPosition (), !config .pinned);
+         this .menuPinTab (tab .getPosition (), config .pinned);
 
          // Events
 
@@ -312,6 +315,11 @@ module .exports = new class Tabs
             label: _("Close All"),
             args: ["menuCloseOtherTabs", -1],
          },
+         {
+            label: _("Reopen Closed Tab"),
+            visible: this .config .closedTabs .length,
+            args: ["menuReopenClosedTab"],
+         },
          { type: "separator" },
          {
             label: _("Move Tab"),
@@ -355,19 +363,19 @@ module .exports = new class Tabs
          tab    = this .tabs .getTabByPosition (position),
          config = this .getTabConfig (tab);
 
-      if (pinned ?? tab .pinButton .is (":visible"))
-      {
-         config .pinned = false;
-
-         tab .pinButton .hide ();
-         tab .closeButton .show ();
-      }
-      else
+      if (pinned ?? !tab .pinButton .is (":visible"))
       {
          config .pinned = true;
 
          tab .pinButton .show ();
          tab .closeButton .hide ();
+      }
+      else
+      {
+         config .pinned = false;
+
+         tab .pinButton .hide ();
+         tab .closeButton .show ();
       }
    }
 
@@ -401,6 +409,18 @@ module .exports = new class Tabs
 
          tab .close (true);
       }
+   }
+
+   menuReopenClosedTab ()
+   {
+      const
+         closedTabs = this .config .closedTabs,
+         closedTab  = closedTabs .pop ();
+
+      this .config .closedTabs = closedTabs;
+
+      if (closedTab)
+         this .openTabs ([closedTab]);
    }
 
    menuMoveTabToStart (position)
@@ -511,6 +531,8 @@ module .exports = new class Tabs
    {
       tab .webview .send ("close");
 
+      this .menuPinTab (tab .getPosition (), false);
+
       if (tab !== this .tabs .getActiveTab ())
          return;
 
@@ -529,6 +551,12 @@ module .exports = new class Tabs
    tabClose (tab)
    {
       // If all tabs are closed, open empty tab.
+
+      const closedTabs = this .config .closedTabs;
+
+      closedTabs .push (tab .url);
+
+      this .config .closedTabs = closedTabs;
 
       electron .ipcRenderer .send ("add-recent-location", tab .url);
 
