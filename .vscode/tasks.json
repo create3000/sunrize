@@ -6,17 +6,13 @@
       {
         "label": "Open Sunrize",
         "type": "shell",
-        "command": "npm run development",
         "problemMatcher": [],
         "runOptions": {
           "runOn": "folderOpen",
         },
-        "windows": {
-          "command": "exit 0"
+        "osx": {
+          "command": "npm run development",
         },
-        "linux": {
-          "command": "exit 0"
-        }
       },
       {
         "label": "Make X_ITE for Sunrize",
