@@ -365,10 +365,10 @@ module .exports = new class Tabs
 
       for (let i = length - 1; i >= 0; -- i)
       {
-         const tab = this .tabs .getTabByPosition (i);
-
          if (i === position)
             continue;
+
+         const tab = this .tabs .getTabByPosition (i);
 
          if (tab .pinButton .is (":visible"))
             continue;
