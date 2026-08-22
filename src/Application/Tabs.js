@@ -48,9 +48,6 @@ module .exports = new class Tabs
          scrollLeft: 0,
       });
 
-      // Limit closed tabs.
-      this .config .closedTabs = this .config .closedTabs .slice (-1000);
-
       $(() => this .initialize ());
    }
 
@@ -704,13 +701,16 @@ module .exports = new class Tabs
       for (const tab of tabs)
          tab .webview .send ("close");
 
-      //this .maintenance ();
+      this .maintenance ();
    }
 
    maintenance ()
    {
+      // Limit closed tabs.
+      this .config .closedTabs = this .config .closedTabs .slice (-1000);
+
       // Remove items older than one year, time in milliseconds.
-      new DataStorage (localStorage, "Sunrize.") .removeItems (Date .now () - (1000 * 60 * 60 * 24 * 365));
+      // new DataStorage (localStorage, "Sunrize.") .removeItems (Date .now () - (1000 * 60 * 60 * 24 * 365));
    }
 
    // Send messages to tabs
