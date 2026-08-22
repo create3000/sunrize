@@ -31,6 +31,7 @@
     --selection-background-color: rgb(246, 196, 197);
     --selection-range: rgba(0, 0, 0, 0.05);
     --scrollbar-thumb-color: rgba(0, 0, 0, 0.2);
+    --scrollbar-thumb-color-hover: rgba(0, 0, 0, 0.4);
 
     /* Filter Colors */
 
@@ -106,6 +107,7 @@
     --selection-background-color: rgb(167, 118, 119);
     --selection-range: rgba(255, 255, 255, 0.05);
     --scrollbar-thumb-color: rgba(255, 255, 255, 0.2);
+    --scrollbar-thumb-color-hover: rgba(255, 255, 255, 0.4);
 
     /* Filter Colors */
 

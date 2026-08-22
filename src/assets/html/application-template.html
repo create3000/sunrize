@@ -15,7 +15,7 @@
 
 ::-webkit-scrollbar {
   width: 8px;
-  height: 8px;
+  height: 4px;
 }
 
 ::-webkit-scrollbar-track, /* Track */
@@ -27,6 +27,11 @@
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background-color: var(--scrollbar-thumb-color);
+  border-radius: 2px;
+}
+
+:hover::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb-color-hover);
 }
 
 .etabs .buttons {
