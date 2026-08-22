@@ -3,7 +3,7 @@
    viewBox="0 0 32 32"
    version="1.1"
    id="svg1"
-   sodipodi:docname="others.svg"
+   sodipodi:docname="stl.svg"
    inkscape:version="1.4.4 (dcaf3e7, 2026-05-05)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -31,7 +31,7 @@
      inkscape:current-layer="svg1" />
   <path
      sodipodi:type="star"
-     style="fill:none;fill-opacity:1;stroke:#77767b;stroke-width:2.86033041;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:none;fill-opacity:1;stroke:#26a269;stroke-width:2.86033041;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
      id="path2"
      inkscape:flatsided="false"
      sodipodi:sides="5"

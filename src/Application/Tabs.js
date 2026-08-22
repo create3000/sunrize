@@ -22,12 +22,17 @@ module .exports = new class Tabs
    config = new DataStorage (localStorage, "Sunrize.Application.");
 
    icons = new Map ([
-      ["UNKNOWN", "../images/seti/default.svg"],
+      ["DEFAULT", "../images/seti/default.svg"],
       ["OTHERS", "../images/seti/others.svg"],
       ["XML", "../images/seti/html.svg"],
       ["VRML", "../images/seti/text.svg"],
       ["JSON", "../images/seti/json.svg"],
       ["GLTF", "../images/seti/json.svg"],
+      ["SPZ", "../images/seti/spz.svg"],
+      ["OBJ", "../images/seti/obj.svg"],
+      ["STL", "../images/seti/stl.svg"],
+      ["PLY", "../images/seti/ply.svg"],
+      ["SOG", "../images/seti/sog.svg"],
       ["IMAGE", "../images/seti/image.svg"],
       ["AUDIO", "../images/seti/audio.svg"],
       ["VIDEO", "../images/seti/video.svg"],
@@ -218,7 +223,7 @@ module .exports = new class Tabs
 
          // Tab Icon
 
-         tab .setIcon (this .getIcon (config .encoding ?? "UNKNOWN"));
+         tab .setIcon (this .getIcon (config .encoding ?? "DEFAULT"));
 
          // Close Button
 
