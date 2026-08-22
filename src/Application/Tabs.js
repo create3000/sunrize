@@ -386,7 +386,8 @@ module .exports = new class Tabs
             args: ["menuCloseOtherTabs", tab .getPosition ()],
          },
          {
-            label: _("Close All"),
+            label: _("Close All Tabs"),
+            accelerator: "Option+CmdOrCtrl+W",
             args: ["menuCloseOtherTabs", -1],
          },
          {
