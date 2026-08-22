@@ -399,17 +399,7 @@ module .exports = new class Tabs
       ];
 
       electron .ipcRenderer .send ("context-menu", "tabs-menu", menu);
-
-      // Remove tab focus when menu gets closed.
-
-      const removeTabFocus = () =>
-      {
-         $(tab .element) .trigger ("blur");
-
-         electron .ipcRenderer .off ("tabs-menu-will-close", removeTabFocus);
-      };
-
-      electron .ipcRenderer .on ("tabs-menu-will-close", removeTabFocus);
+      electron .ipcRenderer .once ("tabs-menu-will-close", () => $(tab .element) .trigger ("blur"));
    }
 
    menuCopyURL (position)
