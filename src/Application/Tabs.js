@@ -404,12 +404,7 @@ module .exports = new class Tabs
 
       const removeTabFocus = () =>
       {
-         setTimeout (() =>
-         {
-            if ($(tab .element) .is (":focus"))
-               tab .webview .focus ();
-         },
-         100);
+         $(tab .element) .trigger ("blur");
 
          electron .ipcRenderer .off ("tabs-menu-will-close", removeTabFocus);
       };
