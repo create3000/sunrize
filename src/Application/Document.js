@@ -66,7 +66,7 @@ module .exports = class Document extends Interface
 
       // Actions
 
-      electron .ipcRenderer .on ("activate", () => this .activate ());
+      electron .ipcRenderer .on ("activate", (event, value) => this .activate (value));
       electron .ipcRenderer .on ("mute", (event, value) => this .setMute (value));
 
       $(window)
@@ -256,17 +256,38 @@ module .exports = class Document extends Interface
 
       // Run activate.
 
-      this .activate ();
+      this .activate (true);
    }
 
    /**
     * Run actions when tab is activated/selected.
     */
-   activate ()
+   activate (active)
    {
-      this .updateMenu ();
+      if (active)
+      {
+         this .updateMenu ();
 
-      electron .ipcRenderer .sendToHost ("focus");
+         electron .ipcRenderer .sendToHost ("focus");
+
+         // Live Handling
+
+         if (this .live)
+            this .browser .beginUpdate ();
+
+         this .browser .setBrowserOption ("AutoUpdate", true);
+
+         this .live = undefined;
+      }
+      else
+      {
+         // Live Handling
+
+         this .live ??= this .browser .isLive ();
+
+         this .browser .setBrowserOption ("AutoUpdate", false);
+         this .browser .endUpdate ();
+      }
    }
 
    updateMenu ()

@@ -63,9 +63,7 @@ module .exports = new class Tabs
 
          tab .initialized = true;
 
-         if (tab .domReady)
-            tab .webview .send ("activate");
-
+         this .activateTab (tab);
          this .saveTabs ();
       });
 
@@ -263,8 +261,7 @@ module .exports = new class Tabs
          {
             tab .domReady = true;
 
-            if (this .tabs .getActiveTab () === tab)
-               tab .webview .send ("activate");
+            this .activateTab (tab);
          });
 
          tab .webview .addEventListener ("ipc-message", event =>
@@ -559,6 +556,22 @@ module .exports = new class Tabs
       this .saveTabs ();
    }
 
+   activeTab = null;
+
+   activateTab (tab)
+   {
+      if (!tab .domReady)
+         return;
+
+      if (tab !== this .tabs .getActiveTab ())
+         return;
+
+      this .activeTab ?.webview .send ("activate", false);
+      tab .webview .send ("activate", true);
+
+      this .activeTab = tab;
+   }
+
    saveTabs ()
    {
       const
@@ -700,7 +713,7 @@ module .exports = new class Tabs
 
    forwardToActiveTab (channel)
    {
-      electron .ipcRenderer .on (channel, (event, ... args) => this .tabs .getActiveTab () .webview .send (channel, ... args));
+      electron .ipcRenderer .on (channel, (event, ... args) => this .tabs .getActiveTab () ?.webview .send (channel, ... args));
    }
 
    forwardToAllTabs (channel)
