@@ -348,6 +348,7 @@ module .exports = new class Tabs
          { type: "separator" },
          {
             label: _("Reload Tab"),
+            accelerator: "F5",
             args: ["menuReloadTab", tab .getPosition ()],
          },
          {
