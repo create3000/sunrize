@@ -390,6 +390,7 @@ module .exports = new class Tabs
             accelerator: "Option+CmdOrCtrl+W",
             args: ["menuCloseOtherTabs", -1],
          },
+         { type: "separator" },
          {
             label: _("Reopen Closed Tab"),
             enabled: this .config .closedTabs .length,
