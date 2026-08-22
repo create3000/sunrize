@@ -337,9 +337,9 @@ module .exports = new class Tabs
             {
                switch (process .platform)
                {
-                  case "darwin": return _("Reveal in Finder");
-                  case "win32":  return _("Reveal in File Explorer");
-                  default:       return _("Reveal in File Manager");
+                  case "darwin": return _("Reveal File in Finder");
+                  case "win32":  return _("Reveal File in File Explorer");
+                  default:       return _("Reveal File in File Manager");
                }
             })(),
             visible: tab .url .startsWith ("file:"),
