@@ -336,7 +336,15 @@ module .exports = new class Tabs
             args: ["menuCopyURL", tab .getPosition ()],
          },
          {
-            label: process .platform === "darwin" ? _("Reveal in Finder") : _("Reveal in File Explorer"),
+            label: (() =>
+            {
+               switch (process .platform)
+               {
+                  case "darwin": return _("Reveal in Finder");
+                  case "win32":  return _("Reveal in File Explorer");
+                  default:       return _("Reveal in File Manager");
+               }
+            })(),
             visible: tab .url .startsWith ("file:"),
             args: ["menuShowItemInFolder", tab .getPosition ()],
          },
