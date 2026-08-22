@@ -48,8 +48,8 @@ module .exports = new class Tabs
          scrollLeft: 0,
       });
 
-      // Reset closed tabs.
-      this .config .closedTabs = [ ];
+      // Limit closed tabs.
+      this .config .closedTabs = this .config .closedTabs .slice (-1000);
 
       $(() => this .initialize ());
    }
@@ -503,14 +503,16 @@ module .exports = new class Tabs
 
       this .config .closedTabs = closedTabs;
 
+      if (!closedTabURL)
+         return;
+
       if (closedTabURL .startsWith ("file:"))
       {
          if (!fs .existsSync (url .fileURLToPath (closedTabURL)))
             return this .menuReopenClosedTab (); // Try next.
       }
 
-      if (closedTabURL)
-         this .openTabs ([closedTabURL]);
+      this .openTabs ([closedTabURL]);
    }
 
    // Tab Handling
