@@ -163,7 +163,7 @@ body {
   --window-tabs-highlight-color: var(--accent-color);
   --tabs-background-color: var(--system-gray7);
 
-  --window-tabs-height: 30px;
+  --window-tabs-height: 34px;
   --tabs-height: 26px;
 
   --toolbar-width: 30px;
