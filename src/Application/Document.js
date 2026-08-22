@@ -259,7 +259,7 @@ module .exports = class Document extends Interface
       this .activate (true);
    }
 
-   #live;
+   #wasLive;
 
    /**
     * Run actions when tab is activated/selected.
@@ -274,18 +274,18 @@ module .exports = class Document extends Interface
 
          // Live Handling
 
-         if (this .#live)
+         if (this .#wasLive)
             this .browser .beginUpdate ();
 
          this .browser .setBrowserOption ("AutoUpdate", true);
 
-         this .#live = undefined;
+         this .#wasLive = undefined;
       }
       else
       {
          // Live Handling
 
-         this .#live ??= this .browser .isLive ();
+         this .#wasLive ??= this .browser .isLive ();
 
          this .browser .setBrowserOption ("AutoUpdate", false);
          this .browser .endUpdate ();
