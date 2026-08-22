@@ -41,18 +41,15 @@ module .exports = new class Tabs
 
    constructor ()
    {
-      this .tabs = $("tab-group") .get (0);
-
       this .config .setDefaultValues ({
          openTabs: [ ],
          scrollLeft: 0,
       });
 
-      $(() => this .initialize ());
-   }
+      // Connect to TabGroup Events
 
-   initialize ()
-   {
+      this .tabs = $("tab-group") .get (0);
+
       this .tabs .on ("tab-active", tab =>
       {
          electron .ipcRenderer .send ("title", tab .getTitle ());
