@@ -1,7 +1,5 @@
 "use strict";
 
-// Icons from https://github.com/jesseweed/seti-ui
-
 const
    $           = require ("jquery"),
    electron    = require ("electron"),
@@ -20,6 +18,8 @@ module .exports = new class Tabs
    // Construction
 
    config = new DataStorage (localStorage, "Sunrize.Application.");
+
+   // Most icons from https://github.com/jesseweed/seti-ui.
 
    icons = new Map ([
       ["DEFAULT", "../images/seti/default.svg"],
