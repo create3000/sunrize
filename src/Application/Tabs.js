@@ -25,7 +25,7 @@ module .exports = new class Tabs
       ["DEFAULT", "../images/seti/default.svg"],
       ["OTHERS", "../images/seti/others.svg"],
       ["XML", "../images/seti/html.svg"],
-      ["VRML", "../images/seti/text.svg"],
+      ["VRML", "../images/seti/vrml.svg"],
       ["JSON", "../images/seti/json.svg"],
       ["GLTF", "../images/seti/json.svg"],
       ["SPZ", "../images/seti/spz.svg"],
