@@ -136,13 +136,8 @@
   display: none !important;
 }
 
-.etabs .tab-close button {
-  visibility: hidden;
-}
-
-.etabs .tab.active .tab-close button,
-.etabs .tab:hover .tab-close button {
-  visibility: visible;
+.etabs .tab:not(.active, :hover, :focus) .tab-close button {
+  color: var(--system-gray2);
 }
 
 .etabs .tab-audio {
