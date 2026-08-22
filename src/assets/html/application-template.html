@@ -53,6 +53,7 @@
   position: absolute;
   top: 9px;
   left: -5px;
+  color: var(--system-gray2);
 }
 
 .etabs .tab:is(.active, :hover, :focus) + .tab::before {
@@ -136,7 +137,7 @@
   display: none !important;
 }
 
-.etabs .tab:not(.active, :hover, :focus) .tab-close button {
+.etabs .tab:not(.active, :hover, :focus) :where(.tab-close button, .tab-audio, .tab-pin) {
   color: var(--system-gray2);
 }
 
