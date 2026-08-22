@@ -65,13 +65,13 @@
   color: var(--window-tabs-text-color);
   font-family: var(--sans-serif);
   box-shadow: none;
-  transition: border 200ms, background-color 200ms, color 200ms;
+  transition: background-color 200ms, border-color 200ms, color 200ms;
 }
 
 .etabs .tab:hover,
 .etabs .tab.active {
-  background: var(--window-tabs-background-color);
-  border: 1px solid var(--border-color) !important;
+  background-color: var(--window-tabs-background-color);
+  border-color: var(--border-color) !important;
 }
 
 .etabs .tab.active {
@@ -79,7 +79,7 @@
 }
 
 .etabs .tab:focus {
-  border: 1px solid var(--system-blue) !important;
+  border-color: var(--system-blue) !important;
 }
 
 .etabs .tab-icon {
