@@ -49,13 +49,10 @@
 }
 
 .etabs .tab:not(.active, :hover, :focus, :first-child)::before {
-  content: "";
+  content: "•";
   position: absolute;
-  top: 10px;
-  left: -2px;
-  width: 0px;
-  height: 12px;
-  border-left: 1px solid var(--tab-separator-color);
+  top: 9px;
+  left: -4px;
 }
 
 .etabs .tab:is(.active, :hover, :focus) + .tab::before {

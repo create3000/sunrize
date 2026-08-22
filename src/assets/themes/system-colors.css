@@ -155,7 +155,6 @@ body {
   --text-color: var(--system-gray0);
   --highlight-color: black;
   --border-color: var(--system-gray3);
-  --tab-separator-color: var(--system-gray3);
   --expander-color: var(--system-gray1);
   --accent-color: var(--system-red);
   --separator-color: var(--system-gray3);
@@ -220,7 +219,6 @@ body {
     --text-color: var(--system-gray1);
     --highlight-color: var(--system-gray0);
     --border-color: var(--system-gray8);
-    --tab-separator-color: var(--system-gray3);
     --expander-color: var(--system-gray8);
     --filter-text-color: var(--filter-system-gray1);
     --filter-highlight-color: var(--filter-system-gray0);
