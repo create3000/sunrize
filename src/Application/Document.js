@@ -67,7 +67,7 @@ module .exports = class Document extends Interface
       // Actions
 
       electron .ipcRenderer .on ("activate", (event, value) => this .activate (value));
-      electron .ipcRenderer .on ("mute", (event, value) => this .setMute (value));
+      electron .ipcRenderer .on ("mute", (event, value) => this .setMute (value, true));
 
       $(window)
          .on ("focusin",  () => this .onfocus ())
@@ -102,14 +102,14 @@ module .exports = class Document extends Interface
 
       // View Menu
 
-      electron .ipcRenderer .on ("primitive-quality",              (event, value) => this .setPrimitiveQuality (value));
-      electron .ipcRenderer .on ("texture-quality",                (event, value) => this .setTextureQuality (value));
-      electron .ipcRenderer .on ("text-compression",               (event, value) => this .setTextCompression (value));
-      electron .ipcRenderer .on ("color-space",                    (event, value) => this .setColorSpace (value));
-      electron .ipcRenderer .on ("tone-mapping",                   (event, value) => this .setToneMapping (value));
-      electron .ipcRenderer .on ("order-independent-transparency", (event, value) => this .setOrderIndependentTransparency (value));
-      electron .ipcRenderer .on ("logarithmic-depth-buffer",       (event, value) => this .setLogarithmicDepthBuffer (value));
-      electron .ipcRenderer .on ("display-rubberband",             (event, value) => this .setDisplayRubberband (value));
+      electron .ipcRenderer .on ("primitive-quality",              (event, value) => this .setPrimitiveQuality (value, true));
+      electron .ipcRenderer .on ("texture-quality",                (event, value) => this .setTextureQuality (value, true));
+      electron .ipcRenderer .on ("text-compression",               (event, value) => this .setTextCompression (value, true));
+      electron .ipcRenderer .on ("color-space",                    (event, value) => this .setColorSpace (value, true));
+      electron .ipcRenderer .on ("tone-mapping",                   (event, value) => this .setToneMapping (value, true));
+      electron .ipcRenderer .on ("order-independent-transparency", (event, value) => this .setOrderIndependentTransparency (value, true));
+      electron .ipcRenderer .on ("logarithmic-depth-buffer",       (event, value) => this .setLogarithmicDepthBuffer (value, true));
+      electron .ipcRenderer .on ("display-rubberband",             (event, value) => this .setDisplayRubberband (value, true));
       electron .ipcRenderer .on ("display-timings",                (event, value) => this .setDisplayTimings (value));
       electron .ipcRenderer .on ("show-library",                   ()             => this .showLibrary ());
 
@@ -709,10 +709,12 @@ Viewpoint {
     *
     * @param {string} value
     */
-   setPrimitiveQuality (value)
+   setPrimitiveQuality (value, notification)
    {
       this .browser .setBrowserOption ("PrimitiveQuality", value);
-      this .browser .setDescription (`Primitive Quality: ${value .toLowerCase ()}`);
+
+      if (notification)
+         this .browser .setDescription (`Primitive Quality: ${value .toLowerCase ()}`);
    }
 
    set_PrimitiveQuality ()
@@ -726,10 +728,12 @@ Viewpoint {
     *
     * @param {string} value
     */
-   setTextureQuality (value)
+   setTextureQuality (value, notification)
    {
       this .browser .setBrowserOption ("TextureQuality", value);
-      this .browser .setDescription (`Texture Quality: ${value .toLowerCase ()}`);
+
+      if (notification)
+         this .browser .setDescription (`Texture Quality: ${value .toLowerCase ()}`);
    }
 
    set_TextureQuality ()
@@ -743,10 +747,12 @@ Viewpoint {
     *
     * @param {string} value
     */
-   setTextCompression (value)
+   setTextCompression (value, notification)
    {
       this .browser .setBrowserOption ("TextCompression", value);
-      this .browser .setDescription (`Text Compression: ${value}`);
+
+      if (notification)
+         this .browser .setDescription (`Text Compression: ${value}`);
    }
 
    set_TextCompression ()
@@ -760,10 +766,12 @@ Viewpoint {
     *
     * @param {string} value
     */
-   setColorSpace (value)
+   setColorSpace (value, notification)
    {
       this .browser .setBrowserOption ("ColorSpace", value);
-      this .browser .setDescription (`Color Space: ${value}`);
+
+      if (notification)
+         this .browser .setDescription (`Color Space: ${value}`);
    }
 
    set_ColorSpace ()
@@ -777,10 +785,12 @@ Viewpoint {
     *
     * @param {string} value
     */
-   setToneMapping (value)
+   setToneMapping (value, notification)
    {
       this .browser .setBrowserOption ("ToneMapping", value);
-      this .browser .setDescription (`Tone Mapping: ${value}`);
+
+      if (notification)
+         this .browser .setDescription (`Tone Mapping: ${value}`);
    }
 
    set_ToneMapping ()
@@ -794,10 +804,12 @@ Viewpoint {
     *
     * @param {boolean} value
     */
-   setOrderIndependentTransparency (value)
+   setOrderIndependentTransparency (value, notification)
    {
       this .browser .setBrowserOption ("OrderIndependentTransparency", value);
-      this .browser .setDescription (`OrderIndependentTransparency: ${value ? "on" : "off"}`);
+
+      if (notification)
+         this .browser .setDescription (`OrderIndependentTransparency: ${value ? "on" : "off"}`);
    }
 
    set_OrderIndependentTransparency ()
@@ -811,10 +823,12 @@ Viewpoint {
     *
     * @param {boolean} value
     */
-   setLogarithmicDepthBuffer (value)
+   setLogarithmicDepthBuffer (value, notification)
    {
       this .browser .setBrowserOption ("LogarithmicDepthBuffer", value);
-      this .browser .setDescription (`LogarithmicDepthBuffer: ${value ? "on" : "off"}`);
+
+      if (notification)
+         this .browser .setDescription (`LogarithmicDepthBuffer: ${value ? "on" : "off"}`);
    }
 
    set_LogarithmicDepthBuffer ()
@@ -828,10 +842,12 @@ Viewpoint {
     *
     * @param {boolean} value
     */
-   setDisplayRubberband (value)
+   setDisplayRubberband (value, notification)
    {
       this .browser .setBrowserOption ("Rubberband", value);
-      this .browser .setDescription (`Rubberband: ${value ? "on" : "off"}`);
+
+      if (notification)
+         this .browser .setDescription (`Rubberband: ${value ? "on" : "off"}`);
    }
 
    set_Rubberband ()
@@ -1320,10 +1336,12 @@ Viewpoint {
     *
     * @param {boolean} value
     */
-   setMute (value)
+   setMute (value, notification)
    {
       this .browser .setBrowserOption ("Mute", value);
-      this .browser .setDescription (`Mute: ${value ? "on" : "off"}`);
+
+      if (notification)
+         this .browser .setDescription (`Mute: ${value ? "on" : "off"}`);
    }
 
    set_Mute ()

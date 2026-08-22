@@ -357,7 +357,6 @@ module .exports = new class Tabs
          },
          {
             label: tab .mute ? _("Unmute Tab") : _("Mute Tab"),
-            enabled: tab .audioButton .is (":visible"),
             args: ["menuToggleMuteTab", tab .getPosition ()],
          },
          { type: "separator" },
