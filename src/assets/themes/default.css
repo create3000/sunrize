@@ -57,6 +57,7 @@ body {
 /* Scrollbar Handle */
 :hover::-webkit-scrollbar-thumb {
   background-color: var(--scrollbar-thumb-color);
+  border-radius: var(--scrollbar-width);
 }
 
 /* https://developer.chrome.com/docs/css-ui/scrollbar-styling?hl=de */
@@ -1336,6 +1337,10 @@ body.light .console-output .selected {
   display: none;
 }
 
+.monaco-editor .slider {
+  border-radius: var(--scrollbar-width);
+}
+
 /* Animation Editor */
 
 .animation-editor {
@@ -1382,6 +1387,7 @@ body.light .console-output .selected {
   bottom: 0;
   height: var(--scrollbar-width);
   background: var(--scrollbar-thumb-color);
+  border-radius: var(--scrollbar-width);
 }
 
 .animation-editor .node-list {
