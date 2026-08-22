@@ -400,7 +400,7 @@ module .exports = new class Tabs
 
       electron .ipcRenderer .send ("context-menu", "tabs-menu", menu);
 
-      // Remove tab focus if menu gets closed.
+      // Remove tab focus when menu gets closed.
 
       const removeTabFocus = () =>
       {
