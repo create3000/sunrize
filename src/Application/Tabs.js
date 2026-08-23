@@ -621,19 +621,28 @@ module .exports = new class Tabs
 
    tabClose (tab)
    {
-      // If all tabs are closed, open empty tab.
+      // Save closed tab.
 
       const closedTabs = this .config .closedTabs;
 
-      closedTabs .push (tab .url);
+      if (closedTabs .at (-1) !== tab .url)
+      {
+         closedTabs .push (tab .url);
 
-      this .config .closedTabs = closedTabs;
+         this .config .closedTabs = closedTabs;
+      }
+
+      // Add closed url to recent locations.
 
       electron .ipcRenderer .send ("add-recent-location", tab .url);
+
+      // If all tabs are closed, open empty tab.
 
       if (!this .tabs .getTabs () .length)
          this .openTabs ();
 
+      // Save tabs.
+      
       this .saveTabs ();
    }
 
