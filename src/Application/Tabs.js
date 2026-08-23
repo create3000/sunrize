@@ -642,7 +642,7 @@ module .exports = new class Tabs
          this .openTabs ();
 
       // Save tabs.
-      
+
       this .saveTabs ();
    }
 
