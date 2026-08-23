@@ -524,6 +524,8 @@ Viewpoint {
          }
 
          fs .writeFile (this .filePath, Editor .getContents (scene, path .extname (this .filePath)), Function .prototype);
+
+         electron .ipcRenderer .send ("current-file", this .browser .currentScene .worldURL);
       }
       else
       {

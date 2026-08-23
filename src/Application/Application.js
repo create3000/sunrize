@@ -87,10 +87,10 @@ module .exports = class Application
 
    async setup ()
    {
-      electron .app .on ("activate",           (event)           => this .onactivate ());
-      electron .app .on ("new-window-for-tab", (event)           => this .createWindow ());
+      electron .app .on ("activate",           ()                => this .onactivate ());
+      electron .app .on ("new-window-for-tab", ()                => this .createWindow ());
       electron .app .on ("open-file",          (event, filePath) => this .openFiles ([url .pathToFileURL (filePath) .href]));
-      electron .app .on ("window-all-closed",  (event)           => this .quit ());
+      electron .app .on ("window-all-closed",  ()                => this .quit ());
 
       electron .ipcMain .on ("title",               (event, title)       => this .title = title);
       electron .ipcMain .on ("current-file",        (event, currentFile) => this .currentFile = currentFile);
@@ -112,7 +112,7 @@ module .exports = class Application
 
       this .openFiles (this .receivedFiles);
 
-      electron .app .on ("second-instance", (event, argv, cwd) =>
+      electron .app .on ("second-instance", (event, argv) =>
       {
          this .openFiles (argv .slice (1)
             .filter (filePath => fs .existsSync (filePath) && fs .lstatSync (filePath) .isFile ())
