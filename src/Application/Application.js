@@ -92,7 +92,7 @@ module .exports = class Application
       electron .app .on ("open-file",          (event, filePath) => this .openFiles ([url .pathToFileURL (filePath) .href]));
       electron .app .on ("window-all-closed",  ()                => this .quit ());
 
-      electron .ipcMain .on ("locale",              (event, locale)      => _.set (locale));
+      electron .ipcMain .on ("locale",              (event, locale)      => _.setLocale (locale));
       electron .ipcMain .on ("title",               (event, title)       => this .title = title);
       electron .ipcMain .on ("current-file",        (event, currentFile) => this .currentFile = currentFile);
       electron .ipcMain .on ("add-recent-location", (event, fileURL)     => this .addRecentLocation (fileURL));

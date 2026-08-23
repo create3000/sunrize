@@ -9,10 +9,10 @@ function gettext (string)
    return strings [string] ?.[locale] ?? string [string] ?.[language] ?? string;
 }
 
-gettext .set = function (loc)
+gettext .setLocale = function (value)
 {
-   gettext .locale   = loc;
-   gettext .language = loc .split ("-") [0];
+   gettext .locale   = value;
+   gettext .language = value .split ("-") [0];
 
    locale   = gettext .locale;
    language = gettext .language;
