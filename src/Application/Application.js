@@ -165,7 +165,10 @@ module .exports = class Application
          }
       }
 
-      this .mainWindow .setRepresentedFilename (this .#currentFile);
+      if (fs .existsSync (this .#currentFile))
+         this .mainWindow .setRepresentedFilename (this .#currentFile);
+      else
+         this .mainWindow .setRepresentedFilename ("");
    }
 
    pushMenu (menu)
@@ -322,6 +325,8 @@ module .exports = class Application
 
                         if (response .canceled)
                            return;
+
+                        this .currentFile = url .pathToFileURL (response .filePath);
 
                         this .addRecentDocument (response .filePath);
 
@@ -1065,9 +1070,6 @@ module .exports = class Application
 
       this .popMenu ();
 
-      if (!response .canceled)
-         this .currentFile = url .pathToFileURL (response .filePaths .at (-1));
-
       return response;
    }
 
@@ -1089,9 +1091,6 @@ module .exports = class Application
       });
 
       this .popMenu ();
-
-      if (!response .canceled)
-         this .currentFile = url .pathToFileURL (response .filePath);
 
       return response;
    }
