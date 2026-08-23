@@ -4,15 +4,15 @@
   <head>
     <component name='Core' level='2'/>
     <component name='Shaders' level='1'/>
+    <component name='X_ITE' level='1'/>
     <meta name='created' content='Tue, 28 Nov 2023 21:59:27 GMT'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V2.2.0, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 23 Aug 2026 07:25:05 GMT'/>
+    <meta name='modified' content='Sun, 23 Aug 2026 08:15:22 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
-      <field accessType='inputOutput' type='SFFloat' name='depthOffset'/>
       <field accessType='inputOutput' type='SFBool' name='instanced'/>
     </ExternProtoDeclare>
     <ProtoDeclare name='X3DGeometryNodeTool'>
@@ -60,9 +60,10 @@
                     <connect nodeField='emissiveColor' protoField='linesColor'/>
                   </IS>
                 </Material>
-                <ProtoInstance name='ToolShader' DEF='_1' containerField='shaders'>
-                  <fieldValue name='depthOffset' value='1e-5'/>
-                </ProtoInstance>
+                <ProtoInstance name='ToolShader' DEF='_1' containerField='shaders'/>
+                <DepthMode DEF='_2'
+                    polygonOffset='-1 -1'
+                    depthRange='0 0.9999'/>
               </Appearance>
               <IndexedLineSet>
                 <IS>
@@ -91,6 +92,7 @@
                   </IS>
                 </Material>
                 <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
+                <DepthMode USE='_2'/>
               </Appearance>
               <PointSet>
                 <IS>

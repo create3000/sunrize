@@ -8,21 +8,18 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V2.2.0, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Shaders/ToolShader.x3d'/>
-    <meta name='modified' content='Sun, 23 Aug 2026 07:44:54 GMT'/>
+    <meta name='modified' content='Sun, 23 Aug 2026 08:14:24 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='ToolShader'>
       <ProtoInterface>
-        <field accessType='inputOutput' type='SFFloat' name='depthOffset' appinfo='depthOffset is in Normalized Device Coordinates (NDC)'/>
         <field accessType='inputOutput' type='SFBool' name='instanced'/>
       </ProtoInterface>
       <ProtoBody>
         <ComposedShader DEF='ToolShader'
             language='GLSL'>
-          <field accessType='inputOutput' type='SFFloat' name='depthOffset'/>
           <field accessType='inputOutput' type='SFBool' name='instanced'/>
           <IS>
-            <connect nodeField='depthOffset' protoField='depthOffset'/>
             <connect nodeField='instanced' protoField='instanced'/>
           </IS>
           <ShaderPart DEF='ToolVertexShader'>
@@ -36,8 +33,6 @@ uniform mat3 x3d_NormalMatrix;
 
 uniform x3d_PointPropertiesParameters x3d_PointProperties;
 
-// depthOffset is in Normalized Device Coordinates (NDC)
-uniform float depthOffset;
 uniform bool instanced;
 
 in mat4 x3d_InstanceMatrix;
@@ -58,8 +53,6 @@ main ()
    normal = normalize (x3d_NormalMatrix * x3d_Normal);
 
    gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * instancedMatrix * x3d_Vertex;
-
-   gl_Position .z -= depthOffset * gl_Position .w;
 }
 ]]>
           </ShaderPart>
