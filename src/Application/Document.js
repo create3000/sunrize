@@ -429,13 +429,15 @@ module .exports = class Document extends Interface
          }
          else
          {
-            await this .loadURL (encodeURI (`data:model/x3d+vrml,
-Viewpoint {
-   description "Initial View"
-   position 2.869677 3.854335 8.769781
-   orientation -0.7765887 0.6177187 0.1238285 0.5052317
-}
-            `));
+            await this .loadURL (encodeURI (/* xml */ `data:model/x3d+xml,
+<X3D profile='Interchange'>
+   <Scene>
+      <Viewpoint
+         description='Initial View'
+         position='2.869677 3.854335 8.769781'
+         orientation='-0.7765887 0.6177187 0.1238285 0.5052317'/>
+   </Scene>
+</X3D>`));
 
             this .activateGridTool ("GridTool", true, false);
          }
