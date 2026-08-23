@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
-<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.1//EN" "https://www.web3d.org/specifications/x3d-4.1.dtd">
+<X3D profile='Interchange' version='4.1' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.1.xsd'>
   <head>
     <component name='Shaders' level='1'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Sun, 03 Aug 2014 14:00:40 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.7.1, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V2.2.0, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Shaders/ToolShader.x3d'/>
-    <meta name='modified' content='Sat, 29 Jun 2024 11:30:31 GMT'/>
+    <meta name='modified' content='Sun, 23 Aug 2026 01:26:28 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='ToolShader'>
       <ProtoInterface>
+        <field accessType='inputOutput' type='SFFloat' name='depthOffset'/>
         <field accessType='inputOutput' type='SFBool' name='instanced'/>
       </ProtoInterface>
       <ProtoBody>
         <ComposedShader DEF='ToolShader'
             language='GLSL'>
+          <field accessType='inputOutput' type='SFFloat' name='depthOffset'/>
           <field accessType='inputOutput' type='SFBool' name='instanced'/>
           <IS>
+            <connect nodeField='depthOffset' protoField='depthOffset'/>
             <connect nodeField='instanced' protoField='instanced'/>
           </IS>
           <ShaderPart DEF='ToolVertexShader'>
@@ -33,6 +36,7 @@ uniform mat3 x3d_NormalMatrix;
 
 uniform x3d_PointPropertiesParameters x3d_PointProperties;
 
+uniform float depthOffset;
 uniform bool instanced;
 
 in mat4 x3d_InstanceMatrix;
@@ -53,6 +57,8 @@ main ()
    normal = normalize (x3d_NormalMatrix * x3d_Normal);
 
    gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * instancedMatrix * x3d_Vertex;
+
+   gl_Position .z -= depthOffset * gl_Position .w;
 }
 ]]>
           </ShaderPart>

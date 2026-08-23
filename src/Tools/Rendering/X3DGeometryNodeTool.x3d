@@ -8,11 +8,12 @@
     <meta name='created' content='Tue, 28 Nov 2023 21:59:27 GMT'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V2.0.7, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 08 Mar 2026 19:34:05 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V2.2.0, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Sun, 23 Aug 2026 01:25:38 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
+      <field accessType='inputOutput' type='SFFloat' name='depthOffset'/>
       <field accessType='inputOutput' type='SFBool' name='instanced'/>
     </ExternProtoDeclare>
     <ProtoDeclare name='X3DGeometryNodeTool'>
@@ -60,7 +61,9 @@
                     <connect nodeField='emissiveColor' protoField='linesColor'/>
                   </IS>
                 </Material>
-                <ProtoInstance name='ToolShader' DEF='_1' containerField='shaders'/>
+                <ProtoInstance name='ToolShader' DEF='_1' containerField='shaders'>
+                  <fieldValue name='depthOffset' value='1e-5'/>
+                </ProtoInstance>
                 <DepthMode DEF='_2'
                     polygonOffset='-1 -1'/>
               </Appearance>
