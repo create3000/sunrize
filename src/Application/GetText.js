@@ -1,6 +1,6 @@
 "use strict";
 
-const strings = require ("../assets/locale/languages.json");
+const strings = require ("../assets/locale/dictionary.json");
 
 let locale, language;
 
