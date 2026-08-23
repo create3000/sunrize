@@ -46,6 +46,8 @@ module .exports = new class Tabs
          scrollLeft: 0,
       });
 
+      electron .ipcRenderer .send ("locale", _.locale);
+
       // Connect to TabGroup Events
 
       this .tabs = $("tab-group") .get (0);

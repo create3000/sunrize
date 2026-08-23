@@ -92,6 +92,7 @@ module .exports = class Application
       electron .app .on ("open-file",          (event, filePath) => this .openFiles ([url .pathToFileURL (filePath) .href]));
       electron .app .on ("window-all-closed",  ()                => this .quit ());
 
+      electron .ipcMain .on ("locale",              (event, locale)      => _.set (locale));
       electron .ipcMain .on ("title",               (event, title)       => this .title = title);
       electron .ipcMain .on ("current-file",        (event, currentFile) => this .currentFile = currentFile);
       electron .ipcMain .on ("add-recent-location", (event, fileURL)     => this .addRecentLocation (fileURL));
@@ -139,21 +140,29 @@ module .exports = class Application
 
    set currentFile (currentFile)
    {
+      currentFile = String (currentFile);
+
       const protocol = currentFile .match (/^(.+?:)/);
 
       switch (protocol ?.[1])
       {
-         default:
-            this .#currentFile = new URL (currentFile) .pathname .split ("/") .at (-1);
+         case undefined:
+         case "id:":
+         case "data:":
+         {
+            this .#currentFile = `${_("New Scene")}.x3d`;
             break;
+         }
          case "file:":
+         {
             this .#currentFile = url .fileURLToPath (currentFile);
             break;
-         case "data:":
-         case "id:":
-         case undefined:
-            this .#currentFile = "";
+         }
+         default:
+         {
+            this .#currentFile = new URL (currentFile) .pathname .split ("/") .at (-1);
             break;
+         }
       }
 
       this .mainWindow .setRepresentedFilename (this .#currentFile);
@@ -376,6 +385,8 @@ module .exports = class Application
                         this .exportPath .set (this .currentFile, response .filePath);
 
                         this .mainWindow .webContents .send ("export-as", response .filePath);
+
+                        this .currentFile = url .pathToFileURL (response .filePath);
 
                         this .updateMenu ();
                      },
@@ -1054,6 +1065,8 @@ module .exports = class Application
 
       this .popMenu ();
 
+      this .currentFile = url .pathToFileURL (response .filePath);
+
       return response;
    }
 
@@ -1075,6 +1088,8 @@ module .exports = class Application
       });
 
       this .popMenu ();
+
+      this .currentFile = url .pathToFileURL (response .filePath);
 
       return response;
    }
