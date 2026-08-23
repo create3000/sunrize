@@ -18,6 +18,6 @@ gettext .setLocale = function (value)
    language = gettext .language;
 };
 
-gettext .set (Intl .DateTimeFormat () .resolvedOptions() .locale);
+gettext .setLocale (Intl .DateTimeFormat () .resolvedOptions() .locale);
 
 module .exports = gettext;
