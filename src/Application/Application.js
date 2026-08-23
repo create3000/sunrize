@@ -1065,7 +1065,8 @@ module .exports = class Application
 
       this .popMenu ();
 
-      this .currentFile = url .pathToFileURL (response .filePath);
+      if (!response .canceled)
+         this .currentFile = url .pathToFileURL (response .filePaths .at (-1));
 
       return response;
    }
@@ -1089,7 +1090,8 @@ module .exports = class Application
 
       this .popMenu ();
 
-      this .currentFile = url .pathToFileURL (response .filePath);
+      if (!response .canceled)
+         this .currentFile = url .pathToFileURL (response .filePath);
 
       return response;
    }
