@@ -6,7 +6,12 @@ let locale, language;
 
 function gettext (string)
 {
-   return strings [string] ?.[locale] ?? string [string] ?.[language] ?? string;
+   const translations = strings [string];
+
+   return translations ?.[locale]
+      ?? translations ?.[language]
+      ?? translations ?.["en"]
+      ?? string;
 }
 
 gettext .setLocale = function (value)
