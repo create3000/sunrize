@@ -4,12 +4,11 @@
   <head>
     <component name='Core' level='2'/>
     <component name='Shaders' level='1'/>
-    <component name='X_ITE' level='1'/>
     <meta name='created' content='Tue, 28 Nov 2023 21:59:27 GMT'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V2.2.0, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 23 Aug 2026 01:25:38 GMT'/>
+    <meta name='modified' content='Sun, 23 Aug 2026 01:44:12 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -64,8 +63,6 @@
                 <ProtoInstance name='ToolShader' DEF='_1' containerField='shaders'>
                   <fieldValue name='depthOffset' value='1e-5'/>
                 </ProtoInstance>
-                <DepthMode DEF='_2'
-                    polygonOffset='-1 -1'/>
               </Appearance>
               <IndexedLineSet>
                 <IS>
@@ -94,7 +91,6 @@
                   </IS>
                 </Material>
                 <ProtoInstance name='ToolShader' USE='_1' containerField='shaders'/>
-                <DepthMode USE='_2'/>
               </Appearance>
               <PointSet>
                 <IS>
