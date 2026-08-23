@@ -8,12 +8,12 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V2.2.0, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Shaders/ToolShader.x3d'/>
-    <meta name='modified' content='Sun, 23 Aug 2026 01:26:28 GMT'/>
+    <meta name='modified' content='Sun, 23 Aug 2026 07:44:54 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='ToolShader'>
       <ProtoInterface>
-        <field accessType='inputOutput' type='SFFloat' name='depthOffset'/>
+        <field accessType='inputOutput' type='SFFloat' name='depthOffset' appinfo='depthOffset is in Normalized Device Coordinates (NDC)'/>
         <field accessType='inputOutput' type='SFBool' name='instanced'/>
       </ProtoInterface>
       <ProtoBody>
@@ -26,7 +26,7 @@
             <connect nodeField='instanced' protoField='instanced'/>
           </IS>
           <ShaderPart DEF='ToolVertexShader'>
-<![CDATA[data:text/plain,#version 300 es
+<![CDATA[data:x-shader/x-fragment,#version 300 es
 
 precision highp float;
 
@@ -36,6 +36,7 @@ uniform mat3 x3d_NormalMatrix;
 
 uniform x3d_PointPropertiesParameters x3d_PointProperties;
 
+// depthOffset is in Normalized Device Coordinates (NDC)
 uniform float depthOffset;
 uniform bool instanced;
 
@@ -64,7 +65,7 @@ main ()
           </ShaderPart>
           <ShaderPart DEF='ToolFragmentShader'
               type='FRAGMENT'>
-<![CDATA[data:text/plain,#version 300 es
+<![CDATA[data:x-shader/x-vertex,#version 300 es
 
 precision highp float;
 
