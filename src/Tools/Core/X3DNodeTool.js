@@ -74,7 +74,7 @@ class X3DNodeTool extends X3DBaseTool
          if (!this [tool])
             continue;
 
-         if (this [tool] .hasOwnProperty ("selected"))
+         if (Object .hasOwn (this [tool], "selected"))
             this [tool] .selected = value;
       }
    }
@@ -122,7 +122,7 @@ class X3DNodeTool extends X3DBaseTool
 
             this .#innerNodes .push (this [tool] .getValue () .getInnerNode ());
 
-            if (this [tool] .hasOwnProperty ("selected"))
+            if (Object .hasOwn (this [tool], "selected"))
                this [tool] .selected = this .#selected;
          }
       }
@@ -479,7 +479,7 @@ class X3DNodeTool extends X3DBaseTool
    toolPointing = true;
    nodePush = false;
 
-   isNodeTraversable (type)
+   isNodeTraversable ()
    {
       return true;
    }
