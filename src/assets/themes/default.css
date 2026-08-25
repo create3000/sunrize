@@ -1399,7 +1399,16 @@ body.light .console-output .selected {
 .animation-editor-navigation {
   padding-top: var(--toolbar-width);
   border-left: 1px solid var(--border-color);
-  width: calc(var(--toolbar-width) + 1px);;
+  width: calc(var(--toolbar-width) + 1px);
+}
+
+.animation-editor-navigation::before {
+  content: "";
+  position: absolute;
+  top: var(--toolbar-width);
+  height: 0px;
+  width: 100%;
+  border-bottom: 1px solid var(--background-color);
 }
 
 .animation-editor .animation-editor-content {
