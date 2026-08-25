@@ -1824,15 +1824,13 @@ body.light .console-output .selected {
   flex: 1 1 auto;
 }
 
-.scene-graph .field-value input,
-.scene-graph .field-value textarea,
-.scene-graph .special-value textarea {
+.scene-graph :is(.field-value, .special-value) :is(input, textarea) {
   display: block;
   box-sizing: border-box;
   outline: none;
-  border: 0;
+  border: 0px;
   margin: 2px 0 2px 20px;
-  padding: 0;
+  padding: 0px 1px;
   min-width: 300px;
   max-width: calc(100% - 20px);
   width: calc(100% - 20px);
