@@ -8,6 +8,7 @@ const
    X3D                = require ("../X3D"),
    Interface          = require ("./Interface"),
    Splitter           = require ("../Controls/Splitter"),
+   TopBar             = require ("./TopBar"),
    Dashboard          = require ("./Dashboard"),
    Footer             = require ("./Footer"),
    Sidebar            = require ("./Sidebar"),
@@ -43,6 +44,7 @@ module .exports = class Document extends Interface
 
       this .verticalSplitter   = new Splitter ($("#vertical-splitter"), "vertical");
       this .horizontalSplitter = new Splitter ($("#horizontal-splitter"), "horizontal");
+      this .topBar             = new TopBar ($("#browser-top-bar"), this);
       this .secondaryToolbar   = new Dashboard ($("#secondary-toolbar"), this);
       this .footer             = new Footer ($("#footer"));
       this .sidebar            = new Sidebar ($("#sidebar"));
