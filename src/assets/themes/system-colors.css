@@ -41,6 +41,7 @@
 
     /* Special Colors */
 
+    --secondary-toolbar-color: rgb(220, 229, 239);
     --sidebar-background-color: rgb(208, 219, 231);
     --tint-color1: rgba(255, 255, 255, 0.4);
     --tint-color2: rgba(255, 255, 255, 0.6);
@@ -117,6 +118,7 @@
 
     /* Special Colors */
 
+    --secondary-toolbar-color: rgb(40, 46, 56);
     --sidebar-background-color: rgb(42, 50, 63);
     --tint-color1: rgba(0, 0, 0, 0.2);
     --tint-color2: rgba(0, 0, 0, 0.4);
@@ -168,6 +170,9 @@ body {
   --window-tabs-height: 34px;
   --tabs-height: 26px;
 
+  --topbar-height: 8px;
+  --toolbar-outer-radius: 15px;
+  --toolbar-inner-radius: calc(var(--toolbar-outer-radius) / 3 * 2);
   --toolbar-width: 30px;
   --icon-size: 16px;
   --medium-icon-size: 18px;

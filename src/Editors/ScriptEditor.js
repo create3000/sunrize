@@ -50,7 +50,7 @@ module .exports = class ScriptEditor extends Interface
       this .verticalSplitter .on ("position", () => this .onSplitterPosition ());
 
       this .toolbar = $("<div></div>")
-         .addClass (["toolbar", "vertical-toolbar", "script-editor-toolbar"])
+         .addClass (["toolbar", "vertical-toolbar", "secondary-toolbar", "script-editor-toolbar"])
          .appendTo (this .scriptEditor);
 
       this .toggleSidebarButton = $("<span></span>")

@@ -175,7 +175,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .navigation = $("<div></div>")
          .attr ("id", "animation-editor-navigation")
-         .addClass (["animation-editor-navigation", "toolbar", "vertical-toolbar"])
+         .addClass (["animation-editor-navigation", "toolbar", "vertical-toolbar", "secondary-toolbar"])
          .appendTo (this .animationEditor);
 
       this .zoomOutIcon = $("<span></span>")

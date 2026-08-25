@@ -23,7 +23,10 @@ module .exports = class Console extends Interface
 
       this .console = element;
       this .left    = $("<div></div>") .addClass ("console-left") .appendTo (this .console);
-      this .toolbar = $("<div></div>") .addClass (["toolbar", "vertical-toolbar", "console-toolbar"]) .appendTo (this .console);
+
+      this .toolbar = $("<div></div>")
+         .addClass (["toolbar", "vertical-toolbar", "secondary-toolbar", "console-toolbar"])
+         .appendTo (this .console);
 
       this .output = $("<div></div>")
          .addClass (["console-output", "output"])
