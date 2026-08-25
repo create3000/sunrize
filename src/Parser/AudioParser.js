@@ -17,7 +17,7 @@ class AudioParser extends X3D .X3DParser
       return "ARRAY_BUFFER";
    }
 
-   setInput (input)
+   setInput ()
    { }
 
    isValid ()
@@ -58,7 +58,7 @@ class AudioParser extends X3D .X3DParser
       audioClipNode .url  = new X3D .MFString (this .getURL (scene .worldURL));
       audioClipNode .loop = true;
 
-      soundNode .source = audioClipNode;
+      soundNode .children = [audioClipNode];
 
       scene .rootNodes .push (soundNode);
 
