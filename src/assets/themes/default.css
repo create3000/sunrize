@@ -1819,8 +1819,7 @@ body.light .console-output .selected {
   height: 25px;
 }
 
-.scene-graph .field-value-container,
-.scene-graph .special-value-container {
+.scene-graph :is(.field-value-container, .special-value-container) {
   flex: 1 1 auto;
 }
 
@@ -1847,8 +1846,7 @@ body.light .console-output .selected {
   margin-bottom: 2px;
 }
 
-.scene-graph .field-value textarea,
-.scene-graph .special-value textarea {
+.scene-graph :is(.field-value, .special-value) textarea {
   position: relative;
   top: -4px;
   overflow: scroll;
