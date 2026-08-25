@@ -1830,9 +1830,10 @@ body.light .console-output .selected {
   display: block;
   box-sizing: border-box;
   outline: none;
-  border: 0;
+  border: 0px;
+  border-radius: var(--tool-border-radius);
   margin: 2px 0 2px 20px;
-  padding: 0;
+  padding: 0px 5px;
   min-width: 300px;
   max-width: calc(100% - 20px);
   width: calc(100% - 20px);
@@ -1852,6 +1853,7 @@ body.light .console-output .selected {
 .scene-graph .field-value textarea,
 .scene-graph .special-value textarea {
   position: relative;
+  padding: 5px;
   top: -4px;
   overflow: scroll;
   height: 140px;
