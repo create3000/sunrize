@@ -17,7 +17,7 @@ class VideoParser extends X3D .X3DParser
       return "ARRAY_BUFFER";
    }
 
-   setInput (input)
+   setInput ()
    { }
 
    isValid ()
@@ -74,8 +74,7 @@ class VideoParser extends X3D .X3DParser
 
       shapeNode .appearance = appearanceNode;
       shapeNode .geometry   = rectangleNode;
-
-      soundNode .source = textureNode;
+      soundNode .children   = [textureNode];
 
       transformNode .children .push (shapeNode, soundNode);
 
