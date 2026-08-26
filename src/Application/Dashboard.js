@@ -185,7 +185,7 @@ module .exports = class Dashboard extends Interface
    {
       this .config .file .audioIntensity = value;
 
-      if (value < 0.01)
+      if (value < 0)
          this .volumeButton .text ("volume_off");
       else if (value < 0.75)
          this .volumeButton .text ("volume_down");
