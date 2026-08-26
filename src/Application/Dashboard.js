@@ -46,7 +46,7 @@ module .exports = class Dashboard extends Interface
       this .volumeButton = $("<span></span>")
          .addClass (["material-icons"])
          .attr ("title", _("Adjust audio intensity."))
-         .css ({ position: "relative", left: "1px" })
+         .css ({ position: "relative", left: "1px", transform: "scale(0.8)" })
          .text ("volume_down")
          .appendTo (this .toolbar)
          .on ("click", () => this .showVolumeSlider ());
