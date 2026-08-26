@@ -12,7 +12,7 @@ $.fn.volumeSliderPopover = function (browser, config)
       .attr ("type", "range")
       .attr ("min", 0)
       .attr ("max", 1)
-      .attr ("step", 1e-5)
+      .attr ("step", "any")
       .val (browser .getBrowserOption ("AudioIntensity"))
       .css ({ "height": 120, "writing-mode": "vertical-lr", "direction": "rtl" })
       .on ("input", () => browser .setBrowserOption ("AudioIntensity", config .audioIntensity = +input .val ()));
