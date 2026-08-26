@@ -43,6 +43,17 @@ module .exports = class Dashboard extends Interface
          .appendTo (this .toolbar)
          .on ("click", () => this .play (!this .config .file .play));
 
+      this .volumeButton = $("<span></span>")
+         .addClass (["material-icons"])
+         .attr ("title", _("Adjust audio intensity."))
+         .css ({ position: "relative", left: "1px", transform: "scale(0.9)" })
+         .text ("volume_down")
+         .appendTo (this .toolbar)
+         .on ("click", () => this .showVolumeSlider ());
+
+      this .browser .getBrowserOptions () ._AudioIntensity
+         .addFieldCallback (this, value => this .updateAudioIntensity (value));
+
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
       const hierarchy = require ("./Hierarchy");
@@ -105,8 +116,11 @@ module .exports = class Dashboard extends Interface
       this .config .file .setDefaultValues ({
          pointer: "arrow",
          play: this .config .global .play,
+         audioIntensity: 1,
          panel: false,
       });
+
+      this .browser .setBrowserOption ("AudioIntensity", this .config .file .audioIntensity);
 
       this [this .config .file .pointer] ();
       this .play ((this .config .file .play) && !this .isInitialScene);
@@ -158,6 +172,25 @@ module .exports = class Dashboard extends Interface
          this .playButton .addClass ("active");
       else
          this .playButton .removeClass ("active");
+   }
+
+   showVolumeSlider ()
+   {
+      require ("../Controls/VolumeSliderPopover");
+
+      this .volumeButton .volumeSliderPopover (this .browser);
+   }
+
+   updateAudioIntensity (audioIntensity)
+   {
+      this .config .file .audioIntensity = audioIntensity;
+
+      if (audioIntensity === 0)
+         this .volumeButton .text ("volume_off");
+      else if (audioIntensity < 0.5)
+         this .volumeButton .text ("volume_down");
+      else
+         this .volumeButton .text ("volume_up");
    }
 
    selectParent ()
