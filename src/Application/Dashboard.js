@@ -181,13 +181,13 @@ module .exports = class Dashboard extends Interface
       this .volumeButton .volumeSliderPopover (this .browser);
    }
 
-   updateAudioIntensity (audioIntensity)
+   updateAudioIntensity (value)
    {
-      this .config .file .audioIntensity = audioIntensity;
+      this .config .file .audioIntensity = value;
 
-      if (audioIntensity === 0)
+      if (value === 0)
          this .volumeButton .text ("volume_off");
-      else if (audioIntensity < 0.5)
+      else if (value < 0.5)
          this .volumeButton .text ("volume_down");
       else
          this .volumeButton .text ("volume_up");
