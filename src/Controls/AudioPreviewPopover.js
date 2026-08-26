@@ -1,12 +1,6 @@
 "use strict";
 
-const
-   $           = require ("jquery"),
-   path        = require ("path"),
-   X3D         = require ("../X3D"),
-   Editor      = require ("../Undo/Editor"),
-   UndoManager = require("../Undo/UndoManager"),
-   _           = require ("../Application/GetText");
+const $ = require ("jquery");
 
 require ("./Popover");
 

@@ -452,10 +452,6 @@ body.light .qtip-tipsy {
   background: inherit !important;
 }
 
-.qtip-audio.qtip {
-  background: rgb(241, 243, 244);
-}
-
 .qtip-tipsy .qtip-content {
   padding: 8px;
 }
