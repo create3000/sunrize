@@ -4,7 +4,7 @@ const $ = require ("jquery");
 
 require ("./Popover");
 
-$.fn.volumeSliderPopover = function (browser, config)
+$.fn.volumeSliderPopover = function (browser)
 {
    // Create content.
 
@@ -15,7 +15,7 @@ $.fn.volumeSliderPopover = function (browser, config)
       .attr ("step", "any")
       .val (browser .getBrowserOption ("AudioIntensity"))
       .css ({ "height": 120, "writing-mode": "vertical-lr", "direction": "rtl" })
-      .on ("input", () => browser .setBrowserOption ("AudioIntensity", config .audioIntensity = +input .val ()));
+      .on ("input", () => browser .setBrowserOption ("AudioIntensity", input .val ()));
 
    // Create tooltip.
 

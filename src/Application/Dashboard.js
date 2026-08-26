@@ -51,6 +51,9 @@ module .exports = class Dashboard extends Interface
          .appendTo (this .toolbar)
          .on ("click", () => this .showVolumeSlider ());
 
+      this .browser .getBrowserOptions () ._AudioIntensity
+         .addFieldCallback (this, value => this .config .file .audioIntensity = value);
+
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
       const hierarchy = require ("./Hierarchy");
@@ -175,7 +178,7 @@ module .exports = class Dashboard extends Interface
    {
       require ("../Controls/VolumeSliderPopover");
 
-      this .volumeButton .volumeSliderPopover (this .browser, this .config .file);
+      this .volumeButton .volumeSliderPopover (this .browser);
    }
 
    selectParent ()
