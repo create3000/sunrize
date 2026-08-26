@@ -52,7 +52,7 @@ module .exports = class Dashboard extends Interface
          .on ("click", () => this .showVolumeSlider ());
 
       this .browser .getBrowserOptions () ._AudioIntensity
-         .addFieldCallback (this, value => this .config .file .audioIntensity = value);
+         .addFieldCallback (this, value => this .updateAudioIntensity (value));
 
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
@@ -179,6 +179,18 @@ module .exports = class Dashboard extends Interface
       require ("../Controls/VolumeSliderPopover");
 
       this .volumeButton .volumeSliderPopover (this .browser);
+   }
+
+   updateAudioIntensity (audioIntensity)
+   {
+      this .config .file .audioIntensity = audioIntensity;
+
+      if (audioIntensity === 0)
+         this .volumeButton .text ("volume_off");
+      else if (audioIntensity < 0.5)
+         this .volumeButton .text ("volume_down");
+      else
+         this .volumeButton .text ("volume_up");
    }
 
    selectParent ()
