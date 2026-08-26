@@ -1,12 +1,9 @@
 "use strict";
 
 const
-   $           = require ("jquery"),
-   path        = require ("path"),
-   X3D         = require ("../X3D"),
-   Editor      = require ("../Undo/Editor"),
-   UndoManager = require("../Undo/UndoManager"),
-   _           = require ("../Application/GetText");
+   $   = require ("jquery"),
+   X3D = require ("../X3D"),
+   _   = require ("../Application/GetText");
 
 require ("./Popover");
 
@@ -86,7 +83,7 @@ $.fn.videoPreviewPopover = async function (node)
 
    // Create tooltip.
 
-   const tooltip = this .popover ({
+   this .popover ({
       preview: true,
       content: preview,
       show: {

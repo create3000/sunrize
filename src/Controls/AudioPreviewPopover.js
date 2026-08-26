@@ -38,7 +38,7 @@ $.fn.audioPreviewPopover = async function (node)
 
    // Create tooltip.
 
-   const tooltip = this .popover ({
+   this .popover ({
       preview: true,
       content: preview,
       show: {
