@@ -41,7 +41,7 @@
 
     /* Special Colors */
 
-    --secondary-toolbar-color: rgb(220, 229, 239);
+    --secondary-toolbar-color: rgb(220, 226, 234);
     --sidebar-background-color: rgb(208, 219, 231);
     --tint-color1: rgba(255, 255, 255, 0.4);
     --tint-color2: rgba(255, 255, 255, 0.6);
@@ -118,7 +118,7 @@
 
     /* Special Colors */
 
-    --secondary-toolbar-color: rgb(40, 46, 56);
+    --secondary-toolbar-color: rgb(40, 43, 49);
     --sidebar-background-color: rgb(42, 50, 63);
     --tint-color1: rgba(0, 0, 0, 0.2);
     --tint-color2: rgba(0, 0, 0, 0.4);
