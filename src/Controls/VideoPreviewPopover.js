@@ -64,7 +64,7 @@ $.fn.videoPreviewPopover = async function (node)
          }
          case X3D .X3DConstants .COMPLETE_STATE:
          {
-            sizes .text (`${node .getWidth ()} × ${node .getHeight ()}`);
+            sizes .text (`${node .getWidth ()} × ${node .getHeight ()} px`);
             break;
          }
       }

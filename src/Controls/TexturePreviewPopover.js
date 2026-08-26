@@ -114,22 +114,22 @@ $.fn.texturePreviewPopover = async function (node)
          {
             case X3D .X3DConstants .MovieTexture:
             {
-               sizes .text (`${node .getWidth ()} × ${node .getHeight ()}, ${formatTime (node ._duration_changed .getValue ())}, ${format}`);
+               sizes .text (`${node .getWidth ()} × ${node .getHeight ()} px, ${formatTime (node ._duration_changed .getValue ())}, ${format}`);
                break;
             }
             case X3D .X3DConstants .X3DEnvironmentTextureNode:
             {
-               sizes .text (`${node .getSize ()} × ${node .getSize ()}, ${format}`);
+               sizes .text (`${node .getSize ()} × ${node .getSize ()} px, ${format}`);
                break;
             }
             case X3D .X3DConstants .X3DTexture2DNode:
             {
-               sizes .text (`${node .getWidth ()} × ${node .getHeight ()}, ${format}`);
+               sizes .text (`${node .getWidth ()} × ${node .getHeight ()} px, ${format}`);
                break;
             }
             case X3D .X3DConstants .X3DTexture3DNode:
             {
-               sizes .text (`${node .getWidth ()} × ${node .getHeight ()} × ${node .getDepth ()}, ${format}`);
+               sizes .text (`${node .getWidth ()} × ${node .getHeight ()} × ${node .getDepth ()} px, ${format}`);
                break;
             }
             default:
