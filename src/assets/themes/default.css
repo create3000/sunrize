@@ -1054,6 +1054,7 @@ body.dark .ui-widget .library-list .component {
 }
 
 #footer > .ui-tabs-nav li {
+  overflow: hidden;
   box-sizing: border-box;
   position: relative;
   background: var(--secondary-toolbar-color);
