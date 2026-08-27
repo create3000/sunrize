@@ -16,9 +16,9 @@ module .exports = class Footer extends Tabs
 
    addTabs ()
    {
-      this .addTextTab ("console",          _("Console"));
-      this .addTextTab ("script-editor",    _("Script Editor"));
-      this .addTextTab ("animation-editor", _("Animation Editor"));
+      this .addIconTextTab ("console",         "menu",        _("Console"));
+      this .addIconTextTab ("script-editor",   "data_object", _("Script Editor"));
+      this .addIconTextTab ("animation-editor","animation",   _("Animation Editor"));
 
       this .console = new Console (this .getPanel ("console"));
    }

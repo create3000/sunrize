@@ -398,6 +398,10 @@ tr.disabled ~ tr > td > div {
   color: inherit;
 }
 
+.ui-tabs > .ui-tabs-nav .icon-text .material-icons {
+  margin-right: 0.5em;
+}
+
 .ui-tabs > .ui-tabs-nav .material-icons {
   position: relative;
   top: -3px;
@@ -1088,6 +1092,11 @@ body.dark .ui-widget .library-list .component {
 
 #footer > .ui-tabs-nav :is(li.ui-tabs-active, li:hover) {
   background-color: var(--system-gray4);
+}
+
+#footer > .ui-tabs-nav .material-icons {
+  top: 1px;
+  font-size: var(--small-font-size);
 }
 
 /* Console */
