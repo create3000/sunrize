@@ -1075,6 +1075,7 @@ body.dark .ui-widget .library-list .component {
 
 #footer > .ui-tabs-nav li:first-child::before {
   content: "";
+  pointer-events: none;
   position: absolute;
   border: 1px solid var(--border-color);
   border-left: none;
