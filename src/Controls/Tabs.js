@@ -90,6 +90,7 @@ module .exports = class Tabs extends Interface
             .addClass ("icon-text")
             .attr ("href", `#${id}-tab`)
             .attr ("title", title)
+            .attr ("ondragstart", "return false;")
             .text (title)
             .prepend ($("<span></span>")
                .addClass ("material-icons")
