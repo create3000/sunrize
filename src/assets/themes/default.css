@@ -1059,7 +1059,6 @@ body.dark .ui-widget .library-list .component {
 }
 
 #footer > .ui-tabs-nav li {
-  box-sizing: border-box;
   position: relative;
   background: var(--secondary-toolbar-color);
   border: 1px solid var(--border-color);
