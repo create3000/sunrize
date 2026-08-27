@@ -1049,7 +1049,7 @@ body.dark .ui-widget .library-list .component {
   position: absolute;
   width: var(--toolbar-width);
   right: 0px;
-  height: 100%;
+  height: var(--tabs-height);
   border-left: 1px solid var(--border-color);
   background: var(--secondary-toolbar-color);
 }
