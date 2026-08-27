@@ -328,217 +328,6 @@ tr.disabled ~ tr > td > div {
   background-color: var(--accent-color);
 }
 
-/* Tabs */
-
-.ui-tabs {
-  position: absolute;
-  inset: 0;
-  border: 0;
-  padding: 0;
-  background: inherit;
-}
-
-.ui-tabs.ui-widget.ui-widget-content {
-  border: none;
-}
-
-.ui-tabs > .ui-tabs-nav {
-  display: flex;
-  justify-content: center;
-  box-sizing: border-box;
-  border: 0;
-  border-radius: 0;
-  padding: 0;
-  height: var(--tabs-height);
-  width: 100%;
-  background: inherit;
-  z-index: 200;
-}
-
-.ui-tabs.top > .ui-tabs-nav {
-  border-bottom: var(--tool-border);
-}
-
-.ui-tabs.bottom > .ui-tabs-nav {
-  position: absolute;
-  bottom: 0;
-  border-top: var(--tool-border);
-}
-
-.ui-tabs > .ui-tabs-nav li,
-.ui-tabs > .ui-tabs-nav .ui-tabs-active,
-.ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
-  margin: 0;
-  border: 0;
-  padding: 0;
-  border-radius: 0;
-  background: none;
-  color: var(--text-color);
-  user-select: none;
-  font-size: var(--small-font-size);
-}
-
-.ui-tabs > .ui-tabs-nav li,
-.ui-tabs > .ui-tabs-nav .ui-tabs-active {
-  height: 100%;
-}
-
-.ui-tabs > .ui-tabs-nav li:hover {
-  color: var(--highlight-color);
-}
-
-.ui-tabs > .ui-tabs-nav li.ui-tabs-active {
-  color: var(--accent-color);
-}
-
-.ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
-  padding: 7px 10px;
-}
-
-.ui-tabs > .ui-tabs-nav .ui-tabs-anchor,
-.ui-tabs > .ui-tabs-nav .ui-tabs-active .ui-tabs-anchor {
-  cursor: pointer !important;
-  color: inherit;
-}
-
-.ui-tabs > .ui-tabs-nav .material-icons {
-  position: relative;
-  top: -3px;
-  margin: 0;
-  padding: 0;
-  font-size: var(--medium-icon-size);
-}
-
-.ui-tabs > .ui-tabs-nav .icon-text .material-icons {
-  top: 1.5px;
-  font-size: inherit;
-  margin-right: 0.6em;
-  transform: scale(1.3);
-}
-
-.ui-tabs > .ui-tabs-panel {
-  box-sizing: border-box;
-  position: relative;
-  padding: unset;
-  width: 100%;
-  height: calc(100% - var(--tabs-height));
-  color: var(--text-color);
-}
-
-.ui-tabs > .ui-tabs-panel.ui-corner-bottom {
-  border-radius: 0;
-}
-
-.tabs-panel {
-  position: absolute;
-  inset: 0;
-}
-
-/* qtip2 */
-
-#qtip-overlay div {
-  background: none;
-}
-
-.qtip {
-  max-width: unset;
-}
-
-.qtip-tipsy.qtip {
-  border: var(--qtip-border);
-  border-radius: var(--qtip-border-radius);
-  background: var(--qtip-background-color);
-  box-shadow: var(--qtip-shadow);
-  backdrop-filter: none;
-}
-
-.qtip-tipsy {
-  color: var(--system-gray1);
-  text-shadow: none;
-}
-
-body.light .qtip-tipsy {
-  color: black;
-}
-
-.qtip-tipsy .qtip-tip {
-  background: inherit !important;
-}
-
-.qtip-tipsy .qtip-content {
-  padding: 8px;
-}
-
-.qtip span {
-  display: block;
-  margin: 2px 0;
-}
-
-.qtip input,
-.qtip select,
-.qtip button {
-  box-sizing: border-box;
-  display: block;
-  width: 100%;
-  background: var(--system-gray5);
-  border: 1px solid var(--system-gray7);
-  border-radius: 16px;
-  color: var(--system-gray0);
-  filter: opacity(80%);
-  margin: 2px 0;
-  padding: 2px 8px;
-  height: 24px;
-}
-
-.qtip ::placeholder {
-  color: var(--system-gray1);
-}
-
-.qtip button {
-  cursor: pointer;
-}
-
-.qtip input[type=checkbox] {
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  top: 1px;
-  margin: 4px 0;
-  width: auto;
-}
-
-.qtip label {
-  user-select: none;
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  top: -7px;
-  margin-left: 5px;
-  width: auto;
-}
-
-.qtip p {
-  margin: 8px 0;
-}
-
-.qtip .qtip-content > div :first-child {
-  margin-top: 0;
-}
-
-.qtip .qtip-content > div :last-child {
-  margin-bottom: 0;
-}
-
-.qtip select:hover,
-.qtip button:hover {
-  background-color: var(--system-gray4);
-  color: var(--qtip-highlight-color);
-}
-
-.qtip-wide {
-  width: 300px;
-}
-
 /* Toolbar */
 
 .toolbar {
@@ -711,6 +500,212 @@ html[platform=darwin] .horizontal-toolbar .select {
 
 .image-icon.arrow {
   background-image: url(../images/icons/arrow.svg);
+}
+
+/* Tabs */
+
+.ui-tabs {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  background: inherit;
+}
+
+.ui-tabs.ui-widget.ui-widget-content {
+  border: none;
+}
+
+.ui-tabs > .ui-tabs-nav {
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  height: var(--tabs-height);
+  width: 100%;
+  background: inherit;
+  z-index: 200;
+}
+
+.ui-tabs.top > .ui-tabs-nav {
+  border-bottom: var(--tool-border);
+}
+
+.ui-tabs.bottom > .ui-tabs-nav {
+  position: absolute;
+  bottom: 0;
+  border-top: var(--tool-border);
+}
+
+.ui-tabs > .ui-tabs-nav li,
+.ui-tabs > .ui-tabs-nav .ui-tabs-active,
+.ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
+  box-sizing: border-box;
+  height: 100%;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  user-select: none;
+  font-size: var(--small-font-size);
+  color: var(--text-color);
+}
+
+.ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
+  cursor: pointer !important;
+  box-sizing: border-box;
+  padding: 7px 10px;
+  height: 100%;
+}
+
+.ui-tabs > .ui-tabs-nav .ui-tabs-anchor:hover  {
+  color: var(--highlight-color);
+}
+
+.ui-tabs > .ui-tabs-nav .ui-tabs-active .ui-tabs-anchor,
+.ui-tabs > .ui-tabs-nav .ui-tabs-active .ui-tabs-anchor * {
+  color: var(--accent-color);
+}
+
+.ui-tabs > .ui-tabs-nav .material-icons {
+  position: relative;
+  top: -3px;
+  margin: 0;
+  padding: 0;
+  font-size: var(--medium-icon-size);
+}
+
+.ui-tabs > .ui-tabs-nav .icon-text .material-icons {
+  top: 1.5px;
+  font-size: inherit;
+  margin-right: 0.6em;
+  transform: scale(1.3);
+}
+
+.ui-tabs > .ui-tabs-panel {
+  box-sizing: border-box;
+  position: relative;
+  padding: unset;
+  width: 100%;
+  height: calc(100% - var(--tabs-height));
+  color: var(--text-color);
+}
+
+.ui-tabs > .ui-tabs-panel.ui-corner-bottom {
+  border-radius: 0;
+}
+
+.tabs-panel {
+  position: absolute;
+  inset: 0;
+}
+
+/* qtip2 */
+
+#qtip-overlay div {
+  background: none;
+}
+
+.qtip {
+  max-width: unset;
+}
+
+.qtip-tipsy.qtip {
+  border: var(--qtip-border);
+  border-radius: var(--qtip-border-radius);
+  background: var(--qtip-background-color);
+  box-shadow: var(--qtip-shadow);
+  backdrop-filter: none;
+}
+
+.qtip-tipsy {
+  color: var(--system-gray1);
+  text-shadow: none;
+}
+
+body.light .qtip-tipsy {
+  color: black;
+}
+
+.qtip-tipsy .qtip-tip {
+  background: inherit !important;
+}
+
+.qtip-tipsy .qtip-content {
+  padding: 8px;
+}
+
+.qtip span {
+  display: block;
+  margin: 2px 0;
+}
+
+.qtip input,
+.qtip select,
+.qtip button {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  background: var(--system-gray5);
+  border: 1px solid var(--system-gray7);
+  border-radius: 16px;
+  color: var(--system-gray0);
+  filter: opacity(80%);
+  margin: 2px 0;
+  padding: 2px 8px;
+  height: 24px;
+}
+
+.qtip ::placeholder {
+  color: var(--system-gray1);
+}
+
+.qtip button {
+  cursor: pointer;
+}
+
+.qtip input[type=checkbox] {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  top: 1px;
+  margin: 4px 0;
+  width: auto;
+}
+
+.qtip label {
+  user-select: none;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  top: -7px;
+  margin-left: 5px;
+  width: auto;
+}
+
+.qtip p {
+  margin: 8px 0;
+}
+
+.qtip .qtip-content > div :first-child {
+  margin-top: 0;
+}
+
+.qtip .qtip-content > div :last-child {
+  margin-bottom: 0;
+}
+
+.qtip select:hover,
+.qtip button:hover {
+  background-color: var(--system-gray4);
+  color: var(--qtip-highlight-color);
+}
+
+.qtip-wide {
+  width: 300px;
 }
 
 /* Browser */
