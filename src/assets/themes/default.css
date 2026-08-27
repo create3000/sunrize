@@ -409,7 +409,7 @@ tr.disabled ~ tr > td > div {
 .ui-tabs > .ui-tabs-nav .icon-text .material-icons {
   top: 1.5px;
   font-size: inherit;
-  margin-right: 0.5em;
+  margin-right: 0.6em;
   transform: scale(1.3);
 }
 
