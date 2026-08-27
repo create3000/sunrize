@@ -16,9 +16,14 @@ module .exports = class Footer extends Tabs
 
    addTabs ()
    {
-      this .addIconTextTab ("console",         "menu",        _("Console"));
-      this .addIconTextTab ("script-editor",   "data_object", _("Script Editor"));
-      this .addIconTextTab ("animation-editor","animation",   _("Animation Editor"));
+      this .addIconTextTab ("console", "menu", _("Console"))
+         .find (".material-icons") .css ("color", "var(--system-green)");
+
+      this .addIconTextTab ("script-editor", "data_object", _("Script Editor"))
+         .find (".material-icons") .css ("color", "var(--system-blue)");
+
+      this .addIconTextTab ("animation-editor","animation", _("Animation Editor"))
+         .find (".material-icons") .css ("color", "var(--system-indigo)");
 
       this .console = new Console (this .getPanel ("console"));
    }

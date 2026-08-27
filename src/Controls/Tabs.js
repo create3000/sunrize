@@ -53,7 +53,7 @@ module .exports = class Tabs extends Interface
 
    addTextTab (id, title)
    {
-      $("<li></li>")
+      const tab = $("<li></li>")
          .append ($("<a></a>")
             .addClass ("text")
             .attr ("href", `#${id}-tab`)
@@ -62,11 +62,13 @@ module .exports = class Tabs extends Interface
          .appendTo (this .tabs);
 
       this .addPanel (id);
+
+      return tab;
    }
 
    addIconTab (id, icon, title)
    {
-      $("<li></li>")
+      const tab = $("<li></li>")
          .append ($("<a></a>")
             .addClass ("icon")
             .attr ("href", `#${id}-tab`)
@@ -77,11 +79,13 @@ module .exports = class Tabs extends Interface
          .appendTo (this .tabs);
 
       this .addPanel (id);
+
+      return tab;
    }
 
    addIconTextTab (id, icon, title)
    {
-      $("<li></li>")
+      const tab = $("<li></li>")
          .append ($("<a></a>")
             .addClass ("icon-text")
             .attr ("href", `#${id}-tab`)
@@ -93,6 +97,8 @@ module .exports = class Tabs extends Interface
          .appendTo (this .tabs);
 
       this .addPanel (id);
+
+      return tab;
    }
 
    addPanel (id)
