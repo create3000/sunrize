@@ -381,7 +381,6 @@ tr.disabled ~ tr > td > div {
 .ui-tabs > .ui-tabs-nav li,
 .ui-tabs > .ui-tabs-nav .ui-tabs-active {
   height: 100%;
-  padding: 7px 10px 0 10px;
 }
 
 .ui-tabs > .ui-tabs-nav li:hover {
@@ -390,6 +389,10 @@ tr.disabled ~ tr > td > div {
 
 .ui-tabs > .ui-tabs-nav li.ui-tabs-active {
   color: var(--accent-color);
+}
+
+.ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
+  padding: 7px 10px;
 }
 
 .ui-tabs > .ui-tabs-nav .ui-tabs-anchor,
@@ -1071,8 +1074,8 @@ body.dark .ui-widget .library-list .component {
   height: calc(100% - 1px);
 }
 
-#footer > .ui-tabs-nav li a {
-  padding: 4px 30px 10px 30px;
+#footer > .ui-tabs-nav .ui-tabs-anchor {
+  padding: 4px 30px 10px;
 }
 
 #footer > .ui-tabs-nav li:last-child {
