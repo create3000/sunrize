@@ -51,8 +51,8 @@ module .exports = class Dashboard extends Interface
          .appendTo (this .toolbar)
          .on ("click", () => this .showVolumeSlider ());
 
-      this .browser .getBrowserOptions () ._AudioIntensity
-         .addFieldCallback (this, value => this .updateAudioIntensity (value));
+      this .browser .getBrowserOptions () ._SoundIntensity
+         .addFieldCallback (this, value => this .updateSoundIntensity (value));
 
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
@@ -116,11 +116,11 @@ module .exports = class Dashboard extends Interface
       this .config .file .setDefaultValues ({
          pointer: "arrow",
          play: this .config .global .play,
-         audioIntensity: 1,
+         soundIntensity: 1,
          panel: false,
       });
 
-      this .browser .setBrowserOption ("AudioIntensity", this .config .file .audioIntensity);
+      this .browser .setBrowserOption ("SoundIntensity", this .config .file .soundIntensity);
 
       this [this .config .file .pointer] ();
       this .play ((this .config .file .play) && !this .isInitialScene);
@@ -181,9 +181,9 @@ module .exports = class Dashboard extends Interface
       this .volumeButton .volumeSliderPopover (this .browser);
    }
 
-   updateAudioIntensity (value)
+   updateSoundIntensity (value)
    {
-      this .config .file .audioIntensity = value;
+      this .config .file .soundIntensity = value;
 
       if (value === 0)
          this .volumeButton .text ("volume_off");

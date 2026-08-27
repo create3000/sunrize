@@ -13,9 +13,9 @@ $.fn.volumeSliderPopover = function (browser)
       .attr ("min", 0)
       .attr ("max", 1)
       .attr ("step", "any")
-      .val (browser .getBrowserOption ("AudioIntensity"))
+      .val (browser .getBrowserOption ("SoundIntensity"))
       .css ({ "height": 120, "writing-mode": "vertical-lr", "direction": "rtl" })
-      .on ("input", () => browser .setBrowserOption ("AudioIntensity", input .val ()));
+      .on ("input", () => browser .setBrowserOption ("SoundIntensity", input .val ()));
 
    // Create tooltip.
 
