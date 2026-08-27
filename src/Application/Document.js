@@ -166,7 +166,7 @@ module .exports = class Document extends Interface
 
       // Connect browser events.
 
-      this .browser .getRenderingProperties () ._Audio .addInterest ("toggleAudio", this);
+      this .browser .getRenderingProperties () ._SoundDestinations .addInterest ("toggleAudio", this);
       this .browser ._activeLayer .addInterest ("toggleGrids", this);
 
       // Connect for Snap Target and Snap Source.
@@ -1333,7 +1333,7 @@ module .exports = class Document extends Interface
 
    toggleAudio ()
    {
-      electron .ipcRenderer .sendToHost ("audio", this .browser .getRenderingProperty ("Audio"));
+      electron .ipcRenderer .sendToHost ("audio", this .browser .getRenderingProperty ("SoundDestinations"));
    }
 
    /**
