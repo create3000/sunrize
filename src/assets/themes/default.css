@@ -1426,9 +1426,10 @@ body.light .console-output .selected {
 
 .animation-editor-toolbar {
   container-type: inline-size;
+  padding-left: 5px;
   left: 0px;
   right: calc(var(--toolbar-width) + 1px);
-  padding-left: 5px;
+  width: auto;
 }
 
 @container (max-width: 630px) {
