@@ -500,9 +500,15 @@ module .exports = class AnimationEditor extends Interface
       animation .setMetaData ("Animation/frameRate", new X3D .SFInt32 (10));
 
       if (group)
-         Editor .insertValueIntoArray (executionContext, node, field, 0, animation);
+      {
+         const index = node ._children .findIndex (node => node .metadata ?.name !== "Animation");
+
+         Editor .insertValueIntoArray (executionContext, node, field, index >= 0 ? index : 0, animation);
+      }
       else
+      {
          Editor .appendValueToArray (executionContext, node, field, animation);
+      }
 
       Editor .undoManager .endUndo ();
 
