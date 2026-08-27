@@ -499,7 +499,10 @@ module .exports = class AnimationEditor extends Interface
       animation .setMetaData ("Animation/duration",  new X3D .SFInt32 (10));
       animation .setMetaData ("Animation/frameRate", new X3D .SFInt32 (10));
 
-      Editor .insertValueIntoArray (executionContext, node, field, 0, animation);
+      if (group)
+         Editor .insertValueIntoArray (executionContext, node, field, 0, animation);
+      else
+         Editor .appendValueToArray (executionContext, node, field, animation);
 
       Editor .undoManager .endUndo ();
 
