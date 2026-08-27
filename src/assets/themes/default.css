@@ -380,7 +380,6 @@ tr.disabled ~ tr > td > div {
 
 .ui-tabs > .ui-tabs-nav li,
 .ui-tabs > .ui-tabs-nav .ui-tabs-active {
-  -box-sizing: border-box;
   height: 100%;
   padding: 7px 10px 0 10px;
 }
@@ -731,9 +730,8 @@ html[platform=darwin] .horizontal-toolbar .select {
   right: var(--toolbar-width);
   bottom: 0px;
   left: 0px;
-  border-top: 1px solid var(--border-color);
-  border-right: 1px solid var(--border-color);
-  border-bottom: 1px solid var(--border-color);
+  border: 1px solid var(--border-color);
+  border-bottom: none;
   border-top-right-radius: var(--toolbar-inner-radius);
   background-color: var(--background-color);
 }
@@ -1038,6 +1036,7 @@ body.dark .ui-widget .library-list .component {
 /* Footer */
 
 #footer {
+  overflow: hidden;
   position: absolute;
   box-sizing: border-box;
   width: 100%;
@@ -1055,8 +1054,35 @@ body.dark .ui-widget .library-list .component {
 }
 
 #footer > .ui-tabs-nav li {
+  box-sizing: border-box;
   position: relative;
-  left:calc(var(--toolbar-width) / -2);
+  background: var(--secondary-toolbar-color);
+  border: 1px solid var(--border-color);
+  border-left: none;
+  padding: 4px 30px 0px 30px;
+  left: calc(var(--toolbar-width) / -2);
+  height: calc(100% - 1px);
+}
+
+#footer > .ui-tabs-nav li:last-child {
+  border-top-right-radius: var(--tabs-height);
+  border-bottom-right-radius: var(--tabs-height);
+}
+
+#footer > .ui-tabs-nav li:first-child::before {
+  content: "";
+  position: absolute;
+  border: 1px solid var(--border-color);
+  border-left: none;
+  top: -1px;
+  left: calc(-100vw - 1px);
+  height: 100%;
+  width: 100vw;
+  background: var(--secondary-toolbar-color);
+}
+
+#footer > .ui-tabs-nav :is(li.ui-tabs-active, li:hover) {
+  background-color: var(--system-gray4);
 }
 
 /* Console */
@@ -1468,6 +1494,7 @@ body.light .console-output .selected {
 /* Sidebar */
 
 #sidebar {
+  overflow: hidden;
   margin-left: 1px;
   border-top-left-radius: var(--toolbar-outer-radius);
 }
