@@ -1091,7 +1091,7 @@ body.dark .ui-widget .library-list .component {
 }
 
 #footer > .ui-tabs-nav :is(li.ui-tabs-active, li:hover) {
-  background-color: var(--sidebar-background-color);
+  background-color: var(--system-gray4);
 }
 
 /* Console */
