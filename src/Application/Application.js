@@ -232,7 +232,7 @@ module .exports = class Application
                      accelerator: "Shift+CmdOrCtrl+O",
                      click: async () =>
                      {
-                        const clipboard = electron .clipboard .readText ();
+                        const clipboard = await electron .clipboard .readText ();
 
                         this .pushMenu (this .createDialogMenu ());
 
