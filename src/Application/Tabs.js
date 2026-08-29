@@ -594,10 +594,7 @@ module .exports = new class Tabs
    {
       tab .mute = value;
 
-      if (value)
-         tab .muteButton .text ("volume_mute");
-      else
-         tab .muteButton .text ("volume_up");
+      tab .muteButton .text (value ? "volume_mute" : "volume_up");
    }
 
    tabClosing (tab)
