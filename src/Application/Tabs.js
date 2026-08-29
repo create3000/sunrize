@@ -283,12 +283,12 @@ module .exports = new class Tabs
                }
                case "mute-button":
                {
-                  this .toggleMuteButton (tab, ... event .args);
+                  this .showMuteButton (tab, ... event .args);
                   break;
                }
                case "mute":
                {
-                  this .toggleMute (tab, ... event .args);
+                  this .setMute (tab, ... event .args);
                   break;
                }
             }
@@ -582,19 +582,19 @@ module .exports = new class Tabs
       this .config .activeTab = tabs .length ? this .tabs .getActiveTab () .url : undefined;
    }
 
-   toggleMuteButton (tab, sound)
+   showMuteButton (tab, value)
    {
-      if (sound)
+      if (value)
          tab .muteButton .show ();
       else
          tab .muteButton .hide ();
    }
 
-   toggleMute (tab, mute)
+   setMute (tab, value)
    {
-      tab .mute = mute;
+      tab .mute = value;
 
-      if (mute)
+      if (value)
          tab .muteButton .text ("volume_mute");
       else
          tab .muteButton .text ("volume_up");

@@ -239,8 +239,6 @@ module .exports = class Document extends Interface
       this .setDisplayTimings               (this .config .file .timings);
       this .setMute                         (this .config .file .mute);
 
-      this .toggleMuteButton ();
-
       // Configure grids.
 
       this .#grids .forEach (grid => grid .dispose ());
