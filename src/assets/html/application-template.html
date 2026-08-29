@@ -100,7 +100,7 @@
   margin-left: 5px;
 }
 
-.etabs .tab-audio,
+.etabs .tab-sound,
 .etabs .tab-pin,
 .etabs .tab-close,
 .etabs .tab-close button {
@@ -115,37 +115,37 @@
 }
 
 @media (prefers-color-scheme: light) {
-  .etabs .tab-audio:hover,
+  .etabs .tab-sound:hover,
   .etabs .tab-close:hover,
   .etabs .tab-close:hover button {
     background-color: var(--system-gray4);
   }
 }
 
-.etabs .tab-audio:hover,
+.etabs .tab-sound:hover,
 .etabs .tab-close:hover,
 .etabs .tab-close:hover button {
   color: var(--system-gray0);
 }
 
 .etabs .tab-pin,
-.etabs .tab-audio {
+.etabs .tab-sound {
   display: none;
 }
 
-.etabs .tab:not(.active) .tab-audio {
+.etabs .tab:not(.active) .tab-sound {
   display: none !important;
 }
 
-.etabs .tab:not(.active, :hover, :focus) :where(.tab-close button, .tab-audio, .tab-pin) {
+.etabs .tab:not(.active, :hover, :focus) :where(.tab-close button, .tab-sound, .tab-pin) {
   color: var(--text-disabled);
 }
 
-.etabs .tab-audio {
+.etabs .tab-sound {
   margin-right: -3px;
 }
 
-.etabs .tab-audio,
+.etabs .tab-sound,
 .etabs .tab-pin,
 .etabs .tab-close {
   margin-left: 5px;

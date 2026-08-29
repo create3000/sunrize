@@ -230,14 +230,14 @@ module .exports = new class Tabs
             .addClass ("material-symbols-outlined")
             .text ("close");
 
-         // Audio Button
+         // Sound Button
 
-         tab .audioButton = $("<span></span>")
-            .addClass (["tab-audio", "material-symbols-outlined"])
+         tab .soundButton = $("<span></span>")
+            .addClass (["tab-sound", "material-symbols-outlined"])
             .text ("volume_up")
             .on ("click", () => tab .webview .send ("mute", !tab .mute));
 
-         tab .closeButton .before (tab .audioButton);
+         tab .closeButton .before (tab .soundButton);
 
          // Pin Button
 
@@ -281,9 +281,9 @@ module .exports = new class Tabs
                   this .setTabURL (tab, tab .url, ... event .args);
                   break;
                }
-               case "audio":
+               case "sound":
                {
-                  this .toggleAudio (tab, ... event .args);
+                  this .toggleSound (tab, ... event .args);
                   break;
                }
                case "mute":
@@ -582,12 +582,12 @@ module .exports = new class Tabs
       this .config .activeTab = tabs .length ? this .tabs .getActiveTab () .url : undefined;
    }
 
-   toggleAudio (tab, audio)
+   toggleSound (tab, sound)
    {
-      if (audio)
-         tab .audioButton .show ();
+      if (sound)
+         tab .soundButton .show ();
       else
-         tab .audioButton .hide ();
+         tab .soundButton .hide ();
    }
 
    toggleMute (tab, mute)
@@ -595,9 +595,9 @@ module .exports = new class Tabs
       tab .mute = mute;
 
       if (mute)
-         tab .audioButton .text ("volume_mute");
+         tab .soundButton .text ("volume_mute");
       else
-         tab .audioButton .text ("volume_up");
+         tab .soundButton .text ("volume_up");
    }
 
    tabClosing (tab)

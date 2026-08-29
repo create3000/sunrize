@@ -166,7 +166,7 @@ module .exports = class Document extends Interface
 
       // Connect browser events.
 
-      this .browser .getRenderingProperties () ._SoundDestinations .addInterest ("toggleAudio", this);
+      this .browser .getRenderingProperties () ._SoundDestinations .addInterest ("toggleSound", this);
       this .browser ._activeLayer .addInterest ("toggleGrids", this);
 
       // Connect for Snap Target and Snap Source.
@@ -239,7 +239,7 @@ module .exports = class Document extends Interface
       this .setDisplayTimings               (this .config .file .timings);
       this .setMute                         (this .config .file .mute);
 
-      this .toggleAudio ();
+      this .toggleSound ();
 
       // Configure grids.
 
@@ -1331,9 +1331,9 @@ module .exports = class Document extends Interface
       viewpointNode ._set_bind = true;
    }
 
-   toggleAudio ()
+   toggleSound ()
    {
-      electron .ipcRenderer .sendToHost ("audio", this .browser .getRenderingProperty ("SoundDestinations"));
+      electron .ipcRenderer .sendToHost ("sound", this .browser .getRenderingProperty ("SoundDestinations"));
    }
 
    /**

@@ -26,7 +26,7 @@ $.fn.volumeSliderPopover = function (browser)
          at: "bottom left",
       },
       style: {
-         classes: "qtip-tipsy qtip-preview qtip-audio-intensity",
+         classes: "qtip-tipsy qtip-preview qtip-sound-intensity",
       },
       events: {
          hide: (event, api) =>
