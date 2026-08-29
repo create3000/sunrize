@@ -43,6 +43,7 @@ module .exports = new class Tabs
    {
       this .config .setDefaultValues ({
          openTabs: [ ],
+         closedTabs: [ ],
          scrollLeft: 0,
       });
 
@@ -628,7 +629,7 @@ module .exports = new class Tabs
       {
          closedTabs .push (tab .url);
 
-         this .config .closedTabs = closedTabs;
+         this .config .closedTabs = closedTabs .slice (-1_000);
       }
 
       // Add closed url to recent locations.
@@ -711,9 +712,6 @@ module .exports = new class Tabs
 
    maintenance ()
    {
-      // Limit closed tabs.
-      this .config .closedTabs = this .config .closedTabs .slice (-1000);
-
       // Remove items older than one year, time in milliseconds.
       // new DataStorage (localStorage, "Sunrize.") .removeItems (Date .now () - (1000 * 60 * 60 * 24 * 365));
    }
