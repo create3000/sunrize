@@ -629,7 +629,7 @@ module .exports = new class Tabs
       {
          closedTabs .push (tab .url);
 
-         this .config .closedTabs = closedTabs .slice (-1_000);
+         this .config .closedTabs = closedTabs .slice (-100);
       }
 
       // Add closed url to recent locations.
