@@ -17,13 +17,13 @@ module .exports = class Footer extends Tabs
    addTabs ()
    {
       this .addIconTextTab ("console", "menu", _("Console"))
-         .find (".material-icons") .css ("color", "var(--system-green)");
+         .find (".material-icons") .css ("color", "hsl(135, 53%, 42%)");
 
       this .addIconTextTab ("script-editor", "data_array", _("Script Editor"))
-         .find (".material-icons") .css ("color", "var(--system-blue)");
+         .find (".material-icons") .css ("color", "hsl(206, 53%, 42%)");
 
       this .addIconTextTab ("animation-editor","animation", _("Animation Editor"))
-         .find (".material-icons") .css ("color", "var(--system-indigo)");
+         .find (".material-icons") .css ("color", "hsl(246, 40%, 48%)");
 
       this .console = new Console (this .getPanel ("console"));
    }
