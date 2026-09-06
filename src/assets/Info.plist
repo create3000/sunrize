@@ -369,6 +369,23 @@
     <dict>
       <key>CFBundleTypeExtensions</key>
       <array>
+        <string>off</string>
+        <string>OFF</string>
+      </array>
+      <key>CFBundleTypeMIMETypes</key>
+      <array>
+        <string>model/off</string>
+      </array>
+      <key>CFBundleTypeName</key>
+      <string>Object File Format</string>
+      <key>CFBundleTypeRole</key>
+      <string>Editor</string>
+      <key>LSHandlerRank</key>
+      <string>Alternate</string>
+    </dict>
+    <dict>
+      <key>CFBundleTypeExtensions</key>
+      <array>
         <string>svg</string>
         <string>SVG</string>
       </array>
