@@ -8,10 +8,10 @@ module .exports = class Registry
 {
    static addWindowsFileTypes ()
    {
-      if (process .platform !== "win32")
+      if (!electron .app .isPackaged)
          return;
 
-      if (!electron .app .isPackaged)
+      if (process .platform !== "win32")
          return;
 
       const
