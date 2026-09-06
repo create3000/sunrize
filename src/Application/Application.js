@@ -1038,7 +1038,7 @@ module .exports = class Application
          },
          {
             name: _("3D"),
-            extensions: ["gltf", "glb", "vrm", "obj", "stl", "ply", "sog", "spz", "off", "svg"],
+            extensions: ["gltf", "glb", "vrm", "obj", "stl", "ply", "sog", "spz", "off", "svg", "svgz"],
          },
          {
             name: _("Audio"),
