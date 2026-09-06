@@ -400,6 +400,23 @@
       <key>LSHandlerRank</key>
       <string>Alternate</string>
     </dict>
+    <dict>
+      <key>CFBundleTypeExtensions</key>
+      <array>
+        <string>svgz</string>
+        <string>SVGZ</string>
+      </array>
+      <key>CFBundleTypeMIMETypes</key>
+      <array>
+        <string>image/svg+xml</string>
+      </array>
+      <key>CFBundleTypeName</key>
+      <string>Scalable Vector Graphics Image</string>
+      <key>CFBundleTypeRole</key>
+      <string>Editor</string>
+      <key>LSHandlerRank</key>
+      <string>Alternate</string>
+    </dict>
   </array>
 </dict>
 </plist>

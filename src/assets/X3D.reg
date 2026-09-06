@@ -51,8 +51,11 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\Software\Classes\.off\OpenWithProgids]
 "Sunrize.off"=""
 
-[HKEY_CURRENT_USER\Software\Classes\.svg\OpenWithProgids]
+[HKEY_CURRENT_USER\Software\Classes\.svgz\OpenWithProgids]
 "Sunrize.svg"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.svg\OpenWithProgids]
+"Sunrize.svgz"=""
 
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.x3d]
 @="X3D XML Model"
@@ -178,4 +181,11 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.svg\DefaultIcon]
 @="\"SUNRIZE_EXE\",0"
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.svg\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.svgz]
+@="Scalable Vector Graphics"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.svgz\DefaultIcon]
+@="\"SUNRIZE_EXE\",0"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.svgz\shell\open\command]
 @="\"SUNRIZE_EXE\" \"%1\""
