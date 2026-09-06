@@ -335,6 +335,40 @@
     <dict>
       <key>CFBundleTypeExtensions</key>
       <array>
+        <string>sog</string>
+        <string>SOG</string>
+      </array>
+      <key>CFBundleTypeMIMETypes</key>
+      <array>
+        <string>model/sog</string>
+      </array>
+      <key>CFBundleTypeName</key>
+      <string>Spatially Ordered Gaussians</string>
+      <key>CFBundleTypeRole</key>
+      <string>Editor</string>
+      <key>LSHandlerRank</key>
+      <string>Alternate</string>
+    </dict>
+    <dict>
+      <key>CFBundleTypeExtensions</key>
+      <array>
+        <string>spz</string>
+        <string>SPZ</string>
+      </array>
+      <key>CFBundleTypeMIMETypes</key>
+      <array>
+        <string>model/spz</string>
+      </array>
+      <key>CFBundleTypeName</key>
+      <string>SPlat Zip</string>
+      <key>CFBundleTypeRole</key>
+      <string>Editor</string>
+      <key>LSHandlerRank</key>
+      <string>Alternate</string>
+    </dict>
+    <dict>
+      <key>CFBundleTypeExtensions</key>
+      <array>
         <string>svg</string>
         <string>SVG</string>
       </array>
