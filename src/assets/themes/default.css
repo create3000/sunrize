@@ -1511,6 +1511,8 @@ body.light .console-output .selected {
   overflow: hidden;
   margin-left: 1px;
   border-top-left-radius: var(--toolbar-outer-radius);
+  height: 100%;
+  background-color: var(--sidebar-background-color);
 }
 
 .sidebar.ui-widget.ui-widget-content {
@@ -1518,7 +1520,6 @@ body.light .console-output .selected {
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-  background-color: var(--sidebar-background-color);
 }
 
 .sidebar.ui-tabs .ui-tabs-nav {

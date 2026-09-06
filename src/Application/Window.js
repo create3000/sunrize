@@ -2,7 +2,7 @@
 
 const Document = require ("./Document");
 
-module .exports = new class Window extends Document
+class Window extends Document
 {
    constructor ()
    {
@@ -13,3 +13,5 @@ module .exports = new class Window extends Document
       this .setup ();
    }
 };
+
+module .exports = new Window ();
