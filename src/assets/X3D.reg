@@ -42,6 +42,12 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\Software\Classes\.ply\OpenWithProgids]
 "Sunrize.ply"=""
 
+[HKEY_CURRENT_USER\Software\Classes\.sog\OpenWithProgids]
+"Sunrize.sog"=""
+
+[HKEY_CURRENT_USER\Software\Classes\.spz\OpenWithProgids]
+"Sunrize.spz"=""
+
 [HKEY_CURRENT_USER\Software\Classes\.svg\OpenWithProgids]
 "Sunrize.svg"=""
 
@@ -141,6 +147,20 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.ply\DefaultIcon]
 @="\"SUNRIZE_EXE\",0"
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.ply\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.sog]
+@="Scalable Vector Graphics"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.sog\DefaultIcon]
+@="\"SUNRIZE_EXE\",0"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.sog\shell\open\command]
+@="\"SUNRIZE_EXE\" \"%1\""
+
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.spz]
+@="Scalable Vector Graphics"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.spz\DefaultIcon]
+@="\"SUNRIZE_EXE\",0"
+[HKEY_CURRENT_USER\Software\Classes\Sunrize.spz\shell\open\command]
 @="\"SUNRIZE_EXE\" \"%1\""
 
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.svg]
