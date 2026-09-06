@@ -51,10 +51,10 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\Software\Classes\.off\OpenWithProgids]
 "Sunrize.off"=""
 
-[HKEY_CURRENT_USER\Software\Classes\.svgz\OpenWithProgids]
+[HKEY_CURRENT_USER\Software\Classes\.svg\OpenWithProgids]
 "Sunrize.svg"=""
 
-[HKEY_CURRENT_USER\Software\Classes\.svg\OpenWithProgids]
+[HKEY_CURRENT_USER\Software\Classes\.svgz\OpenWithProgids]
 "Sunrize.svgz"=""
 
 [HKEY_CURRENT_USER\Software\Classes\Sunrize.x3d]
