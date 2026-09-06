@@ -1058,6 +1058,10 @@ body.dark .ui-widget .library-list .component {
   background: var(--secondary-toolbar-color);
 }
 
+#footer:empty::after {
+  height: 100%;
+}
+
 #footer > .ui-tabs-nav li {
   position: relative;
   border: 1px solid transparent;
