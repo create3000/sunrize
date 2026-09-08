@@ -19,14 +19,15 @@ module .exports = new class Panel extends Interface
       this .container = $(this .pane .element) .parent ();
       this .selection = require ("../Application/Selection");
 
-      this .container .hide () .appendTo ($("#browser-frame"));
+      this .container .hide () .appendTo ($("#browser-pane"));
 
       this .container .css ({
          "z-index": "3000",
          "overflow": "unset",
          "width": "fit-content",
-         "bottom": this .container .css ("top"),
          "top": "unset",
+         "right": "calc(var(--toolbar-width) + 8px)",
+         "bottom": this .container .css ("top"),
       });
 
       this .container .get (0) .addEventListener ("mousedown", event => this .onmousedown (event), true);
