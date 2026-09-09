@@ -15,4 +15,7 @@ X3DUOM .find ("ConcreteNodes")     .append (X_ITE .find ("ConcreteNode"));
 X3DUOM .find ("AbstractNodeType[name=X3DOneSidedMaterialNode]")
    .append (X3DUOM .find ("field[name=emissiveColor]") .first () .clone ());
 
+// detune fix
+X3DUOM .find ("field[name=detune]") .removeAttr ("minInclusive");
+
 module .exports = X3DUOM;
