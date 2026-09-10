@@ -1938,19 +1938,39 @@ module .exports = class OutlineView extends Interface
       let title = "";
 
       if (description)
+      {
          title += `Description:\n\n${description}`;
+      }
+      else
+      {
+         for (const type of node .getType () .toReversed ())
+         {
+            switch (type)
+            {
+               case X3D .X3DConstants .X3DPrototypeInstance:
+                  title += `X3DPrototypeInstance ${node .getTypeName ()}`;
+                  break;
+               default:
+                  continue;
+            }
 
-      for (const type of node .getType () .toReversed ())
+            break;
+         }
+      }
+
+      const innerNode = $.try (() => node .getInnerNode ()) ?? node;
+
+      for (const type of innerNode .getType () .toReversed ())
       {
          switch (type)
          {
             case X3D .X3DConstants .X3DGeometryNode:
             {
-               const numVertices = node .getVertices () .length / 4;
+               const numVertices = innerNode .getVertices () .length / 4;
 
                title += "\n\n";
 
-               switch (node .getGeometryType ())
+               switch (innerNode .getGeometryType ())
                {
                   case 0:
                      title += `Number of Points: ${(numVertices) .toLocaleString (_.locale)}`;
