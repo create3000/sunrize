@@ -1198,7 +1198,7 @@ module .exports = class OutlineView extends Interface
                   .addClass (node ._isActive .getValue () ? "on" : "off")
                   .text ("stop"));
 
-               if (node .getFieldDefinition ("loop"))
+               if (node .getFieldDefinitions () .get ("loop"))
                {
                   buttons .push ($("<span></span>")
                      .attr ("order", "7")
