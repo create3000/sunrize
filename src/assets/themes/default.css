@@ -1056,7 +1056,13 @@ body.dark .ui-widget .library-list .component {
 }
 
 #footer:empty::after {
+  content: "";
+  position: absolute;
+  width: var(--toolbar-width);
+  right: 0px;
   height: 100%;
+  border-left: 1px solid var(--border-color);
+  background: var(--secondary-toolbar-color);
 }
 
 #footer > .ui-tabs-nav li {
