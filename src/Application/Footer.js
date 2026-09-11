@@ -3,6 +3,7 @@
 const
    Tabs    = require ("../Controls/Tabs"),
    Console = require ("../Editors/Console"),
+   $       = require ("jquery"),
    _       = require ("./GetText");
 
 module .exports = class Footer extends Tabs
@@ -24,6 +25,10 @@ module .exports = class Footer extends Tabs
 
       this .addIconTextTab ("animation-editor","animation", _("Animation Editor"))
          .find (".material-icons") .css ("color", "hsl(246, 40%, 48%)");
+
+      $("<div></div>")
+         .addClass (["toolbar", "vertical-toolbar"])
+         .appendTo (this .element);
 
       this .console = new Console (this .getPanel ("console"));
    }

@@ -526,7 +526,6 @@ html[platform=darwin] .horizontal-toolbar .select {
   height: var(--tabs-height);
   width: 100%;
   background: inherit;
-  z-index: 200;
 }
 
 .ui-tabs.top > .ui-tabs-nav {
@@ -1048,14 +1047,12 @@ body.dark .ui-widget .library-list .component {
   height: 100%;
 }
 
-#footer::after {
-  content: "";
-  position: absolute;
-  width: var(--toolbar-width);
-  right: 0px;
-  height: var(--tabs-height);
+#footer > .vertical-toolbar {
+  box-sizing: content-box;
+  height: calc(var(--tabs-height) - 1px);
+  bottom: 0px;
+  background-color: var(--secondary-toolbar-color);
   border-left: 1px solid var(--border-color);
-  background: var(--secondary-toolbar-color);
 }
 
 #footer:empty::after {
