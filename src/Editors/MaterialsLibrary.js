@@ -96,7 +96,7 @@ module .exports = class MaterialsLibrary extends LibraryPane
    {
       const material = this .#scene .getNamedNode (name);
 
-      this .importX3D (material .getNodeName (), material .toXMLString ());
+      this .importX3D (material .getNodeName (), `<X3D><Scene>${material .toXMLString ()}</Scene></X3D>`);
    }
 
    async onChangeMaterials ()
