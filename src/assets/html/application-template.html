@@ -50,10 +50,11 @@
 
 .etabs .tab:not(.active, :hover, :focus, :first-child)::before {
   content: "•";
+  display: inline-block;
   position: absolute;
-  transform: translateY(4%);
   left: -3px;
   color: var(--text-disabled);
+  line-height: 0;
 }
 
 .etabs .tab:is(.active, :hover, :focus) + .tab::before {
