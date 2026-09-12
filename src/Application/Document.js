@@ -330,7 +330,7 @@ module .exports = class Document extends Interface
       if (this .activeElementIsMonacoEditor ())
          return;
 
-      const enabled = this .activeElement .is (":is(input, textarea):not([readonly])");
+      const enabled = this .activateElementIsWritable ();
 
       const menu = [
          { role: "undo", accelerator: "CmdOrCtrl+Z", enabled },
@@ -351,6 +351,7 @@ module .exports = class Document extends Interface
       return Object .assign (menu,
       {
          defaultEditMenu: this .activeElementIsInputOrOutput (),
+         writableElement: this .activateElementIsWritable (),
          monacoEditor: this .activeElementIsMonacoEditor (),
       });
    }
@@ -374,6 +375,11 @@ module .exports = class Document extends Interface
          return true;
 
       return false;
+   }
+
+   activateElementIsWritable ()
+   {
+      return !! this .activeElement ?.is (":is(input, textarea):not([readonly])");
    }
 
    activeElementIsMonacoEditor ()

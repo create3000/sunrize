@@ -423,31 +423,32 @@ module .exports = class Application
             {
                role: "editMenu",
                submenu: [
-                  { role: "undo" },
-                  { role: "redo" },
+                  { role: "undo", enabled: this .menuOptions .writableElement },
+                  { role: "redo", enabled: this .menuOptions .writableElement },
                   { type: "separator" },
-                  { role: "cut" },
+                  { role: "cut", enabled: this .menuOptions .writableElement },
                   { role: "copy" },
-                  { role: "paste" },
+                  { role: "paste", enabled: this .menuOptions .writableElement },
                   ... process .platform === "darwin" ?
                   [
-                     { role: "pasteAndMatchStyle" },
-                     { role: "delete" },
-                     { role: "selectAll" },
+                     { role: "pasteAndMatchStyle", enabled: this .menuOptions .writableElement },
+                     { role: "delete", enabled: this .menuOptions .writableElement },
+                     { role: "selectAll", enabled: this .menuOptions .writableElement },
                      { type: "separator" },
                      {
                         label: _("Speech"),
+                        enabled: this .menuOptions .writableElement,
                         submenu: [
                            { role: "startSpeaking" },
                            { role: "stopSpeaking" },
-                        ]
+                        ],
                      },
                   ]
                   :
                   [
-                     { role: "delete" },
+                     { role: "delete", enabled: this .menuOptions .writableElement },
                      { type: "separator" },
-                     { role: "selectAll" },
+                     { role: "selectAll", enabled: this .menuOptions .writableElement },
                   ],
                ]
             }
