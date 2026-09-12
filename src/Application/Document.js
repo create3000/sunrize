@@ -379,7 +379,7 @@ module .exports = class Document extends Interface
 
    activateElementIsWritable ()
    {
-      return !! this .activeElement ?.is (":is(input, textarea):not([readonly])");
+      return !! this .activeElement ?.is (":is(input, textarea):not([readonly]), .input");
    }
 
    activeElementIsMonacoEditor ()
