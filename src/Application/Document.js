@@ -313,7 +313,7 @@ module .exports = class Document extends Interface
    {
       this .activeElement = document .activeElement ? $(document .activeElement) : null;
 
-      if (this .activeElement ?.is ("input, textarea"))
+      if (this .activeElementIsInputOrOutput ())
       {
          this .activeElement
             .off ("contextmenu.Document")
