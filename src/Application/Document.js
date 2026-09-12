@@ -330,7 +330,7 @@ module .exports = class Document extends Interface
       if (this .activeElementIsMonacoEditor ())
          return;
 
-      const enabled = this .activeElement .is ("input:not([readonly]), textarea:not([readonly])");
+      const enabled = this .activeElement .is (":is(input, textarea):not([readonly])");
 
       const menu = [
          { role: "undo", accelerator: "CmdOrCtrl+Z", enabled },
