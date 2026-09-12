@@ -543,11 +543,13 @@ module .exports = class Application
                   {
                      label: _("Select All"),
                      accelerator: "CmdOrCtrl+A",
+                     enabled: !this .menuOptions .defaultEditMenu && !this .menuOptions .monacoEditor,
                      click: () => this .mainWindow .webContents .send ("select-all"),
                   },
                   {
                      label: _("Deselect All"),
                      accelerator: "Shift+CmdOrCtrl+A",
+                     enabled: !this .menuOptions .defaultEditMenu && !this .menuOptions .monacoEditor,
                      click: () => this .mainWindow .webContents .send ("deselect-all"),
                   },
                   { type: "separator" },
