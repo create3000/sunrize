@@ -340,10 +340,12 @@ module .exports = class Document extends Interface
          { role: "copy", accelerator: "CmdOrCtrl+C" },
          { role: "paste", accelerator: "CmdOrCtrl+P", enabled },
          { type: "separator" },
-         { role: "selectAll", accelerator: "CmdOrCtrl+A", enabled },
+         ... enabled
+            ? [{ role: "selectAll", accelerator: "CmdOrCtrl+A", enabled }]
+            : [{ label: _("Select All"), accelerator: "CmdOrCtrl+A", args: ["selectAllTextInActiveElement"]}],
       ];
 
-      electron .ipcRenderer .send ("context-menu", "default-context-menu", menu);
+      electron .ipcRenderer .send ("context-menu", "document", menu);
    }
 
    updateEditMenu (menu)
@@ -397,6 +399,16 @@ module .exports = class Document extends Interface
          return false;
 
       return true;
+   }
+
+   selectAllTextInActiveElement ()
+   {
+      const range = document .createRange ();
+
+      range .selectNode (this .activeElement .get (0));
+
+      window .getSelection () .removeAllRanges ();
+      window .getSelection () .addRange (range);
    }
 
    // Menu Accelerators Fix for Windows.

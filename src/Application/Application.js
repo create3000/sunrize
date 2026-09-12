@@ -433,7 +433,16 @@ module .exports = class Application
                   [
                      { role: "pasteAndMatchStyle", enabled: this .menuOptions .writableElement },
                      { role: "delete", enabled: this .menuOptions .writableElement },
-                     { role: "selectAll", enabled: this .menuOptions .writableElement },
+                     ... this .menuOptions .writableElement
+                     ? [{ role: "selectAll" }]
+                     : [{
+                        label: _("Select All"),
+                        accelerator: "CmdOrCtrl+A",
+                        click: () =>
+                        {
+                           this .mainWindow .webContents .send ("document", "selectAllTextInActiveElement");
+                        },
+                     }],
                      { type: "separator" },
                      {
                         label: _("Speech"),
@@ -448,7 +457,16 @@ module .exports = class Application
                   [
                      { role: "delete", enabled: this .menuOptions .writableElement },
                      { type: "separator" },
-                     { role: "selectAll", enabled: this .menuOptions .writableElement },
+                     ... this .menuOptions .writableElement
+                     ? [{ role: "selectAll" }]
+                     : [{
+                        label: _("Select All"),
+                        accelerator: "CmdOrCtrl+A",
+                        click: () =>
+                        {
+                           this .mainWindow .webContents .send ("document", "selectAllTextInActiveElement");
+                        },
+                     }],
                   ],
                ]
             }
