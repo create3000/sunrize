@@ -330,15 +330,17 @@ module .exports = class Document extends Interface
       if (this .activeElementIsMonacoEditor ())
          return;
 
+      const enabled = this .activeElement .is ("input:not([readonly]), textarea:not([readonly])");
+
       const menu = [
-         { role: "undo", accelerator: "CmdOrCtrl+Z" },
-         { role: "redo", accelerator: "Shift+CmdOrCtrl+Z" },
+         { role: "undo", accelerator: "CmdOrCtrl+Z", enabled },
+         { role: "redo", accelerator: "Shift+CmdOrCtrl+Z", enabled },
          { type: "separator" },
-         { role: "cut", accelerator: "CmdOrCtrl+X" },
+         { role: "cut", accelerator: "CmdOrCtrl+X", enabled },
          { role: "copy", accelerator: "CmdOrCtrl+C" },
-         { role: "paste", accelerator: "CmdOrCtrl+P" },
+         { role: "paste", accelerator: "CmdOrCtrl+P", enabled },
          { type: "separator" },
-         { role: "selectAll", accelerator: "CmdOrCtrl+A" },
+         { role: "selectAll", accelerator: "CmdOrCtrl+A", enabled },
       ];
 
       electron .ipcRenderer .send ("context-menu", "default-context-menu", menu);
