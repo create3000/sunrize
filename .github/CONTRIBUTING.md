@@ -10,14 +10,15 @@ This document outlines how to get involved.
 ## Getting Started
 
 1. **Fork** the repository and clone your fork.
-2. Install [Node.js](https://nodejs.org/) (LTS version recommended).
-3. Install dependencies:
+2. Checkout the `development` branch.
+3. Install [Node.js](https://nodejs.org/) (LTS version recommended).
+4. Install dependencies:
 
 ```sh
 npm install
 ```
 
-4. Run Sunrize in development mode on macOS or Linux:
+5. Run Sunrize in development mode on macOS or Linux:
 
 ```sh
 npm run development
