@@ -26,6 +26,12 @@ module .exports = class Footer extends Tabs
       this .addIconTextTab ("animation-editor","animation", _("Animation Editor"))
          .find (".material-icons") .css ("color", "hsl(246, 40%, 48%)");
 
+      if (process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT")
+      {
+         this .addIconTextTab ("routing-editor","route", _("Routing Editor"))
+            .find (".material-icons") .css ("color", "hsl(281, 40%, 48%)");
+      }
+
       $("<div></div>")
          .addClass (["toolbar", "vertical-toolbar"])
          .appendTo (this .element);
@@ -49,6 +55,13 @@ module .exports = class Footer extends Tabs
             const AnimationEditor = require ("../Editors/AnimationEditor");
 
             this .animationEditor = new AnimationEditor (panel);
+            break;
+         }
+         case "routing-editor":
+         {
+            const RoutingEditor = require ("../Editors/RoutingEditor");
+
+            this .routingEditor = new RoutingEditor (panel);
             break;
          }
       }

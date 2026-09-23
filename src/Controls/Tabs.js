@@ -48,6 +48,7 @@ module .exports = class Tabs extends Interface
          return;
 
       panel .data ("Tabs.initialized", true);
+
       this .initTab (panel);
    }
 
