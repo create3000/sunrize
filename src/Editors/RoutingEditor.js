@@ -14,6 +14,13 @@ module .exports = class RoutingEditor extends Interface
    {
       super (`Sunrize.RoutingEditor.${element .attr ("id")}.`);
 
+      this .editor = element;
+      this .left   = $("<div></div>") .addClass ("routing-editor-left") .appendTo (this .editor);
+
+      this .toolbar = $("<div></div>")
+         .addClass (["toolbar", "vertical-toolbar", "secondary-toolbar", "routing-toolbar"])
+         .appendTo (this .editor);
+
       this .setup ();
    }
 
