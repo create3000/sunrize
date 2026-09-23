@@ -535,7 +535,7 @@ html[platform=darwin] .horizontal-toolbar .select {
 .ui-tabs.bottom > .ui-tabs-nav {
   position: absolute;
   bottom: 0;
-  border-top: var(--tool-border);
+  border-top: 1px solid var(--system-orange);
 }
 
 .ui-tabs > .ui-tabs-nav li,
