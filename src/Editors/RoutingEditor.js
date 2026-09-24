@@ -62,7 +62,7 @@ module .exports = class RoutingEditor extends Interface
       });
 
       // WIP
-      this .config .file .sheets = [ ];
+      // this .config .file .sheets = [ ];
 
       this .updateSheets ();
    }
