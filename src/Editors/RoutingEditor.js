@@ -105,11 +105,9 @@ module .exports = class RoutingEditor extends Interface
       this .top .tabs ();
       this .top .tabs ("option", "classes.ui-tabs", "top");
       this .top .tabs ("refresh");
+      this .top .tabs ("option", "active", Math .max (this .config .file .activeSheet, sheets .length - 1));
 
-      if (this .top .tabs ("option", "active") === this .config .file .activeSheet)
-         this .activateSheet ();
-      else
-         this .top .tabs ("option", "active", Math .max (this .config .file .activeSheet, sheets .length - 1));
+      this .activateSheet ();
    }
 
    addSheet ()
@@ -121,11 +119,10 @@ module .exports = class RoutingEditor extends Interface
          nodes: [ ],
       });
 
-      this .config .file .sheets = sheets;
+      this .config .file .sheets      = sheets;
+      this .config .file .activeSheet = sheets .length - 1;
 
       this .updateSheets ();
-
-      this .top .tabs ("option", "active", this .config .file .sheets .length - 1);
    }
 
    closeSheet (id)
