@@ -152,7 +152,7 @@ module .exports = class RoutingEditor extends Interface
       const
          active = this .config .file .activeSheet,
          sheets = this .config .file .sheets,
-         title  = this .title .val ();
+         title  = this .title .val () || _("New Logic");
 
       $(`a[href="#routing-sheet-${active}-tab"]`)
          .attr ("title", title)
