@@ -124,6 +124,8 @@ module .exports = class RoutingEditor extends Interface
       this .config .file .sheets = sheets;
 
       this .updateSheets ();
+
+      this .top .tabs ("option", "active", this .config .file .sheets .length - 1);
    }
 
    closeSheet (id)
