@@ -119,7 +119,7 @@ module .exports = class RoutingEditor extends Interface
 
    reorderSheets (item)
    {
-      const active = parseInt (item .find ("a") .attr ("href") .match (/\d+/) [0]);
+      const current = parseInt (item .find ("a") .attr ("href") .match (/\d+/) [0]);
 
       const indices = [ ];
 
@@ -133,8 +133,23 @@ module .exports = class RoutingEditor extends Interface
       for (const i of indices)
          reorderedSheets .push (sheets [i]);
 
-      this .config .file .sheets      = reorderedSheets;
-      this .config .file .activeSheet = indices .indexOf (active);
+      this .config .file .sheets = reorderedSheets;
+
+      if (current < this .config .file .activeSheet)
+      {
+         if (indices .indexOf (current) + 1 > this .config .file .activeSheet)
+            -- this .config .file .activeSheet;
+
+      }
+      else if (current > this .config .file .activeSheet)
+      {
+         if (indices .indexOf (current) <= this .config .file .activeSheet)
+            ++ this .config .file .activeSheet;
+      }
+      else
+      {
+         this .config .file .activeSheet = indices .indexOf (current);
+      }
 
       this .updateSheets ();
    }
