@@ -94,6 +94,7 @@ module .exports = class RoutingEditor extends Interface
          // Hidden empty panel
          $("<div></div>")
             .attr ("id", `routing-sheet-${id}-tab`)
+            .css ("display", "none")
             .appendTo (this .top);
       }
 
@@ -110,6 +111,8 @@ module .exports = class RoutingEditor extends Interface
    activateSheet ()
    {
       const active = this .top .tabs ("option", "active");
+
+      this .config .file .activeSheet = active;
 
       console .log (active);
    }

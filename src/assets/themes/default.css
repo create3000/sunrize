@@ -1581,13 +1581,14 @@ body.light .console-output .selected {
   border-right: 1px solid var(--border-color);
 }
 
-.routing-editor .routes {
+#routing-editor .routes {
   position: absolute;
   width: 100%;
   height: 100%;
 }
 
-.routing-editor .nodes {
+#routing-editor .nodes {
+  overflow: hidden;
   position: absolute;
   width: 100%;
   height: 100%;
