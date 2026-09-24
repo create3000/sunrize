@@ -22,6 +22,8 @@ module .exports = class RoutingEditor extends Interface
 
       this .tabs = $("<ul></ul>") .appendTo (this .top);
 
+      this .tabs .sortable () .on ("sortupdate", () => this .reorderSheets ());
+
       this .toolbar = $("<div></div>")
          .addClass (["toolbar", "vertical-toolbar", "secondary-toolbar", "routing-toolbar"])
          .appendTo (this .editor);
@@ -113,8 +115,25 @@ module .exports = class RoutingEditor extends Interface
          this .activateSheet ();
       else
          this .top .tabs ("option", "active", active);
+   }
 
-      this .tabs .sortable ();
+   reorderSheets ()
+   {
+      const indices = [ ];
+
+      for (const a of this .tabs .find ("> li a"))
+         indices .push (parseInt (a .getAttribute ("href") .match (/\d+/) [0]));
+
+      const
+         sheets          = this .config .file .sheets,
+         reorderedSheets = [ ];
+
+      for (const i of indices)
+         reorderedSheets .push (sheets [i]);
+
+      this .config .file .sheets = reorderedSheets;
+
+      this .updateSheets ();
    }
 
    addSheet ()
