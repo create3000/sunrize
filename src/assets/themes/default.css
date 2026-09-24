@@ -1610,11 +1610,12 @@ body.light .console-output .selected {
   border: 1px solid transparent;
   border-radius: 20px;
   padding: 2px 15px;
+  max-width: 100%;
   field-sizing: content;
 }
 
 #routing-editor .title:focus {
-  border-color: var(--border-color);
+  border-color: var(--system-gray4);
   background: var(--background-color);
 }
 
