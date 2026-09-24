@@ -1529,52 +1529,52 @@ body.light .console-output .selected {
   border-right: 1px solid var(--border-color);
 }
 
-#routing-editor .ui-tabs> .ui-tabs-nav {
+#routing-editor .ui-tabs > .ui-tabs-nav {
   height: 100%;
   border: none;;
   justify-content: left;
 }
 
 #routing-editor .ui-tabs > .ui-tabs-nav li {
-  box-sizing: border-box;
-  position: relative;
+  float: none;
   border: 1px solid transparent;
   border-radius: var(--tabs-height);
-  padding: 2px 10px 2px 14px;
+  padding: 0px;
   height: 100%;
 }
 
-#routing-editor .ui-tabs> .ui-tabs-nav .ui-tabs-anchor {
-  padding: 0px;
+#routing-editor .ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
+  position: relative;
+  float: none;
+  padding: 2px 10px 2px 10px;
   color: var(--window-tabs-text-color);
 }
 
-#routing-editor .ui-tabs> .ui-tabs-nav .ui-tabs-active .ui-tabs-anchor {
+#routing-editor .ui-tabs > .ui-tabs-nav .ui-tabs-active .ui-tabs-anchor {
   color: var(--window-tabs-highlight-color);
 }
 
-#routing-editor .ui-tabs> .ui-tabs-nav .button {
-  position: relative;
-  top: 1px;
-  margin-left: 5px;
-  font-size: 10pt;
-}
-
-#routing-editor .ui-tabs> .ui-tabs-nav :is(li.ui-tabs-active, li:hover) {
+#routing-editor .ui-tabs > .ui-tabs-nav :is(li.ui-tabs-active, li:hover) {
   border-color: var(--border-color);
   background-color: var(--window-tabs-background-color);
 }
 
-#routing-editor .ui-tabs> .ui-tabs-nav li:not(.ui-tabs-active, :hover, :first-child)::before {
+#routing-editor .ui-tabs > .ui-tabs-nav li:not(.ui-tabs-active, :hover, :first-child)::before {
   content: "•";
   position: absolute;
-  top: 3px;
+  top: 3.5px;
   left: -3px;
   color: var(--text-disabled);
 }
 
-#routing-editor .ui-tabs> .ui-tabs-nav li:is(.ui-tabs-active, :hover) + li::before {
+#routing-editor .ui-tabs > .ui-tabs-nav li:is(.ui-tabs-active, :hover) + li::before {
   display: none;
+}
+
+#routing-editor .ui-tabs > .ui-tabs-nav .button {
+  top: 3.5px;
+  left: -5px;
+  font-size: 10pt;
 }
 
 .routing-editor-left {

@@ -82,6 +82,7 @@ module .exports = class RoutingEditor extends Interface
          return this .addSheet ();
 
       this .tabs .empty ();
+      this .top .find ("> div") .remove ();
 
       for (const [id, { title, nodes }] of sheets .entries ())
       {
@@ -116,10 +117,13 @@ module .exports = class RoutingEditor extends Interface
 
    addSheet ()
    {
-      const sheets = this .config .file .sheets;
+      const
+         sheets = this .config .file .sheets,
+         regex  = new RegExp (_("New Logic") + "\\s+(\\d+)\\s*$"),
+         next   = sheets .reduce ((i, sheet) => Math .max (i, (sheet .title .match (regex) ?.[1]|0) + 1), 1);
 
       sheets .push ({
-         title: _("New Logic"),
+         title: _("New Logic") + ` ${next}`,
          nodes: [ ],
       });
 
