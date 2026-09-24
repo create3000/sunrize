@@ -18,6 +18,8 @@ module .exports = class RoutingEditor extends Interface
 
       this .top .on ("tabsactivate", () => this .activateSheet ());
 
+      this .tabs = $("<ul></ul>") .appendTo (this .top);
+
       this .toolbar = $("<div></div>")
          .addClass (["toolbar", "vertical-toolbar", "secondary-toolbar", "routing-toolbar"])
          .appendTo (this .editor);
@@ -71,19 +73,17 @@ module .exports = class RoutingEditor extends Interface
 
       const sheets = this .config .file .sheets;
 
-      if (!sheets .length)
-      {
-         sheets .push ({
-            title: _("New Logic"),
-            nodes: [ ],
-         });
+      if (sheets .length)
+         this .updateSheets ();
+      else
+         this .addSheet ();
+   }
 
-         this .config .file .sheets = sheets;
-      }
+   updateSheets ()
+   {
+      const sheets = this .config .file .sheets;
 
-      this .top .empty ();
-
-      this .tabs = $("<ul></ul>") .appendTo (this .top);
+      this .tabs .empty ();
 
       for (const [id, { title, nodes }] of sheets .entries ())
       {
@@ -109,11 +109,22 @@ module .exports = class RoutingEditor extends Interface
          this .activateSheet ();
       else
          this .top .tabs ("option", "active", this .config .file .active);
+
+      this .top .tabs("refresh");
    }
 
    addSheet ()
    {
+      const sheets = this .config .file .sheets;
 
+      sheets .push ({
+         title: _("New Logic"),
+         nodes: [ ],
+      });
+
+      this .config .file .sheets = sheets;
+
+      this .updateSheets ();
    }
 
    activateSheet ()
