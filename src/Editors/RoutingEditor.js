@@ -119,8 +119,7 @@ module .exports = class RoutingEditor extends Interface
    {
       const
          sheets = this .config .file .sheets,
-         regex  = new RegExp (_("New Logic") + "\\s+(\\d+)\\s*$"),
-         next   = sheets .reduce ((i, sheet) => Math .max (i, (sheet .title .match (regex) ?.[1]|0) + 1), 1);
+         next   = sheets .reduce ((i, sheet) => Math .max (i, (sheet .title .match (/(\d+)\s*$/) ?.[1]|0) + 1), 1);
 
       sheets .push ({
          title: `${_("New Logic")} ${next}`,
