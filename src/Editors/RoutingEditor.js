@@ -13,7 +13,7 @@ module .exports = class RoutingEditor extends Interface
       super (`Sunrize.RoutingEditor.${element .attr ("id")}.`);
 
       this .editor = element;
-      this .top    = $("<div></div>") .addClass ("routing-editor-top") .appendTo (this .editor);
+      this .top    = $("<div></div>") .appendTo (this .editor);
       this .left   = $("<div></div>") .addClass ("routing-editor-left") .appendTo (this .editor);
 
       this .top .on ("tabsactivate", () => this .activateSheet ());
@@ -56,9 +56,13 @@ module .exports = class RoutingEditor extends Interface
 
       this .config .file .setDefaultValues ({
          sheets: [ ],
+         activateSheet: 0,
       });
 
-      this .restoreSheets ();
+      // WIP
+      this .config .file .sheets = [ ];
+
+      this .updateSheets ();
    }
 
    colorScheme (/* shouldUseDarkColors */)
@@ -66,22 +70,14 @@ module .exports = class RoutingEditor extends Interface
       this .requestDrawRoutes ();
    }
 
-   restoreSheets ()
-   {
-      // WIP
-      // this .config .file .sheets = [ ];
-
-      const sheets = this .config .file .sheets;
-
-      if (sheets .length)
-         this .updateSheets ();
-      else
-         this .addSheet ();
-   }
-
    updateSheets ()
    {
       const sheets = this .config .file .sheets;
+
+      if (!sheets .length)
+         return this .addSheet ();
+
+      this .top .css ("class", "") .addClass ("routing-editor-top");
 
       this .tabs .empty ();
 
@@ -94,6 +90,10 @@ module .exports = class RoutingEditor extends Interface
                .attr ("href", `#routing-sheet-${id}-tab`)
                .attr ("title", title)
                .text (title))
+            .append ($("<span></span>")
+               .addClass (["material-icons", "button"])
+               .text ("close")
+               .on ("click", () => this .closeSheet (id)))
             .appendTo (this .tabs);
 
          // Add hidden empty panel.
@@ -104,13 +104,12 @@ module .exports = class RoutingEditor extends Interface
 
       this .top .tabs ();
       this .top .tabs ("option", "classes.ui-tabs", "top");
+      this .top .tabs ("refresh");
 
       if (this .top .tabs ("option", "active") === this .config .file .activeSheet)
          this .activateSheet ();
       else
-         this .top .tabs ("option", "active", this .config .file .active);
-
-      this .top .tabs("refresh");
+         this .top .tabs ("option", "active", Math .max (this .config .file .activeSheet, sheets .length - 1));
    }
 
    addSheet ()
@@ -121,6 +120,17 @@ module .exports = class RoutingEditor extends Interface
          title: _("New Logic"),
          nodes: [ ],
       });
+
+      this .config .file .sheets = sheets;
+
+      this .updateSheets ();
+   }
+
+   closeSheet (id)
+   {
+      const sheets = this .config .file .sheets;
+
+      sheets .splice (id, 1);
 
       this .config .file .sheets = sheets;
 
