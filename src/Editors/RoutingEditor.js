@@ -82,7 +82,7 @@ module .exports = class RoutingEditor extends Interface
 
       for (const [id, { name, nodes }] of sheets .entries ())
       {
-         // Tab
+         // Add tab.
          $("<li></li>")
             .append ($("<a></a>")
                .addClass ("text")
@@ -91,7 +91,7 @@ module .exports = class RoutingEditor extends Interface
                .text (name))
             .appendTo (this .tabs);
 
-         // Hidden empty panel
+         // Add hidden empty panel.
          $("<div></div>")
             .attr ("id", `routing-sheet-${id}-tab`)
             .appendTo (this .top);
