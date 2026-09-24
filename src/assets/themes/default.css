@@ -1527,6 +1527,7 @@ body.light .console-output .selected {
   right: var(--toolbar-width);
   height: 20px;
   border-right: 1px solid var(--border-color);
+  background: none;
 }
 
 #routing-editor .ui-tabs > .ui-tabs-nav {
@@ -1539,6 +1540,7 @@ body.light .console-output .selected {
   float: none;
   border: 1px solid transparent;
   border-radius: var(--tabs-height);
+  background-color: var(--routes-background-color);
   padding: 0px;
   height: 100%;
 }
@@ -1581,7 +1583,7 @@ body.light .console-output .selected {
   overflow: hidden;
   position: absolute;
   box-sizing: border-box;
-  top: 20px;
+  top: 0px;
   right: var(--toolbar-width);
   bottom: 0px;
   left: 0px;
@@ -1604,7 +1606,7 @@ body.light .console-output .selected {
 #routing-editor .title {
   box-sizing: border-box;
   position: absolute;
-  top: 10px;
+  top: 30px;
   left: 10px;
   font-size: 14pt;
   border: 1px solid transparent;
