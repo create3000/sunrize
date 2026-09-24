@@ -123,8 +123,6 @@ module .exports = class RoutingEditor extends Interface
       this .config .file .activeSheet = active;
 
       this .title .val (this .config .file .sheets [active] .title);
-
-      console .log (active);
    }
 
    updateTitle ()
