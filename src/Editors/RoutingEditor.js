@@ -84,7 +84,7 @@ module .exports = class RoutingEditor extends Interface
       this .tabs .empty ();
       this .top .find ("> div") .remove ();
 
-      for (const [id, { title, nodes }] of sheets .entries ())
+      for (const [id, { title }] of sheets .entries ())
       {
          // Add tab.
          $("<li></li>")
@@ -113,6 +113,8 @@ module .exports = class RoutingEditor extends Interface
          this .activateSheet ();
       else
          this .top .tabs ("option", "active", active);
+
+      this .tabs .sortable ();
    }
 
    addSheet ()
