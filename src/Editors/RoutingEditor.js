@@ -29,12 +29,20 @@ module .exports = class RoutingEditor extends Interface
          .appendTo (this .toolbar)
          .on ("click", () => this .addSheet ());
 
-      this .canvas = $("<canvas></canvas>") .addClass ("routes") .appendTo (this .left);
+      this .canvas = $("<canvas></canvas>")
+         .addClass ("routes")
+         .appendTo (this .left);
 
       this .resizer = new ResizeObserver (() => this .resizeCanvas ());
       this .resizer .observe (this .left [0]);
 
-      this .nodes = $("<div></div>") .addClass ("nodes") .appendTo (this .left);
+      this .nodes = $("<div></div>")
+         .addClass ("nodes")
+         .appendTo (this .left);
+
+      this .title = $("<input>")
+         .addClass ("title")
+         .appendTo (this .left);
 
       this .setup ();
    }
@@ -65,16 +73,9 @@ module .exports = class RoutingEditor extends Interface
             name: _("New Logic"),
             nodes: [ ],
          });
-      }
 
-      // WIP
-      sheets .push ({
-         name: _("New Logic 2"),
-         nodes: [ ],
-      },{
-         name: _("New Logic 3"),
-         nodes: [ ],
-      });
+         this .config .file .sheets = sheets;
+      }
 
       this .top .empty ();
 
@@ -99,7 +100,11 @@ module .exports = class RoutingEditor extends Interface
 
       this .top .tabs ();
       this .top .tabs ("option", "classes.ui-tabs", "top");
-      this .top .tabs ("option", "active", this .config .file .activeSheet ?? 0);
+
+      if (this .top .tabs ("option", "active") === this .config .file .activeSheet)
+         this .activateSheet ();
+      else
+         this .top .tabs ("option", "active", this .config .file .active);
    }
 
    addSheet ()
@@ -112,6 +117,8 @@ module .exports = class RoutingEditor extends Interface
       const active = this .top .tabs ("option", "active");
 
       this .config .file .activeSheet = active;
+
+      this .title .val (this .config .file .sheets [active] .name);
 
       console .log (active);
    }
