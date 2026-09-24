@@ -16,7 +16,9 @@ module .exports = class RoutingEditor extends Interface
       this .top    = $("<div></div>") .appendTo (this .editor);
       this .left   = $("<div></div>") .addClass ("routing-editor-left") .appendTo (this .editor);
 
-      this .top .on ("tabsactivate", () => this .activateSheet ());
+      this .top
+         .addClass ("routing-editor-top")
+         .on ("tabsactivate", () => this .activateSheet ());
 
       this .tabs = $("<ul></ul>") .appendTo (this .top);
 
@@ -76,8 +78,6 @@ module .exports = class RoutingEditor extends Interface
 
       if (!sheets .length)
          return this .addSheet ();
-
-      this .top .css ("class", "") .addClass ("routing-editor-top");
 
       this .tabs .empty ();
 
