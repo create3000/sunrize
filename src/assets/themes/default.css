@@ -1595,10 +1595,19 @@ body.light .console-output .selected {
 }
 
 #routing-editor .title {
+  box-sizing: border-box;
   position: absolute;
   top: 10px;
   left: 10px;
   font-size: 14pt;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  padding: 2px 10px;
+}
+
+#routing-editor .title:focus {
+  border-color: var(--border-color);
+  background: var(--background-color);
 }
 
 /* Sidebar */

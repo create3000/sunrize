@@ -123,15 +123,24 @@ module .exports = class RoutingEditor extends Interface
       this .config .file .activeSheet = active;
 
       this .title .val (this .config .file .sheets [active] .title);
+
+      this .updateTitle ();
    }
 
    updateTitle ()
    {
       const
          active = this .config .file .activeSheet,
-         sheets = this .config .file .sheets;
+         sheets = this .config .file .sheets,
+         title  = this .title .val ();
 
-      sheets [active] .title = this .title .val ();
+      $(`a[href="#routing-sheet-${active}-tab"]`)
+         .attr ("title", title)
+         .text (title);
+
+      this .title .css ("width", `calc(${title .length + 2}ch + 1px)`);
+
+      sheets [active] .title = title;
 
       this .config .file .sheets = sheets;
    }
