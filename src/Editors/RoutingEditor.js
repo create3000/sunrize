@@ -16,6 +16,8 @@ module .exports = class RoutingEditor extends Interface
       this .top    = $("<div></div>") .addClass ("routing-editor-top") .appendTo (this .editor);
       this .left   = $("<div></div>") .addClass ("routing-editor-left") .appendTo (this .editor);
 
+      this .top .on ("tabsactivate", () => this .activateSheet ());
+
       this .toolbar = $("<div></div>")
          .addClass (["toolbar", "vertical-toolbar", "secondary-toolbar", "routing-toolbar"])
          .appendTo (this .editor);
@@ -26,7 +28,6 @@ module .exports = class RoutingEditor extends Interface
          .text ("add")
          .appendTo (this .toolbar)
          .on ("click", () => this .addSheet ());
-
 
       this .canvas = $("<canvas></canvas>") .addClass ("routes") .appendTo (this .left);
 
@@ -41,6 +42,12 @@ module .exports = class RoutingEditor extends Interface
    configure ()
    {
       super .configure ();
+
+      this .config .file .setDefaultValues ({
+         sheets: [ ],
+      });
+
+      this .restoreSheets ();
    }
 
    colorScheme (/* shouldUseDarkColors */)
@@ -48,9 +55,63 @@ module .exports = class RoutingEditor extends Interface
       this .requestDrawRoutes ();
    }
 
+   restoreSheets ()
+   {
+      const sheets = this .config .file .sheets;
+
+      if (!sheets .length)
+      {
+         sheets .push ({
+            name: _("New Logic"),
+            nodes: [ ],
+         });
+      }
+
+      // WIP
+      sheets .push ({
+         name: _("New Logic 2"),
+         nodes: [ ],
+      },{
+         name: _("New Logic 3"),
+         nodes: [ ],
+      });
+
+      this .top .empty ();
+
+      this .tabs = $("<ul></ul>") .appendTo (this .top);
+
+      for (const [id, { name, nodes }] of sheets .entries ())
+      {
+         // Tab
+         $("<li></li>")
+            .append ($("<a></a>")
+               .addClass ("text")
+               .attr ("href", `#routing-sheet-${id}-tab`)
+               .attr ("title", name)
+               .text (name))
+            .appendTo (this .tabs);
+
+         // Hidden empty panel
+         $("<div></div>")
+            .attr ("id", `routing-sheet-${id}-tab`)
+            .appendTo (this .top);
+      }
+
+      this .top .tabs ();
+      this .top .tabs ("option", "classes.ui-tabs", "top");
+      this .top .tabs ("option", "active", this .config .file .activeSheet ?? 0);
+   }
+
    addSheet ()
    {
 
+   }
+
+   activateSheet ()
+   {
+      const active = this .top .tabs ("option", "active");
+
+      console .log (active);
    }
 
    resizeCanvas ()
@@ -84,10 +145,6 @@ module .exports = class RoutingEditor extends Interface
          canvasWidth  = this .canvas .width (),
          canvasHeight = this .canvas .height ();
 
-      const background = this .#style .getPropertyValue ("--routes-background-color");
-
-      context .fillStyle = background;
-
-      context .fillRect (0, 0, canvasWidth, canvasHeight);
+      context .clearRect (0, 0, canvasWidth, canvasHeight);
    }
 };

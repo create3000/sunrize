@@ -21,7 +21,7 @@ module .exports = class Tabs extends Interface
 
       this .element .tabs ();
       this .element .tabs ("option", "classes.ui-tabs", this .orientation);
-      this .element .on ("tabsactivate", () => this .tabActivated ());
+      this .element .on ("tabsactivate", () => this .activateTab ());
    }
 
    addTabs () { }
@@ -31,12 +31,12 @@ module .exports = class Tabs extends Interface
       this .config .file .setDefaultValues (Object .assign ({ active: 0 }, defaults));
 
       if (this .element .tabs ("option", "active") === this .config .file .active)
-         this .tabActivated ();
+         this .activateTab ();
       else
          this .element .tabs ("option", "active", this .config .file .active);
    }
 
-   tabActivated ()
+   activateTab ()
    {
       const
          active = this .element .tabs ("option", "active"),
