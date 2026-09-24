@@ -74,7 +74,9 @@ module .exports = class RoutingEditor extends Interface
 
    updateSheets ()
    {
-      const sheets = this .config .file .sheets;
+      const
+         sheets = this .config .file .sheets,
+         active = this .config .file .activeSheet;
 
       if (!sheets .length)
          return this .addSheet ();
@@ -105,9 +107,11 @@ module .exports = class RoutingEditor extends Interface
       this .top .tabs ();
       this .top .tabs ("option", "classes.ui-tabs", "top");
       this .top .tabs ("refresh");
-      this .top .tabs ("option", "active", Math .max (this .config .file .activeSheet, sheets .length - 1));
 
-      this .activateSheet ();
+      if (this .top .tabs ("option", "active") === active)
+         this .activateSheet ();
+      else
+         this .top .tabs ("option", "active", active);
    }
 
    addSheet ()
@@ -195,5 +199,31 @@ module .exports = class RoutingEditor extends Interface
          canvasHeight = this .canvas .height ();
 
       context .clearRect (0, 0, canvasWidth, canvasHeight);
+
+      this .drawGrid (context, canvasWidth, canvasHeight);
+   }
+
+   drawGrid (context, width, height)
+   {
+      const color = this .#style .getPropertyValue ("--system-gray5");
+
+      context .strokeStyle = color;
+      context .lineWidth   = 1;
+
+      for (let x = 0; x < width; x += 20)
+      {
+         context .beginPath ();
+         context .moveTo (x, 0);
+         context .lineTo (x, height);
+         context .stroke ();
+      }
+
+      for (let y = 0; y < height; y += 20)
+      {
+         context .beginPath ();
+         context .moveTo (0, y);
+         context .lineTo (width, y);
+         context .stroke ();
+      }
    }
 };
