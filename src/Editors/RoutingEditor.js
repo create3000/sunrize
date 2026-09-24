@@ -94,7 +94,6 @@ module .exports = class RoutingEditor extends Interface
          // Hidden empty panel
          $("<div></div>")
             .attr ("id", `routing-sheet-${id}-tab`)
-            .css ("display", "none")
             .appendTo (this .top);
       }
 
