@@ -123,7 +123,7 @@ module .exports = class RoutingEditor extends Interface
          next   = sheets .reduce ((i, sheet) => Math .max (i, (sheet .title .match (regex) ?.[1]|0) + 1), 1);
 
       sheets .push ({
-         title: _("New Logic") + ` ${next}`,
+         title: `${_("New Logic")} ${next}`,
          nodes: [ ],
       });
 
