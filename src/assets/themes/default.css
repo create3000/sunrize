@@ -1602,7 +1602,8 @@ body.light .console-output .selected {
   font-size: 14pt;
   border: 1px solid transparent;
   border-radius: 20px;
-  padding: 2px 10px;
+  padding: 2px 15px;
+  field-sizing: content;
 }
 
 #routing-editor .title:focus {

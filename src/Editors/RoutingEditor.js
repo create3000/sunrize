@@ -138,8 +138,6 @@ module .exports = class RoutingEditor extends Interface
          .attr ("title", title)
          .text (title);
 
-      this .title .css ("width", `calc(${title .length + 2}ch + 1px)`);
-
       sheets [active] .title = title;
 
       this .config .file .sheets = sheets;
