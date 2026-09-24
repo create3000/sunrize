@@ -739,7 +739,7 @@ body.light .qtip-tipsy {
   bottom: 0px;
   left: 0px;
   border: 1px solid var(--border-color);
-  border-bottom: none;
+  border-bottom: 1px solid var(--border-color);
   border-top-right-radius: var(--toolbar-inner-radius);
   background-color: var(--background-color);
 }
@@ -1518,13 +1518,26 @@ body.light .console-output .selected {
   box-sizing: border-box;
 }
 
-.routing-editor-left {
+.routing-editor-top {
   overflow: hidden;
   position: absolute;
   box-sizing: border-box;
   left: 0px;
   right: var(--toolbar-width);
-  height: 100%;
+  height: 20px;
+  border-right: 1px solid var(--border-color);
+  background: var(--routes-background-color);
+}
+
+.routing-editor-left {
+  overflow: hidden;
+  position: absolute;
+  box-sizing: border-box;
+  top: 20px;
+  right: var(--toolbar-width);
+  bottom: 0px;
+  left: 0px;
+  border-right: 1px solid var(--border-color);
 }
 
 .routing-editor .routes {
