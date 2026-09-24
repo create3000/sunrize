@@ -1608,7 +1608,7 @@ body.light .console-output .selected {
   position: absolute;
   top: 30px;
   left: 10px;
-  font-size: 14pt;
+  font-size: 12pt;
   border: 1px solid transparent;
   border-radius: 20px;
   padding: 2px 15px;
