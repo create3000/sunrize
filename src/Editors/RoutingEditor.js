@@ -42,6 +42,7 @@ module .exports = class RoutingEditor extends Interface
 
       this .title = $("<input>")
          .addClass ("title")
+         .on ("input", () => this .updateTitle ())
          .appendTo (this .left);
 
       this .setup ();
@@ -65,12 +66,15 @@ module .exports = class RoutingEditor extends Interface
 
    restoreSheets ()
    {
+      // WIP
+      // this .config .file .sheets = [ ];
+
       const sheets = this .config .file .sheets;
 
       if (!sheets .length)
       {
          sheets .push ({
-            name: _("New Logic"),
+            title: _("New Logic"),
             nodes: [ ],
          });
 
@@ -81,15 +85,15 @@ module .exports = class RoutingEditor extends Interface
 
       this .tabs = $("<ul></ul>") .appendTo (this .top);
 
-      for (const [id, { name, nodes }] of sheets .entries ())
+      for (const [id, { title, nodes }] of sheets .entries ())
       {
          // Add tab.
          $("<li></li>")
             .append ($("<a></a>")
                .addClass ("text")
                .attr ("href", `#routing-sheet-${id}-tab`)
-               .attr ("title", name)
-               .text (name))
+               .attr ("title", title)
+               .text (title))
             .appendTo (this .tabs);
 
          // Add hidden empty panel.
@@ -118,9 +122,20 @@ module .exports = class RoutingEditor extends Interface
 
       this .config .file .activeSheet = active;
 
-      this .title .val (this .config .file .sheets [active] .name);
+      this .title .val (this .config .file .sheets [active] .title);
 
       console .log (active);
+   }
+
+   updateTitle ()
+   {
+      const
+         active = this .config .file .activeSheet,
+         sheets = this .config .file .sheets;
+
+      sheets [active] .title = this .title .val ();
+
+      this .config .file .sheets = sheets;
    }
 
    resizeCanvas ()
