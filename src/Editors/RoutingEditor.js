@@ -22,7 +22,7 @@ module .exports = class RoutingEditor extends Interface
 
       this .tabs = $("<ul></ul>") .appendTo (this .top);
 
-      this .tabs .sortable () .on ("sortupdate", () => this .reorderSheets ());
+      this .tabs .sortable () .on ("sortupdate", (event, ui) => this .reorderSheets (ui .item));
 
       this .toolbar = $("<div></div>")
          .addClass (["toolbar", "vertical-toolbar", "secondary-toolbar", "routing-toolbar"])
@@ -117,8 +117,10 @@ module .exports = class RoutingEditor extends Interface
          this .top .tabs ("option", "active", active);
    }
 
-   reorderSheets ()
+   reorderSheets (item)
    {
+      const active = parseInt (item .find ("a") .attr ("href") .match (/\d+/) [0]);
+
       const indices = [ ];
 
       for (const a of this .tabs .find ("> li a"))
@@ -131,7 +133,8 @@ module .exports = class RoutingEditor extends Interface
       for (const i of indices)
          reorderedSheets .push (sheets [i]);
 
-      this .config .file .sheets = reorderedSheets;
+      this .config .file .sheets      = reorderedSheets;
+      this .config .file .activeSheet = indices .indexOf (active);
 
       this .updateSheets ();
    }
