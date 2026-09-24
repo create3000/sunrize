@@ -19,6 +19,13 @@ module .exports = class RoutingEditor extends Interface
          .addClass (["toolbar", "vertical-toolbar", "secondary-toolbar", "routing-toolbar"])
          .appendTo (this .editor);
 
+      this .addSheetButton = $("<span></span>")
+         .addClass ("material-icons")
+         .attr ("title", _("Add new Logic Sheet."))
+         .text ("add")
+         .appendTo (this .toolbar)
+         .on ("click", () => this .addSheet ());
+
       this .canvas = $("<canvas></canvas>") .addClass ("routes") .appendTo (this .left);
 
       this .resizer = new ResizeObserver (() => this .resizeCanvas ());
@@ -37,6 +44,11 @@ module .exports = class RoutingEditor extends Interface
    colorScheme (/* shouldUseDarkColors */)
    {
       this .requestDrawRoutes ();
+   }
+
+   addSheet ()
+   {
+
    }
 
    resizeCanvas ()
