@@ -739,7 +739,7 @@ body.light .qtip-tipsy {
   bottom: 0px;
   left: 0px;
   border: 1px solid var(--border-color);
-  border-bottom: none;
+  border-bottom: 1px solid var(--border-color);
   border-top-right-radius: var(--toolbar-inner-radius);
   background-color: var(--background-color);
 }
