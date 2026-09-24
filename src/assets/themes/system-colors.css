@@ -216,6 +216,10 @@ body {
   --qtip-background-color: white;
   --qtip-border: 1px solid var(--system-gray1);
   --qtip-highlight-color: black;
+
+  /* Routing Editor */
+
+  --routes-background-color: white;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -240,5 +244,9 @@ body {
     --qtip-background-color: black;
     --qtip-border: 1px solid var(--system-gray4);
     --qtip-highlight-color: white;
+
+    /* Routing Editor */
+
+    --routes-background-color: black;
   }
 }

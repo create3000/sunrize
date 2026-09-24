@@ -1527,6 +1527,18 @@ body.light .console-output .selected {
   height: 100%;
 }
 
+.routing-editor .routes {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.routing-editor .nodes {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
 /* Sidebar */
 
 #sidebar {
