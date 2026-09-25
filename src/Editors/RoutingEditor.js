@@ -243,9 +243,10 @@ module .exports = class RoutingEditor extends Interface
       const
          context = this .canvas [0] .getContext ("2d"),
          width   = this .canvas .width (),
-         height  = this .canvas .height ();
+         height  = this .canvas .height (),
+         top     = this .topCanvas .height ();
 
-      this .drawGrid (this .topCanvas [0] .getContext ("2d"), width, 24, -24);
+      this .drawGrid (this .topCanvas [0] .getContext ("2d"), width, top, -top);
       this .drawGrid (context, width, height, 0);
    }
 
