@@ -94,7 +94,7 @@ module .exports = class RouteGraph extends Interface
 
    colorScheme (/* shouldUseDarkColors */)
    {
-      this .requestDrawRoutes ();
+      this .updateCanvas ();
    }
 
    get outlineEditor ()
@@ -611,21 +611,12 @@ module .exports = class RouteGraph extends Interface
          .prop ("width",  this .canvas .width ())
          .prop ("height", this .canvas .height ());
 
-      this .drawRoutes ();
-   }
-
-   #updateCanvasId = undefined;
-
-   requestDrawRoutes ()
-   {
-      clearTimeout (this .#updateCanvasId);
-
-      this .#updateCanvasId = setTimeout (() => this .drawRoutes ());
+      this .updateCanvas ();
    }
 
    #style = window .getComputedStyle ($("body") [0]);
 
-   drawRoutes ()
+   updateCanvas ()
    {
       const
          context = this .canvas [0] .getContext ("2d"),
@@ -665,6 +656,10 @@ module .exports = class RouteGraph extends Interface
          context .lineTo (width, y);
          context .stroke ();
       }
+   }
+
+   drawRoutes (context)
+   {
    }
 
    dragEnter (event)
