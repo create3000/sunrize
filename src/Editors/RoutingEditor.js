@@ -137,7 +137,7 @@ module .exports = class RoutingEditor extends Interface
 
       if (current < this .config .file .activeSheet)
       {
-         if (indices .indexOf (current) + 1 > this .config .file .activeSheet)
+         if (indices .indexOf (current) >= this .config .file .activeSheet)
             -- this .config .file .activeSheet;
 
       }
