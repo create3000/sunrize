@@ -1520,14 +1520,19 @@ body.light .console-output .selected {
 }
 
 .routing-editor-top {
-  overflow: hidden;
+  overflow-y: scroll;
   position: absolute;
   box-sizing: border-box;
   left: 0px;
   right: var(--toolbar-width);
-  height: 20px;
+  height: 24px;
   border-right: 1px solid var(--border-color);
   background: none;
+}
+
+.routing-editor-top::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
 }
 
 #routing-editor .ui-tabs > .ui-tabs-nav {
@@ -1537,18 +1542,20 @@ body.light .console-output .selected {
 }
 
 #routing-editor .ui-tabs > .ui-tabs-nav li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   float: none;
   border: 1px solid transparent;
   border-radius: var(--tabs-height);
-  background-color: var(--routes-background-color);
   padding: 0px;
   height: 100%;
 }
 
 #routing-editor .ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
-  position: relative;
   float: none;
-  padding: 2px 10px 2px 10px;
+  height: auto;
+  padding: 0px 6px 0px 10px;
   color: var(--window-tabs-text-color);
 }
 
@@ -1574,8 +1581,8 @@ body.light .console-output .selected {
 }
 
 #routing-editor .ui-tabs > .ui-tabs-nav .button {
-  top: 3.5px;
-  left: -5px;
+  top: unset;
+  margin-right: 6px;
   font-size: 10pt;
 }
 
