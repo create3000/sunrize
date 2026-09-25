@@ -1691,7 +1691,7 @@ body.light .console-output .selected {
 }
 
 #route-graph .node .arrow:hover {
-  color: rgb(236, 236, 236);
+  color: #fdcb73;
 }
 
 #route-graph .node .fields {
