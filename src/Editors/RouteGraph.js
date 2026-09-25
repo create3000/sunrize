@@ -76,10 +76,13 @@ module .exports = class RouteGraph extends Interface
    {
       super .configure ();
 
+      this .config .global .setDefaultValues ({
+         snapToGrid: false,
+      });
+
       this .config .file .setDefaultValues ({
          pages: [ ],
          activatePage: 0,
-         snapToGrid: false,
       });
 
       // WIP
@@ -107,8 +110,8 @@ module .exports = class RouteGraph extends Interface
          {
             label: _("Snap to Grid"),
             type: "checkbox",
-            checked: this .config .file .snapToGrid,
-            args: ["setSnapToGrid", !this .config .file .snapToGrid],
+            checked: this .config .global .snapToGrid,
+            args: ["setSnapToGrid", !this .config .global .snapToGrid],
          },
       ];
 
@@ -117,7 +120,7 @@ module .exports = class RouteGraph extends Interface
 
    setSnapToGrid (snapToGrid)
    {
-      this .config .file .snapToGrid = snapToGrid;
+      this .config .global .snapToGrid = snapToGrid;
    }
 
    updatePages ()
@@ -657,7 +660,7 @@ module .exports = class RouteGraph extends Interface
       position .left = Math .max (position .left, 0);
       position .top  = Math .max (position .top,  0);
 
-      if (this .config .file .snapToGrid)
+      if (this .config .global .snapToGrid)
       {
          position .left = Math .round (position .left / this .#gridSize) * this .#gridSize;
          position .top  = Math .round (position .top  / this .#gridSize) * this .#gridSize;
