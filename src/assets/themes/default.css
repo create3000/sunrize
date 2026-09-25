@@ -1542,6 +1542,7 @@ body.light .console-output .selected {
 }
 
 #routing-editor .ui-tabs > .ui-tabs-nav li {
+  cursor: pointer;
   display: flex;
   flex-direction: row;
   align-items: center;

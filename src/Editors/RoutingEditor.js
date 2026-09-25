@@ -90,6 +90,7 @@ module .exports = class RoutingEditor extends Interface
       {
          // Add tab.
          $("<li></li>")
+            .on ("click", () => this .top .tabs ("option", "active", id))
             .append ($("<a></a>")
                .addClass ("text")
                .attr ("href", `#routing-sheet-${id}-tab`)
