@@ -50,7 +50,7 @@ module .exports = class RoutingEditor extends Interface
       this .resizer = new ResizeObserver (() => this .resizeCanvas ());
       this .resizer .observe (this .left [0]);
 
-      this .nodes = $("<div></div>")
+      this .elements = $("<div></div>")
          .addClass ("nodes")
          .appendTo (this .left);
 
@@ -80,6 +80,13 @@ module .exports = class RoutingEditor extends Interface
    colorScheme (/* shouldUseDarkColors */)
    {
       this .requestDrawRoutes ();
+   }
+
+   get outlineEditor ()
+   {
+      const document = require ("../Application/Window");
+
+      return document .sidebar .outlineEditor;
    }
 
    updateSheets ()
@@ -213,44 +220,16 @@ module .exports = class RoutingEditor extends Interface
       this .config .file .sheets = sheets;
    }
 
-   dragEnter (event)
-   {
-      event .preventDefault ();
-      event .stopPropagation ();
+   nodes = new Set ();
 
-      if (event .originalEvent .dataTransfer .types .includes ("sunrize/nodes") ||
-          event .originalEvent .dataTransfer .types .includes ("sunrize/imported-node"))
-      {
-         event .originalEvent .dataTransfer .dropEffect = "copy";
-      }
-      else
-      {
-         event .originalEvent .dataTransfer .dropEffect = "none";
-      }
-   }
-
-   drop (event)
+   addNode (node)
    {
-      if (!event .originalEvent .dataTransfer .types .includes ("sunrize/nodes") &&
-          !event .originalEvent .dataTransfer .types .includes ("sunrize/imported-node"))
-      {
+      if (this .nodes .has (node))
          return;
-      }
 
-      const document = require ("../Application/Window");
+      this .nodes .add (node);
 
-      const ids = event .originalEvent .dataTransfer .types .includes ("sunrize/imported-node")
-         ? event .originalEvent .dataTransfer .getData ("sunrize/imported-node") .split (",")
-         : event .originalEvent .dataTransfer .getData ("sunrize/nodes") .split (",");
-
-      for (const id of ids)
-      {
-         const
-            element = $(`#${id}`),
-            node    = document .sidebar .outlineEditor .getNode (element);
-
-         console .log (node .getTypeName ());
-      }
+      console .log (node .getTypeName ());
    }
 
    resizeCanvas ()
@@ -314,6 +293,44 @@ module .exports = class RoutingEditor extends Interface
          context .moveTo (0, y);
          context .lineTo (width, y);
          context .stroke ();
+      }
+   }
+
+   dragEnter (event)
+   {
+      event .preventDefault ();
+      event .stopPropagation ();
+
+      if (event .originalEvent .dataTransfer .types .includes ("sunrize/nodes") ||
+          event .originalEvent .dataTransfer .types .includes ("sunrize/imported-node"))
+      {
+         event .originalEvent .dataTransfer .dropEffect = "copy";
+      }
+      else
+      {
+         event .originalEvent .dataTransfer .dropEffect = "none";
+      }
+   }
+
+   drop (event)
+   {
+      if (!event .originalEvent .dataTransfer .types .includes ("sunrize/nodes") &&
+          !event .originalEvent .dataTransfer .types .includes ("sunrize/imported-node"))
+      {
+         return;
+      }
+
+      const ids = event .originalEvent .dataTransfer .types .includes ("sunrize/imported-node")
+         ? event .originalEvent .dataTransfer .getData ("sunrize/imported-node") .split (",")
+         : event .originalEvent .dataTransfer .getData ("sunrize/nodes") .split (",");
+
+      for (const id of ids)
+      {
+         const
+            element = $(`#${id}`),
+            node    = this .outlineEditor .getNode (element);
+
+         this .addNode (node);
       }
    }
 };
