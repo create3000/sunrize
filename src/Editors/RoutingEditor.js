@@ -24,9 +24,10 @@ module .exports = class RoutingEditor extends Interface
       this .topCanvas = $("<canvas></canvas>")
          .appendTo (this .top);
 
-      this .tabs = $("<ul></ul>") .appendTo (this .top);
-
-      this .tabs .sortable () .on ("sortupdate", (event, ui) => this .reorderSheets (ui .item));
+      this .tabs = $("<ul></ul>")
+         .sortable ()
+         .on ("sortupdate", (event, ui) => this .reorderSheets (ui .item))
+         .appendTo (this .top);
 
       this .toolbar = $("<div></div>")
          .addClass (["toolbar", "vertical-toolbar", "secondary-toolbar", "routing-toolbar"])
@@ -87,8 +88,8 @@ module .exports = class RoutingEditor extends Interface
       if (!sheets .length)
          return this .addSheet ();
 
-      this .tabs .empty ();
       this .top .find ("> div") .remove ();
+      this .tabs .empty ();
 
       for (const [id, { title }] of sheets .entries ())
       {

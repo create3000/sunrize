@@ -1524,8 +1524,6 @@ body.light .console-output .selected {
 }
 
 .routing-editor-top {
-  overflow-x: auto;
-  overflow-y: visible;
   position: absolute;
   box-sizing: border-box;
   left: 0px;
@@ -1541,15 +1539,17 @@ body.light .console-output .selected {
   height: 100%;
 }
 
-.routing-editor-top::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
-}
-
 #routing-editor .ui-tabs > .ui-tabs-nav {
+  overflow-x: auto;
+  overflow-y: visible;
   height: 100%;
   border: none;;
   justify-content: left;
+}
+
+#routing-editor .ui-tabs > .ui-tabs-nav::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
 }
 
 #routing-editor .ui-tabs > .ui-tabs-nav li {
@@ -1582,10 +1582,11 @@ body.light .console-output .selected {
 
 #routing-editor .ui-tabs > .ui-tabs-nav li:not(.ui-tabs-active, :hover, :first-child)::before {
   content: "•";
+  display: block;
   position: absolute;
-  top: 3.5px;
   left: -2px;
   color: var(--text-disabled);
+  line-height: 0;
 }
 
 #routing-editor .ui-tabs > .ui-tabs-nav li:is(.ui-tabs-active, :hover) + li::before {
