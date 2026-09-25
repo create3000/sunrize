@@ -1647,7 +1647,7 @@ body.light .console-output .selected {
   flex-direction: column;
   align-items: start;
   gap: 1px;
-  position: absolute !important;
+  position: absolute;
   color: white;
 }
 

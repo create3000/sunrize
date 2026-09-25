@@ -3,6 +3,7 @@
 
 const
    $         = require ("jquery"),
+   electron  = require ("electron"),
    Interface = require ("../Application/Interface"),
    X3D       = require ("../X3D"),
    _         = require ("../Application/GetText");
@@ -23,26 +24,26 @@ module .exports = class RoutingEditor extends Interface
       this .top
          .addClass ("routing-editor-top")
          .on ("scroll", () => this .top .scrollTop (0))
-         .on ("tabsactivate", () => this .activateSheet ());
+         .on ("tabsactivate", () => this .activatePage ());
 
       this .topCanvas = $("<canvas></canvas>")
          .appendTo (this .top);
 
       this .tabs = $("<ul></ul>")
          .sortable ()
-         .on ("sortupdate", (event, ui) => this .reorderSheets (ui .item))
+         .on ("sortupdate", (event, ui) => this .reorderPages (ui .item))
          .appendTo (this .top);
 
       this .toolbar = $("<div></div>")
          .addClass (["toolbar", "vertical-toolbar", "secondary-toolbar", "routing-toolbar"])
          .appendTo (this .editor);
 
-      this .addSheetButton = $("<span></span>")
+      this .addPageButton = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Add new Logic Sheet."))
+         .attr ("title", _("Add new Logic."))
          .text ("add")
          .appendTo (this .toolbar)
-         .on ("click", () => this .addSheet ());
+         .on ("click", () => this .addPage ());
 
       this .canvas = $("<canvas></canvas>")
          .addClass ("routes")
@@ -60,6 +61,9 @@ module .exports = class RoutingEditor extends Interface
          .on ("input", () => this .updateTitle ())
          .appendTo (this .left);
 
+      electron .ipcRenderer .on ("close", () => this .savePages ());
+      $(window)             .on ("close", () => this .savePages ());
+
       this .setup ();
    }
 
@@ -68,14 +72,14 @@ module .exports = class RoutingEditor extends Interface
       super .configure ();
 
       this .config .file .setDefaultValues ({
-         sheets: [ ],
-         activateSheet: 0,
+         pages: [ ],
+         activatePage: 0,
       });
 
       // WIP
-      // this .config .file .sheets = [ ];
+      // this .config .file .pages = [ ];
 
-      this .updateSheets ();
+      this .updatePages ();
    }
 
    colorScheme (/* shouldUseDarkColors */)
@@ -90,19 +94,19 @@ module .exports = class RoutingEditor extends Interface
       return document .sidebar .outlineEditor;
    }
 
-   updateSheets ()
+   updatePages ()
    {
       const
-         sheets = this .config .file .sheets,
-         active = this .config .file .activeSheet;
+         pages = this .config .file .pages,
+         active = this .config .file .activePage;
 
-      if (!sheets .length)
-         return this .addSheet ();
+      if (!pages .length)
+         return this .addPage ();
 
       this .top .find ("> div") .remove ();
       this .tabs .empty ();
 
-      for (const [id, { title }] of sheets .entries ())
+      for (const [id, { title }] of pages .entries ())
       {
          // Add tab.
          $("<li></li>")
@@ -110,18 +114,18 @@ module .exports = class RoutingEditor extends Interface
             .on ("click", () => this .top .tabs ("option", "active", id))
             .append ($("<a></a>")
                .addClass ("text")
-               .attr ("href", `#routing-sheet-${id}-tab`)
+               .attr ("href", `#routing-page-${id}-tab`)
                .attr ("title", title)
                .text (title))
             .append ($("<span></span>")
                .addClass (["material-icons", "button"])
                .text ("close")
-               .on ("click", () => this .closeSheet (id)))
+               .on ("click", () => this .closePage (id)))
             .appendTo (this .tabs);
 
          // Add hidden empty panel.
          $("<div></div>")
-            .attr ("id", `routing-sheet-${id}-tab`)
+            .attr ("id", `routing-page-${id}-tab`)
             .appendTo (this .top);
       }
 
@@ -130,101 +134,101 @@ module .exports = class RoutingEditor extends Interface
       this .top .tabs ("refresh");
 
       if (this .top .tabs ("option", "active") === active)
-         this .activateSheet ();
+         this .activatePage ();
       else
          this .top .tabs ("option", "active", active);
    }
 
-   reorderSheets (item)
+   reorderPages (item)
    {
       const
          current = item .data ("id"),
          indices = Array .from (this .tabs .find ("> li"), li => $(li) .data ("id"));
 
       const
-         sheets          = this .config .file .sheets,
-         reorderedSheets = indices .map (i => sheets [i]);
+         pages          = this .config .file .pages,
+         reorderedPages = indices .map (i => pages [i]);
 
-      this .config .file .sheets = reorderedSheets;
+      this .config .file .pages = reorderedPages;
 
-      if (current < this .config .file .activeSheet)
+      if (current < this .config .file .activePage)
       {
-         if (indices .indexOf (current) >= this .config .file .activeSheet)
-            -- this .config .file .activeSheet;
+         if (indices .indexOf (current) >= this .config .file .activePage)
+            -- this .config .file .activePage;
 
       }
-      else if (current > this .config .file .activeSheet)
+      else if (current > this .config .file .activePage)
       {
-         if (indices .indexOf (current) <= this .config .file .activeSheet)
-            ++ this .config .file .activeSheet;
+         if (indices .indexOf (current) <= this .config .file .activePage)
+            ++ this .config .file .activePage;
       }
       else
       {
-         this .config .file .activeSheet = indices .indexOf (current);
+         this .config .file .activePage = indices .indexOf (current);
       }
 
-      this .updateSheets ();
+      this .updatePages ();
    }
 
-   addSheet ()
+   addPage ()
    {
       const
-         sheets = this .config .file .sheets,
-         next   = sheets .reduce ((i, sheet) => Math .max (i, (sheet .title .match (/(\d+)\s*$/) ?.[1]|0) + 1), 1);
+         pages = this .config .file .pages,
+         next   = pages .reduce ((i, page) => Math .max (i, (page .title .match (/(\d+)\s*$/) ?.[1]|0) + 1), 1);
 
-      sheets .push ({
+      pages .push ({
          title: `${_("New Logic")} ${next}`,
          nodes: [ ],
       });
 
-      this .config .file .sheets      = sheets;
-      this .config .file .activeSheet = sheets .length - 1;
+      this .config .file .pages      = pages;
+      this .config .file .activePage = pages .length - 1;
 
-      this .updateSheets ();
+      this .updatePages ();
    }
 
-   closeSheet (id)
+   closePage (id)
    {
-      const sheets = this .config .file .sheets;
+      const pages = this .config .file .pages;
 
-      sheets .splice (id, 1);
+      pages .splice (id, 1);
 
-      this .config .file .sheets = sheets;
+      this .config .file .pages = pages;
 
-      this .updateSheets ();
+      this .updatePages ();
    }
 
-   activateSheet ()
+   activatePage ()
    {
       const
          active = this .top .tabs ("option", "active"),
-         sheets = this .config .file .sheets;
+         pages = this .config .file .pages;
 
-      this .config .file .activeSheet = active;
+      this .config .file .activePage = active;
 
-      this .title .val (sheets [active] .title);
+      this .title .val (pages [active] .title);
 
       this .updateTitle ();
 
       // WIP
-      sheets [active] .nodes = [ ];
-      this .config .file .sheets = sheets;
+      pages [active] .nodes = [ ];
+      this .config .file .pages = pages;
    }
 
    updateTitle ()
    {
       const
-         active = this .config .file .activeSheet,
-         sheets = this .config .file .sheets,
+         active = this .config .file .activePage,
+         pages = this .config .file .pages,
          title  = this .title .val () || _("New Logic");
 
-      $(`a[href="#routing-sheet-${active}-tab"]`)
+      $(`a[href="#routing-page-${active}-tab"]`)
          .attr ("title", title)
          .text (title);
 
-      sheets [active] .title = title;
+      pages [active] .title = title;
 
-      this .config .file .sheets = sheets;
+      this .config .file .pages = pages;
    }
 
    getNode (id)
@@ -237,16 +241,16 @@ module .exports = class RoutingEditor extends Interface
       const
          id     = node .getId (),
          active = this .top .tabs ("option", "active"),
-         sheets = this .config .file .sheets,
-         sheet  = sheets [active],
-         nodes  = sheet .nodes;
+         pages = this .config .file .pages,
+         page  = pages [active],
+         nodes  = page .nodes;
 
       if (nodes .find (node => node .id === id))
          return;
 
       nodes .push ({ id, x, y });
 
-      this .config .file .sheets = sheets;
+      this .config .file .pages = pages;
 
       this .addNodeElement (node, { x, y });
    }
@@ -255,6 +259,7 @@ module .exports = class RoutingEditor extends Interface
    {
       const element = $("<div></div>")
          .draggable ()
+         .css ("position", "")
          .attr ("data-id", node .getId ())
          .css ({ left: x, top: y })
          .addClass ("node");
