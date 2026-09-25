@@ -224,10 +224,7 @@ module .exports = class RouteGraph extends Interface
       for (const page of pages)
       {
          for (const node of page .nodes)
-         {
-            if (Number .isInteger (node .id))
-               ids .add (node .id);
-         }
+            ids .add (node .id);
       }
 
       const paths = this .getPathsFromNodes (this .browser .currentScene .rootNodes, ids);
