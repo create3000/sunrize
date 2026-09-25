@@ -1662,7 +1662,7 @@ body.light .console-output .selected {
   justify-content: space-evenly;
   gap: 5px;
   width: 100%;
-  padding: 10px;
+  padding: 8px;
   background: #8579c5;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
