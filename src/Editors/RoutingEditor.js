@@ -129,9 +129,9 @@ module .exports = class RoutingEditor extends Interface
 
    reorderSheets (item)
    {
-      const current = item .data ("id") ;
-
-      const indices = [ ];
+      const
+         current = item .data ("id"),
+         indices = [ ];
 
       for (const li of this .tabs .find ("> li"))
          indices .push ($(li) .data ("id"));
