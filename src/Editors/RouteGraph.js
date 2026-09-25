@@ -49,7 +49,7 @@ module .exports = class RouteGraph extends Interface
 
       this .canvas = $("<canvas></canvas>")
          .addClass ("routes")
-         .on ("contextmenu", () => this .showContextMenu ())
+         .on ("contextmenu", () => this .showCanvasContextMenu ())
          .appendTo (this .left);
 
       electron .ipcRenderer .on ("route-graph", (event, key, ... args) => this [key] (... args));
@@ -104,7 +104,7 @@ module .exports = class RouteGraph extends Interface
       return document .sidebar .outlineEditor;
    }
 
-   showContextMenu ()
+   showCanvasContextMenu ()
    {
       const menu = [
          {
@@ -112,6 +112,18 @@ module .exports = class RouteGraph extends Interface
             type: "checkbox",
             checked: this .config .global .snapToGrid,
             args: ["setSnapToGrid", !this .config .global .snapToGrid],
+         },
+      ];
+
+      electron .ipcRenderer .send ("context-menu", "route-graph", menu);
+   }
+
+   showNodeContextMenu (id)
+   {
+      const menu = [
+         {
+            label: _("Remove Node"),
+            args: ["removeNode", id],
          },
       ];
 
@@ -420,7 +432,7 @@ module .exports = class RouteGraph extends Interface
    {
       const
          active = this .config .file .activePage,
-         pages = this .config .file .pages,
+         pages  = this .config .file .pages,
          title  = this .title .val () || _("New Logic");
 
       $(`a[href="#routing-page-${active}-tab"]`)
@@ -469,7 +481,8 @@ module .exports = class RouteGraph extends Interface
          .css ("position", "")
          .css ({ left: x, top: y })
          .addClass ("node")
-         .on ("drag", (event, ui) => this .moveNode (node .getId (), ui .position));
+         .on ("drag", (event, ui) => this .moveNode (node .getId (), ui .position))
+         .on ("contextmenu", () => this .showNodeContextMenu (node .getId ()));
 
       const header = $("<div></div>")
          .addClass ("header")
@@ -543,6 +556,20 @@ module .exports = class RouteGraph extends Interface
          .appendTo (element);
 
       this .nodes .append (element);
+   }
+
+   removeNode (id)
+   {
+      const
+         active = this .config .file .activePage,
+         pages  = this .config .file .pages,
+         page   = pages [active];
+
+      page .nodes = page .nodes .filter (node => node .id !== id);
+
+      this .config .file .pages = pages;
+
+      this .nodes .find (`.node[data-id=${id}]`) .remove ();
    }
 
    resizeCanvas ()
