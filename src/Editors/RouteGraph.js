@@ -571,6 +571,11 @@ module .exports = class RouteGraph extends Interface
 
       this .config .file .pages = pages;
 
+      this .removeNodeElement (id);
+   }
+
+   removeNodeElement (id)
+   {
       this .nodes .find (`.node[data-id=${id}]`) .remove ();
    }
 
