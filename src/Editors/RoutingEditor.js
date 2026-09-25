@@ -174,8 +174,8 @@ module .exports = class RoutingEditor extends Interface
    savePages ()
    {
       const
-         ids   = new Set (),
-         pages = this .config .file .pages;
+         pages = this .config .file .pages,
+         ids   = new Set ();
 
       for (const page of pages)
       {
@@ -192,8 +192,10 @@ module .exports = class RoutingEditor extends Interface
       {
          for (const node of page .nodes)
          {
-            if (Number .isInteger (node .id))
-               node .path = paths .get (node .id);
+            if (node .id === undefined)
+               continue;
+
+            node .path = paths .get (node .id) ?? "";
 
             delete node .id;
          }
@@ -216,7 +218,7 @@ module .exports = class RoutingEditor extends Interface
       return paths;
    }
 
-   getPathsFromNode (node, ids, path = [ ], paths, seen)
+   getPathsFromNode (node, ids, path, paths, seen)
    {
       if (!node)
          return;
@@ -255,11 +257,82 @@ module .exports = class RoutingEditor extends Interface
 
    restorePages ()
    {
-      const pages = this .config .file .pages;
+      const
+         pages = this .config .file .pages,
+         paths = new Set ();
 
-      console .log (JSON .stringify (this .config .file .pages, undefined, 2));
+      for (const page of pages)
+      {
+         for (const node of page .nodes)
+            paths .add (node .path);
+      }
+
+      const ids = this .getIdsFromNodes (this .browser .currentScene .rootNodes, paths);
+
+      for (const page of pages)
+      {
+         for (const node of page .nodes)
+            node .id = ids .get (node .path);
+
+         page .nodes = page .nodes .filter (node => node .id !== undefined);
+      }
 
       this .config .file .pages = pages;
+
+      console .log (JSON .stringify (this .config .file .pages, undefined, 2));
+   }
+
+   getIdsFromNodes (nodes, paths, path = [ ], ids = new Map (), seen = new Set ())
+   {
+      for (const [i, node] of nodes .entries ())
+      {
+         path .push (i);
+
+         this .getIdsFromNode (node ?.getValue (), paths, path, ids, seen);
+
+         path .pop ();
+      }
+
+      return ids;
+   }
+
+   getIdsFromNode (node, paths, path, ids, seen)
+   {
+      if (!node)
+         return;
+
+      if (seen .has (node))
+         return;
+
+      if (paths .has (path .join (":")))
+         ids .set (path .join (":"), node .getId ());
+
+      this .setNode (node);
+
+      for (const field of node .getFields ())
+      {
+         switch (field .getType ())
+         {
+            case X3D .X3DConstants .SFNode:
+            {
+               path .push (field .getName ());
+
+               this .getIdsFromNode (field .getValue (), paths, path, ids, seen);
+
+               path .pop ();
+               break;
+            }
+            case X3D .X3DConstants .MFNode:
+            {
+               path .push (field .getName ());
+
+               this .getIdsFromNodes (field, paths, path, ids, seen);
+
+               path .pop ();
+               break;
+            }
+         }
+      }
    }
 
    addPage ()
@@ -322,6 +395,11 @@ module .exports = class RoutingEditor extends Interface
    getNode (id)
    {
       return this .outlineEditor .objects .get (id);
+   }
+
+   setNode (node)
+   {
+      return this .outlineEditor .objects .set (node .getId (), node .valueOf ());
    }
 
    addNode (node, { x, y })
