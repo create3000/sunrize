@@ -21,6 +21,9 @@ module .exports = class RoutingEditor extends Interface
          .on ("scroll", () => this .top .scrollTop (0))
          .on ("tabsactivate", () => this .activateSheet ());
 
+      this .topCanvas = $("<canvas></canvas>")
+         .appendTo (this .top);
+
       this .tabs = $("<ul></ul>") .appendTo (this .top);
 
       this .tabs .sortable () .on ("sortupdate", (event, ui) => this .reorderSheets (ui .item));
@@ -213,13 +216,13 @@ module .exports = class RoutingEditor extends Interface
 
    resizeCanvas ()
    {
-      const
-         canvasWidth  = this .canvas .width (),
-         canvasHeight = this .canvas .height ();
+      this .topCanvas
+         .prop ("width",  this .topCanvas .width ())
+         .prop ("height", this .topCanvas .height ());
 
       this .canvas
-         .prop ("width",  canvasWidth)
-         .prop ("height", canvasHeight);
+         .prop ("width",  this .canvas .width ())
+         .prop ("height", this .canvas .height ());
 
       this .drawRoutes ();
    }
@@ -238,23 +241,26 @@ module .exports = class RoutingEditor extends Interface
    drawRoutes ()
    {
       const
-         context      = this .canvas [0] .getContext ("2d"),
-         canvasWidth  = this .canvas .width (),
-         canvasHeight = this .canvas .height ();
+         context = this .canvas [0] .getContext ("2d"),
+         width   = this .canvas .width (),
+         height  = this .canvas .height ();
 
-      context .clearRect (0, 0, canvasWidth, canvasHeight);
-
-      this .drawGrid (context, canvasWidth, canvasHeight);
+      this .drawGrid (this .topCanvas [0] .getContext ("2d"), width, 24, -24);
+      this .drawGrid (context, width, height, 0);
    }
 
-   drawGrid (context, width, height)
+   drawGrid (context, width, height, offset)
    {
-      const color = this .#style .getPropertyValue ("--system-gray5");
+      const
+         size  = 20,
+         color = this .#style .getPropertyValue ("--system-gray5");
+
+      context .clearRect (0, 0, width, height);
 
       context .strokeStyle = color;
       context .lineWidth   = 1;
 
-      for (let x = 0; x < width; x += 20)
+      for (let x = 0; x <= width; x += size)
       {
          context .beginPath ();
          context .moveTo (x, 0);
@@ -262,7 +268,7 @@ module .exports = class RoutingEditor extends Interface
          context .stroke ();
       }
 
-      for (let y = 0; y < height; y += 20)
+      for (let y = Math .abs (offset % size); y <= height; y += size)
       {
          context .beginPath ();
          context .moveTo (0, y);
