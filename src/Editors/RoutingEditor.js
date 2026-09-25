@@ -98,6 +98,7 @@ module .exports = class RoutingEditor extends Interface
       {
          // Add tab.
          $("<li></li>")
+            .data ("id", id)
             .on ("click", () => this .top .tabs ("option", "active", id))
             .append ($("<a></a>")
                .addClass ("text")
@@ -128,12 +129,12 @@ module .exports = class RoutingEditor extends Interface
 
    reorderSheets (item)
    {
-      const current = parseInt (item .find ("a") .attr ("href") .match (/\d+/) [0]);
+      const current = item .data ("id") ;
 
       const indices = [ ];
 
-      for (const a of this .tabs .find ("> li a"))
-         indices .push (parseInt (a .getAttribute ("href") .match (/\d+/) [0]));
+      for (const li of this .tabs .find ("> li"))
+         indices .push ($(li) .data ("id"));
 
       const
          sheets          = this .config .file .sheets,
