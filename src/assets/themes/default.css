@@ -479,7 +479,7 @@ html[platform=darwin] .horizontal-toolbar .select {
   font-size: var(--large-icon-size);
 }
 
-.large-toolbar .image-icon {
+.image-icon {
   background-repeat: no-repeat;
   display: block;
   width: 24px;
@@ -490,11 +490,11 @@ html[platform=darwin] .horizontal-toolbar .select {
   filter: var(--filter-text-color);
 }
 
-.large-toolbar .image-icon:hover {
+.image-icon:hover {
   filter: var(--filter-highlight-color);
 }
 
-.large-toolbar .image-icon.active {
+.image-icon.active {
   filter: var(--filter-accent-color);
 }
 
@@ -1684,10 +1684,14 @@ body.light .console-output .selected {
   font-size: var(--small-font-size);
 }
 
-#route-graph .node .close {
+#route-graph .node .arrow {
   position: relative;
-  top: 2px;
-  font-size: 10pt;
+  top: -1px;
+  font-size: 15pt;
+}
+
+#route-graph .node .arrow:hover {
+  color: rgb(236, 236, 236);
 }
 
 #route-graph .node .fields {

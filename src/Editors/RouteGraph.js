@@ -508,9 +508,10 @@ module .exports = class RouteGraph extends Interface
          .appendTo (title);
 
       $("<span></span>")
-         .addClass (["material-icons", "button", "close"])
-         .text ("close")
-         .on ("click", () => false)
+         .addClass (["material-symbols-outlined", "button", "arrow"])
+         .text ("left_click")
+         .attr ("title", _("Select Node"))
+         .on ("click", () => this .selectNode (node .getId ()))
          .appendTo (header);
 
       const fields = $("<ul></ul>")
@@ -570,6 +571,33 @@ module .exports = class RouteGraph extends Interface
       this .config .file .pages = pages;
 
       this .nodes .find (`.node[data-id=${id}]`) .remove ();
+   }
+
+   selectNode (id)
+   {
+      const
+         node          = this .getNode (id),
+         outlineEditor = this .outlineEditor;
+
+      outlineEditor .expandTo (node, { expandObject: true, expandInlineNodes: true, expandAll: true });
+
+      const elements = Array .from (outlineEditor .sceneGraph .find (`.node[node-id=${id}]`));
+
+      if (!elements .length)
+         return;
+
+      for (const [i, element] of elements .entries ())
+         outlineEditor .selectNodeElement ($(element), { add: (event .shiftKey || event .metaKey) || i > 0, target: true });
+
+      // Scroll element into view.
+      // Hide scrollbars during scroll to prevent overlay issue.
+
+      outlineEditor .treeView .css ("overflow", "hidden");
+
+      elements [0] ?.scrollIntoView ({ block: "center", inline: "start", behavior: "smooth" });
+      $(window) .scrollTop (0);
+
+      setTimeout (() => outlineEditor .treeView .css ("overflow", ""), 1000);
    }
 
    resizeCanvas ()
