@@ -122,6 +122,10 @@ module .exports = class RouteGraph extends Interface
    {
       const menu = [
          {
+            label: _("Select Node"),
+            args: ["selectNode", id],
+         },
+         {
             label: _("Remove Node"),
             args: ["removeNode", id],
          },
@@ -587,7 +591,7 @@ module .exports = class RouteGraph extends Interface
          return;
 
       for (const [i, element] of elements .entries ())
-         outlineEditor .selectNodeElement ($(element), { add: (event .shiftKey || event .metaKey) || i > 0, target: true });
+         outlineEditor .selectNodeElement ($(element), { add: i > 0, target: true });
 
       // Scroll element into view.
       // Hide scrollbars during scroll to prevent overlay issue.
