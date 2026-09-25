@@ -278,8 +278,6 @@ module .exports = class RoutingEditor extends Interface
       }
 
       this .config .file .pages = pages;
-
-      console .log (JSON .stringify (this .config .file .pages, undefined, 2));
    }
 
    getIdsFromNodes (nodes, paths, path = [ ], ids = new Map (), seen = new Set ())
@@ -335,6 +333,19 @@ module .exports = class RoutingEditor extends Interface
       }
    }
 
+   restorePage ()
+   {
+      this .nodes .empty ();
+
+      const
+         active = this .top .tabs ("option", "active"),
+         pages  = this .config .file .pages,
+         page   = pages [active];
+
+      for (const node of page .nodes)
+         this .addNodeElement (this .getNode (node .id), node);
+   }
+
    addPage ()
    {
       const
@@ -374,6 +385,7 @@ module .exports = class RoutingEditor extends Interface
       this .title .val (pages [active] .title);
 
       this .updateTitle ();
+      this .restorePage ();
    }
 
    updateTitle ()
