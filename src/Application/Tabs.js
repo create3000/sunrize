@@ -131,6 +131,7 @@ module .exports = new class Tabs
       this .forwardToActiveTab ("document");
       this .forwardToActiveTab ("script-editor");
       this .forwardToActiveTab ("animation-members-list");
+      this .forwardToActiveTab ("route-graph");
       this .forwardToActiveTab ("outline-editor");
 
       // Restore tabs.

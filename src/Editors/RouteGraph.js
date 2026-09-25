@@ -18,13 +18,11 @@ module .exports = class RouteGraph extends Interface
          .on ("dragenter dragover", event => this .dragEnter (event))
          .on ("drop", event => this .drop (event));
 
-      this .left   = $("<div></div>") .addClass ("route-graph-left") .appendTo (this .editor);
-      this .top    = $("<div></div>") .appendTo (this .editor);
-
-      this .top
+      this .top = $("<div></div>")
          .addClass ("route-graph-top")
          .on ("scroll", () => this .top .scrollTop (0))
-         .on ("tabsactivate", () => this .activatePage ());
+         .on ("tabsactivate", () => this .activatePage ())
+         .appendTo (this .editor);
 
       this .topCanvas = $("<canvas></canvas>")
          .appendTo (this .top);
@@ -45,9 +43,16 @@ module .exports = class RouteGraph extends Interface
          .appendTo (this .toolbar)
          .on ("click", () => this .addPage ());
 
+      this .left = $("<div></div>")
+         .addClass ("route-graph-left")
+         .appendTo (this .editor);
+
       this .canvas = $("<canvas></canvas>")
          .addClass ("routes")
+         .on ("contextmenu", () => this .showContextMenu ())
          .appendTo (this .left);
+
+      electron .ipcRenderer .on ("route-graph", (event, key, ... args) => this [key] (... args));
 
       this .resizer = new ResizeObserver (() => this .resizeCanvas ());
       this .resizer .observe (this .left [0]);
@@ -74,6 +79,7 @@ module .exports = class RouteGraph extends Interface
       this .config .file .setDefaultValues ({
          pages: [ ],
          activatePage: 0,
+         snapToGrid: false,
       });
 
       // WIP
@@ -93,6 +99,25 @@ module .exports = class RouteGraph extends Interface
       const document = require ("../Application/Window");
 
       return document .sidebar .outlineEditor;
+   }
+
+   showContextMenu ()
+   {
+      const menu = [
+         {
+            label: _("Snap to Grid"),
+            type: "checkbox",
+            checked: this .config .file .snapToGrid,
+            args: ["setSnapToGrid", !this .config .file .snapToGrid],
+         },
+      ];
+
+      electron .ipcRenderer .send ("context-menu", "route-graph", menu);
+   }
+
+   setSnapToGrid (snapToGrid)
+   {
+      this .config .file .snapToGrid = snapToGrid;
    }
 
    updatePages ()
@@ -553,10 +578,12 @@ module .exports = class RouteGraph extends Interface
       this .drawGrid (context, width, height, 0);
    }
 
+   #gridSize = 20;
+
    drawGrid (context, width, height, offset)
    {
       const
-         size  = 20,
+         size  = this .#gridSize,
          color = this .#style .getPropertyValue ("--system-gray5");
 
       context .clearRect (0, 0, width, height);
@@ -629,6 +656,12 @@ module .exports = class RouteGraph extends Interface
 
       position .left = Math .max (position .left, 0);
       position .top  = Math .max (position .top,  0);
+
+      if (this .config .file .snapToGrid)
+      {
+         position .left = Math .round (position .left / this .#gridSize) * this .#gridSize;
+         position .top  = Math .round (position .top  / this .#gridSize) * this .#gridSize;
+      }
 
       node .x = position .left;
       node .y = position .top;
