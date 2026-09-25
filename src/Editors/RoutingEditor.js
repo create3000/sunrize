@@ -12,7 +12,10 @@ module .exports = class RoutingEditor extends Interface
    {
       super (`Sunrize.RoutingEditor.${element .attr ("id")}.`);
 
-      this .editor = element;
+      this .editor = element
+         .on ("dragenter dragover", event => this .dragEnter (event))
+         .on ("drop", event => this .drop (event));
+
       this .left   = $("<div></div>") .addClass ("routing-editor-left") .appendTo (this .editor);
       this .top    = $("<div></div>") .appendTo (this .editor);
 
@@ -213,6 +216,46 @@ module .exports = class RoutingEditor extends Interface
       sheets [active] .title = title;
 
       this .config .file .sheets = sheets;
+   }
+
+   dragEnter (event)
+   {
+      event .preventDefault ();
+      event .stopPropagation ();
+
+      if (event .originalEvent .dataTransfer .types .includes ("sunrize/nodes") ||
+          event .originalEvent .dataTransfer .types .includes ("sunrize/imported-node"))
+      {
+         event .originalEvent .dataTransfer .dropEffect = "copy";
+      }
+      else
+      {
+         event .originalEvent .dataTransfer .dropEffect = "none";
+      }
+   }
+
+   drop (event)
+   {
+      if (!event .originalEvent .dataTransfer .types .includes ("sunrize/nodes") &&
+          !event .originalEvent .dataTransfer .types .includes ("sunrize/imported-node"))
+      {
+         return;
+      }
+
+      const document = require ("../Application/Window");
+
+      const ids = event .originalEvent .dataTransfer .types .includes ("sunrize/imported-node")
+         ? event .originalEvent .dataTransfer .getData ("sunrize/imported-node") .split (",")
+         : event .originalEvent .dataTransfer .getData ("sunrize/nodes") .split (",");
+
+      for (const id of ids)
+      {
+         const
+            element = $(`#${id}`),
+            node    = document .sidebar .outlineEditor .getNode (element);
+
+         console .log (node .getTypeName ());
+      }
    }
 
    resizeCanvas ()
