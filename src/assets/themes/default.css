@@ -1643,17 +1643,16 @@ body.light .console-output .selected {
 
 #routing-editor .node {
   user-select: none;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: start;
   gap: 1px;
   position: absolute !important;
-  border-radius: 12px;
   color: white;
 }
 
 #routing-editor .node .header {
+  overflow: hidden;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -1663,6 +1662,8 @@ body.light .console-output .selected {
   width: 100%;
   padding: 10px;
   background: #8579c5;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
 }
 
 #routing-editor .node .icon {
@@ -1687,11 +1688,62 @@ body.light .console-output .selected {
   font-size: 10pt;
 }
 
+#routing-editor .node .fields {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 1px;
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  list-style: none;
+  font-size: var(--small-font-size);
+  color: black;
+}
+
+#routing-editor .node .field {
+  position: relative;
+  box-sizing: border-box;
+  padding: 0px 10px;
+  width: 100%;
+  background: #fdcb73;
+}
+
+#routing-editor .node :is(.input, .output) {
+  position: absolute;
+  box-sizing: border-box;
+  top: 1px;
+  width: 11px;
+  height: 11px;
+  border-radius: 10px;
+}
+
+#routing-editor .node .input {
+  left: -5px;
+  background: #9352de;
+}
+
+#routing-editor .node .input:hover {
+  background: #603b8a;
+}
+
+#routing-editor .node .output {
+  right: -5px;
+  background: #9399fa;
+}
+
+#routing-editor .node .output:hover {
+  background: #595da9;
+}
+
 #routing-editor .node .footer {
   box-sizing: border-box;
   width: 100%;
   height: 10px;
-  background: #f8bb51;
+  background: #8579c5;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
 }
 
 /* Sidebar */
