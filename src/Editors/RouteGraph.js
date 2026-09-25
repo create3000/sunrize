@@ -8,21 +8,21 @@ const
    X3D       = require ("../X3D"),
    _         = require ("../Application/GetText");
 
-module .exports = class RoutingEditor extends Interface
+module .exports = class RouteGraph extends Interface
 {
    constructor (element)
    {
-      super (`Sunrize.RoutingEditor.${element .attr ("id")}.`);
+      super (`Sunrize.RouteGraph.${element .attr ("id")}.`);
 
       this .editor = element
          .on ("dragenter dragover", event => this .dragEnter (event))
          .on ("drop", event => this .drop (event));
 
-      this .left   = $("<div></div>") .addClass ("routing-editor-left") .appendTo (this .editor);
+      this .left   = $("<div></div>") .addClass ("route-graph-left") .appendTo (this .editor);
       this .top    = $("<div></div>") .appendTo (this .editor);
 
       this .top
-         .addClass ("routing-editor-top")
+         .addClass ("route-graph-top")
          .on ("scroll", () => this .top .scrollTop (0))
          .on ("tabsactivate", () => this .activatePage ());
 

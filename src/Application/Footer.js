@@ -28,7 +28,7 @@ module .exports = class Footer extends Tabs
 
       if (process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT")
       {
-         this .addIconTextTab ("routing-editor","route", _("Routing Editor"))
+         this .addIconTextTab ("route-graph","route", _("Route Graph"))
             .find (".material-icons") .css ("color", "hsl(281, 40%, 48%)");
       }
 
@@ -57,11 +57,11 @@ module .exports = class Footer extends Tabs
             this .animationEditor = new AnimationEditor (panel);
             break;
          }
-         case "routing-editor":
+         case "route-graph":
          {
-            const RoutingEditor = require ("../Editors/RoutingEditor");
+            const RouteGraph = require ("../Editors/RouteGraph");
 
-            this .routingEditor = new RoutingEditor (panel);
+            this .routeGraph = new RouteGraph (panel);
             break;
          }
       }

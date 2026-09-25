@@ -1514,16 +1514,16 @@ body.light .console-output .selected {
 
 /* Routing Editor */
 
-#routing-editor {
+#route-graph {
   --tabs-height: 24px;
 }
 
-#routing-editor {
+#route-graph {
   box-sizing: border-box;
   background: var(--routes-background-color);
 }
 
-.routing-editor-top {
+.route-graph-top {
   position: absolute;
   box-sizing: border-box;
   left: 0px;
@@ -1533,13 +1533,13 @@ body.light .console-output .selected {
   background: none;
 }
 
-.routing-editor-top canvas {
+.route-graph-top canvas {
   position: absolute;
   width: 100%;
   height: 100%;
 }
 
-#routing-editor .ui-tabs > .ui-tabs-nav {
+#route-graph .ui-tabs > .ui-tabs-nav {
   overflow-x: auto;
   overflow-y: visible;
   height: 100%;
@@ -1547,12 +1547,12 @@ body.light .console-output .selected {
   justify-content: left;
 }
 
-#routing-editor .ui-tabs > .ui-tabs-nav::-webkit-scrollbar {
+#route-graph .ui-tabs > .ui-tabs-nav::-webkit-scrollbar {
   width: 4px;
   height: 4px;
 }
 
-#routing-editor .ui-tabs > .ui-tabs-nav li {
+#route-graph .ui-tabs > .ui-tabs-nav li {
   cursor: pointer;
   display: flex;
   flex-direction: row;
@@ -1564,23 +1564,23 @@ body.light .console-output .selected {
   height: 100%;
 }
 
-#routing-editor .ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
+#route-graph .ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
   float: none;
   height: auto;
   padding: 0px 6px 0px 10px;
   color: var(--window-tabs-text-color);
 }
 
-#routing-editor .ui-tabs > .ui-tabs-nav .ui-tabs-active .ui-tabs-anchor {
+#route-graph .ui-tabs > .ui-tabs-nav .ui-tabs-active .ui-tabs-anchor {
   color: var(--window-tabs-highlight-color);
 }
 
-#routing-editor .ui-tabs > .ui-tabs-nav :is(li.ui-tabs-active, li:hover) {
+#route-graph .ui-tabs > .ui-tabs-nav :is(li.ui-tabs-active, li:hover) {
   border-color: var(--border-color);
   background-color: var(--window-tabs-background-color);
 }
 
-#routing-editor .ui-tabs > .ui-tabs-nav li:not(.ui-tabs-active, :hover, :first-child)::before {
+#route-graph .ui-tabs > .ui-tabs-nav li:not(.ui-tabs-active, :hover, :first-child)::before {
   content: "•";
   display: block;
   position: absolute;
@@ -1589,17 +1589,17 @@ body.light .console-output .selected {
   line-height: 0;
 }
 
-#routing-editor .ui-tabs > .ui-tabs-nav li:is(.ui-tabs-active, :hover) + li::before {
+#route-graph .ui-tabs > .ui-tabs-nav li:is(.ui-tabs-active, :hover) + li::before {
   display: none;
 }
 
-#routing-editor .ui-tabs > .ui-tabs-nav .button {
+#route-graph .ui-tabs > .ui-tabs-nav .button {
   top: unset;
   margin-right: 6px;
   font-size: 10pt;
 }
 
-#routing-editor .routing-editor-left {
+#route-graph .route-graph-left {
   overflow: hidden;
   position: absolute;
   box-sizing: border-box;
@@ -1610,7 +1610,7 @@ body.light .console-output .selected {
   border-right: 1px solid var(--border-color);
 }
 
-#routing-editor .routing-editor-left > .title {
+#route-graph .route-graph-left > .title {
   box-sizing: border-box;
   position: absolute;
   top: 10px;
@@ -1623,25 +1623,25 @@ body.light .console-output .selected {
   field-sizing: content;
 }
 
-#routing-editor .routing-editor-left > .title:focus {
+#route-graph .route-graph-left > .title:focus {
   border-color: var(--system-gray4);
   background: var(--background-color);
 }
 
-#routing-editor .routes {
+#route-graph .routes {
   position: absolute;
   width: 100%;
   height: 100%;
 }
 
-#routing-editor .nodes {
+#route-graph .nodes {
   overflow: auto;
   position: absolute;
   width: 100%;
   height: 100%;
 }
 
-#routing-editor .node {
+#route-graph .node {
   user-select: none;
   display: flex;
   flex-direction: column;
@@ -1651,7 +1651,7 @@ body.light .console-output .selected {
   color: white;
 }
 
-#routing-editor .node .header {
+#route-graph .node .header {
   overflow: hidden;
   box-sizing: border-box;
   display: flex;
@@ -1666,29 +1666,29 @@ body.light .console-output .selected {
   border-top-right-radius: 12px;
 }
 
-#routing-editor .node .header .icon {
+#route-graph .node .header .icon {
   position: relative;
   top: 3px;
 }
 
-#routing-editor .node .title {
+#route-graph .node .title {
   display: flex;
   flex-direction: column;
   align-items: start;
   gap: 5px;
 }
 
-#routing-editor .node .type-name {
+#route-graph .node .type-name {
   font-size: var(--small-font-size);
 }
 
-#routing-editor .node .close {
+#route-graph .node .close {
   position: relative;
   top: 2px;
   font-size: 10pt;
 }
 
-#routing-editor .node .fields {
+#route-graph .node .fields {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -1702,7 +1702,7 @@ body.light .console-output .selected {
   color: black;
 }
 
-#routing-editor .node .field {
+#route-graph .node .field {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -1713,11 +1713,11 @@ body.light .console-output .selected {
   background: #fdcb73;
 }
 
-#routing-editor .node .field .icon {
+#route-graph .node .field .icon {
   margin-right: 2px;
 }
 
-#routing-editor .node :is(.input, .output) {
+#route-graph .node :is(.input, .output) {
   position: absolute;
   box-sizing: border-box;
   top: 2px;
@@ -1726,25 +1726,25 @@ body.light .console-output .selected {
   border-radius: 10px;
 }
 
-#routing-editor .node .input {
+#route-graph .node .input {
   left: -5px;
   background: #9352de;
 }
 
-#routing-editor .node .input:hover {
+#route-graph .node .input:hover {
   background: #603b8a;
 }
 
-#routing-editor .node .output {
+#route-graph .node .output {
   right: -5px;
   background: #9399fa;
 }
 
-#routing-editor .node .output:hover {
+#route-graph .node .output:hover {
   background: #595da9;
 }
 
-#routing-editor .node .footer {
+#route-graph .node .footer {
   box-sizing: border-box;
   width: 100%;
   height: 10px;
