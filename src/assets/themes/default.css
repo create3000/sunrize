@@ -1644,18 +1644,25 @@ body.light .console-output .selected {
 #routing-editor .node {
   user-select: none;
   overflow: hidden;
-  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 1px;
+  position: absolute !important;
   border-radius: 12px;
   color: white;
 }
 
 #routing-editor .node .header {
+  box-sizing: border-box;
   display: flex;
   flex-direction: row;
   align-items: start;
+  justify-content: space-evenly;
   gap: 5px;
+  width: 100%;
   padding: 10px;
-  background: #43347e;
+  background: #8579c5;
 }
 
 #routing-editor .node .icon {
@@ -1678,6 +1685,13 @@ body.light .console-output .selected {
   position: relative;
   top: 2px;
   font-size: 10pt;
+}
+
+#routing-editor .node .footer {
+  box-sizing: border-box;
+  width: 100%;
+  height: 10px;
+  background: #f8bb51;
 }
 
 /* Sidebar */

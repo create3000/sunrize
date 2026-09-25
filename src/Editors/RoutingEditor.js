@@ -254,6 +254,7 @@ module .exports = class RoutingEditor extends Interface
    addNodeElement (node, { x, y })
    {
       const element = $("<div></div>")
+         .draggable ()
          .attr ("data-id", node .getId ())
          .css ({ left: x, top: y })
          .addClass ("node");
@@ -287,28 +288,42 @@ module .exports = class RoutingEditor extends Interface
          .on ("click", () => false)
          .appendTo (header);
 
+      const fields = $("<ul></ul>")
+         .addClass ("fields")
+         .appendTo (element);
+
       for (const field of node .getFields ())
       {
-         switch (field .getAccessType ())
+         if (field .getAccessType () === X3D .X3DConstants .initializeOnly)
+            continue;
+
+         const row = $("<li></li>")
+            .addClass ("field")
+            .appendTo (fields);
+
+         if (field .isInput ())
          {
-            case X3D .X3DConstants .initializeOnly:
-            {
-               break;
-            }
-            case X3D .X3DConstants .inputOnly:
-            {
-               break;
-            }
-            case X3D .X3DConstants .outputOnly:
-            {
-               break;
-            }
-            case X3D .X3DConstants .inputOutput:
-            {
-               break;
-            }
+            $("<div></div>")
+               .addClass ("input")
+               .appendTo (row);
+         }
+
+         $("<span></span>")
+            .addClass ("name")
+            .text (field .getName ())
+            .appendTo (row);
+
+         if (field .isOutput ())
+         {
+            $("<div></div>")
+               .addClass ("output")
+               .appendTo (row);
          }
       }
+
+      $("<div></div>")
+         .addClass ("footer")
+         .appendTo (element);
 
       this .nodes .append (element);
    }
