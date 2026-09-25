@@ -1599,7 +1599,7 @@ body.light .console-output .selected {
   font-size: 10pt;
 }
 
-.routing-editor-left {
+#routing-editor .routing-editor-left {
   overflow: hidden;
   position: absolute;
   box-sizing: border-box;
@@ -1610,20 +1610,7 @@ body.light .console-output .selected {
   border-right: 1px solid var(--border-color);
 }
 
-#routing-editor .routes {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-
-#routing-editor .nodes {
-  overflow: hidden;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-
-#routing-editor .title {
+#routing-editor .routing-editor-left > .title {
   box-sizing: border-box;
   position: absolute;
   top: 10px;
@@ -1636,9 +1623,61 @@ body.light .console-output .selected {
   field-sizing: content;
 }
 
-#routing-editor .title:focus {
+#routing-editor .routing-editor-left > .title:focus {
   border-color: var(--system-gray4);
   background: var(--background-color);
+}
+
+#routing-editor .routes {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+#routing-editor .nodes {
+  overflow: auto;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+#routing-editor .node {
+  user-select: none;
+  overflow: hidden;
+  position: absolute;
+  border-radius: 12px;
+  color: white;
+}
+
+#routing-editor .node .header {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  gap: 5px;
+  padding: 10px;
+  background: #43347e;
+}
+
+#routing-editor .node .icon {
+  position: relative;
+  top: 3px;
+}
+
+#routing-editor .node .title {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 5px;
+}
+
+#routing-editor .node .type-name {
+  font-size: var(--small-font-size);
+}
+
+#routing-editor .node .close {
+  position: relative;
+  top: 2px;
+  font-size: 10pt;
 }
 
 /* Sidebar */

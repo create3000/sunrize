@@ -4,6 +4,7 @@
 const
    $         = require ("jquery"),
    Interface = require ("../Application/Interface"),
+   X3D       = require ("../X3D"),
    _         = require ("../Application/GetText");
 
 module .exports = class RoutingEditor extends Interface
@@ -50,7 +51,7 @@ module .exports = class RoutingEditor extends Interface
       this .resizer = new ResizeObserver (() => this .resizeCanvas ());
       this .resizer .observe (this .left [0]);
 
-      this .elements = $("<div></div>")
+      this .nodes = $("<div></div>")
          .addClass ("nodes")
          .appendTo (this .left);
 
@@ -195,13 +196,19 @@ module .exports = class RoutingEditor extends Interface
 
    activateSheet ()
    {
-      const active = this .top .tabs ("option", "active");
+      const
+         active = this .top .tabs ("option", "active"),
+         sheets = this .config .file .sheets;
 
       this .config .file .activeSheet = active;
 
-      this .title .val (this .config .file .sheets [active] .title);
+      this .title .val (sheets [active] .title);
 
       this .updateTitle ();
+
+      // WIP
+      sheets [active] .nodes = [ ];
+      this .config .file .sheets = sheets;
    }
 
    updateTitle ()
@@ -220,16 +227,90 @@ module .exports = class RoutingEditor extends Interface
       this .config .file .sheets = sheets;
    }
 
-   nodes = new Set ();
-
-   addNode (node)
+   getNode (id)
    {
-      if (this .nodes .has (node))
+      return this .outlineEditor .objects .get (id);
+   }
+
+   addNode (node, { x, y })
+   {
+      const
+         id     = node .getId (),
+         active = this .top .tabs ("option", "active"),
+         sheets = this .config .file .sheets,
+         sheet  = sheets [active],
+         nodes  = sheet .nodes;
+
+      if (nodes .find (node => node .id === id))
          return;
 
-      this .nodes .add (node);
+      nodes .push ({ id, x, y });
 
-      console .log (node .getTypeName ());
+      this .config .file .sheets = sheets;
+
+      this .addNodeElement (node, { x, y });
+   }
+
+   addNodeElement (node, { x, y })
+   {
+      const element = $("<div></div>")
+         .attr ("data-id", node .getId ())
+         .css ({ left: x, top: y })
+         .addClass ("node");
+
+      const header = $("<div></div>")
+         .addClass ("header")
+         .appendTo (element);
+
+      $("<img>")
+         .addClass ("icon")
+         .attr ("src", "../images/OutlineEditor/Node/X3DBaseNode.svg")
+         .appendTo (header);
+
+      const title = $("<div></div>")
+         .addClass ("title")
+         .appendTo (header);
+
+      $("<span></span>")
+         .addClass ("name")
+         .text (node .getDisplayName () || _("<unnamed>"))
+         .appendTo (title);
+
+      $("<span></span>")
+         .addClass ("type-name")
+         .text (node .getTypeName ())
+         .appendTo (title);
+
+      $("<span></span>")
+         .addClass (["material-icons", "button", "close"])
+         .text ("close")
+         .on ("click", () => false)
+         .appendTo (header);
+
+      for (const field of node .getFields ())
+      {
+         switch (field .getAccessType ())
+         {
+            case X3D .X3DConstants .initializeOnly:
+            {
+               break;
+            }
+            case X3D .X3DConstants .inputOnly:
+            {
+               break;
+            }
+            case X3D .X3DConstants .outputOnly:
+            {
+               break;
+            }
+            case X3D .X3DConstants .inputOutput:
+            {
+               break;
+            }
+         }
+      }
+
+      this .nodes .append (element);
    }
 
    resizeCanvas ()
@@ -330,7 +411,17 @@ module .exports = class RoutingEditor extends Interface
             element = $(`#${id}`),
             node    = this .outlineEditor .getNode (element);
 
-         this .addNode (node);
+         this .addNode (node, this .getRelativeCoords (event));
       }
+   }
+
+   getRelativeCoords (event)
+   {
+      const
+         bounds = event .target .getBoundingClientRect (),
+         x      = event .clientX - bounds .left,
+         y      = event .clientY - bounds .top;
+
+      return { x, y };
    }
 };
