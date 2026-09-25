@@ -98,8 +98,8 @@ module .exports = class RouteGraph extends Interface
    updatePages ()
    {
       const
-         pages  = this .config .file .pages,
-         active = this .config .file .activePage;
+         active = this .config .file .activePage,
+         pages  = this .config .file .pages;
 
       if (!pages .length)
          return this .addPage ();
@@ -437,10 +437,11 @@ module .exports = class RouteGraph extends Interface
    {
       const element = $("<div></div>")
          .draggable ()
-         .css ("position", "")
          .attr ("data-id", node .getId ())
+         .css ("position", "")
          .css ({ left: x, top: y })
-         .addClass ("node");
+         .addClass ("node")
+         .on ("drag", (event, ui) => this .moveNode (node .getId (), ui .position));
 
       const header = $("<div></div>")
          .addClass ("header")
@@ -616,6 +617,23 @@ module .exports = class RouteGraph extends Interface
 
          this .addNode (node, this .getRelativeCoords (event));
       }
+   }
+
+   moveNode (id, position)
+   {
+      const
+         active = this .config .file .activePage,
+         pages  = this .config .file .pages,
+         page   = pages [active],
+         node   = page .nodes .find (node => node .id === id);
+
+      position .left = Math .max (position .left, 0);
+      position .top  = Math .max (position .top,  0);
+
+      node .x = position .left;
+      node .y = position .top;
+
+      this .config .file .pages = pages;
    }
 
    getRelativeCoords (event)
