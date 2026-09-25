@@ -313,6 +313,11 @@ module .exports = class RoutingEditor extends Interface
                .appendTo (row);
          }
 
+         $("<img>")
+            .addClass ("icon")
+            .attr ("src", `../images/OutlineEditor/Fields/${field .getTypeName ()}.svg`)
+            .appendTo (row);
+
          $("<span></span>")
             .addClass ("name")
             .text (field .getName ())

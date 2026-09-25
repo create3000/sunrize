@@ -1666,7 +1666,7 @@ body.light .console-output .selected {
   border-top-right-radius: 12px;
 }
 
-#routing-editor .node .icon {
+#routing-editor .node .header .icon {
   position: relative;
   top: 3px;
 }
@@ -1703,17 +1703,24 @@ body.light .console-output .selected {
 }
 
 #routing-editor .node .field {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   position: relative;
   box-sizing: border-box;
-  padding: 0px 10px;
+  padding: 1px 15px 1px 12px;
   width: 100%;
   background: #fdcb73;
+}
+
+#routing-editor .node .field .icon {
+  margin-right: 2px;
 }
 
 #routing-editor .node :is(.input, .output) {
   position: absolute;
   box-sizing: border-box;
-  top: 1px;
+  top: 2px;
   width: 11px;
   height: 11px;
   border-radius: 10px;
