@@ -131,17 +131,11 @@ module .exports = class RoutingEditor extends Interface
    {
       const
          current = item .data ("id"),
-         indices = [ ];
-
-      for (const li of this .tabs .find ("> li"))
-         indices .push ($(li) .data ("id"));
+         indices = Array .from (this .tabs .find ("> li"), li => $(li) .data ("id"));
 
       const
          sheets          = this .config .file .sheets,
-         reorderedSheets = [ ];
-
-      for (const i of indices)
-         reorderedSheets .push (sheets [i]);
+         reorderedSheets = indices .map (i => sheets [i]);
 
       this .config .file .sheets = reorderedSheets;
 
