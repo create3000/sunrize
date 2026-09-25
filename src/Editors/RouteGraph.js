@@ -626,6 +626,7 @@ module .exports = class RouteGraph extends Interface
 
       this .drawGrid (this .topCanvas [0] .getContext ("2d"), width, top, -top);
       this .drawGrid (context, width, height, 0);
+      this .drawRoutes (context);
    }
 
    #gridSize = 20;
