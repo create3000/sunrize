@@ -52,13 +52,13 @@ module .exports = class RouteGraph extends Interface
       this .resizer = new ResizeObserver (() => this .resizeCanvas ());
       this .resizer .observe (this .left [0]);
 
-      this .nodes = $("<div></div>")
-         .addClass ("nodes")
-         .appendTo (this .left);
-
       this .title = $("<input>")
          .addClass ("title")
          .on ("input", () => this .updateTitle ())
+         .appendTo (this .left);
+
+      this .nodes = $("<div></div>")
+         .addClass ("nodes")
          .appendTo (this .left);
 
       electron .ipcRenderer .on ("close",        () => this .savePages ());
