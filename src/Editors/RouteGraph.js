@@ -445,11 +445,11 @@ module .exports = class RouteGraph extends Interface
    addNode (node, { x, y })
    {
       const
-         id     = node .getId (),
          active = this .top .tabs ("option", "active"),
          pages  = this .config .file .pages,
          page   = pages [active],
-         nodes  = page .nodes;
+         nodes  = page .nodes,
+         id     = node .getId ();
 
       if (nodes .find (node => node .id === id))
          return;
