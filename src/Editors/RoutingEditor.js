@@ -18,6 +18,7 @@ module .exports = class RoutingEditor extends Interface
 
       this .top
          .addClass ("routing-editor-top")
+         .on ("scroll", () => this .top .scrollTop (0))
          .on ("tabsactivate", () => this .activateSheet ());
 
       this .tabs = $("<ul></ul>") .appendTo (this .top);

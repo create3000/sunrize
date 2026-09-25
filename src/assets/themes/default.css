@@ -1520,7 +1520,8 @@ body.light .console-output .selected {
 }
 
 .routing-editor-top {
-  overflow-y: scroll;
+  overflow-x: auto;
+  overflow-y: visible;
   position: absolute;
   box-sizing: border-box;
   left: 0px;
