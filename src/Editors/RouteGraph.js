@@ -522,6 +522,8 @@ module .exports = class RouteGraph extends Interface
 
    addNodeElement (node, { x, y })
    {
+      node .getLive () .addInterest ("nodeLive", this, node .getId ());
+
       node .name_changed     .addInterest ("updateNodeHeader", this, node .getId ());
       node .typeName_changed .addInterest ("updateNodeHeader", this, node .getId ());
 
@@ -642,6 +644,8 @@ module .exports = class RouteGraph extends Interface
 
    removeNodeElement (node)
    {
+      node .getLive () .removeInterest ("nodeLive", this);
+
       node .name_changed     .removeInterest ("updateNodeHeader", this, node .getId ());
       node .typeName_changed .removeInterest ("updateNodeHeader", this, node .getId ());
 
@@ -737,6 +741,18 @@ module .exports = class RouteGraph extends Interface
       $(window) .scrollTop (0);
 
       setTimeout (() => outlineEditor .treeView .css ("overflow", ""), 1000);
+   }
+
+   nodeLive (id)
+   {
+      const node = this .getNode (id);
+
+      console .log (id, node .isLive ());
+
+      if (node .isLive ())
+         return;
+
+      this .removeNode (id);
    }
 
    resizeCanvas ()
