@@ -377,12 +377,12 @@ module .exports = class RouteGraph extends Interface
 
    restorePage ()
    {
-      this .nodes .empty ();
-
       const
          active = this .top .tabs ("option", "active"),
          pages  = this .config .file .pages,
          page   = pages [active];
+
+      this .nodes .empty ();
 
       for (const node of page .nodes)
          this .addNodeElement (this .getNode (node .id), node);
