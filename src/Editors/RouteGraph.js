@@ -539,7 +539,7 @@ module .exports = class RouteGraph extends Interface
    {
       const columns = this .getConnectedNodes (node .getExecutionContext (), node, 0);
 
-      for (const index of Array .from (columns .keys ()) .sort ())
+      for (const index of Array .from (columns .keys ()) .sort ((a, b) => a - b))
       {
          const column = columns .get (index);
 
