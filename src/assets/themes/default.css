@@ -1523,6 +1523,7 @@ body.light .console-output .selected {
   --dark-blue: #595da9;
   --tabs-height: 24px;
   --route-color: #ff8900;
+  --overscroll-padding: 120px;
 }
 
 #route-graph {
@@ -1671,8 +1672,8 @@ body.light .console-output .selected {
   display: block;
   position: absolute;
   content: "";
-  width: calc(100% + 120px);
-  height: calc(100% + 120px);
+  width: calc(100% + var(--overscroll-padding));
+  height: calc(100% + var(--overscroll-padding));
 }
 
 #route-graph .node:focus {
