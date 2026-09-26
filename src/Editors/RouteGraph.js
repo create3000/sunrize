@@ -766,6 +766,7 @@ module .exports = class RouteGraph extends Interface
 
       const color = this .#style .getPropertyValue ("--system-orange");
 
+      context .fillStyle   = color;
       context .strokeStyle = color;
       context .lineWidth   = 3;
 
@@ -813,9 +814,42 @@ module .exports = class RouteGraph extends Interface
 					context .moveTo (x0, y0);
 					context .bezierCurveTo (x1, y1, x2, y2, x3, y3);
 					context .stroke ();
+
+					// Draw arrow
+
+					const arrow = this .getRouteArrow (new X3D .Vector2 (x0, y0), new X3D .Vector2 (x3, y3));
+
+               context .beginPath ();
+					context .moveTo (arrow [0] .x, arrow [0] .y);
+					context .lineTo (arrow [1] .x, arrow [1] .y);
+					context .lineTo (arrow [2] .x, arrow [2] .y);
+					context .fill ();
             }
          }
       }
+   }
+
+   getRouteArrow (sourcePosition, destinationPosition)
+   {
+      // Intersect with arrow
+
+      const
+         p1 = new X3D .Vector2 (),
+         p2 = new X3D .Vector2 (0, 14),
+         p3 = new X3D .Vector2 (10 / 9 * 14, 7),
+         c  = p1 .copy () .add (p2) .add (p3) .divide (3) .negate (),
+         t  = sourcePosition .copy () .add (destinationPosition) .divide (2),
+         d  = destinationPosition .copy () .subtract (sourcePosition),
+         s  = Math .sin (1 / d .x * Math .PI ** 2 / 2) * d .y / 2,
+         a  = d .x ? Math .atan2 (1, 1 / s) : Math .PI / 2;
+
+      const m = new X3D .Matrix3 ();
+
+      m .translate (t);
+      m .rotate (d .y >= 0 ? a : a + Math .PI);
+      m .translate (c);
+
+      return [m .multVecMatrix (p1), m .multVecMatrix (p2), m .multVecMatrix (p3)];
    }
 
    dragEnter (event)
