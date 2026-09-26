@@ -797,7 +797,7 @@ module .exports = class RouteGraph extends Interface
       this .#updateCanvasId = setTimeout (() => this .updateCanvas ());
    }
 
-   #style = window .getComputedStyle ($("body") [0]);
+   #style = window .getComputedStyle ($("#route-graph") [0]);
 
    updateCanvas ()
    {
@@ -870,7 +870,7 @@ module .exports = class RouteGraph extends Interface
          nodes  = new Set (page .nodes .map (node => this .getNode (node .id))),
          offset = this .nodes .offset ();
 
-      const color = this .#style .getPropertyValue ("--system-orange");
+      const color = this .#style .getPropertyValue ("--route-color");
 
       context .fillStyle   = color;
       context .strokeStyle = color;

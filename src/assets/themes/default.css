@@ -1522,6 +1522,7 @@ body.light .console-output .selected {
   --blue: #9399fa;
   --dark-blue: #595da9;
   --tabs-height: 24px;
+  --route-color: #ff8900;
 }
 
 #route-graph {
