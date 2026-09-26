@@ -533,8 +533,6 @@ module .exports = class RouteGraph extends Interface
 
       this .addNodeElement (node, { x, y });
       this .requestUpdateCanvas ();
-
-      return true;
    }
 
    addConnectedNodes (node, { x, y })
@@ -551,12 +549,13 @@ module .exports = class RouteGraph extends Interface
 
          for (const node of column)
          {
-            added ||= this .addNode (node, { x, y: offsetY });
+            this .addNode (node, { x, y: offsetY });
 
-            const element = this .nodes .find (`.node[data-id=${node .getId ()}]`) ;
+            const element = this .nodes .find (`.node[data-id=${node .getId ()}]`);
 
             offsetX  = Math .max (offsetX, element .width ());
             offsetY += element .height () + 40;
+            added  ||= element .length;
          }
 
          if (added)
