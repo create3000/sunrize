@@ -94,7 +94,7 @@ module .exports = class RouteGraph extends Interface
 
    colorScheme (/* shouldUseDarkColors */)
    {
-      this .updateCanvas ();
+      this .requestUpdateCanvas ();
    }
 
    get outlineEditor ()
@@ -450,6 +450,7 @@ module .exports = class RouteGraph extends Interface
 
       this .updateTitle ();
       this .restorePage ();
+      this .requestUpdateCanvas ();
    }
 
    updateTitle ()
@@ -516,6 +517,7 @@ module .exports = class RouteGraph extends Interface
       this .config .file .pages = pages;
 
       this .addNodeElement (node, { x, y });
+      this .requestUpdateCanvas ();
    }
 
    addNodeElement (node, { x, y })
@@ -571,6 +573,7 @@ module .exports = class RouteGraph extends Interface
             continue;
 
          const row = $("<li></li>")
+            .attr ("name", field .getName ())
             .addClass ("field")
             .appendTo (fields);
 
@@ -618,6 +621,7 @@ module .exports = class RouteGraph extends Interface
       this .config .file .pages = pages;
 
       this .removeNodeElement (id);
+      this .requestUpdateCanvas ();
    }
 
    removeNodeElement (id)
@@ -628,6 +632,31 @@ module .exports = class RouteGraph extends Interface
    raiseNode (id)
    {
       this .nodes .find (`.node[data-id=${id}]`) .detach () .appendTo (this .nodes);
+   }
+
+   moveNode (id, position)
+   {
+      const
+         active = this .config .file .activePage,
+         pages  = this .config .file .pages,
+         page   = pages [active],
+         node   = page .nodes .find (node => node .id === id);
+
+      position .left = Math .max (position .left, 0);
+      position .top  = Math .max (position .top,  0);
+
+      if (this .config .global .snapToGrid)
+      {
+         position .left = this .round (position .left, this .#gridSize);
+         position .top  = this .round (position .top,  this .#gridSize);
+      }
+
+      node .x = position .left;
+      node .y = position .top;
+
+      this .config .file .pages = pages;
+
+      this .requestUpdateCanvas ();
    }
 
    selectNode (id)
@@ -668,6 +697,15 @@ module .exports = class RouteGraph extends Interface
          .prop ("height", this .canvas .height ());
 
       this .updateCanvas ();
+   }
+
+   #updateCanvasId;
+
+   requestUpdateCanvas ()
+   {
+      cancelAnimationFrame (this .#updateCanvasId);
+
+      this .#updateCanvasId = requestAnimationFrame (() => this .updateCanvas ());
    }
 
    #style = window .getComputedStyle ($("body") [0]);
@@ -719,7 +757,67 @@ module .exports = class RouteGraph extends Interface
 
    drawRoutes (context)
    {
-      context;
+      const
+         active = this .top .tabs ("option", "active"),
+         pages  = this .config .file .pages,
+         page   = pages [active],
+         nodes  = new Set (page .nodes .map (node => this .getNode (node .id))),
+         offset = this .nodes .offset ();
+
+      const color = this .#style .getPropertyValue ("--system-orange");
+
+      context .strokeStyle = color;
+      context .lineWidth   = 3;
+
+      for (const sourceNode of nodes)
+      {
+         const sourceNodeElement = this .nodes .find (`.node[data-id=${sourceNode .getId ()}]`);
+
+         for (const sourceField of sourceNode .getFields ())
+         {
+            for (const route of sourceField .getOutputRoutes ())
+            {
+               const destinationNode = route .getDestinationNode ();
+
+               if (!nodes .has (destinationNode))
+                  continue;
+
+               const
+                  sourceElement          = sourceNodeElement .find (`.field[name="${sourceField .getName ()}"] .output`),
+                  destinationField       = destinationNode .getField (route .getDestinationField ()),
+                  destinationNodeElement = this .nodes .find (`.node[data-id=${destinationNode .getId ()}]`),
+                  destinationElement     = destinationNodeElement .find (`.field[name="${destinationField .getName ()}"] .input`);
+
+               console .log (sourceField .getName (), destinationField .getName ())
+
+               const
+                  sourceOffset      = sourceElement .offset (),
+                  destinationOffset = destinationElement .offset (),
+                  fromX             = sourceOffset .left - offset .left + sourceElement .width () / 2,
+                  fromY             = sourceOffset .top - offset .top + sourceElement .height () / 2,
+                  toX               = destinationOffset .left - offset .left,
+                  toY               = destinationOffset .top - offset .top + destinationElement .height () / 2;
+
+					// Draw sine curved route, dark or light
+
+               const
+					   wp = (toX - fromX) * 0.5,
+					   x0 = fromX,
+					   y0 = fromY,
+					   x1 = fromX + wp,
+					   y1 = fromY,
+					   x2 = toX - wp,
+					   y2 = toY,
+					   x3 = toX,
+					   y3 = toY;
+
+               context .beginPath ();
+					context .moveTo (x0, y0);
+					context .bezierCurveTo (x1, y1, x2, y2, x3, y3);
+					context .stroke ();
+            }
+         }
+      }
    }
 
    dragEnter (event)
@@ -768,29 +866,6 @@ module .exports = class RouteGraph extends Interface
          y      = event .clientY - bounds .top  + this .nodes .scrollTop ();
 
       return { x, y };
-   }
-
-   moveNode (id, position)
-   {
-      const
-         active = this .config .file .activePage,
-         pages  = this .config .file .pages,
-         page   = pages [active],
-         node   = page .nodes .find (node => node .id === id);
-
-      position .left = Math .max (position .left, 0);
-      position .top  = Math .max (position .top,  0);
-
-      if (this .config .global .snapToGrid)
-      {
-         position .left = this .round (position .left, this .#gridSize);
-         position .top  = this .round (position .top,  this .#gridSize);
-      }
-
-      node .x = position .left;
-      node .y = position .top;
-
-      this .config .file .pages = pages;
    }
 
    round (value, steps)

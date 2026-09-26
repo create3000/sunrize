@@ -2824,7 +2824,7 @@ module .exports = class AnimationEditor extends Interface
       this .drawTimeline ();
    }
 
-   #updateTracksId = undefined;
+   #updateTracksId;
 
    requestDrawTimeline ()
    {
