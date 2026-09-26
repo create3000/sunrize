@@ -1665,7 +1665,7 @@ body.light .console-output .selected {
 }
 
 /* Overscroll spacing */
-#route-graph .node::before {
+#route-graph .node::after {
   pointer-events: none;
   visibility: hidden;
   display: block;
