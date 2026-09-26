@@ -703,9 +703,9 @@ module .exports = class RouteGraph extends Interface
 
    requestUpdateCanvas ()
    {
-      cancelAnimationFrame (this .#updateCanvasId);
+      clearTimeout (this .#updateCanvasId);
 
-      this .#updateCanvasId = requestAnimationFrame (() => this .updateCanvas ());
+      this .#updateCanvasId = setTimeout (() => this .updateCanvas ());
    }
 
    #style = window .getComputedStyle ($("body") [0]);
@@ -793,7 +793,7 @@ module .exports = class RouteGraph extends Interface
                   destinationOffset = destinationElement .offset (),
                   fromX             = sourceOffset .left - offset .left + sourceElement .width () / 2,
                   fromY             = sourceOffset .top - offset .top + sourceElement .height () / 2,
-                  toX               = destinationOffset .left - offset .left,
+                  toX               = destinationOffset .left - offset .left + destinationElement .width () / 2,
                   toY               = destinationOffset .top - offset .top + destinationElement .height () / 2;
 
 					// Draw sine curved route.
