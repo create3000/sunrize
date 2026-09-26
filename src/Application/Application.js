@@ -97,7 +97,7 @@ module .exports = class Application
       electron .ipcMain .on ("current-file",        (event, currentFile) => this .currentFile = currentFile);
       electron .ipcMain .on ("add-recent-location", (event, fileURL)     => this .addRecentLocation (fileURL));
       electron .ipcMain .on ("update-menu",         (event, options)     => this .updateMenu (options));
-      electron .ipcMain .on ("context-menu",        (event, id, menu)    => this .contextMenu (id, menu));
+      electron .ipcMain .on ("context-menu",        (event, ... args)    => this .contextMenu (... args));
 
       electron .ipcMain .handle ("open-files", async (event, urls) => this .openFiles (urls));
       electron .ipcMain .handle ("file-path",  async (event, options) => await this .showDialog (options));
@@ -966,11 +966,11 @@ module .exports = class Application
          this .createWindow ();
    }
 
-   contextMenu (id, menu)
+   contextMenu (id, menu, menuId)
    {
       const contextMenu = electron .Menu .buildFromTemplate (this .addMenuItemHandlers (id, this .filterSeparators (menu)));
 
-      contextMenu .on ("menu-will-close", () => this .mainWindow .webContents .send ("context-menu-will-close", id));
+      contextMenu .on ("menu-will-close", () => this .mainWindow .webContents .send ("context-menu-will-close", menuId));
 
       contextMenu .popup ({ window: this .mainWindow });
    }

@@ -396,8 +396,14 @@ module .exports = new class Tabs
          },
       ];
 
-      electron .ipcRenderer .send ("context-menu", "tabs-menu", menu);
-      electron .ipcRenderer .once ("context-menu-will-close", () => $(tab .element) .trigger ("blur"));
+      const menuId = Math .random ();
+
+      electron .ipcRenderer .send ("context-menu", "tabs-menu", menu, menuId);
+      electron .ipcRenderer .once ("context-menu-will-close", (event, id) =>
+      {
+         if (id === menuId)
+            $(tab .element) .trigger ("blur");
+      });
    }
 
    menuCopyURL (position)

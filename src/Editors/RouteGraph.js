@@ -49,7 +49,6 @@ module .exports = class RouteGraph extends Interface
 
       this .canvas = $("<canvas></canvas>")
          .addClass ("routes")
-         .on ("contextmenu", () => this .showCanvasContextMenu ())
          .appendTo (this .left);
 
       electron .ipcRenderer .on ("route-graph", (event, key, ... args) => this [key] (... args));
@@ -60,15 +59,15 @@ module .exports = class RouteGraph extends Interface
       this .nodes = $("<div></div>")
          .addClass ("nodes")
          .on ("scroll", () => this .scrollNodes ())
+         .on ("contextmenu", event => this .showContextMenu (event))
          .appendTo (this .left);
 
       this .title = $("<input>")
          .addClass ("title")
          .on ("input", () => this .updateTitle ());
 
-      electron .ipcRenderer .on ("context-menu-will-close", () => this .hideContextMenu ());
-      electron .ipcRenderer .on ("close",                   () => this .savePages ());
-      $(window)             .on ("beforeunload",            () => this .savePages ());
+      electron .ipcRenderer .on ("close",        () => this .savePages ());
+      $(window)             .on ("beforeunload", () => this .savePages ());
 
       this .setup ();
    }
@@ -105,8 +104,13 @@ module .exports = class RouteGraph extends Interface
       return document .sidebar .outlineEditor;
    }
 
-   showCanvasContextMenu ()
+   showContextMenu (event, id)
    {
+      event .preventDefault ();
+      event .stopPropagation ();
+
+      const element = this .nodes .find (`.node[data-id=${id}]`) .trigger ("focus");
+
       const menu = [
          {
             label: _("Snap to Grid"),
@@ -114,34 +118,27 @@ module .exports = class RouteGraph extends Interface
             checked: this .config .global .snapToGrid,
             args: ["setSnapToGrid", !this .config .global .snapToGrid],
          },
-      ];
-
-      electron .ipcRenderer .send ("context-menu", "route-graph", menu);
-   }
-
-   #menuElements = [ ];
-
-   showNodeContextMenu (id)
-   {
-      this .#menuElements .push (this .nodes .find (`.node[data-id=${id}]`) .trigger ("focus"));
-
-      const menu = [
+         { type: "separator" },
          {
             label: _("Select Node"),
+            enabled: !! id,
             args: ["selectNode", id],
          },
          {
             label: _("Remove Node"),
+            enabled: !! id,
             args: ["removeNode", id],
          },
       ];
 
-      electron .ipcRenderer .send ("context-menu", "route-graph", menu);
-   }
+      const menuId = Math .random ();
 
-   hideContextMenu ()
-   {
-      this .#menuElements .shift () ?.trigger ("blur");
+      electron .ipcRenderer .send ("context-menu", "route-graph", menu, menuId);
+      electron .ipcRenderer .once ("context-menu-will-close", (event, id) =>
+      {
+         if (id === menuId)
+            element .trigger ("blur");
+      });
    }
 
    setSnapToGrid (snapToGrid)
@@ -532,7 +529,7 @@ module .exports = class RouteGraph extends Interface
          .addClass ("node")
          .on ("mousedown", () => this .raiseNode (node .getId ()))
          .on ("drag", (event, ui) => this .moveNode (node .getId (), ui .position))
-         .on ("contextmenu", () => this .showNodeContextMenu (node .getId ()));
+         .on ("contextmenu", event => this .showContextMenu (event, node .getId ()));
 
       const header = $("<div></div>")
          .addClass ("header")
