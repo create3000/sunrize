@@ -1750,7 +1750,6 @@ body.light .console-output .selected {
 
 #route-graph .node :is(.input, .output) {
   position: absolute;
-  box-sizing: border-box;
   top: 2px;
   width: 11px;
   height: 11px;
