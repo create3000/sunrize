@@ -537,7 +537,48 @@ module .exports = class RouteGraph extends Interface
 
    addConnectedNodes (node, { x, y })
    {
-      this .addNode (node, { x, y });
+      const columns = this .getConnectedNodes (node .getExecutionContext (), node, 0);
+
+      for (const index of Array .from (columns .keys ()) .sort ())
+      {
+         const column = columns .get (index);
+
+         let offsetX = 0;
+         let offsetY = y;
+
+         for (const node of column)
+         {
+            this .addNode (node, { x, y: offsetY });
+
+            const element = this .nodes .find (`.node[data-id=${node .getId ()}]`) ;
+
+            offsetX  = Math .max (offsetX, element .width ());
+            offsetY += element .height () + 40;
+         }
+
+         x += offsetX + 120;
+      }
+   }
+
+   getConnectedNodes (executionContext, node, index, columns = new Map (), nodes = new Set ())
+   {
+      if (nodes .has (node))
+         return;
+
+      nodes .add (node);
+
+      columns .getOrInsert (index, [ ]) .push (node);
+
+      for (const field of node .getFields ())
+      {
+         for (const route of field .getInputRoutes ())
+            this .getConnectedNodes (executionContext, route .getSourceNode (), index - 1, columns, nodes);
+
+         for (const route of field .getOutputRoutes ())
+            this .getConnectedNodes (executionContext, route .getDestinationNode (), index + 1, columns, nodes);
+      }
+
+      return columns;
    }
 
    addNodeElement (node, { x, y })
