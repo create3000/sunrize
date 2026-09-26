@@ -400,8 +400,10 @@ module .exports = class RouteGraph extends Interface
          pages  = this .config .file .pages,
          page   = pages [active];
 
-      this .nodes .empty ()
-         .append (this .title);
+      const currentNodes = Array .from (this .nodes .find (".node"), element => this .getNode ($(element) .data ("id")));
+
+      for (const node of currentNodes)
+         this .removeNodeElement (node);
 
       for (const node of page .nodes)
          this .addNodeElement (this .getNode (node .id), node);
@@ -549,6 +551,7 @@ module .exports = class RouteGraph extends Interface
 
       const element = $("<div></div>")
          .draggable ()
+         .data ("id", node .getId ())
          .attr ("data-id", node .getId ())
          .attr ("tabindex", 0)
          .css ("position", "")
@@ -764,8 +767,6 @@ module .exports = class RouteGraph extends Interface
    nodeLive (id)
    {
       const node = this .getNode (id);
-
-      console .log (id, node .isLive ());
 
       if (node .isLive ())
          return;
