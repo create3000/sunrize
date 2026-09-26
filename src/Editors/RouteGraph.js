@@ -532,6 +532,11 @@ module .exports = class RouteGraph extends Interface
       this .requestUpdateCanvas ();
    }
 
+   addConnectedNodes (node, { x, y })
+   {
+      this .addNode (node, { x, y });
+   }
+
    addNodeElement (node, { x, y })
    {
       node .getLive () .addInterest ("nodeLive", this, node .getId ());
@@ -985,10 +990,14 @@ module .exports = class RouteGraph extends Interface
       for (const id of ids)
       {
          const
-            element = $(`#${id}`),
-            node    = this .outlineEditor .getNode (element);
+            element  = $(`#${id}`),
+            node     = this .outlineEditor .getNode (element),
+            position = this .getDropPosition (event);
 
-         this .addNode (node, this .getDropPosition (event));
+         if (this .config .global .addConnectedNodes)
+            this .addConnectedNodes (node, position);
+         else
+            this .addNode (node, position);
       }
    }
 
