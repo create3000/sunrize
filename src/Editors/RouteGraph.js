@@ -700,7 +700,7 @@ module .exports = class RouteGraph extends Interface
       context .strokeStyle = color;
       context .lineWidth   = 1;
 
-      for (let x =-(offsetX % size); x <= width; x += size)
+      for (let x = -offsetX % size; x <= width; x += size)
       {
          context .beginPath ();
          context .moveTo (x, 0);
@@ -708,7 +708,7 @@ module .exports = class RouteGraph extends Interface
          context .stroke ();
       }
 
-      for (let y = -(offsetY % size); y <= height; y += size)
+      for (let y = -offsetY % size; y <= height; y += size)
       {
          context .beginPath ();
          context .moveTo (0, y);
