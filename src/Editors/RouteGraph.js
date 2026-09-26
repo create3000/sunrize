@@ -557,10 +557,10 @@ module .exports = class RouteGraph extends Interface
 
             x        = parseFloat (element .css ("left"));
             offsetX  = Math .max (offsetX, element .width ());
-            offsetY += element .height () + 40;
+            offsetY += element .height () + this .#gridSize * 2;
          }
 
-         x += offsetX + 120;
+         x += offsetX + this .#gridSize * 5;
       }
    }
 
