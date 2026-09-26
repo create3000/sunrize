@@ -387,17 +387,17 @@ module .exports = class RouteGraph extends Interface
       for (const node of page .nodes)
          this .addNodeElement (this .getNode (node .id), node);
 
-      const { scrollLeft, scrollTop } = page;
+      const { scrollLeft = 0, scrollTop = 0 } = page;
 
-      this .nodes .scrollLeft (scrollLeft ?? 0);
-      this .nodes .scrollTop  (scrollTop  ?? 0);
+      this .nodes .scrollLeft (scrollLeft);
+      this .nodes .scrollTop  (scrollTop);
 
       // Wait until page is drawn and try again.
-      
+
       setTimeout (() =>
       {
-         this .nodes .scrollLeft (scrollLeft ?? 0);
-         this .nodes .scrollTop  (scrollTop  ?? 0);
+         this .nodes .scrollLeft (scrollLeft);
+         this .nodes .scrollTop  (scrollTop);
       });
    }
 
