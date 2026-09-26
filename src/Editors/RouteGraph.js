@@ -1020,9 +1020,8 @@ module .exports = class RouteGraph extends Interface
          s  = Math .sin (1 / d .x * Math .PI ** 2 / 2) * d .y / 2,
          a  = d .x ? Math .atan2 (1, 1 / s) : Math .PI / 2,
          q  = d .x >= 0 ? 0.12 : -0.12, // Correction term for rotation.
-         r  = d .y >= 0 ? a - q : a + Math .PI + q;
-
-      const m = new X3D .Matrix3 ();
+         r  = d .y >= 0 ? a - q : a + Math .PI + q,
+         m  = new X3D .Matrix3 ();
 
       m .translate (t);
       m .rotate (r);
