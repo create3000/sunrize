@@ -1655,12 +1655,12 @@ body.light .console-output .selected {
   align-items: start;
   gap: 1px;
   position: absolute;
-  color: white;
   border: 4px solid transparent;
   border-top-left-radius: 17px;
   border-top-right-radius: 17px;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
+  color: white;
   transition: border-color 300ms ease-in-out;
 }
 
