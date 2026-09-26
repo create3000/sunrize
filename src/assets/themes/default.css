@@ -1656,12 +1656,12 @@ body.light .console-output .selected {
   gap: 1px;
   position: absolute;
   color: white;
-  border: 2px solid transparent;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-  border-bottom-left-radius: 13px;
-  border-bottom-right-radius: 13px;
-  transition: border-color 200ms;
+  border: 4px solid transparent;
+  border-top-left-radius: 17px;
+  border-top-right-radius: 17px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  transition: border-color 300ms ease-in-out;
 }
 
 #route-graph .node:focus {
@@ -1859,7 +1859,7 @@ body.light .console-output .selected {
 
 .tree-view .jstree-node {
   outline: 1px solid transparent;
-  transition: outline 200ms;
+  transition: outline 200ms ease-in-out;
 }
 
 .tree-view .jstree-node.selected {
