@@ -788,8 +788,6 @@ module .exports = class RouteGraph extends Interface
                   destinationNodeElement = this .nodes .find (`.node[data-id=${destinationNode .getId ()}]`),
                   destinationElement     = destinationNodeElement .find (`.field[name="${destinationField .getName ()}"] .input`);
 
-               console .log (sourceField .getName (), destinationField .getName ())
-
                const
                   sourceOffset      = sourceElement .offset (),
                   destinationOffset = destinationElement .offset (),
@@ -798,7 +796,7 @@ module .exports = class RouteGraph extends Interface
                   toX               = destinationOffset .left - offset .left,
                   toY               = destinationOffset .top - offset .top + destinationElement .height () / 2;
 
-					// Draw sine curved route, dark or light
+					// Draw sine curved route.
 
                const
 					   wp = (toX - fromX) * 0.5,
