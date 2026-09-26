@@ -545,8 +545,7 @@ module .exports = class RouteGraph extends Interface
 
          let
             offsetX = 0,
-            offsetY = y,
-            added   = false;
+            offsetY = y;
 
          for (const node of column)
          {
@@ -554,13 +553,12 @@ module .exports = class RouteGraph extends Interface
 
             const element = this .nodes .find (`.node[data-id=${node .getId ()}]`);
 
+            x        = parseFloat (element .css ("left"));
             offsetX  = Math .max (offsetX, element .width ());
             offsetY += element .height () + 40;
-            added  ||= element .length;
          }
 
-         if (added)
-            x += offsetX + 120;
+         x += offsetX + 120;
       }
    }
 
