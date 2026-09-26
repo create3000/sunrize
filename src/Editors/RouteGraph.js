@@ -741,13 +741,15 @@ module .exports = class RouteGraph extends Interface
 
    resizeCanvas ()
    {
+      const contentScale = window .devicePixelRatio;
+
       this .topCanvas
-         .prop ("width",  this .topCanvas .width ())
-         .prop ("height", this .topCanvas .height ());
+         .prop ("width",  this .topCanvas .width  () * contentScale)
+         .prop ("height", this .topCanvas .height () * contentScale);
 
       this .canvas
-         .prop ("width",  this .canvas .width ())
-         .prop ("height", this .canvas .height ());
+         .prop ("width",  this .canvas .width  () * contentScale)
+         .prop ("height", this .canvas .height () * contentScale);
 
       this .updateCanvas ();
    }
@@ -766,16 +768,33 @@ module .exports = class RouteGraph extends Interface
    updateCanvas ()
    {
       const
-         context = this .canvas [0] .getContext ("2d"),
-         width   = this .canvas .width (),
-         height  = this .canvas .height (),
-         offsetX = this .nodes .scrollLeft (),
-         offsetY = this .nodes .scrollTop (),
-         top     = this .topCanvas .height ();
+         context      = this .canvas [0] .getContext ("2d"),
+         topContext   = this .topCanvas [0] .getContext ("2d"),
+         width        = this .canvas .width (),
+         height       = this .canvas .height (),
+         offsetX      = this .nodes .scrollLeft (),
+         offsetY      = this .nodes .scrollTop (),
+         top          = this .topCanvas .height (),
+         contentScale = window .devicePixelRatio;
 
-      this .drawGrid (this .topCanvas [0] .getContext ("2d"), width, top, offsetX, offsetY - top);
+      // Tabs
+
+      topContext .save ();
+      topContext .scale (contentScale, contentScale);
+
+      this .drawGrid (topContext, width, top, offsetX, offsetY - top);
+
+      topContext .restore ();
+
+      // Routes
+
+      context .save ();
+      context .scale (contentScale, contentScale);
+
       this .drawGrid (context, width, height, offsetX, offsetY);
       this .drawRoutes (context);
+
+      context .restore ();
    }
 
    #gridSize = 20;
