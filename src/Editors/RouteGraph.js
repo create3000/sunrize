@@ -522,6 +522,11 @@ module .exports = class RouteGraph extends Interface
 
    addNodeElement (node, { x, y })
    {
+      node .name_changed     .addInterest ("updateNodeHeader", this, node .getId ());
+      node .typeName_changed .addInterest ("updateNodeHeader", this, node .getId ());
+
+      node .getUserDefinedFields () .addInterest ("updateNodeElement", this, node .getId ());
+
       const element = $("<div></div>")
          .draggable ()
          .attr ("data-id", node .getId ())
@@ -614,19 +619,55 @@ module .exports = class RouteGraph extends Interface
       const
          active = this .config .file .activePage,
          pages  = this .config .file .pages,
-         page   = pages [active];
+         page   = pages [active],
+         node   = this .getNode (id);
 
       page .nodes = page .nodes .filter (node => node .id !== id);
 
       this .config .file .pages = pages;
 
-      this .removeNodeElement (id);
+      this .removeNodeElement (node);
       this .requestUpdateCanvas ();
    }
 
-   removeNodeElement (id)
+   removeNodeElement (node)
    {
-      this .nodes .find (`.node[data-id=${id}]`) .remove ();
+      node .name_changed     .removeInterest ("updateNodeHeader", this, node .getId ());
+      node .typeName_changed .removeInterest ("updateNodeHeader", this, node .getId ());
+
+      node .getUserDefinedFields () .removeInterest ("updateNodeElement", this);
+
+      this .nodes .find (`.node[data-id=${node .getId ()}]`) .remove ();
+   }
+
+   updateNodeElement (id)
+   {
+      const node = this .getNode (id);
+
+      if (!node)
+         return;
+
+      const
+         element = this .nodes .find (`.node[data-id=${node .getId ()}]`),
+         x       = parseFloat (element .css ("left")),
+         y       = parseFloat (element .css ("top"));
+
+      this .removeNodeElement (node);
+      this .addNodeElement (node, { x, y });
+      this .requestUpdateCanvas ();
+   }
+
+   updateNodeHeader (id)
+   {
+      const node = this .getNode (id);
+
+      if (!node)
+         return;
+
+      const element = this .nodes .find (`.node[data-id=${node .getId ()}]`);
+
+      element .find (".header .name")      .text (node .getName ());
+      element .find (".header .type-name") .text (node .getTypeName ());
    }
 
    raiseNode (id)
