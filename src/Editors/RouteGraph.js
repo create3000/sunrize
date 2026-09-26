@@ -554,6 +554,7 @@ module .exports = class RouteGraph extends Interface
          .css ("position", "")
          .css ({ left: x, top: y })
          .addClass ("node")
+         .on ("mousedown", () => element .trigger ("focus"))
          .on ("mousedown", () => this .raiseNode (node .getId ()))
          .on ("drag", (event, ui) => this .moveNode (node .getId (), ui .position))
          .on ("contextmenu", event => this .showContextMenu (event, node .getId ()));
