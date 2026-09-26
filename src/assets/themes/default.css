@@ -1657,10 +1657,7 @@ body.light .console-output .selected {
   gap: 1px;
   position: absolute;
   outline: 4px solid transparent;
-  border-top-left-radius: 17px;
-  border-top-right-radius: 17px;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
+  border-radius: 17px 17px 15px 15px;
   color: white;
   transition: outline-color 300ms ease-in-out;
 }
