@@ -1722,15 +1722,13 @@ body.light .console-output .selected {
 }
 
 #route-graph .node .fields {
+  all: initial;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: start;
   gap: 1px;
-  margin: 0px;
-  padding: 0px;
   width: 100%;
-  list-style: none;
   font-size: var(--small-font-size);
   color: black;
 }
