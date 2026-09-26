@@ -729,9 +729,6 @@ module .exports = class RouteGraph extends Interface
 
    removeNodeElement (node)
    {
-      if (!node)
-         return;
-
       node .getLive () .removeInterest ("nodeLive", this);
 
       node .name_changed     .removeInterest ("updateNodeHeader", this, node .getId ());
