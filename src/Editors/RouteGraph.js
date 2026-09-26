@@ -637,7 +637,7 @@ module .exports = class RouteGraph extends Interface
       $("<span></span>")
          .addClass (["material-symbols-outlined", "button", "arrow"])
          .text ("left_click")
-         .attr ("title", _("Select Node"))
+         .attr ("title", _("Select node."))
          .on ("mouseup", () => this .selectNode (node .getId ()))
          .appendTo (header);
 
