@@ -1664,6 +1664,17 @@ body.light .console-output .selected {
   transition: border-color 300ms ease-in-out;
 }
 
+/* Overscroll spacing */
+#route-graph .node::before {
+  pointer-events: none;
+  visibility: hidden;
+  display: block;
+  position: absolute;
+  content: "";
+  width: calc(100% + 120px);
+  height: calc(100% + 120px);
+}
+
 #route-graph .node:focus {
   border-color: #f71501;
 }
