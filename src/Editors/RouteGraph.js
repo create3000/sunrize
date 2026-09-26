@@ -606,6 +606,8 @@ module .exports = class RouteGraph extends Interface
             if (field .getAccessType () === X3D .X3DConstants .initializeOnly)
                continue;
 
+            field .addRouteCallback (this, () => this .requestUpdateCanvas ());
+
             const fieldElement = $("<li></li>")
                .attr ("name", field .getName ())
                .addClass ("field");
@@ -675,6 +677,9 @@ module .exports = class RouteGraph extends Interface
       node .getUserDefinedFields () .removeInterest ("updateNodeElement", this);
 
       this .nodes .find (`.node[data-id=${node .getId ()}]`) .remove ();
+
+      for (const field of node .getFields ())
+         field .removeRouteCallback (this);
    }
 
    updateNodeElement (id)
