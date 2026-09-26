@@ -560,7 +560,7 @@ module .exports = class RouteGraph extends Interface
          .addClass (["material-symbols-outlined", "button", "arrow"])
          .text ("left_click")
          .attr ("title", _("Select Node"))
-         .on ("click", () => this .selectNode (node .getId ()))
+         .on ("mouseup", () => this .selectNode (node .getId ()))
          .appendTo (header);
 
       const fields = $("<ul></ul>")
@@ -631,7 +631,7 @@ module .exports = class RouteGraph extends Interface
 
    raiseNode (id)
    {
-      this .nodes .find (`.node[data-id=${id}]`) .detach () .appendTo (this .nodes);
+      this .nodes .find (`.node[data-id=${id}]`) .appendTo (this .nodes);
    }
 
    moveNode (id, position)
