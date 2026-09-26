@@ -841,12 +841,14 @@ module .exports = class RouteGraph extends Interface
          t  = sourcePosition .copy () .add (destinationPosition) .divide (2),
          d  = destinationPosition .copy () .subtract (sourcePosition),
          s  = Math .sin (1 / d .x * Math .PI ** 2 / 2) * d .y / 2,
-         a  = d .x ? Math .atan2 (1, 1 / s) : Math .PI / 2;
+         a  = d .x ? Math .atan2 (1, 1 / s) : Math .PI / 2,
+         q  = d .x >= 0 ? 0.1 : -0.1, // Correction term for rotation.
+         r  = d .y >= 0 ? a - q : a + Math .PI + q;
 
       const m = new X3D .Matrix3 ();
 
       m .translate (t);
-      m .rotate (d .y >= 0 ? a : a + Math .PI);
+      m .rotate (r);
       m .translate (c);
 
       return [m .multVecMatrix (p1), m .multVecMatrix (p2), m .multVecMatrix (p3)];
