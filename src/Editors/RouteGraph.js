@@ -77,6 +77,7 @@ module .exports = class RouteGraph extends Interface
       super .configure ();
 
       this .config .global .setDefaultValues ({
+         addConnectedNodes: true,
          snapToGrid: false,
       });
 
@@ -120,6 +121,12 @@ module .exports = class RouteGraph extends Interface
          },
          { type: "separator" },
          {
+            label: _("Add Connected Nodes"),
+            type: "checkbox",
+            checked: this .config .global .addConnectedNodes,
+            args: ["setAddConnectedNodes", !this .config .global .addConnectedNodes],
+         },
+         {
             label: _("Select Node"),
             enabled: !! id,
             args: ["selectNode", id],
@@ -139,6 +146,11 @@ module .exports = class RouteGraph extends Interface
          if (id === menuId)
             element .trigger ("blur");
       });
+   }
+
+   setAddConnectedNodes (addConnectedNodes)
+   {
+      this .config .global .addConnectedNodes = addConnectedNodes;
    }
 
    setSnapToGrid (snapToGrid)
