@@ -387,6 +387,8 @@ module .exports = class RouteGraph extends Interface
       for (const node of page .nodes)
          this .addNodeElement (this .getNode (node .id), node);
 
+      // Restore scroll position.
+
       const { scrollLeft = 0, scrollTop = 0 } = page;
 
       this .nodes .scrollLeft (scrollLeft);
