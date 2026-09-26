@@ -57,13 +57,14 @@ module .exports = class RouteGraph extends Interface
       this .resizer = new ResizeObserver (() => this .resizeCanvas ());
       this .resizer .observe (this .left [0]);
 
+      this .nodes = $("<div></div>")
+         .addClass ("nodes")
+         .on ("scroll", () => this .scrollNodes ())
+         .appendTo (this .left);
+
       this .title = $("<input>")
          .addClass ("title")
          .on ("input", () => this .updateTitle ())
-         .appendTo (this .left);
-
-      this .nodes = $("<div></div>")
-         .addClass ("nodes")
          .appendTo (this .left);
 
       electron .ipcRenderer .on ("close",        () => this .savePages ());
@@ -385,6 +386,9 @@ module .exports = class RouteGraph extends Interface
 
       for (const node of page .nodes)
          this .addNodeElement (this .getNode (node .id), node);
+
+      this .nodes .scrollLeft (page .scrollLeft ?? 0);
+      this .nodes .scrollTop  (page .scrollTop  ?? 0);
    }
 
    addPage ()
@@ -443,6 +447,21 @@ module .exports = class RouteGraph extends Interface
       pages [active] .title = title;
 
       this .config .file .pages = pages;
+   }
+
+   scrollNodes ()
+   {
+      const
+         active = this .top .tabs ("option", "active"),
+         pages  = this .config .file .pages,
+         page   = pages [active];
+
+      page .scrollLeft = this .nodes .scrollLeft ();
+      page .scrollTop  = this .nodes .scrollTop ();
+
+      this .config .file .pages = pages;
+
+      this .updateCanvas ();
    }
 
    getNode (id)
@@ -633,16 +652,18 @@ module .exports = class RouteGraph extends Interface
          context = this .canvas [0] .getContext ("2d"),
          width   = this .canvas .width (),
          height  = this .canvas .height (),
+         offsetX = this .nodes .scrollLeft (),
+         offsetY = this .nodes .scrollTop (),
          top     = this .topCanvas .height ();
 
-      this .drawGrid (this .topCanvas [0] .getContext ("2d"), width, top, -top);
-      this .drawGrid (context, width, height, 0);
+      this .drawGrid (this .topCanvas [0] .getContext ("2d"), width, top, offsetX, offsetY - top);
+      this .drawGrid (context, width, height, offsetX, offsetY);
       this .drawRoutes (context);
    }
 
    #gridSize = 20;
 
-   drawGrid (context, width, height, offset)
+   drawGrid (context, width, height, offsetX, offsetY)
    {
       const
          size  = this .#gridSize,
@@ -653,7 +674,7 @@ module .exports = class RouteGraph extends Interface
       context .strokeStyle = color;
       context .lineWidth   = 1;
 
-      for (let x = 0; x <= width; x += size)
+      for (let x =-(offsetX % size); x <= width; x += size)
       {
          context .beginPath ();
          context .moveTo (x, 0);
@@ -661,7 +682,7 @@ module .exports = class RouteGraph extends Interface
          context .stroke ();
       }
 
-      for (let y = Math .abs (offset % size); y <= height; y += size)
+      for (let y = -(offsetY % size); y <= height; y += size)
       {
          context .beginPath ();
          context .moveTo (0, y);

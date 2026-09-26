@@ -1641,7 +1641,6 @@ body.light .console-output .selected {
 }
 
 #route-graph .nodes {
-  pointer-events: none;
   overflow: auto;
   position: absolute;
   width: 100%;
@@ -1649,7 +1648,6 @@ body.light .console-output .selected {
 }
 
 #route-graph .node {
-  pointer-events: auto;
   user-select: none;
   display: flex;
   flex-direction: column;
