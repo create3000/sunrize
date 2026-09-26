@@ -653,15 +653,16 @@ module .exports = class RouteGraph extends Interface
 
    updateNodeElement (id)
    {
-      const node = this .getNode (id);
+      const
+         node    = this .getNode (id),
+         element = this .nodes .find (`.node[data-id=${id}]`);
 
-      if (!node)
+      if (!element .length)
          return;
 
       const
-         element = this .nodes .find (`.node[data-id=${node .getId ()}]`),
-         x       = parseFloat (element .css ("left")),
-         y       = parseFloat (element .css ("top"));
+         x = parseFloat (element .css ("left")),
+         y = parseFloat (element .css ("top"));
 
       this .removeNodeElement (node);
       this .addNodeElement (node, { x, y });
@@ -670,12 +671,12 @@ module .exports = class RouteGraph extends Interface
 
    updateNodeHeader (id)
    {
-      const node = this .getNode (id);
+      const
+         node    = this .getNode (id),
+         element = this .nodes .find (`.node[data-id=${id}]`);
 
-      if (!node)
+      if (!element .length)
          return;
-
-      const element = this .nodes .find (`.node[data-id=${node .getId ()}]`);
 
       element .find (".header .name")      .text (node .getDisplayName () || _("<unnamed>"));
       element .find (".header .type-name") .text (node .getTypeName ());
