@@ -518,6 +518,8 @@ module .exports = class RouteGraph extends Interface
          nodes  = page .nodes,
          id     = node .getId ();
 
+      this .setNode (node);
+
       if (nodes .find (node => node .id === id))
          return;
 
@@ -567,8 +569,9 @@ module .exports = class RouteGraph extends Interface
       if (nodes .has (node))
          return;
 
-      nodes .add (node);
+      this .setNode (node);
 
+      nodes .add (node);
       columns .getOrInsert (index, [ ]) .push (node);
 
       for (const field of node .getFields ())
@@ -724,6 +727,9 @@ module .exports = class RouteGraph extends Interface
 
    removeNodeElement (node)
    {
+      if (!node)
+         return;
+
       node .getLive () .removeInterest ("nodeLive", this);
 
       node .name_changed     .removeInterest ("updateNodeHeader", this, node .getId ());
