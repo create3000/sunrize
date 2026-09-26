@@ -1733,6 +1733,10 @@ body.light .console-output .selected {
   background: var(--orange);
 }
 
+#route-graph .node .field.user-defined {
+  font-weight: bold;
+}
+
 #route-graph .node .field .icon {
   margin-right: 2px;
 }

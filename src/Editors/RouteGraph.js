@@ -525,6 +525,7 @@ module .exports = class RouteGraph extends Interface
       node .name_changed     .addInterest ("updateNodeHeader", this, node .getId ());
       node .typeName_changed .addInterest ("updateNodeHeader", this, node .getId ());
 
+      node .getPredefinedFields ()  .addInterest ("updateNodeElement", this, node .getId ());
       node .getUserDefinedFields () .addInterest ("updateNodeElement", this, node .getId ());
 
       const element = $("<div></div>")
@@ -568,42 +569,51 @@ module .exports = class RouteGraph extends Interface
          .on ("mouseup", () => this .selectNode (node .getId ()))
          .appendTo (header);
 
-      const fields = $("<ul></ul>")
+      const fieldsElement = $("<ul></ul>")
          .addClass ("fields")
          .appendTo (element);
 
-      for (const field of node .getFields ())
+      for (const [i, fields] of [node .getPredefinedFields (), node .getUserDefinedFields () .toReversed ()] .entries ())
       {
-         if (field .getAccessType () === X3D .X3DConstants .initializeOnly)
-            continue;
+         const first = fieldsElement .find ("> :first-child");
 
-         const row = $("<li></li>")
-            .attr ("name", field .getName ())
-            .addClass ("field")
-            .appendTo (fields);
-
-         if (field .isInput ())
+         for (const field of fields)
          {
-            $("<div></div>")
-               .addClass ("input")
-               .appendTo (row);
-         }
+            if (field .getAccessType () === X3D .X3DConstants .initializeOnly)
+               continue;
 
-         $("<img>")
-            .addClass ("icon")
-            .attr ("src", `../images/OutlineEditor/Fields/${field .getTypeName ()}.svg`)
-            .appendTo (row);
+            const fieldElement = $("<li></li>")
+               .attr ("name", field .getName ())
+               .addClass ("field");
 
-         $("<span></span>")
-            .addClass ("name")
-            .text (field .getName ())
-            .appendTo (row);
+            if (i)
+               first .after (fieldElement .addClass ("user-defined"));
+            else
+               fieldElement .appendTo (fieldsElement);
 
-         if (field .isOutput ())
-         {
-            $("<div></div>")
-               .addClass ("output")
-               .appendTo (row);
+            if (field .isInput ())
+            {
+               $("<div></div>")
+                  .addClass ("input")
+                  .appendTo (fieldElement);
+            }
+
+            $("<img>")
+               .addClass ("icon")
+               .attr ("src", `../images/OutlineEditor/Fields/${field .getTypeName ()}.svg`)
+               .appendTo (fieldElement);
+
+            $("<span></span>")
+               .addClass ("name")
+               .text (field .getName ())
+               .appendTo (fieldElement);
+
+            if (field .isOutput ())
+            {
+               $("<div></div>")
+                  .addClass ("output")
+                  .appendTo (fieldElement);
+            }
          }
       }
 
@@ -635,6 +645,7 @@ module .exports = class RouteGraph extends Interface
       node .name_changed     .removeInterest ("updateNodeHeader", this, node .getId ());
       node .typeName_changed .removeInterest ("updateNodeHeader", this, node .getId ());
 
+      node .getPredefinedFields ()  .removeInterest ("updateNodeElement", this);
       node .getUserDefinedFields () .removeInterest ("updateNodeElement", this);
 
       this .nodes .find (`.node[data-id=${node .getId ()}]`) .remove ();
@@ -666,7 +677,7 @@ module .exports = class RouteGraph extends Interface
 
       const element = this .nodes .find (`.node[data-id=${node .getId ()}]`);
 
-      element .find (".header .name")      .text (node .getName ());
+      element .find (".header .name")      .text (node .getDisplayName () || _("<unnamed>"));
       element .find (".header .type-name") .text (node .getTypeName ());
    }
 
@@ -883,7 +894,7 @@ module .exports = class RouteGraph extends Interface
          d  = destinationPosition .copy () .subtract (sourcePosition),
          s  = Math .sin (1 / d .x * Math .PI ** 2 / 2) * d .y / 2,
          a  = d .x ? Math .atan2 (1, 1 / s) : Math .PI / 2,
-         q  = d .x >= 0 ? 0.1 : -0.1, // Correction term for rotation.
+         q  = d .x >= 0 ? 0.12 : -0.12, // Correction term for rotation.
          r  = d .y >= 0 ? a - q : a + Math .PI + q;
 
       const m = new X3D .Matrix3 ();
