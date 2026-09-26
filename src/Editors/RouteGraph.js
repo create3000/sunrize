@@ -537,6 +537,8 @@ module .exports = class RouteGraph extends Interface
       this .requestUpdateCanvas ();
    }
 
+   #gaps = new X3D .Vector2 (5, 2); // In grid units.
+
    addConnectedNodes (node, { x, y })
    {
       const columns = this .getConnectedNodes (node .getExecutionContext (), node, 0);
@@ -557,10 +559,10 @@ module .exports = class RouteGraph extends Interface
 
             x        = parseFloat (element .css ("left"));
             offsetX  = Math .max (offsetX, element .width ());
-            offsetY += element .height () + this .#gridSize * 2;
+            offsetY += element .height () + this .#gridSize * this .#gaps .y;
          }
 
-         x += offsetX + this .#gridSize * 5;
+         x += offsetX + this .#gridSize * this .#gaps .x;
       }
    }
 
