@@ -148,14 +148,14 @@ module .exports = class RouteGraph extends Interface
       });
    }
 
-   setAddConnectedNodes (addConnectedNodes)
-   {
-      this .config .global .addConnectedNodes = addConnectedNodes;
-   }
-
    setSnapToGrid (snapToGrid)
    {
       this .config .global .snapToGrid = snapToGrid;
+   }
+
+   setAddConnectedNodes (addConnectedNodes)
+   {
+      this .config .global .addConnectedNodes = addConnectedNodes;
    }
 
    updatePages ()
