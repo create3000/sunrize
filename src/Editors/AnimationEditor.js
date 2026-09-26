@@ -2812,11 +2812,12 @@ module .exports = class AnimationEditor extends Interface
    {
       const
          tracksWidth  = this .tracks .width (),
-         tracksHeight = this .tracks .height ();
+         tracksHeight = this .tracks .height (),
+         contentScale = window .devicePixelRatio;
 
       this .tracks
-         .prop ("width",  tracksWidth)
-         .prop ("height", tracksHeight);
+         .prop ("width",  tracksWidth  * contentScale)
+         .prop ("height", tracksHeight * contentScale);
 
       this .timelineClip = new Path2D ();
       this .timelineClip .rect (this .getLeft () - this .FRAME_SIZE, 0, this .getWidth () + this .FRAME_SIZE * 2, tracksHeight);
@@ -2842,8 +2843,11 @@ module .exports = class AnimationEditor extends Interface
       const
          context      = this .tracks [0] .getContext ("2d"),
          tracksWidth  = this .tracks .width (),
-         tracksHeight = this .tracks .height ();
+         tracksHeight = this .tracks .height (),
+         contentScale = window .devicePixelRatio;
 
+      context .save ();
+      context .scale (contentScale, contentScale);
       context .clearRect (0, 0, tracksWidth, tracksHeight);
 
       if (!this .animation)
@@ -3028,6 +3032,7 @@ module .exports = class AnimationEditor extends Interface
 
       context .fillRect (x - 1, 0, 3, tracksHeight);
 
+      context .restore ();
       context .restore ();
    }
 
