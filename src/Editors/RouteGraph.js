@@ -729,8 +729,18 @@ module .exports = class RouteGraph extends Interface
             element = $(`#${id}`),
             node    = this .outlineEditor .getNode (element);
 
-         this .addNode (node, this .getRelativeCoords (event));
+         this .addNode (node, this .getDropPosition (event));
       }
+   }
+
+   getDropPosition (event)
+   {
+      const
+         bounds = event .target .getBoundingClientRect (),
+         x      = event .clientX - bounds .left + this .nodes .scrollLeft (),
+         y      = event .clientY - bounds .top  + this .nodes .scrollTop ();
+
+      return { x, y };
    }
 
    moveNode (id, position)
@@ -754,16 +764,6 @@ module .exports = class RouteGraph extends Interface
       node .y = position .top;
 
       this .config .file .pages = pages;
-   }
-
-   getRelativeCoords (event)
-   {
-      const
-         bounds = event .target .getBoundingClientRect (),
-         x      = event .clientX - bounds .left,
-         y      = event .clientY - bounds .top;
-
-      return { x, y };
    }
 
    round (value, steps)
