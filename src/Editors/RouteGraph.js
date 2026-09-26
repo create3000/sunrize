@@ -519,6 +519,7 @@ module .exports = class RouteGraph extends Interface
          .css ("position", "")
          .css ({ left: x, top: y })
          .addClass ("node")
+         .on ("mousedown", () => this .raiseNode (node .getId ()))
          .on ("drag", (event, ui) => this .moveNode (node .getId (), ui .position))
          .on ("contextmenu", () => this .showNodeContextMenu (node .getId ()));
 
@@ -614,6 +615,11 @@ module .exports = class RouteGraph extends Interface
    removeNodeElement (id)
    {
       this .nodes .find (`.node[data-id=${id}]`) .remove ();
+   }
+
+   raiseNode (id)
+   {
+      this .nodes .find (`.node[data-id=${id}]`) .detach () .appendTo (this .nodes);
    }
 
    selectNode (id)
