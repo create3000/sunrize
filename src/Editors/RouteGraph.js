@@ -64,8 +64,7 @@ module .exports = class RouteGraph extends Interface
 
       this .title = $("<input>")
          .addClass ("title")
-         .on ("input", () => this .updateTitle ())
-         .appendTo (this .left);
+         .on ("input", () => this .updateTitle ());
 
       electron .ipcRenderer .on ("close",        () => this .savePages ());
       $(window)             .on ("beforeunload", () => this .savePages ());
@@ -382,7 +381,8 @@ module .exports = class RouteGraph extends Interface
          pages  = this .config .file .pages,
          page   = pages [active];
 
-      this .nodes .empty ();
+      this .nodes .empty ()
+         .append (this .title);
 
       for (const node of page .nodes)
          this .addNodeElement (this .getNode (node .id), node);
