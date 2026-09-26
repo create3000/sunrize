@@ -133,6 +133,7 @@ module .exports = new class Tabs
       this .forwardToActiveTab ("animation-members-list");
       this .forwardToActiveTab ("route-graph");
       this .forwardToActiveTab ("outline-editor");
+      this .forwardToActiveTab ("context-menu-will-close");
 
       // Restore tabs.
       this .restoreTabs (this .config .activeTab);
@@ -396,7 +397,7 @@ module .exports = new class Tabs
       ];
 
       electron .ipcRenderer .send ("context-menu", "tabs-menu", menu);
-      electron .ipcRenderer .once ("tabs-menu-will-close", () => $(tab .element) .trigger ("blur"));
+      electron .ipcRenderer .once ("context-menu-will-close", () => $(tab .element) .trigger ("blur"));
    }
 
    menuCopyURL (position)

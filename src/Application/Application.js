@@ -970,7 +970,7 @@ module .exports = class Application
    {
       const contextMenu = electron .Menu .buildFromTemplate (this .addMenuItemHandlers (id, this .filterSeparators (menu)));
 
-      contextMenu .on ("menu-will-close", () => this .mainWindow .webContents .send (`${id}-will-close`));
+      contextMenu .on ("menu-will-close", () => this .mainWindow .webContents .send ("context-menu-will-close", id));
 
       contextMenu .popup ({ window: this .mainWindow });
    }

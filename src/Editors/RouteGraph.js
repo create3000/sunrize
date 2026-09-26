@@ -66,8 +66,9 @@ module .exports = class RouteGraph extends Interface
          .addClass ("title")
          .on ("input", () => this .updateTitle ());
 
-      electron .ipcRenderer .on ("close",        () => this .savePages ());
-      $(window)             .on ("beforeunload", () => this .savePages ());
+      electron .ipcRenderer .on ("context-menu-will-close", () => this .hideContextMenu ());
+      electron .ipcRenderer .on ("close",                   () => this .savePages ());
+      $(window)             .on ("beforeunload",            () => this .savePages ());
 
       this .setup ();
    }
@@ -118,8 +119,12 @@ module .exports = class RouteGraph extends Interface
       electron .ipcRenderer .send ("context-menu", "route-graph", menu);
    }
 
+   #menuElements = [ ];
+
    showNodeContextMenu (id)
    {
+      this .#menuElements .push (this .nodes .find (`.node[data-id=${id}]`) .trigger ("focus"));
+
       const menu = [
          {
             label: _("Select Node"),
@@ -132,6 +137,11 @@ module .exports = class RouteGraph extends Interface
       ];
 
       electron .ipcRenderer .send ("context-menu", "route-graph", menu);
+   }
+
+   hideContextMenu ()
+   {
+      this .#menuElements .shift () ?.trigger ("blur");
    }
 
    setSnapToGrid (snapToGrid)
@@ -516,6 +526,7 @@ module .exports = class RouteGraph extends Interface
       const element = $("<div></div>")
          .draggable ()
          .attr ("data-id", node .getId ())
+         .attr ("tabindex", 0)
          .css ("position", "")
          .css ({ left: x, top: y })
          .addClass ("node")
@@ -711,6 +722,7 @@ module .exports = class RouteGraph extends Interface
 
    drawRoutes (context)
    {
+      context;
    }
 
    dragEnter (event)
