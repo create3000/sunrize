@@ -467,6 +467,12 @@ module .exports = class RouteGraph extends Interface
       if (nodes .find (node => node .id === id))
          return;
 
+      if (this .config .global .snapToGrid)
+      {
+         x = this .round (x, this .#gridSize);
+         y = this .round (y, this .#gridSize);
+      }
+
       nodes .push ({ id, x, y });
 
       this .config .file .pages = pages;
@@ -719,8 +725,8 @@ module .exports = class RouteGraph extends Interface
 
       if (this .config .global .snapToGrid)
       {
-         position .left = Math .round (position .left / this .#gridSize) * this .#gridSize;
-         position .top  = Math .round (position .top  / this .#gridSize) * this .#gridSize;
+         position .left = this .round (position .left, this .#gridSize);
+         position .top  = this .round (position .top,  this .#gridSize);
       }
 
       node .x = position .left;
@@ -737,5 +743,10 @@ module .exports = class RouteGraph extends Interface
          y      = event .clientY - bounds .top;
 
       return { x, y };
+   }
+
+   round (value, steps)
+   {
+      return Math .round (value / steps) * steps;
    }
 };
