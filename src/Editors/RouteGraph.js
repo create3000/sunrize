@@ -64,7 +64,8 @@ module .exports = class RouteGraph extends Interface
 
       this .title = $("<input>")
          .addClass ("title")
-         .on ("input", () => this .updateTitle ());
+         .on ("input", () => this .updateTitle ())
+         .appendTo (this .nodes);
 
       electron .ipcRenderer .on ("close",        () => this .savePages ());
       $(window)             .on ("beforeunload", () => this .savePages ());
