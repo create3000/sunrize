@@ -543,9 +543,10 @@ module .exports = class RouteGraph extends Interface
       {
          const column = columns .get (index);
 
-         let offsetX = 0;
-         let offsetY = y;
-         let added   = false;
+         let
+            offsetX = 0,
+            offsetY = y,
+            added   = false;
 
          for (const node of column)
          {
