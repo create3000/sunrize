@@ -586,6 +586,7 @@ module .exports = class RouteGraph extends Interface
 
       this .clearNodeSelection ();
       this .clearRouteSelection ();
+      this .clearInputOutput ();
 
       const currentNodes = Array .from (this .nodes .find (".node"), element => this .getNode ($(element) .data ("id")));
 
