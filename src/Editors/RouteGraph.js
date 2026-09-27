@@ -116,7 +116,7 @@ module .exports = class RouteGraph extends Interface
 
       this .config .file .setDefaultValues ({
          pages: [ ],
-         activatePage: 0,
+         activePage: 0,
       });
 
       // WIP
