@@ -1719,6 +1719,7 @@ body.light .console-output .selected {
 
 #route-graph .node .fields {
   all: initial;
+  user-select: inherit;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
