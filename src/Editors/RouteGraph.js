@@ -50,9 +50,20 @@ module .exports = class RouteGraph extends Interface
       this .snapToGridButton = $("<span></span>")
          .addClass ("material-symbols-outlined")
          .attr ("title", _("Snap to grid."))
+         .css ({ transform: "scale(0.9)" })
          .text ("grid_4x4")
          .appendTo (this .toolbar)
          .on ("mouseup", () => this .setSnapToGrid (!this .config .global .snapToGrid));
+
+      $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
+
+      this .addConnectedNodesButton = $("<span></span>")
+         .addClass ("material-symbols-outlined")
+         .attr ("title", _("Add connected nodes."))
+         .css ({ transform: "scale(0.9)" })
+         .text ("hub")
+         .appendTo (this .toolbar)
+         .on ("mouseup", () => this .setAddConnectedNodes (!this .config .global .addConnectedNodes));
 
       this .left = $("<div></div>")
          .addClass ("route-graph-left")
@@ -116,6 +127,7 @@ module .exports = class RouteGraph extends Interface
       if (active)
       {
          this .setSnapToGrid (this .config .global .snapToGrid);
+         this .setAddConnectedNodes (this .config .global .addConnectedNodes);
       }
    }
 
@@ -204,6 +216,11 @@ module .exports = class RouteGraph extends Interface
    setAddConnectedNodes (addConnectedNodes)
    {
       this .config .global .addConnectedNodes = addConnectedNodes;
+
+      if (addConnectedNodes)
+         this .addConnectedNodesButton .addClass ("active");
+      else
+         this .addConnectedNodesButton .removeClass ("active");
    }
 
    updatePages ()
