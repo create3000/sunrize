@@ -701,26 +701,31 @@ module .exports = class RouteGraph extends Interface
 
    addNodeElement (node, { x, y })
    {
-      node .getLive () .addInterest ("nodeLive", this, node .getId ());
+      const id = node .getId ();
 
-      node .name_changed     .addInterest ("updateNodeHeader", this, node .getId ());
-      node .typeName_changed .addInterest ("updateNodeHeader", this, node .getId ());
+      node .getLive () .addInterest ("nodeLive", this, id);
 
-      node .getPredefinedFields ()  .addInterest ("updateNodeElement", this, node .getId ());
-      node .getUserDefinedFields () .addInterest ("updateNodeElement", this, node .getId ());
+      node .name_changed     .addInterest ("updateNodeHeader", this, id);
+      node .typeName_changed .addInterest ("updateNodeHeader", this, id);
+
+      node .getPredefinedFields ()  .addInterest ("updateNodeElement", this, id);
+      node .getUserDefinedFields () .addInterest ("updateNodeElement", this, id);
+
+      if (node instanceof X3D .X3DImportedNodeProxy)
+         node .getImportedNode () .getInlineNode () .getLoadState () .addInterest ("updateNodeElement", this, id);
 
       const element = $("<div></div>")
          .draggable ()
-         .data ("id", node .getId ())
-         .attr ("data-id", node .getId ())
+         .data ("id", id)
+         .attr ("data-id", id)
          .attr ("tabindex", 0)
          .css ("position", "")
          .css ({ left: x, top: y })
          .addClass ("node")
-         .on ("mousedown", () => this .raiseNode (node .getId ()))
-         .on ("mousedown", () => this .focusNode (node .getId ()))
-         .on ("drag", (event, ui) => this .moveNode (node .getId (), ui .position))
-         .on ("contextmenu", event => this .showContextMenu (event, node .getId ()));
+         .on ("mousedown", () => this .raiseNode (id))
+         .on ("mousedown", () => this .focusNode (id))
+         .on ("drag", (event, ui) => this .moveNode (id, ui .position))
+         .on ("contextmenu", event => this .showContextMenu (event, id));
 
       if (node instanceof X3D .X3DImportedNodeProxy)
          element .addClass ("imported-node");
@@ -756,7 +761,7 @@ module .exports = class RouteGraph extends Interface
          .addClass (["material-symbols-outlined", "button", "arrow"])
          .text ("left_click")
          .attr ("title", _("Select node."))
-         .on ("mouseup", () => this .selectNode (node .getId ()))
+         .on ("mouseup", () => this .selectNode (id))
          .appendTo (header);
 
       const fieldsElement = $("<ul></ul>")
@@ -847,15 +852,20 @@ module .exports = class RouteGraph extends Interface
 
    removeNodeElement (node)
    {
+      const id = node .getId ();
+
       node .getLive () .removeInterest ("nodeLive", this);
 
-      node .name_changed     .removeInterest ("updateNodeHeader", this, node .getId ());
-      node .typeName_changed .removeInterest ("updateNodeHeader", this, node .getId ());
+      node .name_changed     .removeInterest ("updateNodeHeader", this, id);
+      node .typeName_changed .removeInterest ("updateNodeHeader", this, id);
 
       node .getPredefinedFields ()  .removeInterest ("updateNodeElement", this);
       node .getUserDefinedFields () .removeInterest ("updateNodeElement", this);
 
-      this .nodes .find (`.node[data-id=${node .getId ()}]`) .remove ();
+      if (node instanceof X3D .X3DImportedNodeProxy)
+         node .getImportedNode () .getInlineNode () .getLoadState () .removeInterest ("updateNodeElement", this);
+
+      this .nodes .find (`.node[data-id=${id}]`) .remove ();
 
       for (const field of node .getFields ())
          field .removeRouteCallback (this);
