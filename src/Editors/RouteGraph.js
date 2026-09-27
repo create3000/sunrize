@@ -41,7 +41,7 @@ module .exports = class RouteGraph extends Interface
          .attr ("title", _("Add new Logic."))
          .text ("add")
          .appendTo (this .toolbar)
-         .on ("click", () => this .addPage ());
+         .on ("mouseup", () => this .addPage ());
 
       this .left = $("<div></div>")
          .addClass ("route-graph-left")
@@ -176,7 +176,7 @@ module .exports = class RouteGraph extends Interface
          // Add tab.
          $("<li></li>")
             .data ("id", id)
-            .on ("click", () => this .top .tabs ("option", "active", id))
+            .on ("mouseup", () => this .top .tabs ("option", "active", id))
             .append ($("<a></a>")
                .addClass ("text")
                .attr ("href", `#routing-page-${id}-tab`)
@@ -185,7 +185,7 @@ module .exports = class RouteGraph extends Interface
             .append ($("<span></span>")
                .addClass (["material-icons", "button"])
                .text ("close")
-               .on ("click", () => this .closePage (id)))
+               .on ("mouseup", () => this .closePage (id)))
             .appendTo (this .tabs);
 
          // Add hidden empty panel.
@@ -781,6 +781,7 @@ module .exports = class RouteGraph extends Interface
 
             const fieldElement = $("<li></li>")
                .attr ("name", field .getName ())
+               .attr ("type-name", field .getTypeName ())
                .addClass ("field");
 
             if (i)
@@ -792,6 +793,7 @@ module .exports = class RouteGraph extends Interface
             {
                $("<div></div>")
                   .addClass ("input")
+                  .on ("mouseup", () => this .selectInput (id, field .getName ()))
                   .appendTo (fieldElement);
             }
 
@@ -809,6 +811,7 @@ module .exports = class RouteGraph extends Interface
             {
                $("<div></div>")
                   .addClass ("output")
+                  .on ("mouseup", () => this .selectOutput (id, field .getName ()))
                   .appendTo (fieldElement);
             }
          }
@@ -970,6 +973,16 @@ module .exports = class RouteGraph extends Interface
          return;
 
       this .removeNode (id);
+   }
+
+   selectInput (id, fieldName)
+   {
+      console .log ("selectInput", id, fieldName)
+   }
+
+   selectOutput (id, fieldName)
+   {
+      console .log ("selectOutput", id, fieldName)
    }
 
    resizeCanvas ()
