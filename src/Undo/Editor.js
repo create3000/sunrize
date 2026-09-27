@@ -2336,6 +2336,20 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       undoManager .beginUndo (_("Remove Field »%s«"), field .getName ());
 
+      switch (field .getType ())
+      {
+         case X3D .X3DConstants .SFNode:
+         {
+            this .setFieldValue (executionContext, node, field, null, undoManager);
+            break;
+         }
+         case X3D .X3DConstants .FNode:
+         {
+            this .setFieldValue (executionContext, node, field, new X3D .MFNode (), undoManager);
+            break;
+         }
+      }
+
       this .setUserDefinedFields (executionContext, node, fields, undoManager);
 
       undoManager .endUndo ();
@@ -3641,13 +3655,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          switch (field .getType ())
          {
             case X3D .X3DConstants .SFNode:
-            {
                return !field .getValue ();
-            }
             case X3D .X3DConstants .MFNode:
-            {
                return this .#removeEmptyGroupsFromArray (node, field, undoManager);
-            }
             default:
                return true;
          }
