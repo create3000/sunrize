@@ -1,10 +1,11 @@
 "use strict";
 
 const
-   Tabs    = require ("../Controls/Tabs"),
-   Console = require ("../Editors/Console"),
-   $       = require ("jquery"),
-   _       = require ("./GetText");
+   Tabs       = require ("../Controls/Tabs"),
+   Console    = require ("../Editors/Console"),
+   RouteGraph = require ("../Editors/RouteGraph"),
+   $          = require ("jquery"),
+   _          = require ("./GetText");
 
 module .exports = class Footer extends Tabs
 {
@@ -26,17 +27,15 @@ module .exports = class Footer extends Tabs
       this .addIconTextTab ("animation-editor","animation", _("Animation Editor"))
          .find (".material-icons") .css ("color", "hsl(246, 40%, 48%)");
 
-      if (process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT")
-      {
-         this .addIconTextTab ("route-graph","route", _("Route Graph"))
-            .find (".material-icons") .css ("color", "hsl(281, 40%, 48%)");
-      }
+      this .addIconTextTab ("route-graph","route", _("Route Graph"))
+         .find (".material-icons") .css ("color", "hsl(281, 40%, 48%)");
 
       $("<div></div>")
          .addClass (["toolbar", "vertical-toolbar"])
          .appendTo (this .element);
 
-      this .console = new Console (this .getPanel ("console"));
+      this .console    = new Console (this .getPanel ("console"));
+      this .routeGraph = new RouteGraph (this .getPanel ("route-graph"));
    }
 
    initTab (panel)
@@ -55,13 +54,6 @@ module .exports = class Footer extends Tabs
             const AnimationEditor = require ("../Editors/AnimationEditor");
 
             this .animationEditor = new AnimationEditor (panel);
-            break;
-         }
-         case "route-graph":
-         {
-            const RouteGraph = require ("../Editors/RouteGraph");
-
-            this .routeGraph = new RouteGraph (panel);
             break;
          }
       }
