@@ -60,6 +60,7 @@ module .exports = class RouteGraph extends Interface
       this .nodes = $("<div></div>")
          .addClass ("nodes")
          .on ("mouseup", () => this .clearInputOutput ())
+         .on ("mouseup", event => this .selectRoute (event))
          .on ("scroll", () => this .scrollNodes ())
          .on ("contextmenu", event => this .showContextMenu (event))
          .appendTo (this .left);
@@ -971,10 +972,6 @@ module .exports = class RouteGraph extends Interface
    {
       const node = this .getNode (id);
 
-      // // DEBUG
-      // if (!node)
-      //    return;
-
       if (node .isLive ())
          return;
 
@@ -1120,29 +1117,34 @@ module .exports = class RouteGraph extends Interface
       this .requestUpdateCanvas ();
    }
 
+   selectRoute (event)
+   {
+      const pointer = this .getRelativePosition (event, false);
+
+      console .log (... pointer);
+   }
+
    #selectedRoutes = new Set ();
 
-   addRouteSelection (routes)
+   addRouteSelection (route)
    {
-      for (const route of routes)
-         this .#selectedRoutes .add (route);
+      this .#selectedRoutes .add (route);
 
       this .requestUpdateCanvas ();
    }
 
-   removeRouteSelection (routes)
+   removeRouteSelection (route)
    {
-      for (const route of routes)
-         this .#selectedRoutes .delete (route);
+      this .#selectedRoutes .delete (route);
 
       this .requestUpdateCanvas ();
    }
 
-   setRouteSelection (routes)
+   setRouteSelection (route)
    {
       this .#selectedRoutes .clear ();
 
-      this .addRouteSelection (routes);
+      this .addRouteSelection (route);
    }
 
    clearRouteSelection ()
@@ -1255,9 +1257,6 @@ module .exports = class RouteGraph extends Interface
          offset     = this .nodes .offset (),
          scrollLeft = this .nodes .scrollLeft (),
          scrollTop  = this .nodes .scrollTop ();
-
-      // // DEBUG
-      // nodes .delete (undefined);
 
       const
          color         = this .#style .getPropertyValue ("--route-color"),

@@ -133,7 +133,6 @@ module .exports = class OutlineView extends Interface
 
       // Clear tree.
 
-      this .objects .clear ();
       this .objects .set (this .executionContext .getId (), this .executionContext);
       this .sceneGraph .empty ();
       this .sceneGraph .attr ("node-id", this .executionContext .getId ());
