@@ -144,7 +144,7 @@ module .exports = class RouteGraph extends Interface
          },
          { type: "separator" },
          {
-            label: _("Deselect All Routes"),
+            label: _("Deselect Routes"),
             args: ["clearRouteSelection"],
          },
          {
@@ -1421,7 +1421,9 @@ module .exports = class RouteGraph extends Interface
 
       // Draw arrow
 
-      const arrow = this .getRouteArrow (new X3D .Vector2 (x0, y0), new X3D .Vector2 (x3, y3));
+      const
+         arrowRotation = this .getBezierTangentAngle (x0, y0, x1, y1, x2, y2, x3, y3, 0.5),
+         arrow         = this .getRouteArrow (new X3D .Vector2 (x0, y0), new X3D .Vector2 (x3, y3), arrowRotation);
 
       context .beginPath ();
       context .moveTo (arrow [0] .x, arrow [0] .y);
@@ -1430,7 +1432,7 @@ module .exports = class RouteGraph extends Interface
       context .fill ();
    }
 
-   getRouteArrow (sourcePosition, destinationPosition)
+   getRouteArrow (sourcePosition, destinationPosition, rotation)
    {
       // Intersect with arrow
 
@@ -1440,18 +1442,30 @@ module .exports = class RouteGraph extends Interface
          p3 = new X3D .Vector2 (10 / 9 * 14, 7),
          c  = p1 .copy () .add (p2) .add (p3) .divide (3) .negate (),
          t  = sourcePosition .copy () .add (destinationPosition) .divide (2),
-         d  = destinationPosition .copy () .subtract (sourcePosition),
-         s  = Math .sin (1 / d .x * Math .PI ** 2 / 2) * d .y / 2,
-         a  = d .x ? Math .atan2 (1, 1 / s) : Math .PI / 2,
-         q  = d .x >= 0 ? 0.12 : -0.12, // Correction term for rotation.
-         r  = d .y >= 0 ? a - q : a + Math .PI + q,
          m  = new X3D .Matrix3 ();
 
       m .translate (t);
-      m .rotate (r);
+      m .rotate (rotation);
       m .translate (c);
 
       return [m .multVecMatrix (p1), m .multVecMatrix (p2), m .multVecMatrix (p3)];
+   }
+
+   getBezierTangentAngle (x0, y0, x1, y1, x2, y2, x3, y3, t)
+   {
+      const mt = 1 - t;
+
+      // Get coefficients for the first derivative of a cubic Bézier curve.
+      const a = 3 * mt * mt;
+      const b = 6 * mt * t;
+      const c = 3 * t * t;
+
+      // Calculate the tangent vector (dx, dy).
+      const dx = a * (x1 - x0) + b * (x2 - x1) + c * (x3 - x2);
+      const dy = a * (y1 - y0) + b * (y2 - y1) + c * (y3 - y2);
+
+      // Return the angle in radians (-PI to PI).
+      return Math .atan2 (dy, dx);
    }
 
    getSourcePosition (offset, sourceElement)
