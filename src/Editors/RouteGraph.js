@@ -1001,9 +1001,7 @@ module .exports = class RouteGraph extends Interface
             offset                 = this .nodes .offset (),
             destinationNodeElement = this .nodes .find (`.node[data-id=${node .getId ()}]`),
             destinationElement     = destinationNodeElement .find (`.field[name="${field .getName ()}"] .input`),
-            destinationOffset      = destinationElement .offset (),
-            toX                    = destinationOffset .left - offset .left + destinationElement .width () / 2,
-            toY                    = destinationOffset .top - offset .top + destinationElement .height () / 2;
+            [toX, toY]             = this .getDestinationPosition (offset, destinationElement);
 
          this .#input = { node, field, toX, toY };
 
@@ -1030,9 +1028,7 @@ module .exports = class RouteGraph extends Interface
             offset            = this .nodes .offset (),
             sourceNodeElement = this .nodes .find (`.node[data-id=${node .getId ()}]`),
             sourceElement     = sourceNodeElement .find (`.field[name="${field .getName ()}"] .output`),
-            sourceOffset      = sourceElement .offset (),
-            fromX             = sourceOffset .left - offset .left + sourceElement .width () / 2,
-            fromY             = sourceOffset .top - offset .top + sourceElement .height () / 2;
+            [fromX, fromY]    = this .getSourcePosition (offset, sourceElement);
 
          this .#output = { node, field, fromX, fromY };
 
@@ -1186,12 +1182,8 @@ module .exports = class RouteGraph extends Interface
                   destinationElement     = destinationNodeElement .find (`.field[name="${destinationField .getName ()}"] .input`);
 
                const
-                  sourceOffset      = sourceElement .offset (),
-                  destinationOffset = destinationElement .offset (),
-                  fromX             = sourceOffset .left - offset .left + sourceElement .width () / 2,
-                  fromY             = sourceOffset .top - offset .top + sourceElement .height () / 2,
-                  toX               = destinationOffset .left - offset .left + destinationElement .width () / 2,
-                  toY               = destinationOffset .top - offset .top + destinationElement .height () / 2;
+                  [fromX, fromY] = this .getSourcePosition (offset, sourceElement),
+                  [toX, toY]     = this .getDestinationPosition (offset, destinationElement);
 
 					this .drawRoute (context, fromX, fromY, toX, toY);
             }
@@ -1258,6 +1250,26 @@ module .exports = class RouteGraph extends Interface
       m .translate (c);
 
       return [m .multVecMatrix (p1), m .multVecMatrix (p2), m .multVecMatrix (p3)];
+   }
+
+   getSourcePosition (offset, sourceElement)
+   {
+      const
+         sourceOffset = sourceElement .offset (),
+         fromX        = sourceOffset .left - offset .left + sourceElement .width () / 2,
+         fromY        = sourceOffset .top - offset .top + sourceElement .height () / 2;
+
+      return [fromX, fromY];
+   }
+
+   getDestinationPosition (offset, destinationElement)
+   {
+      const
+         destinationOffset = destinationElement .offset (),
+         toX               = destinationOffset .left - offset .left + destinationElement .width () / 2,
+         toY               = destinationOffset .top - offset .top + destinationElement .height () / 2;
+
+      return [toX, toY];
    }
 
    dragEnter (event)
