@@ -1659,6 +1659,7 @@ body.light .console-output .selected {
   transform: translate(-50%, -50%);
   font-size: x-large;
   color: var(--system-gray3);
+  text-align: center;
 }
 
 #route-graph .node {
