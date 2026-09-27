@@ -869,12 +869,12 @@ module .exports = class RouteGraph extends Interface
 
    updateNodeElement (id)
    {
-      const
-         node    = this .getNode (id),
-         element = this .nodes .find (`.node[node-id=${id}]`);
+      const element = this .nodes .find (`.node[node-id=${id}]`);
 
       if (!element .length)
          return;
+
+      const node = this .getNode (id);
 
       const
          x = parseFloat (element .css ("left")),
@@ -887,12 +887,12 @@ module .exports = class RouteGraph extends Interface
 
    updateNodeHeader (id)
    {
-      const
-         node    = this .getNode (id),
-         element = this .nodes .find (`.node[node-id=${id}]`);
+      const element = this .nodes .find (`.node[node-id=${id}]`);
 
       if (!element .length)
          return;
+
+      const node = this .getNode (id);
 
       element .find (".header .name")      .text (node .getDisplayName () || _("<unnamed>"));
       element .find (".header .type-name") .text (node .getTypeName ());
@@ -990,13 +990,14 @@ module .exports = class RouteGraph extends Interface
 
       for (const { id } of page .nodes)
       {
-         const
-            node             = this .getNode (id),
-            executionContext = node .getExecutionContext (),
-            element          = this .nodes .find (`.imported-node[node-id=${id}]`);
+         const element = this .nodes .find (`.imported-node[node-id=${id}]`);
 
          if (!element .length)
             continue;
+
+         const
+            node             = this .getNode (id),
+            executionContext = node .getExecutionContext ();
 
          if (executionContext .importedNodes .find (importedNode => importedNode .getExportedNode () === node))
             continue;
