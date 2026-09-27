@@ -247,7 +247,7 @@ module .exports = class RouteGraph extends Interface
             ids .add (node .id);
       }
 
-      const paths = this .getPathsFromNodes (this .browser .currentScene .rootNodes, ids);
+      const paths = this .getPathsFromScene (this .browser .currentScene, ids);
 
       for (const page of pages)
       {
@@ -265,7 +265,35 @@ module .exports = class RouteGraph extends Interface
       this .config .file .pages = pages;
    }
 
-   getPathsFromNodes (nodes, ids, path = [ ], paths = new Map (), seen = new Set ())
+   getPathsFromScene (scene, ids, path = [ ], paths = new Map (), seen = new Set ())
+   {
+      // protos
+
+      path .push ("protos");
+
+      for (const proto of scene .protos)
+      {
+         path .push (proto .name);
+
+         this .getPathsFromScene (proto .getBody (), ids, path, paths, seen);
+
+         path .pop ();
+      }
+
+      path .pop ();
+
+      // rootNodes
+
+      path .push ("rootNodes");
+
+      this .getPathsFromNodes (scene .rootNodes, ids, path, paths, seen);
+
+      path .pop ();
+
+      return paths;
+   }
+
+   getPathsFromNodes (nodes, ids, path, paths, seen)
    {
       for (const [i, node] of nodes .entries ())
       {
@@ -275,8 +303,6 @@ module .exports = class RouteGraph extends Interface
 
          path .pop ();
       }
-
-      return paths;
    }
 
    getPathsFromNode (node, ids, path, paths, seen)
@@ -328,7 +354,7 @@ module .exports = class RouteGraph extends Interface
             paths .add (node .path);
       }
 
-      const ids = this .getIdsFromNodes (this .browser .currentScene .rootNodes, paths);
+      const ids = this .getIdsFromScene (this .browser .currentScene, paths);
 
       for (const page of pages)
       {
@@ -341,7 +367,35 @@ module .exports = class RouteGraph extends Interface
       this .config .file .pages = pages;
    }
 
-   getIdsFromNodes (nodes, paths, path = [ ], ids = new Map (), seen = new Set ())
+   getIdsFromScene (scene, paths, path = [ ], ids = new Map (), seen = new Set ())
+   {
+      // protos
+
+      path .push ("protos");
+
+      for (const proto of scene .protos)
+      {
+         path .push (proto .name);
+
+         this .getIdsFromScene (proto .getBody (), paths, path, ids, seen);
+
+         path .pop ();
+      }
+
+      path .pop ();
+
+      // rootNodes
+
+      path .push ("rootNodes");
+
+      this .getIdsFromNodes (scene .rootNodes, paths, path, ids, seen);
+
+      path .pop ();
+
+      return ids;
+   }
+
+   getIdsFromNodes (nodes, paths, path, ids, seen)
    {
       for (const [i, node] of nodes .entries ())
       {
@@ -351,8 +405,6 @@ module .exports = class RouteGraph extends Interface
 
          path .pop ();
       }
-
-      return ids;
    }
 
    getIdsFromNode (node, paths, path, ids, seen)
