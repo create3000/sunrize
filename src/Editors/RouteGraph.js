@@ -131,14 +131,19 @@ module .exports = class RouteGraph extends Interface
             args: ["setAddConnectedNodes", !this .config .global .addConnectedNodes],
          },
          {
-            label: _("Select Node"),
+            label: _("Find Node"),
             enabled: !! id,
-            args: ["selectNode", id],
+            args: ["findNode", id],
          },
          {
             label: _("Remove Node"),
             enabled: !! id,
             args: ["removeNode", id],
+         },
+         { type: "separator" },
+         {
+            label: _("Deselect All Routes"),
+            args: ["clearRouteSelection"],
          },
       ];
 
@@ -768,8 +773,8 @@ module .exports = class RouteGraph extends Interface
       $("<span></span>")
          .addClass (["material-symbols-outlined", "button", "arrow"])
          .text ("left_click")
-         .attr ("title", _("Select node."))
-         .on ("mouseup", () => this .selectNode (id))
+         .attr ("title", _("Find node."))
+         .on ("mouseup", () => this .findNode (id))
          .appendTo (header);
 
       const fieldsElement = $("<ul></ul>")
@@ -935,7 +940,7 @@ module .exports = class RouteGraph extends Interface
       this .requestUpdateCanvas ();
    }
 
-   selectNode (id)
+   findNode (id)
    {
       const
          node          = this .getNode (id),
@@ -1119,9 +1124,58 @@ module .exports = class RouteGraph extends Interface
 
    selectRoute (event)
    {
-      const pointer = this .getRelativePosition (event, false);
+      const
+         active  = this .top .tabs ("option", "active"),
+         pages   = this .config .file .pages,
+         page    = pages [active],
+         nodes   = new Set (page .nodes .map (node => this .getNode (node .id))),
+         offset  = this .nodes .offset (),
+         pointer = this .getRelativePosition (event, false);
 
-      console .log (... pointer);
+      for (const sourceNode of nodes)
+      {
+         const sourceNodeElement = this .nodes .find (`.node[node-id=${sourceNode .getId ()}]`);
+
+         for (const sourceField of sourceNode .getFields ())
+         {
+            for (const route of sourceField .getOutputRoutes ())
+            {
+               const destinationNode = route .getDestinationNode ();
+
+               if (!nodes .has (destinationNode))
+                  continue;
+
+               const
+                  sourceElement          = sourceNodeElement .find (`.field[name="${sourceField .getName ()}"] .output`),
+                  destinationField       = destinationNode .getField (route .getDestinationField ()),
+                  destinationNodeElement = this .nodes .find (`.node[node-id=${destinationNode .getId ()}]`),
+                  destinationElement     = destinationNodeElement .find (`.field[name="${destinationField .getName ()}"] .input`);
+
+               const
+                  [fromX, fromY] = this .getSourcePosition (offset, sourceElement),
+                  [toX, toY]     = this .getDestinationPosition (offset, destinationElement);
+
+               const arrow = this .getRouteArrow (new X3D .Vector2 (fromX, fromY), new X3D .Vector2 (toX, toY));
+
+               if (X3D .Triangle2 .isPointInTriangle (pointer, ... arrow))
+               {
+                  if (event .shiftKey)
+                  {
+                     if (this .isRouteSelected (route))
+                        this .removeRouteSelection (route);
+                     else
+                        this .addRouteSelection (route);
+                  }
+                  else
+                  {
+                     this .setRouteSelection (route);
+                  }
+               }
+            }
+         }
+      }
+
+      this .requestUpdateCanvas ();
    }
 
    #selectedRoutes = new Set ();
