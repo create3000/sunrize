@@ -616,7 +616,7 @@ module .exports = class RouteGraph extends Interface
 
    setNode (node)
    {
-      return this .outlineEditor .objects .set (node .getId (), node .valueOf ());
+      this .outlineEditor .objects .set (node .getId (), node .valueOf ());
    }
 
    addNode (node, { x, y })
@@ -717,7 +717,7 @@ module .exports = class RouteGraph extends Interface
       {
          // These events are connected and must never be removed.
          node .getImportedNode () .getInlineNode () .getLoadState () .addInterest ("updateNodeElement", this, id);
-         node .getExecutionContext () .importedNodes .addInterest ("updateImportedNodes", this, id);
+         node .getExecutionContext () .importedNodes .addInterest ("updateImportedNodes", this);
       }
 
       const element = $("<div></div>")
@@ -981,20 +981,32 @@ module .exports = class RouteGraph extends Interface
       this .removeNode (id);
    }
 
-   updateImportedNodes (id)
+   updateImportedNodes ()
    {
       const
-         node             = this .getNode (id),
-         executionContext = node .getExecutionContext (),
-         element          = this .nodes .find (`.node[node-id=${id}]`);
+         active = this .config .file .activePage,
+         pages  = this .config .file .pages,
+         page   = pages [active];
 
-      if (!element .length)
-         return;
+      for (const { id } of page .nodes)
+      {
+         const
+            node             = this .getNode (id),
+            executionContext = node .getExecutionContext (),
+            element          = this .nodes .find (`.node[node-id=${id}]`);
 
-      if (executionContext .importedNodes .find (importedNode => importedNode .getExportedNode () === node))
-         return;
+         if (!element .length)
+            continue;
 
-      this .removeNode (id);
+         if (!element .is (".imported-node"))
+            continue;
+
+         if (executionContext .importedNodes .find (importedNode => importedNode .getExportedNode () === node))
+            continue;
+
+         this .removeNode (id);
+      }
+
       this .requestUpdateCanvas ();
    }
 
