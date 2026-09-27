@@ -45,6 +45,15 @@ module .exports = class RouteGraph extends Interface
          .appendTo (this .toolbar)
          .on ("mouseup", () => this .addPage ());
 
+      $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
+
+      this .snapToGridButton = $("<span></span>")
+         .addClass ("material-symbols-outlined")
+         .attr ("title", _("Snap to grid."))
+         .text ("grid_4x4")
+         .appendTo (this .toolbar)
+         .on ("mouseup", () => this .setSnapToGrid (!this .config .global .snapToGrid));
+
       this .left = $("<div></div>")
          .addClass ("route-graph-left")
          .appendTo (this .editor);
@@ -52,8 +61,6 @@ module .exports = class RouteGraph extends Interface
       this .canvas = $("<canvas></canvas>")
          .addClass ("routes")
          .appendTo (this .left);
-
-      electron .ipcRenderer .on ("route-graph", (event, key, ... args) => this [key] (... args));
 
       this .resizer = new ResizeObserver (() => this .resizeCanvas ());
       this .resizer .observe (this .left [0]);
@@ -72,6 +79,9 @@ module .exports = class RouteGraph extends Interface
          .addClass ("title")
          .on ("input", () => this .updateTitle ())
          .appendTo (this .nodes);
+
+      electron .ipcRenderer .on ("activate", (event, value) => this .activate (value));
+      electron .ipcRenderer .on ("route-graph", (event, key, ... args) => this [key] (... args));
 
       electron .ipcRenderer .on ("close",        () => this .savePages ());
       $(window)             .on ("beforeunload", () => this .savePages ());
@@ -96,8 +106,17 @@ module .exports = class RouteGraph extends Interface
       // WIP
       // this .config .file .pages = [ ];
 
+      this .activate (true);
       this .restorePages ();
       this .updatePages ();
+   }
+
+   activate (active)
+   {
+      if (active)
+      {
+         this .setSnapToGrid (this .config .global .snapToGrid);
+      }
    }
 
    colorScheme (/* shouldUseDarkColors */)
@@ -175,6 +194,11 @@ module .exports = class RouteGraph extends Interface
    setSnapToGrid (snapToGrid)
    {
       this .config .global .snapToGrid = snapToGrid;
+
+      if (snapToGrid)
+         this .snapToGridButton .addClass ("active");
+      else
+         this .snapToGridButton .removeClass ("active");
    }
 
    setAddConnectedNodes (addConnectedNodes)
