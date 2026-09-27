@@ -1161,7 +1161,20 @@ module .exports = class RouteGraph extends Interface
                   [fromX, fromY] = this .getSourcePosition (offset, sourceElement),
                   [toX, toY]     = this .getDestinationPosition (offset, destinationElement);
 
-               const arrow = this .getRouteArrow (new X3D .Vector2 (fromX, fromY), new X3D .Vector2 (toX, toY));
+               const
+                  wp = (toX - fromX) * 0.5,
+                  x0 = fromX,
+                  y0 = fromY,
+                  x1 = fromX + wp,
+                  y1 = fromY,
+                  x2 = toX - wp,
+                  y2 = toY,
+                  x3 = toX,
+                  y3 = toY;
+
+               const
+                  arrowRotation = this .getBezierTangentAngle (x0, y0, x1, y1, x2, y2, x3, y3, 0.5),
+                  arrow         = this .getRouteArrow (new X3D .Vector2 (x0, y0), new X3D .Vector2 (x3, y3), arrowRotation);
 
                if (X3D .Triangle2 .isPointInTriangle (pointer, ... arrow))
                {
