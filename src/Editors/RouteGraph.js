@@ -749,6 +749,7 @@ module .exports = class RouteGraph extends Interface
          .addClass ("node")
          .on ("mousedown", () => this .raiseNode (id))
          .on ("mouseup", event => this .selectNode (event, id))
+         .on ("dragstart", (event, ui) => this .moveNodeStart (id))
          .on ("drag", (event, ui) => this .moveNode (id, ui .position))
          .on ("contextmenu", event => this .showContextMenu (event, id));
 
@@ -941,6 +942,16 @@ module .exports = class RouteGraph extends Interface
 
    #movedNode = false;
 
+   moveNodeStart (id)
+   {
+      const node = this .getNode (id);
+
+      this .#movedNode = true;
+
+      if (!this .isNodeSelected (node))
+         this .setNodeSelection (node);
+   }
+
    moveNode (id, position)
    {
       const
@@ -948,8 +959,6 @@ module .exports = class RouteGraph extends Interface
          pages  = this .config .file .pages,
          page   = pages [active],
          node   = page .nodes .find (node => node .id === id);
-
-      this .#movedNode = true;
 
       position .left = Math .max (position .left, 0);
       position .top  = Math .max (position .top,  0);
@@ -964,9 +973,6 @@ module .exports = class RouteGraph extends Interface
       node .y = position .top;
 
       this .config .file .pages = pages;
-
-      if (!this .isNodeSelected (this .getNode (id)))
-         this .setNodeSelection (this .getNode (id));
 
       this .requestUpdateCanvas ();
    }
