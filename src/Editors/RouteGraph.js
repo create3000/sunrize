@@ -59,7 +59,7 @@ module .exports = class RouteGraph extends Interface
       this .nodes = $("<div></div>")
          .addClass ("nodes")
          .on ("mousemove", event => this .mouseMove (event))
-         .on ("mousedown", () => this .clearInputOutput ())
+         .on ("mouseup", () => this .clearInputOutput ())
          .on ("scroll", () => this .scrollNodes ())
          .on ("contextmenu", event => this .showContextMenu (event))
          .appendTo (this .left);
