@@ -1109,9 +1109,7 @@ module .exports = class RouteGraph extends Interface
       this .#input  = null;
       this .#output = null;
 
-      this .nodes
-         .off ("mousemove")
-         .find (`.input, .output`) .css ("visibility", "");
+      this .nodes .find (`.input, .output`) .css ("visibility", "");
 
       this .requestUpdateCanvas ();
    }
