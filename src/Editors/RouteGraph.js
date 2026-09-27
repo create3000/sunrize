@@ -91,7 +91,7 @@ module .exports = class RouteGraph extends Interface
          .on ("input", () => this .updateTitle ())
          .appendTo (this .nodes);
 
-      this .placeHolder = $("<div></div>")
+      this .placeholder = $("<div></div>")
          .addClass ("placeholder")
          .text (_("Drag and drop nodes here."))
          .appendTo (this .nodes);
@@ -653,7 +653,7 @@ module .exports = class RouteGraph extends Interface
       this .requestUpdateCanvas ();
 
       if (!pages [active] .nodes .length)
-         this .placeHolder .show ();
+         this .placeholder .removeClass ("hidden");
    }
 
    updateTitle ()
@@ -912,7 +912,7 @@ module .exports = class RouteGraph extends Interface
          .appendTo (element);
 
       this .nodes .append (element);
-      this .placeHolder .hide ();
+      this .placeholder .addClass ("hidden");
    }
 
    removeNode (id)
@@ -931,7 +931,7 @@ module .exports = class RouteGraph extends Interface
       this .requestUpdateCanvas ();
 
       if (!page .nodes .length)
-         this .placeHolder .show ();
+         this .placeholder .removeClass ("hidden");
    }
 
    removeNodeElement (node)
