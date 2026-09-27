@@ -1305,7 +1305,7 @@ module .exports = class RouteGraph extends Interface
    getRelativePosition (event)
    {
       const
-         bounds = event .target .getBoundingClientRect (),
+         bounds = this .nodes .offset (),
          x      = event .clientX - bounds .left + this .nodes .scrollLeft (),
          y      = event .clientY - bounds .top  + this .nodes .scrollTop ();
 
