@@ -749,7 +749,7 @@ module .exports = class RouteGraph extends Interface
          .addClass ("node")
          .on ("mousedown", () => this .raiseNode (id))
          .on ("mouseup", event => this .selectNode (event, id))
-         .on ("dragstart", (event, ui) => this .moveNodeStart (id))
+         .on ("dragstart", () => this .moveNodeStart (id))
          .on ("drag", (event, ui) => this .moveNode (id, ui .position))
          .on ("contextmenu", event => this .showContextMenu (event, id));
 
@@ -960,6 +960,8 @@ module .exports = class RouteGraph extends Interface
          page   = pages [active],
          node   = page .nodes .find (node => node .id === id);
 
+      // Constrain position.
+
       position .left = Math .max (position .left, 0);
       position .top  = Math .max (position .top,  0);
 
@@ -973,6 +975,24 @@ module .exports = class RouteGraph extends Interface
       node .y = position .top;
 
       this .config .file .pages = pages;
+
+      // Move selected nodes.
+
+      const
+         element = this .nodes .find (`.node[node-id=${id}]`),
+         others  = this .nodes .find (`.node.selected:not([node-id=${id}])`);
+
+      const
+         deltaX = position .left - (parseInt (element .css ("left")) || 0),
+         deltaY = position .top  - (parseInt (element .css ("top"))  || 0);
+
+      for (const other of others)
+      {
+         const otherElement = $(other);
+
+         otherElement .css ("left", (parseInt (otherElement .css ("left")) || 0) + deltaX);
+         otherElement .css ("top",  (parseInt (otherElement .css ("top"))  || 0) + deltaY);
+      }
 
       this .requestUpdateCanvas ();
    }
