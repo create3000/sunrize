@@ -1020,10 +1020,10 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       const routes = executionContext .getRoutes () .filter (route =>
       {
-         if (route .sourceNode === importedNode)
+         if (route .getSourceNode () === exportedNode)
             return true;
 
-         if (route .destinationNode === importedNode)
+         if (route .getDestinationNode () === exportedNode)
             return true;
 
          return false;
@@ -1086,13 +1086,13 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
          for (let { sourceNode, sourceField, destinationNode, destinationField } of routes)
          {
-            if (sourceNode === importedNode)
+            if (sourceNode === exportedNode)
                sourceNode = newImportedNode;
 
-            if (destinationNode === importedNode)
+            if (destinationNode === exportedNode)
                destinationNode = newImportedNode;
 
-            executionContext .addRoute (sourceNode, sourceField, destinationNode, destinationField);
+            this .addRoute (executionContext, sourceNode, sourceField, destinationNode, destinationField, undoManager);
          }
       });
 
