@@ -721,6 +721,7 @@ module .exports = class RouteGraph extends Interface
          .draggable ()
          .data ("id", id)
          .attr ("node-id", id)
+         .attr ("execution-context-id", node .getExecutionContext () .getId ())
          .attr ("tabindex", 0)
          .css ("position", "")
          .css ({ left: x, top: y })
@@ -1003,8 +1004,9 @@ module .exports = class RouteGraph extends Interface
       else
       {
          const
-            node  = this .getNode (id),
-            field = node .getField (fieldName);
+            node             = this .getNode (id),
+            field            = node .getField (fieldName),
+            executionContext = node .getExecutionContext ();
 
          const
             offset                 = this .nodes .offset (),
@@ -1017,6 +1019,9 @@ module .exports = class RouteGraph extends Interface
          this .#input = { node, field, toX: toX + scrollLeft, toY: toY + scrollTop };
 
          this .nodes .find (`.input, .field:not([type-name="${field .getTypeName ()}"]) .output`)
+            .css ("visibility", "hidden");
+
+         this .nodes .find (`.node:not([execution-context-id=${executionContext .getId ()}]) .output`)
             .css ("visibility", "hidden");
       }
    }
@@ -1041,8 +1046,9 @@ module .exports = class RouteGraph extends Interface
       else
       {
          const
-            node  = this .getNode (id),
-            field = node .getField (fieldName);
+            node             = this .getNode (id),
+            field            = node .getField (fieldName),
+            executionContext = node .getExecutionContext ();
 
          const
             offset            = this .nodes .offset (),
@@ -1055,6 +1061,9 @@ module .exports = class RouteGraph extends Interface
          this .#output = { node, field, fromX: fromX + scrollLeft, fromY: fromY + scrollTop };
 
          this .nodes .find (`.field:not([type-name="${field .getTypeName ()}"]) .input, .output`)
+            .css ("visibility", "hidden");
+
+         this .nodes .find (`.node:not([execution-context-id=${executionContext .getId ()}]) .input`)
             .css ("visibility", "hidden");
       }
    }
