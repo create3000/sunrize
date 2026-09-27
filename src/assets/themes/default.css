@@ -1660,7 +1660,7 @@ body.light .console-output .selected {
   font-size: x-large;
   color: var(--system-gray3);
   text-align: center;
-  opacity:1;
+  opacity: 1;
   transition: visibility 300ms, opacity 300ms ease-in-out;
 }
 
