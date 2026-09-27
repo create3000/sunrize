@@ -146,7 +146,7 @@ module .exports = class RouteGraph extends Interface
             args: ["selectAllNodes"],
          },
          {
-            label: _("Deselect Nodes"),
+            label: _("Deselect All Nodes"),
             args: ["clearNodeSelection"],
          },
          {
@@ -160,7 +160,7 @@ module .exports = class RouteGraph extends Interface
             args: ["selectAllRoutes"],
          },
          {
-            label: _("Deselect Routes"),
+            label: _("Deselect All Routes"),
             args: ["clearRouteSelection"],
          },
          {
@@ -1507,6 +1507,9 @@ module .exports = class RouteGraph extends Interface
          offset     = this .nodes .offset (),
          scrollLeft = this .nodes .scrollLeft (),
          scrollTop  = this .nodes .scrollTop ();
+
+      // DEBUG
+      nodes .delete (undefined);
 
       const
          color         = this .#style .getPropertyValue ("--route-color"),
