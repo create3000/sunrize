@@ -532,6 +532,9 @@ module .exports = class RouteGraph extends Interface
          pages  = this .config .file .pages,
          page   = pages [active];
 
+      this .clearNodeSelection ();
+      this .clearRouteSelection ();
+
       const currentNodes = Array .from (this .nodes .find (".node"), element => this .getNode ($(element) .data ("id")));
 
       for (const node of currentNodes)
@@ -594,8 +597,6 @@ module .exports = class RouteGraph extends Interface
 
       this .title .val (pages [active] .title);
 
-      this .clearNodeSelection ();
-      this .clearRouteSelection ();
       this .updateTitle ();
       this .restorePage ();
       this .requestUpdateCanvas ();
@@ -1556,6 +1557,9 @@ module .exports = class RouteGraph extends Interface
          }
       }
 
+      context .fillStyle   = color;
+      context .strokeStyle = color;
+
       if (this .#input)
          this .drawRoute (context, ... this .#pointer, this .#input .toX - scrollLeft, this .#input .toY - scrollTop);
 
@@ -1589,7 +1593,7 @@ module .exports = class RouteGraph extends Interface
          arrowRotation = this .getBezierTangentAngle (x0, y0, x1, y1, x2, y2, x3, y3, 0.5),
          arrow         = this .getRouteArrow (new X3D .Vector2 (x0, y0), new X3D .Vector2 (x3, y3), arrowRotation);
 
-      if (X3D .Triangle2 .isPointInTriangle (this .#pointer, ... arrow))
+      if (selectedColor && X3D .Triangle2 .isPointInTriangle (this .#pointer, ... arrow))
          context .fillStyle = selectedColor;
 
       context .beginPath ();
