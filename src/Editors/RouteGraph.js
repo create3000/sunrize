@@ -65,6 +65,7 @@ module .exports = class RouteGraph extends Interface
          .on ("dblclick", event => this .deleteRoute (event))
          .on ("scroll", () => this .scrollNodes ())
          .on ("contextmenu", event => this .showContextMenu (event))
+         .on ("mousemove", event => this .mouseMove (event))
          .appendTo (this .left);
 
       this .title = $("<input>")
@@ -1058,8 +1059,6 @@ module .exports = class RouteGraph extends Interface
 
          this .nodes .find (`.node:not([execution-context-id=${executionContext .getId ()}]) .output`)
             .css ("visibility", "hidden");
-
-         this .nodes .on ("mousemove", event => this .mouseMove (event));
       }
    }
 
@@ -1102,8 +1101,6 @@ module .exports = class RouteGraph extends Interface
 
          this .nodes .find (`.node:not([execution-context-id=${executionContext .getId ()}]) .input`)
             .css ("visibility", "hidden");
-
-         this .nodes .on ("mousemove", event => this .mouseMove (event));
       }
    }
 
@@ -1119,7 +1116,7 @@ module .exports = class RouteGraph extends Interface
       this .requestUpdateCanvas ();
    }
 
-   #pointer;
+   #pointer = new X3D .Vector2 ();
 
    mouseMove (event)
    {
@@ -1400,7 +1397,7 @@ module .exports = class RouteGraph extends Interface
                   context .strokeStyle = color;
                }
 
-					this .drawRoute (context, fromX, fromY, toX, toY);
+					this .drawRoute (context, fromX, fromY, toX, toY, selectedColor);
             }
          }
       }
@@ -1412,7 +1409,7 @@ module .exports = class RouteGraph extends Interface
          this .drawRoute (context, this .#output .fromX - scrollLeft, this .#output .fromY - scrollTop, ... this .#pointer);
    }
 
-   drawRoute (context, fromX, fromY, toX, toY)
+   drawRoute (context, fromX, fromY, toX, toY, selectedColor)
    {
       // Draw sine curved route.
 
@@ -1437,6 +1434,9 @@ module .exports = class RouteGraph extends Interface
       const
          arrowRotation = this .getBezierTangentAngle (x0, y0, x1, y1, x2, y2, x3, y3, 0.5),
          arrow         = this .getRouteArrow (new X3D .Vector2 (x0, y0), new X3D .Vector2 (x3, y3), arrowRotation);
+
+      if (X3D .Triangle2 .isPointInTriangle (this .#pointer, ... arrow))
+         context .fillStyle = selectedColor;
 
       context .beginPath ();
       context .moveTo (arrow [0] .x, arrow [0] .y);
