@@ -6,6 +6,7 @@ const
    electron  = require ("electron"),
    Interface = require ("../Application/Interface"),
    X3D       = require ("../X3D"),
+   Editor    = require ("../Undo/Editor"),
    _         = require ("../Application/GetText");
 
 module .exports = class RouteGraph extends Interface
@@ -989,6 +990,14 @@ module .exports = class RouteGraph extends Interface
 
       if (this .#output)
       {
+         const
+            executionContext = this .#output .node .getExecutionContext (),
+            node             = this .getNode (id);
+
+         // Add route.
+
+         Editor .addRoute (executionContext, this .#output .node, this .#output .field .getName (), node, fieldName);
+
          this .clearInputOutput ();
       }
       else
@@ -1005,7 +1014,8 @@ module .exports = class RouteGraph extends Interface
 
          this .#input = { node, field, toX, toY };
 
-         this .nodes .find (`.input, .field:not([type-name="${field .getTypeName ()}"]) .output`) .hide ();
+         this .nodes .find (`.input, .field:not([type-name="${field .getTypeName ()}"]) .output`)
+            .css ("visibility", "hidden");
       }
    }
 
@@ -1016,6 +1026,14 @@ module .exports = class RouteGraph extends Interface
 
       if (this .#input)
       {
+         const
+            executionContext = this .#input .node .getExecutionContext (),
+            node             = this .getNode (id);
+
+         // Add route.
+
+         Editor .addRoute (executionContext, node, fieldName, this .#input .node, this .#input .field .getName ());
+
          this .clearInputOutput ();
       }
       else
@@ -1032,7 +1050,8 @@ module .exports = class RouteGraph extends Interface
 
          this .#output = { node, field, fromX, fromY };
 
-         this .nodes .find (`.field:not([type-name="${field .getTypeName ()}"]) .input, .output`) .hide ();
+         this .nodes .find (`.field:not([type-name="${field .getTypeName ()}"]) .input, .output`)
+            .css ("visibility", "hidden");
       }
    }
 
@@ -1041,7 +1060,7 @@ module .exports = class RouteGraph extends Interface
       this .#input  = null;
       this .#output = null;
 
-      this .nodes .find (`.input, .output`) .show ();
+      this .nodes .find (`.input, .output`) .css ("visibility", "");
 
       this .requestUpdateCanvas ();
    }
