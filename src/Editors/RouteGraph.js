@@ -2,12 +2,13 @@
 "use strict";
 
 const
-   $         = require ("jquery"),
-   electron  = require ("electron"),
-   Interface = require ("../Application/Interface"),
-   X3D       = require ("../X3D"),
-   Editor    = require ("../Undo/Editor"),
-   _         = require ("../Application/GetText");
+   $           = require ("jquery"),
+   electron    = require ("electron"),
+   Interface   = require ("../Application/Interface"),
+   X3D         = require ("../X3D"),
+   Editor      = require ("../Undo/Editor"),
+   UndoManager = require ("../Undo/UndoManager"),
+   _           = require ("../Application/GetText");
 
 module .exports = class RouteGraph extends Interface
 {
@@ -60,7 +61,8 @@ module .exports = class RouteGraph extends Interface
       this .nodes = $("<div></div>")
          .addClass ("nodes")
          .on ("mouseup", () => this .clearInputOutput ())
-         .on ("mouseup", event => this .selectRoute (event))
+         .on ("mouseup", event => this .selectRoute (event, false))
+         .on ("dblclick", event => this .deleteRoute (event))
          .on ("scroll", () => this .scrollNodes ())
          .on ("contextmenu", event => this .showContextMenu (event))
          .appendTo (this .left);
@@ -144,6 +146,10 @@ module .exports = class RouteGraph extends Interface
          {
             label: _("Deselect All Routes"),
             args: ["clearRouteSelection"],
+         },
+         {
+            label: _("Delete Selected Routes"),
+            args: ["deleteSelectedRoutes"],
          },
       ];
 
@@ -1122,7 +1128,7 @@ module .exports = class RouteGraph extends Interface
       this .requestUpdateCanvas ();
    }
 
-   selectRoute (event)
+   selectRoute (event, deleteRoute)
    {
       const
          active  = this .top .tabs ("option", "active"),
@@ -1159,23 +1165,52 @@ module .exports = class RouteGraph extends Interface
 
                if (X3D .Triangle2 .isPointInTriangle (pointer, ... arrow))
                {
-                  if (event .shiftKey)
+                  if (deleteRoute)
                   {
-                     if (this .isRouteSelected (route))
-                        this .removeRouteSelection (route);
-                     else
-                        this .addRouteSelection (route);
+                     Editor .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField);
+
+                     this .removeRouteSelection (route);
                   }
                   else
                   {
-                     this .setRouteSelection (route);
+                     if (event .shiftKey)
+                     {
+                        if (this .isRouteSelected (route))
+                           this .removeRouteSelection (route);
+                        else
+                           this .addRouteSelection (route);
+                     }
+                     else
+                     {
+                        this .setRouteSelection (route);
+                     }
                   }
+
+                  // Only select or delete one route.
+                  return;
                }
             }
          }
       }
+   }
 
-      this .requestUpdateCanvas ();
+   deleteRoute (event)
+   {
+      this .selectRoute (event, true);
+   }
+
+   deleteSelectedRoutes ()
+   {
+      UndoManager .shared .beginUndo (_("Delete Selected Routes"));
+
+      for (const route of this .#selectedRoutes)
+      {
+         Editor .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField);
+      }
+
+      UndoManager .shared .endUndo ();
+
+      this .clearRouteSelection ();
    }
 
    #selectedRoutes = new Set ();
