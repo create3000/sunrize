@@ -1663,7 +1663,7 @@ body.light .console-output .selected {
   transition: outline-color 300ms ease-in-out;
 }
 
-#route-graph .node:focus {
+#route-graph .node.selected {
   outline-color: var(--outline-color);
 }
 

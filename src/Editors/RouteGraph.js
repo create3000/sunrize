@@ -117,7 +117,10 @@ module .exports = class RouteGraph extends Interface
       event .preventDefault ();
       event .stopPropagation ();
 
-      const element = this .nodes .find (`.node[node-id=${id}]`) .trigger ("focus");
+      const element = this .nodes .find (`.node[node-id=${id}]`);
+
+      if (element .length && !element .is (".selected"))
+         this .setNodeSelection (this .getNode (element .data ("id")));
 
       const menu = [
          {
@@ -139,9 +142,17 @@ module .exports = class RouteGraph extends Interface
             args: ["findNode", id],
          },
          {
-            label: _("Remove Node"),
-            enabled: !! id,
-            args: ["removeNode", id],
+            label: _("Select All Nodes"),
+            args: ["selectAllNodes"],
+         },
+         {
+            label: _("Deselect Nodes"),
+            args: ["clearNodeSelection"],
+         },
+         {
+            label: _("Remove Selected Nodes"),
+            enabled: !! this .#selectedNodes .size,
+            args: ["removeSelectedNodes"],
          },
          { type: "separator" },
          {
@@ -154,14 +165,7 @@ module .exports = class RouteGraph extends Interface
          },
       ];
 
-      const menuId = Math .random ();
-
-      electron .ipcRenderer .send ("context-menu", "route-graph", menu, menuId);
-      electron .ipcRenderer .once ("context-menu-will-close", (event, id) =>
-      {
-         if (id === menuId)
-            element .trigger ("blur");
-      });
+      electron .ipcRenderer .send ("context-menu", "route-graph", menu);
    }
 
    setSnapToGrid (snapToGrid)
@@ -586,6 +590,8 @@ module .exports = class RouteGraph extends Interface
 
       this .title .val (pages [active] .title);
 
+      this .clearNodeSelection ();
+      this .clearRouteSelection ();
       this .updateTitle ();
       this .restorePage ();
       this .requestUpdateCanvas ();
@@ -714,7 +720,7 @@ module .exports = class RouteGraph extends Interface
       return columns;
    }
 
-   addNodeElement (node, { x, y })
+   addNodeElement (node, { x, y }, selected)
    {
       const id = node .getId ();
 
@@ -738,14 +744,16 @@ module .exports = class RouteGraph extends Interface
          .data ("id", id)
          .attr ("node-id", id)
          .attr ("execution-context-id", node .getExecutionContext () .getId ())
-         .attr ("tabindex", 0)
          .css ("position", "")
          .css ({ left: x, top: y })
          .addClass ("node")
          .on ("mousedown", () => this .raiseNode (id))
-         .on ("mouseup", () => this .focusNode (id))
+         .on ("mouseup", event => this .selectNode (event, id))
          .on ("drag", (event, ui) => this .moveNode (id, ui .position))
          .on ("contextmenu", event => this .showContextMenu (event, id));
+
+      if (selected)
+         element .addClass ("selected");
 
       if (node instanceof X3D .X3DImportedNodeProxy)
          element .addClass ("imported-node");
@@ -878,6 +886,19 @@ module .exports = class RouteGraph extends Interface
 
       for (const field of node .getFields ())
          field .removeRouteCallback (this);
+
+      // Clear selections.
+
+      this .removeNodeSelection (node);
+
+      for (const field of node .getFields ())
+      {
+         for (const route of field .getInputRoutes ())
+            this .clearRouteSelection (route);
+
+         for (const route of field .getOutputRoutes ())
+            this .clearRouteSelection (route);
+      }
    }
 
    updateNodeElement (id)
@@ -887,14 +908,16 @@ module .exports = class RouteGraph extends Interface
       if (!element .length)
          return;
 
-      const node = this .getNode (id);
+      const
+         node     = this .getNode (id),
+         selected = this .isNodeSelected (node);
 
       const
          x = parseFloat (element .css ("left")),
          y = parseFloat (element .css ("top"));
 
       this .removeNodeElement (node);
-      this .addNodeElement (node, { x, y });
+      this .addNodeElement (node, { x, y }, selected);
       this .requestUpdateCanvas ();
    }
 
@@ -911,15 +934,12 @@ module .exports = class RouteGraph extends Interface
       element .find (".header .type-name") .text (node .getTypeName ());
    }
 
-   focusNode (id)
-   {
-      this .nodes .find (`.node[node-id=${id}]`) .trigger ("focus");
-   }
-
    raiseNode (id)
    {
       this .nodes .find (`.node[node-id=${id}]`) .appendTo (this .nodes);
    }
+
+   #movedNode = false;
 
    moveNode (id, position)
    {
@@ -928,6 +948,8 @@ module .exports = class RouteGraph extends Interface
          pages  = this .config .file .pages,
          page   = pages [active],
          node   = page .nodes .find (node => node .id === id);
+
+      this .#movedNode = true;
 
       position .left = Math .max (position .left, 0);
       position .top  = Math .max (position .top,  0);
@@ -943,7 +965,9 @@ module .exports = class RouteGraph extends Interface
 
       this .config .file .pages = pages;
 
-      this .focusNode (id);
+      if (!this .isNodeSelected (this .getNode (id)))
+         this .setNodeSelection (this .getNode (id));
+
       this .requestUpdateCanvas ();
    }
 
@@ -978,6 +1002,77 @@ module .exports = class RouteGraph extends Interface
       $(window) .scrollTop (0);
 
       setTimeout (() => outlineEditor .treeView .css ("overflow", ""), 1000);
+   }
+
+   selectNode (event, id)
+   {
+      if (this .#movedNode)
+      {
+         this .#movedNode = false;
+         return;
+      }
+
+      const node = this .getNode (id);
+
+      if (event .shiftKey)
+      {
+         if (this .isNodeSelected (node))
+            this .removeNodeSelection (node);
+         else
+            this .addNodeSelection (node);
+      }
+      else
+      {
+         this .setNodeSelection (node);
+      }
+   }
+
+   selectAllNodes ()
+   {
+      this .clearNodeSelection ();
+
+      for (const element of this .nodes .find (".node"))
+         this .addNodeSelection (this .getNode ($(element) .data ("id")));
+   }
+
+   removeSelectedNodes ()
+   {
+      for (const node of Array .from (this .#selectedNodes))
+         this .removeNode (node .getId ());
+   }
+
+   #selectedNodes = new Set ();
+
+   addNodeSelection (node)
+   {
+      this .#selectedNodes .add (node);
+
+      this .nodes .find (`.node[node-id=${node .getId ()}]`) .addClass ("selected");
+   }
+
+   removeNodeSelection (node)
+   {
+      this .#selectedNodes .delete (node);
+
+      this .nodes .find (`.node[node-id=${node .getId ()}]`) .removeClass ("selected");
+   }
+
+   setNodeSelection (node)
+   {
+      this .clearNodeSelection ();
+      this .addNodeSelection (node);
+   }
+
+   clearNodeSelection ()
+   {
+      this .#selectedNodes .clear ();
+
+      this .nodes .find (`.node`) .removeClass ("selected");
+   }
+
+   isNodeSelected (node)
+   {
+      return this .#selectedNodes .has (node);
    }
 
    nodeLive (id)
@@ -1239,8 +1334,7 @@ module .exports = class RouteGraph extends Interface
 
    setRouteSelection (route)
    {
-      this .#selectedRoutes .clear ();
-
+      this .clearRouteSelection ();
       this .addRouteSelection (route);
    }
 
