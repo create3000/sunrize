@@ -652,9 +652,6 @@ module .exports = class RouteGraph extends Interface
       this .updateTitle ();
       this .restorePage ();
       this .requestUpdateCanvas ();
-
-      if (!pages [active] .nodes .length)
-         this .placeholder .removeClass ("hidden");
    }
 
    updateTitle ()
@@ -913,7 +910,6 @@ module .exports = class RouteGraph extends Interface
          .appendTo (element);
 
       this .nodes .append (element);
-      this .placeholder .addClass ("hidden");
    }
 
    removeNode (id)
@@ -930,9 +926,6 @@ module .exports = class RouteGraph extends Interface
 
       this .removeNodeElement (node);
       this .requestUpdateCanvas ();
-
-      if (!page .nodes .length)
-         this .placeholder .removeClass ("hidden");
    }
 
    removeNodeElement (node)

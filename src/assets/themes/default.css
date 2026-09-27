@@ -1651,6 +1651,8 @@ body.light .console-output .selected {
 }
 
 #route-graph .nodes > .placeholder {
+  visibility: hidden;
+  opacity: 0;
   user-select: none;
   pointer-events: none;
   position: absolute;
@@ -1660,13 +1662,12 @@ body.light .console-output .selected {
   font-size: x-large;
   color: var(--system-gray3);
   text-align: center;
-  opacity: 1;
   transition: visibility 300ms, opacity 300ms ease-in-out;
 }
 
-#route-graph .nodes > .placeholder.hidden {
-  visibility: hidden;
-  opacity: 0;
+#route-graph .nodes:has(> :last-child:nth-child(2)) > .placeholder {
+  visibility: visible;
+  opacity: 1;
 }
 
 #route-graph .node {
