@@ -16,6 +16,11 @@ module .exports = class RouteGraph extends Interface
    {
       super (`Sunrize.RouteGraph.${element .attr ("id")}.`);
 
+      this .config .global .setDefaultValues ({
+         snapToGrid: false,
+         addConnectedNodes: true,
+      });
+
       this .editor = element
          .on ("dragenter dragover", event => this .dragEnter (event))
          .on ("drop", event => this .drop (event));
@@ -108,11 +113,6 @@ module .exports = class RouteGraph extends Interface
    configure ()
    {
       super .configure ();
-
-      this .config .global .setDefaultValues ({
-         addConnectedNodes: true,
-         snapToGrid: false,
-      });
 
       this .config .file .setDefaultValues ({
          pages: [ ],
