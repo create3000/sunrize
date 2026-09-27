@@ -726,10 +726,14 @@ module .exports = class RouteGraph extends Interface
          .addClass ("header")
          .appendTo (element);
 
-      $("<img>")
+      const icon = $("<img>")
          .addClass ("icon")
-         .attr ("src", "../images/OutlineEditor/Node/X3DBaseNode.svg")
          .appendTo (header);
+
+      if (node instanceof X3D .X3DImportedNodeProxy)
+         icon .attr ("src", "../images/OutlineEditor/Node/ImportedNode.svg");
+      else
+         icon .attr ("src", "../images/OutlineEditor/Node/X3DBaseNode.svg");
 
       const title = $("<div></div>")
          .addClass ("title")

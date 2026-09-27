@@ -1747,7 +1747,7 @@ body.light .console-output .selected {
 }
 
 #route-graph .node .field .icon {
-  margin-right: 2px;
+  margin-right: 3px;
 }
 
 #route-graph .node :is(.input, .output) {
