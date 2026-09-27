@@ -993,12 +993,9 @@ module .exports = class RouteGraph extends Interface
          const
             node             = this .getNode (id),
             executionContext = node .getExecutionContext (),
-            element          = this .nodes .find (`.node[node-id=${id}]`);
+            element          = this .nodes .find (`.imported-node[node-id=${id}]`);
 
          if (!element .length)
-            continue;
-
-         if (!element .is (".imported-node"))
             continue;
 
          if (executionContext .importedNodes .find (importedNode => importedNode .getExportedNode () === node))
