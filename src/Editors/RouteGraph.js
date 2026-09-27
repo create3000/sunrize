@@ -940,13 +940,19 @@ module .exports = class RouteGraph extends Interface
 
       outlineEditor .expandTo (node, { expandObject: true, expandInlineNodes: true, expandAll: true });
 
-      const elements = Array .from (outlineEditor .sceneGraph .find (`.node[node-id=${id}]`));
+      const elements = Array .from (outlineEditor .sceneGraph .find (`.node[node-id=${id}], .imported-node[node-id=${id}]`));
 
       if (!elements .length)
          return;
 
       for (const [i, element] of elements .entries ())
-         outlineEditor .selectNodeElement ($(element), { add: i > 0, target: true });
+      {
+         if ($(element) .is (".node"))
+            outlineEditor .selectNodeElement ($(element), { add: i > 0, target: true });
+
+         else if ($(element) .is (".imported-node"))
+            outlineEditor .selectPrimaryElement ($(element), { add: i > 0, target: true });
+      }
 
       // Scroll element into view.
       // Hide scrollbars during scroll to prevent overlay issue.
@@ -962,6 +968,10 @@ module .exports = class RouteGraph extends Interface
    nodeLive (id)
    {
       const node = this .getNode (id);
+
+      // DEBUG
+      if (!node)
+         return;
 
       if (node .isLive ())
          return;
@@ -1065,6 +1075,9 @@ module .exports = class RouteGraph extends Interface
          page   = pages [active],
          nodes  = new Set (page .nodes .map (node => this .getNode (node .id))),
          offset = this .nodes .offset ();
+
+      // DEBUG
+      nodes .delete (undefined);
 
       const color = this .#style .getPropertyValue ("--route-color");
 
