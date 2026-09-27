@@ -58,6 +58,7 @@ module .exports = class RouteGraph extends Interface
 
       this .nodes = $("<div></div>")
          .addClass ("nodes")
+         .on ("mousedown", () => this .clearInputOutput ())
          .on ("scroll", () => this .scrollNodes ())
          .on ("contextmenu", event => this .showContextMenu (event))
          .appendTo (this .left);
@@ -793,7 +794,8 @@ module .exports = class RouteGraph extends Interface
             {
                $("<div></div>")
                   .addClass ("input")
-                  .on ("mouseup", () => this .selectInput (id, field .getName ()))
+                  .on ("mousedown", false)
+                  .on ("mouseup", event => this .selectInput (event, id, field .getName ()))
                   .appendTo (fieldElement);
             }
 
@@ -811,7 +813,8 @@ module .exports = class RouteGraph extends Interface
             {
                $("<div></div>")
                   .addClass ("output")
-                  .on ("mouseup", () => this .selectOutput (id, field .getName ()))
+                  .on ("mousedown", false)
+                  .on ("mouseup", event => this .selectOutput (event, id, field .getName ()))
                   .appendTo (fieldElement);
             }
          }
@@ -975,14 +978,57 @@ module .exports = class RouteGraph extends Interface
       this .removeNode (id);
    }
 
-   selectInput (id, fieldName)
+   #input  = null;
+   #output = null;
+
+   selectInput (event, id, fieldName)
    {
-      console .log ("selectInput", id, fieldName)
+      event .preventDefault ();
+      event .stopPropagation ();
+
+      if (this .#output)
+      {
+         this .clearInputOutput ();
+      }
+      else
+      {
+         const
+            node  = this .getNode (id),
+            field = node .getField (fieldName);
+
+         this .#input = { node, field };
+
+         this .nodes .find (`.input, .field:not([type-name="${field .getTypeName ()}"]) .output`) .hide ();
+      }
    }
 
-   selectOutput (id, fieldName)
+   selectOutput (event, id, fieldName)
    {
-      console .log ("selectOutput", id, fieldName)
+      event .preventDefault ();
+      event .stopPropagation ();
+
+      if (this .#input)
+      {
+         this .clearInputOutput ();
+      }
+      else
+      {
+         const
+            node  = this .getNode (id),
+            field = node .getField (fieldName);
+
+         this .#output = { node, field };
+
+         this .nodes .find (`.field:not([type-name="${field .getTypeName ()}"]) .input, .output`) .hide ();
+      }
+   }
+
+   clearInputOutput ()
+   {
+      this .nodes .find (`.input, .output`) .show ();
+
+      this .#input  = null;
+      this .#output = null;
    }
 
    resizeCanvas ()
@@ -1118,36 +1164,41 @@ module .exports = class RouteGraph extends Interface
                   toX               = destinationOffset .left - offset .left + destinationElement .width () / 2,
                   toY               = destinationOffset .top - offset .top + destinationElement .height () / 2;
 
-					// Draw sine curved route.
-
-               const
-					   wp = (toX - fromX) * 0.5,
-					   x0 = fromX,
-					   y0 = fromY,
-					   x1 = fromX + wp,
-					   y1 = fromY,
-					   x2 = toX - wp,
-					   y2 = toY,
-					   x3 = toX,
-					   y3 = toY;
-
-               context .beginPath ();
-					context .moveTo (x0, y0);
-					context .bezierCurveTo (x1, y1, x2, y2, x3, y3);
-					context .stroke ();
-
-					// Draw arrow
-
-					const arrow = this .getRouteArrow (new X3D .Vector2 (x0, y0), new X3D .Vector2 (x3, y3));
-
-               context .beginPath ();
-					context .moveTo (arrow [0] .x, arrow [0] .y);
-					context .lineTo (arrow [1] .x, arrow [1] .y);
-					context .lineTo (arrow [2] .x, arrow [2] .y);
-					context .fill ();
+					this .drawRoute (context, fromX, fromY, toX, toY);
             }
          }
       }
+   }
+
+   drawRoute (context, fromX, fromY, toX, toY)
+   {
+      // Draw sine curved route.
+
+      const
+         wp = (toX - fromX) * 0.5,
+         x0 = fromX,
+         y0 = fromY,
+         x1 = fromX + wp,
+         y1 = fromY,
+         x2 = toX - wp,
+         y2 = toY,
+         x3 = toX,
+         y3 = toY;
+
+      context .beginPath ();
+      context .moveTo (x0, y0);
+      context .bezierCurveTo (x1, y1, x2, y2, x3, y3);
+      context .stroke ();
+
+      // Draw arrow
+
+      const arrow = this .getRouteArrow (new X3D .Vector2 (x0, y0), new X3D .Vector2 (x3, y3));
+
+      context .beginPath ();
+      context .moveTo (arrow [0] .x, arrow [0] .y);
+      context .lineTo (arrow [1] .x, arrow [1] .y);
+      context .lineTo (arrow [2] .x, arrow [2] .y);
+      context .fill ();
    }
 
    getRouteArrow (sourcePosition, destinationPosition)
