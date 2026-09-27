@@ -1650,6 +1650,15 @@ body.light .console-output .selected {
   background: var(--background-color);
 }
 
+#route-graph .nodes > .placeholder {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: x-large;
+  color: var(--system-gray3);
+}
+
 #route-graph .node {
   user-select: none;
   display: flex;

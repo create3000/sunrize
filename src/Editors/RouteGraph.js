@@ -91,6 +91,11 @@ module .exports = class RouteGraph extends Interface
          .on ("input", () => this .updateTitle ())
          .appendTo (this .nodes);
 
+      this .placeHolder = $("<div></div>")
+         .addClass ("placeholder")
+         .text (_("Drag and drop nodes here."))
+         .appendTo (this .nodes);
+
       electron .ipcRenderer .on ("activate", (event, value) => this .activate (value));
       electron .ipcRenderer .on ("route-graph", (event, key, ... args) => this [key] (... args));
 
@@ -646,6 +651,9 @@ module .exports = class RouteGraph extends Interface
       this .updateTitle ();
       this .restorePage ();
       this .requestUpdateCanvas ();
+
+      if (!pages [active] .nodes .length)
+         this .placeHolder .show ();
    }
 
    updateTitle ()
@@ -904,6 +912,7 @@ module .exports = class RouteGraph extends Interface
          .appendTo (element);
 
       this .nodes .append (element);
+      this .placeHolder .hide ();
    }
 
    removeNode (id)
@@ -920,6 +929,9 @@ module .exports = class RouteGraph extends Interface
 
       this .removeNodeElement (node);
       this .requestUpdateCanvas ();
+
+      if (!page .nodes .length)
+         this .placeHolder .show ();
    }
 
    removeNodeElement (node)
