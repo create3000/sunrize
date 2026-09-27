@@ -89,6 +89,8 @@ module .exports = class RouteGraph extends Interface
          .on ("scroll", () => this .scrollNodes ())
          .on ("contextmenu", event => this .showContextMenu (event))
          .on ("mousemove", event => this .mouseMove (event))
+         .on ("mousedown", () => this .drawLassoStart ())
+         .on ("mouseup", () => this .drawLassoEnd ())
          .appendTo (this .left);
 
       this .title = $("<input>")
@@ -100,6 +102,10 @@ module .exports = class RouteGraph extends Interface
          .addClass ("placeholder")
          .text (_("Drag and drop nodes here."))
          .appendTo (this .nodes);
+
+      this .overlay = $("<canvas></canvas>")
+         .addClass ("overlay")
+         .appendTo (this .left);
 
       electron .ipcRenderer .on ("activate", (event, value) => this .activate (value));
       electron .ipcRenderer .on ("route-graph", (event, key, ... args) => this [key] (... args));
@@ -1198,11 +1204,83 @@ module .exports = class RouteGraph extends Interface
       this .requestUpdateCanvas ();
    }
 
+   #lasso;
+   #lassoStart;
+   #lassoScroll;
+
+   drawLassoStart ()
+   {
+      if (this .#input || this .#output)
+         return;
+
+      this .#lasso       = true;
+      this .#lassoStart  = this .#pointer .copy ();
+      this .#lassoScroll = new X3D .Vector2 (this .nodes .scrollLeft (), this .nodes .scrollTop ());
+
+      this .nodes .on ("mousemove.lasso scroll.lasso", () => this .drawLasso ());
+   }
+
+   drawLasso ()
+   {
+      const
+         context      = this .overlay [0] .getContext ("2d"),
+         width        = this .overlay .width (),
+         height       = this .overlay .height (),
+         contentScale = window .devicePixelRatio,
+         scroll       = new X3D .Vector2 (this .nodes .scrollLeft (), this .nodes .scrollTop ()),
+         deltaScroll  = this .#lassoScroll .copy () .subtract (scroll),
+         start        = this .#lassoStart .copy () .add (deltaScroll),
+         size         = this .#pointer .copy () .subtract (start);
+
+      const
+         fillStyle   = this .#style .getPropertyValue ("--lasso-fill"),
+         strokeStyle = this .#style .getPropertyValue ("--lasso-stroke");
+
+      context .fillStyle   = fillStyle;
+      context .strokeStyle = strokeStyle;
+      context .lineWidth   = 2;
+
+      context .save ();
+      context .scale (contentScale, contentScale);
+      context .clearRect (0, 0, width, height);
+
+      context .beginPath ();
+      context .rect (... start, ... size);
+      context .fill ();
+
+      context .beginPath ();
+      context .rect (... start, ... size);
+      context .stroke ();
+
+      context .restore ();
+   }
+
+   drawLassoEnd ()
+   {
+      this .#lasso = false;
+
+      this .nodes .off (".lasso");
+
+      const
+         context      = this .overlay [0] .getContext ("2d"),
+         width        = this .overlay .width (),
+         height       = this .overlay .height (),
+         contentScale = window .devicePixelRatio;
+
+      context .save ();
+      context .scale (contentScale, contentScale);
+      context .clearRect (0, 0, width, height);
+      context .restore ();
+   }
+
    #input  = null;
    #output = null;
 
    selectInput (event, id, fieldName)
    {
+      if (this .#lasso)
+         return;
+
       event .preventDefault ();
       event .stopPropagation ();
 
@@ -1245,6 +1323,9 @@ module .exports = class RouteGraph extends Interface
 
    selectOutput (event, id, fieldName)
    {
+      if (this .#lasso)
+         return;
+
       event .preventDefault ();
       event .stopPropagation ();
 
@@ -1474,6 +1555,10 @@ module .exports = class RouteGraph extends Interface
       this .canvas
          .prop ("width",  this .canvas .width  () * contentScale)
          .prop ("height", this .canvas .height () * contentScale);
+
+      this .overlay
+         .prop ("width",  this .overlay .width  () * contentScale)
+         .prop ("height", this .overlay .height () * contentScale);
 
       this .updateCanvas ();
    }
