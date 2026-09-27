@@ -1725,6 +1725,7 @@ body.light .console-output .selected {
   align-items: start;
   gap: 1px;
   width: 100%;
+  font-family: inherit;
   font-size: var(--small-font-size);
   color: black;
 }
