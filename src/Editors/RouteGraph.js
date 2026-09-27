@@ -156,6 +156,10 @@ module .exports = class RouteGraph extends Interface
          },
          { type: "separator" },
          {
+            label: _("Select All Routes"),
+            args: ["selectAllRoutes"],
+         },
+         {
             label: _("Deselect Routes"),
             args: ["clearRouteSelection"],
          },
@@ -950,6 +954,8 @@ module .exports = class RouteGraph extends Interface
 
       if (!this .isNodeSelected (node))
          this .setNodeSelection (node);
+
+      this .clearInputOutput ();
    }
 
    moveNode (id, position)
@@ -1326,6 +1332,33 @@ module .exports = class RouteGraph extends Interface
    deleteRoute (event)
    {
       this .selectRoute (event, true);
+   }
+
+   selectAllRoutes ()
+   {
+      const
+         active = this .top .tabs ("option", "active"),
+         pages  = this .config .file .pages,
+         page   = pages [active],
+         nodes  = new Set (page .nodes .map (node => this .getNode (node .id)));
+
+      this .clearRouteSelection ();
+
+      for (const sourceNode of nodes)
+      {
+         for (const sourceField of sourceNode .getFields ())
+         {
+            for (const route of sourceField .getOutputRoutes ())
+            {
+               const destinationNode = route .getDestinationNode ();
+
+               if (!nodes .has (destinationNode))
+                  continue;
+
+               this .addRouteSelection (route);
+            }
+         }
+      }
    }
 
    deleteSelectedRoutes ()
