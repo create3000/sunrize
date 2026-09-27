@@ -58,6 +58,7 @@ module .exports = class RouteGraph extends Interface
 
       this .nodes = $("<div></div>")
          .addClass ("nodes")
+         .on ("mousemove", event => this .mouseMove (event))
          .on ("mousedown", () => this .clearInputOutput ())
          .on ("scroll", () => this .scrollNodes ())
          .on ("contextmenu", event => this .showContextMenu (event))
@@ -996,7 +997,15 @@ module .exports = class RouteGraph extends Interface
             node  = this .getNode (id),
             field = node .getField (fieldName);
 
-         this .#input = { node, field };
+         const
+            offset                 = this .nodes .offset (),
+            destinationNodeElement = this .nodes .find (`.node[data-id=${node .getId ()}]`),
+            destinationElement     = destinationNodeElement .find (`.field[name="${field .getName ()}"] .input`),
+            destinationOffset      = destinationElement .offset (),
+            toX                    = destinationOffset .left - offset .left + destinationElement .width () / 2,
+            toY                    = destinationOffset .top - offset .top + destinationElement .height () / 2;
+
+         this .#input = { node, field, toX, toY };
 
          this .nodes .find (`.input, .field:not([type-name="${field .getTypeName ()}"]) .output`) .hide ();
       }
@@ -1017,7 +1026,15 @@ module .exports = class RouteGraph extends Interface
             node  = this .getNode (id),
             field = node .getField (fieldName);
 
-         this .#output = { node, field };
+         const
+            offset            = this .nodes .offset (),
+            sourceNodeElement = this .nodes .find (`.node[data-id=${node .getId ()}]`),
+            sourceElement     = sourceNodeElement .find (`.field[name="${field .getName ()}"] .output`),
+            sourceOffset      = sourceElement .offset (),
+            fromX             = sourceOffset .left - offset .left + sourceElement .width () / 2,
+            fromY             = sourceOffset .top - offset .top + sourceElement .height () / 2;
+
+         this .#output = { node, field, fromX, fromY };
 
          this .nodes .find (`.field:not([type-name="${field .getTypeName ()}"]) .input, .output`) .hide ();
       }
@@ -1025,10 +1042,22 @@ module .exports = class RouteGraph extends Interface
 
    clearInputOutput ()
    {
-      this .nodes .find (`.input, .output`) .show ();
-
       this .#input  = null;
       this .#output = null;
+
+      this .nodes .find (`.input, .output`) .show ();
+
+      this .requestUpdateCanvas ();
+   }
+
+   #pointer;
+
+   mouseMove (event)
+   {
+      this .#pointer = this .getRelativePosition (event);
+
+      if (this .#input || this .#output)
+         this .requestUpdateCanvas ();
    }
 
    resizeCanvas ()
@@ -1168,6 +1197,12 @@ module .exports = class RouteGraph extends Interface
             }
          }
       }
+
+      if (this .#input)
+         this .drawRoute (context, this .#pointer .x, this .#pointer .y, this .#input .toX, this .#input .toY);
+
+      if (this .#output)
+         this .drawRoute (context, this .#output .fromX, this .#output .fromY, this .#pointer .x, this .#pointer .y);
    }
 
    drawRoute (context, fromX, fromY, toX, toY)
@@ -1258,7 +1293,7 @@ module .exports = class RouteGraph extends Interface
          const
             element  = $(`#${id}`),
             node     = this .outlineEditor .getNode (element),
-            position = this .getDropPosition (event);
+            position = this .getRelativePosition (event);
 
          if (this .config .global .addConnectedNodes)
             this .addConnectedNodes (node, position);
@@ -1267,7 +1302,7 @@ module .exports = class RouteGraph extends Interface
       }
    }
 
-   getDropPosition (event)
+   getRelativePosition (event)
    {
       const
          bounds = event .target .getBoundingClientRect (),
