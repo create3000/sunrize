@@ -714,7 +714,11 @@ module .exports = class RouteGraph extends Interface
       node .getUserDefinedFields () .addInterest ("updateNodeElement", this, id);
 
       if (node instanceof X3D .X3DImportedNodeProxy)
+      {
+         // These events are connected and must never be removed.
          node .getImportedNode () .getInlineNode () .getLoadState () .addInterest ("updateNodeElement", this, id);
+         node .getExecutionContext () .importedNodes .addInterest ("updateImportedNodes", this, id);
+      }
 
       const element = $("<div></div>")
          .draggable ()
@@ -851,14 +855,11 @@ module .exports = class RouteGraph extends Interface
 
       node .getLive () .removeInterest ("nodeLive", this);
 
-      node .name_changed     .removeInterest ("updateNodeHeader", this, id);
-      node .typeName_changed .removeInterest ("updateNodeHeader", this, id);
+      node .name_changed     .removeInterest ("updateNodeHeader", this);
+      node .typeName_changed .removeInterest ("updateNodeHeader", this);
 
       node .getPredefinedFields ()  .removeInterest ("updateNodeElement", this);
       node .getUserDefinedFields () .removeInterest ("updateNodeElement", this);
-
-      if (node instanceof X3D .X3DImportedNodeProxy)
-         node .getImportedNode () .getInlineNode () .getLoadState () .removeInterest ("updateNodeElement", this);
 
       this .nodes .find (`.node[node-id=${id}]`) .remove ();
 
@@ -970,14 +971,31 @@ module .exports = class RouteGraph extends Interface
    {
       const node = this .getNode (id);
 
-      // DEBUG
-      if (!node)
-         return;
+      // // DEBUG
+      // if (!node)
+      //    return;
 
       if (node .isLive ())
          return;
 
       this .removeNode (id);
+   }
+
+   updateImportedNodes (id)
+   {
+      const
+         node             = this .getNode (id),
+         executionContext = node .getExecutionContext (),
+         element          = this .nodes .find (`.node[node-id=${id}]`);
+
+      if (!element .length)
+         return;
+
+      if (executionContext .importedNodes .find (importedNode => importedNode .getExportedNode () === node))
+         return;
+
+      this .removeNode (id);
+      this .requestUpdateCanvas ();
    }
 
    #input  = null;
@@ -1228,8 +1246,8 @@ module .exports = class RouteGraph extends Interface
          scrollLeft = this .nodes .scrollLeft (),
          scrollTop  = this .nodes .scrollTop ();
 
-      // DEBUG
-      nodes .delete (undefined);
+      // // DEBUG
+      // nodes .delete (undefined);
 
       const
          color         = this .#style .getPropertyValue ("--route-color"),
