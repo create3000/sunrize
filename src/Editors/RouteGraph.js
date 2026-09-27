@@ -114,7 +114,7 @@ module .exports = class RouteGraph extends Interface
       event .preventDefault ();
       event .stopPropagation ();
 
-      const element = this .nodes .find (`.node[data-id=${id}]`) .trigger ("focus");
+      const element = this .nodes .find (`.node[node-id=${id}]`) .trigger ("focus");
 
       const menu = [
          {
@@ -666,7 +666,7 @@ module .exports = class RouteGraph extends Interface
          {
             this .addNode (node, { x, y: offsetY });
 
-            const element = this .nodes .find (`.node[data-id=${node .getId ()}]`);
+            const element = this .nodes .find (`.node[node-id=${node .getId ()}]`);
 
             x        = parseFloat (element .css ("left"));
             offsetX  = Math .max (offsetX, element .width ());
@@ -720,7 +720,7 @@ module .exports = class RouteGraph extends Interface
       const element = $("<div></div>")
          .draggable ()
          .data ("id", id)
-         .attr ("data-id", id)
+         .attr ("node-id", id)
          .attr ("tabindex", 0)
          .css ("position", "")
          .css ({ left: x, top: y })
@@ -860,7 +860,7 @@ module .exports = class RouteGraph extends Interface
       if (node instanceof X3D .X3DImportedNodeProxy)
          node .getImportedNode () .getInlineNode () .getLoadState () .removeInterest ("updateNodeElement", this);
 
-      this .nodes .find (`.node[data-id=${id}]`) .remove ();
+      this .nodes .find (`.node[node-id=${id}]`) .remove ();
 
       for (const field of node .getFields ())
          field .removeRouteCallback (this);
@@ -870,7 +870,7 @@ module .exports = class RouteGraph extends Interface
    {
       const
          node    = this .getNode (id),
-         element = this .nodes .find (`.node[data-id=${id}]`);
+         element = this .nodes .find (`.node[node-id=${id}]`);
 
       if (!element .length)
          return;
@@ -888,7 +888,7 @@ module .exports = class RouteGraph extends Interface
    {
       const
          node    = this .getNode (id),
-         element = this .nodes .find (`.node[data-id=${id}]`);
+         element = this .nodes .find (`.node[node-id=${id}]`);
 
       if (!element .length)
          return;
@@ -899,12 +899,12 @@ module .exports = class RouteGraph extends Interface
 
    focusNode (id)
    {
-      this .nodes .find (`.node[data-id=${id}]`) .trigger ("focus");
+      this .nodes .find (`.node[node-id=${id}]`) .trigger ("focus");
    }
 
    raiseNode (id)
    {
-      this .nodes .find (`.node[data-id=${id}]`) .appendTo (this .nodes);
+      this .nodes .find (`.node[node-id=${id}]`) .appendTo (this .nodes);
    }
 
    moveNode (id, position)
@@ -1008,7 +1008,7 @@ module .exports = class RouteGraph extends Interface
 
          const
             offset                 = this .nodes .offset (),
-            destinationNodeElement = this .nodes .find (`.node[data-id=${node .getId ()}]`),
+            destinationNodeElement = this .nodes .find (`.node[node-id=${node .getId ()}]`),
             destinationElement     = destinationNodeElement .find (`.field[name="${field .getName ()}"] .input`),
             [toX, toY]             = this .getDestinationPosition (offset, destinationElement),
             scrollLeft             = this .nodes .scrollLeft (),
@@ -1046,7 +1046,7 @@ module .exports = class RouteGraph extends Interface
 
          const
             offset            = this .nodes .offset (),
-            sourceNodeElement = this .nodes .find (`.node[data-id=${node .getId ()}]`),
+            sourceNodeElement = this .nodes .find (`.node[node-id=${node .getId ()}]`),
             sourceElement     = sourceNodeElement .find (`.field[name="${field .getName ()}"] .output`),
             [fromX, fromY]    = this .getSourcePosition (offset, sourceElement),
             scrollLeft        = this .nodes .scrollLeft (),
@@ -1189,7 +1189,7 @@ module .exports = class RouteGraph extends Interface
 
       for (const sourceNode of nodes)
       {
-         const sourceNodeElement = this .nodes .find (`.node[data-id=${sourceNode .getId ()}]`);
+         const sourceNodeElement = this .nodes .find (`.node[node-id=${sourceNode .getId ()}]`);
 
          for (const sourceField of sourceNode .getFields ())
          {
@@ -1203,7 +1203,7 @@ module .exports = class RouteGraph extends Interface
                const
                   sourceElement          = sourceNodeElement .find (`.field[name="${sourceField .getName ()}"] .output`),
                   destinationField       = destinationNode .getField (route .getDestinationField ()),
-                  destinationNodeElement = this .nodes .find (`.node[data-id=${destinationNode .getId ()}]`),
+                  destinationNodeElement = this .nodes .find (`.node[node-id=${destinationNode .getId ()}]`),
                   destinationElement     = destinationNodeElement .find (`.field[name="${destinationField .getName ()}"] .input`);
 
                const
