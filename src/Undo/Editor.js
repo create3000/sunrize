@@ -2343,7 +2343,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             this .setFieldValue (executionContext, node, field, null, undoManager);
             break;
          }
-         case X3D .X3DConstants .FNode:
+         case X3D .X3DConstants .MFNode:
          {
             this .setFieldValue (executionContext, node, field, new X3D .MFNode (), undoManager);
             break;
