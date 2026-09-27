@@ -1516,6 +1516,7 @@ body.light .console-output .selected {
 
 #route-graph {
   --lila: #8579c5;
+  --dark-lila: #413469;
   --orange: #fdcb73;
   --purple: #9352de;
   --blue: #9399fa;
@@ -1691,6 +1692,10 @@ body.light .console-output .selected {
   border-top-right-radius: 12px;
 }
 
+#route-graph .node.imported-node .header {
+  background-color: var(--dark-lila);
+}
+
 #route-graph .node .header .icon {
   position: relative;
   top: 3px;
@@ -1779,6 +1784,10 @@ body.light .console-output .selected {
   background: var(--lila);
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+}
+
+#route-graph .node.imported-node .footer {
+  background-color: var(--dark-lila);
 }
 
 /* Sidebar */
