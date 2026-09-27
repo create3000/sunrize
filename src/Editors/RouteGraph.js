@@ -59,7 +59,6 @@ module .exports = class RouteGraph extends Interface
 
       this .nodes = $("<div></div>")
          .addClass ("nodes")
-         .on ("mousemove", event => this .mouseMove (event))
          .on ("mouseup", () => this .clearInputOutput ())
          .on ("scroll", () => this .scrollNodes ())
          .on ("contextmenu", event => this .showContextMenu (event))
@@ -1023,6 +1022,8 @@ module .exports = class RouteGraph extends Interface
 
          this .nodes .find (`.node:not([execution-context-id=${executionContext .getId ()}]) .output`)
             .css ("visibility", "hidden");
+
+         this .nodes .on ("mousemove", event => this .mouseMove (event));
       }
    }
 
@@ -1065,6 +1066,8 @@ module .exports = class RouteGraph extends Interface
 
          this .nodes .find (`.node:not([execution-context-id=${executionContext .getId ()}]) .input`)
             .css ("visibility", "hidden");
+
+         this .nodes .on ("mousemove", event => this .mouseMove (event));
       }
    }
 
@@ -1073,7 +1076,9 @@ module .exports = class RouteGraph extends Interface
       this .#input  = null;
       this .#output = null;
 
-      this .nodes .find (`.input, .output`) .css ("visibility", "");
+      this .nodes
+         .off ("mousemove")
+         .find (`.input, .output`) .css ("visibility", "");
 
       this .requestUpdateCanvas ();
    }
@@ -1084,8 +1089,7 @@ module .exports = class RouteGraph extends Interface
    {
       this .#pointer = this .getRelativePosition (event, false);
 
-      if (this .#input || this .#output)
-         this .requestUpdateCanvas ();
+      this .requestUpdateCanvas ();
    }
 
    resizeCanvas ()
@@ -1225,14 +1229,10 @@ module .exports = class RouteGraph extends Interface
       }
 
       if (this .#input)
-      {
-         this .drawRoute (context, this .#pointer .x, this .#pointer .y, this .#input .toX - scrollLeft, this .#input .toY - scrollTop);
-      }
+         this .drawRoute (context, ... this .#pointer, this .#input .toX - scrollLeft, this .#input .toY - scrollTop);
 
       if (this .#output)
-      {
-         this .drawRoute (context, this .#output .fromX - scrollLeft, this .#output .fromY - scrollTop, this .#pointer .x, this .#pointer .y);
-      }
+         this .drawRoute (context, this .#output .fromX - scrollLeft, this .#output .fromY - scrollTop, ... this .#pointer);
    }
 
    drawRoute (context, fromX, fromY, toX, toY)
@@ -1359,7 +1359,7 @@ module .exports = class RouteGraph extends Interface
          x      = event .clientX - bounds .left + (scroll ? this .nodes .scrollLeft () : 0),
          y      = event .clientY - bounds .top  + (scroll ? this .nodes .scrollTop ()  : 0);
 
-      return { x, y };
+      return new X3D .Vector2 (x, y);
    }
 
    round (value, steps)
