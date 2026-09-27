@@ -155,6 +155,11 @@ module .exports = class RouteGraph extends Interface
 
       const menu = [
          {
+            label: _("New Page"),
+            args: ["addPage"],
+         },
+         { type: "separator" },
+         {
             label: _("Snap to Grid"),
             type: "checkbox",
             checked: this .config .global .snapToGrid,
