@@ -722,6 +722,9 @@ module .exports = class RouteGraph extends Interface
          .on ("drag", (event, ui) => this .moveNode (node .getId (), ui .position))
          .on ("contextmenu", event => this .showContextMenu (event, node .getId ()));
 
+      if (node instanceof X3D .X3DImportedNodeProxy)
+         element .addClass ("imported-node");
+
       const header = $("<div></div>")
          .addClass ("header")
          .appendTo (element);
