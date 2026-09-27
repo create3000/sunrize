@@ -1522,6 +1522,7 @@ body.light .console-output .selected {
   --blue: #9399fa;
   --outline-color: #f71501;
   --route-color: #ff8900;
+  --route-selected-color: #f71501;
   --tabs-height: 24px;
   --overscroll-gap: 120px;
 }

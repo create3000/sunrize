@@ -1092,6 +1092,43 @@ module .exports = class RouteGraph extends Interface
       this .requestUpdateCanvas ();
    }
 
+   #selectedRoutes = new Set ();
+
+   addRouteSelection (routes)
+   {
+      for (const route of routes)
+         this .#selectedRoutes .add (route);
+
+      this .requestUpdateCanvas ();
+   }
+
+   removeRouteSelection (routes)
+   {
+      for (const route of routes)
+         this .#selectedRoutes .delete (route);
+
+      this .requestUpdateCanvas ();
+   }
+
+   setRouteSelection (routes)
+   {
+      this .#selectedRoutes .clear ();
+
+      this .addRouteSelection (routes);
+   }
+
+   clearRouteSelection ()
+   {
+      this .#selectedRoutes .clear ();
+
+      this .requestUpdateCanvas ();
+   }
+
+   isRouteSelected (route)
+   {
+      return this .#selectedRoutes .has (route);
+   }
+
    resizeCanvas ()
    {
       const contentScale = window .devicePixelRatio;
@@ -1194,11 +1231,11 @@ module .exports = class RouteGraph extends Interface
       // DEBUG
       nodes .delete (undefined);
 
-      const color = this .#style .getPropertyValue ("--route-color");
+      const
+         color         = this .#style .getPropertyValue ("--route-color"),
+         selectedColor = this .#style .getPropertyValue ("--route-selected-color");
 
-      context .fillStyle   = color;
-      context .strokeStyle = color;
-      context .lineWidth   = 3;
+      context .lineWidth = 3;
 
       for (const sourceNode of nodes)
       {
@@ -1222,6 +1259,17 @@ module .exports = class RouteGraph extends Interface
                const
                   [fromX, fromY] = this .getSourcePosition (offset, sourceElement),
                   [toX, toY]     = this .getDestinationPosition (offset, destinationElement);
+
+               if (this .isRouteSelected (route))
+               {
+                  context .fillStyle   = selectedColor;
+                  context .strokeStyle = selectedColor;
+               }
+               else
+               {
+                  context .fillStyle   = color;
+                  context .strokeStyle = color;
+               }
 
 					this .drawRoute (context, fromX, fromY, toX, toY);
             }
