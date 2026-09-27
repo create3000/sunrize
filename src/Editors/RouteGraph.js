@@ -275,6 +275,16 @@ module .exports = class RouteGraph extends Interface
       {
          path .push (proto .name);
 
+         // fields
+
+         path .push ("fields");
+
+         this .getPathsFromNode (proto, ids, path, paths, seen);
+
+         path .pop ();
+
+         // body
+
          this .getPathsFromScene (proto .getBody (), ids, path, paths, seen);
 
          path .pop ();
@@ -376,6 +386,16 @@ module .exports = class RouteGraph extends Interface
       for (const proto of scene .protos)
       {
          path .push (proto .name);
+
+         // fields
+
+         path .push ("fields");
+
+         this .getIdsFromNode (proto, paths, path, ids, seen);
+
+         path .pop ();
+
+         // body
 
          this .getIdsFromScene (proto .getBody (), paths, path, ids, seen);
 
