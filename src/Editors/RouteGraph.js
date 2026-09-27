@@ -279,7 +279,7 @@ module .exports = class RouteGraph extends Interface
 
          path .push ("fields");
 
-         this .getPathsFromNode (proto, ids, path, paths, seen);
+         this .getPathsFromNode (proto, true, ids, path, paths, seen);
 
          path .pop ();
 
@@ -300,6 +300,21 @@ module .exports = class RouteGraph extends Interface
 
       path .pop ();
 
+      // importedNodes
+
+      path .push ("importedNodes");
+
+      for (const [i, importedNode] of scene .importedNodes .entries ())
+      {
+         path .push (i);
+
+         this .getPathsFromNode (importedNode .getExportedNode (), false, ids, path, paths, seen);
+
+         path .pop ();
+      }
+
+      path .pop ();
+
       return paths;
    }
 
@@ -309,13 +324,13 @@ module .exports = class RouteGraph extends Interface
       {
          path .push (i);
 
-         this .getPathsFromNode (node ?.getValue (), ids, path, paths, seen);
+         this .getPathsFromNode (node ?.getValue (), true, ids, path, paths, seen);
 
          path .pop ();
       }
    }
 
-   getPathsFromNode (node, ids, path, paths, seen)
+   getPathsFromNode (node, fields, ids, path, paths, seen)
    {
       if (!node)
          return;
@@ -326,6 +341,9 @@ module .exports = class RouteGraph extends Interface
       if (ids .has (node .getId ()))
          paths .set (node .getId (), path .join (":"));
 
+      if (!fields)
+         return;
+
       for (const field of node .getFields ())
       {
          switch (field .getType ())
@@ -334,7 +352,7 @@ module .exports = class RouteGraph extends Interface
             {
                path .push (field .getName ());
 
-               this .getPathsFromNode (field .getValue (), ids, path, paths, seen);
+               this .getPathsFromNode (field .getValue (), true, ids, path, paths, seen);
 
                path .pop ();
                break;
@@ -391,7 +409,7 @@ module .exports = class RouteGraph extends Interface
 
          path .push ("fields");
 
-         this .getIdsFromNode (proto, paths, path, ids, seen);
+         this .getIdsFromNode (proto, true, paths, path, ids, seen);
 
          path .pop ();
 
@@ -412,6 +430,21 @@ module .exports = class RouteGraph extends Interface
 
       path .pop ();
 
+      // importedNodes
+
+      path .push ("importedNodes");
+
+      for (const [i, importedNode] of scene .importedNodes .entries ())
+      {
+         path .push (i);
+
+         this .getIdsFromNode (importedNode .getExportedNode (), false, paths, path, ids, seen);
+
+         path .pop ();
+      }
+
+      path .pop ();
+
       return ids;
    }
 
@@ -421,13 +454,13 @@ module .exports = class RouteGraph extends Interface
       {
          path .push (i);
 
-         this .getIdsFromNode (node ?.getValue (), paths, path, ids, seen);
+         this .getIdsFromNode (node ?.getValue (), true, paths, path, ids, seen);
 
          path .pop ();
       }
    }
 
-   getIdsFromNode (node, paths, path, ids, seen)
+   getIdsFromNode (node, fields, paths, path, ids, seen)
    {
       if (!node)
          return;
@@ -440,6 +473,9 @@ module .exports = class RouteGraph extends Interface
 
       this .setNode (node);
 
+      if (!fields)
+         return;
+
       for (const field of node .getFields ())
       {
          switch (field .getType ())
@@ -448,7 +484,7 @@ module .exports = class RouteGraph extends Interface
             {
                path .push (field .getName ());
 
-               this .getIdsFromNode (field .getValue (), paths, path, ids, seen);
+               this .getIdsFromNode (field .getValue (), true, paths, path, ids, seen);
 
                path .pop ();
                break;
@@ -641,6 +677,9 @@ module .exports = class RouteGraph extends Interface
    getConnectedNodes (executionContext, node, index, columns = new Map (), nodes = new Set ())
    {
       if (nodes .has (node))
+         return;
+
+      if (node .getExecutionContext () !== executionContext)
          return;
 
       this .setNode (node);
