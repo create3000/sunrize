@@ -60,7 +60,7 @@ module .exports = class RouteGraph extends Interface
       this .addConnectedNodesButton = $("<span></span>")
          .addClass ("material-symbols-outlined")
          .attr ("title", _("Add connected nodes."))
-         .css ({ transform: "scale(0.9)" })
+         .css ({ transform: "scale(0.8)" })
          .text ("hub")
          .appendTo (this .toolbar)
          .on ("mouseup", () => this .setAddConnectedNodes (!this .config .global .addConnectedNodes));
