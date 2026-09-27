@@ -1651,6 +1651,8 @@ body.light .console-output .selected {
 }
 
 #route-graph .nodes > .placeholder {
+  user-select: none;
+  pointer-events: none;
   position: absolute;
   top: 50%;
   left: 50%;
