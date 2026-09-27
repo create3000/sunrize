@@ -723,7 +723,7 @@ module .exports = class RouteGraph extends Interface
          .css ({ left: x, top: y })
          .addClass ("node")
          .on ("mousedown", () => this .raiseNode (id))
-         .on ("mousedown", () => this .focusNode (id))
+         .on ("mouseup", () => this .focusNode (id))
          .on ("drag", (event, ui) => this .moveNode (id, ui .position))
          .on ("contextmenu", event => this .showContextMenu (event, id));
 
@@ -821,19 +821,6 @@ module .exports = class RouteGraph extends Interface
       this .nodes .append (element);
    }
 
-   focusNode (id)
-   {
-      const
-         element    = this .nodes .find (`.node[data-id=${id}]`),
-         scrollLeft = this .nodes .scrollLeft (),
-         scrollTop  = this .nodes .scrollTop ();
-
-      element .trigger ("focus");
-
-      this .nodes .scrollLeft (scrollLeft);
-      this .nodes .scrollTop (scrollTop);
-   }
-
    removeNode (id)
    {
       const
@@ -902,6 +889,11 @@ module .exports = class RouteGraph extends Interface
       element .find (".header .type-name") .text (node .getTypeName ());
    }
 
+   focusNode (id)
+   {
+      this .nodes .find (`.node[data-id=${id}]`) .trigger ("focus");
+   }
+
    raiseNode (id)
    {
       this .nodes .find (`.node[data-id=${id}]`) .appendTo (this .nodes);
@@ -929,6 +921,7 @@ module .exports = class RouteGraph extends Interface
 
       this .config .file .pages = pages;
 
+      this .focusNode (id);
       this .requestUpdateCanvas ();
    }
 
