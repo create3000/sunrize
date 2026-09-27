@@ -206,6 +206,7 @@ module .exports = class RouteGraph extends Interface
          },
          {
             label: _("Delete Selected Routes"),
+            enabled: !! this .#selectedRoutes .size,
             args: ["deleteSelectedRoutes"],
          },
       ];
