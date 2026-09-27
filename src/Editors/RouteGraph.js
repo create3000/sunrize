@@ -1010,9 +1010,11 @@ module .exports = class RouteGraph extends Interface
             offset                 = this .nodes .offset (),
             destinationNodeElement = this .nodes .find (`.node[data-id=${node .getId ()}]`),
             destinationElement     = destinationNodeElement .find (`.field[name="${field .getName ()}"] .input`),
-            [toX, toY]             = this .getDestinationPosition (offset, destinationElement);
+            [toX, toY]             = this .getDestinationPosition (offset, destinationElement),
+            scrollLeft             = this .nodes .scrollLeft (),
+            scrollTop              = this .nodes .scrollTop ();
 
-         this .#input = { node, field, toX, toY };
+         this .#input = { node, field, toX: toX + scrollLeft, toY: toY + scrollTop };
 
          this .nodes .find (`.input, .field:not([type-name="${field .getTypeName ()}"]) .output`)
             .css ("visibility", "hidden");
@@ -1046,9 +1048,11 @@ module .exports = class RouteGraph extends Interface
             offset            = this .nodes .offset (),
             sourceNodeElement = this .nodes .find (`.node[data-id=${node .getId ()}]`),
             sourceElement     = sourceNodeElement .find (`.field[name="${field .getName ()}"] .output`),
-            [fromX, fromY]    = this .getSourcePosition (offset, sourceElement);
+            [fromX, fromY]    = this .getSourcePosition (offset, sourceElement),
+            scrollLeft        = this .nodes .scrollLeft (),
+            scrollTop         = this .nodes .scrollTop ();
 
-         this .#output = { node, field, fromX, fromY };
+         this .#output = { node, field, fromX: fromX + scrollLeft, fromY: fromY + scrollTop };
 
          this .nodes .find (`.field:not([type-name="${field .getTypeName ()}"]) .input, .output`)
             .css ("visibility", "hidden");
@@ -1069,7 +1073,7 @@ module .exports = class RouteGraph extends Interface
 
    mouseMove (event)
    {
-      this .#pointer = this .getRelativePosition (event);
+      this .#pointer = this .getRelativePosition (event, false);
 
       if (this .#input || this .#output)
          this .requestUpdateCanvas ();
@@ -1166,11 +1170,13 @@ module .exports = class RouteGraph extends Interface
    drawRoutes (context)
    {
       const
-         active = this .top .tabs ("option", "active"),
-         pages  = this .config .file .pages,
-         page   = pages [active],
-         nodes  = new Set (page .nodes .map (node => this .getNode (node .id))),
-         offset = this .nodes .offset ();
+         active     = this .top .tabs ("option", "active"),
+         pages      = this .config .file .pages,
+         page       = pages [active],
+         nodes      = new Set (page .nodes .map (node => this .getNode (node .id))),
+         offset     = this .nodes .offset (),
+         scrollLeft = this .nodes .scrollLeft (),
+         scrollTop  = this .nodes .scrollTop ();
 
       // DEBUG
       nodes .delete (undefined);
@@ -1210,10 +1216,14 @@ module .exports = class RouteGraph extends Interface
       }
 
       if (this .#input)
-         this .drawRoute (context, this .#pointer .x, this .#pointer .y, this .#input .toX, this .#input .toY);
+      {
+         this .drawRoute (context, this .#pointer .x, this .#pointer .y, this .#input .toX - scrollLeft, this .#input .toY - scrollTop);
+      }
 
       if (this .#output)
-         this .drawRoute (context, this .#output .fromX, this .#output .fromY, this .#pointer .x, this .#pointer .y);
+      {
+         this .drawRoute (context, this .#output .fromX - scrollLeft, this .#output .fromY - scrollTop, this .#pointer .x, this .#pointer .y);
+      }
    }
 
    drawRoute (context, fromX, fromY, toX, toY)
@@ -1275,8 +1285,8 @@ module .exports = class RouteGraph extends Interface
    {
       const
          sourceOffset = sourceElement .offset (),
-         fromX        = sourceOffset .left - offset .left + sourceElement .width () / 2,
-         fromY        = sourceOffset .top - offset .top + sourceElement .height () / 2;
+         fromX        = sourceOffset .left - offset .left + sourceElement .width ()  / 2,
+         fromY        = sourceOffset .top  - offset .top  + sourceElement .height () / 2;
 
       return [fromX, fromY];
    }
@@ -1285,8 +1295,8 @@ module .exports = class RouteGraph extends Interface
    {
       const
          destinationOffset = destinationElement .offset (),
-         toX               = destinationOffset .left - offset .left + destinationElement .width () / 2,
-         toY               = destinationOffset .top - offset .top + destinationElement .height () / 2;
+         toX               = destinationOffset .left - offset .left + destinationElement .width ()  / 2,
+         toY               = destinationOffset .top  - offset .top  + destinationElement .height () / 2;
 
       return [toX, toY];
    }
@@ -1324,7 +1334,7 @@ module .exports = class RouteGraph extends Interface
          const
             element  = $(`#${id}`),
             node     = this .outlineEditor .getNode (element),
-            position = this .getRelativePosition (event);
+            position = this .getRelativePosition (event, true);
 
          if (this .config .global .addConnectedNodes)
             this .addConnectedNodes (node, position);
@@ -1333,12 +1343,12 @@ module .exports = class RouteGraph extends Interface
       }
    }
 
-   getRelativePosition (event)
+   getRelativePosition (event, scroll)
    {
       const
          bounds = this .nodes .offset (),
-         x      = event .clientX - bounds .left + this .nodes .scrollLeft (),
-         y      = event .clientY - bounds .top  + this .nodes .scrollTop ();
+         x      = event .clientX - bounds .left + (scroll ? this .nodes .scrollLeft () : 0),
+         y      = event .clientY - bounds .top  + (scroll ? this .nodes .scrollTop ()  : 0);
 
       return { x, y };
    }
