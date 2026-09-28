@@ -1523,8 +1523,8 @@ body.light .console-output .selected {
   --outline-color: #f71501;
   --route-color: #ff8900;
   --route-selected-color: #f71501;
-  --lasso-fill: hsla(207, 77%, 69%, 0.1);
-  --lasso-stroke: hsl(207, 71%, 80%);
+  --lasso-fill: hsla(207, 71%, 84%, 0.2);
+  --lasso-stroke: hsl(207, 71%, 84%);
   --tabs-height: 24px;
   --overscroll-gap: 120px;
 }
