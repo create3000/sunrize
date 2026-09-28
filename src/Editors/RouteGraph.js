@@ -487,34 +487,35 @@ module .exports = class RouteGraph extends Interface
 
    restorePages ()
    {
-      const
-         configNode = Editor .getConfigNode (this .browser .currentScene),
-         pages      = $.try (() => JSON .parse (configNode ?.getMetaData ("Sunrize/RouteGraph/pages"))),
-         paths      = new Set ();
+      try
+      {
+         const
+            configNode = Editor .getConfigNode (this .browser .currentScene),
+            pages      = JSON .parse (configNode ?.getMetaData ("Sunrize/RouteGraph/pages")),
+            paths      = new Set ();
 
-      if (!Array .isArray (pages))
+         for (const page of pages)
+         {
+            for (const node of page .nodes)
+               paths .add (node .path);
+         }
+
+         const ids = this .getIdsFromScene (this .browser .currentScene, paths);
+
+         for (const page of pages)
+         {
+            for (const node of page .nodes)
+               node .id = ids .get (node .path);
+
+            page .nodes = page .nodes .filter (node => node .id !== undefined);
+         }
+
+         this .pages = pages;
+      }
+      catch
       {
          this .pages = [ ];
-         return;
       }
-
-      for (const page of pages)
-      {
-         for (const node of page .nodes)
-            paths .add (node .path);
-      }
-
-      const ids = this .getIdsFromScene (this .browser .currentScene, paths);
-
-      for (const page of pages)
-      {
-         for (const node of page .nodes)
-            node .id = ids .get (node .path);
-
-         page .nodes = page .nodes .filter (node => node .id !== undefined);
-      }
-
-      this .pages = pages;
    }
 
    getIdsFromScene (scene, paths, path = [ ], ids = new Map (), seen = new Set ())
