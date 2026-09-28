@@ -1284,10 +1284,10 @@ module .exports = class RouteGraph extends Interface
          end    = start .copy () .add (size);
 
       const lasso = {
-         left:   Math .min (start .x, end .x),
-         top:    Math .min (start .y, end .y),
-         right:  Math .max (start .x, end .x),
-         bottom: Math .max (start .y, end .y),
+         left:   Math .min (start .x, end .x) + scroll .x,
+         top:    Math .min (start .y, end .y) + scroll .y,
+         right:  Math .max (start .x, end .x) + scroll .x,
+         bottom: Math .max (start .y, end .y) + scroll .y,
       };
 
       if (!event .shiftKey)
