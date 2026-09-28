@@ -321,7 +321,7 @@ module .exports = class RouteGraph extends Interface
    savePages ()
    {
       const
-         pages = this .pages,
+         pages = structuredClone (this .pages),
          ids   = new Set ();
 
       for (const page of pages)
@@ -336,9 +336,6 @@ module .exports = class RouteGraph extends Interface
       {
          for (const node of page .nodes)
          {
-            if (node .id === undefined)
-               continue;
-
             node .path = paths .get (node .id) ?? "";
 
             delete node .id;
