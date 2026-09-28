@@ -1710,10 +1710,9 @@ body.light .console-output .selected {
   display: flex;
   flex-direction: row;
   align-items: start;
-  justify-content: space-evenly;
   gap: 5px;
   width: 100%;
-  padding: 8px;
+  padding: 8px 12px;
   background: var(--lila);
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
@@ -1743,6 +1742,7 @@ body.light .console-output .selected {
   position: relative;
   top: -1px;
   font-size: 15pt;
+  margin-left: auto;
 }
 
 #route-graph .node .arrow:hover {
