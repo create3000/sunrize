@@ -1004,13 +1004,13 @@ module .exports = class RouteGraph extends Interface
       this .nodes .find (`.node[node-id=${id}]`) .appendTo (this .nodes);
    }
 
-   #movedNode = false;
+   #movingNode = false;
 
    moveNodeStart (id)
    {
       const node = this .getNode (id);
 
-      this .#movedNode = true;
+      this .#movingNode = true;
 
       if (!this .isNodeSelected (node))
          this .setNodeSelection (node);
@@ -1098,9 +1098,9 @@ module .exports = class RouteGraph extends Interface
 
    selectNode (event, id)
    {
-      if (this .#movedNode)
+      if (this .#movingNode)
       {
-         this .#movedNode = false;
+         this .#movingNode = false;
          return;
       }
 
@@ -1222,7 +1222,7 @@ module .exports = class RouteGraph extends Interface
 
    drawLasso ()
    {
-      if (this .#movedNode)
+      if (this .#movingNode)
          return this .drawLassoEnd ();
 
       const
