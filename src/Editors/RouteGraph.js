@@ -1033,16 +1033,16 @@ module .exports = class RouteGraph extends Interface
          others  = this .nodes .find (`.node.selected:not([node-id=${id}])`);
 
       const
-         deltaX = position .left - (parseInt (element .css ("left")) || 0),
-         deltaY = position .top  - (parseInt (element .css ("top"))  || 0);
+         deltaX = position .left - parseInt (element .css ("left")),
+         deltaY = position .top  - parseInt (element .css ("top"));
 
       for (const other of others)
       {
          const
             element = $(other),
             id      = element .data ("id"),
-            left    = (parseInt (element .css ("left")) || 0) + deltaX,
-            top     = (parseInt (element .css ("top"))  || 0) + deltaY;
+            left    = parseInt (element .css ("left")) + deltaX,
+            top     = parseInt (element .css ("top"))  + deltaY;
 
          element .css ("left", left);
          element .css ("top",  top);
@@ -1096,6 +1096,9 @@ module .exports = class RouteGraph extends Interface
          this .#movingNode = false;
          return;
       }
+
+      if (this .#lasso)
+         return;
 
       const node = this .getNode (id);
 
@@ -1200,6 +1203,7 @@ module .exports = class RouteGraph extends Interface
    #lasso;
    #lassoStart;
    #lassoScroll;
+   #lassoNodes;
 
    drawLassoStart ()
    {
@@ -1209,11 +1213,12 @@ module .exports = class RouteGraph extends Interface
       this .#lasso       = true;
       this .#lassoStart  = this .#pointer .copy ();
       this .#lassoScroll = new X3D .Vector2 (this .nodes .scrollLeft (), this .nodes .scrollTop ());
+      this .#lassoNodes  = new Set (this .#selectedNodes);
 
-      this .nodes .on ("mousemove.lasso scroll.lasso", () => this .drawLasso ());
+      this .nodes .on ("mousemove.lasso scroll.lasso", event => this .drawLasso (event));
    }
 
-   drawLasso ()
+   drawLasso (event)
    {
       if (this .#movingNode)
          return this .drawLassoEnd ();
@@ -1254,6 +1259,9 @@ module .exports = class RouteGraph extends Interface
 
       // Intersection Test
 
+      if (size .x < 10 || size .y < 10)
+         return;
+
       const
          active = this .top .tabs ("option", "active"),
          pages  = this .pages,
@@ -1262,14 +1270,49 @@ module .exports = class RouteGraph extends Interface
 
       const lasso = {
          left:   Math .min (start .x, end .x),
-         right:  Math .max (start .x, end .x),
          top:    Math .min (start .y, end .y),
+         right:  Math .max (start .x, end .x),
          bottom: Math .max (start .y, end .y),
       };
 
+      if (!event .shiftKey)
+         this .clearNodeSelection ();
+
       for (const { id } of page .nodes)
       {
-         // const element =
+         const
+            node      = this .getNode (id),
+            element   = this .nodes .find (`.node[node-id=${id}]`),
+            left      = parseInt (element .css ("left")),
+            top       = parseInt (element .css ("top")),
+            width     = element .width (),
+            height    = element .height (),
+            rectangle = { left, top, right: left + width, bottom: top + height };
+
+         if (this .rectanglesIntersect (lasso, rectangle))
+         {
+            if (event .shiftKey)
+            {
+               if (this .#lassoNodes .has (node))
+                  this .removeNodeSelection (node);
+               else
+                  this .addNodeSelection (node);
+            }
+            else
+            {
+               this .addNodeSelection (node);
+            }
+         }
+         else
+         {
+            if (event .shiftKey)
+            {
+               if (this .#lassoNodes .has (node))
+                  this .addNodeSelection (node);
+               else
+                  this .removeNodeSelection (node);
+            }
+         }
       }
    }
 
