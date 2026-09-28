@@ -111,6 +111,7 @@ module .exports = class RouteGraph extends Interface
 
       electron .ipcRenderer .on ("activate", (event, value) => this .activate (value));
       electron .ipcRenderer .on ("route-graph", (event, key, ... args) => this [key] (... args));
+      electron .ipcRenderer .on ("context-menu-will-close", (event, id) => this .closeContextMenu (id));
 
       electron .ipcRenderer .on ("close",        () => this .savePages ());
       $(window)             .on ("beforeunload", () => this .savePages ());
@@ -226,11 +227,12 @@ module .exports = class RouteGraph extends Interface
       this .#menuId = Math .random ();
 
       electron .ipcRenderer .send ("context-menu", "route-graph", menu, this .#menuId);
-      electron .ipcRenderer .once ("context-menu-will-close", (event, id) =>
-      {
-         if (id === this .#menuId)
-            this .#menu = false;
-      });
+   }
+
+   closeContextMenu (id)
+   {
+      if (id === this .#menuId)
+         this .#menu = false;
    }
 
    setSnapToGrid (snapToGrid)
