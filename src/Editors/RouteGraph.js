@@ -685,7 +685,8 @@ module .exports = class RouteGraph extends Interface
          page    = pages [active],
          current = pages [this .config .file .activePage];
 
-      this .savePage (current);
+      if (current)
+         this .savePage (current);
 
       this .config .file .activePage = active;
 
