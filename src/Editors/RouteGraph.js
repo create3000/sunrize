@@ -92,7 +92,6 @@ module .exports = class RouteGraph extends Interface
          .on ("contextmenu", event => this .showContextMenu (event))
          .on ("mousemove", event => this .mouseMove (event))
          .on ("mousedown", event => this .drawLassoStart (event))
-         .on ("mouseup", event => this .drawLassoEnd (event))
          .appendTo (this .left);
 
       this .title = $("<input>")
@@ -1241,6 +1240,7 @@ module .exports = class RouteGraph extends Interface
 
       this .nodes .on ("scroll.lasso", event => this .drawLasso (event));
       $(document) .on ("mousemove.lasso", event => this .drawLasso (event));
+      $(document) .on ("mouseup.lasso", event => this .drawLassoEnd (event));
    }
 
    drawLasso (event)
@@ -1347,6 +1347,20 @@ module .exports = class RouteGraph extends Interface
             }
          }
       }
+
+      const
+         overscrollX = end .x - this .nodes .width (),
+         overscrollY = end .y - this .nodes .height ();
+
+      if (end .x < 10)
+         this .nodes .scrollLeft (this .nodes .scrollLeft () - 10);
+      else if (overscrollX > -10)
+         this .nodes .scrollLeft (this .nodes .scrollLeft () + 10);
+
+      if (end .y < 10)
+         this .nodes .scrollTop (this .nodes .scrollTop () - 10);
+      else if (overscrollY > -10)
+         this .nodes .scrollTop (this .nodes .scrollTop () + 10);
    }
 
    drawLassoEnd (event)
