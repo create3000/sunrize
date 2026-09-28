@@ -1671,7 +1671,7 @@ html[platform=win32] #route-graph .ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
   font-size: x-large;
   color: var(--system-gray3);
   text-align: center;
-  transition: visibility 300ms, opacity 300ms ease-in-out;
+  transition: visibility 300ms, opacity 300ms linear;
 }
 
 #route-graph .nodes:has(> :last-child:nth-child(2)) > .placeholder {
@@ -1689,11 +1689,11 @@ html[platform=win32] #route-graph .ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
   outline: 4px solid transparent;
   border-radius: 17px 17px 15px 15px;
   color: white;
-  transition: outline-color 300ms ease-in-out;
+  transition: outline-color 300ms linear;
 }
 
 #route-graph .nodes.lasso .node {
-  transition: outline-color 100ms ease-in-out;
+  transition: outline-color 100ms linear;
 }
 
 #route-graph .node.selected {
@@ -1912,7 +1912,7 @@ html[platform=win32] #route-graph .ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
 
 .tree-view .jstree-node {
   outline: 1px solid transparent;
-  transition: outline 200ms ease-in-out;
+  transition: outline 200ms linear;
 }
 
 .tree-view .jstree-node.selected {
