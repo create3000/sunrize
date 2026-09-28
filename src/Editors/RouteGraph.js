@@ -163,7 +163,7 @@ module .exports = class RouteGraph extends Interface
       const element = this .nodes .find (`.node[node-id=${id}]`);
 
       if (element .length && !element .is (".selected"))
-         this .setNodeSelection (this .getNode (element .data ("id")));
+         this .setNodeSelection (this .getNode (element .data ("node-id")));
 
       const menu = [
          {
@@ -629,7 +629,7 @@ module .exports = class RouteGraph extends Interface
       this .clearRouteSelection ();
       this .clearInputOutput ();
 
-      const currentNodes = Array .from (this .nodes .find (".node"), element => this .getNode ($(element) .data ("id")));
+      const currentNodes = Array .from (this .nodes .find (".node"), element => this .getNode ($(element) .data ("node-id")));
 
       for (const node of currentNodes)
          this .removeNodeElement (node);
@@ -863,7 +863,7 @@ module .exports = class RouteGraph extends Interface
 
       const element = $("<div></div>")
          .draggable ()
-         .data ("id", id)
+         .data ("node-id", id)
          .attr ("node-id", id)
          .attr ("execution-context-id", node .getExecutionContext () .getId ())
          .css ("position", "")
@@ -1119,7 +1119,7 @@ module .exports = class RouteGraph extends Interface
       {
          const
             element = $(other),
-            id      = element .data ("id"),
+            id      = element .data ("node-id"),
             left    = parseInt (element .css ("left")) + deltaX,
             top     = parseInt (element .css ("top"))  + deltaY;
 
@@ -1205,7 +1205,7 @@ module .exports = class RouteGraph extends Interface
       this .clearNodeSelection ();
 
       for (const element of this .nodes .find (".node"))
-         this .addNodeSelection (this .getNode ($(element) .data ("id")));
+         this .addNodeSelection (this .getNode ($(element) .data ("node-id")));
    }
 
    removeSelectedNodes ()
