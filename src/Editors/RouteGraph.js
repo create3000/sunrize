@@ -156,6 +156,9 @@ module .exports = class RouteGraph extends Interface
       return document .sidebar .outlineEditor;
    }
 
+   #menu;
+   #menuId;
+
    showContextMenu (event, id)
    {
       event .preventDefault ();
@@ -219,7 +222,15 @@ module .exports = class RouteGraph extends Interface
          },
       ];
 
+      this .#menu   = true;
+      this .#menuId = Math .random ();
+
       electron .ipcRenderer .send ("context-menu", "route-graph", menu);
+      electron .ipcRenderer .once ("context-menu-will-close", (event, id) =>
+      {
+         if (id === this .#menuId)
+            this .#menu = false;
+      });
    }
 
    setSnapToGrid (snapToGrid)
@@ -1219,7 +1230,7 @@ module .exports = class RouteGraph extends Interface
       if (event .button !== 0)
          return;
 
-      if (this .#input || this .#output)
+      if (this .#menu || this .#input || this .#output)
          return;
 
       this .#lassoStart  = this .#pointer .copy ();
