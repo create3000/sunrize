@@ -246,7 +246,7 @@ module .exports = class RouteGraph extends Interface
    {
       const
          active = this .config .file .activePage,
-         pages  = this .config .file .pages;
+         pages  = this .pages;
 
       if (!pages .length)
          return this .addPage ();
@@ -294,10 +294,10 @@ module .exports = class RouteGraph extends Interface
          indices = Array .from (this .tabs .find ("> li"), li => $(li) .data ("id"));
 
       const
-         pages          = this .config .file .pages,
+         pages          = this .pages,
          reorderedPages = indices .map (i => pages [i]);
 
-      this .config .file .pages = reorderedPages;
+      this .pages = reorderedPages;
 
       if (current < this .config .file .activePage)
       {
@@ -321,7 +321,7 @@ module .exports = class RouteGraph extends Interface
    savePages ()
    {
       const
-         pages = this .config .file .pages,
+         pages = this .pages,
          ids   = new Set ();
 
       for (const page of pages)
@@ -475,7 +475,7 @@ module .exports = class RouteGraph extends Interface
          page .nodes = page .nodes .filter (node => node .id !== undefined);
       }
 
-      this .config .file .pages = pages;
+      this .pages = pages;
    }
 
    getIdsFromScene (scene, paths, path = [ ], ids = new Map (), seen = new Set ())
@@ -589,7 +589,7 @@ module .exports = class RouteGraph extends Interface
    {
       const
          active = this .top .tabs ("option", "active"),
-         pages  = this .config .file .pages,
+         pages  = this .pages,
          page   = pages [active];
 
       this .clearNodeSelection ();
@@ -623,15 +623,14 @@ module .exports = class RouteGraph extends Interface
    addPage ()
    {
       const
-         pages = this .config .file .pages,
-         next   = pages .reduce ((i, page) => Math .max (i, (page .title .match (/(\d+)\s*$/) ?.[1]|0) + 1), 1);
+         pages = this .pages,
+         next  = pages .reduce ((i, page) => Math .max (i, (page .title .match (/(\d+)\s*$/) ?.[1]|0) + 1), 1);
 
       pages .push ({
          title: `${_("New Logic")} ${next}`,
          nodes: [ ],
       });
 
-      this .config .file .pages      = pages;
       this .config .file .activePage = pages .length - 1;
 
       this .updatePages ();
@@ -639,11 +638,7 @@ module .exports = class RouteGraph extends Interface
 
    closePage (id)
    {
-      const pages = this .config .file .pages;
-
-      pages .splice (id, 1);
-
-      this .config .file .pages = pages;
+      this .pages .splice (id, 1);
 
       this .updatePages ();
    }
@@ -652,7 +647,7 @@ module .exports = class RouteGraph extends Interface
    {
       const
          active = this .top .tabs ("option", "active"),
-         pages = this .config .file .pages;
+         pages = this .pages;
 
       this .config .file .activePage = active;
 
@@ -667,7 +662,7 @@ module .exports = class RouteGraph extends Interface
    {
       const
          active = this .config .file .activePage,
-         pages  = this .config .file .pages,
+         pages  = this .pages,
          title  = this .title .val () || _("New Logic");
 
       $(`a[href="#routing-page-${active}-tab"]`)
@@ -675,21 +670,17 @@ module .exports = class RouteGraph extends Interface
          .text (title);
 
       pages [active] .title = title;
-
-      this .config .file .pages = pages;
    }
 
    scrollNodes ()
    {
       const
          active = this .top .tabs ("option", "active"),
-         pages  = this .config .file .pages,
+         pages  = this .pages,
          page   = pages [active];
 
       page .scrollLeft = this .nodes .scrollLeft ();
       page .scrollTop  = this .nodes .scrollTop ();
-
-      this .config .file .pages = pages;
 
       this .updateCanvas ();
    }
@@ -708,7 +699,7 @@ module .exports = class RouteGraph extends Interface
    {
       const
          active = this .top .tabs ("option", "active"),
-         pages  = this .config .file .pages,
+         pages  = this .pages,
          page   = pages [active],
          nodes  = page .nodes,
          id     = node .getId ();
@@ -725,8 +716,6 @@ module .exports = class RouteGraph extends Interface
       }
 
       nodes .push ({ id, x, y });
-
-      this .config .file .pages = pages;
 
       this .addNodeElement (node, { x, y });
       this .requestUpdateCanvas ();
@@ -925,13 +914,11 @@ module .exports = class RouteGraph extends Interface
    {
       const
          active = this .config .file .activePage,
-         pages  = this .config .file .pages,
+         pages  = this .pages,
          page   = pages [active],
          node   = this .getNode (id);
 
       page .nodes = page .nodes .filter (node => node .id !== id);
-
-      this .config .file .pages = pages;
 
       this .removeNodeElement (node);
       this .requestUpdateCanvas ();
@@ -1024,7 +1011,7 @@ module .exports = class RouteGraph extends Interface
    {
       const
          active = this .config .file .activePage,
-         pages  = this .config .file .pages,
+         pages  = this .pages,
          page   = pages [active],
          node   = page .nodes .find (node => node .id === id);
 
@@ -1068,8 +1055,6 @@ module .exports = class RouteGraph extends Interface
          node .x = left;
          node .y = top;
       }
-
-      this .config .file .pages = pages;
 
       this .requestUpdateCanvas ();
    }
@@ -1192,7 +1177,7 @@ module .exports = class RouteGraph extends Interface
    {
       const
          active = this .config .file .activePage,
-         pages  = this .config .file .pages,
+         pages  = this .pages,
          page   = pages [active];
 
       for (const { id } of page .nodes)
@@ -1274,7 +1259,7 @@ module .exports = class RouteGraph extends Interface
 
       const
          active = this .top .tabs ("option", "active"),
-         pages  = this .config .file .pages,
+         pages  = this .pages,
          page   = pages [active],
          end    = start .copy () .add (size);
 
@@ -1431,7 +1416,7 @@ module .exports = class RouteGraph extends Interface
    {
       const
          active  = this .top .tabs ("option", "active"),
-         pages   = this .config .file .pages,
+         pages   = this .pages,
          page    = pages [active],
          nodes   = new Set (page .nodes .map (node => this .getNode (node .id))),
          offset  = this .nodes .offset (),
@@ -1515,7 +1500,7 @@ module .exports = class RouteGraph extends Interface
    {
       const
          active = this .top .tabs ("option", "active"),
-         pages  = this .config .file .pages,
+         pages  = this .pages,
          page   = pages [active],
          nodes  = new Set (page .nodes .map (node => this .getNode (node .id)));
 
@@ -1680,7 +1665,7 @@ module .exports = class RouteGraph extends Interface
    {
       const
          active     = this .top .tabs ("option", "active"),
-         pages      = this .config .file .pages,
+         pages      = this .pages,
          page       = pages [active],
          nodes      = new Set (page .nodes .map (node => this .getNode (node .id))),
          offset     = this .nodes .offset (),
