@@ -50,7 +50,7 @@ module .exports = class Application
 
    constructor ()
    {
-      process .env .SUNRISE_ENVIRONMENT = "DEVELOPMENT"; // Windows test
+      // process .env .SUNRISE_ENVIRONMENT = "DEVELOPMENT"; // Windows test
 
       if (process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT")
          process .env .ELECTRON_ENABLE_LOGGING = 1;
