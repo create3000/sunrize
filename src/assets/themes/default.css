@@ -1601,6 +1601,7 @@ body.light .console-output .selected {
   position: absolute;
   left: -2px;
   color: var(--text-disabled);
+  padding-top: 1px;
   line-height: 0;
 }
 
