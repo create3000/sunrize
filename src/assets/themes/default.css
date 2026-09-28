@@ -1572,6 +1572,7 @@ body.light .console-output .selected {
   border: 1px solid transparent;
   border-radius: var(--tabs-height);
   padding: 0px;
+  padding-top: 1px;
   height: 100%;
 }
 
@@ -1581,6 +1582,10 @@ body.light .console-output .selected {
   height: auto;
   padding: 0px 6px 0px 10px;
   color: var(--window-tabs-text-color);
+}
+
+#route-graph .ui-tabs > .ui-tabs-nav li:is(.win32) .ui-tabs-anchor {
+  padding-top: 1px;
 }
 
 #route-graph .ui-tabs > .ui-tabs-nav .ui-tabs-active .ui-tabs-anchor {
