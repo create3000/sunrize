@@ -73,7 +73,7 @@ module .exports = class RouteGraph extends Interface
          .on ("click", () => this .setAddConnectedNodes (!this .config .global .addConnectedNodes));
 
       this .left = $("<div></div>")
-         .addClass ("route-graph-left")
+         .addClass ("pages")
          .appendTo (this .editor);
 
       this .canvas = $("<canvas></canvas>")

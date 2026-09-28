@@ -1617,7 +1617,7 @@ html[platform=win32] #route-graph .ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
   font-size: 10pt;
 }
 
-#route-graph .route-graph-left {
+#route-graph .pages {
   overflow: hidden;
   position: absolute;
   box-sizing: border-box;
