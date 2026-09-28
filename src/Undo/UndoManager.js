@@ -25,6 +25,9 @@ module .exports = class UndoManager
 
    set saveNeeded (value)
    {
+      if (this .#saveNeeded === value)
+         return;
+
       this .#saveNeeded = value;
 
       this .#processInterests ();
