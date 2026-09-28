@@ -1118,7 +1118,7 @@ module .exports = class RouteGraph extends Interface
       if (event .button !== 0)
          return;
 
-      if (this .#lasso)
+      if (this .#lasso || this .#movingNode)
          return;
 
       const node = this .getNode (id);
