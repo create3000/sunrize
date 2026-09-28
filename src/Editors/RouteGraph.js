@@ -1042,8 +1042,6 @@ module .exports = class RouteGraph extends Interface
       node .x = position .left;
       node .y = position .top;
 
-      this .config .file .pages = pages;
-
       // Move selected nodes.
 
       const
@@ -1056,11 +1054,22 @@ module .exports = class RouteGraph extends Interface
 
       for (const other of others)
       {
-         const otherElement = $(other);
+         const
+            element = $(other),
+            id      = element .data ("id"),
+            left    = (parseInt (element .css ("left")) || 0) + deltaX,
+            top     = (parseInt (element .css ("top"))  || 0) + deltaY;
 
-         otherElement .css ("left", (parseInt (otherElement .css ("left")) || 0) + deltaX);
-         otherElement .css ("top",  (parseInt (otherElement .css ("top"))  || 0) + deltaY);
+         element .css ("left", left);
+         element .css ("top",  top);
+
+         const node = page .nodes .find (node => node .id === id);
+
+         node .x = left;
+         node .y = top;
       }
+
+      this .config .file .pages = pages;
 
       this .requestUpdateCanvas ();
    }
@@ -1227,6 +1236,8 @@ module .exports = class RouteGraph extends Interface
       if (this .#movingNode)
          return this .drawLassoEnd ();
 
+      // Draw Lasso
+
       const
          context      = this .overlay [0] .getContext ("2d"),
          width        = this .overlay .width (),
@@ -1258,6 +1269,26 @@ module .exports = class RouteGraph extends Interface
       context .stroke ();
 
       context .restore ();
+
+      // Intersection Test
+
+      const
+         active = this .top .tabs ("option", "active"),
+         pages  = this .config .file .pages,
+         page   = pages [active],
+         end    = start .copy () .add (size);
+
+      const lasso = {
+         left:   Math .min (start .x, end .x),
+         right:  Math .max (start .x, end .x),
+         top:    Math .min (start .y, end .y),
+         bottom: Math .max (start .y, end .y),
+      };
+
+      for (const { id } of page .nodes)
+      {
+         // const element =
+      }
    }
 
    drawLassoEnd ()
@@ -1276,6 +1307,12 @@ module .exports = class RouteGraph extends Interface
       context .scale (contentScale, contentScale);
       context .clearRect (0, 0, width, height);
       context .restore ();
+   }
+
+   rectanglesIntersect (a, b)
+   {
+      return Math .max (a .left, b .left) < Math .min (a .right, b .right) &&
+          Math .max (a .top, b .top) < Math .min (a .bottom, b .bottom);
    }
 
    #input  = null;
