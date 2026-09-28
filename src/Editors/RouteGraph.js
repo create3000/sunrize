@@ -364,12 +364,18 @@ module .exports = class RouteGraph extends Interface
          }
       }
 
-      if (!ids .size)
-         return;
+      if (ids .size)
+      {
+         const configNode = Editor .getConfigNode (this .browser .currentScene, true);
 
-      const configNode = Editor .getConfigNode (this .browser .currentScene, true);
+         configNode .setMetaData ("Sunrize/RouteGraph/pages", new X3D .SFString (JSON .stringify (pages)));
+      }
+      else
+      {
+         const configNode = Editor .getConfigNode (this .browser .currentScene);
 
-      configNode .setMetaData ("Sunrize/RouteGraph/pages", new X3D .SFString (JSON .stringify (pages)));
+         configNode ?.removeMetaData ("Sunrize/RouteGraph/pages");
+      }
 
       UndoManager .shared .saveNeeded = true;
    }
