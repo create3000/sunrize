@@ -266,26 +266,26 @@ module .exports = class RouteGraph extends Interface
       this .top .find ("> div") .remove ();
       this .tabs .empty ();
 
-      for (const [id, { title }] of pages .entries ())
+      for (const [index, { title }] of pages .entries ())
       {
          // Add tab.
          $("<li></li>")
-            .data ("id", id)
-            .on ("click", () => this .top .tabs ("option", "active", id))
+            .data ("index", index)
+            .on ("click", () => this .top .tabs ("option", "active", index))
             .append ($("<a></a>")
                .addClass ("text")
-               .attr ("href", `#routing-page-${id}-tab`)
+               .attr ("href", `#routing-page-${index}-tab`)
                .attr ("title", title)
                .text (title))
             .append ($("<span></span>")
                .addClass (["material-icons", "button"])
                .text ("close")
-               .on ("click", () => this .closePage (id)))
+               .on ("click", () => this .closePage (index)))
             .appendTo (this .tabs);
 
          // Add hidden empty panel.
          $("<div></div>")
-            .attr ("id", `routing-page-${id}-tab`)
+            .attr ("id", `routing-page-${index}-tab`)
             .appendTo (this .top);
       }
 
@@ -302,8 +302,8 @@ module .exports = class RouteGraph extends Interface
    reorderPages (item)
    {
       const
-         current = item .data ("id"),
-         indices = Array .from (this .tabs .find ("> li"), li => $(li) .data ("id"));
+         current = item .data ("index"),
+         indices = Array .from (this .tabs .find ("> li"), li => $(li) .data ("index"));
 
       const
          pages          = this .pages,
@@ -670,9 +670,9 @@ module .exports = class RouteGraph extends Interface
       this .top .tabs ("option", "active", pages .length - 1);
    }
 
-   closePage (id)
+   closePage (index)
    {
-      this .pages .splice (id, 1);
+      this .pages .splice (index, 1);
 
       this .updatePages ();
    }
