@@ -1239,7 +1239,8 @@ module .exports = class RouteGraph extends Interface
       this .#lassoScroll = new X3D .Vector2 (this .nodes .scrollLeft (), this .nodes .scrollTop ());
       this .#lassoNodes  = new Set (this .#selectedNodes);
 
-      this .nodes .on ("mousemove.lasso scroll.lasso", event => this .drawLasso (event));
+      this .nodes .on ("scroll.lasso", event => this .drawLasso (event));
+      $(document) .on ("mousemove.lasso", event => this .drawLasso (event));
    }
 
    drawLasso (event)
@@ -1257,10 +1258,11 @@ module .exports = class RouteGraph extends Interface
          width        = this .overlay .width (),
          height       = this .overlay .height (),
          contentScale = window .devicePixelRatio,
+         pointer      = this .getRelativePosition (event, false),
          scroll       = new X3D .Vector2 (this .nodes .scrollLeft (), this .nodes .scrollTop ()),
          deltaScroll  = this .#lassoScroll .copy () .subtract (scroll),
          start        = this .#lassoStart .copy () .add (deltaScroll),
-         size         = this .#pointer .copy () .subtract (start);
+         size         = pointer .copy () .subtract (start);
 
       const
          fillStyle   = this .#style .getPropertyValue ("--lasso-fill"),
@@ -1355,6 +1357,7 @@ module .exports = class RouteGraph extends Interface
       this .#lasso = false;
 
       this .nodes .removeClass ("lasso") .off (".lasso");
+      $(document) .off (".lasso");
 
       const
          context      = this .overlay [0] .getContext ("2d"),
