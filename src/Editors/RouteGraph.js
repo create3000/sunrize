@@ -672,6 +672,11 @@ module .exports = class RouteGraph extends Interface
 
    closePage (index)
    {
+      const active = this .top .tabs ("option", "active");
+
+      if (active === this .config .file .activePage)
+         this .config .file .activePage = -1;
+
       this .pages .splice (index, 1);
 
       this .updatePages ();
