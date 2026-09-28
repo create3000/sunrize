@@ -1618,6 +1618,7 @@ html[platform=win32] #route-graph .ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
 }
 
 #route-graph .pages {
+  user-select: none;
   overflow: hidden;
   position: absolute;
   box-sizing: border-box;
