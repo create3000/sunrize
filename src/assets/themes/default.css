@@ -1663,7 +1663,6 @@ html[platform=win32] #route-graph .ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
 #route-graph .nodes > .placeholder {
   visibility: hidden;
   opacity: 0;
-  user-select: none;
   pointer-events: none;
   position: absolute;
   top: 50%;
