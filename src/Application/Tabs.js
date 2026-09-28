@@ -327,8 +327,8 @@ module .exports = new class Tabs
 
       const menu = [
          {
-            label: tab .url .startsWith ("file:") ? _("Copy Path") : _("Copy URL"),
-            visible: !tab .url .startsWith ("id:"),
+            label: tab .url .startsWith ("file:") || tab .url .startsWith ("id:") ? _("Copy Path") : _("Copy URL"),
+            enabled: !tab .url .startsWith ("id:"),
             args: ["menuCopyURL", tab .getPosition ()],
          },
          {
@@ -341,7 +341,7 @@ module .exports = new class Tabs
                   default:       return _("Reveal File in File Manager");
                }
             })(),
-            visible: tab .url .startsWith ("file:"),
+            enabled: tab .url .startsWith ("file:"),
             args: ["menuShowItemInFolder", tab .getPosition ()],
          },
          { type: "separator" },
