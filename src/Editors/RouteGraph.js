@@ -680,12 +680,12 @@ module .exports = class RouteGraph extends Interface
    activatePage ()
    {
       const
-         active = this .top .tabs ("option", "active"),
-         pages  = this .pages,
-         page   = pages [active],
-         last   = pages [this .config .file .activePage];
+         active  = this .top .tabs ("option", "active"),
+         pages   = this .pages,
+         page    = pages [active],
+         current = pages [this .config .file .activePage];
 
-      this .savePage (last);
+      this .savePage (current);
 
       this .config .file .activePage = active;
 
