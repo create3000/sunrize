@@ -1572,6 +1572,7 @@ body.light .console-output .selected {
   border: 1px solid transparent;
   border-radius: var(--tabs-height);
   padding: 0px;
+  padding-top: 1px;
   height: 100%;
 }
 
