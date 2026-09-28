@@ -1581,6 +1581,7 @@ html[platform=linux] #route-graph .ui-tabs > .ui-tabs-nav li {
 }
 
 #route-graph .ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
+  pointer-events: none;
   align-items: center;
   float: none;
   height: auto;
