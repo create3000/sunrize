@@ -483,8 +483,14 @@ module .exports = class RouteGraph extends Interface
    {
       const
          configNode = Editor .getConfigNode (this .browser .currentScene),
-         pages      = $.try (() => JSON .parse (configNode ?.getMetaData ("Sunrize/RouteGraph/pages"))) ?? [ ],
+         pages      = $.try (() => JSON .parse (configNode ?.getMetaData ("Sunrize/RouteGraph/pages"))),
          paths      = new Set ();
+
+      if (!Array .isArray (pages))
+      {
+         this .pages = [ ];
+         return;
+      }
 
       for (const page of pages)
       {
