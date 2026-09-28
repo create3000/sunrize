@@ -191,7 +191,7 @@ module .exports = class RouteGraph extends Interface
          {
             label: _("Find Node"),
             enabled: !! id,
-            args: ["findNode", id],
+            args: ["findNode", id, false],
          },
          {
             label: _("Select All Nodes"),
@@ -859,7 +859,7 @@ module .exports = class RouteGraph extends Interface
             if (event .button !== 0)
                return;
 
-            this .findNode (id);
+            this .findNode (id, event .shiftKey);
          })
          .appendTo (header);
 
@@ -1083,7 +1083,7 @@ module .exports = class RouteGraph extends Interface
       $(document) .off (".move-node");
    }
 
-   findNode (id)
+   findNode (id, add)
    {
       const
          node          = this .getNode (id),
@@ -1099,10 +1099,10 @@ module .exports = class RouteGraph extends Interface
       for (const [i, element] of elements .entries ())
       {
          if ($(element) .is (".node"))
-            outlineEditor .selectNodeElement ($(element), { add: i > 0, target: true });
+            outlineEditor .selectNodeElement ($(element), { add: add || i > 0, target: true });
 
          else if ($(element) .is (".imported-node"))
-            outlineEditor .selectPrimaryElement ($(element), { add: i > 0, target: true });
+            outlineEditor .selectPrimaryElement ($(element), { add: add || i > 0, target: true });
       }
 
       // Scroll element into view.
