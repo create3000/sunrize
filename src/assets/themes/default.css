@@ -1576,6 +1576,7 @@ body.light .console-output .selected {
 }
 
 #route-graph .ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
+  align-items: center;
   float: none;
   height: auto;
   padding: 0px 6px 0px 10px;
@@ -1605,6 +1606,7 @@ body.light .console-output .selected {
 }
 
 #route-graph .ui-tabs > .ui-tabs-nav .button {
+  align-items: center;
   top: unset;
   margin-right: 6px;
   font-size: 10pt;
