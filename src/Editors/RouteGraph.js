@@ -1288,7 +1288,7 @@ module .exports = class RouteGraph extends Interface
 
       // Intersection Test
 
-      if (Math .abs (size .x) < 10 || Math .abs (size .y) < 10)
+      if (Math .max (... size .copy () .abs ()) < 10)
          return;
 
       this .#lasso = true;
