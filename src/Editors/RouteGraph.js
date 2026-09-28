@@ -1248,8 +1248,6 @@ module .exports = class RouteGraph extends Interface
       if (event .button !== 0)
          return;
 
-      console .log (this .#movingNode)
-
       if (this .#movingNode)
          return this .drawLassoEnd (event);
 
