@@ -1234,11 +1234,30 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static removeProtoDeclaration (executionContext, name, undoManager = UndoManager .shared)
    {
-      const oldProtos = new Map (Array .from (executionContext .protos, p => [p .getName (), p]));
+      const
+         oldProto  = executionContext .getProtoDeclaration (name),
+         oldProtos = new Map (Array .from (executionContext .protos, p => [p .getName (), p]));
 
       undoManager .beginUndo (_("Remove Proto Declaration »%s«"), name);
 
       executionContext .removeProtoDeclaration (name);
+
+      for (const field of oldProto .getFields ())
+      {
+         switch (field .getType ())
+         {
+            case X3D .X3DConstants .SFNode:
+            {
+               this .setFieldValue (executionContext, oldProto, field, null, undoManager);
+               break;
+            }
+            case X3D .X3DConstants .MFNode:
+            {
+               this .setFieldValue (executionContext, oldProto, field, new X3D .MFNode (), undoManager);
+               break;
+            }
+         }
+      }
 
       undoManager .registerUndo (() =>
       {
