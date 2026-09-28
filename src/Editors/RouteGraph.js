@@ -815,6 +815,7 @@ module .exports = class RouteGraph extends Interface
          .on ("mouseup", event => this .selectNode (event, id))
          .on ("dragstart", () => this .moveNodeStart (id))
          .on ("drag", (event, ui) => this .moveNode (id, ui .position))
+         .on ("mouseup", () => this .moveNodeEnd ())
          .on ("contextmenu", event => this .showContextMenu (event, id));
 
       if (selected)
@@ -1074,6 +1075,11 @@ module .exports = class RouteGraph extends Interface
       this .requestUpdateCanvas ();
    }
 
+   moveNodeEnd ()
+   {
+      this .#movingNode = false;
+   }
+
    findNode (id)
    {
       const
@@ -1111,12 +1117,6 @@ module .exports = class RouteGraph extends Interface
    {
       if (event .button !== 0)
          return;
-
-      if (this .#movingNode)
-      {
-         this .#movingNode = false;
-         return;
-      }
 
       if (this .#lasso)
          return;
@@ -1247,6 +1247,8 @@ module .exports = class RouteGraph extends Interface
    {
       if (event .button !== 0)
          return;
+
+      console .log (this .#movingNode)
 
       if (this .#movingNode)
          return this .drawLassoEnd (event);
