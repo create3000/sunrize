@@ -346,6 +346,9 @@ module .exports = class RouteGraph extends Interface
 
       for (const page of pages)
       {
+         delete page .selectedNodes;
+         delete page .selectedRoutes;
+
          for (const node of page .nodes)
          {
             node .path = paths .get (node .id) ?? "";
@@ -594,6 +597,12 @@ module .exports = class RouteGraph extends Interface
       }
    }
 
+   savePage (page)
+   {
+      page .selectedNodes  = Array .from (this .#selectedNodes);
+      page .selectedRoutes = Array .from (this .#selectedRoutes);
+   }
+
    restorePage ()
    {
       const
@@ -612,6 +621,22 @@ module .exports = class RouteGraph extends Interface
 
       for (const node of page .nodes)
          this .addNodeElement (this .getNode (node .id), node);
+
+      // Restore selections.
+
+      const ids = page .nodes .map (node => node .id);
+
+      for (const node of page .selectedNodes ?? [ ])
+      {
+         if (ids .includes (node .getId ()))
+            this .addNodeSelection (node);
+      }
+
+      for (const route of page .selectedRoutes ?? [ ])
+      {
+         if (route .getExecutionContext () .routes .includes (route))
+            this .addRouteSelection (route);
+      }
 
       // Restore scroll position.
 
@@ -640,9 +665,9 @@ module .exports = class RouteGraph extends Interface
          nodes: [ ],
       });
 
-      this .config .file .activePage = pages .length - 1;
-
       this .updatePages ();
+
+      this .top .tabs ("option", "active", pages .length - 1);
    }
 
    closePage (id)
@@ -656,11 +681,15 @@ module .exports = class RouteGraph extends Interface
    {
       const
          active = this .top .tabs ("option", "active"),
-         pages = this .pages;
+         pages  = this .pages,
+         page   = pages [active],
+         last   = pages [this .config .file .activePage];
+
+      this .savePage (last);
 
       this .config .file .activePage = active;
 
-      this .title .val (pages [active] .title);
+      this .title .val (page .title);
 
       this .updateTitle ();
       this .restorePage ();
