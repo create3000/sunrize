@@ -225,7 +225,7 @@ module .exports = class RouteGraph extends Interface
       this .#menu   = true;
       this .#menuId = Math .random ();
 
-      electron .ipcRenderer .send ("context-menu", "route-graph", menu);
+      electron .ipcRenderer .send ("context-menu", "route-graph", menu, this .#menuId);
       electron .ipcRenderer .once ("context-menu-will-close", (event, id) =>
       {
          if (id === this .#menuId)
