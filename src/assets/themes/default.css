@@ -1584,7 +1584,7 @@ body.light .console-output .selected {
   color: var(--window-tabs-text-color);
 }
 
-#route-graph .ui-tabs > .ui-tabs-nav li:is(.win32) .ui-tabs-anchor {
+html[platform=win32] #route-graph .ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
   padding-top: 1px;
 }
 

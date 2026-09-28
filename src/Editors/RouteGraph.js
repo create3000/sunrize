@@ -271,7 +271,6 @@ module .exports = class RouteGraph extends Interface
          // Add tab.
          $("<li></li>")
             .data ("index", index)
-            .addClass (process .platform)
             .on ("click", () => this .top .tabs ("option", "active", index))
             .append ($("<a></a>")
                .addClass ("text")
