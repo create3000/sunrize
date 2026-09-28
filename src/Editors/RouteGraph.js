@@ -815,7 +815,6 @@ module .exports = class RouteGraph extends Interface
          .on ("mouseup", event => this .selectNode (event, id))
          .on ("dragstart", () => this .moveNodeStart (id))
          .on ("drag", (event, ui) => this .moveNode (id, ui .position))
-         .on ("mouseup", () => this .moveNodeEnd ())
          .on ("contextmenu", event => this .showContextMenu (event, id));
 
       if (selected)
@@ -1017,6 +1016,8 @@ module .exports = class RouteGraph extends Interface
 
       this .#movingNode = true;
 
+      $(document) .on ("mouseup.move-node", () => this .moveNodeEnd ());
+
       if (!this .isNodeSelected (node))
          this .setNodeSelection (node);
 
@@ -1078,6 +1079,8 @@ module .exports = class RouteGraph extends Interface
    moveNodeEnd ()
    {
       this .#movingNode = false;
+
+      $(document) .off (".move-node");
    }
 
    findNode (id)
