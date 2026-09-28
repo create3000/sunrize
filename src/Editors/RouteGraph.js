@@ -97,7 +97,7 @@ module .exports = class RouteGraph extends Interface
       this .title = $("<input>")
          .addClass ("title")
          .on ("input", () => this .updateTitle ())
-         .on ("mousemove", event => event .stopPropagation ())
+         .on ("mousedown", event => event .stopPropagation ())
          .appendTo (this .nodes);
 
       this .placeholder = $("<div></div>")
