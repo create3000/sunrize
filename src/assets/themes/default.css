@@ -1685,6 +1685,10 @@ body.light .console-output .selected {
   transition: outline-color 300ms ease-in-out;
 }
 
+#route-graph .nodes.lasso .node {
+  transition: outline-color 100ms ease-in-out;
+}
+
 #route-graph .node.selected {
   outline-color: var(--outline-color);
 }

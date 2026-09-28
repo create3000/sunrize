@@ -50,7 +50,7 @@ module .exports = class RouteGraph extends Interface
          .attr ("title", _("Add new Logic."))
          .text ("add")
          .appendTo (this .toolbar)
-         .on ("mouseup", () => this .addPage ());
+         .on ("click", () => this .addPage ());
 
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
@@ -60,7 +60,7 @@ module .exports = class RouteGraph extends Interface
          .css ({ transform: "scale(0.9)" })
          .text ("grid_4x4")
          .appendTo (this .toolbar)
-         .on ("mouseup", () => this .setSnapToGrid (!this .config .global .snapToGrid));
+         .on ("click", () => this .setSnapToGrid (!this .config .global .snapToGrid));
 
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
@@ -70,7 +70,7 @@ module .exports = class RouteGraph extends Interface
          .css ({ transform: "scale(0.8)" })
          .text ("hub")
          .appendTo (this .toolbar)
-         .on ("mouseup", () => this .setAddConnectedNodes (!this .config .global .addConnectedNodes));
+         .on ("click", () => this .setAddConnectedNodes (!this .config .global .addConnectedNodes));
 
       this .left = $("<div></div>")
          .addClass ("route-graph-left")
@@ -91,8 +91,8 @@ module .exports = class RouteGraph extends Interface
          .on ("scroll", () => this .scrollNodes ())
          .on ("contextmenu", event => this .showContextMenu (event))
          .on ("mousemove", event => this .mouseMove (event))
-         .on ("mousedown", () => this .drawLassoStart ())
-         .on ("mouseup", () => this .drawLassoEnd ())
+         .on ("mousedown", event => this .drawLassoStart (event))
+         .on ("mouseup", event => this .drawLassoEnd (event))
          .appendTo (this .left);
 
       this .title = $("<input>")
@@ -259,7 +259,7 @@ module .exports = class RouteGraph extends Interface
          // Add tab.
          $("<li></li>")
             .data ("id", id)
-            .on ("mouseup", () => this .top .tabs ("option", "active", id))
+            .on ("click", () => this .top .tabs ("option", "active", id))
             .append ($("<a></a>")
                .addClass ("text")
                .attr ("href", `#routing-page-${id}-tab`)
@@ -268,7 +268,7 @@ module .exports = class RouteGraph extends Interface
             .append ($("<span></span>")
                .addClass (["material-icons", "button"])
                .text ("close")
-               .on ("mouseup", () => this .closePage (id)))
+               .on ("click", () => this .closePage (id)))
             .appendTo (this .tabs);
 
          // Add hidden empty panel.
@@ -842,7 +842,13 @@ module .exports = class RouteGraph extends Interface
          .addClass (["material-symbols-outlined", "button", "arrow"])
          .text ("left_click")
          .attr ("title", _("Find node."))
-         .on ("mouseup", () => this .findNode (id))
+         .on ("mouseup", event =>
+         {
+            if (event .button !== 0)
+               return;
+
+            this .findNode (id);
+         })
          .appendTo (header);
 
       const fieldsElement = $("<ul></ul>")
@@ -1091,6 +1097,9 @@ module .exports = class RouteGraph extends Interface
 
    selectNode (event, id)
    {
+      if (event .button !== 0)
+         return;
+
       if (this .#movingNode)
       {
          this .#movingNode = false;
@@ -1205,12 +1214,14 @@ module .exports = class RouteGraph extends Interface
    #lassoScroll;
    #lassoNodes;
 
-   drawLassoStart ()
+   drawLassoStart (event)
    {
+      if (event .button !== 0)
+         return;
+
       if (this .#input || this .#output)
          return;
 
-      this .#lasso       = true;
       this .#lassoStart  = this .#pointer .copy ();
       this .#lassoScroll = new X3D .Vector2 (this .nodes .scrollLeft (), this .nodes .scrollTop ());
       this .#lassoNodes  = new Set (this .#selectedNodes);
@@ -1221,7 +1232,7 @@ module .exports = class RouteGraph extends Interface
    drawLasso (event)
    {
       if (this .#movingNode)
-         return this .drawLassoEnd ();
+         return this .drawLassoEnd (event);
 
       // Draw Lasso
 
@@ -1261,6 +1272,10 @@ module .exports = class RouteGraph extends Interface
 
       if (size .x < 10 || size .y < 10)
          return;
+
+      this .#lasso = true;
+
+      this .nodes .addClass ("lasso");
 
       const
          active = this .top .tabs ("option", "active"),
@@ -1316,11 +1331,14 @@ module .exports = class RouteGraph extends Interface
       }
    }
 
-   drawLassoEnd ()
+   drawLassoEnd (event)
    {
+      if (event .button !== 0)
+         return;
+
       this .#lasso = false;
 
-      this .nodes .off (".lasso");
+      this .nodes .removeClass ("lasso") .off (".lasso");
 
       const
          context      = this .overlay [0] .getContext ("2d"),
@@ -1345,6 +1363,9 @@ module .exports = class RouteGraph extends Interface
 
    selectInput (event, id, fieldName)
    {
+      if (event .button !== 0)
+         return;
+
       if (this .#lasso)
          return;
 
@@ -1390,6 +1411,9 @@ module .exports = class RouteGraph extends Interface
 
    selectOutput (event, id, fieldName)
    {
+      if (event .button !== 0)
+         return;
+
       if (this .#lasso)
          return;
 
@@ -1454,6 +1478,9 @@ module .exports = class RouteGraph extends Interface
 
    selectRoute (event, deleteRoute)
    {
+      if (event .button !== 0)
+         return;
+
       const
          active  = this .top .tabs ("option", "active"),
          pages   = this .pages,
