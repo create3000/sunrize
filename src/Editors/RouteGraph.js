@@ -88,6 +88,7 @@ module .exports = class RouteGraph extends Interface
          .on ("mouseup", event => this .selectRoute (event, false))
          .on ("dblclick", event => this .deleteRoute (event))
          .on ("scroll", () => this .scrollNodes ())
+         .on ("scrollend", () => this .scrollNodesEnd ())
          .on ("contextmenu", event => this .showContextMenu (event))
          .on ("mousemove", event => this .mouseMove (event))
          .on ("mousedown", event => this .drawLassoStart (event))
@@ -742,8 +743,12 @@ module .exports = class RouteGraph extends Interface
       page .scrollLeft = this .nodes .scrollLeft ();
       page .scrollTop  = this .nodes .scrollTop ();
 
-      this .requestSavePages ();
       this .updateCanvas ();
+   }
+
+   scrollNodesEnd ()
+   {
+      this .requestSavePages ();
    }
 
    getNode (id)
@@ -1127,7 +1132,6 @@ module .exports = class RouteGraph extends Interface
          node .y = top;
       }
 
-      this .requestSavePages ();
       this .requestUpdateCanvas ();
    }
 
@@ -1136,6 +1140,8 @@ module .exports = class RouteGraph extends Interface
       this .#movingNode = false;
 
       $(document) .off (".move-node");
+
+      this .requestSavePages ();
    }
 
    findNode (id, add)
