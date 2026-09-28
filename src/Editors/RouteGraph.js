@@ -112,9 +112,6 @@ module .exports = class RouteGraph extends Interface
       electron .ipcRenderer .on ("route-graph", (event, key, ... args) => this [key] (... args));
       electron .ipcRenderer .on ("context-menu-will-close", (event, id) => this .closeContextMenu (id));
 
-      electron .ipcRenderer .on ("close",        () => this .savePages ());
-      $(window)             .on ("beforeunload", () => this .savePages ());
-
       this .setup ();
    }
 
@@ -123,12 +120,10 @@ module .exports = class RouteGraph extends Interface
       super .configure ();
 
       this .config .file .setDefaultValues ({
-         pages: [ ],
          activePage: 0,
       });
 
-      // WIP
-      // this .config .file .pages = [ ];
+      this .browser .currentScene .sceneGraph_changed .addInterest ("requestSavePages", this);
 
       this .activate (true);
       this .restorePages ();
@@ -297,6 +292,8 @@ module .exports = class RouteGraph extends Interface
          this .activatePage ();
       else
          this .top .tabs ("option", "active", active);
+
+      this .requestSavePages ();
    }
 
    reorderPages (item)
@@ -330,6 +327,15 @@ module .exports = class RouteGraph extends Interface
       this .updatePages ();
    }
 
+   #savePagesId;
+
+   requestSavePages ()
+   {
+      clearTimeout (this .#savePagesId);
+
+      this .#savePagesId = setTimeout (() => this .savePages ());
+   }
+
    savePages ()
    {
       const
@@ -357,7 +363,14 @@ module .exports = class RouteGraph extends Interface
          }
       }
 
-      this .config .file .pages = pages;
+      if (!ids .size)
+         return;
+
+      const configNode = Editor .getConfigNode (this .browser .currentScene, true);
+
+      configNode .setMetaData ("Sunrize/RouteGraph/pages", new X3D .SFString (JSON .stringify (pages)));
+
+      UndoManager .shared .saveNeeded = true;
    }
 
    getPathsFromScene (scene, ids, path = [ ], paths = new Map (), seen = new Set ())
@@ -468,8 +481,9 @@ module .exports = class RouteGraph extends Interface
    restorePages ()
    {
       const
-         pages = this .config .file .pages,
-         paths = new Set ();
+         configNode = Editor .getConfigNode (this .browser .currentScene),
+         pages      = $.try (() => JSON .parse (configNode ?.getMetaData ("Sunrize/RouteGraph/pages"))) ?? [ ],
+         paths      = new Set ();
 
       for (const page of pages)
       {
@@ -714,6 +728,8 @@ module .exports = class RouteGraph extends Interface
          .text (title);
 
       pages [active] .title = title;
+
+      this .requestSavePages ();
    }
 
    scrollNodes ()
@@ -726,6 +742,7 @@ module .exports = class RouteGraph extends Interface
       page .scrollLeft = this .nodes .scrollLeft ();
       page .scrollTop  = this .nodes .scrollTop ();
 
+      this .requestSavePages ();
       this .updateCanvas ();
    }
 
@@ -762,6 +779,7 @@ module .exports = class RouteGraph extends Interface
       nodes .push ({ id, x, y });
 
       this .addNodeElement (node, { x, y });
+      this .requestSavePages ();
       this .requestUpdateCanvas ();
    }
 
@@ -971,6 +989,7 @@ module .exports = class RouteGraph extends Interface
       page .nodes = page .nodes .filter (node => node .id !== id);
 
       this .removeNodeElement (node);
+      this .requestSavePages ();
       this .requestUpdateCanvas ();
    }
 
@@ -1108,6 +1127,7 @@ module .exports = class RouteGraph extends Interface
          node .y = top;
       }
 
+      this .requestSavePages ();
       this .requestUpdateCanvas ();
    }
 
