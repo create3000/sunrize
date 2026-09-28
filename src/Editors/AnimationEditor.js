@@ -16,6 +16,8 @@ require ("../Bits/Validate");
 
 module .exports = class AnimationEditor extends Interface
 {
+   #style = window .getComputedStyle ($("#animation-editor") [0]);
+
    constructor (element)
    {
       super (`Sunrize.AnimationEditor.${element .attr ("id")}.`);
@@ -2833,8 +2835,6 @@ module .exports = class AnimationEditor extends Interface
 
       this .#updateTracksId = setTimeout (() => this .drawTimeline ());
    }
-
-   #style = window .getComputedStyle ($("body") [0]);
 
    TRACK_PADDING = 8;
 

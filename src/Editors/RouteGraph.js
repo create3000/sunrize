@@ -12,6 +12,8 @@ const
 
 module .exports = class RouteGraph extends Interface
 {
+   #style = window .getComputedStyle ($("#route-graph") [0]);
+
    constructor (element)
    {
       super (`Sunrize.RouteGraph.${element .attr ("id")}.`);
@@ -1574,8 +1576,6 @@ module .exports = class RouteGraph extends Interface
 
       this .#updateCanvasId = setTimeout (() => this .updateCanvas ());
    }
-
-   #style = window .getComputedStyle ($("#route-graph") [0]);
 
    updateCanvas ()
    {
