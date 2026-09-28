@@ -1572,12 +1572,8 @@ body.light .console-output .selected {
   border: 1px solid transparent;
   border-radius: var(--tabs-height);
   padding: 0px;
-  padding-top: 1px;
-  height: 100%;
-}
-
-html[platform=linux] #route-graph .ui-tabs > .ui-tabs-nav li {
   padding-top: 2px;
+  height: 100%;
 }
 
 #route-graph .ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
@@ -1586,11 +1582,8 @@ html[platform=linux] #route-graph .ui-tabs > .ui-tabs-nav li {
   float: none;
   height: auto;
   padding: 0px 6px 0px 10px;
+  line-height: 0;
   color: var(--window-tabs-text-color);
-}
-
-html[platform=win32] #route-graph .ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
-  padding-top: 1px;
 }
 
 #route-graph .ui-tabs > .ui-tabs-nav .ui-tabs-active .ui-tabs-anchor {
@@ -1619,6 +1612,7 @@ html[platform=win32] #route-graph .ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
   align-items: center;
   top: unset;
   margin-right: 6px;
+  line-height: 0;
   font-size: 10pt;
 }
 
