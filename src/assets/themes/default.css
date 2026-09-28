@@ -1681,7 +1681,6 @@ html[platform=win32] #route-graph .ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
 }
 
 #route-graph .node {
-  user-select: none;
   display: flex;
   flex-direction: column;
   align-items: start;
