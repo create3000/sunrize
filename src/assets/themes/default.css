@@ -1572,13 +1572,13 @@ body.light .console-output .selected {
   border: 1px solid transparent;
   border-radius: var(--tabs-height);
   padding: 0px;
-  padding-top: 1px;
   height: 100%;
 }
 
 #route-graph .ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
   float: none;
   height: auto;
+  margin-top: 1px;
   padding: 0px 6px 0px 10px;
   color: var(--window-tabs-text-color);
 }
@@ -1607,6 +1607,7 @@ body.light .console-output .selected {
 
 #route-graph .ui-tabs > .ui-tabs-nav .button {
   top: unset;
+  margin-top: 1px;
   margin-right: 6px;
   font-size: 10pt;
 }
