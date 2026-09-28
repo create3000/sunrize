@@ -32,8 +32,6 @@
     --selection-range: rgba(0, 0, 0, 0.05);
     --scrollbar-thumb-color: rgba(0, 0, 0, 0.2);
     --scrollbar-thumb-color-hover: rgba(0, 0, 0, 0.4);
-    --lasso-fill: rgba(0, 0, 0, 0.1);
-    --lasso-stroke: var(--system-gray1);
 
     /* Filter Colors */
 
@@ -111,8 +109,6 @@
     --selection-range: rgba(255, 255, 255, 0.05);
     --scrollbar-thumb-color: rgba(255, 255, 255, 0.2);
     --scrollbar-thumb-color-hover: rgba(255, 255, 255, 0.4);
-    --lasso-fill: rgba(255, 255, 255, 0.1);
-    --lasso-stroke: var(--system-gray1);
 
     /* Filter Colors */
 
