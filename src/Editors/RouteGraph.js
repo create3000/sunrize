@@ -1222,6 +1222,9 @@ module .exports = class RouteGraph extends Interface
 
    drawLasso ()
    {
+      if (this .#movedNode)
+         return this .drawLassoEnd ();
+
       const
          context      = this .overlay [0] .getContext ("2d"),
          width        = this .overlay .width (),
