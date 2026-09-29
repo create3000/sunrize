@@ -453,6 +453,8 @@ module .exports = class RouteGraph extends Interface
       if (seen .has (node))
          return;
 
+      seen .add (node);
+
       if (ids .has (node .getId ()))
          paths .set (node .getId (), path .join (":"));
 
@@ -590,6 +592,8 @@ module .exports = class RouteGraph extends Interface
 
       if (seen .has (node))
          return;
+
+      seen .add (node);
 
       if (paths .has (path .join (":")))
          ids .set (path .join (":"), node .getId ());
