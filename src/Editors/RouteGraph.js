@@ -13,6 +13,23 @@ module .exports = class RouteGraph extends Interface
 {
    #style = window .getComputedStyle ($("#route-graph") [0]);
 
+   get outlineEditor ()
+   {
+      const document = require ("../Application/Window");
+
+      return document .sidebar .outlineEditor;
+   }
+
+   get page ()
+   {
+      const
+         active = this .top .tabs ("option", "active"),
+         pages  = this .pages,
+         page   = pages [active];
+
+      return page;
+   }
+
    constructor (element)
    {
       super (`Sunrize.RouteGraph.${element .attr ("id")}.`);
@@ -71,6 +88,45 @@ module .exports = class RouteGraph extends Interface
          .appendTo (this .toolbar)
          .on ("click", () => this .setAddConnectedNodes (!this .config .global .addConnectedNodes));
 
+      $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
+
+      this .zoomOutIcon = $("<span></span>")
+         .addClass ("material-icons")
+         .attr ("title", _("Zoom timeline out."))
+         .css ("transform", "scale(1.4)")
+         .css ("margin-top", "13px")
+         .css ("margin-bottom", "15px")
+         .text ("zoom_out")
+         .appendTo (this .toolbar)
+         .on ("click", () => this .zoomOut ());
+
+      this .zoomInIcon = $("<span></span>")
+         .addClass ("material-icons")
+         .attr ("title", _("Zoom timeline in."))
+         .css ("transform", "scale(1.4)")
+         .css ("margin-bottom", "15px")
+         .text ("zoom_in")
+         .appendTo (this .toolbar)
+         .on ("click", () => this .zoomIn ());
+
+      this .zoomFitIcon = $("<span></span>")
+         .addClass ("material-icons")
+         .attr ("title", _("Zoom timeline to fit in window."))
+         .css ("transform", "scale(1.4)")
+         .css ("margin-bottom", "15px")
+         .text ("fit_screen")
+         .appendTo (this .toolbar)
+         .on ("click", () => this .zoomFit ());
+
+      this .zoom100Icon = $("<span></span>")
+         .addClass ("material-icons")
+         .attr ("title", _("Default timeline zoom."))
+         .css ("transform", "scale(1.4)")
+         .css ("margin-bottom", "15px")
+         .text ("1x_mobiledata")
+         .appendTo (this .toolbar)
+         .on ("click", () => this .zoom100 ());
+
       this .left = $("<div></div>")
          .addClass ("pages")
          .appendTo (this .editor);
@@ -87,8 +143,8 @@ module .exports = class RouteGraph extends Interface
          .on ("mouseup", () => this .clearInputOutput ())
          .on ("mouseup", event => this .selectRoute (event, false))
          .on ("dblclick", event => this .deleteRoute (event))
-         .on ("scroll", () => this .scrollNodes ())
-         .on ("scrollend", () => this .scrollNodesEnd ())
+         .on ("scroll", () => this .scrollPage ())
+         .on ("scrollend", () => this .scrollPageEnd ())
          .on ("contextmenu", event => this .showContextMenu (event))
          .on ("mousemove", event => this .mouseMove (event))
          .on ("mousedown", event => this .drawLassoStart (event))
@@ -144,13 +200,6 @@ module .exports = class RouteGraph extends Interface
    colorScheme (/* shouldUseDarkColors */)
    {
       this .requestUpdateCanvas ();
-   }
-
-   get outlineEditor ()
-   {
-      const document = require ("../Application/Window");
-
-      return document .sidebar .outlineEditor;
    }
 
    #menu;
@@ -660,10 +709,7 @@ module .exports = class RouteGraph extends Interface
 
    restorePage ()
    {
-      const
-         active = this .top .tabs ("option", "active"),
-         pages  = this .pages,
-         page   = pages [active];
+      const page = this .page;
 
       this .clearNodeSelection ();
       this .clearRouteSelection ();
@@ -773,12 +819,9 @@ module .exports = class RouteGraph extends Interface
       this .requestSavePages ();
    }
 
-   scrollNodes ()
+   scrollPage ()
    {
-      const
-         active = this .top .tabs ("option", "active"),
-         pages  = this .pages,
-         page   = pages [active];
+      const page = this .page;
 
       page .scrollLeft = this .nodes .scrollLeft ();
       page .scrollTop  = this .nodes .scrollTop ();
@@ -786,9 +829,60 @@ module .exports = class RouteGraph extends Interface
       this .updateCanvas ();
    }
 
-   scrollNodesEnd ()
+   scrollPageEnd ()
    {
       this .requestSavePages ();
+   }
+
+   scalePage (scale)
+   {
+      const page = this .page;
+
+      scale = X3D .Algorithm .clamp (scale, 0.3, 2);
+
+      page .scale = scale;
+
+      this .nodes .find (".node") .css ("scale", scale);
+
+      for (const node of page .nodes)
+      {
+         this .nodes .find (`.node[node-id=${node .id}]`)
+            .css ("left", node .x * scale)
+            .css ("top",  node .y * scale);
+      }
+
+      this .requestSavePages ();
+      this .requestUpdateCanvas ();
+   }
+
+   zoomOut ()
+   {
+      const
+         page  = this .page,
+         scale = page .scale ?? 1;
+
+      this .scalePage (scale * 0.9);
+   }
+
+   zoomIn ()
+   {
+      const
+         page  = this .page,
+         scale = page .scale ?? 1;
+
+      this .scalePage (scale * 1.1);
+   }
+
+   zoomFit ()
+   {
+      const scale = 1;
+
+      this .scalePage (scale);
+   }
+
+   zoom100 ()
+   {
+      this .scalePage (1);
    }
 
    getNode (id)
@@ -804,11 +898,9 @@ module .exports = class RouteGraph extends Interface
    addNode (node, { x, y })
    {
       const
-         active = this .top .tabs ("option", "active"),
-         pages  = this .pages,
-         page   = pages [active],
-         nodes  = page .nodes,
-         id     = node .getId ();
+         page  = this .page,
+         nodes = page .nodes,
+         id    = node .getId ();
 
       this .setNode (node);
 
@@ -832,7 +924,12 @@ module .exports = class RouteGraph extends Interface
 
    addConnectedNodes (node, { x, y })
    {
-      const columns = this .getConnectedNodes (node .getExecutionContext (), node, 0);
+      const
+         scale   = this .page .scale ?? 1,
+         columns = this .getConnectedNodes (node .getExecutionContext (), node, 0);
+
+      x /= scale;
+      y /= scale;
 
       for (const index of Array .from (columns .keys ()) .sort ((a, b) => a - b))
       {
@@ -848,7 +945,7 @@ module .exports = class RouteGraph extends Interface
 
             const element = this .nodes .find (`.node[node-id=${node .getId ()}]`);
 
-            x        = parseInt (element .css ("left"));
+            x        = parseInt (element .css ("left")) / scale;
             offsetX  = Math .max (offsetX, element .width ());
             offsetY += element .height () + this .#gridSize * this .#gaps .y;
          }
@@ -884,6 +981,10 @@ module .exports = class RouteGraph extends Interface
 
    addNodeElement (node, { x, y }, selected)
    {
+      const
+         page  = this .page,
+         scale = page .scale ?? 1;
+
       const id = node .getId ();
 
       node .getLive () .addInterest ("nodeLive", this, id);
@@ -907,7 +1008,7 @@ module .exports = class RouteGraph extends Interface
          .attr ("node-id", id)
          .attr ("execution-context-id", node .getExecutionContext () .getId ())
          .css ("position", "")
-         .css ({ left: x, top: y })
+         .css ({ left: x * scale, top: y * scale, scale })
          .addClass ("node")
          .on ("mousedown", () => this .raiseNode (id))
          .on ("mouseup", event => this .selectNode (event, id))
@@ -1126,10 +1227,9 @@ module .exports = class RouteGraph extends Interface
    moveNode (id, position)
    {
       const
-         active = this .config .file .activePage,
-         pages  = this .pages,
-         page   = pages [active],
-         node   = page .nodes .find (node => node .id === id);
+         page  = this .page,
+         scale = page .scale ?? 1,
+         node  = page .nodes .find (node => node .id === id);
 
       // Constrain position.
 
@@ -1142,8 +1242,8 @@ module .exports = class RouteGraph extends Interface
          position .top  = this .round (position .top,  this .#gridSize);
       }
 
-      node .x = position .left;
-      node .y = position .top;
+      node .x = position .left / scale;
+      node .y = position .top  / scale;
 
       // Move selected nodes.
 
@@ -1168,8 +1268,8 @@ module .exports = class RouteGraph extends Interface
 
          const node = page .nodes .find (node => node .id === id);
 
-         node .x = left;
-         node .y = top;
+         node .x = left / scale;
+         node .y = top  / scale;
       }
 
       this .requestUpdateCanvas ();
@@ -1400,10 +1500,8 @@ module .exports = class RouteGraph extends Interface
       this .nodes .addClass ("lasso");
 
       const
-         active = this .top .tabs ("option", "active"),
-         pages  = this .pages,
-         page   = pages [active],
-         end    = start .copy () .add (size);
+         page = this .page,
+         end  = start .copy () .add (size);
 
       const lasso = {
          left:   Math .min (start .x, end .x) + scroll .x,
@@ -1422,9 +1520,8 @@ module .exports = class RouteGraph extends Interface
             element   = this .nodes .find (`.node[node-id=${id}]`),
             left      = parseInt (element .css ("left")),
             top       = parseInt (element .css ("top")),
-            width     = element .width (),
-            height    = element .height (),
-            rectangle = { left, top, right: left + width, bottom: top + height };
+            rect      = element [0] .getBoundingClientRect (),
+            rectangle = { left, top, right: left + rect .width, bottom: top + rect .height };
 
          if (this .rectanglesIntersect (lasso, rectangle))
          {
@@ -1619,9 +1716,8 @@ module .exports = class RouteGraph extends Interface
          return;
 
       const
-         active  = this .top .tabs ("option", "active"),
-         pages   = this .pages,
-         page    = pages [active],
+         page    = this .page,
+         scale   = page .scale ?? 1,
          nodes   = new Set (page .nodes .map (node => this .getNode (node .id))),
          offset  = this .nodes .offset (),
          pointer = this .getRelativePosition (event, false);
@@ -1662,7 +1758,7 @@ module .exports = class RouteGraph extends Interface
 
                const
                   arrowRotation = this .getBezierTangentAngle (x0, y0, x1, y1, x2, y2, x3, y3, 0.5),
-                  arrow         = this .getRouteArrow (new X3D .Vector2 (x0, y0), new X3D .Vector2 (x3, y3), arrowRotation);
+                  arrow         = this .getRouteArrow (new X3D .Vector2 (x0, y0), new X3D .Vector2 (x3, y3), arrowRotation, scale);
 
                if (X3D .Triangle2 .isPointInTriangle (pointer, ... arrow))
                {
@@ -1703,10 +1799,8 @@ module .exports = class RouteGraph extends Interface
    selectAllRoutes ()
    {
       const
-         active = this .top .tabs ("option", "active"),
-         pages  = this .pages,
-         page   = pages [active],
-         nodes  = new Set (page .nodes .map (node => this .getNode (node .id)));
+         page  = this .page,
+         nodes = new Set (page .nodes .map (node => this .getNode (node .id)));
 
       this .clearRouteSelection ();
 
@@ -1868,9 +1962,8 @@ module .exports = class RouteGraph extends Interface
    drawRoutes (context)
    {
       const
-         active     = this .top .tabs ("option", "active"),
-         pages      = this .pages,
-         page       = pages [active],
+         page       = this .page,
+         scale      = page .scale ?? 1,
          nodes      = new Set (page .nodes .map (node => this .getNode (node .id))),
          offset     = this .nodes .offset (),
          scrollLeft = this .nodes .scrollLeft (),
@@ -1883,7 +1976,7 @@ module .exports = class RouteGraph extends Interface
          color         = this .#style .getPropertyValue ("--route-color"),
          selectedColor = this .#style .getPropertyValue ("--route-selected-color");
 
-      context .lineWidth = 3;
+      context .lineWidth = 3 * scale;
 
       for (const sourceNode of nodes)
       {
@@ -1919,7 +2012,7 @@ module .exports = class RouteGraph extends Interface
                   context .strokeStyle = color;
                }
 
-					this .drawRoute (context, fromX, fromY, toX, toY, selectedColor);
+					this .drawRoute (context, fromX, fromY, toX, toY, scale, selectedColor);
             }
          }
       }
@@ -1928,13 +2021,13 @@ module .exports = class RouteGraph extends Interface
       context .strokeStyle = color;
 
       if (this .#input)
-         this .drawRoute (context, ... this .#pointer, this .#input .toX - scrollLeft, this .#input .toY - scrollTop);
+         this .drawRoute (context, ... this .#pointer, this .#input .toX - scrollLeft, this .#input .toY - scrollTop, scale);
 
       if (this .#output)
-         this .drawRoute (context, this .#output .fromX - scrollLeft, this .#output .fromY - scrollTop, ... this .#pointer);
+         this .drawRoute (context, this .#output .fromX - scrollLeft, this .#output .fromY - scrollTop, ... this .#pointer, scale);
    }
 
-   drawRoute (context, fromX, fromY, toX, toY, selectedColor)
+   drawRoute (context, fromX, fromY, toX, toY, scale, selectedColor)
    {
       // Draw sine curved route.
 
@@ -1958,7 +2051,7 @@ module .exports = class RouteGraph extends Interface
 
       const
          arrowRotation = this .getBezierTangentAngle (x0, y0, x1, y1, x2, y2, x3, y3, 0.5),
-         arrow         = this .getRouteArrow (new X3D .Vector2 (x0, y0), new X3D .Vector2 (x3, y3), arrowRotation);
+         arrow         = this .getRouteArrow (new X3D .Vector2 (x0, y0), new X3D .Vector2 (x3, y3), arrowRotation, scale);
 
       if (selectedColor && X3D .Triangle2 .isPointInTriangle (this .#pointer, ... arrow))
          context .fillStyle = selectedColor;
@@ -1970,7 +2063,7 @@ module .exports = class RouteGraph extends Interface
       context .fill ();
    }
 
-   getRouteArrow (sourcePosition, destinationPosition, rotation)
+   getRouteArrow (sourcePosition, destinationPosition, rotation, scale)
    {
       // Intersect with arrow
 
@@ -1984,6 +2077,7 @@ module .exports = class RouteGraph extends Interface
 
       m .translate (t);
       m .rotate (rotation);
+      m .scale (new X3D .Vector2 (scale));
       m .translate (c);
 
       return [m .multVecMatrix (p1), m .multVecMatrix (p2), m .multVecMatrix (p3)];
@@ -2010,8 +2104,9 @@ module .exports = class RouteGraph extends Interface
    {
       const
          sourceOffset = sourceElement .offset (),
-         fromX        = sourceOffset .left - offset .left + sourceElement .width ()  / 2,
-         fromY        = sourceOffset .top  - offset .top  + sourceElement .height () / 2;
+         rect         = sourceElement [0] .getBoundingClientRect (),
+         fromX        = sourceOffset .left - offset .left + rect .width  / 2,
+         fromY        = sourceOffset .top  - offset .top  + rect .height / 2;
 
       return [fromX, fromY];
    }
@@ -2020,8 +2115,9 @@ module .exports = class RouteGraph extends Interface
    {
       const
          destinationOffset = destinationElement .offset (),
-         toX               = destinationOffset .left - offset .left + destinationElement .width ()  / 2,
-         toY               = destinationOffset .top  - offset .top  + destinationElement .height () / 2;
+         rect              = destinationElement [0] .getBoundingClientRect (),
+         toX               = destinationOffset .left - offset .left + rect .width  / 2,
+         toY               = destinationOffset .top  - offset .top  + rect .height / 2;
 
       return [toX, toY];
    }

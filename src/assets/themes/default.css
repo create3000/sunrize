@@ -1701,6 +1701,7 @@ html[platform=darwin] #route-graph .ui-tabs > .ui-tabs-nav li {
   outline: 4px solid transparent;
   border-radius: 17px 17px 15px 15px;
   color: white;
+  transform-origin: 0 0;
   transition: outline-color 300ms linear;
 }
 
