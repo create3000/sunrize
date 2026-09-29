@@ -42,8 +42,8 @@
     /* Special Colors */
 
     --secondary-toolbar-color: hsl(214, 25%, 90%);
+    --secondary-toolbar-transparent: hsla(214, 25%, 90%, 0);
     --sidebar-background-color: hsl(211, 36%, 86%);
-    --sidebar-transparent: hsla(211, 36%, 86%, 0);
     --tint-color1: rgba(255, 255, 255, 0.4);
     --tint-color2: rgba(255, 255, 255, 0.6);
 
@@ -120,6 +120,7 @@
     /* Special Colors */
 
     --secondary-toolbar-color: hsl(220, 9%, 17%);
+    --secondary-toolbar-transparent: hsla(220, 9%, 17%, 0);
     --sidebar-background-color: hsl(217, 20%, 21%);
     --sidebar-transparent: hsla(217, 20%, 21%, 0);
     --tint-color1: rgba(0, 0, 0, 0.2);
