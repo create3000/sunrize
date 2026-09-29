@@ -369,15 +369,20 @@ module .exports = class RouteGraph extends Interface
          const configNode = Editor .getConfigNode (this .browser .currentScene, true);
 
          configNode .setMetaData ("Sunrize/RouteGraph/pages", JSON .stringify (pages));
+
+         UndoManager .shared .saveNeeded = true;
       }
       else
       {
          const configNode = Editor .getConfigNode (this .browser .currentScene);
 
-         configNode ?.removeMetaData ("Sunrize/RouteGraph/pages");
-      }
+         if (configNode ?.hasMetaData ("Sunrize/RouteGraph/pages"))
+         {
+            configNode .removeMetaData ("Sunrize/RouteGraph/pages");
 
-      UndoManager .shared .saveNeeded = true;
+            UndoManager .shared .saveNeeded = true;
+         }
+      }
    }
 
    getPathsFromScene (scene, ids, path = [ ], paths = new Map (), seen = new Set ())
