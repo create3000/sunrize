@@ -904,20 +904,19 @@ module .exports = class RouteGraph extends Interface
             maxY = Math .max (maxY, node .y + element .height ());
          }
 
-         if (minX < padX)
+         const
+            translationX = padX - minX,
+            translationY = padY - minY;
+
+         minX += translationX;
+         minY += translationY;
+         maxX += translationX;
+         maxY += translationY;
+
+         for (const node of page .nodes)
          {
-            const translationX = padX - minX;
-
-            for (const node of page .nodes)
-               node .x += translationX;
-         }
-
-         if (minY < padY)
-         {
-            const translationY = padY - minY;
-
-            for (const node of page .nodes)
-               node .y += translationY;
+            node .x += translationX;
+            node .y += translationY;
          }
 
          const
