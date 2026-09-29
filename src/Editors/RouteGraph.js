@@ -897,7 +897,7 @@ module .exports = class RouteGraph extends Interface
 
       if (page .nodes .length)
       {
-         // Determine bounding box.
+         // Determine bounding box of all nodes.
 
          let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
 
