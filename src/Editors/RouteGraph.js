@@ -846,17 +846,17 @@ module .exports = class RouteGraph extends Interface
 
       // Determine translation.
 
-      let minX = Infinity, minY = Infinity;
+      let originX = Infinity, originY = Infinity;
 
       for (const node of page .nodes)
       {
-         minX = Math .min (node .x, minX);
-         minY = Math .min (node .y, minY);
+         originX = Math .min (node .x, originX);
+         originY = Math .min (node .y, originY);
       }
 
       const
-         translationX = minX - minX * scale,
-         translationY = minY - minY * scale;
+         translationX = originX - originX * scale,
+         translationY = originY - originY * scale;
 
       // Update node transform.
 
