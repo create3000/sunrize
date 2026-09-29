@@ -821,7 +821,7 @@ module .exports = class RouteGraph extends Interface
 
             const element = this .nodes .find (`.node[node-id=${node .getId ()}]`);
 
-            x        = parseFloat (element .css ("left"));
+            x        = parseInt (element .css ("left"));
             offsetX  = Math .max (offsetX, element .width ());
             offsetY += element .height () + this .#gridSize * this .#gaps .y;
          }
@@ -1054,8 +1054,8 @@ module .exports = class RouteGraph extends Interface
          selected = this .isNodeSelected (node);
 
       const
-         x = parseFloat (element .css ("left")),
-         y = parseFloat (element .css ("top"));
+         x = parseInt (element .css ("left")),
+         y = parseInt (element .css ("top"));
 
       this .removeNodeElement (node);
       this .addNodeElement (node, { x, y }, selected);
