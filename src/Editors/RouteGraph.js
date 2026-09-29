@@ -895,6 +895,14 @@ module .exports = class RouteGraph extends Interface
          padRight  = this .#gridSize * 2,
          padBottom = this .#gridSize * 2;
 
+      // Adjust scroll positions.
+
+      page .scrollLeft = 0;
+      page .scrollTop  = 0;
+
+      this .nodes .scrollLeft (0);
+      this .nodes .scrollTop  (0);
+
       if (page .nodes .length)
       {
          // Determine bounding box of all nodes.
@@ -931,26 +939,10 @@ module .exports = class RouteGraph extends Interface
             scale  = Math .min (scaleX, scaleY);
 
          this .scalePage (scale);
-
-         // Now adjust scroll positions when nodes have new position.
-
-         page .scrollLeft = 0;
-         page .scrollTop  = 0;
-
-         this .nodes .scrollLeft (0);
-         this .nodes .scrollTop  (0);
-
-         this .requestSavePages ();
       }
       else
       {
          this .scalePage (1);
-
-         page .scrollLeft = 0;
-         page .scrollTop  = 0;
-
-         this .nodes .scrollLeft (0);
-         this .nodes .scrollTop  (0);
       }
    }
 
