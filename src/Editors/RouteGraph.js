@@ -890,32 +890,45 @@ module .exports = class RouteGraph extends Interface
          padX = this .#gridSize,
          padY = this .#gridSize * 2;
 
-      let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-
-      for (const node of page .nodes)
+      if (page .nodes .length)
       {
-         const element = this .nodes .find (`.node[node-id=${node .id}]`);
+         let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
 
-         minX = Math .min (minX, node .x);
-         minY = Math .min (minY, node .y);
-         maxX = Math .max (maxX, node .x + element .width ()  + padX * 2);
-         maxY = Math .max (maxY, node .y + element .height () + padY * 4);
+         for (const node of page .nodes)
+         {
+            const element = this .nodes .find (`.node[node-id=${node .id}]`);
+
+            minX = Math .min (minX, node .x);
+            minY = Math .min (minY, node .y);
+            maxX = Math .max (maxX, node .x + element .width ()  + padX * 2);
+            maxY = Math .max (maxY, node .y + element .height () + padY * 4);
+         }
+
+         const
+            scaleX = this .nodes .width ()  / (maxX - minX),
+            scaleY = this .nodes .height () / (maxY - minY),
+            scale  = Math .min (scaleX, scaleY);
+
+         this .scalePage (scale);
+
+         // Now adjust scroll positions when nodes have new position.
+
+         page .scrollLeft = minX - padX;
+         page .scrollTop  = minY - padY;
+
+         this .nodes .scrollLeft (page .scrollLeft);
+         this .nodes .scrollTop  (page .scrollTop);
       }
+      else
+      {
+         this .scalePage (1);
 
-      const
-         scaleX = this .nodes .width ()  / (maxX - minX),
-         scaleY = this .nodes .height () / (maxY - minY),
-         scale  = Math .min (scaleX, scaleY);
+         page .scrollLeft = 0;
+         page .scrollTop  = 0;
 
-      this .scalePage (page .nodes .length ? scale : 1);
-
-      // Now adjust scroll positions when nodes have new position.
-
-      page .scrollLeft = minX - padX;
-      page .scrollTop  = minY - padY;
-
-      this .nodes .scrollLeft (page .scrollLeft);
-      this .nodes .scrollTop  (page .scrollTop);
+         this .nodes .scrollLeft (0);
+         this .nodes .scrollTop  (0);
+      }
    }
 
    zoom100 ()
