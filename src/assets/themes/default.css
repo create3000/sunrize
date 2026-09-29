@@ -335,6 +335,7 @@ tr.disabled ~ tr > td > div {
 /* Toolbar */
 
 .toolbar {
+  overflow: hidden;
   position: absolute;
   box-sizing: border-box;
 }
@@ -350,6 +351,16 @@ tr.disabled ~ tr > td > div {
   right: 0;
   height: 100%;
   width: var(--toolbar-width);
+}
+
+.vertical-toolbar::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  height: 30px;
+  bottom: 0px;
+  background: linear-gradient(0deg,var(--sidebar-background-color) 0%, var(--sidebar-transparent) 100%);
 }
 
 .horizontal-toolbar .material-icons,
