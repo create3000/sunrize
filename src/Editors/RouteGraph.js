@@ -850,8 +850,8 @@ module .exports = class RouteGraph extends Interface
 
       for (const node of page .nodes)
       {
-         originX = Math .min (node .x, originX);
-         originY = Math .min (node .y, originY);
+         originX = Math .min (originX, node .x);
+         originY = Math .min (originY, node .y);
       }
 
       const
