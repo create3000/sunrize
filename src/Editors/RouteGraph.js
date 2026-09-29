@@ -864,9 +864,12 @@ module .exports = class RouteGraph extends Interface
 
       for (const node of page .nodes)
       {
+         node .x += translationX / scale;
+         node .y += translationY / scale;
+
          this .nodes .find (`.node[node-id=${node .id}]`)
-            .css ("left", node .x * scale + translationX)
-            .css ("top",  node .y * scale + translationY);
+            .css ("left", node .x * scale)
+            .css ("top",  node .y * scale);
       }
 
       this .requestSavePages ();
@@ -941,6 +944,8 @@ module .exports = class RouteGraph extends Interface
 
          this .nodes .scrollLeft (page .scrollLeft);
          this .nodes .scrollTop  (page .scrollTop);
+
+         this .requestSavePages ();
       }
       else
       {
