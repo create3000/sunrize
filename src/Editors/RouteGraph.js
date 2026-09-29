@@ -892,6 +892,8 @@ module .exports = class RouteGraph extends Interface
 
       if (page .nodes .length)
       {
+         // Determine bounding box.
+
          let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
 
          for (const node of page .nodes)
@@ -903,6 +905,8 @@ module .exports = class RouteGraph extends Interface
             maxX = Math .max (maxX, node .x + element .width ());
             maxY = Math .max (maxY, node .y + element .height ());
          }
+
+         // Reposition nodes.
 
          const
             translationX = padX - minX,
@@ -918,6 +922,8 @@ module .exports = class RouteGraph extends Interface
             node .x += translationX;
             node .y += translationY;
          }
+
+         // Scale nodes.
 
          const
             scaleX = this .nodes .width ()  / (maxX - minX + padX * 2),
