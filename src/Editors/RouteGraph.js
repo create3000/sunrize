@@ -844,7 +844,7 @@ module .exports = class RouteGraph extends Interface
 
       page .scale = scale;
 
-      // Determine translation.
+      // Determine translation to scale from minX and minY.
 
       let originX = Infinity, originY = Infinity;
 
