@@ -934,8 +934,8 @@ module .exports = class RouteGraph extends Interface
          // Scale nodes.
 
          const
-            scaleX = (this .nodes .width ()  - (padLeft + padRight))  / (maxX - minX),
-            scaleY = (this .nodes .height () - (padTop  + padBottom)) / (maxY - minY),
+            scaleX = (this .nodes .innerWidth ()  - (padLeft + padRight))  / (maxX - minX),
+            scaleY = (this .nodes .innerHeight () - (padTop  + padBottom)) / (maxY - minY),
             scale  = Math .min (scaleX, scaleY);
 
          this .scalePage (scale);
