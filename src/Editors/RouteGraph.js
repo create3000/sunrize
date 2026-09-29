@@ -576,7 +576,8 @@ module .exports = class RouteGraph extends Interface
                for (const node of page .nodes)
                   node .id = ids .get (node .path);
 
-               page .nodes   = page .nodes .filter (node => node .id !== undefined);
+               page .nodes = page .nodes .filter (node => node .id !== undefined);
+
                page .scale ??= 1;
             }
 
@@ -842,8 +843,6 @@ module .exports = class RouteGraph extends Interface
 
       scale = X3D .Algorithm .clamp (scale, 0.2, 2);
 
-      page .scale = scale;
-
       // Determine translation to scale from minX and minY.
 
       let originX = Infinity, originY = Infinity;
@@ -864,13 +863,15 @@ module .exports = class RouteGraph extends Interface
 
       for (const node of page .nodes)
       {
-         node .x += translationX / scale;
-         node .y += translationY / scale;
-
          this .nodes .find (`.node[node-id=${node .id}]`)
-            .css ("left", node .x * scale)
-            .css ("top",  node .y * scale);
+            .css ("left", node .x * scale + translationX)
+            .css ("top",  node .y * scale + translationY);
+
+         node .x = (node .x * scale + translationX) / scale;
+         node .y = (node .y * scale + translationY) / scale;
       }
+
+      page .scale = scale;
 
       this .requestSavePages ();
       this .requestUpdateCanvas ();
@@ -1047,9 +1048,9 @@ module .exports = class RouteGraph extends Interface
 
    addNodeElement (node, { x, y }, selected)
    {
-      const scale = this .page .scale;
-
-      const id = node .getId ();
+      const
+         id    = node .getId (),
+         scale = this .page .scale;
 
       node .getLive () .addInterest ("nodeLive", this, id);
 
@@ -1072,7 +1073,9 @@ module .exports = class RouteGraph extends Interface
          .attr ("node-id", id)
          .attr ("execution-context-id", node .getExecutionContext () .getId ())
          .css ("position", "")
-         .css ({ left: x * scale, top: y * scale, scale })
+         .css ("left", x * scale)
+         .css ("top", y * scale)
+         .css ("scale", scale)
          .addClass ("node")
          .on ("mousedown", () => this .raiseNode (id))
          .on ("mouseup", event => this .selectNode (event, id))
