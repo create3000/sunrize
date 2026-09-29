@@ -844,13 +844,29 @@ module .exports = class RouteGraph extends Interface
 
       page .scale = scale;
 
+      // Determine translation.
+
+      let minX = Infinity, minY = Infinity;
+
+      for (const node of page .nodes)
+      {
+         minX = Math .min (node .x, minX);
+         minY = Math .min (node .y, minY);
+      }
+
+      const
+         translationX = minX - minX * scale,
+         translationY = minY - minY * scale;
+
+      // Update node transform.
+
       this .nodes .find (".node") .css ("scale", scale);
 
       for (const node of page .nodes)
       {
          this .nodes .find (`.node[node-id=${node .id}]`)
-            .css ("left", node .x * scale)
-            .css ("top",  node .y * scale);
+            .css ("left", node .x * scale + translationX)
+            .css ("top",  node .y * scale + translationY);
       }
 
       this .requestSavePages ();
