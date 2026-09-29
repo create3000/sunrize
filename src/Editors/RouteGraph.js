@@ -576,7 +576,8 @@ module .exports = class RouteGraph extends Interface
                for (const node of page .nodes)
                   node .id = ids .get (node .path);
 
-               page .nodes = page .nodes .filter (node => node .id !== undefined);
+               page .nodes   = page .nodes .filter (node => node .id !== undefined);
+               page .scale ??= 1;
             }
 
             this .pages = pages;
@@ -764,6 +765,7 @@ module .exports = class RouteGraph extends Interface
       pages .push ({
          title: `${_("New Logic")} ${next}`,
          nodes: [ ],
+         scale: 1,
       });
 
       this .updatePages ();
@@ -857,20 +859,12 @@ module .exports = class RouteGraph extends Interface
 
    zoomOut ()
    {
-      const
-         page  = this .page,
-         scale = page .scale ?? 1;
-
-      this .scalePage (scale * 0.9);
+      this .scalePage (this .page .scale * 0.9);
    }
 
    zoomIn ()
    {
-      const
-         page  = this .page,
-         scale = page .scale ?? 1;
-
-      this .scalePage (scale * 1.1);
+      this .scalePage (this .page .scale * 1.1);
    }
 
    zoomFit ()
@@ -925,7 +919,7 @@ module .exports = class RouteGraph extends Interface
    addConnectedNodes (node, { x, y })
    {
       const
-         scale   = this .page .scale ?? 1,
+         scale   = this .page .scale,
          columns = this .getConnectedNodes (node .getExecutionContext (), node, 0);
 
       x /= scale;
@@ -981,9 +975,7 @@ module .exports = class RouteGraph extends Interface
 
    addNodeElement (node, { x, y }, selected)
    {
-      const
-         page  = this .page,
-         scale = page .scale ?? 1;
+      const scale = this .page .scale;
 
       const id = node .getId ();
 
@@ -1228,7 +1220,7 @@ module .exports = class RouteGraph extends Interface
    {
       const
          page  = this .page,
-         scale = page .scale ?? 1,
+         scale = page .scale,
          node  = page .nodes .find (node => node .id === id);
 
       // Constrain position.
@@ -1717,7 +1709,7 @@ module .exports = class RouteGraph extends Interface
 
       const
          page    = this .page,
-         scale   = page .scale ?? 1,
+         scale   = page .scale,
          nodes   = new Set (page .nodes .map (node => this .getNode (node .id))),
          offset  = this .nodes .offset (),
          pointer = this .getRelativePosition (event, false);
@@ -1963,7 +1955,7 @@ module .exports = class RouteGraph extends Interface
    {
       const
          page       = this .page,
-         scale      = page .scale ?? 1,
+         scale      = page .scale,
          nodes      = new Set (page .nodes .map (node => this .getNode (node .id))),
          offset     = this .nodes .offset (),
          scrollLeft = this .nodes .scrollLeft (),
