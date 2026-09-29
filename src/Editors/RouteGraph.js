@@ -124,11 +124,12 @@ module .exports = class RouteGraph extends Interface
          activePage: 0,
       });
 
-      this .browser .currentScene .sceneGraph_changed .addInterest ("requestSavePages", this);
-
       this .activate (true);
       this .restorePages ();
       this .updatePages ();
+
+      // Must be last call, because is checked in requestSavePages.
+      this .browser .currentScene .sceneGraph_changed .addInterest ("requestSavePages", this);
    }
 
    activate (active)
@@ -332,6 +333,9 @@ module .exports = class RouteGraph extends Interface
 
    requestSavePages ()
    {
+      if (!this .browser .currentScene .sceneGraph_changed .hasInterest ("requestSavePages", this))
+         return;
+
       clearTimeout (this .#savePagesId);
 
       this .#savePagesId = setTimeout (() => this .savePages ());
@@ -349,28 +353,35 @@ module .exports = class RouteGraph extends Interface
             ids .add (node .id);
       }
 
-      const paths = this .getPathsFromScene (this .browser .currentScene, ids);
-
-      for (const page of pages)
-      {
-         delete page .selectedNodes;
-         delete page .selectedRoutes;
-
-         for (const node of page .nodes)
-         {
-            node .path = paths .get (node .id) ?? "";
-
-            delete node .id;
-         }
-      }
-
       if (ids .size)
       {
-         const configNode = Editor .getConfigNode (this .browser .currentScene, true);
+         const paths = this .getPathsFromScene (this .browser .currentScene, ids);
 
-         configNode .setMetaData ("Sunrize/RouteGraph/pages", JSON .stringify (pages));
+         for (const page of pages)
+         {
+            delete page .selectedNodes;
+            delete page .selectedRoutes;
 
-         UndoManager .shared .saveNeeded = true;
+            for (const node of page .nodes)
+            {
+               node .path = paths .get (node .id) ?? "";
+
+               delete node .id;
+            }
+         }
+
+         const
+            string     = JSON .stringify (pages),
+            readConfig = Editor .getConfigNode (this .browser .currentScene);
+
+         if (readConfig ?.getMetaData ("Sunrize/RouteGraph/pages") .toString () !== string)
+         {
+            const configNode = readConfig ?? Editor .getConfigNode (this .browser .currentScene, true);
+
+            configNode .setMetaData ("Sunrize/RouteGraph/pages", string);
+
+            UndoManager .shared .saveNeeded = true;
+         }
       }
       else
       {
@@ -507,17 +518,24 @@ module .exports = class RouteGraph extends Interface
                paths .add (node .path);
          }
 
-         const ids = this .getIdsFromScene (this .browser .currentScene, paths);
-
-         for (const page of pages)
+         if (paths .size)
          {
-            for (const node of page .nodes)
-               node .id = ids .get (node .path);
+            const ids = this .getIdsFromScene (this .browser .currentScene, paths);
 
-            page .nodes = page .nodes .filter (node => node .id !== undefined);
+            for (const page of pages)
+            {
+               for (const node of page .nodes)
+                  node .id = ids .get (node .path);
+
+               page .nodes = page .nodes .filter (node => node .id !== undefined);
+            }
+
+            this .pages = pages;
          }
-
-         this .pages = pages;
+         else
+         {
+            this .pages = [ ];
+         }
       }
       catch
       {
