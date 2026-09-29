@@ -837,9 +837,11 @@ module .exports = class RouteGraph extends Interface
       this .requestSavePages ();
    }
 
-   scalePage (scale)
+   scalePage (scale, reset)
    {
-      const page = this .page;
+      const
+         page         = this .page,
+         currentScale = reset ? 1 : page .scale;
 
       scale = X3D .Algorithm .clamp (scale, 0.2, 2);
 
@@ -853,22 +855,17 @@ module .exports = class RouteGraph extends Interface
          originY = Math .min (originY, node .y);
       }
 
-      const
-         translationX = originX - originX * scale,
-         translationY = originY - originY * scale;
-
       // Update node transform.
-
-      this .nodes .find (".node") .css ("scale", scale);
 
       for (const node of page .nodes)
       {
          this .nodes .find (`.node[node-id=${node .id}]`)
-            .css ("left", node .x * scale + translationX)
-            .css ("top",  node .y * scale + translationY);
+            .css ("left", (node .x - originX) * scale + originX * currentScale)
+            .css ("top",  (node .y - originY) * scale + originY * currentScale)
+            .css ("scale", scale);
 
-         node .x = (node .x * scale + translationX) / scale;
-         node .y = (node .y * scale + translationY) / scale;
+         node .x = ((node .x - originX) * scale + originX * currentScale) / scale;
+         node .y = ((node .y - originY) * scale + originY * currentScale) / scale;
       }
 
       page .scale = scale;
@@ -939,7 +936,7 @@ module .exports = class RouteGraph extends Interface
             scaleY = (this .nodes .innerHeight () - (padTop  + padBottom)) / (maxY - minY),
             scale  = Math .min (scaleX, scaleY);
 
-         this .scalePage (scale);
+         this .scalePage (scale, true);
       }
       else
       {
