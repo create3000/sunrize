@@ -917,11 +917,6 @@ module .exports = class RouteGraph extends Interface
             translationX = padLeft - minX,
             translationY = padTop  - minY;
 
-         minX += translationX;
-         minY += translationY;
-         maxX += translationX;
-         maxY += translationY;
-
          for (const node of page .nodes)
          {
             node .x += translationX;
@@ -939,11 +934,11 @@ module .exports = class RouteGraph extends Interface
 
          // Now adjust scroll positions when nodes have new position.
 
-         page .scrollLeft = minX - padLeft;
-         page .scrollTop  = minY - padTop;
+         page .scrollLeft = 0;
+         page .scrollTop  = 0;
 
-         this .nodes .scrollLeft (page .scrollLeft);
-         this .nodes .scrollTop  (page .scrollTop);
+         this .nodes .scrollLeft (0);
+         this .nodes .scrollTop  (0);
 
          this .requestSavePages ();
       }
