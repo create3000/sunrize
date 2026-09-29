@@ -368,7 +368,7 @@ module .exports = class RouteGraph extends Interface
       {
          const configNode = Editor .getConfigNode (this .browser .currentScene, true);
 
-         configNode .setMetaData ("Sunrize/RouteGraph/pages", new X3D .SFString (JSON .stringify (pages)));
+         configNode .setMetaData ("Sunrize/RouteGraph/pages", JSON .stringify (pages));
       }
       else
       {
