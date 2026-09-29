@@ -840,7 +840,7 @@ module .exports = class RouteGraph extends Interface
    {
       const page = this .page;
 
-      scale = X3D .Algorithm .clamp (scale, 0.3, 2);
+      scale = X3D .Algorithm .clamp (scale, 0.1, 2);
 
       page .scale = scale;
 
