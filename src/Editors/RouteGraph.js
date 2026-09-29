@@ -859,13 +859,17 @@ module .exports = class RouteGraph extends Interface
 
       for (const node of page .nodes)
       {
+         const
+            left = (node .x - originX) * scale + originX * currentScale,
+            top  = (node .y - originY) * scale + originY * currentScale;
+
          this .nodes .find (`.node[node-id=${node .id}]`)
-            .css ("left", (node .x - originX) * scale + originX * currentScale)
-            .css ("top",  (node .y - originY) * scale + originY * currentScale)
+            .css ("left", left)
+            .css ("top",  top)
             .css ("scale", scale);
 
-         node .x = ((node .x - originX) * scale + originX * currentScale) / scale;
-         node .y = ((node .y - originY) * scale + originY * currentScale) / scale;
+         node .x = left / scale;
+         node .y = top  / scale;
       }
 
       page .scale = scale;
