@@ -886,9 +886,11 @@ module .exports = class RouteGraph extends Interface
    zoomFit ()
    {
       const
-         page = this .page,
-         padX = this .#gridSize,
-         padY = this .#gridSize * 2;
+         page      = this .page,
+         padLeft   = this .#gridSize * 2,
+         padTop    = this .#gridSize * 3,
+         padRight  = this .#gridSize * 2,
+         padBottom = this .#gridSize * 2;
 
       if (page .nodes .length)
       {
@@ -909,8 +911,8 @@ module .exports = class RouteGraph extends Interface
          // Reposition nodes.
 
          const
-            translationX = padX - minX,
-            translationY = padY - minY;
+            translationX = padLeft - minX,
+            translationY = padTop  - minY;
 
          minX += translationX;
          minY += translationY;
@@ -926,16 +928,16 @@ module .exports = class RouteGraph extends Interface
          // Scale nodes.
 
          const
-            scaleX = this .nodes .width ()  / (maxX - minX + padX * 2),
-            scaleY = this .nodes .height () / (maxY - minY + padY * 3),
+            scaleX = (this .nodes .width ()  - (padLeft + padRight))  / (maxX - minX),
+            scaleY = (this .nodes .height () - (padTop  + padBottom)) / (maxY - minY),
             scale  = Math .min (scaleX, scaleY);
 
          this .scalePage (scale);
 
          // Now adjust scroll positions when nodes have new position.
 
-         page .scrollLeft = minX - padX;
-         page .scrollTop  = minY - padY;
+         page .scrollLeft = minX - padLeft;
+         page .scrollTop  = minY - padTop;
 
          this .nodes .scrollLeft (page .scrollLeft);
          this .nodes .scrollTop  (page .scrollTop);
