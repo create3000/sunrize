@@ -1336,15 +1336,13 @@ module .exports = class RouteGraph extends Interface
          return;
 
       const
+         page     = this .page,
          node     = this .getNode (id),
+         position = page .nodes .find (node => node .id === id),
          selected = this .isNodeSelected (node);
 
-      const
-         x = parseInt (element .css ("left")),
-         y = parseInt (element .css ("top"));
-
       this .removeNodeElement (node);
-      this .addNodeElement (node, { x, y }, selected);
+      this .addNodeElement (node, position, selected);
       this .requestUpdateCanvas ();
    }
 
