@@ -771,7 +771,7 @@ module .exports = class RouteGraph extends Interface
          next  = pages .reduce ((i, page) => Math .max (i, (page .title .match (/(\d+)\s*$/) ?.[1]|0) + 1), 1);
 
       pages .push ({
-         title: `${_("New Logic")} ${next}`,
+         title: `${util .format (_("New Logic %d"), next)}`,
          nodes: [ ],
          scale: 1,
       });
