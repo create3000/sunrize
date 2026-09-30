@@ -7,6 +7,7 @@ const
    X3D         = require ("../X3D"),
    Editor      = require ("../Undo/Editor"),
    UndoManager = require ("../Undo/UndoManager"),
+   util        = require ("util"),
    _           = require ("../Application/GetText");
 
 module .exports = class RouteGraph extends Interface
@@ -2129,6 +2130,8 @@ module .exports = class RouteGraph extends Interface
       // DEBUG
       nodes .delete (undefined);
 
+      this .nodes .attr ("title", "");
+
       const
          color         = this .#style .getPropertyValue ("--route-color"),
          selectedColor = this .#style .getPropertyValue ("--route-selected-color");
@@ -2169,7 +2172,7 @@ module .exports = class RouteGraph extends Interface
                   context .strokeStyle = color;
                }
 
-					this .drawRoute (context, fromX, fromY, toX, toY, scale, selectedColor);
+					this .drawRoute (context, fromX, fromY, toX, toY, scale, selectedColor, route);
             }
          }
       }
@@ -2184,7 +2187,7 @@ module .exports = class RouteGraph extends Interface
          this .drawRoute (context, this .#output .fromX - scrollLeft, this .#output .fromY - scrollTop, ... this .#pointer, scale);
    }
 
-   drawRoute (context, fromX, fromY, toX, toY, scale, selectedColor)
+   drawRoute (context, fromX, fromY, toX, toY, scale, selectedColor, route)
    {
       // Draw sine curved route.
 
@@ -2211,7 +2214,19 @@ module .exports = class RouteGraph extends Interface
          arrow         = this .getRouteArrow (new X3D .Vector2 (x0, y0), new X3D .Vector2 (x3, y3), arrowRotation, scale);
 
       if (selectedColor && X3D .Triangle2 .isPointInTriangle (this .#pointer, ... arrow))
+      {
          context .fillStyle = selectedColor;
+
+         const sourceNodeName = route .getSourceNode () instanceof X3D .X3DNode
+            ? route .getSourceNode () .getName ()
+            : route .getSourceNode () .getImportedName ();
+
+         const destinationNodeName = route .getDestinationNode () instanceof X3D .X3DNode
+            ? route .getDestinationNode () .getName ()
+            : route .getDestinationNode () .getImportedName ();
+
+         this .nodes .attr ("title", util .format (_("Route from %s<%s>.%s to %s<%s>.%s"), route .getSourceNode () .getTypeName (), sourceNodeName || _("unnamed"), route .sourceField, route .getDestinationNode () .getTypeName (), destinationNodeName || _("unnamed"), route .destinationField));
+      }
 
       context .beginPath ();
       context .moveTo (arrow [0] .x, arrow [0] .y);
