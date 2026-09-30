@@ -1944,8 +1944,6 @@ module .exports = class RouteGraph extends Interface
                      else
                      {
                         this .setRouteSelection (route);
-                        this .setNodeSelection (route .getSourceNode ());
-                        this .addNodeSelection (route .getDestinationNode ());
                      }
                   }
 
