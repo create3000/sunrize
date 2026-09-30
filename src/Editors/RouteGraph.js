@@ -853,7 +853,7 @@ module .exports = class RouteGraph extends Interface
 
       const deltaY = event .originalEvent .deltaY;
 
-      this .scalePage (deltaY > 0 ? this .page .scale * 0.98 : this .page .scale * 1.02);
+      this .scalePage (deltaY > 0 ? this .page .scale * 0.96 : this .page .scale * 1.04);
    }
 
    scalePage (scale, reset)
