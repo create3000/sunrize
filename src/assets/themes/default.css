@@ -1924,6 +1924,7 @@ html[platform=darwin] #route-graph .ui-tabs > .ui-tabs-nav li {
   flex-direction: row;
   flex: 1 1 auto;
   color: inherit;
+  white-space: inherit;
 }
 
 .tree-view .jstree-node {
