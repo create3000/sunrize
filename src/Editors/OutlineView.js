@@ -247,7 +247,8 @@ module .exports = class OutlineView extends Interface
 
       child .find (".jstree-node")
          .wrapInner ("<div class=\"item no-select\"/>")
-         .find (".item") .append ("<div class=\"route-curves-wrapper\"><canvas class=\"route-curves\"></canvas></div>");
+         .find (".item")
+         .append ("<div class=\"route-curves-wrapper\"><canvas class=\"route-curves\"></canvas></div>");
 
       // Connect actions.
 
@@ -805,7 +806,8 @@ module .exports = class OutlineView extends Interface
 
       child .find (".jstree-node")
          .wrapInner ("<div class=\"item no-select\"/>")
-         .find (".item") .append ("<div class=\"route-curves-wrapper\"><canvas class=\"route-curves\"></canvas></div>");
+         .find (".item")
+         .append ("<div class=\"route-curves-wrapper\"><canvas class=\"route-curves\"></canvas></div>");
 
       child .find (".field .name, .field .icon, .special .name, .special .icon")
          .on ("click", this .selectField .bind (this));
@@ -2287,7 +2289,8 @@ module .exports = class OutlineView extends Interface
 
       child .find (".jstree-node")
          .wrapInner ("<div class=\"item no-select\"/>")
-         .find (".item") .append ("<div class=\"route-curves-wrapper\"><canvas class=\"route-curves\"></canvas></div>");
+         .find (".item")
+         .append ("<div class=\"route-curves-wrapper\"><canvas class=\"route-curves\"></canvas></div>");
 
       // Connect actions.
 
@@ -2369,7 +2372,8 @@ module .exports = class OutlineView extends Interface
 
       child .find (".jstree-node")
          .wrapInner ("<div class=\"item no-select\"/>")
-         .find (".item") .append ("<div class=\"route-curves-wrapper\"><canvas class=\"route-curves\"></canvas></div>");
+         .find (".item")
+         .append ("<div class=\"route-curves-wrapper\"><canvas class=\"route-curves\"></canvas></div>");
 
       // Connect actions.
 
@@ -2466,7 +2470,8 @@ module .exports = class OutlineView extends Interface
 
       child .find (".jstree-node")
          .wrapInner ("<div class=\"item no-select\"/>")
-         .find (".item") .append ("<div class=\"route-curves-wrapper\"><canvas class=\"route-curves\"></canvas></div>");
+         .find (".item")
+         .append ("<div class=\"route-curves-wrapper\"><canvas class=\"route-curves\"></canvas></div>");
 
       this .connectFieldActions (child);
 
@@ -2576,7 +2581,8 @@ module .exports = class OutlineView extends Interface
 
       child .find (".jstree-node")
          .wrapInner ("<div class=\"item no-select\"/>")
-         .find (".item") .append ("<div class=\"route-curves-wrapper\"><canvas class=\"route-curves\"></canvas></div>");
+         .find (".item")
+         .append ("<div class=\"route-curves-wrapper\"><canvas class=\"route-curves\"></canvas></div>");
 
       this .connectFieldActions (child);
 
