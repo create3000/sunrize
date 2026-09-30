@@ -182,7 +182,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .zoomOutIcon = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Zoom timeline out."))
+         .attr ("title", _("Zoom timeline out. (-)"))
          .css ("transform", "scale(1.4)")
          .css ("margin-bottom", "15px")
          .text ("zoom_out")
@@ -191,7 +191,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .zoomInIcon = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Zoom timeline in."))
+         .attr ("title", _("Zoom timeline in. (+)"))
          .css ("transform", "scale(1.4)")
          .css ("margin-bottom", "15px")
          .text ("zoom_in")
@@ -200,7 +200,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .zoomFitIcon = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Zoom timeline to fit in window."))
+         .attr ("title", _("Zoom timeline to fit in window. (0)"))
          .css ("transform", "scale(1.4)")
          .css ("margin-bottom", "15px")
          .text ("fit_screen")
@@ -209,7 +209,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .zoom100Icon = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Default timeline zoom."))
+         .attr ("title", _("Default timeline zoom. (1)"))
          .css ("transform", "scale(1.4)")
          .css ("margin-bottom", "15px")
          .text ("1x_mobiledata")
@@ -2015,80 +2015,83 @@ module .exports = class AnimationEditor extends Interface
       {
          case " ":
          {
-            this .toggleAnimation ();
-
             event .preventDefault ();
             event .stopPropagation ();
+
+            this .toggleAnimation ();
             break;
          }
          case "ArrowLeft":
          {
-            this .previousFrame ();
-
             event .preventDefault ();
             event .stopPropagation ();
+
+            this .previousFrame ();
             break;
          }
          case "ArrowRight":
          {
-            this .nextFrame ();
-
             event .preventDefault ();
             event .stopPropagation ();
+
+            this .nextFrame ();
             break;
          }
          case "ArrowDown":
          {
-            this .firstFrame ();
-
             event .preventDefault ();
             event .stopPropagation ();
+
+            this .firstFrame ();
             break;
          }
          case "ArrowUp":
          {
-            this .lastFrame ();
-
             event .preventDefault ();
             event .stopPropagation ();
+
+            this .lastFrame ();
             break;
          }
          case "-":
          {
-            this .zoomOut ();
-
             event .preventDefault ();
             event .stopPropagation ();
+
+            this .zoomOut ();
             break;
          }
          case "+":
          {
-            this .zoomIn ();
-
             event .preventDefault ();
             event .stopPropagation ();
+
+            this .zoomIn ();
             break;
          }
          case "0":
          {
-            this .zoomFit ();
-
             event .preventDefault ();
             event .stopPropagation ();
+
+            this .zoomFit ();
             break;
          }
          case "1":
          {
-            this .zoom100 ();
-
             event .preventDefault ();
             event .stopPropagation ();
+
+            this .zoom100 ();
             break;
          }
          case "a":
          {
             if (event .metaKey || event .ctrlKey)
             {
+               event .preventDefault ();
+               event .stopPropagation ();
+
                if (event .shiftKey)
                {
                   this .setSelectedKeyframes ([ ]);
@@ -2098,9 +2101,6 @@ module .exports = class AnimationEditor extends Interface
                {
                   this .setSelectionRange (0, this .getDuration ());
                }
-
-               event .preventDefault ();
-               event .stopPropagation ();
             }
 
             break;
@@ -2109,10 +2109,10 @@ module .exports = class AnimationEditor extends Interface
          {
             if (event .metaKey || event .ctrlKey)
             {
-               this .cutKeyframes ();
-
                event .preventDefault ();
                event .stopPropagation ();
+
+               this .cutKeyframes ();
             }
 
             break;
@@ -2121,10 +2121,10 @@ module .exports = class AnimationEditor extends Interface
          {
             if (event .metaKey || event .ctrlKey)
             {
-               this .copyKeyframes ();
-
                event .preventDefault ();
                event .stopPropagation ();
+
+               this .copyKeyframes ();
             }
 
             break;
@@ -2133,20 +2133,20 @@ module .exports = class AnimationEditor extends Interface
          {
             if (event .metaKey || event .ctrlKey)
             {
-               this .pasteKeyframes ();
-
                event .preventDefault ();
                event .stopPropagation ();
+
+               this .pasteKeyframes ();
             }
 
             break;
          }
          case "Backspace":
          {
-            this .deleteKeyframes ();
-
             event .preventDefault ();
             event .stopPropagation ();
+
+            this .deleteKeyframes ();
             break;
          }
       }

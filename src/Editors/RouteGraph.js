@@ -92,7 +92,7 @@ module .exports = class RouteGraph extends Interface
 
       this .zoomOutIcon = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Zoom timeline out."))
+         .attr ("title", _("Zoom nodes out. (-)"))
          .css ("transform", "scale(1.4)")
          .css ("margin-top", "13px")
          .css ("margin-bottom", "15px")
@@ -102,7 +102,7 @@ module .exports = class RouteGraph extends Interface
 
       this .zoomInIcon = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Zoom timeline in."))
+         .attr ("title", _("Zoom nodes in. (+)"))
          .css ("transform", "scale(1.4)")
          .css ("margin-bottom", "15px")
          .text ("zoom_in")
@@ -111,7 +111,7 @@ module .exports = class RouteGraph extends Interface
 
       this .zoomFitIcon = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Zoom timeline to fit in window."))
+         .attr ("title", _("Zoom nodes to fit in window. (0)"))
          .css ("transform", "scale(1.4)")
          .css ("margin-bottom", "15px")
          .text ("fit_screen")
@@ -120,7 +120,7 @@ module .exports = class RouteGraph extends Interface
 
       this .zoom100Icon = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Default timeline zoom."))
+         .attr ("title", _("Default nodes zoom. (1)"))
          .css ("transform", "scale(1.4)")
          .css ("margin-bottom", "15px")
          .text ("1x_mobiledata")
@@ -139,6 +139,7 @@ module .exports = class RouteGraph extends Interface
       this .resizer .observe (this .left [0]);
 
       this .nodes = $("<div></div>")
+         .attr ("tabindex", 0)
          .addClass ("nodes")
          .on ("mouseup", () => this .clearInputOutput ())
          .on ("mouseup", event => this .selectRoute (event, false))
@@ -148,6 +149,7 @@ module .exports = class RouteGraph extends Interface
          .on ("contextmenu", event => this .showContextMenu (event))
          .on ("mousemove", event => this .mouseMove (event))
          .on ("mousedown", event => this .drawLassoStart (event))
+         .on ("keydown", event => this .keyDown (event))
          .appendTo (this .left);
 
       this .title = $("<input>")
@@ -241,14 +243,17 @@ module .exports = class RouteGraph extends Interface
          },
          {
             label: _("Select All Nodes"),
+            accelerator: "CmdOrCtrl+A",
             args: ["selectAllNodes"],
          },
          {
             label: _("Deselect All Nodes"),
+            accelerator: "Shift+CmdOrCtrl+A",
             args: ["clearNodeSelection"],
          },
          {
             label: _("Remove Selected Nodes"),
+            accelerator: "CmdOrCtrl+Backspace",
             enabled: !! this .#selectedNodes .size,
             args: ["removeSelectedNodes"],
          },
@@ -951,6 +956,76 @@ module .exports = class RouteGraph extends Interface
    zoom100 ()
    {
       this .scalePage (1);
+   }
+
+   keyDown (event)
+   {
+      // console .log (event .key);
+
+      switch (event .key)
+      {
+         case "-":
+         {
+            event .preventDefault ();
+            event .stopPropagation ();
+
+            this .zoomOut ();
+            break;
+         }
+         case "+":
+         {
+            event .preventDefault ();
+            event .stopPropagation ();
+
+            this .zoomIn ();
+            break;
+         }
+         case "0":
+         {
+            event .preventDefault ();
+            event .stopPropagation ();
+
+            this .zoomFit ();
+            break;
+         }
+         case "1":
+         {
+            event .preventDefault ();
+            event .stopPropagation ();
+
+            this .zoom100 ();
+            break;
+         }
+         case "a":
+         {
+            if (event .metaKey || event .ctrlKey)
+            {
+               event .preventDefault ();
+               event .stopPropagation ();
+
+               if (event .shiftKey)
+                  this .clearNodeSelection ();
+               else
+                  this .selectAllNodes ();
+            }
+
+            break;
+         }
+         case "Backspace":
+         {
+            if (event .metaKey || event .ctrlKey)
+            {
+               event .preventDefault ();
+               event .stopPropagation ();
+
+               this .removeSelectedNodes ();
+            }
+
+            event .preventDefault ();
+            event .stopPropagation ();
+            break;
+         }
+      }
    }
 
    getNode (id)
