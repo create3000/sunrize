@@ -1533,7 +1533,7 @@ body.light .console-output .selected {
   --lila: #8579c5;
   --dark-lila: #413469;
   --purple: #9352de;
-  --outline-color: var(-red);
+  --outline-color: var(--red);
   --route-color: var(--orange);
   --route-selected-color: var(--red);
   --lasso-fill: hsla(207, 71%, 84%, 0.2);
