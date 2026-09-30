@@ -129,10 +129,10 @@ Shaders are written in OpenGL Shading Language (GLSL), a high-level shading lang
 
 ### Open, Import, Save
 
-- New = <kbd>Ctrl-or-Cmd</kbd>+<kbd>n</kbd>
-- Open = <kbd>Ctrl-or-Cmd</kbd>+<kbd>o</kbd>
-- Save = <kbd>Ctrl-or-Cmd</kbd>+<kbd>s</kbd>
-- Save As = <kbd>Shift</kbd>+<kbd>Ctrl-or-Cmd</kbd>+<kbd>s</kbd>
+- New = <kbd>Ctrl-or-Cmd</kbd>+<kbd>N</kbd>
+- Open = <kbd>Ctrl-or-Cmd</kbd>+<kbd>O</kbd>
+- Save = <kbd>Ctrl-or-Cmd</kbd>+<kbd>S</kbd>
+- Save As = <kbd>Shift</kbd>+<kbd>Ctrl-or-Cmd</kbd>+<kbd>S</kbd>
 - Quit = <kbd>Ctrl-or-Cmd</kbd>+<kbd>1</kbd>
 
 ### Examiner Viewer
@@ -156,17 +156,17 @@ Shaders are written in OpenGL Shading Language (GLSL), a high-level shading lang
 
 ### Edit
 
-- Undo = <kbd>Ctrl-or-Cmd</kbd>+<kbd>z</kbd>
-- Redo = <kbd>Shift+Ctrl-or-Cmd</kbd>+<kbd>z</kbd>
-- Cut = <kbd>Ctrl-or-Cmd</kbd>+<kbd>x</kbd>
-- Copy = <kbd>Ctrl-or-Cmd</kbd>+<kbd>c</kbd>
-- Paste = <kbd>Ctrl-or-Cmd</kbd>+<kbd>v</kbd>
+- Undo = <kbd>Ctrl-or-Cmd</kbd>+<kbd>Z</kbd>
+- Redo = <kbd>Shift+Ctrl-or-Cmd</kbd>+<kbd>Z</kbd>
+- Cut = <kbd>Ctrl-or-Cmd</kbd>+<kbd>X</kbd>
+- Copy = <kbd>Ctrl-or-Cmd</kbd>+<kbd>C</kbd>
+- Paste = <kbd>Ctrl-or-Cmd</kbd>+<kbd>V</kbd>
 - Delete = <kbd>Ctrl-or-Cmd</kbd>+<kbd>Delete</kbd>
 
 ### Select &amp; Group
 
-- Select all = <kbd>Ctrl-or-Cmd</kbd>+<kbd>a</kbd>
-- Deselect all = <kbd>Shift+Ctrl-or-Cmd</kbd>+<kbd>a</kbd>
+- Select all = <kbd>Ctrl-or-Cmd</kbd>+<kbd>A</kbd>
+- Deselect all = <kbd>Shift+Ctrl-or-Cmd</kbd>+<kbd>A</kbd>
 - Select multiple = <kbd>Shift</kbd> and ***click***
 
 ### Transform Tool
@@ -204,8 +204,7 @@ Shaders are written in OpenGL Shading Language (GLSL), a high-level shading lang
 
 ## Abbreviations
 
-- <kbd>Shift</kbd>+<kbd>Ctrl-or-Cmd</kbd>+<kbd>u</kbd> means to press at the same time the <kbd>Shift</kbd>, <kbd>Ctrl-or-Cmd</kbd>, and <kbd>u</kbd> keys on your keyboard. Keys
-  always appear in italics.
+- <kbd>Shift</kbd>+<kbd>Ctrl-or-Cmd</kbd>+<kbd>U</kbd> means to press at the same time the <kbd>Shift</kbd>, <kbd>Ctrl-or-Cmd</kbd>, and <kbd>U</kbd> keys on your keyboard.
 - ***Click*** means to quickly press and release the left mouse button.
 - ***Click-middle*** means to quickly press and release the middle mouse button.
 - ***Drag*** means to press and hold down the left mouse button while dragging the mouse.
