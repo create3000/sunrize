@@ -1917,6 +1917,9 @@ html[platform=darwin] #route-graph .ui-tabs > .ui-tabs-nav li {
 }
 
 .tree-view .jstree-anchor {
+  all: initial;
+  font-family: inherit;
+  font-size: inherit;
   display: flex;
   flex-direction: row;
   flex: 1 1 auto;
@@ -2147,6 +2150,11 @@ html[platform=darwin] #route-graph .ui-tabs > .ui-tabs-nav li {
   top: 6px;
 }
 
+.scene-graph .route .access-type.input,
+.scene-graph .route .access-type.output  {
+  top: 4px;
+}
+
 .scene-graph .access-type img.active {
   display: none;
   position: absolute;
@@ -2195,7 +2203,7 @@ html[platform=darwin] #route-graph .ui-tabs > .ui-tabs-nav li {
 
 .scene-graph .route-curves {
   position: absolute;
-  top: -2px;
+  top: -4px;
   width: 20px;
   height: 25px;
 }
