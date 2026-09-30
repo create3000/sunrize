@@ -1927,7 +1927,7 @@ html[platform=darwin] #route-graph .ui-tabs > .ui-tabs-nav li {
   font-family: inherit;
   font-size: inherit;
   color: inherit;
-  white-space: nowrap;
+  white-space: inherit;
 }
 
 .tree-view .jstree-node {
