@@ -1871,7 +1871,8 @@ module .exports = class RouteGraph extends Interface
    {
       this .#pointer = this .getRelativePosition (event, false);
 
-      this .requestUpdateCanvas ();
+      if (this .#input || this .#output)
+         this .updateCanvas ();
    }
 
    selectRoute (event, deleteRoute)
