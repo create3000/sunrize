@@ -63,7 +63,7 @@ module .exports = class RouteGraph extends Interface
 
       this .addPageButton = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Add new Logic."))
+         .attr ("title", _("Add new logic page."))
          .text ("add")
          .appendTo (this .toolbar)
          .on ("click", () => this .addPage ());
@@ -72,7 +72,7 @@ module .exports = class RouteGraph extends Interface
 
       this .snapToGridButton = $("<span></span>")
          .addClass ("material-symbols-outlined")
-         .attr ("title", _("Snap to grid."))
+         .attr ("title", _("Toggle snap to grid."))
          .css ({ transform: "scale(0.9)" })
          .text ("grid_4x4")
          .appendTo (this .toolbar)
@@ -82,7 +82,7 @@ module .exports = class RouteGraph extends Interface
 
       this .addConnectedNodesButton = $("<span></span>")
          .addClass ("material-symbols-outlined")
-         .attr ("title", _("Add connected nodes."))
+         .attr ("title", _("Toggle add connected nodes."))
          .css ({ transform: "scale(0.8)" })
          .text ("hub")
          .appendTo (this .toolbar)
