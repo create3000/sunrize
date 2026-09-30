@@ -88,8 +88,8 @@ module .exports = class AnimationEditor extends Interface
       this .cutFrameIcon = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", darwin
-            ? _("Cut selected keyframes. (Cmd+x)")
-            : _("Cut selected keyframes. (Ctrl+x)"))
+            ? _("Cut selected keyframes. (⌘X)")
+            : _("Cut selected keyframes. (Ctrl+X)"))
          .text ("content_cut")
          .appendTo (this .toolbar)
          .on ("click", () => this .cutKeyframes ());
@@ -97,8 +97,8 @@ module .exports = class AnimationEditor extends Interface
       this .copyFrameIcon = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", darwin
-            ? _("Copy selected keyframes. (Cmd+c)")
-            : _("Copy selected keyframes. (Ctrl+c)"))
+            ? _("Copy selected keyframes. (⌘C)")
+            : _("Copy selected keyframes. (Ctrl+C)"))
          .text ("content_copy")
          .appendTo (this .toolbar)
          .on ("click", () => this .copyKeyframes ());
@@ -106,8 +106,8 @@ module .exports = class AnimationEditor extends Interface
       this .pasteFrameIcon = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", darwin
-            ? _("Paste keyframes at current frame. (Cmd+v)")
-            : _("Paste keyframes at current frame. (Ctrl+v)"))
+            ? _("Paste keyframes at current frame. (⌘V)")
+            : _("Paste keyframes at current frame. (Ctrl+V)"))
          .text ("content_paste")
          .appendTo (this .toolbar)
          .on ("click", () => this .pasteKeyframes ());
@@ -416,6 +416,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .setSelection (require ("../Application/Selection"));
       this .zoomFit ();
+      this .resizeTimeline ();
       this .requestDrawTimeline ();
 
       this .browser .nextFrame () .then (() => this .setCurrentFrame (0));
@@ -523,7 +524,7 @@ module .exports = class AnimationEditor extends Interface
       Editor .undoManager .endUndo ();
 
       // Wait until NodeList knows animation, to have it restored after reload.
-      setTimeout (() => this .nodeList .setNode (animation));
+      this .browser .nextFrame () .then (() => this .nodeList .setNode (animation));
    }
 
    resizeAnimation (newDuration, newFrameRate, scaleKeyframes)
