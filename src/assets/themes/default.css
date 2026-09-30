@@ -1910,7 +1910,7 @@ html[platform=darwin] #route-graph .ui-tabs > .ui-tabs-nav li {
 
 .tree-view .jstree-ocl {
   position: relative;
-  top: 0;
+  top: -2px;
   width: 22px;
   cursor: pointer;
   color: var(--expander-color);
@@ -1983,7 +1983,7 @@ html[platform=darwin] #route-graph .ui-tabs > .ui-tabs-nav li {
 }
 
 .scene-graph .description .jstree-anchor {
-  padding: 2px 0;
+  padding: 4px 0;
   font-size: smaller;
 }
 
