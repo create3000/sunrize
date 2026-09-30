@@ -146,6 +146,7 @@ module .exports = class RouteGraph extends Interface
          .on ("dblclick", event => this .deleteRoute (event))
          .on ("scroll", () => this .scrollPage ())
          .on ("scrollend", () => this .scrollPageEnd ())
+         .on ("wheel", event => this .scalePageWithWheel (event))
          .on ("contextmenu", event => this .showContextMenu (event))
          .on ("mousemove", event => this .mouseMove (event))
          .on ("mousedown", event => this .drawLassoStart (event))
@@ -840,6 +841,19 @@ module .exports = class RouteGraph extends Interface
    scrollPageEnd ()
    {
       this .requestSavePages ();
+   }
+
+   scalePageWithWheel (event)
+   {
+      if (!(event .metaKey && event .ctrlKey))
+         return;
+
+      event .preventDefault ();
+      event .stopPropagation ();
+
+      const deltaY = event .originalEvent .deltaY;
+
+      this .scalePage (deltaY > 0 ? this .page .scale * 0.98 : this .page .scale * 1.02);
    }
 
    scalePage (scale, reset)
