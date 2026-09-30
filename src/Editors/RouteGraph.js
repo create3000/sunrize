@@ -528,7 +528,7 @@ module .exports = class RouteGraph extends Interface
       seen .add (node);
 
       if (ids .has (node .getId ()))
-         paths .set (node .getId (), path .join (":"));
+         paths .set (node .getId (), path .join (","));
 
       if (!fields)
          return;
@@ -676,8 +676,8 @@ module .exports = class RouteGraph extends Interface
 
       seen .add (node);
 
-      if (paths .has (path .join (":")))
-         ids .set (path .join (":"), node .getId ());
+      if (paths .has (path .join (",")))
+         ids .set (path .join (","), node .getId ());
 
       this .setNode (node);
 
