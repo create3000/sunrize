@@ -131,7 +131,9 @@ module .exports = new class Tabs
       this .forwardToActiveTab ("document");
       this .forwardToActiveTab ("script-editor");
       this .forwardToActiveTab ("animation-members-list");
+      this .forwardToActiveTab ("route-graph");
       this .forwardToActiveTab ("outline-editor");
+      this .forwardToActiveTab ("context-menu-will-close");
 
       // Restore tabs.
       this .restoreTabs (this .config .activeTab);
@@ -325,8 +327,8 @@ module .exports = new class Tabs
 
       const menu = [
          {
-            label: tab .url .startsWith ("file:") ? _("Copy Path") : _("Copy URL"),
-            visible: !tab .url .startsWith ("id:"),
+            label: tab .url .startsWith ("file:") || tab .url .startsWith ("id:") ? _("Copy Path") : _("Copy URL"),
+            enabled: !tab .url .startsWith ("id:"),
             args: ["menuCopyURL", tab .getPosition ()],
          },
          {
@@ -339,7 +341,7 @@ module .exports = new class Tabs
                   default:       return _("Reveal File in File Manager");
                }
             })(),
-            visible: tab .url .startsWith ("file:"),
+            enabled: tab .url .startsWith ("file:"),
             args: ["menuShowItemInFolder", tab .getPosition ()],
          },
          { type: "separator" },
@@ -394,8 +396,14 @@ module .exports = new class Tabs
          },
       ];
 
-      electron .ipcRenderer .send ("context-menu", "tabs-menu", menu);
-      electron .ipcRenderer .once ("tabs-menu-will-close", () => $(tab .element) .trigger ("blur"));
+      const menuId = Math .random ();
+
+      electron .ipcRenderer .send ("context-menu", "tabs-menu", menu, menuId);
+      electron .ipcRenderer .once ("context-menu-will-close", (event, id) =>
+      {
+         if (id === menuId)
+            $(tab .element) .trigger ("blur");
+      });
    }
 
    menuCopyURL (position)

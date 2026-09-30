@@ -13,7 +13,7 @@
     --system-cyan: rgb(0, 192, 232);
     --system-blue: rgb(0, 136, 255);
     --system-indigo: rgb(88, 86, 214);
-    --system-purple: rgb(97, 85, 245);
+    --system-purple: rgb(203, 48, 224);
     --system-pink: rgb(255, 45, 85);
     --system-brown: rgb(172, 127, 94);
 
@@ -42,6 +42,7 @@
     /* Special Colors */
 
     --secondary-toolbar-color: hsl(214, 25%, 90%);
+    --secondary-toolbar-transparent: hsla(214, 25%, 90%, 0);
     --sidebar-background-color: hsl(211, 36%, 86%);
     --tint-color1: rgba(255, 255, 255, 0.4);
     --tint-color2: rgba(255, 255, 255, 0.6);
@@ -119,7 +120,9 @@
     /* Special Colors */
 
     --secondary-toolbar-color: hsl(220, 9%, 17%);
+    --secondary-toolbar-transparent: hsla(220, 9%, 17%, 0);
     --sidebar-background-color: hsl(217, 20%, 21%);
+    --sidebar-transparent: hsla(217, 20%, 21%, 0);
     --tint-color1: rgba(0, 0, 0, 0.2);
     --tint-color2: rgba(0, 0, 0, 0.4);
 
@@ -216,6 +219,10 @@ body {
   --qtip-background-color: white;
   --qtip-border: 1px solid var(--system-gray1);
   --qtip-highlight-color: black;
+
+  /* Routing Editor */
+
+  --routes-background-color: white;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -240,5 +247,9 @@ body {
     --qtip-background-color: black;
     --qtip-border: 1px solid var(--system-gray4);
     --qtip-highlight-color: white;
+
+    /* Routing Editor */
+
+    --routes-background-color: black;
   }
 }

@@ -16,9 +16,13 @@ require ("../Bits/Validate");
 
 module .exports = class AnimationEditor extends Interface
 {
+   #style = window .getComputedStyle ($("#animation-editor") [0]);
+
    constructor (element)
    {
       super (`Sunrize.AnimationEditor.${element .attr ("id")}.`);
+
+      const darwin = process .platform === "darwin";
 
       this .animationEditor = element;
 
@@ -83,21 +87,27 @@ module .exports = class AnimationEditor extends Interface
 
       this .cutFrameIcon = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Cut selected keyframes."))
+         .attr ("title", darwin
+            ? _("Cut selected keyframes. (⌘X)")
+            : _("Cut selected keyframes. (Ctrl+X)"))
          .text ("content_cut")
          .appendTo (this .toolbar)
          .on ("click", () => this .cutKeyframes ());
 
       this .copyFrameIcon = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Copy selected keyframes."))
+         .attr ("title", darwin
+            ? _("Copy selected keyframes. (⌘C)")
+            : _("Copy selected keyframes. (Ctrl+C)"))
          .text ("content_copy")
          .appendTo (this .toolbar)
          .on ("click", () => this .copyKeyframes ());
 
       this .pasteFrameIcon = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Paste keyframes at current frame."))
+         .attr ("title", darwin
+            ? _("Paste keyframes at current frame. (⌘V)")
+            : _("Paste keyframes at current frame. (Ctrl+V)"))
          .text ("content_paste")
          .appendTo (this .toolbar)
          .on ("click", () => this .pasteKeyframes ());
@@ -113,7 +123,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .toggleAnimationIcon = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Start animation."))
+         .attr ("title", _("Start animation. (Space)"))
          .text ("play_arrow")
          .appendTo (this .toolbar)
          .on ("click", () => this .toggleAnimation ());
@@ -180,8 +190,8 @@ module .exports = class AnimationEditor extends Interface
 
       this .zoomOutIcon = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Zoom timeline out."))
-         .css ("transform", "scale(1.4)")
+         .attr ("title", _("Zoom timeline out. (-)"))
+         .css ("transform", "scale(1.5)")
          .css ("margin-bottom", "15px")
          .text ("zoom_out")
          .appendTo (this .navigation)
@@ -189,8 +199,8 @@ module .exports = class AnimationEditor extends Interface
 
       this .zoomInIcon = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Zoom timeline in."))
-         .css ("transform", "scale(1.4)")
+         .attr ("title", _("Zoom timeline in. (+)"))
+         .css ("transform", "scale(1.5)")
          .css ("margin-bottom", "15px")
          .text ("zoom_in")
          .appendTo (this .navigation)
@@ -198,7 +208,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .zoomFitIcon = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Zoom timeline to fit in window."))
+         .attr ("title", _("Zoom timeline to fit in window. (0)"))
          .css ("transform", "scale(1.4)")
          .css ("margin-bottom", "15px")
          .text ("fit_screen")
@@ -207,7 +217,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .zoom100Icon = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Default timeline zoom."))
+         .attr ("title", _("Default timeline zoom. (1)"))
          .css ("transform", "scale(1.4)")
          .css ("margin-bottom", "15px")
          .text ("1x_mobiledata")
@@ -406,6 +416,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .setSelection (require ("../Application/Selection"));
       this .zoomFit ();
+      this .resizeTimeline ();
       this .requestDrawTimeline ();
 
       this .browser .nextFrame () .then (() => this .setCurrentFrame (0));
@@ -513,7 +524,7 @@ module .exports = class AnimationEditor extends Interface
       Editor .undoManager .endUndo ();
 
       // Wait until NodeList knows animation, to have it restored after reload.
-      setTimeout (() => this .nodeList .setNode (animation));
+      this .browser .nextFrame () .then (() => this .nodeList .setNode (animation));
    }
 
    resizeAnimation (newDuration, newFrameRate, scaleKeyframes)
@@ -2013,80 +2024,83 @@ module .exports = class AnimationEditor extends Interface
       {
          case " ":
          {
-            this .toggleAnimation ();
-
             event .preventDefault ();
             event .stopPropagation ();
+
+            this .toggleAnimation ();
             break;
          }
          case "ArrowLeft":
          {
-            this .previousFrame ();
-
             event .preventDefault ();
             event .stopPropagation ();
+
+            this .previousFrame ();
             break;
          }
          case "ArrowRight":
          {
-            this .nextFrame ();
-
             event .preventDefault ();
             event .stopPropagation ();
+
+            this .nextFrame ();
             break;
          }
          case "ArrowDown":
          {
-            this .firstFrame ();
-
             event .preventDefault ();
             event .stopPropagation ();
+
+            this .firstFrame ();
             break;
          }
          case "ArrowUp":
          {
-            this .lastFrame ();
-
             event .preventDefault ();
             event .stopPropagation ();
+
+            this .lastFrame ();
             break;
          }
          case "-":
          {
-            this .zoomOut ();
-
             event .preventDefault ();
             event .stopPropagation ();
+
+            this .zoomOut ();
             break;
          }
          case "+":
          {
-            this .zoomIn ();
-
             event .preventDefault ();
             event .stopPropagation ();
+
+            this .zoomIn ();
             break;
          }
          case "0":
          {
-            this .zoomFit ();
-
             event .preventDefault ();
             event .stopPropagation ();
+
+            this .zoomFit ();
             break;
          }
          case "1":
          {
-            this .zoom100 ();
-
             event .preventDefault ();
             event .stopPropagation ();
+
+            this .zoom100 ();
             break;
          }
          case "a":
          {
             if (event .metaKey || event .ctrlKey)
             {
+               event .preventDefault ();
+               event .stopPropagation ();
+
                if (event .shiftKey)
                {
                   this .setSelectedKeyframes ([ ]);
@@ -2096,9 +2110,6 @@ module .exports = class AnimationEditor extends Interface
                {
                   this .setSelectionRange (0, this .getDuration ());
                }
-
-               event .preventDefault ();
-               event .stopPropagation ();
             }
 
             break;
@@ -2107,10 +2118,10 @@ module .exports = class AnimationEditor extends Interface
          {
             if (event .metaKey || event .ctrlKey)
             {
-               this .cutKeyframes ();
-
                event .preventDefault ();
                event .stopPropagation ();
+
+               this .cutKeyframes ();
             }
 
             break;
@@ -2119,10 +2130,10 @@ module .exports = class AnimationEditor extends Interface
          {
             if (event .metaKey || event .ctrlKey)
             {
-               this .copyKeyframes ();
-
                event .preventDefault ();
                event .stopPropagation ();
+
+               this .copyKeyframes ();
             }
 
             break;
@@ -2131,20 +2142,20 @@ module .exports = class AnimationEditor extends Interface
          {
             if (event .metaKey || event .ctrlKey)
             {
-               this .pasteKeyframes ();
-
                event .preventDefault ();
                event .stopPropagation ();
+
+               this .pasteKeyframes ();
             }
 
             break;
          }
          case "Backspace":
          {
-            this .deleteKeyframes ();
-
             event .preventDefault ();
             event .stopPropagation ();
+
+            this .deleteKeyframes ();
             break;
          }
       }
@@ -2812,11 +2823,12 @@ module .exports = class AnimationEditor extends Interface
    {
       const
          tracksWidth  = this .tracks .width (),
-         tracksHeight = this .tracks .height ();
+         tracksHeight = this .tracks .height (),
+         contentScale = window .devicePixelRatio;
 
       this .tracks
-         .prop ("width",  tracksWidth)
-         .prop ("height", tracksHeight);
+         .prop ("width",  tracksWidth  * contentScale)
+         .prop ("height", tracksHeight * contentScale);
 
       this .timelineClip = new Path2D ();
       this .timelineClip .rect (this .getLeft () - this .FRAME_SIZE, 0, this .getWidth () + this .FRAME_SIZE * 2, tracksHeight);
@@ -2824,7 +2836,7 @@ module .exports = class AnimationEditor extends Interface
       this .drawTimeline ();
    }
 
-   #updateTracksId = undefined;
+   #updateTracksId;
 
    requestDrawTimeline ()
    {
@@ -2833,8 +2845,6 @@ module .exports = class AnimationEditor extends Interface
       this .#updateTracksId = setTimeout (() => this .drawTimeline ());
    }
 
-   #style = window .getComputedStyle ($("body") [0]);
-
    TRACK_PADDING = 8;
 
    drawTimeline ()
@@ -2842,8 +2852,11 @@ module .exports = class AnimationEditor extends Interface
       const
          context      = this .tracks [0] .getContext ("2d"),
          tracksWidth  = this .tracks .width (),
-         tracksHeight = this .tracks .height ();
+         tracksHeight = this .tracks .height (),
+         contentScale = window .devicePixelRatio;
 
+      context .save ();
+      context .scale (contentScale, contentScale);
       context .clearRect (0, 0, tracksWidth, tracksHeight);
 
       if (!this .animation)
@@ -3028,6 +3041,7 @@ module .exports = class AnimationEditor extends Interface
 
       context .fillRect (x - 1, 0, 3, tracksHeight);
 
+      context .restore ();
       context .restore ();
    }
 

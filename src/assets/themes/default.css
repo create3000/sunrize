@@ -335,6 +335,7 @@ tr.disabled ~ tr > td > div {
 /* Toolbar */
 
 .toolbar {
+  overflow: hidden;
   position: absolute;
   box-sizing: border-box;
 }
@@ -350,6 +351,16 @@ tr.disabled ~ tr > td > div {
   right: 0;
   height: 100%;
   width: var(--toolbar-width);
+}
+
+.vertical-toolbar::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  height: 30px;
+  bottom: 0px;
+  background: linear-gradient(0deg,var(--secondary-toolbar-color) 0%, var(--secondary-toolbar-transparent) 100%);
 }
 
 .horizontal-toolbar .material-icons,
@@ -479,7 +490,7 @@ html[platform=darwin] .horizontal-toolbar .select {
   font-size: var(--large-icon-size);
 }
 
-.large-toolbar .image-icon {
+.image-icon {
   background-repeat: no-repeat;
   display: block;
   width: 24px;
@@ -490,11 +501,11 @@ html[platform=darwin] .horizontal-toolbar .select {
   filter: var(--filter-text-color);
 }
 
-.large-toolbar .image-icon:hover {
+.image-icon:hover {
   filter: var(--filter-highlight-color);
 }
 
-.large-toolbar .image-icon.active {
+.image-icon.active {
   filter: var(--filter-accent-color);
 }
 
@@ -547,9 +558,9 @@ html[platform=darwin] .horizontal-toolbar .select {
 .ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
   box-sizing: border-box;
   height: 100%;
-  margin: 0;
-  border: 0;
-  padding: 0;
+  margin: 0px;
+  border: 0px;
+  padding: 7px 10px;
   border-radius: 0;
   background: none;
   user-select: none;
@@ -560,7 +571,7 @@ html[platform=darwin] .horizontal-toolbar .select {
 .ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
   cursor: pointer !important;
   box-sizing: border-box;
-  padding: 7px 10px;
+  padding: 0px;
   height: 100%;
 }
 
@@ -1512,6 +1523,327 @@ body.light .console-output .selected {
   image-rendering: pixelated;
 }
 
+/* Routing Editor */
+
+#route-graph {
+  --lila: #8579c5;
+  --dark-lila: #413469;
+  --orange: #fdcb73;
+  --purple: #9352de;
+  --blue: #9399fa;
+  --outline-color: #f71501;
+  --route-color: #ff8900;
+  --route-selected-color: #f71501;
+  --lasso-fill: hsla(207, 71%, 84%, 0.2);
+  --lasso-stroke: hsl(207, 71%, 84%);
+  --tabs-height: 24px;
+  --overscroll-gap: 120px;
+}
+
+#route-graph {
+  box-sizing: border-box;
+  background: var(--routes-background-color);
+}
+
+.route-graph-top {
+  position: absolute;
+  box-sizing: border-box;
+  left: 0px;
+  right: var(--toolbar-width);
+  height: var(--tabs-height);
+  border-right: 1px solid var(--border-color);
+  background: none;
+}
+
+.route-graph-top canvas {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+#route-graph .ui-tabs > .ui-tabs-nav {
+  overflow-x: auto;
+  overflow-y: visible;
+  height: 100%;
+  border: none;;
+  justify-content: left;
+}
+
+#route-graph .ui-tabs > .ui-tabs-nav::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+#route-graph .ui-tabs > .ui-tabs-nav li {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  float: none;
+  border: 1px solid transparent;
+  border-radius: var(--tabs-height);
+  padding: 0px;
+  padding-top: 2px;
+  height: 100%;
+}
+
+html[platform=darwin] #route-graph .ui-tabs > .ui-tabs-nav li {
+  padding-top: 1px;
+}
+
+#route-graph .ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
+  pointer-events: none;
+  float: none;
+  height: auto;
+  padding: 0px 6px 0px 10px;
+  line-height: 0;
+  color: var(--window-tabs-text-color);
+}
+
+#route-graph .ui-tabs > .ui-tabs-nav .ui-tabs-active .ui-tabs-anchor {
+  color: var(--window-tabs-highlight-color);
+}
+
+#route-graph .ui-tabs > .ui-tabs-nav :is(li.ui-tabs-active, li:hover) {
+  border-color: var(--border-color);
+  background-color: var(--window-tabs-background-color);
+}
+
+#route-graph .ui-tabs > .ui-tabs-nav li:not(.ui-tabs-active, :hover, :first-child)::before {
+  content: "•";
+  display: block;
+  position: absolute;
+  left: -2px;
+  color: var(--text-disabled);
+  padding-top: 1px;
+  line-height: 0;
+}
+
+#route-graph .ui-tabs > .ui-tabs-nav li:is(.ui-tabs-active, :hover) + li::before {
+  display: none;
+}
+
+#route-graph .ui-tabs > .ui-tabs-nav .button {
+  top: unset;
+  margin-right: 6px;
+  line-height: 0;
+  font-size: 10pt;
+}
+
+#route-graph .pages {
+  user-select: none;
+  overflow: hidden;
+  position: absolute;
+  box-sizing: border-box;
+  top: var(--tabs-height);
+  right: var(--toolbar-width);
+  bottom: 0px;
+  left: 0px;
+  border-right: 1px solid var(--border-color);
+}
+
+#route-graph .routes {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+#route-graph .nodes {
+  overflow: auto;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+#route-graph .nodes > .title {
+  box-sizing: border-box;
+  position: sticky;
+  top: 10px;
+  left: 10px;
+  font-size: 12pt;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  padding: 2px 15px;
+  max-width: 100%;
+  field-sizing: content;
+}
+
+#route-graph .nodes > .title:focus {
+  border-color: var(--system-gray4);
+  background: var(--background-color);
+}
+
+#route-graph .nodes > .placeholder {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: x-large;
+  color: var(--system-gray3);
+  text-align: center;
+  transition: visibility 300ms, opacity 300ms linear;
+}
+
+#route-graph .nodes:has(> :last-child:nth-child(2)) > .placeholder {
+  visibility: visible;
+  opacity: 1;
+}
+
+#route-graph .node {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 1px;
+  position: absolute;
+  outline: 4px solid transparent;
+  border-radius: 17px 17px 15px 15px;
+  color: white;
+  transform-origin: 0 0;
+  transition: outline-color 300ms linear;
+}
+
+#route-graph .nodes.lasso .node {
+  transition: outline-color 100ms linear;
+}
+
+#route-graph .node.selected {
+  outline-color: var(--outline-color);
+}
+
+/* Overscroll spacing */
+#route-graph .node::after {
+  pointer-events: none;
+  visibility: hidden;
+  display: block;
+  position: absolute;
+  content: "";
+  width: calc(100% + var(--overscroll-gap));
+  height: calc(100% + var(--overscroll-gap));
+}
+
+#route-graph .node .header {
+  overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  gap: 5px;
+  width: 100%;
+  padding: 8px 12px;
+  background: var(--lila);
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+#route-graph .node.imported-node .header {
+  background-color: var(--dark-lila);
+}
+
+#route-graph .node .header .icon {
+  position: relative;
+  top: 3px;
+}
+
+#route-graph .node .title {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 5px;
+}
+
+#route-graph .node .type-name {
+  font-size: var(--small-font-size);
+}
+
+#route-graph .node .arrow {
+  position: relative;
+  top: -1px;
+  font-size: 15pt;
+  margin-left: auto;
+}
+
+#route-graph .node .arrow:hover {
+  color: var(--orange)
+}
+
+#route-graph .node .fields {
+  all: initial;
+  user-select: inherit;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 1px;
+  width: 100%;
+  font-family: inherit;
+  font-size: var(--small-font-size);
+  color: black;
+}
+
+#route-graph .node .field {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  box-sizing: border-box;
+  padding: 1px 15px 1px 12px;
+  width: 100%;
+  background: var(--orange);
+}
+
+#route-graph .node .field.user-defined {
+  font-weight: bold;
+}
+
+#route-graph .node .field .icon {
+  margin-right: 3px;
+}
+
+#route-graph .node :is(.input, .output) {
+  position: absolute;
+  top: 2px;
+  width: 11px;
+  height: 11px;
+  border-radius: 10px;
+}
+
+#route-graph .node .input {
+  left: -5px;
+  background: var(--purple);
+}
+
+#route-graph .node .output {
+  right: -5px;
+  background: var(--blue);
+}
+
+#route-graph .node :is(.input, .output):hover {
+  outline: 4px solid var(--outline-color);
+}
+
+#route-graph .node .footer {
+  box-sizing: border-box;
+  width: 100%;
+  height: 10px;
+  background: var(--lila);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+#route-graph .node.imported-node .footer {
+  background-color: var(--dark-lila);
+}
+
+#route-graph .overlay {
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
 /* Sidebar */
 
 #sidebar {
@@ -1593,7 +1925,7 @@ body.light .console-output .selected {
 
 .tree-view .jstree-node {
   outline: 1px solid transparent;
-  transition: outline 200ms;
+  transition: outline 200ms linear;
 }
 
 .tree-view .jstree-node.selected {

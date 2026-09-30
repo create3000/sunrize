@@ -1020,10 +1020,10 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       const routes = executionContext .getRoutes () .filter (route =>
       {
-         if (route .sourceNode === importedNode)
+         if (route .getSourceNode () === exportedNode)
             return true;
 
-         if (route .destinationNode === importedNode)
+         if (route .getDestinationNode () === exportedNode)
             return true;
 
          return false;
@@ -1086,13 +1086,13 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
          for (let { sourceNode, sourceField, destinationNode, destinationField } of routes)
          {
-            if (sourceNode === importedNode)
+            if (sourceNode === exportedNode)
                sourceNode = newImportedNode;
 
-            if (destinationNode === importedNode)
+            if (destinationNode === exportedNode)
                destinationNode = newImportedNode;
 
-            executionContext .addRoute (sourceNode, sourceField, destinationNode, destinationField);
+            this .addRoute (executionContext, sourceNode, sourceField, destinationNode, destinationField, undoManager);
          }
       });
 
@@ -1234,11 +1234,30 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static removeProtoDeclaration (executionContext, name, undoManager = UndoManager .shared)
    {
-      const oldProtos = new Map (Array .from (executionContext .protos, p => [p .getName (), p]));
+      const
+         oldProto  = executionContext .getProtoDeclaration (name),
+         oldProtos = new Map (Array .from (executionContext .protos, p => [p .getName (), p]));
 
       undoManager .beginUndo (_("Remove Proto Declaration »%s«"), name);
 
       executionContext .removeProtoDeclaration (name);
+
+      for (const field of oldProto .getFields ())
+      {
+         switch (field .getType ())
+         {
+            case X3D .X3DConstants .SFNode:
+            {
+               this .setFieldValue (executionContext, oldProto, field, null, undoManager);
+               break;
+            }
+            case X3D .X3DConstants .MFNode:
+            {
+               this .setFieldValue (executionContext, oldProto, field, new X3D .MFNode (), undoManager);
+               break;
+            }
+         }
+      }
 
       undoManager .registerUndo (() =>
       {
@@ -2335,6 +2354,20 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       const fields = [... node .getUserDefinedFields ()] .filter (f => f !== field);
 
       undoManager .beginUndo (_("Remove Field »%s«"), field .getName ());
+
+      switch (field .getType ())
+      {
+         case X3D .X3DConstants .SFNode:
+         {
+            this .setFieldValue (executionContext, node, field, null, undoManager);
+            break;
+         }
+         case X3D .X3DConstants .MFNode:
+         {
+            this .setFieldValue (executionContext, node, field, new X3D .MFNode (), undoManager);
+            break;
+         }
+      }
 
       this .setUserDefinedFields (executionContext, node, fields, undoManager);
 
@@ -3641,13 +3674,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          switch (field .getType ())
          {
             case X3D .X3DConstants .SFNode:
-            {
                return !field .getValue ();
-            }
             case X3D .X3DConstants .MFNode:
-            {
                return this .#removeEmptyGroupsFromArray (node, field, undoManager);
-            }
             default:
                return true;
          }

@@ -8,7 +8,6 @@ module .exports = class UndoManager
 {
    static shared = new UndoManager (true);
 
-   saveNeeded     = false;
    undoStack      = [ ];
    undoFunctions  = [ ];
    deferFunctions = new Map ();
@@ -16,6 +15,21 @@ module .exports = class UndoManager
    undoIndex      = -1;
    undoLabel      = _("Undo");
    redoLabel      = _("Redo");
+
+   #saveNeeded = false;
+
+   get saveNeeded ()
+   {
+      return this .#saveNeeded;
+   }
+
+   set saveNeeded (value)
+   {
+      this .#saveNeeded = value;
+
+      if (value)
+         this .#processInterests ();
+   }
 
    undo ()
    {
@@ -46,7 +60,6 @@ module .exports = class UndoManager
       this .undoFunctions     = [ ];
       this .deferFunctions    = new Map ();
       this .undoIndex        -= 1;
-      this .saveNeeded        = true;
 
       // Make labels.
 
@@ -59,7 +72,7 @@ module .exports = class UndoManager
 
       // Propagate change.
 
-      this .#processInterests ();
+      this .saveNeeded = true;
    }
 
    redo ()
@@ -92,7 +105,6 @@ module .exports = class UndoManager
       undoItem .undoFunctions = this .undoFunctions;
       this .undoFunctions     = [ ];
       this .deferFunctions    = new Map ();
-      this .saveNeeded        = true;
 
       // Make labels.
 
@@ -105,7 +117,7 @@ module .exports = class UndoManager
 
       // Propagate change.
 
-      this .#processInterests ();
+      this .saveNeeded = true;
    }
 
    /**
@@ -150,7 +162,6 @@ module .exports = class UndoManager
       this .undoFunctions  = [ ];
       this .deferFunctions = new Map ();
       this .undoIndex      = this .undoList .length - 1;
-      this .saveNeeded     = true;
 
       // Make labels.
 
@@ -159,7 +170,7 @@ module .exports = class UndoManager
 
       // Propagate change.
 
-      this .#processInterests ();
+      this .saveNeeded = true;
    }
 
    /**

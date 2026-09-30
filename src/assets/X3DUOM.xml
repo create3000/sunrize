@@ -2,7 +2,7 @@
 <!-- X3D Unified Object Model (X3DUOM) X3dUnifiedObjectModel-4.1.xml -->
 <!-- Online at https://www.web3d.org/specifications/X3dUnifiedObjectModel-4.1.xml -->
 <!-- This file contains a listing of all abstract and concrete nodes in version 4.1 of X3D -->
-<!-- Generated 2026-08-12-07:00 17:00:03.4836953-07:00 -->
+<!-- Generated 2026-09-27-07:00 13:37:43.7598179-07:00 -->
 <X3dUnifiedObjectModel xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
                        version="4.1"
                        xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/X3dUnifiedObjectModel.xsd">
@@ -647,7 +647,7 @@
          <enumeration value="SFMatrix4d"
                       appinfo="Single Field (singleton) 4×4 matrix of double-precision floating point numbers"/>
          <enumeration value="MFMatrix4d"
-                      appinfo="Multiple Field (list) 4×4 matric3w of double-precision floating point numbers"/>
+                      appinfo="Multiple Field (list) 4×4 matrix of double-precision floating point numbers"/>
          <enumeration value="SFMatrix4f"
                       appinfo="Single Field (singleton) 4×4 matrix of single-precision floating point numbers"/>
          <enumeration value="MFMatrix4f"
@@ -11597,7 +11597,6 @@
                    type="SFFloat"
                    accessType="inputOutput"
                    default="0"
-                   minInclusive="0"
                    description="The detune field, measured in cents, modulates the speed at which the the audio stream is rendered."/>
             <field name="elapsedTime"
                    type="SFTime"
@@ -12461,7 +12460,6 @@
                    type="SFFloat"
                    accessType="inputOutput"
                    default="0"
-                   minInclusive="0"
                    description="The detune field, measured in cents, modulates the speed at which the the audio stream is rendered."/>
             <field name="elapsedTime"
                    type="SFTime"
@@ -20994,13 +20992,13 @@
       </ConcreteNode>
       <ConcreteNode name="HAnimDisplacer">
          <InterfaceDefinition specificationUrl="https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/hanim.html#HAnimDisplacer"
-                              appinfo="HAnimDisplacer nodes alter the shape of coordinate-based geometry within parent HAnimJoint or HAnimSegment nodes.">
+                              appinfo="HAnimDisplacer nodes alter the shape of coordinate-based geometry within parent HAnimSegment or ancestor HAnimHumanoid nodes.">
             <componentInfo name="HAnim" level="1"/>
             <Inheritance baseType="X3DGeometricPropertyNode"/>
             <field name="coordIndex"
                    type="MFInt32"
                    accessType="inputOutput"
-                   description="Defines index values into the parent HAnimSegment or HAnimBody/HAnimHumanoid coordinate array for the mesh of vertices affected by this HAnimDisplacer."/>
+                   description="Defines index values into the parent HAnimSegment or ancestor HAnimHumanoid coordinate array for the mesh of vertices affected by this HAnimDisplacer."/>
             <field name="description"
                    type="SFString"
                    accessType="inputOutput"
@@ -21854,6 +21852,10 @@
                    type="SFString"
                    accessType="inputOutput"
                    description="Author-provided prose that describes intended purpose of this node."/>
+            <field name="displacers"
+                   type="MFNode"
+                   accessType="inputOutput"
+                   acceptableNodeTypes="HAnimDisplacer"/>
             <field name="info"
                    type="MFString"
                    accessType="inputOutput"
@@ -21987,7 +21989,7 @@
                    additionalEnumerationValuesAllowed="false"
                    simpleType="hanimVersionChoices"
                    baseType="xs:NMTOKEN"
-                   description="HAnimHumanoid version, where allowed value is 2.">
+                   description="HAnimHumanoid version is required, where allowed value is 2.">
                <enumeration value="2.0"
                             appinfo="Revised standard HAnim 19774 version 2 (parts 1 and 2) were approved by ISO in November 2019, published by Web3D Consortium May 2020."
                             documentation="https://www.web3d.org/documents/specifications/19774/V2.0"/>
@@ -22038,6 +22040,7 @@
             <containerField default="children" type="xs:NMTOKEN"/>
             <ContentModel>
                <GroupContentModel name="ChildContentModelCore" minOccurs="0"/>
+               <NodeContentModel name="HAnimDisplacer" minOccurs="0" maxOccurs="unbounded"/>
                <NodeContentModel name="HAnimJoint" minOccurs="0" maxOccurs="unbounded"/>
                <NodeContentModel name="HAnimSegment" minOccurs="0" maxOccurs="unbounded"/>
                <NodeContentModel name="HAnimSite" minOccurs="0" maxOccurs="unbounded"/>
@@ -31621,7 +31624,6 @@
                    type="SFFloat"
                    accessType="inputOutput"
                    default="0"
-                   minInclusive="0"
                    description="The detune field, measured in cents, modulates the speed at which the the audio stream is rendered."/>
             <field name="elapsedTime"
                    type="SFTime"
@@ -43560,7 +43562,7 @@
                <enumeration value="SFMatrix4d"
                             appinfo="Single Field (singleton) 4×4 matrix of double-precision floating point numbers."/>
                <enumeration value="MFMatrix4d"
-                            appinfo="Multiple Field (list) 4×4 matric3w of double-precision floating point numbers."/>
+                            appinfo="Multiple Field (list) 4×4 matrix of double-precision floating point numbers."/>
                <enumeration value="SFMatrix4f"
                             appinfo="Single Field (singleton) 4×4 matrix of single-precision floating point numbers."/>
                <enumeration value="MFMatrix4f"
