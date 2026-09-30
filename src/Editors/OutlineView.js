@@ -2333,6 +2333,8 @@ module .exports = class OutlineView extends Interface
    {
       // Generate tree.
 
+      console .log (node .getTypeName (), field .getName (), full)
+
       const child = $("<div></div>")
          .addClass ("subtree");
 
@@ -4132,6 +4134,10 @@ module .exports = class OutlineView extends Interface
 
          if (data)
          {
+            // For some reason `element.data("full-expanded", ...)` does not work, but this.
+            if (element .hasClass ("field"))
+               this .getField (element) .setUserData (_fullExpanded, data .fullExpanded);
+
             element .data ("full-expanded", data .fullExpanded);
             element .jstree ("open_node", element);
 
