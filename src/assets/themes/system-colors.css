@@ -168,7 +168,6 @@ body {
   --window-tabs-background-color: var(--system-gray5);
   --window-tabs-text-color: var(--text-color);
   --window-tabs-highlight-color: var(--accent-color);
-  --tabs-background-color: var(--system-gray7);
 
   --window-tabs-height: 34px;
   --tabs-height: 26px;
