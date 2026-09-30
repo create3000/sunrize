@@ -853,6 +853,8 @@ module .exports = class OutlineView extends Interface
       this .expandNodeComplete (protos, scenes, elements);
    }
 
+   #autoExpand = true;
+
    expandNodeComplete (protos, scenes, elements)
    {
       this .requestUpdateRouteGraph ();
@@ -860,31 +862,34 @@ module .exports = class OutlineView extends Interface
 
       // Auto expand SFNodes
 
-      for (const e of elements .filter ("li[type-name=SFNode]"))
+      if (this .#autoExpand)
       {
-         const
-            element = $(e),
-            field   = this .getField (element);
-
-         if (field .getValue ())
+         for (const e of elements .filter ("li[type-name=SFNode]"))
          {
-            element .data ("auto-expand", true);
-            element .jstree ("open_node", element);
+            const
+               element = $(e),
+               field   = this .getField (element);
+
+            if (field .getValue ())
+            {
+               element .data ("auto-expand", true);
+               element .jstree ("open_node", element);
+            }
          }
-      }
 
-      // Auto expand MFNodes
+         // Auto expand MFNodes
 
-      for (const e of elements .filter ("li[type-name=MFNode]"))
-      {
-         const
-            element = $(e),
-            field   = this .getField (element);
-
-         if (field .length && field .length <= this .autoExpandMaxChildren)
+         for (const e of elements .filter ("li[type-name=MFNode]"))
          {
-            element .data ("auto-expand", true);
-            element .jstree ("open_node", element);
+            const
+               element = $(e),
+               field   = this .getField (element);
+
+            if (field .length && field .length <= this .autoExpandMaxChildren)
+            {
+               element .data ("auto-expand", true);
+               element .jstree ("open_node", element);
+            }
          }
       }
 
@@ -2333,8 +2338,6 @@ module .exports = class OutlineView extends Interface
    {
       // Generate tree.
 
-      console .log (node .getTypeName (), field .getName (), full)
-
       const child = $("<div></div>")
          .addClass ("subtree");
 
@@ -2933,7 +2936,7 @@ module .exports = class OutlineView extends Interface
 
    fieldBeforeOpen (event, leaf)
    {
-      const element = $("#" + leaf .node .id);
+      const element = $(`#${leaf .node .id}`);
 
       if (element .hasClass ("proto"))
       {
@@ -4116,7 +4119,11 @@ module .exports = class OutlineView extends Interface
       for (const row of this .config .file .expanded)
          expanded .set (row .path, row);
 
+      this .#autoExpand = false;
+
       this .restoreExpandedNodes (this .sceneGraph .find ("> div > ul > li"), [ ], expanded);
+
+      this .#autoExpand = true;
 
       this .treeView .scrollTop (this .config .file .scrollTop);
       this .treeView .scrollLeft (this .config .file .scrollLeft);
@@ -4134,10 +4141,6 @@ module .exports = class OutlineView extends Interface
 
          if (data)
          {
-            // For some reason `element.data("full-expanded", ...)` does not work, but this.
-            if (element .hasClass ("field"))
-               this .getField (element) .setUserData (_fullExpanded, data .fullExpanded);
-
             element .data ("full-expanded", data .fullExpanded);
             element .jstree ("open_node", element);
 
