@@ -4116,6 +4116,15 @@ module .exports = class OutlineView extends Interface
          scrollLeft: 0,
       });
 
+      // Convert legacy ":" separator to ",". 2026-10-01
+      this .config .file .expanded = this .config .file .expanded .map (row =>
+      {
+         if (row .path .match (/^\d+:/))
+            row .path = row .path .split (":") .join (",");
+
+         return row;
+      });
+
       for (const row of this .config .file .expanded)
          expanded .set (row .path, row);
 
