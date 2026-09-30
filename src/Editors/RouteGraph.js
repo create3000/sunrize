@@ -1798,6 +1798,9 @@ module .exports = class RouteGraph extends Interface
 
          this .nodes .find (`.node:not([execution-context-id=${executionContext .getId ()}]) .output`)
             .css ("visibility", "hidden");
+
+         this .nodes .find (`.node[node-id=${node .getId ()}] .field[name=${field .getName ()}] .output`)
+            .css ("visibility", "hidden");
       }
    }
 
@@ -1845,6 +1848,9 @@ module .exports = class RouteGraph extends Interface
             .css ("visibility", "hidden");
 
          this .nodes .find (`.node:not([execution-context-id=${executionContext .getId ()}]) .input`)
+            .css ("visibility", "hidden");
+
+         this .nodes .find (`.node[node-id=${node .getId ()}] .field[name=${field .getName ()}] .input`)
             .css ("visibility", "hidden");
       }
    }
