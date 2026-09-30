@@ -1920,13 +1920,14 @@ html[platform=darwin] #route-graph .ui-tabs > .ui-tabs-nav li {
 
 .tree-view .jstree-anchor {
   all: initial;
-  font-family: inherit;
-  font-size: inherit;
+  user-select: none;
   display: flex;
   flex-direction: row;
   flex: 1 1 auto;
+  font-family: inherit;
+  font-size: inherit;
   color: inherit;
-  white-space: inherit;
+  white-space: nowrap;
 }
 
 .tree-view .jstree-node {
