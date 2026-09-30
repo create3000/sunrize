@@ -85,21 +85,21 @@ module .exports = class AnimationEditor extends Interface
 
       this .cutFrameIcon = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Cut selected keyframes."))
+         .attr ("title", _("Cut selected keyframes. (Ctrl+x)"))
          .text ("content_cut")
          .appendTo (this .toolbar)
          .on ("click", () => this .cutKeyframes ());
 
       this .copyFrameIcon = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Copy selected keyframes."))
+         .attr ("title", _("Copy selected keyframes. (Ctrl+c)"))
          .text ("content_copy")
          .appendTo (this .toolbar)
          .on ("click", () => this .copyKeyframes ());
 
       this .pasteFrameIcon = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Paste keyframes at current frame."))
+         .attr ("title", _("Paste keyframes at current frame. (Ctrl+v)"))
          .text ("content_paste")
          .appendTo (this .toolbar)
          .on ("click", () => this .pasteKeyframes ());
@@ -115,7 +115,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .toggleAnimationIcon = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Start animation."))
+         .attr ("title", _("Start animation. (Space)"))
          .text ("play_arrow")
          .appendTo (this .toolbar)
          .on ("click", () => this .toggleAnimation ());
