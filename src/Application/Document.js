@@ -955,7 +955,7 @@ module .exports = class Document extends Interface
       grid ._visible .addInterest ("updateMenu", this);
       tool .getValue () .getField ("isActive") .addInterest ("handleUndoForGrid", this, typeName);
 
-      UndoManager .shared .beginUndo (_ ("Change Visibility of %s"), typeName);
+      UndoManager .shared .beginUndo (_("Change Visibility of %s"), typeName);
 
       if (visible)
       {
