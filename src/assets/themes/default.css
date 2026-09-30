@@ -1526,14 +1526,16 @@ body.light .console-output .selected {
 /* Routing Editor */
 
 #route-graph {
+  --yellow: #fdcb73;
+  --orange: #ff8900;
+  --red: #f71501;
+  --blue: #9399fa;
   --lila: #8579c5;
   --dark-lila: #413469;
-  --orange: #fdcb73;
   --purple: #9352de;
-  --blue: #9399fa;
-  --outline-color: #f71501;
-  --route-color: #ff8900;
-  --route-selected-color: #f71501;
+  --outline-color: var(-red);
+  --route-color: var(--orange);
+  --route-selected-color: var(--red);
   --lasso-fill: hsla(207, 71%, 84%, 0.2);
   --lasso-stroke: hsl(207, 71%, 84%);
   --tabs-height: 24px;
@@ -1791,7 +1793,7 @@ html[platform=darwin] #route-graph .ui-tabs > .ui-tabs-nav li {
   box-sizing: border-box;
   padding: 1px 15px 1px 12px;
   width: 100%;
-  background: var(--orange);
+  background: var(--yellow);
 }
 
 #route-graph .node .field.user-defined {
