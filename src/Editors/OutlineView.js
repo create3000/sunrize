@@ -4093,7 +4093,7 @@ module .exports = class OutlineView extends Interface
          if (element .data ("expanded"))
          {
             expanded .push ({
-               path: path .join (":"),
+               path: path .join (","),
                fullExpanded: element .data ("full-expanded"),
             });
          }
@@ -4137,7 +4137,7 @@ module .exports = class OutlineView extends Interface
 
          path .push (element .hasClass ("field") ? this .getField (element) .getName () : i);
 
-         const data = expanded .get (path .join (":"));
+         const data = expanded .get (path .join (","));
 
          if (data)
          {
