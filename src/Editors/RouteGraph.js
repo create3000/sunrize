@@ -2329,6 +2329,8 @@ module .exports = class RouteGraph extends Interface
          return;
       }
 
+      this .nodes .trigger ("focus");
+
       const ids = event .originalEvent .dataTransfer .types .includes ("sunrize/imported-node")
          ? event .originalEvent .dataTransfer .getData ("sunrize/imported-node") .split (",")
          : event .originalEvent .dataTransfer .getData ("sunrize/nodes") .split (",");
