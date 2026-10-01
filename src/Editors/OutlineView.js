@@ -3590,6 +3590,7 @@ module .exports = class OutlineView extends Interface
          }
          else
          {
+            elements .addClass ("selected");
             element .addClass (["primary", "manually", "selected"]);
          }
 
