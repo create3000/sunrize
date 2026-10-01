@@ -491,6 +491,7 @@ module .exports = class OutlineView extends Interface
       parent .attr ("index", scene .rootNodes .length);
 
       const child = $("<div></div>")
+         .attr ("field-id", scene .rootNodes .getId ())
          .addClass (["root-nodes", "subtree"]);
 
       if (!scene .rootNodes .length)
