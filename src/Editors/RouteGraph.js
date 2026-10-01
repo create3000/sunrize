@@ -978,7 +978,7 @@ module .exports = class RouteGraph extends Interface
    {
       // console .log (event .key);
 
-      if (document .activeElement === this .title [0])
+      if (document .activeElement !== this .nodes [0])
          return;
 
       switch (event .key)
@@ -1482,6 +1482,8 @@ module .exports = class RouteGraph extends Interface
 
       if (this .#lasso || this .#movingNode)
          return;
+
+      this .nodes .trigger ("focus");
 
       const node = this .getNode (id);
 
