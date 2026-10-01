@@ -187,6 +187,7 @@ module .exports = class RouteGraph extends Interface
       this .activate (true);
       this .restorePages ();
       this .updatePages ();
+      this .resizeCanvas ();
 
       // Must be last call, because is checked in requestSavePages.
       this .browser .currentScene .sceneGraph_changed .addInterest ("requestSavePages", this);
