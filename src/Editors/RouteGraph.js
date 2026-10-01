@@ -978,6 +978,9 @@ module .exports = class RouteGraph extends Interface
    {
       // console .log (event .key);
 
+      if (document .activeElement === this .title [0])
+         return;
+
       switch (event .key)
       {
          case "-":
@@ -1037,8 +1040,6 @@ module .exports = class RouteGraph extends Interface
                this .removeSelectedNodes ();
             }
 
-            event .preventDefault ();
-            event .stopPropagation ();
             break;
          }
       }
