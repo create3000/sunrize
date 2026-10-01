@@ -1439,6 +1439,8 @@ module .exports = class RouteGraph extends Interface
 
       $(document) .off (".move-node");
 
+      this .nodes .trigger ("focus");
+
       this .requestSavePages ();
    }
 
