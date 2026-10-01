@@ -528,7 +528,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                args: ["removeImportedNode", element .attr ("id")],
             },
             {
-               label: _("Add Clone"),
+               label: _("Add Instance"),
                visible: local,
                args: ["addImportedNodeClone", element .attr ("id")],
             },
@@ -3055,16 +3055,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          selection = selected .filter (element) .length ? selected : element,
          ids       = selection .map (function () { return this .id; }) .get ();
 
-      if (element .closest (".imported-nodes") .length)
-      {
-         event .preventDefault ();
-      }
-      else
-      {
-         this .selectPrimaryElement (element);
+      this .selectPrimaryElement (element);
 
-         event .originalEvent .dataTransfer .setData ("sunrize/imported-node", ids .join (","));
-      }
+      event .originalEvent .dataTransfer .setData ("sunrize/imported-node", ids .join (","));
    }
 
    onDragEnter (event)
@@ -3540,11 +3533,11 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             if (sourceNode)
             {
-               UndoManager .shared .beginUndo (this .getUndoDescriptionForNode (destinationElement .data ("dropEffect"), sourceNode), sourceNode .getTypeName (), sourceNode .getDisplayName ());
+               UndoManager .shared .beginUndo (this .getUndoDescriptionForNode (destinationElement .data ("dropEffect"), sourceNode, sourceElement), sourceNode .getTypeName (), sourceNode .getDisplayName ());
             }
             else
             {
-               UndoManager .shared .beginUndo (this .getUndoDescriptionForNode (destinationElement .data ("dropEffect"), sourceNode), "NULL");
+               UndoManager .shared .beginUndo (this .getUndoDescriptionForNode (destinationElement .data ("dropEffect"), sourceNode, sourceElement), "NULL");
             }
          }
          else
@@ -3585,8 +3578,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          {
             const
                sourceElement                 = $("#" + sourceElementId),
-               sourceParentFieldElement      = sourceElement .closest (".field, .scene", this .sceneGraph),
-               sourceParentNodeElement       = sourceParentFieldElement .closest (".node, .proto, .scene", this .sceneGraph),
+               sourceParentFieldElement      = sourceElement .closest (".field, .scene, .imported-nodes", this .sceneGraph),
+               sourceParentNodeElement       = sourceParentFieldElement .closest (".node, .proto, .scene, .imported-nodes", this .sceneGraph),
                sourceParentNode              = this .getNode (sourceParentNodeElement),
                sourceParentField             = sourceParentFieldElement .hasClass ("scene") ? sourceParentNode .rootNodes : this .getField (sourceParentFieldElement),
                sourceExecutionContextElement = sourceElement .closest (".scene", this .sceneGraph),
@@ -3649,7 +3642,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             // Remove source node.
 
-            if (destinationElement .data ("dropEffect") === "move")
+            if (destinationElement .data ("dropEffect") === "move" && !sourceParentNodeElement .is (".imported-nodes"))
             {
                switch (sourceParentField .getType ())
                {
@@ -3757,7 +3750,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       // console .log ("onDragEnd")
    }
 
-   getUndoDescriptionForNode (dropEffect, node)
+   getUndoDescriptionForNode (dropEffect, node, element)
    {
       if (Array .isArray (node))
       {
@@ -3770,22 +3763,29 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       }
       else
       {
-         if (node ?.getDisplayName ())
+         if (element .closest (".imported-nodes") .length)
          {
-            switch (dropEffect)
-            {
-               case "copy": return _("Copy Node %s »%s«");
-               case "link": return _("Link Node %s »%s«");
-               case "move": return _("Move Node %s »%s«");
-            }
+            return _("Add Node %s »%s«");
          }
          else
          {
-            switch (dropEffect)
+            if (node ?.getDisplayName ())
             {
-               case "copy": return _("Copy Node %s");
-               case "link": return _("Link Node %s");
-               case "move": return _("Move Node %s");
+               switch (dropEffect)
+               {
+                  case "copy": return _("Copy Node %s »%s«");
+                  case "link": return _("Link Node %s »%s«");
+                  case "move": return _("Move Node %s »%s«");
+               }
+            }
+            else
+            {
+               switch (dropEffect)
+               {
+                  case "copy": return _("Copy Node %s");
+                  case "link": return _("Link Node %s");
+                  case "move": return _("Move Node %s");
+               }
             }
          }
       }
