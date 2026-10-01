@@ -19,6 +19,9 @@ Object .assign (X3D .X3DNode .prototype,
       if (this .getExecutionContext () .getOuterNode () instanceof X3D .X3DProtoDeclaration)
          return this;
 
+      if (this instanceof X3D .X3DImportedNodeProxy)
+         return this;
+
       const module = path .resolve (__dirname, "Tools", this .constructor .componentInfo .name, this .constructor .typeName + "Tool.js");
 
       if (!fs .existsSync (module))

@@ -3543,10 +3543,10 @@ module .exports = class OutlineView extends Interface
          element = $(event .currentTarget) .closest (".node, .externproto, .proto, .imported-node, .exported-node"),
          add     = event .shiftKey || event .metaKey;
 
-      if (element .is (".node"))
+      if (element .is (".node, .imported-node"))
          this .selectNodeElement (element, { add, target: true });
 
-      else if (element .is (".externproto, .proto, .imported-node, .exported-node"))
+      else if (element .is (".externproto, .proto, .exported-node"))
          this .selectPrimaryElement (element, { add, target: true });
    }
 
@@ -3554,7 +3554,7 @@ module .exports = class OutlineView extends Interface
 
    selectNodeElement (element, { add = false, target = false } = { })
    {
-      if (!element .is (".node"))
+      if (!element .is (".node, .imported-node"))
          return;
 
       if (!this .isEditable (element))
@@ -3566,7 +3566,8 @@ module .exports = class OutlineView extends Interface
          selected         = element .hasClass ("manually"),
          selectedElements = this .sceneGraph .find (".primary, .selected"),
          node             = this .getNode (element),
-         elements         = $(`.node[node-id='${node ?.getId ()}']`);
+         elements         = $(`:is(.node, .imported-node)[node-id='${node ?.getId ()}']`),
+         importedNodes    = element .closest (".imported-nodes") .length;
 
       selectedElements .removeClass ("primary");
 
@@ -3591,18 +3592,21 @@ module .exports = class OutlineView extends Interface
             element .addClass (["primary", "manually", "selected"]);
          }
 
-         if (elements .filter (".manually") .length)
+         if (!importedNodes)
          {
-            if (target)
-               hierarchy .target (node);
+            if (elements .filter (".manually") .length)
+            {
+               if (target)
+                  hierarchy .target (node);
 
-            selection .add (node);
-            hierarchy .add (node);
-         }
-         else
-         {
-            selection .remove (node);
-            hierarchy .remove (node);
+               selection .add (node);
+               hierarchy .add (node);
+            }
+            else
+            {
+               selection .remove (node);
+               hierarchy .remove (node);
+            }
          }
       }
       else
@@ -3611,11 +3615,14 @@ module .exports = class OutlineView extends Interface
          element .addClass (["primary", "manually"]);
          elements .addClass ("selected");
 
-         if (target)
-            hierarchy .target (node);
+         if (!importedNodes)
+         {
+            if (target)
+               hierarchy .target (node);
 
-         selection .set (node);
-         hierarchy .set (node);
+            selection .set (node);
+            hierarchy .set (node);
+         }
       }
 
       // Prevent update tree view.

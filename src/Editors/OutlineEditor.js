@@ -3018,8 +3018,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    onDragStartNode (event)
    {
       const
-         element   = $(event .target) .closest (".node", this .sceneGraph),
-         selected  = this .sceneGraph .find (".node.manually"),
+         element   = $(event .target) .closest (".node, .imported-node", this .sceneGraph),
+         selected  = this .sceneGraph .find (".node.manually, .imported-node.manually"),
          selection = selected .filter (element) .length ? selected : element,
          ids       = selection .map (function () { return this .id; }) .get ();
 
@@ -3049,15 +3049,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
    onDragStartImportedNode (event)
    {
-      const
-         element   = $(event .target) .closest (".imported-node", this .sceneGraph),
-         selected  = this .sceneGraph .find (".imported-node.manually"),
-         selection = selected .filter (element) .length ? selected : element,
-         ids       = selection .map (function () { return this .id; }) .get ();
-
-      this .selectPrimaryElement (element);
-
-      event .originalEvent .dataTransfer .setData ("sunrize/imported-node", ids .join (","));
+      this .onDragStartNode (event);
    }
 
    onDragEnter (event)
@@ -3224,25 +3216,23 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                }
             }
          }
-         else if (event .originalEvent .dataTransfer .types .includes ("sunrize/nodes") ||
-                  event .originalEvent .dataTransfer .types .includes ("sunrize/imported-node"))
+         else if (event .originalEvent .dataTransfer .types .includes ("sunrize/nodes"))
          {
             const
-               isImportedNode                     = event .originalEvent .dataTransfer .types .includes ("sunrize/imported-node"),
                sourceElement                      = this .sceneGraph .find (".primary"),
                sourceExecutionContextElement      = sourceElement .closest (".scene", this .sceneGraph),
                destinationExecutionContextElement = destinationElement .closest (".scene", this .sceneGraph),
                sourceExecutionContext             = this .getNode (sourceExecutionContextElement),
                destinationExecutionContext        = this .getNode (destinationExecutionContextElement);
 
-            if (isImportedNode && sourceExecutionContext !== destinationExecutionContext)
+            if (sourceExecutionContext !== destinationExecutionContext)
             {
                event .originalEvent .dataTransfer .dropEffect = "none";
             }
             else
             {
                if (event .altKey)
-                  event .originalEvent .dataTransfer .dropEffect = isImportedNode ? "link" : "copy";
+                  event .originalEvent .dataTransfer .dropEffect = "copy";
                else if (event .ctrlKey)
                   event .originalEvent .dataTransfer .dropEffect = "link";
                else
@@ -3493,12 +3483,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             }
          }
       }
-      else if (event .originalEvent .dataTransfer .types .includes ("sunrize/nodes") ||
-               event .originalEvent .dataTransfer .types .includes ("sunrize/imported-node"))
+      else if (event .originalEvent .dataTransfer .types .includes ("sunrize/nodes"))
       {
-         const sourceElementsIds = event .originalEvent .dataTransfer .types .includes ("sunrize/imported-node")
-            ? event .originalEvent .dataTransfer .getData ("sunrize/imported-node") .split (",")
-            : event .originalEvent .dataTransfer .getData ("sunrize/nodes") .split (",");
+         const sourceElementsIds = event .originalEvent .dataTransfer .getData ("sunrize/nodes") .split (",");
 
          const
             destinationElement                 = $(event .target) .closest ("li, .scene", this .sceneGraph),
