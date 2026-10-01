@@ -1611,18 +1611,20 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       // Create Inline node.
 
+      let childNode;
+
       switch (nodes .length)
       {
          case 1:
          {
-            var childNode = nodes [0];
+            childNode = nodes [0];
             break;
          }
          default:
          {
             await Editor .addComponent (executionContext, "Grouping");
 
-            var childNode = executionContext .createNode ("Group") .getValue ();
+            childNode = executionContext .createNode ("Group") .getValue ();
 
             childNode ._children = nodes;
 
