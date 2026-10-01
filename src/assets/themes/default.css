@@ -1912,7 +1912,7 @@ html[platform=darwin] #route-graph .ui-tabs > .ui-tabs-nav li {
 
 .tree-view .jstree-ocl {
   position: relative;
-  top: -2px;
+  top: 0px;
   width: 22px;
   cursor: pointer;
   color: var(--expander-color);
@@ -1922,6 +1922,8 @@ html[platform=darwin] #route-graph .ui-tabs > .ui-tabs-nav li {
   all: initial;
   user-select: none;
   display: flex;
+  position: relative;
+  top: 2px;
   flex-direction: row;
   flex: 1 1 auto;
   font-family: inherit;
