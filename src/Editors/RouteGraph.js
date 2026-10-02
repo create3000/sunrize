@@ -807,6 +807,8 @@ module .exports = class RouteGraph extends Interface
 
       this .config .file .activePage = active;
 
+      page .nodes = page .nodes .filter (node => this .getNode (node .id) .isLive ());
+
       this .title .val (page .title);
 
       this .updateTitle ();
