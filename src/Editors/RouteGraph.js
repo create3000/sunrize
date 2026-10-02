@@ -721,6 +721,8 @@ module .exports = class RouteGraph extends Interface
    {
       const page = this .page;
 
+      page .nodes = page .nodes .filter (node => this .getNode (node .id) .isLive ());
+
       this .clearNodeSelection ();
       this .clearRouteSelection ();
       this .clearInputOutput ();
@@ -806,8 +808,6 @@ module .exports = class RouteGraph extends Interface
          this .savePage (current);
 
       this .config .file .activePage = active;
-
-      page .nodes = page .nodes .filter (node => this .getNode (node .id) .isLive ());
 
       this .title .val (page .title);
 
