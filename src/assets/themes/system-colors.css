@@ -165,7 +165,7 @@ body {
   --accent-color: var(--system-red);
   --separator-color: var(--system-gray3);
 
-  --window-tabs-background-color: var(--system-gray5);
+  --window-tabs-background-color: hsl(206, 62%, 95%);
   --window-tabs-text-color: var(--text-color);
   --window-tabs-highlight-color: var(--accent-color);
 
@@ -234,6 +234,10 @@ body {
     --expander-color: var(--system-gray8);
     --filter-text-color: var(--filter-system-gray1);
     --filter-highlight-color: var(--filter-system-gray0);
+
+    --window-tabs-background-color: var(--system-gray5);
+    --window-tabs-text-color: var(--text-color);
+    --window-tabs-highlight-color: var(--accent-color);
 
     /* Tools */
 
