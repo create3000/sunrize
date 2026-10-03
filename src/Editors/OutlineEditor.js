@@ -2612,9 +2612,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          case "Cylinder":
          case "Sphere":
          {
-            this .browser .finishedEvents () .addFieldCallback (this .#endUndoSetFieldValueSymbol, () =>
+            this .browser .finishEvents () .addFieldCallback (this .#endUndoSetFieldValueSymbol, () =>
             {
-               this .browser .finishedEvents () .removeFieldCallback (this .#endUndoSetFieldValueSymbol);
+               this .browser .finishEvents () .removeFieldCallback (this .#endUndoSetFieldValueSymbol);
 
                toolNode .getTransformTool () .transformGroups ();
                toolNode .handleUndo (new X3D .SFBool ());
@@ -2627,9 +2627,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          }
          case "Disk2D":
          {
-            this .browser .finishedEvents () .addFieldCallback (this .#endUndoSetFieldValueSymbol, () =>
+            this .browser .finishEvents () .addFieldCallback (this .#endUndoSetFieldValueSymbol, () =>
             {
-               this .browser .finishedEvents () .removeFieldCallback (this .#endUndoSetFieldValueSymbol);
+               this .browser .finishEvents () .removeFieldCallback (this .#endUndoSetFieldValueSymbol);
 
                if (field .getName () === "innerRadius")
                   toolNode .getInnerRadiusTransformTool () .transformGroups ();
@@ -2661,9 +2661,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             {
                // Sound, X3DEnvironmentalSensorNode, ...
 
-               this .browser .finishedEvents () .addFieldCallback (this .#endUndoSetFieldValueSymbol, () =>
+               this .browser .finishEvents () .addFieldCallback (this .#endUndoSetFieldValueSymbol, () =>
                {
-                  this .browser .finishedEvents () .removeFieldCallback (this .#endUndoSetFieldValueSymbol);
+                  this .browser .finishEvents () .removeFieldCallback (this .#endUndoSetFieldValueSymbol);
 
                   innerTool .transformGroups ();
                   toolNode .handleUndo (new X3D .SFBool ());
