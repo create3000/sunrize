@@ -79,10 +79,9 @@ class X3DGeometryNodeTool extends X3DNodeTool
 
    traverseAfter (type, renderObject)
    {
-      if (this .isNodeTraversable (type))
-         this .node .traverseAfter ?.(type, renderObject);
-
       this .traverse (type, renderObject);
+
+      this .node .traverseAfter ?.(type, renderObject);
    }
 }
 
