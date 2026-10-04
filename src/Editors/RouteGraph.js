@@ -1124,10 +1124,10 @@ module .exports = class RouteGraph extends Interface
       if (node .getExecutionContext () !== executionContext)
          return;
 
-      this .setNode (node);
-
       nodes .add (node);
       columns .getOrInsert (index, [ ]) .push (node);
+
+      this .setNode (node);
 
       for (const field of node .getFields ())
       {
