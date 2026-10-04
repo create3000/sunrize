@@ -1880,7 +1880,7 @@ module .exports = class RouteGraph extends Interface
 
       const state = this .#input || this .#output || this .findRoute (event);
 
-      if (this .#pointerState === state)
+      if (!(state || this .#pointerState))
          return;
 
       this .#pointerState = state;
@@ -1942,7 +1942,7 @@ module .exports = class RouteGraph extends Interface
       }
    }
 
-   selectRoute (event, deleteRoute)
+   selectRoute (event)
    {
       if (event .button !== 0)
          return;
@@ -1952,31 +1952,32 @@ module .exports = class RouteGraph extends Interface
       if (!route)
          return;
 
-      if (deleteRoute)
+      if (event .shiftKey)
       {
-         Editor .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField);
-
-         this .removeRouteSelection (route);
+         if (this .isRouteSelected (route))
+            this .removeRouteSelection (route);
+         else
+            this .addRouteSelection (route);
       }
       else
       {
-         if (event .shiftKey)
-         {
-            if (this .isRouteSelected (route))
-               this .removeRouteSelection (route);
-            else
-               this .addRouteSelection (route);
-         }
-         else
-         {
-            this .setRouteSelection (route);
-         }
+         this .setRouteSelection (route);
       }
    }
 
    deleteRoute (event)
    {
-      this .selectRoute (event, true);
+      if (event .button !== 0)
+         return;
+
+      const route = this .findRoute (event);
+
+      if (!route)
+         return;
+
+      this .removeRouteSelection (route);
+
+      Editor .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField);
    }
 
    selectAllRoutes ()
