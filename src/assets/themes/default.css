@@ -1905,11 +1905,6 @@ html[platform=darwin] #route-graph .ui-tabs > .ui-tabs-nav li {
   white-space: nowrap;
 }
 
-.tree-view .item > * {
-  position: relative;
-  vertical-align: top;
-}
-
 .tree-view .jstree-ocl {
   position: relative;
   top: 0px;
