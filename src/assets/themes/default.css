@@ -2218,7 +2218,7 @@ html[platform=darwin] #route-graph .ui-tabs > .ui-tabs-nav li {
 
 .scene-graph :is(.field-value, .special-value) textarea {
   overflow: scroll;
-  margin-bottom: 7px;
+  margin-bottom: 8px;
   height: 140px;
   white-space: pre;
   resize: vertical;
