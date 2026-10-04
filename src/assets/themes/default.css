@@ -2148,10 +2148,6 @@ html[platform=darwin] #route-graph .ui-tabs > .ui-tabs-nav li {
   min-width: 50px;
 }
 
-.scene-graph .route .access-type {
-  top: 6px;
-}
-
 .scene-graph .access-type img.active {
   display: none;
   position: absolute;
