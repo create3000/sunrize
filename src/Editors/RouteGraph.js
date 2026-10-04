@@ -1325,10 +1325,10 @@ module .exports = class RouteGraph extends Interface
       for (const field of node .getFields ())
       {
          for (const route of field .getInputRoutes ())
-            this .clearRouteSelection (route);
+            this .removeRouteSelection (route);
 
          for (const route of field .getOutputRoutes ())
-            this .clearRouteSelection (route);
+            this .removeRouteSelection (route);
       }
    }
 
@@ -1996,7 +1996,7 @@ module .exports = class RouteGraph extends Interface
    {
       UndoManager .shared .beginUndo (_("Delete Selected Routes"));
 
-      for (const route of this .#selectedRoutes)
+      for (const route of Array .from (this .#selectedRoutes))
       {
          Editor .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField);
       }
