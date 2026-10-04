@@ -2578,8 +2578,10 @@ module .exports = class OutlineView extends Interface
 
       child
          .removeAttr ("tabindex")
-         .find (".jstree-anchor > *")
-            .unwrap ();
+         .find (".jstree-anchor")
+            .removeAttr ("href")
+            .removeAttr ("tabindex")
+            .on ("click", this .selectNone .bind (this));
 
       child .find (".jstree-ocl")
          .addClass ("material-icons")

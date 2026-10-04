@@ -2222,8 +2222,6 @@ html[platform=darwin] #route-graph .ui-tabs > .ui-tabs-nav li {
 }
 
 .scene-graph :is(.field-value, .special-value) textarea {
-  position: relative;
-  top: -4px;
   overflow: scroll;
   height: 140px;
   white-space: pre;
