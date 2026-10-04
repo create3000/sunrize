@@ -10,7 +10,7 @@ function main ()
    systemSync (`git pull origin`);
    systemSync (`npm up`);
    systemSync (`npm i -D ${electron}`);
-   systemSync (`electron-forge publish`);
+   systemSync (`electron-forge release`);
    systemSync (`npm i -P ${electron}`);
 }
 
