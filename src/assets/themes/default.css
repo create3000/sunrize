@@ -1907,7 +1907,7 @@ html[platform=darwin] #route-graph .ui-tabs > .ui-tabs-nav li {
 
 .tree-view .item > * {
   position: relative;
-  top: 2px;
+  vertical-align: top;
 }
 
 .tree-view .jstree-ocl {
@@ -2034,10 +2034,6 @@ html[platform=darwin] #route-graph .ui-tabs > .ui-tabs-nav li {
   height: 12px;
 }
 
-.scene-graph .item * {
-  vertical-align: top;
-}
-
 .scene-graph .item .node-type-name,
 .scene-graph .item .as {
   font-weight: bold;
@@ -2156,11 +2152,6 @@ html[platform=darwin] #route-graph .ui-tabs > .ui-tabs-nav li {
   top: 6px;
 }
 
-.scene-graph .route .access-type.input,
-.scene-graph .route .access-type.output  {
-  top: 4px;
-}
-
 .scene-graph .access-type img.active {
   display: none;
   position: absolute;
@@ -2208,8 +2199,6 @@ html[platform=darwin] #route-graph .ui-tabs > .ui-tabs-nav li {
 }
 
 .scene-graph .route-curves {
-  position: absolute;
-  top: -4px;
   width: 20px;
   height: 25px;
 }
