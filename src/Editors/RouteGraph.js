@@ -1872,20 +1872,24 @@ module .exports = class RouteGraph extends Interface
    }
 
    #pointer = new X3D .Vector2 ();
+   #pointerState = false;
 
    mouseMove (event)
    {
       this .#pointer = this .getRelativePosition (event, false);
 
-      if (this .#input || this .#output)
-         this .updateCanvas ();
-   }
+      const state = this .#input || this .#output || this .findRoute (event);
 
-   selectRoute (event, deleteRoute)
-   {
-      if (event .button !== 0)
+      if (this .#pointerState === state)
          return;
 
+      this .#pointerState = state;
+
+      this .updateCanvas ();
+   }
+
+   findRoute (event)
+   {
       const
          page    = this .page,
          scale   = page .scale,
@@ -1932,32 +1936,40 @@ module .exports = class RouteGraph extends Interface
                   arrow         = this .getRouteArrow (new X3D .Vector2 (x0, y0), new X3D .Vector2 (x3, y3), arrowRotation, scale);
 
                if (X3D .Triangle2 .isPointInTriangle (pointer, ... arrow))
-               {
-                  if (deleteRoute)
-                  {
-                     Editor .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField);
-
-                     this .removeRouteSelection (route);
-                  }
-                  else
-                  {
-                     if (event .shiftKey)
-                     {
-                        if (this .isRouteSelected (route))
-                           this .removeRouteSelection (route);
-                        else
-                           this .addRouteSelection (route);
-                     }
-                     else
-                     {
-                        this .setRouteSelection (route);
-                     }
-                  }
-
-                  // Only select or delete one route.
-                  return;
-               }
+                  return route;
             }
+         }
+      }
+   }
+
+   selectRoute (event, deleteRoute)
+   {
+      if (event .button !== 0)
+         return;
+
+      const route = this .findRoute (event);
+
+      if (!route)
+         return;
+
+      if (deleteRoute)
+      {
+         Editor .deleteRoute (route .getExecutionContext (), route .sourceNode, route .sourceField, route .destinationNode, route .destinationField);
+
+         this .removeRouteSelection (route);
+      }
+      else
+      {
+         if (event .shiftKey)
+         {
+            if (this .isRouteSelected (route))
+               this .removeRouteSelection (route);
+            else
+               this .addRouteSelection (route);
+         }
+         else
+         {
+            this .setRouteSelection (route);
          }
       }
    }
