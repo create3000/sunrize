@@ -2203,7 +2203,7 @@ html[platform=darwin] #route-graph .ui-tabs > .ui-tabs-nav li {
   box-sizing: border-box;
   outline: none;
   border: 0px;
-  margin: 2px 0 2px 20px;
+  margin: 0 0 0 20px;
   padding: 0px 1px;
   min-width: 300px;
   max-width: calc(100% - 20px);
@@ -2216,13 +2216,9 @@ html[platform=darwin] #route-graph .ui-tabs > .ui-tabs-nav li {
   tab-size: 3;
 }
 
-.scene-graph .field-value input {
-  margin-top: 2px;
-  margin-bottom: 2px;
-}
-
 .scene-graph :is(.field-value, .special-value) textarea {
   overflow: scroll;
+  margin-bottom: 7px;
   height: 140px;
   white-space: pre;
   resize: vertical;
