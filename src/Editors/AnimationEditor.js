@@ -2859,189 +2859,189 @@ module .exports = class AnimationEditor extends Interface
       context .scale (contentScale, contentScale);
       context .clearRect (0, 0, tracksWidth, tracksHeight);
 
-      if (!this .animation)
-         return;
-
-      const
-         left         = this .getLeft (),
-         width        = this .getWidth (),
-         translation  = this .getTranslation (),
-         scale        = this .getScale (),
-         trackOffsets = this .memberList .getTrackOffsets (),
-         firstFrame   = Math .max (0, Math .floor (-translation / scale)),
-         lastFrame    = Math .min (this .getDuration (), Math .ceil ((width - translation) / scale)) + 1;
-
-		const [frameStep, frameFactor] = this .getFrameParams ();
-
-      const
-         blue   = this .#style .getPropertyValue ("--system-blue"),
-         indigo = this .#style .getPropertyValue ("--system-indigo"),
-         orange = this .#style .getPropertyValue ("--system-orange"),
-         brown  = this .#style .getPropertyValue ("--system-brown"),
-         red    = this .#style .getPropertyValue ("--system-red"),
-         range  = this .#style .getPropertyValue ("--selection-range"),
-         tint1  = this .#style .getPropertyValue ("--tint-color1"),
-         tint2  = this .#style .getPropertyValue ("--tint-color2");
-
-      // Draw selection range.
-
-      context .save ();
-      context .clip (this .timelineClip);
-
-      const selectionRange = this .getSelectionRange ();
-
-      if (selectionRange [0] !== selectionRange [1])
+      if (this .animation)
       {
-         const minFrame = X3D .Algorithm .clamp (selectionRange [0], firstFrame, lastFrame - 1);
-         const maxFrame = X3D .Algorithm .clamp (selectionRange [1], firstFrame, lastFrame - 1);
-         const x0       = left + minFrame * scale + translation;
-         const x1       = left + maxFrame * scale + translation;
+         const
+            left         = this .getLeft (),
+            width        = this .getWidth (),
+            translation  = this .getTranslation (),
+            scale        = this .getScale (),
+            trackOffsets = this .memberList .getTrackOffsets (),
+            firstFrame   = Math .max (0, Math .floor (-translation / scale)),
+            lastFrame    = Math .min (this .getDuration (), Math .ceil ((width - translation) / scale)) + 1;
 
-         context .fillStyle = range;
+         const [frameStep, frameFactor] = this .getFrameParams ();
 
-         context .fillRect (Math .min (x0, x1) - 1, 0, Math .abs (x1 - x0) + 3, tracksHeight);
-      }
+         const
+            blue   = this .#style .getPropertyValue ("--system-blue"),
+            indigo = this .#style .getPropertyValue ("--system-indigo"),
+            orange = this .#style .getPropertyValue ("--system-orange"),
+            brown  = this .#style .getPropertyValue ("--system-brown"),
+            red    = this .#style .getPropertyValue ("--system-red"),
+            range  = this .#style .getPropertyValue ("--selection-range"),
+            tint1  = this .#style .getPropertyValue ("--tint-color1"),
+            tint2  = this .#style .getPropertyValue ("--tint-color2");
 
-      context .restore ();
-
-      // Draw all tracks.
-
-      for (const [i, { item, top, bottom, height }] of trackOffsets .entries ())
-      {
-         // Track
-
-         const odd = item .data ("i") % 2;
-
-         if (odd || i === 0)
-         {
-            // Draw a line below last field.
-
-            if (trackOffsets [i + 1] ?.item .hasClass ("node") ?? true)
-            {
-               context .fillStyle = tint2;
-
-               context .fillRect (0, bottom - 1, tracksWidth, 1);
-            }
-         }
-         else if (item .hasClass ("field"))
-         {
-            // Draw a bar.
-
-            context .fillStyle = tint1;
-
-            context .fillRect (0, top, tracksWidth, height);
-         }
-
-         // Highlight track on hover.
-
-         const hover = this .pointer .y > top && this .pointer .y < bottom;
-
-         if (hover)
-            item .addClass ("hover-track");
-         else
-            item .removeClass ("hover-track");
-
-         if (item .is (".hover, .hover-tracks") || hover)
-         {
-            context .fillStyle = tint2;
-
-            context .fillRect (0, top, tracksWidth, height);
-         }
-
-         // Frames
+         // Draw selection range.
 
          context .save ();
          context .clip (this .timelineClip);
 
-			// Draw vertical lines.
+         const selectionRange = this .getSelectionRange ();
 
-         context .strokeStyle = item .hasClass ("main") ? indigo : blue;
-         context .lineWidth   = item .is (".main, .node") ? 3 : 1;
-
-			for (let frame = firstFrame - (firstFrame % frameStep); frame < lastFrame; frame += frameStep)
-			{
-				const s = frame % frameFactor; // size (large or small)
-            const y = Math .floor (top + height * (s ? 0.75 : 0.5));
-				const x = Math .floor (left + this .getPointerFromFrame (frame));
-
-            context .beginPath ();
-				context .moveTo (x + 0.5, y - this .TRACK_PADDING);
-				context .lineTo (x + 0.5, bottom - this .TRACK_PADDING);
-            context .stroke ();
-			}
-
-         // Draw keyframes.
-
-         switch (item .attr ("type"))
+         if (selectionRange [0] !== selectionRange [1])
          {
-            case "main":
-            {
-               for (const field of this .fields .keys ())
-                  this .drawKeyframes (context, field, firstFrame, lastFrame, bottom - this .TRACK_PADDING, brown);
+            const minFrame = X3D .Algorithm .clamp (selectionRange [0], firstFrame, lastFrame - 1);
+            const maxFrame = X3D .Algorithm .clamp (selectionRange [1], firstFrame, lastFrame - 1);
+            const x0       = left + minFrame * scale + translation;
+            const x1       = left + maxFrame * scale + translation;
 
-               break;
-            }
-            case "node":
-            {
-               const node = item .data ("node");
+            context .fillStyle = range;
 
-               for (const field of node .getFields ())
-                  this .drawKeyframes (context, field, firstFrame, lastFrame, bottom - this .TRACK_PADDING, brown);
-
-               break;
-            }
-            case "field":
-            {
-               this .drawKeyframes (context, item .data ("field"), firstFrame, lastFrame, bottom - this .TRACK_PADDING, orange);
-               break;
-            }
-         }
-
-         // Draw selected keyframes.
-
-         switch (item .attr ("type"))
-         {
-            case "main":
-            {
-               const fields = new Set (this .fields .keys ());
-
-               this .drawSelectedKeyframes (context, fields, bottom - this .TRACK_PADDING, red);
-               break;
-            }
-            case "node":
-            {
-               const
-                  node   = item .data ("node"),
-                  fields = new Set (node .getFields ());
-
-               this .drawSelectedKeyframes (context, fields, bottom - this .TRACK_PADDING, red);
-               break;
-            }
-            case "field":
-            {
-               const fields = new Set ([item .data ("field")]);
-
-               this .drawSelectedKeyframes (context, fields, bottom - this .TRACK_PADDING, red);
-               break;
-            }
+            context .fillRect (Math .min (x0, x1) - 1, 0, Math .abs (x1 - x0) + 3, tracksHeight);
          }
 
          context .restore ();
+
+         // Draw all tracks.
+
+         for (const [i, { item, top, bottom, height }] of trackOffsets .entries ())
+         {
+            // Track
+
+            const odd = item .data ("i") % 2;
+
+            if (odd || i === 0)
+            {
+               // Draw a line below last field.
+
+               if (trackOffsets [i + 1] ?.item .hasClass ("node") ?? true)
+               {
+                  context .fillStyle = tint2;
+
+                  context .fillRect (0, bottom - 1, tracksWidth, 1);
+               }
+            }
+            else if (item .hasClass ("field"))
+            {
+               // Draw a bar.
+
+               context .fillStyle = tint1;
+
+               context .fillRect (0, top, tracksWidth, height);
+            }
+
+            // Highlight track on hover.
+
+            const hover = this .pointer .y > top && this .pointer .y < bottom;
+
+            if (hover)
+               item .addClass ("hover-track");
+            else
+               item .removeClass ("hover-track");
+
+            if (item .is (".hover, .hover-tracks") || hover)
+            {
+               context .fillStyle = tint2;
+
+               context .fillRect (0, top, tracksWidth, height);
+            }
+
+            // Frames
+
+            context .save ();
+            context .clip (this .timelineClip);
+
+            // Draw vertical lines.
+
+            context .strokeStyle = item .hasClass ("main") ? indigo : blue;
+            context .lineWidth   = item .is (".main, .node") ? 3 : 1;
+
+            for (let frame = firstFrame - (firstFrame % frameStep); frame < lastFrame; frame += frameStep)
+            {
+               const s = frame % frameFactor; // size (large or small)
+               const y = Math .floor (top + height * (s ? 0.75 : 0.5));
+               const x = Math .floor (left + this .getPointerFromFrame (frame));
+
+               context .beginPath ();
+               context .moveTo (x + 0.5, y - this .TRACK_PADDING);
+               context .lineTo (x + 0.5, bottom - this .TRACK_PADDING);
+               context .stroke ();
+            }
+
+            // Draw keyframes.
+
+            switch (item .attr ("type"))
+            {
+               case "main":
+               {
+                  for (const field of this .fields .keys ())
+                     this .drawKeyframes (context, field, firstFrame, lastFrame, bottom - this .TRACK_PADDING, brown);
+
+                  break;
+               }
+               case "node":
+               {
+                  const node = item .data ("node");
+
+                  for (const field of node .getFields ())
+                     this .drawKeyframes (context, field, firstFrame, lastFrame, bottom - this .TRACK_PADDING, brown);
+
+                  break;
+               }
+               case "field":
+               {
+                  this .drawKeyframes (context, item .data ("field"), firstFrame, lastFrame, bottom - this .TRACK_PADDING, orange);
+                  break;
+               }
+            }
+
+            // Draw selected keyframes.
+
+            switch (item .attr ("type"))
+            {
+               case "main":
+               {
+                  const fields = new Set (this .fields .keys ());
+
+                  this .drawSelectedKeyframes (context, fields, bottom - this .TRACK_PADDING, red);
+                  break;
+               }
+               case "node":
+               {
+                  const
+                     node   = item .data ("node"),
+                     fields = new Set (node .getFields ());
+
+                  this .drawSelectedKeyframes (context, fields, bottom - this .TRACK_PADDING, red);
+                  break;
+               }
+               case "field":
+               {
+                  const fields = new Set ([item .data ("field")]);
+
+                  this .drawSelectedKeyframes (context, fields, bottom - this .TRACK_PADDING, red);
+                  break;
+               }
+            }
+
+            context .restore ();
+         }
+
+         // Draw current frame cursor.
+
+         context .save ();
+         context .clip (this .timelineClip);
+
+         const frame = this .getCurrentFrame ();
+         const x     = Math .floor (left + this .getPointerFromFrame (frame));
+
+         context .fillStyle = blue;
+
+         context .fillRect (x - 1, 0, 3, tracksHeight);
+         context .restore ();
       }
 
-      // Draw current frame cursor.
-
-      context .save ();
-      context .clip (this .timelineClip);
-
-      const frame = this .getCurrentFrame ();
-      const x     = Math .floor (left + this .getPointerFromFrame (frame));
-
-      context .fillStyle = blue;
-
-      context .fillRect (x - 1, 0, 3, tracksHeight);
-
-      context .restore ();
       context .restore ();
    }
 
