@@ -416,7 +416,6 @@ module .exports = class AnimationEditor extends Interface
 
       this .setSelection (require ("../Application/Selection"));
       this .zoomFit ();
-      this .resizeTimeline ();
       this .requestDrawTimeline ();
 
       this .browser .nextFrame () .then (() => this .setCurrentFrame (0));
