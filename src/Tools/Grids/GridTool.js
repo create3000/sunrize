@@ -37,11 +37,15 @@ class GridTool extends X3DGridNodeTool
 
    getSnapPositionWithNormal (position, direction)
    {
+      const snapDistance = Math .abs (this .tool .snapDistance);
+
       for (let i = 0; i < 3; ++ i)
       {
-         const translation = this .getSnapPositionWithNormalForAxis (i, position, direction);
+         const
+            translation = this .getSnapPositionWithNormalForAxis (i, position, direction),
+            distance    = translation .distance (position);
 
-         if (translation .distance (position) < Math .abs (this .tool .snapDistance))
+         if (distance > snapDistance / 1000 && distance < snapDistance)
             return translation;
       }
 

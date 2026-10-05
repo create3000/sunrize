@@ -364,7 +364,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
          delta = after - before,
          ratio = after / before;
 
-      // We must procced with the original current matrix and a snapping scale of [1 1 1], for correct grouped event handling.
+      // We must proceed with the original current matrix and a snapping scale of [1 1 1], for correct grouped event handling.
 
       if (Math .abs (delta) < MIN_DELTA || Math .abs (ratio) < MIN_RATIO || isNaN (ratio) || Math .abs (ratio) === Infinity)
          return currentMatrix;
