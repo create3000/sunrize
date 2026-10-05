@@ -4,8 +4,8 @@ const handler =
 {
    get (target, key)
    {
-      if (key in target)
-         return target [key];
+      if (Reflect .has (target, key))
+         return Reflect .get (target, key);
 
       const property = target .node [key];
 
@@ -16,24 +16,25 @@ const handler =
    },
    set (target, key, value)
    {
-      if (key in target)
-         target [key] = value;
-      else
-         target .node [key] = value;
+      if (Reflect .has (target, key))
+         return Reflect .set (target, key, value);
 
-      return true;
+      return Reflect .set (target .node, key, value);
    },
    has (target, key)
    {
-      return key in target .node;
+      return Reflect .has (target, key)
+         || Reflect .has (target .node, key);
    },
    ownKeys (target)
    {
-      return Object .keys (target .node);
+      return Array .from (new Set (Reflect .ownKeys (target)
+         .concat (Reflect .ownKeys (target .node))));
    },
    getOwnPropertyDescriptor (target, key)
    {
-      return Object .getOwnPropertyDescriptor (target .node, key);
+      return Reflect .getOwnPropertyDescriptor (target, key)
+         ?? Reflect .getOwnPropertyDescriptor (target .node, key);
    },
    getPrototypeOf (target)
    {
