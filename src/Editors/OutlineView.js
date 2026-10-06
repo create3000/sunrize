@@ -983,7 +983,7 @@ module .exports = class OutlineView extends Interface
    createNodeElement (type, parent, node, index)
    {
       if (node instanceof X3D .X3DImportedNodeInstance)
-         return this .createImportedNodeElement (["imported-node", "proxy"], parent, node .getExecutionContext (), node, index);
+         return this .createImportedNodeElement (["imported-node", "instance"], parent, node .getExecutionContext (), node, index);
 
       if (node)
       {
@@ -4039,7 +4039,7 @@ module .exports = class OutlineView extends Interface
          }
          default: // X3DBaseNode
          {
-            const element = parent .find (`:is(.node, .imported-node.proxy, .externproto, .proto, .scene)[node-id="${object .getId ()}"]`);
+            const element = parent .find (`:is(.node, .imported-node.instance, .externproto, .proto, .scene)[node-id="${object .getId ()}"]`);
 
             if (!element .length)
                break;

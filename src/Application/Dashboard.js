@@ -214,7 +214,7 @@ module .exports = class Dashboard extends Interface
          outlineEditor .expandTo (node, { expandObject: true, expandAll: true });
 
       const elements = nodes .map (node => outlineEditor .sceneGraph
-         .find (`:is(.node, .imported-node.proxy)[node-id="${node .getId ()}"]`));
+         .find (`:is(.node, .imported-node.instance)[node-id="${node .getId ()}"]`));
 
       outlineEditor .deselectAll ({ target: false });
 
@@ -223,7 +223,7 @@ module .exports = class Dashboard extends Interface
          if (element .is (".node"))
             outlineEditor .selectNodeElement (element, { add: true });
 
-         else if (element .is (".imported-node.proxy"))
+         else if (element .is (".imported-node.instance"))
             outlineEditor .selectPrimaryElement (element, { add: true });
       }
 

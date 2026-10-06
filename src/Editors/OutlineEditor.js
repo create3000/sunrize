@@ -535,26 +535,26 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             { type: "separator" },
             {
                label: _("Cut"),
-               visible: local && element .hasClass ("proxy"),
+               visible: local && element .hasClass ("instance"),
                accelerator: "CmdOrCtrl+X",
                args: ["cutNodes"],
             },
             {
                label: _("Copy"),
-               visible: local && element .hasClass ("proxy"),
+               visible: local && element .hasClass ("instance"),
                accelerator: "CmdOrCtrl+C",
                args: ["copyNodes"],
             },
             {
                label: _("Delete"),
-               visible: local && element .hasClass ("proxy"),
+               visible: local && element .hasClass ("instance"),
                accelerator: "CmdOrCtrl+Backspace",
                args: ["deleteNodes"],
             },
             { type: "separator" },
          ];
 
-         if (local && element .hasClass ("proxy") && innerNode .getType () .includes (X3D .X3DConstants .X3DChildNode))
+         if (local && element .hasClass ("instance") && innerNode .getType () .includes (X3D .X3DConstants .X3DChildNode))
             this .addChildNodeMenu (menu, element, parentNodeElement, executionContext, node);
       }
 
@@ -967,8 +967,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    async copyNodes ()
    {
       const
-         primary     = $(":is(.node, .proto, .externproto, .imported-node.proxy).primary"),
-         selected    = this .sceneGraph .find (":is(.node, .proto, .externproto, .imported-node.proxy).manually"),
+         primary     = $(":is(.node, .proto, .externproto, .imported-node.instance).primary"),
+         selected    = this .sceneGraph .find (":is(.node, .proto, .externproto, .imported-node.instance).manually"),
          selection   = selected .filter (primary) .length ? selected : primary,
          ids         = selection .map (function () { return this .id; }) .get (),
          elements    = ids .map (id => $(`#${id}`)),
@@ -1119,8 +1119,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
    deleteNodes ()
    {
       const
-         primary   = $(".node.primary, .imported-node.proxy.primary"),
-         selected  = this .sceneGraph .find (".node.manually, .imported-node.proxy.manually"),
+         primary   = $(".node.primary, .imported-node.instance.primary"),
+         selected  = this .sceneGraph .find (".node.manually, .imported-node.instance.manually"),
          selection = !primary .length || selected .filter (primary) .length ? selected : primary,
          ids       = selection .map (function () { return this .id; }) .get ();
 
@@ -1252,8 +1252,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       if (field .getType () === X3D .X3DConstants .MFNode)
       {
          const
-            selectedNodes          = Array .from (this .sceneGraph .find (":is(.node, .imported-node.proxy):is(.manually,.primary)"), e => this .getNode ($(e))),
-            selectedElements       = Array .from (this .sceneGraph .find (":is(.node, .imported-node.proxy).manually"), e => $(e)),
+            selectedNodes          = Array .from (this .sceneGraph .find (":is(.node, .imported-node.instance):is(.manually,.primary)"), e => this .getNode ($(e))),
+            selectedElements       = Array .from (this .sceneGraph .find (":is(.node, .imported-node.instance).manually"), e => $(e)),
             destinationModelMatrix = this .getModelMatrix (parentNodeElement);
 
          // Add other selected nodes.
@@ -3255,7 +3255,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                {
                   destinationElement .addClass ("drag-into");
                }
-               else if (destinationElement .is (".node, .imported-node.proxy"))
+               else if (destinationElement .is (".node, .imported-node.instance"))
                {
                   const
                      item = destinationElement .find ("> .item"),
