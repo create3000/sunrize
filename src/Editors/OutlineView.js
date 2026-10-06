@@ -1485,9 +1485,13 @@ module .exports = class OutlineView extends Interface
          .addClass ("name")
          .appendTo (child);
 
+      const loaded = node .getImportedNode () .getInlineNode () .checkLoadState () === X3D .X3DConstants .COMPLETE_STATE;
+
       $("<span></span>")
          .addClass ("node-type-name")
-         .text (node .getTypeName ())
+         .text (type .includes ("instance") || loaded
+            ? node .getTypeName ()
+            : node .getImportedNode () .getTypeName ())
          .appendTo (name);
 
       name .append (document .createTextNode (" "));
