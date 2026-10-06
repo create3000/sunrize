@@ -3732,7 +3732,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
             for (const node of children)
             {
-               if (executionContext .getLocalizedNode (node) instanceof X3D .X3DImportedNode)
+               if (executionContext .getNodeOrImportedNode (node) instanceof X3D .X3DImportedNode)
                   continue;
 
                // Rebind X3DBindableNode nodes.
