@@ -1083,19 +1083,19 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       {
          this .updateImportedNode (executionContext, inlineNode, exportedName, importedName, "", description, undoManager);
 
-         const newImportedNode = executionContext .getImportedNodes () .get (importedName);
+         const newInstance = executionContext .getImportedNode (importedName) .getValue ();
 
          for (const route of routes)
          {
             const sourceNode = route .getSourceNode () === instance
-               ? newImportedNode
+               ? newInstance
                : route .getSourceNode ();
 
             const destinationNode = route .getDestinationNode () === instance
-               ? newImportedNode
+               ? newInstance
                : route .getDestinationNode ();
 
-            this .addRoute (executionContext, sourceNode, route .sourceField, destinationNode, route .destinationField, undoManager);
+            executionContext .addRoute (sourceNode, route .sourceField, destinationNode, route .destinationField);
          }
       });
 
