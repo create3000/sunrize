@@ -71,7 +71,7 @@ module .exports = new class Hierarchy extends Interface
             const node = object .getValue () .valueOf ();
 
             if (!node .getType () .some (type => this .#targetTypes .has (type)) &&
-                !(node instanceof X3D .X3DImportedNodeProxy))
+                !(node instanceof X3D .X3DImportedNodeInstance))
             {
                continue;
             }

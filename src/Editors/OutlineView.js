@@ -552,7 +552,7 @@ module .exports = class OutlineView extends Interface
          .appendTo (ul);
 
       for (const [index, importedNode] of importedNodes .entries ())
-         ul .append (this .createImportedNodeElement (["imported-node"], parent, scene, importedNode .getExportedNode (), index));
+         ul .append (this .createImportedNodeElement (["imported-node"], parent, scene, importedNode .getInstance (), index));
 
       // Added to prevent bug, that last route is not drawn right.
       $("<li></li>")
@@ -982,7 +982,7 @@ module .exports = class OutlineView extends Interface
 
    createNodeElement (type, parent, node, index)
    {
-      if (node instanceof X3D .X3DImportedNodeProxy)
+      if (node instanceof X3D .X3DImportedNodeInstance)
          return this .createImportedNodeElement (["imported-node", "proxy"], parent, node .getExecutionContext (), node, index);
 
       if (node)
@@ -1453,7 +1453,7 @@ module .exports = class OutlineView extends Interface
 
       const classes = type;
 
-      if (importedNode .getExportedNode () .getSharedNode ())
+      if (node .getExportedNode ())
       {
          const selection = require ("../Application/Selection");
 
@@ -2908,7 +2908,7 @@ module .exports = class OutlineView extends Interface
    {
       const ids = [parseInt (element .attr ("node-id"))];
 
-      if (this .getNode (element) instanceof X3D .X3DImportedNodeProxy)
+      if (this .getNode (element) instanceof X3D .X3DImportedNodeInstance)
       {
          // Close nodes.
 
@@ -2922,9 +2922,9 @@ module .exports = class OutlineView extends Interface
             ?? this .executionContext;
 
          const importedNode = executionContext .importedNodes
-            .find (importedNode => $.try (() => importedNode .getExportedNode () .getInnerNode () .getId ()) === ids [0]);
+            .find (importedNode => $.try (() => importedNode .getInstance () .getInnerNode () .getId ()) === ids [0]);
 
-         ids .push (importedNode ?.getExportedNode () .getId ());
+         ids .push (importedNode ?.getInstance () .getId ());
       }
 
       for (const id of ids)

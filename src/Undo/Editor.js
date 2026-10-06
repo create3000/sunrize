@@ -1016,7 +1016,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          inlineNode   = importedNode .getInlineNode (),
          exportedName = importedNode .getExportedName (),
          description  = importedNode .getDescription (),
-         exportedNode = importedNode .getExportedNode ();
+         exportedNode = importedNode .getInstance ();
 
       const routes = executionContext .getRoutes () .filter (route =>
       {

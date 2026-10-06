@@ -496,7 +496,7 @@ module .exports = class RouteGraph extends Interface
       {
          path .push (i);
 
-         this .getPathsFromNode (importedNode .getExportedNode (), false, ids, path, paths, seen);
+         this .getPathsFromNode (importedNode .getInstance (), false, ids, path, paths, seen);
 
          path .pop ();
       }
@@ -645,7 +645,7 @@ module .exports = class RouteGraph extends Interface
       {
          path .push (i);
 
-         this .getIdsFromNode (importedNode .getExportedNode (), false, paths, path, ids, seen);
+         this .getIdsFromNode (importedNode .getInstance (), false, paths, path, ids, seen);
 
          path .pop ();
       }
@@ -1155,7 +1155,7 @@ module .exports = class RouteGraph extends Interface
       node .getPredefinedFields ()  .addInterest ("updateNodeElement", this, id);
       node .getUserDefinedFields () .addInterest ("updateNodeElement", this, id);
 
-      if (node instanceof X3D .X3DImportedNodeProxy)
+      if (node instanceof X3D .X3DImportedNodeInstance)
       {
          // These events are connected and must never be removed.
          node .getImportedNode () .getInlineNode () .getLoadState () .addInterest ("updateNodeElement", this, id);
@@ -1181,7 +1181,7 @@ module .exports = class RouteGraph extends Interface
       if (selected)
          element .addClass ("selected");
 
-      if (node instanceof X3D .X3DImportedNodeProxy)
+      if (node instanceof X3D .X3DImportedNodeInstance)
          element .addClass ("imported-node");
 
       const header = $("<div></div>")
@@ -1192,7 +1192,7 @@ module .exports = class RouteGraph extends Interface
          .addClass ("icon")
          .appendTo (header);
 
-      if (node instanceof X3D .X3DImportedNodeProxy)
+      if (node instanceof X3D .X3DImportedNodeInstance)
          icon .attr ("src", "../images/OutlineEditor/Node/ImportedNode.svg");
       else
          icon .attr ("src", "../images/OutlineEditor/Node/X3DBaseNode.svg");
@@ -1580,7 +1580,7 @@ module .exports = class RouteGraph extends Interface
             node             = this .getNode (id),
             executionContext = node .getExecutionContext ();
 
-         if (executionContext .importedNodes .find (importedNode => importedNode .getExportedNode () === node))
+         if (executionContext .importedNodes .find (importedNode => importedNode .getInstance () === node))
             continue;
 
          this .removeNode (id);

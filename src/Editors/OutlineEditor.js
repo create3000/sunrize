@@ -530,7 +530,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             {
                label: _("Add Instance"),
                visible: local,
-               args: ["addImportedNodeClone", element .attr ("id")],
+               args: ["addImportedNodeInstance", element .attr ("id")],
             },
             { type: "separator" },
             {
@@ -932,16 +932,16 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       Editor .removeImportedNode (importedNode .getExecutionContext (), importedNode .getImportedName ());
    }
 
-   addImportedNodeClone (id)
+   addImportedNodeInstance (id)
    {
       const
          element          = $(`#${id}`),
          importedNode     = this .objects .get (parseInt (element .attr ("imported-node-id"))),
          executionContext = importedNode .getExecutionContext ();
 
-      UndoManager .shared .beginUndo (_("Add Clone of Imported Node »%s«"), importedNode .getImportedName ());
+      UndoManager .shared .beginUndo (_("Add Instance of Imported Node »%s«"), importedNode .getImportedName ());
 
-      Editor .appendValueToArray (executionContext, executionContext, executionContext .rootNodes, importedNode .getExportedNode ());
+      Editor .appendValueToArray (executionContext, executionContext, executionContext .rootNodes, importedNode .getInstance ());
 
       UndoManager .shared .endUndo ();
    }
@@ -3669,7 +3669,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             if (destinationElement .data ("dropEffect") ?.match (/copy|move/))
             {
-               if (!(sourceNode instanceof X3D .X3DImportedNodeProxy))
+               if (!(sourceNode instanceof X3D .X3DImportedNodeInstance))
                {
                   if (sourceNode ?.getType () .some (type => this .transformLikeNodes .has (type)))
                   {

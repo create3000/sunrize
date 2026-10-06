@@ -117,7 +117,10 @@ module .exports = new class Panel extends Interface
    {
       this .removeNode (this .node);
 
-      this .node = node;
+      if (node instanceof X3D .X3DImportedNodeInstance)
+         this .node = node .getInnerNode ();
+      else
+         this .node = node;
 
       this .addNode (this .node);
    }
