@@ -3972,6 +3972,17 @@ module .exports = class OutlineView extends Interface
 
       flags |= Traverse .IMPORTED_NODES;
 
+      if (this .expandToFlags (object, flags, expandObject, expandAll))
+         return;
+
+      if (!(object instanceof X3D .X3DImportedNodeInstance))
+         return;
+
+      this .expandToFlags (object .getImportedNode (), flags, expandObject, expandAll);
+   }
+
+   expandToFlags (object, flags, expandObject, expandAll)
+   {
       for (const hierarchy of this .executionContext .find (object, flags))
       {
          hierarchy .shift (); // execution context
@@ -3983,8 +3994,10 @@ module .exports = class OutlineView extends Interface
          this .expandHierarchy (hierarchy, this .sceneGraph, this .executionContext);
 
          if (!expandAll)
-            break;
+            return true;
       }
+
+      return false;
    }
 
    expandHierarchy (hierarchy, parent, parentObject)
