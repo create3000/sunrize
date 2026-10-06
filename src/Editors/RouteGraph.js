@@ -2243,15 +2243,7 @@ module .exports = class RouteGraph extends Interface
       {
          context .fillStyle = selectedColor;
 
-         const sourceNodeName = route .getSourceNode () instanceof X3D .X3DNode
-            ? route .getSourceNode () .getName ()
-            : route .getSourceNode () .getImportedName ();
-
-         const destinationNodeName = route .getDestinationNode () instanceof X3D .X3DNode
-            ? route .getDestinationNode () .getName ()
-            : route .getDestinationNode () .getImportedName ();
-
-         this .nodes .attr ("title", util .format (_("Route from %s<%s>.%s to %s<%s>.%s"), route .getSourceNode () .getTypeName (), sourceNodeName || _("unnamed"), route .sourceField, route .getDestinationNode () .getTypeName (), destinationNodeName || _("unnamed"), route .destinationField));
+         this .nodes .attr ("title", util .format (_("Route from %s<%s>.%s to %s<%s>.%s"), route .getSourceNode () .getTypeName (), route .getSourceNode () .getName () || _("unnamed"), route .sourceField, route .getDestinationNode () .getTypeName (), route .getDestinationNode () .getName () || _("unnamed"), route .destinationField));
       }
 
       context .beginPath ();

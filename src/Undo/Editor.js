@@ -178,7 +178,8 @@ module .exports = class Editor
 
       // Filter out routes.
 
-      const routes = [... childRoutes] .filter (route => children .has (route .getSourceNode () .valueOf ()) && children .has (route .getDestinationNode () .valueOf ()));
+      const routes = [... childRoutes] .filter (route => children .has (route .getSourceNode () .valueOf ())
+         && children .has (route .getDestinationNode () .valueOf ()));
 
       // Store world url.
 
@@ -1016,14 +1017,14 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          inlineNode   = importedNode .getInlineNode (),
          exportedName = importedNode .getExportedName (),
          description  = importedNode .getDescription (),
-         exportedNode = importedNode .getInstance ();
+         instance     = importedNode .getInstance ();
 
       const routes = executionContext .getRoutes () .filter (route =>
       {
-         if (route .getSourceNode () === exportedNode)
+         if (route .getSourceNode () === instance)
             return true;
 
-         if (route .getDestinationNode () === exportedNode)
+         if (route .getDestinationNode () === instance)
             return true;
 
          return false;
@@ -1039,7 +1040,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
          for (const index of Array .from (field .keys ()) .reverse ())
          {
-            if (field [index] .getValue () === exportedNode)
+            if (field [index] .getValue () === instance)
                this .removeValueFromArray (executionContext, node, field, index, undoManager);
          }
       }
@@ -1057,7 +1058,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             {
                case X3D .X3DConstants .SFNode:
                {
-                  if (field .getValue () === exportedNode)
+                  if (field .getValue () === instance)
                      this .setFieldValue (executionContext, node, field, null, undoManager);
 
                   break;
@@ -1066,7 +1067,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                {
                   for (const index of Array .from (field .keys ()) .reverse ())
                   {
-                     if (field [index] .getValue () === exportedNode)
+                     if (field [index] .getValue () === instance)
                         this .removeValueFromArray (executionContext, node, field, index, undoManager);
                   }
 
@@ -1084,15 +1085,17 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
          const newImportedNode = executionContext .getImportedNodes () .get (importedName);
 
-         for (let { sourceNode, sourceField, destinationNode, destinationField } of routes)
+         for (const route of routes)
          {
-            if (sourceNode === exportedNode)
-               sourceNode = newImportedNode;
+            const sourceNode = route .getSourceNode () === instance
+               ? newImportedNode
+               : route .getSourceNode ();
 
-            if (destinationNode === exportedNode)
-               destinationNode = newImportedNode;
+            const destinationNode = route .getDestinationNode () === instance
+               ? newImportedNode
+               : route .getDestinationNode ();
 
-            this .addRoute (executionContext, sourceNode, sourceField, destinationNode, destinationField, undoManager);
+            this .addRoute (executionContext, sourceNode, route .sourceField, destinationNode, route .destinationField, undoManager);
          }
       });
 

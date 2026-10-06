@@ -2691,21 +2691,13 @@ module .exports = class OutlineView extends Interface
       {
          case "input":
          {
-            const sourceNodeName = route .getSourceNode () instanceof X3D .X3DNode
-               ? route .getSourceNode () .getName ()
-               : route .getSourceNode () .getImportedName ();
-
-            connectorDescription .text (util .format (_("Route from %s<%s>.%s"), route .getSourceNode () .getTypeName (), sourceNodeName || _("unnamed"), route .sourceField));
+            connectorDescription .text (util .format (_("Route from %s<%s>.%s"), route .getSourceNode () .getTypeName (), route .getSourceNode () .getName () || _("unnamed"), route .sourceField));
 
             break;
          }
          case "output":
          {
-            const destinationNodeName = route .getDestinationNode () instanceof X3D .X3DNode
-               ? route .getDestinationNode () .getName ()
-               : route .getDestinationNode () .getImportedName ();
-
-            connectorDescription .text (util .format (_("Route to %s<%s>.%s"), route .getDestinationNode () .getTypeName (), destinationNodeName || _("unnamed"), route .destinationField));
+            connectorDescription .text (util .format (_("Route to %s<%s>.%s"), route .getDestinationNode () .getTypeName (), route .getDestinationNode () .getName () || _("unnamed"), route .destinationField));
 
             break;
          }
