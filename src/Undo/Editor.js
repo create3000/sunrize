@@ -208,7 +208,7 @@ module .exports = class Editor
       // Add routes.
 
       for (const route of routes)
-         scene .routes .add (route .getRouteId (), route);
+         scene .routes .add (route .getId (), route);
 
       // Return XML string.
 
