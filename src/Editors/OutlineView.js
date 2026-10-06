@@ -34,7 +34,7 @@ module .exports = class OutlineView extends Interface
          expandInlineNodes: true,
       });
 
-      this .treeView = $("<div><div/>")
+      this .treeView = $("<div></div>")
          .attr ("tabindex", "0")
          .addClass ("tree-view")
          .appendTo (this .outlineEditor);
@@ -43,7 +43,7 @@ module .exports = class OutlineView extends Interface
 
       this .resizeObserver .observe (this .treeView [0]);
 
-      this .sceneGraph = $("<div><div/>")
+      this .sceneGraph = $("<div></div>")
          .addClass (["tree", "scene-graph", "scene"])
          .on ("dragenter dragover", this .onDragEnter .bind (this))
          .on ("dragleave dragend drop", this .onDragLeave .bind (this))
@@ -223,7 +223,7 @@ module .exports = class OutlineView extends Interface
 
       child
          .jstree ()
-         .off ("keypress.jstree dblclick.jstree")
+         .off ("keypress.jstree keydown.jstree dblclick.jstree")
          .on ("before_open.jstree", this .nodeBeforeOpen .bind (this))
          .on ("close_node.jstree",  this .nodeCloseNode .bind (this))
          .appendTo (parent)
@@ -783,7 +783,7 @@ module .exports = class OutlineView extends Interface
 
       child
          .jstree ()
-         .off ("keypress.jstree dblclick.jstree")
+         .off ("keypress.jstree keydown.jstree dblclick.jstree")
          .on ("before_open.jstree", this .fieldBeforeOpen .bind (this))
          .on ("close_node.jstree",  this .fieldCloseNode .bind (this))
          .appendTo (parent)
@@ -2275,7 +2275,7 @@ module .exports = class OutlineView extends Interface
 
       child
          .jstree ()
-         .off ("keypress.jstree dblclick.jstree")
+         .off ("keypress.jstree keydown.jstree dblclick.jstree")
          .on ("before_open.jstree", this .nodeBeforeOpen .bind (this))
          .on ("close_node.jstree",  this .nodeCloseNode .bind (this))
          .appendTo (parent)
@@ -2358,7 +2358,7 @@ module .exports = class OutlineView extends Interface
 
       child
          .jstree ()
-         .off ("keypress.jstree dblclick.jstree")
+         .off ("keypress.jstree keydown.jstree dblclick.jstree")
          .on ("before_open.jstree", this .nodeBeforeOpen .bind (this))
          .on ("close_node.jstree",  this .nodeCloseNode .bind (this))
          .appendTo (parent)
@@ -2463,7 +2463,7 @@ module .exports = class OutlineView extends Interface
 
       child
          .jstree ()
-         .off ("keypress.jstree dblclick.jstree")
+         .off ("keypress.jstree keydown.jstree dblclick.jstree")
          .appendTo (parent)
          .hide ();
 
@@ -2576,7 +2576,7 @@ module .exports = class OutlineView extends Interface
 
       child
          .jstree ()
-         .off ("keypress.jstree dblclick.jstree")
+         .off ("keypress.jstree keydown.jstree dblclick.jstree")
          .appendTo (parent)
          .hide ();
 
@@ -2617,7 +2617,7 @@ module .exports = class OutlineView extends Interface
       }
       else
       {
-         textarea .attr ("disabled", "disabled");
+         textarea .attr ("disabled", "");
       }
 
       this .connectArrayField (textarea, node, field, false);
