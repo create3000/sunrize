@@ -3567,8 +3567,7 @@ module .exports = class OutlineView extends Interface
          selected         = element .hasClass ("manually"),
          selectedElements = this .sceneGraph .find (".primary, .selected"),
          node             = this .getNode (element),
-         elements         = $(`:is(.node, .imported-node)[node-id='${node ?.getId ()}']`),
-         importedNodes    = element .closest (".imported-nodes") .length;
+         elements         = $(`:is(.node, .imported-node)[node-id='${node ?.getId ()}']`);
 
       selectedElements .removeClass ("primary");
 
@@ -3594,21 +3593,18 @@ module .exports = class OutlineView extends Interface
             element .addClass (["primary", "manually", "selected"]);
          }
 
-         if (!importedNodes)
+         if (elements .filter (".manually") .length)
          {
-            if (elements .filter (".manually") .length)
-            {
-               if (target)
-                  hierarchy .target (node);
+            if (target)
+               hierarchy .target (node);
 
-               selection .add (node);
-               hierarchy .add (node);
-            }
-            else
-            {
-               selection .remove (node);
-               hierarchy .remove (node);
-            }
+            selection .add (node);
+            hierarchy .add (node);
+         }
+         else
+         {
+            selection .remove (node);
+            hierarchy .remove (node);
          }
       }
       else
@@ -3617,14 +3613,11 @@ module .exports = class OutlineView extends Interface
          element .addClass (["primary", "manually"]);
          elements .addClass ("selected");
 
-         if (!importedNodes)
-         {
-            if (target)
-               hierarchy .target (node);
+         if (target)
+            hierarchy .target (node);
 
-            selection .set (node);
-            hierarchy .set (node);
-         }
+         selection .set (node);
+         hierarchy .set (node);
       }
 
       // Prevent update tree view.
