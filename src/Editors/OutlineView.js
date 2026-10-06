@@ -1453,7 +1453,7 @@ module .exports = class OutlineView extends Interface
 
       const classes = type;
 
-      if (node .getExportedNode ())
+      if ($.try (() => node .getInnerNode ()))
       {
          const selection = require ("../Application/Selection");
 
