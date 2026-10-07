@@ -2,7 +2,7 @@
 
 const X3DNodeTool = require ("./X3DNodeTool");
 
-class X3DPrototypeInstanceTool extends X3DNodeTool
+class X3DImportedNodeInstanceTool extends X3DNodeTool
 {
    #tool;
 
@@ -10,8 +10,7 @@ class X3DPrototypeInstanceTool extends X3DNodeTool
    {
       super (node);
 
-      node .getProtoNode () ._updateInstances .addInterest ("updateTool", this);
-      node .getBody ()      .rootNodes        .addInterest ("updateTool", this);
+      node .typeName_changed .addInterest ("updateTool", this);
 
       this .updateTool ();
    }
@@ -34,8 +33,7 @@ class X3DPrototypeInstanceTool extends X3DNodeTool
    {
       try
       {
-         this .node .getProtoNode () ._updateInstances .removeInterest ("updateTool", this);
-         this .node .getBody ()      .rootNodes        .removeInterest ("updateTool", this);
+         this .node .typeName_changed .removeInterest ("updateTool", this);
 
          this .node .getInnerNode () .removeTool ();
       }
@@ -51,4 +49,4 @@ class X3DPrototypeInstanceTool extends X3DNodeTool
    }
 }
 
-module .exports = X3DPrototypeInstanceTool;
+module .exports = X3DImportedNodeInstanceTool;
