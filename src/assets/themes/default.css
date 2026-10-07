@@ -284,6 +284,10 @@ tr.disabled ~ tr > td > div {
   width: 35%;
 }
 
+#vertical-splitter > .vertical-splitter-left > .ui-resizable-handle {
+  height: calc(100% - 1px);
+}
+
 /* Horizontal splitter */
 
 .horizontal-splitter {
