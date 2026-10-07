@@ -49,7 +49,9 @@ module .exports = class ScriptEditor extends Interface
 
       this .vSplitter = new Splitter (this .verticalSplitter, "vertical");
 
-      this .verticalSplitter .on ("position", () => this .onSplitterPosition ());
+      this .vSplitter .snapToBorder = true;
+
+      this .vSplitter .splitter .on ("position", () => this .onSplitterPosition ());
 
       this .toolbar = $("<div></div>")
          .addClass (["toolbar", "vertical-toolbar", "secondary-toolbar", "script-editor-toolbar"])

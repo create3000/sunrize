@@ -74,12 +74,18 @@ module .exports = class Splitter extends Interface
       }
    }
 
+   snapToBorder = false;
+   snapDistance = 30;
+
    /**
     * @param {number} position
     */
    set position (position)
    {
       position = Algorithm .clamp (position, 0, 1);
+
+      if (this .snapToBorder)
+         position = this .snap (position);
 
       this .config .file .position = position;
 
@@ -108,5 +114,32 @@ module .exports = class Splitter extends Interface
       }
 
       this .splitter .trigger ("position");
+   }
+
+   snap (position)
+   {
+      let size = 0;
+
+      switch (this .orientation)
+      {
+         case "horizontal":
+         {
+            size = this .splitter .innerHeight ();
+            break;
+         }
+         case "vertical":
+         {
+            size = this .splitter .innerWidth ();
+            break;
+         }
+      }
+
+      if (position < this .snapDistance / size)
+         return 0;
+
+      if (position > 1 - this .snapDistance / size)
+         return 1;
+
+      return position;
    }
 };
