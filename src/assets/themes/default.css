@@ -754,8 +754,8 @@ body.light .qtip-tipsy {
   right: var(--toolbar-width);
   bottom: 0px;
   left: 0px;
-  border: 1px solid var(--border-color);
-  border-bottom: none;
+  border-top: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
   border-top-right-radius: var(--toolbar-inner-radius);
   background-color: var(--background-color);
 }
