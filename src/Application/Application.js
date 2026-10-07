@@ -595,7 +595,7 @@ module .exports = class Application
                      click: () => this .mainWindow .webContents .send ("toggle-sidebar", !this .menuOptions .sidebar),
                   },
                   {
-                     label: _("Footer"),
+                     label: _("Panel"),
                      type: "checkbox",
                      checked: this .menuOptions .footer,
                      click: () => this .mainWindow .webContents .send ("toggle-footer", !this .menuOptions .footer),

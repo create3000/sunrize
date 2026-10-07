@@ -240,8 +240,6 @@ module .exports = class Document extends Interface
 
       // Configure browser options.
 
-      this .toggleSidebar                   (this .config .file .sidebar);
-      this .toggleFooter                    (this .config .file .footer);
       this .setTextureQuality               (this .config .file .textureQuality);
       this .setPrimitiveQuality             (this .config .file .primitiveQuality);
       this .setTextureQuality               (this .config .file .textureQuality);
@@ -742,28 +740,44 @@ module .exports = class Document extends Interface
     * View Menu
     */
 
-   toggleSidebar (value)
+   toggleSidebar ()
    {
-      this .config .file .sidebar = value;
-
-      this .updateMenu ();
+      if (this .verticalSplitter .position < 1)
+         this .verticalSplitter .toggle ("maximize");
+      else
+         this .verticalSplitter .toggle ("restore");
    }
 
    verticalSplitterPosition ()
    {
-      // const position = this .verticalSplitter .position;
-   }
+      const sidebar = this .verticalSplitter .position < 1;
 
-   toggleFooter (value)
-   {
-      this .config .file .footer = value;
+      if (this .config .file .sidebar === sidebar)
+         return;
+
+      this .config .file .sidebar = sidebar;
 
       this .updateMenu ();
    }
 
+   toggleFooter ()
+   {
+      if (this .horizontalSplitter .position < 1)
+         this .horizontalSplitter .toggle ("maximize");
+      else
+         this .horizontalSplitter .toggle ("restore");
+   }
+
    horizontalSplitterPosition ()
    {
-      // const position = this .horizontalSplitter .position;
+      const footer = this .horizontalSplitter .position < 1;
+
+      if (this .config .file .footer === footer)
+         return;
+
+      this .config .file .footer = footer;
+
+      this .updateMenu ();
    }
 
    /**

@@ -23,8 +23,9 @@ module .exports = class Splitter extends Interface
             top .resizable ({
                minHeight: 0,
                handles: "s",
-               resize: () => this .position = this .position,
-            });
+            })
+            .on ("mousedown", () => this .start ())
+            .on ("resize", () => this .position = this .position);
 
             top .find ("> .ui-resizable-s") .append ($("<div></div>"));
             break;
@@ -36,8 +37,9 @@ module .exports = class Splitter extends Interface
             left .resizable ({
                minWidth: 0,
                handles: "e",
-               resize: () => this .position = this .position,
-            });
+            })
+            .on ("mousedown", () => this .start ())
+            .on ("resize", () => this .position = this .position);
 
             left .find ("> .ui-resizable-e") .append ($("<div></div>"));
             break;
@@ -49,7 +51,7 @@ module .exports = class Splitter extends Interface
 
    configure ()
    {
-      if (this .config .file .position !== undefined)
+      if (!this .isInitialScene && this .config .file .position !== undefined)
          this .position = this .config .file .position;
       else
          this .splitter .trigger ("position");
@@ -114,6 +116,65 @@ module .exports = class Splitter extends Interface
       }
 
       this .splitter .trigger ("position");
+   }
+
+   start ()
+   {
+      this .config .file .startPosition = this .position;
+   }
+
+   toggle (action)
+   {
+      switch (action)
+      {
+         case "minimize":
+         {
+            this .config .file .startPosition = this .position;
+            this .position = 0;
+            break;
+         }
+         case "maximize":
+         {
+            this .config .file .startPosition = this .position;
+            this .position = 1;
+            break;
+         }
+         case "restore":
+         {
+            if (this .config .file .startPosition === 0 || this .config .file .startPosition === 1)
+            {
+               switch (this .orientation)
+               {
+                  case "horizontal":
+                  {
+                     const
+                        top    = this .splitter .find ("> .horizontal-splitter-top"),
+                        bottom = this .splitter .find ("> .horizontal-splitter-bottom");
+
+                     top    .css ("height", "");
+                     bottom .css ("height", "");
+                     break;
+                  }
+                  case "vertical":
+                  {
+                     const
+                        left  = this .splitter .find ("> .vertical-splitter-left"),
+                        right = this .splitter .find ("> .vertical-splitter-right");
+
+                     left  .css ("width", "");
+                     right .css ("width", "");
+                     break;
+                  }
+               }
+            }
+            else
+            {
+               this .position = this .config .file .startPosition;
+            }
+
+            break;
+         }
+      }
    }
 
    snap (position)

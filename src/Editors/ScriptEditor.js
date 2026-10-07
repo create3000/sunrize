@@ -51,7 +51,7 @@ module .exports = class ScriptEditor extends Interface
 
       this .vSplitter .snapToBorder = true;
 
-      this .vSplitter .splitter .on ("position", () => this .onSplitterPosition ());
+      this .vSplitter .splitter .on ("position", () => this .splitterPosition ());
 
       this .toolbar = $("<div></div>")
          .addClass (["toolbar", "vertical-toolbar", "secondary-toolbar", "script-editor-toolbar"])
@@ -1074,7 +1074,7 @@ main ()
       }
    }
 
-   onSplitterPosition ()
+   splitterPosition ()
    {
       if (this .vSplitter .position)
          this .toggleSidebarButton .addClass ("active");
@@ -1085,13 +1085,8 @@ main ()
    toggleSidebar ()
    {
       if (this .vSplitter .position)
-      {
-         this .config .file .vSplitterPosition = this .vSplitter .position;
-         this .vSplitter .position             = 0;
-      }
+         this .vSplitter .toggle ("minimize");
       else
-      {
-         this .vSplitter .position = this .config .file .vSplitterPosition;
-      }
+         this .vSplitter .toggle ("restore");
    }
 };
