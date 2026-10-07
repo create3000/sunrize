@@ -1081,7 +1081,7 @@ main ()
       if (this .vSplitter .position)
       {
          this .config .file .vSplitterPosition = this .vSplitter .position;
-         this .vSplitter .position           = 0;
+         this .vSplitter .position             = 0;
       }
       else
       {

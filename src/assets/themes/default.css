@@ -254,7 +254,9 @@ tr.disabled ~ tr > td > div {
 .ui-resizable-e,
 .ui-resizable-w {
   cursor: col-resize;
-  width: 4px;
+  width: 5px;
+  right: -3px;
+  border-radius: 5px;
 }
 
 .ui-resizable-w:hover,
@@ -320,7 +322,9 @@ tr.disabled ~ tr > td > div {
 
 .ui-resizable-s {
   cursor: row-resize;
-  height: 4px;
+  height: 5px;
+  bottom: -3px;
+  border-radius: 5px;
 }
 
 .ui-resizable-s:hover {
