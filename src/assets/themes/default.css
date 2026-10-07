@@ -323,7 +323,7 @@ tr.disabled ~ tr > td > div {
 .ui-resizable-s {
   cursor: row-resize;
   height: 5px;
-  bottom: -3px;
+  bottom: -2px;
   border-radius: 5px;
 }
 
@@ -735,6 +735,7 @@ body.light .qtip-tipsy {
   height: 100%;
   background-color: var(--secondary-toolbar-color);
   border-top-right-radius: var(--toolbar-outer-radius);
+  border-bottom: 1px solid var(--border-color);
 }
 
 #browser-top-bar {
@@ -1060,7 +1061,6 @@ body.dark .ui-widget .library-list .component {
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-  border-top: 1px solid var(--border-color);
 }
 
 #footer > .vertical-toolbar {
@@ -1392,10 +1392,6 @@ body.light .console-output .selected {
   border-right: 1px solid var(--border-color);
 }
 
-.script-editor .horizontal-splitter-top {
-  border-bottom: 1px solid var(--border-color);
-}
-
 .script-editor .node-list {
   bottom: var(--input-height);
   border-bottom: 1px solid var(--border-color);
@@ -1411,6 +1407,7 @@ body.light .console-output .selected {
   width: 100%;
   height: var(--input-height);
   border: none;
+  border-bottom: 1px solid var(--border-color);
   background: none;
 }
 

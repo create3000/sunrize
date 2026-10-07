@@ -52,6 +52,9 @@ module .exports = class Document extends Interface
       // Prevent scrolling when Panel becomes larger.
       $("#vertical-splitter") .on ("scroll", () => $("#vertical-splitter") .scrollTop (0));
 
+      this .verticalSplitter   .splitter .on ("position", () => this .verticalSplitterPosition ());
+      this .horizontalSplitter .splitter .on ("position", () => this .horizontalSplitterPosition ());
+
       // Additional Parsers
 
       X3D .GoldenGate .addParsers (ImageParser, VideoParser, AudioParser);
@@ -741,11 +744,33 @@ module .exports = class Document extends Interface
       this .updateMenu ();
    }
 
+   verticalSplitterPosition ()
+   {
+      const position = this .verticalSplitter .position;
+
+      if (position > 0 && position < 0.05)
+         this .verticalSplitter .position = 0;
+
+      if (position < 1 && position > 0.95)
+         this .verticalSplitter .position = 1;
+   }
+
    toggleFooter (value)
    {
       this .config .file .footer = value;
 
       this .updateMenu ();
+   }
+
+   horizontalSplitterPosition ()
+   {
+      const position = this .horizontalSplitter .position;
+
+      if (position > 0 && position < 0.05)
+         this .horizontalSplitter .position = 0;
+
+      if (position < 1 && position > 0.95)
+         this .horizontalSplitter .position = 1;
    }
 
    /**
