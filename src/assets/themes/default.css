@@ -1467,7 +1467,7 @@ body.light .console-output .selected {
   top: var(--toolbar-width);
   height: 0px;
   width: 100%;
-  border-bottom: 1px solid var(--background-color);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .animation-editor .animation-editor-content {
