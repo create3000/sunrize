@@ -74,6 +74,8 @@ module .exports = class Splitter extends Interface
             return left .outerWidth () / this .splitter .innerWidth ();
          }
       }
+
+      return 0.5;
    }
 
    snapToBorder = false;
