@@ -146,25 +146,11 @@ module .exports = class Splitter extends Interface
                switch (this .orientation)
                {
                   case "horizontal":
-                  {
-                     const
-                        top    = this .splitter .find ("> .horizontal-splitter-top"),
-                        bottom = this .splitter .find ("> .horizontal-splitter-bottom");
-
-                     top    .css ("height", "");
-                     bottom .css ("height", "");
+                     this .splitter .find ("> *") .css ("height", "");
                      break;
-                  }
                   case "vertical":
-                  {
-                     const
-                        left  = this .splitter .find ("> .vertical-splitter-left"),
-                        right = this .splitter .find ("> .vertical-splitter-right");
-
-                     left  .css ("width", "");
-                     right .css ("width", "");
+                     this .splitter .find ("> *") .css ("width", "");
                      break;
-                  }
                }
             }
             else
