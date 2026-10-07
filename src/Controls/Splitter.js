@@ -122,7 +122,10 @@ module .exports = class Splitter extends Interface
 
    start ()
    {
-      this .config .file .startPosition = this .position;
+      const position = this .position;
+
+      if (position > 0 && position < 1)
+         this .config .file .startPosition = this .position;
    }
 
    toggle (action)
