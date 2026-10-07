@@ -61,6 +61,8 @@ module .exports = class Application
          defaultEditMenu: false,
          undoLabel: _("Undo"),
          redoLabel: _("Redo"),
+         sidebar: true,
+         footer: true,
       };
 
       this .config .setDefaultValues ({
@@ -586,6 +588,18 @@ module .exports = class Application
                      click: () => this .mainWindow .webContents .send ("toggle-developer-tools"),
                   },
                   { type: "separator" },
+                  {
+                     label: _("Sidebar"),
+                     type: "checkbox",
+                     checked: this .menuOptions .sidebar,
+                     click: () => this .mainWindow .webContents .send ("toggle-sidebar", !this .menuOptions .sidebar),
+                  },
+                  {
+                     label: _("Footer"),
+                     type: "checkbox",
+                     checked: this .menuOptions .footer,
+                     click: () => this .mainWindow .webContents .send ("toggle-footer", !this .menuOptions .footer),
+                  },
                   {
                      label: _("Outline Editor"),
                      submenu: [

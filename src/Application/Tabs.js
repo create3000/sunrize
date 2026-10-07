@@ -104,6 +104,8 @@ module .exports = new class Tabs
       this .forwardToActiveTab ("transform-to-zero");
       this .forwardToActiveTab ("remove-empty-groups");
 
+      this .forwardToActiveTab ("toggle-sidebar");
+      this .forwardToActiveTab ("toggle-footer");
       this .forwardToAllTabs ("expand-extern-proto-declarations");
       this .forwardToAllTabs ("expand-prototype-instances");
       this .forwardToAllTabs ("expand-inline-nodes");

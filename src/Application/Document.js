@@ -104,6 +104,8 @@ module .exports = class Document extends Interface
 
       // View Menu
 
+      electron .ipcRenderer .on ("toggle-sidebar",                 (event, value) => this .toggleSidebar (value));
+      electron .ipcRenderer .on ("toggle-footer",                  (event, value) => this .toggleFooter (value));
       electron .ipcRenderer .on ("primitive-quality",              (event, value) => this .setPrimitiveQuality (value, true));
       electron .ipcRenderer .on ("texture-quality",                (event, value) => this .setTextureQuality (value, true));
       electron .ipcRenderer .on ("text-compression",               (event, value) => this .setTextCompression (value, true));
@@ -212,6 +214,8 @@ module .exports = class Document extends Interface
       this .config .file .setDefaultValues ({
          commonMetaData: true,
          inferProfileAndComponents: true,
+         sidebar: true,
+         footer: true,
          primitiveQuality: "MEDIUM",
          textureQuality: "MEDIUM",
          textCompression: "CHAR_SPACING",
@@ -228,6 +232,9 @@ module .exports = class Document extends Interface
 
       // Configure browser options.
 
+      this .toggleSidebar                   (this .config .file .sidebar);
+      this .toggleFooter                    (this .config .file .footer);
+      this .setTextureQuality               (this .config .file .textureQuality);
       this .setPrimitiveQuality             (this .config .file .primitiveQuality);
       this .setTextureQuality               (this .config .file .textureQuality);
       this .setTextCompression              (this .config .file .textCompression);
@@ -298,7 +305,7 @@ module .exports = class Document extends Interface
 
       this .updateEditMenu (menu);
       this .updateUndoMenus (menu);
-      this .updateBrowserOptionsMenus (menu);
+      this .updateViewMenus (menu);
       this .updateGridMenus (menu);
       this .updateSnapToolMenus (menu);
 
@@ -727,6 +734,20 @@ module .exports = class Document extends Interface
     * View Menu
     */
 
+   toggleSidebar (value)
+   {
+      this .config .file .sidebar = value;
+
+      this .updateMenu ();
+   }
+
+   toggleFooter (value)
+   {
+      this .config .file .footer = value;
+
+      this .updateMenu ();
+   }
+
    /**
     *
     * @param {string} value
@@ -895,10 +916,12 @@ module .exports = class Document extends Interface
       this .updateMenu ();
    }
 
-   updateBrowserOptionsMenus (menu)
+   updateViewMenus (menu)
    {
       Object .assign (menu,
       {
+         sidebar: this .config .file .sidebar,
+         footer: this .config .file .footer,
          primitiveQuality: this .config .file .primitiveQuality,
          textureQuality: this .config .file .textureQuality,
          textCompression: this .config .file .textCompression,

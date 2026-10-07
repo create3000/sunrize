@@ -28,6 +28,8 @@ module .exports = class ScriptEditor extends Interface
    {
       super (`Sunrize.ScriptEditor.${element .attr ("id")}.`);
 
+      const darwin = process .platform === "darwin";
+
       this .scriptEditor = element;
 
       this .verticalSplitter = $("<div></div>")
@@ -71,7 +73,9 @@ module .exports = class ScriptEditor extends Interface
 
       this .applyButton = $("<span></span>")
          .addClass ("material-icons")
-         .attr ("title", _("Apply script source to node."))
+         .attr ("title", darwin
+            ? _("Save source code in url field. (⌘S)")
+            : _("Save source code in url field. (Ctrl+S)"))
          .text ("check_circle")
          .appendTo (this .toolbar)
          .on ("click", () => this .apply (true));
