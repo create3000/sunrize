@@ -62,28 +62,28 @@ module .exports = class AnimationEditor extends Interface
 
       // Toolbar
 
-      this .toolbar = $("<div></div>")
-         .attr ("id", "animation-editor-toolbar")
-         .addClass (["animation-editor-toolbar", "toolbar", "horizontal-toolbar"])
+      this .controls = $("<div></div>")
+         .attr ("id", "animation-editor-controls")
+         .addClass (["animation-editor-controls", "toolbar", "horizontal-toolbar"])
          .appendTo (this .animationEditor);
 
       this .createAnimationIcon = $("<span></span>")
          .addClass (["material-symbols-outlined", "disabled"])
          .attr ("title", _("Create animation."))
          .text ("animation")
-         .appendTo (this .toolbar)
+         .appendTo (this .controls)
          .on ("click", () => this .createAnimation ());
 
-      $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
+      $("<span></span>") .addClass ("separator") .appendTo (this .controls);
 
       this .addMembersIcon = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _("Add member(s) to animation."))
          .text ("add")
-         .appendTo (this .toolbar)
+         .appendTo (this .controls)
          .on ("click", () => this .addMembers ());
 
-      $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
+      $("<span></span>") .addClass ("separator") .appendTo (this .controls);
 
       this .cutFrameIcon = $("<span></span>")
          .addClass ("material-icons")
@@ -91,7 +91,7 @@ module .exports = class AnimationEditor extends Interface
             ? _("Cut selected keyframes. (⌘X)")
             : _("Cut selected keyframes. (Ctrl+X)"))
          .text ("content_cut")
-         .appendTo (this .toolbar)
+         .appendTo (this .controls)
          .on ("click", () => this .cutKeyframes ());
 
       this .copyFrameIcon = $("<span></span>")
@@ -100,7 +100,7 @@ module .exports = class AnimationEditor extends Interface
             ? _("Copy selected keyframes. (⌘C)")
             : _("Copy selected keyframes. (Ctrl+C)"))
          .text ("content_copy")
-         .appendTo (this .toolbar)
+         .appendTo (this .controls)
          .on ("click", () => this .copyKeyframes ());
 
       this .pasteFrameIcon = $("<span></span>")
@@ -109,37 +109,37 @@ module .exports = class AnimationEditor extends Interface
             ? _("Paste keyframes at current frame. (⌘V)")
             : _("Paste keyframes at current frame. (Ctrl+V)"))
          .text ("content_paste")
-         .appendTo (this .toolbar)
+         .appendTo (this .controls)
          .on ("click", () => this .pasteKeyframes ());
 
-      $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
+      $("<span></span>") .addClass ("separator") .appendTo (this .controls);
 
       this .firstFrameIcon = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _("Go to first frame."))
          .text ("first_page")
-         .appendTo (this .toolbar)
+         .appendTo (this .controls)
          .on ("click", () => this .firstFrame ());
 
       this .toggleAnimationIcon = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _("Start animation. (Space)"))
          .text ("play_arrow")
-         .appendTo (this .toolbar)
+         .appendTo (this .controls)
          .on ("click", () => this .toggleAnimation ());
 
       this .lastFrameIcon = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _("Go to last frame."))
          .text ("last_page")
-         .appendTo (this .toolbar)
+         .appendTo (this .controls)
          .on ("click", () => this .lastFrame ());
 
       this .loopIcon = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _("Loop animation."))
          .text ("loop")
-         .appendTo (this .toolbar)
+         .appendTo (this .controls)
          .on ("click", () => this .toggleLoop ());
 
       this .frameInput = $("<input></input>")
@@ -150,17 +150,17 @@ module .exports = class AnimationEditor extends Interface
          .attr ("max", 0)
          .attr ("title", _("Current frame."))
          .css ("width", "70px")
-         .appendTo (this .toolbar)
+         .appendTo (this .controls)
          .on ("change input", () => this .setCurrentFrame (this .getCurrentFrame ()));
 
       this .propertiesIcon = $("<span></span>")
          .addClass ("material-icons")
          .attr ("title", _("Edit animation properties."))
          .text ("access_time")
-         .appendTo (this .toolbar)
+         .appendTo (this .controls)
          .on ("click", () => this .showProperties ());
 
-      $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
+      $("<span></span>") .addClass ("separator") .appendTo (this .controls);
 
       this .keyTypeElement = $("<select></select>")
          .addClass ("select")
@@ -170,7 +170,7 @@ module .exports = class AnimationEditor extends Interface
          .append ($("<option></option>") .text ("SPLINE"))
          .append ($("<option></option>") .text ("SPLIT"))
          .append ($("<option></option>") .text ("MIXED") .hide ())
-         .appendTo (this .toolbar)
+         .appendTo (this .controls)
          .on ("change", () => this .setKeyType ());
 
       this .timeElement = $("<span></span>")
@@ -179,13 +179,13 @@ module .exports = class AnimationEditor extends Interface
          .css ("top", "7.5px")
          .css ("margin-right", "6px")
          .text (this .formatFrames (0, 10))
-         .appendTo (this .toolbar);
+         .appendTo (this .controls);
 
       // Navigation toolbar
 
-      this .navigation = $("<div></div>")
-         .attr ("id", "animation-editor-navigation")
-         .addClass (["animation-editor-navigation", "toolbar", "vertical-toolbar", "secondary-toolbar"])
+      this .toolbar = $("<div></div>")
+         .attr ("id", "animation-editor-toolbar")
+         .addClass (["animation-editor-toolbar", "toolbar", "vertical-toolbar", "secondary-toolbar"])
          .appendTo (this .animationEditor);
 
       this .zoomOutIcon = $("<span></span>")
@@ -194,7 +194,7 @@ module .exports = class AnimationEditor extends Interface
          .css ("transform", "scale(1.5)")
          .css ("margin-bottom", "15px")
          .text ("zoom_out")
-         .appendTo (this .navigation)
+         .appendTo (this .toolbar)
          .on ("click", () => this .zoomOut ());
 
       this .zoomInIcon = $("<span></span>")
@@ -203,7 +203,7 @@ module .exports = class AnimationEditor extends Interface
          .css ("transform", "scale(1.5)")
          .css ("margin-bottom", "15px")
          .text ("zoom_in")
-         .appendTo (this .navigation)
+         .appendTo (this .toolbar)
          .on ("click", () => this .zoomIn ());
 
       this .zoomFitIcon = $("<span></span>")
@@ -212,7 +212,7 @@ module .exports = class AnimationEditor extends Interface
          .css ("transform", "scale(1.4)")
          .css ("margin-bottom", "15px")
          .text ("fit_screen")
-         .appendTo (this .navigation)
+         .appendTo (this .toolbar)
          .on ("click", () => this .zoomFit ());
 
       this .zoom100Icon = $("<span></span>")
@@ -221,7 +221,7 @@ module .exports = class AnimationEditor extends Interface
          .css ("transform", "scale(1.4)")
          .css ("margin-bottom", "15px")
          .text ("1x_mobiledata")
-         .appendTo (this .navigation)
+         .appendTo (this .toolbar)
          .on ("click", () => this .zoom100 ());
 
       // Animations List

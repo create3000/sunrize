@@ -36,20 +36,20 @@ module .exports = class Tabs extends Interface
          this .element .tabs ("option", "active", this .config .file .active);
    }
 
-   activateTab ()
+   activateTab (active = this .element .tabs ("option", "active"))
    {
-      const
-         active = this .element .tabs ("option", "active"),
-         panel  = $(this .element .find (`.tabs-panel`) .get (active));
+      const panel  = $(this .element .find (`.tabs-panel`) .get (active));
 
       this .config .file .active = active;
 
-      if (panel .data ("Tabs.initialized"))
-         return;
+      if (!panel .data ("Tabs.initialized"))
+      {
+         panel .data ("Tabs.initialized", true);
 
-      panel .data ("Tabs.initialized", true);
+         this .initTab (panel);
+      }
 
-      this .initTab (panel);
+      this .tabActivated (panel);
    }
 
    addTextTab (id, title)
@@ -62,9 +62,9 @@ module .exports = class Tabs extends Interface
             .text (title))
          .appendTo (this .tabs);
 
-      this .addPanel (id);
+      const panel = this .addPanel (id);
 
-      return tab;
+      return { tab, panel };
    }
 
    addIconTab (id, icon, title)
@@ -79,9 +79,9 @@ module .exports = class Tabs extends Interface
                .text (icon)))
          .appendTo (this .tabs);
 
-      this .addPanel (id);
+      const panel = this .addPanel (id);
 
-      return tab;
+      return { tab, panel };
    }
 
    addIconTextTab (id, icon, title)
@@ -98,14 +98,14 @@ module .exports = class Tabs extends Interface
                .text (icon)))
          .appendTo (this .tabs);
 
-      this .addPanel (id);
+      const panel = this .addPanel (id);
 
-      return tab;
+      return { tab, panel };
    }
 
    addPanel (id)
    {
-      $("<div></div>")
+      return $("<div></div>")
          .attr ("id", `${id}-tab`)
          .append ($("<div></div>")
             .attr ("id", id)
@@ -119,5 +119,8 @@ module .exports = class Tabs extends Interface
    }
 
    initTab ()
+   { }
+
+   tabActivated ()
    { }
 };

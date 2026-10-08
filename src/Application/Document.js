@@ -60,6 +60,8 @@ module .exports = class Document extends Interface
       this .verticalSplitter   .splitter .on ("position", () => this .verticalSplitterPosition ());
       this .horizontalSplitter .splitter .on ("position", () => this .horizontalSplitterPosition ());
 
+      this .footer .maximizeButton .on ("click", () => this .toggleFooterMaximize ());
+
       // Additional Parsers
 
       X3D .GoldenGate .addParsers (ImageParser, VideoParser, AudioParser);
@@ -770,7 +772,14 @@ module .exports = class Document extends Interface
 
    horizontalSplitterPosition ()
    {
-      const footer = this .horizontalSplitter .position < 1;
+      const
+         footer    = this .horizontalSplitter .position < 1,
+         maximized = this .horizontalSplitter .position === 0;
+
+      if (maximized)
+         this .footer .maximizeButton .addClass ("active");
+      else
+         this .footer .maximizeButton .removeClass ("active");
 
       if (this .config .file .footer === footer)
          return;
@@ -778,6 +787,16 @@ module .exports = class Document extends Interface
       this .config .file .footer = footer;
 
       this .updateMenu ();
+   }
+
+   toggleFooterMaximize ()
+   {
+      const maximized = this .horizontalSplitter .position === 0;
+
+      if (maximized)
+         this .horizontalSplitter .toggle ("restore");
+      else
+         this .horizontalSplitter .toggle ("minimize");
    }
 
    /**

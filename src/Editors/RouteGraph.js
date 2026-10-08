@@ -58,6 +58,8 @@ module .exports = class RouteGraph extends Interface
          .on ("sortupdate", (event, ui) => this .reorderPages (ui .item))
          .appendTo (this .top);
 
+      // Toolbar
+
       this .toolbar = $("<div></div>")
          .addClass (["toolbar", "vertical-toolbar", "secondary-toolbar", "routing-toolbar"])
          .appendTo (this .editor);

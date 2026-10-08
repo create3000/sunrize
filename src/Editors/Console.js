@@ -24,10 +24,6 @@ module .exports = class Console extends Interface
       this .console = element;
       this .left    = $("<div></div>") .addClass ("console-left") .appendTo (this .console);
 
-      this .toolbar = $("<div></div>")
-         .addClass (["toolbar", "vertical-toolbar", "secondary-toolbar", "console-toolbar"])
-         .appendTo (this .console);
-
       this .output = $("<div></div>")
          .addClass (["console-output", "output"])
          .attr ("tabindex", 0)
@@ -87,6 +83,10 @@ module .exports = class Console extends Interface
 
       // Toolbar
 
+      this .toolbar = $("<div></div>")
+         .addClass (["toolbar", "vertical-toolbar", "secondary-toolbar", "console-toolbar"])
+         .appendTo (this .console);
+
       this .searchButton = $("<span></span>")
          .addClass ("material-icons")
          .css ("transform", "scale(1.2)")
@@ -110,8 +110,6 @@ module .exports = class Console extends Interface
          .text ("delete_forever")
          .on ("click", () => this .clearConsole ())
          .appendTo (this .toolbar);
-
-      $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
       // Input
 

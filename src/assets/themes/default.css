@@ -361,14 +361,18 @@ tr.disabled ~ tr > td > div {
   width: var(--toolbar-width);
 }
 
-.vertical-toolbar::after {
+.secondary-toolbar::after {
   content: "";
   pointer-events: none;
   position: absolute;
   width: 100%;
   height: 30px;
   bottom: 0px;
-  background: linear-gradient(0deg,var(--secondary-toolbar-color) 0%, var(--secondary-toolbar-transparent) 100%);
+  background: linear-gradient(0deg,var(--secondary-toolbar-color) 0%, transparent 100%);
+}
+
+#script-editor-console .secondary-toolbar::after {
+  background: linear-gradient(0deg, var(--background-color) 0%, transparent 100%);
 }
 
 .horizontal-toolbar .material-icons,
@@ -1442,7 +1446,7 @@ body.light .console-output .selected {
   box-sizing: border-box;
 }
 
-.animation-editor-toolbar {
+.animation-editor-controls {
   container-type: inline-size;
   padding-left: 5px;
   left: 0px;
@@ -1451,18 +1455,18 @@ body.light .console-output .selected {
 }
 
 @container (max-width: 630px) {
-  .animation-editor-toolbar .right {
+  .animation-editor-controls .right {
     display: none;
   }
 }
 
-.animation-editor-navigation {
+.animation-editor-toolbar {
   padding-top: var(--toolbar-width);
   border-left: 1px solid var(--border-color);
   width: calc(var(--toolbar-width) + 1px);
 }
 
-.animation-editor-navigation::before {
+.animation-editor-toolbar::before {
   content: "";
   position: absolute;
   top: var(--toolbar-width);

@@ -24,6 +24,8 @@ monacoLoader .require .config ({
 
 module .exports = class ScriptEditor extends Interface
 {
+   maximizeSeparator = false;
+   
    constructor (element)
    {
       super (`Sunrize.ScriptEditor.${element .attr ("id")}.`);
@@ -52,6 +54,8 @@ module .exports = class ScriptEditor extends Interface
       this .vSplitter .snapToBorder = true;
 
       this .vSplitter .splitter .on ("position", () => this .splitterPosition ());
+
+      // Toolbar
 
       this .toolbar = $("<div></div>")
          .addClass (["toolbar", "vertical-toolbar", "secondary-toolbar", "script-editor-toolbar"])
