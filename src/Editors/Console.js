@@ -435,10 +435,7 @@ module .exports = class Console extends Interface
          element .addClass ("selected");
 
          if (scroll)
-         {
             element .get (0) .scrollIntoView ({ block: "center", inline: "start", behavior: "smooth" });
-            $(window) .scrollTop (0);
-         }
 
          this .searchStatus .text (util .format (_("%d of %d"), this .currentElement + 1, this .foundElements .length));
          this .searchPreviousButton .removeClass ("disabled");

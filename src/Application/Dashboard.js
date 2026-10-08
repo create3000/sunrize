@@ -36,17 +36,21 @@ module .exports = class Dashboard extends Interface
          .on ("click", () => this .arrow ());
 
       this .playButton = $("<span></span>")
-         .addClass (["material-icons"])
+         .addClass ("material-symbols-outlined")
          .attr ("title", _("Toggle browser update."))
-         .css ({ position: "relative", left: "-1px", "font-weight": "bold" })
+         .css ("position", "relative")
+         .css ("left", -6)
+         .css ("font-variation-settings", `"FILL" 1`)
+         .css ("scale", "1.4")
          .text ("play_arrow")
          .appendTo (this .toolbar)
          .on ("click", () => this .play (!this .config .file .play));
 
       this .volumeButton = $("<span></span>")
-         .addClass (["material-icons"])
+         .addClass ("material-symbols-outlined")
          .attr ("title", _("Adjust global sound intensity."))
-         .css ({ position: "relative", left: "1px", transform: "scale(0.9)" })
+         .css ("position", "relative")
+         .css ("font-variation-settings", `"FILL" 1`)
          .text ("volume_down")
          .appendTo (this .toolbar)
          .on ("click", () => this .showVolumeSlider ());
@@ -59,17 +63,27 @@ module .exports = class Dashboard extends Interface
       const hierarchy = require ("./Hierarchy");
 
       this .upButton = $("<span></span>")
-         .addClass (["material-icons", "disabled"])
+         .addClass (["material-symbols-outlined", "disabled"])
          .attr ("title", _("Select parent node(s)."))
-         .css ({ transform: "rotate(-90deg) scaleX(0.8)", "margin-top": "-6px", "margin-bottom": "-7px" })
+         .css ("position", "relative")
+         .css ("left", 7)
+         .css ("font-variation-settings", `"FILL" 1`)
+         .css ("rotate", "-90deg")
+         .css ("scale", "1 1.2")
+         .css ("margin", "-2px 0 -10px 0")
          .text ("play_arrow")
          .appendTo (this .toolbar)
          .on ("click", () => this .selectParent ());
 
       this .downButton = $("<span></span>")
-         .addClass (["material-icons", "disabled"])
+         .addClass (["material-symbols-outlined", "disabled"])
          .attr ("title", _("Select child node(s)."))
-         .css ({ transform: "rotate(90deg) scaleX(0.8)", "margin-top": "-7px", "margin-bottom": "-6px" })
+         .css ("position", "relative")
+         .css ("left", 7)
+         .css ("font-variation-settings", `"FILL" 1`)
+         .css ("rotate", "90deg")
+         .css ("scale", "1 1.2")
+         .css ("margin", "-10px 0 -2px 0")
          .text ("play_arrow")
          .appendTo (this .toolbar)
          .on ("click", () => this .selectChild ());
@@ -228,14 +242,8 @@ module .exports = class Dashboard extends Interface
       }
 
       // Scroll element into view.
-      // Hide scrollbars during scroll to prevent overlay issue.
-
-      outlineEditor .treeView .css ("overflow", "hidden");
 
       elements [0] ?.[0] ?.scrollIntoView ({ block: "center", inline: "start", behavior: "smooth" });
-      $(window) .scrollTop (0);
-
-      setTimeout (() => outlineEditor .treeView .css ("overflow", ""), 1000);
    }
 
    onHierarchy ()
