@@ -69,6 +69,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .createAnimationIcon = $("<span></span>")
          .addClass (["material-symbols-outlined", "disabled"])
+         .css ("scale", "0.8")
          .attr ("title", _("Create animation."))
          .text ("animation")
          .appendTo (this .controls)
@@ -77,7 +78,8 @@ module .exports = class AnimationEditor extends Interface
       $("<span></span>") .addClass ("separator") .appendTo (this .controls);
 
       this .addMembersIcon = $("<span></span>")
-         .addClass ("material-icons")
+         .addClass ("material-symbols-outlined")
+         .css ("scale", "0.9")
          .attr ("title", _("Add member(s) to animation."))
          .text ("add")
          .appendTo (this .controls)
@@ -86,7 +88,8 @@ module .exports = class AnimationEditor extends Interface
       $("<span></span>") .addClass ("separator") .appendTo (this .controls);
 
       this .cutFrameIcon = $("<span></span>")
-         .addClass ("material-icons")
+         .addClass ("material-symbols-outlined")
+         .css ("scale", "0.7")
          .attr ("title", darwin
             ? _("Cut selected keyframes. (⌘X)")
             : _("Cut selected keyframes. (Ctrl+X)"))
@@ -95,7 +98,8 @@ module .exports = class AnimationEditor extends Interface
          .on ("click", () => this .cutKeyframes ());
 
       this .copyFrameIcon = $("<span></span>")
-         .addClass ("material-icons")
+         .addClass ("material-symbols-outlined")
+         .css ("scale", "0.7")
          .attr ("title", darwin
             ? _("Copy selected keyframes. (⌘C)")
             : _("Copy selected keyframes. (Ctrl+C)"))
@@ -104,7 +108,8 @@ module .exports = class AnimationEditor extends Interface
          .on ("click", () => this .copyKeyframes ());
 
       this .pasteFrameIcon = $("<span></span>")
-         .addClass ("material-icons")
+         .addClass ("material-symbols-outlined")
+         .css ("scale", "0.7")
          .attr ("title", darwin
             ? _("Paste keyframes at current frame. (⌘V)")
             : _("Paste keyframes at current frame. (Ctrl+V)"))
@@ -115,28 +120,32 @@ module .exports = class AnimationEditor extends Interface
       $("<span></span>") .addClass ("separator") .appendTo (this .controls);
 
       this .firstFrameIcon = $("<span></span>")
-         .addClass ("material-icons")
+         .addClass ("material-symbols-outlined")
+         .css ("scale", "0.8")
          .attr ("title", _("Go to first frame."))
          .text ("first_page")
          .appendTo (this .controls)
          .on ("click", () => this .firstFrame ());
 
       this .toggleAnimationIcon = $("<span></span>")
-         .addClass ("material-icons")
+         .addClass ("material-symbols-outlined")
+         .css ("scale", "0.8")
          .attr ("title", _("Start animation. (Space)"))
          .text ("play_arrow")
          .appendTo (this .controls)
          .on ("click", () => this .toggleAnimation ());
 
       this .lastFrameIcon = $("<span></span>")
-         .addClass ("material-icons")
+         .addClass ("material-symbols-outlined")
+         .css ("scale", "0.8")
          .attr ("title", _("Go to last frame."))
          .text ("last_page")
          .appendTo (this .controls)
          .on ("click", () => this .lastFrame ());
 
       this .loopIcon = $("<span></span>")
-         .addClass ("material-icons")
+         .addClass ("material-symbols-outlined")
+         .css ("scale", "0.7")
          .attr ("title", _("Loop animation."))
          .text ("loop")
          .appendTo (this .controls)
@@ -154,7 +163,8 @@ module .exports = class AnimationEditor extends Interface
          .on ("change input", () => this .setCurrentFrame (this .getCurrentFrame ()));
 
       this .propertiesIcon = $("<span></span>")
-         .addClass ("material-icons")
+         .addClass ("material-symbols-outlined")
+         .css ("scale", "0.7")
          .attr ("title", _("Edit animation properties."))
          .text ("access_time")
          .appendTo (this .controls)
@@ -176,7 +186,7 @@ module .exports = class AnimationEditor extends Interface
       this .timeElement = $("<span></span>")
          .addClass (["text", "right"])
          .attr ("title", _("Current frame time (hours:minutes:seconds:frames)."))
-         .css ("top", "7.5px")
+         .css ("top", "6px")
          .css ("margin-right", "6px")
          .text (this .formatFrames (0, 10))
          .appendTo (this .controls);
@@ -189,36 +199,32 @@ module .exports = class AnimationEditor extends Interface
          .appendTo (this .animationEditor);
 
       this .zoomOutIcon = $("<span></span>")
-         .addClass ("material-icons")
+         .addClass ("material-symbols-outlined")
          .attr ("title", _("Zoom timeline out. (-)"))
-         .css ("transform", "scale(1.5)")
          .css ("margin-bottom", "15px")
          .text ("zoom_out")
          .appendTo (this .toolbar)
          .on ("click", () => this .zoomOut ());
 
       this .zoomInIcon = $("<span></span>")
-         .addClass ("material-icons")
+         .addClass ("material-symbols-outlined")
          .attr ("title", _("Zoom timeline in. (+)"))
-         .css ("transform", "scale(1.5)")
          .css ("margin-bottom", "15px")
          .text ("zoom_in")
          .appendTo (this .toolbar)
          .on ("click", () => this .zoomIn ());
 
       this .zoomFitIcon = $("<span></span>")
-         .addClass ("material-icons")
+         .addClass ("material-symbols-outlined")
          .attr ("title", _("Zoom timeline to fit in window. (0)"))
-         .css ("transform", "scale(1.4)")
          .css ("margin-bottom", "15px")
          .text ("fit_screen")
          .appendTo (this .toolbar)
          .on ("click", () => this .zoomFit ());
 
       this .zoom100Icon = $("<span></span>")
-         .addClass ("material-icons")
+         .addClass ("material-symbols-outlined")
          .attr ("title", _("Default timeline zoom. (1)"))
-         .css ("transform", "scale(1.4)")
          .css ("margin-bottom", "15px")
          .text ("1x_mobiledata")
          .appendTo (this .toolbar)

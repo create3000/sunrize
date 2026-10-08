@@ -352,6 +352,7 @@ tr.disabled ~ tr > td > div {
   top: 0;
   width: 100%;
   height: var(--toolbar-width);
+  padding-top: 1px;
   white-space: nowrap;
 }
 
@@ -425,7 +426,7 @@ tr.disabled ~ tr > td > div {
   box-sizing: content-box;
   display: inline-block;
   position: relative;
-  top: -3px;
+  top: -4px;
   margin: auto 5px;
   font-family: var(--sans-serif);
   font-size: var(--font-size);
@@ -443,10 +444,6 @@ html[platform=win32] .horizontal-toolbar .select {
 html[platform=darwin] .horizontal-toolbar .input,
 html[platform=darwin] .horizontal-toolbar .select {
   padding: 1px 6px 0 6px;
-}
-
-.horizontal-toolbar .select {
-  top: -2.5px;
 }
 
 .horizontal-toolbar .separator {
