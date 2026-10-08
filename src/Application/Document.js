@@ -805,6 +805,20 @@ module .exports = class Document extends Interface
          this .horizontalSplitter .toggle ("minimize");
    }
 
+   toggleMaximizeView ()
+   {
+      if (this .config .file .sidebar || this .config .file .footer)
+      {
+         this .verticalSplitter   .toggle ("maximize");
+         this .horizontalSplitter .toggle ("maximize");
+      }
+      else
+      {
+         this .verticalSplitter   .toggle ("restore");
+         this .horizontalSplitter .toggle ("restore");
+      }
+   }
+
    /**
     *
     * @param {string} value
@@ -1409,7 +1423,13 @@ module .exports = class Document extends Interface
                type: "radio",
                checked: viewpointNode ._isBound .getValue (),
                args: ["bindViewpoint", index + 1],
-            })),
+            }))
+         },
+         {
+            label: _("Maximize View"),
+            type: "checkbox",
+            checked: !(this .config .file .sidebar || this .config .file .footer),
+            args: ["toggleMaximizeView"],
          },
       ];
 

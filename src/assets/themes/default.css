@@ -607,7 +607,7 @@ html[platform=darwin] .horizontal-toolbar .select {
 .ui-tabs > .ui-tabs-nav .icon-text .material-icons {
   top: 1.5px;
   font-size: inherit;
-  margin-right: 0.6em;
+  margin-right: 8px;
   transform: scale(1.3);
 }
 

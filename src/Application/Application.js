@@ -589,13 +589,13 @@ module .exports = class Application
                   },
                   { type: "separator" },
                   {
-                     label: _("Sidebar"),
+                     label: _("Show Sidebar"),
                      type: "checkbox",
                      checked: this .menuOptions .sidebar,
                      click: () => this .mainWindow .webContents .send ("toggle-sidebar", !this .menuOptions .sidebar),
                   },
                   {
-                     label: _("Panel"),
+                     label: _("Show Panel"),
                      type: "checkbox",
                      checked: this .menuOptions .footer,
                      click: () => this .mainWindow .webContents .send ("toggle-footer", !this .menuOptions .footer),
