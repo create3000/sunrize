@@ -189,7 +189,7 @@ module .exports = class Document extends Interface
          .on ("mouseup",   event => this .onselect (event));
 
       $("#browser-frame")
-         .on ("contextmenu", event => this .showBrowserContextMenu (event));
+         .on ("contextmenu", event => this .showContextMenu (event));
 
       electron .ipcRenderer .on ("document", (event, key, ... args) => this [key] (... args));
 
@@ -332,13 +332,13 @@ module .exports = class Document extends Interface
       {
          this .activeElement
             .off ("contextmenu.Document")
-            .on ("contextmenu.Document", () => this .showContextMenu ());
+            .on ("contextmenu.Document", () => this .showEditContextMenu ());
       }
 
       electron .ipcRenderer .send ("update-menu", this .updateEditMenu ({ }));
    }
 
-   async showContextMenu ()
+   async showEditContextMenu ()
    {
       await $.sleep ();
 
@@ -1386,7 +1386,7 @@ module .exports = class Document extends Interface
     * Context Menu
     */
 
-   showBrowserContextMenu (event)
+   showContextMenu (event)
    {
       if (event .shiftKey || event .ctrlKey || event .metaKey)
          return;

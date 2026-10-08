@@ -1128,7 +1128,7 @@ body.dark .ui-widget .library-list .component {
 #footer .buttons {
   user-select: none;
   position: absolute;
-  bottom: 0px;
+  bottom: 1px;
   right: 3px;
 }
 
