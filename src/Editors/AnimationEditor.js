@@ -175,6 +175,7 @@ module .exports = class AnimationEditor extends Interface
       this .keyTypeElement = $("<select></select>")
          .addClass ("select")
          .attr ("title", _("Select keyframe type."))
+         .css ("margin-left", "10px")
          .append ($("<option></option>") .text ("CONSTANT"))
          .append ($("<option></option>") .text ("LINEAR") .attr ("selected", ""))
          .append ($("<option></option>") .text ("SPLINE"))
