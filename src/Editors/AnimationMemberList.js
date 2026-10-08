@@ -105,13 +105,13 @@ module .exports = class AnimationMembersList extends Interface
          .appendTo (this .#list);
 
       const applyButton = $("<span></span>")
-         .addClass (["apply", "material-icons", "button", "off", "disabled"])
+         .addClass (["apply", "material-symbols-outlined", "button", "off", "disabled"])
          .attr ("title", _("Add keyframe(s)."))
          .text ("check_box")
          .on ("click", () => this .addKeyframesToMain ());
 
       const removeButton = $("<span></span>")
-         .addClass (["material-icons-outlined", "button"])
+         .addClass (["material-symbols-outlined", "button"])
          .attr ("title", _("Close animation."))
          .text ("cancel")
          .on ("click", () => this .#editor .closeAnimation ());
@@ -159,7 +159,7 @@ module .exports = class AnimationMembersList extends Interface
             .appendTo (this .#list);
 
          const applyButton = $("<span></span>")
-            .addClass (["apply", "material-icons", "button", "off", "disabled"])
+            .addClass (["apply", "material-symbols-outlined", "button", "off", "disabled"])
             .attr ("title", _("Add keyframe(s)."))
             .text ("check_box")
             .on ("click", () => this .addKeyframesToNode (node));
@@ -170,7 +170,7 @@ module .exports = class AnimationMembersList extends Interface
          node .setUserData (this .#animation [_expanded], expanded);
 
          const expandButton = $("<span></span>")
-            .addClass (["material-icons-outlined", "button"])
+            .addClass (["material-symbols-outlined", "button"])
             .addClass (expanded ? "on" : "off")
             .attr ("title", _("Show all fields."))
             .text ("expand_circle_down")
@@ -255,7 +255,7 @@ module .exports = class AnimationMembersList extends Interface
             .text (field .getName ());
 
          const applyButton = $("<span></span>")
-            .addClass (["apply", "material-icons", "button", "off"])
+            .addClass (["apply", "material-symbols-outlined", "button", "off"])
             .attr ("title", _("Add keyframe."))
             .text ("check_box")
             .on ("click", () => this .addKeyframeToField (node, field));
