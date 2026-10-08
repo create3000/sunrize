@@ -88,8 +88,7 @@ module .exports = class Console extends Interface
          .appendTo (this .console);
 
       this .searchButton = $("<span></span>")
-         .addClass ("material-icons")
-         .css ("transform", "scale(1.2)")
+         .addClass ("material-symbols-outlined")
          .attr ("title", _("Show search widget."))
          .text ("search")
          .on ("click", () => this .toggleSearch (!this .config .file .search))
@@ -98,14 +97,16 @@ module .exports = class Console extends Interface
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
       this .suspendButton = $("<span></span>")
-         .addClass ("material-icons")
+         .addClass ("material-symbols-outlined")
+         .css ("scale", "0.8")
          .attr ("title", _("Suspend console output."))
          .text ("pause_circle")
          .on ("click", () => this .setSuspendConsole (!this .suspendConsole))
          .appendTo (this .toolbar);
 
       this .clearButton = $("<span></span>")
-         .addClass ("material-icons")
+         .addClass ("material-symbols-outlined")
+         .css ("scale", "0.8")
          .attr ("title", _("Clear console."))
          .text ("delete_forever")
          .on ("click", () => this .clearConsole ())
