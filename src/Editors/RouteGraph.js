@@ -66,7 +66,6 @@ module .exports = class RouteGraph extends Interface
 
       this .addPageButton = $("<span></span>")
          .addClass ("material-symbols-outlined")
-         .css ("scale", "0.9")
          .attr ("title", _("Add new logic page."))
          .text ("add")
          .appendTo (this .toolbar)

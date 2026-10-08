@@ -74,9 +74,6 @@ module .exports = class ScriptEditor extends Interface
 
       this .createButton = $("<span></span>")
          .addClass ("material-symbols-outlined")
-         .css ("scale", "0.9")
-         .css ("margin-top", -2)
-         .css ("margin-bottom", 8)
          .attr ("title", _("Create new Script node or shader."))
          .text ("add")
          .appendTo (this .toolbar)
@@ -85,8 +82,6 @@ module .exports = class ScriptEditor extends Interface
       this .applyButton = $("<span></span>")
          .addClass ("material-symbols-outlined")
          .css ("scale", "0.8")
-         .css ("margin-top", 8)
-         .css ("margin-bottom", 8)
          .attr ("title", darwin
             ? _("Save source code in url field. (⌘S)")
             : _("Save source code in url field. (Ctrl+S)"))
@@ -99,8 +94,6 @@ module .exports = class ScriptEditor extends Interface
       this .directOutputButton = $("<span></span>")
          .addClass ("material-symbols-outlined")
          .css ("scale", "0.8")
-         .css ("margin-top", 8)
-         .css ("margin-bottom", 8)
          .attr ("title", _("Toggle direct output."))
          .text ("radio_button_checked")
          .appendTo (this .toolbar)
@@ -109,8 +102,6 @@ module .exports = class ScriptEditor extends Interface
       this .mustEvaluateButton = $("<span></span>")
          .addClass ("material-symbols-outlined")
          .css ("scale", "0.8")
-         .css ("margin-top", 8)
-         .css ("margin-bottom", 8)
          .attr ("title", _("Toggle must evaluate."))
          .text ("priority_high")
          .appendTo (this .toolbar)
@@ -118,11 +109,9 @@ module .exports = class ScriptEditor extends Interface
 
       this .shaderTypeButton = $("<span></span>")
          .addClass ("material-symbols-outlined")
-         .css ("scale", "0.8")
-         .css ("margin-top", 8)
-         .css ("margin-bottom", 8)
+         .css ("scale", "0.9")
          .attr ("title", _("Change shader type."))
-         .text ("auto_awesome")
+         .text ("change_history")
          .appendTo (this .toolbar)
          .on ("click", () => this .changeShaderType ());
 
@@ -1084,12 +1073,12 @@ main ()
       {
          case "VERTEX":
          {
-            this .shaderTypeButton .text ("timeline");
+            this .shaderTypeButton .text ("change_history");
             break;
          }
          case "FRAGMENT":
          {
-            this .shaderTypeButton .text ("auto_awesome");
+            this .shaderTypeButton .text ("grain");
             break;
          }
       }

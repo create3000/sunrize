@@ -79,7 +79,6 @@ module .exports = class AnimationEditor extends Interface
 
       this .addMembersIcon = $("<span></span>")
          .addClass ("material-symbols-outlined")
-         .css ("scale", "0.9")
          .attr ("title", _("Add member(s) to animation."))
          .text ("add")
          .appendTo (this .controls)
