@@ -357,6 +357,10 @@ tr.disabled ~ tr > td > div {
 }
 
 .vertical-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 10px;
   right: 0;
   height: 100%;
   width: var(--toolbar-width);
@@ -386,8 +390,7 @@ tr.disabled ~ tr > td > div {
 }
 
 .vertical-toolbar .material-symbols-outlined {
-  display: block;
-  margin: 10px auto;
+  margin: 0 auto;
   width: var(--icon-size);
   cursor: pointer;
   font-size: var(--icon-size);
@@ -454,8 +457,7 @@ html[platform=darwin] .horizontal-toolbar .select {
 }
 
 .vertical-toolbar .separator {
-  display: block;
-  margin: 10px auto;
+  margin: 0px auto;
   height: 0;
   width: var(--icon-size);
   border-bottom: 1px solid var(--separator-color);
@@ -492,7 +494,7 @@ html[platform=darwin] .horizontal-toolbar .select {
   display: block;
   width: 24px;
   height: 24px;
-  margin: 10px auto;
+  margin: 0px auto;
   cursor: pointer;
   user-select: none;
   filter: var(--filter-text-color);
@@ -1065,6 +1067,7 @@ body.dark .ui-widget .library-list .component {
   box-sizing: content-box;
   height: calc(var(--tabs-height) - 1px);
   bottom: 0px;
+  padding-top: 0px;
   background-color: var(--secondary-toolbar-color);
   border-left: 1px solid var(--border-color);
 }
@@ -1462,7 +1465,7 @@ body.light .console-output .selected {
 }
 
 .animation-editor-toolbar {
-  padding-top: var(--toolbar-width);
+  padding-top: calc(var(--toolbar-width) + 10px);
   border-left: 1px solid var(--border-color);
   width: calc(var(--toolbar-width) + 1px);
 }
