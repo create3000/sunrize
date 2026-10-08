@@ -777,9 +777,15 @@ module .exports = class Document extends Interface
          maximized = this .horizontalSplitter .position === 0;
 
       if (maximized)
+      {
+         this .footer .footer .addClass ("maximized");
          this .footer .maximizeButton .addClass ("active");
+      }
       else
+      {
+         this .footer .footer .removeClass ("maximized");
          this .footer .maximizeButton .removeClass ("active");
+      }
 
       if (this .config .file .footer === footer)
          return;
@@ -967,6 +973,11 @@ module .exports = class Document extends Interface
       this .updateMenu ();
    }
 
+   showLibrary ()
+   {
+      require ("../Editors/Library") .open (this .browser .currentScene);
+   }
+
    updateViewMenus (menu)
    {
       Object .assign (menu,
@@ -984,11 +995,6 @@ module .exports = class Document extends Interface
          rubberband: this .config .file .rubberband,
          timings: this .config .file .timings,
       });
-   }
-
-   showLibrary ()
-   {
-      require ("../Editors/Library") .open (this .browser .currentScene);
    }
 
    /*

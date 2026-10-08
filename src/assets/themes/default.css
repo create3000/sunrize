@@ -1072,6 +1072,10 @@ body.dark .ui-widget .library-list .component {
   height: 100%;
 }
 
+#footer.maximized {
+  border-top-right-radius: var(--toolbar-outer-radius);
+}
+
 #footer > .vertical-toolbar {
   box-sizing: content-box;
   height: calc(var(--tabs-height) - 1px);
