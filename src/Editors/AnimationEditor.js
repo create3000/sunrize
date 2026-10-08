@@ -2337,6 +2337,9 @@ module .exports = class AnimationEditor extends Interface
 
    on_mousedown (event)
    {
+      if (!this .animation)
+         return;
+
       $(document)
          .on ("mousemove.AnimationEditor", event => this .updatePointer (event))
          .on ("mouseup.AnimationEditor",   event => this .on_mouseup (event))
@@ -2401,6 +2404,9 @@ module .exports = class AnimationEditor extends Interface
 
    on_mouseup (event)
    {
+      if (!this .animation)
+         return;
+
       $(document) .off (".AnimationEditor");
 
       this .updatePointer (event);
@@ -2417,6 +2423,9 @@ module .exports = class AnimationEditor extends Interface
 
    on_mousemove (event)
    {
+      if (!this .animation)
+         return;
+
       switch (this .#button)
       {
          case undefined:
@@ -2436,6 +2445,9 @@ module .exports = class AnimationEditor extends Interface
 
    on_wheel (event)
    {
+      if (!this .animation)
+         return;
+
       const deltaY = event .originalEvent .deltaY;
 
       this .updatePointer (event);
