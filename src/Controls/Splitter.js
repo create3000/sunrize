@@ -69,13 +69,13 @@ module .exports = class Splitter extends Interface
          {
             const top = this .splitter .find ("> .horizontal-splitter-top");
 
-            return (top .outerHeight () / this .splitter .innerHeight ()) || 0;
+            return Algorithm .clamp ((top .outerHeight () / this .splitter .innerHeight ()) || 0, 0, 1);
          }
          case "vertical":
          {
             const left = this .splitter .find ("> .vertical-splitter-left");
 
-            return (left .outerWidth () / this .splitter .innerWidth ()) || 0;
+            return Algorithm .clamp ((left .outerWidth () / this .splitter .innerWidth ()) || 0, 0, 1);
          }
       }
 
