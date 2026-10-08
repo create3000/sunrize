@@ -1132,7 +1132,7 @@ body.dark .ui-widget .library-list .component {
   right: 3px;
 }
 
-#footer .buttons > * {
+#footer .buttons :is(.material-icons, .material-symbols-outlined) {
   cursor: pointer;
 }
 

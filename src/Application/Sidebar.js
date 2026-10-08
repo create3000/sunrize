@@ -1,9 +1,8 @@
 "use strict";
 
 const
-   OutlineEditor = require ("../Editors/OutlineEditor"),
-   Tabs          = require ("../Controls/Tabs"),
-   _             = require ("./GetText");
+   Tabs = require ("../Controls/Tabs"),
+   _    = require ("./GetText");
 
 module .exports = class Sidebar extends Tabs
 {
@@ -16,15 +15,12 @@ module .exports = class Sidebar extends Tabs
 
    addTabs ()
    {
-      if (process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT")
-         this .addIconTab ("file-manager", "description", _("File Manager"));
+      // if (process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT")
+      //    this .addIconTab ("file-manager", "description", _("File Manager"));
 
       this .addIconTab ("outline-editor", "list", _("Outline Editor"));
 
-      if (process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT")
-         this .addIconTab ("node-inspector", "visibility", _("Node Inspector"));
-
-      this .outlineEditor = new OutlineEditor (this .getPanel ("outline-editor"));
+      this .activateTab (0);
    }
 
    configure ()
@@ -41,6 +37,13 @@ module .exports = class Sidebar extends Tabs
             const FileManager = require ("../Editors/FileManager");
 
             this .fileManger = new FileManager (panel);
+            break;
+         }
+         case "outline-editor":
+         {
+            const OutlineEditor = require ("../Editors/OutlineEditor");
+
+            this .outlineEditor = new OutlineEditor (this .getPanel ("outline-editor"));
             break;
          }
          case "node-inspector":
