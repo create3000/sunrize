@@ -14,7 +14,7 @@ module .exports = class Dashboard extends Interface
       super ("Sunrize.Dashboard.");
 
       this .document = document;
-      this .toolbar  = element .addClass ("secondary-toolbar");
+      this .toolbar  = element .addClass (["secondary-toolbar", "dash-board"]);
 
       this .setup ();
    }

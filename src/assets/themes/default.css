@@ -780,7 +780,7 @@ body.light .qtip-tipsy {
   background-color: var(--system-gray7);
 }
 
-:not(#script-editor-console) > .secondary-toolbar {
+:not(#script-editor-console) > .secondary-toolbar:not(.dash-board) {
   background-color: var(--secondary-toolbar-color);
 }
 
@@ -1123,6 +1123,17 @@ body.dark .ui-widget .library-list .component {
 
 #footer > .ui-tabs-nav li:is(.ui-tabs-active, :hover) + li::before {
   display: none;
+}
+
+#footer .buttons {
+  user-select: none;
+  position: absolute;
+  bottom: 0px;
+  right: 3px;
+}
+
+#footer .buttons > * {
+  cursor: pointer;
 }
 
 /* Console */

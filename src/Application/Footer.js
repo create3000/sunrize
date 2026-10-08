@@ -11,16 +11,20 @@ module .exports = class Footer extends Tabs
    {
       super (element, "bottom");
 
+      this .footer  = element;
       this .editors = new Map ();
 
-      // Toolbar
+      // Buttons
+
+      this .buttons = $("<div></div>")
+         .addClass ("buttons");
 
       this .maximizeButton = $("<span></span>")
-         .addClass ("material-symbols-outlined")
+         .addClass (["material-symbols-outlined", "button"])
          .attr ("title", _("Maximize Panel."))
-         .text ("fullscreen");
-
-      this .separator = $("<span></span>") .addClass ("separator");
+         .css ("scale", "0.8")
+         .text ("fullscreen")
+         .appendTo (this .buttons);
 
       this .setup ();
    }
@@ -38,12 +42,18 @@ module .exports = class Footer extends Tabs
       animationEditor .tab .find (".material-icons") .css ("color", "hsl(246, 40%, 48%)");
       routeGraph      .tab .find (".material-icons") .css ("color", "hsl(281, 40%, 48%)");
 
-      $("<div></div>")
-         .addClass (["toolbar", "vertical-toolbar"])
-         .appendTo (this .element);
-
       this .activateTab (3);
       this .activateTab (0);
+
+      // Add toolbar stub after all tabs are created.
+
+      $("<div></div>")
+         .addClass (["toolbar", "vertical-toolbar"])
+         .appendTo (this .footer);
+
+      // Add buttons after all tabs are created.
+
+      this .buttons .appendTo (this .footer);
    }
 
    initTab (panel)
@@ -87,17 +97,5 @@ module .exports = class Footer extends Tabs
             break;
          }
       }
-   }
-
-   tabActivated (panel)
-   {
-      const
-         editor  = this .editors .get (panel .attr ("id")),
-         toolbar = editor .toolbar;
-
-      if (editor .maximizeSeparator !== false)
-         this .separator .prependTo (toolbar);
-
-      this .maximizeButton .prependTo (toolbar);
    }
 };
