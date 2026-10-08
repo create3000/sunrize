@@ -376,7 +376,6 @@ tr.disabled ~ tr > td > div {
   background: linear-gradient(0deg, var(--background-color) 0%, transparent 100%);
 }
 
-.horizontal-toolbar .material-icons,
 .horizontal-toolbar .material-symbols-outlined {
   display: inline-block;
   margin: auto 5px;
@@ -386,7 +385,6 @@ tr.disabled ~ tr > td > div {
   user-select: none;
 }
 
-.vertical-toolbar .material-icons,
 .vertical-toolbar .material-symbols-outlined {
   display: block;
   margin: 10px auto;
@@ -465,24 +463,20 @@ html[platform=darwin] .horizontal-toolbar .select {
 }
 
 .codicon:hover,
-.material-icons:hover,
 .material-symbols-outlined:hover {
   color: var(--highlight-color);
 }
 
 .codicon.active,
-.material-icons.active,
 .material-symbols-outlined.active {
   color: var(--accent-color);
 }
 
 .codicon.disabled,
-.material-icons.disabled,
 .material-symbols-outlined.disabled,
 .horizontal-toolbar .text.disabled,
 .horizontal-toolbar .input.disabled,
-.horizontal-toolbar .select.disabled,
-.vertical-toolbar .material-icons.disabled {
+.horizontal-toolbar .select.disabled {
   pointer-events: none;
   color: var(--system-gray3);
   border-color: var(--system-gray3);
@@ -491,12 +485,6 @@ html[platform=darwin] .horizontal-toolbar .select {
 .horizontal-toolbar .right {
   position: absolute;
   right: 0;
-}
-
-.large-toolbar .material-icons {
-  margin: 5px auto;
-  width: var(--large-icon-size);
-  font-size: var(--large-icon-size);
 }
 
 .image-icon {
