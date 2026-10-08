@@ -123,7 +123,7 @@
     --sidebar-background-color: hsl(217, 20%, 21%);
     --tint-color1: rgba(0, 0, 0, 0.2);
     --tint-color2: rgba(0, 0, 0, 0.4);
-    --tabs-icon-color: black;
+    --tabs-icon-color: var(--system-gray6);
 
     /* TweakPanel colors */
 
