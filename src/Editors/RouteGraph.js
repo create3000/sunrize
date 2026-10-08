@@ -65,7 +65,8 @@ module .exports = class RouteGraph extends Interface
          .appendTo (this .editor);
 
       this .addPageButton = $("<span></span>")
-         .addClass ("material-icons")
+         .addClass ("material-symbols-outlined")
+         .css ("scale", "0.9")
          .attr ("title", _("Add new logic page."))
          .text ("add")
          .appendTo (this .toolbar)
@@ -76,7 +77,7 @@ module .exports = class RouteGraph extends Interface
       this .snapToGridButton = $("<span></span>")
          .addClass ("material-symbols-outlined")
          .attr ("title", _("Toggle snap to grid."))
-         .css ({ transform: "scale(0.9)" })
+         .css ("scale", "0.9")
          .text ("grid_4x4")
          .appendTo (this .toolbar)
          .on ("click", () => this .setSnapToGrid (!this .config .global .snapToGrid));
@@ -86,7 +87,7 @@ module .exports = class RouteGraph extends Interface
       this .addConnectedNodesButton = $("<span></span>")
          .addClass ("material-symbols-outlined")
          .attr ("title", _("Toggle add connected nodes."))
-         .css ({ transform: "scale(0.8)" })
+         .css ("scale", "0.8")
          .text ("hub")
          .appendTo (this .toolbar)
          .on ("click", () => this .setAddConnectedNodes (!this .config .global .addConnectedNodes));
@@ -94,38 +95,29 @@ module .exports = class RouteGraph extends Interface
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
       this .zoomOutIcon = $("<span></span>")
-         .addClass ("material-icons")
-         .attr ("title", _("Zoom nodes out. (-)"))
-         .css ("transform", "scale(1.5)")
-         .css ("margin-top", "13px")
-         .css ("margin-bottom", "15px")
+         .addClass ("material-symbols-outlined")
+         .attr ("title", _("Zoom timeline out. (-)"))
          .text ("zoom_out")
          .appendTo (this .toolbar)
          .on ("click", () => this .zoomOut ());
 
       this .zoomInIcon = $("<span></span>")
-         .addClass ("material-icons")
-         .attr ("title", _("Zoom nodes in. (+)"))
-         .css ("transform", "scale(1.5)")
-         .css ("margin-bottom", "15px")
+         .addClass ("material-symbols-outlined")
+         .attr ("title", _("Zoom timeline in. (+)"))
          .text ("zoom_in")
          .appendTo (this .toolbar)
          .on ("click", () => this .zoomIn ());
 
       this .zoomFitIcon = $("<span></span>")
-         .addClass ("material-icons")
-         .attr ("title", _("Zoom nodes to fit in window. (0)"))
-         .css ("transform", "scale(1.4)")
-         .css ("margin-bottom", "15px")
+         .addClass ("material-symbols-outlined")
+         .attr ("title", _("Zoom timeline to fit in window. (0)"))
          .text ("fit_screen")
          .appendTo (this .toolbar)
          .on ("click", () => this .zoomFit ());
 
       this .zoom100Icon = $("<span></span>")
-         .addClass ("material-icons")
-         .attr ("title", _("Default nodes zoom. (1)"))
-         .css ("transform", "scale(1.4)")
-         .css ("margin-bottom", "15px")
+         .addClass ("material-symbols-outlined")
+         .attr ("title", _("Default timeline zoom. (1)"))
          .text ("1x_mobiledata")
          .appendTo (this .toolbar)
          .on ("click", () => this .zoom100 ());
@@ -334,7 +326,7 @@ module .exports = class RouteGraph extends Interface
                .attr ("title", title)
                .text (title))
             .append ($("<span></span>")
-               .addClass (["material-icons", "button"])
+               .addClass (["material-symbols-outlined", "button"])
                .text ("close")
                .on ("click", () => this .closePage (index)))
             .appendTo (this .tabs);

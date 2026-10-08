@@ -201,7 +201,6 @@ module .exports = class AnimationEditor extends Interface
       this .zoomOutIcon = $("<span></span>")
          .addClass ("material-symbols-outlined")
          .attr ("title", _("Zoom timeline out. (-)"))
-         .css ("margin-bottom", "15px")
          .text ("zoom_out")
          .appendTo (this .toolbar)
          .on ("click", () => this .zoomOut ());
@@ -209,7 +208,6 @@ module .exports = class AnimationEditor extends Interface
       this .zoomInIcon = $("<span></span>")
          .addClass ("material-symbols-outlined")
          .attr ("title", _("Zoom timeline in. (+)"))
-         .css ("margin-bottom", "15px")
          .text ("zoom_in")
          .appendTo (this .toolbar)
          .on ("click", () => this .zoomIn ());
@@ -217,7 +215,6 @@ module .exports = class AnimationEditor extends Interface
       this .zoomFitIcon = $("<span></span>")
          .addClass ("material-symbols-outlined")
          .attr ("title", _("Zoom timeline to fit in window. (0)"))
-         .css ("margin-bottom", "15px")
          .text ("fit_screen")
          .appendTo (this .toolbar)
          .on ("click", () => this .zoomFit ());
@@ -225,7 +222,6 @@ module .exports = class AnimationEditor extends Interface
       this .zoom100Icon = $("<span></span>")
          .addClass ("material-symbols-outlined")
          .attr ("title", _("Default timeline zoom. (1)"))
-         .css ("margin-bottom", "15px")
          .text ("1x_mobiledata")
          .appendTo (this .toolbar)
          .on ("click", () => this .zoom100 ());
