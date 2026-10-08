@@ -43,7 +43,7 @@ module .exports = class Sidebar extends Tabs
          {
             const OutlineEditor = require ("../Editors/OutlineEditor");
 
-            this .outlineEditor = new OutlineEditor (this .getPanel ("outline-editor"));
+            this .outlineEditor = new OutlineEditor (panel);
             break;
          }
          case "node-inspector":

@@ -62,9 +62,9 @@ module .exports = class Tabs extends Interface
             .text (title))
          .appendTo (this .tabs);
 
-      const panel = this .addPanel (id);
+      this .addPanel (id);
 
-      return { tab, panel };
+      return tab;
    }
 
    addIconTab (id, icon, title)
@@ -75,13 +75,13 @@ module .exports = class Tabs extends Interface
             .attr ("href", `#${id}-tab`)
             .attr ("title", title)
             .append ($("<span></span>")
-               .addClass ("material-icons")
+               .addClass ("material-symbols-outlined")
                .text (icon)))
          .appendTo (this .tabs);
 
-      const panel = this .addPanel (id);
+      this .addPanel (id);
 
-      return { tab, panel };
+      return tab;
    }
 
    addIconTextTab (id, icon, title)
@@ -91,16 +91,15 @@ module .exports = class Tabs extends Interface
             .addClass ("icon-text")
             .attr ("href", `#${id}-tab`)
             .attr ("title", title)
-            .attr ("ondragstart", "return false;")
             .text (title)
             .prepend ($("<span></span>")
-               .addClass ("material-icons")
+               .addClass ("material-symbols-outlined")
                .text (icon)))
          .appendTo (this .tabs);
 
-      const panel = this .addPanel (id);
+      this .addPanel (id);
 
-      return { tab, panel };
+      return tab;
    }
 
    addPanel (id)

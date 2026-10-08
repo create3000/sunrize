@@ -25,7 +25,7 @@ body {
 }
 
 .material-symbols-outlined {
-  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
 }
 
 :focus {
@@ -596,7 +596,7 @@ html[platform=darwin] .horizontal-toolbar .select {
   color: var(--accent-color);
 }
 
-.ui-tabs > .ui-tabs-nav .material-icons {
+.ui-tabs > .ui-tabs-nav .material-symbols-outlined {
   position: relative;
   top: -3px;
   margin: 0;
@@ -604,7 +604,7 @@ html[platform=darwin] .horizontal-toolbar .select {
   font-size: var(--medium-icon-size);
 }
 
-.ui-tabs > .ui-tabs-nav .icon-text .material-icons {
+.ui-tabs > .ui-tabs-nav .icon-text .material-symbols-outlined {
   top: 1.5px;
   font-size: inherit;
   margin-right: 8px;
@@ -1117,11 +1117,6 @@ body.dark .ui-widget .library-list .component {
   background-color: var(--window-tabs-background-color);
 }
 
-#footer > .ui-tabs-nav .material-icons {
-  border-radius: 2px;
-  color: var(--tabs-icon-color);
-}
-
 #footer > .ui-tabs-nav li:not(.ui-tabs-active, :hover, :first-child)::before {
   content: "•";
   position: absolute;
@@ -1141,7 +1136,7 @@ body.dark .ui-widget .library-list .component {
   right: 3px;
 }
 
-#footer .buttons :is(.material-icons, .material-symbols-outlined) {
+#footer .buttons .material-symbols-outlined {
   cursor: pointer;
 }
 

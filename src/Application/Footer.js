@@ -31,16 +31,13 @@ module .exports = class Footer extends Tabs
 
    addTabs ()
    {
-      const
-         console         = this .addIconTextTab ("console", "menu", _("Console")),
-         scriptEditor    = this .addIconTextTab ("script-editor", "data_array", _("Script Editor")),
-         animationEditor = this .addIconTextTab ("animation-editor","animation", _("Animation Editor")),
-         routeGraph      = this .addIconTextTab ("route-graph","route", _("Route Graph"));
+      this .addIconTextTab ("console", "menu", _("Console"));
+      this .addIconTextTab ("script-editor", "data_array", _("Script Editor"));
+      this .addIconTextTab ("animation-editor", "animation", _("Keyframe Animation"));
+      this .addIconTextTab ("route-graph", "route", _("Route Graph"));
 
-      console         .tab .find (".material-icons") .css ("background-color", "hsl(135, 53%, 42%)");
-      scriptEditor    .tab .find (".material-icons") .css ("background-color", "hsl(206, 53%, 42%)");
-      animationEditor .tab .find (".material-icons") .css ("background-color", "hsl(246, 40%, 48%)");
-      routeGraph      .tab .find (".material-icons") .css ("background-color", "hsl(281, 40%, 48%)");
+      if (process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT")
+         this .addIconTextTab ("media-recorder", "videocam", _("Media Recorder"));
 
       this .activateTab (3);
       this .activateTab (0);
@@ -64,7 +61,7 @@ module .exports = class Footer extends Tabs
          {
             const Console = require ("../Editors/Console");
 
-            this .console = new Console (this .getPanel ("console"));
+            this .console = new Console (panel);
 
             this .editors .set (panel .attr ("id"), this .console);
             break;
@@ -91,9 +88,18 @@ module .exports = class Footer extends Tabs
          {
             const RouteGraph = require ("../Editors/RouteGraph");
 
-            this .routeGraph = new RouteGraph (this .getPanel ("route-graph"));
+            this .routeGraph = new RouteGraph (panel);
 
             this .editors .set (panel .attr ("id"), this .routeGraph);
+            break;
+         }
+         case "media-recorder":
+         {
+            const MediaRecorder = require ("../Editors/MediaRecorder");
+
+            this .mediaRecorder = new MediaRecorder (panel);
+
+            this .editors .set (panel .attr ("id"), this .mediaRecorder);
             break;
          }
       }
