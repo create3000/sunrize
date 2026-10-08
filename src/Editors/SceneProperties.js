@@ -228,7 +228,7 @@ module .exports = new class SceneProperties extends Dialog
             .append ($("<span></span>") .text (_("Key")))
             .append ($("<span></span>")
                .attr ("title", "Sort column alphabetically.")
-               .addClass (["material-icons", "sort-key"])
+               .addClass (["material-symbols-outlined", "sort-key"])
                .addClass (this .config .file .sortMetaData ? ["active"] : [ ])
                .css ("font-size", "inherit")
                .text ("sort_by_alpha"))
@@ -487,7 +487,7 @@ module .exports = new class SceneProperties extends Dialog
                .append ($("<span></span>")
                   .attr ("title", _("Drag to move key/value pair."))
                   .css ("font-size", "120%")
-                  .addClass (["material-icons", "button", "drag"])
+                  .addClass (["material-symbols-outlined", "button", "drag"])
                   .addClass (this .config .file .sortMetaData ? ["disabled"] : [ ])
                   .text ("drag_handle")))
             .append ($("<td></td>")
@@ -508,7 +508,7 @@ module .exports = new class SceneProperties extends Dialog
                .append ($("<span></span>")
                   .attr ("title", _("Delete key/value pair."))
                   .css ("font-size", "120%")
-                  .addClass (["material-icons", "button"])
+                  .addClass (["material-symbols-outlined", "button"])
                   .text ("delete_forever")
                   .on ("click", (event) => this .removeMetaData (event, key))));
 
@@ -526,7 +526,7 @@ module .exports = new class SceneProperties extends Dialog
                   .addClass ("open-link")
                   .attr ("title", _("Open link in web browser."))
                   .css ("font-size", "120%")
-                  .addClass (["material-icons", "button"])
+                  .addClass (["material-symbols-outlined", "button"])
                   .text ("open_in_new")
                   .appendTo (column)
                   .on ("click", () => electron .shell .openExternal (match [1]));
