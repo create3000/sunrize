@@ -154,6 +154,8 @@ module .exports = class Splitter extends Interface
 
             if (snapStartPosition === 0 || snapStartPosition === 1)
             {
+               this .config .file .position = undefined;
+
                switch (this .orientation)
                {
                   case "horizontal":
