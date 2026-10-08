@@ -25,7 +25,7 @@ monacoLoader .require .config ({
 module .exports = class ScriptEditor extends Interface
 {
    maximizeSeparator = false;
-   
+
    constructor (element)
    {
       super (`Sunrize.ScriptEditor.${element .attr ("id")}.`);
@@ -62,7 +62,8 @@ module .exports = class ScriptEditor extends Interface
          .appendTo (this .scriptEditor);
 
       this .toggleSidebarButton = $("<span></span>")
-         .addClass (["material-symbols-outlined"])
+         .addClass ("material-symbols-outlined")
+         .css ("margin-bottom", 14)
          .attr ("title", _("Toggle sidebar."))
          .text ("dock_to_right")
          .appendTo (this .toolbar)
@@ -71,14 +72,20 @@ module .exports = class ScriptEditor extends Interface
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
       this .createButton = $("<span></span>")
-         .addClass ("material-icons")
+         .addClass ("material-symbols-outlined")
+         .css ("scale", "0.9")
+         .css ("margin-top", -2)
+         .css ("margin-bottom", 8)
          .attr ("title", _("Create new Script node or shader."))
          .text ("add")
          .appendTo (this .toolbar)
          .on ("click", () => this .create ());
 
       this .applyButton = $("<span></span>")
-         .addClass ("material-icons")
+         .addClass ("material-symbols-outlined")
+         .css ("scale", "0.8")
+         .css ("margin-top", 8)
+         .css ("margin-bottom", 8)
          .attr ("title", darwin
             ? _("Save source code in url field. (⌘S)")
             : _("Save source code in url field. (Ctrl+S)"))
@@ -89,21 +96,30 @@ module .exports = class ScriptEditor extends Interface
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
       this .directOutputButton = $("<span></span>")
-         .addClass ("material-icons")
+         .addClass ("material-symbols-outlined")
+         .css ("scale", "0.8")
+         .css ("margin-top", 8)
+         .css ("margin-bottom", 8)
          .attr ("title", _("Toggle direct output."))
          .text ("radio_button_checked")
          .appendTo (this .toolbar)
          .on ("click", () => this .toggleDirectOutput ());
 
       this .mustEvaluateButton = $("<span></span>")
-         .addClass ("material-icons")
+         .addClass ("material-symbols-outlined")
+         .css ("scale", "0.8")
+         .css ("margin-top", 8)
+         .css ("margin-bottom", 8)
          .attr ("title", _("Toggle must evaluate."))
          .text ("priority_high")
          .appendTo (this .toolbar)
          .on ("click", () => this .toggleMustEvaluate ());
 
       this .shaderTypeButton = $("<span></span>")
-         .addClass ("material-icons")
+         .addClass ("material-symbols-outlined")
+         .css ("scale", "0.8")
+         .css ("margin-top", 8)
+         .css ("margin-bottom", 8)
          .attr ("title", _("Change shader type."))
          .text ("auto_awesome")
          .appendTo (this .toolbar)
