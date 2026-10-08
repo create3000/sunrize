@@ -51,6 +51,10 @@ module .exports = class Splitter extends Interface
 
    configure ()
    {
+      this .config .file .setDefaultValues ({
+         startPosition: 0,
+      });
+
       if (!this .isInitialScene && this .config .file .position !== undefined)
          this .position = this .config .file .position;
       else
@@ -146,7 +150,9 @@ module .exports = class Splitter extends Interface
          }
          case "restore":
          {
-            if (this .config .file .startPosition === 0 || this .config .file .startPosition === 1)
+            const snapStartPosition = this .snap (this .config .file .startPosition);
+
+            if (snapStartPosition === 0 || snapStartPosition === 1)
             {
                switch (this .orientation)
                {

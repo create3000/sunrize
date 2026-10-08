@@ -625,6 +625,7 @@ html[platform=darwin] .horizontal-toolbar .select {
 }
 
 .tabs-panel {
+  overflow: hidden;
   position: absolute;
   inset: 0;
 }
