@@ -45,6 +45,7 @@
     --sidebar-background-color: hsl(211, 46%, 86%);
     --tint-color1: rgba(255, 255, 255, 0.4);
     --tint-color2: rgba(255, 255, 255, 0.6);
+    --tabs-icon-color: white;
 
     /* TweakPanel colors */
 
@@ -122,6 +123,7 @@
     --sidebar-background-color: hsl(217, 20%, 21%);
     --tint-color1: rgba(0, 0, 0, 0.2);
     --tint-color2: rgba(0, 0, 0, 0.4);
+    --tabs-icon-color: black;
 
     /* TweakPanel colors */
 

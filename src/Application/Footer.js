@@ -37,10 +37,10 @@ module .exports = class Footer extends Tabs
          animationEditor = this .addIconTextTab ("animation-editor","animation", _("Animation Editor")),
          routeGraph      = this .addIconTextTab ("route-graph","route", _("Route Graph"));
 
-      console         .tab .find (".material-icons") .css ("color", "hsl(135, 53%, 42%)");
-      scriptEditor    .tab .find (".material-icons") .css ("color", "hsl(206, 53%, 42%)");
-      animationEditor .tab .find (".material-icons") .css ("color", "hsl(246, 40%, 48%)");
-      routeGraph      .tab .find (".material-icons") .css ("color", "hsl(281, 40%, 48%)");
+      console         .tab .find (".material-icons") .css ("background-color", "hsl(135, 53%, 42%)");
+      scriptEditor    .tab .find (".material-icons") .css ("background-color", "hsl(206, 53%, 42%)");
+      animationEditor .tab .find (".material-icons") .css ("background-color", "hsl(246, 40%, 48%)");
+      routeGraph      .tab .find (".material-icons") .css ("background-color", "hsl(281, 40%, 48%)");
 
       this .activateTab (3);
       this .activateTab (0);

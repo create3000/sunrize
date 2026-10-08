@@ -1117,6 +1117,11 @@ body.dark .ui-widget .library-list .component {
   background-color: var(--window-tabs-background-color);
 }
 
+#footer > .ui-tabs-nav .material-icons {
+  border-radius: 2px;
+  color: var(--tabs-icon-color);
+}
+
 #footer > .ui-tabs-nav li:not(.ui-tabs-active, :hover, :first-child)::before {
   content: "•";
   position: absolute;
