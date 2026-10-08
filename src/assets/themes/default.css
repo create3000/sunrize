@@ -381,37 +381,24 @@ tr.disabled ~ tr > td > div {
 }
 
 .horizontal-toolbar .material-symbols-outlined {
+  position: relative;
+  top: 3px;
   display: inline-block;
   margin: auto 5px;
   height: var(--icon-size);
   cursor: pointer;
-  font-size: var(--icon-size);
+  font-size: calc(var(--icon-size) + 7px);
   user-select: none;
 }
 
 .vertical-toolbar .material-symbols-outlined {
+  position: relative;
+  left: -3px;
   margin: 0 auto;
   width: var(--icon-size);
   cursor: pointer;
-  font-size: var(--icon-size);
+  font-size: calc(var(--icon-size) + 7px);
   user-select: none;
-}
-
-.horizontal-toolbar .material-symbols-outlined {
-  font-size: calc(var(--icon-size) + 7px);
-  position: relative;
-  top: 3px;
-}
-
-.vertical-toolbar .material-symbols-outlined {
-  font-size: calc(var(--icon-size) + 7px);
-  position: relative;
-  left: -3px;
-}
-
-.small .material-symbols-outlined {
-  font-size: calc(var(--icon-size) + 3px);
-  left: -1px;
 }
 
 .horizontal-toolbar .text {
