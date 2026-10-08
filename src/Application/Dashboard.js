@@ -93,14 +93,14 @@ module .exports = class Dashboard extends Interface
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
       this .viewSelectedButton = $("<span></span>")
-         .addClass (["material-symbols-outlined"])
+         .addClass ("material-symbols-outlined")
          .attr ("title", _("Look at selected objects."))
          .text ("center_focus_strong")
          .appendTo (this .toolbar)
          .on ("click", () => this .viewAll (true));
 
       this .viewAllButton = $("<span></span>")
-         .addClass (["material-symbols-outlined"])
+         .addClass ("material-symbols-outlined")
          .attr ("title", _("Look at all objects in active layer."))
          .text ("zoom_out_map")
          .appendTo (this .toolbar)
@@ -116,7 +116,7 @@ module .exports = class Dashboard extends Interface
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
       this .showPanelsButton = $("<span></span>")
-         .addClass (["material-symbols-outlined"])
+         .addClass ("material-symbols-outlined")
          .attr ("title", _("Show Node Panel."))
          .text ("edit_note")
          .appendTo (this .toolbar)
