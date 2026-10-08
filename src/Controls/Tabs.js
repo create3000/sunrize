@@ -60,6 +60,7 @@ module .exports = class Tabs extends Interface
             .attr ("href", `#${id}-tab`)
             .attr ("title", title)
             .text (title))
+            .attr ("ondragstart", "return false;")
          .appendTo (this .tabs);
 
       this .addPanel (id);
@@ -74,6 +75,7 @@ module .exports = class Tabs extends Interface
             .addClass ("icon")
             .attr ("href", `#${id}-tab`)
             .attr ("title", title)
+            .attr ("ondragstart", "return false;")
             .append ($("<span></span>")
                .addClass ("material-symbols-outlined")
                .text (icon)))
@@ -92,6 +94,7 @@ module .exports = class Tabs extends Interface
             .attr ("href", `#${id}-tab`)
             .attr ("title", title)
             .text (title)
+            .attr ("ondragstart", "return false;")
             .prepend ($("<span></span>")
                .addClass ("material-symbols-outlined")
                .text (icon)))
