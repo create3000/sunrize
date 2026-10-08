@@ -1288,7 +1288,7 @@ module .exports = class Document extends Interface
          outlineEditor .selectNodeElement ($(element), { add: (event .shiftKey || event .metaKey) || i > 0, target: true });
 
       // Scroll element into view.
-      
+
       elements [0] ?.scrollIntoView ({ block: "center", inline: "start", behavior: "smooth" });
    }
 

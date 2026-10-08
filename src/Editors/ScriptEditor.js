@@ -40,6 +40,7 @@ module .exports = class ScriptEditor extends Interface
          .appendTo (this .scriptEditor);
 
       this .verticalSplitterLeft = $("<div></div>")
+         .attr ("id", "script-editor-horizontal")
          .addClass ("vertical-splitter-left")
          .css ("width", "30%")
          .appendTo (this .verticalSplitter);

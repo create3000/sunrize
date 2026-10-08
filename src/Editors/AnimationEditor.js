@@ -129,6 +129,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .toggleAnimationIcon = $("<span></span>")
          .addClass ("material-symbols-outlined")
+         .css ("font-variation-settings", `"FILL" 1`)
          .css ("scale", "0.8")
          .attr ("title", _("Start animation. (Space)"))
          .text ("play_arrow")
@@ -147,7 +148,7 @@ module .exports = class AnimationEditor extends Interface
          .addClass ("material-symbols-outlined")
          .css ("scale", "0.7")
          .attr ("title", _("Loop animation."))
-         .text ("loop")
+         .text ("repeat")
          .appendTo (this .controls)
          .on ("click", () => this .toggleLoop ());
 

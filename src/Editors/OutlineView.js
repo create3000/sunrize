@@ -240,7 +240,7 @@ module .exports = class OutlineView extends Interface
          .on ("dblclick", this .activateNode .bind (this));
 
       child .find (".jstree-ocl")
-         .addClass ("material-icons")
+         .addClass ("material-symbols-outlined")
          .text ("arrow_right")
          .on ("click", this .selectExpander .bind (this))
          .on ("dblclick", this .activateExpander .bind (this));
@@ -800,7 +800,7 @@ module .exports = class OutlineView extends Interface
          .on ("dblclick", this .activateField .bind (this));
 
       child .find (".jstree-ocl")
-         .addClass ("material-icons")
+         .addClass ("material-symbols-outlined")
          .text ("arrow_right")
          .on ("click", this .selectExpander .bind (this))
          .on ("dblclick", this .activateExpander .bind (this));
@@ -1193,7 +1193,8 @@ module .exports = class OutlineView extends Interface
                   .attr ("order", "5")
                   .attr ("title", node ._isActive .getValue () && !node ._isPaused .getValue () ? _("Pause timer.") : _("Start timer."))
                   .attr ("action", "play-node")
-                  .addClass (["button", "material-icons"])
+                  .css ("font-variation-settings", `"FILL" 1`)
+                  .addClass (["button", "material-symbols-outlined"])
                   .addClass (node ._isPaused .getValue () ? "on" : "off")
                   .text (node ._isActive .getValue () ? "pause" : "play_arrow"));
 
@@ -1201,7 +1202,8 @@ module .exports = class OutlineView extends Interface
                   .attr ("order", "6")
                   .attr ("title", _("Stop timer."))
                   .attr ("action", "stop-node")
-                  .addClass (["button", "material-icons"])
+                  .css ("font-variation-settings", `"FILL" 1`)
+                  .addClass (["button", "material-symbols-outlined"])
                   .addClass (node ._isActive .getValue () ? "on" : "off")
                   .text ("stop"));
 
@@ -1211,7 +1213,7 @@ module .exports = class OutlineView extends Interface
                      .attr ("order", "7")
                      .attr ("title", _("Toggle loop."))
                      .attr ("action", "loop-node")
-                     .addClass (["button", "material-icons"])
+                     .addClass (["button", "material-symbols-outlined"])
                      .addClass (node ._loop .getValue () ? "on" : "off")
                      .text ("repeat"));
                }
@@ -1238,7 +1240,7 @@ module .exports = class OutlineView extends Interface
                   .attr ("title", "Load now.")
                   .attr ("action", "reload-node")
                   .addClass (["button", "material-symbols-outlined", className])
-                  .text ("autorenew"));
+                  .text ("refresh"));
 
                continue;
             }
@@ -2292,7 +2294,7 @@ module .exports = class OutlineView extends Interface
          .on ("dblclick", this .activateNode .bind (this));
 
       child .find (".jstree-ocl")
-         .addClass ("material-icons")
+         .addClass ("material-symbols-outlined")
          .text ("arrow_right")
          .on ("click", this .selectExpander .bind (this))
          .on ("dblclick", this .activateExpander .bind (this));
@@ -2375,7 +2377,7 @@ module .exports = class OutlineView extends Interface
          .on ("dblclick", this .activateNode .bind (this));
 
       child .find (".jstree-ocl")
-         .addClass ("material-icons")
+         .addClass ("material-symbols-outlined")
          .text ("arrow_right")
          .on ("click", this .selectExpander .bind (this))
          .on ("dblclick", this .activateExpander .bind (this));
@@ -2475,7 +2477,7 @@ module .exports = class OutlineView extends Interface
             .on ("click", this .selectNone .bind (this));
 
       child .find (".jstree-ocl")
-         .addClass ("material-icons")
+         .addClass ("material-symbols-outlined")
          .text ("arrow_right")
          .on ("click", this .selectExpander .bind (this))
          .on ("dblclick", this .activateExpander .bind (this));
@@ -2588,7 +2590,7 @@ module .exports = class OutlineView extends Interface
             .on ("click", this .selectNone .bind (this));
 
       child .find (".jstree-ocl")
-         .addClass ("material-icons")
+         .addClass ("material-symbols-outlined")
          .text ("arrow_right")
          .on ("click", this .selectExpander .bind (this))
          .on ("dblclick", this .activateExpander .bind (this));

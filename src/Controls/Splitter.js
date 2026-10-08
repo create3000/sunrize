@@ -69,13 +69,13 @@ module .exports = class Splitter extends Interface
          {
             const top = this .splitter .find ("> .horizontal-splitter-top");
 
-            return top .outerHeight () / this .splitter .innerHeight ();
+            return (top .outerHeight () / this .splitter .innerHeight ()) || 0;
          }
          case "vertical":
          {
             const left = this .splitter .find ("> .vertical-splitter-left");
 
-            return left .outerWidth () / this .splitter .innerWidth ();
+            return (left .outerWidth () / this .splitter .innerWidth ()) || 0;
          }
       }
 
@@ -193,6 +193,9 @@ module .exports = class Splitter extends Interface
             break;
          }
       }
+
+      if (!size)
+         return position;
 
       if (position < this .snapDistance / size)
          return 0;
