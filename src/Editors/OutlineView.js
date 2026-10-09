@@ -3967,11 +3967,8 @@ module .exports = class OutlineView extends Interface
 
       for (const [i, element] of elements .entries ())
       {
-         if ($(element) .is (".node, .imported-node.instance"))
+         if ($(element) .is (".node, .imported-node"))
             this .selectNodeElement ($(element), { add: add || i > 0, target: true });
-
-         else if ($(element) .is (".imported-node"))
-            this .selectPrimaryElement ($(element), { add: add || i > 0, target: true });
       }
 
       // Scroll element into view.
