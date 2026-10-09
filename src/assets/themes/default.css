@@ -430,6 +430,7 @@ html[platform=win32] .horizontal-toolbar .material-symbols-outlined {
 
 html[platform=win32] .horizontal-toolbar .input,
 html[platform=win32] .horizontal-toolbar .select {
+  margin-top: -1px;
   padding: 0px 6px 1px 6px;
 }
 
