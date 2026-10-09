@@ -1542,20 +1542,17 @@ body.light .console-output .selected {
   border: 1px solid transparent;
   border-radius: var(--tabs-height);
   padding: 0px;
-  padding-top: 2px;
   height: 100%;
 }
 
-html[platform=darwin] #route-graph .ui-tabs > .ui-tabs-nav li {
-  padding-top: 1px;
-}
-
 #route-graph .ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
+  all: initial;
   pointer-events: none;
   float: none;
   height: auto;
   padding: 0px 6px 0px 10px;
-  line-height: 0;
+  font-size: inherit;
+  font-family: inherit;
   color: var(--window-tabs-text-color);
 }
 
@@ -1585,12 +1582,7 @@ html[platform=darwin] #route-graph .ui-tabs > .ui-tabs-nav li {
 #route-graph .ui-tabs > .ui-tabs-nav .button {
   top: 0px;
   margin-right: 6px;
-  line-height: 0;
   font-size: 10pt;
-}
-
-html[platform=win32] #route-graph .ui-tabs > .ui-tabs-nav .button {
-  top: -1px;
 }
 
 #route-graph .pages {
