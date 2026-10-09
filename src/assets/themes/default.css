@@ -1806,14 +1806,14 @@ body.light .console-output .selected {
   background-color: var(--sidebar-background-color);
 }
 
-.sidebar.ui-widget.ui-widget-content {
+#sidebar.ui-widget.ui-widget-content {
   position: absolute;
   box-sizing: border-box;
   width: 100%;
   height: 100%;
 }
 
-.sidebar.ui-tabs .ui-tabs-nav {
+#sidebar.ui-tabs .ui-tabs-nav {
   left: -1px;
   width: calc(100% + 1px);
   border-left: 1px solid var(--background-color);
