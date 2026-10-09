@@ -1539,6 +1539,7 @@ body.light .console-output .selected {
   flex-direction: row;
   align-items: center;
   float: none;
+  border: 1px solid transparent;
   border-radius: var(--tabs-height);
   padding: 1px 0px;
   height: 100%;
