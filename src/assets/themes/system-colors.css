@@ -175,7 +175,7 @@ body {
   --toolbar-outer-radius: 15px;
   --toolbar-inner-radius: calc(var(--toolbar-outer-radius) / 3 * 2);
   --toolbar-width: 30px;
-  --icon-size: 16px;
+  --icon-size: 23px;
   --medium-icon-size: 18px;
   --large-icon-size: 28px;
 

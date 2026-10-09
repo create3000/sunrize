@@ -386,9 +386,9 @@ tr.disabled ~ tr > td > div {
   top: 3px;
   display: inline-block;
   margin: auto 5px;
-  height: var(--icon-size);
+  height: calc(var(--icon-size) - 7px);
   cursor: pointer;
-  font-size: calc(var(--icon-size) + 7px);
+  font-size: var(--icon-size);
   user-select: none;
 }
 
@@ -398,7 +398,7 @@ html[platform=win32] .horizontal-toolbar .material-symbols-outlined {
 
 .vertical-toolbar .material-symbols-outlined {
   cursor: pointer;
-  font-size: calc(var(--icon-size) + 7px);
+  font-size: var(--icon-size);
   user-select: none;
 }
 
@@ -439,15 +439,15 @@ html[platform=darwin] .horizontal-toolbar .select {
 .horizontal-toolbar .separator {
   display: inline-block;
   margin: auto 10px;
-  width: 0;
-  height: var(--icon-size);
+  width: 0px;
+  height: calc(var(--icon-size) - 7px);
   border-right: 1px solid var(--separator-color);
   user-select: none;
 }
 
 .vertical-toolbar .separator {
-  height: 0;
-  width: var(--icon-size);
+  height: 0px;
+  width: calc(var(--icon-size) - 7px);
   border-bottom: 1px solid var(--separator-color);
   user-select: none;
 }
