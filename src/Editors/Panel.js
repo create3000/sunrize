@@ -19,7 +19,7 @@ module .exports = new class Panel extends Interface
       this .container = $(this .pane .element) .parent ();
       this .selection = require ("../Application/Selection");
 
-      this .container .hide () .appendTo ($("#browser-pane"));
+      this .container .hide () .appendTo ($("#browser-panel"));
 
       this .container .css ({
          "z-index": "3000",

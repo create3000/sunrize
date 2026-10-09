@@ -677,7 +677,7 @@ body.light .qtip-tipsy {
 
 /* Browser */
 
-#browser-pane {
+#browser-panel {
   box-sizing: border-box;
   position: relative;
   width: 100%;

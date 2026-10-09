@@ -113,8 +113,8 @@ module .exports = new class BrowserFrame extends Dialog
          .append ($("<td></td>") .append (this .backgroundColor))
          .appendTo (this .table .body);
 
-      this .paneObserver = new ResizeObserver (() => this .updateSize ());
-      this .paneObserver .observe ($("#browser-pane") [0]);
+      this .panelObserver = new ResizeObserver (() => this .updateSize ());
+      this .panelObserver .observe ($("#browser-panel") [0]);
 
       this .frameObserver = new ResizeObserver (() => this .onresize ());
       this .frameObserver .observe ($("#browser-frame") [0]);
@@ -154,8 +154,8 @@ module .exports = new class BrowserFrame extends Dialog
 
    updateSize ()
    {
-      this .width .val ($("#browser-pane") .width ());
-      this .height .val ($("#browser-pane") .height ());
+      this .width .val ($("#browser-panel") .width ());
+      this .height .val ($("#browser-panel") .height ());
    }
 
    onchange ()
