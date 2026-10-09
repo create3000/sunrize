@@ -3967,7 +3967,7 @@ module .exports = class OutlineView extends Interface
 
       for (const [i, element] of elements .entries ())
       {
-         if ($(element) .is (".node"))
+         if ($(element) .is (".node, .imported-node.instance"))
             this .selectNodeElement ($(element), { add: add || i > 0, target: true });
 
          else if ($(element) .is (".imported-node"))
