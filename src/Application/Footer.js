@@ -23,7 +23,7 @@ module .exports = class Footer extends Tabs
          .addClass (["material-symbols-outlined", "button"])
          .attr ("title", _("Maximize Panel."))
          .css ("scale", "0.8")
-         .text ("fullscreen")
+         .text ("expand")
          .appendTo (this .buttons);
 
       this .setup ();
