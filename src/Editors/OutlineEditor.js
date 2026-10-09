@@ -655,10 +655,6 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          label: _("Add Parent Group"),
          submenu: [
             {
-               label: "Transform",
-               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "Transform", "children"],
-            },
-            {
                label: "Group",
                args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "Group", "children"],
             },
@@ -669,6 +665,10 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
             {
                label: "Switch",
                args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "Switch", "children"],
+            },
+            {
+               label: "Transform",
+               args: ["addParentGroup", element .attr ("id"), executionContext .getId (), node .getId (), "Grouping", "Transform", "children"],
             },
             { type: "separator" },
             {
