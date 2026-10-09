@@ -359,6 +359,7 @@ tr.disabled ~ tr > td > div {
 .vertical-toolbar {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 10px;
   padding-top: 10px;
   right: 0;
@@ -396,10 +397,6 @@ html[platform=win32] .horizontal-toolbar .material-symbols-outlined {
 }
 
 .vertical-toolbar .material-symbols-outlined {
-  position: relative;
-  left: -3px;
-  margin: 0 auto;
-  width: var(--icon-size);
   cursor: pointer;
   font-size: calc(var(--icon-size) + 7px);
   user-select: none;
@@ -449,7 +446,6 @@ html[platform=darwin] .horizontal-toolbar .select {
 }
 
 .vertical-toolbar .separator {
-  margin: 0px auto;
   height: 0;
   width: var(--icon-size);
   border-bottom: 1px solid var(--separator-color);

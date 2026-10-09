@@ -64,7 +64,6 @@ module .exports = class ScriptEditor extends Interface
 
       this .toggleSidebarButton = $("<span></span>")
          .addClass ("material-symbols-outlined")
-         .css ("margin-bottom", "11px")
          .attr ("title", _("Toggle sidebar."))
          .text ("dock_to_right")
          .appendTo (this .toolbar)
