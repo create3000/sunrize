@@ -369,7 +369,7 @@ module .exports = class AnimationMembersList extends Interface
 
       const menu = [
          {
-            label: _("Find Node"),
+            label: _("Find Member"),
             args: ["findNode"],
          },
          {
