@@ -405,7 +405,7 @@ tr.disabled ~ tr > td > div {
   font-size: var(--font-size);
   border: 1px solid var(--system-gray3);
   border-radius: var(--font-size);
-  padding: 1px 6px;
+  padding: 1px 7px;
 }
 
 .horizontal-toolbar .separator {
