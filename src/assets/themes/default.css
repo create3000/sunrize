@@ -418,7 +418,7 @@ html[platform=win32] .horizontal-toolbar .material-symbols-outlined {
   box-sizing: content-box;
   display: inline-block;
   position: relative;
-  top: -4px;
+  top: -5px;
   margin: auto 5px;
   font-family: var(--sans-serif);
   font-size: var(--font-size);
@@ -430,12 +430,12 @@ html[platform=win32] .horizontal-toolbar .material-symbols-outlined {
 
 html[platform=win32] .horizontal-toolbar .input,
 html[platform=win32] .horizontal-toolbar .select {
-  top: -5px;
   padding: 0px 6px 1px 6px;
 }
 
 html[platform=darwin] .horizontal-toolbar .input,
 html[platform=darwin] .horizontal-toolbar .select {
+  top: -4px;
   padding: 1px 6px 0 6px;
 }
 
