@@ -6,7 +6,7 @@ const
 
 module .exports = class UndoManager
 {
-   static shared = new UndoManager (true);
+   static shared = new UndoManager ();
 
    undoStack      = [ ];
    undoFunctions  = [ ];
