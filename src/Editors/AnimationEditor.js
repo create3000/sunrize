@@ -153,12 +153,12 @@ module .exports = class AnimationEditor extends Interface
 
       this .frameInput = $("<input></input>")
          .addClass ("input")
+         .css ("width", "70px")
          .attr ("type", "number")
          .attr ("step", 1)
          .attr ("min", 0)
          .attr ("max", 0)
          .attr ("title", _("Current frame."))
-         .css ("width", "70px")
          .appendTo (this .controls)
          .on ("change input", () => this .setCurrentFrame (this .getCurrentFrame ()));
 
@@ -174,8 +174,8 @@ module .exports = class AnimationEditor extends Interface
 
       this .keyTypeElement = $("<select></select>")
          .addClass ("select")
-         .attr ("title", _("Select keyframe type."))
          .css ("margin-left", "10px")
+         .attr ("title", _("Select keyframe type."))
          .append ($("<option></option>") .text ("CONSTANT"))
          .append ($("<option></option>") .text ("LINEAR") .attr ("selected", ""))
          .append ($("<option></option>") .text ("SPLINE"))
@@ -185,9 +185,9 @@ module .exports = class AnimationEditor extends Interface
          .on ("change", () => this .setKeyType ());
 
       this .timeElement = $("<span></span>")
-         .addClass (["text", "right"])
+         .addClass ("text")
+         .css ("margin-left", "auto")
          .attr ("title", _("Current frame time (hours:minutes:seconds:frames)."))
-         .css ("margin-right", "6px")
          .text (this .formatFrames (0, 10))
          .appendTo (this .controls);
 

@@ -344,23 +344,24 @@ tr.disabled ~ tr > td > div {
 
 .toolbar {
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   position: absolute;
   box-sizing: border-box;
 }
 
 .horizontal-toolbar {
+  flex-direction: row;
+  padding: 0px 10px;
   top: 0;
   width: 100%;
   height: var(--toolbar-width);
-  padding-top: 1px;
   white-space: nowrap;
 }
 
 .vertical-toolbar {
-  display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 10px;
   padding-top: 10px;
   right: 0;
   height: 100%;
@@ -382,18 +383,9 @@ tr.disabled ~ tr > td > div {
 }
 
 .horizontal-toolbar .material-symbols-outlined {
-  position: relative;
-  top: 3px;
-  display: inline-block;
-  margin: auto 5px;
-  height: calc(var(--icon-size) - 7px);
   cursor: pointer;
   font-size: var(--icon-size);
   user-select: none;
-}
-
-html[platform=win32] .horizontal-toolbar .material-symbols-outlined {
-  top: 4px;
 }
 
 .vertical-toolbar .material-symbols-outlined {
@@ -403,42 +395,19 @@ html[platform=win32] .horizontal-toolbar .material-symbols-outlined {
 }
 
 .horizontal-toolbar .text {
-  display: inline-block;
-  position: relative;
-  top: 7px;
-  margin: auto 5px;
   font-size: var(--font-size);
 }
 
 .horizontal-toolbar .input,
 .horizontal-toolbar .select {
-  box-sizing: content-box;
-  display: inline-block;
-  position: relative;
-  top: -5px;
-  margin: auto 5px;
   font-family: var(--sans-serif);
   font-size: var(--font-size);
   border: 1px solid var(--system-gray3);
-  border-radius: 9.5px;
-  padding: 0px 6px 0px 6px;
-  height: 16px;
-}
-
-html[platform=win32] .horizontal-toolbar .input,
-html[platform=win32] .horizontal-toolbar .select {
-  padding: 0px 6px 1px 6px;
-}
-
-html[platform=darwin] .horizontal-toolbar .input,
-html[platform=darwin] .horizontal-toolbar .select {
-  top: -4px;
-  padding: 1px 6px 0 6px;
+  border-radius: 16px;
+  padding: 1px 6px 0px 6px;
 }
 
 .horizontal-toolbar .separator {
-  display: inline-block;
-  margin: auto 10px;
   width: 0px;
   height: calc(var(--icon-size) - 7px);
   border-right: 1px solid var(--separator-color);
@@ -464,25 +433,20 @@ html[platform=darwin] .horizontal-toolbar .select {
 
 .codicon.disabled,
 .material-symbols-outlined.disabled,
-.horizontal-toolbar .text.disabled,
-.horizontal-toolbar .input.disabled,
-.horizontal-toolbar .select.disabled {
+.toolbar .text.disabled,
+.toolbar .input.disabled,
+.toolbar .select.disabled {
   pointer-events: none;
   color: var(--system-gray3);
   border-color: var(--system-gray3);
 }
 
-.horizontal-toolbar .right {
-  position: absolute;
-  right: 0;
-}
-
 .image-icon {
   background-repeat: no-repeat;
-  display: block;
+  min-width: 24px;
   width: 24px;
+  min-height: 24px;
   height: 24px;
-  margin: 0px auto;
   cursor: pointer;
   user-select: none;
   filter: var(--filter-text-color);
@@ -753,10 +717,6 @@ body.light .qtip-tipsy {
   top: 50%;
   transform: translate(-50%,-50%);
   background-color: var(--system-gray7);
-}
-
-:not(#script-editor-console) > .secondary-toolbar:not(.dash-board) {
-  background-color: var(--secondary-toolbar-color);
 }
 
 /* Dialog */
@@ -1049,6 +1009,10 @@ body.dark .ui-widget .library-list .component {
 
 #footer.maximized {
   border-top-right-radius: var(--toolbar-outer-radius);
+}
+
+#footer :not(#script-editor-console) > .secondary-toolbar {
+  background-color: var(--secondary-toolbar-color);
 }
 
 #footer > .vertical-toolbar {
@@ -1444,12 +1408,6 @@ body.light .console-output .selected {
   left: 0px;
   right: calc(var(--toolbar-width) + 1px);
   width: auto;
-}
-
-@container (max-width: 690px) {
-  .animation-editor-controls .right {
-    display: none;
-  }
 }
 
 .animation-editor-toolbar {
