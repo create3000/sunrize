@@ -40,6 +40,8 @@ module .exports = class Document extends Interface
          autoSave: true,
       });
 
+      this .config .file .clear ();
+
       // Layout
 
       this .verticalSplitter   = new Splitter ($("#vertical-splitter"), "vertical");
