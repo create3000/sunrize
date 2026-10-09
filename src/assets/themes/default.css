@@ -1552,9 +1552,7 @@ html[platform=win32] #route-graph .ui-tabs > .ui-tabs-nav li {
 #route-graph .ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
   all: initial;
   pointer-events: none;
-  float: none;
-  height: auto;
-  padding: 0px 6px 0px 10px;
+  margin: 0px 6px 0px 10px;
   font-size: inherit;
   font-family: inherit;
   color: var(--window-tabs-text-color);
