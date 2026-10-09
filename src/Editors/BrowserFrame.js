@@ -154,8 +154,8 @@ module .exports = new class BrowserFrame extends Dialog
 
    updateSize ()
    {
-      this .width  .val ($("#browser-frame") .width ());
-      this .height .val ($("#browser-frame") .height ());
+      this .width  .val ($("#browser-frame") .innerWidth ());
+      this .height .val ($("#browser-frame") .innerHeight ());
    }
 
    onchange ()
@@ -189,7 +189,7 @@ module .exports = new class BrowserFrame extends Dialog
          [numerator = 1, denominator = 1] = configNode ?.getMetaData ("Sunrize/BrowserFrame/aspectRatio") ?? [ ],
          [backgroundColor = ""]           = configNode ?.getMetaData ("Sunrize/BrowserFrame/backgroundColor") ?? [ ],
          aspectRatio                      = numerator / denominator,
-         frameAspectRatio                 = $("#browser-frame") .width () / $("#browser-frame") .height (),
+         frameAspectRatio                 = $("#browser-frame") .innerWidth () / $("#browser-frame") .innerHeight (),
          element                          = $(this .browser .element);
 
       if (fixedSize && aspectRatio)
@@ -213,8 +213,8 @@ module .exports = new class BrowserFrame extends Dialog
    {
       const
          document = require ("../Application/Window"),
-         xOffset  = $("#browser-panel") .outerWidth ()  - $("#browser-frame") .width (),
-         yOffset  = $("#browser-panel") .outerHeight () - $("#browser-frame") .height (),
+         xOffset  = $("#browser-panel") .outerWidth ()  - $("#browser-frame") .innerWidth (),
+         yOffset  = $("#browser-panel") .outerHeight () - $("#browser-frame") .innerHeight (),
          width    = parseInt (this .width  .val ()),
          height   = parseInt (this .height .val ());
 
