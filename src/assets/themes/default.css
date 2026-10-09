@@ -391,6 +391,10 @@ tr.disabled ~ tr > td > div {
   user-select: none;
 }
 
+html[platform=win32] .horizontal-toolbar .material-symbols-outlined {
+  top: 4px;
+}
+
 .vertical-toolbar .material-symbols-outlined {
   position: relative;
   left: -3px;
