@@ -1545,6 +1545,10 @@ body.light .console-output .selected {
   height: 100%;
 }
 
+html[platform=win32] #route-graph .ui-tabs > .ui-tabs-nav li {
+  padding-top: 1px;
+}
+
 #route-graph .ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
   all: initial;
   pointer-events: none;
