@@ -105,7 +105,7 @@ module .exports = new class BrowserFrame extends Dialog
 
       this .backgroundColor = $("<input></input>")
          .attr ("title", _("A background color which is applied to the <x3d-canvas> element."))
-         .attr ("placeholder", "Enter any CSS color here.")
+         .attr ("placeholder", "Enter a CSS color here.")
          .on ("change", () => this .onchange ());
 
       $("<tr></tr>")
