@@ -103,7 +103,7 @@ input[type=range] {
   color: var(--system-yellow);
 }
 
- .read-only :is(x3d-canvas, .toolbar, .dialog, .outline-editor) {
+ .readonly :is(.material-symbols-outlined, .button, .dialog, .scene-graph) {
   pointer-events: none;
 }
 
@@ -1876,6 +1876,7 @@ body.light .console-output .selected {
 }
 
 .tree-view .jstree-ocl {
+  pointer-events: all;
   position: relative;
   top: 0px;
   width: 22px;
@@ -1885,6 +1886,7 @@ body.light .console-output .selected {
 
 .tree-view .jstree-anchor {
   all: initial;
+  pointer-events: inherit;
   user-select: none;
   display: flex;
   position: relative;
@@ -2317,7 +2319,7 @@ body.light .console-output .selected {
   background-color: var(--tp-monitor-background-color-focus);
 }
 
-.tp-mllv_i:read-only {
+.tp-mllv_i:readonly {
   background-color: var(--tp-monitor-background-color-readonly);
 }
 

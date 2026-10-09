@@ -716,14 +716,6 @@ module .exports = new class Tabs
 
       for (const tab of tabs)
          tab .webview .send ("close");
-
-      this .maintenance ();
-   }
-
-   maintenance ()
-   {
-      // Remove items older than one year, time in milliseconds.
-      // new DataStorage (localStorage, "Sunrize.") .removeItems (Date .now () - (1000 * 60 * 60 * 24 * 365));
    }
 
    // Send messages to tabs

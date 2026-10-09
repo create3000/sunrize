@@ -22,9 +22,6 @@ const handler =
       if (String (value) .match (/^(?:undefined|null)$/))
          return target .getDefaultValue (key);
 
-      // Update timestamp.
-      storage [namespace + key + ".#timeStamp"] = JSON .stringify (Date .now ());
-
       return JSON .parse (value);
    },
    set (target, key, value)
@@ -34,15 +31,9 @@ const handler =
          namespace = target .getNameSpace ();
 
       if (value === undefined)
-      {
-         storage .removeItem (namespace + key + ".#timeStamp");
          storage .removeItem (namespace + key);
-      }
       else
-      {
-         storage [namespace + key + ".#timeStamp"] = JSON .stringify (Date .now ());
-         storage [namespace + key]                 = JSON .stringify (value);
-      }
+         storage [namespace + key] = JSON .stringify (value);
 
       return true;
    },
@@ -57,15 +48,15 @@ const handler =
       const
          storage   = target .getStorage (),
          namespace = target .getNameSpace (),
-         ownKeys   = [ ];
+         ownKeys   = new Set ();
 
       for (const key of Object .keys (storage))
       {
-         if (key .startsWith (namespace) && !key .endsWith (".#timeStamp"))
-            ownKeys .push (key .substring (namespace .length));
+         if (key .startsWith (namespace))
+            ownKeys .add (key .substring (namespace .length) .replace (/\..*$/, ""));
       }
 
-      return ownKeys;
+      return Array .from (ownKeys);
    },
    getOwnPropertyDescriptor (target, key)
    {
@@ -146,31 +137,6 @@ module .exports = class DataStorage
       const value = defaults .get (this .target) [key];
 
       return value === undefined ? undefined : JSON .parse (JSON .stringify (value));
-   }
-
-   /**
-    *
-    * @param {number} before
-    */
-   removeItems (before = Date .now ())
-   {
-      const
-         storage   = this .getStorage (),
-         namespace = this .getNameSpace ();
-
-      for (const key of Object .keys (storage))
-      {
-         if (key .startsWith (namespace) && !key .endsWith (".#timeStamp"))
-         {
-            const timeStamp = JSON .parse (storage [key + ".#timeStamp"]);
-
-            if (timeStamp < before)
-            {
-               storage .removeItem (key + ".#timeStamp");
-               storage .removeItem (key);
-            }
-         }
-      }
    }
 
    clear ()
