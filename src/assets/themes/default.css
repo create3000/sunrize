@@ -408,7 +408,7 @@ html[platform=win32] .horizontal-toolbar .material-symbols-outlined {
 .horizontal-toolbar .text {
   display: inline-block;
   position: relative;
-  top: 8px;
+  top: 7px;
   margin: auto 5px;
   font-size: var(--font-size);
 }
