@@ -18,30 +18,30 @@ module .exports = class Splitter extends Interface
       {
          case "horizontal":
          {
-            const top = this .splitter .find ("> .horizontal-splitter-top");
+            this .handle = this .splitter .find ("> .horizontal-splitter-top");
 
-            top .resizable ({
+            this .handle .resizable ({
                minHeight: 0,
                handles: "s",
             })
             .on ("mousedown", () => this .start ())
             .on ("resize", () => this .position = this .position);
 
-            top .find ("> .ui-resizable-s") .append ($("<div></div>"));
+            this .handle .find ("> .ui-resizable-s") .append ($("<div></div>"));
             break;
          }
          case "vertical":
          {
-            const left = this .splitter .find ("> .vertical-splitter-left");
+            this .handle = this .splitter .find ("> .vertical-splitter-left");
 
-            left .resizable ({
+            this .handle .resizable ({
                minWidth: 0,
                handles: "e",
             })
             .on ("mousedown", () => this .start ())
             .on ("resize", () => this .position = this .position);
 
-            left .find ("> .ui-resizable-e") .append ($("<div></div>"));
+            this .handle .find ("> .ui-resizable-e") .append ($("<div></div>"));
             break;
          }
       }

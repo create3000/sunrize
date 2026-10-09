@@ -154,8 +154,10 @@ module .exports = new class BrowserFrame extends Dialog
 
    updateSize ()
    {
-      this .width  .val ($("#browser-frame") .innerWidth ());
-      this .height .val ($("#browser-frame") .innerHeight ());
+      const frame = $("#browser-frame");
+
+      this .width  .val (frame .innerWidth ());
+      this .height .val (frame .innerHeight ());
    }
 
    onchange ()

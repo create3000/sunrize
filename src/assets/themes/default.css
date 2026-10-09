@@ -705,6 +705,30 @@ body.light .qtip-tipsy {
   background-color: var(--background-color);
 }
 
+#browser-size {
+  visibility: hidden;
+  opacity: 0;
+  user-select: none;
+  pointer-events: none;
+  position: absolute;
+  top: calc(var(--topbar-height) + 10px);
+  left: 10px;
+  padding: 2px 5px;
+  background: rgba(255, 255, 255, 0.5);
+  color: rgb(46, 46, 46);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  font-family: var(--sans-serif);
+  font-size: var(--small-font-size);
+  font-weight: bold;
+  transition: visibility 300ms allow-discrete, opacity 300ms linear;
+}
+
+#browser-size.visible {
+  visibility: visible;
+  opacity: 1;
+}
+
 #browser {
   position: absolute;
   width: 100%;

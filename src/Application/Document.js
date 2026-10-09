@@ -60,6 +60,13 @@ module .exports = class Document extends Interface
       this .verticalSplitter   .splitter .on ("position", () => this .verticalSplitterPosition ());
       this .horizontalSplitter .splitter .on ("position", () => this .horizontalSplitterPosition ());
 
+      this .verticalSplitter   .splitter .on ("position", () => this .updateBrowserSize ());
+      this .horizontalSplitter .splitter .on ("position", () => this .updateBrowserSize ());
+      this .verticalSplitter   .handle .on ("mousedown", () => this .startBrowserSize ());
+      this .horizontalSplitter .handle .on ("mousedown", () => this .startBrowserSize ());
+      this .verticalSplitter   .handle .on ("mouseup", () => this .endBrowserSize ());
+      this .horizontalSplitter .handle .on ("mouseup", () => this .endBrowserSize ());
+
       this .footer .maximizeButton .on ("click", () => this .toggleFooterMaximize ());
 
       // Additional Parsers
@@ -817,6 +824,26 @@ module .exports = class Document extends Interface
          this .verticalSplitter   .toggle ("restore");
          this .horizontalSplitter .toggle ("restore");
       }
+   }
+
+   updateBrowserSize ()
+   {
+      const
+         frame  = $("#browser-frame"),
+         width  = Math .round (frame .innerWidth ()),
+         height = Math .round (frame .innerHeight ());
+
+      $("#browser-size") .text (`${width} × ${height}`);
+   }
+
+   startBrowserSize ()
+   {
+      $("#browser-size") .addClass ("visible");
+   }
+
+   endBrowserSize ()
+   {
+      $("#browser-size") .removeClass ("visible");
    }
 
    /**
