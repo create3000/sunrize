@@ -1450,7 +1450,7 @@ body.light .console-output .selected {
   width: auto;
 }
 
-@container (max-width: 630px) {
+@container (max-width: 690px) {
   .animation-editor-controls .right {
     display: none;
   }
