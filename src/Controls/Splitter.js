@@ -24,7 +24,7 @@ module .exports = class Splitter extends Interface
                minHeight: 0,
                handles: "s",
             })
-            .on ("mousedown", () => this .start ())
+            .on ("resizestart", () => this .start ())
             .on ("resize", () => this .position = this .position);
 
             this .handle .find ("> .ui-resizable-s") .append ($("<div></div>"));
@@ -38,7 +38,7 @@ module .exports = class Splitter extends Interface
                minWidth: 0,
                handles: "e",
             })
-            .on ("mousedown", () => this .start ())
+            .on ("resizestart", () => this .start ())
             .on ("resize", () => this .position = this .position);
 
             this .handle .find ("> .ui-resizable-e") .append ($("<div></div>"));
@@ -58,7 +58,7 @@ module .exports = class Splitter extends Interface
       if (!this .isInitialScene && this .config .file .position !== undefined)
          this .position = this .config .file .position;
       else
-         this .splitter .trigger ("position");
+         this .handle .trigger ("position");
    }
 
    get position ()
@@ -121,7 +121,7 @@ module .exports = class Splitter extends Interface
          }
       }
 
-      this .splitter .trigger ("position");
+      this .handle .trigger ("position");
    }
 
    start ()

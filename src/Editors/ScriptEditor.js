@@ -54,7 +54,7 @@ module .exports = class ScriptEditor extends Interface
 
       this .vSplitter .snapToBorder = true;
 
-      this .vSplitter .splitter .on ("position", () => this .splitterPosition ());
+      this .vSplitter .handle .on ("position", () => this .splitterPosition ());
 
       // Toolbar
 

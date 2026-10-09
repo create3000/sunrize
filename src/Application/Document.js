@@ -57,15 +57,15 @@ module .exports = class Document extends Interface
       this .verticalSplitter   .snapToBorder = true;
       this .horizontalSplitter .snapToBorder = true;
 
-      this .verticalSplitter   .splitter .on ("position", () => this .verticalSplitterPosition ());
-      this .horizontalSplitter .splitter .on ("position", () => this .horizontalSplitterPosition ());
+      this .verticalSplitter   .handle .on ("position", () => this .verticalSplitterPosition ());
+      this .horizontalSplitter .handle .on ("position", () => this .horizontalSplitterPosition ());
 
-      this .verticalSplitter   .splitter .on ("position", () => this .updateBrowserSize ());
-      this .horizontalSplitter .splitter .on ("position", () => this .updateBrowserSize ());
-      this .verticalSplitter   .handle .on ("mousedown", () => this .startBrowserSize ());
-      this .horizontalSplitter .handle .on ("mousedown", () => this .startBrowserSize ());
-      this .verticalSplitter   .handle .on ("mouseup", () => this .endBrowserSize ());
-      this .horizontalSplitter .handle .on ("mouseup", () => this .endBrowserSize ());
+      this .verticalSplitter   .handle .on ("position",    () => this .updateBrowserSize ());
+      this .horizontalSplitter .handle .on ("position",    () => this .updateBrowserSize ());
+      this .verticalSplitter   .handle .on ("resizestart", () => this .startBrowserSize ());
+      this .horizontalSplitter .handle .on ("resizestart", () => this .startBrowserSize ());
+      this .verticalSplitter   .handle .on ("resizestop",  () => this .endBrowserSize ());
+      this .horizontalSplitter .handle .on ("resizestop",  () => this .endBrowserSize ());
 
       this .footer .maximizeButton .on ("click", () => this .toggleFooterMaximize ());
 
