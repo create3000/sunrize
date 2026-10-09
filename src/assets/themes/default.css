@@ -1509,7 +1509,7 @@ body.light .console-output .selected {
   box-sizing: border-box;
   left: 0px;
   right: var(--toolbar-width);
-  height: var(--tabs-height);
+  height: calc(var(--tabs-height) - 2px);
   border-right: 1px solid var(--border-color);
   background: none;
 }
