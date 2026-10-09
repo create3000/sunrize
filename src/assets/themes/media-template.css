@@ -1,3 +1,5 @@
-@import url(../../node_modules/material-symbols/index.css);
+@import url(../../node_modules/jquery-ui-dist/jquery-ui.min.css);
+@import url(../../node_modules/qtip2/dist/jquery.qtip.min.css);
 @import url(../../node_modules/spectrum-colorpicker2/dist/spectrum.css);
+@import url(../../node_modules/material-symbols/index.css);
 @import url(../../node_modules/@vscode/codicons/dist/codicon.css);

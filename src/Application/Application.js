@@ -80,7 +80,6 @@ module .exports = class Application
       });
 
       Template .create (path .join (__dirname, "../assets/html/application-template.html"));
-      Template .create (path .join (__dirname, "../assets/html/window-template.html"));
       Template .create (path .join (__dirname, "../assets/themes/media-template.css"));
       Template .create (path .join (__dirname, "../assets/themes/prompt-template.css"));
 

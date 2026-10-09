@@ -18,6 +18,5 @@ vendor
 
 src/assets/html/application.html
 src/assets/html/document.html
-src/assets/html/window.html
 src/assets/themes/media.css
 src/assets/themes/prompt.css
