@@ -154,8 +154,8 @@ module .exports = new class BrowserFrame extends Dialog
 
    updateSize ()
    {
-      this .width .val ($("#browser-panel") .width ());
-      this .height .val ($("#browser-panel") .height ());
+      this .width  .val ($("#browser-frame") .width ());
+      this .height .val ($("#browser-frame") .height ());
    }
 
    onchange ()
@@ -211,9 +211,14 @@ module .exports = new class BrowserFrame extends Dialog
 
    onsize ()
    {
-      const document = require ("../Application/Window");
+      const
+         document = require ("../Application/Window"),
+         xOffset  = $("#browser-panel") .outerWidth ()  - $("#browser-frame") .width (),
+         yOffset  = $("#browser-panel") .outerHeight () - $("#browser-frame") .height (),
+         width    = parseInt (this .width  .val ()),
+         height   = parseInt (this .height .val ());
 
-      document .verticalSplitter   .position = this .width  .val () / $("body") .width ();
-      document .horizontalSplitter .position = this .height .val () / $("body") .height ();
+      document .verticalSplitter   .position = (width  + xOffset) / $("body") .width ();
+      document .horizontalSplitter .position = (height + yOffset) / $("body") .height ();
    }
 };

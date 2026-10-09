@@ -105,8 +105,8 @@ module .exports = class Splitter extends Interface
                top    = this .splitter .find ("> .horizontal-splitter-top"),
                bottom = this .splitter .find ("> .horizontal-splitter-bottom");
 
-            top    .css ("height", (100 * position) + "%");
-            bottom .css ("height", (100 * (1 - position)) + "%");
+            top    .css ("height", `${100 * position}%`);
+            bottom .css ("height", `${100 * (1 - position)}%`);
             break;
          }
          case "vertical":
@@ -115,8 +115,8 @@ module .exports = class Splitter extends Interface
                left  = this .splitter .find ("> .vertical-splitter-left"),
                right = this .splitter .find ("> .vertical-splitter-right");
 
-            left  .css ("width", (100 * position) + "%");
-            right .css ("width", (100 * (1 - position)) + "%");
+            left  .css ("width", `${100 * position}%`);
+            right .css ("width", `${100 * (1 - position)}%`);
             break;
          }
       }
