@@ -705,6 +705,16 @@ body.light .qtip-tipsy {
   background-color: var(--background-color);
 }
 
+#browser {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  background-color: var(--system-gray7);
+}
+
 #browser-size {
   visibility: hidden;
   opacity: 0;
@@ -727,16 +737,6 @@ body.light .qtip-tipsy {
 #browser-size.visible {
   visibility: visible;
   opacity: 1;
-}
-
-#browser {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-50%);
-  background-color: var(--system-gray7);
 }
 
 /* Dialog */
