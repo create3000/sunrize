@@ -382,7 +382,7 @@ tr.disabled ~ tr > td > div {
 
 .horizontal-toolbar .material-symbols-outlined {
   position: relative;
-  top: 3px;
+  top: 4px;
   display: inline-block;
   margin: auto 5px;
   height: var(--icon-size);
@@ -391,8 +391,8 @@ tr.disabled ~ tr > td > div {
   user-select: none;
 }
 
-html[platform=win32] .horizontal-toolbar .material-symbols-outlined {
-  top: 4px;
+html[platform=darwin] .horizontal-toolbar .material-symbols-outlined {
+  top: 3px;
 }
 
 .vertical-toolbar .material-symbols-outlined {
@@ -1628,7 +1628,7 @@ html[platform=darwin] #route-graph .ui-tabs > .ui-tabs-nav li {
 }
 
 #route-graph .ui-tabs > .ui-tabs-nav .button {
-  top: unset;
+  top: 0px;
   margin-right: 6px;
   line-height: 0;
   font-size: 10pt;
