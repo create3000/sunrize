@@ -18,6 +18,13 @@ module .exports = class AnimationMembersList extends Interface
    #animation;
    #timeSensor;
 
+   get outlineEditor ()
+   {
+      const document = require ("../Application/Window");
+
+      return document .sidebar .outlineEditor;
+   }
+
    constructor (editor, element)
    {
       super ("Sunrize.AnimationMembersList.");
@@ -362,12 +369,21 @@ module .exports = class AnimationMembersList extends Interface
 
       const menu = [
          {
+            label: _("Find Node"),
+            args: ["findNode"],
+         },
+         {
             label: _("Remove Member from Animation"),
             args: ["removeMember"],
          },
       ];
 
       electron .ipcRenderer .send ("context-menu", "animation-members-list", menu);
+   }
+
+   findNode ()
+   {
+      this .outlineEditor .findNode (this .#node);
    }
 
    removeMember ()

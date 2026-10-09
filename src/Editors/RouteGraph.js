@@ -1441,29 +1441,7 @@ module .exports = class RouteGraph extends Interface
 
    findNode (id, add)
    {
-      const
-         node          = this .getNode (id),
-         outlineEditor = this .outlineEditor;
-
-      outlineEditor .expandTo (node, { expandObject: true, expandInlineNodes: true, expandAll: true });
-
-      const elements = Array .from (outlineEditor .sceneGraph .find (`.node[node-id=${id}], .imported-node[node-id=${id}]`));
-
-      if (!elements .length)
-         return;
-
-      for (const [i, element] of elements .entries ())
-      {
-         if ($(element) .is (".node"))
-            outlineEditor .selectNodeElement ($(element), { add: add || i > 0, target: true });
-
-         else if ($(element) .is (".imported-node"))
-            outlineEditor .selectPrimaryElement ($(element), { add: add || i > 0, target: true });
-      }
-
-      // Scroll element into view.
-
-      elements [0] ?.scrollIntoView ({ block: "center", inline: "start", behavior: "smooth" });
+      this .outlineEditor .findNode (this .getNode (id), add);
    }
 
    selectNode (event, id)

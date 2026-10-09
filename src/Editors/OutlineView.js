@@ -3954,6 +3954,31 @@ module .exports = class OutlineView extends Interface
 
    onDragEnd (event) { }
 
+   findNode (node, add = false)
+   {
+      const id = node .getId ();
+
+      this .expandTo (node, { expandObject: true, expandInlineNodes: true, expandAll: true });
+
+      const elements = Array .from (this .sceneGraph .find (`.node[node-id=${id}], .imported-node[node-id=${id}]`));
+
+      if (!elements .length)
+         return;
+
+      for (const [i, element] of elements .entries ())
+      {
+         if ($(element) .is (".node"))
+            this .selectNodeElement ($(element), { add: add || i > 0, target: true });
+
+         else if ($(element) .is (".imported-node"))
+            this .selectPrimaryElement ($(element), { add: add || i > 0, target: true });
+      }
+
+      // Scroll element into view.
+
+      elements [0] ?.scrollIntoView ({ block: "center", inline: "start", behavior: "smooth" });
+   }
+
    expandTo (object, { expandExternProtoDeclarations = false, expandInlineNodes = false, expandPrototypeInstances = false, expandObject = false, expandAll = false } = { })
    {
       let flags = Traverse .NONE;
