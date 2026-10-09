@@ -1541,12 +1541,8 @@ body.light .console-output .selected {
   float: none;
   border: 1px solid transparent;
   border-radius: var(--tabs-height);
-  padding: 0px;
+  padding: 1px 0px;
   height: 100%;
-}
-
-html[platform=win32] #route-graph .ui-tabs > .ui-tabs-nav li {
-  padding-top: 1px;
 }
 
 #route-graph .ui-tabs > .ui-tabs-nav .ui-tabs-anchor {
