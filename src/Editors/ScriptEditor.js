@@ -1050,10 +1050,14 @@ main ()
       const menu = [
          {
             label: "VERTEX",
+            type: "radio",
+            checked: !this .node ._type .equals ("FRAGMENT"),
             args: ["changeShaderTypeTo", "VERTEX"],
          },
          {
             label: "FRAGMENT",
+            type: "radio",
+            checked: this .node ._type .equals ("FRAGMENT"),
             args: ["changeShaderTypeTo", "FRAGMENT"],
          },
       ];
