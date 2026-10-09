@@ -79,9 +79,7 @@ module .exports = class Document extends Interface
     */
    async initialize ()
    {
-      $("html")
-         .attr ("platform", process .platform)
-         .addClass ("read-only");
+      $("html") .addClass ([process .platform, "read-only"]);
 
       // Actions
 
