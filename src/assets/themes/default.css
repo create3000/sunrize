@@ -400,11 +400,12 @@ tr.disabled ~ tr > td > div {
 
 .horizontal-toolbar .input,
 .horizontal-toolbar .select {
+  appearance: none;
   font-family: var(--sans-serif);
   font-size: var(--font-size);
   border: 1px solid var(--system-gray3);
   border-radius: 16px;
-  padding: 1px 6px 0px 6px;
+  padding: 1px 6px;
 }
 
 .horizontal-toolbar .separator {
