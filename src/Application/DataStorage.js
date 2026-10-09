@@ -48,15 +48,22 @@ const handler =
       const
          storage   = target .getStorage (),
          namespace = target .getNameSpace (),
-         ownKeys   = new Set ();
+         ownKeys   = [ ];
 
       for (const key of Object .keys (storage))
       {
-         if (key .startsWith (namespace))
-            ownKeys .add (key .substring (namespace .length) .replace (/\..*$/, ""));
+         if (!key .startsWith (namespace))
+            continue;
+
+         const end = key .substring (namespace .length);
+
+         if (end .includes ("."))
+            continue;
+
+         ownKeys .push (end);
       }
 
-      return Array .from (ownKeys);
+      return ownKeys;
    },
    getOwnPropertyDescriptor (target, key)
    {
