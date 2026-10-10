@@ -73,7 +73,7 @@ module .exports = class ScriptEditor extends Interface
 
       this .createButton = $("<span></span>")
          .addClass ("material-symbols-outlined")
-         .attr ("title", _("Create new Script node or shader."))
+         .attr ("title", _("Create new Script or ComposedShader node."))
          .text ("add")
          .appendTo (this .toolbar)
          .on ("click", () => this .create ());
