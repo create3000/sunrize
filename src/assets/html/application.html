@@ -10,7 +10,20 @@
 @import url(../themes/media.css);
 
 .material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-size: var(--icon-size);
+}
+
+.material-symbols-outlined.fill {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.material-symbols-outlined:hover {
+  color: var(--highlight-color);
+}
+
+.material-symbols-outlined.active {
+  color: var(--accent-color);
 }
 
 ::-webkit-scrollbar {
@@ -34,18 +47,19 @@
   background-color: var(--scrollbar-thumb-color-hover);
 }
 
-.etabs .buttons {
-  display: none;
-}
-
 .etabs .nav {
+  overflow: hidden;
   height: var(--window-tabs-height);
   background: var(--background-color);
   box-shadow: none;
   border: none;
+  white-space: nowrap;
+}
+
+.etabs .tabs {
   overflow-x: auto;
   overflow-y: hidden;
-  white-space: nowrap;
+  width: 100%;
 }
 
 .etabs .tab:not(.active, :hover, :focus, :first-child)::before {
@@ -157,6 +171,17 @@
   margin-right: 2px;
   font-size: inherit;
   transform: rotate(45deg);
+}
+
+.etabs .buttons {
+  box-sizing: border-box;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin-left: auto;
+  border: none;
+  padding: 0 5px;
+  height: 100%;
 }
       </style>
     </tab-group>

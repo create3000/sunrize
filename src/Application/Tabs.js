@@ -13,7 +13,7 @@ const
 require ("electron-tabs");
 require ("./CSS");
 
-module .exports = new class Tabs
+class Tabs
 {
    // Construction
 
@@ -49,9 +49,15 @@ module .exports = new class Tabs
 
       electron .ipcRenderer .send ("locale", _.locale);
 
-      // Connect to TabGroup Events
+      // Get TabGroup
 
       this .tabs = $("tab-group") .get (0);
+
+      // Create Buttons
+
+      this .buttons = new Buttons (this .tabs, $(this .tabs .shadowRoot) .find (".etabs .buttons"));
+
+      // Connect to TabGroup Events
 
       this .tabs .on ("tab-active", tab =>
       {
@@ -294,6 +300,16 @@ module .exports = new class Tabs
                case "mute":
                {
                   this .setMute (tab, ... event .args);
+                  break;
+               }
+               case "footer":
+               {
+                  this .buttons .setFooter (... event .args);
+                  break;
+               }
+               case "sidebar":
+               {
+                  this .buttons .setSidebar (... event .args);
                   break;
                }
             }
@@ -729,4 +745,55 @@ module .exports = new class Tabs
    {
       electron .ipcRenderer .on (channel, (event, ... args) => this .tabs .getTabs () .forEach (tab => tab .webview .send (channel, ... args)));
    }
-};
+}
+
+class Buttons
+{
+   constructor (tabs, element)
+   {
+      this .tabs    = tabs;
+      this .buttons = element;
+
+      this .toggleFooterButton = $("<span></span>")
+         .addClass ("material-symbols-outlined")
+         .attr ("title", _("Toggle Panel."))
+         .text ("dock_to_bottom")
+         .appendTo (this .buttons)
+         .on ("click", () => this .toggleFooter ());
+
+      this .toggleSidebarButton = $("<span></span>")
+         .addClass ("material-symbols-outlined")
+         .attr ("title", _("Toggle Sidebar."))
+         .text ("dock_to_left")
+         .appendTo (this .buttons)
+         .on ("click", () => this .toggleSidebar ());
+   }
+
+   setFooter (state)
+   {
+      if (state)
+         this .toggleFooterButton .addClass (["active", "fill"]);
+      else
+         this .toggleFooterButton .removeClass (["active", "fill"]);
+   }
+
+   toggleFooter ()
+   {
+      this .tabs .getActiveTab () ?.webview .send ("toggle-footer");
+   }
+
+   setSidebar (state)
+   {
+      if (state)
+         this .toggleSidebarButton .addClass (["active", "fill"]);
+      else
+         this .toggleSidebarButton .removeClass (["active", "fill"]);
+   }
+
+   toggleSidebar ()
+   {
+      this .tabs .getActiveTab () ?.webview .send ("toggle-sidebar");
+   }
+}
+
+module .exports = new Tabs ();

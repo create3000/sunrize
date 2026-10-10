@@ -293,6 +293,8 @@ module .exports = class Document extends Interface
          this .updateMenu ();
 
          electron .ipcRenderer .sendToHost ("focus");
+         electron .ipcRenderer .sendToHost ("sidebar", this .config .file .sidebar);
+         electron .ipcRenderer .sendToHost ("footer", this .config .file .footer);
 
          // Live Handling
 
@@ -766,6 +768,8 @@ module .exports = class Document extends Interface
 
       this .config .file .sidebar = sidebar;
 
+      electron .ipcRenderer .sendToHost ("sidebar", sidebar);
+
       this .updateMenu ();
    }
 
@@ -798,6 +802,8 @@ module .exports = class Document extends Interface
          return;
 
       this .config .file .footer = footer;
+
+      electron .ipcRenderer .sendToHost ("footer", footer);
 
       this .updateMenu ();
    }
