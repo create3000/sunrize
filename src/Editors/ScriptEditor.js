@@ -63,7 +63,7 @@ module .exports = class ScriptEditor extends Interface
          .appendTo (this .scriptEditor);
 
       this .toggleSidebarButton = $("<span></span>")
-         .addClass ("material-symbols-outlined")
+         .addClass (["material-symbols-outlined", "fill"])
          .attr ("title", _("Toggle sidebar."))
          .text ("dock_to_right")
          .appendTo (this .toolbar)
@@ -1090,9 +1090,9 @@ main ()
    splitterPosition ()
    {
       if (this .vSplitter .position)
-         this .toggleSidebarButton .addClass ("active");
+         this .toggleSidebarButton .addClass (["active", "fill"]);
       else
-         this .toggleSidebarButton .removeClass ("active");
+         this .toggleSidebarButton .removeClass (["active", "fill"]);
    }
 
    toggleSidebar ()

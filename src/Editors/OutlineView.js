@@ -1193,8 +1193,7 @@ module .exports = class OutlineView extends Interface
                   .attr ("order", "5")
                   .attr ("title", node ._isActive .getValue () && !node ._isPaused .getValue () ? _("Pause timer.") : _("Start timer."))
                   .attr ("action", "play-node")
-                  .css ("font-variation-settings", `"FILL" 1`)
-                  .addClass (["button", "material-symbols-outlined"])
+                  .addClass (["button", "material-symbols-outlined", "fill"])
                   .addClass (node ._isPaused .getValue () ? "on" : "off")
                   .text (node ._isActive .getValue () ? "pause" : "play_arrow"));
 
@@ -1202,8 +1201,7 @@ module .exports = class OutlineView extends Interface
                   .attr ("order", "6")
                   .attr ("title", _("Stop timer."))
                   .attr ("action", "stop-node")
-                  .css ("font-variation-settings", `"FILL" 1`)
-                  .addClass (["button", "material-symbols-outlined"])
+                  .addClass (["button", "material-symbols-outlined", "fill"])
                   .addClass (node ._isActive .getValue () ? "on" : "off")
                   .text ("stop"));
 

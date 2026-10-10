@@ -39,9 +39,8 @@ module .exports = class Dashboard extends Interface
          .on ("click", () => this .arrow ());
 
       this .playButton = $("<span></span>")
-         .addClass ("material-symbols-outlined")
+         .addClass (["material-symbols-outlined", "fill"])
          .attr ("title", _("Toggle browser update."))
-         .css ("font-variation-settings", `"FILL" 1`)
          .css ("translate", "-1px")
          .css ("scale", "1.4")
          .text ("play_arrow")
@@ -49,9 +48,8 @@ module .exports = class Dashboard extends Interface
          .on ("click", () => this .play (!this .config .file .play));
 
       this .volumeButton = $("<span></span>")
-         .addClass ("material-symbols-outlined")
+         .addClass (["material-symbols-outlined", "fill"])
          .attr ("title", _("Adjust global sound intensity."))
-         .css ("font-variation-settings", `"FILL" 1`)
          .css ("translate", "1px")
          .text ("volume_down")
          .appendTo (this .toolbar)
@@ -65,9 +63,8 @@ module .exports = class Dashboard extends Interface
       const hierarchy = require ("./Hierarchy");
 
       this .upButton = $("<span></span>")
-         .addClass (["material-symbols-outlined", "disabled"])
+         .addClass (["material-symbols-outlined", "fill", "disabled"])
          .attr ("title", _("Select parent node(s)."))
-         .css ("font-variation-settings", `"FILL" 1`)
          .css ("rotate", "-90deg")
          .css ("scale", "1 1.2")
          .css ("margin", "-2px 0 -6px 0")
@@ -76,9 +73,8 @@ module .exports = class Dashboard extends Interface
          .on ("click", () => this .selectParent ());
 
       this .downButton = $("<span></span>")
-         .addClass (["material-symbols-outlined", "disabled"])
+         .addClass (["material-symbols-outlined", "fill", "disabled"])
          .attr ("title", _("Select child node(s)."))
-         .css ("font-variation-settings", `"FILL" 1`)
          .css ("rotate", "90deg")
          .css ("scale", "1 1.2")
          .css ("margin", "-6px 0 -2px 0")

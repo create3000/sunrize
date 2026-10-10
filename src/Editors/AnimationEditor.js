@@ -127,8 +127,7 @@ module .exports = class AnimationEditor extends Interface
          .on ("click", () => this .firstFrame ());
 
       this .toggleAnimationIcon = $("<span></span>")
-         .addClass ("material-symbols-outlined")
-         .css ("font-variation-settings", `"FILL" 1`)
+         .addClass (["material-symbols-outlined", "fill"])
          .css ("scale", "0.8")
          .attr ("title", _("Start animation. (Space)"))
          .text ("play_arrow")
