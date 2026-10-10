@@ -24,8 +24,9 @@ module .exports = class Splitter extends Interface
                minHeight: 0,
                handles: "s",
             })
-            .on ("resizestart", () => this .start ())
-            .on ("resize", () => this .position = this .position);
+            .on ("resizestart", event => this .start (event))
+            .on ("resizestop", event=> this .stop (event))
+            .on ("resize", event => this .resize (event));
 
             this .handle .find ("> .ui-resizable-s") .append ($("<div></div>"));
             break;
@@ -38,8 +39,9 @@ module .exports = class Splitter extends Interface
                minWidth: 0,
                handles: "e",
             })
-            .on ("resizestart", () => this .start ())
-            .on ("resize", () => this .position = this .position);
+            .on ("resizestart", event=> this .start (event))
+            .on ("resizestop", event=> this .stop (event))
+            .on ("resize", event => this .resize (event));
 
             this .handle .find ("> .ui-resizable-e") .append ($("<div></div>"));
             break;
@@ -124,12 +126,26 @@ module .exports = class Splitter extends Interface
       this .handle .trigger ("position");
    }
 
-   start ()
+   start (event)
    {
+      event .stopPropagation ();
+
       const position = this .position;
 
       if (position > 0 && position < 1)
          this .config .file .startPosition = this .position;
+   }
+
+   stop (event)
+   {
+      event .stopPropagation ();
+   }
+
+   resize (event)
+   {
+      event .stopPropagation ();
+
+      this .position = this .position;
    }
 
    toggle (action)
@@ -152,7 +168,7 @@ module .exports = class Splitter extends Interface
 
             if (position > 0 && position < 1)
                this .config .file .startPosition = position;
-            
+
             this .position = 1;
             break;
          }
