@@ -55,4 +55,5 @@ input:focus {
   border-radius: 7px !important;
   padding: 0.3em 1.8em !important;
   width: 100px !important;
+  font-family: var(--sans-serif) !important;
 }
