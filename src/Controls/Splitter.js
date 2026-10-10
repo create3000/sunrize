@@ -7,7 +7,7 @@ const
 
 /* eslint no-self-assign: "off"
    --------
-   no-self-assign: this .position is updated from getter.
+   no-self-assign: `this.position` is updated from getter.
  */
 
 module .exports = class Splitter extends Interface
