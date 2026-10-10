@@ -858,7 +858,7 @@ module .exports = class ScriptEditor extends Interface
             args: ["createScript"],
          },
          {
-            label: _("Create New Shader"),
+            label: _("Create New ComposedShader"),
             args: ["createShader"],
          },
       ];
