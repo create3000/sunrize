@@ -16,6 +16,5 @@ _site
 .bundle
 vendor
 
-src/assets/html/document.html
 src/assets/themes/media.css
 src/assets/themes/prompt.css
