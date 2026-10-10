@@ -5,6 +5,11 @@ const
    Interface = require ("../Application/Interface"),
    Algorithm = require ("../Bits/Algorithm");
 
+/* eslint no-self-assign: "off"
+   --------
+   no-self-assign: this .position is updated from getter.
+ */
+
 module .exports = class Splitter extends Interface
 {
    constructor (element, orientation)
