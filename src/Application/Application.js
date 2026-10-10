@@ -79,7 +79,6 @@ module .exports = class Application
          size: [1100, 680],
       });
 
-      Template .create (path .join (__dirname, "../assets/html/application-template.html"));
       Template .create (path .join (__dirname, "../assets/themes/media-template.css"));
       Template .create (path .join (__dirname, "../assets/themes/prompt-template.css"));
 
