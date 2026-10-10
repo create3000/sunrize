@@ -138,13 +138,21 @@ module .exports = class Splitter extends Interface
       {
          case "minimize":
          {
-            this .config .file .startPosition = this .position;
+            const position = this .position;
+
+            if (position > 0 && position < 1)
+               this .config .file .startPosition = position;
+
             this .position = 0;
             break;
          }
          case "maximize":
          {
-            this .config .file .startPosition = this .position;
+            const position = this .position;
+
+            if (position > 0 && position < 1)
+               this .config .file .startPosition = position;
+            
             this .position = 1;
             break;
          }
