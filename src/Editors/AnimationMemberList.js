@@ -133,6 +133,7 @@ module .exports = class AnimationMembersList extends Interface
          .append (applyButton)
          .append (document .createTextNode (" "))
          .append (removeButton)
+         .on ("contextmenu", () => this .contextMenuForAnimation (this .#animation))
          .appendTo (listItem);
 
       item
@@ -361,6 +362,20 @@ module .exports = class AnimationMembersList extends Interface
       }
 
       return offsets;
+   }
+
+   contextMenuForAnimation (node)
+   {
+      this .#node = node;
+
+      const menu = [
+         {
+            label: _("Find Node"),
+            args: ["findNode"],
+         },
+      ];
+
+      electron .ipcRenderer .send ("context-menu", "animation-members-list", menu);
    }
 
    contextMenuForNode (node)
