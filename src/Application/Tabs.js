@@ -772,9 +772,9 @@ class Buttons
    setFooter (state)
    {
       if (state)
-         this .toggleFooterButton .addClass (["active", "fill"]);
+         this .toggleFooterButton .addClass ("fill");
       else
-         this .toggleFooterButton .removeClass (["active", "fill"]);
+         this .toggleFooterButton .removeClass ("fill");
    }
 
    toggleFooter ()
@@ -785,9 +785,9 @@ class Buttons
    setSidebar (state)
    {
       if (state)
-         this .toggleSidebarButton .addClass (["active", "fill"]);
+         this .toggleSidebarButton .addClass ("fill");
       else
-         this .toggleSidebarButton .removeClass (["active", "fill"]);
+         this .toggleSidebarButton .removeClass ("fill");
    }
 
    toggleSidebar ()
