@@ -165,6 +165,8 @@ module .exports = class Splitter extends Interface
                      this .splitter .find ("> *") .css ("width", "");
                      break;
                }
+
+               this .handle .trigger ("position");
             }
             else
             {
