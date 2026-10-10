@@ -369,11 +369,11 @@ module .exports = class AnimationMembersList extends Interface
 
       const menu = [
          {
-            label: _("Find Member"),
+            label: _("Find Node"),
             args: ["findNode"],
          },
          {
-            label: _("Remove Member from Animation"),
+            label: _("Remove Node from Animation"),
             args: ["removeMember"],
          },
       ];

@@ -2,6 +2,7 @@
 
 const
    $         = require ("jquery"),
+   electron  = require ("electron"),
    X3D       = require ("../X3D"),
    Interface = require ("../Application/Interface"),
    Traverse  = require ("x3d-traverse"),
@@ -9,6 +10,13 @@ const
 
 module .exports = class NodeList extends Interface
 {
+   get outlineEditor ()
+   {
+      const document = require ("../Application/Window");
+
+      return document .sidebar .outlineEditor;
+   }
+
    constructor (element, { filter = () => true, callback = Function .prototype })
    {
       super ("Sunrize.NodeList.");
@@ -20,6 +28,8 @@ module .exports = class NodeList extends Interface
       this .executionContext = null;
       this .node             = null;
       this .nodes            = [ ];
+
+      electron .ipcRenderer .on ("node-list", (event, key, ... args) => this [key] (... args));
 
       this .setup ();
    }
@@ -72,6 +82,7 @@ module .exports = class NodeList extends Interface
             .append (document .createTextNode (" "))
             .append (nameElement)
             .on ("click", () => this .setNode (node))
+            .on ("contextmenu", () => this .showContextMenu (node))
             .appendTo (listItem);
 
          node .typeName_changed .addInterest ("set_typeName", this, typeNameElement, node);
@@ -123,5 +134,29 @@ module .exports = class NodeList extends Interface
    set_name (element, node)
    {
       element .text (this .getName (node));
+   }
+
+   #node;
+
+   showContextMenu (node)
+   {
+      this .#node = node;
+
+      const menu = [
+         {
+            label: _("Find Node"),
+            args: ["findNode", this .id],
+         },
+      ];
+
+      electron .ipcRenderer .send ("context-menu", "node-list", menu);
+   }
+
+   findNode (id)
+   {
+      if (id !== this .id)
+         return;
+
+      this .outlineEditor .findNode (this .#node);
    }
 };

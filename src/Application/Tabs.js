@@ -137,6 +137,7 @@ class Tabs
       this .forwardToActiveTab ("move-selection-center-to-snap-target");
 
       this .forwardToActiveTab ("document");
+      this .forwardToActiveTab ("node-list");
       this .forwardToActiveTab ("script-editor");
       this .forwardToActiveTab ("animation-members-list");
       this .forwardToActiveTab ("route-graph");
