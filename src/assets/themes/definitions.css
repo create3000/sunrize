@@ -206,7 +206,7 @@ body {
   --accent-color: var(--system-red);
   --separator-color: var(--system-gray3);
 
-  --tabs-background-color: hsl(211, 5%, 96%);
+  --tabs-background-color: hsl(211, 4%, 97%);
   --tabs-text-color: var(--text-color);
   --tabs-highlight-color: var(--accent-color);
   --tabs-height: 26px;
