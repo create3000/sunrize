@@ -345,6 +345,15 @@ tr.disabled ~ tr > td > div {
   background-color: var(--accent-color);
 }
 
+/* Node Name */
+
+.node-name {
+  width: 100%;
+  height: var(--input-height);
+  border: none;
+  background: none;
+}
+
 /* Toolbar */
 
 .toolbar {
@@ -1262,7 +1271,7 @@ body.dark .ui-widget .library-list .component {
   padding-left: 17px;
   width: 100%;
   height: 100%;
-  background-color: transparent;
+  background: none;
   color: var(--text-color);
   resize: none;
   border-right: 1px solid var(--border-color);
@@ -1395,11 +1404,7 @@ body.light .console-output .selected {
 .script-editor .node-name {
   position: absolute;
   bottom: 0px;
-  width: 100%;
-  height: var(--input-height);
-  border: none;
   border-bottom: 1px solid var(--border-color);
-  background: none;
 }
 
 .script-editor .script-editor-monaco {
@@ -1491,10 +1496,6 @@ body.light .console-output .selected {
 .animation-editor .node-name {
   position: absolute;
   bottom: 0px;
-  width: 100%;
-  height: var(--input-height);
-  border: none;
-  background-color: var(--background-color);
 }
 
 .animation-editor .tracks {
