@@ -22,6 +22,16 @@ module .exports = class VideoRecorder extends Interface
 
       this .recorder = element;
 
+      this .left = $("<div></div>")
+         .addClass ("video-recorder-left")
+         .appendTo (this .recorder);
+
+      // Toolbar
+
+      this .toolbar = $("<div></div>")
+         .addClass (["toolbar", "vertical-toolbar", "secondary-toolbar", "video-recorder-toolbar"])
+         .appendTo (this .recorder);
+
       this .setup ();
    }
 
@@ -31,19 +41,23 @@ module .exports = class VideoRecorder extends Interface
    {
       this .#desktop = await electron .ipcRenderer .invoke ("path", "desktop");
 
-      this .left = $("<div></div>")
-         .addClass ("video-recorder-left")
-         .appendTo (this .recorder);
+      // Toolbar
 
       this .recordButton = $("<span></span>")
-         .addClass (["material-symbols-outlined", "button"])
+         .addClass (["material-symbols-outlined"])
          .attr ("title", _("Start recording."))
          .text ("screen_record")
          .on ("click", () => this .toggleRecord ())
-         .appendTo (this .left);
+         .appendTo (this .toolbar);
 
-      this .mimeTypeButton = $("<select></select>")
-         .appendTo (this .left);
+      this .settingsButton = $("<span></span>")
+         .addClass (["material-symbols-outlined"])
+         .attr ("title", _("Edit settings."))
+         .text ("settings")
+         .on ("click", () => this .showSettings ())
+         .appendTo (this .toolbar);
+
+      this .mimeTypeButton = $("<select></select>");
 
       for (const [name, mimeType] of VideoRecorder .mimeTypes)
       {
@@ -55,17 +69,12 @@ module .exports = class VideoRecorder extends Interface
             .val (mimeType)
             .appendTo (this .mimeTypeButton);
       }
-
-      // Toolbar
-
-      this .toolbar = $("<div></div>")
-         .addClass (["toolbar", "vertical-toolbar", "secondary-toolbar", "video-recorder-toolbar"])
-         .appendTo (this .recorder);
    }
 
    #record = false;
-   #recorder;
+   #timeoutId;
    #mimeType;
+   #recorder;
    #blob;
 
    toggleRecord ()
@@ -80,8 +89,9 @@ module .exports = class VideoRecorder extends Interface
    {
       const stream = this .browser .getElement () .captureStream (30);
 
-      this .#mimeType = this .mimeTypeButton .val ();
-      this .#recorder = new MediaRecorder (stream, { mimeType: this .#mimeType });
+      this .#timeoutId = setTimeout (() => this .stopRecord (), 60_000);
+      this .#mimeType  = this .mimeTypeButton .val ();
+      this .#recorder  = new MediaRecorder (stream, { mimeType: this .#mimeType });
 
       const chunks = [ ];
 
@@ -110,6 +120,8 @@ module .exports = class VideoRecorder extends Interface
 
    async stopRecord ()
    {
+      clearTimeout (this .#timeoutId);
+
       this .#recorder .stop ();
 
       const
@@ -124,5 +136,10 @@ module .exports = class VideoRecorder extends Interface
       this .#record = false;
 
       this .recordButton .removeClass ("active");
+   }
+
+   showSettings ()
+   {
+
    }
 };
