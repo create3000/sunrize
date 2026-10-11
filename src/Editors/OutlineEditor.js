@@ -3157,7 +3157,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                   event .originalEvent .dataTransfer .dropEffect = "move";
 
                   if (sourceIndex == destinationIndex || sourceIndex + 1 == destinationIndex)
-                  { }
+                  {
+                     ;
+                  }
                   else if (sourceIndex < destinationIndex)
                   {
                      for (let i = sourceIndex + 1; i < destinationIndex; ++ i)
