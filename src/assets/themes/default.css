@@ -1325,6 +1325,7 @@ body.dark .ui-widget .library-list .component {
 }
 
 .console-search-status {
+  user-select: none;
   flex: 0 0 auto;
   position: relative;
   top: 10px;
