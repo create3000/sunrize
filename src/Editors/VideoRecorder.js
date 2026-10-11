@@ -4,10 +4,11 @@
 const
    $         = require ("jquery"),
    Interface = require ("../Application/Interface"),
+   electron  = require ("electron"),
    fs        = require ("fs"),
    _         = require ("../Application/GetText");
 
-module .exports = class MediaRecorderPanel extends Interface
+module .exports = class VideoRecorder extends Interface
 {
    static mimeTypes = [
       ["MP4", "video/mp4", "mp4"],
@@ -17,12 +18,21 @@ module .exports = class MediaRecorderPanel extends Interface
 
    constructor (element)
    {
-      super (`Sunrize.MediaRecorder.${element .attr ("id")}.`);
+      super (`Sunrize.VideoRecorder.${element .attr ("id")}.`);
 
       this .recorder = element;
 
+      this .setup ();
+   }
+
+   #desktop;
+
+   async initialize ()
+   {
+      this .#desktop = await electron .ipcRenderer .invoke ("path", "desktop");
+
       this .left = $("<div></div>")
-         .addClass ("media-recorder-left")
+         .addClass ("video-recorder-left")
          .appendTo (this .recorder);
 
       this .recordButton = $("<span></span>")
@@ -35,7 +45,7 @@ module .exports = class MediaRecorderPanel extends Interface
       this .mimeTypeButton = $("<select></select>")
          .appendTo (this .left);
 
-      for (const [name, mimeType] of MediaRecorderPanel .mimeTypes)
+      for (const [name, mimeType] of VideoRecorder .mimeTypes)
       {
          if (!MediaRecorder .isTypeSupported (mimeType))
             continue;
@@ -49,10 +59,8 @@ module .exports = class MediaRecorderPanel extends Interface
       // Toolbar
 
       this .toolbar = $("<div></div>")
-         .addClass (["toolbar", "vertical-toolbar", "secondary-toolbar", "media-recorder-toolbar"])
+         .addClass (["toolbar", "vertical-toolbar", "secondary-toolbar", "video-recorder-toolbar"])
          .appendTo (this .recorder);
-
-      this .setup ();
    }
 
    #record = false;
@@ -105,11 +113,11 @@ module .exports = class MediaRecorderPanel extends Interface
       this .#recorder .stop ();
 
       const
-         suffix = MediaRecorderPanel .mimeTypes .find (([, mimeType]) => mimeType === this .#mimeType) [2],
+         suffix = VideoRecorder .mimeTypes .find (([, mimeType]) => mimeType === this .#mimeType) [2],
          blob   = await this .#blob,
          buffer = Buffer .from (await blob .arrayBuffer ());
 
-      fs .writeFileSync (`/Users/holger/Desktop/test.${suffix}`, buffer);
+      fs .writeFileSync (`${this .#desktop}/test.${suffix}`, buffer);
 
       // Toggle State
 

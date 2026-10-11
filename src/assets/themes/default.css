@@ -1841,9 +1841,9 @@ body.light .console-output .selected {
   height: 100%;
 }
 
-/* Media Recorder */
+/* Video Recorder */
 
-.media-recorder-left {
+.video-recorder-left {
   overflow: hidden;
   position: absolute;
   box-sizing: border-box;

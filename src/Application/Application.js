@@ -102,6 +102,7 @@ module .exports = class Application
       electron .ipcMain .handle ("open-files", async (event, urls) => this .openFiles (urls));
       electron .ipcMain .handle ("file-path",  async (event, options) => await this .showDialog (options));
       electron .ipcMain .handle ("fullname",   async () => await (await import ("fullname")) .default ());
+      electron .ipcMain .handle ("path",       async (event, name) => electron .app .getPath (name));
 
       await electron .app .whenReady ();
       await this .updateMenu ();

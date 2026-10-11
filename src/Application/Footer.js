@@ -37,7 +37,7 @@ module .exports = class Footer extends Tabs
       this .addIconTextTab ("route-graph", "route", _("Route Graph"));
 
       if (process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT")
-         this .addIconTextTab ("media-recorder", "videocam", _("Media Recorder"));
+         this .addIconTextTab ("video-recorder", "videocam", _("Video Recorder"));
 
       this .activateTab (3);
       this .activateTab (0);
@@ -93,13 +93,13 @@ module .exports = class Footer extends Tabs
             this .editors .set (panel .attr ("id"), this .routeGraph);
             break;
          }
-         case "media-recorder":
+         case "video-recorder":
          {
-            const MediaRecorder = require ("../Editors/MediaRecorder");
+            const VideoRecorder = require ("../Editors/VideoRecorder");
 
-            this .mediaRecorder = new MediaRecorder (panel);
+            this .videoRecorder = new VideoRecorder (panel);
 
-            this .editors .set (panel .attr ("id"), this .mediaRecorder);
+            this .editors .set (panel .attr ("id"), this .videoRecorder);
             break;
          }
       }
