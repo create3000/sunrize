@@ -361,7 +361,7 @@ tr.disabled ~ tr > td > div {
   padding: 0px 10px;
   top: 0;
   width: 100%;
-  height: var(--toolbar-width);
+  height: var(--toolbar-size);
   white-space: nowrap;
 }
 
@@ -370,7 +370,7 @@ tr.disabled ~ tr > td > div {
   padding-top: 10px;
   right: 0;
   height: 100%;
-  width: var(--toolbar-width);
+  width: var(--toolbar-size);
 }
 
 .secondary-toolbar::after {
@@ -702,7 +702,7 @@ body.light .qtip-tipsy {
   overflow: hidden;
   position: absolute;
   top: var(--topbar-height);
-  right: var(--toolbar-width);
+  right: var(--toolbar-size);
   bottom: 0px;
   left: 0px;
   border-top: 1px solid var(--border-color);
@@ -1054,7 +1054,7 @@ body.dark .ui-widget .library-list .component {
 #footer:empty::after {
   content: "";
   position: absolute;
-  width: var(--toolbar-width);
+  width: var(--toolbar-size);
   right: 0px;
   height: 100%;
   border-left: 1px solid var(--border-color);
@@ -1066,7 +1066,7 @@ body.dark .ui-widget .library-list .component {
   border: 1px solid transparent;
   border-radius: var(--tabs-height);
   padding: 0px;
-  left: calc(var(--toolbar-width) / -2);
+  left: calc(var(--toolbar-size) / -2);
   height: calc(100% - 1px);
 }
 
@@ -1123,7 +1123,7 @@ body.dark .ui-widget .library-list .component {
   position: absolute;
   box-sizing: border-box;
   left: 0px;
-  right: var(--toolbar-width);
+  right: var(--toolbar-size);
   height: 100%;
 }
 
@@ -1372,7 +1372,7 @@ body.light .console-output .selected {
   position: absolute;
   box-sizing: border-box;
   left: 0;
-  right: var(--toolbar-width);
+  right: var(--toolbar-size);
   width: unset;
   height: 100%;
 }
@@ -1432,20 +1432,20 @@ body.light .console-output .selected {
   container-type: inline-size;
   padding-left: 5px;
   left: 0px;
-  right: calc(var(--toolbar-width) + 1px);
+  right: calc(var(--toolbar-size) + 1px);
   width: auto;
 }
 
 .animation-editor-toolbar {
-  padding-top: calc(var(--toolbar-width) + 10px);
+  padding-top: calc(var(--toolbar-size) + 10px);
   border-left: 1px solid var(--border-color);
-  width: calc(var(--toolbar-width) + 1px);
+  width: calc(var(--toolbar-size) + 1px);
 }
 
 .animation-editor-toolbar::before {
   content: "";
   position: absolute;
-  top: var(--toolbar-width);
+  top: var(--toolbar-size);
   height: 0px;
   width: 100%;
   border-bottom: 1px solid var(--border-color);
@@ -1454,8 +1454,8 @@ body.light .console-output .selected {
 .animation-editor .animation-editor-content {
   position: absolute;
   box-sizing: border-box;
-  top: var(--toolbar-width);
-  right: var(--toolbar-width);
+  top: var(--toolbar-size);
+  right: var(--toolbar-size);
   left: 0;
   bottom: 0;
   border-top: 1px solid var(--border-color);
@@ -1499,9 +1499,9 @@ body.light .console-output .selected {
 .animation-editor .tracks {
   position: absolute;
   display: block;
-  width: calc(100% - var(--toolbar-width));
-  height: calc(100% - var(--toolbar-width));
-  top: var(--toolbar-width);
+  width: calc(100% - var(--toolbar-size));
+  height: calc(100% - var(--toolbar-size));
+  top: var(--toolbar-size);
   image-rendering: pixelated;
 }
 
@@ -1533,7 +1533,7 @@ body.light .console-output .selected {
   position: absolute;
   box-sizing: border-box;
   left: 0px;
-  right: var(--toolbar-width);
+  right: var(--toolbar-size);
   height: var(--tabs-height);
   border-right: 1px solid var(--border-color);
   background: none;
@@ -1613,7 +1613,7 @@ body.light .console-output .selected {
   position: absolute;
   box-sizing: border-box;
   top: var(--tabs-height);
-  right: var(--toolbar-width);
+  right: var(--toolbar-size);
   bottom: 0px;
   left: 0px;
   border-right: 1px solid var(--border-color);

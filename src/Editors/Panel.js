@@ -26,7 +26,7 @@ module .exports = new class Panel extends Interface
          "overflow": "unset",
          "width": "fit-content",
          "top": "unset",
-         "right": "calc(var(--toolbar-width) + 8px)",
+         "right": "calc(var(--toolbar-size) + 8px)",
          "bottom": this .container .css ("top"),
       });
 
