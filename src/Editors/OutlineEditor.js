@@ -1843,7 +1843,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          executionContext = this .objects .get (executionContextId),
          childNode        = this .objects .get (nodeId),
          defaultDirectory = $.try (() => path .dirname (url .fileURLToPath (executionContext .getWorldURL ()))),
-         defaultPath      = childNode .getName () && defaultDirectory ? path .join (defaultDirectory, `${childNode .getName ()}.x3d`) : defaultDirectory,
+         defaultPath      = childNode .getDisplayName () && defaultDirectory ? path .join (defaultDirectory, `${childNode .getDisplayName ()}.x3d`) : defaultDirectory,
          response         = await electron .ipcRenderer .invoke ("file-path", { type: "save", defaultPath });
 
       if (response .canceled)
