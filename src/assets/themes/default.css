@@ -84,12 +84,29 @@ body {
 
 /* inputs */
 
+input[type=button] {
+  user-select: none;
+  cursor: pointer;
+}
+
 input[type=checkbox] {
+  user-select: none;
+  cursor: pointer;
   accent-color: var(--system-green);
 }
 
 input[type=range] {
   accent-color: var(--accent-color);
+}
+
+label[for] {
+  user-select: none;
+  cursor: pointer;
+}
+
+.button {
+  user-select: none;
+  cursor: pointer;
 }
 
 /* common */
@@ -206,7 +223,8 @@ td > div {
 tr.disabled ~ tr input,
 tr.disabled ~ tr textarea,
 tr.disabled ~ tr select,
-tr.disabled ~ tr button {
+tr.disabled ~ tr button,
+tr.disabled ~ tr label {
   pointer-events: none;
 }
 
@@ -794,10 +812,6 @@ body.dark .dialog ::placeholder {
   overflow-y: auto;
 }
 
-.scene-properties .button {
-  cursor: pointer;
-}
-
 .scene-properties .drag {
   cursor: move;
 }
@@ -1000,7 +1014,6 @@ body.dark .ui-widget .library-list .component {
 }
 
 .node-list .button {
-  cursor: pointer;
   position: relative;
   top: 2px;
   font-size: var(--font-size);
@@ -1826,6 +1839,18 @@ body.light .console-output .selected {
   height: 100%;
 }
 
+/* Media Recorder */
+
+.media-recorder-left {
+  overflow: hidden;
+  position: absolute;
+  box-sizing: border-box;
+  left: 0px;
+  right: var(--toolbar-size);
+  height: 100%;
+  border-right: 1px solid var(--border-color);
+}
+
 /* Sidebar */
 
 #sidebar {
@@ -2245,7 +2270,6 @@ body.light .console-output .selected {
 }
 
 .scene-graph .button {
-  cursor: pointer;
   font-size: var(--font-size);
   position: relative;
   top: 2.5px;

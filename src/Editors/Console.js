@@ -16,13 +16,15 @@ module .exports = class Console extends Interface
    {
       super (`Sunrize.Console.${element .attr ("id")}.`);
 
+      this .console            = element;
       this .suspendConsole     = false;
       this .historyIndex       = 0;
       this .history            = [ ];
       this .addMessageCallback = this .addMessage .bind (this);
 
-      this .console = element;
-      this .left    = $("<div></div>") .addClass ("console-left") .appendTo (this .console);
+      this .left = $("<div></div>")
+         .addClass ("console-left")
+         .appendTo (this .console);
 
       this .output = $("<div></div>")
          .addClass (["console-output", "output"])
