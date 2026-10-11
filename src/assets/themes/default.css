@@ -54,17 +54,17 @@ body {
 ::-webkit-scrollbar-track, /* Track */
 ::-webkit-scrollbar-thumb:window-inactive, /* Handle */
 ::-webkit-scrollbar-corner { /* Corner */
-  background-color: transparent;
+  background: none;
 }
 
 /* Scrollbar Handle */
 :hover::-webkit-scrollbar-thumb {
-  background-color: var(--scrollbar-thumb-color);
+  background: var(--scrollbar-thumb-color);
   border-radius: var(--scrollbar-width);
 }
 
 :hover::-webkit-scrollbar-thumb:hover {
-  background-color: var(--scrollbar-thumb-color-hover);
+  background: var(--scrollbar-thumb-color-hover);
 }
 
 /* https://developer.chrome.com/docs/css-ui/scrollbar-styling?hl=de */
@@ -75,11 +75,11 @@ body {
 /* textarea resizer */
 
 ::-webkit-resizer {
-  background-color: transparent;
+  background: none;
 }
 
 :hover::-webkit-resizer {
-  background-color: var(--scrollbar-thumb-color);
+  background: var(--scrollbar-thumb-color);
 }
 
 /* inputs */
