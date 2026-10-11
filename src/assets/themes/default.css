@@ -749,6 +749,7 @@ body.light .qtip-tipsy {
   font-family: var(--sans-serif);
   font-size: var(--small-font-size);
   font-weight: bold;
+  white-space: nowrap;
   transition: visibility 300ms allow-discrete, opacity 300ms linear;
 }
 
