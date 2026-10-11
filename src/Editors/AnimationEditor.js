@@ -406,6 +406,10 @@ module .exports = class AnimationEditor extends Interface
       }
       else
       {
+         // TimeSensor
+
+         this .timeSensor = null;
+
          // Show Animations List
 
          this .updateMemberList ();
