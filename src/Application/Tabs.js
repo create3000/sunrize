@@ -755,16 +755,22 @@ class Buttons
       this .tabs    = tabs;
       this .buttons = element;
 
+      const darwin = process .platform === "darwin";
+
       this .toggleFooterButton = $("<span></span>")
          .addClass ("material-symbols-outlined")
-         .attr ("title", _("Toggle Panel."))
+         .attr ("title", darwin
+            ? _("Toggle Panel. (⌘J)")
+            : _("Toggle Panel. (Ctrl+J)"))
          .text ("dock_to_bottom")
          .appendTo (this .buttons)
          .on ("click", () => this .toggleFooter ());
 
       this .toggleSidebarButton = $("<span></span>")
          .addClass ("material-symbols-outlined")
-         .attr ("title", _("Toggle Sidebar."))
+         .attr ("title", darwin
+            ? _("Toggle Sidebar. (⌘B)")
+            : _("Toggle Sidebar. (Ctrl+B)"))
          .text ("dock_to_left")
          .appendTo (this .buttons)
          .on ("click", () => this .toggleSidebar ());
