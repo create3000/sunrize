@@ -433,7 +433,8 @@ tr.disabled ~ tr > td > div {
 }
 
 .horizontal-toolbar .input,
-.horizontal-toolbar .select {
+.horizontal-toolbar .select,
+#footer select {
   appearance: none;
   font-family: var(--sans-serif);
   font-size: var(--font-size);
