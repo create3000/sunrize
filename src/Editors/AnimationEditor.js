@@ -276,6 +276,10 @@ module .exports = class AnimationEditor extends Interface
 
       this .setSelection (selection);
 
+      // Visibility
+
+      document .addEventListener ("visibilitychange", () => this .visibility ());
+
       // Setup
 
       this .setup ();
@@ -294,6 +298,12 @@ module .exports = class AnimationEditor extends Interface
    colorScheme (/* shouldUseDarkColors */)
    {
       this .requestDrawTimeline ();
+   }
+
+   visibility ()
+   {
+      if (this .timeSensor)
+         this .timeSensor ._evenLive = !(document .webkitHidden ?? document .hidden);
    }
 
    isAnimation (node)

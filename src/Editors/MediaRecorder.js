@@ -5,7 +5,6 @@ const
    $         = require ("jquery"),
    electron  = require ("electron"),
    Interface = require ("../Application/Interface"),
-   util      = require ("util"),
    _         = require ("../Application/GetText");
 
 module .exports = class MediaRecorder extends Interface
