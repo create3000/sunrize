@@ -347,10 +347,12 @@ tr.disabled ~ tr > td > div {
 
 /* Node Name */
 
-.node-name {
+.node-name,
+.ui-widget .node-name {
   width: 100%;
   height: var(--input-height);
   border: none;
+  padding: 0px 5px;
   background: none;
 }
 
