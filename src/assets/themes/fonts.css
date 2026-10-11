@@ -1,0 +1,45 @@
+@charset "utf-8";
+
+@font-face {
+  font-family: "Roboto";
+  src: url(../fonts/Roboto/Roboto-VariableFont_wdth,wght.ttf);
+  font-display: swap;
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+  font-style: normal;
+  font-optical-sizing: auto;
+  font-variation-settings: "wdth" 100;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url(../fonts/Roboto/Roboto-Italic-VariableFont_wdth\,wght.ttf);
+  font-display: swap;
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+  font-style: italic;
+  font-optical-sizing: auto;
+  font-variation-settings: "wdth" 100;
+}
+
+@font-face {
+  font-family: "Roboto Mono";
+  src: url(../fonts/Roboto_Mono/RobotoMono-VariableFont_wght.ttf);
+  font-display: swap;
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+  font-style: normal;
+  font-optical-sizing: auto;
+  font-variation-settings: "wdth" 100;
+}
+
+@font-face {
+  font-family: "Roboto Mono";
+  src: url(../fonts/Roboto_Mono/RobotoMono-VariableFont_wght.ttf);
+  font-display: swap;
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+  font-style: italic;
+  font-optical-sizing: auto;
+  font-variation-settings: "wdth" 100;
+}
