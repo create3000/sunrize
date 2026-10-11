@@ -106,13 +106,15 @@ input[type=range] {
   color: var(--system-yellow);
 }
 
- .readonly :is(.material-symbols-outlined, .button, .dialog, .scene-graph) {
+.readonly :is(.material-symbols-outlined, .button, .dialog, .scene-graph) {
   pointer-events: none;
 }
 
 textarea, input, button, select,
 th, td,
-.ui-widget, .ui-widget:has(input, select, textarea, button), .ui-widget-content {
+.ui-widget,
+.ui-widget :is(input, select, textarea, button),
+.ui-widget-content {
   border: none;
   padding: 0;
   background: none;
@@ -594,6 +596,7 @@ tr.disabled ~ tr > td > div {
 .qtip-tipsy {
   color: var(--system-gray1);
   text-shadow: none;
+  font-family: var(--sans-serif);
 }
 
 body.light .qtip-tipsy {
