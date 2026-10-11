@@ -43,6 +43,11 @@
   --scrollbar-thumb-color: rgba(0, 0, 0, 0.2);
   --scrollbar-thumb-color-hover: rgba(0, 0, 0, 0.4);
 
+  --secondary-toolbar-color: hsl(214, 35%, 90%);
+  --sidebar-background-color: hsl(211, 46%, 86%);
+  --tint-color1: rgba(255, 255, 255, 0.5);
+  --tint-color2: white;
+
   --tabs-background-color: white;
   --tabs-text-color: var(--text-color);
   --tabs-highlight-color: var(--accent-color);
@@ -66,13 +71,6 @@
   --filter-system-red: invert(31%) sepia(82%) saturate(3000%) hue-rotate(344deg) brightness(115%) contrast(105%);
   --filter-system-gray0: invert(36%) sepia(72%) saturate(11%) hue-rotate(222deg) brightness(95%) contrast(90%);
   --filter-system-gray1: invert(63%) sepia(4%) saturate(334%) hue-rotate(201deg) brightness(89%) contrast(86%);
-
-  /* Special Colors */
-
-  --secondary-toolbar-color: hsl(214, 35%, 90%);
-  --sidebar-background-color: hsl(211, 46%, 86%);
-  --tint-color1: rgba(255, 255, 255, 0.5);
-  --tint-color2: white;
 
   /* Fonts */
 
@@ -183,6 +181,11 @@
     --filter-text-color: var(--filter-system-gray1);
     --filter-highlight-color: var(--filter-system-gray0);
 
+    --secondary-toolbar-color: hsl(220, 9%, 17%);
+    --sidebar-background-color: hsl(217, 20%, 21%);
+    --tint-color1: rgba(0, 0, 0, 0.2);
+    --tint-color2: rgba(0, 0, 0, 0.4);
+
     --tabs-background-color: var(--system-gray5);
     --tabs-text-color: var(--text-color);
     --tabs-highlight-color: var(--accent-color);
@@ -192,13 +195,6 @@
     --filter-system-red: invert(69%) sepia(59%) saturate(6315%) hue-rotate(336deg) brightness(99%) contrast(108%);
     --filter-system-gray0: invert(97%) sepia(2%) saturate(509%) hue-rotate(200deg) brightness(84%) contrast(94%);
     --filter-system-gray1: invert(72%) sepia(0%) saturate(6315%) hue-rotate(205deg) brightness(81%) contrast(62%);
-
-    /* Special Colors */
-
-    --secondary-toolbar-color: hsl(220, 9%, 17%);
-    --sidebar-background-color: hsl(217, 20%, 21%);
-    --tint-color1: rgba(0, 0, 0, 0.2);
-    --tint-color2: rgba(0, 0, 0, 0.4);
 
     /* Qtip */
 
