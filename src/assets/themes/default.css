@@ -1072,16 +1072,16 @@ body.dark .ui-widget .library-list .component {
 
 #footer > .ui-tabs-nav .ui-tabs-anchor {
   padding: 4px 30px 10px;
-  color: var(--window-tabs-text-color);
+  color: var(--tabs-text-color);
 }
 
 #footer > .ui-tabs-nav .ui-tabs-active .ui-tabs-anchor {
-  color: var(--window-tabs-highlight-color);
+  color: var(--tabs-highlight-color);
 }
 
 #footer > .ui-tabs-nav :is(li.ui-tabs-active, li:hover) {
   border-color: var(--border-color);
-  background-color: var(--window-tabs-background-color);
+  background-color: var(--tabs-background-color);
 }
 
 #footer > .ui-tabs-nav li:not(.ui-tabs-active, :hover, :first-child)::before {
@@ -1577,16 +1577,16 @@ body.light .console-output .selected {
   margin: 0px 6px 0px 10px;
   font-size: inherit;
   font-family: inherit;
-  color: var(--window-tabs-text-color);
+  color: var(--tabs-text-color);
 }
 
 #route-graph .ui-tabs > .ui-tabs-nav .ui-tabs-active .ui-tabs-anchor {
-  color: var(--window-tabs-highlight-color);
+  color: var(--tabs-highlight-color);
 }
 
 #route-graph .ui-tabs > .ui-tabs-nav :is(li.ui-tabs-active, li:hover) {
   border-color: var(--border-color);
-  background-color: var(--window-tabs-background-color);
+  background-color: var(--tabs-background-color);
 }
 
 #route-graph .ui-tabs > .ui-tabs-nav li:not(.ui-tabs-active, :hover, :first-child)::before {

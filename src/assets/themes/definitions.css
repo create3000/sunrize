@@ -86,10 +86,9 @@
     /* Special Colors */
 
     --secondary-toolbar-color: hsl(214, 35%, 90%);
-    --sidebar-background-color: hsl(211, 46%, 86%);
-    --tint-color1: rgba(255, 255, 255, 0.4);
-    --tint-color2: rgba(255, 255, 255, 0.6);
-    --tabs-icon-color: white;
+    --sidebar-background-color: hsl(211, 36%, 86%);
+    --tint-color1: rgba(255, 255, 255, 0.5);
+    --tint-color2: white;
 
     /* TweakPanel colors */
 
@@ -167,7 +166,6 @@
     --sidebar-background-color: hsl(217, 20%, 21%);
     --tint-color1: rgba(0, 0, 0, 0.2);
     --tint-color2: rgba(0, 0, 0, 0.4);
-    --tabs-icon-color: var(--system-gray6);
 
     /* TweakPanel colors */
 
@@ -208,12 +206,11 @@ body {
   --accent-color: var(--system-red);
   --separator-color: var(--system-gray3);
 
-  --window-tabs-background-color: hsl(206, 62%, 95%);
-  --window-tabs-text-color: var(--text-color);
-  --window-tabs-highlight-color: var(--accent-color);
-
-  --window-tabs-height: 34px;
+  --tabs-background-color: hsl(211, 5%, 96%);
+  --tabs-text-color: var(--text-color);
+  --tabs-highlight-color: var(--accent-color);
   --tabs-height: 26px;
+  --window-tabs-height: 34px;
 
   --topbar-height: 8px;
   --toolbar-outer-radius: 15px;
@@ -278,9 +275,9 @@ body {
     --filter-text-color: var(--filter-system-gray1);
     --filter-highlight-color: var(--filter-system-gray0);
 
-    --window-tabs-background-color: var(--system-gray5);
-    --window-tabs-text-color: var(--text-color);
-    --window-tabs-highlight-color: var(--accent-color);
+    --tabs-background-color: var(--system-gray5);
+    --tabs-text-color: var(--text-color);
+    --tabs-highlight-color: var(--accent-color);
 
     /* Tools */
 
