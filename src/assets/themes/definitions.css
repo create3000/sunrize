@@ -94,9 +94,9 @@
 
     --tp-base-border-radius: 12px;
     --tp-container-background-color: white;
-    --tp-container-background-color-active: hsl(230, 7%, 90%);
-    --tp-container-background-color-focus: hsl(230, 7%, 90%);
-    --tp-container-background-color-hover: hsl(230, 7%, 95%);
+    --tp-container-background-color-active: white;
+    --tp-container-background-color-focus: white;
+    --tp-container-background-color-hover: white;
     --tp-base-background-color: var(--system-gray7);
     --tp-base-shadow-color: hsla(0, 0%, 0%, 0.2);
     --tp-container-foreground-color: hsl(230, 7%, 17%);
