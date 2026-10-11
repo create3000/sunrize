@@ -1,85 +1,149 @@
 @charset "utf-8";
 
-@media (prefers-color-scheme: light) {
-  :root {
-    /* Colors */
+:root {
+  /* System Colors */
 
-    --system-red: rgb(255, 56, 60);
-    --system-orange: rgb(255, 141, 40);
-    --system-yellow: rgb(255, 204, 0);
-    --system-green: rgb(52, 199, 89);
-    --system-mint: rgb(0, 200, 179);
-    --system-teal: rgb(0, 195, 208);
-    --system-cyan: rgb(0, 192, 232);
-    --system-blue: rgb(0, 136, 255);
-    --system-indigo: rgb(88, 86, 214);
-    --system-purple: rgb(203, 48, 224);
-    --system-pink: rgb(255, 45, 85);
-    --system-brown: rgb(172, 127, 94);
+  --system-red: rgb(255, 56, 60);
+  --system-orange: rgb(255, 141, 40);
+  --system-yellow: rgb(255, 204, 0);
+  --system-green: rgb(52, 199, 89);
+  --system-mint: rgb(0, 200, 179);
+  --system-teal: rgb(0, 195, 208);
+  --system-cyan: rgb(0, 192, 232);
+  --system-blue: rgb(0, 136, 255);
+  --system-indigo: rgb(88, 86, 214);
+  --system-purple: rgb(203, 48, 224);
+  --system-pink: rgb(255, 45, 85);
+  --system-brown: rgb(172, 127, 94);
 
-    --system-gray0: rgb(72, 72, 77);
-    --system-gray1: rgb(142, 142, 147);
-    --system-gray2: rgb(174, 174, 178);
-    --system-gray3: rgb(199, 199, 204);
-    --system-gray4: rgb(209, 209, 214);
-    --system-gray5: rgb(229, 229, 234);
-    --system-gray6: rgb(242, 242, 247);
-    --system-gray7: rgb(249, 249, 255);
-    --system-gray8: rgb(255, 255, 255);
+  --system-gray0: rgb(72, 72, 77);
+  --system-gray1: rgb(142, 142, 147);
+  --system-gray2: rgb(174, 174, 178);
+  --system-gray3: rgb(199, 199, 204);
+  --system-gray4: rgb(209, 209, 214);
+  --system-gray5: rgb(229, 229, 234);
+  --system-gray6: rgb(242, 242, 247);
+  --system-gray7: rgb(249, 249, 255);
+  --system-gray8: rgb(255, 255, 255);
 
-    --selection-color: black;
-    --selection-background-color: rgb(246, 196, 197);
-    --selection-range: rgba(0, 0, 0, 0.05);
-    --scrollbar-thumb-color: rgba(0, 0, 0, 0.2);
-    --scrollbar-thumb-color-hover: rgba(0, 0, 0, 0.4);
+  /* Colors */
 
-    /* Filter Colors */
+  --background-color: var(--system-gray6);
+  --text-color: var(--system-gray0);
+  --highlight-color: black;
+  --text-disabled: var(--system-gray2);
+  --border-color: var(--system-gray3);
+  --expander-color: var(--system-gray1);
+  --accent-color: var(--system-red);
+  --separator-color: var(--system-gray3);
 
-    --filter-system-red: invert(31%) sepia(82%) saturate(3000%) hue-rotate(344deg) brightness(115%) contrast(105%);
-    --filter-system-gray0: invert(36%) sepia(72%) saturate(11%) hue-rotate(222deg) brightness(95%) contrast(90%);
-    --filter-system-gray1: invert(63%) sepia(4%) saturate(334%) hue-rotate(201deg) brightness(89%) contrast(86%);
+  --selection-color: black;
+  --selection-background-color: rgb(246, 196, 197);
+  --selection-range: rgba(0, 0, 0, 0.05);
+  --scrollbar-thumb-color: rgba(0, 0, 0, 0.2);
+  --scrollbar-thumb-color-hover: rgba(0, 0, 0, 0.4);
 
-    /* Special Colors */
+  --tabs-background-color: white;
+  --tabs-text-color: var(--text-color);
+  --tabs-highlight-color: var(--accent-color);
+  --tabs-height: 26px;
+  --window-tabs-height: 34px;
 
-    --secondary-toolbar-color: hsl(214, 35%, 90%);
-    --sidebar-background-color: hsl(211, 46%, 86%);
-    --tint-color1: rgba(255, 255, 255, 0.5);
-    --tint-color2: white;
+  --topbar-height: 8px;
+  --toolbar-outer-radius: 15px;
+  --toolbar-inner-radius: calc(var(--toolbar-outer-radius) / 3 * 2);
+  --toolbar-size: 30px;
+  --icon-size: 23px;
+  --medium-icon-size: 18px;
+  --large-icon-size: 28px;
 
-    /* TweakPanel colors */
+  /* Filter Colors */
 
-    --tp-base-border-radius: 12px;
-    --tp-container-background-color: white;
-    --tp-container-background-color-active: white;
-    --tp-container-background-color-focus: white;
-    --tp-container-background-color-hover: white;
-    --tp-base-background-color: var(--system-gray7);
-    --tp-base-shadow-color: hsla(0, 0%, 0%, 0.2);
-    --tp-container-foreground-color: hsl(230, 7%, 17%);
-    --tp-groove-foreground-color: hsl(230, 7%, 17%);
-    --tp-input-background-color: hsl(230, 7%, 92%);
-    --tp-input-background-color-active: hsl(230, 7%, 94%);
-    --tp-input-background-color-focus: hsl(230, 7%, 94%);
-    --tp-input-background-color-hover: hsl(230, 7%, 94%);
-    --tp-input-foreground-color: hsl(230, 7%, 17%);
-    --tp-button-background-color: var(--tp-input-background-color);
-    --tp-button-background-color-active: var(--tp-input-background-color-active);
-    --tp-button-background-color-focus: var(--tp-input-background-color-focus);
-    --tp-button-background-color-hover: var(--tp-input-background-color-hover);
-    --tp-button-foreground-color: var(--tp-input-foreground-color);
-    --tp-label-foreground-color: hsl(230, 7%, 17%);
-    --tp-monitor-background-color: var(--tp-input-background-color);
-    --tp-monitor-background-color-readonly: transparent;
-    --tp-monitor-background-color-active: var(--tp-input-background-color-active);
-    --tp-monitor-background-color-focus: var(--tp-input-background-color-focus);
-    --tp-monitor-background-color-hover: var(--tp-input-background-color-hover);
-    --tp-monitor-foreground-color: var(--tp-input-foreground-color);
-  }
+  --filter-text-color: var(--filter-system-gray0);
+  --filter-highlight-color: var(--filter-system-grayZ);
+  --filter-accent-color: var(--filter-system-red);
+
+  --filter-system-red: invert(31%) sepia(82%) saturate(3000%) hue-rotate(344deg) brightness(115%) contrast(105%);
+  --filter-system-gray0: invert(36%) sepia(72%) saturate(11%) hue-rotate(222deg) brightness(95%) contrast(90%);
+  --filter-system-gray1: invert(63%) sepia(4%) saturate(334%) hue-rotate(201deg) brightness(89%) contrast(86%);
+
+  /* Special Colors */
+
+  --secondary-toolbar-color: hsl(214, 35%, 90%);
+  --sidebar-background-color: hsl(211, 46%, 86%);
+  --tint-color1: rgba(255, 255, 255, 0.5);
+  --tint-color2: white;
+
+  /* Fonts */
+
+  --sans-serif: Roboto, sans-serif;
+  --monospace: Roboto Mono, monospace;
+  --font-size: 10pt;
+  --large-font-size: 18pt;
+  --small-font-size: 8pt;
+
+  /*Qtip */
+
+  --qtip-shadow: var(--tool-shadow);
+  --qtip-border-radius: 12px;
+
+  --qtip-background-color: white;
+  --qtip-border: 1px solid var(--system-gray1);
+  --qtip-highlight-color: black;
+
+  /* TweakPanel colors */
+
+  --tp-base-border-radius: 12px;
+  --tp-container-background-color: white;
+  --tp-container-background-color-active: white;
+  --tp-container-background-color-focus: white;
+  --tp-container-background-color-hover: white;
+  --tp-base-background-color: var(--system-gray7);
+  --tp-base-shadow-color: hsla(0, 0%, 0%, 0.2);
+  --tp-container-foreground-color: hsl(230, 7%, 17%);
+  --tp-groove-foreground-color: hsl(230, 7%, 17%);
+  --tp-input-background-color: hsl(230, 7%, 92%);
+  --tp-input-background-color-active: hsl(230, 7%, 94%);
+  --tp-input-background-color-focus: hsl(230, 7%, 94%);
+  --tp-input-background-color-hover: hsl(230, 7%, 94%);
+  --tp-input-foreground-color: hsl(230, 7%, 17%);
+  --tp-button-background-color: var(--tp-input-background-color);
+  --tp-button-background-color-active: var(--tp-input-background-color-active);
+  --tp-button-background-color-focus: var(--tp-input-background-color-focus);
+  --tp-button-background-color-hover: var(--tp-input-background-color-hover);
+  --tp-button-foreground-color: var(--tp-input-foreground-color);
+  --tp-label-foreground-color: hsl(230, 7%, 17%);
+  --tp-monitor-background-color: var(--tp-input-background-color);
+  --tp-monitor-background-color-readonly: transparent;
+  --tp-monitor-background-color-active: var(--tp-input-background-color-active);
+  --tp-monitor-background-color-focus: var(--tp-input-background-color-focus);
+  --tp-monitor-background-color-hover: var(--tp-input-background-color-hover);
+  --tp-monitor-foreground-color: var(--tp-input-foreground-color);
+
+  /* Tools */
+
+  --tool-backdrop-filter: blur(25px);
+  --tool-background-color: color-mix(in srgb, var(--sidebar-background-color), transparent 20%);
+  --tool-border-radius: 12px;
+  --tool-border: 1px solid var(--system-gray8);
+  --tool-shadow: 3px 3px 9px rgba(0, 0, 0, 0.6);
+
+  --background-disabled: repeating-linear-gradient(
+    -45deg,
+    var(--tint-color1),
+    var(--tint-color1) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+
+  /* Route Graph */
+
+  --route-graph-background-color: white;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    /* Colors */
+    /* System Colors */
 
     --system-red: rgb(255, 66, 69);
     --system-orange: rgb(255, 146, 48);
@@ -110,6 +174,19 @@
     --scrollbar-thumb-color: rgba(255, 255, 255, 0.2);
     --scrollbar-thumb-color-hover: rgba(255, 255, 255, 0.4);
 
+    /* Colors */
+
+    --text-color: var(--system-gray1);
+    --highlight-color: var(--system-gray0);
+    --border-color: var(--system-gray8);
+    --expander-color: var(--system-gray8);
+    --filter-text-color: var(--filter-system-gray1);
+    --filter-highlight-color: var(--filter-system-gray0);
+
+    --tabs-background-color: var(--system-gray5);
+    --tabs-text-color: var(--text-color);
+    --tabs-highlight-color: var(--accent-color);
+
     /* Filter Colors */
 
     --filter-system-red: invert(69%) sepia(59%) saturate(6315%) hue-rotate(336deg) brightness(99%) contrast(108%);
@@ -122,6 +199,12 @@
     --sidebar-background-color: hsl(217, 20%, 21%);
     --tint-color1: rgba(0, 0, 0, 0.2);
     --tint-color2: rgba(0, 0, 0, 0.4);
+
+    /* Qtip */
+
+    --qtip-background-color: black;
+    --qtip-border: 1px solid var(--system-gray4);
+    --qtip-highlight-color: white;
 
     /* TweakPanel colors */
 
@@ -147,93 +230,6 @@
     --tp-monitor-background-color-focus: var(--tp-input-background-color-focus);
     --tp-monitor-background-color-hover: var(--tp-input-background-color-hover);
     --tp-monitor-foreground-color: var(--tp-input-foreground-color);
-  }
-}
-
-body {
-  /* Colors */
-
-  --background-color: var(--system-gray6);
-  --text-color: var(--system-gray0);
-  --highlight-color: black;
-  --text-disabled: var(--system-gray2);
-  --border-color: var(--system-gray3);
-  --expander-color: var(--system-gray1);
-  --accent-color: var(--system-red);
-  --separator-color: var(--system-gray3);
-
-  --tabs-background-color: white;
-  --tabs-text-color: var(--text-color);
-  --tabs-highlight-color: var(--accent-color);
-  --tabs-height: 26px;
-  --window-tabs-height: 34px;
-
-  --topbar-height: 8px;
-  --toolbar-outer-radius: 15px;
-  --toolbar-inner-radius: calc(var(--toolbar-outer-radius) / 3 * 2);
-  --toolbar-size: 30px;
-  --icon-size: 23px;
-  --medium-icon-size: 18px;
-  --large-icon-size: 28px;
-
-  /* Filter Colors */
-
-  --filter-text-color: var(--filter-system-gray0);
-  --filter-highlight-color: var(--filter-system-grayZ);
-  --filter-accent-color: var(--filter-system-red);
-
-  /* Fonts */
-
-  --sans-serif: Roboto, sans-serif;
-  --monospace: Roboto Mono, monospace;
-  --font-size: 10pt;
-  --large-font-size: 18pt;
-  --small-font-size: 8pt;
-
-  /* Tools */
-
-  --tool-backdrop-filter: blur(25px);
-  --tool-background-color: color-mix(in srgb, var(--sidebar-background-color), transparent 20%);
-  --tool-border-radius: 12px;
-  --tool-border: 1px solid var(--system-gray8);
-  --tool-shadow: 3px 3px 9px rgba(0, 0, 0, 0.6);
-
-  --background-disabled: repeating-linear-gradient(
-    -45deg,
-    var(--tint-color1),
-    var(--tint-color1) 10px,
-    transparent 10px,
-    transparent 20px
-  );
-
-  /*Qtip */
-
-  --qtip-shadow: var(--tool-shadow);
-  --qtip-border-radius: 12px;
-
-  --qtip-background-color: white;
-  --qtip-border: 1px solid var(--system-gray1);
-  --qtip-highlight-color: black;
-
-  /* Routing Editor */
-
-  --routes-background-color: white;
-}
-
-@media (prefers-color-scheme: dark) {
-  body {
-    /* Colors */
-
-    --text-color: var(--system-gray1);
-    --highlight-color: var(--system-gray0);
-    --border-color: var(--system-gray8);
-    --expander-color: var(--system-gray8);
-    --filter-text-color: var(--filter-system-gray1);
-    --filter-highlight-color: var(--filter-system-gray0);
-
-    --tabs-background-color: var(--system-gray5);
-    --tabs-text-color: var(--text-color);
-    --tabs-highlight-color: var(--accent-color);
 
     /* Tools */
 
@@ -241,14 +237,8 @@ body {
     --tool-border: 1px solid var(--system-gray2);
     --tool-shadow: 3px 3px 9px var(--system-gray8);
 
-    /* Qtip */
+    /* Route Graph */
 
-    --qtip-background-color: black;
-    --qtip-border: 1px solid var(--system-gray4);
-    --qtip-highlight-color: white;
-
-    /* Routing Editor */
-
-    --routes-background-color: black;
+    --route-graph-background-color: black;
   }
 }

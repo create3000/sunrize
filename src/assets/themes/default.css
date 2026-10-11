@@ -1546,7 +1546,7 @@ body.light .console-output .selected {
 
 #route-graph {
   box-sizing: border-box;
-  background: var(--routes-background-color);
+  background: var(--route-graph-background-color);
 }
 
 .route-graph-top {
