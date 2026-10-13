@@ -364,17 +364,6 @@ tr.disabled ~ tr > td > div {
   background-color: var(--accent-color);
 }
 
-/* Node Name */
-
-.node-name,
-.ui-widget .node-name {
-  width: 100%;
-  height: var(--input-height);
-  border: none;
-  padding: 0px 5px;
-  background: none;
-}
-
 /* Toolbar */
 
 .toolbar {
@@ -1422,6 +1411,11 @@ body.light .console-output .selected {
   position: absolute;
   bottom: 0px;
   border-bottom: 1px solid var(--border-color);
+  width: 100%;
+  height: var(--input-height);
+  border: none;
+  padding: 0px 5px;
+  background: none;
 }
 
 .script-editor .script-editor-monaco {
@@ -1513,6 +1507,11 @@ body.light .console-output .selected {
 .animation-editor .node-name {
   position: absolute;
   bottom: 0px;
+  width: 100%;
+  height: var(--input-height);
+  border: none;
+  padding: 0px 5px;
+  background: none;
 }
 
 .animation-editor .tracks {
@@ -2336,6 +2335,10 @@ body.light .console-output .selected {
 
 .tp-rotv {
   border: var(--qtip-border);
+}
+
+.tp-lblv_l, .tp-rotv_b, .tp-fldv_b, .tp-coltxtv_ms {
+  color: var(--text-color) !important;
 }
 
 .tp-lblv_v {
