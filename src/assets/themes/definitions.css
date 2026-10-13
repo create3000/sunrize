@@ -204,6 +204,7 @@
 
     /* TweakPanel colors */
 
+    --lbl-fg
     --tp-base-border-radius: 12px;
     --tp-container-background-color: black;
     --tp-container-background-color-hover: black;

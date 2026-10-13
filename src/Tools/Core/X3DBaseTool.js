@@ -7,7 +7,7 @@ const handler =
       if (Reflect .has (target, key))
          return Reflect .get (target, key);
 
-      const property = target .node [key];
+      const property = Reflect .get (target .node, key);
 
       if (typeof property === "function")
          return property .bind (target .node);
