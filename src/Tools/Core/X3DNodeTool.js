@@ -503,12 +503,14 @@ class X3DNodeTool extends X3DBaseTool
       if (this .nodePush)
          this .node .push (renderObject);
 
-      renderObject .getSensors () .push (X3DNodeTool .#sensors);
+      renderObject .getHAnimNode () .push (null);
+      renderObject .getSensors ()   .push (X3DNodeTool .#sensors);
 
       for (const innerNode of this .#innerNodes)
          innerNode ?.traverse (type, renderObject);
 
-      renderObject .getSensors () .pop ();
+      renderObject .getSensors ()   .pop ();
+      renderObject .getHAnimNode () .pop ();
 
       if (this .nodePush)
          this .node .pop (renderObject);
