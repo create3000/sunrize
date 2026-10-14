@@ -364,6 +364,16 @@ tr.disabled ~ tr > td > div {
   background-color: var(--accent-color);
 }
 
+/* Node Name */
+
+input.node-name {
+  width: 100%;
+  height: var(--input-height);
+  border: none;
+  padding: 0px 5px;
+  background: none;
+}
+
 /* Toolbar */
 
 .toolbar {
@@ -1041,6 +1051,13 @@ body.dark .ui-widget .library-list .component {
 
 /* Footer */
 
+@media (prefers-color-scheme: light) {
+  #footer {
+    --tint-color1: rgba(255, 255, 255, 0.5);
+    --tint-color2: white;
+  }
+}
+
 #footer {
   overflow: hidden;
   position: absolute;
@@ -1411,11 +1428,6 @@ body.light .console-output .selected {
   position: absolute;
   bottom: 0px;
   border-bottom: 1px solid var(--border-color);
-  width: 100%;
-  height: var(--input-height);
-  border: none;
-  padding: 0px 5px;
-  background: none;
 }
 
 .script-editor .script-editor-monaco {
@@ -1507,11 +1519,6 @@ body.light .console-output .selected {
 .animation-editor .node-name {
   position: absolute;
   bottom: 0px;
-  width: 100%;
-  height: var(--input-height);
-  border: none;
-  padding: 0px 5px;
-  background: none;
 }
 
 .animation-editor .tracks {
