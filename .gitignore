@@ -1,7 +1,6 @@
 /node_modules/
 /out/
 /x_ite/
-/package-lock.json
 /docs/ssl
 certificate.pfx
 certificate-creation.ps1
