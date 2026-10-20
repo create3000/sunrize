@@ -25,7 +25,7 @@ class GeoLODTool extends X3DBoundedObjectTool
 
       super .reshapeTool ();
 
-      const center = this .node .getCoord (this .node ._center, GeoLODTool .#center);
+      const center = this .node .getLocalCoord (this .node ._center, GeoLODTool .#center);
 
       if (!this .tool .center .getValue () .equals (center))
          this .tool .center = center;

@@ -3581,7 +3581,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
             case X3D .X3DConstants .GeoCoordinate:
             {
                const point = node ._point
-                  .map (p => node .getCoord (p .getValue (), new X3D .Vector3 ()))
+                  .map (p => node .getLocalCoord (p .getValue (), new X3D .Vector3 ()))
                   .map (p => this .roundToIntegerIfAlmostEqual (modelMatrix .multVecMatrix (p .getValue () .copy ())))
                   .map (p => node .getGeoCoord (p .getValue (), new X3D .Vector3 ()));
 
