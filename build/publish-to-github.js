@@ -5,7 +5,7 @@ const { systemSync, sh } = require ("shell-tools");
 
 function main ()
 {
-   const electron = sh ("npm list electron") .match (/(electron@.*?)\n/s) [0];
+   const electron = sh ("npm list electron") .match (/(electron@.*?)\n/s) [1];
 
    systemSync (`git pull origin`);
    systemSync (`npm up`);
