@@ -21,9 +21,9 @@ Sunrize is an easy-to-use editor for X3D files, built on top of the [X_ITE](/x_i
 
 ## Installer Packages
 
-The latest builds of Sunrize are available as installer packages on the [Sunrize Releases](https://github.com/create3000/sunrize/releases) page on GitHub. From there, you can download precompiled binaries, but currently only for Windows.
+The latest builds of Sunrize are available as installer packages on the [Sunrize Releases](https://github.com/create3000/sunrize/releases) page on GitHub. From there, you can download precompiled binaries, for Windows and Linux.
 
-[<i class="fa-brands fa-windows"></i><br>Windows](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/Sunrize.X3D.Editor-{{ site.version }}.Setup.exe){: download="" .platform .w-25 }
+[<i class="fa-brands fa-windows"></i><br>Windows](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/Sunrize.X3D.Editor-{{ site.version }}.Setup.exe){: download="" .platform .w-25 }[<i class="fa-solid fa-gauge-high"></i><br>RPM](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/sunrize-{{ site.version }}-1.x86_64.rpm){: download="" .platform .w-25 }[<i class="fa-brands fa-debian"></i><br>DEB](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/sunrize_{{ site.version }}_amd64.deb){: download="" .platform .w-25 }[<i class="fa-regular fa-image"></i><br>AppImage](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/Sunrize.X3D.Editor-{{ site.version }}-x64.AppImage){: download="" .platform .w-25 }
 
 ## Run from Console
 
