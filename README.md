@@ -15,7 +15,7 @@ Sunrize is based on [X_ITE](https://create3000.github.io/x_ite/) and is a basic 
 
 ## Installer Packages
 
-The latest builds of Sunrize are available as installer packages on the [Sunrize Releases](https://github.com/create3000/sunrize/releases) page on GitHub. From there, you can download precompiled binaries, but currently only for Windows.
+The latest builds of Sunrize are available as installer packages on the [Sunrize Releases](https://github.com/create3000/sunrize/releases) page on GitHub. From there, you can download precompiled binaries for Windows, macOS, and Linux.
 
 ## Run from Console
 
