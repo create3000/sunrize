@@ -31,7 +31,7 @@ Click here to download the latest Windows installer for Sunrize:
 
 ### macOS
 
-Click here to download the latest macOS app for Sunrize:
+Click here to download the latest macOS app of Sunrize:
 
 [<i class="fa-brands fa-apple"></i><br>macOS](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/Sunrize.X3D.Editor-darwin-arm64-{{ site.version }}.zip){: download="" .platform .w-25 }
 
@@ -43,7 +43,7 @@ xattr -dr com.apple.quarantine "/Applications/Sunrize X3D Editor.app"
 
 ### Linux
 
-Click here to download the latest Linux installer for Sunrize:
+Click here to download the latest Linux app or installer for Sunrize:
 
 [<i class="fa-solid fa-gear"></i><br>AppImage](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/Sunrize.X3D.Editor-{{ site.version }}-x64.AppImage){: download="" .platform .w-25 }[<i class="fa-brands fa-debian"></i><br>DEB](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/sunrize_{{ site.version }}_amd64.deb){: download="" .platform .w-25 }[<i class="fa-solid fa-gauge-high"></i><br>RPM](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/sunrize-{{ site.version }}-1.x86_64.rpm){: download="" .platform .w-25 }
 
