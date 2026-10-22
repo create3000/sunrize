@@ -19,6 +19,8 @@ const linuxOptions = {
    * This uses, undocumented in official makers and documented
    * in ReForged, object registry of icon sizes mapping to
    * icon file.
+   *
+   * https://spacingbat3.github.io/ReForged/interfaces/_reforged_maker-appimage.MakerAppImageConfig.html
    */
   icon: {
     "96x96": iconSvg,
