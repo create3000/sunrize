@@ -1,7 +1,7 @@
 const path = require("path");
 const pkginfo = require("./package.json");
 
-/** Extensionless path to icon files */
+/** Path to icon files without extension */
 const iconPath = path.resolve(__dirname, "src", "assets", "images", "icon");
 const iconPng = `${iconPath}.png`;
 const iconSvg = `${iconPath}.svg`;
@@ -21,8 +21,8 @@ const linuxOptions = {
    * icon file.
    */
   icon: {
-    "96x96":    iconSvg,
-    "256x256":  iconPng,
+    "96x96": iconSvg,
+    "256x256": iconPng,
     "scalable": iconSvg,
   },
 };
@@ -31,7 +31,7 @@ module.exports = {
   packagerConfig: {
     // On Linux, it is preferred to be a `name` than
     // `productName` (to make it easier to type in
-    // terminals), Windows "maybe" it is benefitial
+    // terminals), Windows "maybe" it is beneficial
     // (you might always add it to %PATH% + it is
     // not a name of shortcut that is visible to end
     // users), macOS does not care according to docs
