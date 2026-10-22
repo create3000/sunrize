@@ -33,7 +33,7 @@ Click here to download the latest Windows installer for Sunrize:
 
 Click here to download the latest Linux installer for Sunrize:
 
-[<i class="fa-solid fa-gauge-high"></i><br>RPM](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/sunrize-{{ site.version }}-1.x86_64.rpm){: download="" .platform .w-25 }[<i class="fa-brands fa-debian"></i><br>DEB](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/sunrize_{{ site.version }}_amd64.deb){: download="" .platform .w-25 }[<i class="fa-regular fa-image"></i><br>AppImage](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/Sunrize.X3D.Editor-{{ site.version }}-x64.AppImage){: download="" .platform .w-25 }
+[<i class="fa-solid fa-gauge-high"></i><br>RPM](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/sunrize-{{ site.version }}-1.x86_64.rpm){: download="" .platform .w-25 }[<i class="fa-brands fa-debian"></i><br>DEB](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/sunrize_{{ site.version }}_amd64.deb){: download="" .platform .w-25 }[<i class="fa-solid fa-gear"></i><br>AppImage](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/Sunrize.X3D.Editor-{{ site.version }}-x64.AppImage){: download="" .platform .w-25 }
 
 ## Run from Console
 
