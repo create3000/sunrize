@@ -25,6 +25,22 @@ const linuxOptions = {
     "256x256": iconPng,
     "scalable": iconSvg,
   },
+  mimeType: [
+    "model/x3d+xml",
+    "model/x3d+vrml",
+    "model/x3d+json",
+    "model/vrml",
+    "x-world/x-vrml",
+    "model/gltf+json",
+    "model/vrm",
+    "model/obj",
+    "model/stl",
+    "model/ply",
+    "model/sog",
+    "model/spz",
+    "model/off",
+    "image/svg+xml",
+  ],
 };
 
 module.exports = {
