@@ -14,18 +14,18 @@ const linuxOptions = {
   /**
    * Note: this has extension in contrast to packagerConfig.
    *
-   * FreeDesktop also supports scallable (vector) icons properly.
+   * FreeDesktop also supports scalable (vector) icons properly.
    *
    * This uses, undocumented in official makers and documented
    * in ReForged, object registry of icon sizes mapping to
    * icon file.
    */
   icon: {
-    "96x96":     iconSvg,
-    "256x256":   iconPng,
-    "scallable": iconSvg
+    "96x96":    iconSvg,
+    "256x256":  iconPng,
+    "scalable": iconSvg,
   },
-}
+};
 
 module.exports = {
   packagerConfig: {
@@ -63,7 +63,7 @@ module.exports = {
     // macOS
     extendInfo: "./src/assets/Info.plist",
     osxSign: {
-      optionsForFile: (filePath) => {
+      optionsForFile: (/* filePath */) => {
         // Here, we keep it simple and return a single entitlements.plist file.
         // You can use this callback to map different sets of entitlements
         // to specific files in your packaged app.
@@ -77,7 +77,7 @@ module.exports = {
     {
       name: "@electron-forge/maker-squirrel",
       platforms: ["win32"],
-      config: (arch) => ({
+      config: (/* arch */) => ({
         authors: 'CREATE3000 and Contributors',
         loadingGif: "./src/assets/images/loading.gif",
         setupIcon: `${iconPath}.ico`,
