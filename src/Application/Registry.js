@@ -17,7 +17,7 @@ module .exports = class Registry
       const
          exe = electron .app .getPath ("exe"),
          reg = fs .readFileSync (path .join (__dirname, "../assets/X3D.reg"), { encoding: "utf-8" }),
-         tmp = path .join (__dirname, "../assets/X3D-tmp.reg");
+         tmp = path .join (electron .app .getAppPath ("temp"), "Sunrize-X3D.reg");
 
       const out = reg .replaceAll ("SUNRIZE_EXE", exe .replaceAll ("\\", "\\\\"));
 
