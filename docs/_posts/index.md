@@ -29,6 +29,18 @@ Click here to download the latest Windows installer for Sunrize:
 
 [<i class="fa-brands fa-windows"></i><br>Windows](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/Sunrize.X3D.Editor-{{ site.version }}.Setup.exe){: download="" .platform .w-25 }
 
+### macOS
+
+Click here to download the latest macOS app for Sunrize:
+
+[<i class="fa-brands fa-apple"></i><br>macOS](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/Sunrize.X3D.Editor-darwin-arm64-{{ site.version }}.zip){: download="" .platform .w-25 }
+
+After downloading, you'll first need to remove the quarantine status:
+
+```sh
+xattr -dr com.apple.quarantine "/Applications/Sunrize X3D Editor.app"
+```
+
 ### Linux
 
 Click here to download the latest Linux installer for Sunrize:
