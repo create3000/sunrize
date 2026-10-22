@@ -124,11 +124,11 @@ module.exports = {
       platforms: ["linux"],
       config: { options: linuxOptions },
     },
-    {
-      name: "@electron-forge/maker-rpm",
-      platforms: ["linux"],
-      config: { options: linuxOptions },
-    },
+    // {
+    //   name: "@electron-forge/maker-rpm",
+    //   platforms: ["linux"],
+    //   config: { options: linuxOptions },
+    // },
     {
       name: "@reforged/maker-appimage",
       platforms: ["linux"],
