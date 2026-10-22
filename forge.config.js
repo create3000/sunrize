@@ -25,7 +25,7 @@ const linuxOptions = {
     "256x256":   iconPng,
     "scallable": iconSvg
   },
-}
+};
 
 module.exports = {
   packagerConfig: {
