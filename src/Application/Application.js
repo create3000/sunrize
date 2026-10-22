@@ -8,7 +8,6 @@ const
    fs           = require ("fs"),
    util         = require ("util"),
    Registry     = require ("./Registry"),
-   Template     = require ("./Template"),
    LocalStorage = require ("node-localstorage") .LocalStorage,
    DataStorage  = require ("../Application/DataStorage"),
    _            = require ("../Application/GetText");
@@ -78,9 +77,6 @@ module .exports = class Application
          recentLocations: [ ],
          size: [1100, 680],
       });
-
-      Template .create (path .join (__dirname, "../assets/themes/media-template.css"));
-      Template .create (path .join (__dirname, "../assets/themes/prompt-template.css"));
 
       this .setup ();
    }
@@ -1234,7 +1230,6 @@ module .exports = class Application
 
    quit ()
    {
-      Template .removeAll ();
       electron .app .quit ();
    }
 };
