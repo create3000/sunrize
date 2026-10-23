@@ -195,7 +195,7 @@ module .exports = class Dashboard extends Interface
 
       if (value === 0)
          this .volumeButton .text ("volume_off");
-      else if (value < 0.75)
+      else if (value < 0.5)
          this .volumeButton .text ("volume_down");
       else
          this .volumeButton .text ("volume_up");
