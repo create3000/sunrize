@@ -65,6 +65,7 @@ module .exports = class Application
       };
 
       this .config .setDefaultValues ({
+         themeSource: "system",
          autoSave: true,
          browserUpdate: false,
          expandExternProtoDeclarations: true,
@@ -77,6 +78,8 @@ module .exports = class Application
          recentLocations: [ ],
          size: [1100, 680],
       });
+
+      electron .nativeTheme .themeSource = this .config .themeSource;
 
       this .setup ();
    }
@@ -599,6 +602,42 @@ module .exports = class Application
                            checked: this .menuOptions .footer,
                            accelerator: "CmdOrCtrl+J",
                            click: () => this .mainWindow .webContents .send ("toggle-footer", !this .menuOptions .footer),
+                        },
+                        { type: "separator" },
+                        {
+                           label: _("Theme"),
+                           submenu: [
+                              {
+                                 label: _("Light"),
+                                 type: "radio",
+                                 checked: this .config .themeSource === "light",
+                                 click: () =>
+                                 {
+                                    this .config .themeSource          = "light";
+                                    electron .nativeTheme .themeSource = "light";
+                                 },
+                              },
+                              {
+                                 label: _("Dark"),
+                                 type: "radio",
+                                 checked: this .config .themeSource === "dark",
+                                 click: () =>
+                                 {
+                                    this .config .themeSource          = "dark";
+                                    electron .nativeTheme .themeSource = "dark";
+                                 },
+                              },
+                              {
+                                 label: _("System"),
+                                 type: "radio",
+                                 checked: this .config .themeSource === "system",
+                                 click: () =>
+                                 {
+                                    this .config .themeSource          = "system";
+                                    electron .nativeTheme .themeSource = "system";
+                                 },
+                              },
+                           ],
                         },
                      ],
                   },
