@@ -1576,6 +1576,8 @@ module .exports = class RouteGraph extends Interface
       $(document) .on ("mouseup.lasso", event => this .drawLassoEnd (event));
    }
 
+   #lassoBorderRadius = 10;
+
    drawLasso (event)
    {
       if (event .button !== 0)
@@ -1601,20 +1603,20 @@ module .exports = class RouteGraph extends Interface
          fillStyle   = this .#style .getPropertyValue ("--lasso-fill"),
          strokeStyle = this .#style .getPropertyValue ("--lasso-stroke");
 
-      context .fillStyle   = fillStyle;
-      context .strokeStyle = strokeStyle;
-      context .lineWidth   = 2;
-
       context .save ();
       context .scale (contentScale, contentScale);
       context .clearRect (0, 0, width, height);
 
+      context .fillStyle   = fillStyle;
+      context .strokeStyle = strokeStyle;
+      context .lineWidth   = 2;
+
       context .beginPath ();
-      context .roundRect (... start, ... size, 10);
+      context .roundRect (... start, ... size, this .#lassoBorderRadius);
       context .fill ();
 
       context .beginPath ();
-      context .roundRect (... start, ... size, 10);
+      context .roundRect (... start, ... size, this .#lassoBorderRadius);
       context .stroke ();
 
       context .restore ();
@@ -2085,15 +2087,14 @@ module .exports = class RouteGraph extends Interface
    {
       const
          lineSpacing  = this .#gridSize,
-         lineColor    = this .#style .getPropertyValue ("--system-gray7"),
+         lineColor    = this .#style .getPropertyValue ("--system-gray6"),
          pointSpacing = lineSpacing * this .#gridPointFactor,
-         pointColor   = this .#style .getPropertyValue ("--system-gray3"),
-         contentScale = window .devicePixelRatio;
+         pointColor   = this .#style .getPropertyValue ("--system-gray2");
 
       context .clearRect (0, 0, width, height);
 
       context .strokeStyle = lineColor;
-      context .lineWidth   = contentScale;
+      context .lineWidth   = 1;
 
       for (let x = -offsetX % lineSpacing; x <= width; x += lineSpacing)
       {
@@ -2115,10 +2116,10 @@ module .exports = class RouteGraph extends Interface
 
       context .fillStyle = pointColor;
 
-      for (let y = -offsetY % pointSpacing - contentScale / 2 - lineSpacing; y <= height; y += pointSpacing)
+      for (let y = -offsetY % pointSpacing - lineSpacing - 0.5; y <= height; y += pointSpacing)
       {
-         for (let x = -offsetX % pointSpacing - contentScale / 2; x < width; x += pointSpacing)
-            context .rect (x, y, contentScale, contentScale);
+         for (let x = -offsetX % pointSpacing - 0.5; x < width; x += pointSpacing)
+            context .rect (x, y, 1, 1);
       }
 
       context .fill ();
