@@ -1610,11 +1610,11 @@ module .exports = class RouteGraph extends Interface
       context .clearRect (0, 0, width, height);
 
       context .beginPath ();
-      context .rect (... start, ... size);
+      context .roundRect (... start, ... size, 10);
       context .fill ();
 
       context .beginPath ();
-      context .rect (... start, ... size);
+      context .roundRect (... start, ... size, 10);
       context .stroke ();
 
       context .restore ();
