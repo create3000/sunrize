@@ -2083,15 +2083,18 @@ module .exports = class RouteGraph extends Interface
    drawGrid (context, width, height, offsetX, offsetY)
    {
       const
-         size  = this .#gridSize,
-         color = this .#style .getPropertyValue ("--system-gray5");
+         lineSpacing  = this .#gridSize,
+         lineColor    = this .#style .getPropertyValue ("--system-gray7"),
+         pointSpacing = lineSpacing * 2,
+         pointColor   = this .#style .getPropertyValue ("--system-gray2"),
+         contentScale = window .devicePixelRatio;
 
       context .clearRect (0, 0, width, height);
 
-      context .strokeStyle = color;
-      context .lineWidth   = 1;
+      context .strokeStyle = lineColor;
+      context .lineWidth   = contentScale;
 
-      for (let x = -offsetX % size; x <= width; x += size)
+      for (let x = -offsetX % lineSpacing; x <= width; x += lineSpacing)
       {
          context .beginPath ();
          context .moveTo (x, 0);
@@ -2099,13 +2102,25 @@ module .exports = class RouteGraph extends Interface
          context .stroke ();
       }
 
-      for (let y = -offsetY % size; y <= height; y += size)
+      for (let y = -offsetY % lineSpacing; y <= height; y += lineSpacing)
       {
          context .beginPath ();
          context .moveTo (0, y);
          context .lineTo (width, y);
          context .stroke ();
       }
+
+      // Points
+
+      context .fillStyle = pointColor;
+
+      for (let y = -offsetY % pointSpacing - 1; y <= height; y += pointSpacing)
+      {
+         for (let x = -offsetX % pointSpacing - 1; x < width; x += pointSpacing)
+            context .rect (x, y, contentScale, contentScale);
+      }
+
+      context .fill ();
    }
 
    drawRoutes (context)
