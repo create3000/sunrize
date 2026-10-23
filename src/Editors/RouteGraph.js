@@ -2114,9 +2114,9 @@ module .exports = class RouteGraph extends Interface
 
       context .fillStyle = pointColor;
 
-      for (let y = -offsetY % pointSpacing - 1 + lineSpacing; y <= height; y += pointSpacing)
+      for (let y = -offsetY % pointSpacing - contentScale / 2 + lineSpacing; y <= height; y += pointSpacing)
       {
-         for (let x = -offsetX % pointSpacing - 1; x < width; x += pointSpacing)
+         for (let x = -offsetX % pointSpacing - contentScale / 2; x < width; x += pointSpacing)
             context .rect (x, y, contentScale, contentScale);
       }
 
