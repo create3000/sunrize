@@ -615,6 +615,8 @@ module .exports = class Application
                                  {
                                     this .config .themeSource          = "light";
                                     electron .nativeTheme .themeSource = "light";
+
+                                    this .updateMenu ();
                                  },
                               },
                               {
@@ -625,6 +627,8 @@ module .exports = class Application
                                  {
                                     this .config .themeSource          = "dark";
                                     electron .nativeTheme .themeSource = "dark";
+
+                                    this .updateMenu ();
                                  },
                               },
                               {
@@ -635,6 +639,8 @@ module .exports = class Application
                                  {
                                     this .config .themeSource          = "system";
                                     electron .nativeTheme .themeSource = "system";
+
+                                    this .updateMenu ();
                                  },
                               },
                            ],
