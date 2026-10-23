@@ -2086,7 +2086,7 @@ module .exports = class RouteGraph extends Interface
          lineSpacing  = this .#gridSize,
          lineColor    = this .#style .getPropertyValue ("--system-gray7"),
          pointSpacing = lineSpacing * 2,
-         pointColor   = this .#style .getPropertyValue ("--system-gray2"),
+         pointColor   = this .#style .getPropertyValue ("--system-gray3"),
          contentScale = window .devicePixelRatio;
 
       context .clearRect (0, 0, width, height);
@@ -2114,7 +2114,7 @@ module .exports = class RouteGraph extends Interface
 
       context .fillStyle = pointColor;
 
-      for (let y = -offsetY % pointSpacing - 1; y <= height; y += pointSpacing)
+      for (let y = -offsetY % pointSpacing - 1 + lineSpacing; y <= height; y += pointSpacing)
       {
          for (let x = -offsetX % pointSpacing - 1; x < width; x += pointSpacing)
             context .rect (x, y, contentScale, contentScale);
