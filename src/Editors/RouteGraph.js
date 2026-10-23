@@ -2079,13 +2079,14 @@ module .exports = class RouteGraph extends Interface
    }
 
    #gridSize = 20;
+   #gridPointFactor = 2;
 
    drawGrid (context, width, height, offsetX, offsetY)
    {
       const
          lineSpacing  = this .#gridSize,
          lineColor    = this .#style .getPropertyValue ("--system-gray7"),
-         pointSpacing = lineSpacing * 2,
+         pointSpacing = lineSpacing * this .#gridPointFactor,
          pointColor   = this .#style .getPropertyValue ("--system-gray3"),
          contentScale = window .devicePixelRatio;
 
