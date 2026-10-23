@@ -29,6 +29,8 @@ The latest builds of Sunrize are available as installer packages on the [Sunrize
 ```sh
 # macOS users first need to remove the quarantine status:
 xattr -dr com.apple.quarantine "/Applications/Sunrize X3D Editor.app"
+# Linux users first need to make the AppImage executable (or use File Manager):
+chmod u+x Sunrize.X3D.Editor-{{ site.version }}-x64.AppImage
 ```
 
 ## Run from Console
