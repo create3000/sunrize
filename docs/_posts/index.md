@@ -35,7 +35,7 @@ The latest builds of Sunrize are available as installer packages or binaries on 
 <span>Linux</span>
 <small>AppImage</small>
 ](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/Sunrize.X3D.Editor-{{ site.version }}-x64.AppImage){: download="" .platform }
-[dummy](){: .dummy .platform style="visibility: none; opacity: 0; pointer-events: none" }
+[hidden](dummy){: .platform style="visibility: none; opacity: 0; pointer-events: none" }
 {: .packages }
 
 
