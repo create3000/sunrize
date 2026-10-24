@@ -14,6 +14,7 @@
   ],
   "scripts": {
     "start": "electron .",
+    "start:linux": "electron . --ozone-platform=x11",
     "development": "SUNRISE_ENVIRONMENT=DEVELOPMENT electron .",
     "release": "node build/release.js",
     "X3DUOM": "sh build/X3DUOM.sh",
