@@ -21,15 +21,17 @@ Sunrize is an easy-to-use editor for X3D files, built on top of the [X_ITE](/x_i
 
 ## Installer Packages and Binaries
 
-The latest builds of Sunrize are available as installer packages on the [Sunrize releases](https://github.com/create3000/sunrize/releases) page on GitHub. From there, you can download precompiled binaries, for Windows, macOS, and Linux.
+The latest builds of Sunrize are available as installer packages or binaries on the [Sunrize releases](https://github.com/create3000/sunrize/releases) page on GitHub. From there, you can download precompiled binaries, for Windows, macOS, and Linux.
 
 [<i class="fa-brands fa-windows"></i>
 <span>Windows</span>
 <small>Installer</small>
-](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/Sunrize.X3D.Editor-{{ site.version }}.Setup.exe){: download="" .platform .w-25 }[<i class="fa-brands fa-apple"></i>
+](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/Sunrize.X3D.Editor-{{ site.version }}.Setup.exe){: download="" .platform .w-25 }
+[<i class="fa-brands fa-apple"></i>
 <span>macOS</span>
 <small>ZIP</small>
-](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/Sunrize.X3D.Editor-darwin-arm64-{{ site.version }}.zip){: download="" .platform .w-25 }[<i class="fa-brands fa-linux"></i>
+](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/Sunrize.X3D.Editor-darwin-arm64-{{ site.version }}.zip){: download="" .platform .w-25 }
+[<i class="fa-brands fa-linux"></i>
 <span>Linux</span>
 <small>AppImage</small>
 ](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/Sunrize.X3D.Editor-{{ site.version }}-x64.AppImage){: download="" .platform .w-25 }
