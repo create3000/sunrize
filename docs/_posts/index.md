@@ -19,7 +19,7 @@ Sunrize is an easy-to-use editor for X3D files, built on top of the [X_ITE](/x_i
 
 [<i class="fa-solid fa-heart"></i> Support us on Patreon](https://patreon.com/X_ITE){: .patreon }
 
-## Installer Packages
+## Installer Packages and Binaries
 
 The latest builds of Sunrize are available as installer packages on the [Sunrize releases](https://github.com/create3000/sunrize/releases) page on GitHub. From there, you can download precompiled binaries, for Windows, macOS, and Linux.
 
