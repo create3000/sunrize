@@ -1,3 +1,6 @@
+@charset "UTF-8";
+@import url(sunrize.css);
+
 /*
  * Common rules start here
  */
@@ -757,32 +760,4 @@ table.slim-table tbody tr td:has(img) {
 .example-links li:not(:first-child)::before {
   content: "·";
   margin: 0 7px 0 4px;
-}
-
-/* Platform link  */
-
-.packages {
-  display: flex;
-  flex-direction: row;
-  gap: 1%;
-}
-
-.platform {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 25%;
-  border: 1px solid !important;
-  border-radius: .625rem;
-  padding: 1rem;
-  text-align: center;
-  word-wrap: anywhere;
-}
-
-.platform i {
-  font-size: 3rem;
-}
-
-.platform span {
-  font-size: 140%;
 }
