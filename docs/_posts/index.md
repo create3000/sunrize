@@ -26,15 +26,15 @@ The latest builds of Sunrize are available as installer packages or binaries on 
 [<i class="fa-brands fa-windows"></i>
 <span>Windows</span>
 <small>Installer</small>
-](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/Sunrize.X3D.Editor-{{ site.version }}.Setup.exe){: download="" .platform .w-25 }
+](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/Sunrize.X3D.Editor-{{ site.version }}.Setup.exe){: download="" .platform }
 [<i class="fa-brands fa-apple"></i>
 <span>macOS</span>
 <small>ZIP</small>
-](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/Sunrize.X3D.Editor-darwin-arm64-{{ site.version }}.zip){: download="" .platform .w-25 }
+](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/Sunrize.X3D.Editor-darwin-arm64-{{ site.version }}.zip){: download="" .platform }
 [<i class="fa-brands fa-linux"></i>
 <span>Linux</span>
 <small>AppImage</small>
-](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/Sunrize.X3D.Editor-{{ site.version }}-x64.AppImage){: download="" .platform .w-25 }
+](https://github.com/create3000/sunrize/releases/download/v{{ site.version }}/Sunrize.X3D.Editor-{{ site.version }}-x64.AppImage){: download="" .platform }
 {: .packages }
 
 
