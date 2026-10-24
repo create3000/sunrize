@@ -49,8 +49,8 @@ First you need to install both Node.js and npm on your system. To accomplish thi
 
 Then you can run Sunrize without installing it using npm's **npx** command:
 
-```console
-$ npx sunrize@latest [files]
+```sh
+npx sunrize@latest [files]
 ```
 
 >**Note:** The first time, it may take a while for Sunrize to start.
