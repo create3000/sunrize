@@ -202,7 +202,7 @@ module .exports = class Console extends Interface
       else
          text .text (message);
 
-      if (performance .now () - this .messageTime > 1000)
+      if (performance .now () - this .messageTime > 1_000)
          this .addSplitter ();
 
       this .messageTime = performance .now ();
