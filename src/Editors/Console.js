@@ -188,18 +188,22 @@ module .exports = class Console extends Interface
       "error",
    ];
 
-   addMessage (event, level, sourceId, line, message)
+   addMessage (event, level, sourceId, line, message, html = false)
    {
       if (this .excludes .some (exclude => message .includes (exclude)))
          return;
 
       const text = $("<p></p>")
          .addClass (this .logLevels [level] ?? "log")
-         .attr ("title", sourceId ? `${sourceId}:${line}`: "")
-         .text (message);
+         .attr ("title", sourceId ? `${sourceId}:${line}`: "");
+
+      if (html)
+         text .html (message);
+      else
+         text .text (message);
 
       if (performance .now () - this .messageTime > 1000)
-         this .output .append ($("<p></p>") .addClass ("splitter"));
+         this .addSplitter ();
 
       this .messageTime = performance .now ();
 
@@ -208,6 +212,11 @@ module .exports = class Console extends Interface
       this .output .scrollTop (this .output .prop ("scrollHeight"));
 
       this .findElements (text, this .currentElement, false);
+   }
+
+   addSplitter ()
+   {
+      this .output .append ($("<p></p>") .addClass ("splitter"));
    }
 
    setSuspendConsole (value)

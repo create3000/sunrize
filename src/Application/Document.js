@@ -468,10 +468,27 @@ module .exports = class Document extends Interface
             json     = await response .json (),
             pkg      = require ("../../package.json");
 
-         if (json .name === `v${pkg .version}`)
-            return;
+         // if (json .name === `v${pkg .version}`)
+         //    return;
 
-         console .log (`A new Sunrize version ${json .name} is now available on GitHub.`);
+         let file;
+
+         switch (process .platform)
+         {
+            case "win32":
+               file = `Sunrize.X3D.Editor-${json .name .substring (1)}.Setup.exe`;
+               break;
+            case "darwin":
+               file = `Sunrize.X3D.Editor-darwin-arm64-${json .name .substring (1)}.zip`;
+               break;
+            default:
+               file = `Sunrize.X3D.Editor-${json .name .substring (1)}-x64.AppImage`;
+               break;
+         }
+
+         this .footer .console .addSplitter ();
+         this .footer .console .addMessage (undefined, 1, "", 0, `A new Sunrize version ${json .name} is now available on GitHub.`);
+         this .footer .console .addMessage (undefined, 1, "", 0, `Download new version: <a download href="https://github.com/create3000/sunrize/releases/download/${json .name}/${file}">${file}</a>`, true);
       }
       catch
       { }

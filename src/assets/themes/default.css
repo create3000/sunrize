@@ -1264,6 +1264,10 @@ body.dark .ui-widget .library-list .component {
   display: none;
 }
 
+.console-output a {
+  color: var(--system-orange);
+}
+
 .console-input {
   position: absolute;
   box-sizing: border-box;
