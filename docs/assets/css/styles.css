@@ -2,12 +2,6 @@
 @import url(/x_ite/assets/css/styles.css);
 @import url(https://create3000.github.io/x_ite/assets/css/styles.css);
 
-/* Logo */
-
-.rounded-circle {
-  border-radius: 15px !important;
-}
-
 /* Platform link  */
 
 .packages {
