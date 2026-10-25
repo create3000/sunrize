@@ -194,7 +194,7 @@ module .exports = class Console extends Interface
          return;
 
       const text = $("<p></p>")
-         .addClass (typeof level === "string" ? level : this .logLevels [level] ?? "log")
+         .addClass (typeof level === "string" ? level : (this .logLevels [level] ?? "log"))
          .attr ("title", sourceId ? `${sourceId}:${line}`: "");
 
       if (html)
