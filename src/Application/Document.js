@@ -220,6 +220,8 @@ module .exports = class Document extends Interface
 
       console .info (`Welcome to ${pkg .productName} v${pkg .version}.`);
 
+      this .checkReleases ();
+
       await this .restoreFile ();
 
       if (!this .isInitialScene)
@@ -455,6 +457,24 @@ module .exports = class Document extends Interface
             break;
          }
       }
+   }
+
+   async checkReleases ()
+   {
+      try
+      {
+         const
+            response = await fetch ("https://api.github.com/repos/create3000/sunrize/releases/latest"),
+            json     = await response .json (),
+            pkg      = require ("../../package.json");
+
+         if (json .name === `v${pkg .version}`)
+            return;
+
+         console .log (`A new Sunrize version ${json .name} is now available on GitHub.`);
+      }
+      catch
+      { }
    }
 
    /*
