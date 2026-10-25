@@ -487,8 +487,9 @@ module .exports = class Document extends Interface
          }
 
          this .footer .console .addSplitter ();
-         this .footer .console .addMessage (undefined, 1, "", 0, `A new Sunrize version ${json .name} is now available on GitHub.`);
-         this .footer .console .addMessage (undefined, 1, "", 0, `Download new version: <a download href="https://github.com/create3000/sunrize/releases/download/${json .name}/${file}">${file}</a>`, true);
+         this .footer .console .addMessage ("info", "", 0, `A new Sunrize version ${json .name} is now available on GitHub.`);
+         this .footer .console .addMessage ("info", "", 0, `Download new version: <a download href="https://github.com/create3000/sunrize/releases/download/${json .name}/${file}">${file}</a>`, true);
+         this .footer .console .addSplitter ();
       }
       catch
       { }

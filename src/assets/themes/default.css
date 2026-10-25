@@ -1260,6 +1260,10 @@ body.dark .ui-widget .library-list .component {
   padding: 0px;
 }
 
+.console-output p.splitter + p.splitter {
+  display: none;
+}
+
 .console-output p.splitter:first-child {
   display: none;
 }

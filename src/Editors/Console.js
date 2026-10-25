@@ -20,7 +20,7 @@ module .exports = class Console extends Interface
       this .suspendConsole     = false;
       this .historyIndex       = 0;
       this .history            = [ ];
-      this .addMessageCallback = this .addMessage .bind (this);
+      this .addMessageCallback = (event, ... args) => this .addMessage (... args);
 
       this .left = $("<div></div>")
          .addClass ("console-left")
@@ -188,13 +188,13 @@ module .exports = class Console extends Interface
       "error",
    ];
 
-   addMessage (event, level, sourceId, line, message, html = false)
+   addMessage (level, sourceId, line, message, html = false)
    {
       if (this .excludes .some (exclude => message .includes (exclude)))
          return;
 
       const text = $("<p></p>")
-         .addClass (this .logLevels [level] ?? "log")
+         .addClass (typeof level === "string" ? level : this .logLevels [level] ?? "log")
          .attr ("title", sourceId ? `${sourceId}:${line}`: "");
 
       if (html)
@@ -226,13 +226,13 @@ module .exports = class Console extends Interface
       if (value)
       {
          electron .ipcRenderer .off ("console-message", this .addMessageCallback);
-         this .addMessage (null, "info", __filename, 0, `Console output suspended at ${new Date () .toLocaleTimeString ()}.`);
+         this .addMessage ("info", __filename, 0, `Console output suspended at ${new Date () .toLocaleTimeString ()}.`);
          this .suspendButton .addClass ("active");
       }
       else
       {
          electron .ipcRenderer .on ("console-message", this .addMessageCallback);
-         this .addMessage (null, "info", __filename, 0, `Console output enabled at ${new Date () .toLocaleTimeString ()}.`);
+         this .addMessage ("info", __filename, 0, `Console output enabled at ${new Date () .toLocaleTimeString ()}.`);
          this .suspendButton .removeClass ("active");
       }
    }
@@ -242,7 +242,7 @@ module .exports = class Console extends Interface
       this .messageTime = 0;
 
       this .output .empty ();
-      this .addMessage (null, "info", __filename, 0, `Console cleared at ${new Date () .toLocaleTimeString ()}.`);
+      this .addMessage ("info", __filename, 0, `Console cleared at ${new Date () .toLocaleTimeString ()}.`);
       this .searchString ();
    }
 
