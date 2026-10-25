@@ -469,7 +469,7 @@ module .exports = class Document extends Interface
             pkg      = require ("../../package.json");
 
          if (json .name === `v${pkg .version}`)
-            return;
+            return setTimeout (() => this .checkReleases (), 24 * 60 * 60 * 1_000);
 
          let file;
 
