@@ -468,8 +468,8 @@ module .exports = class Document extends Interface
             json     = await response .json (),
             pkg      = require ("../../package.json");
 
-         // if (json .name === `v${pkg .version}`)
-         //    return;
+         if (json .name === `v${pkg .version}`)
+            return;
 
          let file;
 
