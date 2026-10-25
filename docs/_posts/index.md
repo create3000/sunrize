@@ -48,7 +48,7 @@ chmod u+x Sunrize.X3D.Editor-{{ site.version }}-x64.AppImage
 
 ## Run from Console
 
-First you need to install **Node.js** with **npm** on your system. To accomplish this, you can use a [Node installer or nvm](https://nodejs.org/en/download/), or use [Homebrew](https://brew.sh), or your systems package manager.
+First you need to install **Node.js** with **npm** on your system. To accomplish this, you can use a [Node.js installer or nvm](https://nodejs.org/en/download/), or use [Homebrew](https://brew.sh), or your systems package manager.
 
 Then you can run Sunrize without installing it using npm's **npx** command:
 
