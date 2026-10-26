@@ -465,10 +465,10 @@ module .exports = class Document extends Interface
       {
          const
             response = await fetch ("https://api.github.com/repos/create3000/sunrize/releases/latest"),
-            json     = await response .json (),
+            latest   = await response .json (),
             pkg      = require ("../../package.json");
 
-         if (json .name === `v${pkg .version}`)
+         if (latest .name === `v${pkg .version}`)
             return setTimeout (() => this .checkReleases (), 24 * 60 * 60 * 1_000);
 
          let filename;
@@ -476,20 +476,20 @@ module .exports = class Document extends Interface
          switch (process .platform)
          {
             case "win32":
-               filename = `Sunrize.X3D.Editor-${json .name .substring (1)}.Setup.exe`;
+               filename = `Sunrize.X3D.Editor-${latest .name .substring (1)}.Setup.exe`;
                break;
             case "darwin":
-               filename = `Sunrize.X3D.Editor-darwin-arm64-${json .name .substring (1)}.zip`;
+               filename = `Sunrize.X3D.Editor-darwin-arm64-${latest .name .substring (1)}.zip`;
                break;
             default:
-               filename = `Sunrize.X3D.Editor-${json .name .substring (1)}-x64.AppImage`;
+               filename = `Sunrize.X3D.Editor-${latest .name .substring (1)}-x64.AppImage`;
                break;
          }
 
-         const fileURL = `https://github.com/create3000/sunrize/releases/download/${json .name}/${filename}`;
+         const fileURL = `https://github.com/create3000/sunrize/releases/download/${latest .name}/${filename}`;
 
          this .footer .console .addSplitter ();
-         this .footer .console .addMessage ("info", "", 0, `A new Sunrize version ${json .name} is now available on GitHub.`);
+         this .footer .console .addMessage ("info", "", 0, `A new Sunrize version ${latest .name} is now available on GitHub.`);
          this .footer .console .addMessage ("info", "", 0, `Download new version: <a download href="${fileURL}">${filename}</a>`, true);
          this .footer .console .addSplitter ();
       }
