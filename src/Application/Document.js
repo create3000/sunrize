@@ -493,8 +493,11 @@ module .exports = class Document extends Interface
          this .footer .console .addMessage ("info", "", 0, `Download new version: <a download href="${fileURL}">${filename}</a>`, true);
          this .footer .console .addSplitter ();
       }
-      catch
-      { }
+      catch (error)
+      {
+         if (process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT")
+            console .error (error);
+      }
    }
 
    /*
