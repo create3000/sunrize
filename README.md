@@ -8,6 +8,8 @@
 
 Sunrize is an easy-to-use editor for X3D files, built on top of the [X_ITE](https://create3000.github.io/x_ite/) framework. It provides an intuitive interface for creating, editing, and previewing interactive 3D scenes directly in the browser. With support for the full [X3D standard](https://www.web3d.org/standards) and X_ITE’s advanced rendering features, Sunrize makes it simple to experiment with nodes, materials, and animations while immediately seeing the results in real time.
 
+![Image of Sunrize Editor](https://create3000.github.io/sunrize/assets/img/sunrize-dark.avif)
+
 ## Quick Links
 
 * [Website](https://create3000.github.io/sunrize/)
