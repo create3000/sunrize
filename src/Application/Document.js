@@ -220,7 +220,7 @@ module .exports = class Document extends Interface
 
       console .info (`Welcome to ${pkg .productName} v${pkg .version}.`);
 
-      setTimeout (() => this .checkReleases (), 5 * 60 * 1_000);
+      this .checkReleases ();
 
       await this .restoreFile ();
 
