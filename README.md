@@ -6,7 +6,7 @@
 
 ## Introduction
 
-Sunrize is based on [X_ITE](https://create3000.github.io/x_ite/) and is a basic editor for X3D files. The scene can be edited in an Outline Editor and there is a Script Editor where Script nodes and ComposedShader nodes can be edited.
+Sunrize is an easy-to-use editor for X3D files, built on top of the [X_ITE](https://create3000.github.io/x_ite/) framework. It provides an intuitive interface for creating, editing, and previewing interactive 3D scenes directly in the browser. With support for the full [X3D standard](https://www.web3d.org/standards) and X_ITE’s advanced rendering features, Sunrize makes it simple to experiment with nodes, materials, and animations while immediately seeing the results in real time.
 
 ## Quick Links
 
@@ -19,12 +19,12 @@ The latest builds of Sunrize are available as installer packages on the [Sunrize
 
 ## Run from Console
 
-First you need to install both Node.js and npm on your system. To accomplish this, you can use a [Node installer](https://nodejs.org/en/download/) (Windows), or use [Homebrew](https://brew.sh) to install node (macos), or use your Linux package manager.
+First you need to install **Node.js** with **npm** on your system. To accomplish this, you can use a [Node.js installer or nvm](https://nodejs.org/en/download/), or use [Homebrew](https://brew.sh), or your systems package manager.
 
 Then you can run Sunrize without installing it using npm's **npx** command:
 
-```console
-$ npx sunrize@latest [files]
+```sh
+npx sunrize@latest [files]
 ```
 
 >**Note:** The first time, it may take a while for Sunrize to start.
