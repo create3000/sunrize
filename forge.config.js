@@ -22,10 +22,6 @@ const linuxOptions = {
    *
    * https://spacingbat3.github.io/ReForged/interfaces/_reforged_maker-appimage.MakerAppImageConfig.html
    */
-  version: pkginfo .version,
-  description: pkginfo .description,
-  maintainer: pkginfo .author,
-  homepage: pkginfo .homepage,
   icon: {
     "96x96": iconSvg,
     "256x256": iconPng,
