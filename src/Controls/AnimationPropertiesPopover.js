@@ -85,7 +85,7 @@ $.fn.animationPropertiesPopover = function (editor)
       events: {
          show: (event, api) =>
          {
-            content .children () .off () .on ("keydown", (event) =>
+            content .children () .on ("keydown", (event) =>
             {
                if (event .key !== "Enter")
                   return;
