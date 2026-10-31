@@ -1009,6 +1009,8 @@ module .exports = class Application
       window .on ("leave-full-screen", () => this .onleavefullscreen ());
       window .on ("close",        (event) => this .onclose (event));
 
+      window .webContents .session .on ("will-download", (event, item) => this .willDownload (item));
+
       if (this .config .fullscreen)
          window .setFullScreen (this .config .fullscreen);
       else if (this .config .maximized)
@@ -1025,6 +1027,42 @@ module .exports = class Application
          this .mainWindow .show ();
       else
          this .createWindow ();
+   }
+
+   willDownload (item)
+   {
+      item .on ("updated", (event, state) =>
+      {
+         if (state === "interrupted")
+         {
+            this .mainWindow .webContents .send ("download-item", "interrupted", item .getETag (), item .getSavePath ());
+         }
+         else if (state === "progressing")
+         {
+            if (item .isPaused ())
+            {
+               this .mainWindow .webContents .send ("download-item", "paused", item .getETag (), item .getSavePath ());
+            }
+            else
+            {
+               const fractions = item .getReceivedBytes () / item .getTotalBytes ();
+
+               this .mainWindow .webContents .send ("download-item", "progress", item .getETag (), item .getSavePath (), fractions);
+            }
+         }
+      });
+
+      item .once ("done", (event, state) =>
+      {
+         if (state === "completed")
+         {
+            this .mainWindow .webContents .send ("download-item", "completed", item .getETag (), item .getSavePath ());
+         }
+         else
+         {
+            this .mainWindow .webContents .send ("download-item", "failed", item .getETag (), item .getSavePath ());
+         }
+      });
    }
 
    contextMenu (id, menu, menuId)

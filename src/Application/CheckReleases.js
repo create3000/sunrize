@@ -1,3 +1,5 @@
+const $ = require ("jquery");
+
 module .exports = class CheckReleases
 {
    static #instance;
@@ -50,7 +52,7 @@ module .exports = class CheckReleases
 
          this .#console .addSplitter ();
          this .#console .addMessage ("info", "", 0, `A new Sunrize version ${latest .name} is now available on GitHub.`);
-         this .#console .addMessage ("info", "", 0, `Download new version: <a download href="${fileURL}">${filename}</a>`, true);
+         this .#console .addMessage ("info", "", 0, $(`<span>Download new version: <span><a download href="${fileURL}">${filename}</a>`));
          this .#console .addSplitter ();
       }
       catch (error)

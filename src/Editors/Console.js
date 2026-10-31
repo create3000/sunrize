@@ -130,6 +130,7 @@ module .exports = class Console extends Interface
       }
 
       electron .ipcRenderer .on ("console-message", this .addMessageCallback);
+      electron .ipcRenderer .on ("download-item", (event, ... args) => this .downloadItem (... args));
 
       this .setup ();
    }
@@ -188,19 +189,19 @@ module .exports = class Console extends Interface
       "error",
    ];
 
-   addMessage (level, sourceId, line, message, html = false)
+   addMessage (level, sourceId, line, message)
    {
-      if (this .excludes .some (exclude => message .includes (exclude)))
+      if (typeof message === "string" && this .excludes .some (exclude => message .includes (exclude)))
          return;
 
       const text = $("<p></p>")
          .addClass (typeof level === "string" ? level : (this .logLevels [level] ?? "log"))
          .attr ("title", sourceId ? `${sourceId}:${line}`: "");
 
-      if (html)
-         text .html (message);
-      else
+      if (typeof message === "string")
          text .text (message);
+      else
+         text .append (message);
 
       if (performance .now () - this .messageTime > 1_000)
          this .addSplitter ();
@@ -209,7 +210,8 @@ module .exports = class Console extends Interface
 
       this .output .children (`:not(:nth-last-child(-n+${this .CONSOLE_MAX}))`) .remove ();
       this .output .append (text);
-      this .output .scrollTop (this .output .prop ("scrollHeight"));
+
+      setTimeout (() => this .output .scrollTop (this .output .prop ("scrollHeight")));
 
       this .findElements (text, this .currentElement, false);
    }
@@ -308,6 +310,54 @@ module .exports = class Console extends Interface
       this .output .css ("height", `calc(100% - ${this .input .height ()}px)`);
 
       div .remove ();
+   }
+
+   downloadItem (state, etag, filePath, ... args)
+   {
+      if (!filePath)
+         return;
+
+      const id = `download-item-${etag .replaceAll ('"', "")}`;
+
+      if (!$(`#${id}`) .length)
+         this .addMessage ("info", "", 0, $(`<span id="${id}"></span>`));
+
+      switch (state)
+      {
+         case "interrupted":
+         {
+            $(`#${id}`) .text (util .format (_("Downloading %s interrupted."), filePath));
+            break;
+         }
+         case "paused":
+         {
+            $(`#${id}`) .text (util .format (_("Downloading %s paused."), filePath));
+            break;
+         }
+         case "progress":
+         {
+            const percent = args [0] * 100;
+
+            $(`#${id}`) .text (`Downloading ${filePath}: ${percent .toFixed (1)} %.`);
+            break;
+         }
+         case "completed":
+         {
+            $(`#${id}`)
+               .removeAttr ("id")
+               .text (util .format (_("Downloading %s completed."), filePath));
+
+            break;
+         }
+         case "failed":
+         {
+            $(`#${id}`)
+               .removeAttr ("id")
+               .text (util .format (_("Downloading %s failed."), filePath));
+
+            break;
+         }
+      }
    }
 
    evaluateSourceCode (event)

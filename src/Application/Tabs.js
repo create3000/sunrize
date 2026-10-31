@@ -143,6 +143,7 @@ class Tabs
       this .forwardToActiveTab ("route-graph");
       this .forwardToActiveTab ("outline-editor");
       this .forwardToActiveTab ("context-menu-will-close");
+      this .forwardToActiveTab ("download-item");
 
       // Restore tabs.
       this .restoreTabs (this .config .activeTab);
