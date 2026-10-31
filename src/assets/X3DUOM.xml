@@ -2,7 +2,7 @@
 <!-- X3D Unified Object Model (X3DUOM) X3dUnifiedObjectModel-4.1.xml -->
 <!-- Online at https://www.web3d.org/specifications/X3dUnifiedObjectModel-4.1.xml -->
 <!-- This file contains a listing of all abstract and concrete nodes in version 4.1 of X3D -->
-<!-- Generated 2026-09-27-07:00 13:37:43.7598179-07:00 -->
+<!-- Generated 2026-10-28-07:00 19:32:04.834869-07:00 -->
 <X3dUnifiedObjectModel xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
                        version="4.1"
                        xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/X3dUnifiedObjectModel.xsd">
@@ -343,7 +343,7 @@
                   documentation="https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#containerField">
          <enumeration value="children" appinfo="parent node is another HAnimJoint"/>
          <enumeration value="joints"
-                      appinfo="parent node is HAnimHumanoid, typically as a USE node"/>
+                      appinfo="parent node is HAnimHumanoid, typically as a USE node (deprecated X3D 4.1)"/>
          <enumeration value="skeleton" appinfo="parent node is HAnimHumanoid"/>
       </SimpleType>
       <SimpleType name="containerFieldChoicesHAnimMotion"
@@ -359,7 +359,7 @@
                   documentation="https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#containerField">
          <enumeration value="children" appinfo="parent node is HAnimJoint"/>
          <enumeration value="segments"
-                      appinfo="parent node is HAnimHumanoid, typically as a USE node"/>
+                      appinfo="parent node is HAnimHumanoid, typically as a USE node (deprecated X3D 4.1)"/>
       </SimpleType>
       <SimpleType name="containerFieldChoicesHAnimSite"
                   baseType="xs:NMTOKEN"
@@ -367,7 +367,7 @@
                   documentation="https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#containerField">
          <enumeration value="children" appinfo="parent node is HAnimSegment"/>
          <enumeration value="sites"
-                      appinfo="parent node is HAnimHumanoid, typically as a USE node"/>
+                      appinfo="parent node is HAnimHumanoid, typically as a USE node (deprecated X3D 4.1)"/>
          <enumeration value="skeleton" appinfo="parent node is HAnimHumanoid"/>
          <enumeration value="viewpoints" appinfo="parent node is HAnimHumanoid"/>
       </SimpleType>
@@ -4389,7 +4389,7 @@
       </SimpleType>
       <SimpleType name="multiTextureModeValues"
                   baseType="MFString"
-                  appinfo="multiTextureModeValues are supported enumeration values for the MultiTexture mode attribute, one per each texture. Multiple optional values, but cannot be extended. (previously no underscores in X3D 3.0-4.0)"
+                  appinfo="multiTextureModeValues are supported enumeration values for the MultiTexture mode attribute, one per each texture. Multiple optional values, but cannot be extended. (Note: previously no underscores in X3D 3.0-4.0)"
                   documentation="https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/texturing.html#t-MultitextureModes">
          <enumeration value="&#34;ADD&#34;"/>
          <enumeration value="&#34;ADD_SIGNED&#34;"/>
@@ -4732,7 +4732,7 @@
                       appinfo="Sphere mapping but in local coordinates. (previously hypenated in X3D 3.0-4.0)"/>
          <enumeration value="COORD" appinfo="Use vertex coordinates"/>
          <enumeration value="COORD_EYE"
-                      appinfo="Use vertex coordinates transformed to camera space. (previously hypenated in X3D 3.0-4.0)"/>
+                      appinfo="Use vertex coordinates transformed to camera space. (underscores used in X3D 4.1)"/>
          <enumeration value="NOISE"
                       appinfo="Apply Perlin solid noise function on vertex coordinates"/>
          <enumeration value="NOISE_EYE"
@@ -20992,13 +20992,13 @@
       </ConcreteNode>
       <ConcreteNode name="HAnimDisplacer">
          <InterfaceDefinition specificationUrl="https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/hanim.html#HAnimDisplacer"
-                              appinfo="HAnimDisplacer nodes alter the shape of coordinate-based geometry within parent HAnimSegment or ancestor HAnimHumanoid nodes.">
+                              appinfo="HAnimDisplacer nodes alter the shape of coordinate-based geometry within HAnim nodes.">
             <componentInfo name="HAnim" level="1"/>
             <Inheritance baseType="X3DGeometricPropertyNode"/>
             <field name="coordIndex"
                    type="MFInt32"
                    accessType="inputOutput"
-                   description="Defines index values into the parent HAnimSegment or ancestor HAnimHumanoid coordinate array for the mesh of vertices affected by this HAnimDisplacer."/>
+                   description="Defines index values into the parent HAnimJoint or ancestor HAnimHumanoid coordinate array for the mesh of vertices affected by this HAnimDisplacer."/>
             <field name="description"
                    type="SFString"
                    accessType="inputOutput"
@@ -21985,7 +21985,6 @@
             <field name="version"
                    type="SFString"
                    accessType="inputOutput"
-                   use="required"
                    additionalEnumerationValuesAllowed="false"
                    simpleType="hanimVersionChoices"
                    baseType="xs:NMTOKEN"
@@ -22068,29 +22067,32 @@
          <InterfaceDefinition specificationUrl="https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/hanim.html#HAnimJoint"
                               appinfo="HAnimJoint node can represent each joint in a body.">
             <componentInfo name="HAnim" level="1"/>
-            <Inheritance baseType="X3DChildNode"/>
+            <Inheritance baseType="X3DGroupingNode"/>
             <AdditionalInheritance baseType="X3DBoundedObject"/>
             <field name="addChildren"
                    type="MFNode"
                    accessType="inputOnly"
-                   acceptableNodeTypes="HAnimJoint|HAnimSegment"/>
+                   acceptableNodeTypes="X3DChildNode"
+                   inheritedFrom="X3DGroupingNode">
+               <componentInfo name="Grouping" level="2"/>
+            </field>
             <field name="bboxCenter"
                    type="SFVec3f"
                    accessType="initializeOnly"
                    default="0 0 0"
-                   inheritedFrom="X3DBoundedObject"
+                   inheritedFrom="X3DGroupingNode"
                    description="Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system."/>
             <field name="bboxDisplay"
                    type="SFBool"
                    accessType="inputOutput"
                    default="false"
-                   inheritedFrom="X3DBoundedObject"
+                   inheritedFrom="X3DGroupingNode"
                    description="Whether to display bounding box for associated geometry, aligned with world coordinates."/>
             <field name="bboxSize"
                    type="SFVec3f"
                    accessType="initializeOnly"
                    default="-1 -1 -1"
-                   inheritedFrom="X3DBoundedObject"
+                   inheritedFrom="X3DGroupingNode"
                    baseType="bboxSizeType"
                    description="Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost."/>
             <field name="center"
@@ -22101,7 +22103,8 @@
             <field name="children"
                    type="MFNode"
                    accessType="inputOutput"
-                   acceptableNodeTypes="HAnimJoint|HAnimSegment"
+                   acceptableNodeTypes="X3DChildNode"
+                   inheritedFrom="X3DGroupingNode"
                    description="Grouping nodes contain an ordered list of children nodes."/>
             <field name="description"
                    type="SFString"
@@ -23027,7 +23030,10 @@
             <field name="removeChildren"
                    type="MFNode"
                    accessType="inputOnly"
-                   acceptableNodeTypes="HAnimJoint|HAnimSegment"/>
+                   acceptableNodeTypes="X3DChildNode"
+                   inheritedFrom="X3DGroupingNode">
+               <componentInfo name="Grouping" level="2"/>
+            </field>
             <field name="rotation"
                    type="SFRotation"
                    accessType="inputOutput"
@@ -23074,7 +23080,7 @@
                    type="SFBool"
                    accessType="inputOutput"
                    default="true"
-                   inheritedFrom="X3DBoundedObject"
+                   inheritedFrom="X3DGroupingNode"
                    description="Whether or not renderable content within this node is visually displayed."/>
             <field name="DEF"
                    type="SFString"
@@ -23107,11 +23113,9 @@
                    description="The style attribute on each X3D node and statement provides an inline block of CSS source for element styling, reserved for use by Cascading Style Sheets (CSS) and XML stylesheets."/>
             <containerField default="children" type="containerFieldChoicesHAnimJoint"/>
             <ContentModel>
+               <GroupContentModel name="ChildContentModel" minOccurs="0" maxOccurs="unbounded"/>
                <GroupContentModel name="ChildContentModelCore" minOccurs="0"/>
                <NodeContentModel name="HAnimDisplacer"/>
-               <NodeContentModel name="HAnimJoint"/>
-               <NodeContentModel name="HAnimSegment"/>
-               <NodeContentModel name="ProtoInstance"/>
             </ContentModel>
          </InterfaceDefinition>
       </ConcreteNode>
@@ -24298,6 +24302,8 @@
             <ContentModel>
                <GroupContentModel name="ChildContentModel" minOccurs="0" maxOccurs="unbounded"/>
                <GroupContentModel name="ChildContentModelCore" minOccurs="0"/>
+               <NodeContentModel name="Coordinate"/>
+               <NodeContentModel name="CoordinateDouble"/>
                <NodeContentModel name="HAnimDisplacer"/>
             </ContentModel>
          </InterfaceDefinition>
@@ -24344,10 +24350,19 @@
                    acceptableNodeTypes="X3DChildNode"
                    inheritedFrom="X3DGroupingNode"
                    description="Grouping nodes contain an ordered list of children nodes."/>
+            <field name="coord"
+                   type="SFNode"
+                   accessType="inputOutput"
+                   default="NULL"
+                   acceptableNodeTypes="X3DCoordinateNode"/>
             <field name="description"
                    type="SFString"
                    accessType="inputOutput"
                    description="Author-provided prose that describes intended purpose of this node."/>
+            <field name="displacers"
+                   type="MFNode"
+                   accessType="inputOutput"
+                   acceptableNodeTypes="HAnimDisplacer"/>
             <field name="IS"
                    type="SFNode"
                    accessType="inputOutput"
@@ -25181,6 +25196,9 @@
             <ContentModel>
                <GroupContentModel name="ChildContentModel" minOccurs="0" maxOccurs="unbounded"/>
                <GroupContentModel name="ChildContentModelCore" minOccurs="0"/>
+               <NodeContentModel name="Coordinate"/>
+               <NodeContentModel name="CoordinateDouble"/>
+               <NodeContentModel name="HAnimDisplacer"/>
             </ContentModel>
          </InterfaceDefinition>
       </ConcreteNode>
@@ -39435,7 +39453,7 @@
                             appinfo="Sphere mapping but in local coordinates. (previously hypenated in X3D 3.0-4.0)."/>
                <enumeration value="COORD" appinfo="Use vertex coordinates."/>
                <enumeration value="COORD_EYE"
-                            appinfo="Use vertex coordinates transformed to camera space. (previously hypenated in X3D 3.0-4.0)."/>
+                            appinfo="Use vertex coordinates transformed to camera space. (underscores used in X3D 4.1)."/>
                <enumeration value="NOISE"
                             appinfo="Apply Perlin solid noise function on vertex coordinates."/>
                <enumeration value="NOISE_EYE"
