@@ -326,26 +326,26 @@ module .exports = class Console extends Interface
       {
          case "interrupted":
          {
-            $(`#${id}`) .text (util .format (_("Downloading %s interrupted."), filePath));
+            $(`#${id}`) .text (util .format (_(`Downloading "%s" interrupted.`), filePath));
             break;
          }
          case "paused":
          {
-            $(`#${id}`) .text (util .format (_("Downloading %s paused."), filePath));
+            $(`#${id}`) .text (util .format (_(`Downloading "%s" paused.`), filePath));
             break;
          }
          case "progress":
          {
             const percent = args [0] * 100;
 
-            $(`#${id}`) .text (`Downloading ${filePath}: ${percent .toFixed (1)} %.`);
+            $(`#${id}`) .text (util .format (_(`Downloading "%s": %s %%.`), filePath, percent .toFixed (1)));
             break;
          }
          case "completed":
          {
             $(`#${id}`)
                .removeAttr ("id")
-               .text (util .format (_("Downloading %s completed."), filePath));
+               .text (util .format (_(`Downloading "%s" completed.`), filePath));
 
             break;
          }
@@ -353,7 +353,7 @@ module .exports = class Console extends Interface
          {
             $(`#${id}`)
                .removeAttr ("id")
-               .text (util .format (_("Downloading %s failed."), filePath));
+               .text (util .format (_(`Downloading "%s" failed.`), filePath));
 
             break;
          }
