@@ -199,10 +199,10 @@ module .exports = class Console extends Interface
          .addClass (typeof level === "string" ? level : (this .logLevels [level] ?? "log"))
          .attr ("title", sourceId ? `${sourceId}:${line}`: "");
 
-      if (typeof message === "string")
-         text .text (message);
-      else
+      if (message instanceof $)
          text .append (message);
+      else
+         text .text (message);
 
       if (performance .now () - this .messageTime > 1_000)
          this .addSplitter ();
