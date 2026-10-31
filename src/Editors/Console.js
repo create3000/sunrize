@@ -6,6 +6,7 @@ const
    electron  = require ("electron"),
    Interface = require ("../Application/Interface"),
    util      = require ("util"),
+   md5       = require ("md5"),
    _         = require ("../Application/GetText");
 
 module .exports = class Console extends Interface
@@ -312,12 +313,12 @@ module .exports = class Console extends Interface
       div .remove ();
    }
 
-   downloadItem (state, etag, filePath, ... args)
+   downloadItem (state, filePath, ... args)
    {
       if (!filePath)
          return;
 
-      const id = `download-item-${etag .replaceAll ('"', "")}`;
+      const id = `download-item-${md5 (filePath)}`;
 
       if (!$(`#${id}`) .length)
          this .addMessage ("info", "", 0, $(`<span id="${id}"></span>`));

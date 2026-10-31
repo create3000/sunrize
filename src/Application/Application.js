@@ -1035,19 +1035,19 @@ module .exports = class Application
       {
          if (state === "interrupted")
          {
-            this .mainWindow .webContents .send ("download-item", "interrupted", item .getETag (), item .getSavePath ());
+            this .mainWindow .webContents .send ("download-item", "interrupted", item .getSavePath ());
          }
          else if (state === "progressing")
          {
             if (item .isPaused ())
             {
-               this .mainWindow .webContents .send ("download-item", "paused", item .getETag (), item .getSavePath ());
+               this .mainWindow .webContents .send ("download-item", "paused", item .getSavePath ());
             }
             else
             {
                const fractions = item .getReceivedBytes () / item .getTotalBytes ();
 
-               this .mainWindow .webContents .send ("download-item", "progress", item .getETag (), item .getSavePath (), fractions);
+               this .mainWindow .webContents .send ("download-item", "progress", item .getSavePath (), fractions);
             }
          }
       });
@@ -1056,11 +1056,11 @@ module .exports = class Application
       {
          if (state === "completed")
          {
-            this .mainWindow .webContents .send ("download-item", "completed", item .getETag (), item .getSavePath ());
+            this .mainWindow .webContents .send ("download-item", "completed", item .getSavePath ());
          }
          else
          {
-            this .mainWindow .webContents .send ("download-item", "failed", item .getETag (), item .getSavePath ());
+            this .mainWindow .webContents .send ("download-item", "failed", item .getSavePath ());
          }
       });
    }
