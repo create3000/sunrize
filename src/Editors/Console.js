@@ -354,7 +354,7 @@ module .exports = class Console extends Interface
                }
             })();
 
-            const element = $(util .format (_(`<span>Downloading <a href="" title="%s">%s</a> completed.</span>`), title, filePath));
+            const element = $(util .format (_(`<span>Downloading <a href="#" title="%s">%s</a> completed.</span>`), title, filePath));
 
             $(`#${id}`)
                .removeAttr ("id")
