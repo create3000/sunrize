@@ -356,11 +356,6 @@ module .exports = class Console extends Interface
 
             const element = $(util .format (_(`<span>Downloading <a href="#" title="%s">%s</a> completed.</span>`), title, filePath));
 
-            $(`#${id}`)
-               .removeAttr ("id")
-               .empty ()
-               .append (element);
-
             element .find ("a") .on ("click", event =>
             {
                event .preventDefault ();
@@ -368,6 +363,11 @@ module .exports = class Console extends Interface
 
                electron .shell .showItemInFolder (filePath);
             });
+
+            $(`#${id}`)
+               .removeAttr ("id")
+               .empty ()
+               .append (element);
 
             break;
          }
