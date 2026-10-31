@@ -344,9 +344,30 @@ module .exports = class Console extends Interface
          }
          case "completed":
          {
+            const title = (() =>
+            {
+               switch (process .platform)
+               {
+                  case "darwin": return _("Reveal file in Finder.");
+                  case "win32":  return _("Reveal file in File Explorer.");
+                  default:       return _("Reveal file in File Manager.");
+               }
+            })();
+
+            const element = $(util .format (_(`<span>Downloading <a href="" title="%s">%s</a> completed.</span>`), title, filePath));
+
             $(`#${id}`)
                .removeAttr ("id")
-               .text (util .format (_(`Downloading "%s" completed.`), filePath));
+               .empty ()
+               .append (element);
+
+            element .find ("a") .on ("click", event =>
+            {
+               event .preventDefault ();
+               event .stopPropagation ();
+
+               electron .shell .showItemInFolder (filePath);
+            });
 
             break;
          }
