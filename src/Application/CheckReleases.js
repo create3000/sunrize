@@ -45,7 +45,7 @@ module .exports = class CheckReleases
 
          const fileURL = `https://github.com/create3000/sunrize/releases/download/${latest .name}/${filename}`;
 
-         if (!this .fileExists (fileURL))
+         if (!await this .fileExists (fileURL))
             return this .waitForRelease ();
 
          this .#console .addSplitter ();
