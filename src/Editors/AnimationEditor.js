@@ -586,14 +586,16 @@ module .exports = class AnimationEditor extends Interface
 
          for (const interpolator of this .interpolators)
          {
-            const key      = interpolator .getMetaData ("Interpolator/key",      new X3D .MFInt32 ());
-            const keyValue = interpolator .getMetaData ("Interpolator/keyValue", new X3D .MFDouble ());
-            const keyType  = interpolator .getMetaData ("Interpolator/keyType",  new X3D .MFString ());
-
-            const index = X3D .Algorithm .upperBound (key, 0, key .length, newDuration);
+            const components = this .#components .get (interpolator .getType () .at (-1));
+            const key        = interpolator .getMetaData ("Interpolator/key",      new X3D .MFInt32 ());
+            const keyValue   = interpolator .getMetaData ("Interpolator/keyValue", new X3D .MFDouble ());
+            const keyType    = interpolator .getMetaData ("Interpolator/keyType",  new X3D .MFString ());
+            const keySize    = interpolator .getMetaData ("Interpolator/keySize",  new X3D .SFInt32 (1));
+            const index      = X3D .Algorithm .upperBound (key, 0, key .length, newDuration);
+            const indexN     = index * components * keySize;
 
             Editor .setNodeMetaData (interpolator, "Interpolator/key",      key      .slice (0, index));
-            Editor .setNodeMetaData (interpolator, "Interpolator/keyValue", keyValue .slice (0, index));
+            Editor .setNodeMetaData (interpolator, "Interpolator/keyValue", keyValue .slice (0, indexN));
             Editor .setNodeMetaData (interpolator, "Interpolator/keyType",  keyType  .slice (0, index));
          }
 
