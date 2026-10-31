@@ -222,7 +222,7 @@ module .exports = class Document extends Interface
 
       console .info (`Welcome to ${pkg .productName} v${pkg .version}.`);
 
-      CheckReleases .check (this .footer .console);
+      CheckReleases .run (this .footer .console);
 
       // Restore
 

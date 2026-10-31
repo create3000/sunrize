@@ -1,15 +1,22 @@
 module .exports = class CheckReleases
 {
-   static #console;
+   static #instance;
 
-   static check (console)
+   static run (console)
+   {
+      return this .#instance ??= new CheckReleases (console);
+   }
+
+   #console;
+
+   constructor (console)
    {
       this .#console = console;
 
       this .checkReleases ();
    }
 
-   static async checkReleases ()
+   async checkReleases ()
    {
       try
       {
@@ -53,12 +60,12 @@ module .exports = class CheckReleases
       }
    }
 
-   static waitForRelease ()
+   waitForRelease ()
    {
       setTimeout (() => this .checkReleases (), 24 * 60 * 60 * 1_000);
    }
 
-   static async fileExists (url)
+   async fileExists (url)
    {
       try
       {
