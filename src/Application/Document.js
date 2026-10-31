@@ -460,6 +460,10 @@ module .exports = class Document extends Interface
       }
    }
 
+   /*
+    * Check Releases
+    */
+
    async checkReleases ()
    {
       try
@@ -470,7 +474,7 @@ module .exports = class Document extends Interface
             pkg      = require ("../../package.json");
 
          if (latest .name === `v${pkg .version}`)
-            return setTimeout (() => this .checkReleases (), 24 * 60 * 60 * 1_000);
+            return this .waitForRelease ();
 
          let filename;
 
@@ -489,6 +493,9 @@ module .exports = class Document extends Interface
 
          const fileURL = `https://github.com/create3000/sunrize/releases/download/${latest .name}/${filename}`;
 
+         if (!this .fileExists (fileURL))
+            return this .waitForRelease ();
+
          this .footer .console .addSplitter ();
          this .footer .console .addMessage ("info", "", 0, `A new Sunrize version ${latest .name} is now available on GitHub.`);
          this .footer .console .addMessage ("info", "", 0, `Download new version: <a download href="${fileURL}">${filename}</a>`, true);
@@ -498,6 +505,25 @@ module .exports = class Document extends Interface
       {
          if (process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT")
             console .error (error);
+      }
+   }
+
+   waitForRelease ()
+   {
+      setTimeout (() => this .checkReleases (), 24 * 60 * 60 * 1_000);
+   }
+
+   async fileExists (url)
+   {
+      try
+      {
+         const response = await fetch (url, { method: "HEAD" });
+
+         return response .ok;
+      }
+      catch
+      {
+         return false;
       }
    }
 
