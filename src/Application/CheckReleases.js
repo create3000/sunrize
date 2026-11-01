@@ -1,4 +1,7 @@
-const $ = require ("jquery");
+const
+   $    = require ("jquery"),
+   util = require ("util"),
+   _    = require ("./GetText");
 
 module .exports = class CheckReleases
 {
@@ -51,8 +54,8 @@ module .exports = class CheckReleases
             return this .waitForRelease ();
 
          this .#console .addSplitter ();
-         this .#console .addMessage ("info", "", 0, `A new Sunrize version ${latest .name} is now available on GitHub.`);
-         this .#console .addMessage ("info", "", 0, $(`<span>Download new version: <span><a download href="${fileURL}">${filename}</a>`));
+         this .#console .addMessage ("info", "", 0, util .format (_(`A new Sunrize version %s is now available on GitHub.`), latest .name));
+         this .#console .addMessage ("info", "", 0, $(util .format (_(`<span>Download new version: <span><a download href="%s">$%s</a>`), fileURL, filename)));
          this .#console .addSplitter ();
       }
       catch (error)
