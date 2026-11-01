@@ -55,7 +55,7 @@ module .exports = class CheckReleases
 
          this .#console .addSplitter ();
          this .#console .addMessage ("info", "", 0, util .format (_(`A new Sunrize version %s is now available on GitHub.`), latest .name));
-         this .#console .addMessage ("info", "", 0, $(util .format (_(`<span>Download new version: <span><a download href="%s">$%s</a>`), fileURL, filename)));
+         this .#console .addMessage ("info", "", 0, $(util .format (_(`<span>Download new version: <span><a download href="%s">%s</a>`), fileURL, filename)));
          this .#console .addSplitter ();
       }
       catch (error)

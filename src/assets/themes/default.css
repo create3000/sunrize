@@ -1270,6 +1270,8 @@ body.dark .ui-widget .library-list .component {
 
 .console-output a {
   color: var(--system-orange);
+  text-decoration: none;
+  border-bottom: 1px solid var(--system-orange);
 }
 
 .console-input {
