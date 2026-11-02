@@ -19,6 +19,7 @@ const
    VideoParser        = require ("../Parser/VideoParser"),
    AudioParser        = require ("../Parser/AudioParser"),
    CheckReleases      = require ("./CheckReleases"),
+   Package            = require ("../../package.json"),
    _                  = require ("./GetText");
 
 require ("jquery-ui-dist/jquery-ui");
@@ -183,7 +184,6 @@ module .exports = class Document extends Interface
          this .browser .getBrowserOptions () .getField (option) .addInterest (`set_${option}`, this);
 
       this .browser .setBrowserOption ("AlwaysUpdateGeometries", true);
-      this .browser .setBrowserOption ("MetadataReference", require ("../../package.json") .homepage);
 
       // Connect browser events.
 
@@ -218,9 +218,7 @@ module .exports = class Document extends Interface
 
       // Info
 
-      const pkg = require ("../../package.json");
-
-      console .info (`Welcome to ${pkg .productName} v${pkg .version}.`);
+      console .info (`Welcome to ${Package .productName} v${Package .version}.`);
 
       CheckReleases .run (this .footer .console);
 
@@ -546,11 +544,9 @@ module .exports = class Document extends Interface
 
       if (this .config .file .commonMetaData ?? true)
       {
-         const
-            pkg       = require ("../../package.json"),
-            generator = scene .getMetaData ("generator") ?.filter (value => !value .startsWith (pkg .productName)) ?? [ ];
+         const generator = scene .getMetaData ("generator") ?.filter (value => !value .startsWith (Package .productName)) ?? [ ];
 
-         generator .unshift (`${pkg .productName} V${pkg .version}, ${pkg .homepage}`);
+         generator .unshift (`${Package .productName} V${Package .version}, ${Package .homepage}`);
 
          if (!scene .getMetaData ("creator") ?.some (value => value .includes (this .fullname)))
             scene .addMetaData ("creator", this .fullname);

@@ -10,6 +10,7 @@ const
    NodeList    = require ("./NodeList"),
    MemberList  = require ("./AnimationMemberList"),
    Editor      = require ("../Undo/Editor"),
+   Package     = require ("../../package.json"),
    _           = require ("../Application/GetText");
 
 require ("../Bits/Validate");
@@ -521,8 +522,8 @@ module .exports = class AnimationEditor extends Interface
       executionContext .addNamedNode (executionContext .getUniqueName ("NewAnimation"),      animation);
       executionContext .addNamedNode (executionContext .getUniqueName ("NewAnimationTimer"), timeSensor);
 
-      animation .setMetaData ("Animation/duration",  new X3D .SFInt32 (10));
-      animation .setMetaData ("Animation/frameRate", new X3D .SFInt32 (10));
+      animation .setMetaData ("Animation/duration",  Package .homepage, new X3D .SFInt32 (10));
+      animation .setMetaData ("Animation/frameRate", Package .homepage, new X3D .SFInt32 (10));
 
       if (group)
       {

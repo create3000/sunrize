@@ -4,7 +4,8 @@ const
    X3DActiveLayerNodeTool = require ("../Layering/X3DActiveLayerNodeTool"),
    X3D                    = require ("../../X3D"),
    ActionKeys             = require ("../../Application/ActionKeys"),
-   Editor                 = require ("../../Undo/Editor.js");
+   Editor                 = require ("../../Undo/Editor.js"),
+   Package                = require ("../../../package.json");
 
 class X3DGridNodeTool extends X3DActiveLayerNodeTool
 {
@@ -99,7 +100,7 @@ class X3DGridNodeTool extends X3DActiveLayerNodeTool
       {
          const configNode = Editor .getLayerConfigNode (this .getBrowser (), true);
 
-         configNode ?.setMetaData (path, field);
+         configNode ?.setMetaData (path, Package .homepage, field);
       }
    }
 

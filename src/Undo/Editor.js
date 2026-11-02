@@ -9,6 +9,7 @@ const
    X3D         = require ("../X3D"),
    Traverse    = require ("x3d-traverse"),
    UndoManager = require ("./UndoManager"),
+   Package     = require ("../../package.json"),
    _           = require ("../Application/GetText");
 
 module .exports = class Editor
@@ -1979,7 +1980,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
 
       undoManager .beginUndo (_("Change Metadata of Node %s"), node .getTypeName ());
 
-      node .setMetaData (path, value);
+      node .setMetaData (path, Package .homepage, value);
 
       undoManager .registerUndo (() =>
       {

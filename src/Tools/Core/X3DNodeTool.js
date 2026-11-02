@@ -8,6 +8,7 @@ const
    Traverse    = require ("x3d-traverse"),
    path        = require ("path"),
    url         = require ("url"),
+   Package     = require ("../../../package.json"),
    _           = require ("../../Application/GetText");
 
 const _tool = Symbol .for ("Sunrize.tool");
@@ -450,7 +451,7 @@ class X3DNodeTool extends X3DBaseTool
                   break;
             }
 
-            this .setMetaData (`${this .getTypeName ()}/${name}`, initialValue);
+            this .setMetaData (`${this .getTypeName ()}/${name}`, Package .homepage, initialValue);
 
             Editor .setNodeMetaData (this .node, `${this .getTypeName ()}/${name}`, value);
          }

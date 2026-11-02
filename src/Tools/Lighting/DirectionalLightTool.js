@@ -1,6 +1,8 @@
 "use strict";
 
-const X3DLightNodeTool = require ("./X3DLightNodeTool");
+const
+   X3DLightNodeTool = require ("./X3DLightNodeTool"),
+   Package          = require ("../../../package.json");
 
 class DirectionalLightTool extends X3DLightNodeTool
 {
@@ -35,7 +37,7 @@ class DirectionalLightTool extends X3DLightNodeTool
    {
       this .#changing = true;
 
-      this .setMetaData ("DirectionalLight/location", this .tool .location);
+      this .setMetaData ("DirectionalLight/location", Package .homepage, this .tool .location);
    }
 
    set_meta_location ()

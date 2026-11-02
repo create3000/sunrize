@@ -1,7 +1,8 @@
 const
-   $    = require ("jquery"),
-   util = require ("util"),
-   _    = require ("./GetText");
+   $       = require ("jquery"),
+   util    = require ("util"),
+   Package = require ("../../package.json"),
+   _       = require ("./GetText");
 
 module .exports = class CheckReleases
 {
@@ -27,10 +28,9 @@ module .exports = class CheckReleases
       {
          const
             response = await fetch ("https://api.github.com/repos/create3000/sunrize/releases/latest"),
-            latest   = await response .json (),
-            pkg      = require ("../../package.json");
+            latest   = await response .json ();
 
-         if (latest .name === `v${pkg .version}`)
+         if (latest .name === `v${Package .version}`)
             return this .waitForRelease ();
 
          let filename;

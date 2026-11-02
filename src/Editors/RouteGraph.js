@@ -8,6 +8,7 @@ const
    Editor      = require ("../Undo/Editor"),
    UndoManager = require ("../Undo/UndoManager"),
    util        = require ("util"),
+   Package     = require ("../../package.json"),
    _           = require ("../Application/GetText");
 
 module .exports = class RouteGraph extends Interface
@@ -428,7 +429,7 @@ module .exports = class RouteGraph extends Interface
          {
             const configNode = readConfig ?? Editor .getConfigNode (this .browser .currentScene, true);
 
-            configNode .setMetaData ("Sunrize/RouteGraph/pages", string);
+            configNode .setMetaData ("Sunrize/RouteGraph/pages", Package .homepage, string);
 
             UndoManager .shared .saveNeeded = true;
          }
