@@ -332,6 +332,12 @@ class Tabs
       }
 
       this .saveTabs ();
+
+      // Scroll to right.
+
+      const tabs = $(this .tabs .shadowRoot) .find (".etabs .tabs");
+
+      tabs .scrollLeft (tabs .prop ("scrollWidth"));
    }
 
    getIcon (encoding)
