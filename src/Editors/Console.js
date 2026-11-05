@@ -211,8 +211,7 @@ module .exports = class Console extends Interface
 
       this .output .children (`:not(:nth-last-child(-n+${this .CONSOLE_MAX}))`) .remove ();
       this .output .append (text);
-
-      setTimeout (() => this .output .scrollTop (this .output .prop ("scrollHeight")));
+      this .output .scrollTop (this .output .prop ("scrollHeight"));
 
       this .findElements (text, this .currentElement, false);
    }
