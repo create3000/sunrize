@@ -39,7 +39,7 @@ class Tabs
       ["SVG", "../images/seti/svg.svg"],
    ]);
 
-   scrollOptions = { behavior: "instant", block: "center" };
+   scrollOptions = { behavior: "instant", inline: "center" };
 
    constructor ()
    {
