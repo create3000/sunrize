@@ -39,6 +39,8 @@ class Tabs
       ["SVG", "../images/seti/svg.svg"],
    ]);
 
+   scrollOptions = { behavior: "instant", block: "center" };
+
    constructor ()
    {
       this .config .setDefaultValues ({
@@ -175,7 +177,7 @@ class Tabs
          const tab = this .getTabByURL (activeTab) ?? this .tabs .getTabByPosition (0);
 
          tab .activate ();
-         tab .element .scrollIntoView ();
+         tab .element .scrollIntoView (this .scrollOptions);
       }
       else
       {
@@ -330,7 +332,7 @@ class Tabs
             ?? this .tabs .getTabByPosition (this .tabs .getTabs () .length - 1);
 
          tab .activate ();
-         tab .element .scrollIntoView ();
+         tab .element .scrollIntoView (this .scrollOptions);
       }
 
       this .saveTabs ();

@@ -190,6 +190,8 @@ module .exports = class Console extends Interface
       "error",
    ];
 
+   #scrollOptions = { behavior: "instant", block: "end" };
+
    addMessage (level, sourceId, line, message)
    {
       if (typeof message === "string" && this .excludes .some (exclude => message .includes (exclude)))
@@ -211,14 +213,18 @@ module .exports = class Console extends Interface
 
       this .output .children (`:not(:nth-last-child(-n+${this .CONSOLE_MAX}))`) .remove ();
       this .output .append (text);
-      this .output .scrollTop (this .output .prop ("scrollHeight"));
+      text .get (0) .scrollIntoView (this .#scrollOptions);
 
       this .findElements (text, this .currentElement, false);
    }
 
    addSplitter ()
    {
-      this .output .append ($("<p></p>") .addClass ("splitter"));
+      const splitter = $("<p></p>") .addClass ("splitter");
+
+      this .output .append (splitter);
+
+      splitter .get (0) .scrollIntoView (this .#scrollOptions);
    }
 
    setSuspendConsole (value)
