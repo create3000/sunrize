@@ -175,6 +175,7 @@ class Tabs
          const tab = this .getTabByURL (activeTab) ?? this .tabs .getTabByPosition (0);
 
          tab .activate ();
+         tab .element .scrollIntoView ();
       }
       else
       {
@@ -329,15 +330,10 @@ class Tabs
             ?? this .tabs .getTabByPosition (this .tabs .getTabs () .length - 1);
 
          tab .activate ();
+         tab .element .scrollIntoView ();
       }
 
       this .saveTabs ();
-
-      // Scroll to right.
-
-      const tabs = $(this .tabs .shadowRoot) .find (".etabs .tabs");
-
-      tabs .scrollLeft (tabs .prop ("scrollWidth"));
    }
 
    getIcon (encoding)
