@@ -1972,7 +1972,7 @@ module .exports = class AnimationEditor extends Interface
             begin     = selectionRange [0] / duration,
             end       = selectionRange [1] / duration;
 
-         if (this .timeSensor ._range [1] !== begin && this .timeSensor ._range [2] !== end)
+         if (!(this .timeSensor ._range [1] === begin && this .timeSensor ._range [2] === end))
          {
             this .timeSensor ._range [1] = begin;
             this .timeSensor ._range [2] = end;
@@ -2706,7 +2706,7 @@ module .exports = class AnimationEditor extends Interface
 
       this .updateRange ();
       this .selectKeyframesInRange ();
-      this .requestDrawTimeline ();
+      this .drawTimeline ();
    }
 
    expandSelectionRange (frame)
