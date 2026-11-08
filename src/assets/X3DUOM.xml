@@ -2,7 +2,7 @@
 <!-- X3D Unified Object Model (X3DUOM) X3dUnifiedObjectModel-4.1.xml -->
 <!-- Online at https://www.web3d.org/specifications/X3dUnifiedObjectModel-4.1.xml -->
 <!-- This file contains a listing of all abstract and concrete nodes in version 4.1 of X3D -->
-<!-- Generated 2026-10-28-07:00 19:32:04.834869-07:00 -->
+<!-- Generated 2026-10-31-07:00 13:20:31.8989519-07:00 -->
 <X3dUnifiedObjectModel xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
                        version="4.1"
                        xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/X3dUnifiedObjectModel.xsd">
@@ -21855,7 +21855,8 @@
             <field name="displacers"
                    type="MFNode"
                    accessType="inputOutput"
-                   acceptableNodeTypes="HAnimDisplacer"/>
+                   acceptableNodeTypes="HAnimDisplacer"
+                   description="Contains zero or more HAnimDisplacer nodes that can animate the HAnimHumanoid skinCoord field."/>
             <field name="info"
                    type="MFString"
                    accessType="inputOutput"
@@ -21882,7 +21883,7 @@
                    type="MFNode"
                    accessType="inputOutput"
                    acceptableNodeTypes="HAnimJoint"
-                   description="The joints field contains a list of USE references for all HAnimJoint node instances found within the preceding skeleton hierarchy."/>
+                   description="(Deprecated) The joints field contains a list of USE references for all HAnimJoint node instances found within the preceding skeleton hierarchy."/>
             <field name="loa"
                    type="SFInt32"
                    accessType="inputOutput"
@@ -21932,12 +21933,12 @@
                    type="MFNode"
                    accessType="inputOutput"
                    acceptableNodeTypes="HAnimSegment"
-                   description="The segments field contains a list of USE references for all HAnimSegment node instances found within the preceding skeleton hierarchy."/>
+                   description="(Deprecated) The segments field contains a list of USE references for all HAnimSegment node instances found within the preceding skeleton hierarchy."/>
             <field name="sites"
                    type="MFNode"
                    accessType="inputOutput"
                    acceptableNodeTypes="HAnimSite"
-                   description="sites field contains a list of USE references for all HAnimSite node instances found within the preceding skeleton hierarchy."/>
+                   description="(Deprecated) sites field contains a list of USE references for all HAnimSite node instances found within the preceding skeleton hierarchy."/>
             <field name="skeletalConfiguration"
                    type="SFString"
                    accessType="inputOutput"
@@ -24354,7 +24355,8 @@
                    type="SFNode"
                    accessType="inputOutput"
                    default="NULL"
-                   acceptableNodeTypes="X3DCoordinateNode"/>
+                   acceptableNodeTypes="X3DCoordinateNode"
+                   description="the coord field is used for HAnimSite objects that have deformable meshes and shall contain coordinates referenced from the mesh in the current object."/>
             <field name="description"
                    type="SFString"
                    accessType="inputOutput"
@@ -24362,7 +24364,8 @@
             <field name="displacers"
                    type="MFNode"
                    accessType="inputOutput"
-                   acceptableNodeTypes="HAnimDisplacer"/>
+                   acceptableNodeTypes="HAnimDisplacer"
+                   description="the displacers field stores HAnimDisplacer objects for a particular HAnimJoint object."/>
             <field name="IS"
                    type="SFNode"
                    accessType="inputOutput"
