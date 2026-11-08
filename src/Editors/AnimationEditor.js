@@ -153,9 +153,10 @@ module .exports = class AnimationEditor extends Interface
 
       this .reverseIcon = $("<span></span>")
          .addClass ("material-symbols-outlined")
-         .css ("scale", "0.7")
+         .css ("translate", "0 -1px")
+         .css ("scale", "0.7 -0.7")
          .attr ("title", _("Reverse animation."))
-         .text ("keyboard_backspace")
+         .text ("keyboard_return")
          .appendTo (this .controls)
          .on ("click", () => this .toggleReverse ());
 

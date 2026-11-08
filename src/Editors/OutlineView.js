@@ -1227,9 +1227,11 @@ module .exports = class OutlineView extends Interface
                      .attr ("order", "8")
                      .attr ("title", _("Toggle reverse."))
                      .attr ("action", "reverse-node")
+                     .css ("translate", "0 -1px")
+                     .css ("scale", "1 -1")
                      .addClass (["button", "material-symbols-outlined"])
                      .addClass (node ._reverse .getValue () ? "on" : "off")
-                     .text ("keyboard_backspace"));
+                     .text ("keyboard_return"));
                }
 
                if (!node ._enabled .getValue ())
