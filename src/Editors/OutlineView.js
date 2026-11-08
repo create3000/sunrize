@@ -334,6 +334,10 @@ module .exports = class OutlineView extends Interface
             this .loopNode (event);
             break;
 
+         case "reverse-node":
+            this .reverseNode (event);
+            break;
+
          case "reload-node":
             this .reloadNode (event);
             break;
@@ -1188,6 +1192,7 @@ module .exports = class OutlineView extends Interface
                node ._isActive .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
                node ._isPaused .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
                node ._loop     .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
+               node ._reverse  .addFieldCallback (this .#updateNodePlaySymbol, this .updateNodePlay .bind (this, node));
 
                buttons .push ($("<span></span>")
                   .attr ("order", "5")
@@ -1214,6 +1219,17 @@ module .exports = class OutlineView extends Interface
                      .addClass (["button", "material-symbols-outlined"])
                      .addClass (node ._loop .getValue () ? "on" : "off")
                      .text ("repeat"));
+               }
+
+               if (node .getFieldDefinitions () .get ("reverse"))
+               {
+                  buttons .push ($("<span></span>")
+                     .attr ("order", "8")
+                     .attr ("title", _("Toggle reverse."))
+                     .attr ("action", "reverse-node")
+                     .addClass (["button", "material-symbols-outlined"])
+                     .addClass (node ._reverse .getValue () ? "on" : "off")
+                     .text ("keyboard_backspace"));
                }
 
                if (!node ._enabled .getValue ())
@@ -1415,6 +1431,14 @@ module .exports = class OutlineView extends Interface
          .find ("> .item [action=loop-node]")
          .removeClass (["on", "off"])
          .addClass (node ._loop .getValue () ? "on" : "off"));
+
+      buttons .push (this .sceneGraph
+         .find (`.node[node-id=${node .getId ()}],
+         .imported-node[node-id=${node .getId ()}],
+         .exported-node[node-id=${node .getId ()}]`)
+         .find ("> .item [action=reverse-node]")
+         .removeClass (["on", "off"])
+         .addClass (node ._reverse .getValue () ? "on" : "off"));
 
       if (node ._enabled .getValue ())
          buttons .slice (-3) .forEach (button => button .show ());
@@ -3154,6 +3178,7 @@ module .exports = class OutlineView extends Interface
                   node ._isActive .removeFieldCallback (this .#updateNodePlaySymbol);
                   node ._isPaused .removeFieldCallback (this .#updateNodePlaySymbol);
                   node ._loop     .removeFieldCallback (this .#updateNodePlaySymbol);
+                  node ._reverse  .removeFieldCallback (this .#updateNodePlaySymbol);
                   continue;
                }
                case X3D .X3DConstants .X3DBindableNode:
@@ -3395,6 +3420,8 @@ module .exports = class OutlineView extends Interface
    stopNode (event) { }
 
    loopNode (event) { }
+
+   reverseNode (event) { }
 
    reloadNode (event)
    {
