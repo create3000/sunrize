@@ -2339,9 +2339,9 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       }
       else
       {
-         Editor .setFieldValue (this .browser .currentScene, node, node ._startTime, Date .now () / 1000);
-
          node ._evenLive = true;
+
+         Editor .setFieldValue (this .browser .currentScene, node, node ._startTime, Date .now () / 1000);
       }
    }
 
@@ -2354,6 +2354,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       event .preventDefault ();
       event .stopImmediatePropagation ();
+
+      node ._evenLive = false;
 
       Editor .setFieldValue (this .browser .currentScene, node, node ._stopTime, Date .now () / 1000);
    }
