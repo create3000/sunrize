@@ -3,6 +3,7 @@
 const
    X3DActiveLayerNodeTool = require ("../Layering/X3DActiveLayerNodeTool"),
    ActionKeys             = require ("../../Application/ActionKeys"),
+   X3D                    = require ("../../X3D"),
    $                      = require ("jquery");
 
 class X3DSnapNodeTool extends X3DActiveLayerNodeTool
@@ -42,7 +43,7 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
 
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
-      if (!this .getBrowser () .touch (x, y))
+      if (!this .getBrowser () .touch (X3D .PointingType .TOUCH, x, y))
       {
          this ._visible = false;
          return;
@@ -70,7 +71,7 @@ class X3DSnapNodeTool extends X3DActiveLayerNodeTool
    {
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
-      if (!this .getBrowser () .touch (x, y))
+      if (!this .getBrowser () .touch (X3D .PointingType .TOUCH, x, y))
          return;
 
       // Stop event propagation.

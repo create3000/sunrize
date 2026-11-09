@@ -1190,7 +1190,7 @@ module .exports = class Document extends Interface
 
             this .#pointer .assign (this .browser .getPointerFromEvent (event));
 
-            if (this .browser .touch (... this .#pointer))
+            if (this .browser .touch (X3D .PointingType .TOUCH, ... this .#pointer))
             {
                if (this .browser .getHit () .sensors .size)
                   return;
@@ -1272,7 +1272,7 @@ module .exports = class Document extends Interface
 
       const outlineEditor = this .sidebar .outlineEditor;
 
-      if (!this .browser .touch (... pointer))
+      if (!this .browser .touch (X3D .PointingType .TOUCH, ... pointer))
       {
          outlineEditor .deselectAll ();
          return;
