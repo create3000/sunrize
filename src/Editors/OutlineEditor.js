@@ -2376,6 +2376,19 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          node ._evenLive = true;
    }
 
+   reverseNode (event)
+   {
+      const
+         target  = $(event .target),
+         element = target .closest (".node, .imported-node, .exported-node", this .sceneGraph),
+         node    = this .getNode (element);
+
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
+
+      Editor .setFieldValue (this .browser .currentScene, node, node ._reverse, !node ._reverse .getValue ());
+   }
+
    addBooleanField (button)
    {
       const

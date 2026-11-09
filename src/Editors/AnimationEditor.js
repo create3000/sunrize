@@ -151,6 +151,15 @@ module .exports = class AnimationEditor extends Interface
          .appendTo (this .controls)
          .on ("click", () => this .toggleLoop ());
 
+      this .reverseIcon = $("<span></span>")
+         .addClass ("material-symbols-outlined")
+         .css ("translate", "0 -1px")
+         .css ("scale", "0.7 -0.7")
+         .attr ("title", _("Reverse animation."))
+         .text ("keyboard_return")
+         .appendTo (this .controls)
+         .on ("click", () => this .toggleReverse ());
+
       this .frameInput = $("<input></input>")
          .addClass ("input")
          .css ("width", "70px")
@@ -335,6 +344,7 @@ module .exports = class AnimationEditor extends Interface
       if (this .timeSensor)
       {
          this .timeSensor ._loop             .removeInterest ("set_loop",     this);
+         this .timeSensor ._reverse          .removeInterest ("set_reverse",  this);
          this .timeSensor ._isActive         .removeInterest ("set_active",   this);
          this .timeSensor ._fraction_changed .removeInterest ("set_fraction", this);
 
@@ -374,6 +384,7 @@ module .exports = class AnimationEditor extends Interface
             .find (node => node .getValue () .getType () .includes (X3D .X3DConstants .TimeSensor)) .getValue ();
 
          this .timeSensor ._loop             .addInterest ("set_loop",     this);
+         this .timeSensor ._reverse          .addInterest ("set_reverse",  this);
          this .timeSensor ._isActive         .addInterest ("set_active",   this);
          this .timeSensor ._fraction_changed .addInterest ("set_fraction", this);
 
@@ -381,6 +392,7 @@ module .exports = class AnimationEditor extends Interface
          this .timeSensor ._range    = [0, 0, 1];
 
          this .set_loop (this .timeSensor ._loop);
+         this .set_reverse (this .timeSensor ._reverse);
          this .set_active (this .timeSensor ._isActive);
 
          // Show Member List
@@ -448,6 +460,7 @@ module .exports = class AnimationEditor extends Interface
          this .toggleAnimationIcon,
          this .lastFrameIcon,
          this .loopIcon,
+         this .reverseIcon,
          this .frameInput,
          this .propertiesIcon,
          this .keyTypeElement,
@@ -1946,6 +1959,13 @@ module .exports = class AnimationEditor extends Interface
          node ._evenLive = true;
    }
 
+   toggleReverse ()
+   {
+      const node = this .timeSensor;
+
+      Editor .setFieldValue (this .browser .currentScene, node, node ._reverse, !node ._reverse .getValue ());
+   }
+
    showProperties ()
    {
       require ("../Controls/AnimationPropertiesPopover");
@@ -2011,6 +2031,14 @@ module .exports = class AnimationEditor extends Interface
          this .loopIcon .addClass ("active");
       else
          this .loopIcon .removeClass ("active");
+   }
+
+   set_reverse (reverse)
+   {
+      if (reverse .getValue ())
+         this .reverseIcon .addClass ("active");
+      else
+         this .reverseIcon .removeClass ("active");
    }
 
    set_active (active)
