@@ -77,6 +77,7 @@ module .exports = class Application
          recentDocuments: [ ],
          recentLocations: [ ],
          size: [1100, 680],
+         zoomFactor: 1,
       });
 
       electron .nativeTheme .themeSource = this .config .themeSource;
@@ -645,6 +646,22 @@ module .exports = class Application
                               },
                            ],
                         },
+                        { type: "separator" },
+                        {
+                           label: _("Zoom In"),
+                           accelerator: "CmdOrCtrl+Plus",
+                           click: () => this .zoomIn (),
+                        },
+                        {
+                           label: _("Zoom Out"),
+                           accelerator: "CmdOrCtrl+-",
+                           click: () => this .zoomOut (),
+                        },
+                        {
+                           label: _("Reset Zoom"),
+                           accelerator: "CmdOrCtrl+0",
+                           click: () => this .resetZoom (),
+                        },
                      ],
                   },
                   {
@@ -825,7 +842,7 @@ module .exports = class Application
                   },
                   {
                      label: _("Display Timings"),
-                     accelerator: "CmdOrCtrl+Plus",
+                     accelerator: "Alt+CmdOrCtrl+Plus",
                      type: "checkbox",
                      checked: this .menuOptions .timings,
                      click: () => this .mainWindow .webContents .send ("display-timings", !this .menuOptions .timings),
@@ -995,6 +1012,7 @@ module .exports = class Application
             nodeIntegration: true,
             contextIsolation: false,
             webviewTag: true,
+            zoomFactor: 1,
          },
       });
 
@@ -1019,6 +1037,27 @@ module .exports = class Application
       await window .loadFile (path .join (__dirname, "../assets/html/application.html"));
 
       this .ready = true;
+   }
+
+   zoomIn ()
+   {
+      this .config .zoomFactor = Math .min (this .config .zoomFactor + 1/64, 5);
+
+      this .mainWindow .webContents .setZoomFactor (this .config .zoomFactor);
+   }
+
+   zoomOut ()
+   {
+      this .config .zoomFactor = Math .max (this .config .zoomFactor - 1/64, 0.5);
+
+      this .mainWindow .webContents .setZoomFactor (this .config .zoomFactor);
+   }
+
+   resetZoom ()
+   {
+      this .config .zoomFactor = 1;
+
+      this .mainWindow .webContents .setZoomFactor (this .config .zoomFactor);
    }
 
    onactivate ()
