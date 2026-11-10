@@ -1281,43 +1281,24 @@ module .exports = class Document extends Interface
       // Select.
 
       const
-         shapeNode    = this .browser .getHit () .shapeNode,
-         geometryTool = shapeNode .getGeometry () ?.getTool (),
-         tool         = geometryTool ?? shapeNode .getExecutionContext () .getOuterNode () ?.getTool (),
-         node         = tool ?? shapeNode .getExecutionContext () .getOuterNode () ?? shapeNode;
+         parentNode = this .browser .getHit () .parentNode,
+         tool       = parentNode .getExecutionContext () .getOuterNode () ?.getTool (),
+         node       = tool ?? parentNode .getExecutionContext () .getOuterNode () ?? parentNode;
 
-      outlineEditor .expandTo (node, { expandObject: true, expandInlineNodes: true, expandAll: true });
+      outlineEditor .expandTo (node, { expandObject: true, expandInlineNodes: true, expandAll: false });
 
       let elements = outlineEditor .sceneGraph .find (`.node[node-id=${node .getId ()}]`);
 
       if (!elements .length)
          return;
 
-      if (outlineEditor .isEditable (elements))
-      {
-         if (tool)
-         {
-            elements = Array .from (elements);
-         }
-         else
-         {
-            const parentElements = Array .from (elements) .flatMap (element =>
-            {
-               const parentElements = Array .from ($(element) .parent () .closest (".node", outlineEditor .sceneGraph));
-
-               return parentElements .length ? parentElements : element;
-            });
-
-            elements = parentElements .map ((element, i) => outlineEditor .getNode ($(element)) .getType () .includes (X3D .X3DConstants .X3DGroupingNode) ? parentElements [i] : elements [i]);
-         }
-      }
-      else
+      if (!outlineEditor .isEditable (elements))
       {
          while (!outlineEditor .isEditable (elements))
             elements = elements .parent () .closest (".node, .scene", outlineEditor .sceneGraph);
-
-         elements = Array .from (elements);
       }
+
+      elements = Array .from (elements);
 
       for (const [i, element] of elements .entries ())
          outlineEditor .selectNodeElement ($(element), { add: (event .shiftKey || event .metaKey) || i > 0, target: true });
