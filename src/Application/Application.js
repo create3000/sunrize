@@ -1012,7 +1012,7 @@ module .exports = class Application
             nodeIntegration: true,
             contextIsolation: false,
             webviewTag: true,
-            zoomFactor: 1,
+            zoomFactor: this .config .zoomFactor,
          },
       });
 
