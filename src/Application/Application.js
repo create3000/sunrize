@@ -649,7 +649,7 @@ module .exports = class Application
                         { type: "separator" },
                         {
                            label: _("Zoom In"),
-                           accelerator: process .platform === "win32" ? "Shift+CmdOrCtrl+Plus" : "CmdOrCtrl+Plus",
+                           accelerator: "CmdOrCtrl+Plus",
                            click: () => this .zoomIn (),
                         },
                         {
