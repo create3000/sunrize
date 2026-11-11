@@ -1283,7 +1283,7 @@ module .exports = class Document extends Interface
       const
          parentNode = this .browser .getHit () .parentNode,
          tool       = parentNode .getExecutionContext () .getOuterNode () ?.getTool (),
-         node       = tool ?? parentNode .getExecutionContext () .getOuterNode () ?? parentNode;
+         node       = tool ?.valueOf () ?? parentNode .getExecutionContext () .getOuterNode () ?? parentNode;
 
       outlineEditor .expandTo (node, { expandObject: true, expandInlineNodes: true, expandAll: false });
 
