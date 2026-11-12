@@ -1342,7 +1342,7 @@ module .exports = class Document extends Interface
          executionContext = this .browser .currentScene,
          layerNode        = this .browser .getActiveLayer (),
          nodes            = selection .nodes,
-         [, bbox]         = Editor .getModelMatricesAndBBoxes (executionContext, layerNode, nodes);
+         [, bbox]         = Editor .getModelMatricesAndBBoxes (executionContext, layerNode, nodes, true);
 
       if (!bbox .size .norm ())
          return;

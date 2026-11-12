@@ -2759,7 +2759,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
    static moveNodesToTarget (executionContext, layerNode, nodes, targetPosition, targetNormal, sourcePosition, sourceNormal, moveCenter, undoManager = UndoManager .shared)
    {
       const
-         [values, bbox] = this .getModelMatricesAndBBoxes (executionContext, layerNode, nodes),
+         [values, bbox] = this .getModelMatricesAndBBoxes (executionContext, layerNode, nodes, true),
          bboxCenter     = bbox .center;
 
       if (moveCenter)
@@ -2947,7 +2947,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     * @param {Array<X3DNode>} nodes
     * @returns {[Map<X3DNode,Box3[]>,Box3]}
     */
-   static getModelMatricesAndBBoxes (executionContext, layerNode, nodes)
+   static getModelMatricesAndBBoxes (executionContext, layerNode, nodes, visible)
    {
       const
          values = new Map (),
@@ -2957,7 +2957,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       {
          const
             innerNode     = $.try (() => node .getInnerNode ()),
-            modelMatrices = this .getModelMatrices (executionContext, layerNode, node, false, true);
+            modelMatrices = this .getModelMatrices (executionContext, layerNode, node, false, visible);
 
          if (!innerNode)
             continue;
@@ -3021,7 +3021,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     * @param {boolean} addSelf
     * @returns {Array<Matrix4>}
     */
-   static getModelMatrices (executionContext, layerNode, node, addSelf = false, visible)
+   static getModelMatrices (executionContext, layerNode, node, addSelf, visible)
    {
       node = node .valueOf ();
 
@@ -3046,7 +3046,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                   continue;
             }
 
-            if (object .getType () .includes (X3D .X3DConstants .X3DBoundedObject) && visible && !object ._visible .getValue ())
+            if (visible && object .getType () .includes (X3D .X3DConstants .X3DBoundedObject) && !object ._visible .getValue ())
                continue HIERARCHY;
 
             if (!object .getType () .includes (X3D .X3DConstants .X3DTransformMatrix3DNode))
