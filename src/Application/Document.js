@@ -1281,9 +1281,11 @@ module .exports = class Document extends Interface
       // Select.
 
       const
-         parentNode = this .browser .getHit () .parentNode,
-         tool       = parentNode .getExecutionContext () .getOuterNode () ?.getTool (),
-         node       = tool ?.valueOf () ?? parentNode .getExecutionContext () .getOuterNode () ?? parentNode;
+         hit        = this .browser .getHit (),
+         parentNode = hit .parentNode,
+         tool       = parentNode .getExecutionContext () .getOuterNode () ?.getTool () ?.valueOf (),
+         parent     = tool ?? parentNode .getExecutionContext () .getOuterNode () ?? parentNode,
+         node       = parent .isPrivate () ? hit .shapeNode : parent;
 
       outlineEditor .expandTo (node, { expandObject: true, expandInlineNodes: true, expandAll: false });
 
