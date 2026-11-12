@@ -2957,7 +2957,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
       {
          const
             innerNode     = $.try (() => node .getInnerNode ()),
-            modelMatrices = this .getModelMatrices (executionContext, layerNode, node, false);
+            modelMatrices = this .getModelMatrices (executionContext, layerNode, node, false, true);
 
          if (!innerNode)
             continue;
@@ -3021,7 +3021,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     * @param {boolean} addSelf
     * @returns {Array<Matrix4>}
     */
-   static getModelMatrices (executionContext, layerNode, node, addSelf = false)
+   static getModelMatrices (executionContext, layerNode, node, addSelf = false, visible)
    {
       node = node .valueOf ();
 
@@ -3029,7 +3029,7 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
          hierarchies   = Traverse .find (executionContext, node, Traverse .ROOT_NODES),
          modelMatrices = [ ];
 
-      for (const hierarchy of hierarchies)
+      HIERARCHY: for (const hierarchy of hierarchies)
       {
          const modelMatrix = new X3D .Matrix4 ();
 
@@ -3045,6 +3045,9 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
                if (object !== layerNode)
                   continue;
             }
+
+            if (object .getType () .includes (X3D .X3DConstants .X3DBoundedObject) && visible && !object ._visible .getValue ())
+               continue HIERARCHY;
 
             if (!object .getType () .includes (X3D .X3DConstants .X3DTransformMatrix3DNode))
                continue;
