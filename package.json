@@ -98,7 +98,7 @@
     "@electron-forge/publisher-github": "^8.0.1",
     "@eslint/js": "^10.0.1",
     "@reforged/maker-appimage": "^6.0.0",
-    "eslint": "^10.14.0",
+    "eslint": "^10.15.0",
     "globals": "^17.14.0",
     "shell-tools": "^1.1.9"
   },
@@ -106,7 +106,7 @@
     "@vscode/codicons": "^0.0.45",
     "capitalize": "^2.0.4",
     "console": "^0.7.2",
-    "electron": "^45.3.1",
+    "electron": "^45.3.2",
     "electron-prompt": "^1.7.0",
     "electron-squirrel-startup": "^1.0.1",
     "electron-tabs": "^1.0.4",
