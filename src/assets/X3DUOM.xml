@@ -2,7 +2,7 @@
 <!-- X3D Unified Object Model (X3DUOM) X3dUnifiedObjectModel-4.1.xml -->
 <!-- Online at https://www.web3d.org/specifications/X3dUnifiedObjectModel-4.1.xml -->
 <!-- This file contains a listing of all abstract and concrete nodes in version 4.1 of X3D -->
-<!-- Generated 2026-10-31-07:00 13:20:31.8989519-07:00 -->
+<!-- Generated 2026-11-08-08:00 08:49:21.9672839-08:00 -->
 <X3dUnifiedObjectModel xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
                        version="4.1"
                        xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/X3dUnifiedObjectModel.xsd">
@@ -291,7 +291,7 @@
                   appinfo="containerFieldChoicesAudioClip lists the allowed containerField enumeration values for AudioClip node: default &#34;source&#34; if parent node is Sound node, &#34;inputs&#34; if parent is part of audio graph, otherwise &#34;children&#34; if parent node is LoadSensor."
                   documentation="https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#containerField">
          <enumeration value="children"
-                      appinfo="parent node is X3DSoundChannelNode, X3DSoundDestinationNode, or X3DSoundProcessingNode"/>
+                      appinfo="parent node is X3DSoundChannelNode, X3DSoundDestinationNode, X3DSoundProcessingNode or LoadSensor"/>
          <enumeration value="source"
                       appinfo="parent node is Sound node (legacy X3D3 SFNode source is allowed content model, prefer X3D4 MFNode children)"/>
          <enumeration value="watchList"
@@ -299,7 +299,7 @@
       </SimpleType>
       <SimpleType name="containerFieldChoicesAudioGraph"
                   baseType="xs:NMTOKEN"
-                  appinfo="containerFieldChoicesAudioClip lists the allowed containerField enumeration values for AudioClip node: default &#34;children&#34; if parent is part of audio graph, &#34;source&#34; if parent node is Sound node, otherwise &#34;outputs&#34; signal is provided to this node by parent ChannelSplitter node."
+                  appinfo="containerFieldChoicesAudioGraph lists the allowed containerField enumeration values for audio graph nodes: default &#34;children&#34; if parent is part of audio graph, &#34;source&#34; if parent node is Sound node, otherwise &#34;outputs&#34; signal is provided to this node by parent ChannelSplitter node."
                   documentation="https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#containerField">
          <enumeration value="children"
                       appinfo="provide inputs to parent (X3DSoundChannelNode, X3DSoundDestinationNode, X3DSoundProcessingNode) as part of audio graph, otherwise standalone as childe in scene graph"/>
@@ -410,7 +410,7 @@
                   appinfo="containerFieldChoicesSoundSource lists the allowed containerField enumeration values for X3DSoundSourceNode elements: default &#34;source&#34; if parent node is Sound node, otherwise &#34;inputs&#34; if parent node is another node in audio graph."
                   documentation="https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#containerField">
          <enumeration value="children"
-                      appinfo="parent node is X3DSoundChannelNode, X3DSoundDestinationNode, or X3DSoundProcessingNode"/>
+                      appinfo="parent node is X3DSoundChannelNode, X3DSoundDestinationNode, X3DSoundProcessingNode or LoadSensor"/>
          <enumeration value="source"
                       appinfo="parent node is Sound node (legacy X3D3 SFNode source is allowed content model, prefer X3D4 MFNode children)"/>
       </SimpleType>
