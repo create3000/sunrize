@@ -3265,7 +3265,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
             if (sourceExecutionContext !== destinationExecutionContext)
             {
-               event .originalEvent .dataTransfer .dropEffect = "none";
+               event .originalEvent .dataTransfer .dropEffect = "copy";
             }
             else
             {
@@ -3275,41 +3275,41 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                   event .originalEvent .dataTransfer .dropEffect = "link";
                else
                   event .originalEvent .dataTransfer .dropEffect = "move";
+            }
 
-               if (destinationElement .is (".scene-graph"))
+            if (destinationElement .is (".scene-graph"))
+            {
+               destinationElement .addClass ("drag-after");
+            }
+            else if (destinationElement .is (".scene, .root-nodes, .field[type-name*=Node]"))
+            {
+               destinationElement .addClass ("drag-into");
+            }
+            else if (destinationElement .is (".node, .imported-node.instance"))
+            {
+               const
+                  item = destinationElement .find ("> .item"),
+                  y    = event .pageY - destinationElement .offset () .top;
+
+               if (y < item .height () * 0.25)
                {
+                  destinationElement .data ("drag-type", "drag-before");
+                  destinationElement .addClass ("drag-before");
+               }
+               else if (y > destinationElement .height () - item .height () * 0.25)
+               {
+                  destinationElement .data ("drag-type", "drag-after");
                   destinationElement .addClass ("drag-after");
-               }
-               else if (destinationElement .is (".scene, .root-nodes, .field[type-name*=Node]"))
-               {
-                  destinationElement .addClass ("drag-into");
-               }
-               else if (destinationElement .is (".node, .imported-node.instance"))
-               {
-                  const
-                     item = destinationElement .find ("> .item"),
-                     y    = event .pageY - destinationElement .offset () .top;
-
-                  if (y < item .height () * 0.25)
-                  {
-                     destinationElement .data ("drag-type", "drag-before");
-                     destinationElement .addClass ("drag-before");
-                  }
-                  else if (y > destinationElement .height () - item .height () * 0.25)
-                  {
-                     destinationElement .data ("drag-type", "drag-after");
-                     destinationElement .addClass ("drag-after");
-                  }
-                  else
-                  {
-                     destinationElement .data ("drag-type", "drag-into");
-                     destinationElement .addClass ("drag-into");
-                  }
                }
                else
                {
-                  event .originalEvent .dataTransfer .dropEffect = "none";
+                  destinationElement .data ("drag-type", "drag-into");
+                  destinationElement .addClass ("drag-into");
                }
+            }
+            else
+            {
+               event .originalEvent .dataTransfer .dropEffect = "none";
             }
          }
          else if (event .originalEvent .dataTransfer .types .includes ("sunrize/field"))
