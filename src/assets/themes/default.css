@@ -2011,22 +2011,6 @@ body.light .console-output .selected {
   font-size: smaller;
 }
 
-.scene-graph .not-started-state {
-  color: var(--text-color);
-}
-
-.scene-graph .in-progress-state {
-  color: var(--system-yellow);
-}
-
-.scene-graph .complete-state {
-  color: var(--system-green);
-}
-
-.scene-graph .failed-state {
-  color: var(--system-red);
-}
-
 /* make drag & drop work */
 .scene-graph .last {
   overflow: hidden;
@@ -2311,6 +2295,22 @@ body.light .console-output .selected {
 
 .scene-graph .field-button {
   top: 4px;
+}
+
+.scene-graph .not-started-state {
+  color: var(--text-color);
+}
+
+.scene-graph .in-progress-state {
+  color: var(--system-yellow);
+}
+
+.scene-graph .complete-state {
+  color: var(--system-green);
+}
+
+.scene-graph .failed-state {
+  color: var(--system-red);
 }
 
 /* Spectrum Color Picker */
