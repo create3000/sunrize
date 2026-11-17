@@ -220,6 +220,10 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                   args: ["deleteNodes"],
                },
                {
+                  label: _("Add Clone"),
+                  args: ["addClone", element .attr ("id"), executionContext .getId (), node .getId ()],
+               },
+               {
                   label: _("Unlink Clone"),
                   enabled: node .getCloneCount () > 1,
                   args: ["unlinkClone", element .attr ("id"), executionContext .getId (), node .getId ()],
@@ -1165,6 +1169,19 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
                break;
          }
       }
+
+      UndoManager .shared .endUndo ();
+   }
+
+   addClone (id, executionContextId, nodeId)
+   {
+      const
+         executionContext = this .objects .get (executionContextId),
+         node             = this .objects .get (nodeId);
+
+      UndoManager .shared .beginUndo (_("Add Clone"));
+
+      Editor .appendValueToArray (executionContext, executionContext, executionContext .rootNodes, node);
 
       UndoManager .shared .endUndo ();
    }
