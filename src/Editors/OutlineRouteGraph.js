@@ -128,19 +128,18 @@ module .exports = class OutlineRouteGraph extends OutlineView
             fields .set (route, (fields .get (route) ?? 0) + 1);
       }
 
+      this .sceneGraph .find (".field-routes, .single-route, .route-curves")
+         .css ("height", "");
+
       this .sceneGraph
          .find (".field-routes")
-         .css ("height", "")
          .each ((i, canvas2d) => this .updateFieldRoutes ($(canvas2d), fields));
 
       this .sceneGraph
          .find (".single-route")
-         .css ("height", "")
          .each ((i, canvas2d) => this .updateSingleRoute ($(canvas2d), fields));
 
       const canvases = this .sceneGraph .find (".route-curves");
-
-      canvases .css ("height", "");
 
       this .updateRouteCurves (canvases, fields);
    }
