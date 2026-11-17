@@ -3035,6 +3035,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       this .selectPrimaryElement (element);
 
+      event .dataTransfer .effectAllowed = "all";
       event .originalEvent .dataTransfer .setData ("sunrize/externproto", ids .join (","));
    }
 
@@ -3048,6 +3049,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       this .selectPrimaryElement (element);
 
+      event .dataTransfer .effectAllowed = "all";
       event .originalEvent .dataTransfer .setData ("sunrize/proto", ids .join (","));
    }
 
@@ -3061,6 +3063,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
       this .selectPrimaryElement (element);
 
+      event .dataTransfer .effectAllowed = "all";
       event .originalEvent .dataTransfer .setData ("sunrize/nodes", ids .join (","));
    }
 
@@ -3075,6 +3078,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       {
          this .selectPrimaryElement (element);
 
+         event .dataTransfer .effectAllowed = "all";
          event .originalEvent .dataTransfer .setData ("sunrize/field", element .attr ("id"));
       }
       else
