@@ -2647,7 +2647,7 @@ module .exports = class OutlineView extends Interface
       }
       else
       {
-         textarea .attr ("disabled", "");
+         textarea .attr ("readonly", "");
       }
 
       this .connectArrayField (textarea, node, field, false);
