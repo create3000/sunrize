@@ -1400,7 +1400,7 @@ module .exports = class OutlineView extends Interface
          .imported-node[node-id=${node .getId ()}],
          .exported-node[node-id=${node .getId ()}],
          .externproto[node-id=${node .getId ()}]`)
-         .find ("> .item .reload-node")
+         .find ("> .item [action=reload-node]")
          .removeClass (["not-started-state", "in-progress-state", "complete-state", "failed-state"])
          .addClass (className);
    }
