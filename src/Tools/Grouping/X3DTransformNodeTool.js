@@ -81,9 +81,6 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
    beginUndo ()
    {
-      if (!this .isVisible ())
-         return false;
-
       if (!this .tool .undo)
          return false;
 
@@ -132,9 +129,6 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
    transformGroups ()
    {
-      if (!this .isVisible ())
-         return;
-
       if (this .tool .group === "NONE")
          return;
 
@@ -153,9 +147,6 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       for (const other of X3DTransformNodeTool .#transformTools)
       {
          if (other === this)
-            continue;
-
-         if (!other .isVisible ())
             continue;
 
          if (other .tool .group !== this .tool .group)
