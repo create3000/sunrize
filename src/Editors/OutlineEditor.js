@@ -1752,7 +1752,7 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          data   = dataURL .substring (dataURL .indexOf (isData ? "," : ":") + 1),
          buffer = Buffer .from (data, isData && match [3] === "base64" ? "base64" : "utf8");
 
-      fs .writeFile (response .filePath, buffer, Function .prototype);
+      fs .writeFileSync (response .filePath, buffer);
 
       // Add undo step.
 

@@ -571,7 +571,7 @@ module .exports = class Document extends Interface
             return;
          }
 
-         fs .writeFile (this .filePath, Editor .getContents (scene, path .extname (this .filePath)), Function .prototype);
+         fs .writeFileSync (this .filePath, Editor .getContents (scene, path .extname (this .filePath)));
       }
       else
       {
