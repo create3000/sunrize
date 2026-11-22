@@ -1,12 +1,10 @@
 "use strict";
 
 const
-   $           = require ("jquery"),
-   path        = require ("path"),
-   X3D         = require ("../X3D"),
-   Editor      = require ("../Undo/Editor"),
-   UndoManager = require("../Undo/UndoManager"),
-   _           = require ("../Application/GetText");
+   $      = require ("jquery"),
+   path   = require ("path"),
+   X3D    = require ("../X3D"),
+   Editor = require ("../Undo/Editor");
 
 require ("./Popover");
 
@@ -22,6 +20,7 @@ $.fn.materialPreviewPopover = async function (node)
       .attr ("splashScreen", "false")
       .attr ("contextMenu", "false")
       .attr ("notifications", "false")
+      .attr ("contentScale", "auto")
       .attr ("colorSpace", node .getBrowser () .getBrowserOption ("ColorSpace"))
       .attr ("xrSessionMode", "NONE")
       .appendTo (preview);
