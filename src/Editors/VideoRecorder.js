@@ -89,7 +89,7 @@ module .exports = class VideoRecorder extends Interface
          .appendTo (this .settings);
 
       $("<span></span>")
-         .text (_("Filetype"))
+         .text (_("File Type"))
          .appendTo (this .settings);
 
       this .fileType = $("<select></select>")
