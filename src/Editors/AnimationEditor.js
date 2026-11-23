@@ -160,7 +160,7 @@ module .exports = class AnimationEditor extends Interface
          .appendTo (this .controls)
          .on ("click", () => this .toggleReverse ());
 
-      this .frameInput = $("<input></input>")
+      this .frameInput = $("<input>")
          .addClass ("input")
          .css ("width", "70px")
          .attr ("type", "number")
@@ -246,7 +246,7 @@ module .exports = class AnimationEditor extends Interface
          .appendTo (this .verticalSplitterLeft)
          .on ("scroll mousemove", () => this .drawTimeline ());
 
-      this .animationName = $("<input></input>")
+      this .animationName = $("<input>")
          .addClass ("node-name")
          .attr ("title", _("Rename animation."))
          .attr ("placeholder", _("Enter animation name."))

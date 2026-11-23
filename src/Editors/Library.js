@@ -41,7 +41,7 @@ module .exports = new class Library extends Dialog
 
       // Input
 
-      this .input = $("<input></input>")
+      this .input = $("<input>")
          .appendTo (this .element)
          .addClass ("library-input")
          .attr ("placeholder", _("Search a node"))

@@ -364,9 +364,11 @@ tr.disabled ~ tr > td > div {
   background-color: var(--accent-color);
 }
 
-/* Node Name */
+/* Node Name, Settings */
 
-input.node-name {
+input.node-name,
+input.settings,
+select.settings {
   width: 100%;
   height: var(--input-height);
   border: none;
@@ -1868,8 +1870,27 @@ body.light .console-output .selected {
   border-right: 1px solid var(--border-color);
 }
 
-.video-recorder-settings {
+.video-recorder-settings-panel {
+  overflow: hidden;
+  position: absolute;
+  inset: 0px;
+}
 
+.video-recorder-settings {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.video-recorder-settings :is(input, select) {
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.video-recorder-settings span {
+  padding: 4px 0px;
+  font-size: smaller;
+  background: var(--system-gray8);
 }
 
 .video-recorder-browser {

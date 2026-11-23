@@ -39,7 +39,7 @@ $.fn.addPrototypePopover = function (executionContext, type)
       .text (_("Name"))
       .appendTo (content);
 
-   const nameInput = $("<input></input>")
+   const nameInput = $("<input>")
       .attr ("placeholder", _("Enter a name"))
       .attr ("spellcheck", "true")
       .appendTo (content);

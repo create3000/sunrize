@@ -65,7 +65,7 @@ module .exports = class Splitter extends Interface
       if (!this .isInitialScene && this .config .file .position !== undefined)
          this .position = this .config .file .position;
       else
-         this .handle .trigger ("position");
+         setTimeout (() => this .handle .trigger ("position"));
    }
 
    get position ()
@@ -128,7 +128,7 @@ module .exports = class Splitter extends Interface
          }
       }
 
-      this .handle .trigger ("position");
+      setTimeout (() => this .handle .trigger ("position"));
    }
 
    start (event)
@@ -195,7 +195,7 @@ module .exports = class Splitter extends Interface
                      break;
                }
 
-               this .handle .trigger ("position");
+               setTimeout (() => this .handle .trigger ("position"));
             }
             else
             {

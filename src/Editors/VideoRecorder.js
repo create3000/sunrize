@@ -31,7 +31,7 @@ module .exports = class VideoRecorder extends Interface
          .appendTo (this .videoRecorder);
 
       this .verticalSplitterLeft = $("<div></div>")
-         .addClass (["video-recorder-settings", "vertical-splitter-left"])
+         .addClass (["video-recorder-settings-panel", "vertical-splitter-left"])
          .css ("width", "30%")
          .appendTo (this .verticalSplitter);
 
@@ -45,6 +45,81 @@ module .exports = class VideoRecorder extends Interface
       this .vSplitter .snapToBorder = true;
 
       this .vSplitter .handle .on ("position", () => this .splitterPosition ());
+
+      // Settings
+
+      this .settings = $("<div></div>")
+         .addClass ("video-recorder-settings")
+         .appendTo (this .verticalSplitterLeft);
+
+      $("<span></span>")
+         .text (_("Width"))
+         .appendTo (this .settings);
+
+      this .width = $("<input>")
+         .addClass ("settings")
+         .attr ("type", "number")
+         .attr ("min", 1)
+         .attr ("step", "1")
+         .val (1024)
+         .appendTo (this .settings);
+
+      $("<span></span>")
+         .text (_("Height"))
+         .appendTo (this .settings);
+
+      this .height = $("<input>")
+         .addClass ("settings")
+         .attr ("type", "number")
+         .attr ("min", 1)
+         .attr ("step", "1")
+         .val (768)
+         .appendTo (this .settings);
+
+      $("<span></span>")
+         .text (_("Duration"))
+         .appendTo (this .settings);
+
+      this .duration = $("<input>")
+         .addClass ("settings")
+         .attr ("type", "number")
+         .attr ("min", 1)
+         .attr ("step", "1")
+         .val (60)
+         .appendTo (this .settings);
+
+      $("<span></span>")
+         .text (_("Filetype"))
+         .appendTo (this .settings);
+
+      this .fileType = $("<select></select>")
+         .addClass ("settings")
+         .appendTo (this .settings);
+
+      for (const [name, mimeType] of VideoRecorder .mimeTypes)
+      {
+         if (!MediaRecorder .isTypeSupported (mimeType))
+            continue;
+
+         $("<option></option>")
+            .text (name)
+            .val (mimeType)
+            .appendTo (this .fileType);
+      }
+
+      $("<span></span>")
+         .text (_("Filename"))
+         .appendTo (this .settings);
+
+      this .duration = $("<input>")
+         .addClass ("settings")
+         .attr ("placeholder", _("Filename"))
+         .appendTo (this .settings);
+
+      // Fills remaining empty space.
+      $("<span></span>")
+         .css ("flex", 1)
+         .appendTo (this .settings);
 
       // Toolbar
 
@@ -78,19 +153,6 @@ module .exports = class VideoRecorder extends Interface
          .text ("screen_record")
          .on ("click", () => this .toggleRecord ())
          .appendTo (this .toolbar);
-
-      this .mimeTypeButton = $("<select></select>");
-
-      for (const [name, mimeType] of VideoRecorder .mimeTypes)
-      {
-         if (!MediaRecorder .isTypeSupported (mimeType))
-            continue;
-
-         $("<option></option>")
-            .text (name)
-            .val (mimeType)
-            .appendTo (this .mimeTypeButton);
-      }
    }
 
    #record = false;

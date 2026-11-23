@@ -35,7 +35,7 @@ module .exports = new class BrowserFrame extends Dialog
             .text (_("Browser Frame")))
          .appendTo (this .table .header);
 
-      this .width = $("<input></input>")
+      this .width = $("<input>")
          .attr ("type", "number")
          .attr ("min", 1)
          .attr ("step", "1")
@@ -46,12 +46,12 @@ module .exports = new class BrowserFrame extends Dialog
          .css ({ "display": "inline-block", "width": "20px", "text-align": "center" })
          .text ("✕");
 
-      this .height = $("<input></input>")
-          .attr ("type", "number")
+      this .height = $("<input>")
+         .attr ("type", "number")
          .attr ("min", 1)
-          .attr ("step", "1")
-          .css ("width", "calc((100% - 20px) / 2)")
-          .on ("change", () => this .onsize ());
+         .attr ("step", "1")
+         .css ("width", "calc((100% - 20px) / 2)")
+         .on ("change", () => this .onsize ());
 
       $("<tr></tr>")
          .append ($("<th></th>")
@@ -62,7 +62,7 @@ module .exports = new class BrowserFrame extends Dialog
             .append (this .height))
          .appendTo (this .table .body);
 
-      this .fixedSize = $("<input></input>")
+      this .fixedSize = $("<input>")
          .attr ("id", "browser-frame-fixed-size")
          .attr ("type", "checkbox")
          .on ("change", () => this .onchange ());
@@ -76,7 +76,7 @@ module .exports = new class BrowserFrame extends Dialog
                .text (_("Fixed Size"))))
          .appendTo (this .table .body);
 
-      this .numerator = $("<input></input>")
+      this .numerator = $("<input>")
          .attr ("type", "number")
          .attr ("min", 1)
          .attr ("step", "1")
@@ -87,7 +87,7 @@ module .exports = new class BrowserFrame extends Dialog
          .css ({ "display": "inline-block", "width": "20px", "text-align": "center" })
          .text ("/");
 
-      this .denominator = $("<input></input>")
+      this .denominator = $("<input>")
           .attr ("type", "number")
          .attr ("min", 1)
           .attr ("step", "1")
@@ -103,7 +103,7 @@ module .exports = new class BrowserFrame extends Dialog
             .append (this .denominator))
          .appendTo (this .table .body);
 
-      this .backgroundColor = $("<input></input>")
+      this .backgroundColor = $("<input>")
          .attr ("title", _("A background color which is applied to the <x3d-canvas> element."))
          .attr ("placeholder", "Enter a CSS color here.")
          .on ("change", () => this .onchange ());

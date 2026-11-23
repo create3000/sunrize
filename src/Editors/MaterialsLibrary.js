@@ -44,7 +44,7 @@ module .exports = class MaterialsLibrary extends LibraryPane
       const buttons = $("<li></li>")
          .appendTo (this .#list);
 
-      this .#physicalButton = $("<input></input>")
+      this .#physicalButton = $("<input>")
          .attr ("title", _("Requires an EnvironmentLight node."))
          .attr ("type", "checkbox")
          .attr ("id", "use-physical-material")

@@ -54,7 +54,7 @@ module .exports = class Console extends Interface
          .addClass ("console-search-input-elements")
          .appendTo (this .search);
 
-      this .searchInput = $("<input></input>")
+      this .searchInput = $("<input>")
          .attr ("type", "text")
          .attr ("placeholder", _("Find"))
          .addClass ("console-search-input")

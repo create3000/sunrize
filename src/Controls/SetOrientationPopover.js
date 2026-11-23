@@ -19,7 +19,7 @@ $.fn.setOrientationPopover = function (executionContext, textureProjectorNode)
       .text (_("Orientation"))
       .appendTo (content);
 
-   const orientationInput = $("<input></input>")
+   const orientationInput = $("<input>")
       .attr ("placeholder", _("Enter orientation values"))
       .appendTo (content);
 

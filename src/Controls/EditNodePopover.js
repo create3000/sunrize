@@ -18,7 +18,7 @@ $.fn.editNodePopover = function (node)
       .text (_("Name"))
       .appendTo (content);
 
-   const nameInput = $("<input></input>")
+   const nameInput = $("<input>")
       .attr ("placeholder", _("Enter a name"))
       .attr ("spellcheck", "true")
       .appendTo (content);
@@ -29,7 +29,7 @@ $.fn.editNodePopover = function (node)
          .text (_("Application Information"))
          .appendTo (content);
 
-      $("<input></input>")
+      $("<input>")
          .addClass ("appinfo")
          .attr ("placeholder", _("Enter application information"))
          .attr ("spellcheck", "true")
@@ -40,7 +40,7 @@ $.fn.editNodePopover = function (node)
          .text (_("Documentation"))
          .appendTo (content);
 
-      $("<input></input>")
+      $("<input>")
          .addClass ("documentation")
          .attr ("placeholder", _("Enter documentation"))
          .attr ("spellcheck", "true")

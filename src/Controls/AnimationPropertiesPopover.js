@@ -18,7 +18,7 @@ $.fn.animationPropertiesPopover = function (editor)
       .text (_("Frames"))
       .appendTo (content);
 
-   const durationInput = $("<input></input>")
+   const durationInput = $("<input>")
       .attr ("type", "number")
       .attr ("step", 1)
       .attr ("min", 1)
@@ -31,7 +31,7 @@ $.fn.animationPropertiesPopover = function (editor)
       .text (_("Frame Rate (fps)"))
       .appendTo (content);
 
-   const frameRateInput = $("<input></input>")
+   const frameRateInput = $("<input>")
       .attr ("type", "number")
       .attr ("step", 1)
       .attr ("min", 1)
@@ -41,7 +41,7 @@ $.fn.animationPropertiesPopover = function (editor)
       .on ("change input", updateTime)
       .appendTo (content);
 
-   const scaleInput = $("<input></input>")
+   const scaleInput = $("<input>")
       .attr ("type", "checkbox")
       .attr ("id", "keyframe-scale")
       .appendTo (content);

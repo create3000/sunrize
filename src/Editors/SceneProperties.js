@@ -56,7 +56,7 @@ module .exports = new class SceneProperties extends Dialog
       this .profileAndComponents .table .body = $("<tbody></tbody>") .appendTo (this .profileAndComponents .table);
       this .profileAndComponents .inputs      = { };
 
-      this .profileAndComponents .inputs .checkbox = $("<input></input>")
+      this .profileAndComponents .inputs .checkbox = $("<input>")
          .attr ("id", "infer-profile-and-components-checkbox")
          .attr ("type", "checkbox")
          .on ("click", () => this .toggleInferProfileAndComponents ());
@@ -81,7 +81,7 @@ module .exports = new class SceneProperties extends Dialog
          $("<tr></tr>")
             .append ($("<td></td>")
                .width ("15px")
-               .append ($("<input></input>")
+               .append ($("<input>")
                   .attr ("type", "checkbox")
                   .attr ("id", `scene-properties-${component .name}`)
                   .attr ("component", component .name)
@@ -92,7 +92,7 @@ module .exports = new class SceneProperties extends Dialog
                   .text (component .title)))
             .append ($("<td></td>")
                .width ("15px")
-               .append ($("<input></input>")
+               .append ($("<input>")
                   .attr ("component", component .name)
                   .attr ("level", component .level)
                   .val (component .level)
@@ -128,8 +128,8 @@ module .exports = new class SceneProperties extends Dialog
 
       this .units .inputs = new Map (Units .map (unit => [unit .category,
       {
-         name: $("<input></input>") .attr ("list", unit .category),
-         conversionFactor: $("<input></input>") .attr ("category", unit .category),
+         name: $("<input>") .attr ("list", unit .category),
+         conversionFactor: $("<input>") .attr ("category", unit .category),
       }]));
 
       $("<tr></tr>")
@@ -185,7 +185,7 @@ module .exports = new class SceneProperties extends Dialog
       this .metaDataOptions = $("<table></table>") .appendTo (this .metaData);
       this .metaDataOptions .body = $("<tbody></tbody>") .appendTo (this .metaDataOptions);
 
-      this .commonMetaData = $("<input></input>")
+      this .commonMetaData = $("<input>")
          .attr ("id", "common-metadata")
          .attr ("type", "checkbox")
          .on ("click", () => this .toggleCommonMetaData ());
@@ -247,12 +247,12 @@ module .exports = new class SceneProperties extends Dialog
       this .worldInfo .table .body = $("<tbody></tbody>") .appendTo (this .worldInfo .table);
       this .worldInfo .inputs      = { };
 
-      this .worldInfo .inputs .checkbox = $("<input></input>")
+      this .worldInfo .inputs .checkbox = $("<input>")
          .attr ("id", "world-info-checkbox")
          .attr ("type", "checkbox")
          .on ("click", () => this .toggleWorldInfo ());
 
-      this .worldInfo .inputs .title = $("<input></input>") .attr ("spellcheck", "true");
+      this .worldInfo .inputs .title = $("<input>") .attr ("spellcheck", "true");
       this .worldInfo .inputs .info  = $("<textarea></textarea>") .attr ("spellcheck", "true") .height ("100%") .css ("resize", "none");
 
       this .worldInfo .checkboxRow = $("<tr></tr>")
@@ -495,14 +495,14 @@ module .exports = new class SceneProperties extends Dialog
                   .addClass (this .config .file .sortMetaData ? ["disabled"] : [ ])
                   .text ("drag_handle")))
             .append ($("<td></td>")
-               .append ($("<input></input>")
+               .append ($("<input>")
                   .attr ("index", 0)
                   .attr ("placeholder", _("Insert meta key here."))
                   .attr ("spellcheck", "true")
                   .val (key) .on ("change", (event) => this .changeMetaData (event, key))))
             .append ($("<td></td>")
                .addClass ("meta-value")
-               .append ($("<input></input>")
+               .append ($("<input>")
                   .attr ("index", 1)
                   .attr ("placeholder", _("Insert meta value here."))
                   .attr ("spellcheck", "true")
@@ -566,12 +566,12 @@ module .exports = new class SceneProperties extends Dialog
       $("<tr></tr>")
          .append ($("<td></td>"))
          .append ($("<td></td>")
-            .append ($("<input></input>")
+            .append ($("<input>")
                .attr ("placeholder", _("Add new meta key."))
                .attr ("spellcheck", "true")
                .on ("change", event => this .changeMetaData (event, ""))))
          .append ($("<td></td>")
-            .append ($("<input></input>")
+            .append ($("<input>")
                .prop ("readonly", true)
                .attr ("spellcheck", "true")
                .on ("change", event => this .changeMetaData (event, ""))))
