@@ -4,6 +4,7 @@
 const
    $         = require ("jquery"),
    Interface = require ("../Application/Interface"),
+   Splitter  = require ("../Controls/Splitter"),
    electron  = require ("electron"),
    fs        = require ("fs"),
    _         = require ("../Application/GetText");
@@ -20,17 +21,45 @@ module .exports = class VideoRecorder extends Interface
    {
       super (`Sunrize.VideoRecorder.${element .attr ("id")}.`);
 
-      this .recorder = element;
+      this .videoRecorder = element;
 
-      this .left = $("<div></div>")
-         .addClass ("video-recorder-left")
-         .appendTo (this .recorder);
+      // Video Recorder Panel
+
+      this .verticalSplitter = $("<div></div>")
+         .attr ("id", "video-recorder-left")
+         .addClass (["video-recorder-left", "vertical-splitter"])
+         .appendTo (this .videoRecorder);
+
+      this .verticalSplitterLeft = $("<div></div>")
+         .addClass (["video-recorder-settings", "vertical-splitter-left"])
+         .css ("width", "30%")
+         .appendTo (this .verticalSplitter);
+
+      this .verticalSplitterRight = $("<div></div>")
+         .addClass (["video-recorder-browser", "vertical-splitter-right"])
+         .css ("width", "70%")
+         .appendTo (this .verticalSplitter);
+
+      this .vSplitter = new Splitter (this .verticalSplitter, "vertical");
+
+      this .vSplitter .snapToBorder = true;
+
+      this .vSplitter .handle .on ("position", () => this .splitterPosition ());
 
       // Toolbar
 
       this .toolbar = $("<div></div>")
          .addClass (["toolbar", "vertical-toolbar", "secondary-toolbar", "video-recorder-toolbar"])
-         .appendTo (this .recorder);
+         .appendTo (this .videoRecorder);
+
+      this .toggleSidebarButton = $("<span></span>")
+         .addClass ("material-symbols-outlined")
+         .attr ("title", _("Toggle sidebar."))
+         .text ("dock_to_right")
+         .appendTo (this .toolbar)
+         .on ("click", () => this .toggleSidebar ());
+
+      $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
       this .setup ();
    }
@@ -48,13 +77,6 @@ module .exports = class VideoRecorder extends Interface
          .attr ("title", _("Start recording."))
          .text ("screen_record")
          .on ("click", () => this .toggleRecord ())
-         .appendTo (this .toolbar);
-
-      this .settingsButton = $("<span></span>")
-         .addClass (["material-symbols-outlined"])
-         .attr ("title", _("Edit settings."))
-         .text ("settings")
-         .on ("click", () => this .showSettings ())
          .appendTo (this .toolbar);
 
       this .mimeTypeButton = $("<select></select>");
@@ -138,8 +160,19 @@ module .exports = class VideoRecorder extends Interface
       this .recordButton .removeClass ("active");
    }
 
-   showSettings ()
+   splitterPosition ()
    {
+      if (this .vSplitter .position)
+         this .toggleSidebarButton .addClass (["active", "fill"]);
+      else
+         this .toggleSidebarButton .removeClass (["active", "fill"]);
+   }
 
+   toggleSidebar ()
+   {
+      if (this .vSplitter .position)
+         this .vSplitter .toggle ("minimize");
+      else
+         this .vSplitter .toggle ("restore");
    }
 };

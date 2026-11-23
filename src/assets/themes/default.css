@@ -1868,6 +1868,14 @@ body.light .console-output .selected {
   border-right: 1px solid var(--border-color);
 }
 
+.video-recorder-settings {
+
+}
+
+.video-recorder-browser {
+  border-left: 1px solid var(--border-color);
+}
+
 /* Sidebar */
 
 #sidebar {
