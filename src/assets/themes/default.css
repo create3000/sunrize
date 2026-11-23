@@ -1882,7 +1882,7 @@ body.light .console-output .selected {
   height: 100%;
 }
 
-.video-recorder-settings :is(input, select) {
+.video-recorder-settings :is(input, select, .file-chooser) {
   border-top: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
 }
@@ -1891,6 +1891,16 @@ body.light .console-output .selected {
   padding: 4px 0px;
   font-size: smaller;
   background: var(--system-gray8);
+}
+
+.video-recorder-settings .filename-box {
+  display: flex;
+}
+.video-recorder-settings .file-chooser {
+  align-content: center;
+  padding: 0;
+  background: transparent;
+  font-size: var(--font-size);
 }
 
 .video-recorder-browser {

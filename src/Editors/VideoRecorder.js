@@ -6,15 +6,24 @@ const
    Interface = require ("../Application/Interface"),
    Splitter  = require ("../Controls/Splitter"),
    electron  = require ("electron"),
+   path      = require ("path"),
+   url       = require ("url"),
    fs        = require ("fs"),
    _         = require ("../Application/GetText");
 
 module .exports = class VideoRecorder extends Interface
 {
-   static mimeTypes = [
-      ["MP4", "video/mp4", "mp4"],
-      ["WebM", "video/webm", "webm"],
-      ["OGG", "video/ogg", "ogv"],
+   static formats = [
+      { name: "MP4",  mimeType: "video/mp4",  suffix: "mp4"  },
+      { name: "WebM", mimeType: "video/webm", suffix: "webm" },
+      { name: "OGG",  mimeType: "video/ogg",  suffix: "ogv"  },
+   ];
+
+   static filters = [
+      {
+         name: _("Video"),
+         extensions: ["mp4", "webm", "ogv"],
+      },
    ];
 
    constructor (element)
@@ -102,14 +111,14 @@ module .exports = class VideoRecorder extends Interface
          .addClass ("settings")
          .appendTo (this .settings);
 
-      for (const [name, mimeType] of VideoRecorder .mimeTypes)
+      for (const [index, { name, mimeType }] of VideoRecorder .formats .entries ())
       {
          if (!MediaRecorder .isTypeSupported (mimeType))
             continue;
 
          $("<option></option>")
             .text (name)
-            .val (mimeType)
+            .val (index)
             .appendTo (this .fileType);
       }
 
@@ -117,10 +126,21 @@ module .exports = class VideoRecorder extends Interface
          .text (_("Filename"))
          .appendTo (this .settings);
 
-      this .duration = $("<input>")
+      this .filenameBox = $("<div></div>")
+         .addClass ("filename-box")
+         .appendTo (this .settings);
+
+      this .filename = $("<input>")
          .addClass ("settings")
          .attr ("placeholder", _("Enter a filename."))
-         .appendTo (this .settings);
+         .appendTo (this .filenameBox);
+
+      this .fileChooser = $("<span></span>")
+         .addClass (["file-chooser", "button", "material-symbols-outlined"])
+         .attr ("title", _("Choose a file."))
+         .text ("file_save")
+         .appendTo (this .filenameBox)
+         .on ("click", () => this .chooseFile ());
 
       // Fills remaining empty space.
       $("<span></span>")
@@ -142,23 +162,28 @@ module .exports = class VideoRecorder extends Interface
 
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
-      this .setup ();
-   }
-
-   #desktop;
-
-   async initialize ()
-   {
-      this .#desktop = await electron .ipcRenderer .invoke ("path", "desktop");
-
-      // Toolbar
-
       this .recordButton = $("<span></span>")
          .addClass (["material-symbols-outlined"])
          .attr ("title", _("Start recording."))
          .text ("screen_record")
          .on ("click", () => this .toggleRecord ())
          .appendTo (this .toolbar);
+
+      this .setup ();
+   }
+
+   async chooseFile ()
+   {
+      const
+         suffix           = VideoRecorder .formats [this .fileType .val ()] .suffix,
+         defaultDirectory = $.try (() => path .dirname (url .fileURLToPath (this .browser .currentScene .getWorldURL ()))),
+         defaultPath      = defaultDirectory ? path .join (defaultDirectory, `${_("Video")}.${suffix}`) : `${_("Video")}.${suffix}`,
+         response         = await electron .ipcRenderer .invoke ("file-path", { type: "save", filters: VideoRecorder .filters, defaultPath });
+
+      if (response .canceled)
+         return;
+
+      this .filename .val (response .filePath);
    }
 
    #record = false;
@@ -179,8 +204,8 @@ module .exports = class VideoRecorder extends Interface
    {
       const stream = this .browser .getElement () .captureStream (30);
 
-      this .#timeoutId = setTimeout (() => this .stopRecord (), 60_000);
-      this .#mimeType  = this .mimeTypeButton .val ();
+      this .#timeoutId = setTimeout (() => this .stopRecord (), this .duration .val () * 1_000 || 60_000);
+      this .#mimeType  = VideoRecorder .formats [this .fileType .val ()] .mimeType;
       this .#recorder  = new MediaRecorder (stream, { mimeType: this .#mimeType });
 
       const chunks = [ ];
@@ -215,11 +240,10 @@ module .exports = class VideoRecorder extends Interface
       this .#recorder .stop ();
 
       const
-         suffix = VideoRecorder .mimeTypes .find (([, mimeType]) => mimeType === this .#mimeType) [2],
          blob   = await this .#blob,
          buffer = Buffer .from (await blob .arrayBuffer ());
 
-      fs .writeFileSync (`${this .#desktop}/test.${suffix}`, buffer);
+      fs .writeFileSync (this .filename .val (), buffer);
 
       // Toggle State
 
