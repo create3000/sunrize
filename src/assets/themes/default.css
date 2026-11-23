@@ -1903,8 +1903,15 @@ body.light .console-output .selected {
   font-size: var(--font-size);
 }
 
-.video-recorder-browser {
+.video-recorder-record-panel {
   border-left: 1px solid var(--border-color);
+}
+
+.video-recorder-record-frame {
+  position: absolute;
+  margin: 20px;
+  inset: 0px;
+  border: 1px solid var(--border-color);
 }
 
 /* Sidebar */

@@ -45,7 +45,7 @@ module .exports = class VideoRecorder extends Interface
          .appendTo (this .verticalSplitter);
 
       this .verticalSplitterRight = $("<div></div>")
-         .addClass (["video-recorder-browser", "vertical-splitter-right"])
+         .addClass (["video-recorder-record-panel", "vertical-splitter-right"])
          .css ("width", "70%")
          .appendTo (this .verticalSplitter);
 
@@ -151,6 +151,12 @@ module .exports = class VideoRecorder extends Interface
       $("<span></span>")
          .css ("flex", 1)
          .appendTo (this .settings);
+
+      // Record Panel
+
+      this .browserFrame= $("<div></div>")
+         .addClass ("video-recorder-record-frame")
+         .appendTo (this .verticalSplitterRight);
 
       // Toolbar
 
