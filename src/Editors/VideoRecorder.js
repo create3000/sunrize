@@ -58,9 +58,11 @@ module .exports = class VideoRecorder extends Interface
 
       this .width = $("<input>")
          .addClass ("settings")
+         .attr ("title", _("Width in Pixels"))
          .attr ("type", "number")
          .attr ("min", 1)
          .attr ("step", "1")
+         .attr ("placeholder", _("Enter a number."))
          .val (1024)
          .appendTo (this .settings);
 
@@ -70,9 +72,11 @@ module .exports = class VideoRecorder extends Interface
 
       this .height = $("<input>")
          .addClass ("settings")
+         .attr ("title", _("Height in Pixels"))
          .attr ("type", "number")
          .attr ("min", 1)
          .attr ("step", "1")
+         .attr ("placeholder", _("Enter a number."))
          .val (768)
          .appendTo (this .settings);
 
@@ -82,9 +86,11 @@ module .exports = class VideoRecorder extends Interface
 
       this .duration = $("<input>")
          .addClass ("settings")
+         .attr ("title", _("Duration in Seconds"))
          .attr ("type", "number")
          .attr ("min", 1)
          .attr ("step", "1")
+         .attr ("placeholder", _("Enter a number."))
          .val (60)
          .appendTo (this .settings);
 
@@ -113,7 +119,7 @@ module .exports = class VideoRecorder extends Interface
 
       this .duration = $("<input>")
          .addClass ("settings")
-         .attr ("placeholder", _("Filename"))
+         .attr ("placeholder", _("Enter a filename."))
          .appendTo (this .settings);
 
       // Fills remaining empty space.
