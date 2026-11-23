@@ -73,6 +73,7 @@ module .exports = class VideoRecorder extends Interface
          .attr ("step", "1")
          .attr ("placeholder", _("Enter a number."))
          .val (1024)
+         .on ("change input", () => this .config .file .width = this .width .val ())
          .appendTo (this .settings);
 
       $("<span></span>")
@@ -87,6 +88,7 @@ module .exports = class VideoRecorder extends Interface
          .attr ("step", "1")
          .attr ("placeholder", _("Enter a number."))
          .val (768)
+         .on ("change input", () => this .config .file .height = this .height .val ())
          .appendTo (this .settings);
 
       $("<span></span>")
@@ -101,6 +103,7 @@ module .exports = class VideoRecorder extends Interface
          .attr ("step", "1")
          .attr ("placeholder", _("Enter a number."))
          .val (60)
+         .on ("change input", () => this .config .file .duration = this .duration .val ())
          .appendTo (this .settings);
 
       $("<span></span>")
@@ -109,6 +112,7 @@ module .exports = class VideoRecorder extends Interface
 
       this .fileType = $("<select></select>")
          .addClass ("settings")
+         .on ("change input", () => this .config .file .fileType = this .fileType .val ())
          .appendTo (this .settings);
 
       for (const [index, { name, mimeType }] of VideoRecorder .formats .entries ())
@@ -133,6 +137,7 @@ module .exports = class VideoRecorder extends Interface
       this .filename = $("<input>")
          .addClass ("settings")
          .attr ("placeholder", _("Enter a filename."))
+         .on ("change input", () => this .config .file .filename = this .filename .val ())
          .appendTo (this .filenameBox);
 
       this .fileChooser = $("<span></span>")
@@ -172,6 +177,25 @@ module .exports = class VideoRecorder extends Interface
       this .setup ();
    }
 
+   configure ()
+   {
+      super .configure ();
+
+      this .config .file .setDefaultValues ({
+         width: 1024,
+         height: 768,
+         duration: 60,
+         fileType: 0,
+         filename: "",
+      });
+
+      this .width    .val (this .config .file .width);
+      this .height   .val (this .config .file .height);
+      this .duration .val (this .config .file .duration);
+      this .fileType .val (this .config .file .fileType);
+      this .filename .val (this .config .file .filename);
+   }
+
    async chooseFile ()
    {
       const
@@ -184,6 +208,8 @@ module .exports = class VideoRecorder extends Interface
          return;
 
       this .filename .val (response .filePath);
+
+      this .config .file .filename = response .filePath;
    }
 
    #record = false;
