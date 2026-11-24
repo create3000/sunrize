@@ -1292,7 +1292,10 @@ module .exports = class Document extends Interface
       let elements = outlineEditor .sceneGraph .find (`.node[node-id=${node .getId ()}]`);
 
       if (!elements .length)
+      {
+         outlineEditor .deselectAll ();
          return;
+      }
 
       if (!outlineEditor .isEditable (elements))
       {
