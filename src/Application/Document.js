@@ -193,6 +193,7 @@ module .exports = class Document extends Interface
       // Connect for Snap Target and Snap Source.
 
       $(this .browser .element)
+         .on ("keydown",   event => this .onnudge (event))
          .on ("mousedown", event => this .onmousedown (event))
          .on ("mouseup",   event => this .onsnaptool (event))
          .on ("mouseup",   event => this .onselect (event));
@@ -458,6 +459,89 @@ module .exports = class Document extends Interface
 
             break;
          }
+      }
+   }
+
+   static NUDGE_STEP = 0.001;
+   static NUDGE_FACTOR = 10;
+
+   onnudge (event)
+   {
+      const nudge = Document .NUDGE_STEP * (event .shiftKey ? Document .NUDGE_FACTOR : 1);
+
+      switch (event .key)
+      {
+         case "a":
+         {
+            if (this .activeElementIsInputOrOutput ())
+               break;
+
+            if (event .ctrlKey)
+            {
+               this .sidebar .outlineEditor .selectAll ();
+               return false;
+            }
+
+            break;
+         }
+         case "ArrowUp":
+         {
+            if (event .altKey)
+					this .nudgeSelection (new X3D .Vector3 (0, 0, -nudge));
+            else
+               this .nudgeSelection (new X3D .Vector3 (0, nudge, 0));
+
+            break;
+         }
+         case "ArrowDown":
+         {
+            if (event .altKey)
+               this .nudgeSelection (new X3D .Vector3 (0, 0, nudge));
+            else
+               this .nudgeSelection (new X3D .Vector3 (0, -nudge, 0));
+
+            break;
+         }
+         case "ArrowLeft":
+         {
+            this .nudgeSelection (new X3D .Vector3 (-nudge, 0, 0));
+            break;
+         }
+         case "ArrowRight":
+         {
+            this .nudgeSelection (new X3D .Vector3 (nudge, 0, 0));
+            break;
+         }
+      }
+   }
+
+   nudgeSelection (nudge)
+   {
+      const
+         selection = require ("./Selection"),
+         node      = selection .nodes .at (-1);
+
+      if (!node)
+         return;
+
+      const type = node .getType ();
+
+      for (let t = type .length - 1; t >= 0; -- t)
+      {
+         switch (type [t])
+         {
+            case X3D .X3DConstants .X3DTransformNode:
+            {
+               nudge .add (node ._translation .getValue ());
+
+               node ._translation = nudge;
+               break;
+            }
+            default:
+               continue;
+         }
+
+         break;
       }
    }
 
