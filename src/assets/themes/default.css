@@ -752,7 +752,7 @@ body.light .qtip-tipsy {
   background-color: var(--system-gray7);
 }
 
-#browser-size {
+#browser-size, .time {
   visibility: hidden;
   opacity: 0;
   user-select: none;
@@ -773,7 +773,11 @@ body.light .qtip-tipsy {
   transition: visibility 300ms allow-discrete, opacity 300ms linear;
 }
 
-#browser-size.visible {
+.time {
+  top: 10px;
+}
+
+#browser-size.visible, .time.visible {
   visibility: visible;
   opacity: 1;
 }

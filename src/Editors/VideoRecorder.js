@@ -169,6 +169,12 @@ module .exports = class VideoRecorder extends Interface
       this .frameObserver = new ResizeObserver (() => this .resizeFrame ());
       this .frameObserver .observe (this .verticalSplitterRight [0]);
 
+      // Time
+
+      this .time = $("<div></div>")
+         .addClass ("time")
+         .appendTo (this .aspectFrame);
+
       // Toolbar
 
       this .toolbar = $("<div></div>")
@@ -249,6 +255,7 @@ module .exports = class VideoRecorder extends Interface
    #recordCanvas;
    #recordBrowser;
    #record = false;
+   #recordTime;
    #timeoutId;
    #mimeType;
    #recorder;
@@ -265,12 +272,9 @@ module .exports = class VideoRecorder extends Interface
    async startRecord ()
    {
       const
-         width  = this .width  .val ()|0 || 1024,
-         height = this .height .val ()|0 || 576;
-
-      // Toggle state.
-
-      this .#record = true;
+         width    = this .width  .val ()|0 || 1024,
+         height   = this .height .val ()|0 || 576,
+         duration = this .duration .val ()|0 || 60;
 
       // Disable settings.
 
@@ -317,8 +321,21 @@ module .exports = class VideoRecorder extends Interface
       this .#recordBrowser .beginUpdate ();
       this .#recordBrowser .addBrowserEvent ();
 
-      this .#recordBrowser .prepareEvents ()
-         .addFieldCallback (this, () => this .#recordBrowser .addBrowserEvent ());
+      this .time .addClass ("visible") .text (duration) .appendTo (this .aspectFrame);
+
+      this .#recordBrowser .prepareEvents () .addFieldCallback (this, () =>
+      {
+         this .#recordBrowser .addBrowserEvent ();
+
+         const time = duration - (Date .now () - this .#recordTime) / 1000;
+
+         this .time .text (time .toFixed (1) + " s");
+      });
+
+      // Toggle state.
+
+      this .#record     = true;
+      this .#recordTime = Date .now ();
 
       // Create stream.
 
@@ -360,9 +377,6 @@ module .exports = class VideoRecorder extends Interface
       this .#recordCanvas .remove ();
       this .#recordBrowser .dispose ();
 
-      this .#recordBrowser .prepareEvents ()
-         .removeFieldCallback (this);
-
       // Save file.
 
       const
@@ -377,6 +391,7 @@ module .exports = class VideoRecorder extends Interface
       this .settings .find ("input") .removeAttr ("readonly");
       this .settings .find ("select") .removeAttr ("disabled");
       this .settings .find (".button") .removeClass ("disabled");
+      this .time .removeClass ("visible");
 
       // Toggle state.
 
