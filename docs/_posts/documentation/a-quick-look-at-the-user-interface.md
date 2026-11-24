@@ -178,6 +178,9 @@ Shaders are written in OpenGL Shading Language (GLSL), a high-level shading lang
 
 - Move along one axis = ***drag arrow handles***
 - Move in plane of surface = <kbd>Alt-or-Option</kbd> and ***drag arrow handles***
+- Nudge along x-axis = arrow keys <kbd>Left</kbd> and <kbd>Right</kbd>, click <kbd>Shift</kbd> to nudge faster
+- Nudge along y-axis = arrow keys <kbd>Up</kbd> and <kbd>Down</kbd>, click <kbd>Shift</kbd> to nudge faster
+- Nudge along z-axis = arrow keys <kbd>Alt-or-Option</kbd>+<kbd>Up</kbd> and <kbd>Alt-or-Option</kbd>+<kbd>Down</kbd>, click <kbd>Alt-or-Option</kbd>+<kbd>Shift</kbd> to nudge faster
 
 #### Rotate (drag circle handles of manipulator)
 
