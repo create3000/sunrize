@@ -467,25 +467,18 @@ module .exports = class Document extends Interface
 
    onnudge (event)
    {
+      if (!this .secondaryToolbar .arrowButton .hasClass ("active"))
+         return;
+
       const nudge = Document .NUDGE_STEP * (event .shiftKey ? Document .NUDGE_FACTOR : 1);
 
       switch (event .key)
       {
-         case "a":
-         {
-            if (this .activeElementIsInputOrOutput ())
-               break;
-
-            if (event .ctrlKey)
-            {
-               this .sidebar .outlineEditor .selectAll ();
-               return false;
-            }
-
-            break;
-         }
          case "ArrowUp":
          {
+            event .preventDefault ();
+            event .stopPropagation ();
+
             if (event .altKey)
 					this .nudgeSelection (new X3D .Vector3 (0, 0, -nudge));
             else
@@ -495,6 +488,9 @@ module .exports = class Document extends Interface
          }
          case "ArrowDown":
          {
+            event .preventDefault ();
+            event .stopPropagation ();
+
             if (event .altKey)
                this .nudgeSelection (new X3D .Vector3 (0, 0, nudge));
             else
@@ -504,11 +500,17 @@ module .exports = class Document extends Interface
          }
          case "ArrowLeft":
          {
+            event .preventDefault ();
+            event .stopPropagation ();
+
             this .nudgeSelection (new X3D .Vector3 (-nudge, 0, 0));
             break;
          }
          case "ArrowRight":
          {
+            event .preventDefault ();
+            event .stopPropagation ();
+
             this .nudgeSelection (new X3D .Vector3 (nudge, 0, 0));
             break;
          }
