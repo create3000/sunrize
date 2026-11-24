@@ -172,8 +172,7 @@ module .exports = class VideoRecorder extends Interface
       // Time
 
       this .time = $("<div></div>")
-         .addClass ("time")
-         .appendTo (this .aspectFrame);
+         .addClass (["time", "visible"]);
 
       // Toolbar
 
@@ -321,7 +320,7 @@ module .exports = class VideoRecorder extends Interface
       this .#recordBrowser .beginUpdate ();
       this .#recordBrowser .addBrowserEvent ();
 
-      this .time .addClass ("visible") .text (duration) .appendTo (this .aspectFrame);
+      this .time .text (duration) .appendTo (this .aspectFrame);
 
       this .#recordBrowser .prepareEvents () .addFieldCallback (this, () =>
       {
@@ -391,7 +390,7 @@ module .exports = class VideoRecorder extends Interface
       this .settings .find ("input") .removeAttr ("readonly");
       this .settings .find ("select") .removeAttr ("disabled");
       this .settings .find (".button") .removeClass ("disabled");
-      this .time .removeClass ("visible");
+      this .time .detach ();
 
       // Toggle state.
 
