@@ -33,6 +33,8 @@ module .exports = class VideoRecorder extends Interface
 
       this .videoRecorder = element;
 
+      const maxRenderbufferSize = this .getMaxRenderbufferSize ();
+
       // Video Recorder Panel
 
       this .verticalSplitter = $("<div></div>")
@@ -76,6 +78,7 @@ module .exports = class VideoRecorder extends Interface
          .attr ("title", _("Width in Pixels"))
          .attr ("type", "number")
          .attr ("min", 1)
+         .attr ("max", maxRenderbufferSize)
          .attr ("step", "1")
          .attr ("placeholder", _("Enter a number."))
          .on ("change input", () => this .config .file .width = this .width .val ())
@@ -92,6 +95,7 @@ module .exports = class VideoRecorder extends Interface
          .attr ("title", _("Height in Pixels"))
          .attr ("type", "number")
          .attr ("min", 1)
+         .attr ("max", maxRenderbufferSize)
          .attr ("step", "1")
          .attr ("placeholder", _("Enter a number."))
          .on ("change input", () => this .config .file .height = this .height .val ())
@@ -256,10 +260,12 @@ module .exports = class VideoRecorder extends Interface
          duration = this .duration .val ()|0,
          filename = this .filename .val ();
 
+      const maxRenderbufferSize = this .getMaxRenderbufferSize ();
+
       let ok = true;
 
-      ok &&= width > 0;
-      ok &&= height > 0;
+      ok &&= width > 0 && width < maxRenderbufferSize;
+      ok &&= height > 0 && height < maxRenderbufferSize;
       ok &&= duration > 0;
       ok &&= filename;
 
@@ -267,6 +273,13 @@ module .exports = class VideoRecorder extends Interface
          this .recordButton .removeClass ("disabled");
       else
          this .recordButton .addClass ("disabled");
+   }
+
+   getMaxRenderbufferSize ()
+   {
+      const gl = this .browser .getContext ();
+
+      return gl .getParameter (gl .MAX_RENDERBUFFER_SIZE);
    }
 
    #recordCanvas;
