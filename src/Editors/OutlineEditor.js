@@ -1718,54 +1718,61 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
    async saveDataUrlToFile (id, executionContextId, nodeId)
    {
-      const
-         executionContext = this .objects .get (executionContextId),
-         urlObject        = this .objects .get (nodeId),
-         index            = urlObject ._url .findIndex (fileURL => fileURL .match (/^\s*(?:data|ecmascript|javascript|vrmlscript):/s)),
-         dataURL          = Editor .decodeURI (urlObject ._url [index]),
-         protocol         = dataURL .match (/^\s*(?:data|ecmascript|javascript|vrmlscript):/s),
-         match            = dataURL .match (/^\s*data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s),
-         isData           = protocol [0] === "data:";
+      try
+      {
+         const
+            executionContext = this .objects .get (executionContextId),
+            urlObject        = this .objects .get (nodeId),
+            index            = urlObject ._url .findIndex (fileURL => fileURL .match (/^\s*(?:data|ecmascript|javascript|vrmlscript):/s)),
+            dataURL          = Editor .decodeURI (urlObject ._url [index]),
+            protocol         = dataURL .match (/^\s*(?:data|ecmascript|javascript|vrmlscript):/s),
+            match            = dataURL .match (/^\s*data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s),
+            isData           = protocol [0] === "data:";
 
-      if (!((isData && match) || !isData))
-         return;
+         if (!((isData && match) || !isData))
+            return;
 
-      // Open dialog.
+         // Open dialog.
 
-      const
-         name             = urlObject .getName () ,
-         mimeType         = isData ? match [1] || "text/plain" : this .protocolToMimeType .get (protocol [0]),
-         extension        = mime .extension (mimeType),
-         defaultDirectory = $.try (() => path .dirname (url .fileURLToPath (executionContext .getWorldURL ()))),
-         desktop          = await electron .ipcRenderer .invoke ("path", "desktop"),
-         defaultPath      = name ? path .join (defaultDirectory ?? desktop, `${name}.${extension}`) : (defaultDirectory ?? desktop);
+         const
+            name             = urlObject .getName () ,
+            mimeType         = isData ? match [1] || "text/plain" : this .protocolToMimeType .get (protocol [0]),
+            extension        = mime .extension (mimeType),
+            defaultDirectory = $.try (() => path .dirname (url .fileURLToPath (executionContext .getWorldURL ()))),
+            desktop          = await electron .ipcRenderer .invoke ("path", "desktop"),
+            defaultPath      = name ? path .join (defaultDirectory ?? desktop, `${name}.${extension}`) : (defaultDirectory ?? desktop);
 
-      const filters = extension
-            ? [{ name: _(`${extension .toUpperCase ()} Document`), extensions: [extension] }]
-            : [{ name: _("All Files"), extensions: ["*"] }];
+         const filters = extension
+               ? [{ name: _(`${extension .toUpperCase ()} Document`), extensions: [extension] }]
+               : [{ name: _("All Files"), extensions: ["*"] }];
 
-      const response = await electron .ipcRenderer .invoke ("file-path", { type: "save", defaultPath, filters });
+         const response = await electron .ipcRenderer .invoke ("file-path", { type: "save", defaultPath, filters });
 
-      if (response .canceled)
-         return;
+         if (response .canceled)
+            return;
 
-      // Create file.
+         // Create file.
 
-      const
-         data   = dataURL .substring (dataURL .indexOf (isData ? "," : ":") + 1),
-         buffer = Buffer .from (data, isData && match [3] === "base64" ? "base64" : "utf8");
+         const
+            data   = dataURL .substring (dataURL .indexOf (isData ? "," : ":") + 1),
+            buffer = Buffer .from (data, isData && match [3] === "base64" ? "base64" : "utf8");
 
-      fs .writeFileSync (response .filePath, buffer);
+         fs .writeFileSync (response .filePath, buffer);
 
-      // Add undo step.
+         // Add undo step.
 
-      const value = urlObject ._url .toSpliced (index, 1, Editor .relativePath (executionContext, response .filePath));
+         const value = urlObject ._url .toSpliced (index, 1, Editor .relativePath (executionContext, response .filePath));
 
-      UndoManager .shared .beginUndo (_("Save Data URL to File"));
+         UndoManager .shared .beginUndo (_("Save Data URL to File"));
 
-      Editor .setFieldValue (executionContext, urlObject, urlObject ._url, value);
+         Editor .setFieldValue (executionContext, urlObject, urlObject ._url, value);
 
-      UndoManager .shared .endUndo ();
+         UndoManager .shared .endUndo ();
+      }
+      catch (error)
+      {
+         console .error (error);
+      }
    }
 
    textTypes = new Set ([
@@ -1871,52 +1878,59 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
 
    async convertNodeToInlineFile (id, executionContextId, nodeId, typeName)
    {
-      const
-         executionContext = this .objects .get (executionContextId),
-         childNode        = this .objects .get (nodeId),
-         name             = childNode .getDisplayName (),
-         defaultDirectory = $.try (() => path .dirname (url .fileURLToPath (executionContext .getWorldURL ()))),
-         desktop          = await electron .ipcRenderer .invoke ("path", "desktop"),
-         defaultPath      = name ? path .join (defaultDirectory ?? desktop, `${name}.x3d`) : (defaultDirectory ?? desktop),
-         response         = await electron .ipcRenderer .invoke ("file-path", { type: "save", defaultPath });
-
-      if (response .canceled)
-         return;
-
-      switch (typeName)
+      try
       {
-         case "Inline":
-            UndoManager .shared .beginUndo (_("Convert Node to Inline File"));
-            break;
-         case "InlineGeometry":
-            UndoManager .shared .beginUndo (_("Convert Node to InlineGeometry"));
-            break;
+         const
+            executionContext = this .objects .get (executionContextId),
+            childNode        = this .objects .get (nodeId),
+            name             = childNode .getDisplayName (),
+            defaultDirectory = $.try (() => path .dirname (url .fileURLToPath (executionContext .getWorldURL ()))),
+            desktop          = await electron .ipcRenderer .invoke ("path", "desktop"),
+            defaultPath      = name ? path .join (defaultDirectory ?? desktop, `${name}.x3d`) : (defaultDirectory ?? desktop),
+            response         = await electron .ipcRenderer .invoke ("file-path", { type: "save", defaultPath });
+
+         if (response .canceled)
+            return;
+
+         // Create inline file.
+
+         await Editor .convertNodesToInlineFile (executionContext, [childNode], response .filePath);
+
+         // Create Inline node.
+
+         switch (typeName)
+         {
+            case "Inline":
+               UndoManager .shared .beginUndo (_("Convert Node to Inline File"));
+               break;
+            case "InlineGeometry":
+               UndoManager .shared .beginUndo (_("Convert Node to InlineGeometry"));
+               break;
+         }
+
+         await Editor .addComponent (executionContext, "Networking");
+
+         const inlineNode = executionContext .createNode (typeName) .getValue ();
+
+         inlineNode ._url = [Editor .relativePath (executionContext, response .filePath)];
+
+         if (childNode .getName ())
+            Editor .updateNamedNode (executionContext, childNode .getName (), inlineNode);
+
+         // Insert Inline node.
+
+         Editor .replaceAllOccurrences (executionContext, childNode, inlineNode);
+
+         UndoManager .shared .endUndo ();
+
+         await this .browser .nextFrame ();
+
+         this .expandTo (inlineNode);
       }
-
-      // Create inline file.
-
-      await Editor .convertNodesToInlineFile (executionContext, [childNode], response .filePath);
-
-      // Create Inline node.
-
-      await Editor .addComponent (executionContext, "Networking");
-
-      const inlineNode = executionContext .createNode (typeName) .getValue ();
-
-      inlineNode ._url = [Editor .relativePath (executionContext, response .filePath)];
-
-      if (childNode .getName ())
-         Editor .updateNamedNode (executionContext, childNode .getName (), inlineNode);
-
-      // Insert Inline node.
-
-      Editor .replaceAllOccurrences (executionContext, childNode, inlineNode);
-
-      UndoManager .shared .endUndo ();
-
-      await this .browser .nextFrame ();
-
-      this .expandTo (inlineNode);
+      catch (error)
+      {
+         console .error (error);
+      }
    }
 
    addNormalsToGeometry (id, executionContextId, nodeId)

@@ -8,36 +8,43 @@ module .exports = class Registry
 {
    static addWindowsFileTypes ()
    {
-      if (!electron .app .isPackaged)
-         return;
-
-      if (process .platform !== "win32")
-         return;
-
-      const
-         exe = electron .app .getPath ("exe"),
-         reg = fs .readFileSync (path .join (__dirname, "../assets/X3D.reg"), { encoding: "utf-8" }),
-         tmp = path .join (electron .app .getAppPath ("temp"), "Sunrize-X3D.reg");
-
-      const out = reg .replaceAll ("SUNRIZE_EXE", exe .replaceAll ("\\", "\\\\"));
-
-      fs .writeFileSync (tmp, out);
-
-      const ls = child_process .spawn ("reg", ["import", tmp]);
-
-      ls .stdout .on ('data', (data) =>
+      try
       {
-         // console .log (`stdout: ${data}`);
-      });
+         if (!electron .app .isPackaged)
+            return;
 
-      ls .stderr .on ('data', (data) =>
-      {
-         // console .error (`stderr: ${data}`);
-      });
+         if (process .platform !== "win32")
+            return;
 
-      ls .on ("close", (code) =>
+         const
+            exe = electron .app .getPath ("exe"),
+            reg = fs .readFileSync (path .join (__dirname, "../assets/X3D.reg"), { encoding: "utf-8" }),
+            tmp = path .join (electron .app .getAppPath ("temp"), "Sunrize-X3D.reg");
+
+         const out = reg .replaceAll ("SUNRIZE_EXE", exe .replaceAll ("\\", "\\\\"));
+
+         fs .writeFileSync (tmp, out);
+
+         const ls = child_process .spawn ("reg", ["import", tmp]);
+
+         ls .stdout .on ('data', (data) =>
+         {
+            // console .log (`stdout: ${data}`);
+         });
+
+         ls .stderr .on ('data', (data) =>
+         {
+            // console .error (`stderr: ${data}`);
+         });
+
+         ls .on ("close", (code) =>
+         {
+            fs .unlinkSync (tmp);
+         });
+      }
+      catch (error)
       {
-         fs .unlinkSync (tmp);
-      });
+         console .error (error);
+      }
    }
 };

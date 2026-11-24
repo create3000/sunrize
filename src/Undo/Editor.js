@@ -396,6 +396,7 @@ module .exports = class Editor
    }
 
    /**
+    * Throws an error if filePath is not valid.
     *
     * @param {X3DExecutionContext} executionContext
     * @param {Array<X3DNode>} nodes
@@ -1319,37 +1320,48 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd () }
     */
    static async turnIntoExternProto (executionContext, proto, filePath, undoManager = UndoManager .shared)
    {
-      const
-         browser   = executionContext .getBrowser (),
-         scene     = await browser .createScene (browser .getProfile ("Core")),
-         x3dSyntax = await this .exportX3D (executionContext, [proto]);
+      try
+      {
+         const
+            browser   = executionContext .getBrowser (),
+            scene     = await browser .createScene (browser .getProfile ("Core")),
+            x3dSyntax = await this .exportX3D (executionContext, [proto]);
 
-      undoManager .beginUndo (_("Turn Prototype »%s« into Extern Prototype"), proto .getName ());
+         // Save proto scene.
 
-      this .removeProtoDeclaration (executionContext, proto .getName (), undoManager);
+         scene .setWorldURL (url .pathToFileURL (filePath));
 
-      scene .setWorldURL (url .pathToFileURL (filePath));
+         await this .importX3D (scene, x3dSyntax, new UndoManager ());
 
-      await this .importX3D (scene, x3dSyntax, new UndoManager ());
+         this .rewriteURLs (scene, scene, executionContext .worldURL, scene .worldURL, new UndoManager ());
+         this .inferProfileAndComponents (scene, new UndoManager ());
 
-      this .rewriteURLs (scene, scene, executionContext .worldURL, scene .worldURL, new UndoManager ());
-      this .inferProfileAndComponents (scene, new UndoManager ());
+         fs .writeFileSync (filePath, this .getContents (scene, path .extname (filePath)));
+         scene .dispose ();
 
-      fs .writeFileSync (filePath, this .getContents (scene, path .extname (filePath)));
-      scene .dispose ();
+         // Replace proto.
 
-      const
-         name         = executionContext .getUniqueExternProtoName (proto .getName ()),
-         externproto  = this .addExternProtoDeclaration (executionContext, name, undoManager),
-         relativePath = this .relativePath (executionContext, filePath),
-         absolutePath = url .pathToFileURL (filePath) .href,
-         hash         = "#" + encodeURIComponent (proto .getName ());
+         undoManager .beginUndo (_("Turn Prototype »%s« into Extern Prototype"), proto .getName ());
 
-      externproto ._url = new X3D .MFString (relativePath + hash, absolutePath + hash);
+         this .removeProtoDeclaration (executionContext, proto .getName (), undoManager);
 
-      this .replaceProtoNodes (executionContext, proto, externproto, undoManager);
+         const
+            name         = executionContext .getUniqueExternProtoName (proto .getName ()),
+            externproto  = this .addExternProtoDeclaration (executionContext, name, undoManager),
+            relativePath = this .relativePath (executionContext, filePath),
+            absolutePath = url .pathToFileURL (filePath) .href,
+            hash         = "#" + encodeURIComponent (proto .getName ());
 
-      undoManager .endUndo ();
+         externproto ._url = new X3D .MFString (relativePath + hash, absolutePath + hash);
+
+         this .replaceProtoNodes (executionContext, proto, externproto, undoManager);
+
+         undoManager .endUndo ();
+      }
+      catch (error)
+      {
+         console .error (error);
+      }
    }
 
    /**

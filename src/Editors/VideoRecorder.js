@@ -400,7 +400,7 @@ module .exports = class VideoRecorder extends Interface
          blob   = await this .#blob,
          buffer = Buffer .from (await blob .arrayBuffer ());
 
-      fs .writeFileSync (this .filename .val (), buffer);
+      $.try (() => fs .writeFileSync (this .filename .val (), buffer), true);
 
       // Enable settings.
 

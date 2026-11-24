@@ -571,7 +571,7 @@ module .exports = class Document extends Interface
             return;
          }
 
-         fs .writeFileSync (this .filePath, Editor .getContents (scene, path .extname (this .filePath)));
+         $.try (() => fs .writeFileSync (this .filePath, Editor .getContents (scene, path .extname (this .filePath))), true);
       }
       else
       {
