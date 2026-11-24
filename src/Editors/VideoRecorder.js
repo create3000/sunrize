@@ -268,8 +268,13 @@ module .exports = class VideoRecorder extends Interface
          width  = this .width  .val ()|0 || 1024,
          height = this .height .val ()|0 || 576;
 
+      // Toggle state.
+
+      this .#record = true;
+
       // Disable settings.
 
+      this .recordButton .addClass ("active");
       this .settings .find ("input") .attr ("readonly", "");
       this .settings .find ("select") .attr ("disabled", "");
       this .settings .find (".button") .addClass ("disabled");
@@ -340,12 +345,6 @@ module .exports = class VideoRecorder extends Interface
       });
 
       this .#recorder .start ();
-
-      // Toggle state.
-
-      this .#record = true;
-
-      this .recordButton .addClass ("active");
    }
 
    async stopRecord ()
@@ -374,6 +373,7 @@ module .exports = class VideoRecorder extends Interface
 
       // Enable settings.
 
+      this .recordButton .removeClass ("active");
       this .settings .find ("input") .removeAttr ("readonly");
       this .settings .find ("select") .removeAttr ("disabled");
       this .settings .find (".button") .removeClass ("disabled");
@@ -383,8 +383,6 @@ module .exports = class VideoRecorder extends Interface
       this .#recordCanvas  = null;
       this .#recordBrowser = null;
       this .#record        = false;
-
-      this .recordButton .removeClass ("active");
 
       // Show video player.
 
