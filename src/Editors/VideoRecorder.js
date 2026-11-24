@@ -327,15 +327,19 @@ module .exports = class VideoRecorder extends Interface
       this .#recordBrowser .setBrowserOption ("Timings",       false);
       this .#recordBrowser .setBrowserOption ("ContextMenu",   false);
       this .#recordBrowser .setBrowserOption ("Mute",          true);
+      this .#recordBrowser .setBrowserOption ("XRSessionMode", "NONE");
 
       const options = [
-         "PrimitiveQuality",
-         "TextureQuality",
+         "Antialiased",
          "ColorSpace",
          "Exposure",
          "LogarithmicDepthBuffer",
+         "Multisampling",
          "OrderIndependentTransparency",
+         "PrimitiveQuality",
+         "QualityWhenMoving",
          "TextCompression",
+         "TextureQuality",
          "ToneMapping",
       ];
 
