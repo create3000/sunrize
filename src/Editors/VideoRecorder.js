@@ -228,6 +228,7 @@ module .exports = class VideoRecorder extends Interface
 
       this .verifySettings ();
       this .resizeFrame ();
+      this .showVideoPlayer ();
    }
 
    async chooseFile ()
@@ -432,10 +433,17 @@ module .exports = class VideoRecorder extends Interface
       // Show video player.
 
       this .resizeFrame ();
+      this .showVideoPlayer ();
+   }
+
+   showVideoPlayer ()
+   {
+      if (!fs .existsSync (this .filename .val ()))
+         return;
 
       $("<video controls></video>")
          .attr ("src", this .filename .val ())
-         .appendTo (this .aspectFrame);
+         .appendTo (this .aspectFrame .empty ());
    }
 
    resizeFrame ()
