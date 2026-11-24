@@ -35,9 +35,7 @@ module .exports = class Footer extends Tabs
       this .addIconTextTab ("script-editor", "data_array", _("Script Editor"));
       this .addIconTextTab ("animation-editor", "animation", _("Keyframe Animation"));
       this .addIconTextTab ("route-graph", "route", _("Route Graph"));
-
-      if (process .env .SUNRISE_ENVIRONMENT === "DEVELOPMENT")
-         this .addIconTextTab ("video-recorder", "videocam", _("Video Recorder"));
+      this .addIconTextTab ("video-recorder", "videocam", _("Video Recorder"));
 
       this .activateTab (3);
       this .activateTab (0);
