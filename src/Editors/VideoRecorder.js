@@ -15,9 +15,9 @@ const
 module .exports = class VideoRecorder extends Interface
 {
    static formats = [
-      { name: "MP4",  mimeType: "video/mp4",  suffix: "mp4"  },
-      { name: "WebM", mimeType: "video/webm", suffix: "webm" },
-      { name: "OGG",  mimeType: "video/ogg",  suffix: "ogv"  },
+      { name: "MP4",  mimeType: "video/mp4",  ext: "mp4"  },
+      { name: "WebM", mimeType: "video/webm", ext: "webm" },
+      { name: "OGG",  mimeType: "video/ogg",  ext: "ogv"  },
    ];
 
    static filters = [
@@ -240,7 +240,7 @@ module .exports = class VideoRecorder extends Interface
       const newFilename = path .format ({
          ... path .parse (this .filename .val ()),
          base: undefined,
-         ext: "." + VideoRecorder .formats [this .fileType .val ()] .suffix,
+         ext: "." + VideoRecorder .formats [this .fileType .val ()] .ext,
       });
 
       this .filename .val (newFilename);
@@ -251,10 +251,10 @@ module .exports = class VideoRecorder extends Interface
       const
          worldURL         = new URL (this .browser .currentScene .getWorldURL ()),
          name             = worldURL .protocol === "data:" ? _("New Scene") : path .parse (worldURL .pathname) .name,
-         suffix           = VideoRecorder .formats [this .fileType .val ()] .suffix,
+         ext              = VideoRecorder .formats [this .fileType .val ()] .ext,
          defaultDirectory = $.try (() => path .dirname (url .fileURLToPath (worldURL))),
          desktop          = await electron .ipcRenderer .invoke ("path", "desktop"),
-         defaultPath      = path .join (defaultDirectory ?? desktop, `${name}.${suffix}`),
+         defaultPath      = path .join (defaultDirectory ?? desktop, `${name}.${ext}`),
          filters          = VideoRecorder .filters,
          response         = await electron .ipcRenderer .invoke ("file-path", { type: "save", defaultPath, filters });
 
