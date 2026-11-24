@@ -1914,6 +1914,7 @@ body.light .console-output .selected {
 }
 
 .video-recorder-aspect-frame {
+  box-sizing: content-box;
   position: absolute;
   border: 1px solid var(--border-color);
   left: 50%;
