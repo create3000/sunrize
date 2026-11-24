@@ -518,11 +518,14 @@ module .exports = class Document extends Interface
    nudgeSelection (nudge)
    {
       const
-         selection = require ("./Selection"),
-         node      = selection .nodes .at (-1);
+         selection     = require ("./Selection"),
+         outlineEditor = this .sidebar .outlineEditor,
+         node          = selection .nodes .at (-1);
 
       if (!node)
          return;
+
+      let field;
 
       const type = node .getType ();
 
@@ -530,18 +533,48 @@ module .exports = class Document extends Interface
       {
          switch (type [t])
          {
-            case X3D .X3DConstants .X3DTransformNode:
-            {
-               nudge .add (node ._translation .getValue ());
-
-               node ._translation = nudge;
+            case X3D .X3DConstants .X3DEnvironmentalSensorNode:
+               field = node ._center;
                break;
-            }
+            case X3D .X3DConstants .ListenerPointSource:
+            case X3D .X3DConstants .OrthoViewpoint:
+            case X3D .X3DConstants .Viewpoint:
+               field = node ._position;
+               break;
+            case X3D .X3DConstants .Sound:
+            case X3D .X3DConstants .SpatialSound:
+            case X3D .X3DConstants .X3DLightNode:
+               field = node ._location;
+               break;
+            case X3D .X3DConstants .X3DNBodyCollidableNode:
+            case X3D .X3DConstants .X3DTransformNode:
+               field = node ._translation;
+               break;
             default:
                continue;
          }
 
          break;
+      }
+
+      if (!field)
+         return;
+
+      try
+      {
+         nudge .add (field .getValue ());
+
+         outlineEditor .beginUndoSetFieldValue (node, field);
+
+         Editor .setFieldValue (node .getExecutionContext (), node, field, nudge);
+      }
+      catch
+      {
+         electron .shell .beep ();
+      }
+      finally
+      {
+         outlineEditor .endUndoSetFieldValue (node, field);
       }
    }
 
