@@ -1914,6 +1914,7 @@ body.light .console-output .selected {
 }
 
 .video-recorder-aspect-frame {
+  overflow: hidden;
   box-sizing: content-box;
   position: absolute;
   border: 1px solid var(--border-color);
@@ -1925,6 +1926,7 @@ body.light .console-output .selected {
 .video-recorder x3d-canvas {
   width: 100%;
   height: 100%;
+  transform-origin: top left;
 }
 
 /* Sidebar */

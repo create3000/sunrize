@@ -3,6 +3,7 @@
 
 const
    $         = require ("jquery"),
+   X3D       = require ("../X3D"),
    Interface = require ("../Application/Interface"),
    Splitter  = require ("../Controls/Splitter"),
    electron  = require ("electron"),
@@ -245,6 +246,7 @@ module .exports = class VideoRecorder extends Interface
          this .recordButton .addClass ("disabled");
    }
 
+   #recordCanvas;
    #recordBrowser;
    #record = false;
    #timeoutId;
@@ -262,14 +264,54 @@ module .exports = class VideoRecorder extends Interface
 
    async startRecord ()
    {
+      const
+         width  = this .width  .val ()|0 || 1024,
+         height = this .height .val ()|0 || 576;
+
+      this .aspectFrame .css ({
+         "max-width": "fit-content",
+         "max-height": "fit-content",
+      });
+
       // Create browser.
 
-      this .#recordBrowser = $("<x3d-canvas></x3d-canvas>")
-         .appendTo (this .aspectFrame);
+      this .#recordCanvas  = $(`<x3d-canvas splashScreen="false"></x3d-canvas>`) .appendTo (this .aspectFrame);
+      this .#recordBrowser = this .#recordCanvas .prop ("browser");
+
+      this .#recordBrowser .setBrowserOption ("Notifications", false);
+      this .#recordBrowser .setBrowserOption ("Timings",       false);
+      this .#recordBrowser .setBrowserOption ("ContextMenu",   false);
+      this .#recordBrowser .setBrowserOption ("Mute",          true);
+
+      const options = [
+         "PrimitiveQuality",
+         "TextureQuality",
+         "ColorSpace",
+         "Exposure",
+         "LogarithmicDepthBuffer",
+         "OrderIndependentTransparency",
+         "TextCompression",
+         "ToneMapping",
+      ];
+
+      for (const option of options)
+         this .#recordBrowser .setBrowserOption (option, this .browser .getBrowserOption (option));
+
+      this .#recordBrowser .endUpdate ();
+
+      await this .#recordBrowser .resize (width, height);
+      await this .#recordBrowser .loadURL (new X3D .MFString (this .browser .getWorldURL ()));
+      this .resizeFrame ();
+
+      this .#recordBrowser .beginUpdate ();
+      this .#recordBrowser .addBrowserEvent ();
+
+      this .#recordBrowser .prepareEvents ()
+         .addFieldCallback (this, () => this .#recordBrowser .addBrowserEvent ());
 
       // Create stream.
 
-      const stream = this .#recordBrowser .get (0) .captureStream (30);
+      const stream = this .#recordCanvas .get (0) .captureStream (30);
 
       this .#timeoutId = setTimeout (() => this .stopRecord (), this .duration .val () * 1_000 || 60_000);
       this .#mimeType  = VideoRecorder .formats [this .fileType .val ()] .mimeType;
@@ -279,7 +321,7 @@ module .exports = class VideoRecorder extends Interface
 
       this .#recorder .addEventListener ("dataavailable", event =>
       {
-         if (event .data .size > 0)
+         if (event .data .size)
             chunks .push (event .data);
       });
 
@@ -310,8 +352,11 @@ module .exports = class VideoRecorder extends Interface
 
       // Dispose browser.
 
-      this .#recordBrowser .remove ();
-      this .#recordBrowser .prop ("browser") .dispose ();
+      this .#recordCanvas .remove ();
+      this .#recordBrowser .dispose ();
+
+      this .#recordBrowser .prepareEvents ()
+         .removeFieldCallback (this);
 
       // Save file.
 
@@ -323,7 +368,14 @@ module .exports = class VideoRecorder extends Interface
 
       // Toggle state.
 
-      this .#record = false;
+      this .aspectFrame .css ({
+         "max-width": "",
+         "max-height": "",
+      });
+
+      this .#recordCanvas  = null;
+      this .#recordBrowser = null;
+      this .#record        = false;
 
       this .recordButton .removeClass ("active");
    }
@@ -331,17 +383,22 @@ module .exports = class VideoRecorder extends Interface
    resizeFrame ()
    {
       const
-         numerator        = this .width  .val ()|0 || 1024,
-         denominator      = this .height .val ()|0 || 576,
-         aspectRatio      = numerator / denominator,
+         width            = this .width  .val ()|0 || 1024,
+         height           = this .height .val ()|0 || 576,
+         aspectRatio      = width / height,
          frameAspectRatio = this .recordFrame .innerWidth () / this .recordFrame .innerHeight ();
 
-      this .aspectFrame .css ({ "aspect-ratio": `${numerator} / ${denominator}` });
+      this .aspectFrame .css ({ "aspect-ratio": `${width} / ${height}` });
 
       if (aspectRatio > frameAspectRatio)
          this .aspectFrame .css ({ "width": "100%", "height": "auto" });
       else
          this .aspectFrame .css ({ "width": "auto", "height": "100%" });
+
+      if (aspectRatio > frameAspectRatio)
+         this .#recordCanvas ?.css ("scale", this .recordFrame .innerWidth () / width);
+      else
+         this .#recordCanvas ?.css ("scale", this .recordFrame .innerHeight () / height);
    }
 
    splitterPosition ()
