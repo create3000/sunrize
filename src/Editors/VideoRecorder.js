@@ -245,6 +245,7 @@ module .exports = class VideoRecorder extends Interface
          this .recordButton .addClass ("disabled");
    }
 
+   #recordBrowser;
    #record = false;
    #timeoutId;
    #mimeType;
@@ -261,7 +262,14 @@ module .exports = class VideoRecorder extends Interface
 
    async startRecord ()
    {
-      const stream = this .browser .getElement () .captureStream (30);
+      // Create browser.
+
+      this .#recordBrowser = $("<x3d-canvas></x3d-canvas>")
+         .appendTo (this .aspectFrame);
+
+      // Create stream.
+
+      const stream = this .#recordBrowser .get (0) .captureStream (30);
 
       this .#timeoutId = setTimeout (() => this .stopRecord (), this .duration .val () * 1_000 || 60_000);
       this .#mimeType  = VideoRecorder .formats [this .fileType .val ()] .mimeType;
@@ -285,7 +293,7 @@ module .exports = class VideoRecorder extends Interface
 
       this .#recorder .start ();
 
-      // Toggle State
+      // Toggle state.
 
       this .#record = true;
 
@@ -294,9 +302,18 @@ module .exports = class VideoRecorder extends Interface
 
    async stopRecord ()
    {
+      // Stop recording.
+
       clearTimeout (this .#timeoutId);
 
       this .#recorder .stop ();
+
+      // Dispose browser.
+
+      this .#recordBrowser .remove ();
+      this .#recordBrowser .prop ("browser") .dispose ();
+
+      // Save file.
 
       const
          blob   = await this .#blob,
@@ -304,7 +321,7 @@ module .exports = class VideoRecorder extends Interface
 
       fs .writeFileSync (this .filename .val (), buffer);
 
-      // Toggle State
+      // Toggle state.
 
       this .#record = false;
 

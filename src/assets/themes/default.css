@@ -1923,8 +1923,8 @@ body.light .console-output .selected {
 }
 
 .video-recorder x3d-canvas {
-  position: absolute;
-  inset: 0px;
+  width: 100%;
+  height: 100%;
 }
 
 /* Sidebar */
