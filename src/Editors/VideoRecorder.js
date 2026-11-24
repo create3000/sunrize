@@ -124,7 +124,8 @@ module .exports = class VideoRecorder extends Interface
 
       this .fileType = $("<select></select>")
          .addClass ("settings")
-         .on ("change input", () => this .config .file .fileType = this .fileType .val ())
+         .on ("change", () => this .config .file .fileType = this .fileType .val ())
+         .on ("change", () => this .changeFileType ())
          .appendTo (this .settings);
 
       for (const [index, { name, mimeType }] of VideoRecorder .formats .entries ())
@@ -229,6 +230,20 @@ module .exports = class VideoRecorder extends Interface
       this .verifySettings ();
       this .resizeFrame ();
       this .showVideoPlayer ();
+   }
+
+   changeFileType ()
+   {
+      if (!this .filename .val ())
+         return;
+
+      const newFilename = path .format ({
+         ... path .parse (this .filename .val ()),
+         base: undefined,
+         ext: "." + VideoRecorder .formats [this .fileType .val ()] .suffix,
+      });
+
+      this .filename .val (newFilename);
    }
 
    async chooseFile ()
