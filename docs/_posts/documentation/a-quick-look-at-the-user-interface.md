@@ -50,43 +50,43 @@ The user interface consists of four main parts: Menubar, Dashboard, Sidebar, and
   - **Sidebar** toggle the display of the sidebar on/off.
   - **Panel** toggle the display of the panel on/off.
   - **Theme**
-    - **Light** use light theme
-    - **Dark** use dark theme
-    - **System** use system theme
-  - **Zoom In** zoom in editor layout
-  - **Zoom Out** zoom out of editor layout
-  - **Reset Zoom** reset the zoom level
+    - **Light** use light theme.
+    - **Dark** use dark theme.
+    - **System** use system theme.
+  - **Zoom In** zoom in editor layout.
+  - **Zoom Out** zoom out of editor layout.
+  - **Reset Zoom** reset the zoom level.
 - **Outline Editor**
-  - **Expand ExternProto Declarations:** toggle display of extern-proto scenes
-  - **Expand Prototype Instances**: toggle display of prototype instance body
-  - **Expand Inline Nodes:** toggle display of Inline nodes internal scenes
+  - **Expand ExternProto Declarations:** toggle display of extern-proto scenes.
+  - **Expand Prototype Instances**: toggle display of prototype instance body.
+  - **Expand Inline Nodes:** toggle display of Inline nodes internal scenes.
 - **Primitive Quality**
-  - **High:** switch to highest primitive quality
-  - **Medium:** switch to medium primitive quality
-  - **Low:** switch to lowest primitive quality
+  - **High:** switch to highest primitive quality.
+  - **Medium:** switch to medium primitive quality.
+  - **Low:** switch to lowest primitive quality.
 - **Texture Quality**
-  - **High:** switch to highest texture quality
-  - **Medium:** switch to medium texture quality
-  - **Low:** switch to lowest texture quality
+  - **High:** switch to highest texture quality.
+  - **Medium:** switch to medium texture quality.
+  - **Low:** switch to lowest texture quality.
 - **Text Compression**
-  - **Char Spacing:** adjust the spacing between characters in text nodes
-  - **Scaling:** scale text to fit into the bounding box of the text node
+  - **Char Spacing:** adjust the spacing between characters in text nodes.
+  - **Scaling:** scale text to fit into the bounding box of the text node.
 - **Color Space**
-  - **Linear:** switch to linear color space
-  - **Linear When PhysicalMaterial:** switch to linear color space when using PhysicalMaterial
-  - **sRGB:** switch to sRGB color space
+  - **Linear:** switch to linear color space.
+  - **Linear When PhysicalMaterial:** switch to linear color space when using PhysicalMaterial.
+  - **sRGB:** switch to sRGB color space.
 - **Tone Mapping**
-  - **KHR PBR Neutral:** switch to KHR PBR Neutral tone mapping
-  - **ACES Hill Exposure Boost:** switch to ACES Hill Exposure Boost tone mapping
-  - **ACES Hill:** switch to ACES Hill tone mapping
-  - **ACES Narkowicz:** switch to ACES Narkowicz tone mapping
-  - **None:** switch off tone mapping
+  - **KHR PBR Neutral:** switch to KHR PBR Neutral tone mapping.
+  - **ACES Hill Exposure Boost:** switch to ACES Hill Exposure Boost tone mapping.
+  - **ACES Hill:** switch to ACES Hill tone mapping.
+  - **ACES Narkowicz:** switch to ACES Narkowicz tone mapping.
+  - **None:** switch off tone mapping.
 - **Order Independent Transparency** toggle order independent transparency on/off. This is a technique to render transparent objects in a more realistic way.
 - **Logarithmic Depth Buffer** toggle logarithmic depth buffer on/off. This is a technique to render large scenes in a more realistic way.
 - **Display Rubberband:** toggle the display of the rubberband when the Walk Viewer is active.
 - **Display Timings:** toggle the display of the timings on/off. This provides you with useful information about your system.
 - **Show Library:** opens the library window, where you can select nodes to add to your scene.
-- **Fullscreen:** toggle fullscreen, you can leave the full screen mode again by pressing the *F11* key
+- **Fullscreen:** toggle fullscreen, you can leave the full screen mode again by pressing the <kbd>F11</kbd> key.
 
 ### Layout
 
