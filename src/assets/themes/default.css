@@ -1921,7 +1921,7 @@ body.light .console-output .selected {
 
 .video-recorder-record-frame {
   position: absolute;
-  margin: 20px;
+  margin: 10px;
   inset: 0px;
 }
 
