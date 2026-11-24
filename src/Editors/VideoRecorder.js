@@ -140,6 +140,7 @@ module .exports = class VideoRecorder extends Interface
          .addClass ("settings")
          .attr ("placeholder", _("Enter a filename."))
          .on ("change input", () => this .config .file .filename = this .filename .val ())
+         .on ("change input", () => this .verifyFilename ())
          .appendTo (this .filenameBox);
 
       this .fileChooser = $("<span></span>")
@@ -183,7 +184,7 @@ module .exports = class VideoRecorder extends Interface
       $("<span></span>") .addClass ("separator") .appendTo (this .toolbar);
 
       this .recordButton = $("<span></span>")
-         .addClass (["material-symbols-outlined"])
+         .addClass (["disabled", "material-symbols-outlined"])
          .attr ("title", _("Start recording."))
          .text ("screen_record")
          .on ("click", () => this .toggleRecord ())
@@ -210,15 +211,18 @@ module .exports = class VideoRecorder extends Interface
       this .fileType .val (this .config .file .fileType);
       this .filename .val (this .config .file .filename);
 
+      this .verifyFilename ();
       this .resizeFrame ();
    }
 
    async chooseFile ()
    {
       const
+         worldURL         = new URL (this .browser .currentScene .getWorldURL ()),
+         name             = worldURL .protocol === "data:" ? _("New Scene") : path .parse (worldURL .pathname) .name,
          suffix           = VideoRecorder .formats [this .fileType .val ()] .suffix,
-         defaultDirectory = $.try (() => path .dirname (url .fileURLToPath (this .browser .currentScene .getWorldURL ()))),
-         defaultPath      = defaultDirectory ? path .join (defaultDirectory, `${_("Video")}.${suffix}`) : `${_("Video")}.${suffix}`,
+         defaultDirectory = $.try (() => path .dirname (url .fileURLToPath (worldURL))),
+         defaultPath      = defaultDirectory ? path .join (defaultDirectory, `${name}.${suffix}`) : `${name}.${suffix}`,
          response         = await electron .ipcRenderer .invoke ("file-path", { type: "save", filters: VideoRecorder .filters, defaultPath });
 
       if (response .canceled)
@@ -227,6 +231,18 @@ module .exports = class VideoRecorder extends Interface
       this .filename .val (response .filePath);
 
       this .config .file .filename = response .filePath;
+
+      this .verifyFilename ();
+   }
+
+   verifyFilename ()
+   {
+      const filename = this .filename .val ();
+
+      if (filename)
+         this .recordButton .removeClass ("disabled");
+      else
+         this .recordButton .addClass ("disabled");
    }
 
    #record = false;
