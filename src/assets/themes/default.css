@@ -1921,6 +1921,11 @@ body.light .console-output .selected {
   transform: translate(-50%, -50%);
 }
 
+.video-recorder x3d-canvas {
+  position: absolute;
+  inset: 0px;
+}
+
 /* Sidebar */
 
 #sidebar {

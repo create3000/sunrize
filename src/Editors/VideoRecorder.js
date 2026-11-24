@@ -298,8 +298,8 @@ module .exports = class VideoRecorder extends Interface
    resizeFrame ()
    {
       const
-         numerator        = +this .width  .val () || 1024,
-         denominator      = +this .height .val () || 576,
+         numerator        = this .width  .val ()|0 || 1024,
+         denominator      = this .height .val ()|0 || 576,
          aspectRatio      = numerator / denominator,
          frameAspectRatio = this .recordFrame .innerWidth () / this .recordFrame .innerHeight ();
 
