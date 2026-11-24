@@ -126,7 +126,7 @@ The user interface consists of four main parts: Menubar, Dashboard, Sidebar, and
 ![straighten](/assets/img/documentation/straighten.png){: .normal }
 <br>**Straighten camera:** click to place your view upright and level in the world.
 
-## Sidebar Panel
+## Editors in the Sidebar
 
 ### Outline Editor
 
@@ -136,7 +136,7 @@ The [Outline Editor](../using-the-outline-editor/) is a very powerful editor, it
 <br>Outline Editor with Scene Graph
 {: .small }
 
-## Footer
+## Editors in the Panel
 
 ### Console
 
@@ -157,6 +157,30 @@ The [Script Editor](../using-the-script-editor/) allows you to create and edit s
 Scripts are written in ECMAScript, a lightweight, platform-independent programming language that is very similar to JavaScript. ECMAScript provides functions that are called when events come into the script, access to fields within the script, logic to operate on the fields, and the ability to send events from the script.
 
 Shaders are written in OpenGL Shading Language (GLSL), a high-level shading language based on the syntax of the C programming language. With GLSL you can code (right up to) short programs, called shaders, which are executed on the GPU. With Shaders you are able for instance to write your own lighting model. But that's only one feature of shaders. There are thousands of other really nice possibilities: Shadows, Environment Mapping, Per-Pixel Lighting, Bump Mapping, Parallax Bump Mapping, HDR, and much more!
+
+### Keyframe Animation Editor
+
+![Keyframe Animation Editor](/assets/img/documentation/keyframe-animation-editor.png)
+<br>Keyframe Animation Editor
+{: .small }
+
+You can easily create animations using the Keyframe Animation Editor. Keyframes can be of type Spline, Linear or Constant and can be arranged while playing the animation. You can play the whole animation or only a selected range. Have a look at [Animating Objects](/sunrize/documentation/animating-objects/) to see how the Keyframe Animation Editor works.
+
+### Route Graph Editor
+
+![Route Graph Editor](/assets/img/documentation/route-graph.png)
+<br>Route Graph Editor
+{: .small }
+
+Easily create and edit routes using the Route Graph Editor. You can create routes by dragging and dropping nodes and fields into the graph. You can also create routes by clicking on two matching connectors in the Outline Editor. Have a look at [Route Graph Editor](/sunrize/documentation/route-graph-editor/) to see how the Route Graph Editor works.
+
+### Video Recorder
+
+![Video Recorder](/assets/img/documentation/video-recorder.png)
+<br>Video Recorder
+{: .small }
+
+Create videos of your scene using the Video Recorder. You can record videos in different formats and resolutions.
 
 ## Keyboard Shortcuts and Tricks
 
@@ -233,7 +257,7 @@ Shaders are written in OpenGL Shading Language (GLSL), a high-level shading lang
 
 #### Wiring Routes
 
-- Create a route = ***Click on two mating connectors***
+- Create a route = ***Click on two matching connectors***
 - Remove a route = <kbd>Ctrl-or-Cmd</kbd> and ***click on connector***
 - Follow a route = ***Click small circle next to connector***
 - View info about route = <kbd>Shift</kbd> and ***click field expander arrow***
