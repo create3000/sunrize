@@ -268,12 +268,18 @@ module .exports = class VideoRecorder extends Interface
          width  = this .width  .val ()|0 || 1024,
          height = this .height .val ()|0 || 576;
 
+      // Disable settings.
+
+      this .settings .find ("input") .attr ("readonly", "");
+      this .settings .find ("select") .attr ("disabled", "");
+      this .settings .find (".button") .addClass ("disabled");
+
+      // Create browser.
+
       this .aspectFrame .css ({
          "max-width": "fit-content",
          "max-height": "fit-content",
       });
-
-      // Create browser.
 
       this .#recordCanvas  = $(`<x3d-canvas splashScreen="false"></x3d-canvas>`) .appendTo (this .aspectFrame);
       this .#recordBrowser = this .#recordCanvas .prop ("browser");
@@ -365,6 +371,12 @@ module .exports = class VideoRecorder extends Interface
          buffer = Buffer .from (await blob .arrayBuffer ());
 
       fs .writeFileSync (this .filename .val (), buffer);
+
+      // Enable settings.
+
+      this .settings .find ("input") .removeAttr ("readonly");
+      this .settings .find ("select") .removeAttr ("disabled");
+      this .settings .find (".button") .removeClass ("disabled");
 
       // Toggle state.
 
