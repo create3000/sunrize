@@ -1897,6 +1897,14 @@ body.light .console-output .selected {
   background: var(--system-gray8);
 }
 
+.video-recorder-settings span.header {
+  border-bottom: 1px solid var(--border-color);
+  background: transparent;
+  font-weight: bold;
+  color: var(--accent-color);
+  text-align: center;
+}
+
 .video-recorder-settings .filename-box {
   display: flex;
 }

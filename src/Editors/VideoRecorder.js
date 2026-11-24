@@ -63,6 +63,11 @@ module .exports = class VideoRecorder extends Interface
          .appendTo (this .verticalSplitterLeft);
 
       $("<span></span>")
+         .addClass ("header")
+         .text (_("Video Settings"))
+         .appendTo (this .settings);
+
+      $("<span></span>")
          .text (_("Width"))
          .appendTo (this .settings);
 
