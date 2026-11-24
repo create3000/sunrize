@@ -380,16 +380,15 @@ module .exports = class VideoRecorder extends Interface
 
       // Toggle state.
 
-      this .aspectFrame .css ({
-         "max-width": "",
-         "max-height": "",
-      });
-
       this .#recordCanvas  = null;
       this .#recordBrowser = null;
       this .#record        = false;
 
       this .recordButton .removeClass ("active");
+
+      // Show video player.
+
+      this .resizeFrame ();
 
       $("<video controls></video>")
          .attr ("src", this .filename .val ())
@@ -404,7 +403,11 @@ module .exports = class VideoRecorder extends Interface
          aspectRatio      = width / height,
          frameAspectRatio = this .recordFrame .innerWidth () / this .recordFrame .innerHeight ();
 
-      this .aspectFrame .css ({ "aspect-ratio": `${width} / ${height}` });
+      this .aspectFrame .css ({
+         "aspect-ratio": `${width} / ${height}`,
+         "max-width": width,
+         "max-height": height,
+      });
 
       if (aspectRatio > frameAspectRatio)
          this .aspectFrame .css ({ "width": "100%", "height": "auto" });
