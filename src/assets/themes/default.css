@@ -1911,7 +1911,14 @@ body.light .console-output .selected {
   position: absolute;
   margin: 20px;
   inset: 0px;
+}
+
+.video-recorder-aspect-frame {
+  position: absolute;
   border: 1px solid var(--border-color);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* Sidebar */

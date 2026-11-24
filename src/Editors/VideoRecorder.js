@@ -74,6 +74,7 @@ module .exports = class VideoRecorder extends Interface
          .attr ("placeholder", _("Enter a number."))
          .val (1024)
          .on ("change input", () => this .config .file .width = this .width .val ())
+         .on ("change input", () => this .resizeFrame ())
          .appendTo (this .settings);
 
       $("<span></span>")
@@ -87,8 +88,9 @@ module .exports = class VideoRecorder extends Interface
          .attr ("min", 1)
          .attr ("step", "1")
          .attr ("placeholder", _("Enter a number."))
-         .val (768)
+         .val (576)
          .on ("change input", () => this .config .file .height = this .height .val ())
+         .on ("change input", () => this .resizeFrame ())
          .appendTo (this .settings);
 
       $("<span></span>")
@@ -154,9 +156,16 @@ module .exports = class VideoRecorder extends Interface
 
       // Record Panel
 
-      this .browserFrame= $("<div></div>")
+      this .recordFrame = $("<div></div>")
          .addClass ("video-recorder-record-frame")
          .appendTo (this .verticalSplitterRight);
+
+      this .aspectFrame = $("<div></div>")
+         .addClass ("video-recorder-aspect-frame")
+         .appendTo (this .recordFrame);
+
+      this .frameObserver = new ResizeObserver (() => this .resizeFrame ());
+      this .frameObserver .observe (this .verticalSplitterRight [0]);
 
       // Toolbar
 
@@ -189,7 +198,7 @@ module .exports = class VideoRecorder extends Interface
 
       this .config .file .setDefaultValues ({
          width: 1024,
-         height: 768,
+         height: 576,
          duration: 60,
          fileType: 0,
          filename: "",
@@ -200,6 +209,8 @@ module .exports = class VideoRecorder extends Interface
       this .duration .val (this .config .file .duration);
       this .fileType .val (this .config .file .fileType);
       this .filename .val (this .config .file .filename);
+
+      this .resizeFrame ();
    }
 
    async chooseFile ()
@@ -282,6 +293,22 @@ module .exports = class VideoRecorder extends Interface
       this .#record = false;
 
       this .recordButton .removeClass ("active");
+   }
+
+   resizeFrame ()
+   {
+      const
+         numerator        = +this .width  .val () || 1024,
+         denominator      = +this .height .val () || 576,
+         aspectRatio      = numerator / denominator,
+         frameAspectRatio = this .recordFrame .innerWidth () / this .recordFrame .innerHeight ();
+
+      this .aspectFrame .css ({ "aspect-ratio": `${numerator} / ${denominator}` });
+
+      if (aspectRatio > frameAspectRatio)
+         this .aspectFrame .css ({ "width": "100%", "height": "auto" });
+      else
+         this .aspectFrame .css ({ "width": "auto", "height": "100%" });
    }
 
    splitterPosition ()
