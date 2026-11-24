@@ -462,7 +462,7 @@ module .exports = class Document extends Interface
       }
    }
 
-   static NUDGE_STEP = 0.001;
+   static NUDGE_STEP = 0.001; // in meters
    static NUDGE_FACTOR = 10;
 
    onnudge (event)
