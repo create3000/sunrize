@@ -150,7 +150,7 @@ module .exports = class VideoRecorder extends Interface
       this .filename = $("<input>")
          .addClass ("settings")
          .attr ("placeholder", _("Enter a filename."))
-         .on ("change input", () => this .config .file .filename = this .filename .val () .trim ())
+         .on ("change input", () => this .config .file .filename = this .getFilename ())
          .on ("change input", () => this .verifySettings ())
          .appendTo (this .filenameBox);
 
@@ -232,13 +232,18 @@ module .exports = class VideoRecorder extends Interface
       this .showVideoPlayer ();
    }
 
+   getFilename ()
+   {
+      return this .filename .val () .trim ();
+   }
+
    changeFileType ()
    {
-      if (!this .filename .val () .trim ())
+      if (!this .getFilename ())
          return;
 
       const newFilename = path .format ({
-         ... path .parse (this .filename .val () .trim ()),
+         ... path .parse (this .getFilename ()),
          base: undefined,
          ext: "." + VideoRecorder .formats [this .fileType .val ()] .ext,
       });
@@ -274,7 +279,7 @@ module .exports = class VideoRecorder extends Interface
          width               = this .width    .val ()|0,
          height              = this .height   .val ()|0,
          duration            = this .duration .val ()|0,
-         filename            = this .filename .val () .trim (),
+         filename            = this .getFilename (),
          maxRenderbufferSize = this .browser .getRenderingProperty ("MaxRenderbufferSize");
 
       let ok = true;
@@ -429,7 +434,7 @@ module .exports = class VideoRecorder extends Interface
          blob   = await this .#blob,
          buffer = Buffer .from (await blob .arrayBuffer ());
 
-      $.try (() => fs .writeFileSync (this .filename .val () .trim (), buffer), true);
+      $.try (() => fs .writeFileSync (this .getFilename (), buffer), true);
 
       // Enable settings.
 
@@ -453,11 +458,11 @@ module .exports = class VideoRecorder extends Interface
 
    showVideoPlayer ()
    {
-      if (!fs .existsSync (this .filename .val () .trim ()))
+      if (!fs .existsSync (this .getFilename ()))
          return;
 
       $("<video controls></video>")
-         .attr ("src", this .filename .val () .trim ())
+         .attr ("src", this .getFilename ())
          .appendTo (this .aspectFrame .empty ());
    }
 
