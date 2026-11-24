@@ -15,13 +15,17 @@ The user interface consists of four main parts: Menubar, Dashboard, Sidebar, and
 - **Open:** opens and reads a scene saved in X3D and related formats.
 - **Open Location:** opens a web location and reads a scene.
 - **Open Recent:** opens a tab with the recently opened files.
+- **Reload:** reloads the current scene from disk or web location.
+- **Make Browser Live (Play) on Load:** toggles the live mode on/off when the scene is loaded.
 - **Save:** saves the scene in X3D format (.x3d, .x3dv or .x3dj).
 - **Save As:** saves the current scene under a new filename.
 - **Save A Copy:** saves the current scene under a new filename without affecting the current file.
+- **Save All:** saves all open scenes in X3D format (.x3d, .x3dv or .x3dj).
 - **Auto Save:** toggle auto save on/off.
 - **Export As:** exports the current scene as HTML page.
 - **Scene Properties:** edit scene properties like units and world information.
-- **Close Window:** exits Sunrize.
+- **Close Tab:** exits the current tab.
+- **Close All Tabs:** exits all open tabs.
 
 ### Edit Menu
 
@@ -39,8 +43,6 @@ The user interface consists of four main parts: Menubar, Dashboard, Sidebar, and
 - **Hide Unselected Objects:** hides all unselected objects from view.
 - **Show Selected Objects:** shows all selected objects that were hidden by choosing *»Hide Selected Objects«*.
 - **Show All Objects:** displays any objects that were hidden using *»Hide Selected Objects«.*
-- **Transform to Zero:** set selected transforms to its default value and apply transformations to the lowest possible objects.
-- **Remove Empty Groups:** removes empty grouping nodes.
 
 ### View
 
