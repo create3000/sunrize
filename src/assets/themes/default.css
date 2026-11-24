@@ -1929,6 +1929,13 @@ body.light .console-output .selected {
   transform-origin: top left;
 }
 
+.video-recorder video {
+  position: absolute;
+  width: 100%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
 /* Sidebar */
 
 #sidebar {

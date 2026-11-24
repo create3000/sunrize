@@ -276,7 +276,7 @@ module .exports = class VideoRecorder extends Interface
 
       // Create browser.
 
-      this .aspectFrame .css ({
+      this .aspectFrame .empty () .css ({
          "max-width": "fit-content",
          "max-height": "fit-content",
       });
@@ -390,6 +390,10 @@ module .exports = class VideoRecorder extends Interface
       this .#record        = false;
 
       this .recordButton .removeClass ("active");
+
+      $("<video controls></video>")
+         .attr ("src", this .filename .val ())
+         .appendTo (this .aspectFrame);
    }
 
    resizeFrame ()
