@@ -33,7 +33,7 @@ module .exports = class VideoRecorder extends Interface
 
       this .videoRecorder = element;
 
-      const maxRenderbufferSize = this .getMaxRenderbufferSize ();
+      const maxRenderbufferSize = this .browser .getRenderingProperty ("MaxRenderbufferSize");
 
       // Video Recorder Panel
 
@@ -260,7 +260,7 @@ module .exports = class VideoRecorder extends Interface
          duration = this .duration .val ()|0,
          filename = this .filename .val ();
 
-      const maxRenderbufferSize = this .getMaxRenderbufferSize ();
+      const maxRenderbufferSize = this .browser .getRenderingProperty ("MaxRenderbufferSize");
 
       let ok = true;
 
@@ -273,13 +273,6 @@ module .exports = class VideoRecorder extends Interface
          this .recordButton .removeClass ("disabled");
       else
          this .recordButton .addClass ("disabled");
-   }
-
-   getMaxRenderbufferSize ()
-   {
-      const gl = this .browser .getContext ();
-
-      return gl .getParameter (gl .MAX_RENDERBUFFER_SIZE);
    }
 
    #recordCanvas;
