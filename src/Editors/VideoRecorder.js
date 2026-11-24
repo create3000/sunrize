@@ -150,7 +150,7 @@ module .exports = class VideoRecorder extends Interface
       this .filename = $("<input>")
          .addClass ("settings")
          .attr ("placeholder", _("Enter a filename."))
-         .on ("change input", () => this .config .file .filename = this .filename .val ())
+         .on ("change input", () => this .config .file .filename = this .filename .val () .trim ())
          .on ("change input", () => this .verifySettings ())
          .appendTo (this .filenameBox);
 
@@ -234,11 +234,11 @@ module .exports = class VideoRecorder extends Interface
 
    changeFileType ()
    {
-      if (!this .filename .val ())
+      if (!this .filename .val () .trim ())
          return;
 
       const newFilename = path .format ({
-         ... path .parse (this .filename .val ()),
+         ... path .parse (this .filename .val () .trim ()),
          base: undefined,
          ext: "." + VideoRecorder .formats [this .fileType .val ()] .ext,
       });
@@ -274,7 +274,7 @@ module .exports = class VideoRecorder extends Interface
          width               = this .width    .val ()|0,
          height              = this .height   .val ()|0,
          duration            = this .duration .val ()|0,
-         filename            = this .filename .val (),
+         filename            = this .filename .val () .trim (),
          maxRenderbufferSize = this .browser .getRenderingProperty ("MaxRenderbufferSize");
 
       let ok = true;
@@ -429,7 +429,7 @@ module .exports = class VideoRecorder extends Interface
          blob   = await this .#blob,
          buffer = Buffer .from (await blob .arrayBuffer ());
 
-      $.try (() => fs .writeFileSync (this .filename .val (), buffer), true);
+      $.try (() => fs .writeFileSync (this .filename .val () .trim (), buffer), true);
 
       // Enable settings.
 
@@ -453,11 +453,11 @@ module .exports = class VideoRecorder extends Interface
 
    showVideoPlayer ()
    {
-      if (!fs .existsSync (this .filename .val ()))
+      if (!fs .existsSync (this .filename .val () .trim ()))
          return;
 
       $("<video controls></video>")
-         .attr ("src", this .filename .val ())
+         .attr ("src", this .filename .val () .trim ())
          .appendTo (this .aspectFrame .empty ());
    }
 
