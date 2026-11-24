@@ -181,7 +181,7 @@ module .exports = class VideoRecorder extends Interface
       // Time
 
       this .time = $("<div></div>")
-         .addClass (["time", "visible"]);
+         .addClass (["time", "mini-tip", "visible"]);
 
       // Toolbar
 

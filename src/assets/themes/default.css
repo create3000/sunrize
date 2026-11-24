@@ -752,13 +752,13 @@ body.light .qtip-tipsy {
   background-color: var(--system-gray7);
 }
 
-#browser-size, .time {
+.mini-tip {
   visibility: hidden;
   opacity: 0;
   user-select: none;
   pointer-events: none;
   position: absolute;
-  top: calc(var(--topbar-height) + 10px);
+  top: 10px;
   left: 10px;
   padding: 2px 5px;
   background: rgba(255, 255, 255, 0.5);
@@ -773,13 +773,13 @@ body.light .qtip-tipsy {
   transition: visibility 300ms allow-discrete, opacity 300ms linear;
 }
 
-.time {
-  top: 10px;
-}
-
-#browser-size.visible, .time.visible {
+.mini-tip.visible {
   visibility: visible;
   opacity: 1;
+}
+
+#browser-size {
+  top: calc(var(--topbar-height) + 10px);
 }
 
 /* Dialog */
