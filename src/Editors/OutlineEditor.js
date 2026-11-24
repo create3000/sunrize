@@ -1733,11 +1733,14 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       // Open dialog.
 
       const
+         name             = urlObject .getName () ,
          mimeType         = isData ? match [1] || "text/plain" : this .protocolToMimeType .get (protocol [0]),
          extension        = mime .extension (mimeType),
          defaultDirectory = $.try (() => path .dirname (url .fileURLToPath (executionContext .getWorldURL ()))),
-         defaultPath      = urlObject .getName () && defaultDirectory ? path .join (defaultDirectory, `${urlObject .getName ()}.${extension}`) : defaultDirectory,
-         filters          = extension
+         desktop          = await electron .ipcRenderer .invoke ("path", "desktop"),
+         defaultPath      = name ? path .join (defaultDirectory ?? desktop, `${name}.${extension}`) : (defaultDirectory ?? desktop);
+
+      const filters = extension
             ? [{ name: _(`${extension .toUpperCase ()} Document`), extensions: [extension] }]
             : [{ name: _("All Files"), extensions: ["*"] }];
 
@@ -1871,8 +1874,10 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
       const
          executionContext = this .objects .get (executionContextId),
          childNode        = this .objects .get (nodeId),
+         name             = childNode .getDisplayName (),
          defaultDirectory = $.try (() => path .dirname (url .fileURLToPath (executionContext .getWorldURL ()))),
-         defaultPath      = childNode .getDisplayName () && defaultDirectory ? path .join (defaultDirectory, `${childNode .getDisplayName ()}.x3d`) : defaultDirectory,
+         desktop          = await electron .ipcRenderer .invoke ("path", "desktop"),
+         defaultPath      = name ? path .join (defaultDirectory ?? desktop, `${name}.x3d`) : (defaultDirectory ?? desktop),
          response         = await electron .ipcRenderer .invoke ("file-path", { type: "save", defaultPath });
 
       if (response .canceled)
@@ -2284,7 +2289,8 @@ module .exports = class OutlineEditor extends OutlineRouteGraph
          executionContext = this .objects .get (executionContextId),
          proto            = this .objects .get (protoNodeId),
          defaultDirectory = $.try (() => path .dirname (url .fileURLToPath (executionContext .getWorldURL ()))),
-         defaultPath      = defaultDirectory ? path .join (defaultDirectory, `${proto .getName ()}.x3d`) : undefined,
+         desktop          = await electron .ipcRenderer .invoke ("path", "desktop"),
+         defaultPath      = path .join (defaultDirectory ?? desktop, `${proto .getName ()}.x3d`),
          response         = await electron .ipcRenderer .invoke ("file-path", { type: "save", defaultPath });
 
       if (response .canceled)

@@ -233,8 +233,10 @@ module .exports = class VideoRecorder extends Interface
          name             = worldURL .protocol === "data:" ? _("New Scene") : path .parse (worldURL .pathname) .name,
          suffix           = VideoRecorder .formats [this .fileType .val ()] .suffix,
          defaultDirectory = $.try (() => path .dirname (url .fileURLToPath (worldURL))),
-         defaultPath      = defaultDirectory ? path .join (defaultDirectory, `${name}.${suffix}`) : `${name}.${suffix}`,
-         response         = await electron .ipcRenderer .invoke ("file-path", { type: "save", filters: VideoRecorder .filters, defaultPath });
+         desktop          = await electron .ipcRenderer .invoke ("path", "desktop"),
+         defaultPath      = path .join (defaultDirectory ?? desktop, `${name}.${suffix}`),
+         filters          = VideoRecorder .filters,
+         response         = await electron .ipcRenderer .invoke ("file-path", { type: "save", defaultPath, filters });
 
       if (response .canceled)
          return;
