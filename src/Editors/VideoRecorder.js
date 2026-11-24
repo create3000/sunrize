@@ -78,9 +78,9 @@ module .exports = class VideoRecorder extends Interface
          .attr ("min", 1)
          .attr ("step", "1")
          .attr ("placeholder", _("Enter a number."))
-         .val (1024)
          .on ("change input", () => this .config .file .width = this .width .val ())
          .on ("change input", () => this .resizeFrame ())
+         .on ("change input", () => this .verifySettings ())
          .appendTo (this .settings);
 
       $("<span></span>")
@@ -94,9 +94,9 @@ module .exports = class VideoRecorder extends Interface
          .attr ("min", 1)
          .attr ("step", "1")
          .attr ("placeholder", _("Enter a number."))
-         .val (576)
          .on ("change input", () => this .config .file .height = this .height .val ())
          .on ("change input", () => this .resizeFrame ())
+         .on ("change input", () => this .verifySettings ())
          .appendTo (this .settings);
 
       $("<span></span>")
@@ -110,8 +110,8 @@ module .exports = class VideoRecorder extends Interface
          .attr ("min", 1)
          .attr ("step", "1")
          .attr ("placeholder", _("Enter a number."))
-         .val (60)
          .on ("change input", () => this .config .file .duration = this .duration .val ())
+         .on ("change input", () => this .verifySettings ())
          .appendTo (this .settings);
 
       $("<span></span>")
@@ -146,7 +146,7 @@ module .exports = class VideoRecorder extends Interface
          .addClass ("settings")
          .attr ("placeholder", _("Enter a filename."))
          .on ("change input", () => this .config .file .filename = this .filename .val ())
-         .on ("change input", () => this .verifyFilename ())
+         .on ("change input", () => this .verifySettings ())
          .appendTo (this .filenameBox);
 
       this .fileChooser = $("<span></span>")
@@ -222,7 +222,7 @@ module .exports = class VideoRecorder extends Interface
       this .fileType .val (this .config .file .fileType);
       this .filename .val (this .config .file .filename);
 
-      this .verifyFilename ();
+      this .verifySettings ();
       this .resizeFrame ();
    }
 
@@ -245,14 +245,25 @@ module .exports = class VideoRecorder extends Interface
 
       this .config .file .filename = response .filePath;
 
-      this .verifyFilename ();
+      this .verifySettings ();
    }
 
-   verifyFilename ()
+   verifySettings ()
    {
-      const filename = this .filename .val ();
+      const
+         width    = this .width    .val ()|0,
+         height   = this .height   .val ()|0,
+         duration = this .duration .val ()|0,
+         filename = this .filename .val ();
 
-      if (filename)
+      let ok = true;
+
+      ok &&= width > 0;
+      ok &&= height > 0;
+      ok &&= duration > 0;
+      ok &&= filename;
+
+      if (ok)
          this .recordButton .removeClass ("disabled");
       else
          this .recordButton .addClass ("disabled");
@@ -278,9 +289,9 @@ module .exports = class VideoRecorder extends Interface
    async startRecord ()
    {
       const
-         width    = this .width  .val ()|0 || 1024,
-         height   = this .height .val ()|0 || 576,
-         duration = this .duration .val ()|0 || 60;
+         width    = this .width  .val ()|0,
+         height   = this .height .val ()|0,
+         duration = this .duration .val ()|0;
 
       // Disable settings.
 
@@ -347,7 +358,7 @@ module .exports = class VideoRecorder extends Interface
 
       const stream = this .#recordCanvas .get (0) .captureStream (30);
 
-      this .#timeoutId = setTimeout (() => this .stopRecord (), this .duration .val () * 1_000 || 60_000);
+      this .#timeoutId = setTimeout (() => this .stopRecord (), duration * 1_000);
       this .#mimeType  = VideoRecorder .formats [this .fileType .val ()] .mimeType;
       this .#recorder  = new MediaRecorder (stream, { mimeType: this .#mimeType });
 
@@ -417,8 +428,8 @@ module .exports = class VideoRecorder extends Interface
    resizeFrame ()
    {
       const
-         width            = this .width  .val ()|0 || 1024,
-         height           = this .height .val ()|0 || 576,
+         width            = this .width  .val ()|0,
+         height           = this .height .val ()|0,
          aspectRatio      = width / height,
          frameAspectRatio = this .recordFrame .innerWidth () / this .recordFrame .innerHeight ();
 
