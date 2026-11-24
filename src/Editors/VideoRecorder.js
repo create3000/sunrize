@@ -213,8 +213,8 @@ module .exports = class VideoRecorder extends Interface
       super .configure ();
 
       this .config .file .setDefaultValues ({
-         width: 1024,
-         height: 576,
+         width: 1920,
+         height: 1080,
          duration: 60,
          fileType: 0,
          filename: "",
