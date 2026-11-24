@@ -255,12 +255,11 @@ module .exports = class VideoRecorder extends Interface
    verifySettings ()
    {
       const
-         width    = this .width    .val ()|0,
-         height   = this .height   .val ()|0,
-         duration = this .duration .val ()|0,
-         filename = this .filename .val ();
-
-      const maxRenderbufferSize = this .browser .getRenderingProperty ("MaxRenderbufferSize");
+         width               = this .width    .val ()|0,
+         height              = this .height   .val ()|0,
+         duration            = this .duration .val ()|0,
+         filename            = this .filename .val (),
+         maxRenderbufferSize = this .browser .getRenderingProperty ("MaxRenderbufferSize");
 
       let ok = true;
 
@@ -341,8 +340,12 @@ module .exports = class VideoRecorder extends Interface
 
       this .#recordBrowser .endUpdate ();
 
+      const fileURL = this .browser .currentScene .worldURL .startsWith ("data:")
+         ? new X3D .MFString (encodeURI (`data:model/x3d+xml,${this .browser .currentScene .toXMLString ()}`))
+         : new X3D .MFString (this .browser .getWorldURL ());
+
       await this .#recordBrowser .resize (width, height);
-      await this .#recordBrowser .loadURL (new X3D .MFString (this .browser .getWorldURL ()));
+      await this .#recordBrowser .loadURL (fileURL);
       this .resizeFrame ();
 
       this .#recordBrowser .beginUpdate ();
