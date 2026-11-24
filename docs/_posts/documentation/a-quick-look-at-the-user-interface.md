@@ -44,6 +44,16 @@ The user interface consists of four main parts: Menubar, Dashboard, Sidebar, and
 
 ### View
 
+- **Appearance**
+  - **Sidebar** toggle the display of the sidebar on/off.
+  - **Panel** toggle the display of the panel on/off.
+  - **Theme**
+    - **Light** use light theme
+    - **Dark** use dark theme
+    - **System** use system theme
+  - **Zoom In** zoom in editor layout
+  - **Zoom Out** zoom out of editor layout
+  - **Reset Zoom** reset the zoom level
 - **Outline Editor**
   - **Expand ExternProto Declarations:** toggle display of extern-proto scenes
   - **Expand Prototype Instances**: toggle display of prototype instance body
@@ -56,6 +66,21 @@ The user interface consists of four main parts: Menubar, Dashboard, Sidebar, and
   - **High:** switch to highest texture quality
   - **Medium:** switch to medium texture quality
   - **Low:** switch to lowest texture quality
+- **Text Compression**
+  - **Char Spacing:** adjust the spacing between characters in text nodes
+  - **Scaling:** scale text to fit into the bounding box of the text node
+- **Color Space**
+  - **Linear:** switch to linear color space
+  - **Linear When PhysicalMaterial:** switch to linear color space when using PhysicalMaterial
+  - **sRGB:** switch to sRGB color space
+- **Tone Mapping**
+  - **KHR PBR Neutral:** switch to KHR PBR Neutral tone mapping
+  - **ACES Hill Exposure Boost:** switch to ACES Hill Exposure Boost tone mapping
+  - **ACES Hill:** switch to ACES Hill tone mapping
+  - **ACES Narkowicz:** switch to ACES Narkowicz tone mapping
+  - **None:** switch off tone mapping
+- **Order Independent Transparency** toggle order independent transparency on/off. This is a technique to render transparent objects in a more realistic way.
+- **Logarithmic Depth Buffer** toggle logarithmic depth buffer on/off. This is a technique to render large scenes in a more realistic way.
 - **Display Rubberband:** toggle the display of the rubberband when the Walk Viewer is active.
 - **Display Timings:** toggle the display of the timings on/off. This provides you with useful information about your system.
 - **Show Library:** opens the library window, where you can select nodes to add to your scene.
@@ -63,11 +88,17 @@ The user interface consists of four main parts: Menubar, Dashboard, Sidebar, and
 
 ### Layout
 
-- **Browser Size:** set aspect ratio of browser size.
+- **Browser Frame:** set aspect ratio of the browser size.
 - **Grid Layout Tool:** display construction aid.
 - **Angle Grid Layout Tool:** display construction aid.
 - **Axonometric Grid Layout Tool:** display construction aid.
 - **Show Grid Tool Options in Panel:** opens Panel for currently active Grid Tool.
+- **Activate Snap Target:** places the yellow Snap Target in the scene.
+- **Activate Snap Source:** places the green Snap Source arrow in the scene.
+- **Center Snap Target in Selection:** centers snap target in the middle of the nearest plane of the
+  selected object.
+- **Move Selection to Snap Target:** moves a face of the selected object to the Snap Target.
+- **Move Selection Center to Snap Target:** moves the selected object's center to the Snap Target.
 
 ### Help
 
