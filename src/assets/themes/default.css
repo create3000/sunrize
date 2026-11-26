@@ -2313,7 +2313,7 @@ body.light .console-output .selected {
   overflow: scroll;
   margin-bottom: 8px;
   height: 140px;
-  min-height: 140px;;
+  min-height: 140px;
   white-space: pre;
   resize: vertical;
 }
