@@ -223,6 +223,7 @@ module .exports = class AnimationMembersList extends Interface
 		X3D .X3DConstants .SFRotation,
 		X3D .X3DConstants .SFVec2f,
 		X3D .X3DConstants .SFVec3f,
+		X3D .X3DConstants .MFFloat,
 		X3D .X3DConstants .MFVec2f,
 		X3D .X3DConstants .MFVec3f
    ]);

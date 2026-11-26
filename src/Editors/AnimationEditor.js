@@ -731,6 +731,7 @@ module .exports = class AnimationEditor extends Interface
 		X3D .X3DConstants .OrientationInterpolator,
 		X3D .X3DConstants .PositionInterpolator2D,
 		X3D .X3DConstants .PositionInterpolator,
+		X3D .X3DConstants .CoordinateInterpolator1D,
 		X3D .X3DConstants .CoordinateInterpolator2D,
 		X3D .X3DConstants .CoordinateInterpolator,
 		X3D .X3DConstants .NormalInterpolator,
@@ -798,6 +799,7 @@ module .exports = class AnimationEditor extends Interface
       [X3D .X3DConstants .SFRotation, "OrientationInterpolator"],
       [X3D .X3DConstants .SFVec2f,    "PositionInterpolator2D"],
       [X3D .X3DConstants .SFVec3f,    "PositionInterpolator"],
+      [X3D .X3DConstants .MFFloat,    "CoordinateInterpolator1D"],
       [X3D .X3DConstants .MFVec2f,    "CoordinateInterpolator2D"],
       [X3D .X3DConstants .MFVec3f,    "CoordinateInterpolator"],
       // NormalInterpolator
@@ -811,6 +813,7 @@ module .exports = class AnimationEditor extends Interface
       [X3D .X3DConstants .OrientationInterpolator,  4],
       [X3D .X3DConstants .PositionInterpolator2D,   2],
       [X3D .X3DConstants .PositionInterpolator,     3],
+      [X3D .X3DConstants .CoordinateInterpolator1D, 1],
       [X3D .X3DConstants .CoordinateInterpolator2D, 2],
       [X3D .X3DConstants .CoordinateInterpolator,   3],
       [X3D .X3DConstants .NormalInterpolator,       3],
@@ -964,6 +967,7 @@ module .exports = class AnimationEditor extends Interface
             this .addKeyframeToInterpolator (interpolator, frame, type, field);
             break;
          }
+         case X3D .X3DConstants .MFFloat:
          case X3D .X3DConstants .MFVec2f:
          case X3D .X3DConstants .MFVec3f:
          {
@@ -982,7 +986,9 @@ module .exports = class AnimationEditor extends Interface
 
             Editor .setNodeMetaData (interpolator, "Interpolator/keySize", keySize);
 
-            const value = Array .from (field) .flatMap (value => Array .from (value));
+            const value = typeof field [0] === "object"
+               ? Array .from (field) .flatMap (value => Array .from (value))
+               : Array .from (field);
 
             this .addKeyframeToInterpolator (interpolator, frame, type, value);
             break;
@@ -1050,7 +1056,7 @@ module .exports = class AnimationEditor extends Interface
          destinationField = route .getDestinationField (),
          nodeName         = destinationNode .getDisplayName () || destinationNode .getTypeName (),
          fieldName        = capitalize (destinationField .replace (/^set_|_changed$/g, ""), true),
-         typeName         = interpolator .getTypeName () .match (/(Sequencer|Interpolator)$/) [1];
+         typeName         = interpolator .getTypeName () .match (/(Sequencer|Interpolator)/) [1];
 
       return `${nodeName}${fieldName}${typeName}`;
    }
@@ -1103,6 +1109,7 @@ module .exports = class AnimationEditor extends Interface
             this .updateScalarInterpolator (interpolator);
             break;
          }
+         case X3D .X3DConstants .CoordinateInterpolator1D:
          case X3D .X3DConstants .CoordinateInterpolator2D:
          case X3D .X3DConstants .CoordinateInterpolator:
          case X3D .X3DConstants .NormalInterpolator:
@@ -1580,11 +1587,12 @@ module .exports = class AnimationEditor extends Interface
       // Use slice and concat instead of splice to support very large arrays.
 
       const
-         before = keyValue .slice (0, indexN),
-         after  = keyValue .slice (indexN + deleteCountN),
-         insert = new X3D .MFDouble ();
+         isArray = interpolator ._value_changed instanceof X3D .X3DArrayField,
+         before  = keyValue .slice (0, indexN),
+         after   = keyValue .slice (indexN + deleteCountN),
+         insert  = new X3D .MFDouble ();
 
-      insert .setValue (components === 1 ? [value] : Array .from (value));
+      insert .setValue (isArray ? Array .from (value) : [value]);
 
       const newKeyValue = before .concat (insert) .concat (after);
 
