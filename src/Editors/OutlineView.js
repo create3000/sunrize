@@ -2626,7 +2626,7 @@ module .exports = class OutlineView extends Interface
       child .find (".jstree-node")
          .wrapInner ("<div class=\"item no-select\"/>")
          .find (".item")
-         .append ("<div class=\"route-curves-wrapper\"><canvas class=\"route-curves\"></canvas></div>");
+         .append ("<div class=\"route-curves-wrapper\"><canvas class=\"route-curves route-value\"></canvas></div>");
 
       this .connectFieldActions (child);
 

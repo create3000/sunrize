@@ -2283,6 +2283,10 @@ body.light .console-output .selected {
   height: 25px;
 }
 
+.scene-graph .route-curves.route-value {
+  height: 100%;
+}
+
 .scene-graph :is(.field-value-container, .special-value-container) {
   flex: 1 1 auto;
 }

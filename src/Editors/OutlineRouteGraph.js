@@ -302,7 +302,8 @@ module .exports = class OutlineRouteGraph extends OutlineView
             rect1   = canvas1 .get (0) .getBoundingClientRect (),
             rect2   = canvas2 .get (0) .getBoundingClientRect ();
 
-         canvas1 .height (Math .ceil (rect2 .y - rect1 .y));
+         if (!canvas1 .is (".route-value"))
+            canvas1 .height (Math .ceil (rect2 .y - rect1 .y));
 
          canvas1 .prop ("width",  canvas1 .width ());
          canvas1 .prop ("height", canvas1 .height ());
