@@ -30,6 +30,7 @@ class CylinderTool extends X3DGeometryNodeTool
 
       groupNode     .bboxSize      = new X3D .Vector3 (2, 2, 2);
       transformNode .children      = [groupNode];
+      transformTool .selected      = true;
       transformTool .group         = this .getTypeName ();
       transformTool .undo          = false;
       transformTool .tools         = ["SCALE"];

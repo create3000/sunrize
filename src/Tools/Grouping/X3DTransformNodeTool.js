@@ -149,6 +149,9 @@ class X3DTransformNodeTool extends X3DChildNodeTool
          if (other === this)
             continue;
 
+         if (!other .tool .selected)
+            continue;
+
          if (other .tool .group !== this .tool .group)
             continue;
 

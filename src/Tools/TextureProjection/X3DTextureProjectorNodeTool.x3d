@@ -242,11 +242,15 @@ async function initialize ()
    tool .bboxDisplay   = false;
 }
 
-function set_selected ()
+async function set_selected ()
 {
    frustumMaterial .emissiveColor = selected
       ? new SFColor (0.1, 0.1, 0.1)
       : new SFColor ();
+
+   const tool = await transform .getValue () .addTool () .getToolInstance ();
+
+   tool .selected = selected;
 }
 
 function set_direction ()

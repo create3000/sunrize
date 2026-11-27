@@ -2,14 +2,16 @@
 <!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.1//EN" "https://www.web3d.org/specifications/x3d-4.1.dtd">
 <X3D profile='Interchange' version='4.1' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.1.xsd'>
   <head>
+    <component name='Core' level='2'/>
     <component name='Layout' level='2'/>
+    <component name='Navigation' level='2'/>
     <component name='Scripting' level='1'/>
     <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Thu, 18 Feb 2016 08:47:54 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V2.0.1, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 01 Feb 2026 19:10:05 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V2.7.2, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Fri, 27 Nov 2026 22:32:47 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -275,6 +277,7 @@ function eventsProcessed ()
         </Collision>
         <Script DEF='SpatialSoundScript'
             directOutput='true'>
+          <field accessType='inputOutput' type='SFBool' name='selected'/>
           <field accessType='inputOutput' type='SFBool' name='active'/>
           <field accessType='inputOutput' type='SFVec3f' name='direction'/>
           <field accessType='initializeOnly' type='SFVec3f' name='upVector' value='0 1 0'/>
@@ -284,6 +287,7 @@ function eventsProcessed ()
             <Transform USE='TransformTool'/>
           </field>
           <IS>
+            <connect nodeField='selected' protoField='selected'/>
             <connect nodeField='active' protoField='isActive'/>
             <connect nodeField='direction' protoField='direction'/>
             <connect nodeField='activeTool' protoField='activeTool'/>
@@ -303,6 +307,13 @@ async function initialize ()
    tool .centerDisplay = false;
    tool .bboxEvents    = false;
    tool .bboxDisplay   = false;
+}
+
+async function set_selected ()
+{
+   const tool = await transform .getValue () .addTool () .getToolInstance ();
+
+   tool .selected = selected;
 }
 
 let changing = false;

@@ -2,15 +2,17 @@
 <!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.1//EN" "https://www.web3d.org/specifications/x3d-4.1.dtd">
 <X3D profile='Interchange' version='4.1' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.1.xsd'>
   <head>
+    <component name='Core' level='2'/>
     <component name='Layout' level='2'/>
+    <component name='Navigation' level='2'/>
     <component name='Scripting' level='1'/>
     <component name='Shaders' level='1'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Fri, 01 Aug 2014 17:41:58 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V2.0.0, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V2.7.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Lighting/X3DLightNodeTool.x3d'/>
-    <meta name='modified' content='Sat, 31 Jan 2026 23:04:56 GMT'/>
+    <meta name='modified' content='Fri, 27 Nov 2026 22:13:25 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -322,11 +324,15 @@ async function initialize ()
    tool .bboxDisplay   = false;
 }
 
-function set_selected ()
+async function set_selected ()
 {
    emissiveStrength = selected ? 1 : 0.5;
 
    set_material ()
+
+   const tool = await transform .getValue () .addTool () .getToolInstance ();
+
+   tool .selected = selected;
 }
 
 async function set_type (value)

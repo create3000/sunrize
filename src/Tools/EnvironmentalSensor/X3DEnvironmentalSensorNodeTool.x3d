@@ -101,9 +101,13 @@ async function initialize ()
    tool .bboxEvents = false;
 }
 
-function set_selected ()
+async function set_selected ()
 {
    set_color ();
+
+   const tool = await transform .getValue () .addTool () .getToolInstance ();
+
+   tool .selected = selected;
 }
 
 function set_color ()

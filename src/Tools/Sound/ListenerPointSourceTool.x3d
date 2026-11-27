@@ -3,11 +3,13 @@
 <X3D profile='Interchange' version='4.1' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.1.xsd'>
   <head>
     <component name='Layout' level='2'/>
+    <component name='Navigation' level='2'/>
+    <component name='Networking' level='2'/>
     <component name='Scripting' level='1'/>
     <meta name='created' content='Tue, 26 Mar 2024 07:12:19 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V2.0.1, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 01 Feb 2026 19:11:34 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V2.7.2, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Fri, 27 Nov 2026 22:34:06 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='ListenerPointSourceTool'>
@@ -58,12 +60,14 @@
           </Transform>
         </Collision>
         <Script DEF='ListenerPointSourceScript'>
+          <field accessType='inputOutput' type='SFBool' name='selected'/>
           <field accessType='inputOutput' type='SFBool' name='active'/>
           <field accessType='inputOutput' type='SFString' name='activeTool'/>
           <field accessType='inputOutput' type='SFNode' name='transform'>
             <Transform USE='TransformTool'/>
           </field>
           <IS>
+            <connect nodeField='selected' protoField='selected'/>
             <connect nodeField='active' protoField='isActive'/>
             <connect nodeField='activeTool' protoField='activeTool'/>
             <connect nodeField='transform' protoField='transformTool'/>
@@ -82,6 +86,13 @@ async function initialize ()
    tool .centerDisplay = false;
    tool .bboxEvents    = false;
    tool .bboxDisplay   = false;
+}
+
+async function set_selected ()
+{
+   const tool = await transform .getValue () .addTool () .getToolInstance ();
+
+   tool .selected = selected;
 }
 ]]>
         </Script>
