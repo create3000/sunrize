@@ -32,7 +32,6 @@ class SphereTool extends X3DGeometryNodeTool
       transformNode .children      = [groupNode];
       transformTool .selected      = true;
       transformTool .group         = this .getTypeName ();
-      transformTool .undo          = false;
       transformTool .tools         = ["SCALE"];
       transformTool .keys          = [ ];
       transformTool .connectedAxes = ["XY", "XZ", "YX", "YZ", "ZX", "ZY"];
