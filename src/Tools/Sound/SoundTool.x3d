@@ -363,7 +363,7 @@ async function initialize ()
    tool .bboxDisplay   = false;
 }
 
-function set_selected ()
+async function set_selected ()
 {
    material .emissiveColor = selected
       ? new SFColor (0.1, 0.1, 0.1)
@@ -373,6 +373,10 @@ function set_selected ()
    minFrontTransform .visible = selected && minFrontDisplay;
    maxBackTransform  .visible = selected && maxBackDisplay;
    maxFrontTransform .visible = selected && maxFrontDisplay;
+
+   const tool = await transform .getValue () .addTool () .getToolInstance ();
+
+   tool .selected = selected;
 }
 
 let changing = false;

@@ -12,7 +12,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V2.7.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/sunrize/src/sunrize/Tools/Lighting/X3DLightNodeTool.x3d'/>
-    <meta name='modified' content='Fri, 27 Nov 2026 22:13:25 GMT'/>
+    <meta name='modified' content='Fri, 27 Nov 2026 23:06:09 GMT'/>
   </head>
   <Scene>
     <ExternProtoDeclare name='ToolShader' url='"../Shaders/ToolShader.x3d"'>
@@ -43,16 +43,15 @@
           <Transform DEF='_1'>
             <ScreenGroup>
               <Transform DEF='Lights'
-                  translation='0 0 1.26218e-29'
-                  scale='12 12 12'
-                  scaleOrientation='0 0 -1 0.785398163397448'>
+                  scale='12 12 12'>
                 <Switch>
                   <IS>
                     <connect nodeField='whichChoice' protoField='type'/>
                   </IS>
                   <Transform DEF='DirectionalLight'
                       translation='0 0 -0.16262'
-                      scale='2 2 2'>
+                      scale='2 2 2'
+                      bboxSize='5 5 5'>
                     <Transform DEF='Rays'>
                       <Shape
                           castShadow='false'>
@@ -175,10 +174,11 @@
                       <Sphere DEF='_2'/>
                     </Shape>
                   </Transform>
-                  <Transform DEF='SpotLight'>
+                  <Transform DEF='SpotLight'
+                      bboxSize='5 5 5'>
                     <Transform DEF='Cone'>
                       <Transform
-                          translation='0 0 -0.373349'
+                          translation='0 0 -1'
                           rotation='1 0 0 4.71239'
                           scale='1.70236 1.70236 1.70236'>
                         <Shape
@@ -193,7 +193,7 @@
                       </Transform>
                     </Transform>
                     <Transform DEF='Bulb'
-                        translation='0 0 1.46147'>
+                        translation='0 0 1'>
                       <Shape DEF='Sphere_1'
                           castShadow='false'>
                         <Appearance USE='_10'/>
@@ -441,8 +441,10 @@ function set_angle ()
         <ROUTE fromNode='TransformTool' fromField='rotation_changed' toNode='Tool' toField='set_rotation'/>
       </ProtoBody>
     </ProtoDeclare>
-    <ProtoInstance name='X3DLightNodeTool'>
-      <fieldValue name='type' value='3'/>
-    </ProtoInstance>
+    <Transform>
+      <ProtoInstance name='X3DLightNodeTool'>
+        <fieldValue name='selected' value='true'/>
+      </ProtoInstance>
+    </Transform>
   </Scene>
 </X3D>
