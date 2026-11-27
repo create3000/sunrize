@@ -235,7 +235,6 @@ async function initialize ()
    Browser .addRoute (tool, "activeTool", this, "activeTool");
    Browser .addRoute (tool, "isActive",   this, "active");
 
-   tool .undo          = false;
    tool .tools         = new MFString ("TRANSLATE", "ROTATE");
    tool .centerDisplay = false;
    tool .bboxEvents    = false;
