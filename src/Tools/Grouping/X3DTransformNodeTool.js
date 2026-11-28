@@ -56,15 +56,17 @@ class X3DTransformNodeTool extends X3DChildNodeTool
       if ((keys & ActionKeys .Shift) && !this .tool .keys .includes ("SHIFT"))
          return;
 
+      let scaleMode;
+
       if (this .tool .tools .includes ("TRANSLATE"))
       {
-         var scaleMode = keys === ActionKeys .Option || keys === (ActionKeys .Shift | ActionKeys .Option)
+         scaleMode = keys === ActionKeys .Option || keys === (ActionKeys .Shift | ActionKeys .Option)
             ? "SCALE_FROM_OPPOSITE_HANDLE"
             : "SCALE_FROM_CENTER";
       }
       else
       {
-         var scaleMode = "SCALE_FROM_CENTER";
+         scaleMode = "SCALE_FROM_CENTER";
       }
 
       this .tool .translateMode = keys === ActionKeys .Option ? "TRANSLATE_ALONG_PLANE" : "TRANSLATE_ALONG_AXIS";
