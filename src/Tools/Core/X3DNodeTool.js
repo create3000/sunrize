@@ -274,9 +274,6 @@ class X3DNodeTool extends X3DBaseTool
    {
       // This function is also called in OutlineEditor beginUndoSetFieldValue and endUndoSetFieldValue.
 
-      if (!this .tool .undo)
-         return;
-
       if (active .getValue ())
          this .prepareUndo ();
       else
@@ -292,7 +289,8 @@ class X3DNodeTool extends X3DBaseTool
          name        = this .getDisplayName (),
          description = this .getUndoDescription (this .tool .activeTool, name);
 
-      UndoManager .shared .beginUndo (description, typeName, name);
+      if (this .tool .undo)
+         UndoManager .shared .beginUndo (description, typeName, name);
 
       // Prepare undo.
 
@@ -379,7 +377,8 @@ class X3DNodeTool extends X3DBaseTool
 
       this .#groupedTools .clear ();
 
-      UndoManager .shared .endUndo ();
+      if (this .tool .undo)
+         UndoManager .shared .endUndo ();
    }
 
    beginUndo ()

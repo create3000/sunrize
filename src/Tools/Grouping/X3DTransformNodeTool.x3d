@@ -1829,6 +1829,13 @@ async function set_toggleCenterTool ()
 {
    keepCenter = !keepCenter;
 
+   if (centerTool .getValue () .getTool ())
+   {
+      const tool = await centerTool .getValue () .getTool () .getToolInstance ();
+
+      tool .selected = keepCenter;
+   }
+
    if (!keepCenter)
       return;
 
@@ -1840,6 +1847,7 @@ async function set_toggleCenterTool ()
    Browser .addRoute (tool, "grouping", this, "grouping");
    Browser .addRoute (tool, "isActive", this, "active");
 
+   tool .selected      = true;
    tool .group         = "CENTER_TOOL";
    tool .undo          = false;
    tool .tools         = new MFString ("TRANSLATE");
