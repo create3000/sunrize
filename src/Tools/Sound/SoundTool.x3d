@@ -426,7 +426,6 @@ async function set_minBackTime ()
    Browser .addRoute (tool, "isActive", this, "set_minBackActive");
 
    tool .group         = "NONE";
-   tool .undo          = false;
    tool .tools         = new MFString ("TRANSLATE");
    tool .yAxisDisplay  = false;
    tool .zAxisDisplay  = false;
@@ -497,7 +496,6 @@ async function set_minFrontTime ()
    Browser .addRoute (tool, "isActive", this, "set_minFrontActive");
 
    tool .group         = "NONE";
-   tool .undo          = false;
    tool .tools         = new MFString ("TRANSLATE");
    tool .yAxisDisplay  = false;
    tool .zAxisDisplay  = false;
@@ -568,7 +566,6 @@ async function set_maxBackTime ()
    Browser .addRoute (tool, "isActive", this, "set_maxBackActive");
 
    tool .group         = "NONE";
-   tool .undo          = false;
    tool .tools         = new MFString ("TRANSLATE");
    tool .xAxisDisplay  = false;
    tool .zAxisDisplay  = false;
@@ -639,7 +636,6 @@ async function set_maxFrontTime ()
    Browser .addRoute (tool, "isActive", this, "set_maxFrontActive");
 
    tool .group         = "NONE";
-   tool .undo          = false;
    tool .tools         = new MFString ("TRANSLATE");
    tool .xAxisDisplay  = false;
    tool .zAxisDisplay  = false;

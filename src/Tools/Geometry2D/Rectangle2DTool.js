@@ -40,7 +40,6 @@ class Rectangle2DTool extends X3DGeometryNodeTool
       transformTool .bboxDisplay   = false;
 
       this .tool .group       = this .getTypeName ();
-      this .tool .undo        = true;
       this .tool .addChildren = new X3D .MFNode (transformNode);
 
       // Connections

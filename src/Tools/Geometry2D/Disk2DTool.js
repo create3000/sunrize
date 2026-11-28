@@ -89,7 +89,6 @@ class Disk2DTool extends X3DGeometryNodeTool
          this .set_innerRadius (this .node ._innerRadius);
       }
 
-      this .tool .undo        = true;
       this .tool .addChildren =toolChildren;
    }
 

@@ -19,7 +19,7 @@
       <ProtoInterface>
         <field accessType='inputOutput' type='SFBool' name='selected'/>
         <field accessType='inputOutput' type='SFString' name='group' value='NONE'/>
-        <field accessType='inputOutput' type='SFBool' name='undo'/>
+        <field accessType='inputOutput' type='SFBool' name='undo' value='true'/>
         <field accessType='inputOutput' type='SFVec3f' name='size' value='1 1 1'/>
         <field accessType='inputOutput' type='SFBool' name='linesDisplay' value='true'/>
         <field accessType='inputOutput' type='SFFloat' name='linewidthScaleFactor' value='2'/>

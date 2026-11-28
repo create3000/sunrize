@@ -41,7 +41,6 @@ class ArcClose2DTool extends X3DGeometryNodeTool
       transformTool .bboxColor     = ToolColors .BLUE;
 
       this .tool .group       = this .getTypeName ();
-      this .tool .undo        = true;
       this .tool .addChildren = new X3D .MFNode (transformNode);
 
       // Connections
