@@ -81,9 +81,6 @@ class X3DTransformNodeTool extends X3DChildNodeTool
 
    beginUndo ()
    {
-      if (!this .tool .undo)
-         return false;
-
       this .#initialMatrix .assign (this .getCurrentMatrix ());
 
       this .#initialTranslation      = this ._translation      .copy ();

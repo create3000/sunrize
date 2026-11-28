@@ -31,6 +31,7 @@ class BoxTool extends X3DGeometryNodeTool
       transformNode .children      = [groupNode];
       transformTool .selected      = true;
       transformTool .group         = this .getTypeName ();
+      transformTool .undo          = false;
       transformTool .tools         = ["SCALE"];
       transformTool .keys          = ["SHIFT"];
       transformTool .centerDisplay = false;
@@ -39,6 +40,7 @@ class BoxTool extends X3DGeometryNodeTool
       transformTool .bboxDisplay   = false;
 
       this .tool .group       = this .getTypeName ();
+      this .tool .undo        = true;
       this .tool .addChildren = new X3D .MFNode (transformNode);
 
       // Connections

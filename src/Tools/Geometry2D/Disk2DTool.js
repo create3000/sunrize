@@ -36,6 +36,7 @@ class Disk2DTool extends X3DGeometryNodeTool
          transformNode .children      = [groupNode];
          transformTool .selected      = true;
          transformTool .group         = `${this .getTypeName ()}.outerRadius`;
+         transformTool .undo          = false;
          transformTool .tools         = ["SCALE"];
          transformTool .keys          = [ ];
          transformTool .connectedAxes = ["XY", "YX", "ZX"];
@@ -71,6 +72,7 @@ class Disk2DTool extends X3DGeometryNodeTool
          transformNode .children      = [groupNode];
          transformTool .selected      = true;
          transformTool .group         = `${this .getTypeName ()}.innerRadius`;
+         transformTool .undo          = false;
          transformTool .tools         = ["SCALE"];
          transformTool .keys          = [ ];
          transformTool .connectedAxes = ["XY", "YX", "ZX"];
@@ -89,6 +91,7 @@ class Disk2DTool extends X3DGeometryNodeTool
          this .set_innerRadius (this .node ._innerRadius);
       }
 
+      this .tool .undo        = true;
       this .tool .addChildren =toolChildren;
    }
 

@@ -31,6 +31,7 @@ class Circle2DTool extends X3DGeometryNodeTool
       transformNode .children      = [groupNode];
       transformTool .selected      = true;
       transformTool .group         = this .getTypeName ();
+      transformTool .undo          = false;
       transformTool .tools         = ["SCALE"];
       transformTool .keys          = [ ];
       transformTool .connectedAxes = ["XY", "YX", "ZX"];
@@ -41,6 +42,7 @@ class Circle2DTool extends X3DGeometryNodeTool
       transformTool .bboxColor     = ToolColors .BLUE;
 
       this .tool .group       = this .getTypeName ();
+      this .tool .undo        = true;
       this .tool .addChildren = new X3D .MFNode (transformNode);
 
       // Connections
